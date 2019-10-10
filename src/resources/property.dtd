@@ -1,0 +1,658 @@
+<!-- ...................................................................... -->
+<!-- Samurai Graph Property DTD V1.0 ...................................... -->
+<!-- File property.dtd .................................................... -->
+
+<!-- $Id: property.dtd,v 1.3 2012/03/22 09:04:38 kuromaru Exp $ -->
+
+<!-- This is the driver file for V1.0 of the Samurai Graph Property XML DTD.
+     Please use the following formal public identifier to identify it:
+
+     "-//NILAB//DTD Samurai-Graph Property XML 1.0//EN"
+
+     For example:
+
+     <!DOCTYPE property
+               PUBLIC "-//NILAB//DTD Samurai-Graph Property XML 1.0//EN"
+          "http://samurai-graph.sourceforge.jp/property.dtd"
+     [...]>
+-->
+
+<!-- root node -->
+<!ELEMENT Property (Window) >
+<!-- Version appears since ver. 2.0.0 -->
+<!ATTLIST Property Version NMTOKEN #IMPLIED >
+
+<!ELEMENT Window (Figure+) >
+<!ATTLIST Window BackgroundColor CDATA #REQUIRED >
+<!ATTLIST Window GridInterval NMTOKEN #REQUIRED >
+<!ATTLIST Window GridLineColor CDATA #REQUIRED >
+<!ATTLIST Window GridLineWidth NMTOKEN #REQUIRED >
+<!ATTLIST Window GridVisible NMTOKEN #REQUIRED >
+<!-- ImageScale appears since ver. 2.0.0 -->
+<!ATTLIST Window ImageScale NMTOKEN #IMPLIED >
+<!-- ImageX appears since ver. 2.0.0 -->
+<!ATTLIST Window ImageX NMTOKEN #IMPLIED >
+<!-- ImageY appears since ver. 2.0.0 -->
+<!ATTLIST Window ImageY NMTOKEN #IMPLIED >
+<!ATTLIST Window PaperHeight NMTOKEN #REQUIRED >
+<!ATTLIST Window PaperWidth NMTOKEN #REQUIRED >
+
+<!-- 0.3.0 < 0.5.0 (Axes,Legend,Labels,SignificantDifferenceSymbols,AxisBreakSymbols,TimingLines,Data*) -->
+<!-- 0.5.1 < 0.7.1 (Axes,Legend,Labels,SignificantDifferenceSymbols,AxisBreakSymbols,TimingLines,Grid,Data*) -->
+<!-- 0.8.0         (Axes,Legend,Labels,SignificantDifferenceSymbols,AxisBreakSymbols,TimingLines,Grid,Shape,Data*) -->
+<!-- 0.9.0 < 1.0.7 (Grid,TimingLines,SignificantDifferenceSymbols,Axes,Shape,AxisBreakSymbols,Legend,Labels,Data*) -->
+<!-- 2.0.0 <       (Grid,Axes,ColorBar,TimingLines,SignificantDifferenceSymbols,Shape,AxisBreakSymbols,Legend,Labels,Data*) -->
+<!-- 2.1.0 <       (Grid,Axes,ColorBar?,TimingLines,SignificantDifferenceSymbols,Shape,AxisBreakSymbols,Legend,Labels,Data*) -->
+<!ENTITY % figure.content.030080 "(Axes,Legend,Labels,SignificantDifferenceSymbols,AxisBreakSymbols,TimingLines,Grid?,Shape?,Data*)" >
+<!ENTITY % figure.content.090107 "(Grid,TimingLines,SignificantDifferenceSymbols,Axes,Shape,AxisBreakSymbols,Legend,Labels,Data*)" >
+<!ENTITY % figure.content.200 "(Grid,((TimingLines,SignificantDifferenceSymbols,Axes,Shape,AxisBreakSymbols,Legend,Labels,Data*)|(Axes,ColorBar,TimingLines,SignificantDifferenceSymbols,Shape,AxisBreakSymbols,Legend,Labels,Data*)))" >
+<!ENTITY % figure.content.210 "(Grid,((TimingLines,SignificantDifferenceSymbols,Axes,Shape,AxisBreakSymbols,Legend,Labels,Data*)|(Axes,ColorBar?,TimingLines,SignificantDifferenceSymbols,Shape,AxisBreakSymbols,Legend,Labels,Data*)))" >
+<!ELEMENT Figure (%figure.content.030080;|%figure.content.210;) >
+<!ATTLIST Figure BackgroundColor CDATA #REQUIRED >
+<!ATTLIST Figure BackgroundTransparent NMTOKEN #REQUIRED >
+<!-- DataAnchor appears since ver. 2.1.0 -->
+<!ATTLIST Figure DataAnchor NMTOKEN #IMPLIED >
+<!-- FrameColor appears since ver. 2.1.0 -->
+<!ATTLIST Figure FrameColor CDATA #IMPLIED >
+<!-- FrameLineWidth appears since ver. 2.1.0 -->
+<!ATTLIST Figure FrameLineWidth NMTOKEN #IMPLIED >
+<!-- FrameVisible appears since ver. 2.1.0 -->
+<!ATTLIST Figure FrameVisible NMTOKEN #IMPLIED >
+<!ATTLIST Figure Height NMTOKEN #REQUIRED >
+<!-- SpaceAxisLineAndNumber disappears since ver. 2.1.0 -->
+<!ATTLIST Figure SpaceAxisLineAndNumber NMTOKEN #IMPLIED >
+<!-- SpaceNumberAndTitle disappears since ver. 2.1.0 -->
+<!ATTLIST Figure SpaceNumberAndTitle NMTOKEN #IMPLIED >
+<!ATTLIST Figure Type NMTOKEN #REQUIRED >
+<!ATTLIST Figure Width NMTOKEN #REQUIRED >
+<!ATTLIST Figure X NMTOKEN #REQUIRED >
+<!ATTLIST Figure Y NMTOKEN #REQUIRED >
+
+<!ELEMENT Axes (Axis+) >
+<!-- all attributes of Axes disappears since ver. 2.1.0 -->
+<!ATTLIST Axes AxisLineWidth NMTOKEN #IMPLIED >
+<!ATTLIST Axes FontName CDATA #IMPLIED >
+<!ATTLIST Axes FontSize NMTOKEN #IMPLIED >
+<!ATTLIST Axes FontStyle CDATA #IMPLIED >
+<!ATTLIST Axes FrameLineColor CDATA #IMPLIED >
+<!ATTLIST Axes FrameLineVisible NMTOKEN #IMPLIED >
+<!ATTLIST Axes FrameLineWidth NMTOKEN #IMPLIED >
+<!ATTLIST Axes LineColor CDATA #IMPLIED >
+<!ATTLIST Axes StringColor CDATA #IMPLIED >
+<!ATTLIST Axes TickMarkLength NMTOKEN #IMPLIED >
+<!ATTLIST Axes TickMarkWidth NMTOKEN #IMPLIED >
+
+<!ELEMENT Axis EMPTY >
+<!ATTLIST Axis AutomaticCalculationOfTick NMTOKEN #REQUIRED >
+<!-- AxisLineColor appears since ver. 2.1.0 -->
+<!ATTLIST Axis AxisLineColor CDATA #IMPLIED >
+<!-- AxisLineWidth appears since ver. 2.1.0 -->
+<!ATTLIST Axis AxisLineWidth NMTOKEN #IMPLIED >
+<!-- AxisVisible disappears since ver. 2.1.0 -->
+<!ATTLIST Axis AxisVisible NMTOKEN #IMPLIED >
+<!ATTLIST Axis BaselineValue NMTOKEN #REQUIRED >
+<!ATTLIST Axis Exponent NMTOKEN #REQUIRED >
+<!-- ExponentLocationX appears since ver. 2.1.0 -->
+<!ATTLIST Axis ExponentLocationX NMTOKEN #IMPLIED >
+<!-- ExponentLocationY appears since ver. 2.1.0 -->
+<!ATTLIST Axis ExponentLocationY NMTOKEN #IMPLIED >
+<!ATTLIST Axis ExponentValue NMTOKEN #REQUIRED >
+<!-- GridLineColor disappears since ver. 0.9.1 -->
+<!ATTLIST Axis GridLineColor CDATA #IMPLIED >
+<!-- GridLineStyle disappears since ver. 0.9.1 -->
+<!ATTLIST Axis GridLineStyle CDATA #IMPLIED >
+<!-- GridLineVisible disappears since ver. 0.9.1 -->
+<!ATTLIST Axis GridLineVisible NMTOKEN #IMPLIED >
+<!-- GridLineWidth disappears since ver. 0.9.1 -->
+<!ATTLIST Axis GridLineWidth NMTOKEN #IMPLIED >
+<!-- InvertCoordinates appears since ver. 1.0.5 -->
+<!ATTLIST Axis InvertCoordinates NMTOKEN #IMPLIED >
+<!ATTLIST Axis LineColor CDATA #IMPLIED >
+<!-- MajorTickMarkLength appears since ver. 2.1.0 -->
+<!ATTLIST Axis MajorTickMarkLength NMTOKEN #IMPLIED >
+<!-- MinorTickMarkLength appears since ver. 2.1.0 -->
+<!ATTLIST Axis MinorTickMarkLength NMTOKEN #IMPLIED >
+<!-- MinorTickMarkNumber appears since ver. 2.1.0 -->
+<!ATTLIST Axis MinorTickMarkNumber NMTOKEN #IMPLIED >
+<!ATTLIST Axis MaxValue NMTOKEN #REQUIRED >
+<!ATTLIST Axis MinValue NMTOKEN #REQUIRED >
+<!-- NumberAngle appears since ver. 2.0.0 -->
+<!ATTLIST Axis NumberAngle NMTOKEN #IMPLIED >
+<!-- NumberFontColor appears since ver. 2.1.0 -->
+<!ATTLIST Axis NumberFontColor CDATA #IMPLIED >
+<!-- NumberFontName appears since ver. 2.1.0 -->
+<!ATTLIST Axis NumberFontName CDATA #IMPLIED >
+<!-- NumberFontSize appears since ver. 2.1.0 -->
+<!ATTLIST Axis NumberFontSize NMTOKEN #IMPLIED >
+<!-- NumberFontStyle appears since ver. 2.1.0 -->
+<!ATTLIST Axis NumberFontStyle CDATA #IMPLIED >
+<!ATTLIST Axis NumberInteger NMTOKEN #REQUIRED >
+<!ATTLIST Axis NumberVisible NMTOKEN #REQUIRED >
+<!ATTLIST Axis Position NMTOKEN #REQUIRED >
+<!ATTLIST Axis ScaleType NMTOKEN #REQUIRED >
+<!-- Shift appears since ver. 2.1.0 -->
+<!ATTLIST Axis Shift NMTOKEN #IMPLIED >
+<!-- SpaceAxisLineAndNumber appears since ver. 2.1.0 -->
+<!ATTLIST Axis SpaceAxisLineAndNumber NMTOKEN #IMPLIED >
+<!-- SpaceNumberAndTitle appears since ver. 2.1.0 -->
+<!ATTLIST Axis SpaceNumberAndTitle NMTOKEN #IMPLIED >
+<!ATTLIST Axis StepValue NMTOKEN #REQUIRED >
+<!-- TickMarkBothsides appears since ver. 2.1.0 -->
+<!ATTLIST Axis TickMarkBothsides NMTOKEN #IMPLIED >
+<!-- TickMarkColor appears since ver. 2.1.0 -->
+<!ATTLIST Axis TickMarkColor CDATA #IMPLIED >
+<!-- TickMarkInside disappears since ver. 2.1.0 -->
+<!ATTLIST Axis TickMarkInside NMTOKEN #IMPLIED >
+<!-- TickMarkLength appears since ver. 2.1.0 -->
+<!ATTLIST Axis TickMarkLength NMTOKEN #IMPLIED >
+<!ATTLIST Axis TickMarkVisible NMTOKEN #REQUIRED >
+<!-- TickMarkWidth appears since ver. 2.1.0 -->
+<!ATTLIST Axis TickMarkWidth NMTOKEN #IMPLIED >
+<!ATTLIST Axis Title CDATA #REQUIRED >
+<!-- TitleFontColor appears since ver. 2.1.0 -->
+<!ATTLIST Axis TitleFontColor CDATA #IMPLIED >
+<!-- TitleFontName appears since ver. 2.1.0 -->
+<!ATTLIST Axis TitleFontName CDATA #IMPLIED >
+<!-- TitleFontSize appears since ver. 2.1.0 -->
+<!ATTLIST Axis TitleFontSize NMTOKEN #IMPLIED >
+<!-- TitleFontStyle appears since ver. 2.1.0 -->
+<!ATTLIST Axis TitleFontStyle CDATA #IMPLIED >
+<!-- TitleShiftFromCenter appears since ver. 2.1.0 -->
+<!ATTLIST Axis TitleShiftFromCenter NMTOKEN #IMPLIED >
+<!ATTLIST Axis TitleVisible NMTOKEN #REQUIRED >
+<!-- Visible appears since ver. 2.1.0 -->
+<!ATTLIST Axis Visible NMTOKEN #IMPLIED >
+
+<!ELEMENT ColorBar (ColorStyles*) >
+<!ATTLIST ColorBar AutomaticCalculationOfTick NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar BarLength NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar BarWidth NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar BaselineValue NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar ColorBarStyle CDATA #REQUIRED >
+<!ATTLIST ColorBar Direction CDATA #REQUIRED >
+<!ATTLIST ColorBar Exponent NMTOKEN #REQUIRED >
+<!-- ExponentLocationX appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar ExponentLocationX NMTOKEN #IMPLIED >
+<!-- ExponentLocationY appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar ExponentLocationY NMTOKEN #IMPLIED >
+<!ATTLIST ColorBar ExponentValue NMTOKEN #REQUIRED >
+<!-- FontName disappears since ver. 2.1.0 -->
+<!ATTLIST ColorBar FontName CDATA #IMPLIED >
+<!-- FontSize disappears since ver. 2.1.0 -->
+<!ATTLIST ColorBar FontSize NMTOKEN #IMPLIED >
+<!-- FontStyle disappears since ver. 2.1.0 -->
+<!ATTLIST ColorBar FontStyle CDATA #IMPLIED >
+<!ATTLIST ColorBar FrameLineWidth NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar InvertCoordinates NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar LineColor CDATA #REQUIRED >
+<!-- MajorTickMarkLength appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar MajorTickMarkLength NMTOKEN #IMPLIED >
+<!-- MinorTickMarkLength appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar MinorTickMarkLength NMTOKEN #IMPLIED >
+<!-- MinorTickMarkNumber appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar MinorTickMarkNumber NMTOKEN #IMPLIED >
+<!ATTLIST ColorBar MaxValue NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar MinValue NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar NumberAngle NMTOKEN #REQUIRED >
+<!-- NumberFontColor appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar NumberFontColor CDATA #IMPLIED >
+<!-- NumberFontName appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar NumberFontName CDATA #IMPLIED >
+<!-- NumberFontSize appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar NumberFontSize NMTOKEN #IMPLIED >
+<!-- NumberFontStyle appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar NumberFontStyle CDATA #IMPLIED >
+<!ATTLIST ColorBar NumberInteger NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar NumberVisible NMTOKEN #REQUIRED >
+<!-- ReversedOrder disappears since ver. 2.1.0 -->
+<!ATTLIST ColorBar ReversedOrder NMTOKEN #IMPLIED >
+<!ATTLIST ColorBar ScaleType NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar SpaceLineAndNumber NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar SpaceNumberAndTitle NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar StepValue NMTOKEN #REQUIRED >
+<!-- StringColor disappears since ver. 2.1.0 -->
+<!ATTLIST ColorBar StringColor CDATA #IMPLIED >
+<!-- TickMarkBothsides appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar TickMarkBothsides NMTOKEN #IMPLIED >
+<!-- TickMarkColor appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar TickMarkColor CDATA #IMPLIED >
+<!-- TickMarkInside disappears since ver. 2.1.0 -->
+<!ATTLIST ColorBar TickMarkInside NMTOKEN #IMPLIED >
+<!-- TickMarkLength disappears since ver. 2.1.0 -->
+<!ATTLIST ColorBar TickMarkLength NMTOKEN #IMPLIED >
+<!ATTLIST ColorBar TickMarkVisible NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar TickMarkWidth NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar Title CDATA #REQUIRED >
+<!-- TitleFontColor appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar TitleFontColor CDATA #IMPLIED >
+<!-- TitleFontName appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar TitleFontName CDATA #IMPLIED >
+<!-- TitleFontSize appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar TitleFontSize NMTOKEN #IMPLIED >
+<!-- TitleFontStyle appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar TitleFontStyle CDATA #IMPLIED >
+<!-- TitleShiftFromCenter appears since ver. 2.1.0 -->
+<!ATTLIST ColorBar TitleShiftFromCenter NMTOKEN #IMPLIED >
+<!ATTLIST ColorBar TitleVisible NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar Visible NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar XAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar XValue NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar YAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST ColorBar YValue NMTOKEN #REQUIRED >
+
+<!ELEMENT Legend EMPTY >
+<!ATTLIST Legend BackgroundColor CDATA #REQUIRED >
+<!ATTLIST Legend BackgroundTransparent CDATA #REQUIRED >
+<!ATTLIST Legend FontName CDATA #REQUIRED >
+<!ATTLIST Legend FontSize NMTOKEN #REQUIRED >
+<!ATTLIST Legend FontStyle CDATA #REQUIRED >
+<!ATTLIST Legend FrameLineColor CDATA #REQUIRED >
+<!ATTLIST Legend FrameLineWidth NMTOKEN #REQUIRED >
+<!ATTLIST Legend FrameVisible NMTOKEN #REQUIRED >
+<!ATTLIST Legend LegendVisible NMTOKEN #REQUIRED >
+<!ATTLIST Legend StringColor CDATA #REQUIRED >
+<!-- SymbolSpan appears since ver. 0.9.1 -->
+<!ATTLIST Legend SymbolSpan NMTOKEN #IMPLIED >
+<!ATTLIST Legend XAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST Legend XValue NMTOKEN #REQUIRED >
+<!ATTLIST Legend YAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST Legend YValue NMTOKEN #REQUIRED >
+
+<!ELEMENT Labels (Label*) >
+<!ELEMENT Label EMPTY >
+<!ATTLIST Label Angle NMTOKEN #REQUIRED >
+<!ATTLIST Label FontName CDATA #REQUIRED >
+<!ATTLIST Label FontSize NMTOKEN #REQUIRED >
+<!ATTLIST Label FontStyle CDATA #REQUIRED >
+<!ATTLIST Label StringColor CDATA #REQUIRED >
+<!ATTLIST Label Text CDATA #REQUIRED >
+<!ATTLIST Label XAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST Label XValue NMTOKEN #REQUIRED >
+<!ATTLIST Label YAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST Label YValue NMTOKEN #REQUIRED >
+
+<!ELEMENT SignificantDifferenceSymbols (SignificantDifferenceSymbol*) >
+<!ELEMENT SignificantDifferenceSymbol EMPTY >
+<!-- Anchored appears since ver. 2.0.0 -->
+<!ATTLIST SignificantDifferenceSymbol Anchored NMTOKEN #IMPLIED >
+<!ATTLIST SignificantDifferenceSymbol Color CDATA #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol FontName CDATA #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol FontSize NMTOKEN #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol FontStyle CDATA #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol HorizontalY NMTOKEN #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol LeftX NMTOKEN #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol LeftY NMTOKEN #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol LineVisible NMTOKEN #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol LineWidth NMTOKEN #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol RightX NMTOKEN #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol RightY NMTOKEN #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol Space NMTOKEN #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol Text CDATA #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol XAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST SignificantDifferenceSymbol YAxisPosition NMTOKEN #REQUIRED >
+
+<!ELEMENT AxisBreakSymbols (AxisBreakSymbol*) >
+<!ELEMENT AxisBreakSymbol EMPTY >
+<!-- Anchored appears since ver. 2.0.0 -->
+<!ATTLIST AxisBreakSymbol Anchored NMTOKEN #IMPLIED >
+<!ATTLIST AxisBreakSymbol Angle NMTOKEN #REQUIRED >
+<!ATTLIST AxisBreakSymbol Distortion NMTOKEN #REQUIRED >
+<!ATTLIST AxisBreakSymbol Horizontal NMTOKEN #REQUIRED >
+<!ATTLIST AxisBreakSymbol InnerColor CDATA #REQUIRED >
+<!ATTLIST AxisBreakSymbol Interval NMTOKEN #REQUIRED >
+<!ATTLIST AxisBreakSymbol Length NMTOKEN #REQUIRED >
+<!ATTLIST AxisBreakSymbol LineColor CDATA #REQUIRED >
+<!ATTLIST AxisBreakSymbol LineWidth NMTOKEN #REQUIRED >
+<!ATTLIST AxisBreakSymbol XAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST AxisBreakSymbol XValue NMTOKEN #REQUIRED >
+<!ATTLIST AxisBreakSymbol YAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST AxisBreakSymbol YValue NMTOKEN #REQUIRED >
+
+<!ELEMENT TimingLines (TimingLine*) >
+<!ELEMENT TimingLine EMPTY >
+<!-- Anchored appears since ver. 2.0.0 -->
+<!ATTLIST TimingLine Anchored NMTOKEN #IMPLIED >
+<!ATTLIST TimingLine AxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST TimingLine Color CDATA #REQUIRED >
+<!ATTLIST TimingLine Type CDATA #REQUIRED >
+<!ATTLIST TimingLine Value NMTOKEN #REQUIRED >
+<!ATTLIST TimingLine Width NMTOKEN #REQUIRED >
+
+<!-- Grid appears since ver. 0.5.1 -->
+<!ELEMENT Grid EMPTY >
+<!ATTLIST Grid AutomaticCalculationOfTick NMTOKEN #REQUIRED >
+<!ATTLIST Grid BaselineValueX NMTOKEN #REQUIRED >
+<!ATTLIST Grid BaselineValueY NMTOKEN #REQUIRED >
+<!ATTLIST Grid Color CDATA #REQUIRED >
+<!ATTLIST Grid StepValueX NMTOKEN #REQUIRED >
+<!ATTLIST Grid StepValueY NMTOKEN #REQUIRED >
+<!ATTLIST Grid GridVisible NMTOKEN #REQUIRED >
+<!ATTLIST Grid Type CDATA #REQUIRED >
+<!ATTLIST Grid Width NMTOKEN #REQUIRED >
+<!ATTLIST Grid XAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST Grid YAxisPosition NMTOKEN #REQUIRED >
+
+<!-- Shape appears since ver. 0.8.0 -->
+<!ELEMENT Shape ((Rectangle|Ellipse|Arrow)*) >
+
+<!-- Rectangle appears since ver. 0.8.0 -->
+<!ELEMENT Rectangle EMPTY >
+<!-- Anchored appears since ver. 2.0.0 -->
+<!ATTLIST Rectangle Anchored NMTOKEN #IMPLIED >
+<!ATTLIST Rectangle BottomYValue NMTOKEN #REQUIRED >
+<!ATTLIST Rectangle EdgeLineColor CDATA #REQUIRED >
+<!ATTLIST Rectangle EdgeLineType CDATA #REQUIRED >
+<!-- EdgeLineVisible appears since ver. 2.0.0 -->
+<!ATTLIST Rectangle EdgeLineVisible NMTOKEN #IMPLIED >
+<!ATTLIST Rectangle EdgeLineWidth NMTOKEN #REQUIRED >
+<!-- FillColor appears since ver. 2.0.0 -->
+<!ATTLIST Rectangle FillColor CDATA #IMPLIED >
+<!-- GradationColor1 appears since ver. 2.0.0 -->
+<!ATTLIST Rectangle GradationColor1 CDATA #IMPLIED >
+<!-- GradationColor2 appears since ver. 2.0.0 -->
+<!ATTLIST Rectangle GradationColor2 CDATA #IMPLIED >
+<!-- GradationDirection appears since ver. 2.0.0 -->
+<!ATTLIST Rectangle GradationDirection CDATA #IMPLIED >
+<!-- GradationOrder appears since ver. 2.0.0 -->
+<!ATTLIST Rectangle GradationOrder CDATA #IMPLIED >
+<!ATTLIST Rectangle LeftXValue NMTOKEN #REQUIRED >
+<!-- PaintStyle appears since ver. 2.0.0 -->
+<!ATTLIST Rectangle PaintStyle CDATA #IMPLIED >
+<!-- PatternColor appears since ver. 2.0.0 -->
+<!ATTLIST Rectangle PatternColor CDATA #IMPLIED >
+<!-- PatternType appears since ver. 2.0.0 -->
+<!ATTLIST Rectangle PatternType CDATA #IMPLIED >
+<!ATTLIST Rectangle RightXValue NMTOKEN #REQUIRED >
+<!ATTLIST Rectangle TopYValue NMTOKEN #REQUIRED >
+<!ATTLIST Rectangle Transparent CDATA #REQUIRED >
+<!ATTLIST Rectangle XAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST Rectangle YAxisPosition NMTOKEN #REQUIRED >
+
+<!-- Ellipse appears since ver. 0.8.0 -->
+<!ELEMENT Ellipse EMPTY >
+<!-- Anchored appears since ver. 2.0.0 -->
+<!ATTLIST Ellipse Anchored NMTOKEN #IMPLIED >
+<!ATTLIST Ellipse BottomYValue NMTOKEN #REQUIRED >
+<!ATTLIST Ellipse EdgeLineColor CDATA #REQUIRED >
+<!ATTLIST Ellipse EdgeLineType CDATA #REQUIRED >
+<!-- EdgeLineVisible appears since ver. 2.0.0 -->
+<!ATTLIST Ellipse EdgeLineVisible NMTOKEN #IMPLIED >
+<!ATTLIST Ellipse EdgeLineWidth NMTOKEN #REQUIRED >
+<!-- FillColor appears since ver. 2.0.0 -->
+<!ATTLIST Ellipse FillColor CDATA #IMPLIED >
+<!-- GradationColor1 appears since ver. 2.0.0 -->
+<!ATTLIST Ellipse GradationColor1 CDATA #IMPLIED >
+<!-- GradationColor2 appears since ver. 2.0.0 -->
+<!ATTLIST Ellipse GradationColor2 CDATA #IMPLIED >
+<!-- GradationDirection appears since ver. 2.0.0 -->
+<!ATTLIST Ellipse GradationDirection NMTOKEN #IMPLIED >
+<!-- GradationOrder appears since ver. 2.0.0 -->
+<!ATTLIST Ellipse GradationOrder CDATA #IMPLIED >
+<!-- InnerColor disappears since ver. 2.0.0 -->
+<!ATTLIST Ellipse InnerColor CDATA #IMPLIED >
+<!ATTLIST Ellipse LeftXValue NMTOKEN #REQUIRED >
+<!-- PaintStyle appears since ver. 2.0.0 -->
+<!ATTLIST Ellipse PaintStyle CDATA #IMPLIED >
+<!-- PatternColor appears since ver. 2.0.0 -->
+<!ATTLIST Ellipse PatternColor CDATA #IMPLIED >
+<!-- PatternType appears since ver. 2.0.0 -->
+<!ATTLIST Ellipse PatternType CDATA #IMPLIED >
+<!ATTLIST Ellipse RightXValue NMTOKEN #REQUIRED >
+<!ATTLIST Ellipse TopYValue NMTOKEN #REQUIRED >
+<!ATTLIST Ellipse Transparent CDATA #REQUIRED >
+<!ATTLIST Ellipse XAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST Ellipse YAxisPosition NMTOKEN #REQUIRED >
+
+<!-- Arrow appears since ver. 0.8.0 -->
+<!ELEMENT Arrow EMPTY >
+<!-- Anchored appears since ver. 2.0.0 -->
+<!ATTLIST Arrow Anchored NMTOKEN #IMPLIED >
+<!ATTLIST Arrow Color CDATA #REQUIRED >
+<!ATTLIST Arrow EndHeadType CDATA #REQUIRED >
+<!-- EndXValue is only used in Shape.Arrow -->
+<!ATTLIST Arrow EndXValue NMTOKEN #IMPLIED >
+<!-- EndYValue is only used in Shape.Arrow -->
+<!ATTLIST Arrow EndYValue NMTOKEN #IMPLIED >
+<!ATTLIST Arrow HeadCloseAngle NMTOKEN #REQUIRED >
+<!ATTLIST Arrow HeadOpenAngle NMTOKEN #REQUIRED >
+<!ATTLIST Arrow HeadSize NMTOKEN #REQUIRED >
+<!ATTLIST Arrow StartHeadType CDATA #REQUIRED >
+<!-- StartXValue is only used in Shape.Arrow -->
+<!ATTLIST Arrow StartXValue NMTOKEN #IMPLIED >
+<!-- StartYValue is only used in Shape.Arrow -->
+<!ATTLIST Arrow StartYValue NMTOKEN #IMPLIED >
+<!ATTLIST Arrow Type CDATA #REQUIRED >
+<!ATTLIST Arrow Width NMTOKEN #REQUIRED >
+<!-- XAxisPosition is only used in Shape.Arrow -->
+<!ATTLIST Arrow XAxisPosition NMTOKEN #IMPLIED >
+<!-- YAxisPosition is only used in Shape.Arrow -->
+<!ATTLIST Arrow YAxisPosition NMTOKEN #IMPLIED >
+
+<!-- 0.3.0 < 0.6.1 (Line,Symbol,Bar,ErrorBar?,TickLabels?) -->
+<!-- 0.7.0 < 0.9.1 (Bar,ErrorBar?,Line,Symbol,TickLabels?) -->
+<!-- 1.0.0 < 1.0.7 ((Bar,ErrorBar?,Line,Symbol,TickLabels?)|(Arrow)) -->
+<!-- 2.0.0 <       ((Bar,ErrorBar?,Line,Symbol,TickLabels?)|(Arrow)|(ColorMap)) -->
+<!ENTITY % data.content.030061 "(Line,Symbol,Bar,ErrorBar?,TickLabels?)" >
+<!ENTITY % data.content.070091 "(Bar,ErrorBar?,Line,Symbol,TickLabels?)" >
+<!ENTITY % data.content.100107 "(Bar,ErrorBar?,Line,Symbol,TickLabels?)|(Arrow)" >
+<!ENTITY % data.content.200xxx "(Bar,ErrorBar?,Line,Symbol,TickLabels?)|(Arrow)|(ColorMap)" >
+<!ELEMENT Data (%data.content.030061;|%data.content.200xxx;) >
+<!-- IndexInLegend appears since ver. 2.0.0 -->
+<!ATTLIST Data IndexInLegend NMTOKEN #IMPLIED >
+<!ATTLIST Data Name CDATA #REQUIRED >
+<!-- Origin appears since ver. 2.0.0 -->
+<!ATTLIST Data Origin CDATA #IMPLIED >
+<!ATTLIST Data Type CDATA #REQUIRED >
+<!ATTLIST Data VisibleInLegend NMTOKEN #REQUIRED >
+<!ATTLIST Data XAxisPosition NMTOKEN #REQUIRED >
+<!ATTLIST Data YAxisPosition NMTOKEN #REQUIRED >
+<!-- SamplingRate is only used in Sampling XY data type -->
+<!ATTLIST Data SamplingRate NMTOKEN #IMPLIED >
+<!-- DirectionInvariant appears since ver. 1.0.0 -->
+<!ATTLIST Data DirectionInvariant NMTOKEN #IMPLIED >
+<!-- Polar appears since ver. 1.0.0 -->
+<!ATTLIST Data Polar NMTOKEN #IMPLIED >
+<!-- MagnitudePerCM appears since ver. 1.0.0 -->
+<!ATTLIST Data MagnitudePerCM NMTOKEN #IMPLIED >
+<!-- Attributes for column indices or variable names appear since ver. 2.0.0 -->
+<!-- They are used only in the data set properties. -->
+<!ATTLIST Data XValueIndex NMTOKEN #IMPLIED >
+<!ATTLIST Data YValueIndex NMTOKEN #IMPLIED >
+<!ATTLIST Data ZValueIndex NMTOKEN #IMPLIED >
+<!ATTLIST Data XValueIndices CDATA #IMPLIED >
+<!ATTLIST Data YValueIndices CDATA #IMPLIED >
+<!ATTLIST Data LowerErrorBarIndices CDATA #IMPLIED >
+<!ATTLIST Data UpperErrorBarIndices CDATA #IMPLIED >
+<!ATTLIST Data ErrorBarHolderIndices CDATA #IMPLIED >
+<!ATTLIST Data TickLabelIndices CDATA #IMPLIED >
+<!ATTLIST Data TickLabelHolderIndices CDATA #IMPLIED >
+<!ATTLIST Data XCoordinateIndex NMTOKEN #IMPLIED >
+<!ATTLIST Data YCoordinateIndex NMTOKEN #IMPLIED >
+<!ATTLIST Data ComponentIndex1 NMTOKEN #IMPLIED >
+<!ATTLIST Data ComponentIndex2 NMTOKEN #IMPLIED >
+<!ATTLIST Data SerialNumberIndex NMTOKEN #IMPLIED >
+
+<!ATTLIST Data XValueName NMTOKEN #IMPLIED >
+<!ATTLIST Data YValueName NMTOKEN #IMPLIED >
+<!ATTLIST Data ZValueName NMTOKEN #IMPLIED >
+<!ATTLIST Data LowerErrorValueName NMTOKEN #IMPLIED >
+<!ATTLIST Data UpperErrorValueName NMTOKEN #IMPLIED >
+<!ATTLIST Data ErrorBarHolderName NMTOKEN #IMPLIED >
+<!ATTLIST Data TickLabelName NMTOKEN #IMPLIED >
+<!ATTLIST Data TickLabelHolderName NMTOKEN #IMPLIED >
+<!ATTLIST Data XValueNames CDATA #IMPLIED >
+<!ATTLIST Data YValueNames CDATA #IMPLIED >
+<!ATTLIST Data ZValueNames CDATA #IMPLIED >
+<!ATTLIST Data LowerErrorValueNames CDATA #IMPLIED >
+<!ATTLIST Data UpperErrorValueNames CDATA #IMPLIED >
+<!ATTLIST Data ErrorBarHolderNames CDATA #IMPLIED >
+<!ATTLIST Data TickLabelNames CDATA #IMPLIED >
+<!ATTLIST Data TickLabelHolderNames CDATA #IMPLIED >
+<!ATTLIST Data PickupDimensionName NMTOKEN #IMPLIED >
+<!ATTLIST Data PickupEnd NMTOKEN #IMPLIED >
+<!ATTLIST Data PickupStart NMTOKEN #IMPLIED >
+<!ATTLIST Data PickupStep NMTOKEN #IMPLIED >
+<!ATTLIST Data XLocationVariableName NMTOKEN #IMPLIED >
+<!ATTLIST Data YLocationVariableName NMTOKEN #IMPLIED >
+<!ATTLIST Data FirstComponentVariableName NMTOKEN #IMPLIED >
+<!ATTLIST Data SecondComponentVariableName NMTOKEN #IMPLIED >
+<!ATTLIST Data TimeVariableName NMTOKEN #IMPLIED >
+<!ATTLIST Data SerialNumberVariableName NMTOKEN #IMPLIED >
+<!-- IndexVariableName appears since ver. 2.1.0 -->
+<!ATTLIST Data IndexVariableName NMTOKEN #IMPLIED >
+<!-- AnimationDimension appears since ver. 2.1.0 -->
+<!ATTLIST Data AnimationDimension CDATA #IMPLIED >
+<!-- PickUpDimension appears since ver. 2.1.0 -->
+<!ATTLIST Data PickUpDimension CDATA #IMPLIED >
+
+<!-- ArraySectionAvailable appears since ver. 2.1.0 -->
+<!ATTLIST Data ArraySectionAvailable NMTOKEN #IMPLIED >
+<!-- ArraySection appears since ver. 2.1.0 -->
+<!ATTLIST Data ArraySection CDATA #IMPLIED >
+<!-- IndexArraySection appears since ver. 2.1.0 -->
+<!ATTLIST Data IndexArraySection CDATA #IMPLIED >
+<!-- TickLabelArraySection appears since ver. 2.1.0 -->
+<!ATTLIST Data TickLabelArraySection CDATA #IMPLIED >
+<!-- XArraySection appears since ver. 2.1.0 -->
+<!ATTLIST Data XArraySection CDATA #IMPLIED >
+<!-- YArraySection appears since ver. 2.1.0 -->
+<!ATTLIST Data YArraySection CDATA #IMPLIED >
+
+<!-- PickUpIndices appears since ver. 2.1.0 -->
+<!ATTLIST Data PickUpIndices CDATA #IMPLIED >
+
+<!-- AnimationArraySection appears since ver. 2.1.0 -->
+<!ATTLIST Data AnimationArraySection CDATA #IMPLIED >
+<!-- FrameRate appears since ver. 2.1.0 -->
+<!ATTLIST Data FrameRate NMTOKEN #IMPLIED >
+<!-- LoopPlayback appears since ver. 2.1.0 -->
+<!ATTLIST Data LoopPlayback NMTOKEN #IMPLIED >
+
+<!-- ShiftX appears since ver. 2.1.0 -->
+<!ATTLIST Data ShiftX NMTOKEN #IMPLIED >
+<!-- ShiftY appears since ver. 2.1.0 -->
+<!ATTLIST Data ShiftY NMTOKEN #IMPLIED >
+
+<!ELEMENT Line (Styles*, ColorStyles*) >
+<!-- Color disappears since ver. 2.1.0 -->
+<!ATTLIST Line Color CDATA #IMPLIED >
+<!-- ConnectAllEffectivePoints appears since ver. 2.0.0 -->
+<!ATTLIST Line ConnectAllEffectivePoints NMTOKEN #IMPLIED >
+<!-- ShiftX appears since ver. 2.0.0 -->
+<!ATTLIST Line ShiftX NMTOKEN #IMPLIED >
+<!-- ShiftY appears since ver. 2.0.0 -->
+<!ATTLIST Line ShiftY NMTOKEN #IMPLIED >
+<!-- Type disappears since ver. 2.1.0 -->
+<!ATTLIST Line Type CDATA #IMPLIED >
+<!ATTLIST Line Visible NMTOKEN #REQUIRED >
+<!-- Width disappears since ver. 2.1.0 -->
+<!ATTLIST Line Width NMTOKEN #IMPLIED >
+
+<!ELEMENT Symbol EMPTY >
+<!ATTLIST Symbol InnerColor CDATA #REQUIRED >
+<!-- InnerTransparent appears since ver. 2.0.0 -->
+<!ATTLIST Symbol InnerTransparent CDATA #IMPLIED >
+<!ATTLIST Symbol LineColor CDATA #REQUIRED >
+<!-- LineVisible appears since ver. 2.0.0 -->
+<!ATTLIST Symbol LineVisible NMTOKEN #IMPLIED >
+<!ATTLIST Symbol LineWidth NMTOKEN #REQUIRED >
+<!ATTLIST Symbol Size NMTOKEN #REQUIRED >
+<!ATTLIST Symbol Type CDATA #REQUIRED >
+<!ATTLIST Symbol Visible NMTOKEN #REQUIRED >
+
+<!ELEMENT Bar EMPTY >
+<!ATTLIST Bar BaselineValue NMTOKEN #REQUIRED >
+<!-- Color disappears since ver. 2.0.0 -->
+<!ATTLIST Bar Color CDATA #IMPLIED >
+<!ATTLIST Bar EdgeLineColor CDATA #REQUIRED >
+<!-- EdgeLineVisible appears since ver. 2.0.0 -->
+<!ATTLIST Bar EdgeLineVisible NMTOKEN #IMPLIED >
+<!ATTLIST Bar EdgeLineWidth NMTOKEN #REQUIRED >
+<!-- FillColor appears since ver. 2.0.0 -->
+<!ATTLIST Bar FillColor CDATA #IMPLIED >
+<!-- GradationColor1 appears since ver. 2.0.0 -->
+<!ATTLIST Bar GradationColor1 CDATA #IMPLIED >
+<!-- GradationColor2 appears since ver. 2.0.0 -->
+<!ATTLIST Bar GradationColor2 CDATA #IMPLIED >
+<!-- GradationDirection appears since ver. 2.0.0 -->
+<!ATTLIST Bar GradationDirection NMTOKEN #IMPLIED >
+<!-- GradationOrder appears since ver. 2.0.0 -->
+<!ATTLIST Bar GradationOrder CDATA #IMPLIED >
+<!-- Interval appears since ver. 2.0.0 -->
+<!ATTLIST Bar Interval NMTOKEN #IMPLIED >
+<!-- PaintStyle appears since ver. 2.0.0 -->
+<!ATTLIST Bar PaintStyle CDATA #IMPLIED >
+<!-- PatternColor appears since ver. 2.0.0 -->
+<!ATTLIST Bar PatternColor CDATA #IMPLIED >
+<!-- PatternType appears since ver. 2.0.0 -->
+<!ATTLIST Bar PatternType CDATA #IMPLIED >
+<!-- ShiftX appears since ver. 2.0.0 -->
+<!ATTLIST Bar ShiftX NMTOKEN #IMPLIED >
+<!-- ShiftY appears since ver. 2.0.0 -->
+<!ATTLIST Bar ShiftY NMTOKEN #IMPLIED >
+<!-- Transparent appears since ver. 2.0.0 -->
+<!ATTLIST Bar Transparent CDATA #IMPLIED >
+<!-- Vertical appears since ver. 2.0.0 -->
+<!ATTLIST Bar Vertical NMTOKEN #IMPLIED >
+<!ATTLIST Bar Visible NMTOKEN #REQUIRED >
+<!-- Width disappears since ver. 0.9.1 (unit:cm) -->
+<!ATTLIST Bar Width NMTOKEN #IMPLIED >
+<!-- WidthValue appears since ver. 0.9.1 (unit:none) -->
+<!ATTLIST Bar WidthValue NMTOKEN #IMPLIED >
+<!-- OffsetX appears since ver. 2.1.0 -->
+<!ATTLIST Bar OffsetX NMTOKEN #IMPLIED >
+<!-- OffsetY appears since ver. 2.1.0 -->
+<!ATTLIST Bar OffsetY NMTOKEN #IMPLIED >
+
+<!ELEMENT ErrorBar EMPTY >
+<!ATTLIST ErrorBar Color CDATA #REQUIRED >
+<!ATTLIST ErrorBar HeadSize NMTOKEN #REQUIRED >
+<!ATTLIST ErrorBar HeadType CDATA #REQUIRED >
+<!-- LineWidth was renamed to Width at ver. 0.7.0 -->
+<!ATTLIST ErrorBar LineWidth NMTOKEN #IMPLIED >
+<!-- Position appears since ver. 2.0.0 -->
+<!ATTLIST ErrorBar Position NMTOKEN #IMPLIED >
+<!ATTLIST ErrorBar Style CDATA #REQUIRED >
+<!-- Vertical appears since ver. 2.0.0 -->
+<!ATTLIST ErrorBar Vertical NMTOKEN #IMPLIED >
+<!ATTLIST ErrorBar Visible NMTOKEN #REQUIRED >
+<!-- Width appears since ver. 0.7.0 -->
+<!ATTLIST ErrorBar Width NMTOKEN #IMPLIED >
+
+<!ELEMENT TickLabels EMPTY >
+<!-- AlignHorizontally appears since ver. 2.0.0 -->
+<!ATTLIST TickLabels AlignHorizontally NMTOKEN #IMPLIED >
+<!ATTLIST TickLabels Angle NMTOKEN #REQUIRED >
+<!ATTLIST TickLabels Color CDATA #REQUIRED >
+<!-- DecimalPlaces appears since ver. 2.0.0 -->
+<!ATTLIST TickLabels DecimalPlaces NMTOKEN #IMPLIED >
+<!-- Exponent appears since ver. 2.0.0 -->
+<!ATTLIST TickLabels Exponent NMTOKEN #IMPLIED >
+<!ATTLIST TickLabels FontName CDATA #REQUIRED >
+<!ATTLIST TickLabels FontSize NMTOKEN #REQUIRED >
+<!ATTLIST TickLabels FontStyle CDATA #REQUIRED >
+<!ATTLIST TickLabels Visible NMTOKEN #REQUIRED >
+
+<!-- ColorMap appears since ver. 2.0.0 -->
+<!ELEMENT ColorMap EMPTY >
+<!ATTLIST ColorMap HeightValue NMTOKEN #IMPLIED >
+<!ATTLIST ColorMap Visible NMTOKEN #IMPLIED >
+<!ATTLIST ColorMap WidthValue NMTOKEN #IMPLIED >
+
+<!-- Styles appears since ver. 2.1.0 -->
+<!ELEMENT Styles (Style+) >
+<!-- Style appears since ver. 2.1.0 -->
+<!ELEMENT Style EMPTY >
+<!ATTLIST Style Color CDATA #IMPLIED >
+<!ATTLIST Style Type CDATA #IMPLIED >
+<!ATTLIST Style Width NMTOKEN #IMPLIED >
+
+<!-- ColorStyles appears since ver. 2.1.0 -->
+<!ELEMENT ColorStyles (ColorStyle+) >
+<!-- ColorStyle appears since ver. 2.1.0 -->
+<!ELEMENT ColorStyle EMPTY >
+<!ATTLIST ColorStyle Color1 CDATA #IMPLIED >
+<!ATTLIST ColorStyle Color2 CDATA #IMPLIED >
+<!ATTLIST ColorStyle Name CDATA #REQUIRED >
+<!ATTLIST ColorStyle ReversedOrder NMTOKEN #REQUIRED >
+
