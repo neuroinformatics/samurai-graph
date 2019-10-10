@@ -1,0 +1,92 @@
+
+○ソフト名称
+  Samurai Graph @SAMURAIGRAPH_VERSION@
+
+
+○Samurai Graph とは
+  Samurai Graph は Java 言語で開発された高機能な２次元グラフ作成ソフト
+で、ユーザフレンドリーな操作感で利用することができます。テキスト形式で
+保存された実験データなどのファイルから数値データを読み込んで、２次元の
+グラフにプロットできます。また、マウスによるインタラクティブな操作によ
+りラベルやタイミング線などの様々な部品の追加・配置変更や、軸目盛りや数
+字のドラッグによるスケールの変更が可能です。作成したグラフは、EMF、GIF、
+JPEG、EPS、PDFなどの様々な画像フォーマットのファイルに保存できます。
+  Samurai Graph に関する最新の情報は、 
+      http://samurai-graph.sourceforge.jp/
+から入手できます。
+
+
+○システム要件および動作環境
+  Samurai Graph は Java 言語で実装されており、Windows や MacOS X や 
+Linux 等、Java 6 以降に対応している環境で動作します。
+
+  Java ダウンロードのページ http://www.java.com/ja/download/manual.jsp
+から Java ソフトウェアを入手して、インストールしてください。
+
+  Java に関する情報は、Sun Java Technology (http://java.sun.com/) の
+ページから取得できます。
+
+
+○ディレクトリ構成
+  @SAMURAIGRAPH_VECTORIMGFILE@.tar.gz を展開すると、次のファイル群が得
+られます。構成を確認してください。
+
+    @SAMURAIGRAPH_VECTORIMGFILE@
+      |
+      +--- samurai-graph.jar
+      |      (Samurai Graph アプリケーション本体の Jar ファイル)
+      |
+      +--- lib (Samurai Graph が利用するライブラリ)
+      |
+      +--- README.txt (この文書です。)
+      |
+      +--- COPYING.txt (Samurai Graph の著作権に関する文書)
+      |
+      +--- LICENSE.txt (LGPLライセンスに関する文書)
+      |
+      +--- doc (ドキュメント群)
+      |
+      +--- examples (データファイルやプロパティファイルの例)
+      |
+      +--- usersmanual (ユーザーズマニュアル)
+
+
+○インストール
+  実行用の Jar 形式の Java プログラムを含む、関連したライブラリ等の一式が
+含まれています。
+  ダウンロード後、このファイルを任意のディレクトリに展開してください。
+
+
+○プログラムの起動
+    展開したディレクトリの中にある samurai-graph.jar を次の方法で実行して
+    ください。
+        % java -jar samurai-graph.jar
+
+
+○使用方法
+  使用方法の詳細については、同梱のユーザーズマニュアルを参照してください。
+
+
+○アンインストール
+    展開したディレクトリごと削除してください。
+
+
+○変更履歴
+  変更履歴は、Samurai Graph 起動時に表示されるウインドウのメニューバー
+[Help]-[Change Log] から閲覧が可能です。
+
+
+○著作権
+  Copyright (c) 2004-2010 RIKEN, Japan. All rights reserved.
+  Created by Neuroinformatics Laboratory, BSI.
+  This software is distributed under the LGPL
+    (Lesser General Public License).
+  http://www.gnu.org/licenses/lgpl.html
+
+
+○連絡先
+  名前: 理化学研究所 脳科学総合研究センター
+          ニューロインフォマティクス技術開発チーム
+  mail: software@ni.brain.riken.jp
+  HP: http://www.ni.brain.riken.jp/
+

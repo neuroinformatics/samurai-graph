@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: jp.riken.brain.ni.helper.UpgradeHelper
+Created-By: 1.4.2_06 (Sun Microsystems Inc.)
+

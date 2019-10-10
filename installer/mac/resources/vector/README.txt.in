@@ -1,0 +1,86 @@
+
+○ソフト名称
+  Samurai Graph @SAMURAIGRAPH_VERSION@
+
+
+○Samurai Graph とは
+  Samurai Graph は Java 言語で開発された高機能な２次元グラフ作成ソフト
+で、ユーザフレンドリーな操作感で利用することができます。テキスト形式で
+保存された実験データなどのファイルから数値データを読み込んで、２次元の
+グラフにプロットできます。また、マウスによるインタラクティブな操作によ
+りラベルやタイミング線などの様々な部品の追加・配置変更や、軸目盛りや数
+字のドラッグによるスケールの変更が可能です。作成したグラフは、EMF、GIF、
+JPEG、EPS、PDF などの様々な画像フォーマットのファイルに保存できます。
+  Samurai Graph に関する最新の情報は、
+      http://samurai-graph.sourceforge.jp/
+から入手できます。
+
+
+○システム要件および動作環境
+  Samurai Graph は Java 言語で実装されており、Windows や MacOS X や
+Linux 等、Java 6 以降に対応している環境で動作します。
+  Java に関する情報は、Sun Java Technology のページ http://java.sun.com/
+から取得できます。
+  MacOS X については、OS が標準で Java をサポートしているため、プログラム
+のコピーのみで容易に導入できます。詳しくは、
+http://www.apple.com/macos/features/java/ を参照してください。
+
+
+○ディレクトリ構成
+  @SAMURAIGRAPH_VECTORIMGFILE@.gz を解凍すると、次のファイルが得られます。
+  構成を確認してください。
+    @SAMURAIGRAPH_VECTORIMGFILE@ (ディスクイメージ)
+      |
+      +--- Samurai Graph (アプリケーション本体)
+      |
+      +--- Example Data (データファイルやプロパティファイルの例)
+      |
+      +--- README.txt (この文書です。)
+      |
+      +--- COPYING.txt (Samurai Graph の著作権に関する文書)
+      |
+      +--- LICENSE.txt (LGPLライセンスに関する文書)
+      |
+      +--- Users Manual (ユーザーズマニュアル)
+
+
+○インストール
+  ディスクイメージ @SAMURAIGRAPH_VECTORIMGFILE@ には、Java プログラムを通常
+のプログラムとして利用できるよう、アプリケーションバンドラが含まれ
+ています。
+  ダウンロード後、ディスクイメージをマウントし、Samurai Graph のプログ
+ラムをアプリケーションフォルダにコピーしてください。
+
+
+○プログラムの起動
+  アプリケーションフォルダにインストールした Samurai Graph のアイコンを
+ダブルクリックしてください。
+
+
+○使用方法
+  使用方法の詳細については、同梱のユーザーズマニュアルを参照してください。
+
+
+○アンインストール
+  アプリケーションフォルダにインストールした Samurai Graph のプログラム
+をゴミ箱へ移動させ削除してください。
+
+
+○変更履歴
+  変更履歴は、Samurai Graph 起動時に表示されるウインドウのメニューバー
+[Help]-[Change Log] から閲覧が可能です。
+
+
+○著作権
+  Copyright (c) 2004-2010 RIKEN, Japan. All rights reserved.
+  Created by Neuroinformatics Laboratory, BSI.
+  This software is distributed under the LGPL
+    (Lesser General Public License).
+  http://www.gnu.org/licenses/lgpl.html
+
+
+○連絡先
+  理化学研究所 脳科学総合研究センター
+  ニューロインフォマティクス技術開発チーム
+  mail: software@ni.brain.riken.jp
+  HP: http://www.ni.brain.riken.jp/

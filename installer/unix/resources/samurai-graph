@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# Samurai Graph - launcher script
+# $Id: samurai-graph,v 1.2 2006/02/21 00:00:14 orrisroot Exp $
+
+scriptdir=`dirname $0`
+
+SAMURAIGRAPH_HOME=${SAMURAIGRAPH_HOME:-"$scriptdir"}
+SAMURAIGRAPH_OPT=${SAMURAIGRAPH_OPT:-""}
+
+jarfile="$SAMURAIGRAPH_HOME/samurai-graph.jar"
+
+OLD_IFS=$IFS
+sg_which() {
+  command="$1"
+  output=
+  IFS=:
+  for dir in $PATH
+  do
+    if test -x "$dir/$command"; then
+       test x"$output" = x"" && output="$dir/$command"
+    fi
+  done
+  IFS=$OLD_IFS
+  echo "$output"
+}
+
+if test -z $JAVA_HOME; then
+  javavm=`sg_which java`
+else
+  javavm="$JAVA_HOME/bin/java"
+fi
+
+if ! test -x $javavm; then
+  echo "Error: The Java runtime environment is not present on your system." >&2
+  echo "       Please set the JAVA_HOME variable in your environment to match the" >&2
+  echo "       location of your java installation." >&2
+  exit 1
+fi
+
+javavm_opts="-Xms512m -Xmx512m"
+
+exec "$javavm" $javavm_opts $SAMURAIGRAPH_OPT -jar $jarfile $*

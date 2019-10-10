@@ -1,0 +1,41 @@
+Memorandum of How To Release.
+
+1. update change logs.
+  - update product.xml in web resources 'web/htdocs/product.xml'.
+  - run synchronization script.
+    % cd src/changelog
+    % ./make.sh  (make.bat)
+
+2. update version number.
+
+  - src/resources/samurai-graph.properties
+    samurai-graph.version=2.0.0
+
+  - installer/win32/resources/vector/README.txt
+     Samurai Graph 2.0.0
+     samurai-graph-w200.zip
+     samurai-graph-w200
+     samurai-graph-win32-2.0.0.exe
+
+3. commit version updated sources.
+  % cvs commit
+
+4. add tag to CVS repository.
+  % cvs tag RELEASE_2_0_0
+
+5. rebuild binaries.
+  % ./build.sh rebuild
+
+6. create os specific installer
+  Windows:
+    run NSIS 2.0 compiler.
+     - installer/win32/launcher.nsi
+     - installer/win32/samurai-graph-wiwn32-inst.nsi
+  MacOS X:
+    create disk image distribution file
+    % cd installer/mac
+    % ./build.sh build
+  UNIX:
+    create disk image distribution file
+    % cd installer/unix
+    % ./build.sh build

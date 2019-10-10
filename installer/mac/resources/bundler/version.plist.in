@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BuildVersion</key>
+	<string>@SAMURAIGRAPH_MAJOR_VERSION@@SAMURAIGRAPH_MINOR_VERSION@@SAMURAIGRAPH_MICRO_VERSION@</string>
+	<key>CFBundleShortVersionString</key>
+	<string>@SAMURAIGRAPH_MAJOR_VERSION@.@SAMURAIGRAPH_MINOR_VERSION@</string>
+	<key>CFBundleVersion</key>
+	<string>@SAMURAIGRAPH_MAJOR_VERSION@.@SAMURAIGRAPH_MINOR_VERSION@.@SAMURAIGRAPH_MICRO_VERSION@</string>
+	<key>ProjectName</key>
+	<string>SamuraiGraph</string>
+	<key>SourceVersion</key>
+	<string>RELEASE_@SAMURAIGRAPH_MAJOR_VERSION@_@SAMURAIGRAPH_MINOR_VERSION@_@SAMURAIGRAPH_MICRO_VERSION@</string>
+</dict>
+</plist>
