@@ -1,0 +1,575 @@
+<?xml version="1.0"?>
+<!DOCTYPE project PUBLIC "-//ANT//DTD project//EN" "tools/ant.dtd">
+<!-- ============================================================= -->
+<!-- Generic ANT build file                                        -->
+<!--   this file is used for Samurai Graph                         -->
+<!--                                                               -->
+<!--                                                               -->
+<!-- Author: Yoshihiro OKUMURA                                     -->
+<!-- $Id: build.xml,v 1.62 2012/04/04 07:34:53 kuromaru Exp $      -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<project name="samurai-graph" default="default" basedir=".">
+
+  <description>
+      SAMURAI GRAPH Project
+  </description>
+
+  <!-- project name -->
+  <property name="project" value="samurai-graph"/>
+
+  <!-- directory definition -->
+  <property name="SG.srcdir"          value="src"/>
+  <property name="SG.dstdir"          value="dist"/>
+  <property name="SG.dst.libdir"      value="${SG.dstdir}/lib"/>
+  <property name="SG.dst.docdir"      value="${SG.dstdir}/doc"/>
+  <property name="SG.dst.examplesdir" value="${SG.dstdir}/examples"/>
+  <property name="SG.mfdir"           value="${SG.srcdir}/META-INF"/>
+  <property name="SG.resdir"          value="${SG.srcdir}/resources"/>
+  <property name="SG.classes"         value="classes"/>
+  <property name="SG.src.distdir"     value="srcdist"/>
+  <property name="SG.javadoc.dstdir"  value="javadoc"/>
+  <property name="SG.examplesdir"     value="examples/data"/>
+  <property name="SG.src.basedir"     value="${SG.srcdir}/jp/riken/brain/ni/samuraigraph"/>
+
+  <!-- samurai-graph jar properties -->
+  <property name="SG.samurai-graph.mf"      value="${SG.mfdir}/MANIFEST.MF"/>
+  <property name="SG.samurai-graph.basedir" value="${SG.classes}/samurai-graph"/>
+  <property name="SG.samurai-graph.jar"  value="${SG.dstdir}/${project}.jar"/>
+
+  <!-- vectorgraphics -->
+  <property name="FHEP.src.basedir" value="contrib/freehep"/>
+  <property name="VG.src.basedir" value="${FHEP.src.basedir}/vectorgraphics/src"/>
+  <property name="VG.src.libdir"  value="${VG.src.basedir}/target/vectorgraphics-2.1.1/lib"/>
+  <property name="VG.src.docdir"  value="${VG.src.basedir}/web/freehep/vectorgraphics/"/>
+  <property name="VG.web.basedir" value="${FHEP.src.basedir}/vectorgraphics/web"/>
+  <property name="VG.dst.libdir"  value="${SG.dst.libdir}/vectorgraphics"/>
+  <property name="VG.dst.docdir"  value="${SG.dst.docdir}/vectorgraphics"/>
+  <property name="FHEPEXP.src.basedir" value="${FHEP.src.basedir}/freehep-export"/>
+  <property name="FHEPEXP.src.libdir"  value="${FHEP.src.basedir}/freehep-export/target"/>
+  <property name="FHEPEXP.dst.libdir"  value="${VG.dst.libdir}"/>
+
+  <!-- foxtrot -->
+  <property name="FT.src.basedir" value="contrib/foxtrot"/>
+  <property name="FT.src.libdir"  value="${FT.src.basedir}/dist/lib"/>
+  <property name="FT.src.docdir"  value="${FT.src.basedir}/src/etc/"/>
+  <property name="FT.dst.libdir" value="${SG.dst.libdir}/foxtrot"/>
+  <property name="FT.dst.docdir" value="${SG.dst.docdir}/foxtrot"/>
+
+  <!-- netCDF -->
+  <property name="NC.src.basedir" value="contrib/netCDF"/>
+  <property name="NC.src.libdir"  value="${NC.src.basedir}/cdm/target"/>
+  <property name="NC.src.extlibdir"  value="${NC.src.basedir}/lib/external"/>
+  <property name="NC.src.docdir"  value="${NC.src.basedir}"/>
+  <property name="NC.dst.libdir" value="${SG.dst.libdir}/netCDF"/>
+  <property name="NC.dst.docdir" value="${SG.dst.docdir}/netCDF"/>
+
+  <!-- cisd-jhdf5 -->
+  <property name="CJ.src.basedir" value="contrib/cisd-jhdf5"/>
+  <property name="CJ.src.libdir"  value="${CJ.src.basedir}/lib"/>
+  <property name="CJ.src.nativelibdir"  value="${CJ.src.basedir}/lib/batteries_included"/>
+  <property name="CJ.src.docdir"  value="${CJ.src.basedir}"/>
+  <property name="CJ.dst.libdir" value="${SG.dst.libdir}/cisd-jhdf5"/>
+  <property name="CJ.dst.docdir" value="${SG.dst.docdir}/cisd-jhdf5"/>
+  
+  <!-- jmatio -->
+  <property name="JM.src.basedir" value="contrib/jmatio"/>
+  <property name="JM.src.libdir"  value="${JM.src.basedir}/lib"/>
+  <property name="JM.src.docdir"  value="${JM.src.basedir}"/>
+  <property name="JM.dst.libdir" value="${SG.dst.libdir}/jmatio"/>
+  <property name="JM.dst.docdir" value="${SG.dst.docdir}/jmatio"/>
+  
+  <!-- jna -->
+  <property name="JN.src.basedir" value="contrib/jna"/>
+  <property name="JN.src.libdir"  value="${JN.src.basedir}/lib"/>
+  <property name="JN.src.docdir"  value="${JN.src.basedir}"/>
+  <property name="JN.dst.libdir" value="${SG.dst.libdir}/jna"/>
+  <property name="JN.dst.docdir" value="${SG.dst.docdir}/jna"/>
+
+  <!-- juniversalchardet -->
+  <property name="CD.src.basedir" value="contrib/juniversalchardet"/>
+  <property name="CD.src.libdir"  value="${CD.src.basedir}/lib"/>
+  <property name="CD.src.docdir"  value="${CD.src.basedir}"/>
+  <property name="CD.dst.libdir" value="${SG.dst.libdir}/juniversalchardet"/>
+  <property name="CD.dst.docdir" value="${SG.dst.docdir}/juniversalchardet"/>
+
+  <!-- joda-time -->
+  <property name="JT.src.basedir" value="contrib/joda-time"/>
+  <property name="JT.src.libdir"  value="${JT.src.basedir}"/>
+  <property name="JT.src.docdir"  value="${JT.src.basedir}"/>
+  <property name="JT.dst.libdir" value="${SG.dst.libdir}/joda-time"/>
+  <property name="JT.dst.docdir" value="${SG.dst.docdir}/joda-time"/>
+
+  <!-- classpath -->
+  <path id="SG.classpath">
+    <pathelement path="${classpath}"/>
+    <fileset dir="${VG.dst.libdir}">
+      <include name="freehep-*.jar"/>
+    </fileset>
+    <fileset dir="${FT.src.libdir}">
+      <include name="foxtrot.jar"/>
+    </fileset>
+    <fileset dir="${NC.src.libdir}">
+      <include name="netcdf-4.2.jar"/>
+    </fileset>
+    <fileset dir="${NC.src.extlibdir}">
+      <include name="log4j-1.2.15.jar"/>
+      <include name="slf4j-api-1.5.6.jar"/>
+      <include name="slf4j-log4j12-1.5.6.jar"/>
+      <include name="jdom.jar"/>
+    </fileset>
+    <fileset dir="${CJ.src.libdir}">
+      <include name="cisd-args4j.jar"/>
+      <include name="cisd-base.jar"/>
+      <include name="cisd-jhdf5-core.jar"/>
+      <include name="cisd-jhdf5-tools.jar"/>
+      <include name="cisd-jhdf5.jar"/>
+      <include name="commons-io.jar"/>
+      <include name="commons-lang.jar"/>
+    </fileset>
+    <fileset dir="${CJ.src.nativelibdir}">
+      <include name="cisd-jhdf5-batteries_included_lin_win_mac_sun.jar"/>
+    </fileset>
+    <fileset dir="${JM.src.libdir}">
+      <include name="jamtio.jar"/>
+    </fileset>
+    <fileset dir="${JN.src.libdir}">
+      <include name="jna.jar"/>
+      <include name="platform.jar"/>
+    </fileset>
+    <fileset dir="${CD.src.libdir}">
+      <include name="juniversalchardet-1.0.3.jar"/>
+    </fileset>
+    <fileset dir="${JT.src.libdir}">
+      <include name="joda-time-2.1.jar"/>
+    </fileset>
+  </path>
+
+  <!-- default -->
+  <target name="default" depends="jar,windows"/>
+
+  <!-- all -->
+  <target name="all" depends="jar,javadoc"/>
+
+  <!-- prepare -->
+  <target name="prepare">
+    <!-- clean up classes and distribution directory -->
+    <delete dir="${SG.classes}"/>
+    <delete dir="${SG.dstdir}"/>
+    <!-- distribution image -->
+    <mkdir dir="${SG.dstdir}"/>
+    <mkdir dir="${SG.dst.libdir}"/>
+    <mkdir dir="${SG.dst.docdir}"/>
+    <mkdir dir="${SG.dst.examplesdir}"/>
+    <mkdir dir="${VG.dst.libdir}"/>
+    <mkdir dir="${VG.dst.docdir}"/>
+    <mkdir dir="${FT.dst.libdir}"/>
+    <mkdir dir="${FT.dst.docdir}"/>
+    <mkdir dir="${NC.dst.libdir}"/>
+    <mkdir dir="${NC.dst.docdir}"/>
+    <mkdir dir="${CJ.dst.libdir}"/>
+    <mkdir dir="${CJ.dst.docdir}"/>
+    <mkdir dir="${JM.dst.libdir}"/>
+    <mkdir dir="${JM.dst.docdir}"/>
+    <mkdir dir="${JN.dst.libdir}"/>
+    <mkdir dir="${JN.dst.docdir}"/>
+    <mkdir dir="${CD.dst.libdir}"/>
+    <mkdir dir="${CD.dst.docdir}"/>
+    <mkdir dir="${JT.dst.libdir}"/>
+    <mkdir dir="${JT.dst.docdir}"/>
+
+    <!-- copy samurai-graph static contents -->
+    <copy file="COPYING.txt" todir="${SG.dstdir}"/>
+    <copy file="LICENSE.txt" todir="${SG.dstdir}"/>
+    <copy todir="${SG.dst.examplesdir}">
+      <fileset dir="${SG.examplesdir}">
+        <include name="**/*.txt"/>
+        <include name="**/*.nc"/>
+        <include name="**/*.sgp"/>
+      </fileset>
+    </copy>
+
+    <!-- copy vectorgraphics libraries -->
+    <unzip src="${VG.src.basedir}/target/vectorgraphics-2.1.1-bin.zip" dest="${VG.src.basedir}/target"/>
+    <copy file="${VG.src.libdir}/freehep-graphics2d-2.1.1.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-graphicsio-2.1.1.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-graphicsio-cgm-2.1-SNAPSHOT.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-graphicsio-emf-2.1.1.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-graphicsio-java-2.1.1.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-graphicsio-pdf-2.1.1.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-graphicsio-ps-2.1.1.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-graphicsio-svg-2.1.1.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-graphicsio-swf-2.1.1.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-io-2.0.2.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-swing-2.0.3.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-util-2.0.2.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/freehep-xml-2.1.1.jar" todir="${VG.dst.libdir}"/>
+    <copy file="${VG.src.libdir}/openide-lookup-1.9-patched-1.0.jar" todir="${VG.dst.libdir}"/>
+    <delete dir="${VG.src.basedir}/target/vectorgraphics-2.1.1"/>
+    <copy file="${VG.src.basedir}/LGPL.txt"         todir="${VG.dst.docdir}"/>
+    <copy file="${VG.src.basedir}/LICENSE.txt"      todir="${VG.dst.docdir}"/>
+    <copy file="${VG.src.basedir}/README.txt"       todir="${VG.dst.docdir}"/>
+    <copy file="${VG.web.basedir}/ReleaseNotes-2.1.1.html" todir="${VG.dst.docdir}"/>
+    <copy file="${FHEP.src.basedir}/SAMURAIGRAPH-ChangeLog.txt" todir="${VG.dst.docdir}"/>
+    <copy file="${FHEPEXP.src.libdir}/freehep-export-2.1.1.jar" todir="${VG.dst.libdir}"/>
+
+    <!-- copy foxtrot libraries -->
+    <copy
+      file="${FT.src.libdir}/foxtrot.jar"
+      tofile="${FT.dst.libdir}/foxtrot.jar"
+    />
+    <copy todir="${FT.dst.docdir}">
+      <fileset dir="${FT.src.docdir}">
+        <include name="**/README"/>
+        <include name="**/LICENSE"/>
+      </fileset>
+    </copy>
+    <copy file="${FT.src.basedir}/SAMURAIGRAPH-ChangeLog.txt" todir="${FT.dst.docdir}"/>
+
+    <!-- copy netCDF libraries -->
+    <copy
+      file="${NC.src.libdir}/netcdf-4.2.jar"
+      tofile="${NC.dst.libdir}/netcdf-4.2.jar"
+    />
+    <copy
+      file="${NC.src.extlibdir}/log4j-1.2.15.jar"
+      tofile="${NC.dst.libdir}/log4j-1.2.15.jar"
+    />
+    <copy
+      file="${NC.src.extlibdir}/slf4j-api-1.5.6.jar"
+      tofile="${NC.dst.libdir}/slf4j-api-1.5.6.jar"
+    />
+    <copy
+      file="${NC.src.extlibdir}/slf4j-log4j12-1.5.6.jar"
+      tofile="${NC.dst.libdir}/slf4j-log4j12-1.5.6.jar"
+    />
+    <copy
+      file="${NC.src.extlibdir}/jdom.jar"
+      tofile="${NC.dst.libdir}/jdom.jar"
+    />
+    <copy
+      file="${NC.src.extlibdir}/commons-codec-1.3.jar"
+      tofile="${NC.dst.libdir}/commons-codec-1.3.jar"
+    />
+    <copy
+      file="${NC.src.extlibdir}/commons-httpclient-3.1.jar"
+      tofile="${NC.dst.libdir}/commons-httpclient-3.1.jar"
+    />
+    <copy
+      file="${NC.src.extlibdir}/commons-logging-1.1.jar"
+      tofile="${NC.dst.libdir}/commons-logging-1.1.jar"
+    />
+    <copy todir="${NC.dst.docdir}">
+      <fileset dir="${NC.src.docdir}">
+        <include name="**/README.txt"/>
+      </fileset>
+    </copy>
+    <copy file="${NC.src.basedir}/SAMURAIGRAPH-ChangeLog.txt" todir="${NC.dst.docdir}"/>
+
+    <!-- copy cisd-jhdf5 libraries -->
+    <copy
+      file="${CJ.src.libdir}/cisd-args4j.jar"
+      tofile="${CJ.dst.libdir}/cisd-args4j.jar"
+    />
+    <copy
+      file="${CJ.src.libdir}/cisd-base.jar"
+      tofile="${CJ.dst.libdir}/cisd-base.jar"
+    />
+    <copy
+      file="${CJ.src.libdir}/cisd-jhdf5-core.jar"
+      tofile="${CJ.dst.libdir}/cisd-jhdf5-core.jar"
+    />
+    <copy
+      file="${CJ.src.libdir}/cisd-jhdf5-tools.jar"
+      tofile="${CJ.dst.libdir}/cisd-jhdf5-tools.jar"
+    />
+    <copy
+      file="${CJ.src.libdir}/cisd-jhdf5.jar"
+      tofile="${CJ.dst.libdir}/cisd-jhdf5.jar"
+    />
+    <copy
+      file="${CJ.src.libdir}/commons-io.jar"
+      tofile="${CJ.dst.libdir}/commons-io.jar"
+    />
+    <copy
+      file="${CJ.src.libdir}/commons-lang.jar"
+      tofile="${CJ.dst.libdir}/commons-lang.jar"
+    />
+    <copy
+      file="${CJ.src.nativelibdir}/cisd-jhdf5-batteries_included_lin_win_mac_sun.jar"
+      tofile="${CJ.dst.libdir}/cisd-jhdf5-batteries_included_lin_win_mac_sun.jar"
+    />
+    <copy todir="${CJ.dst.docdir}">
+      <fileset dir="${CJ.src.docdir}">
+        <include name="**/CONTENT"/>
+        <include name="**/COPYING"/>
+        <include name="**/COPYING-args4j"/>
+        <include name="**/COPYING-commons"/>
+        <include name="**/COPYING-hdf5"/>
+        <include name="**/LICENSE"/>
+      </fileset>
+    </copy>
+
+    <!-- copy jmatio libraries -->
+    <copy
+      file="${JM.src.libdir}/jamtio.jar"
+      tofile="${JM.dst.libdir}/jamtio.jar"
+    />
+    <copy todir="${JM.dst.docdir}">
+      <fileset dir="${JM.src.docdir}">
+        <include name="**/readme.txt"/>
+        <include name="**/license.txt"/>
+      </fileset>
+    </copy>
+
+    <!-- copy jna libraries -->
+    <copy
+      file="${JN.src.libdir}/jna.jar"
+      tofile="${JN.dst.libdir}/jna.jar"
+    />
+    <copy
+      file="${JN.src.libdir}/platform.jar"
+      tofile="${JN.dst.libdir}/platform.jar"
+    />
+    <copy todir="${JN.dst.docdir}">
+      <fileset dir="${JN.src.docdir}">
+        <include name="**/license.txt"/>
+        <include name="**/LGPL.txt"/>
+      </fileset>
+    </copy>
+
+    <!-- copy juniversalchardet libraries -->
+    <copy
+      file="${CD.src.libdir}/juniversalchardet-1.0.3.jar"
+      tofile="${CD.dst.libdir}/juniversalchardet-1.0.3.jar"
+    />
+    <copy todir="${CD.dst.docdir}">
+      <fileset dir="${CD.src.docdir}">
+        <include name="**/license.txt"/>
+        <include name="**/MPL.txt"/>
+      </fileset>
+    </copy>
+
+    <!-- copy joda-time libraries -->
+    <copy
+      file="${JT.src.libdir}/joda-time-2.1.jar"
+      tofile="${JT.dst.libdir}/joda-time-2.1.jar"
+    />
+    <copy todir="${JT.dst.docdir}">
+      <fileset dir="${JT.src.docdir}">
+        <include name="**/LICENSE.txt"/>
+        <include name="**/NOTICE.txt"/>
+      </fileset>
+    </copy>
+
+    <!-- for jar -->
+    <mkdir dir="${SG.classes}"/>
+    <mkdir dir="${SG.samurai-graph.basedir}"/>
+    <mkdir dir="${SG.samurai-graph.basedir}/resources"/>
+    <copy todir="${SG.samurai-graph.basedir}/resources">
+      <fileset dir="${SG.resdir}">
+        <include name="**/*.properties"/>
+        <include name="**/*.dtd"/>
+        <include name="**/*.gif"/>
+        <include name="**/*.png"/>
+        <include name="**/*.html"/>
+      </fileset>
+    </copy>
+
+  </target>
+
+  <!-- compile -->
+  <target name="compile" depends="prepare">
+    <javac
+       srcdir="${SG.src.basedir}/base"
+       destdir="${SG.samurai-graph.basedir}"
+       encoding="SJIS"
+       target="1.5"
+       source="1.5"
+       classpathref="SG.classpath"
+    >
+      <!-- <compilerarg value="-Xlint"/> -->
+    </javac>
+    <javac
+       srcdir="${SG.src.basedir}/data"
+       destdir="${SG.samurai-graph.basedir}"
+       encoding="SJIS"
+       target="1.5"
+       source="1.5"
+       classpathref="SG.classpath"
+    >
+      <!-- <compilerarg value="-Xlint"/> -->
+    </javac>
+    <javac
+       srcdir="${SG.src.basedir}/figure"
+       destdir="${SG.samurai-graph.basedir}"
+       encoding="SJIS"
+       target="1.5"
+       source="1.5"
+       classpathref="SG.classpath"
+    >
+      <!-- <compilerarg value="-Xlint"/> -->
+    </javac>
+    <javac
+       srcdir="${SG.src.basedir}/figure/java2d"
+       destdir="${SG.samurai-graph.basedir}"
+       encoding="SJIS"
+       target="1.5"
+       source="1.5"
+       classpathref="SG.classpath"
+    >
+      <!-- <compilerarg value="-Xlint"/> -->
+    </javac>
+    <javac
+       srcdir="${SG.src.basedir}/application"
+       destdir="${SG.samurai-graph.basedir}"
+       encoding="SJIS"
+       target="1.5"
+       source="1.5"
+       classpathref="SG.classpath"
+    >
+      <!-- <compilerarg value="-Xlint"/> -->
+    </javac>
+  </target>
+
+  <!-- jar file creation -->
+  <target name="jar" depends="compile">
+    <jar
+      jarfile="${SG.samurai-graph.jar}"
+      basedir="${SG.samurai-graph.basedir}"
+      manifest="${SG.samurai-graph.mf}"
+    />
+  </target>
+  
+  <!-- JavaDoc creation -->
+  <target name="javadoc" depends="prepare">
+    <mkdir dir="${SG.javadoc.dstdir}"/>
+    <javadoc 
+       encoding="SJIS"
+       docencoding="iso-2022-jp"
+       locale="ja"
+       destdir="${SG.javadoc.dstdir}">
+       <fileset dir="${SG.src.basedir}/base"/>
+       <fileset dir="${SG.src.basedir}/data"/>
+       <fileset dir="${SG.src.basedir}/figure"/>
+       <fileset dir="${SG.src.basedir}/figure/java2d"/>
+       <fileset dir="${SG.src.basedir}/application"/>
+    </javadoc>
+  </target>
+
+  <!-- Copy license and examples -->
+  <target name="srcdst">
+    <mkdir dir="${SG.src.dstdir}"/>
+    <copy file="COPYING.txt" todir="${SG.src.dstdir}"/>
+    <copy file="LICENSE.txt" todir="${SG.src.dstdir}"/>
+    <copy todir="${SG.src.dstdir}/examples">
+      <fileset dir="${SG.examplesdir}" excludes="**/CVS*"/>
+    </copy>
+    <copy todir="${SG.src.dstdir}/examples/data">
+      <fileset dir="${SG.examplesdir}" excludes="**/CVS*"/>
+    </copy>
+  </target>
+
+
+  <!-- clean -->
+  <target name="clean">
+    <delete dir="${SG.dstdir}"/>
+    <delete dir="${SG.classes}"/>
+    <delete dir="${SG.javadoc.dstdir}"/>
+    <delete dir="${HP.classes}"/>
+    <delete dir="${HP.src.libdir}"/>
+    <delete dir="${OSX.classes}"/>
+    <delete dir="${OSX.src.libdir}"/>
+  </target>
+
+  <!-- run -->
+  <target name="run" depends="jar">
+    <java fork="true" jar="dist/samurai-graph.jar"/>
+  </target>
+
+  <!-- *************** for windows *************** -->
+  <!-- compile sources of helper applications -->
+  <!-- helper properties -->
+  <property name="HP.src.basedir"     value="helper"/>
+  <property name="HP.classes"         value="${SG.classes}/helper"/>
+  <property name="HP.mfdir"           value="${HP.src.basedir}/META-INF"/>
+  <!-- helper jar properties -->
+  <property name="HP.src.libdir"              value="${HP.src.basedir}/lib"/>
+  <property name="HP.upgrade-helper.mf"       value="${HP.mfdir}/UPGRADE.MF" />
+  <property name="HP.upgrade-helper.basedir"  value="${HP.classes}"/>
+  <property name="HP.upgrade-helper.jar"      value="${HP.src.libdir}/upgrade-helper.jar"/>
+  <target name="windows">
+    <!-- delete classes and dist directory -->
+    <delete dir="${HP.classes}"/>
+    <delete dir="${HP.upgrade-helper.basedir}"/>
+    <delete dir="${HP.src.libdir}"/>
+    <!-- create dist directory -->
+    <mkdir dir="${HP.classes}"/>
+    <mkdir dir="${HP.upgrade-helper.basedir}"/>
+    <mkdir dir="${HP.src.libdir}"/>
+    <!-- compile sources of helper applications -->
+    <javac
+       srcdir="${HP.src.basedir}/jp/riken/brain/ni/helper"
+       destdir="${HP.upgrade-helper.basedir}"
+       encoding="SJIS"
+       target="1.5"
+       source="1.5"
+    />
+    <!-- create jar file -->
+    <jar
+     jarfile="${HP.upgrade-helper.jar}"
+     basedir="${HP.classes}"
+     manifest="${HP.upgrade-helper.mf}"
+    />
+  </target>
+
+  <!-- *************** for macosx *************** -->
+  <!-- maxos x application adapter properties -->
+  <property name="OSX.src.basedir"     value="macosx"/>
+  <property name="OSX.classes"         value="${SG.classes}/macosx"/>
+  <!-- maxos x application adapter jar properties -->
+  <property name="OSX.src.libdir"            value="${OSX.src.basedir}/lib"/>
+  <property name="OSX.macosx-adapter.basedir"  value="${OSX.classes}"/>
+  <property name="OSX.macosx-adapter.jar"      value="${OSX.src.libdir}/macosx-adapter.jar"/>
+  <!-- maxos x depending jar -->
+  <path id="OSX.classpath">
+    <pathelement path="${classpath}"/>
+    <fileset dir="${SG.dstdir}">
+      <include name="samurai-graph.jar"/>
+    </fileset>
+  </path>
+
+  <target name="macosx" depends="jar">
+    <!-- delete classes and dist directory -->
+    <delete dir="${OSX.classes}"/>
+    <delete dir="${OSX.macosx-adapter.basedir}"/>
+    <delete dir="${OSX.src.libdir}"/>
+    <!-- create dist directory -->
+    <mkdir dir="${OSX.classes}"/>
+    <mkdir dir="${OSX.macosx-adapter.basedir}"/>
+    <mkdir dir="${OSX.src.libdir}"/>
+    <!-- compile sources of macosx application adapter -->
+    <javac
+       srcdir="${OSX.src.basedir}/jp/riken/brain/ni/samuraigraph/platform/macosx"
+       destdir="${OSX.macosx-adapter.basedir}"
+       classpathref="OSX.classpath"
+       encoding="SJIS"
+       target="1.5"
+       source="1.5"
+    />
+    <!-- create jar file -->
+    <jar
+     jarfile="${OSX.macosx-adapter.jar}"
+     basedir="${OSX.classes}"
+    />
+  </target>
+
+  <target name="testJDK">
+    <condition property="isJDK1.5">
+       <and>
+         <equals arg1="${ant.java.version}" arg="1.5"/>
+       </and>
+    </condition>
+  </target>
+</project>

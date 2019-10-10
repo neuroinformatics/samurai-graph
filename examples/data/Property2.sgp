@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Property PUBLIC "-//NILAB//DTD Samurai-Graph Property XML 1.0//EN" "http://samurai-graph.sourceforge.jp/property.dtd">
+<Property>
+<Window BackgroundColor="(255,255,255,255)" GridInterval="1.0cm" GridLineColor="(233,215,215,255)" GridLineWidth="1.0pt" GridVisible="true" PaperHeight="29.7cm" PaperWidth="21.0cm">
+<Figure BackgroundColor="(255,255,255,255)" BackgroundTransparent="false" Height="9.3cm" SpaceAxisLineAndNumber="0.2cm" SpaceNumberAndTitle="0.2cm" Type="SXY" Width="15.0cm" X="2.0cm" Y="0.7cm">
+<Grid AutomaticCalculationOfTick="true" BaselineValueX="0.0" BaselineValueY="0.0" Color="(128,128,128,255)" GridVisible="false" StepValueX="1.0" StepValueY="1.0" Type="Dotted" Width="1.0pt" XAxisPosition="Bottom" YAxisPosition="Left"/>
+<TimingLines/>
+<SignificantDifferenceSymbols/>
+<Axes AxisLineWidth="1.5pt" FontName="Serif" FontSize="16.0pt" FontStyle="Plain" FrameLineColor="(0,0,0,255)" FrameLineVisible="false" FrameLineWidth="1.5pt" LineColor="(0,0,0,255)" StringColor="(0,0,0,255)" TickMarkLength="0.25cm" TickMarkWidth="1.5pt">
+<Axis AutomaticCalculationOfTick="true" AxisVisible="true" BaselineValue="0.0" Exponent="false" ExponentValue="0" MaxValue="1.0" MinValue="0.0" NumberInteger="false" NumberVisible="true" Position="Bottom" ScaleType="Linear" StepValue="0.2" TickMarkInside="true" TickMarkVisible="true" Title="X Label" TitleVisible="true"/>
+<Axis AutomaticCalculationOfTick="true" AxisVisible="false" BaselineValue="0.0" Exponent="false" ExponentValue="0" MaxValue="1.0" MinValue="0.0" NumberInteger="false" NumberVisible="true" Position="Top" ScaleType="Linear" StepValue="0.2" TickMarkInside="true" TickMarkVisible="true" Title="X Label" TitleVisible="true"/>
+<Axis AutomaticCalculationOfTick="true" AxisVisible="true" BaselineValue="0.0" Exponent="false" ExponentValue="0" MaxValue="1.317" MinValue="-1.317" NumberInteger="true" NumberVisible="true" Position="Left" ScaleType="Linear" StepValue="1.0" TickMarkInside="true" TickMarkVisible="true" Title="Y Label" TitleVisible="true"/>
+<Axis AutomaticCalculationOfTick="true" AxisVisible="false" BaselineValue="0.0" Exponent="false" ExponentValue="0" MaxValue="1.317" MinValue="-1.317" NumberInteger="true" NumberVisible="true" Position="Right" ScaleType="Linear" StepValue="1.0" TickMarkInside="true" TickMarkVisible="true" Title="Y Label" TitleVisible="true"/>
+</Axes>
+<Shape/>
+<AxisBreakSymbols/>
+<Legend BackgroundColor="(255,255,255,255)" BackgroundTransparent="false" FontName="Serif" FontSize="16.0pt" FontStyle="Plain" FrameLineColor="(0,0,0,255)" FrameLineWidth="0.5pt" FrameVisible="true" LegendVisible="true" StringColor="(0,0,0,255)" SymbolSpan="1.5cm" XAxisPosition="Bottom" XValue="0.717" YAxisPosition="Left" YValue="1.317"/>
+<Labels/>
+<Data Name="Example6" Type="SXY_MULTIPLE" VisibleInLegend="true" XAxisPosition="Bottom" YAxisPosition="Left">
+<Bar BaselineValue="0.0" Color="{(255,255,255,255)}" EdgeLineColor="(0,0,0,255)" EdgeLineWidth="0.5pt" Visible="false" WidthValue="0.04"/>
+<Line Color="{(0,0,0,255)}" Type="Solid" Visible="true" Width="1.0pt"/>
+<Symbol InnerColor="{(255,255,255,255)}" LineColor="(0,0,0,255)" LineWidth="1.0pt" Size="0.3cm" Type="Circle" Visible="false"/>
+</Data>
+</Figure>
+</Window>
+</Property>

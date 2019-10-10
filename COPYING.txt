@@ -1,0 +1,7 @@
+Samurai Graph : A highly functional and user-friendly graph plotter
+
+Copyright (c) 2004-2010 RIKEN (The Institute of Physical and Chemical Research)
+All rights reserved.
+
+This software is distributed under the LGPL (Lesser General Public License),
+see the file LICENSE.txt
