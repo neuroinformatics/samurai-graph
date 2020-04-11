@@ -8,6 +8,9 @@ import jp.riken.brain.ni.samuraigraph.data.SGSXYZGridDataBuffer;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYDataBuffer;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYGridDataBuffer;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
@@ -95,6 +98,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 		protected void initLength() {
 			this.values = new int[length];
 		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("length", "values");
+		}
 	}
 
 	/**
@@ -113,6 +119,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 		protected void initLength() {
 			this.values = new double[length];
 		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("length", "values");
+		}
 	}
 
 	/**
@@ -128,6 +137,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 			super();
 			this.useMemory(p);
 			this.read();
+		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("pointer");
 		}
 	}
 	
@@ -184,6 +196,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 		public SXYDataStructure(Pointer p) {
 			super(p);
 		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("length", "len", "num", "xValuesPointer", "yValuesPointer");
+		}
 	}
 
 	/**
@@ -199,6 +214,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 		}
 		public SXYZDataStructure(Pointer p) {
 			super(p);
+		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("length", "len", "xValuesPointer", "yValuesPointer", "zValuesPointer");
 		}
 	}
 
@@ -218,6 +236,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 		public VXYDataStructure(Pointer p) {
 			super(p);
 		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("length", "len", "xValuesPointer", "yValuesPointer", "fValuesPointer", "sValuesPointer", "polarFlag");
+		}
 	}
 	
 	/**
@@ -233,6 +254,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 		}
 		public SXYZGridDataStructure(Pointer p) {
 			super(p);
+		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("xLength", "yLength", "xLen", "yLen", "xValuesPointer", "yValuesPointer", "zValuesPointer");
 		}
 	}
 
@@ -252,6 +276,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 		public VXYGridDataStructure(Pointer p) {
 			super(p);
 		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("xLength", "yLength", "xLen", "yLen", "xValuesPointer", "yValuesPointer", "fValuesPointer", "sValuesPointer", "polarFlag");
+		}
 	}
 
 	/**
@@ -267,6 +294,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 			super();
 			this.useMemory(p);
 			this.read();
+		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("str");
 		}
 	}
 
@@ -288,6 +318,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 		protected void initLength() {
 			this.num = dataNum;
 		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("dataNum", "num", "dataTypeArrayPointer", "dataArrayPointer");
+		}
 	}
 
 	/**
@@ -306,6 +339,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 			this.useMemory(p);
 			this.read();
 		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("dataBufferPointer", "parametersNum", "parametersPointer");
+		}
 	}
 
 	/**
@@ -323,6 +359,9 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 			super();
 			this.useMemory(p);
 			this.read();
+		}
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("dataBufferPointer", "errmsgNum", "errmsgPointer");
 		}
 	}
 
