@@ -27,7 +27,6 @@
                     <target>1.8</target>
                     <compilerArgs>
                         <arg>-Xlint:all</arg>
-                        <arg>-Werror</arg>
                     </compilerArgs>
                     <fork>true</fork>
                 </configuration>
@@ -193,10 +192,16 @@
             <version>1.0.3</version>
         </dependency>
 
+        <!-- log4j -->
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.13.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.13.1</version>
         </dependency>
 
     </dependencies>

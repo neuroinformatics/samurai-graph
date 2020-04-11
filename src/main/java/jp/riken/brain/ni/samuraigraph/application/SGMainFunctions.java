@@ -411,9 +411,8 @@ class SGMainFunctions implements ActionListener, SGIConstants,
             // take the procedure below to get rid of warning messages as follows:
             // "log4j:WARN No appenders could be found for logger (ucar.nc2.NetcdfFile)."
             // "log4j:WARN Please initialize the log4j system properly."
-            org.apache.log4j.BasicConfigurator.configure();
-            org.apache.log4j.Logger logger = org.apache.log4j.Logger.getRootLogger();
-            logger.setLevel(org.apache.log4j.Level.OFF);
+            org.apache.logging.log4j.Configurator.initialize(new org.apache.logging.log4j.DefaultConfiguration());
+            org.apache.logging.log4j.Configurator.setRootLevel(org.apache.logging.log4j.Level.OFF);
 
             // remove temporary files used in upgrade
             this.removeUpdaterTemporaryFiles();
