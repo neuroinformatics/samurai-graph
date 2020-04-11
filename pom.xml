@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                        http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>jp.riken.brain.ni</groupId>
+    <artifactId>samurai-graph</artifactId>
+    <packaging>jar</packaging>
+    <version>2.0.0</version>
+    <name>samurai-graph</name>
+    <url>https://github.com/neuroinformatics/samurai-graph</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+
+            <!-- Written for Java 1.8 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.8</target>
+                    <compilerArgs>
+                        <arg>-Xlint:all</arg>
+                        <arg>-Werror</arg>
+                    </compilerArgs>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+
+            <!-- Copy dependencies prior to packaging -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>unpack-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeScope>runtime</includeScope>
+                            <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>freehep-maven</id>
+            <name>Maven FreeHEP</name>
+            <url>https://java.freehep.org/maven2</url>
+        </repository>
+        <repository>
+            <id>unidata-all</id>
+            <name>Unidata All</name>
+            <url>https://artifacts.unidata.ucar.edu/repository/unidata-all/</url>
+        </repository>
+        <repository>
+            <id>imagej</id>
+            <name>ImageJ Public Repository</name>
+            <url>http://maven.imagej.net/content/repositories/public/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+
+	<!-- org.freehep -->
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-export</artifactId>
+            <version>2.1.1</version>
+            <!-- <version>2.1.3</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-graphics2d</artifactId>
+            <version>2.1.1</version>
+            <!-- <version>2.4.3</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-graphicsio</artifactId>
+            <version>2.1.1</version>
+            <!-- <version>2.4.3</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-graphicsio-cgm</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-graphicsio-emf</artifactId>
+            <version>2.1.1</version>
+            <!-- <version>2.4.3</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-graphicsio-java</artifactId>
+            <version>2.1.1</version>
+            <!-- <version>2.1.4</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-graphicsio-pdf</artifactId>
+            <version>2.1.1</version>
+            <!-- <version>2.4.3</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-graphicsio-ps</artifactId>
+            <version>2.1.1</version>
+            <!-- <version>2.4.3</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-graphicsio-svg</artifactId>
+            <version>2.1.1</version>
+            <!-- <version>2.4.3</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-graphicsio-swf</artifactId>
+            <version>2.1.1</version>
+            <!-- <version>2.4.3</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-io</artifactId>
+            <version>2.0.2</version>
+            <!-- <version>2.0.4</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-swing</artifactId>
+            <version>2.0.3</version>
+            <!-- <version>2.0.9</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-util</artifactId>
+            <version>2.0.2</version>
+            <!-- <version>2.1.3</version> -->
+        </dependency>
+        <dependency>
+            <groupId>org.freehep</groupId>
+            <artifactId>freehep-xml</artifactId>
+            <version>2.1.1</version>
+            <!-- <version>2.1.9</version> -->
+        </dependency>
+
+        <!-- foxtrot -->
+        <dependency>
+            <groupId>foxtrot</groupId>
+            <artifactId>foxtrot</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+        <!-- netcdf -->
+        <dependency>
+            <groupId>edu.ucar</groupId>
+            <artifactId>netcdfAll</artifactId>
+            <version>4.6.14</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.systems.cisd</groupId>
+            <artifactId>jhdf5</artifactId>
+            <version>14.12.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.diffplug.matsim</groupId>
+            <artifactId>matfilerw</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.juniversalchardet</groupId>
+            <artifactId>juniversalchardet</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+    </dependencies>
+
+</project>
