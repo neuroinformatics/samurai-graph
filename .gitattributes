@@ -17,7 +17,6 @@
 *.sh text eol=lf
 .gitignore text eol=lf
 pom.xml text eol=lf
-build.xml text eol=lf
 
 # Declare files that must always be CRLF
 *.bat text eol=crlf
