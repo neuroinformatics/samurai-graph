@@ -1774,7 +1774,7 @@ class SGCommandManager implements SGIApplicationCommandConstants,
             }
             final String[] imageTypes = {
                     "EMF", "EPS", "PS", "PDF",
-                    "SVG", "CGM", "SWF",
+                    "SVG", "SWF",
                     "JPG", "JPEG", "GIF", "PNG", "RAW", "PPM",
                     "BMP"
             };

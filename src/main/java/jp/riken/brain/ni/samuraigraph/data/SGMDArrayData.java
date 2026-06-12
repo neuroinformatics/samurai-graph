@@ -1597,8 +1597,14 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     				return false;
     			}
         	}
-    	} catch (HDF5Exception e) {
-    		return false;
+    	} catch (Exception e) {
+            if (e.getClass().getName().contains("HDF5Exception")) {
+                return false;
+            }
+            if (e instanceof RuntimeException) {
+                throw (RuntimeException) e;
+            }
+            return false;
     	} finally {
     		// closes the writer
     		writer.close();

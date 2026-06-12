@@ -264,21 +264,36 @@ public class SGHDF5Variable extends SGMDArrayVariable {
 				array[ii] = this.getDoubleValue(mdArray, dimensionIndex, indices[ii],
 						origins.clone());
 			}
-		} catch (HDF5DatatypeInterfaceException e) {
-			try {
-				if (HDF5DataClass.INTEGER.equals(this.getDataClass())) {
-					// read data as long array
-					MDLongArray mdArray = this.getReader().readLongMDArray(this.mName);
-					array = new double[indices.length];
-					for (int ii = 0; ii < array.length; ii++) {
-						array[ii] = (double) this.getLongValue(mdArray, dimensionIndex, 
-								indices[ii], origins.clone());
-					}
-				}
-			} catch (HDF5DatatypeInterfaceException e2) {
-				// failed to read data
-				throw e2;
-			}
+		} catch (Exception e) {
+            if (e.getClass().getName().endsWith("HDF5DatatypeInterfaceException")) {
+                try {
+                    if (HDF5DataClass.INTEGER.equals(this.getDataClass())) {
+                        // read data as long array
+                        MDLongArray mdArray = this.getReader().readLongMDArray(this.mName);
+                        array = new double[indices.length];
+                        for (int ii = 0; ii < array.length; ii++) {
+                            array[ii] = (double) this.getLongValue(mdArray, dimensionIndex, 
+                                    indices[ii], origins.clone());
+                        }
+                    }
+                } catch (Exception e2) {
+                    if (e2.getClass().getName().endsWith("HDF5DatatypeInterfaceException")) {
+                        // failed to read data
+                        if (e2 instanceof RuntimeException) {
+                            throw (RuntimeException) e2;
+                        } else {
+                            throw new RuntimeException(e2);
+                        }
+                    }
+                    if (e2 instanceof RuntimeException) {
+                        throw (RuntimeException) e2;
+                    }
+                }
+            } else {
+                if (e instanceof RuntimeException) {
+                    throw (RuntimeException) e;
+                }
+            }
 		}
 		return array;
 	}
@@ -463,8 +478,17 @@ public class SGHDF5Variable extends SGMDArrayVariable {
 					array[ii] = this.getString(mdArray, dimensionIndex, indices[ii], 
 							origins.clone());
 				}
-			} catch (HDF5DatatypeInterfaceException e) {
-				throw e;
+			} catch (Exception e) {
+                if (e.getClass().getName().endsWith("HDF5DatatypeInterfaceException")) {
+                    if (e instanceof RuntimeException) {
+                        throw (RuntimeException) e;
+                    } else {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (e instanceof RuntimeException) {
+                    throw (RuntimeException) e;
+                }
 			}
 		}
 		return array;

@@ -38,14 +38,13 @@ import org.freehep.graphicsio.ImageConstants;
 import org.freehep.graphicsio.ImageGraphics2D;
 import org.freehep.graphicsio.InfoConstants;
 import org.freehep.graphicsio.PageConstants;
-import org.freehep.graphicsio.cgm.CGMGraphics2D;
 import org.freehep.graphicsio.emf.EMFGraphics2D;
 import org.freehep.graphicsio.pdf.PDFGraphics2D;
 import org.freehep.graphicsio.ps.PSGraphics2D;
 import org.freehep.graphicsio.svg.SVGGraphics2D;
 import org.freehep.graphicsio.swf.SWFGraphics2D;
-import org.freehep.util.UserProperties;
-import org.freehep.util.export.ExportDialog;
+import org.freehep.graphicsbase.util.UserProperties;
+import org.freehep.graphicsbase.util.export.ExportDialog;
 
 /**
  * A class used to preview, print and export an image.
@@ -79,7 +78,6 @@ public class SGImageExportManager implements SGIImageExportManager,
             + PageConstants.BACKGROUND_COLOR;
 
     private static final String[][] VECTOR_BG_KEY_ARRAY = {
-            { CGMGraphics2D.BACKGROUND, CGMGraphics2D.BACKGROUND_COLOR },
             { PSGraphics2D.BACKGROUND, PSGraphics2D.BACKGROUND_COLOR },
             { SWFGraphics2D.BACKGROUND, SWFGraphics2D.BACKGROUND_COLOR },
             { PDFGraphics2D.BACKGROUND, PDFGraphics2D.BACKGROUND_COLOR },
@@ -157,7 +155,14 @@ public class SGImageExportManager implements SGIImageExportManager,
      */
     public SGImageExportManager() {
         ExportDialogActionListener bl = new ExportDialogActionListener();
-        this.mExportDialog.addActionListener(bl);
+        try {
+            java.lang.reflect.Field typeField = org.freehep.graphicsbase.util.export.ExportDialog.class.getDeclaredField("type");
+            typeField.setAccessible(true);
+            javax.swing.JComboBox cb = (javax.swing.JComboBox) typeField.get(this.mExportDialog);
+            cb.addActionListener(bl);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -219,15 +224,15 @@ public class SGImageExportManager implements SGIImageExportManager,
 
         ExportDialog ed = this.mExportDialog;
         Color bg = target.getBackground();
-        Properties p = ed.getUserProperties();
+        Properties p = getExportDialogProperties(ed);
 
         // directory
-        String key = ExportDialog.SAVE_AS_FILE;
+        String key = getSaveAsFileConstant();
         String baseDir = this.mBaseDirectoryName;
-        String path = ed.getUserProperties().getProperty(key);
+        String path = p.getProperty(key);
         if (path != null) {
             String pathNew = SGApplicationUtility.getPathName(baseDir, this.mExportFileName);
-            ed.setUserProperty(key, pathNew);
+            p.setProperty(key, pathNew);
         }
         String defFile = SGApplicationUtility.getPathName(baseDir, this.mExportFileName);
 
@@ -275,7 +280,7 @@ public class SGImageExportManager implements SGIImageExportManager,
 
     // "No Margin", "Small", "Medium" or "Large"
     private static String[] getMarginList() {
-        return new String[] { PageConstants.NO_MARGIN, PageConstants.SMALL,
+        return new String[] { "No Margin", PageConstants.SMALL,
                 PageConstants.MEDIUM, PageConstants.LARGE };
     }
 
@@ -551,36 +556,6 @@ public class SGImageExportManager implements SGIImageExportManager,
                 this.setText(prop, InfoConstants.TITLE, p,
                         SVGGraphics2D.TITLE, result);
 
-            } else if ("CGM".equalsIgnoreCase(type)) {
-                g = new CGMGraphics2D(f, target);
-                clipFlag = true;
-
-                // "Background"
-                final boolean bgFlag = this.setBoolean(prop, PageConstants.BACKGROUND, p,
-                        CGMGraphics2D.BACKGROUND, result);
-
-                // "BackgroundColor"
-                this.setBackgroundColor(prop, PageConstants.BACKGROUND_COLOR, p,
-                        CGMGraphics2D.BACKGROUND_COLOR, target, bgFlag, result);
-
-                // "Binary"
-                this.setBoolean(prop, "Binary", p, CGMGraphics2D.BINARY, result);
-
-                // "Author"
-                this.setText(prop, InfoConstants.AUTHOR, p,
-                        CGMGraphics2D.AUTHOR, result);
-
-                // "Title"
-                this.setText(prop, InfoConstants.TITLE, p,
-                        CGMGraphics2D.TITLE, result);
-
-                // "Subject"
-                this.setText(prop, InfoConstants.SUBJECT, p,
-                        CGMGraphics2D.SUBJECT, result);
-
-                // "Keywords"
-                this.setText(prop, InfoConstants.KEYWORDS, p,
-                        CGMGraphics2D.KEYWORDS, result);
 
             } else if (ImageConstants.SWF.equalsIgnoreCase(type)) {
                 g = new SWFGraphics2D(f, target);
@@ -640,8 +615,12 @@ public class SGImageExportManager implements SGIImageExportManager,
                     boolean valid = true;
                     Double resolution = SGUtilityText.getDouble(strResolution);
     				if (resolution != null) {
-    					if (resolution > 0.0) {
-        	                g = new ImageGraphics2D(f, target, uType, resolution / 72.0, roundNum);
+    				if (resolution > 0.0) {
+                            double scale = resolution / 72.0;
+                            Dimension d = target.getSize();
+                            Dimension scaledD = new Dimension((int) Math.round(d.width * scale), (int) Math.round(d.height * scale));
+        	                g = new ImageGraphics2D(f, scaledD, uType);
+                            g.scale(scale, scale);
     					} else {
     						valid = false;
     					}
@@ -652,7 +631,7 @@ public class SGImageExportManager implements SGIImageExportManager,
     	            result.putResult(KEY_RESOLUTION, status);
                 }
                 if (g == null) {
-	                g = new ImageGraphics2D(f, target, uType, 1.0, roundNum);
+	                g = new ImageGraphics2D(f, target, uType);
                 }
 
                 String formatKey = ImageGraphics2D.rootKey + "." + uType;
@@ -1152,7 +1131,7 @@ public class SGImageExportManager implements SGIImageExportManager,
             	String[] margins = getMarginList();
             	for (int ii = 0; ii < margins.length; ii++) {
             		if (SGUtilityText.isEqualString(margins[ii], value)) {
-                        Insets in = PageConstants.getMargins(margins[ii]);
+                        Insets in = "No Margin".equals(margins[ii]) ? new Insets(0, 0, 0, 0) : PageConstants.getMargins(margins[ii]);
                         p.setProperty(key, in);
                         result.putResult(propKey, SGPropertyResults.SUCCEEDED);
                         return true;
@@ -1343,6 +1322,33 @@ public class SGImageExportManager implements SGIImageExportManager,
             }
             printAll(g);
             return Printable.PAGE_EXISTS;
+        }
+    }
+
+    private static Properties getExportDialogProperties(ExportDialog ed) {
+        try {
+            java.lang.reflect.Field propsField = ExportDialog.class.getDeclaredField("props");
+            propsField.setAccessible(true);
+            Properties p = (Properties) propsField.get(ed);
+            if (p == null) {
+                p = new Properties();
+                propsField.set(ed, p);
+            }
+            return p;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new Properties();
+        }
+    }
+
+    private static String getSaveAsFileConstant() {
+        try {
+            java.lang.reflect.Field field = ExportDialog.class.getDeclaredField("SAVE_AS_FILE");
+            field.setAccessible(true);
+            return (String) field.get(null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "org.freehep.graphicsbase.util.export.ExportDialog.SaveAsFile";
         }
     }
 
