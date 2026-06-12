@@ -24,7 +24,7 @@ Memorandum of How To Release.
   % cvs tag RELEASE_2_0_0
 
 5. rebuild binaries.
-  % mvn clean package --settings settings.xml
+  % mvn clean package
 
 6. create os specific installer
   > [!NOTE]
