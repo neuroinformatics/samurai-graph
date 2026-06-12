@@ -411,8 +411,8 @@ class SGMainFunctions implements ActionListener, SGIConstants,
             // take the procedure below to get rid of warning messages as follows:
             // "log4j:WARN No appenders could be found for logger (ucar.nc2.NetcdfFile)."
             // "log4j:WARN Please initialize the log4j system properly."
-            org.apache.logging.log4j.Configurator.initialize(new org.apache.logging.log4j.DefaultConfiguration());
-            org.apache.logging.log4j.Configurator.setRootLevel(org.apache.logging.log4j.Level.OFF);
+            org.apache.logging.log4j.core.config.Configurator.initialize(new org.apache.logging.log4j.core.config.DefaultConfiguration());
+            org.apache.logging.log4j.core.config.Configurator.setRootLevel(org.apache.logging.log4j.Level.OFF);
 
             // remove temporary files used in upgrade
             this.removeUpdaterTemporaryFiles();
@@ -3281,10 +3281,15 @@ class SGMainFunctions implements ActionListener, SGIConstants,
                     figureLocation, fig, cdSet, dataNameBase, false) == false) {
                 return new SGStatus(false);
             }
-        } catch (HDF5DatatypeInterfaceException e) {
-        	// Failed to read the HDF5 data.
-        	wnd.endProgress();
-            return new SGStatus(false, MSG_HDF5_VALUES_OUT_OF_RANGE);
+        } catch (Exception e) {
+            if (e.getClass().getName().endsWith("HDF5DatatypeInterfaceException")) {
+                // Failed to read the HDF5 data.
+                wnd.endProgress();
+                return new SGStatus(false, MSG_HDF5_VALUES_OUT_OF_RANGE);
+            }
+            if (e instanceof RuntimeException) {
+                throw (RuntimeException) e;
+            }
         }
 
         return new SGStatus(true);
@@ -5969,8 +5974,14 @@ class SGMainFunctions implements ActionListener, SGIConstants,
 		        try {
 			        hdfWriter = HDF5FactoryProvider.get().open(new File(path));
 			        hdfWriter.setStringAttribute("/", attrName, savedString);
-		        } catch (HDF5Exception e) {
-		        	e.printStackTrace();
+		        } catch (Exception e) {
+                    if (e.getClass().getName().contains("HDF5Exception")) {
+                        e.printStackTrace();
+                    } else {
+                        if (e instanceof RuntimeException) {
+                            throw (RuntimeException) e;
+                        }
+                    }
 		        } finally {
 		        	if (hdfWriter != null) {
 		        		hdfWriter.close();

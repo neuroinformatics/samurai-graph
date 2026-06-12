@@ -2487,8 +2487,14 @@ public class SGDataUtility implements SGIDataColumnTypeConstants, SGIDataPropert
     	IHDF5Reader reader = null;
 		try {
 	    	reader = HDF5FactoryProvider.get().openForReading(new File(data.getPath()));
-        } catch (HDF5Exception e) {
-        	hdf5 = false;
+        } catch (Exception e) {
+            if (e.getClass().getName().contains("HDF5Exception")) {
+                hdf5 = false;
+            } else {
+                if (e instanceof RuntimeException) {
+                    throw (RuntimeException) e;
+                }
+            }
         } finally {
         	if (reader != null) {
         		reader.close();
@@ -3884,9 +3890,17 @@ public class SGDataUtility implements SGIDataColumnTypeConstants, SGIDataPropert
 					obj = reader.getFloatAttribute(path, name);
 				}
 			} else if (HDF5DataClass.BOOLEAN.equals(dClass)) {
-				obj = reader.getBooleanAttribute(path, name);
+				try {
+					obj = reader.getBooleanAttribute(path, name);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} else if (HDF5DataClass.ENUM.equals(dClass)) {
-				obj = reader.getEnumAttribute(path, name);
+				try {
+					obj = reader.getEnumAttribute(path, name);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 			SGAttribute attr = new SGAttribute(name, obj);
 			aList.add(attr);
@@ -3938,11 +3952,21 @@ public class SGDataUtility implements SGIDataColumnTypeConstants, SGIDataPropert
         			writer.setFloatAttribute(path, attrName, value);
     			}
 			} else if (HDF5DataClass.BOOLEAN.equals(attrDataClass)) {
-				final boolean value = reader.getBooleanAttribute(path, attrName);
-				writer.setBooleanAttribute(path, attrName, value);
+				try {
+					final boolean value = reader.getBooleanAttribute(path, attrName);
+					writer.setBooleanAttribute(path, attrName, value);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return false;
+				}
 			} else if (HDF5DataClass.ENUM.equals(attrDataClass)) {
-				HDF5EnumerationValue value = reader.getEnumAttribute(path, attrName);
-				writer.setEnumAttribute(path, attrName, value);
+				try {
+					HDF5EnumerationValue value = reader.getEnumAttribute(path, attrName);
+					writer.setEnumAttribute(path, attrName, value);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return false;
+				}
     		}
 		}
 		return true;
