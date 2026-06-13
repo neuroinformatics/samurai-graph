@@ -621,7 +621,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     String[] fileArray = new String[dataNum];
     SGButton[] btnArray = new SGButton[dataNum];
     @SuppressWarnings("unchecked")
-    Map<String, Object>[] mapArray = (Map<String, Object>[]) new Map[dataNum];
+    Map<String, Object>[] mapArray = (Map<String, Object>[]) new Map<?, ?>[dataNum];
     SGTuple2f[] figureSizeArray = new SGTuple2f[dataNum];
     for (int ii = 0; ii < dataNum; ii++) {
       SGPropertyFileData data = dataList.get(ii);

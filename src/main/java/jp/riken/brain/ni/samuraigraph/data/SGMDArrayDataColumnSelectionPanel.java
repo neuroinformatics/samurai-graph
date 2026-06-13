@@ -81,15 +81,15 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     SGDataTypeConstants.VXY_VIRTUAL_MDARRAY_DATA
   };
 
-  protected SGComboBox mGenericDimensionRendererComboBox = null;
+  protected SGComboBox<?> mGenericDimensionRendererComboBox = null;
 
   protected DimensionEditorComboBox mGenericDimensionEditorComboBox = null;
 
-  protected SGComboBox mTimeDimensionRendererComboBox = null;
+  protected SGComboBox<?> mTimeDimensionRendererComboBox = null;
 
   protected DimensionEditorComboBox mTimeDimensionEditorComboBox = null;
 
-  protected SGComboBox mPickUpDimensionRendererComboBox = null;
+  protected SGComboBox<?> mPickUpDimensionRendererComboBox = null;
 
   protected DimensionEditorComboBox mPickUpDimensionEditorComboBox = null;
 
@@ -899,7 +899,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
 
     @Override
     public Component getListCellRendererComponent(
-        JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
       DefaultListCellRenderer renderer =
           (DefaultListCellRenderer)
               super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);

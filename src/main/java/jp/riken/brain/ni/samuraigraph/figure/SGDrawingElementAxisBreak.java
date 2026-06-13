@@ -563,7 +563,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     Number num = null;
     Color cl = null;
     Boolean b = null;
-    List list = null;
+    List<Color> list = null;
 
     // width
     str = el.getAttribute(SGIAxisBreakConstants.KEY_LENGTH);

@@ -75,25 +75,25 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     mVXYDataFirstVariablePanel = new javax.swing.JPanel();
     mVXYDataFirstVariableDimensionGridPanel = new javax.swing.JPanel();
     mVXYDataFirstVariableDimensionXLabel = new javax.swing.JLabel();
-    mVXYDataFirstVariableDimensionXComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mVXYDataFirstVariableDimensionXComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mVXYDataFirstVariableDimensionYLabel = new javax.swing.JLabel();
-    mVXYDataFirstVariableDimensionYComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mVXYDataFirstVariableDimensionYComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mVXYDataFirstVariableDimensionScatterPanel = new javax.swing.JPanel();
     mVXYDataFirstVariableDimensionIndexComboBox =
-        new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mVXYDataXVariablePanel = new javax.swing.JPanel();
-    mVXYDataXVariableDimensionComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mVXYDataXVariableDimensionComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mVXYDataYVariablePanel = new javax.swing.JPanel();
-    mVXYDataYVariableDimensionComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mVXYDataYVariableDimensionComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mVXYDataSecondVariablePanel = new javax.swing.JPanel();
     mVXYDataSecondVariableDimensionGridPanel = new javax.swing.JPanel();
     mVXYDataSecondVariableDimensionXLabel = new javax.swing.JLabel();
-    mVXYDataSecondVariableDimensionXComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mVXYDataSecondVariableDimensionXComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mVXYDataSecondVariableDimensionYLabel = new javax.swing.JLabel();
-    mVXYDataSecondVariableDimensionYComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mVXYDataSecondVariableDimensionYComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mVXYDataSecondVariableDimensionScatterPanel = new javax.swing.JPanel();
     mVXYDataSecondVariableDimensionIndexComboBox =
-        new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mVXYPlotTypeRadioButtonPanel = new javax.swing.JPanel();
     mVXYGridPlotRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
     mVXYScatterPlotRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
@@ -101,15 +101,15 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     mSXYZDataZVariablePanel = new javax.swing.JPanel();
     mSXYZDataZVariableDimensionGridPanel = new javax.swing.JPanel();
     mSXYZDataZVariableDimensionXLabel = new javax.swing.JLabel();
-    mSXYZDataZVariableDimensionXComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mSXYZDataZVariableDimensionXComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mSXYZDataZVariableDimensionYLabel = new javax.swing.JLabel();
-    mSXYZDataZVariableDimensionYComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mSXYZDataZVariableDimensionYComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mSXYZDataZVariableDimensionScatterPanel = new javax.swing.JPanel();
-    mSXYZDataZVariableDimensionIndexComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mSXYZDataZVariableDimensionIndexComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mSXYZDataXVariablePanel = new javax.swing.JPanel();
-    mSXYZDataXVariableDimensionComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mSXYZDataXVariableDimensionComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mSXYZDataYVariablePanel = new javax.swing.JPanel();
-    mSXYZDataYVariableDimensionComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mSXYZDataYVariableDimensionComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mSXYZPlotTypeRadioButtonPanel = new javax.swing.JPanel();
     mSXYZGridPlotRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
     mSXYZScatterPlotRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
@@ -945,17 +945,17 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
   private jp.riken.brain.ni.samuraigraph.data.SGIndexPanel mSXYZDataIndexStridePanel;
   private javax.swing.JPanel mSXYZDataStridePanel;
   private jp.riken.brain.ni.samuraigraph.data.SGIndexPanel mSXYZDataXStridePanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mSXYZDataXVariableDimensionComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mSXYZDataXVariableDimensionComboBox;
   private javax.swing.JPanel mSXYZDataXVariablePanel;
   private jp.riken.brain.ni.samuraigraph.data.SGIndexPanel mSXYZDataYStridePanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mSXYZDataYVariableDimensionComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mSXYZDataYVariableDimensionComboBox;
   private javax.swing.JPanel mSXYZDataYVariablePanel;
   private javax.swing.JPanel mSXYZDataZVariableDimensionGridPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mSXYZDataZVariableDimensionIndexComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mSXYZDataZVariableDimensionIndexComboBox;
   private javax.swing.JPanel mSXYZDataZVariableDimensionScatterPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mSXYZDataZVariableDimensionXComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mSXYZDataZVariableDimensionXComboBox;
   private javax.swing.JLabel mSXYZDataZVariableDimensionXLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mSXYZDataZVariableDimensionYComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mSXYZDataZVariableDimensionYComboBox;
   private javax.swing.JLabel mSXYZDataZVariableDimensionYLabel;
   private javax.swing.JPanel mSXYZDataZVariablePanel;
   private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mSXYZGridPlotRadioButton;
@@ -968,30 +968,30 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
   private javax.swing.JTabbedPane mTabbedPane;
   private javax.swing.JPanel mVXYDataDimensionPanel;
   private javax.swing.JPanel mVXYDataFirstVariableDimensionGridPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>
       mVXYDataFirstVariableDimensionIndexComboBox;
   private javax.swing.JPanel mVXYDataFirstVariableDimensionScatterPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mVXYDataFirstVariableDimensionXComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mVXYDataFirstVariableDimensionXComboBox;
   private javax.swing.JLabel mVXYDataFirstVariableDimensionXLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mVXYDataFirstVariableDimensionYComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mVXYDataFirstVariableDimensionYComboBox;
   private javax.swing.JLabel mVXYDataFirstVariableDimensionYLabel;
   private javax.swing.JPanel mVXYDataFirstVariablePanel;
   private jp.riken.brain.ni.samuraigraph.data.SGIndexPanel mVXYDataIndexStridePanel;
   private javax.swing.JPanel mVXYDataSecondVariableDimensionGridPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>
       mVXYDataSecondVariableDimensionIndexComboBox;
   private javax.swing.JPanel mVXYDataSecondVariableDimensionScatterPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mVXYDataSecondVariableDimensionXComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mVXYDataSecondVariableDimensionXComboBox;
   private javax.swing.JLabel mVXYDataSecondVariableDimensionXLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mVXYDataSecondVariableDimensionYComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mVXYDataSecondVariableDimensionYComboBox;
   private javax.swing.JLabel mVXYDataSecondVariableDimensionYLabel;
   private javax.swing.JPanel mVXYDataSecondVariablePanel;
   private javax.swing.JPanel mVXYDataStridePanel;
   private jp.riken.brain.ni.samuraigraph.data.SGIndexPanel mVXYDataXStridePanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mVXYDataXVariableDimensionComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mVXYDataXVariableDimensionComboBox;
   private javax.swing.JPanel mVXYDataXVariablePanel;
   private jp.riken.brain.ni.samuraigraph.data.SGIndexPanel mVXYDataYStridePanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mVXYDataYVariableDimensionComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mVXYDataYVariableDimensionComboBox;
   private javax.swing.JPanel mVXYDataYVariablePanel;
   private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mVXYGridPlotRadioButton;
   private javax.swing.JPanel mVXYPlotTypeRadioButtonPanel;
@@ -2144,7 +2144,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     this.mIgnoreComboBoxEventFlag = false;
   }
 
-  private void setSelectedItem(JComboBox cb, Object obj) {
+  private void setSelectedItem(JComboBox<?> cb, Object obj) {
     this.mIgnoreComboBoxEventFlag = true;
     cb.setSelectedItem(obj);
     this.mIgnoreComboBoxEventFlag = false;
@@ -2200,7 +2200,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     this.updateDimensionPanelsEnabled(disabledDimList);
   }
 
-  private void getDisabledDimensions(JComboBox cb, List<String> disabledDimList) {
+  private void getDisabledDimensions(JComboBox<?> cb, List<String> disabledDimList) {
     Object item = cb.getSelectedItem();
     if (item != null) {
       Integer num = SGUtilityText.getInteger(item.toString());
@@ -2646,16 +2646,16 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     final int stateChange = e.getStateChange();
     final Object item = e.getItem();
     if (source instanceof JComboBox && stateChange == ItemEvent.SELECTED) {
-      JComboBox cb = (JComboBox) source;
+      JComboBox<?> cb = (JComboBox<?>) source;
       this.onItemSelected(cb, item);
     }
   }
 
-  private void onItemSelected(final JComboBox source) {
+  private void onItemSelected(final JComboBox<?> source) {
     this.onItemSelected(source, source.getSelectedItem());
   }
 
-  private void onItemSelected(final JComboBox source, final Object item) {
+  private void onItemSelected(final JComboBox<?> source, final Object item) {
     if (this.mIgnoreComboBoxEventFlag) {
       return;
     }

@@ -4243,7 +4243,7 @@ public class SGDrawingWindow extends JFrame
     final int numY = (int) ((float) bbRect.getHeight() / dy) + 1;
 
     // get a two-dimensional array of figures
-    ArrayList<SGFigure>[][] fListArray = new ArrayList[numX][numY];
+    ArrayList<SGFigure>[][] fListArray = (ArrayList<SGFigure>[][]) new ArrayList<?>[numX][numY];
     for (int ii = 0; ii < numX; ii++) {
       for (int jj = 0; jj < numY; jj++) {
         fListArray[ii][jj] = new ArrayList<SGFigure>();
@@ -4288,7 +4288,7 @@ public class SGDrawingWindow extends JFrame
     final int sx = numListX.size();
     final int sy = numListY.size();
 
-    ArrayList<SGFigure>[][] figureListArray = new ArrayList[sx][sy];
+    ArrayList<SGFigure>[][] figureListArray = (ArrayList<SGFigure>[][]) new ArrayList<?>[sx][sy];
     for (int ii = 0; ii < sx; ii++) {
       final int nx = numListX.get(ii);
       for (int jj = 0; jj < sy; jj++) {
@@ -4516,7 +4516,7 @@ public class SGDrawingWindow extends JFrame
     final int numY = (int) ((float) bbRect.getHeight() / dy) + 1;
 
     // get a two-dimensional array of figures
-    ArrayList<SGFigure>[][] fListArray = new ArrayList[numX][numY];
+    ArrayList<SGFigure>[][] fListArray = (ArrayList<SGFigure>[][]) new ArrayList<?>[numX][numY];
     for (int ii = 0; ii < numX; ii++) {
       for (int jj = 0; jj < numY; jj++) {
         fListArray[ii][jj] = new ArrayList<SGFigure>();
@@ -4566,7 +4566,7 @@ public class SGDrawingWindow extends JFrame
     final int sx = numListX.size();
     final int sy = numListY.size();
 
-    ArrayList<SGFigure>[][] figureListArray = new ArrayList[sx][sy];
+    ArrayList<SGFigure>[][] figureListArray = (ArrayList<SGFigure>[][]) new ArrayList<?>[sx][sy];
     for (int ii = 0; ii < sx; ii++) {
       final int nx = numListX.get(ii);
       for (int jj = 0; jj < sy; jj++) {

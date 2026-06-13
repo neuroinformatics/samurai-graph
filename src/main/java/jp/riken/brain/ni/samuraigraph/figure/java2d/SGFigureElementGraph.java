@@ -665,7 +665,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
       // if data object is not selected in the legend element,
       // clear the focused objects in this graph
       SGIFigureElementLegend lElement = (SGIFigureElementLegend) ori;
-      List dList = lElement.getFocusedDataList();
+      List<SGData> dList = lElement.getFocusedDataList();
       if (dList.size() == 0) {
         if (this.clearFocusedObjects() == false) {
           return false;
@@ -1092,7 +1092,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
   /** */
   protected Set<SGIChildObject> getAvailableChildSet() {
     Set<SGIChildObject> set = new HashSet<SGIChildObject>();
-    List mList = this.getMementoList();
+    List<SGProperties> mList = this.getMementoList();
     for (int ii = 0; ii < mList.size(); ii++) {
       GraphProperties p = (GraphProperties) mList.get(ii);
       set.addAll(p.visibleElementGroupList);
@@ -1122,7 +1122,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
   protected void paintGraphics(Graphics g, boolean clip) {
     Graphics2D g2d = (Graphics2D) g;
 
-    List list = this.mChildList;
+    List<SGIChildObject> list = this.mChildList;
     if (list == null) {
       return;
     }
@@ -1215,9 +1215,9 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
   }
 
   protected SGElementGroupLineInGraph getGroupLine(final SGElementGroupSetInGraph groupSet) {
-    ArrayList groupList = groupSet.getElementGroupList();
+    ArrayList<SGElementGroup> groupList = groupSet.getElementGroupList();
     for (int ii = 0; ii < groupList.size(); ii++) {
-      final SGElementGroup group = (SGElementGroup) groupList.get(ii);
+      final SGElementGroup group = groupList.get(ii);
       if (group instanceof SGElementGroupLineInGraph) {
         return (SGElementGroupLineInGraph) group;
       }
@@ -1227,9 +1227,9 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
   }
 
   protected SGElementGroupBarInGraph getGroupBar(final SGElementGroupSetInGraph groupSet) {
-    ArrayList groupList = groupSet.getElementGroupList();
+    ArrayList<SGElementGroup> groupList = groupSet.getElementGroupList();
     for (int ii = 0; ii < groupList.size(); ii++) {
-      final SGElementGroup group = (SGElementGroup) groupList.get(ii);
+      final SGElementGroup group = groupList.get(ii);
       if (group instanceof SGElementGroupBarInGraph) {
         return (SGElementGroupBarInGraph) group;
       }
@@ -1239,9 +1239,9 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
   }
 
   protected SGElementGroupSymbolInGraph getGroupSymbol(final SGElementGroupSetInGraph groupSet) {
-    ArrayList groupList = groupSet.getElementGroupList();
+    ArrayList<SGElementGroup> groupList = groupSet.getElementGroupList();
     for (int ii = 0; ii < groupList.size(); ii++) {
-      final SGElementGroup group = (SGElementGroup) groupList.get(ii);
+      final SGElementGroup group = groupList.get(ii);
       if (group instanceof SGElementGroupSymbolInGraph) {
         return (SGElementGroupSymbolInGraph) group;
       }
@@ -1252,9 +1252,9 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
 
   protected SGElementGroupPseudocolorMapInGraph getColorMap(
       final SGElementGroupSetInGraph groupSet) {
-    ArrayList groupList = groupSet.getElementGroupList();
+    ArrayList<SGElementGroup> groupList = groupSet.getElementGroupList();
     for (int ii = 0; ii < groupList.size(); ii++) {
-      final SGElementGroup group = (SGElementGroup) groupList.get(ii);
+      final SGElementGroup group = groupList.get(ii);
       if (group instanceof SGElementGroupPseudocolorMapInGraph) {
         return (SGElementGroupPseudocolorMapInGraph) group;
       }

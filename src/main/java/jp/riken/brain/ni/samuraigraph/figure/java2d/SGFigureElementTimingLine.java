@@ -585,7 +585,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
   /** */
   public boolean onMouseClicked(final MouseEvent e) {
 
-    ArrayList list = this.getVisibleTimingElementListInside();
+    ArrayList<TimingLine> list = this.getVisibleTimingElementListInside();
     for (int ii = list.size() - 1; ii >= 0; ii--) {
       final TimingLine line = (TimingLine) list.get(ii);
       if (line.isValid() == false) {
@@ -633,7 +633,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     final int x = e.getX();
     final int y = e.getY();
 
-    ArrayList list = this.getVisibleTimingElementListInside();
+    ArrayList<TimingLine> list = this.getVisibleTimingElementListInside();
     for (int ii = list.size() - 1; ii >= 0; ii--) {
       final TimingLine el = (TimingLine) list.get(ii);
       if (el.isValid() == false) {
@@ -697,7 +697,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
 
   /** */
   public boolean setMouseCursor(final int x, final int y) {
-    ArrayList list = this.getVisibleTimingElementListInside();
+    ArrayList<TimingLine> list = this.getVisibleTimingElementListInside();
     for (int ii = list.size() - 1; ii >= 0; ii--) {
       final TimingLine el = (TimingLine) list.get(ii);
       if (el.isValid() == false) {
@@ -797,7 +797,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
   public void paintGraphics(Graphics g, boolean clip) {
     Graphics2D g2d = (Graphics2D) g;
 
-    ArrayList list = this.getVisibleTimingElementListInside();
+    ArrayList<TimingLine> list = this.getVisibleTimingElementListInside();
     Rectangle2D gRect = this.getGraphRect();
 
     // draw guide arrow
@@ -1045,7 +1045,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
   /** */
   protected Set<SGIChildObject> getAvailableChildSet() {
     Set<SGIChildObject> set = new HashSet<>();
-    List mList = this.getMementoList();
+    List<SGProperties> mList = this.getMementoList();
     for (int ii = 0; ii < mList.size(); ii++) {
       TimingElementProperties p = (TimingElementProperties) mList.get(ii);
       set.addAll(p.visibleTimingElementList);
@@ -2253,10 +2253,9 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       // get pairs of a key and a value to add a new label
       String sAxis = null;
       String sValue = null;
-      Iterator itr = map.getKeyIterator();
+      Iterator<String> itr = map.getKeyIterator();
       while (itr.hasNext()) {
-        Object keyObj = itr.next();
-        String key = keyObj.toString();
+        String key = itr.next();
         if (COM_TIMING_LINE_AXIS.equalsIgnoreCase(key)) {
           sAxis = map.getValueString(key);
         } else if (COM_TIMING_LINE_VALUE.equalsIgnoreCase(key)) {

@@ -204,7 +204,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
 
   /** */
   private boolean setLocationOfAllDrawingElements() {
-    List list = this.mChildList;
+    List<SGIChildObject> list = this.mChildList;
     for (int ii = 0; ii < list.size(); ii++) {
       AxisBreakSymbol abs = (AxisBreakSymbol) list.get(ii);
       if (!abs.isAnchored()) {
@@ -2226,10 +2226,9 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
       String sy = null;
       String sAxisX = null;
       String sAxisY = null;
-      Iterator itr = map.getKeyIterator();
+      Iterator<String> itr = map.getKeyIterator();
       while (itr.hasNext()) {
-        Object keyObj = itr.next();
-        String key = keyObj.toString();
+        String key = itr.next();
         if (COM_BREAK_LOCATION_X.equalsIgnoreCase(key)) {
           sx = map.getValueString(key);
         } else if (COM_BREAK_LOCATION_Y.equalsIgnoreCase(key)) {

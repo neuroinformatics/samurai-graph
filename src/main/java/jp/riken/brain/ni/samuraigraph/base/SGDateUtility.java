@@ -262,7 +262,7 @@ public class SGDateUtility {
     return true;
   }
 
-  public static boolean checkDateComboBoxInputValidatity(SGComboBox cb) {
+  public static boolean checkDateComboBoxInputValidatity(SGComboBox<?> cb) {
     Object dateFormatItem = cb.getSelectedItem();
     if (dateFormatItem != null) {
       String pattern = dateFormatItem.toString();

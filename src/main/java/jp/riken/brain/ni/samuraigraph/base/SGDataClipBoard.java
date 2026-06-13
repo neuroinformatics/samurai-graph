@@ -24,7 +24,7 @@ public class SGDataClipBoard {
    * @return a copied data object
    */
   public DataCopy add(SGData data, String name) {
-    return this.add(data, name, new HashMap<Class, SGProperties>());
+    return this.add(data, name, new HashMap<Class<?>, SGProperties>());
   }
 
   /**
@@ -35,9 +35,9 @@ public class SGDataClipBoard {
    * @param propertiesMap a map of properties for each figure element class
    * @return a copied data object
    */
-  public DataCopy add(SGData data, String name, Map<Class, SGProperties> propertiesMap) {
+  public DataCopy add(SGData data, String name, Map<Class<?>, SGProperties> propertiesMap) {
     SGData dCopy = (SGData) data.copy();
-    Map<Class, SGProperties> map = new HashMap<Class, SGProperties>(propertiesMap);
+    Map<Class<?>, SGProperties> map = new HashMap<Class<?>, SGProperties>(propertiesMap);
     DataCopy d = new DataCopy(dCopy, name, map);
     this.mDataList.add(d);
     return d;
@@ -81,7 +81,7 @@ public class SGDataClipBoard {
     private String name = null;
 
     /** Properties of data. */
-    private Map<Class, SGProperties> propertiesMap = new HashMap<Class, SGProperties>();
+    private Map<Class<?>, SGProperties> propertiesMap = new HashMap<Class<?>, SGProperties>();
 
     /**
      * Builds this class object.
@@ -90,7 +90,7 @@ public class SGDataClipBoard {
      * @param name the name of data
      * @param propertiesMap a map of properties for each figure element class
      */
-    private DataCopy(SGData data, String name, Map<Class, SGProperties> propertiesMap) {
+    private DataCopy(SGData data, String name, Map<Class<?>, SGProperties> propertiesMap) {
       super();
       this.data = data;
       this.name = name;
@@ -133,7 +133,7 @@ public class SGDataClipBoard {
      * @param cl class object
      * @return properties for a given class object
      */
-    public SGProperties getProperties(Class cl) {
+    public SGProperties getProperties(Class<?> cl) {
       SGProperties p = this.propertiesMap.get(cl);
       if (p == null) {
         return null;
@@ -147,8 +147,8 @@ public class SGDataClipBoard {
      *
      * @return a map of data properties
      */
-    public Map<Class, SGProperties> getPropertiesMap() {
-      return new HashMap<Class, SGProperties>(this.propertiesMap);
+    public Map<Class<?>, SGProperties> getPropertiesMap() {
+      return new HashMap<Class<?>, SGProperties>(this.propertiesMap);
     }
   }
 }

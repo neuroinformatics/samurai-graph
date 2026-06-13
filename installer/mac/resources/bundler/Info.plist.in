@@ -63,7 +63,7 @@
 		<key>MainClass</key>
 		<string>jp.riken.brain.ni.samuraigraph.application.SGDrawingServer</string>
 		<key>VMOptions</key>
-		<string>-Xmx512m</string>
+		<string>-Xmx512m --add-opens java.desktop/java.awt=ALL-UNNAMED --add-exports java.desktop/sun.awt=ALL-UNNAMED --add-opens java.desktop/sun.awt=ALL-UNNAMED</string>
 		<key>Properties</key>
 		<dict>
 			<key>apple.laf.useScreenMenuBar</key>

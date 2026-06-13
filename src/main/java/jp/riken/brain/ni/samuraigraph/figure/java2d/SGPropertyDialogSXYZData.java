@@ -412,7 +412,7 @@ public class SGPropertyDialogSXYZData extends SGDataDialog
 
   // Set enabled or disabled the components depending on the data type.
   private void updateComponents() {
-    List list = this.mPropertyDialogObserverList;
+    List<SGIPropertyDialogObserver> list = this.mPropertyDialogObserverList;
     boolean enabled = true;
     for (int ii = 0; ii < list.size(); ii++) {
       SGISXYZDataDialogObserver obs = (SGISXYZDataDialogObserver) list.get(ii);

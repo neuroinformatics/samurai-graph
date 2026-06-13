@@ -436,7 +436,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     Number num = null;
     Color cl = null;
     // Boolean b = null;
-    List list = null;
+    List<Color> list = null;
 
     // line width
     str = el.getAttribute(KEY_LINE_WIDTH);

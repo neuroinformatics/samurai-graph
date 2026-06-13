@@ -1063,7 +1063,7 @@ public class SGFigureElementShape extends SGFigureElement2D
   public void paintGraphics(Graphics g, boolean clip) {
     Graphics2D g2d = (Graphics2D) g;
 
-    List list = this.getVisibleChildList();
+    List<SGIChildObject> list = this.getVisibleChildList();
     for (int ii = 0; ii < list.size(); ii++) {
       ShapeObject sh = (ShapeObject) list.get(ii);
       if (sh.isValid() == false) {
@@ -1139,7 +1139,7 @@ public class SGFigureElementShape extends SGFigureElement2D
   /** */
   protected Set<SGIChildObject> getAvailableChildSet() {
     Set<SGIChildObject> set = new HashSet<>();
-    List mList = this.getMementoList();
+    List<SGProperties> mList = this.getMementoList();
     for (int ii = 0; ii < mList.size(); ii++) {
       ShapeElementProperties p = (ShapeElementProperties) mList.get(ii);
       set.addAll(p.visibleShapeList);

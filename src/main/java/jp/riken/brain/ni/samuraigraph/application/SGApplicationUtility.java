@@ -1369,7 +1369,7 @@ public class SGApplicationUtility
           colNum = tokenList.size();
 
           // create list array
-          listArray = new List[colNum];
+          listArray = (List<String>[]) new List<?>[colNum];
           for (int ii = 0; ii < listArray.length; ii++) {
             listArray[ii] = new ArrayList<String>();
           }
@@ -1678,7 +1678,8 @@ public class SGApplicationUtility
 
   public static void showHDF5ReadErrorMessageDialog(Window wnd, String path) {
     String msg =
-        "Given file seems to be HDF5 format, but failed to open it due to unacceptable characters in the file path.";
+        "Given file seems to be HDF5 format, but failed to open it due to unacceptable characters"
+            + " in the file path.";
     showHDF5ReadErrorMessageDialog(wnd, msg, path);
   }
 

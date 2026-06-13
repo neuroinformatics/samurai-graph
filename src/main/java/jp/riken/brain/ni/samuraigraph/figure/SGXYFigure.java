@@ -79,7 +79,7 @@ public class SGXYFigure extends SGFigure
   }
 
   public SGIFigureElement getSymbolElement(final int symbolElementType) {
-    Class cl = null;
+    Class<?> cl = null;
     switch (symbolElementType) {
       case SGIDrawingElementConstants.SYMBOL_ELEMENT_TYPE_STRING:
         cl = SGIFigureElementString.class;
