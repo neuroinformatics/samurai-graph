@@ -8,7 +8,7 @@ import java.util.ServiceLoader;
 public class ExportFileTypeRegistry {
     private static ExportFileTypeRegistry registry;
     private static ClassLoader loader;
-    private List extraTypes = new ArrayList();
+    private List<ExportFileType> extraTypes = new ArrayList<ExportFileType>();
 
     private ExportFileTypeRegistry() {
     }
@@ -27,13 +27,12 @@ public class ExportFileTypeRegistry {
         return registry;
     }
 
-    public List get() {
+    public List<ExportFileType> get() {
         return get(null);
     }
 
-    @SuppressWarnings("unchecked")
-    public List get(String extension) {
-        List list = new ArrayList();
+    public List<ExportFileType> get(String extension) {
+        List<ExportFileType> list = new ArrayList<ExportFileType>();
         
         ClassLoader classLoader = loader != null ? loader : Thread.currentThread().getContextClassLoader();
         ServiceLoader<ExportFileType> serviceLoader = ServiceLoader.load(ExportFileType.class, classLoader);
@@ -44,15 +43,13 @@ public class ExportFileTypeRegistry {
         return list;
     }
 
-    @SuppressWarnings("unchecked")
     public void add(ExportFileType type) {
         extraTypes.add(type);
     }
 
-    @SuppressWarnings("unchecked")
-    private void addExportFileTypeToList(List list, String extension, Iterator iterator) {
+    private void addExportFileTypeToList(List<ExportFileType> list, String extension, Iterator<ExportFileType> iterator) {
         while (iterator.hasNext()) {
-            ExportFileType type = (ExportFileType) iterator.next();
+            ExportFileType type = iterator.next();
             if (extension == null) {
                 if (!list.contains(type)) {
                     list.add(type);

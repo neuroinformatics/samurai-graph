@@ -15,6 +15,7 @@ import javax.swing.event.ChangeListener;
 /**
  * A button used for the selection of the color gradation.
  */
+@SuppressWarnings({"serial", "this-escape"})
 public class SGGradationPaintSelectionButton extends SGButton
 implements ChangeListener {
     

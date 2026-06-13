@@ -55,7 +55,7 @@ public class SGFigureIDSelectionWizardDialog extends SGWizardDialog {
         mCancelButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
         mPanel = new javax.swing.JPanel();
         mFigureIDLabel = new javax.swing.JLabel();
-        mFigureIDComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mFigureIDComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mCreateRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
         mAddRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
         mDataNamePanel = new javax.swing.JPanel();
@@ -161,7 +161,7 @@ public class SGFigureIDSelectionWizardDialog extends SGWizardDialog {
     private javax.swing.JLabel mDataNameLabel;
     private javax.swing.JPanel mDataNamePanel;
     private jp.riken.brain.ni.samuraigraph.base.SGTextField mDataNameTextField;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mFigureIDComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mFigureIDComboBox;
     private javax.swing.JLabel mFigureIDLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGButton mNextButton;
     private jp.riken.brain.ni.samuraigraph.base.SGButton mOKButton;

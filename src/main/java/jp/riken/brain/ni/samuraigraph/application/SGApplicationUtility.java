@@ -589,14 +589,14 @@ public class SGApplicationUtility implements SGIApplicationConstants, SGIApplica
             return null;
         }
         
-        final boolean bp = showProgress && (progress != null);
+        // removed bp
 
         SGIDataSource dataSource = null;
         try {
             final String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
             if (SGDataUtility.isSDArrayData(dataType)) {
 				
-            	if (bp) {
+            	if (showProgress && progress != null) {
                     progress.setProgressMessage(PROGRESS_MESSAGE_READFILE);
             	}
 
@@ -606,7 +606,7 @@ public class SGApplicationUtility implements SGIApplicationConstants, SGIApplica
                     return null;
                 }
 
-            	if (bp) {
+            	if (showProgress && progress != null) {
                     // allocate memory
                     progress.setProgressMessage(PROGRESS_MESSAGE_CREATEDATA);
             	}
@@ -667,7 +667,7 @@ public class SGApplicationUtility implements SGIApplicationConstants, SGIApplica
             }
 			
         } finally {
-        	if (bp) {
+        	if (showProgress && progress != null) {
                 progress.endProgress();
         	}
         }
@@ -1224,10 +1224,7 @@ public class SGApplicationUtility implements SGIApplicationConstants, SGIApplica
         	
         } else if (SGDataUtility.isVXYTypeData(dataType)) {
         	
-        	Boolean polar = SGDataUtility.isPolar(infoMap);
-        	if (polar == null) {
-        		return di;
-        	}
+        	boolean polar = SGDataUtility.isPolar(infoMap);
         	String fColType = SGDataUtility.getVXYFirstComponentColumnType(polar);
         	String sColType = SGDataUtility.getVXYSecondComponentColumnType(polar);
         	
@@ -1331,7 +1328,7 @@ public class SGApplicationUtility implements SGIApplicationConstants, SGIApplica
         // get stride information
         infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, 
         		pfInfoMap.get(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE));
-        @SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 		Map<String, SGIntegerSeriesSet> strideMap = (Map<String, SGIntegerSeriesSet>) pfInfoMap.get(
         		SGIDataInformationKeyConstants.KEY_ALL_STRIDE);
         if (strideMap != null) {
@@ -1390,7 +1387,7 @@ public class SGApplicationUtility implements SGIApplicationConstants, SGIApplica
                 	continue;
                 }
 
-                if (colNum == -1) {
+                if (listArray == null) {
                 	colNum = tokenList.size();
                 	
                 	// create list array
@@ -1805,7 +1802,6 @@ public class SGApplicationUtility implements SGIApplicationConstants, SGIApplica
 	 *          a drop event
 	 * @return  A file list. If some error occurs, returns null.
 	 */
-	@SuppressWarnings("unchecked")
 	public static List<File> getDroppedFileList(final DropTargetDropEvent dtde) {
 	    List<File> fileList = new ArrayList<File>();
 	    dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
@@ -1813,6 +1809,7 @@ public class SGApplicationUtility implements SGIApplicationConstants, SGIApplica
 	        if ((dtde.getDropAction() & DnDConstants.ACTION_COPY_OR_MOVE) != 0) {
 	            Transferable trans = dtde.getTransferable();
 	            if (dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+	                @SuppressWarnings("unchecked")
 	                List<File> list = (List<File>) trans.getTransferData(DataFlavor.javaFileListFlavor);
 	                fileList.addAll(list);
 	            } else if (dtde.isDataFlavorSupported(DataFlavor.stringFlavor)) {

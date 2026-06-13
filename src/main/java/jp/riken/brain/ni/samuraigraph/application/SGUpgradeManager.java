@@ -372,6 +372,9 @@ class SGUpgradeManager implements ActionListener, SGIConstants,
         } else if (owner instanceof Dialog) {
             cfDialog = new SGUpgradeConfirmDialog((Dialog) owner, true);
         }
+        if (cfDialog == null) {
+            return false;
+        }
         cfDialog.setMessage(msg);
         cfDialog.setPage(sb.toString());
         cfDialog.pack();
@@ -674,6 +677,9 @@ class SGUpgradeManager implements ActionListener, SGIConstants,
         default:
         }
 
+        if (fileSaved == null) {
+            return false;
+        }
         String path = fileSaved.getAbsolutePath();
         File file = new File(path);
 
@@ -780,8 +786,10 @@ class SGUpgradeManager implements ActionListener, SGIConstants,
             owner.setCursor(Cursor.getDefaultCursor());
 
             // clear attributes
-            dg.setInputStream(null);
-            dg.setOutputStream(null);
+            if (dg != null) {
+                dg.setInputStream(null);
+                dg.setOutputStream(null);
+            }
 
             // close streams
             if (bis != null) {

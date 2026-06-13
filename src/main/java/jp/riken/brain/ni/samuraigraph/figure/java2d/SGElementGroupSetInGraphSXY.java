@@ -806,7 +806,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
             throw new IllegalArgumentException("(data instanceof SGISXYTypeData) == false");
         }
 
-        ArrayList rectList = new ArrayList();
+        ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
         List<SGElementGroupTickLabel> tickLabelGroups = this.getTickLabelGroups();
         if (tickLabelGroups.size() == 0) {
             return null;
@@ -817,7 +817,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
             return null;
         }
 
-        ArrayList strList = new ArrayList();
+        ArrayList<SGIDrawingElementJava2D> strList = new ArrayList<SGIDrawingElementJava2D>();
         SGDrawingElement[] elArray = group.getDrawingElementArray();
         for (int ii = 0; ii < elArray.length; ii++) {
             if (!elArray[ii].isVisible()) {
@@ -832,7 +832,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
                     continue;
                 }
             }
-            strList.add(elArray[ii]);
+            strList.add((SGIDrawingElementJava2D) elArray[ii]);
         }
 
         Rectangle2D rectAll = SGUtilityForFigureElementJava2D.getBoundingBox(strList);
@@ -842,7 +842,8 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
         rectList.add(rectAll);
 
         // join the rectangles
-        Rectangle2D uniRect = SGUtility.createUnion(rectList);
+        @SuppressWarnings("rawtypes")
+        Rectangle2D uniRect = SGUtility.createUnion((ArrayList) rectList);
         if (uniRect == null) {
             return null;
         }

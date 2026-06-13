@@ -1,6 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class SGAxisDoubleValue extends SGAxisValue {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class SGExclusiveAccessController {
     //
-    private ArrayList mSelectableList = new ArrayList();
+    private ArrayList<SGISelectable> mSelectableList = new ArrayList<SGISelectable>();
 
     /**
      * 
@@ -46,12 +46,12 @@ public class SGExclusiveAccessController {
      * @param obj
      */
     public void select(final SGISelectable obj) {
-        ArrayList list = this.mSelectableList;
+        ArrayList<SGISelectable> list = this.mSelectableList;
         if (!list.contains(obj)) {
             throw new IllegalArgumentException("!list.contains(obj)");
         }
         for (int ii = 0; ii < list.size(); ii++) {
-            SGISelectable s = (SGISelectable) list.get(ii);
+            SGISelectable s = list.get(ii);
             s.setSelected(s.equals(obj));
         }
     }
@@ -61,15 +61,15 @@ public class SGExclusiveAccessController {
      * @param obj
      */
     public void deselect(final SGISelectable obj) {
-        ArrayList list = this.mSelectableList;
+        ArrayList<SGISelectable> list = this.mSelectableList;
         if (!list.contains(obj)) {
             throw new IllegalArgumentException("!list.contains(obj)");
         }
         for (int ii = 0; ii < list.size(); ii++) {
-            SGISelectable s = (SGISelectable) list.get(ii);
+            SGISelectable s = list.get(ii);
             if (s.equals(obj)) {
                 s.setSelected(false);
-                SGISelectable ss = (SGISelectable) list.get((ii + 1)
+                SGISelectable ss = list.get((ii + 1)
                         % list.size());
                 ss.setSelected(true);
                 return;
@@ -83,13 +83,13 @@ public class SGExclusiveAccessController {
      * @param sub
      */
     public void deselect(final SGISelectable obj, final SGISelectable sub) {
-        ArrayList list = this.mSelectableList;
+        ArrayList<SGISelectable> list = this.mSelectableList;
         if (!list.contains(obj) || !list.contains(sub)) {
             throw new IllegalArgumentException(
                     "!list.contains(obj) || !list.contains(sub)");
         }
         for (int ii = 0; ii < list.size(); ii++) {
-            SGISelectable s = (SGISelectable) list.get(ii);
+            SGISelectable s = list.get(ii);
             if (s.equals(obj)) {
                 s.setSelected(false);
                 sub.setSelected(true);

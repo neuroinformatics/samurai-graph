@@ -1499,7 +1499,7 @@ public abstract class SGElementGroupSetForData extends
     	boolean succeeded = true;
     	String[] colNames = new String[values.length];
     	String[] colValues = new String[values.length];
-    	@SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 		Map<String, Integer>[] colDims = new Map[values.length];
     	if (isSDArrayData || isNetCDFData) {
         	for (int ii = 0; ii < values.length; ii++) {
@@ -1789,7 +1789,7 @@ public abstract class SGElementGroupSetForData extends
 
     	// create an array of column types
 		String[] columnTypes = new String[vars.length];
-    	@SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 		Map<String, Integer>[] dimensionMaps = new Map[vars.length];
     	for (int ii = 0; ii < columnTypes.length; ii++) {
     		columnTypes[ii] = "";

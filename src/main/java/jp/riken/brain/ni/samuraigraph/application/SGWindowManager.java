@@ -47,7 +47,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
  */
 class SGWindowManager implements ActionListener, DropTargetListener,
 		PropertyChangeListener, WindowListener, ComponentListener,
-		SGIRootObjectConstants, SGIPreferencesConstants,
+		SGIPreferencesConstants,
 		SGIApplicationTextConstants, SGIApplicationConstants,
 		SGIImageConstants, SGIApplicationCommandConstants {
 
@@ -455,7 +455,7 @@ class SGWindowManager implements ActionListener, DropTargetListener,
         List<SGDrawingWindow> wList = new ArrayList<SGDrawingWindow>(
                 this.mWndMap.values());
         for (int ii = 0; ii < wList.size(); ii++) {
-            SGDrawingWindow wnd = (SGDrawingWindow) wList.get(ii);
+            SGDrawingWindow wnd = wList.get(ii);
             wnd.setPasteMenuEnabled(b);
         }
     }

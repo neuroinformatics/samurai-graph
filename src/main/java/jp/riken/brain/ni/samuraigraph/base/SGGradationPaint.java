@@ -164,7 +164,7 @@ implements SGIDisposable {
     }
     
     public Color[] getColors() {
-        return (Color[]) this.mColors.clone();
+        return this.mColors.clone();
     }
     
     public boolean setDirection(final int direction) {

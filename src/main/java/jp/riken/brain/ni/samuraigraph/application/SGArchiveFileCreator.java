@@ -26,25 +26,23 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow.BackgroundImage;
 import jp.riken.brain.ni.samuraigraph.base.SGExtensionFileFilter;
 import jp.riken.brain.ni.samuraigraph.base.SGFileChooser;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /**
  * Create an archive file.
  */
-public class SGArchiveFileCreator extends SGFileHandler implements SGIConstants, 
-		SGIApplicationConstants, SGIArchiveFileConstants {
+public class SGArchiveFileCreator extends SGFileHandler implements SGIApplicationConstants, SGIArchiveFileConstants {
 
     /**
      * Constant value of End of File
      */
     protected static final int EOF = -1;
-    
+
     /**
      * Constructs an object.
      * 
      */
     public SGArchiveFileCreator() {
-    	super();
+        super();
         this.initFilePath(DEFAULT_ARCHIVE_FILE_NAME, ARCHIVE_FILE_EXTENSION);
     }
 
@@ -69,7 +67,7 @@ public class SGArchiveFileCreator extends SGFileHandler implements SGIConstants,
         if (flist.size() == 0) {
             return -2;
         }
-        
+
         final String rootname = root.getAbsolutePath() + File.separator;
 
         ByteArrayOutputStream baos = null;
@@ -92,19 +90,19 @@ public class SGArchiveFileCreator extends SGFileHandler implements SGIConstants,
                 zental.add(zent);
                 writeFileEntry(zos, file, zent);
             }
-            
+
             BackgroundImage bgImg = wnd.getBackgroundImage();
             byte[] imageByteArray = null;
             ZipEntry imageZipEntry = null;
             if (bgImg != null) {
-            	imageByteArray = bgImg.getByteArray();
+                imageByteArray = bgImg.getByteArray();
                 String ext = bgImg.getExtension();
                 StringBuffer sb = new StringBuffer();
                 sb.append(ARCHIVE_IMAGE_NAME);
                 sb.append('.');
                 sb.append(ext);
                 String entryname = sb.toString();
-            	imageZipEntry = new ZipEntry(entryname);
+                imageZipEntry = new ZipEntry(entryname);
                 writeFileEntry(zos, imageByteArray, imageZipEntry);
             }
 
@@ -120,11 +118,11 @@ public class SGArchiveFileCreator extends SGFileHandler implements SGIConstants,
                 ZipEntry zent = zental.get(ii);
                 writeFileEntry(zos, file, zent);
             }
-            
+
             if (bgImg != null) {
                 writeFileEntry(zos, imageByteArray, imageZipEntry);
             }
-            
+
             zos.finish();
 
             // get compressed data and write zip file
@@ -143,19 +141,19 @@ public class SGArchiveFileCreator extends SGFileHandler implements SGIConstants,
             return -1;
         } finally {
             try {
-                zos.close();
+                if (zos != null) zos.close();
             } catch (Exception e) {
             }
             try {
-                baos.close();
+                if (baos != null) baos.close();
             } catch (Exception e) {
             }
             try {
-                bos.close();
+                if (bos != null) bos.close();
             } catch (Exception e) {
             }
             try {
-                fos.close();
+                if (fos != null) fos.close();
             } catch (Exception e) {
             }
         }
@@ -193,40 +191,41 @@ public class SGArchiveFileCreator extends SGFileHandler implements SGIConstants,
         }
         return null;
     }
-    
+
     public static class ArchiveFile {
         public File file = null;
         public String desc = null;
     }
 
     /**
-     * Change file extension in chooser text filename field by selecting file filter.
+     * Change file extension in chooser text filename field by selecting file
+     * filter.
      */
     public static class FileFileterPropertyChangeListenr implements PropertyChangeListener {
-        
+
         private final SGFileChooser chooser;
-        
+
         private File currentFile = null;
-        
+
         public FileFileterPropertyChangeListenr(SGFileChooser chooser, File currentFile) {
             this.chooser = chooser;
             this.currentFile = currentFile;
         }
-        
+
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             String s = evt.getPropertyName();
             FileChooserUI ui = chooser.getUI();
             BasicFileChooserUI bui = null;
             if (ui instanceof BasicFileChooserUI) {
-                bui = (BasicFileChooserUI)ui;
+                bui = (BasicFileChooserUI) ui;
             }
-            if (bui==null) {
+            if (bui == null) {
                 return;
             }
-            if(s.equals(JFileChooser.FILE_FILTER_CHANGED_PROPERTY)) {
+            if (s.equals(JFileChooser.FILE_FILTER_CHANGED_PROPERTY)) {
                 File file = this.chooser.getSelectedFile();
-                if (null!=file) {
+                if (null != file) {
                     this.currentFile = file;
                     return;
                 } else {
@@ -235,7 +234,7 @@ public class SGArchiveFileCreator extends SGFileHandler implements SGIConstants,
             }
         }
     }
-    
+
     private JFileChooser createFileChooser() {
         // set the file extension filter
         SGExtensionFileFilter ffOlder = new SGExtensionFileFilter();
@@ -244,28 +243,28 @@ public class SGArchiveFileCreator extends SGFileHandler implements SGIConstants,
         SGExtensionFileFilter ff = new SGExtensionFileFilter();
         ff.setExplanation(ARCHIVE_FILE_DESCRIPTION);
         ff.addExtension(ARCHIVE_FILE_EXTENSION);
-		SGExtensionFileFilter[] ffArray = { ffOlder, ff };
-		JFileChooser chooser = SGApplicationUtility.createFileChooser(
-				this.mCurrentDirectory, this.mCurrentFileName, ffArray, "");
+        SGExtensionFileFilter[] ffArray = { ffOlder, ff };
+        JFileChooser chooser = SGApplicationUtility.createFileChooser(
+                this.mCurrentDirectory, this.mCurrentFileName, ffArray, "");
 
         // add property change listener for selection of file filter.
         String path = SGApplicationUtility.getPathName(this.mCurrentDirectory, this.mCurrentFileName);
         FileFileterPropertyChangeListenr ffChangeListener = new FileFileterPropertyChangeListenr(
-        		(SGFileChooser) chooser, new File(path));
+                (SGFileChooser) chooser, new File(path));
         chooser.addPropertyChangeListener(ffChangeListener);
-        
+
         return chooser;
     }
-    
+
     /**
      * 
      * @param wnd
      * @return
      */
     public ArchiveFile getArchiveFileFromFileChooser(final Component parent) throws IOException {
-    	
-    	// creates a file chooser
-    	JFileChooser chooser = this.createFileChooser();
+
+        // creates a file chooser
+        JFileChooser chooser = this.createFileChooser();
 
         // show save dialog
         final int ret = chooser.showSaveDialog(parent);
@@ -274,14 +273,14 @@ public class SGArchiveFileCreator extends SGFileHandler implements SGIConstants,
         if (ret == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             this.setSelectedFile(file);
-            
+
             FileFilter filter = chooser.getFileFilter();
             if (filter instanceof SGExtensionFileFilter) {
                 SGExtensionFileFilter fSelected = (SGExtensionFileFilter) filter;
                 final String desc = fSelected.getExplanation();
                 aFile.desc = desc;
             } else {
-            	aFile.desc = ARCHIVE_FILE_DESCRIPTION;
+                aFile.desc = ARCHIVE_FILE_DESCRIPTION;
             }
             aFile.file = file;
         }
@@ -293,10 +292,10 @@ public class SGArchiveFileCreator extends SGFileHandler implements SGIConstants,
      * Get the target file list
      * 
      * @param dirname :
-     *            root directory
+     *                root directory
      */
     private static List<File> _getDirFileList(final String dirname) {
-    	List<File> list = new ArrayList<File>();
+        List<File> list = new ArrayList<File>();
         File dir = new File(dirname);
         if (!dir.isDirectory()) {
             return list;
@@ -345,12 +344,12 @@ public class SGArchiveFileCreator extends SGFileHandler implements SGIConstants,
     /**
      * Write the file and zip entry to zip stream.
      * 
-     * @param zos :
-     *            archive file output stream
-     * @param file :
-     *            target file
+     * @param zos    :
+     *               archive file output stream
+     * @param file   :
+     *               target file
      * @param zentry :
-     *            Zip Entry
+     *               Zip Entry
      * @throws ZipException
      * @throws IOException
      */

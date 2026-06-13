@@ -9,6 +9,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
+import javax.swing.JTextField;
+
+import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
+import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 
 import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
@@ -93,7 +97,7 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
         mBackgroundTransparentSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mEdgeLineVisibleCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
         mEdgeLineTypeLabel = new javax.swing.JLabel();
-        mEdgeLineTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mEdgeLineTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mLeftXPanel = new javax.swing.JPanel();
         mLeftXValueTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
         mLeftXDateButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
@@ -497,7 +501,7 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
     private jp.riken.brain.ni.samuraigraph.base.SGButton mCancelButton;
     private javax.swing.JLabel mEdgeLineLabel;
     private javax.swing.JSeparator mEdgeLineSeparator;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mEdgeLineTypeComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mEdgeLineTypeComboBox;
     private javax.swing.JLabel mEdgeLineTypeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mEdgeLineVisibleCheckBox;
     private javax.swing.JLabel mEdgeLineWidthLabel;
@@ -746,8 +750,8 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
     /**
      * 
      */
-    public List getColorSelectionButtonsList() {
-        final List list = new ArrayList();
+    public List<SGColorSelectionButton> getColorSelectionButtonsList() {
+        final List<SGColorSelectionButton> list = new ArrayList<SGColorSelectionButton>();
         list.add(this.mLineColorButton);
         list.add(this.mInnerFillPaintButton);
         return list;
@@ -756,8 +760,9 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
     /**
      * 
      */
-    public List getTextFieldComponentsList() {
-        final List list = this.getFormattedTextFieldsListFromSpinners();
+    public List<JTextField> getTextFieldComponentsList() {
+        final List<JTextField> list = new ArrayList<JTextField>();
+        list.addAll(this.getFormattedTextFieldsListFromSpinners());
         list.addAll(this.getAxisNumberTextFieldList());
         return list;
     }
@@ -767,8 +772,8 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
      * 
      * @return
      */
-    public List getAxisNumberTextFieldList() {
-        final List list = new ArrayList();
+    public List<SGTextField> getAxisNumberTextFieldList() {
+        final List<SGTextField> list = new ArrayList<SGTextField>();
         list.add(this.mLeftXValueTextField);
         list.add(this.mRightXValueTextField);
         list.add(this.mTopYValueTextField);

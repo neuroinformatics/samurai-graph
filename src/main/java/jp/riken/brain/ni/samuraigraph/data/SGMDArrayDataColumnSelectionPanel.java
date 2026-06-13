@@ -516,6 +516,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     	return list;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     protected class GenericDimensionCellEditor extends DefaultCellEditor {
 
 		private static final long serialVersionUID = -7057361850365123546L;
@@ -558,6 +559,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
         this.mGenericDimensionEditorComboBox.setDeprecatedList(deprecatedList);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     protected class TimeCellEditor extends DefaultCellEditor {
 
 		private static final long serialVersionUID = -8323763303354706069L;
@@ -616,6 +618,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
         this.mTimeDimensionEditorComboBox.setDeprecatedList(deprecatedList);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     protected class PickUpDimensionCellEditor extends DefaultCellEditor {
 
 		private static final long serialVersionUID = -8136894336623617659L;
@@ -848,6 +851,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
 		info.clearDimensionIndex(key);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected class DimensionEditorComboBox extends SGComboBox {
 		private static final long serialVersionUID = -1258556477585773902L;
 		public DimensionEditorComboBox() {

@@ -46,6 +46,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGIColorBarConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIColorBarDialogObserver;
 import jp.riken.brain.ni.samuraigraph.figure.SGIStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGStroke;
+import jp.riken.brain.ni.samuraigraph.figure.java2d.SGAxisElement.*;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

@@ -23,8 +23,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGSDArrayFile;
  * A class of wizard dialog to select the type of each column.
  * 
  */
-public class SGSDArrayDataSetupWizardDialog extends SGDataSetupWizardDialog implements
-    SGIDataColumnTypeConstants, PropertyChangeListener, SGIApplicationTextConstants {
+public class SGSDArrayDataSetupWizardDialog extends SGDataSetupWizardDialog {
 
     /**
      * Serial Version UID.

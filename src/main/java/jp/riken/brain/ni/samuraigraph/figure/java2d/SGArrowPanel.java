@@ -64,15 +64,15 @@ public class SGArrowPanel extends SGPropertyPanel implements
         mLineWidthLabel = new javax.swing.JLabel();
         mLineWidthSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mLineTypeLabel = new javax.swing.JLabel();
-        mLineTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mLineTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mCloseAngleSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mCloseAngleLabel = new javax.swing.JLabel();
         mOpenAngleSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mOpenAngleLabel = new javax.swing.JLabel();
         mStartHeadTypeLabel = new javax.swing.JLabel();
-        mStartHeadTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mStartHeadTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mEndHeadTypeLabel = new javax.swing.JLabel();
-        mEndHeadTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mEndHeadTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -226,17 +226,17 @@ public class SGArrowPanel extends SGPropertyPanel implements
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mCloseAngleSpinner;
     private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mColorButton;
     private javax.swing.JLabel mColorLabel;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mEndHeadTypeComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mEndHeadTypeComboBox;
     private javax.swing.JLabel mEndHeadTypeLabel;
     private javax.swing.JLabel mHeadSizeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mHeadSizeSpinner;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mLineTypeComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mLineTypeComboBox;
     private javax.swing.JLabel mLineTypeLabel;
     private javax.swing.JLabel mLineWidthLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mLineWidthSpinner;
     private javax.swing.JLabel mOpenAngleLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mOpenAngleSpinner;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mStartHeadTypeComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mStartHeadTypeComboBox;
     private javax.swing.JLabel mStartHeadTypeLabel;
     // End of variables declaration//GEN-END:variables
 

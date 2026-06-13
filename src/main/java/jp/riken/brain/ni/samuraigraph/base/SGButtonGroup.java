@@ -11,7 +11,7 @@ import javax.swing.AbstractButton;
  */
 public class SGButtonGroup implements ActionListener {
 
-    private ArrayList mButtonList = new ArrayList();
+    private ArrayList<AbstractButton> mButtonList = new ArrayList<AbstractButton>();
 
     /**
      * The default constructor.
@@ -44,9 +44,9 @@ public class SGButtonGroup implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         AbstractButton btn = (AbstractButton) e.getSource();
-        ArrayList list = this.mButtonList;
+        ArrayList<AbstractButton> list = this.mButtonList;
         for (int ii = 0; ii < list.size(); ii++) {
-            AbstractButton b = (AbstractButton) list.get(ii);
+            AbstractButton b = list.get(ii);
             if (btn.equals(b) == false) {
                 b.setSelected(false);
             }

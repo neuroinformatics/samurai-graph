@@ -723,13 +723,13 @@ public class SGDataCreator implements SGIConstants, SGIDataColumnTypeConstants, 
             }
             List<Integer> indexList = new ArrayList<Integer>();
             for (int ii = 0; ii < listArray.length; ii++) {
-                Integer firstIndex = (Integer) firstIndexList.get(ii);
+                Integer firstIndex = firstIndexList.get(ii);
                 List<String> list = listArray[ii];
                 if (firstIndex.intValue() != 0) {
                     // number
                     boolean err = false;
                     for (int jj = 0; jj < list.size(); jj++) {
-                        String value = (String) list.get(jj);
+                        String value = list.get(jj);
                         // check the number
                         if (SGUtilityText.getDouble(value) == null) {
                             err = true;
@@ -840,7 +840,7 @@ public class SGDataCreator implements SGIConstants, SGIDataColumnTypeConstants, 
             if (SGApplicationUtility.evaluteTitleList(indexList)) {
                 // this line represents titles
                 for (int ii = 0; ii < colNum; ii++) {
-                    Token token = (Token) tokenList.get(ii);
+                    Token token = tokenList.get(ii);
                     titles[ii] = token.getString();
                 }
 
@@ -863,7 +863,7 @@ public class SGDataCreator implements SGIConstants, SGIDataColumnTypeConstants, 
                 fileColumns[ii].index = ii;
                 fileColumns[ii].title = titles[ii];
                 String valueType = null;
-                Token token = (Token) tokenList.get(ii);
+                Token token = tokenList.get(ii);
                 if (token.isDoubleQuoted()) {
                 	SGDate d = SGUtilityText.getDate(token.getString());
                     if (d != null) {
@@ -915,7 +915,7 @@ public class SGDataCreator implements SGIConstants, SGIDataColumnTypeConstants, 
                 // check number columns
                 List<Integer> errNumColList = new ArrayList<Integer>();
                 for (int ii = 0; ii < numColList.size(); ii++) {
-                    Integer colIndex = (Integer) numColList.get(ii);
+                    Integer colIndex = numColList.get(ii);
                     List<String> list = listArray[colIndex.intValue()];
                     boolean valid = true;
                     for (int jj = 0; jj < list.size(); jj++) {
@@ -933,7 +933,7 @@ public class SGDataCreator implements SGIConstants, SGIDataColumnTypeConstants, 
                 // check date columns
                 List<Integer> errDateColList = new ArrayList<Integer>();
                 for (int ii = 0; ii < dateColList.size(); ii++) {
-                    Integer colIndex = (Integer) dateColList.get(ii);
+                    Integer colIndex = dateColList.get(ii);
                     List<String> list = listArray[colIndex.intValue()];
                     boolean valid = true;
                     for (int jj = 0; jj < list.size(); jj++) {
@@ -950,11 +950,11 @@ public class SGDataCreator implements SGIConstants, SGIDataColumnTypeConstants, 
 
                 // replace the column type from number or date to text
                 for (int ii = 0; ii < errNumColList.size(); ii++) {
-                    Integer colIndex = (Integer) errNumColList.get(ii);
+                    Integer colIndex = errNumColList.get(ii);
                     fileColumns[colIndex.intValue()].valueType = VALUE_TYPE_TEXT;
                 }
                 for (int ii = 0; ii < errDateColList.size(); ii++) {
-                    Integer colIndex = (Integer) errDateColList.get(ii);
+                    Integer colIndex = errDateColList.get(ii);
                     fileColumns[colIndex.intValue()].valueType = VALUE_TYPE_TEXT;
                 }
             }
@@ -1866,7 +1866,7 @@ public class SGDataCreator implements SGIConstants, SGIDataColumnTypeConstants, 
     }
 
     private boolean setTimeIndexMap(SGMDArrayData mdData, Map<String, Object> infoMap) {
-        @SuppressWarnings("unchecked")
+		@SuppressWarnings("unchecked")
 		Map<String, Integer> timeIndexMap = (Map<String, Integer>) infoMap.get(
         		SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP);
         if (timeIndexMap != null) {
@@ -2327,7 +2327,7 @@ public class SGDataCreator implements SGIConstants, SGIDataColumnTypeConstants, 
 
         } else {
 
-            @SuppressWarnings("unchecked")
+			@SuppressWarnings("unchecked")
 			Map<String, Integer> pickUpDimensionIndexMap = (Map<String, Integer>) infoMap.get(
             		SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP);
 

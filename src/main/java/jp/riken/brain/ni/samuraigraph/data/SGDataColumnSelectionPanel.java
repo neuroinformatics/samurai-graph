@@ -648,13 +648,13 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
         /**
          * Returns the combo box component.
          */
+        @SuppressWarnings("unchecked")
         public Component getTableCellEditorComponent(JTable table,
                 Object value, boolean isSelected, int row, int column) {
 
         	String[] items = getColumnTypeEditorComboBoxItems(row);
 
             // set up new combo box items
-            @SuppressWarnings("unchecked")
             JComboBox<String> cb = (JComboBox<String>) super.getTableCellEditorComponent(table,
                     value, isSelected, row, column);
             

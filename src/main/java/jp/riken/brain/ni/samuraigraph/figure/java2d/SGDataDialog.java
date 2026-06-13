@@ -12,6 +12,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
+import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
@@ -68,24 +69,24 @@ public abstract class SGDataDialog extends SGPropertyDialog {
      */
     protected String getDataNameFromObservers() {
 
-        List oList = this.mPropertyDialogObserverList;
+        List<SGIPropertyDialogObserver> oList = this.mPropertyDialogObserverList;
         final int len = oList.size();
         if (len == 0) {
             return null;
         }
 
-        ArrayList nList = new ArrayList(len);
+        ArrayList<String> nList = new ArrayList<String>(len);
         for (int ii = 0; ii < len; ii++) {
             SGIDataPropertyDialogObserver l = (SGIDataPropertyDialogObserver) oList
                     .get(ii);
             nList.add(l.getName());
         }
 
-        String name0 = (String) nList.get(0);
+        String name0 = nList.get(0);
         String name = name0;
         if (len > 1) {
             for (int ii = 1; ii < len; ii++) {
-                String name1 = (String) nList.get(ii);
+                String name1 = nList.get(ii);
                 if (name0.equals(name1) == false) {
                     name = null;
                     break;
@@ -104,24 +105,24 @@ public abstract class SGDataDialog extends SGPropertyDialog {
      */
     protected Boolean getLegendVisibleFromObservers() {
 
-        List oList = this.mPropertyDialogObserverList;
+        List<SGIPropertyDialogObserver> oList = this.mPropertyDialogObserverList;
         final int len = oList.size();
         if (len == 0) {
             return null;
         }
 
-        ArrayList lList = new ArrayList(len);
+        ArrayList<Boolean> lList = new ArrayList<Boolean>(len);
         for (int ii = 0; ii < len; ii++) {
             SGIDataPropertyDialogObserver l = (SGIDataPropertyDialogObserver) oList
                     .get(ii);
             lList.add(Boolean.valueOf(l.getLegendVisibleFlag()));
         }
 
-        Boolean b0 = (Boolean) lList.get(0);
+        Boolean b0 = lList.get(0);
         Boolean b = b0;
         if (len > 1) {
             for (int ii = 1; ii < len; ii++) {
-                Boolean b1 = (Boolean) lList.get(ii);
+                Boolean b1 = lList.get(ii);
                 if (b0.equals(b1) == false) {
                     b = null;
                     break;
