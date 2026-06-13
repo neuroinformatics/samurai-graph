@@ -112,9 +112,9 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
         mSpaceTitleAndNumbersSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mTitleFontPanel = new javax.swing.JPanel();
         mTitleFontFamilyNameLabel = new javax.swing.JLabel();
-        mTitleFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mTitleFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mTitleFontStyleLabel = new javax.swing.JLabel();
-        mTitleFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mTitleFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mTitleFontSizeLabel = new javax.swing.JLabel();
         mTitleFontSizeSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mTitleFontColorLabel = new javax.swing.JLabel();
@@ -126,9 +126,9 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
         mNumberSubPanel = new javax.swing.JPanel();
         mNumberFontPanel = new javax.swing.JPanel();
         mNumberFontFamilyNameLabel = new javax.swing.JLabel();
-        mNumberFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mNumberFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mNumberFontStyleLabel = new javax.swing.JLabel();
-        mNumberFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mNumberFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mNumberFontSizeLabel = new javax.swing.JLabel();
         mNumberFontSizeSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mNumberFontColorLabel = new javax.swing.JLabel();
@@ -149,7 +149,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
         mNumberDateFormatLabel = new javax.swing.JLabel();
         mNumberDateLabel = new javax.swing.JLabel();
         mNumberDateSeparator = new javax.swing.JSeparator();
-        mNumberDateFormatComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mNumberDateFormatComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mTickMarkTabPanel = new javax.swing.JPanel();
         mTickMarkSubPanel = new javax.swing.JPanel();
         mMinorTickMarkPanel = new javax.swing.JPanel();
@@ -995,7 +995,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
 
         mExponentSpinner.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         mExponentSpinner.setPreferredSize(new java.awt.Dimension(40, 20));
-        mExponentSpinner.setValue(new Integer(0));
+        mExponentSpinner.setValue(0);
         mExponentSpinner.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -1177,7 +1177,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     private javax.swing.JLabel mNumberAngleLabel;
     private javax.swing.JPanel mNumberAnglePanel;
     jp.riken.brain.ni.samuraigraph.base.SGSpinner mNumberAngleSpinner;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mNumberDateFormatComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mNumberDateFormatComboBox;
     private javax.swing.JLabel mNumberDateFormatLabel;
     private javax.swing.JLabel mNumberDateLabel;
     private javax.swing.JPanel mNumberDatePanel;
@@ -1193,11 +1193,11 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mNumberFontColorButton;
     private javax.swing.JLabel mNumberFontColorLabel;
     private javax.swing.JLabel mNumberFontFamilyNameLabel;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mNumberFontNameComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mNumberFontNameComboBox;
     private javax.swing.JPanel mNumberFontPanel;
     private javax.swing.JLabel mNumberFontSizeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mNumberFontSizeSpinner;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mNumberFontStyleComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mNumberFontStyleComboBox;
     private javax.swing.JLabel mNumberFontStyleLabel;
     private javax.swing.JPanel mNumberSubPanel;
     protected javax.swing.JPanel mNumberTabPanel;
@@ -1233,11 +1233,11 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mTitleFontColorButton;
     private javax.swing.JLabel mTitleFontColorLabel;
     private javax.swing.JLabel mTitleFontFamilyNameLabel;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mTitleFontNameComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mTitleFontNameComboBox;
     private javax.swing.JPanel mTitleFontPanel;
     private javax.swing.JLabel mTitleFontSizeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mTitleFontSizeSpinner;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mTitleFontStyleComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mTitleFontStyleComboBox;
     private javax.swing.JLabel mTitleFontStyleLabel;
     private javax.swing.JLabel mTitleShiftFromCenterLabel;
     jp.riken.brain.ni.samuraigraph.base.SGSpinner mTitleShiftFromCenterSpinner;

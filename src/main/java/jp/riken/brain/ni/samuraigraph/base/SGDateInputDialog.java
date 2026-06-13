@@ -141,7 +141,7 @@ public class SGDateInputDialog extends SGAbstractDateInputDialog {
 
         mYearSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         mYearSpinner.setPreferredSize(new java.awt.Dimension(80, 24));
-        mYearSpinner.setValue(new Integer(0));
+        mYearSpinner.setValue(0);
         mYearSpinner.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -175,7 +175,7 @@ public class SGDateInputDialog extends SGAbstractDateInputDialog {
 
         mMillisecondSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         mMillisecondSpinner.setPreferredSize(new java.awt.Dimension(80, 24));
-        mMillisecondSpinner.setValue(new Integer(0));
+        mMillisecondSpinner.setValue(0);
         mMillisecondSpinner.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;

@@ -2075,7 +2075,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends
                     result.putResult(key, SGPropertyResults.INVALID_INPUT_VALUE);
                     return false;
                 }
-                SGNetCDFPickUpDimensionInfo info = new SGNetCDFPickUpDimensionInfo(dim.getName(), indices);
+                SGNetCDFPickUpDimensionInfo info = new SGNetCDFPickUpDimensionInfo(dim.getShortName(), indices);
             	if (sxyData.setPickUpDimensionInfo(info) == false) {
                     result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
                     return false;
@@ -2906,7 +2906,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends
         		SGInteger end = this.createInteger(pickUpEnd, len);
         		SGInteger step = this.createInteger(pickUpStep, len);
                 SGIntegerSeriesSet indices = new SGIntegerSeriesSet(start, end, step);
-                SGNetCDFPickUpDimensionInfo info = new SGNetCDFPickUpDimensionInfo(dim.getName(), indices);
+                SGNetCDFPickUpDimensionInfo info = new SGNetCDFPickUpDimensionInfo(dim.getShortName(), indices);
             	if (sxyData.setPickUpDimensionInfo(info) == false) {
             		this.setPickUpResults(map, result, pickUpStart, pickUpEnd, pickUpStep,
             				SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3234,7 +3234,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends
                     newInfo = new SGNetCDFPickUpDimensionInfo(pickUpVar.getName(), indices);
                     result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
             	} else {
-            		newInfo = this.getNetCDFPickUpInfo(map, result, dim.getName(), len, null);
+            		newInfo = this.getNetCDFPickUpInfo(map, result, dim.getShortName(), len, null);
             		if (newInfo == null) {
                 		// get default pick up stride
                 		SGDataColumnInfo[] infoArray = this.getDataColumnInfoArray();

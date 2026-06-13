@@ -30,7 +30,7 @@ import ucar.ma2.ArrayChar;
 import ucar.ma2.DataType;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 /**
@@ -1437,7 +1437,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements
 		}
 		SGSXYNetCDFMultipleData data = new SGSXYNetCDFMultipleData(
 				this.getNetcdfFile(), this.getDataSourceObserver(),
-				x, y, le, ue, eh, tl, th, dim.getName(), pickUpIndices, time, index,
+				x, y, le, ue, eh, tl, th, dim.getShortName(), pickUpIndices, time, index,
 				this.mStride, this.mTickLabelStride, this.isStrideAvailable());
         data.setDecimalPlaces(this.mDecimalPlaces);
         data.setExponent(this.mExponent);
@@ -1680,7 +1680,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements
 	}
 
 	@Override
-	protected boolean exportToFile(NetcdfFileWriteable ncWrite, 
+	protected boolean exportToFile(NetcdfFileWriter ncWrite, 
 			final SGExportParameter mode, SGDataBufferPolicy policy)
 			throws IOException, InvalidRangeException {
 		// do nothing
@@ -1939,7 +1939,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements
 	public String getToolTipSpatiallyVaried(final int index) {
 		SGNetCDFVariable cVar = this.getCoordinateVariable();
 		Dimension dim = cVar.getDimension(0);
-		String name = dim.getName();
+		String name = dim.getShortName();
 		Double value = null;
 		try {
 			value = this.getCoordinateValue(name, index);
@@ -1963,7 +1963,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements
     public String getToolTipSpatiallyVaried(final int index0, final int index1) {
 		SGNetCDFVariable cVar = this.getCoordinateVariable();
 		Dimension dim = cVar.getDimension(0);
-		String name = dim.getName();
+		String name = dim.getShortName();
 		Double value0 = null;
 		try {
 			value0 = this.getCoordinateValue(name, index0);
@@ -2122,7 +2122,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements
 	}
 
 	@Override
-    protected Array setEditedValues(NetcdfFileWriteable ncWrite,
+    protected Array setEditedValues(NetcdfFileWriter ncWrite,
     		String varName, Array array, final boolean all) {
 		// do nothing
     	return array;

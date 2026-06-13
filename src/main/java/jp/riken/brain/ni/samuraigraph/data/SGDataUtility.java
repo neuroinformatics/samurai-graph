@@ -3,6 +3,7 @@ package jp.riken.brain.ni.samuraigraph.data;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -1433,7 +1434,7 @@ public class SGDataUtility implements SGIDataColumnTypeConstants, SGIDataPropert
                     return false;
                 }
                 String pickUpDimName = pickUpDimNameList.get(0);
-                Dimension pickUpDim = ncfile.findDimension(pickUpDimName);
+                Dimension pickUpDim = ncfile.getNetcdfFile().findDimension(pickUpDimName);
                 if (pickUpDim == null) {
                     return false;
                 }
@@ -3570,7 +3571,7 @@ public class SGDataUtility implements SGIDataColumnTypeConstants, SGIDataPropert
             List<Attribute> attrList = var.getAttributes();
             for (Attribute attr : attrList) {
                 if (attr.isString()) {
-                    String name = attr.getName();
+                    String name = attr.getShortName();
                     String value = attr.getStringValue();
                     if (ATTRIBUTE_VALUE_TYPE.equals(name.trim()) &&
                         SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(value.trim())) {
@@ -3595,7 +3596,7 @@ public class SGDataUtility implements SGIDataColumnTypeConstants, SGIDataPropert
             List<Attribute> attrList = var.getAttributes();
             for (Attribute attr : attrList) {
                 if (attr.isString()) {
-                    String name = attr.getName();
+                    String name = attr.getShortName();
                     String value = attr.getStringValue();
                     if (name!=null && value!=null &&
                             ATTRIBUTE_VALUE_TYPE.equals(name.trim()) &&
@@ -3866,38 +3867,38 @@ public class SGDataUtility implements SGIDataColumnTypeConstants, SGIDataPropert
 			final String path, final List<String> attrNameList) {
 		List<SGAttribute> aList = new ArrayList<SGAttribute>();
 		for (String name : attrNameList) {
-			HDF5DataTypeInformation info = reader.getAttributeInformation(path,
+			HDF5DataTypeInformation info = reader.object().getAttributeInformation(path,
 					name);
 			HDF5DataClass dClass = info.getDataClass();
 			final boolean arrayType = (info.getNumberOfElements() > 1);
 			Object obj = null;
 			if (HDF5DataClass.STRING.equals(dClass)) {
 				if (arrayType) {
-					obj = reader.getStringArrayAttribute(path, name);
+					obj = reader.string().getArrayAttr(path, name);
 				} else {
-					obj = reader.getStringAttribute(path, name);
+					obj = reader.string().getAttr(path, name);
 				}
 			} else if (HDF5DataClass.INTEGER.equals(dClass)) {
 				if (arrayType) {
-					obj = reader.getIntArrayAttribute(path, name);
+					obj = reader.int32().getArrayAttr(path, name);
 				} else {
-					obj = reader.getIntAttribute(path, name);
+					obj = reader.int32().getAttr(path, name);
 				}
 			} else if (HDF5DataClass.FLOAT.equals(dClass)) {
 				if (arrayType) {
-					obj = reader.getFloatArrayAttribute(path, name);
+					obj = reader.float32().getArrayAttr(path, name);
 				} else {
-					obj = reader.getFloatAttribute(path, name);
+					obj = reader.float32().getAttr(path, name);
 				}
 			} else if (HDF5DataClass.BOOLEAN.equals(dClass)) {
 				try {
-					obj = reader.getBooleanAttribute(path, name);
+					obj = reader.bool().getAttr(path, name);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else if (HDF5DataClass.ENUM.equals(dClass)) {
 				try {
-					obj = reader.getEnumAttribute(path, name);
+					obj = reader.enumeration().getAttr(path, name);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -3924,45 +3925,45 @@ public class SGDataUtility implements SGIDataColumnTypeConstants, SGIDataPropert
 	public static boolean writeHDF5Attribute(final IHDF5Writer writer, 
 			final IHDF5Reader reader, final String path, final List<String> attrNameList) {
 		for (String attrName : attrNameList) {
-			HDF5DataTypeInformation attrInfo = reader.getAttributeInformation(path, attrName);
+			HDF5DataTypeInformation attrInfo = reader.object().getAttributeInformation(path, attrName);
 			final boolean arrayType = (attrInfo.getNumberOfElements() > 1);
 			HDF5DataClass attrDataClass = attrInfo.getDataClass();
     		if (HDF5DataClass.STRING.equals(attrDataClass)) {
     			if (arrayType) {
-        			final String[] value = reader.getStringArrayAttribute(path, attrName);
-        			writer.setStringArrayAttribute(path, attrName, value);
+        			final String[] value = reader.string().getArrayAttr(path, attrName);
+        			writer.string().setArrayAttr(path, attrName, value);
     			} else {
-        			final String value = reader.getStringAttribute(path, attrName);
-        			writer.setStringAttribute(path, attrName, value);
+        			final String value = reader.string().getAttr(path, attrName);
+        			writer.string().setAttr(path, attrName, value);
     			}
     		} else if (HDF5DataClass.INTEGER.equals(attrDataClass)) {
     			if (arrayType) {
-        			final int[] value = reader.getIntArrayAttribute(path, attrName);
-        			writer.setIntArrayAttribute(path, attrName, value);
+        			final int[] value = reader.int32().getArrayAttr(path, attrName);
+        			writer.int32().setArrayAttr(path, attrName, value);
     			} else {
-        			final int value = reader.getIntAttribute(path, attrName);
-        			writer.setIntAttribute(path, attrName, value);
+        			final int value = reader.int32().getAttr(path, attrName);
+        			writer.int32().setAttr(path, attrName, value);
     			}
     		} else if (HDF5DataClass.FLOAT.equals(attrDataClass)) {
     			if (arrayType) {
-    				final float[] value = reader.getFloatArrayAttribute(path, attrName);
-    				writer.setFloatArrayAttribute(path, attrName, value);
+    				final float[] value = reader.float32().getArrayAttr(path, attrName);
+    				writer.float32().setArrayAttr(path, attrName, value);
     			} else {
-        			final float value = reader.getFloatAttribute(path, attrName);
-        			writer.setFloatAttribute(path, attrName, value);
+        			final float value = reader.float32().getAttr(path, attrName);
+        			writer.float32().setAttr(path, attrName, value);
     			}
 			} else if (HDF5DataClass.BOOLEAN.equals(attrDataClass)) {
 				try {
-					final boolean value = reader.getBooleanAttribute(path, attrName);
-					writer.setBooleanAttribute(path, attrName, value);
+					final boolean value = reader.bool().getAttr(path, attrName);
+					writer.bool().setAttr(path, attrName, value);
 				} catch (Exception e) {
 					e.printStackTrace();
 					return false;
 				}
 			} else if (HDF5DataClass.ENUM.equals(attrDataClass)) {
 				try {
-					HDF5EnumerationValue value = reader.getEnumAttribute(path, attrName);
-					writer.setEnumAttribute(path, attrName, value);
+					HDF5EnumerationValue value = reader.enumeration().getAttr(path, attrName);
+					writer.enumeration().setAttr(path, attrName, value);
 				} catch (Exception e) {
 					e.printStackTrace();
 					return false;
@@ -4340,7 +4341,7 @@ public class SGDataUtility implements SGIDataColumnTypeConstants, SGIDataPropert
 
     private static float roundMagnitudePerCM(final float mag, final double max) {
         float magNew = (float) SGUtilityNumber.getNumberInNumberOrder(mag, max,
-                MAGNITUDE_PER_CM_MINIMAL_ORDER, BigDecimal.ROUND_HALF_UP);
+                MAGNITUDE_PER_CM_MINIMAL_ORDER, RoundingMode.HALF_UP.ordinal());
         return magNew;
     }
 
@@ -6076,7 +6077,7 @@ public class SGDataUtility implements SGIDataColumnTypeConstants, SGIDataPropert
 	public static String getDimensionString(Dimension[] dims) {
 		String[] dimNames = new String[dims.length];
 		for (int ii = 0; ii < dims.length; ii++) {
-			dimNames[ii] = dims[ii].getName();
+			dimNames[ii] = dims[ii].getShortName();
 		}
 		return getDimensionString(dimNames);
 	}

@@ -1,6 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class SGAxisDoubleValue extends SGAxisValue {
 
@@ -61,7 +62,7 @@ public class SGAxisDoubleValue extends SGAxisValue {
 	@Override
 	public SGAxisValue adjustValue(SGAxisValue min, SGAxisValue max, final int digit) {
         final double dValue = SGUtilityNumber.getNumberInRangeOrder(this.mValue, 
-        		min.getValue(), max.getValue(), digit, BigDecimal.ROUND_HALF_UP);
+        		min.getValue(), max.getValue(), digit, RoundingMode.HALF_UP.ordinal());
         return new SGAxisDoubleValue(dValue);
 	}
 }

@@ -1163,9 +1163,9 @@ class SGAxisScale extends SGDrawingElementScale2D implements SGIMovable,
     private void onLabelClicked(MouseEvent e, ScaleString el) {
         final int x = e.getX();
         final int y = e.getY();
-        final int mod = e.getModifiers();
-        final boolean ctrl = (mod & InputEvent.CTRL_MASK) != 0;
-        final boolean shift = (mod & InputEvent.SHIFT_MASK) != 0;
+        final int mod = e.getModifiersEx();
+        final boolean ctrl = (mod & InputEvent.CTRL_DOWN_MASK) != 0;
+        final boolean shift = (mod & InputEvent.SHIFT_DOWN_MASK) != 0;
         final int cnt = e.getClickCount();
         if (SwingUtilities.isLeftMouseButton(e) && cnt == 1) {
             if (this.isSelected() && !ctrl && !shift) {
@@ -1976,9 +1976,9 @@ class SGAxisScale extends SGDrawingElementScale2D implements SGIMovable,
     }
 
 	@Override
-	public ArrayList getChildNodes() {
+	public ArrayList<SGINode> getChildNodes() {
 		// always returns an empty list
-        return new ArrayList();
+        return new ArrayList<>();
 	}
 
 	@Override

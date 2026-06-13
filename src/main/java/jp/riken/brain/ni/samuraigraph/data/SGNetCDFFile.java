@@ -187,8 +187,8 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
 		// set up the remote flag
 		boolean remote = true;
 		try {
-			new URL(ncfile.getLocation());
-		} catch (MalformedURLException e) {
+			new java.net.URI(ncfile.getLocation()).toURL();
+		} catch (MalformedURLException | java.net.URISyntaxException | IllegalArgumentException e) {
 			remote = false;
 		}
 		this.mRemoteFileFlag = remote;
@@ -375,7 +375,7 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
         	for (int ii = 0; ii < len; ii++) {
         		values[ii] = attr.getValue(ii);
         	}
-        	SGAttribute a = new SGAttribute(attr.getName(), values);
+        	SGAttribute a = new SGAttribute(attr.getShortName(), values);
         	aList.add(a);
         }
         return aList;

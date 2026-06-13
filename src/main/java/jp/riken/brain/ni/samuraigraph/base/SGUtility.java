@@ -875,7 +875,7 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
     ) {
 
         // is Shift-key is pressed
-        final boolean onShift = ((e.getModifiers() & InputEvent.SHIFT_MASK) != 0);
+        final boolean onShift = ((e.getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) != 0);
 
         final int diffX = e.getX() - pos.x;
         final int diffY = e.getY() - pos.y;
@@ -1009,8 +1009,8 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
      *            the list which contains the object
      * @return true if succeeded
      */
-    public static boolean moveObjectToTail(final Object obj,
-            final List list) {
+    public static <T> boolean moveObjectToTail(final T obj,
+            final List<T> list) {
         return moveObjectTo(obj, list, list.size() - 1);
     }
 
@@ -1023,9 +1023,9 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
      *            the list which contains the object
      * @return true if succeeded
      */
-    public static boolean moveObjectToNext(final Object obj,
-            final List list) {
-        List<Object> objList = new ArrayList<Object>();
+    public static <T> boolean moveObjectToNext(final T obj,
+            final List<T> list) {
+        List<T> objList = new ArrayList<T>();
         objList.add(obj);
         return moveObject(objList, list, 1);
     }
@@ -1039,9 +1039,9 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
      *            the list which contains the object
      * @return true if succeeded
      */
-    public static boolean moveObjectToPrevious(final Object obj,
-            final List list) {
-        List<Object> objList = new ArrayList<Object>();
+    public static <T> boolean moveObjectToPrevious(final T obj,
+            final List<T> list) {
+        List<T> objList = new ArrayList<T>();
         objList.add(obj);
         return moveObject(objList, list, -1);
     }
@@ -1055,8 +1055,8 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
      *            the list which contains the object
      * @return true if succeeded
      */
-    public static boolean moveObjectToHead(final Object obj,
-            final List list) {
+    public static <T> boolean moveObjectToHead(final T obj,
+            final List<T> list) {
         return moveObjectTo(obj, list, 0);
     }
 
@@ -1071,7 +1071,7 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
      *            the array index
      * @return true if succeeded
      */
-    public static boolean moveObjectTo(final Object obj, final List list,
+    public static <T> boolean moveObjectTo(final T obj, final List<T> list,
             final int index) {
         if (list == null) {
             throw new IllegalArgumentException("list==null");
@@ -1098,12 +1098,12 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
      *           the level to move the objects
      * @return true if succeeded
      */
-    public static boolean moveObject(final List movedList, final List list,
+    public static <T> boolean moveObject(final List<T> movedList, final List<T> list,
             final int num) {
 
         if (num > 0) {
             for (int ii = movedList.size() - 1; ii >= 0; ii--) {
-                Object obj = movedList.get(ii);
+                T obj = movedList.get(ii);
                 final int index = list.indexOf(obj);
                 if (index == -1) {
                     return false;
@@ -1118,7 +1118,7 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
             }
         } else {
             for (int ii = 0; ii < movedList.size(); ii++) {
-                Object obj = movedList.get(ii);
+                T obj = movedList.get(ii);
                 final int index = list.indexOf(obj);
                 if (index == -1) {
                     return false;
@@ -1144,10 +1144,10 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
      *            a list of visible objects
      * @return
      */
-    public static boolean setVisibleList(final List list, final List listVisible) {
-        ArrayList listInvisible = new ArrayList();
+    public static <T extends SGIVisible> boolean setVisibleList(final List<T> list, final List<T> listVisible) {
+        ArrayList<T> listInvisible = new ArrayList<T>();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGIVisible el = (SGIVisible) list.get(ii);
+            T el = list.get(ii);
             final boolean b = listVisible.contains(el);
             el.setVisible(b);
             if (!b) {
@@ -2143,8 +2143,8 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
     	MouseDragResult result = new MouseDragResult();
     	int ex = e.getX();
     	int ey = e.getY();
-        final int mod = e.getModifiers();
-        final boolean shift = (mod & InputEvent.SHIFT_MASK) != 0;
+        final int mod = e.getModifiersEx();
+        final boolean shift = (mod & InputEvent.SHIFT_DOWN_MASK) != 0;
         int dx = ex - input.pressedPoint.x;
         int dy = ey - input.pressedPoint.y;
 
@@ -2688,9 +2688,9 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
 		for (Object obj : objList) {
 			Integer cnt = cntMap.get(obj);
 			if (cnt == null) {
-				cnt = new Integer(1);
+				cnt = 1;
 			} else {
-				cnt = new Integer(cnt + 1);
+				cnt = cnt + 1;
 			}
 			cntMap.put(obj, cnt);
 		}

@@ -8,14 +8,18 @@ import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
+import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
+import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
+import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.figure.SGIAxisBreakConstants;
 
@@ -767,8 +771,9 @@ public class SGAxisBreakDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getTextFieldComponentsList() {
-        final List list = this.getFormattedTextFieldsListFromSpinners();
+    @Override
+    public List<JTextField> getTextFieldComponentsList() {
+        final List<JTextField> list = new ArrayList<JTextField>(this.getFormattedTextFieldsListFromSpinners());
         list.addAll(this.getAxisNumberTextFieldList());
         return list;
     }
@@ -778,8 +783,9 @@ public class SGAxisBreakDialog extends SGPropertyDialog implements
      * 
      * @return
      */
-    public List getAxisNumberTextFieldList() {
-        ArrayList list = new ArrayList();
+    @Override
+    public List<SGTextField> getAxisNumberTextFieldList() {
+        ArrayList<SGTextField> list = new ArrayList<SGTextField>();
         list.add(this.mXValueTextField);
         list.add(this.mYValueTextField);
         return list;
@@ -788,8 +794,9 @@ public class SGAxisBreakDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getColorSelectionButtonsList() {
-        ArrayList list = new ArrayList();
+    @Override
+    public List<SGColorSelectionButton> getColorSelectionButtonsList() {
+        ArrayList<SGColorSelectionButton> list = new ArrayList<SGColorSelectionButton>();
         list.add(this.mLineColorButton);
         list.add(this.mInnerColorButton);
         return list;
@@ -798,8 +805,9 @@ public class SGAxisBreakDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getSpinnerList() {
-        ArrayList list = new ArrayList();
+    @Override
+    public List<SGSpinner> getSpinnerList() {
+        ArrayList<SGSpinner> list = new ArrayList<SGSpinner>();
         list.add(this.mLengthSpinner);
         list.add(this.mIntervalSpinner);
         list.add(this.mDistortionSpinner);

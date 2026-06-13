@@ -59,14 +59,14 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog implements
         mPreviewButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
         mPanel = new javax.swing.JPanel();
         mFontFamilyLabel = new javax.swing.JLabel();
-        mFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mFontSizeLabel = new javax.swing.JLabel();
         mLineWidthSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mColorLabel = new javax.swing.JLabel();
         mLineWidthLabel1 = new javax.swing.JLabel();
         mLineWidthLabel2 = new javax.swing.JLabel();
         mFontSizeSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-        mFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
         mFormLabel = new javax.swing.JLabel();
         mFormSeparator = new javax.swing.JSeparator();
@@ -341,7 +341,7 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog implements
         mPanel.add(mHorizontalYValueLabel, gridBagConstraints);
 
         mLocationAnchoredCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        mLocationAnchoredCheckBox.setLabel("Anchored");
+        mLocationAnchoredCheckBox.setText("Anchored");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -521,10 +521,10 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog implements
     private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mColorButton;
     private javax.swing.JLabel mColorLabel;
     private javax.swing.JLabel mFontFamilyLabel;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mFontNameComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mFontNameComboBox;
     private javax.swing.JLabel mFontSizeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mFontSizeSpinner;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mFontStyleComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mFontStyleComboBox;
     private javax.swing.JLabel mFontStyleLabel;
     private javax.swing.JLabel mFormLabel;
     private javax.swing.JSeparator mFormSeparator;
@@ -930,17 +930,16 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getColorSelectionButtonsList() {
-        final List list = new ArrayList();
+    @Override
+    public List<jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton> getColorSelectionButtonsList() {
+        final List<jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton> list = new ArrayList<>();
         list.add(this.mColorButton);
         return list;
     }
 
-    /**
-     * 
-     */
-    public List getTextFieldComponentsList() {
-        final List list = this.getFormattedTextFieldsListFromSpinners();
+    @Override
+    public List<javax.swing.JTextField> getTextFieldComponentsList() {
+        final List<javax.swing.JTextField> list = new ArrayList<>(this.getFormattedTextFieldsListFromSpinners());
         list.addAll(this.getAxisNumberTextFieldList());
         list.add(this.mTextField);
         return list;
@@ -951,6 +950,7 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog implements
      * 
      * @return
      */
+    @Override
     public List<SGTextField> getAxisNumberTextFieldList() {
         final List<SGTextField> list = new ArrayList<SGTextField>();
         list.add(this.mLeftXValueTextField);
@@ -961,11 +961,9 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog implements
         return list;
     }
 
-    /**
-     * 
-     */
-    public List getSpinnerList() {
-        List list = new ArrayList();
+    @Override
+    public List<jp.riken.brain.ni.samuraigraph.base.SGSpinner> getSpinnerList() {
+        List<jp.riken.brain.ni.samuraigraph.base.SGSpinner> list = new ArrayList<>();
         list.add(this.mFontSizeSpinner);
         list.add(this.mSpaceSpinner);
         list.add(this.mLineWidthSpinner);

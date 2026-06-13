@@ -1173,7 +1173,7 @@ public abstract class SGAxisElement implements ActionListener,
 
         Rectangle2D rect = new Rectangle2D.Float();
 
-        ArrayList list = new ArrayList();
+        ArrayList<SGIDrawingElementJava2D> list = new ArrayList<SGIDrawingElementJava2D>();
 
         for (int ii = 0; ii < this.mAxisLines.length; ii++) {
             list.add(this.mAxisLines[ii]);
@@ -1209,10 +1209,10 @@ public abstract class SGAxisElement implements ActionListener,
     public boolean onMouseClicked(final MouseEvent e) {
         final int x = e.getX();
         final int y = e.getY();
-        final int mod = e.getModifiers();
+        final int mod = e.getModifiersEx();
         final int cnt = e.getClickCount();
-        final boolean ctrl = (mod & InputEvent.CTRL_MASK) != 0;
-        final boolean shift = (mod & InputEvent.SHIFT_MASK) != 0;
+        final boolean ctrl = (mod & InputEvent.CTRL_DOWN_MASK) != 0;
+        final boolean shift = (mod & InputEvent.SHIFT_DOWN_MASK) != 0;
         
         // check axis line even when axis is invisible
         for (int ii = 0; ii < this.mAxisLines.length; ii++) {

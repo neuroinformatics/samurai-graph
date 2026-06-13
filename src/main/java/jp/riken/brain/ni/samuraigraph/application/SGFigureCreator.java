@@ -487,7 +487,7 @@ public class SGFigureCreator implements SGIFigureConstants {
             final SGDrawingWindow wnd) {
         Object obj = null;
         try {
-            obj = cl.newInstance();
+            obj = cl.getDeclaredConstructor().newInstance();
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;

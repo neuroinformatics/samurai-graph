@@ -32,7 +32,7 @@ implements ActionListener, FocusListener, ChangeListener {
     private SGColorSelectionButton mColorSelectionButton = null;
 
     private JLabel mPatternSelectionLabel = null;
-    private SGComboBox mPatternSelectionComboBox = null;
+    private SGComboBox<String> mPatternSelectionComboBox = null;
 
     /**
      * The color selection dialog.
@@ -66,7 +66,7 @@ implements ActionListener, FocusListener, ChangeListener {
         this.mColorSelectionLabel = new JLabel();
         this.mColorSelectionButton = new SGColorSelectionButton();
         this.mPatternSelectionLabel = new JLabel();
-        this.mPatternSelectionComboBox = new SGComboBox();
+        this.mPatternSelectionComboBox = new SGComboBox<String>();
 
         this.mPatternSelectionPanel.setLayout(new GridBagLayout());
 

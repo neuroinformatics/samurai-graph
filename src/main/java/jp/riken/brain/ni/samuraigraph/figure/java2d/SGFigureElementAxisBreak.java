@@ -292,7 +292,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D implements
                 if (el.isValid() == false) {
                     continue;
                 }
-                ArrayList pList = el.getAnchorPointList();
+                ArrayList<Point2D> pList = el.getAnchorPointList();
                 if (! el.isAnchored()) {
                     SGUtilityForFigureElementJava2D.drawAnchorAsChildObject(pList, g2d);
                 } else {
@@ -303,14 +303,14 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D implements
 
         // draw symbols around focused objects
         if (this.mSymbolsVisibleFlagAroundFocusedObjects) {
-            ArrayList fList = new ArrayList();
+            ArrayList<SGISelectable> fList = new ArrayList<SGISelectable>();
             this.getFocusedObjectsList(fList);
             for (int ii = 0; ii < fList.size(); ii++) {
                 AxisBreakSymbol el = (AxisBreakSymbol) fList.get(ii);
                 if (el.isValid() == false) {
                     continue;
                 }
-                ArrayList pList = el.getAnchorPointList();
+                ArrayList<Point2D> pList = el.getAnchorPointList();
                 if (! el.isAnchored()) {
                     SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(pList, g2d);
                 } else {
@@ -1357,8 +1357,8 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D implements
          * @return
          *       a list of child nodes
          */
-        public ArrayList getChildNodes() {
-            return new ArrayList();
+        public ArrayList<SGINode> getChildNodes() {
+            return new ArrayList<SGINode>();
         }
 
         /**

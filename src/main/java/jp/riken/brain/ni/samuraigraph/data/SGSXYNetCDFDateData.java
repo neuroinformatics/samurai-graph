@@ -181,7 +181,7 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
 			pickUpIndices = new SGIntegerSeriesSet(pickUpIndex);
 		}
 		SGSXYNetCDFMultipleData data = new SGSXYNetCDFMultipleData(
-				this.getNetcdfFile(), this.getDataSourceObserver(), x, y, le, ue, eh, tl, th, dim.getName(),
+				this.getNetcdfFile(), this.getDataSourceObserver(), x, y, le, ue, eh, tl, th, dim.getShortName(),
 				pickUpIndices, time, id, this.mStride, this.mTickLabelStride, this.isStrideAvailable());
         SGDataCache cache = this.getCache();
         if (cache != null) {

@@ -27,7 +27,7 @@ public class SGDimensionInfo {
 	 */
 	public SGDimensionInfo(final Dimension dim) {
 		super();
-		this.mName = dim.getName();
+		this.mName = dim.getShortName();
 		this.mLength = dim.getLength();
 	}
 	

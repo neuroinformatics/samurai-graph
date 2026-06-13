@@ -47,7 +47,7 @@ public class SGHDF5Variable extends SGMDArrayVariable {
 		// initializes the attributes
 		IHDF5Reader reader = this.getReader();
 		this.mDataSetInfo = reader.getDataSetInformation(this.mName);
-		List<String> attrNameList = reader.getAttributeNames(this.mName);
+		List<String> attrNameList = reader.object().getAttributeNames(this.mName);
 		this.mAttrList = SGDataUtility.findHDF5Attributes(reader, this.mName, attrNameList);
 		
 		// initializes the origins
@@ -128,7 +128,7 @@ public class SGHDF5Variable extends SGMDArrayVariable {
 	 * @return the multidimensional array of double values
 	 */
 	public MDDoubleArray readDoubleMDArray() {
-		return this.getReader().readDoubleMDArray(this.mName);
+		return this.getReader().float64().readMDArray(this.mName);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class SGHDF5Variable extends SGMDArrayVariable {
 	 * @return the multidimensional array of string objects
 	 */
 	public MDArray<String> readStringMDArray() {
-		return this.getReader().readStringMDArray(this.mName);
+		return this.getReader().string().readMDArray(this.mName);
 	}
 
 	private String getString(MDArray<String> mdArray, final int dimensionIndex, 
@@ -269,7 +269,7 @@ public class SGHDF5Variable extends SGMDArrayVariable {
                 try {
                     if (HDF5DataClass.INTEGER.equals(this.getDataClass())) {
                         // read data as long array
-                        MDLongArray mdArray = this.getReader().readLongMDArray(this.mName);
+                        MDLongArray mdArray = this.getReader().int64().readMDArray(this.mName);
                         array = new double[indices.length];
                         for (int ii = 0; ii < array.length; ii++) {
                             array[ii] = (double) this.getLongValue(mdArray, dimensionIndex, 

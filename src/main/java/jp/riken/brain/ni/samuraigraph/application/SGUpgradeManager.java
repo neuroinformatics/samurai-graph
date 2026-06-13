@@ -225,11 +225,11 @@ class SGUpgradeManager implements ActionListener, SGIConstants,
         URL url = null;
         try {
             if (direct) {
-                url = new URL(fileName);
+                url = java.net.URI.create(fileName).toURL();
             } else {
-                url = new URL("http", host, port, fileName);
+                url = java.net.URI.create("http://" + host + ":" + port + "/" + fileName).toURL();
             }
-        } catch (MalformedURLException ex) {
+        } catch (MalformedURLException | IllegalArgumentException ex) {
             return false;
         }
 
@@ -713,8 +713,8 @@ class SGUpgradeManager implements ActionListener, SGIConstants,
                 // create an URL instance
                 URL url = null;
                 try {
-                    url = new URL(urlStr);
-                } catch (MalformedURLException ex) {
+                    url = java.net.URI.create(urlStr).toURL();
+                } catch (MalformedURLException | IllegalArgumentException ex) {
                     continue;
                 }
 

@@ -52,6 +52,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
+import jp.riken.brain.ni.samuraigraph.base.SGINode;
+import java.math.RoundingMode;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopiable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
@@ -1647,8 +1649,8 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 	 *
 	 * @return a list of chid nodes
 	 */
-	public ArrayList getChildNodes() {
-		return new ArrayList();
+	public ArrayList<SGINode> getChildNodes() {
+		return new ArrayList<SGINode>();
 	}
 
 	/**
@@ -3111,6 +3113,21 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 		 */
 		protected ElementGroupSetInLegend(SGData data) {
 			super(data);
+		}
+
+		@Override
+		public ArrayList<SGINode> getChildNodes() {
+			return new ArrayList<>();
+		}
+
+		@Override
+		public String getClassDescription() {
+			return "Legend";
+		}
+
+		@Override
+		public String getInstanceDescription() {
+			return this.getName() != null ? this.getName() : "Legend";
 		}
 
 	    /**
@@ -6958,7 +6975,7 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 				final float value = percm * span;
 				final float valueReduced = (float) SGUtilityNumber
 						.getNumberInNumberOrder(value, value, 3,
-								BigDecimal.ROUND_HALF_UP);
+								RoundingMode.HALF_UP.ordinal());
 				this.mMagnitudeString.setString(Float.toString(valueReduced));
 			}
 

@@ -27,7 +27,7 @@ import ucar.ma2.Array;
 import ucar.ma2.DataType;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVXYTypeData {
@@ -899,7 +899,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
 	}
 
 	@Override
-	protected boolean exportToFile(NetcdfFileWriteable ncWrite, 
+	protected boolean exportToFile(NetcdfFileWriter ncWrite, 
 			final SGExportParameter mode, SGDataBufferPolicy policy)
 			throws IOException, InvalidRangeException {
 		
@@ -1412,7 +1412,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
 	}
 
 	@Override
-    protected Array setEditedValues(NetcdfFileWriteable ncWrite,
+    protected Array setEditedValues(NetcdfFileWriter ncWrite,
     		String varName, Array array, final boolean all) {
 		final boolean polar = this.isPolar();
 		String first = SGDataUtility.getVXYFirstComponentColumnType(polar);

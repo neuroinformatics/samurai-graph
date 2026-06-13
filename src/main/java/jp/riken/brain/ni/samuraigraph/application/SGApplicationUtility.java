@@ -958,14 +958,12 @@ public class SGApplicationUtility implements SGIApplicationConstants, SGIApplica
     public static SGData createDataInstance(Class<?> cl) {
         SGData data = null;
         try {
-            Object obj = cl.newInstance();
+            Object obj = cl.getDeclaredConstructor().newInstance();
             if (obj instanceof SGData) {
                 data = (SGData)obj;
             }
-        } catch (InstantiationException e) {
+        } catch (Exception e) {
         	return null;
-		} catch (IllegalAccessException e) {
-			return null;
         }
         return data;
     }

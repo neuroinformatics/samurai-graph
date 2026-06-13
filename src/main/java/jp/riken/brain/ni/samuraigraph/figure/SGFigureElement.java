@@ -138,7 +138,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     /**
      * List of action listeners.
      */
-    protected List mActionListenerList = new ArrayList();
+    protected List<ActionListener> mActionListenerList = new ArrayList<>();
 
     /**
      * 
@@ -720,8 +720,8 @@ public abstract class SGFigureElement implements SGIFigureElement {
         final List<SGISelectable> fList = this.getFocusedObjectsList();
 
         // Neither CTRL key nor SHIFT key is pressed.
-        if (((mod & InputEvent.CTRL_MASK) == 0)
-                && ((mod & InputEvent.SHIFT_MASK) == 0)) {
+        if (((mod & InputEvent.CTRL_DOWN_MASK) == 0)
+                && ((mod & InputEvent.SHIFT_DOWN_MASK) == 0)) {
             // If the list already contains this object.
             if (fList.contains(el)) {
                 // do nothing
@@ -755,7 +755,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
      */
     public boolean updateFocusedObjectsList(final SGISelectable el,
             final MouseEvent e) {
-        final int mod = e.getModifiers();
+        final int mod = e.getModifiersEx();
         return this.updateFocusedObjectsList(el, mod);
     }
 
@@ -1163,7 +1163,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     /**
      * 
      */
-    protected boolean updateHistory(ArrayList list) {
+    protected boolean updateHistory(List<? extends SGIUndoable> list) {
         return this.mUndoManager.updateHistory(list);
     }
 
@@ -1199,7 +1199,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
      * 
      * @return
      */
-    protected List getMementoList() {
+    protected List<SGProperties> getMementoList() {
         return this.mUndoManager.getMementoList();
     }
 
@@ -1221,9 +1221,9 @@ public abstract class SGFigureElement implements SGIFigureElement {
      */
     public void clearChanged() {
         this.setChanged(false);
-        List cList = this.getUndoableChildList();
+        List<SGIUndoable> cList = this.getUndoableChildList();
         for (int ii = 0; ii < cList.size(); ii++) {
-            SGIUndoable obj = (SGIUndoable) cList.get(ii);
+            SGIUndoable obj = cList.get(ii);
             obj.clearChanged();
         }
     }
@@ -1234,7 +1234,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
      * @param listVisible
      * @return
      */
-    protected boolean setVisibleList(final List listAll, final List listVisible) {
+    protected <T extends SGIVisible> boolean setVisibleList(final List<T> listAll, final List<T> listVisible) {
         return SGUtility.setVisibleList(listAll, listVisible);
     }
 
@@ -1919,7 +1919,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
         }
 
         // record the list before edited
-        ArrayList objListOld = new ArrayList(this.mChildList);
+        List<SGIChildObject> objListOld = new ArrayList<>(this.mChildList);
 
         // move focused objects
         if (toFront) {
@@ -1955,7 +1955,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
         }
 
         // record the list before edited
-        ArrayList objListOld = new ArrayList(this.mChildList);
+        List<SGIChildObject> objListOld = new ArrayList<>(this.mChildList);
 
         // move focused objects
         if (toFront) {
@@ -1985,7 +1985,8 @@ public abstract class SGFigureElement implements SGIFigureElement {
      * @return
      *                true if succeeded
      */
-    protected boolean moveFocusedObjects(final boolean toTail, final List objList) {
+    @SuppressWarnings("unchecked")
+    protected <T> boolean moveFocusedObjects(final boolean toTail, final List<T> objList) {
         // get the focused objects
     	List<SGISelectable> list = this.getFocusedObjectsList();
         if (list.size() == 0) {
@@ -1993,18 +1994,18 @@ public abstract class SGFigureElement implements SGIFigureElement {
         }
 
         // record the list before edited
-        List<SGISelectable> objListOld = new ArrayList<SGISelectable>(objList);
+        List<T> objListOld = new ArrayList<>(objList);
 
         // move focused objects
         if (toTail) {
             for (int ii = 0; ii < list.size(); ii++) {
                 Object el = list.get(ii);
-                SGUtility.moveObjectToTail(el, objList);
+                SGUtility.moveObjectToTail((T) el, objList);
             }
         } else {
             for (int ii = list.size() - 1; ii >= 0; ii--) {
                 Object el = list.get(ii);
-                SGUtility.moveObjectToHead(el, objList);
+                SGUtility.moveObjectToHead((T) el, objList);
             }
         }
 
@@ -2027,7 +2028,8 @@ public abstract class SGFigureElement implements SGIFigureElement {
      * @return
      *                true if succeeded
      */
-    protected boolean moveFocusedObjects(final int num, final List objList) {
+    @SuppressWarnings("unchecked")
+    protected <T> boolean moveFocusedObjects(final int num, final List<T> objList) {
         // get the focused objects
     	List<SGISelectable> list = this.getFocusedObjectsList();
         if (list.size() == 0) {
@@ -2035,8 +2037,8 @@ public abstract class SGFigureElement implements SGIFigureElement {
         }
         
         // record the list before edited
-        List<SGISelectable> objListOld = new ArrayList<SGISelectable>(objList);
-        if (SGUtility.moveObject(list, objList, num) == false) {
+        List<T> objListOld = new ArrayList<>(objList);
+        if (SGUtility.moveObject((List<T>) (List<?>) list, objList, num) == false) {
             return false;
         }
 
@@ -2054,8 +2056,8 @@ public abstract class SGFigureElement implements SGIFigureElement {
      * 
      * @return a list of chid nodes
      */
-    public ArrayList getChildNodes() {
-        return new ArrayList(this.getVisibleChildList());
+    public ArrayList<SGINode> getChildNodes() {
+        return new ArrayList<SGINode>(this.getVisibleChildList());
     }
 
     /**
@@ -2072,14 +2074,11 @@ public abstract class SGFigureElement implements SGIFigureElement {
         if (this.isChanged()) {
             return true;
         }
-        final List list = this.getUndoableChildList();
+        final List<SGIUndoable> list = this.getUndoableChildList();
         for (int ii = 0; ii < list.size(); ii++) {
-            final Object obj = list.get(ii);
-            if (obj instanceof SGIUndoable) {
-                final SGIUndoable el = (SGIUndoable) obj;
-                if (el.isChangedRoot()) {
-                    return true;
-                }
+            final SGIUndoable el = list.get(ii);
+            if (el.isChangedRoot()) {
+                return true;
             }
         }
         return false;
@@ -2094,7 +2093,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
 //        if (this.updateHistory(this.getVisibleChildList()) == false) {
 //            return false;
 //        }
-        if (this.updateHistory(new ArrayList(this.getUndoableChildList())) == false) {
+        if (this.updateHistory(new ArrayList<SGIUndoable>(this.getUndoableChildList())) == false) {
             return false;
         }
 
@@ -2113,10 +2112,10 @@ public abstract class SGFigureElement implements SGIFigureElement {
      *          true if succeeded
      */
     protected boolean deleteUselessChild() {
-        Set set = this.getAvailableChildSet();
-        List cList = new ArrayList(this.mChildList);
+        Set<?> set = this.getAvailableChildSet();
+        List<SGIChildObject> cList = new ArrayList<>(this.mChildList);
         for (int ii = cList.size() - 1; ii >= 0; ii--) {
-            Object obj = cList.get(ii);
+            SGIChildObject obj = cList.get(ii);
             if (set.contains(obj) == false) {
                 this.removeChild(obj);
             }
@@ -2142,13 +2141,10 @@ public abstract class SGFigureElement implements SGIFigureElement {
     public void initUndoBuffer() {
 
     	// child objects
-        List cList = this.getUndoableChildList();
+        List<SGIUndoable> cList = this.getUndoableChildList();
         for (int ii = 0; ii < cList.size(); ii++) {
-            Object obj = cList.get(ii);
-            if (obj instanceof SGIUndoable) {
-                SGIUndoable u = (SGIUndoable) obj;
-                u.initUndoBuffer();
-            }
+            SGIUndoable u = cList.get(ii);
+            u.initUndoBuffer();
         }
         
         // this object
@@ -2170,9 +2166,9 @@ public abstract class SGFigureElement implements SGIFigureElement {
     public boolean deleteForwardHistory() {
 	
         // delete forward history
-        List cList = this.getUndoableChildList();
+        List<SGIUndoable> cList = this.getUndoableChildList();
         for (int ii = 0; ii < cList.size(); ii++) {
-            SGIUndoable obj = (SGIUndoable) cList.get(ii);
+            SGIUndoable obj = cList.get(ii);
             if (obj.deleteForwardHistory() == false) {
         	return false;
             }

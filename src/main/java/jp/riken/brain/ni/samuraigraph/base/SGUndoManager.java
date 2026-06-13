@@ -14,14 +14,14 @@ public class SGUndoManager implements SGIDisposable {
     private SGIUndoable mUndoable = null;
 
     // a list of the memento of mUndoable
-    private List mMementoList = new ArrayList();
+    private List<SGProperties> mMementoList = new ArrayList<>();
 
     // the index in the memento series of mUndoable
     private int mMementoCounter = 0;
 
     // A list of changed objects list, which contains mUndoable
     // and its undoable child objects if they exist.
-    private List mChangedObjectListList = new ArrayList();
+    private List<List<SGIUndoable>> mChangedObjectListList = new ArrayList<>();
 
     // the index in the series of changed objects lists
     private int mChangedObjectListCounter = 0;
@@ -71,7 +71,7 @@ public class SGUndoManager implements SGIDisposable {
 
     // Set the memento to the undoable object with the current counter values.
     private boolean setCurrentMemento() {
-        SGProperties p = (SGProperties) this.mMementoList
+        SGProperties p = this.mMementoList
                 .get(this.mMementoCounter);
         return this.mUndoable.setMemento(p);
     }
@@ -85,10 +85,10 @@ public class SGUndoManager implements SGIDisposable {
         if (this.isUndoable() == false) {
             return false;
         }
-        ArrayList undoableList = (ArrayList) this.mChangedObjectListList
+        List<SGIUndoable> undoableList = this.mChangedObjectListList
                 .get(this.mChangedObjectListCounter - 1);
         for (int ii = 0; ii < undoableList.size(); ii++) {
-            SGIUndoable undoable = (SGIUndoable) undoableList.get(ii);
+            SGIUndoable undoable = undoableList.get(ii);
             boolean flag;
             if (undoable.equals(this.mUndoable)) {
                 flag = undoable.setMementoBackward();
@@ -115,10 +115,10 @@ public class SGUndoManager implements SGIDisposable {
         if (this.isRedoable() == false) {
             return false;
         }
-        ArrayList undoableList = (ArrayList) this.mChangedObjectListList
+        List<SGIUndoable> undoableList = this.mChangedObjectListList
                 .get(this.mChangedObjectListCounter);
         for (int ii = 0; ii < undoableList.size(); ii++) {
-            SGIUndoable undoable = (SGIUndoable) undoableList.get(ii);
+            SGIUndoable undoable = undoableList.get(ii);
             boolean flag;
             if (undoable.equals(this.mUndoable)) {
                 flag = undoable.setMementoForward();
@@ -139,9 +139,9 @@ public class SGUndoManager implements SGIDisposable {
     /**
      * Update the list of changed objects lists.
      */
-    private boolean updateObjectHistory(final List objList) {
-        List hList = new ArrayList(this.mChangedObjectListList.subList(0, this.mChangedObjectListCounter));
-        hList.add(new ArrayList(objList));
+    private boolean updateObjectHistory(final List<SGIUndoable> objList) {
+        List<List<SGIUndoable>> hList = new ArrayList<>(this.mChangedObjectListList.subList(0, this.mChangedObjectListCounter));
+        hList.add(new ArrayList<>(objList));
 
         this.mChangedObjectListList = hList;
         this.mChangedObjectListCounter++;
@@ -162,7 +162,7 @@ public class SGUndoManager implements SGIDisposable {
             }
 
             // add to the changed objects list
-            ArrayList objList = new ArrayList();
+            List<SGIUndoable> objList = new ArrayList<>();
             objList.add(this.mUndoable);
             if (this.updateObjectHistory(objList) == false) {
                 return false;
@@ -180,8 +180,8 @@ public class SGUndoManager implements SGIDisposable {
      * @return
      *                true if succeeded
      */
-    public boolean updateHistory(final List objList) {
-        ArrayList changedObjList = new ArrayList();
+    public boolean updateHistory(final List<? extends SGIUndoable> objList) {
+        List<SGIUndoable> changedObjList = new ArrayList<>();
         if (this.mUndoable.isChanged()) {
             // update the memento list of mUndoable
             if (this.updateMementoList() == false) {
@@ -193,7 +193,7 @@ public class SGUndoManager implements SGIDisposable {
         }
 
         for (int ii = 0; ii < objList.size(); ii++) {
-            SGIUndoable obj = (SGIUndoable) objList.get(ii);
+            SGIUndoable obj = objList.get(ii);
             if (obj.isChangedRoot()) {
                 if (obj.updateHistory() == false) {
                     return false;
@@ -224,7 +224,7 @@ public class SGUndoManager implements SGIDisposable {
     // Update the memento list and add a property object to the tail of the list.
     private boolean addMemento(final SGProperties p) {
         for (int ii = this.mMementoList.size() - 1; ii >= this.mMementoCounter; ii--) {
-            SGProperties pOld = (SGProperties) this.mMementoList.remove(ii);
+            SGProperties pOld = this.mMementoList.remove(ii);
             pOld.dispose();
             pOld = null;
         }
@@ -256,8 +256,8 @@ public class SGUndoManager implements SGIDisposable {
      * @return
      *         a list of all memento objects
      */
-    public List getMementoList() {
-        return new ArrayList(this.mMementoList);
+    public List<SGProperties> getMementoList() {
+        return new ArrayList<>(this.mMementoList);
     }
 
     /**
@@ -265,8 +265,8 @@ public class SGUndoManager implements SGIDisposable {
      * @return
      *         lists of all changed objects
      */
-    public List getChangedObjectListList() {
-        return new ArrayList(this.mChangedObjectListList);
+    public List<List<SGIUndoable>> getChangedObjectListList() {
+        return new ArrayList<>(this.mChangedObjectListList);
     }
 
     /**
@@ -319,9 +319,9 @@ public class SGUndoManager implements SGIDisposable {
 
     // clear all objects
     private void clear() {
-        List list = this.mMementoList;
+        List<SGProperties> list = this.mMementoList;
         for (int ii = 0; ii < list.size(); ii++) {
-            SGProperties p = (SGProperties) list.get(ii);
+            SGProperties p = list.get(ii);
             p.dispose();
         }
         this.mMementoList.clear();
@@ -369,9 +369,9 @@ public class SGUndoManager implements SGIDisposable {
 	
 		// remove elements in mChangedObjectListList at the index
 		// more than mChangedObjectListCounter
-		HashSet removedSet = new HashSet();
+		HashSet<SGIUndoable> removedSet = new HashSet<>();
 		for (int ii = this.mChangedObjectListList.size() - 1; ii >= this.mChangedObjectListCounter; ii--) {
-		    List removedList = (List) this.mChangedObjectListList.remove(ii);
+		    List<SGIUndoable> removedList = this.mChangedObjectListList.remove(ii);
 		    removedSet.addAll(removedList);
 		    removedList.clear();
 		}
@@ -379,7 +379,7 @@ public class SGUndoManager implements SGIDisposable {
 		// remove elements in mMementoList at the index
 		// more than (mMementoCounter + 1) and dispose them
 		for (int ii = this.mMementoList.size() - 1; ii > this.mMementoCounter; ii--) {
-		    SGProperties p = (SGProperties) this.mMementoList.remove(ii);
+		    SGProperties p = this.mMementoList.remove(ii);
 		    p.dispose();
             p = null;
 		}

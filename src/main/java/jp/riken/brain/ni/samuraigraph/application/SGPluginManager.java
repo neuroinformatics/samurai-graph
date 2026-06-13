@@ -84,7 +84,7 @@ public class SGPluginManager implements SGIDisposable {
     }
     
     private void loadJar(final File jarfile, List<Class<?>> clslist)
-    throws ClassNotFoundException, ZipException, IOException, InstantiationException, IllegalAccessException {
+    throws ClassNotFoundException, ZipException, IOException, InstantiationException, IllegalAccessException, NoSuchMethodException, java.lang.reflect.InvocationTargetException {
         ZipFile zip = new ZipFile(jarfile);
         SGJarClassLoader jcl = new SGJarClassLoader(zip);
 
@@ -100,7 +100,7 @@ public class SGPluginManager implements SGIDisposable {
                     Class<?> classObj = jcl.loadClass(className, false);
                     clsInJar.add(classObj);
                     if (SGIPluginOutputDataToFile.class.isAssignableFrom(classObj)) {
-                        classObj.newInstance();
+                        classObj.getDeclaredConstructor().newInstance();
                     }
                 }
             }
@@ -189,7 +189,7 @@ public class SGPluginManager implements SGIDisposable {
         Map<FileFilter, SGIPluginOutputDataToFile> pluginMap = new HashMap<FileFilter, SGIPluginOutputDataToFile>();
         for (int i = 0; i < list.size(); i++) {
             try {
-                Object obj = list.get(i).newInstance();
+                Object obj = list.get(i).getDeclaredConstructor().newInstance();
                 SGIPluginOutputDataToFile plugin = (SGIPluginOutputDataToFile)obj;
                 
                 SGExtensionFileFilter filter = new SGExtensionFileFilter();

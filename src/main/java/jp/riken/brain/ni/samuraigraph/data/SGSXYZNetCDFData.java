@@ -27,7 +27,7 @@ import ucar.ma2.Array;
 import ucar.ma2.DataType;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGISXYZTypeData {
@@ -700,7 +700,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
 	}
 
 	@Override
-	protected boolean exportToFile(NetcdfFileWriteable ncWrite, 
+	protected boolean exportToFile(NetcdfFileWriter ncWrite, 
 			final SGExportParameter mode, SGDataBufferPolicy policy)
 			throws IOException, InvalidRangeException {
 
@@ -1163,7 +1163,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
 	}
 
 	@Override
-    protected Array setEditedValues(NetcdfFileWriteable ncWrite,
+    protected Array setEditedValues(NetcdfFileWriter ncWrite,
     		String varName, Array array, final boolean all) {
 		return this.setEditedValues(ncWrite, varName, array, X_VALUE, Y_VALUE,
 				new String[] { Z_VALUE }, all);

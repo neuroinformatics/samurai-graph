@@ -95,7 +95,7 @@ public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
 
         mYearSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         mYearSpinner.setPreferredSize(new java.awt.Dimension(80, 24));
-        mYearSpinner.setValue(new Integer(0));
+        mYearSpinner.setValue(0);
         mYearSpinner.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -127,7 +127,7 @@ public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
 
         mDaySpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         mDaySpinner.setPreferredSize(new java.awt.Dimension(80, 24));
-        mDaySpinner.setValue(new Integer(0));
+        mDaySpinner.setValue(0);
         mDaySpinner.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -137,7 +137,7 @@ public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
 
         mMonthSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         mMonthSpinner.setPreferredSize(new java.awt.Dimension(80, 24));
-        mMonthSpinner.setValue(new Integer(0));
+        mMonthSpinner.setValue(0);
         mMonthSpinner.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -172,7 +172,7 @@ public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
 
         mMillisecondSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         mMillisecondSpinner.setPreferredSize(new java.awt.Dimension(80, 24));
-        mMillisecondSpinner.setValue(new Integer(0));
+        mMillisecondSpinner.setValue(0);
         mMillisecondSpinner.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -197,7 +197,7 @@ public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
 
         mSecondSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         mSecondSpinner.setPreferredSize(new java.awt.Dimension(80, 24));
-        mSecondSpinner.setValue(new Integer(0));
+        mSecondSpinner.setValue(0);
         mSecondSpinner.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -207,7 +207,7 @@ public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
 
         mMinuteSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         mMinuteSpinner.setPreferredSize(new java.awt.Dimension(80, 24));
-        mMinuteSpinner.setValue(new Integer(0));
+        mMinuteSpinner.setValue(0);
         mMinuteSpinner.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -217,7 +217,7 @@ public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
 
         mHourSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         mHourSpinner.setPreferredSize(new java.awt.Dimension(80, 24));
-        mHourSpinner.setValue(new Integer(0));
+        mHourSpinner.setValue(0);
         mHourSpinner.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
