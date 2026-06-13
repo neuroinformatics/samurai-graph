@@ -3640,7 +3640,14 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
 
     // error bar variable
-    if (errorBarAvailable && leVars != null && ueVars != null && leDataTypes != null && ueDataTypes != null && sameErrorVariableFlags != null && sameErrorVariableFlags.length > 0 && sameErrorVariableFlags[0] != null) {
+    if (errorBarAvailable
+        && leVars != null
+        && ueVars != null
+        && leDataTypes != null
+        && ueDataTypes != null
+        && sameErrorVariableFlags != null
+        && sameErrorVariableFlags.length > 0
+        && sameErrorVariableFlags[0] != null) {
       final int[] errorShape;
       if (pickedUp) {
         // this.setFillValue(leVars[0], lowerErrorValues);
@@ -3673,7 +3680,13 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
 
     // tick label variable
-    if (tickLabelAvailable && dateFlag == null && tlVars != null && lenDimNames != null && tlStrArray != null && tlVars.length > 0 && lenDimNames.length > 0) {
+    if (tickLabelAvailable
+        && dateFlag == null
+        && tlVars != null
+        && lenDimNames != null
+        && tlStrArray != null
+        && tlVars.length > 0
+        && lenDimNames.length > 0) {
       if (pickedUp) {
         this.writeCharValue(ncWrite, tlVars[0].getShortName(), lenDimNames[0], tlStrArray);
       } else {
