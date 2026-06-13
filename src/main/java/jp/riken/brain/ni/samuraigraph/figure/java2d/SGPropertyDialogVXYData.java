@@ -7,6 +7,11 @@ import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
+import jp.riken.brain.ni.samuraigraph.base.SGTextField;
+import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 
 import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
@@ -247,8 +252,8 @@ public class SGPropertyDialogVXYData extends SGDataDialog
     /**
      * 
      */
-    public java.util.List getColorSelectionButtonsList() {
-        ArrayList list = new ArrayList();
+    public List<SGColorSelectionButton> getColorSelectionButtonsList() {
+        ArrayList<SGColorSelectionButton> list = new ArrayList<SGColorSelectionButton>();
         list.addAll(this.mArrowPanel.getColorSelectionButtonsList());
         return list;
     }
@@ -256,16 +261,16 @@ public class SGPropertyDialogVXYData extends SGDataDialog
     /**
      * 
      */
-    public java.util.List getAxisNumberTextFieldList() {
-        ArrayList list = new ArrayList();
+    public List<SGTextField> getAxisNumberTextFieldList() {
+        ArrayList<SGTextField> list = new ArrayList<SGTextField>();
         return list;
     }
 
     /**
      * 
      */
-    public java.util.List getSpinnerList() {
-        ArrayList list = new ArrayList();
+    public List<SGSpinner> getSpinnerList() {
+        ArrayList<SGSpinner> list = new ArrayList<SGSpinner>();
         list.addAll(this.mArrowPanel.getSpinnerList());
         return list;
     }
@@ -273,8 +278,9 @@ public class SGPropertyDialogVXYData extends SGDataDialog
     /**
      * 
      */
-    public java.util.List getTextFieldComponentsList() {
-        final List list = this.getFormattedTextFieldsListFromSpinners();
+    public List<JTextField> getTextFieldComponentsList() {
+        final List<JTextField> list = new ArrayList<JTextField>();
+        list.addAll(this.getFormattedTextFieldsListFromSpinners());
         list.addAll(this.getAxisNumberTextFieldList());
         list.add(this.mNameField);
         list.add(this.mMagnitudePerCMTextField);
@@ -460,24 +466,24 @@ public class SGPropertyDialogVXYData extends SGDataDialog
 
     //
     private Float getScalingFactorFromObservers() {
-        List oList = this.mPropertyDialogObserverList;
+        List<SGIPropertyDialogObserver> oList = this.mPropertyDialogObserverList;
         final int len = oList.size();
         if (len == 0) {
             return null;
         }
 
-        ArrayList lList = new ArrayList(len);
+        ArrayList<Float> lList = new ArrayList<Float>(len);
         for (int ii = 0; ii < len; ii++) {
             SGIVXYDataDialogObserver l = (SGIVXYDataDialogObserver) oList
                     .get(ii);
             lList.add(Float.valueOf(l.getMagnitudePerCM()));
         }
 
-        Float m0 = (Float) lList.get(0);
+        Float m0 = lList.get(0);
         Float m = m0;
         if (len > 1) {
             for (int ii = 1; ii < len; ii++) {
-                Float m1 = (Float) lList.get(ii);
+                Float m1 = lList.get(ii);
                 if (m0.equals(m1) == false) {
                     m = null;
                     break;
@@ -524,24 +530,24 @@ public class SGPropertyDialogVXYData extends SGDataDialog
 
     //
     private Boolean getInvarianceFromObservers() {
-        List oList = this.mPropertyDialogObserverList;
+        List<SGIPropertyDialogObserver> oList = this.mPropertyDialogObserverList;
         final int len = oList.size();
         if (len == 0) {
             return null;
         }
 
-        ArrayList lList = new ArrayList(len);
+        ArrayList<Boolean> lList = new ArrayList<Boolean>(len);
         for (int ii = 0; ii < len; ii++) {
             SGIVXYDataDialogObserver l = (SGIVXYDataDialogObserver) oList
                     .get(ii);
             lList.add(Boolean.valueOf(l.isDirectionInvariant()));
         }
 
-        Boolean m0 = (Boolean) lList.get(0);
+        Boolean m0 = lList.get(0);
         Boolean m = m0;
         if (len > 1) {
             for (int ii = 1; ii < len; ii++) {
-                Boolean m1 = (Boolean) lList.get(ii);
+                Boolean m1 = lList.get(ii);
                 if (m0.equals(m1) == false) {
                     m = null;
                     break;

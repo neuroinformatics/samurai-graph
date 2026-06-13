@@ -144,7 +144,6 @@ import jp.riken.brain.ni.samuraigraph.figure.SGXYFigure;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupSetInGraph;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetForData;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetMultipleSXY;
-import ncsa.hdf.hdf5lib.exceptions.HDF5DatatypeInterfaceException;
 import ncsa.hdf.hdf5lib.exceptions.HDF5Exception;
 
 import org.w3c.dom.DOMImplementation;
@@ -169,11 +168,11 @@ import foxtrot.Worker;
 /**
  * The main thread.
  */
-class SGMainFunctions implements ActionListener, SGIConstants,
+class SGMainFunctions implements ActionListener,
         SGIUpgradeConstants, SGIApplicationCommandConstants,
         SGIApplicationConstants, SGIPropertyFileConstants,
         SGIPreferencesConstants, SGIApplicationTextConstants,
-        SGIRootObjectConstants, SGIImageConstants, SGIArchiveFileConstants,
+        SGIImageConstants, SGIArchiveFileConstants,
         SGIDataColumnTypeConstants, WindowListener, SGINetCDFConstants {
 
     // only used for debug
@@ -403,6 +402,7 @@ class SGMainFunctions implements ActionListener, SGIConstants,
             final SGSplashWindow sw = this.createSplashWindow();
             if (sw == null) {
                 exitApplication(1);
+                return;
             }
             sw.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             sw.setProgressValue(0.0f);
@@ -1099,7 +1099,7 @@ class SGMainFunctions implements ActionListener, SGIConstants,
     boolean duplicateFocusedData(SGDrawingWindow wnd) {
         List<SGFigure> fList = wnd.getVisibleFigureList();
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure f = (SGFigure) fList.get(ii);
+            SGFigure f = fList.get(ii);
 
             // get figure elements
             SGIFigureElement[] elArray = f.getIFigureElementArray();
@@ -1111,7 +1111,7 @@ class SGMainFunctions implements ActionListener, SGIConstants,
             List<SGData> dListOriginal = new ArrayList<SGData>();
             List<SGData> dListDuplicated = new ArrayList<SGData>();
             for (int jj = 0; jj < dataList.size(); jj++) {
-                SGData data = (SGData) dataList.get(jj);
+                SGData data = dataList.get(jj);
 
                 // get properties of data before duplication
 //                String dataType = data.getDataType();
@@ -1291,7 +1291,7 @@ class SGMainFunctions implements ActionListener, SGIConstants,
             SGFigure figure = fList.get(ii);
             List<SGData> dList = new ArrayList<SGData>(figure.getVisibleDataList());
             for (int jj = 0; jj < dList.size(); jj++) {
-                SGData data = (SGData) dList.get(jj);
+                SGData data = dList.get(jj);
                 FigureData fd = new FigureData(data, ii);
                 WrappedData wd = new WrappedData(fd);
                 wdList.add(wd);
@@ -2627,9 +2627,6 @@ class SGMainFunctions implements ActionListener, SGIConstants,
             try {
     			reader = SGApplicationUtility.openHDF5(path);
             } catch (HDF5Exception e1) {
-        		if (reader != null) {
-        			reader.close();
-        		}
                 return false;
             }
             SGHDF5File hdf5File = new SGHDF5File(reader);
@@ -3388,6 +3385,9 @@ class SGMainFunctions implements ActionListener, SGIConstants,
                 }
             }
         } else {
+            if (fig == null) {
+                return false;
+            }
             // add data to figure already exists.
             SGIProgressControl progress = (SGIProgressControl) wnd;
             progress.setProgressMessage("Add Data");
@@ -4142,7 +4142,7 @@ class SGMainFunctions implements ActionListener, SGIConstants,
             }
 
             // get an object from dataList
-            WrappedData wData = (WrappedData) dataList.get(ii);
+            WrappedData wData = dataList.get(ii);
             if (!wData.hasFigureData()) {
                 SGPropertyFileData pfData = wData.getPropertyFileData();
                 String fileName = pfData.getFileName();

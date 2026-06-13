@@ -77,7 +77,6 @@ public class SGDrawingServer implements SGIApplicationConstants,
     	String scriptFileName = null;
     	boolean commandFlag = false;
     	boolean devFlag = false;
-    	boolean preprocessFlag = false;
     	List<String> dataFileNameList = new ArrayList<String>();
         for (int ii = 0; ii < commands.length; ii++) {
         	if (commands[ii].equals("-prop") || commands[ii].equals("-p")) {

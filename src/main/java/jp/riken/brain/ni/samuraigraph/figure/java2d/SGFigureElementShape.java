@@ -91,7 +91,7 @@ public class SGFigureElementShape extends SGFigureElement2D implements
     /**
      * A map of property dialogs for shape objects.
      */
-    private HashMap mShapeDialogMap = new HashMap();
+    private HashMap<Object, SGPropertyDialog> mShapeDialogMap = new HashMap<Object, SGPropertyDialog>();
     
     private ShapeObject mPressedShape = null;
 
@@ -117,9 +117,9 @@ public class SGFigureElementShape extends SGFigureElement2D implements
         super.dispose();
 
         // dispose the map of property dialogs
-        Iterator itr = this.mShapeDialogMap.values().iterator();
+        Iterator<SGPropertyDialog> itr = this.mShapeDialogMap.values().iterator();
         while (itr.hasNext()) {
-            SGPropertyDialog dg = (SGPropertyDialog) itr.next();
+            SGPropertyDialog dg = itr.next();
             dg.dispose();
         }
         this.mShapeDialogMap.clear();
@@ -573,7 +573,7 @@ public class SGFigureElementShape extends SGFigureElement2D implements
      */
     public SGProperties getProperties() {
         ShapeElementProperties p = new ShapeElementProperties();
-        p.visibleShapeList = new ArrayList(this.getVisibleChildList());
+        p.visibleShapeList = new ArrayList<SGIChildObject>(this.getVisibleChildList());
         return p;
     }
 
@@ -1112,7 +1112,7 @@ public class SGFigureElementShape extends SGFigureElement2D implements
                 if (sh.isValid() == false) {
                     continue;
                 }
-                List pList = sh.getAnchorPointList();
+                List<Point2D> pList = sh.getAnchorPointList();
                 if (!sh.getIElement().isAnchored()) {
                     SGUtilityForFigureElementJava2D.drawAnchorAsChildObject(pList, g2d);
                 } else {
@@ -1123,14 +1123,14 @@ public class SGFigureElementShape extends SGFigureElement2D implements
 
         // draw symbols around focused objects
         if (this.mSymbolsVisibleFlagAroundFocusedObjects) {
-            ArrayList fList = new ArrayList();
+            ArrayList<SGISelectable> fList = new ArrayList<SGISelectable>();
             this.getFocusedObjectsList(fList);
             for (int ii = 0; ii < fList.size(); ii++) {
                 ShapeObject sh = (ShapeObject) fList.get(ii);
                 if (sh.isValid() == false) {
                     continue;
                 }
-                List pList = sh.getAnchorPointList();
+                List<Point2D> pList = sh.getAnchorPointList();
                 if (!sh.getIElement().isAnchored()) {
                     SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(pList, g2d);
                 } else {
@@ -1227,7 +1227,7 @@ public class SGFigureElementShape extends SGFigureElement2D implements
      * 
      */
     private static class ShapeElementProperties extends SGProperties {
-        ArrayList visibleShapeList = new ArrayList();
+        ArrayList<SGIChildObject> visibleShapeList = new ArrayList<SGIChildObject>();
 
         /**
          * 
@@ -1305,7 +1305,7 @@ public class SGFigureElementShape extends SGFigureElement2D implements
 
         public boolean setShapeWithAxesValues();
 
-        public List getAnchorPointList();
+        public List<Point2D> getAnchorPointList();
 
         public int getMouseLocation(final int x, final int y);
 
@@ -1628,7 +1628,7 @@ public class SGFigureElementShape extends SGFigureElement2D implements
          * 
          * @return
          */
-        private List getAnchorPointList() {
+        private List<Point2D> getAnchorPointList() {
             return this.mElement.getAnchorPointList();
         }
 
@@ -2702,8 +2702,8 @@ public class SGFigureElementShape extends SGFigureElement2D implements
          * 
          * @return
          */
-        public List getAnchorPointList() {
-            ArrayList list = new ArrayList();
+        public List<Point2D> getAnchorPointList() {
+            ArrayList<Point2D> list = new ArrayList<Point2D>();
 
             final float mag = this.getMagnification();
             final float x = this.getX();
@@ -4367,8 +4367,8 @@ public class SGFigureElementShape extends SGFigureElement2D implements
          * 
          * @return
          */
-        public List getAnchorPointList() {
-            ArrayList list = new ArrayList();
+        public List<Point2D> getAnchorPointList() {
+            ArrayList<Point2D> list = new ArrayList<Point2D>();
 
             Point2D ps = new Point2D.Float(this.getStartX(), this.getStartY());
             Point2D pe = new Point2D.Float(this.getEndX(), this.getEndY());

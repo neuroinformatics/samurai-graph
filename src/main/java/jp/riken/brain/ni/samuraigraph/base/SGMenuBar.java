@@ -965,7 +965,7 @@ public class SGMenuBar extends JMenuBar implements ActionListener,
     }
 
     private void createMenuItem(SGINode node, JMenu parent, ActionListener l) {
-        final ArrayList childList = node.getChildNodes();
+        final ArrayList<?> childList = node.getChildNodes();
         final String cText = node.getClassDescription();
         final String iText = node.getInstanceDescription();
         // final String command = MENUBAR_PROPERTIES;

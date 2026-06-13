@@ -158,7 +158,7 @@ public class SGImageExportManager implements SGIImageExportManager,
         try {
             java.lang.reflect.Field typeField = org.freehep.graphicsbase.util.export.ExportDialog.class.getDeclaredField("type");
             typeField.setAccessible(true);
-            javax.swing.JComboBox cb = (javax.swing.JComboBox) typeField.get(this.mExportDialog);
+            javax.swing.JComboBox<?> cb = (javax.swing.JComboBox<?>) typeField.get(this.mExportDialog);
             cb.addActionListener(bl);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -607,7 +607,6 @@ public class SGImageExportManager implements SGIImageExportManager,
             	final String uType = type.toUpperCase();
 
             	// round
-            	final int roundNum = this.getRoundNumber(prop);
 
 				// "Resolution"
                 String strResolution = prop.getValue(KEY_RESOLUTION);
@@ -724,33 +723,7 @@ public class SGImageExportManager implements SGIImageExportManager,
 		return roundNum;
     }
     
-    /**
-     * Sets a text string to the image properties.
-     *
-     * @param prop
-     *           the map input properties
-     * @param propKey
-     *           the key for the map of input properties
-     * @param p
-     *           the image properties
-     * @param key
-     *           the key for the image properties
-     * @param result
-     *           the results of setting properties
-     * @return true if succeeded
-     */
-    private boolean setString(final SGPropertyMap prop, final String propKey,
-            final UserProperties p, final String key,
-            final SGPropertyResults result) {
-    	String value = prop.getValue(propKey);
-        if (value != null) {
-        	String str = prop.getValueString(propKey);
-            p.setProperty(key, str);
-            result.putResult(propKey, SGPropertyResults.SUCCEEDED);
-            return true;
-        }
-        return false;
-    }
+
 
     /**
      * Sets a text string to the image properties from given candidates.
@@ -851,36 +824,7 @@ public class SGImageExportManager implements SGIImageExportManager,
         return false;
     }
 
-    /**
-     * Sets an integer value to the image properties.
-     *
-     * @param prop
-     *           the map input properties
-     * @param propKey
-     *           the key for the map of input properties
-     * @param p
-     *           the image properties
-     * @param key
-     *           the key for the image properties
-     * @param result
-     *           the results of setting properties
-     * @return true if succeeded
-     */
-    private boolean setInteger(final SGPropertyMap prop, final String propKey,
-            final UserProperties p, final String key, final SGPropertyResults result) {
-        String value = prop.getValue(propKey);
-        if (value != null) {
-            Integer n = SGUtilityText.getInteger(value);
-            if (n == null) {
-                result.putResult(propKey, SGPropertyResults.INVALID_INPUT_VALUE);
-                return false;
-            }
-            p.setProperty(key, n.intValue());
-            result.putResult(propKey, SGPropertyResults.SUCCEEDED);
-            return true;
-        }
-        return false;
-    }
+
 
     /**
      * Sets an integer value to the image properties with candidates.
@@ -920,36 +864,7 @@ public class SGImageExportManager implements SGIImageExportManager,
         return false;
     }
 
-    /**
-     * Sets a float value to the image properties.
-     *
-     * @param prop
-     *           the map input properties
-     * @param propKey
-     *           the key for the map of input properties
-     * @param p
-     *           the image properties
-     * @param key
-     *           the key for the image properties
-     * @param result
-     *           the results of setting properties
-     * @return true if succeeded
-     */
-    private boolean setFloat(final SGPropertyMap prop, final String propKey,
-            final UserProperties p, final String key, final SGPropertyResults result) {
-        String value = prop.getValue(propKey);
-        if (value != null) {
-            Float f = SGUtilityText.getFloat(value);
-            if (f == null) {
-                result.putResult(propKey, SGPropertyResults.INVALID_INPUT_VALUE);
-                return false;
-            }
-            p.setProperty(key, f.floatValue());
-            result.putResult(propKey, SGPropertyResults.SUCCEEDED);
-            return true;
-        }
-        return false;
-    }
+
 
     /**
      * Sets a float value to the image properties within given value range.
@@ -1149,7 +1064,7 @@ public class SGImageExportManager implements SGIImageExportManager,
         public void actionPerformed(ActionEvent e) {
             Object source = e.getSource();
             if (source instanceof JComboBox) {
-                JComboBox cb = (JComboBox) source;
+                JComboBox<?> cb = (JComboBox<?>) source;
                 Object obj = cb.getSelectedItem();
 
                 Component target = SGImageExportManager.this.mTarget;

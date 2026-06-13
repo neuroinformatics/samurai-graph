@@ -55,6 +55,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementAxisBreak.AxisBreakSymbolProperties;
 import jp.riken.brain.ni.samuraigraph.figure.SGIAxisBreakConstants;
+import jp.riken.brain.ni.samuraigraph.figure.java2d.SGAxisElement.AxisProperties;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -814,7 +815,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D implements
 
         List<SGIChildObject> list = this.getVisibleChildList();
 
-        ArrayList axisBreakRectList = new ArrayList();
+        ArrayList<Rectangle2D> axisBreakRectList = new ArrayList<Rectangle2D>();
         for (int ii = 0; ii < list.size(); ii++) {
             AxisBreakSymbol el = (AxisBreakSymbol) list.get(ii);
             Rectangle2D rect = el.getElementBounds();
@@ -828,7 +829,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D implements
 
         Rectangle2D gRect = this.getGraphRect();
 
-        ArrayList rectList = new ArrayList();
+        ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
         rectList.add(gRect);
 
         if (rectAxisBreakSymbols != null) {
@@ -855,9 +856,10 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D implements
     /**
      * 
      */
-    protected Set getAvailableChildSet() {
-        Set set = new HashSet();
-        List mList = this.getMementoList();
+    @Override
+    protected Set<SGIChildObject> getAvailableChildSet() {
+        Set<SGIChildObject> set = new HashSet<SGIChildObject>();
+        List<SGProperties> mList = this.getMementoList();
         for (int ii = 0; ii < mList.size(); ii++) {
             AxisProperties ap = (AxisProperties) mList.get(ii);
             set.addAll(ap.visibleAxisBreakSymbolList);
@@ -870,7 +872,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D implements
      * 
      */
     public static class AxisProperties extends SGProperties {
-        List visibleAxisBreakSymbolList = new ArrayList();
+        List<SGIChildObject> visibleAxisBreakSymbolList = new ArrayList<SGIChildObject>();
 
         AxisProperties() {
         }
@@ -1520,8 +1522,8 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D implements
          * 
          * @return
          */
-        private ArrayList getAnchorPointList() {
-            ArrayList list = new ArrayList();
+        private ArrayList<Point2D> getAnchorPointList() {
+            ArrayList<Point2D> list = new ArrayList<Point2D>();
 
             Shape array[] = this.getShapeArray();
             if (array.length==0) {

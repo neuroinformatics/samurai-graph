@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.AbstractButton;
@@ -180,7 +181,7 @@ public class SGToolBar extends JToolBar implements ActionListener,
         }
 
         // a map of file name and icon
-        HashMap map = new HashMap();
+        HashMap<String, ImageIcon> map = new HashMap<String, ImageIcon>();
         for (int ii = 0; ii < num; ii++) {
             map.put(filenameArray[ii], icons[ii]);
         }
@@ -398,17 +399,17 @@ public class SGToolBar extends JToolBar implements ActionListener,
         return p;
     }
 
-    private ToolBarButton createButton(Map map, String filename, String tip) {
-        ImageIcon icon = (ImageIcon) map.get(filename);
+    private ToolBarButton createButton(Map<String, ImageIcon> map, String filename, String tip) {
+        ImageIcon icon = map.get(filename);
         ToolBarButton b = new ToolBarButton(icon);
         b.setToolTipText(tip);
         b.addActionListener(this);
         return b;
     }
 
-    private ToolBarToggleButton createToggleButton(Map map, String filename,
+    private ToolBarToggleButton createToggleButton(Map<String, ImageIcon> map, String filename,
             String tip) {
-        ImageIcon icon = (ImageIcon) map.get(filename);
+        ImageIcon icon = map.get(filename);
         ToolBarToggleButton b = new ToolBarToggleButton(icon);
         b.setToolTipText(tip);
         b.addActionListener(this);
@@ -431,7 +432,7 @@ public class SGToolBar extends JToolBar implements ActionListener,
     /**
      *
      */
-    private ArrayList mActionListenerList = new ArrayList();
+    private List<ActionListener> mActionListenerList = new ArrayList<ActionListener>();
 
     /**
      *
@@ -459,9 +460,9 @@ public class SGToolBar extends JToolBar implements ActionListener,
      *
      */
     public void notifyToListener(final ActionEvent e) {
-        ArrayList list = this.mActionListenerList;
+        List<ActionListener> list = this.mActionListenerList;
         for (int ii = 0; ii < list.size(); ii++) {
-            final ActionListener el = (ActionListener) list.get(ii);
+            final ActionListener el = list.get(ii);
             el.actionPerformed(e);
         }
     }
@@ -520,7 +521,7 @@ public class SGToolBar extends JToolBar implements ActionListener,
 
         final int num = commands.length;
 
-        HashMap map = new HashMap();
+        HashMap<String, JToolBar> map = new HashMap<String, JToolBar>();
         for (int ii = 0; ii < num; ii++) {
             map.put(commands[ii], tArray[ii]);
         }
@@ -531,7 +532,7 @@ public class SGToolBar extends JToolBar implements ActionListener,
     /**
      *
      */
-    private Map mToolBarMap;
+    private Map<String, JToolBar> mToolBarMap;
 
     /**
      *
@@ -571,9 +572,9 @@ public class SGToolBar extends JToolBar implements ActionListener,
         }
 
         // throw an action event
-        ArrayList lList = this.mActionListenerList;
+        List<ActionListener> lList = this.mActionListenerList;
         for (int ii = 0; ii < lList.size(); ii++) {
-            ActionListener l = (ActionListener) lList.get(ii);
+            ActionListener l = lList.get(ii);
             l.actionPerformed(new ActionEvent(this, e.getID(), command, e
                     .getModifiers()));
         }
@@ -645,9 +646,9 @@ public class SGToolBar extends JToolBar implements ActionListener,
      * @return
      */
     public boolean isInsertToggleButtonSelected() {
-        final ArrayList list = this.getInsertToggleButtonList();
+        final List<JToggleButton> list = this.getInsertToggleButtonList();
         for (int ii = 0; ii < list.size(); ii++) {
-            final AbstractButton btn = (AbstractButton) list.get(ii);
+            final AbstractButton btn = list.get(ii);
             if (btn.isSelected()) {
                 return true;
             }
@@ -659,9 +660,9 @@ public class SGToolBar extends JToolBar implements ActionListener,
      *
      */
     public void setInsertToggleButtonsEnabled(final boolean flag) {
-        final ArrayList btnList = this.getInsertToggleButtonList();
+        final List<JToggleButton> btnList = this.getInsertToggleButtonList();
         for (int ii = 0; ii < btnList.size(); ii++) {
-            final AbstractButton btn = (AbstractButton) btnList.get(ii);
+            final AbstractButton btn = btnList.get(ii);
             btn.setEnabled(flag);
         }
     }
@@ -670,9 +671,9 @@ public class SGToolBar extends JToolBar implements ActionListener,
      *
      */
     public void setInsertToggleItemsUnSelected() {
-        final ArrayList btnList = this.getInsertToggleButtonList();
+        final List<JToggleButton> btnList = this.getInsertToggleButtonList();
         for (int ii = 0; ii < btnList.size(); ii++) {
-            final AbstractButton btn = (AbstractButton) btnList.get(ii);
+            final AbstractButton btn = btnList.get(ii);
             btn.setSelected(false);
         }
     }
@@ -680,8 +681,8 @@ public class SGToolBar extends JToolBar implements ActionListener,
     /**
      *
      */
-    private ArrayList getInsertToggleButtonList() {
-        final ArrayList list = new ArrayList(Arrays.asList(this
+    private List<JToggleButton> getInsertToggleButtonList() {
+        final List<JToggleButton> list = new ArrayList<JToggleButton>(Arrays.asList(this
                 .getInsertToggleButtonArray()));
         return list;
     }
@@ -788,16 +789,16 @@ public class SGToolBar extends JToolBar implements ActionListener,
     private JToolBar[] getToolBarArray() {
         Component[] com = this.getComponents();
 
-        ArrayList list = new ArrayList();
+        ArrayList<JToolBar> list = new ArrayList<JToolBar>();
         for (int ii = 0; ii < com.length; ii++) {
             if (com[ii] instanceof JToolBar) {
-                list.add(com[ii]);
+                list.add((JToolBar) com[ii]);
             }
         }
 
         JToolBar[] array = new JToolBar[list.size()];
         for (int ii = 0; ii < array.length; ii++) {
-            array[ii] = (JToolBar) list.get(ii);
+            array[ii] = list.get(ii);
         }
 
         return array;
@@ -811,15 +812,15 @@ public class SGToolBar extends JToolBar implements ActionListener,
     public String[] getToolBarPattern() {
         Component[] com = this.getToolBarArray();
         String[] keys = TOOLBAR_MENUCMD_ARRAY;
-        Map map = this.mToolBarMap;
+        Map<String, JToolBar> map = this.mToolBarMap;
 
-        ArrayList keyList = new ArrayList();
+        List<String> keyList = new ArrayList<String>();
         for (int ii = 0; ii < com.length; ii++) {
             if (!com[ii].isVisible()) {
                 continue;
             }
 
-            for (int jj = 0; ii < keys.length; jj++) {
+            for (int jj = 0; jj < keys.length; jj++) {
                 Object value = map.get(keys[jj]);
                 if (com[ii].equals(value)) {
                     keyList.add(keys[jj]);
@@ -830,7 +831,7 @@ public class SGToolBar extends JToolBar implements ActionListener,
 
         String[] array = new String[keyList.size()];
         for (int ii = 0; ii < array.length; ii++) {
-            array[ii] = (String) keyList.get(ii);
+            array[ii] = keyList.get(ii);
         }
 
         return array;
@@ -847,17 +848,17 @@ public class SGToolBar extends JToolBar implements ActionListener,
             throw new IllegalArgumentException("pattern==null");
         }
 
-        ArrayList visibleList = new ArrayList();
+        List<String> visibleList = new ArrayList<String>();
         for (int ii = 0; ii < pattern.length; ii++) {
             final String key = pattern[ii];
             visibleList.add(key);
         }
 
-        Map map = this.mToolBarMap;
+        Map<String, JToolBar> map = this.mToolBarMap;
         String[] keys = TOOLBAR_MENUCMD_ARRAY;
         for (int ii = 0; ii < keys.length; ii++) {
             final boolean visible = (visibleList.contains(keys[ii]));
-            JToolBar bar = (JToolBar) map.get(keys[ii]);
+            JToolBar bar = map.get(keys[ii]);
             bar.setVisible(visible);
         }
 
@@ -912,8 +913,8 @@ public class SGToolBar extends JToolBar implements ActionListener,
 
         JToolBar[] array = this.getToolBarArray();
 
-        ArrayList tList = new ArrayList();
-        ArrayList pList = new ArrayList();
+        List<JToolBar> tList = new ArrayList<JToolBar>();
+        List<JToolBar> pList = new ArrayList<JToolBar>();
         int num = array.length;
         int x = 0;
         for (int ii = 0; ii < array.length; ii++) {

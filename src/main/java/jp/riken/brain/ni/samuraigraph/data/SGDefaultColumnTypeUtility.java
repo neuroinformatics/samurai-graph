@@ -377,7 +377,7 @@ public class SGDefaultColumnTypeUtility implements SGIDataColumnTypeConstants,
 			if (samplingRate != null) {
 				if (numberIndexList.size() >= 1) {
 					for (int ii = 0; ii < numberIndexList.size(); ii++) {
-						Integer num = (Integer) numberIndexList.get(ii);
+						Integer num = numberIndexList.get(ii);
 						columnTypes[num.intValue()] = Y_VALUE;
 					}
 				} else {
@@ -390,7 +390,7 @@ public class SGDefaultColumnTypeUtility implements SGIDataColumnTypeConstants,
 			} else if (dateColumnUsed) {
 				if (numberIndexList.size() >= 1) {
 					for (int ii = 0; ii < numberIndexList.size(); ii++) {
-						Integer num = (Integer) numberIndexList.get(ii);
+						Integer num = numberIndexList.get(ii);
 						columnTypes[num.intValue()] = Y_VALUE;
 					}
 					Integer date0 = dateIndexList.get(0);
@@ -400,10 +400,10 @@ public class SGDefaultColumnTypeUtility implements SGIDataColumnTypeConstants,
 				}
 			} else {
 				if (numberIndexList.size() >= 2) {
-					Integer num1 = (Integer) numberIndexList.get(0);
+					Integer num1 = numberIndexList.get(0);
 					columnTypes[num1.intValue()] = X_VALUE;
 					for (int ii = 1; ii < numberIndexList.size(); ii++) {
-						Integer num = (Integer) numberIndexList.get(ii);
+						Integer num = numberIndexList.get(ii);
 						columnTypes[num.intValue()] = Y_VALUE;
 					}
 				} else {
@@ -429,7 +429,7 @@ public class SGDefaultColumnTypeUtility implements SGIDataColumnTypeConstants,
 			int yNumberColumnIndex = -1;
 			int cnt = 0;
 			for (int ii = 0; ii < len; ii++) {
-				SGDataColumnInfo cInfo = (SGDataColumnInfo) columnInfoList
+				SGDataColumnInfo cInfo = columnInfoList
 						.get(ii);
 				String valueType = cInfo.getValueType();
 				if (VALUE_TYPE_NUMBER.equals(valueType)) {
@@ -454,17 +454,17 @@ public class SGDefaultColumnTypeUtility implements SGIDataColumnTypeConstants,
 				} else {
 					// x values
 					if (dateIndexList.size() != 0 && dateColumnUsed) {
-						Integer num1 = (Integer) dateIndexList.get(0);
+						Integer num1 = dateIndexList.get(0);
 						columnTypes[num1.intValue()] = X_VALUE;
 						dateAssigned = true;
 					} else {
-						Integer num1 = (Integer) numberIndexList.get(0);
+						Integer num1 = numberIndexList.get(0);
 						columnTypes[num1.intValue()] = X_VALUE;
 					}
 				}
 
 				// y values
-				Integer num2 = (Integer) numberIndexList.get(yNumberArrayIndex);
+				Integer num2 = numberIndexList.get(yNumberArrayIndex);
 				columnTypes[num2.intValue()] = Y_VALUE;
 
 				boolean[] isRepeatedTitle = SGDataUtility
@@ -473,9 +473,9 @@ public class SGDefaultColumnTypeUtility implements SGIDataColumnTypeConstants,
 
 				// error bars
 				if (numberIndexList.size() >= minNumberSize + 2) {
-					Integer num3 = (Integer) numberIndexList
+					Integer num3 = numberIndexList
 							.get(yNumberArrayIndex + 1);
-					Integer num4 = (Integer) numberIndexList
+					Integer num4 = numberIndexList
 							.get(yNumberArrayIndex + 2);
 					columnTypes[num3.intValue()] = SGDataUtility
 							.appendColumnNoOrTitle(LOWER_ERROR_VALUE,
@@ -493,7 +493,7 @@ public class SGDefaultColumnTypeUtility implements SGIDataColumnTypeConstants,
 
 				// tick labels
 				if (textIndexList.size() > 0) {
-					Integer tick = (Integer) textIndexList.get(0);
+					Integer tick = textIndexList.get(0);
 					columnTypes[tick.intValue()] = SGDataUtility
 							.appendColumnNoOrTitle(TICK_LABEL,
 									yNumberColumnIndex,
@@ -501,7 +501,7 @@ public class SGDefaultColumnTypeUtility implements SGIDataColumnTypeConstants,
 									columnInfoList.get(yNumberColumnIndex)
 											.getTitle());
 				} else if (dateIndexList.size() > 0 && !dateAssigned) {
-					Integer date = (Integer) dateIndexList.get(0);
+					Integer date = dateIndexList.get(0);
 					columnTypes[date.intValue()] = SGDataUtility
 							.appendColumnNoOrTitle(TICK_LABEL,
 									yNumberColumnIndex,
@@ -705,10 +705,10 @@ public class SGDefaultColumnTypeUtility implements SGIDataColumnTypeConstants,
 		}
 
 		if (numberIndexList.size() >= 4) {
-			Integer num1 = (Integer) numberIndexList.get(0);
-			Integer num2 = (Integer) numberIndexList.get(1);
-			Integer num3 = (Integer) numberIndexList.get(2);
-			Integer num4 = (Integer) numberIndexList.get(3);
+			Integer num1 = numberIndexList.get(0);
+			Integer num2 = numberIndexList.get(1);
+			Integer num3 = numberIndexList.get(2);
+			Integer num4 = numberIndexList.get(3);
 			columnTypes[num1.intValue()] = X_COORDINATE;
 			columnTypes[num2.intValue()] = Y_COORDINATE;
 			columnTypes[num3.intValue()] = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
@@ -820,9 +820,9 @@ public class SGDefaultColumnTypeUtility implements SGIDataColumnTypeConstants,
 
 		if (numberIndexList.size() >= 3) {
 			// x, y and z values
-			Integer num1 = (Integer) numberIndexList.get(0);
-			Integer num2 = (Integer) numberIndexList.get(1);
-			Integer num3 = (Integer) numberIndexList.get(2);
+			Integer num1 = numberIndexList.get(0);
+			Integer num2 = numberIndexList.get(1);
+			Integer num3 = numberIndexList.get(2);
 			columnTypes[num1.intValue()] = X_VALUE;
 			columnTypes[num2.intValue()] = Y_VALUE;
 			columnTypes[num3.intValue()] = Z_VALUE;

@@ -25,7 +25,7 @@ import org.w3c.dom.Element;
  * Create a property file.
  */
 public class SGPropertyFileCreator extends SGFileHandler
-		implements SGIConstants, SGIPropertyFileConstants {
+		implements SGIPropertyFileConstants {
 
     /**
      * Default name of the property file with the extension.

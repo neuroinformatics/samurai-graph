@@ -57,6 +57,7 @@ import org.w3c.dom.Element;
 /**
  * The window which has figures in its pane.
  */
+@SuppressWarnings("serial")
 public class SGDrawingWindow extends JFrame implements ComponentListener,
         PropertyChangeListener, MenuListener, ActionListener, SGIDisposable, SGIUndoable,
         SGINode, SGIRootObject, SGIWindowDialogObserver, SGIProgressControl {
@@ -255,13 +256,13 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      */
     private boolean create() {
         // load images
-        Map map = this.loadImages();
+        Map<String, ImageIcon> map = this.loadImages();
 
         // update the UI
         SwingUtilities.updateComponentTreeUI(this);
 
         // icon image
-        final ImageIcon icon = (ImageIcon) map.get(SAMURAI_IMG_FILENAME);
+        final ImageIcon icon = map.get(SAMURAI_IMG_FILENAME);
         this.setIconImage(icon.getImage());
 
         // create the menu bar
@@ -542,9 +543,6 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     	return id;
     }
 
-    /**
-     *
-     */
     // private JToolBar mBottomToolBar = new JToolBar();
 
     /**
@@ -2058,15 +2056,15 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         // menu bar
         final JMenuBar menuBar = this.getJMenuBar();
         final double menuHeight = menuBar.getHeight();
-        yy -= menuHeight;
+        yy -= (int) menuHeight;
 
         // tool bar
         yy -= this.getToolBarHeight();
 
         // ruler
         final double rulerWidth = this.mClientPanel.getRulerWidth();
-        xx -= rulerWidth;
-        yy -= rulerWidth;
+        xx -= (int) rulerWidth;
+        yy -= (int) rulerWidth;
 
         return new Point2D.Float(xx, yy);
     }
@@ -4529,6 +4527,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     /**
      * Returns a two dimensional array of figure list.
      */
+    @SuppressWarnings("unchecked")
     private ArrayList<SGFigure>[][] getFigureListArray() {
         // get the visible figure list
         ArrayList<SGFigure> figureList = this.getVisibleFigureList();
@@ -4558,7 +4557,6 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         final int numY = (int) ((float) bbRect.getHeight() / dy) + 1;
 
         // get a two-dimensional array of figures
-        @SuppressWarnings("unchecked")
         ArrayList<SGFigure>[][] fListArray = new ArrayList[numX][numY];
         for (int ii = 0; ii < numX; ii++) {
             for (int jj = 0; jj < numY; jj++) {
@@ -4604,12 +4602,11 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         final int sx = numListX.size();
         final int sy = numListY.size();
 
-        @SuppressWarnings("unchecked")
         ArrayList<SGFigure>[][] figureListArray = new ArrayList[sx][sy];
         for (int ii = 0; ii < sx; ii++) {
-            final int nx = ((Integer) numListX.get(ii)).intValue();
+            final int nx = numListX.get(ii);
             for (int jj = 0; jj < sy; jj++) {
-                final int ny = ((Integer) numListY.get(jj)).intValue();
+                final int ny = numListY.get(jj);
                 figureListArray[ii][jj] = fListArray[nx][ny];
             }
         }
@@ -4804,6 +4801,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      *
      * @return
      */
+    @SuppressWarnings("unchecked")
     public boolean alignFiguresByGraphArea() {
         // get the visible figure list
         ArrayList<SGFigure> figureList = this.getVisibleFigureList();
@@ -4838,7 +4836,6 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         final int numY = (int) ((float) bbRect.getHeight() / dy) + 1;
 
         // get a two-dimensional array of figures
-        @SuppressWarnings("unchecked")
         ArrayList<SGFigure>[][] fListArray = new ArrayList[numX][numY];
         for (int ii = 0; ii < numX; ii++) {
             for (int jj = 0; jj < numY; jj++) {
@@ -4889,12 +4886,11 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         final int sx = numListX.size();
         final int sy = numListY.size();
 
-        @SuppressWarnings("unchecked")
         ArrayList<SGFigure>[][] figureListArray = new ArrayList[sx][sy];
         for (int ii = 0; ii < sx; ii++) {
-            final int nx = ((Integer) numListX.get(ii)).intValue();
+            final int nx = numListX.get(ii);
             for (int jj = 0; jj < sy; jj++) {
-                final int ny = ((Integer) numListY.get(jj)).intValue();
+                final int ny = numListY.get(jj);
                 figureListArray[ii][jj] = fListArray[nx][ny];
             }
         }
@@ -5117,7 +5113,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      *
      */
 
-    /**
+    /*
      * Returns the relative location of figure2 to figure1.
      *
      * @param figure1
@@ -6418,7 +6414,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         }
 
         // add listeners to the property dialog
-        SGPropertyDialog dg = (SGPropertyDialog) dList.get(0);
+        SGPropertyDialog dg = dList.get(0);
         List<SGIPropertyDialogObserver> lList = new ArrayList<SGIPropertyDialogObserver>();
         lList.addAll(figList);
         this.showPropertyDialog(dg, lList);
@@ -6608,7 +6604,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         }
 
         // show the property dialog
-        SGPropertyDialog dg = (SGPropertyDialog) dList.get(0);
+        SGPropertyDialog dg = dList.get(0);
         this.showPropertyDialog(dg, obsList);
 
         return true;
@@ -6636,7 +6632,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         }
 
         // show the property dialog
-        SGPropertyDialog dg = (SGPropertyDialog) dList.get(0);
+        SGPropertyDialog dg = dList.get(0);
         this.showPropertyDialog(dg, obsList);
 
         return true;
@@ -6664,7 +6660,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         }
 
         // show the property dialog
-        SGPropertyDialog dg = (SGPropertyDialog) dList.get(0);
+        SGPropertyDialog dg = dList.get(0);
         this.showPropertyDialog(dg, obsList);
 
         return true;
@@ -7029,6 +7025,24 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
          */
         public WindowProperties() {
             super();
+        }
+
+        @Override
+        public int hashCode() {
+            return java.util.Objects.hash(
+                mVisibleFigureList,
+                mPaperWidth,
+                mPaperHeight,
+                mBackgroundColor,
+                mGridVisible,
+                mGridColor,
+                mGridInverval,
+                mGridLineWidth,
+                mImageLocationX,
+                mImageLocationY,
+                mImageScalingFactor,
+                mImage
+            );
         }
 
         /**

@@ -1,14 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
 import java.awt.Dimension;
-import java.awt.event.AdjustmentListener;
 
 /**
  * A dialog to display the change log.
  * 
  */
-public class SGChangeLogDialog extends SGScrollPaneDialog implements
-        AdjustmentListener {
+public class SGChangeLogDialog extends SGScrollPaneDialog {
 
     /**
      * 

@@ -382,9 +382,9 @@ public abstract class SGAxisSelectionPanel extends javax.swing.JPanel implements
                 }
             }
 
-            ArrayList list = this.mActionListenerList;
+            List<ActionListener> list = this.mActionListenerList;
             for (int ii = 0; ii < list.size(); ii++) {
-                ActionListener l = (ActionListener) list.get(ii);
+                ActionListener l = list.get(ii);
                 l.actionPerformed(new ActionEvent(this, 0, ""));
             }
 
@@ -462,12 +462,12 @@ public abstract class SGAxisSelectionPanel extends javax.swing.JPanel implements
             mRightLine.setSelected(b);
         }
 
-        private ArrayList mActionListenerList = new ArrayList();
+        private List<ActionListener> mActionListenerList = new ArrayList<ActionListener>();
 
         public void addActionListener(final ActionListener l) {
-            List list = this.mActionListenerList;
+            List<ActionListener> list = this.mActionListenerList;
             for (int ii = 0; ii < list.size(); ii++) {
-                final ActionListener el = (ActionListener) list.get(ii);
+                final ActionListener el = list.get(ii);
                 if (el.equals(l)) {
                     return;
                 }
@@ -476,9 +476,9 @@ public abstract class SGAxisSelectionPanel extends javax.swing.JPanel implements
         }
 
         public void removeActionListener(ActionListener l) {
-            List list = this.mActionListenerList;
+            List<ActionListener> list = this.mActionListenerList;
             for (int ii = list.size() - 1; ii >= 0; ii--) {
-                final ActionListener el = (ActionListener) list.get(ii);
+                final ActionListener el = list.get(ii);
                 if (el.equals(l)) {
                     list.remove(l);
                 }

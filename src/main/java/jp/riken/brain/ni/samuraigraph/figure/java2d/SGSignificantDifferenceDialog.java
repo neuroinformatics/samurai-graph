@@ -1208,7 +1208,7 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog implements
         final Boolean anchored = this.getLocationAnchored();
 
         // check values
-        ArrayList list = new ArrayList();
+        ArrayList<String> list = new ArrayList<String>();
         if (sd.hasValidHorizontalYValue(yConfig, horizontalY) == false) {
             list.add("HorizontalY");
         }
@@ -1229,7 +1229,7 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog implements
             sb.append(ERRMSG_AXIS_VALUE_INVALID);
             sb.append(":\n");
             for (int ii = 0; ii < list.size(); ii++) {
-                String str = (String) list.get(ii);
+                String str = list.get(ii);
                 sb.append('-');
                 sb.append(str);
                 sb.append('\n');

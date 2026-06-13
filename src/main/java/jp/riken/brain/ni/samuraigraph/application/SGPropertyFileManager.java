@@ -609,7 +609,7 @@ class SGPropertyFileManager implements ActionListener, SGIConstants, SGIApplicat
         pdg.setSelectedFile(file);
 
         // get information from the property file
-        List dataList = new ArrayList();
+        List<SGPropertyFileData> dataList = new ArrayList<SGPropertyFileData>();
         if (this.getInfoFromPropertyFile(file, pdg, dataList, false) == false) {
             return false;
         }

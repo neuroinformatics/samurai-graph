@@ -23,8 +23,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 /**
  * About dialog.
  */
-public class SGAboutDialog extends SGDialog implements ActionListener,
-        ComponentListener, SGIApplicationConstants {
+public class SGAboutDialog extends SGDialog implements SGIApplicationConstants {
 
     private static final long serialVersionUID = 1528835468569338270L;
 
@@ -165,13 +164,13 @@ public class SGAboutDialog extends SGDialog implements ActionListener,
     private static String NEUROINFORMATICS_LAB_URL = "http://www.ni.brain.riken.jp/";
 
     private static final int verpos_r = 375; // right position of the version
-                                                // label
+                                             // label
 
     private static final int verpos_t = 125; // top position of the version
-                                                // label
+                                             // label
 
     private static final int verpos_b = 155; // bottom position of the
-                                                // version label
+                                             // version label
 
     /**
      * is links(hand) cursor shape?
@@ -232,7 +231,7 @@ public class SGAboutDialog extends SGDialog implements ActionListener,
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	super.actionPerformed(e);
+        super.actionPerformed(e);
         Object source = e.getSource();
         if (source.equals(this.mOKButton)) {
             this.setVisible(false);

@@ -102,7 +102,7 @@ public class SGElementGroupLineInGraph extends SGElementGroupLineForData impleme
                     GeneralPath gp = (GeneralPath) pathList.get(ii);
 
                     int num = 0;
-                    ArrayList list = new ArrayList();
+                    ArrayList<Point2D> list = new ArrayList<Point2D>();
 
                     PathIterator itr = gp
                             .getPathIterator(new AffineTransform());
@@ -124,7 +124,7 @@ public class SGElementGroupLineInGraph extends SGElementGroupLineForData impleme
 
                     if (num <= MAX_NUMBER_OF_ANCHORS) {
                         for (int jj = 0; jj < num; jj++) {
-                            Point2D pos = (Point2D) list.get(jj);
+                            Point2D pos = list.get(jj);
                             SGUtilityForFigureElementJava2D
                                     .drawAnchorAsFocusedObject(pos, g2d);
                         }
@@ -132,7 +132,7 @@ public class SGElementGroupLineInGraph extends SGElementGroupLineForData impleme
                         int div = num / MAX_NUMBER_OF_ANCHORS;
                         int cnt = 0;
                         while (true) {
-                            Point2D pos = (Point2D) list.get(cnt);
+                            Point2D pos = list.get(cnt);
                             SGUtilityForFigureElementJava2D
                                     .drawAnchorAsFocusedObject(pos, g2d);
                             cnt += div;

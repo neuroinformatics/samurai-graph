@@ -116,7 +116,7 @@ public class SGFigureCreator implements SGIFigureConstants {
     private boolean mSuccess = false;
 
     // The class object for SGIAxisElement.
-    private Class mClassOfAxisElement = null;
+    private Class<?> mClassOfAxisElement = null;
 
     // // The class object for SGIGraphElement of the scalar XY-type.
     // private Class mClassOfSXYGraphElement = null;
@@ -125,28 +125,28 @@ public class SGFigureCreator implements SGIFigureConstants {
     // private Class mClassOfVXYGraphElement = null;
 
     // The class object for SGIGraphElement.
-    private Class mClassOfGraphElement = null;
+    private Class<?> mClassOfGraphElement = null;
 
     // The class object for SGIGridElement.
-    private Class mClassOfGridElement = null;
+    private Class<?> mClassOfGridElement = null;
 
     // The class object for SGIStringElement.
-    private Class mClassOfStringElement = null;
+    private Class<?> mClassOfStringElement = null;
 
     // The class object for SGILegendElement.
-    private Class mClassOfLegendElement = null;
+    private Class<?> mClassOfLegendElement = null;
 
     // The class object for SGIAxisBreakElement.
-    private Class mClassOfAxisBreakElement = null;
+    private Class<?> mClassOfAxisBreakElement = null;
 
     // The class object for SGISignificantDifferenceElement.
-    private Class mClassOfSignificantDifferenceElement = null;
+    private Class<?> mClassOfSignificantDifferenceElement = null;
 
     // The class object for SGITimingLineElement.
-    private Class mClassOfTimingLineElement = null;
+    private Class<?> mClassOfTimingLineElement = null;
 
     // The class object for SGIShapeElement.
-    private Class mClassOfShapeElement = null;
+    private Class<?> mClassOfShapeElement = null;
 
     /**
      * Constants of layer.

@@ -90,7 +90,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D implement
     /**
      * A map of property dialogs for data.
      */
-    private HashMap mDataDialogMap = new HashMap();
+    private HashMap<String, SGPropertyDialog> mDataDialogMap = new HashMap<String, SGPropertyDialog>();
 
     private static final String DIALOG_KEY_SXY = "SXY";
 

@@ -77,10 +77,12 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
         if (!destDir.isDirectory()) {
             throw new IOException("Couldn't access dir " + destDir);
         }
-        ZipFile zfile = new ZipFile(zfileName);
-        Enumeration entries = zfile.entries();
+        ZipFile zfile = null;
+        try {
+            zfile = new ZipFile(zfileName);
+            Enumeration<? extends ZipEntry> entries = zfile.entries();
         while (entries.hasMoreElements()) {
-            ZipEntry ze = (ZipEntry) entries.nextElement();
+            ZipEntry ze = entries.nextElement();
             String path = SGApplicationUtility.getPathName(
                     destDir.getAbsolutePath(), 
                     ze.getName());
@@ -108,7 +110,15 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
                     if (is != null)
                         is.close();
                     if (os != null)
-                        is.close();
+                        os.close();
+                }
+            }
+        }
+        } finally {
+            if (zfile != null) {
+                try {
+                    zfile.close();
+                } catch (IOException e) {
                 }
             }
         }

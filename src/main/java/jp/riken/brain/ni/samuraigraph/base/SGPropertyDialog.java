@@ -172,7 +172,7 @@ public abstract class SGPropertyDialog extends SGDialog implements
     	super.actionPerformed(e);
         Object source = e.getSource();
         try {
-            List comList = this.getTextFieldComponentsList();
+            List<JTextField> comList = this.getTextFieldComponentsList();
             if (source.equals(this.getOKButton()) || comList.contains(source)) {
                 this.onOK();
             } else if (source.equals(this.getCancelButton())) {
@@ -297,9 +297,9 @@ public abstract class SGPropertyDialog extends SGDialog implements
      *
      */
     protected void clearAllSpinners() {
-        List list = this.getSpinnerList();
+        List<SGSpinner> list = this.getSpinnerList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGSpinner sp = (SGSpinner) list.get(ii);
+            SGSpinner sp = list.get(ii);
             sp.clearTemporaryValues();
         }
     }

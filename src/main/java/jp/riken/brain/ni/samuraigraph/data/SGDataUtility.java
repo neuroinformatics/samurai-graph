@@ -3782,7 +3782,6 @@ public class SGDataUtility implements SGIDataColumnTypeConstants, SGIDataPropert
 			SGMDArrayDataColumnInfo pickUpCol = (SGMDArrayDataColumnInfo) SGDataUtility.findColumnWithName(
 					colArray, pickUpDimensionName.toString());
 			if (pickUpCol != null) {
-				@SuppressWarnings("unchecked")
 				Map<String, Integer> dimensionIndexMap = (Map<String, Integer>) infoMap.get(
 						SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP);
 				for (int ii = 0; ii < colArray.length; ii++) {

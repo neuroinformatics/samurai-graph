@@ -59,6 +59,7 @@ import java.lang.reflect.Method;
  *         href="mailto:ejalbert@cs.stanford.edu">ejalbert@cs.stanford.edu</a>)
  * @version 1.4b1 (Released June 20, 2001)
  */
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class SGBrowserLauncher {
 
 	/**

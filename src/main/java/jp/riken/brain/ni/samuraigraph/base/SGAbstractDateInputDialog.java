@@ -13,7 +13,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
 
 public abstract class SGAbstractDateInputDialog extends SGDialog
-		implements ItemListener, ChangeListener, DocumentListener, FocusListener {
+		implements ItemListener, DocumentListener {
 
 	private static final long serialVersionUID = -8811503975748065777L;
 

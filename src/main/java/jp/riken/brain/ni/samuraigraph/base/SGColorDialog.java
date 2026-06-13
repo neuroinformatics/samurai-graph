@@ -13,7 +13,6 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import javax.swing.WindowConstants;
 
 /**
  * A dialog with a color chooser.

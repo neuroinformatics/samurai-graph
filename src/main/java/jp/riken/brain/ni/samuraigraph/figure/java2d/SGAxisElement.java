@@ -5435,17 +5435,16 @@ public abstract class SGAxisElement implements ActionListener,
     	public void axisScaleChanged(SGAxis axis);
     	
     }
-}
 
 // axis line
-class ElementLineAxis extends SGSimpleLine2D {
+public static class ElementLineAxis extends SGSimpleLine2D {
     ElementLineAxis() {
         super();
     }
 }
 
 //axis title
-class ElementStringTitle extends
+public static class ElementStringTitle extends
         SGDrawingElementString2DExtended implements SGIMovable, SGIFigureElementAxisConstants {
 	
 	SGAxisElement mAxisElement = null;
@@ -5569,7 +5568,7 @@ class ElementStringTitle extends
 }
 
 // line for tick marks
-class ElementLineTickMark extends SGDrawingElementLine2D implements AxisScaleElement {
+public static class ElementLineTickMark extends SGDrawingElementLine2D implements AxisScaleElement {
     
     SGTuple2f mStart = new SGTuple2f();
     
@@ -5650,7 +5649,7 @@ class ElementLineTickMark extends SGDrawingElementLine2D implements AxisScaleEle
 }
 
 // string for scale numbers
-class ElementStringNumber extends SGDrawingElementString2DExtended implements AxisScaleElement {
+public static class ElementStringNumber extends SGDrawingElementString2DExtended implements AxisScaleElement {
 	
     // value in scale
     double mValue;
@@ -5729,7 +5728,7 @@ class ElementStringNumber extends SGDrawingElementString2DExtended implements Ax
 }
 
 // exponent symbol
-class ElementStringExponent extends
+public static class ElementStringExponent extends
         SGDrawingElementString2DExtended implements SGIMovable, SGIFigureElementAxisConstants {
 	
 	SGAxisElement mAxisElement = null;
@@ -5806,7 +5805,7 @@ class ElementStringExponent extends
  * Properties for a single axis.
  * 
  */
-class AxisProperties extends SGProperties {
+public static class AxisProperties extends SGProperties {
 
     boolean axisVisible;
 
@@ -6023,5 +6022,6 @@ class AxisProperties extends SGProperties {
         }
         return true;
     }
+}
 }
 

@@ -1467,7 +1467,7 @@ public class SGClientPanel extends JLayeredPane implements
 //            }
         }
         
-        private Map mPopupMenuEnabledMap = new HashMap();
+        private Map<String, Boolean> mPopupMenuEnabledMap = new HashMap<String, Boolean>();
 
         //
         // action event
@@ -1687,9 +1687,9 @@ public class SGClientPanel extends JLayeredPane implements
             this.mWnd.setCursor(Cursor.getDefaultCursor());
             
             // set extra region flag to false
-            List fList = mWnd.getVisibleFigureList();
+            List<SGFigure> fList = mWnd.getVisibleFigureList();
             for (int ii = 0; ii < fList.size(); ii++) {
-                SGFigure f = (SGFigure) fList.get(ii);
+                SGFigure f = fList.get(ii);
                 f.setExtraRegionFlag(false);
             }
             repaint();
@@ -1780,13 +1780,12 @@ public class SGClientPanel extends JLayeredPane implements
          * 
          */
         private boolean clickFigures(final MouseEvent e) {
-            ArrayList list = this.mWnd.getVisibleFigureList();
+            ArrayList<SGFigure> list = this.mWnd.getVisibleFigureList();
             for (int ii = list.size() - 1; ii >= 0; ii--) {
-                SGFigure figure = (SGFigure) list.get(ii);
+                SGFigure figure = list.get(ii);
                 if (figure.onMouseClicked(e)) {
                     return true;
                 }
-
             }
             return false;
         }
@@ -1795,9 +1794,9 @@ public class SGClientPanel extends JLayeredPane implements
          * 
          */
         private boolean pressFigures(final MouseEvent e) {
-            ArrayList list = this.mWnd.getVisibleFigureList();
+            ArrayList<SGFigure> list = this.mWnd.getVisibleFigureList();
             for (int ii = list.size() - 1; ii >= 0; ii--) {
-                SGFigure figure = (SGFigure) list.get(ii);
+                SGFigure figure = list.get(ii);
 
                 if (figure.onMousePressed(e)) {
                     return true;
@@ -2044,7 +2043,7 @@ public class SGClientPanel extends JLayeredPane implements
             final float vx = (float) vpRect.getX();
             final float vw = (float) vpRect.getWidth();
 
-            ArrayList list = new ArrayList();
+            ArrayList<Float> list = new ArrayList<Float>();
             int cnt = (int) ((vx - px) / space) + 1;
             while (true) {
                 final float x = cnt * space + px;
@@ -2063,7 +2062,7 @@ public class SGClientPanel extends JLayeredPane implements
 
             final float[] array = new float[list.size()];
             for (int ii = 0; ii < array.length; ii++) {
-                array[ii] = ((Float) list.get(ii)).floatValue();
+                array[ii] = list.get(ii).floatValue();
             }
 
             return array;
@@ -2085,7 +2084,7 @@ public class SGClientPanel extends JLayeredPane implements
             final float vy = (float) vpRect.getY();
             final float vh = (float) vpRect.getHeight();
 
-            ArrayList list = new ArrayList();
+            ArrayList<Float> list = new ArrayList<Float>();
             int cnt = (int) ((vy - py) / space) + 1;
             while (true) {
                 final float y = cnt * space + py;
@@ -2104,7 +2103,7 @@ public class SGClientPanel extends JLayeredPane implements
 
             final float[] array = new float[list.size()];
             for (int ii = 0; ii < array.length; ii++) {
-                array[ii] = ((Float) list.get(ii)).floatValue();
+                array[ii] = list.get(ii).floatValue();
             }
 
             return array;
@@ -2629,7 +2628,7 @@ public class SGClientPanel extends JLayeredPane implements
 
             // horizontal
             {
-                final ArrayList numberList = new ArrayList();
+                final ArrayList<Integer> numberList = new ArrayList<Integer>();
                 final float px = (float) pRect.getX();
                 final float pOffset = -px;
                 final float pOffsetInRulerUnit = pOffset / factor;
@@ -2655,7 +2654,7 @@ public class SGClientPanel extends JLayeredPane implements
                 // draw
                 for (int ii = 0; ii < numberList.size(); ii++) {
                     // main
-                    final int num = ((Integer) numberList.get(ii)).intValue();
+                    final int num = numberList.get(ii).intValue();
                     final float location = num * factor;
                     final float pos = px + rw + location;
                     line.setLine(pos, 0.20f * rw, pos, rw);
@@ -2681,7 +2680,7 @@ public class SGClientPanel extends JLayeredPane implements
 
             // vertical
             {
-                final ArrayList numberList = new ArrayList();
+                final ArrayList<Integer> numberList = new ArrayList<Integer>();
                 final float py = (float) pRect.getY();
                 final float pOffset = -py;
                 final float pOffsetInRulerUnit = pOffset / factor;
@@ -2708,7 +2707,7 @@ public class SGClientPanel extends JLayeredPane implements
                 for (int ii = 0; ii < numberList.size(); ii++) {
 
                     // main
-                    final int num = ((Integer) numberList.get(ii)).intValue();
+                    final int num = numberList.get(ii).intValue();
                     final float location = num * factor;
                     final float pos = py + rw + location;
                     line.setLine(0.20f * rw, pos, rw, pos);

@@ -60,7 +60,7 @@ import java.util.NoSuchElementException;
  * @see
  * @since
  */
-public class SGCSVTokenizer implements Enumeration, SGITextDataConstants {
+public class SGCSVTokenizer implements Enumeration<SGCSVTokenizer.Token>, SGITextDataConstants {
 
     private String record;
 
@@ -337,7 +337,7 @@ public class SGCSVTokenizer implements Enumeration, SGITextDataConstants {
      * @see java.util.Enumeration
      * @see java.util.SGCSVTokenizer#nextToken()
      */
-    public Object nextElement() {
+    public Token nextElement() {
         return nextToken();
     }
 

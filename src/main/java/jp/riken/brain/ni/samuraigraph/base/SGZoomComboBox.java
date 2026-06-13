@@ -14,7 +14,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer.Token;
  * A combo box to display the magnification.
  * 
  */
-public class SGZoomComboBox extends JComboBox implements SGIRootObjectConstants {
+public class SGZoomComboBox extends JComboBox<String> implements SGIRootObjectConstants {
 
     /**
      * 
@@ -84,7 +84,7 @@ public class SGZoomComboBox extends JComboBox implements SGIRootObjectConstants 
             }
         }
 
-    }
+     }
 
     /**
      * Current magnification value.
@@ -93,9 +93,9 @@ public class SGZoomComboBox extends JComboBox implements SGIRootObjectConstants 
 
     // set auto zoom flag to all zoomable objects
     private void setAutoZoom(final boolean b) {
-        ArrayList list = this.mZoomableList;
+        ArrayList<SGIZoomable> list = this.mZoomableList;
         for (int ii = 0; ii < list.size(); ii++) {
-            SGIZoomable l = (SGIZoomable) list.get(ii);
+            SGIZoomable l = list.get(ii);
             l.setAutoZoom(b);
         }
     }
@@ -177,7 +177,7 @@ public class SGZoomComboBox extends JComboBox implements SGIRootObjectConstants 
         Float num = null;
         if (text.endsWith(PERCENT)) {
             String str = text.substring(0, text.length() - 1);
-            ArrayList list = new ArrayList();
+            ArrayList<Token> list = new ArrayList<Token>();
             // str is not read from data file
             if (SGUtilityText.tokenize(str, list, false) == false) {
                 return null;
@@ -187,7 +187,7 @@ public class SGZoomComboBox extends JComboBox implements SGIRootObjectConstants 
                 return null;
             }
 
-            Token token = (Token) list.get(0);
+            Token token = list.get(0);
             num = SGUtilityText.getFloat(token.getString());
         }
 
@@ -204,7 +204,7 @@ public class SGZoomComboBox extends JComboBox implements SGIRootObjectConstants 
     /**
      * The list of zoomable objects.
      */
-    private final ArrayList mZoomableList = new ArrayList();
+    private final ArrayList<SGIZoomable> mZoomableList = new ArrayList<SGIZoomable>();
 
     /**
      * Add a zoomable object.
@@ -228,9 +228,9 @@ public class SGZoomComboBox extends JComboBox implements SGIRootObjectConstants 
 
     // zoom all zoomable objects.
     private void zoom(final float mag) {
-        ArrayList list = this.mZoomableList;
+        ArrayList<SGIZoomable> list = this.mZoomableList;
         for (int ii = 0; ii < list.size(); ii++) {
-            SGIZoomable l = (SGIZoomable) list.get(ii);
+            SGIZoomable l = list.get(ii);
             l.zoom(mag);
         }
     }

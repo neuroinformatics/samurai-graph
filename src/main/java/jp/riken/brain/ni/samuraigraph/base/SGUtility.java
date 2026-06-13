@@ -101,7 +101,7 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
     /**
      *
      */
-    public static Rectangle2D createUnion(final ArrayList rectList) {
+    public static Rectangle2D createUnion(final ArrayList<Rectangle2D> rectList) {
 
         if (rectList == null) {
             throw new IllegalArgumentException("rectList==null");
@@ -109,7 +109,7 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
 
         Rectangle2D rectAll = null;
         for (int ii = 0; ii < rectList.size(); ii++) {
-            Rectangle2D rect = (Rectangle2D) rectList.get(ii);
+            Rectangle2D rect = rectList.get(ii);
             if (rect == null) {
                 throw new IllegalArgumentException("rect==null");
             }
@@ -421,7 +421,7 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
      *            a list to set the copied objects
      * @return true if succeeded
      */
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static boolean copyObjects(final List list1,
             final List list2) {
         if (list1 == null || list2 == null) {
@@ -1817,7 +1817,7 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
      *           the second list
      * @return true if the first list contains at least one element in the second list
      */
-    public static boolean contains(List list1, List list2) {
+    public static boolean contains(List<?> list1, List<?> list2) {
     	if (list1 == null || list2 == null) {
     		throw new IllegalArgumentException("a1 == null || a2 == null");
     	}
@@ -2353,11 +2353,11 @@ public class SGUtility implements SGIConstants, SGIDrawingElementConstants {
     	while (true) {
         	Node node = cur.getParentNode();
         	if (node == null) {
-            	property = (Element) cur;
+            	property = cur;
         		break;
         	}
         	if (!(node instanceof Element)) {
-            	property = (Element) cur;
+            	property = cur;
         		break;
         	}
         	cur = (Element) node;

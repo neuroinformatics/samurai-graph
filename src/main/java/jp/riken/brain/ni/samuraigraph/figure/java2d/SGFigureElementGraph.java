@@ -749,7 +749,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements
      *
      * @return a list to which the cut data objects are added
      */
-    public List cutFocusedData() {
+    public List<SGData> cutFocusedData() {
         List<SGData> list = this.getFocusedDataList();
         this.hideSelectedData();
         return list;
@@ -1179,8 +1179,8 @@ public class SGFigureElementGraph extends SGFigureElementForData implements
     /**
      *
      */
-    protected Set getAvailableChildSet() {
-        Set set = new HashSet();
+    protected Set<SGIChildObject> getAvailableChildSet() {
+        Set<SGIChildObject> set = new HashSet<SGIChildObject>();
         List mList = this.getMementoList();
         for (int ii = 0; ii < mList.size(); ii++) {
             GraphProperties p = (GraphProperties) mList.get(ii);
@@ -1259,7 +1259,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements
             return false;
         }
 
-        final ArrayList rectList = new ArrayList();
+        final ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
         for (int ii = 0; ii < this.mChildList.size(); ii++) {
             final SGElementGroupSetInGraph groupSet = (SGElementGroupSetInGraph) this.mChildList
                     .get(ii);

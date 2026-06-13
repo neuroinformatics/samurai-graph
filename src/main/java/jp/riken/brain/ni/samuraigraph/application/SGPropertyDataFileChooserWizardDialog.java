@@ -83,7 +83,7 @@ import com.jmatio.io.MatFileReader;
  * 
  */
 public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
-        implements TableModelListener, DropTargetListener, ComponentListener, CellEditorListener, MouseListener,
+        implements TableModelListener, DropTargetListener, CellEditorListener, MouseListener,
         MouseMotionListener, MouseWheelListener, SGIDataColumnTypeConstants {
 
     /**
@@ -659,7 +659,6 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
      * @param dataList      a list of data column information
      * @param versionNumber the version number of property file
      */
-    @SuppressWarnings("unchecked")
     public void setData(List<SGPropertyFileData> dataList, String versionNumber) {
 
         // set to attribute
@@ -677,7 +676,8 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         String[] nameArray = new String[dataNum];
         String[] fileArray = new String[dataNum];
         SGButton[] btnArray = new SGButton[dataNum];
-        Map<String, Object>[] mapArray = new Map[dataNum];
+        @SuppressWarnings("unchecked")
+        Map<String, Object>[] mapArray = (Map<String, Object>[]) new Map[dataNum];
         SGTuple2f[] figureSizeArray = new SGTuple2f[dataNum];
         for (int ii = 0; ii < dataNum; ii++) {
             SGPropertyFileData data = dataList.get(ii);
@@ -791,9 +791,10 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
             // list of the path of data files
             Object obj = map.get(id);
             if (obj == null) {
-                obj = new ArrayList();
+                obj = new ArrayList<Object>();
                 map.put(id, obj);
             }
+            @SuppressWarnings("unchecked")
             ArrayList<Object> list = (ArrayList<Object>) obj;
 
             // add the path to the list
@@ -881,7 +882,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         }
 
         // get dropped file list
-        List fileList = SGApplicationUtility.getDroppedFileList(dtde);
+        List<?> fileList = SGApplicationUtility.getDroppedFileList(dtde);
         if (fileList == null || fileList.size() == 0) {
             return;
         }
