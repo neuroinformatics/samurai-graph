@@ -1605,7 +1605,10 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       colArray[ii + offset] = columns[this.mYIndices[ii].intValue()];
     }
     offset += this.mYIndices.length;
-    if (be && sameErrorVariableFlags != null && this.mLowerErrorIndices != null && this.mUpperErrorIndices != null) {
+    if (be
+        && sameErrorVariableFlags != null
+        && this.mLowerErrorIndices != null
+        && this.mUpperErrorIndices != null) {
       int tmp = offset;
       int cnt = 0;
       for (int ii = 0; ii < sameErrorVariableFlags.length; ii++) {
