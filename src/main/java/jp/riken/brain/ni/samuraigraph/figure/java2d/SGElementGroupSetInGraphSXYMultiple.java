@@ -128,7 +128,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   /** Disposes this object. */
   public void dispose() {
     super.dispose();
-    ArrayList list = this.mElementGroupSetList;
+    ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
     for (int ii = 0; ii < list.size(); ii++) {
       SGElementGroupSet gs = (SGElementGroupSet) list.get(ii);
       gs.dispose();
@@ -150,7 +150,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   /** */
   public void setSelected(final boolean b) {
     this.mSelectedFlag = b;
-    ArrayList list = this.mElementGroupSetList;
+    ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
     for (int ii = list.size() - 1; ii >= 0; ii--) {
       SGISelectable groupSet = (SGISelectable) list.get(ii);
       groupSet.setSelected(b);
@@ -163,7 +163,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    */
   public void setVisible(final boolean b) {
     super.setVisible(b);
-    ArrayList list = this.mElementGroupSetList;
+    ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
     for (int ii = list.size() - 1; ii >= 0; ii--) {
       SGElementGroupSetInGraph groupSet = (SGElementGroupSetInGraph) list.get(ii);
       groupSet.setVisible(b);
@@ -173,7 +173,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   /** */
   public boolean setName(final String name) {
     super.setName(name);
-    ArrayList list = this.mElementGroupSetList;
+    ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
     for (int ii = list.size() - 1; ii >= 0; ii--) {
       SGElementGroupSetInGraph groupSet = (SGElementGroupSetInGraph) list.get(ii);
       groupSet.setName(name);
@@ -187,7 +187,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    */
   public boolean setVisibleInLegend(final boolean b) {
     super.setVisibleInLegend(b);
-    ArrayList list = this.mElementGroupSetList;
+    ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
     for (int ii = list.size() - 1; ii >= 0; ii--) {
       SGElementGroupSetInGraph groupSet = (SGElementGroupSetInGraph) list.get(ii);
       groupSet.setVisibleInLegend(b);
@@ -251,7 +251,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   /** */
   public boolean onDrawingElement(final int x, final int y) {
 
-    ArrayList list = this.mElementGroupSetList;
+    ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
     for (int ii = list.size() - 1; ii >= 0; ii--) {
       SGElementGroupSetInGraph groupSet = (SGElementGroupSetInGraph) list.get(ii);
       boolean flag = groupSet.onDrawingElement(x, y);
@@ -265,7 +265,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
   /** */
   public void paintGraphics2D(final Graphics2D g2d) {
-    ArrayList list = this.mElementGroupSetList;
+    ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
     for (int ii = list.size() - 1; ii >= 0; ii--) {
       SGElementGroupSetInGraph groupSet = (SGElementGroupSetInGraph) list.get(ii);
       if (groupSet.isVisible()) {
@@ -279,7 +279,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   /** */
   public void setClipFlag(final boolean b) {
     super.setClipFlag(b);
-    ArrayList list = this.mElementGroupSetList;
+    ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
     for (int ii = 0; ii < list.size(); ii++) {
       SGElementGroupSetInGraph grouptSet = (SGElementGroupSetInGraph) list.get(ii);
       grouptSet.setClipFlag(b);
@@ -559,7 +559,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
   public boolean setXAxis(SGAxis axis) {
     super.setXAxis(axis);
-    ArrayList list = this.mElementGroupSetList;
+    ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
     for (int ii = 0; ii < list.size(); ii++) {
       SGElementGroupSetInGraph groupSet = (SGElementGroupSetInGraph) list.get(ii);
       groupSet.setXAxis(axis);
@@ -569,7 +569,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
   public boolean setYAxis(SGAxis axis) {
     super.setYAxis(axis);
-    ArrayList list = this.mElementGroupSetList;
+    ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
     for (int ii = 0; ii < list.size(); ii++) {
       SGElementGroupSetInGraph groupSet = (SGElementGroupSetInGraph) list.get(ii);
       groupSet.setYAxis(axis);

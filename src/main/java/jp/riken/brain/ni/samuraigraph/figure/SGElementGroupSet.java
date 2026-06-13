@@ -381,7 +381,6 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
    * @param p a property object to be set
    * @return true if succeeded
    */
-  @SuppressWarnings({"rawtypes", "unchecked"})
   public boolean getProperties(final SGProperties p) {
     if ((p instanceof ElementGroupSetProperties) == false) {
       return false;

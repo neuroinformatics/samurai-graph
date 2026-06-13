@@ -358,7 +358,7 @@ public class SGToolBar extends JToolBar
       this.mPopupMenu = p;
     }
 
-    Map map = this.mToolBarMap;
+    Map<String, JToolBar> map = this.mToolBarMap;
     Component[] array = p.getComponents();
     for (int ii = 0; ii < array.length; ii++) {
       if (array[ii] instanceof JCheckBoxMenuItem) {

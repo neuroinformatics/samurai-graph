@@ -386,7 +386,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     Number num = null;
     // Color cl = null;
     // Boolean b = null;
-    List list = null;
+    List<Color> list = null;
 
     // set font size
     str = el.getAttribute(KEY_FONT_SIZE);

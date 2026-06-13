@@ -1182,7 +1182,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    */
   protected Set<SGIChildObject> getAvailableChildSet() {
     Set<SGIChildObject> set = new HashSet<SGIChildObject>();
-    List mList = this.getMementoList();
+    List<SGProperties> mList = this.getMementoList();
     for (int ii = 0; ii < mList.size(); ii++) {
       LegendProperties p = (LegendProperties) mList.get(ii);
       set.addAll(p.visibleElementGroupList);
@@ -1495,7 +1495,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
   /** Clear all focused data. */
   public void clearAllFocusedData() {
-    List lList = this.getVisibleChildList();
+    List<SGIChildObject> lList = this.getVisibleChildList();
     for (int ii = 0; ii < lList.size(); ii++) {
       ElementGroupSetInLegend gs = (ElementGroupSetInLegend) lList.get(ii);
       gs.setSelected(false);
@@ -2524,7 +2524,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
     int lenNew = indexMax - indexMin + 1;
     @SuppressWarnings("unchecked")
-    List<SGData>[] dListArray = new ArrayList[lenNew];
+    List<SGData>[] dListArray = (List<SGData>[]) new ArrayList<?>[lenNew];
     for (int ii = 0; ii < lenNew; ii++) {
       dListArray[ii] = new ArrayList<SGData>();
     }

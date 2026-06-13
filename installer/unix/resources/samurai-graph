@@ -38,6 +38,6 @@ if ! test -x $javavm; then
   exit 1
 fi
 
-javavm_opts="-Xms512m -Xmx512m"
+javavm_opts="-Xms512m -Xmx512m --add-opens java.desktop/java.awt=ALL-UNNAMED --add-exports java.desktop/sun.awt=ALL-UNNAMED --add-opens java.desktop/sun.awt=ALL-UNNAMED"
 
 exec "$javavm" $javavm_opts $SAMURAIGRAPH_OPT -jar $jarfile $*

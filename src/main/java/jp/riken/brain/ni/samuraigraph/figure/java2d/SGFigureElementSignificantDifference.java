@@ -491,7 +491,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
       return false;
     }
 
-    List list = this.mChildList;
+    List<SGIChildObject> list = this.mChildList;
     for (int ii = 0; ii < list.size(); ii++) {
       final SigDiffSymbol el = (SigDiffSymbol) list.get(ii);
       if (!el.isAnchored()) {
@@ -1189,7 +1189,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
   /** */
   protected Set<SGIChildObject> getAvailableChildSet() {
     Set<SGIChildObject> set = new HashSet<SGIChildObject>();
-    List mList = this.getMementoList();
+    List<SGProperties> mList = this.getMementoList();
     for (int ii = 0; ii < mList.size(); ii++) {
       SigDiffElementProperties p = (SigDiffElementProperties) mList.get(ii);
       set.addAll(p.visibleSigDiffSymbolList);
@@ -3232,10 +3232,9 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
       String sRightY = null;
       String sAxisX = null;
       String sAxisY = null;
-      Iterator itr = map.getKeyIterator();
+      Iterator<String> itr = map.getKeyIterator();
       while (itr.hasNext()) {
-        Object keyObj = itr.next();
-        String key = keyObj.toString();
+        String key = itr.next();
         if (COM_SIGDIFF_LOCATION_HORIZONTAL_Y.equalsIgnoreCase(key)) {
           sHorizontalY = map.getValueString(key);
         } else if (COM_SIGDIFF_LOCATION_LEFT_X.equalsIgnoreCase(key)) {

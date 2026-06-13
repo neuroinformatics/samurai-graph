@@ -291,8 +291,8 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
    */
   public List<SGData> getUselessDataList() {
     List<SGData> dataList = new ArrayList<SGData>(this.mDataList);
-    Set cSet = this.getAvailableChildSet();
-    Iterator itr = cSet.iterator();
+    Set<SGIChildObject> cSet = this.getAvailableChildSet();
+    Iterator<SGIChildObject> itr = cSet.iterator();
     while (itr.hasNext()) {
       SGElementGroupSetForData gs = (SGElementGroupSetForData) itr.next();
       SGData data = gs.getData();
@@ -342,9 +342,9 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
     super.dispose();
 
     // dispose dialog map
-    Iterator itr = this.mDataDialogMap.keySet().iterator();
+    Iterator<String> itr = this.mDataDialogMap.keySet().iterator();
     while (itr.hasNext()) {
-      Object key = itr.next();
+      String key = itr.next();
       SGPropertyDialog dg = (SGPropertyDialog) this.mDataDialogMap.get(key);
       dg.dispose();
     }

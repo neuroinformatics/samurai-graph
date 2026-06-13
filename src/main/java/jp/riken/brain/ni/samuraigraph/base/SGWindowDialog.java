@@ -843,7 +843,7 @@ public class SGWindowDialog extends SGPropertyDialog
 
   /** */
   public boolean setDialogProperty() {
-    List list = this.mPropertyDialogObserverList;
+    List<SGIPropertyDialogObserver> list = this.mPropertyDialogObserverList;
 
     SGIWindowDialogObserver wnd0 = (SGIWindowDialogObserver) list.get(0);
 

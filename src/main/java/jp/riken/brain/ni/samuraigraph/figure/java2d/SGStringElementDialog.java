@@ -52,14 +52,14 @@ public class SGStringElementDialog extends SGPropertyDialog
 
     mTextPanel = new javax.swing.JPanel();
     mFontFamilyLabel = new javax.swing.JLabel();
-    mFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mFontSizeLabel = new javax.swing.JLabel();
     mTextAngleSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
     mTextColorLabel = new javax.swing.JLabel();
     mTextAngleLabel = new javax.swing.JLabel();
     mFontSizeSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
     mColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
-    mFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+    mFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mRightSpaceLabel = new javax.swing.JLabel();
     mLeftSpaceLabel = new javax.swing.JLabel();
     mStringLabel = new javax.swing.JLabel();
@@ -343,10 +343,10 @@ public class SGStringElementDialog extends SGPropertyDialog
   private jp.riken.brain.ni.samuraigraph.base.SGButton mCancelButton;
   private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mColorButton;
   private javax.swing.JLabel mFontFamilyLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mFontNameComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mFontNameComboBox;
   private javax.swing.JLabel mFontSizeLabel;
   private jp.riken.brain.ni.samuraigraph.base.SGSpinner mFontSizeSpinner;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox mFontStyleComboBox;
+  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mFontStyleComboBox;
   private javax.swing.JLabel mFontStyleLabel;
   private javax.swing.JPanel mHeadPanel;
   private javax.swing.JLabel mLeftSpaceLabel;

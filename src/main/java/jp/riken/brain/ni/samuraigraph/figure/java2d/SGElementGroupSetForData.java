@@ -1435,7 +1435,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     String[] colNames = new String[values.length];
     String[] colValues = new String[values.length];
     @SuppressWarnings("unchecked")
-    Map<String, Integer>[] colDims = new Map[values.length];
+    Map<String, Integer>[] colDims = (Map<String, Integer>[]) new Map<?, ?>[values.length];
     if (isSDArrayData || isNetCDFData) {
       for (int ii = 0; ii < values.length; ii++) {
         String[] tokens = values[ii].split(":");
@@ -1737,7 +1737,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     // create an array of column types
     String[] columnTypes = new String[vars.length];
     @SuppressWarnings("unchecked")
-    Map<String, Integer>[] dimensionMaps = new Map[vars.length];
+    Map<String, Integer>[] dimensionMaps = (Map<String, Integer>[]) new Map<?, ?>[vars.length];
     for (int ii = 0; ii < columnTypes.length; ii++) {
       columnTypes[ii] = "";
     }
@@ -2478,7 +2478,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     SGIDataSource src = data.getDataSource();
     if (srcOld.equals(src)) {
       // clear all edited values in the memento list
-      List mementoList = this.mUndoManager.getMementoList();
+      List<?> mementoList = this.mUndoManager.getMementoList();
       for (int ii = 0; ii < mementoList.size(); ii++) {
         ElementGroupSetPropertiesInFigureElement memento =
             (ElementGroupSetPropertiesInFigureElement) mementoList.get(ii);

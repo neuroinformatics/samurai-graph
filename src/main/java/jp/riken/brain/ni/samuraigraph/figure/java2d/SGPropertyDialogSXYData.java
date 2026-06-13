@@ -3727,7 +3727,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     final Boolean symbol = this.getSymbolVisible();
     final Boolean bar = this.getBarVisible();
 
-    List list = this.mPropertyDialogObserverList;
+    List<SGIPropertyDialogObserver> list = this.mPropertyDialogObserverList;
     for (int ii = 0; ii < list.size(); ii++) {
       SGISXYDataDialogObserver obs = (SGISXYDataDialogObserver) list.get(ii);
       boolean lineVisible;

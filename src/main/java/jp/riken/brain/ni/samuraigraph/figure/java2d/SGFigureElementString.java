@@ -487,7 +487,7 @@ public class SGFigureElementString extends SGFigureElement2D
       }
     }
 
-    List list = this.mChildList;
+    List<SGIChildObject> list = this.mChildList;
     for (int ii = 0; ii < list.size(); ii++) {
       LabelElement el = (LabelElement) list.get(ii);
       el.requestUpdateLocation();
@@ -2427,10 +2427,9 @@ public class SGFigureElementString extends SGFigureElement2D
       String sValueY = null;
       String sAxisX = null;
       String sAxisY = null;
-      Iterator itr = map.getKeyIterator();
+      Iterator<String> itr = map.getKeyIterator();
       while (itr.hasNext()) {
-        Object keyObj = itr.next();
-        String key = keyObj.toString();
+        String key = itr.next();
         if (COM_LABEL_TEXT.equalsIgnoreCase(key)) {
           sText = map.getValueString(key);
         } else if (COM_LABEL_LOCATION_X.equalsIgnoreCase(key)) {

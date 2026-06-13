@@ -1,10 +1,6 @@
 {
-    "editor.formatOnSave": true,
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "java.compile.nullAnalysis.mode": "automatic",
     "[java]": {
-        "editor.defaultFormatter": "gabrielbb.vscode-spotless-java",
-        "editor.formatOnSave": true
+        "editor.defaultFormatter": "josevseb.google-java-format-for-vs-code"
     },
-    "spotless.java.enabled": true
+    "java.compile.nullAnalysis.mode": "automatic"
 }

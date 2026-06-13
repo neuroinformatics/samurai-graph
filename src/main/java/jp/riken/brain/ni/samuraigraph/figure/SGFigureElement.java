@@ -388,7 +388,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @return true if succeeded
    */
   public boolean removeData(final SGData data) {
-    List dList = this.mDataList;
+    List<SGData> dList = this.mDataList;
     for (int ii = dList.size() - 1; ii >= 0; ii--) {
       final SGData d = (SGData) dList.get(ii);
       if (d.equals(data)) {
@@ -1246,7 +1246,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
    */
   protected List<SGICopiable> getCopiableFocusedObjectsList() {
     List<SGICopiable> list = new ArrayList<SGICopiable>();
-    List fList = this.getFocusedObjectsList();
+    List<SGISelectable> fList = this.getFocusedObjectsList();
     for (int ii = fList.size() - 1; ii >= 0; ii--) {
       Object obj = fList.get(ii);
       if (obj instanceof SGICopiable) {
@@ -1944,8 +1944,8 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @return a set of available child objects in the histories
    */
-  protected Set getAvailableChildSet() {
-    return new HashSet();
+  protected Set<SGIChildObject> getAvailableChildSet() {
+    return new HashSet<>();
   }
 
   /** Initialize the undo buffer. */

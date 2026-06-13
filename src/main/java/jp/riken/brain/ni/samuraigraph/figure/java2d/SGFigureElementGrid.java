@@ -503,7 +503,8 @@ public class SGFigureElementGrid extends SGFigureElement2D
    *
    * @param list a list to be added the focused objects
    */
-  public boolean getFocusedObjectsList(ArrayList list) {
+  @Override
+  public boolean getFocusedObjectsList(List<SGISelectable> list) {
     return true;
   }
 

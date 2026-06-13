@@ -616,7 +616,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     this.setFocusedValueIndices(dg);
 
     // get previous data properties
-    List mementoList = this.mUndoManager.getMementoList();
+    List<?> mementoList = this.mUndoManager.getMementoList();
     ElementGroupSetPropertiesInFigureElement prev =
         (ElementGroupSetPropertiesInFigureElement)
             mementoList.get(this.mUndoManager.getMementoIndex());
