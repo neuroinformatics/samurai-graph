@@ -954,6 +954,10 @@ class SGColorBarAxis extends SGAxisElement
       axisMaxInScale = Math.log(this.mAxis.getMaxDoubleValue());
     }
 
+    if (valueArrayInScale == null) {
+      return false;
+    }
+
     final float barWidth = this.getBarWidth();
     final float barLength = this.getLength();
     for (int ii = 0; ii < this.mNumberList.size(); ii++) {

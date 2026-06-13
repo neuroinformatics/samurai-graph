@@ -2752,19 +2752,21 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
           }
         }
       }
-      if (bCVarX || bCVarY) {
+      final boolean isCVarX = (bCVarX != null) ? bCVarX.booleanValue() : false;
+      final boolean isCVarY = (bCVarY != null) ? bCVarY.booleanValue() : false;
+      if (isCVarX || isCVarY) {
 
-        if (bCVarX && bCVarY) {
+        if (isCVarX && isCVarY) {
           // both of x and y variables must not coordinate variables
           return null;
         }
-        if (bCVarX) {
+        if (isCVarX) {
           // only one coordinate variable can exist
           if (xSet.size() != 1) {
             return null;
           }
         }
-        if (bCVarY) {
+        if (isCVarY) {
           // only one coordinate variable can exist
           if (ySet.size() != 1) {
             return null;
@@ -3427,7 +3429,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
                 policy);
       }
     } else {
-      if (dateFlag != null) {
+      if (dateFlag != null && dVar != null) {
         String dimString =
             SGDataUtility.getDimensionString(new String[] {validDateDimName, validDateLenDimName});
         this.addVariable(
@@ -3588,10 +3590,10 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     if (pickedUp) {
       if (idx) {
         int[] shape = new int[] {multiplicity, len};
-        if (dateFlag == null || !dateFlag) {
+        if (dateFlag == null || !dateFlag.booleanValue()) {
           this.writeValues(ncWrite, xVars[0], xDataTypes[0], xValues, shape);
         }
-        if (dateFlag == null || dateFlag) {
+        if (dateFlag == null || dateFlag.booleanValue()) {
           this.writeValues(ncWrite, yVars[0], yDataTypes[0], yValues, shape);
         }
       } else {
@@ -3616,21 +3618,21 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
           sValues = yValues[0];
           mValues = xValues;
         }
-        if (dateFlag == null || !dateFlag) {
+        if (dateFlag == null || !dateFlag.booleanValue()) {
           this.writeValues(ncWrite, sVar, sDataType, sValues, sShape);
         }
-        if (dateFlag == null || dateFlag) {
+        if (dateFlag == null || dateFlag.booleanValue()) {
           this.writeValues(ncWrite, mVar, mDataType, mValues, mShape);
         }
       }
     } else {
       int[] shape = new int[] {len};
-      if (dateFlag == null || !dateFlag) {
+      if (dateFlag == null || !dateFlag.booleanValue()) {
         for (int ii = 0; ii < xVars.length; ii++) {
           this.writeValues(ncWrite, xVars[ii], xDataTypes[ii], xValues[ii], shape);
         }
       }
-      if (dateFlag == null || dateFlag) {
+      if (dateFlag == null || dateFlag.booleanValue()) {
         for (int ii = 0; ii < yVars.length; ii++) {
           this.writeValues(ncWrite, yVars[ii], yDataTypes[ii], yValues[ii], shape);
         }
@@ -3638,14 +3640,14 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
 
     // error bar variable
-    if (errorBarAvailable) {
+    if (errorBarAvailable && leVars != null && ueVars != null && leDataTypes != null && ueDataTypes != null && sameErrorVariableFlags != null && sameErrorVariableFlags.length > 0 && sameErrorVariableFlags[0] != null) {
       final int[] errorShape;
       if (pickedUp) {
         // this.setFillValue(leVars[0], lowerErrorValues);
         Array lowerErrorArray = Array.factory(leDataTypes[0], new int[] {multiplicity, len});
         this.setArray(lowerErrorArray, lowerErrorValues);
         this.writeValues(ncWrite, leVars[0], lowerErrorArray);
-        if (!sameErrorVariableFlags[0]) {
+        if (!sameErrorVariableFlags[0].booleanValue()) {
           // this.setFillValue(ueVars[0], upperErrorValues);
           Array upperErrorArray = Array.factory(ueDataTypes[0], new int[] {multiplicity, len});
           this.setArray(upperErrorArray, upperErrorValues);
@@ -3654,13 +3656,13 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       } else {
         errorShape = new int[] {len};
         for (int ii = 0; ii < lowerErrorValues.length; ii++) {
-          if (leVars[ii] != null) {
+          if (leVars[ii] != null && leDataTypes[ii] != null) {
             // this.setFillValue(leVars[ii], lowerErrorValues);
             Array lowerErrorArray = Array.factory(leDataTypes[ii], errorShape);
             this.setArray(lowerErrorArray, lowerErrorValues[ii]);
             this.writeValues(ncWrite, leVars[ii], lowerErrorArray);
           }
-          if (ueVars[ii] != null) {
+          if (ueVars[ii] != null && ueDataTypes[ii] != null) {
             // this.setFillValue(ueVars[ii], upperErrorValues);
             Array upperErrorArray = Array.factory(ueDataTypes[ii], errorShape);
             this.setArray(upperErrorArray, upperErrorValues[ii]);
@@ -3671,12 +3673,12 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
 
     // tick label variable
-    if (tickLabelAvailable && dateFlag == null) {
+    if (tickLabelAvailable && dateFlag == null && tlVars != null && lenDimNames != null && tlStrArray != null && tlVars.length > 0 && lenDimNames.length > 0) {
       if (pickedUp) {
         this.writeCharValue(ncWrite, tlVars[0].getShortName(), lenDimNames[0], tlStrArray);
       } else {
         for (int ii = 0; ii < tickLabels.length; ii++) {
-          if (tlVars[ii] != null) {
+          if (tlVars[ii] != null && lenDimNames[ii] != null && tlStrArray[ii] != null) {
             this.writeCharValue(
                 ncWrite, tlVars[ii].getShortName(), lenDimNames[ii], tlStrArray[ii]);
           }

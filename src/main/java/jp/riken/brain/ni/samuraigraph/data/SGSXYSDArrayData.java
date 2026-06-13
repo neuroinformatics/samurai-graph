@@ -817,7 +817,7 @@ public class SGSXYSDArrayData extends SGSDArrayData
     String[] columnTitles = this.getDataFile().getTitles();
 
     Integer eh = null;
-    if (le != null) {
+    if (le != null && ue != null) {
       String strle = columns[le.intValue()];
       String strue = columns[ue.intValue()];
       Integer ehle = SGDataUtility.getAppendedColumnIndex(strle, columnTitles);

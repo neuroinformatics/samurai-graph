@@ -911,7 +911,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       final boolean pickUpEnabled = !multipleVariable && (pickUpCnt == 1);
       this.mPickUpDimensionPanel.setInnerComponentsEnabled(pickUpEnabled);
 
-      if (pickUpEnabled) {
+      if (pickUpEnabled && pickUpColumn != null) {
         // set the length of selected dimension
         SGDimensionInfo dim = pickUpColumn.getDimension(0);
         this.mPickUpDimensionPanel.setLength(dim.getLength());

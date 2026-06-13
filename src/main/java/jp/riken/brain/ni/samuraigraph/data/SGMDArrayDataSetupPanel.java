@@ -1636,7 +1636,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
             // x-component of z-variable
             zxIndex = zInfo.getDimensionIndex(KEY_SXYZ_X_DIMENSION);
             if (zxIndex == null) {
-              if (xIndex != null) {
+              if (xInfo != null && xIndex != null) {
                 final int len = xInfo.getDimensions()[xIndex];
                 for (int ii = 0; ii < dims.length; ii++) {
                   if (dims[ii] == len) {
@@ -1656,7 +1656,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
             // y-component of z-variable
             zyIndex = zInfo.getDimensionIndex(KEY_SXYZ_Y_DIMENSION);
             if (zyIndex == null) {
-              if (yIndex != null) {
+              if (yInfo != null && yIndex != null) {
                 final int len = yInfo.getDimensions()[yIndex];
                 for (int ii = 0; ii < dims.length; ii++) {
                   if (dims[ii] == len) {
@@ -1690,7 +1690,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
           this.mSXYZDataXStridePanel.setLength(xInfo.getGenericDimensionLength());
           bx = true;
         } else {
-          if (this.isValidDimensionIndex(zxIndex)) {
+          if (zInfo != null && this.isValidDimensionIndex(zxIndex) && zxIndex != null) {
             final int[] dims = zInfo.getDimensions();
             this.mSXYZDataXStridePanel.setLength(dims[zxIndex]);
             bx = true;
@@ -1700,7 +1700,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
           this.mSXYZDataYStridePanel.setLength(yInfo.getGenericDimensionLength());
           by = true;
         } else {
-          if (this.isValidDimensionIndex(zyIndex)) {
+          if (zInfo != null && this.isValidDimensionIndex(zyIndex) && zyIndex != null) {
             final int[] dims = zInfo.getDimensions();
             this.mSXYZDataYStridePanel.setLength(dims[zyIndex]);
             by = true;
@@ -1741,7 +1741,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
         int xLen = -1;
         int yLen = -1;
         int zLen = -1;
-        if (this.isValidDimensionIndex(zIndex)) {
+        if (zInfo != null && this.isValidDimensionIndex(zIndex) && zIndex != null) {
           final int[] dims = zInfo.getDimensions();
           zLen = dims[zIndex];
         }
@@ -1856,7 +1856,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
             this.addIndexItems(this.mVXYDataFirstVariableDimensionYComboBox, dims.length);
             fxIndex = fInfo.getDimensionIndex(KEY_VXY_X_DIMENSION);
             if (!this.isValidDimensionIndex(fxIndex)) {
-              if (this.isValidDimensionIndex(xIndex)) {
+              if (xInfo != null && xIndex != null && this.isValidDimensionIndex(xIndex)) {
                 final int len = xInfo.getDimensions()[xIndex];
                 for (int ii = 0; ii < dims.length; ii++) {
                   if (dims[ii] == len) {
@@ -1871,7 +1871,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
             }
             fyIndex = fInfo.getDimensionIndex(KEY_VXY_Y_DIMENSION);
             if (!this.isValidDimensionIndex(fyIndex)) {
-              if (this.isValidDimensionIndex(yIndex)) {
+              if (yInfo != null && yIndex != null && this.isValidDimensionIndex(yIndex)) {
                 final int len = yInfo.getDimensions()[yIndex];
                 for (int ii = 0; ii < dims.length; ii++) {
                   if (dims[ii] == len) {
@@ -1911,7 +1911,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
             this.addIndexItems(this.mVXYDataSecondVariableDimensionYComboBox, dims.length);
             sxIndex = sInfo.getDimensionIndex(KEY_VXY_X_DIMENSION);
             if (!this.isValidDimensionIndex(sxIndex)) {
-              if (this.isValidDimensionIndex(xIndex)) {
+              if (xInfo != null && xIndex != null && this.isValidDimensionIndex(xIndex)) {
                 final int len = xInfo.getDimensions()[xIndex];
                 for (int ii = 0; ii < dims.length; ii++) {
                   if (dims[ii] == len) {
@@ -1920,24 +1920,13 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
                   }
                 }
               }
-              // if (!this.isValidDimensionIndex(sxIndex)) {
-              // if (this.isValidDimensionIndex(fxIndex)) {
-              // final int len = fInfo.getDimensions()[fxIndex];
-              // for (int ii = 0; ii < dims.length; ii++) {
-              // if (dims[ii] == len) {
-              // sxIndex = ii;
-              // break;
-              // }
-              // }
-              // }
-              // }
               if (!this.isValidDimensionIndex(sxIndex)) {
                 sxIndex = 0;
               }
             }
             syIndex = sInfo.getDimensionIndex(KEY_VXY_Y_DIMENSION);
             if (!this.isValidDimensionIndex(syIndex)) {
-              if (this.isValidDimensionIndex(yIndex)) {
+              if (yInfo != null && yIndex != null && this.isValidDimensionIndex(yIndex)) {
                 final int len = yInfo.getDimensions()[yIndex];
                 for (int ii = 0; ii < dims.length; ii++) {
                   if (dims[ii] == len) {
@@ -1994,7 +1983,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
           bx = true;
         } else {
           if (fInfo != null && sInfo != null) {
-            if (this.isValidDimensionIndex(fxIndex) && this.isValidDimensionIndex(sxIndex)) {
+            if (this.isValidDimensionIndex(fxIndex) && this.isValidDimensionIndex(sxIndex) && fxIndex != null && sxIndex != null) {
               final int[] fDims = fInfo.getDimensions();
               final int[] sDims = sInfo.getDimensions();
               this.mVXYDataXStridePanel.setLength(fDims[fxIndex]);
@@ -2010,7 +1999,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
           if (fInfo != null && sInfo != null) {
             final int[] fDims = fInfo.getDimensions();
             final int[] sDims = sInfo.getDimensions();
-            if (this.isValidDimensionIndex(fyIndex) && this.isValidDimensionIndex(syIndex)) {
+            if (this.isValidDimensionIndex(fyIndex) && this.isValidDimensionIndex(syIndex) && fyIndex != null && syIndex != null) {
               this.mVXYDataYStridePanel.setLength(fDims[fyIndex]);
               this.mVXYDataYStridePanel.setLength(sDims[syIndex]);
               by = true;
@@ -2066,11 +2055,11 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
         int yLen = -1;
         int fLen = -1;
         int sLen = -1;
-        if (this.isValidDimensionIndex(fIndex)) {
+        if (fInfo != null && this.isValidDimensionIndex(fIndex) && fIndex != null) {
           final int[] dims = fInfo.getDimensions();
           fLen = dims[fIndex];
         }
-        if (this.isValidDimensionIndex(sIndex)) {
+        if (sInfo != null && this.isValidDimensionIndex(sIndex) && sIndex != null) {
           final int[] dims = sInfo.getDimensions();
           sLen = dims[sIndex];
         }

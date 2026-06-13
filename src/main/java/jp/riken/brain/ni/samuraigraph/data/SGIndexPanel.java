@@ -269,7 +269,7 @@ public class SGIndexPanel extends javax.swing.JPanel
    */
   public void setIndices(SGIntegerSeriesSet indices) {
     final boolean indicesValid = (indices != null);
-    if (indicesValid) {
+    if (indicesValid && indices != null) {
       SGIntegerSeries series = indices.testReduce();
       final boolean seriesValid = (series != null);
       if (seriesValid) {

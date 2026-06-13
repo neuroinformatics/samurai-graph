@@ -1203,7 +1203,7 @@ public class SGUtility implements SGIDrawingElementConstants {
             return false;
           }
         } else {
-          if (a2 != null) {
+          if (a2[ii] != null) {
             return false;
           }
         }
@@ -1243,17 +1243,11 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @return true if two arrays are equal
    */
   public static boolean equals(int[] a1, int[] a2) {
-    if (a1 == null && a2 == null) {
+    if (a1 == a2) {
       return true;
     }
-    if (a1 == null) {
-      if (a2 != null) {
-        return false;
-      }
-    } else {
-      if (a2 == null) {
-        return false;
-      }
+    if (a1 == null || a2 == null) {
+      return false;
     }
     if (a1.length != a2.length) {
       return false;

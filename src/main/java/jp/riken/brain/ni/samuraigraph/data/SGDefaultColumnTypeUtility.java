@@ -1046,7 +1046,7 @@ public class SGDefaultColumnTypeUtility
       }
     }
 
-    if (xIndex == -1) {
+    if (xIndex == -1 || xVar == null) {
       return false;
     }
 
@@ -1730,6 +1730,9 @@ public class SGDefaultColumnTypeUtility
             return false;
           }
         }
+      }
+      if (xCoordinateVariable == null) {
+        return false;
       }
       for (Integer yIndex : yIndices) {
         final boolean b = isCoordinateVariableColumn(columnInfoList, yIndex);

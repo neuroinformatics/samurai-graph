@@ -977,10 +977,10 @@ public class SGDataUtility
       String title = cInfo.getTitle();
       if (title == null || title.trim().equals("")) {
         result[i] = true;
-      }
-      if (result[i] == false) {
+      } else {
         for (int j = i + 1; j < len; j++) {
-          if (title.equalsIgnoreCase(columnInfo[j].getTitle())) {
+          String nextTitle = columnInfo[j].getTitle();
+          if (nextTitle != null && title.equalsIgnoreCase(nextTitle)) {
             result[i] = true;
             result[j] = true;
           }
@@ -3425,7 +3425,7 @@ public class SGDataUtility
         && tlValueNames.length == thValueNames.length) {
       ticklabelFlag = true;
     }
-    if (errorbarFlag) {
+    if (errorbarFlag && leValueNames != null && ueValueNames != null && ehValueNames != null) {
       for (int i = 0; i < leValueNames.length; i++) {
         int leVarIndex = nc.getVariableIndex(leValueNames[i]);
         int ueVarIndex = nc.getVariableIndex(ueValueNames[i]);
@@ -3440,7 +3440,7 @@ public class SGDataUtility
         }
       }
     }
-    if (ticklabelFlag) {
+    if (ticklabelFlag && tlValueNames != null && thValueNames != null) {
       for (int i = 0; i < tlValueNames.length; i++) {
         int tlVarIndex = nc.getVariableIndex(tlValueNames[i]);
         columns[tlVarIndex].setColumnType(
@@ -3692,7 +3692,7 @@ public class SGDataUtility
 
     // get the group name
     String groupName = (String) infoMap.get(SGIFigureElementGraph.KEY_GROUP_NAME);
-    if (groupName != null) {
+    if (groupName != null && originMap != null) {
       // replaces the origin map
       Map<String, Integer> tempMap = new HashMap<String, Integer>();
       Set<Entry<String, Integer>> entrySet = originMap.entrySet();
@@ -3755,7 +3755,7 @@ public class SGDataUtility
 
     // get the group name
     String groupName = (String) infoMap.get(SGIFigureElementGraph.KEY_GROUP_NAME);
-    if (groupName != null) {
+    if (groupName != null && originMap != null) {
       // replaces the origin map
       Map<String, int[]> tempMap = new HashMap<String, int[]>();
       Set<Entry<String, int[]>> entrySet = originMap.entrySet();
@@ -3825,7 +3825,7 @@ public class SGDataUtility
       if (timeDimensionMap != null) {
         timeDimension = timeDimensionMap.get(mdCol.getName());
         tValid = (timeDimension != null && timeDimension != -1);
-        if (tValid) {
+        if (tValid && timeDimension != null) {
           if (timeDimension < 0 || timeDimension >= dims.length) {
             return null;
           }
@@ -3838,7 +3838,7 @@ public class SGDataUtility
       if (pickupDimensionMap != null) {
         Integer pickupDimension = pickupDimensionMap.get(mdCol.getName());
         final boolean pValid = (pickupDimension != null && pickupDimension != -1);
-        if (pValid) {
+        if (pValid && pickupDimension != null) {
           if (pickupDimension < 0 || pickupDimension >= dims.length) {
             return null;
           }
@@ -4361,7 +4361,7 @@ public class SGDataUtility
         }
       }
     }
-    if (xCnt != 1 || yCnt != 1) {
+    if (xCol == null || yCol == null || xCnt != 1 || yCnt != 1) {
       return null;
     }
 
@@ -7008,6 +7008,8 @@ public class SGDataUtility
           var = xVar;
         } else if (Y_VALUE.equals(columnType)) {
           var = yVar;
+        } else {
+          throw new Error("Invalid column type: " + columnType);
         }
         String varName = var.getName();
         final int dimension = var.getGenericDimensionIndex();

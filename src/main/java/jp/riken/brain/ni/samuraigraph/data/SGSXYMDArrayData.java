@@ -138,12 +138,12 @@ public class SGSXYMDArrayData extends SGMDArrayData
     //
 
     final int xLen =
-        (xInfo != null) ? xInfo.getGenericDimensionLength() : yInfo.getGenericDimensionLength();
+        (xInfo != null) ? xInfo.getGenericDimensionLength() : (yInfo != null ? yInfo.getGenericDimensionLength() : -1);
     if (xLen == -1) {
       throw new IllegalArgumentException("Invalid length: " + xLen);
     }
     final int yLen =
-        (yInfo != null) ? yInfo.getGenericDimensionLength() : xInfo.getGenericDimensionLength();
+        (yInfo != null) ? yInfo.getGenericDimensionLength() : (xInfo != null ? xInfo.getGenericDimensionLength() : -1);
     if (yLen == -1) {
       throw new IllegalArgumentException("Invalid length: " + yLen);
     }

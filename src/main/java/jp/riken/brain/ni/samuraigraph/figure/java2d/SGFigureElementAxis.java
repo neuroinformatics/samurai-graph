@@ -2214,20 +2214,22 @@ public class SGFigureElementAxis extends SGFigureElement2D
             return false;
           }
         }
-        if (sameFontStyleFlag) {
+        if (sameFontStyleFlag && fontStyle != null) {
           if (axis.setTitleFontStyle(fontStyle.intValue()) == false) {
             return false;
           }
           if (axis.setNumberFontStyle(fontStyle.intValue()) == false) {
             return false;
           }
+        } else if (!sameFontStyleFlag && titleFontStyle != null && scaleFontStyle != null) {
+          if (axis.setTitleFontStyle(titleFontStyle.intValue()) == false) {
+            return false;
+          }
+          if (axis.setNumberFontStyle(scaleFontStyle.intValue()) == false) {
+            return false;
+          }
         } else {
-          if (axis.setTitleFontStyle(titleFontStyle) == false) {
-            return false;
-          }
-          if (axis.setNumberFontStyle(scaleFontStyle) == false) {
-            return false;
-          }
+          return false;
         }
         if (sameFontSizeFlag) {
           if (axis.setTitleFontSize(fontSize, uFontSize.toString()) == false) {

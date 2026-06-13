@@ -1392,8 +1392,10 @@ public class SGVXYSDArrayData extends SGSDArrayData
             }
           }
         }
-        fArray.set(common.f, xx, yy);
-        sArray.set(common.s, xx, yy);
+        if (common != null) {
+          fArray.set(common.f, xx, yy);
+          sArray.set(common.s, xx, yy);
+        }
       }
     }
     writer.writeDoubleMDArray(fName, fArray);

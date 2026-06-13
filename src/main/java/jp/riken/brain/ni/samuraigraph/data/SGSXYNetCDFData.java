@@ -136,7 +136,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     SGNetCDFVariable lVar = null;
     SGNetCDFVariable uVar = null;
     SGNetCDFVariable ehVar = null;
-    if (leInfo != null) {
+    if (leInfo != null && ueInfo != null && ehInfo != null) {
       lVar = this.getVariable(ncfile, leInfo.getName());
       uVar = this.getVariable(ncfile, ueInfo.getName());
       ehVar = this.getVariable(ncfile, ehInfo.getName());

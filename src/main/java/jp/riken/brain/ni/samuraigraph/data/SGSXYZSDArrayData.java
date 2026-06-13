@@ -1128,7 +1128,9 @@ public class SGSXYZSDArrayData extends SGSDArrayData
             }
           }
         }
-        zArray.set(common.z, xx, yy);
+        if (common != null) {
+          zArray.set(common.z, xx, yy);
+        }
       }
     }
     writer.writeDoubleMDArray(zName, zArray);
