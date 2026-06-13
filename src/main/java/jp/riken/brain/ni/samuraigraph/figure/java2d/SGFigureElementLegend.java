@@ -557,9 +557,9 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 		if (this.isSelected()) {
 			list.add(this);
 		}
-		ArrayList lList = this.getVisibleLegendList();
+		ArrayList<ElementGroupSetInLegend> lList = this.getVisibleLegendList();
 		for (int ii = 0; ii < lList.size(); ii++) {
-			ElementGroupSetInLegend gs = (ElementGroupSetInLegend) lList
+			ElementGroupSetInLegend gs = lList
 					.get(ii);
 			if (gs.isSelected()) {
 				list.add(gs);
@@ -960,7 +960,7 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 		lp.xAxis = this.mXAxis;
 		lp.yAxis = this.mYAxis;
 
-		lp.visibleElementGroupList = new ArrayList(this.getVisibleChildList());
+		lp.visibleElementGroupList = new ArrayList<SGIChildObject>(this.getVisibleChildList());
 
 		return true;
 	}
@@ -1208,7 +1208,7 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 
 				// draw anchors around all objects
 				if (this.mSymbolsVisibleFlagAroundAllObjects) {
-					ArrayList pList = this.getAnchorPointList();
+					ArrayList<Point2D> pList = this.getAnchorPointList();
 					SGUtilityForFigureElementJava2D.drawAnchorAsChildObject(
 							pList, g2d);
 				}
@@ -1216,7 +1216,7 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 				// draw anchors around focused objects
 				if (this.mSymbolsVisibleFlagAroundFocusedObjects
 						&& this.isSelected()) {
-					ArrayList pList = this.getAnchorPointList();
+					ArrayList<Point2D> pList = this.getAnchorPointList();
 					SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(
 							pList, g2d);
 				}
@@ -1230,8 +1230,8 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 	 * @return
 	 *         a list of points to draw anchors
 	 */
-	private ArrayList getAnchorPointList() {
-		ArrayList list = new ArrayList();
+	private ArrayList<Point2D> getAnchorPointList() {
+		ArrayList<Point2D> list = new ArrayList<Point2D>();
 
 		Rectangle2D rect = this.getLegendRect();
 		final float x = (float) rect.getX();
@@ -1290,8 +1290,8 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 	 * @return
 	 *         a set of available child objects in the histories
 	 */
-	protected Set getAvailableChildSet() {
-		Set set = new HashSet();
+	protected Set<SGIChildObject> getAvailableChildSet() {
+		Set<SGIChildObject> set = new HashSet<SGIChildObject>();
 		List mList = this.getMementoList();
 		for (int ii = 0; ii < mList.size(); ii++) {
 			LegendProperties p = (LegendProperties) mList.get(ii);
@@ -1449,7 +1449,7 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 			return true;
 		}
 
-		ArrayList list = new ArrayList();
+		ArrayList<Rectangle2D> list = new ArrayList<Rectangle2D>();
 		list.add(graphRect);
 		if (this.isVisible()) {
 			list.add(lRect);
@@ -2587,8 +2587,8 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 	 *
 	 * @return a list of group sets
 	 */
-	protected ArrayList getVisibleLegendList() {
-		ArrayList list = new ArrayList();
+	protected ArrayList<ElementGroupSetInLegend> getVisibleLegendList() {
+		ArrayList<ElementGroupSetInLegend> list = new ArrayList<ElementGroupSetInLegend>();
 		for (int ii = 0; ii < this.mChildList.size(); ii++) {
 			ElementGroupSetInLegend groupSet = (ElementGroupSetInLegend) this.mChildList
 					.get(ii);
@@ -2770,23 +2770,24 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 			indexArrayNew[ii] = indexArray[ii] - indexMin;
 		}
 		int lenNew = indexMax - indexMin + 1;
-		List[] dListArray = new ArrayList[lenNew];
+		@SuppressWarnings("unchecked")
+		List<SGData>[] dListArray = new ArrayList[lenNew];
 		for (int ii = 0; ii < lenNew; ii++) {
-			dListArray[ii] = new ArrayList();
+			dListArray[ii] = new ArrayList<SGData>();
 		}
 		for (int ii = 0; ii < len; ii++) {
 			dListArray[indexArrayNew[ii]].add(dataArray[ii]);
 		}
-		List oDataList = new ArrayList();
+		List<SGData> oDataList = new ArrayList<SGData>();
 		for (int ii = 0; ii < lenNew; ii++) {
 			oDataList.addAll(dListArray[ii]);
 		}
 
 		// sort the legend objects
-		List cList = new ArrayList();
+		List<SGIChildObject> cList = new ArrayList<SGIChildObject>();
 		for (int ii = 0; ii < oDataList.size(); ii++) {
-			SGData data = (SGData) oDataList.get(ii);
-			SGElementGroupSet gs = this.getElementGroupSet(data);
+			SGData data = oDataList.get(ii);
+			SGIChildObject gs = (SGIChildObject) this.getElementGroupSet(data);
 			cList.add(gs);
 		}
 
@@ -4561,9 +4562,9 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 	     * @return true if succeeded
 	     *
 	     */
-	    protected boolean setElementGroupProperties(List elementGroupPropertiesList) {
+	    protected boolean setElementGroupProperties(List<SGProperties> elementGroupPropertiesList) {
 	        for (int ii = 0; ii < elementGroupPropertiesList.size(); ii++) {
-	            SGProperties gp = (SGProperties) elementGroupPropertiesList.get(ii);
+	            SGProperties gp = elementGroupPropertiesList.get(ii);
 	            SGElementGroup group = null;
 	            if (gp instanceof SGElementGroupLine.LineProperties) {
 	                group = this.getLineGroup();
@@ -6086,9 +6087,9 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 	     * @return true if succeeded
 	     *
 	     */
-	    protected boolean setElementGroupProperties(List elementGroupPropertiesList) {
+	    protected boolean setElementGroupProperties(List<SGProperties> elementGroupPropertiesList) {
 	        for (int ii = 0; ii < elementGroupPropertiesList.size(); ii++) {
-	            SGProperties gp = (SGProperties) elementGroupPropertiesList.get(ii);
+	            SGProperties gp = elementGroupPropertiesList.get(ii);
 	            SGElementGroup group = null;
 	            if (gp instanceof SGElementGroupArrow.ArrowProperties) {
 	                group = this.getArrowGroup();
@@ -7435,7 +7436,7 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 
 		SGAxis yAxis;
 
-		ArrayList visibleElementGroupList = new ArrayList();
+		ArrayList<SGIChildObject> visibleElementGroupList = new ArrayList<SGIChildObject>();
 
 		public void dispose() {
         	super.dispose();
@@ -7814,9 +7815,9 @@ public class SGFigureElementLegend extends SGFigureElementForData implements
 	     * @return true if succeeded
 	     *
 	     */
-	    protected boolean setElementGroupProperties(List elementGroupPropertiesList) {
+	    protected boolean setElementGroupProperties(List<SGProperties> elementGroupPropertiesList) {
 	        for (int ii = 0; ii < elementGroupPropertiesList.size(); ii++) {
-	            SGProperties gp = (SGProperties) elementGroupPropertiesList.get(ii);
+	            SGProperties gp = elementGroupPropertiesList.get(ii);
 	            SGElementGroup group = null;
 	            if (gp instanceof SGElementGroupPseudocolorMap.PseudocolorMapProperties) {
 	                group = this.getColorMapGroup();

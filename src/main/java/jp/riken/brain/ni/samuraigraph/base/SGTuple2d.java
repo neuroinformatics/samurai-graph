@@ -131,6 +131,13 @@ public class SGTuple2d implements Cloneable {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        int result = Double.hashCode(x);
+        result = 31 * result + Double.hashCode(y);
+        return result;
+    }
+
     /**
      * Clear both components.
      * 

@@ -304,6 +304,11 @@ public class SGIntegerSeriesSet implements Cloneable {
 		SGIntegerSeriesSet s = (SGIntegerSeriesSet) obj;
 		return this.mSeriesList.equals(s.mSeriesList);
 	}
+
+	@Override
+	public int hashCode() {
+		return mSeriesList.hashCode();
+	}
 	
     /**
      * Clones this object.

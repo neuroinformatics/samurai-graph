@@ -100,16 +100,6 @@ public class SGAxis implements Cloneable {
     /**
      * Sets the scale range.
      * 
-     * @param minValue
-     *           the minimum value
-     * @param maxValue
-     *           the maximum value
-     * @return true if succeeded
-     */
-
-    /**
-     * Sets the scale range.
-     * 
      * @param range
      *           the axis value range to set
      * @return true if succeeded

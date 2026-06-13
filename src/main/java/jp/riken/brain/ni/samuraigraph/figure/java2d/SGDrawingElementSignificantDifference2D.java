@@ -253,7 +253,7 @@ public abstract class SGDrawingElementSignificantDifference2D extends
      * @return
      */
     public Rectangle2D getElementBounds() {
-        ArrayList rectList = new ArrayList();
+        ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
         rectList.add(this.getLineBounds());
         rectList.add(this.getStringBounds());
         Rectangle2D rect = SGUtility.createUnion(rectList);
@@ -271,7 +271,7 @@ public abstract class SGDrawingElementSignificantDifference2D extends
                 .getVerticalLine1();
         final SGDrawingElementLine2D pline2 = (SGDrawingElementLine2D) this
                 .getVerticalLine2();
-        ArrayList rectList = new ArrayList();
+        ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
         rectList.add(hline.getLineShape().getBounds2D());
         rectList.add(pline1.getLineShape().getBounds2D());
         rectList.add(pline2.getLineShape().getBounds2D());

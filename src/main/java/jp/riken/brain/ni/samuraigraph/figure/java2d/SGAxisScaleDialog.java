@@ -15,6 +15,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
 
 import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
+import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
@@ -63,7 +64,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog implements
 
         mAxisLengthModeLabel = new javax.swing.JLabel();
         mAxisLengthModeSeparator = new javax.swing.JSeparator();
-        mAxisLengthModeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mAxisLengthModeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mButtonPanel = new javax.swing.JPanel();
         mOKButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
         mCancelButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
@@ -84,11 +85,11 @@ public class SGAxisScaleDialog extends SGPropertyDialog implements
         mTextPanel = new javax.swing.JPanel();
         mFontPanel = new javax.swing.JPanel();
         mFontStyleLabel = new javax.swing.JLabel();
-        mFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mFontSizeLabel = new javax.swing.JLabel();
         mFontSizeSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mFontNameLabel = new javax.swing.JLabel();
-        mFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mFontAngleLabel = new javax.swing.JLabel();
         mFontAngleSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mFontColorLabel = new javax.swing.JLabel();
@@ -774,7 +775,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog implements
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mAxisLengthModeComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mAxisLengthModeComboBox;
     private javax.swing.JLabel mAxisLengthModeLabel;
     private javax.swing.JSeparator mAxisLengthModeSeparator;
     private javax.swing.JPanel mButtonPanel;
@@ -783,12 +784,12 @@ public class SGAxisScaleDialog extends SGPropertyDialog implements
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mFontAngleSpinner;
     private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mFontColorButton;
     private javax.swing.JLabel mFontColorLabel;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mFontNameComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mFontNameComboBox;
     private javax.swing.JLabel mFontNameLabel;
     private javax.swing.JPanel mFontPanel;
     private javax.swing.JLabel mFontSizeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mFontSizeSpinner;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mFontStyleComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mFontStyleComboBox;
     private javax.swing.JLabel mFontStyleLabel;
     private javax.swing.JLabel mFormLabel;
     private javax.swing.JPanel mFormPanel;
@@ -1161,8 +1162,8 @@ public class SGAxisScaleDialog extends SGPropertyDialog implements
 	}
 
 	@Override
-    public List getColorSelectionButtonsList() {
-    	List<JButton> list = new ArrayList<JButton>();
+    public List<SGColorSelectionButton> getColorSelectionButtonsList() {
+    	List<SGColorSelectionButton> list = new ArrayList<SGColorSelectionButton>();
     	list.add(this.mLineColorButton);
     	list.add(this.mFontColorButton);
     	return list;

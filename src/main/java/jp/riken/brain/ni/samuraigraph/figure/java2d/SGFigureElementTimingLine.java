@@ -159,11 +159,11 @@ public class SGFigureElementTimingLine extends SGFigureElement2D implements
             return;
         }
 
-        ArrayList configList = new ArrayList();
-        ArrayList distList = new ArrayList();
+        ArrayList<Integer> configList = new ArrayList<>();
+        ArrayList<Float> distList = new ArrayList<>();
         this.getNearestAxisInfo(x, y, configList, distList);
-        final int config = ((Integer) configList.get(0)).intValue();
-        final float distance = ((Number) distList.get(0)).floatValue();
+        final int config = configList.get(0);
+        final float distance = distList.get(0);
 
         final float length = distance;
 
@@ -190,7 +190,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D implements
     }
 
     private void getNearestAxisInfo(final int x, final int y,
-            final ArrayList configList, final ArrayList distList) {
+            final ArrayList<Integer> configList, final ArrayList<Float> distList) {
 
         final float left = this.getGraphRectX();
         final float right = left + this.getGraphRectWidth();
@@ -274,10 +274,10 @@ public class SGFigureElementTimingLine extends SGFigureElement2D implements
             return false;
         }
 
-        final ArrayList configList = new ArrayList();
-        final ArrayList distList = new ArrayList();
+        final ArrayList<Integer> configList = new ArrayList<>();
+        final ArrayList<Float> distList = new ArrayList<>();
         this.getNearestAxisInfo(x, y, configList, distList);
-        final int config = ((Integer) configList.get(0)).intValue();
+        final int config = configList.get(0);
 
         final SGAxis axis = this.mAxisElement.getAxisInPlane(config);
         final double value = this.mAxisElement.getValue(config, x, y);
@@ -539,8 +539,8 @@ public class SGFigureElementTimingLine extends SGFigureElement2D implements
      * 
      * @return
      */
-    private ArrayList getVisibleTimingElementListInside() {
-        ArrayList list = new ArrayList();
+    private ArrayList<TimingLine> getVisibleTimingElementListInside() {
+        ArrayList<TimingLine> list = new ArrayList<>();
         List<SGIChildObject> lList = this.getVisibleChildList();
         for (int ii = 0; ii < lList.size(); ii++) {
             TimingLine line = (TimingLine) lList.get(ii);
@@ -896,7 +896,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D implements
                 if (el.isValid() == false) {
                     continue;
                 }
-                ArrayList pList = el.getAnchorPointList();
+                ArrayList<Point2D> pList = el.getAnchorPointList();
                 if (! el.isAnchored()) {
                     SGUtilityForFigureElementJava2D.drawAnchorAsChildObject(pList, g2d);
                 } else {
@@ -907,14 +907,14 @@ public class SGFigureElementTimingLine extends SGFigureElement2D implements
 
         // draw symbols around focused objects
         if (this.mSymbolsVisibleFlagAroundFocusedObjects) {
-            ArrayList fList = new ArrayList();
+            ArrayList<SGISelectable> fList = new ArrayList<>();
             this.getFocusedObjectsList(fList);
             for (int ii = 0; ii < fList.size(); ii++) {
                 TimingLine el = (TimingLine) fList.get(ii);
                 if (el.isValid() == false) {
                     continue;
                 }
-                ArrayList pList = el.getAnchorPointList();
+                ArrayList<Point2D> pList = el.getAnchorPointList();
                 if (! el.isAnchored()) {
                     SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(pList, g2d);
                 } else {
@@ -996,7 +996,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D implements
         }
 
         TimingElementProperties gp = (TimingElementProperties) p;
-        gp.visibleTimingElementList = new ArrayList(this.getVisibleChildList());
+        gp.visibleTimingElementList = new ArrayList<>(this.getVisibleChildList());
 
         return true;
     }
@@ -1115,8 +1115,8 @@ public class SGFigureElementTimingLine extends SGFigureElement2D implements
     /**
      * 
      */
-    protected Set getAvailableChildSet() {
-        Set set = new HashSet();
+    protected Set<SGIChildObject> getAvailableChildSet() {
+     Set<SGIChildObject> set = new HashSet<>();
         List mList = this.getMementoList();
         for (int ii = 0; ii < mList.size(); ii++) {
             TimingElementProperties p = (TimingElementProperties) mList.get(ii);
@@ -1457,8 +1457,8 @@ public class SGFigureElementTimingLine extends SGFigureElement2D implements
          * 
          * @return
          */
-        private ArrayList getAnchorPointList() {
-            ArrayList list = new ArrayList();
+        private ArrayList<Point2D> getAnchorPointList() {
+            ArrayList<Point2D> list = new ArrayList<>();
 
             Point2D pos0 = new Point2D.Float();
             Point2D pos1 = new Point2D.Float();
@@ -2262,7 +2262,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D implements
 
     public static class TimingElementProperties extends SGProperties {
 
-        ArrayList visibleTimingElementList = new ArrayList();
+        ArrayList<SGIChildObject> visibleTimingElementList = new ArrayList<>();
 
         /**
          * 

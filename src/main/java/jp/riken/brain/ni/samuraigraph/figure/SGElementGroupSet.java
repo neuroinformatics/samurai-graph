@@ -396,7 +396,7 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
      * 
      */
     protected abstract boolean setElementGroupProperties(
-            List elementGroupPropertiesList);
+            List<SGProperties> elementGroupPropertiesList);
     
     /**
      * Returns properties of this group set.
@@ -459,7 +459,7 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
         /**
          * a list of properties of element groups in the group set
          */
-        protected List mElementGroupPropertiesList = new ArrayList();
+        protected List<SGProperties> mElementGroupPropertiesList = new ArrayList<SGProperties>();
         
         /**
          * The default constructor.
@@ -539,8 +539,8 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
             return new ArrayList(mElementGroupPropertiesList);
         }
 
-        public void setElementGroupPropertiesList(List elementGroupPropertiesList) {
-            mElementGroupPropertiesList = new ArrayList(elementGroupPropertiesList);
+        public void setElementGroupPropertiesList(List<SGProperties> elementGroupPropertiesList) {
+            mElementGroupPropertiesList = new ArrayList<SGProperties>(elementGroupPropertiesList);
         }
 
         public boolean isVisible() {

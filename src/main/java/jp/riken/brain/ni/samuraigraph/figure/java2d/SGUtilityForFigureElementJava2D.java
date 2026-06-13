@@ -403,8 +403,8 @@ public class SGUtilityForFigureElementJava2D implements
     * @param itr
     * @return
     */
-   public static ArrayList getSegmentList(final PathIterator itr) {
-       ArrayList list = new ArrayList();
+   public static ArrayList<Point2D> getSegmentList(final PathIterator itr) {
+       ArrayList<Point2D> list = new ArrayList<Point2D>();
        while (!itr.isDone()) {
            final float[] array = new float[6];
            final int type = itr.currentSegment(array);

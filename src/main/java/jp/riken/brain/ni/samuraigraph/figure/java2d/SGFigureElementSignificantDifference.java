@@ -561,7 +561,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
         }
 
         List<SGIChildObject> sList = this.getVisibleChildList();
-        ArrayList rectList = new ArrayList();
+        ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
         for (int ii = 0; ii < sList.size(); ii++) {
             SigDiffSymbol el = (SigDiffSymbol) sList.get(ii);
             Rectangle2D rect = el.getElementBounds();
@@ -614,7 +614,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
                 if (el.isValid() == false) {
                     continue;
                 }
-                ArrayList pList = el.getAnchorPointList();
+                List<Point2D> pList = el.getAnchorPointList();
                 if (! el.isAnchored()) {
                     SGUtilityForFigureElementJava2D.drawAnchorAsChildObject(pList, g2d);
                 } else {
@@ -631,7 +631,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
                 if (el.isValid() == false) {
                     continue;
                 }
-                ArrayList pList = el.getAnchorPointList();
+                List<Point2D> pList = el.getAnchorPointList();
                 if (! el.isAnchored()) {
                     SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(pList, g2d);
                 } else {
@@ -1096,7 +1096,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
         }
 
         SigDiffElementProperties gp = (SigDiffElementProperties) p;
-        gp.visibleSigDiffSymbolList = new ArrayList(this.getVisibleChildList());
+        gp.visibleSigDiffSymbolList = new ArrayList<SGIChildObject>(this.getVisibleChildList());
 
         return true;
 
@@ -1270,8 +1270,8 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
     /**
      * 
      */
-    protected Set getAvailableChildSet() {
-        Set set = new HashSet();
+    protected Set<SGIChildObject> getAvailableChildSet() {
+        Set<SGIChildObject> set = new HashSet<SGIChildObject>();
         List mList = this.getMementoList();
         for (int ii = 0; ii < mList.size(); ii++) {
             SigDiffElementProperties p = (SigDiffElementProperties) mList
@@ -1286,7 +1286,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
      * 
      */
     public static class SigDiffElementProperties extends SGProperties {
-        ArrayList visibleSigDiffSymbolList = new ArrayList();
+        ArrayList<SGIChildObject> visibleSigDiffSymbolList = new ArrayList<SGIChildObject>();
 
         /**
          * 
@@ -2407,7 +2407,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
          * 
          * @return
          */
-        private ArrayList getAnchorPointList() {
+        private ArrayList<Point2D> getAnchorPointList() {
             ArrayList<Point2D> list = new ArrayList<Point2D>();
             if (this.isLineVisible()) {
                 list.add(this.getLeftTerm());

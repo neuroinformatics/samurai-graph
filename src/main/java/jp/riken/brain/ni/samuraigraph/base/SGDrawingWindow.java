@@ -672,7 +672,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      * @return
      */
     public SGFigure[] getFigureArray() {
-        return (SGFigure[]) this.getFigureList().toArray(new SGFigure[] {});
+        return this.getFigureList().toArray(new SGFigure[] {});
     }
 
     /**
@@ -700,7 +700,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         List<SGFigure> fList = this.getVisibleFigureList();
         List<Integer> idList = new ArrayList<Integer>();
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure fig = (SGFigure) fList.get(ii);
+            SGFigure fig = fList.get(ii);
             idList.add(Integer.valueOf(fig.getID()));
         }
         int[] idArray = new int[idList.size()];
@@ -732,7 +732,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      */
     public void removeAllFigures() {
     	for (int ii = 0; ii < this.mFigureList.size(); ii++) {
-    	    SGFigure f = (SGFigure) this.mFigureList.get(ii);
+    	    SGFigure f = this.mFigureList.get(ii);
     	    f.dispose();
     	}
         this.mFigureList.clear();
@@ -913,7 +913,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     public boolean drawBackAllVisibleFigures() {
         ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure fig = (SGFigure) list.get(ii);
+            SGFigure fig = list.get(ii);
             if (fig.drawbackFigure() == false) {
                 return false;
             }
@@ -937,7 +937,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     public boolean clearFocusedObjects() {
     	List<SGISelectable> list = this.getFocusedObjectsList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGISelectable s = (SGISelectable) list.get(ii);
+            SGISelectable s = list.get(ii);
             s.setSelected(false);
         }
         return true;
@@ -1024,7 +1024,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     public boolean hideSelectedObjects() {
         ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             if (figure.isSelected()) {
                 this.hideFigure(figure);
             } else {
@@ -1057,7 +1057,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     protected void setSelectionSymbolsVisible(final boolean b) {
         ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             figure.setSelectionSymbolsVisible(b);
         }
     }
@@ -1071,7 +1071,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     protected void setSymbolsAroundAllObjectsVisible(final boolean b) {
         ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             figure.setSymbolsAroundAllObjectsVisible(b);
         }
     }
@@ -1082,7 +1082,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     public boolean clearAllFocusedObjectsInFigures() {
         ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure fig = (SGFigure) list.get(ii);
+            SGFigure fig = list.get(ii);
             if (fig.clearFocusedObjects() == false) {
                 return false;
             }
@@ -1389,7 +1389,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
             // resize the figures
             for (int ii = 0; ii < list.size(); ii++) {
-                SGFigure figure = (SGFigure) list.get(ii);
+                SGFigure figure = list.get(ii);
                 figure.recordFigureRect();
                 figure.resize(ratioX, ratioY);
                 figure.setChanged(true);
@@ -1852,7 +1852,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         // notify to figures
         List<SGFigure> fList = this.getVisibleFigureList();
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure f = (SGFigure) fList.get(ii);
+            SGFigure f = fList.get(ii);
             f.onMenuSelected();
         }
 
@@ -1997,7 +1997,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     public boolean translateFocusedObjects(final int dx, final int dy) {
         ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            final SGFigure figure = (SGFigure) list.get(ii);
+            final SGFigure figure = list.get(ii);
             if (figure.isSelected()) {
                 figure.translate(dx, dy);
             } else {
@@ -4557,6 +4557,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         final int numY = (int) ((float) bbRect.getHeight() / dy) + 1;
 
         // get a two-dimensional array of figures
+        @SuppressWarnings("rawtypes")
         ArrayList<SGFigure>[][] fListArray = new ArrayList[numX][numY];
         for (int ii = 0; ii < numX; ii++) {
             for (int jj = 0; jj < numY; jj++) {
@@ -4836,6 +4837,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         final int numY = (int) ((float) bbRect.getHeight() / dy) + 1;
 
         // get a two-dimensional array of figures
+        @SuppressWarnings("rawtypes")
         ArrayList<SGFigure>[][] fListArray = new ArrayList[numX][numY];
         for (int ii = 0; ii < numX; ii++) {
             for (int jj = 0; jj < numY; jj++) {

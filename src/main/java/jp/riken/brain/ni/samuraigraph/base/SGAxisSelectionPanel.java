@@ -185,7 +185,7 @@ public abstract class SGAxisSelectionPanel extends javax.swing.JPanel implements
     	}
     }
     
-    private List<SGIAxisSelectionObserver> mAxisSelectionObservers = new ArrayList<SGIAxisSelectionObserver>();
+    private transient List<SGIAxisSelectionObserver> mAxisSelectionObservers = new ArrayList<SGIAxisSelectionObserver>();
     
     public void addAxisSelectionListener(SGIAxisSelectionObserver obs) {
     	this.mAxisSelectionObservers.add(obs);
@@ -462,7 +462,7 @@ public abstract class SGAxisSelectionPanel extends javax.swing.JPanel implements
             mRightLine.setSelected(b);
         }
 
-        private List<ActionListener> mActionListenerList = new ArrayList<ActionListener>();
+        private transient List<ActionListener> mActionListenerList = new ArrayList<ActionListener>();
 
         public void addActionListener(final ActionListener l) {
             List<ActionListener> list = this.mActionListenerList;

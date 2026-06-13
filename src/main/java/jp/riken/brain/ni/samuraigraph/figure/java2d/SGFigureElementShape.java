@@ -1176,8 +1176,8 @@ public class SGFigureElementShape extends SGFigureElement2D implements
     /**
      * 
      */
-    protected Set getAvailableChildSet() {
-        Set set = new HashSet();
+    protected Set<SGIChildObject> getAvailableChildSet() {
+        Set<SGIChildObject> set = new HashSet<>();
         List mList = this.getMementoList();
         for (int ii = 0; ii < mList.size(); ii++) {
             ShapeElementProperties p = (ShapeElementProperties) mList.get(ii);

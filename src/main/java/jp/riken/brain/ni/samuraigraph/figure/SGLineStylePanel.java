@@ -84,7 +84,7 @@ public class SGLineStylePanel extends javax.swing.JPanel implements SGIConstants
         mColor1Button = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
         mStylePanel = new javax.swing.JPanel();
         mColorMapTypeLabel = new javax.swing.JLabel();
-        mColorMapTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mColorMapTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mColorMapRenderParentPanel = new javax.swing.JPanel();
         mReversedOrderCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
         mAssignColorsButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
@@ -241,7 +241,7 @@ public class SGLineStylePanel extends javax.swing.JPanel implements SGIConstants
     private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mColor2Button;
     private javax.swing.JLabel mColor2Label;
     private javax.swing.JPanel mColorMapRenderParentPanel;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mColorMapTypeComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mColorMapTypeComboBox;
     private javax.swing.JLabel mColorMapTypeLabel;
     private javax.swing.JPanel mGradientColorPanel;
     private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mReversedOrderCheckBox;
@@ -310,9 +310,9 @@ public class SGLineStylePanel extends javax.swing.JPanel implements SGIConstants
      */
     protected LineStyleTableModel mTableModel = null;
 
-    private SGComboBox mLineTypeRendererComboBox = null;
+    private SGComboBox<String> mLineTypeRendererComboBox = null;
 
-    private SGComboBox mLineTypeEditorComboBox = null;
+    private SGComboBox<String> mLineTypeEditorComboBox = null;
     
     private LineWidthCellRenderer mLineWidthRendererSpinner = null;
     
@@ -435,8 +435,8 @@ public class SGLineStylePanel extends javax.swing.JPanel implements SGIConstants
         vertBar.setValue(value);
     }
 
-    private SGComboBox createComboBoxInstance() {
-    	SGComboBox cb = new SGComboBox();
+    private SGComboBox<String> createComboBoxInstance() {
+    	SGComboBox<String> cb = new SGComboBox<String>();
         cb.setBorder(BorderFactory.createEmptyBorder());
         return cb;
     }
@@ -847,7 +847,7 @@ public class SGLineStylePanel extends javax.swing.JPanel implements SGIConstants
 		}
 	}
 
-	private void setLineTypeEditorComboBoxItems(JComboBox cb, String[] items, Object selectedItem) {
+	private void setLineTypeEditorComboBoxItems(JComboBox<String> cb, String[] items, Object selectedItem) {
 		cb.removeAllItems();
 		for (int ii = 0; ii < items.length; ii++) {
 			this.mLineTypeEditorComboBox.addItem(items[ii]);
@@ -859,13 +859,14 @@ public class SGLineStylePanel extends javax.swing.JPanel implements SGIConstants
     	
 		private static final long serialVersionUID = -4855548374127654502L;
 		
-		public LineTypeCellEditor(JComboBox comboBox) {
+		public LineTypeCellEditor(JComboBox<String> comboBox) {
             super(comboBox);
         }
 		
         public Component getTableCellEditorComponent(JTable table,
                 Object value, boolean isSelected, int row, int column) {
-            JComboBox cb = (JComboBox) super.getTableCellEditorComponent(table,
+            @SuppressWarnings("unchecked")
+            JComboBox<String> cb = (JComboBox<String>) super.getTableCellEditorComponent(table,
                     value, isSelected, row, column);
             setLineTypeEditorComboBoxItems(cb, SGILineConstants.LINE_NAME_ARRAY, value);
             return cb;
@@ -876,18 +877,18 @@ public class SGLineStylePanel extends javax.swing.JPanel implements SGIConstants
     	
 		private static final long serialVersionUID = 3534547450251620437L;
 		
-		private SGComboBox mComboBox = null;
-		
-        public LineTypeCellRenderer(JComboBox cb) {
+		private SGComboBox<String> mComboBox = null;
+
+        public LineTypeCellRenderer(JComboBox<String> cb) {
             super();
-            this.mComboBox = (SGComboBox) cb;
+            this.mComboBox = (SGComboBox<String>) cb;
         }
         
         public Component getTableCellRendererComponent(JTable table,
                 Object value, boolean isSelected, boolean hasFocus, int row,
                 int column) {
             this.mComboBox.removeAllItems();
-            this.mComboBox.addItem(value);
+            this.mComboBox.addItem((String) value);
             return this.mComboBox;
         }
     }

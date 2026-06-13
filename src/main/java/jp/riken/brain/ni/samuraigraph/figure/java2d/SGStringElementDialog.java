@@ -6,14 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
+import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
+import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
+import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
@@ -389,8 +395,12 @@ public class SGStringElementDialog extends SGPropertyDialog implements
         this.setTitle(SGStringElementDialog.TITLE);
 
         // set up the combo boxes
-        this.initFontFamilyNameComboBox(this.mFontNameComboBox);
-        this.initFontStyleComboBox(this.mFontStyleComboBox);
+        @SuppressWarnings("unchecked")
+        JComboBox<String> fontNameCb = this.mFontNameComboBox;
+        this.initFontFamilyNameComboBox(fontNameCb);
+        @SuppressWarnings("unchecked")
+        JComboBox<String> fontStyleCb = this.mFontStyleComboBox;
+        this.initFontStyleComboBox(fontStyleCb);
 
         //
         // spinner model
@@ -587,8 +597,8 @@ public class SGStringElementDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getColorSelectionButtonsList() {
-        final List list = new ArrayList();
+    public List<SGColorSelectionButton> getColorSelectionButtonsList() {
+        final List<SGColorSelectionButton> list = new ArrayList<SGColorSelectionButton>();
         list.add(this.mColorButton);
         return list;
     }
@@ -596,9 +606,14 @@ public class SGStringElementDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getTextFieldComponentsList() {
-        final List list = this.getFormattedTextFieldsListFromSpinners();
-        list.addAll(this.getAxisNumberTextFieldList());
+    public List<JTextField> getTextFieldComponentsList() {
+        final List<JTextField> list = new ArrayList<JTextField>();
+        for (JFormattedTextField tf : this.getFormattedTextFieldsListFromSpinners()) {
+            list.add(tf);
+        }
+        for (SGTextField tf : this.getAxisNumberTextFieldList()) {
+            list.add(tf);
+        }
         list.add(this.mTextField);
         return list;
     }
@@ -608,8 +623,8 @@ public class SGStringElementDialog extends SGPropertyDialog implements
      * 
      * @return
      */
-    public List getAxisNumberTextFieldList() {
-        final List list = new ArrayList();
+    public List<SGTextField> getAxisNumberTextFieldList() {
+        final List<SGTextField> list = new ArrayList<SGTextField>();
         list.add(this.mXValueTextField);
         list.add(this.mYValueTextField);
         return list;
@@ -618,8 +633,8 @@ public class SGStringElementDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getSpinnerList() {
-        List list = new ArrayList();
+    public List<SGSpinner> getSpinnerList() {
+        List<SGSpinner> list = new ArrayList<SGSpinner>();
         list.add(this.mFontSizeSpinner);
         list.add(this.mTextAngleSpinner);
         return list;
@@ -647,7 +662,7 @@ public class SGStringElementDialog extends SGPropertyDialog implements
         final Color cl = this.getTextColor();
 
         // check values
-        ArrayList list = new ArrayList();
+        ArrayList<String> list = new ArrayList<String>();
         if (label.hasValidXValue(xConfig, xValue) == false) {
             list.add("X");
         }

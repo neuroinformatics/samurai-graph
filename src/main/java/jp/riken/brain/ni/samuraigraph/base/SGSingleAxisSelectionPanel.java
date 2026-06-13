@@ -40,7 +40,7 @@ public class SGSingleAxisSelectionPanel extends SGAxisSelectionPanel {
         this.mController.add(this.mRightLine);
     }
 
-    private SGExclusiveAccessController mController = new SGExclusiveAccessController();
+    private transient SGExclusiveAccessController mController = new SGExclusiveAccessController();
 
     protected void updateImage() {
         this.mAxisImagePanel.setTopSelected(this.isTopSelected());

@@ -190,14 +190,14 @@ public abstract class SGDrawingElementAxisBreak2D extends SGDrawingElementAxisBr
         Shape curve2 = this.mCurve2;
 
         PathIterator itr1 = curve1.getPathIterator(null);
-        ArrayList list1 = SGUtilityForFigureElementJava2D.getSegmentList(itr1);
-        Point2D pStart1 = (Point2D) list1.get(0);
-        Point2D pEnd1 = (Point2D) list1.get(list1.size() - 1);
+        ArrayList<Point2D> list1 = SGUtilityForFigureElementJava2D.getSegmentList(itr1);
+        Point2D pStart1 = list1.get(0);
+        Point2D pEnd1 = list1.get(list1.size() - 1);
 
         PathIterator itr2 = curve2.getPathIterator(null);
-        ArrayList list2 = SGUtilityForFigureElementJava2D.getSegmentList(itr2);
-        Point2D pStart2 = (Point2D) list2.get(0);
-        Point2D pEnd2 = (Point2D) list2.get(list2.size() - 1);
+        ArrayList<Point2D> list2 = SGUtilityForFigureElementJava2D.getSegmentList(itr2);
+        Point2D pStart2 = list2.get(0);
+        Point2D pEnd2 = list2.get(list2.size() - 1);
 
         array[0] = curve1;
 

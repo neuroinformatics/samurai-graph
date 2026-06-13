@@ -300,6 +300,13 @@ public abstract class SGDataValueHistory implements Cloneable {
 			}
 
 			@Override
+			public int hashCode() {
+				int result = super.hashCode();
+				result = 31 * result + ((mIndexDimName != null) ? mIndexDimName.hashCode() : 0);
+				return result;
+			}
+
+			@Override
 			protected String paramString() {
 				StringBuffer sb = new StringBuffer();
 				sb.append(super.paramString());
