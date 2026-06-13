@@ -4,174 +4,170 @@ import java.awt.Color;
 
 public interface SGIScaleConstants extends SGILineAndStringConstants {
 
-    //
-    // Code of locations
-    //
-    
-    public static final int BODY = 0;
+  //
+  // Code of locations
+  //
 
-    public static final int HORIZONTAL_MIDDLE = 1;
+  public static final int BODY = 0;
 
-    public static final int VERTICAL_MIDDLE = 2;
+  public static final int HORIZONTAL_MIDDLE = 1;
 
-    public static final int HORIZONTAL_END = 3;
+  public static final int VERTICAL_MIDDLE = 2;
 
-    public static final int VERTICAL_END = 4;
+  public static final int HORIZONTAL_END = 3;
 
-    public static final int JOINT = 5;
+  public static final int VERTICAL_END = 4;
 
-    public static final int ON_HORIZONTAL_STRING = 6;
+  public static final int JOINT = 5;
 
-    public static final int ON_VERTICAL_STRING = 7;
+  public static final int ON_HORIZONTAL_STRING = 6;
 
-    
-    //
-    // Mode for the change of axis scale
-    //
-    
-    enum AXIS_LENGTH_MODE {
-    	LENGTH_FIXED, VALUE_FIXED, ADAPTIVE
-    };
-    
-    public static final String AXIS_LENGTH_MODE_FIXED = "Length Fixed";
+  public static final int ON_VERTICAL_STRING = 7;
 
-    public static final String AXIS_LENGTH_MODE_VALUE_FIXED = "Value Fixed";
+  //
+  // Mode for the change of axis scale
+  //
 
-    public static final String AXIS_LENGTH_MODE_ADAPTIVE = "Adaptive";
+  enum AXIS_LENGTH_MODE {
+    LENGTH_FIXED,
+    VALUE_FIXED,
+    ADAPTIVE
+  };
 
-    
-    //
-    // Space between the line and the symbol
-    //
-    
-    public static final String SCALE_SPACE_UNIT = SPACE_UNIT;
+  public static final String AXIS_LENGTH_MODE_FIXED = "Length Fixed";
 
-    public static final double SCALE_SPACE_MIN = SPACE_MIN;
+  public static final String AXIS_LENGTH_MODE_VALUE_FIXED = "Value Fixed";
 
-    public static final double SCALE_SPACE_MAX = SPACE_MAX;
-    
-    public static final double SCALE_SPACE_STEP = SPACE_STEP;
+  public static final String AXIS_LENGTH_MODE_ADAPTIVE = "Adaptive";
 
-    public static final int SCALE_SPACE_FRAC_DIFIT_MIN = SPACE_FRAC_DIFIT_MIN;
-    
-    public static final int SCALE_SPACE_FRAC_DIFIT_MAX = SPACE_FRAC_DIFIT_MAX;
-    
-    public static final int SCALE_SPACE_MINIMAL_ORDER = SPACE_MINIMAL_ORDER;
+  //
+  // Space between the line and the symbol
+  //
 
-    //
-    // Keys
-    //
-    
-    public static final String TAG_NAME_SCALE = "Scale";
+  public static final String SCALE_SPACE_UNIT = SPACE_UNIT;
 
-    public static final String KEY_SCALE_X_VALUE = "X";
+  public static final double SCALE_SPACE_MIN = SPACE_MIN;
 
-    public static final String KEY_SCALE_Y_VALUE = "Y";
+  public static final double SCALE_SPACE_MAX = SPACE_MAX;
 
-    public static final String KEY_SCALE_X_AXIS_VISIBLE = "XAxisVisible";
+  public static final double SCALE_SPACE_STEP = SPACE_STEP;
 
-    public static final String KEY_SCALE_X_AXIS_LENGTH_VALUE = "XAxisLength";
+  public static final int SCALE_SPACE_FRAC_DIFIT_MIN = SPACE_FRAC_DIFIT_MIN;
 
-    public static final String KEY_SCALE_X_AXIS_TITLE_DOWNSIDE = "XAxisTitleDownSide";
+  public static final int SCALE_SPACE_FRAC_DIFIT_MAX = SPACE_FRAC_DIFIT_MAX;
 
-    public static final String KEY_SCALE_X_AXIS_TEXT = "XAxisText";
+  public static final int SCALE_SPACE_MINIMAL_ORDER = SPACE_MINIMAL_ORDER;
 
-    public static final String KEY_SCALE_X_AXIS_UNIT = "XAxisUnit";
+  //
+  // Keys
+  //
 
-    public static final String KEY_SCALE_Y_AXIS_LENGTH_VALUE = "YAxisLength";
+  public static final String TAG_NAME_SCALE = "Scale";
 
-    public static final String KEY_SCALE_Y_AXIS_VISIBLE = "YAxisVisible";
-    
-    public static final String KEY_SCALE_Y_AXIS_TITLE_LEFTSIDE = "YAxisTitleLeftSide";
+  public static final String KEY_SCALE_X_VALUE = "X";
 
-    public static final String KEY_SCALE_AXIS_LENGTH_MODE = "AxisLengthMode";
+  public static final String KEY_SCALE_Y_VALUE = "Y";
 
-    public static final String KEY_SCALE_Y_AXIS_TEXT = "YAxisText";
+  public static final String KEY_SCALE_X_AXIS_VISIBLE = "XAxisVisible";
 
-    public static final String KEY_SCALE_Y_AXIS_UNIT = "YAxisUnit";
-    
-    public static final String KEY_SCALE_LINE_COLOR = "LineColor";
+  public static final String KEY_SCALE_X_AXIS_LENGTH_VALUE = "XAxisLength";
 
-    public static final String KEY_SCALE_FONT_COLOR = "FontColor";
+  public static final String KEY_SCALE_X_AXIS_TITLE_DOWNSIDE = "XAxisTitleDownSide";
 
-    public static final String KEY_SCALE_TEXT_ANGLE = "Angle";
+  public static final String KEY_SCALE_X_AXIS_TEXT = "XAxisText";
 
+  public static final String KEY_SCALE_X_AXIS_UNIT = "XAxisUnit";
 
-    //
-    // Default Values
-    //
+  public static final String KEY_SCALE_Y_AXIS_LENGTH_VALUE = "YAxisLength";
 
-    // Width
-    public static final float DEFAULT_SCALE_SYMBOL_WIDTH = 2.0f;
+  public static final String KEY_SCALE_Y_AXIS_VISIBLE = "YAxisVisible";
 
-    // Height
-    public static final float DEFAULT_SCALE_SYMBOL_HEIGHT = 2.0f;
+  public static final String KEY_SCALE_Y_AXIS_TITLE_LEFTSIDE = "YAxisTitleLeftSide";
 
-    // Line Width
-    public static final float DEFAULT_SCALE_SYMBOL_LINE_WIDTH = DEFAULT_LINE_WIDTH;
+  public static final String KEY_SCALE_AXIS_LENGTH_MODE = "AxisLengthMode";
 
-    // Space
-    public static final float DEFAULT_SCALE_SYMBOL_SPACE = DEFAULT_SPACE;
+  public static final String KEY_SCALE_Y_AXIS_TEXT = "YAxisText";
 
-    // Horizontal Axis
-    public static final String DEFAULT_SCALE_HORIZONTAL_AXIS = DEFAULT_HORIZONTAL_AXIS;
+  public static final String KEY_SCALE_Y_AXIS_UNIT = "YAxisUnit";
 
-    // Vertical Axis
-    public static final String DEFAULT_SCALE_VERTICAL_AXIS = DEFAULT_VERTICAL_AXIS;
+  public static final String KEY_SCALE_LINE_COLOR = "LineColor";
 
-    // Font
-    public static final String DEFAULT_SCALE_SYMBOL_FONT_NAME = DEFAULT_FONT_NAME;
+  public static final String KEY_SCALE_FONT_COLOR = "FontColor";
 
-    public static final int DEFAULT_SCALE_SYMBOL_FONT_STYLE = DEFAULT_FONT_STYLE;
+  public static final String KEY_SCALE_TEXT_ANGLE = "Angle";
 
-    public static final float DEFAULT_SCALE_SYMBOL_FONT_SIZE = 16.0f;
+  //
+  // Default Values
+  //
 
-    // Color
-    public static final Color DEFAULT_SCALE_SYMBOL_COLOR = DEFAULT_COLOR;
-    
-    // axis mode
-    public static final AXIS_LENGTH_MODE DEFAULT_AXIS_CHANGE_MODE = AXIS_LENGTH_MODE.ADAPTIVE;
-    
-    
-	public static final String COM_SCALE = "Scale";
+  // Width
+  public static final float DEFAULT_SCALE_SYMBOL_WIDTH = 2.0f;
 
-    public static final String COM_SCALE_X_AXIS = "AxisX";
+  // Height
+  public static final float DEFAULT_SCALE_SYMBOL_HEIGHT = 2.0f;
 
-    public static final String COM_SCALE_Y_AXIS = "AxisY";
+  // Line Width
+  public static final float DEFAULT_SCALE_SYMBOL_LINE_WIDTH = DEFAULT_LINE_WIDTH;
 
-    public static final String COM_SCALE_VISIBLE = "Visible";
-    
-    public static final String COM_SCALE_LOCATION_X = "X";
+  // Space
+  public static final float DEFAULT_SCALE_SYMBOL_SPACE = DEFAULT_SPACE;
 
-    public static final String COM_SCALE_LOCATION_Y = "Y";
-    
-    public static final String COM_SCALE_AXIS_LENGTH_MODE = "AxisLengthMode";
+  // Horizontal Axis
+  public static final String DEFAULT_SCALE_HORIZONTAL_AXIS = DEFAULT_HORIZONTAL_AXIS;
 
-    public static final String COM_SCALE_X_AXIS_VISIBLE = "XAxisVisible";
+  // Vertical Axis
+  public static final String DEFAULT_SCALE_VERTICAL_AXIS = DEFAULT_VERTICAL_AXIS;
 
-    public static final String COM_SCALE_X_AXIS_LENGTH = "XAxisLength";
+  // Font
+  public static final String DEFAULT_SCALE_SYMBOL_FONT_NAME = DEFAULT_FONT_NAME;
 
-    public static final String COM_SCALE_X_AXIS_TITLE_DOWNSIDE = "XAxisTitleDownside";
-    
-    public static final String COM_SCALE_X_AXIS_TITLE_TEXT = "XAxisTitleText";
+  public static final int DEFAULT_SCALE_SYMBOL_FONT_STYLE = DEFAULT_FONT_STYLE;
 
-    public static final String COM_SCALE_X_AXIS_TITLE_UNIT = "XAxisTitleUnit";
+  public static final float DEFAULT_SCALE_SYMBOL_FONT_SIZE = 16.0f;
 
-    public static final String COM_SCALE_Y_AXIS_VISIBLE = "YAxisVisible";
+  // Color
+  public static final Color DEFAULT_SCALE_SYMBOL_COLOR = DEFAULT_COLOR;
 
-    public static final String COM_SCALE_Y_AXIS_LENGTH = "YAxisLength";
+  // axis mode
+  public static final AXIS_LENGTH_MODE DEFAULT_AXIS_CHANGE_MODE = AXIS_LENGTH_MODE.ADAPTIVE;
 
-    public static final String COM_SCALE_Y_AXIS_TITLE_LEFTSIDE = "YAxisTitleLeftside";
-    
-    public static final String COM_SCALE_Y_AXIS_TITLE_TEXT = "YAxisTitleText";
+  public static final String COM_SCALE = "Scale";
 
-    public static final String COM_SCALE_Y_AXIS_TITLE_UNIT = "YAxisTitleUnit";
+  public static final String COM_SCALE_X_AXIS = "AxisX";
 
-    public static final String COM_SCALE_LINE_COLOR = "LineColor";
+  public static final String COM_SCALE_Y_AXIS = "AxisY";
 
-    public static final String COM_SCALE_FONT_COLOR = "FontColor";
+  public static final String COM_SCALE_VISIBLE = "Visible";
 
-    public static final String COM_SCALE_FONT_ANGLE = "Angle";
+  public static final String COM_SCALE_LOCATION_X = "X";
 
-    
+  public static final String COM_SCALE_LOCATION_Y = "Y";
+
+  public static final String COM_SCALE_AXIS_LENGTH_MODE = "AxisLengthMode";
+
+  public static final String COM_SCALE_X_AXIS_VISIBLE = "XAxisVisible";
+
+  public static final String COM_SCALE_X_AXIS_LENGTH = "XAxisLength";
+
+  public static final String COM_SCALE_X_AXIS_TITLE_DOWNSIDE = "XAxisTitleDownside";
+
+  public static final String COM_SCALE_X_AXIS_TITLE_TEXT = "XAxisTitleText";
+
+  public static final String COM_SCALE_X_AXIS_TITLE_UNIT = "XAxisTitleUnit";
+
+  public static final String COM_SCALE_Y_AXIS_VISIBLE = "YAxisVisible";
+
+  public static final String COM_SCALE_Y_AXIS_LENGTH = "YAxisLength";
+
+  public static final String COM_SCALE_Y_AXIS_TITLE_LEFTSIDE = "YAxisTitleLeftside";
+
+  public static final String COM_SCALE_Y_AXIS_TITLE_TEXT = "YAxisTitleText";
+
+  public static final String COM_SCALE_Y_AXIS_TITLE_UNIT = "YAxisTitleUnit";
+
+  public static final String COM_SCALE_LINE_COLOR = "LineColor";
+
+  public static final String COM_SCALE_FONT_COLOR = "FontColor";
+
+  public static final String COM_SCALE_FONT_ANGLE = "Angle";
 }

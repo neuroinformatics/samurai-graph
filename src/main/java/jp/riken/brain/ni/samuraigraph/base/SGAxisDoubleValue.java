@@ -4,64 +4,62 @@ import java.math.RoundingMode;
 
 public class SGAxisDoubleValue extends SGAxisValue {
 
-	private final double mValue;
-	
-    /**
-     * Creates an instance for zero value.
-     * 
-     */
-	public SGAxisDoubleValue() {
-		super();
-		this.mValue = 0.0;
-	}
-	
-	public SGAxisDoubleValue(final double value) {
-		super();
-		this.mValue = value;
-	}
+  private final double mValue;
 
-	@Override
-	public double getValue() {
-		return this.mValue;
-	}
-	
-	@Override
-	public SGAxisValue plus(SGAxisStepValue step) {
-		if (step instanceof SGAxisDoubleStepValue) {
-			SGAxisDoubleStepValue d = (SGAxisDoubleStepValue) step;
-			return new SGAxisDoubleValue(this.mValue + d.getValue());
-		} else if (step instanceof SGAxisDateStepValue) {
-			SGAxisDateStepValue d = (SGAxisDateStepValue) step;
-			SGAxisDateValue dateValue = new SGAxisDateValue(this.mValue);
-			return dateValue.plus(d);
-		} else {
-			throw new IllegalArgumentException("Invalid parameter: " + step);
-		}
-	}
+  /** Creates an instance for zero value. */
+  public SGAxisDoubleValue() {
+    super();
+    this.mValue = 0.0;
+  }
 
-	@Override
-	public SGAxisValue minus(SGAxisStepValue step) {
-		if (step instanceof SGAxisDoubleStepValue) {
-			SGAxisDoubleStepValue d = (SGAxisDoubleStepValue) step;
-			return new SGAxisDoubleValue(this.mValue - d.getValue());
-		} else if (step instanceof SGAxisDateStepValue) {
-			SGAxisDateStepValue d = (SGAxisDateStepValue) step;
-			SGAxisDateValue dateValue = new SGAxisDateValue(this.mValue);
-			return dateValue.minus(d);
-		} else {
-			throw new IllegalArgumentException("Invalid parameter: " + step);
-		}
-	}
+  public SGAxisDoubleValue(final double value) {
+    super();
+    this.mValue = value;
+  }
 
-	@Override
-	public String toString() {
-		return Double.toString(this.mValue);
-	}
-	
-	@Override
-	public SGAxisValue adjustValue(SGAxisValue min, SGAxisValue max, final int digit) {
-        final double dValue = SGUtilityNumber.getNumberInRangeOrder(this.mValue, 
-        		min.getValue(), max.getValue(), digit, RoundingMode.HALF_UP.ordinal());
-        return new SGAxisDoubleValue(dValue);
-	}
+  @Override
+  public double getValue() {
+    return this.mValue;
+  }
+
+  @Override
+  public SGAxisValue plus(SGAxisStepValue step) {
+    if (step instanceof SGAxisDoubleStepValue) {
+      SGAxisDoubleStepValue d = (SGAxisDoubleStepValue) step;
+      return new SGAxisDoubleValue(this.mValue + d.getValue());
+    } else if (step instanceof SGAxisDateStepValue) {
+      SGAxisDateStepValue d = (SGAxisDateStepValue) step;
+      SGAxisDateValue dateValue = new SGAxisDateValue(this.mValue);
+      return dateValue.plus(d);
+    } else {
+      throw new IllegalArgumentException("Invalid parameter: " + step);
+    }
+  }
+
+  @Override
+  public SGAxisValue minus(SGAxisStepValue step) {
+    if (step instanceof SGAxisDoubleStepValue) {
+      SGAxisDoubleStepValue d = (SGAxisDoubleStepValue) step;
+      return new SGAxisDoubleValue(this.mValue - d.getValue());
+    } else if (step instanceof SGAxisDateStepValue) {
+      SGAxisDateStepValue d = (SGAxisDateStepValue) step;
+      SGAxisDateValue dateValue = new SGAxisDateValue(this.mValue);
+      return dateValue.minus(d);
+    } else {
+      throw new IllegalArgumentException("Invalid parameter: " + step);
+    }
+  }
+
+  @Override
+  public String toString() {
+    return Double.toString(this.mValue);
+  }
+
+  @Override
+  public SGAxisValue adjustValue(SGAxisValue min, SGAxisValue max, final int digit) {
+    final double dValue =
+        SGUtilityNumber.getNumberInRangeOrder(
+            this.mValue, min.getValue(), max.getValue(), digit, RoundingMode.HALF_UP.ordinal());
+    return new SGAxisDoubleValue(dValue);
+  }
 }

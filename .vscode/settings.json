@@ -1,4 +1,10 @@
 {
+    "editor.formatOnSave": true,
     "java.configuration.updateBuildConfiguration": "automatic",
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "[java]": {
+        "editor.defaultFormatter": "gabrielbb.vscode-spotless-java",
+        "editor.formatOnSave": true
+    },
+    "spotless.java.enabled": true
 }
