@@ -838,14 +838,14 @@ public abstract class SGPropertyDialog extends SGDialog implements
     	map.put(comp, new SGComponentGroupElement(comp));
     }
 
-    protected void initFontFamilyNameComboBox(final JComboBox cb) {
+    protected void initFontFamilyNameComboBox(final JComboBox<String> cb) {
         final String fontNameArray[] = SGUtility.getAvailableFontFamilyNames();
         for (String fontName : fontNameArray) {
             cb.addItem(fontName);
         }
     }
     
-    protected void initFontStyleComboBox(final JComboBox cb) {
+    protected void initFontStyleComboBox(final JComboBox<String> cb) {
         final String[] styleNameArray = { FONT_PLAIN, FONT_ITALIC,
                 FONT_BOLD, FONT_BOLD_ITALIC };
         for (String fontStyleName : styleNameArray) {
@@ -853,7 +853,7 @@ public abstract class SGPropertyDialog extends SGDialog implements
         }
     }
     
-    protected void initDateFormatComboBox(final JComboBox cb) {
+    protected void initDateFormatComboBox(final JComboBox<String> cb) {
         final String[] dateFormatArray = SGIDateConstants.DEFAULT_DATE_DISPLAY_FORMAT_ARRAY;
         for (String format : dateFormatArray) {
         	cb.addItem(format);

@@ -18,6 +18,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGICopiable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIRootObjectConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGISelectable;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 
@@ -52,7 +53,7 @@ class SGClipBoardManager implements SGIDisposable, SGIConstants,
     /**
      * The list of copied data properties.
      */
-    private List<Map<Class, SGProperties>> mCopiedDataPropertiesBuffer = new ArrayList<Map<Class, SGProperties>>();
+    private List<Map<Class<? extends SGIFigureElement>, SGProperties>> mCopiedDataPropertiesBuffer = new ArrayList<Map<Class<? extends SGIFigureElement>, SGProperties>>();
 
     /**
      * Information of the focused figures.
@@ -137,7 +138,7 @@ class SGClipBoardManager implements SGIDisposable, SGIConstants,
         List<String> nList = wnd.getCopiedDataNameList();
         this.mCopiedDataNameBuffer.addAll(nList);
 
-        List<Map<Class, SGProperties>> pList = wnd.getCopiedDataPropertiesMapList();
+        List<Map<Class<? extends SGIFigureElement>, SGProperties>> pList = wnd.getCopiedDataPropertiesMapList();
         this.mCopiedDataPropertiesBuffer.addAll(pList);
 
         WindowInfo info = new WindowInfo();

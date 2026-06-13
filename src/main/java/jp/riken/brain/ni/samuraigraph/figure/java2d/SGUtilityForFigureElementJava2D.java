@@ -10,6 +10,7 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -320,7 +321,7 @@ public class SGUtilityForFigureElementJava2D implements
             size = 1.0;
         } else {
             minDiff = SGUtilityNumber.getNumberInRangeOrder(minDiff, axis, 
-            		SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT, BigDecimal.ROUND_HALF_UP);
+            		SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
             size = minDiff;
         }
         
@@ -336,26 +337,20 @@ public class SGUtilityForFigureElementJava2D implements
     * @param list
     * @return
     */
-   public static Rectangle2D getBoundingBox(final ArrayList list) {
-       ArrayList rectList = new ArrayList();
-       for (int ii = 0; ii < list.size(); ii++) {
-           Object obj = list.get(ii);
-           if (obj == null) {
-               throw new NullPointerException("obj==null");
-           }
-           if (!(obj instanceof SGIDrawingElementJava2D)) {
-               throw new IllegalArgumentException(
-                       "!(obj instanceof SGIDrawingElementJava2D)");
-           }
+    public static Rectangle2D getBoundingBox(final List<? extends SGIDrawingElementJava2D> list) {
+        ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
+        for (int ii = 0; ii < list.size(); ii++) {
+            SGIDrawingElementJava2D el = list.get(ii);
+            if (el == null) {
+                throw new NullPointerException("el==null");
+            }
+            rectList.add(el.getElementBounds());
+        }
 
-           SGIDrawingElementJava2D el = (SGIDrawingElementJava2D) obj;
-           rectList.add(el.getElementBounds());
-       }
+        Rectangle2D rectAll = SGUtility.createUnion(rectList);
 
-       Rectangle2D rectAll = SGUtility.createUnion(rectList);
-
-       return rectAll;
-   }
+        return rectAll;
+    }
 
    /**
     * Calculates and returns the bounding box for given points.

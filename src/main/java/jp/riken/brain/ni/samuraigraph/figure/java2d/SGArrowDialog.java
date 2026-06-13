@@ -285,7 +285,7 @@ public class SGArrowDialog extends SGPropertyDialog
         mPanel.add(mRightSpaceLabel, new java.awt.GridBagConstraints());
 
         mLocationAnchoredCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        mLocationAnchoredCheckBox.setLabel("Anchored");
+        mLocationAnchoredCheckBox.setText("Anchored");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;

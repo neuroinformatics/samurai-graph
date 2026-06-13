@@ -28,7 +28,7 @@ import ucar.ma2.Array;
 import ucar.ma2.ArrayChar;
 import ucar.ma2.Index;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 /**
@@ -968,7 +968,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
 		}
 		SGNetCDFVariable cVar = this.mIndexVariable;
 		Dimension dim = cVar.getDimension(0);
-		String name = dim.getName();
+		String name = dim.getShortName();
 		Double value = null;
 		try {
 			value = this.getCoordinateValue(name, index);
@@ -977,7 +977,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
 		
 		// append to the string buffer
 		StringBuffer sb = new StringBuffer();
-		sb.append(dim.getName());
+		sb.append(dim.getShortName());
 		sb.append('=');
 		sb.append(index);
 		if (value != null) {
@@ -993,14 +993,14 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
 			throw new Error("Unsupported case.");
 		}
 		Dimension xDim = this.mXVariable.getDimension(0);
-		String xName = xDim.getName();
+		String xName = xDim.getShortName();
 		Double xValue = null;
 		try {
 			xValue = this.getCoordinateValue(xName, xIndex);
 		} catch (IOException e) {
 		}
 		Dimension yDim = this.mYVariable.getDimension(0);
-		String yName = yDim.getName();
+		String yName = yDim.getShortName();
 		Double yValue = null;
 		try {
 			yValue = this.getCoordinateValue(yName, yIndex);
@@ -1069,7 +1069,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     	return ret;
     }
 
-    protected Array setEditedValues(NetcdfFileWriteable ncWrite,
+    protected Array setEditedValues(NetcdfFileWriter ncWrite,
     		String varName, Array array, String xColumnType, String yColumnType,
     		String[] valueColumnTypes, final boolean all) {
 		

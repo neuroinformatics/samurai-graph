@@ -36,7 +36,7 @@ import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Attribute;
 import ucar.nc2.Dimension;
 import ucar.nc2.Group;
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 import ch.systemsx.cisd.base.mdarray.MDArray;
 import ch.systemsx.cisd.base.mdarray.MDDoubleArray;
@@ -1056,9 +1056,9 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     public boolean saveToNetCDFFile(final File file, final SGExportParameter mode,
     		SGDataBufferPolicy policy) {
     	SGMDArrayFile mdFile = this.getMDArrayFile();
-        NetcdfFileWriteable ncWrite = null;
+        NetcdfFileWriter ncWrite = null;
         try {
-            ncWrite = NetcdfFileWriteable.createNew(file.getAbsolutePath());
+            ncWrite = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
 
             // adds the global attributes
             List<SGAttribute> globalAttrList = mdFile.getAttributes();
@@ -1066,7 +1066,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
             	String name = gattr.getName();
             	List<Object> values = gattr.getValues();
             	Attribute attr = new Attribute(name, values);
-                ncWrite.addGlobalAttribute(gattr.getName(), attr.getValues());
+                ncWrite.addGroupAttribute(null, attr);
             }
 
             // adds groups
@@ -1119,9 +1119,9 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     @Override
     public boolean saveToDataSetNetCDFFile(final File file) {
     	SGMDArrayFile mdFile = this.getMDArrayFile();
-        NetcdfFileWriteable ncWrite = null;
+        NetcdfFileWriter ncWrite = null;
         try {
-            ncWrite = NetcdfFileWriteable.createNew(file.getAbsolutePath());
+            ncWrite = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
 
             // adds the global attributes
             List<SGAttribute> globalAttrList = mdFile.getAttributes();
@@ -1129,7 +1129,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
             	String name = gattr.getName();
             	List<Object> values = gattr.getValues();
             	Attribute attr = new Attribute(name, values);
-                ncWrite.addGlobalAttribute(gattr.getName(), attr.getValues());
+                ncWrite.addGroupAttribute(null, attr);
             }
 
             // adds groups
@@ -1179,11 +1179,10 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
         return true;
     }
 
-    void addGroup(NetcdfFileWriteable ncWrite, Group parent, MDArrayNode node) {
+    void addGroup(NetcdfFileWriter ncWrite, Group parent, MDArrayNode node) {
     	Group g = null;
     	if (node.name != null) {
-    		g = new Group(ncWrite, parent, node.name);
-    		ncWrite.addGroup(parent, g);
+    		g = ncWrite.addGroup(parent, node.name);
     	}
     	for (MDArrayNode c : node.childList) {
     		this.addGroup(ncWrite, g, c);
@@ -1238,7 +1237,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
      *           a netCDF file
      * @return true if succeeded
      */
-    protected abstract boolean addVariables(NetcdfFileWriteable ncWrite);
+    protected abstract boolean addVariables(NetcdfFileWriter ncWrite);
 
     /**
      * Writes data to a netCDF file.
@@ -1247,23 +1246,23 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
      *           a netCDF file
      * @return true if succeeded
      */
-    protected abstract boolean writeData(NetcdfFileWriteable ncWrite);
+    protected abstract boolean writeData(NetcdfFileWriter ncWrite);
 
 
-    protected void appendAttribute(NetcdfFileWriteable ncWrite, SGMDArrayVariable var,
+    protected void appendAttribute(NetcdfFileWriter ncWrite, SGMDArrayVariable var,
     		String ncVarName) {
 		List<SGAttribute> attrList = var.getAttributes();
 		for (SGAttribute attr : attrList) {
 			String name = attr.getName();
 			List<Object> values = attr.getValues();
-			ncWrite.addVariableAttribute(ncVarName, new Attribute(name, values));
+			ncWrite.addVariableAttribute(ncWrite.findVariable(ncVarName), new Attribute(name, values));
 		}
     }
 
 	protected static final String TIME_DIM_NAME = "time";
 
 	// add time dimensions
-    protected Dimension addTimeVariable(NetcdfFileWriteable ncWrite) {
+    protected Dimension addTimeVariable(NetcdfFileWriter ncWrite) {
 		int timeLen = -1;
 		SGMDArrayVariable[] vars = this.getAssignedVariables();
 		for (int ii = 0; ii < vars.length; ii++) {
@@ -1276,39 +1275,39 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 		}
 		Dimension timeDim = null;
 		if (timeLen != -1) {
-			timeDim = ncWrite.addDimension(TIME_DIM_NAME, timeLen);
+			timeDim = ncWrite.addDimension(null, TIME_DIM_NAME, timeLen);
 		}
 		return timeDim;
     }
 
-	protected boolean addSequentialIntegerNumberVariable(NetcdfFileWriteable ncWrite, Dimension dim, String name) {
+	protected boolean addSequentialIntegerNumberVariable(NetcdfFileWriter ncWrite, Dimension dim, String name) {
 		return this.addSequentialNumberVariable(ncWrite, dim, name, DataType.INT);
 	}
 
-	protected boolean addSequentialDoubleNumberVariable(NetcdfFileWriteable ncWrite, Dimension dim, String name) {
+	protected boolean addSequentialDoubleNumberVariable(NetcdfFileWriter ncWrite, Dimension dim, String name) {
 		return this.addSequentialNumberVariable(ncWrite, dim, name, DataType.DOUBLE);
 	}
 
-	private boolean addSequentialNumberVariable(NetcdfFileWriteable ncWrite, Dimension dim, String name,
+	private boolean addSequentialNumberVariable(NetcdfFileWriter ncWrite, Dimension dim, String name,
 			DataType dataType) {
 		List<Dimension> dimList = new ArrayList<Dimension>();
 		dimList.add(dim);
-		Variable ncVar = ncWrite.addVariable(name, dataType, dimList);
+		Variable ncVar = ncWrite.addVariable(null, name, dataType, dimList);
 		ncVar.addAttribute(SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 		return true;
 	}
 
-    protected boolean writeSequentialIntegerNumbers(NetcdfFileWriteable ncWrite, String varName,
+    protected boolean writeSequentialIntegerNumbers(NetcdfFileWriter ncWrite, String varName,
     		final int len) {
     	return this.writeSequentialNumbers(ncWrite, varName, len, DataType.INT);
     }
 
-    protected boolean writeSequentialDoubleNumbers(NetcdfFileWriteable ncWrite, String varName,
+    protected boolean writeSequentialDoubleNumbers(NetcdfFileWriter ncWrite, String varName,
     		final int len) {
     	return this.writeSequentialNumbers(ncWrite, varName, len, DataType.DOUBLE);
     }
 
-    private boolean writeSequentialNumbers(NetcdfFileWriteable ncWrite, String varName,
+    private boolean writeSequentialNumbers(NetcdfFileWriter ncWrite, String varName,
     		final int len, DataType dataType) {
 		Array valueArray = Array.factory(dataType, new int[] { len });
 		for (int ii = 0; ii < len; ii++) {
@@ -1320,11 +1319,11 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 		return true;
     }
 
-    protected boolean write1DDoubleArray(NetcdfFileWriteable ncWrite, String varName,
+    protected boolean write1DDoubleArray(NetcdfFileWriter ncWrite, String varName,
     		List<Dimension> ncDimList, Map<String, Integer> mdArrayIndexMap) {
     	SGMDArrayVariable mdVar = this.findVariable(varName);
     	Dimension ncDim = ncDimList.get(0);
-    	Integer dimension = mdArrayIndexMap.get(ncDim.getName());
+    	Integer dimension = mdArrayIndexMap.get(ncDim.getShortName());
     	final int len = ncDim.getLength();
     	ArrayDouble valueArray = new ArrayDouble.D1(len);
 		Index idx = valueArray.getIndex();
@@ -1338,13 +1337,13 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 		return true;
     }
 
-    protected boolean write2DDoubleArray(NetcdfFileWriteable ncWrite, String varName,
+    protected boolean write2DDoubleArray(NetcdfFileWriter ncWrite, String varName,
     		List<Dimension> ncDimList, Map<String, Integer> mdArrayIndexMap) {
     	SGMDArrayVariable mdVar = this.findVariable(varName);
     	Dimension ncDim1 = ncDimList.get(0);
     	Dimension ncDim2 = ncDimList.get(1);
-    	Integer dimension1 = mdArrayIndexMap.get(ncDim1.getName());
-    	Integer dimension2 = mdArrayIndexMap.get(ncDim2.getName());
+    	Integer dimension1 = mdArrayIndexMap.get(ncDim1.getShortName());
+    	Integer dimension2 = mdArrayIndexMap.get(ncDim2.getShortName());
     	final int len1 = ncDim1.getLength();
     	final int len2 = ncDim2.getLength();
     	ArrayDouble valueArray = new ArrayDouble.D2(len1, len2);
@@ -1364,15 +1363,15 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 		return true;
     }
 
-    protected boolean write3DDoubleArray(NetcdfFileWriteable ncWrite, String varName,
+    protected boolean write3DDoubleArray(NetcdfFileWriter ncWrite, String varName,
     		List<Dimension> ncDimList, Map<String, Integer> mdArrayIndexMap) {
     	SGMDArrayVariable mdVar = this.findVariable(varName);
     	Dimension ncDim1 = ncDimList.get(0);
     	Dimension ncDim2 = ncDimList.get(1);
     	Dimension ncDim3 = ncDimList.get(2);
-    	Integer dimension1 = mdArrayIndexMap.get(ncDim1.getName());
-    	Integer dimension2 = mdArrayIndexMap.get(ncDim2.getName());
-    	Integer dimension3 = mdArrayIndexMap.get(ncDim3.getName());
+    	Integer dimension1 = mdArrayIndexMap.get(ncDim1.getShortName());
+    	Integer dimension2 = mdArrayIndexMap.get(ncDim2.getShortName());
+    	Integer dimension3 = mdArrayIndexMap.get(ncDim3.getShortName());
     	final int len1 = ncDim1.getLength();
     	final int len2 = ncDim2.getLength();
     	final int len3 = ncDim3.getLength();
@@ -1396,10 +1395,10 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 		return true;
     }
 
-    protected boolean writeArray(NetcdfFileWriteable ncWrite, String varName,
+    protected boolean writeArray(NetcdfFileWriter ncWrite, String varName,
     		Array array) {
 		try {
-			ncWrite.write(varName, array);
+			ncWrite.write(ncWrite.findVariable(varName), array);
 		} catch (IOException e) {
 			return false;
 		} catch (InvalidRangeException e) {
@@ -1408,10 +1407,10 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     	return true;
     }
 
-    protected boolean writeStringArray(NetcdfFileWriteable ncWrite, String varName,
+    protected boolean writeStringArray(NetcdfFileWriter ncWrite, String varName,
     		Array array) {
 		try {
-			ncWrite.writeStringData(varName, array);
+			ncWrite.writeStringData(ncWrite.findVariable(varName), array);
 		} catch (IOException e) {
 			return false;
 		} catch (InvalidRangeException e) {
@@ -1436,7 +1435,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 		return retList;
     }
 
-	protected boolean addDoubleVariable(NetcdfFileWriteable ncWrite, List<Dimension> dimList,
+	protected boolean addDoubleVariable(NetcdfFileWriter ncWrite, List<Dimension> dimList,
 			String name) {
 		SGMDArrayVariable var = this.findVariable(name);
 
@@ -1447,12 +1446,11 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 
 		String dimString = SGDataUtility.getDimensionString(dimList);
 
-		Group group = ncWrite.findGroup(sbGroupName.toString());
-		Variable ncVar = new Variable(ncWrite, group, null, sbShortName.toString(),
-				DataType.DOUBLE, dimString);
+		Group group = ncWrite.getNetcdfFile().findGroup(sbGroupName.toString());
+		Variable ncVar = ncWrite.addVariable(group, sbShortName.toString(), DataType.DOUBLE, dimString);
 		ncVar.addAttribute(SGDataUtility.getValueTypeAttribute(
 				SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-		group.addVariable(ncVar);
+		// group.addVariable(ncVar); // already added by addVariable
 
 		// adds attributes
 		if (var != null) {
@@ -1462,7 +1460,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 		return true;
 	}
 
-	protected boolean addStringVariable(NetcdfFileWriteable ncWrite, List<Dimension> indexDimList,
+	protected boolean addStringVariable(NetcdfFileWriter ncWrite, List<Dimension> indexDimList,
 			String name, final int maxStrLen) {
 		List<Dimension> dimList = new ArrayList<Dimension>();
 		dimList.addAll(indexDimList);
@@ -1474,11 +1472,11 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 		StringBuffer sbGroupName = new StringBuffer();
 		this.getNames(name, sbShortName, sbGroupName);
 
-		Group group = ncWrite.findGroup(sbGroupName.toString());
-		Variable ncVar = ncWrite.addStringVariable(sbShortName.toString(), dimList, maxStrLen);
+		Group group = ncWrite.getNetcdfFile().findGroup(sbGroupName.toString());
+		Variable ncVar = ncWrite.addStringVariable(group, sbShortName.toString(), dimList, maxStrLen);
 		ncVar.addAttribute(SGDataUtility.getValueTypeAttribute(
 				SGIDataColumnTypeConstants.VALUE_TYPE_TEXT));
-		ncVar.setParentGroup(group);
+		// ncVar.setParentGroup(group); // already set in addStringVariable
 
 		// adds attributes
 		if (var != null) {
@@ -1513,8 +1511,8 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 		sbGroupName.append(groupName);
 	}
 
-	protected boolean writeTimeData(NetcdfFileWriteable ncWrite) {
-		Dimension timeDim = ncWrite.findDimension(TIME_DIM_NAME);
+	protected boolean writeTimeData(NetcdfFileWriter ncWrite) {
+		Dimension timeDim = ncWrite.getNetcdfFile().findDimension(TIME_DIM_NAME);
 		if (timeDim != null) {
 			if (!this.writeSequentialIntegerNumbers(ncWrite, TIME_DIM_NAME, timeDim.getLength())) {
 				return false;
@@ -1568,31 +1566,31 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
         		// writes data
         		HDF5DataClass dataClass = hdf5Var.getDataClass();
         		if (HDF5DataClass.FLOAT.equals(dataClass)) {
-    				MDDoubleArray array = reader.readDoubleMDArray(varName);
+    				MDDoubleArray array = reader.float64().readMDArray(varName);
     				
     				// set edited values
     				array = this.setEditedValues(writer, hdf5Var, array);
 
-    				writer.writeDoubleMDArray(varName, array);
+    				writer.float64().writeMDArray(varName, array);
         		} else if (HDF5DataClass.INTEGER.equals(dataClass)) {
-        			MDIntArray array = reader.readIntMDArray(varName);
-        			writer.writeIntMDArray(varName, array);
+        			MDIntArray array = reader.int32().readMDArray(varName);
+        			writer.int32().writeMDArray(varName, array);
         		} else if (HDF5DataClass.STRING.equals(dataClass)) {
-        			MDArray<String> array = reader.readStringMDArray(varName);
-        			writer.writeStringMDArray(varName, array);
+        			MDArray<String> array = reader.string().readMDArray(varName);
+        			writer.string().writeMDArray(varName, array);
         		} else {
         			return false;
         		}
 
         		// writes attributes of variables
-    			List<String> attrNameList = reader.getAttributeNames(varName);
+    			List<String> attrNameList = reader.object().getAttributeNames(varName);
     			if (!SGDataUtility.writeHDF5Attribute(writer, reader, varName, attrNameList)) {
     				return false;
     			}
     			
     			// writes global attributes
     			final String rootPath = "/";
-    			List<String> gAttrNameList = reader.getAttributeNames(rootPath);
+    			List<String> gAttrNameList = reader.object().getAttributeNames(rootPath);
     			if (!SGDataUtility.writeHDF5Attribute(writer, reader, rootPath, gAttrNameList)) {
     				return false;
     			}
@@ -1845,7 +1843,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     		}
     	}
     	MDArray<String> array = new MDArray<String>(flattenedArray, new int[] { dim0, dim1 });
-    	writer.writeStringMDArray(name, array);
+    	writer.string().writeMDArray(name, array);
     	return true;
     }
 

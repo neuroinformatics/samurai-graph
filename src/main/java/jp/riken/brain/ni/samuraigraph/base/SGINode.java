@@ -12,7 +12,7 @@ public interface SGINode {
      * 
      * @return a list of chid nodes
      */
-    public ArrayList getChildNodes();
+    public ArrayList<SGINode> getChildNodes();
 
     /**
      * Returns a name of the class.

@@ -64,7 +64,7 @@ public class SGNetCDFDataColumnInfo extends SGDataColumnInfo {
         	for (int ii = 0; ii < len; ii++) {
         		values[ii] = attr.getValue(ii);
         	}
-        	SGAttribute a = new SGAttribute(attr.getName(), values);
+        	SGAttribute a = new SGAttribute(attr.getShortName(), values);
         	this.mAttributeList.add(a);
         }
     }

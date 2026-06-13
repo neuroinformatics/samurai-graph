@@ -656,11 +656,11 @@ public class SGFigureElementString extends SGFigureElement2D implements
 
         final int x = e.getX();
         final int y = e.getY();
-        final int mod = e.getModifiers();
+        final int mod = e.getModifiersEx();
         final int cnt = e.getClickCount();
         final boolean onEdgeFlag = this.onEdge(x, y);
-        final boolean ctrl = (mod & InputEvent.CTRL_MASK) != 0;
-        final boolean shift = (mod & InputEvent.SHIFT_MASK) != 0;
+        final boolean ctrl = (mod & InputEvent.CTRL_DOWN_MASK) != 0;
+        final boolean shift = (mod & InputEvent.SHIFT_DOWN_MASK) != 0;
 
         List<SGIChildObject> list = this.getVisibleChildList();
         for (int ii = list.size() - 1; ii >= 0; ii--) {
@@ -2008,8 +2008,8 @@ public class SGFigureElementString extends SGFigureElement2D implements
          * @return
          *       a list of child nodes
          */
-        public ArrayList getChildNodes() {
-            return new ArrayList();
+        public ArrayList<SGINode> getChildNodes() {
+            return new ArrayList<SGINode>();
         }
 
         //

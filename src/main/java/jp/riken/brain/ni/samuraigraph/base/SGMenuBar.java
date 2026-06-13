@@ -46,7 +46,7 @@ public class SGMenuBar extends JMenuBar implements ActionListener,
         JMenuBar menuBar = this;
 
         final int shortcutmask = Toolkit.getDefaultToolkit()
-                .getMenuShortcutKeyMask();
+                .getMenuShortcutKeyMaskEx();
         // final int ctrl = ActionEvent.CTRL_MASK;
         final int shift = ActionEvent.SHIFT_MASK;
         final int alt = ActionEvent.ALT_MASK;

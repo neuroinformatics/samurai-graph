@@ -9,7 +9,7 @@ import javax.swing.JComboBox;
  * The original combo box class.
  * 
  */
-public class SGComboBox extends JComboBox {
+public class SGComboBox<E> extends JComboBox<E> {
 
     private static final long serialVersionUID = -1508926886575260391L;
 
@@ -18,12 +18,12 @@ public class SGComboBox extends JComboBox {
         this.init();
     }
 
-    public SGComboBox(ComboBoxModel aModel) {
+    public SGComboBox(ComboBoxModel<E> aModel) {
         super(aModel);
         this.init();
     }
 
-    public SGComboBox(Object[] items) {
+    public SGComboBox(E[] items) {
         super(items);
         this.init();
     }

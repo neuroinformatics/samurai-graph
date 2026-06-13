@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -42,6 +43,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataAxisInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIUndoable;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
@@ -807,9 +809,9 @@ public class SGFigureElementAxis extends SGFigureElement2D implements
             maxNew = max + margin;
 
             minNew = SGUtilityNumber.getNumberInRangeOrder(minNew, min, max,
-                    SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT, BigDecimal.ROUND_HALF_UP);
+                    SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
             maxNew = SGUtilityNumber.getNumberInRangeOrder(maxNew, min, max,
-                    SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT, BigDecimal.ROUND_HALF_UP);
+                    SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
         }
 
         SGValueRange range = new SGValueRange(minNew, maxNew);
@@ -1254,7 +1256,7 @@ public class SGFigureElementAxis extends SGFigureElement2D implements
 
         Rectangle2D gRect = this.getGraphRect();
 
-        ArrayList rectList = new ArrayList();
+        ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
         rectList.add(gRect);
 
         if (rectAllTop != null) {
@@ -1807,8 +1809,8 @@ public class SGFigureElementAxis extends SGFigureElement2D implements
      * 
      * @return a list of child nodes
      */
-    public ArrayList getChildNodes() {
-        return new ArrayList();
+    public ArrayList<SGINode> getChildNodes() {
+        return new ArrayList<SGINode>();
     }
 
     /**
@@ -2612,8 +2614,9 @@ public class SGFigureElementAxis extends SGFigureElement2D implements
     }
 
     
-    protected ArrayList getUndoableChildList() {
-        ArrayList uList = new ArrayList();
+    @Override
+    protected List<SGIUndoable> getUndoableChildList() {
+        ArrayList<SGIUndoable> uList = new ArrayList<SGIUndoable>();
         if (this.isColorBarAvailable()) {
             uList.add(this.mZAxisElementsGroup);
         }

@@ -1500,7 +1500,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
 
         mTickLabelExponentSpinner.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         mTickLabelExponentSpinner.setPreferredSize(new java.awt.Dimension(40, 20));
-        mTickLabelExponentSpinner.setValue(new Integer(0));
+        mTickLabelExponentSpinner.setValue(Integer.valueOf(0));
         mTickLabelExponentSpinner.setVerifyInputWhenFocusTarget(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;

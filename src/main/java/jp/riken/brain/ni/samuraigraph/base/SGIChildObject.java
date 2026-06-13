@@ -4,7 +4,7 @@ package jp.riken.brain.ni.samuraigraph.base;
  * The child object of a figure element.
  *
  */
-public interface SGIChildObject extends SGIVisible {
+public interface SGIChildObject extends SGIVisible, SGINode {
     
     /**
      * Returns the ID.

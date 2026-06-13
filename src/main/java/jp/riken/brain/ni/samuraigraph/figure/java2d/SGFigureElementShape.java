@@ -33,6 +33,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGGradationPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGIAnchored;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
+import jp.riken.brain.ni.samuraigraph.base.SGINode;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopiable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
@@ -1145,9 +1146,9 @@ public class SGFigureElementShape extends SGFigureElement2D implements
      * 
      * @return a list of chid nodes
      */
-    public ArrayList getChildNodes() {
-        final ArrayList list = new ArrayList();
-        final ArrayList aList = new ArrayList(this.mChildList);
+    public ArrayList<SGINode> getChildNodes() {
+        final ArrayList<SGINode> list = new ArrayList<SGINode>();
+        final ArrayList<SGIChildObject> aList = new ArrayList<>(this.mChildList);
         for (int ii = 0; ii < aList.size(); ii++) {
             final ShapeObject el = (ShapeObject) aList.get(ii);
             if (el.isVisible()) {
@@ -2253,6 +2254,21 @@ public class SGFigureElementShape extends SGFigureElement2D implements
             		mAxisElement.getLocationName(this.getYAxis()));
 			return map;
 		}
+
+        @Override
+        public ArrayList<SGINode> getChildNodes() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public String getClassDescription() {
+            return this.mElement != null ? this.mElement.getClassDescription() : "Shape";
+        }
+
+        @Override
+        public String getInstanceDescription() {
+            return this.mElement != null ? this.mElement.getInstanceDescription() : "Shape";
+        }
     }
 
     /**
@@ -2849,8 +2865,8 @@ public class SGFigureElementShape extends SGFigureElement2D implements
         /**
          * 
          */
-        public ArrayList getChildNodes() {
-            return new ArrayList();
+        public ArrayList<SGINode> getChildNodes() {
+            return new ArrayList<SGINode>();
         }
 
         /**
@@ -4458,8 +4474,8 @@ public class SGFigureElementShape extends SGFigureElement2D implements
         /**
          * 
          */
-        public ArrayList getChildNodes() {
-            return new ArrayList();
+        public ArrayList<SGINode> getChildNodes() {
+            return new ArrayList<SGINode>();
         }
 
         /**

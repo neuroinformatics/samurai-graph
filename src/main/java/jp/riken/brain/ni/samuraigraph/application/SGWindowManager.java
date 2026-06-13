@@ -132,21 +132,18 @@ class SGWindowManager implements ActionListener, DropTargetListener,
         String[] array;
         if (pattern != null) {
             // tokenize a string
-            ArrayList tokenList = new ArrayList();
+            List<Token> tokenList = new ArrayList<>();
             // pattern is not read from data file.
             if (SGUtilityText.tokenize(pattern, tokenList, false)) {
-                ArrayList keyList = new ArrayList();
+                List<String> keyList = new ArrayList<>();
                 for (int ii = 0; ii < tokenList.size(); ii++) {
-                    Token token = (Token) tokenList.get(ii);
+                    Token token = tokenList.get(ii);
                     if (token != null) {
                         keyList.add(token.getString());
                     }
                 }
 
-                array = new String[keyList.size()];
-                for (int ii = 0; ii < keyList.size(); ii++) {
-                    array[ii] = (String) keyList.get(ii);
-                }
+                array = keyList.toArray(new String[0]);
             } else {
                 array = SGIRootObjectConstants.TOOLBAR_MENUCMD_ARRAY;
             }

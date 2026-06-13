@@ -1,6 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -338,7 +339,7 @@ public class SGUtilityNumber implements SGIConstants {
         final int order = SGUtilityNumber.getOrder(num) - digit + 1;
         BigDecimal bd = new BigDecimal(value);
         bd = bd.movePointLeft(order);
-        bd = bd.setScale(0, mode);
+        bd = bd.setScale(0, RoundingMode.valueOf(mode));
         bd = bd.movePointRight(order);
         return bd.doubleValue();
     }
@@ -799,7 +800,7 @@ public class SGUtilityNumber implements SGIConstants {
     }
 
     public static double getNumberInRangeOrder(final double value, final SGAxis axis) {
-        return getNumberInRangeOrder(value, axis, BigDecimal.ROUND_HALF_UP);
+        return getNumberInRangeOrder(value, axis, RoundingMode.HALF_UP.ordinal());
     }
 
     public static double getNumberInRangeOrder(final double value, final double[] values,
@@ -807,11 +808,11 @@ public class SGUtilityNumber implements SGIConstants {
     	final double min = SGUtilityNumber.min(values);
     	final double max = SGUtilityNumber.max(values);
         return SGUtilityNumber.getNumberInRangeOrder(value, min, max,
-        		digit, BigDecimal.ROUND_HALF_UP);
+        		digit, RoundingMode.HALF_UP.ordinal());
     }
 
     public static double getNumberInNumberOrder(final double value, final double ref) {
-        return getNumberInNumberOrder(value, ref, SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT, BigDecimal.ROUND_HALF_UP);
+        return getNumberInNumberOrder(value, ref, SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
     }
 
     /**

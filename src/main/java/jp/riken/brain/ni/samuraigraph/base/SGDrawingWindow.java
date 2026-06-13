@@ -139,7 +139,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     /**
      * The list of properties of copied data objects.
      */
-    private List<Map<Class, SGProperties>> mCopiedDataPropertiesMapList = new ArrayList<Map<Class, SGProperties>>();
+    private List<Map<Class<? extends SGIFigureElement>, SGProperties>> mCopiedDataPropertiesMapList = new ArrayList<Map<Class<? extends SGIFigureElement>, SGProperties>>();
 
     /**
      * The background image.
@@ -181,7 +181,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 		    data.dispose();
 		}
 		for (int ii = 0; ii < this.mCopiedDataPropertiesMapList.size(); ii++) {
-		    Map map = (Map) this.mCopiedDataPropertiesMapList.get(ii);
+		    Map<Class<? extends SGIFigureElement>, SGProperties> map = this.mCopiedDataPropertiesMapList.get(ii);
 		    map.clear();
 		}
 		for (int ii = 0; ii < this.mCopiedObjectsList.size(); ii++) {
@@ -648,9 +648,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      * @return figure with given ID. null if not found.
      */
     public SGFigure getFigure(final int id) {
-        List list = this.getVisibleFigureList();
+        List<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure f = (SGFigure) list.get(ii);
+            SGFigure f = list.get(ii);
             if (f.getID() == id) {
                 return f;
             }
@@ -928,8 +928,8 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      *
      * @return a list of child nodes
      */
-    public ArrayList getChildNodes() {
-        return this.getVisibleFigureList();
+    public ArrayList<SGINode> getChildNodes() {
+        return new ArrayList<SGINode>(this.getVisibleFigureList());
     }
 
     /**
@@ -1372,9 +1372,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         this.updateClientRect();
 
         // resize the figures
-        ArrayList list = this.getVisibleFigureList();
+        ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             figure.recordFigureRect();
             figure.setViewBounds();
         }
@@ -1531,9 +1531,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         }
 
         ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
-        ArrayList fList = this.getVisibleFigureList();
+        ArrayList<SGFigure> fList = this.getVisibleFigureList();
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure figure = (SGFigure) fList.get(ii);
+            SGFigure figure = fList.get(ii);
             rectList.add(figure.getBoundingBox());
         }
         Rectangle2D bbRect = SGUtility.createUnion(rectList);
@@ -1980,9 +1980,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      * @param f
      */
     void clearFocusedFiguresOtherThan(SGFigure f) {
-        ArrayList list = this.getVisibleFigureList();
+        ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            final SGFigure figure = (SGFigure) list.get(ii);
+            final SGFigure figure = list.get(ii);
             if (!figure.equals(f)) {
                 figure.setSelected(false);
             }
@@ -2092,15 +2092,15 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     /**
      *
      */
-    private ArrayList mActionListenerList = new ArrayList();
+    private List<ActionListener> mActionListenerList = new ArrayList<>();
 
     /**
      *
      */
     public void addActionListener(final ActionListener listener) {
-        ArrayList list = this.mActionListenerList;
+        List<ActionListener> list = this.mActionListenerList;
         for (int ii = 0; ii < list.size(); ii++) {
-            final ActionListener el = (ActionListener) list.get(ii);
+            final ActionListener el = list.get(ii);
             if (el.equals(listener)) {
                 return;
             }
@@ -2112,9 +2112,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      *
      */
     public void removeActionListener(ActionListener listener) {
-        ArrayList list = this.mActionListenerList;
+        List<ActionListener> list = this.mActionListenerList;
         for (int ii = list.size() - 1; ii >= 0; ii--) {
-            final ActionListener el = (ActionListener) list.get(ii);
+            final ActionListener el = list.get(ii);
             if (el.equals(listener)) {
                 this.mActionListenerList.remove(listener);
             }
@@ -2125,9 +2125,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      *
      */
     public void notifyToListener(final String command) {
-        ArrayList list = this.mActionListenerList;
+        List<ActionListener> list = this.mActionListenerList;
         for (int ii = 0; ii < list.size(); ii++) {
-            final ActionListener el = (ActionListener) list.get(ii);
+            final ActionListener el = list.get(ii);
             el.actionPerformed(this.getActionEvent(command));
         }
     }
@@ -2143,9 +2143,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      *
      */
     public void notifyToListener(final String command, final Object source) {
-        ArrayList list = this.mActionListenerList;
+        List<ActionListener> list = this.mActionListenerList;
         for (int ii = 0; ii < list.size(); ii++) {
-            final ActionListener el = (ActionListener) list.get(ii);
+            final ActionListener el = list.get(ii);
             el.actionPerformed(new ActionEvent(source, 0, command));
         }
     }
@@ -2167,7 +2167,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         this.mMenuBar.setInsertToggleItemsUnSelected();
         this.mToolBar.setInsertToggleItemsUnSelected();
 
-        Map map = this.mInsertFlagMap;
+        Map<String, Boolean> map = this.mInsertFlagMap;
         Boolean b = Boolean.FALSE;
 
         String[] cmdArray = INSERT_MENUBARCMD_ARRAY;
@@ -2179,7 +2179,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     }
 
     private void initInsertFlagMap() {
-        Map map = new HashMap();
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
         Boolean b = Boolean.FALSE;
 
         String[] cmdArray = INSERT_MENUBARCMD_ARRAY;
@@ -2190,17 +2190,17 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         this.mInsertFlagMap = map;
     }
 
-    private Map mInsertFlagMap;
+    private Map<String, Boolean> mInsertFlagMap;
 
     /**
      *
      * @return
      */
     public boolean isInsertFlagSelected() {
-        Map map = this.mInsertFlagMap;
-        Iterator itr = map.values().iterator();
+        Map<String, Boolean> map = this.mInsertFlagMap;
+        Iterator<Boolean> itr = map.values().iterator();
         while (itr.hasNext()) {
-            Boolean b = (Boolean) itr.next();
+            Boolean b = itr.next();
             if (b.booleanValue()) {
                 return true;
             }
@@ -2308,7 +2308,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      *            a list of property map
      */
     public void pasteToFigures(List<SGICopiable> list, List<SGData> dataList,
-            List<String> nameList, List<Map<Class, SGProperties>> propertiesMapList) {
+            List<String> nameList, List<Map<Class<? extends SGIFigureElement>, SGProperties>> propertiesMapList) {
 
     	List<SGFigure> fList = this.getFocusedFigureList();
         if (fList.size() == 0) {
@@ -2320,9 +2320,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
             SGFigure figure = fList.get(ii);
             figure.paste(list);
             for (int jj = 0; jj < nameList.size(); jj++) {
-                SGData data = (SGData) dataList.get(jj);
-                String name = (String) nameList.get(jj);
-                Map map = (Map) propertiesMapList.get(jj);
+                SGData data = dataList.get(jj);
+                String name = nameList.get(jj);
+                Map<Class<? extends SGIFigureElement>, SGProperties> map = propertiesMapList.get(jj);
                 SGData dataNew = (SGData) data.copy();
                 if (figure.addData(dataNew, name, map) == false) {
                     throw new Error("Failed to add data.");
@@ -2352,9 +2352,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      */
     protected void updateFocusedObjectItem() {
         boolean eff = false;
-        ArrayList list = this.getVisibleFigureList();
+        ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             if (figure.isSelected()) {
                 eff = true;
                 break;
@@ -2766,10 +2766,10 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      */
     private boolean moveFocusedObjects(final boolean toFront) {
 
-        ArrayList fList = this.getVisibleFigureList();
+        ArrayList<SGFigure> fList = this.getVisibleFigureList();
         boolean changed = false;
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure figure = (SGFigure) fList.get(ii);
+            SGFigure figure = fList.get(ii);
             if (figure.moveFocusedObjects(toFront) == false) {
                 return false;
             }
@@ -2788,16 +2788,20 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         // move focused objects
         if (toFront) {
             for (int ii = 0; ii < list.size(); ii++) {
-                Object obj = list.get(ii);
-                if (SGUtility.moveObjectTo(obj, objList, objList.size() - 1) == false) {
-                    return false;
+                SGISelectable obj = list.get(ii);
+                if (obj instanceof SGFigure) {
+                    if (SGUtility.moveObjectTo((SGFigure) obj, objList, objList.size() - 1) == false) {
+                        return false;
+                    }
                 }
             }
         } else {
             for (int ii = list.size() - 1; ii >= 0; ii--) {
-                Object obj = list.get(ii);
-                if (SGUtility.moveObjectTo(obj, objList, 0) == false) {
-                    return false;
+                SGISelectable obj = list.get(ii);
+                if (obj instanceof SGFigure) {
+                    if (SGUtility.moveObjectTo((SGFigure) obj, objList, 0) == false) {
+                        return false;
+                    }
                 }
             }
         }
@@ -2843,10 +2847,10 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      */
     private boolean moveFocusedObjects(final int num) {
 
-        ArrayList fList = this.getVisibleFigureList();
+        ArrayList<SGFigure> fList = this.getVisibleFigureList();
         boolean changed = false;
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure figure = (SGFigure) fList.get(ii);
+            SGFigure figure = fList.get(ii);
             if (figure.moveFocusedObjects(num) == false) {
                 return false;
             }
@@ -2863,7 +2867,13 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
         // record the list before edited
         List<SGFigure> objListOld = new ArrayList<SGFigure>(objList);
-        if (SGUtility.moveObject(list, objList, num) == false) {
+        List<SGFigure> movedFigures = new ArrayList<>();
+        for (SGISelectable s : list) {
+            if (s instanceof SGFigure) {
+                movedFigures.add((SGFigure) s);
+            }
+        }
+        if (SGUtility.moveObject(movedFigures, objList, num) == false) {
             return false;
         }
 
@@ -2901,8 +2911,8 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
             return false;
         }
 
-        List objList = this.mFigureList;
-        List objListOld = new ArrayList<SGFigure>(objList);
+        List<SGFigure> objList = this.mFigureList;
+        List<SGFigure> objListOld = new ArrayList<SGFigure>(objList);
 
         // move focused objects
         if (toFront) {
@@ -3080,11 +3090,11 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
     // Duplicate the focused objects.
     void duplicateFocusedObjects() {
-        ArrayList list = this.getVisibleFigureList();
+        ArrayList<SGFigure> list = this.getVisibleFigureList();
 
         // duplicate child object of all figures
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             if (figure.duplicateFocusedObjects() == false) {
                 return;
             }
@@ -3106,7 +3116,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         // set focused the duplicated figures
         List<SGFigure> listNew = this.getVisibleFigureList();
         for (int ii = 0; ii < listNew.size(); ii++) {
-            SGFigure figure = (SGFigure) listNew.get(ii);
+            SGFigure figure = listNew.get(ii);
             if (list.contains(figure) == false) {
                 this.setFocusedFigure(figure, true);
             }
@@ -3202,10 +3212,10 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         List<SGICopiable> copiedObjList = new ArrayList<SGICopiable>();
         List<SGData> dataList = new ArrayList<SGData>();
         List<String> dataNameList = new ArrayList<String>();
-        List<Map<Class, SGProperties>> propertiesMapList = new ArrayList<Map<Class, SGProperties>>();
+        List<Map<Class<? extends SGIFigureElement>, SGProperties>> propertiesMapList = new ArrayList<Map<Class<? extends SGIFigureElement>, SGProperties>>();
         if (isCopy) {
             for (int ii = 0; ii < fList.size(); ii++) {
-                SGFigure figure = (SGFigure) fList.get(ii);
+                SGFigure figure = fList.get(ii);
 
                 // copied objects such as labels and symbols
                 copiedObjList.addAll(figure.createCopiedObjects());
@@ -3216,7 +3226,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
             }
         } else {
             for (int ii = 0; ii < fList.size(); ii++) {
-                SGFigure figure = (SGFigure) fList.get(ii);
+                SGFigure figure = fList.get(ii);
 
                 // copied objects such as labels and symbols
                 copiedObjList.addAll(figure.cutFocusedObjects());
@@ -3280,11 +3290,11 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      * @return
      *       a list of properties of copied data objects
      */
-    public List<Map<Class, SGProperties>> getCopiedDataPropertiesMapList() {
-        List<Map<Class, SGProperties>> list = new ArrayList<Map<Class, SGProperties>>();
+    public List<Map<Class<? extends SGIFigureElement>, SGProperties>> getCopiedDataPropertiesMapList() {
+        List<Map<Class<? extends SGIFigureElement>, SGProperties>> list = new ArrayList<Map<Class<? extends SGIFigureElement>, SGProperties>>();
         for (int ii = 0; ii < this.mCopiedDataPropertiesMapList.size(); ii++) {
-        	Map<Class, SGProperties> map = this.mCopiedDataPropertiesMapList.get(ii);
-            list.add(new HashMap<Class, SGProperties>(map));
+        	Map<Class<? extends SGIFigureElement>, SGProperties> map = this.mCopiedDataPropertiesMapList.get(ii);
+            list.add(new HashMap<Class<? extends SGIFigureElement>, SGProperties>(map));
         }
         return list;
     }
@@ -3328,7 +3338,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     /**
      * The target object to paste the copied objects.
      */
-    private ArrayList mPasteTargetList = new ArrayList();
+    private final List<SGISelectable> mPasteTargetList = new ArrayList<>();
 
     // /**
     // *
@@ -3352,7 +3362,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     void doInserNetCDFLabel() {
         List<SGFigure> fList = this.getVisibleFigureList();
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure f = (SGFigure) fList.get(ii);
+            SGFigure f = fList.get(ii);
             f.insertNetCDFLabel();
         }
         this.repaintContentPane();
@@ -3367,7 +3377,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         List<SGFigure> fList = this.getFocusedFigureList();
         for (int dir : axisDirections) {
             for (int ii = 0; ii < fList.size(); ii++) {
-                SGFigure f = (SGFigure) fList.get(ii);
+                SGFigure f = fList.get(ii);
                 f.fitAxisRangeToVisibleData(dir, forAnimationFrames);
                 if (f.isChangedRoot()) {
                     changed = true;
@@ -3387,7 +3397,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         boolean changed = false;
         List<SGFigure> fList = this.getFocusedFigureList();
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure f = (SGFigure) fList.get(ii);
+            SGFigure f = fList.get(ii);
             f.alignVisibleBars();
             if (f.isChangedRoot()) {
                 changed = true;
@@ -3576,7 +3586,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
     private void createTree(final SGINode node, final StringBuffer sb,
             final int depth) {
-        final ArrayList childList = node.getChildNodes();
+        final ArrayList<SGINode> childList = node.getChildNodes();
         final String cText = node.getClassDescription();
         final String iText = node.getInstanceDescription();
         final boolean pFlag = (node instanceof SGIPropertyDialogObserver);
@@ -3590,7 +3600,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
                 // add child
                 for (int ii = 0; ii < childList.size(); ii++) {
-                    SGINode child = (SGINode) childList.get(ii);
+                    SGINode child = childList.get(ii);
                     this.createTree(child, sb, d);
                 }
             }
@@ -3707,9 +3717,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      */
     public boolean alignFigures() {
         // record the location
-        ArrayList list = this.getVisibleFigureList();
+        ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             figure.recordFigureRect();
         }
         this.recordPaperRect();
@@ -3721,7 +3731,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
         //
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             if (figure.isFigureMoved()) {
                 figure.setChanged(true);
             }
@@ -3788,11 +3798,11 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         // Rectangle pRect = this.getPaperRect().getBounds();
         Rectangle2D cRect = this.getClientRect();
 
-        ArrayList list = this.getVisibleFigureList();
+        ArrayList<SGFigure> list = this.getVisibleFigureList();
         if (list.size() != 0) {
             // update the temporary rectangles
             for (int ii = 0; ii < list.size(); ii++) {
-                SGFigure figure = (SGFigure) list.get(ii);
+                SGFigure figure = list.get(ii);
                 figure.recordFigureRect();
             }
             this.recordPaperRect();
@@ -3800,7 +3810,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
             // align figures
             Rectangle2D bbRect = this.getBoundingBoxOfFigures(list);
             for (int ii = 0; ii < list.size(); ii++) {
-                SGFigure figure = (SGFigure) list.get(ii);
+                SGFigure figure = list.get(ii);
                 float x = BOUNDING_BOX_MARGIN
                         + (float) (cRect.getX() + figure.getGraphRectX() - bbRect
                                 .getX());
@@ -3900,9 +3910,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         if (this.isChanged()) {
             changed = true;
         } else {
-            ArrayList list = this.getVisibleFigureList();
+            ArrayList<SGFigure> list = this.getVisibleFigureList();
             for (int ii = 0; ii < list.size(); ii++) {
-                SGFigure f = (SGFigure) list.get(ii);
+                SGFigure f = list.get(ii);
                 if (f.isChanged()) {
                     changed = true;
                     break;
@@ -3941,12 +3951,15 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     /**
      *
      */
-    protected Set getAvailableChildSet() {
-        Set set = new HashSet();
-        List mList = this.mUndoManager.getMementoList();
+    protected Set<SGFigure> getAvailableChildSet() {
+        Set<SGFigure> set = new HashSet<SGFigure>();
+        List<SGProperties> mList = this.mUndoManager.getMementoList();
         for (int ii = 0; ii < mList.size(); ii++) {
-            WindowProperties p = (WindowProperties) mList.get(ii);
-            set.addAll(p.mVisibleFigureList);
+            SGProperties p = mList.get(ii);
+            if (p instanceof WindowProperties) {
+                WindowProperties wp = (WindowProperties) p;
+                set.addAll(wp.mVisibleFigureList);
+            }
         }
 
         return set;
@@ -3960,7 +3973,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
         // figures
         for (int ii = 0; ii < this.mFigureList.size(); ii++) {
-            SGFigure f = (SGFigure) this.mFigureList.get(ii);
+            SGFigure f = this.mFigureList.get(ii);
             f.initUndoBuffer();
         }
 
@@ -4005,9 +4018,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      */
     public void clearChanged() {
         this.setChanged(false);
-        List fList = this.getVisibleFigureList();
+        List<SGFigure> fList = this.getVisibleFigureList();
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure f = (SGFigure) fList.get(ii);
+            SGFigure f = fList.get(ii);
             f.clearChanged();
         }
     }
@@ -4332,7 +4345,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     /**
      *
      */
-    protected boolean setVisibleFigure(final List list) {
+    protected boolean setVisibleFigure(final List<SGFigure> list) {
         return SGUtility.setVisibleList(this.mFigureList, list);
     }
 
@@ -4503,7 +4516,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
                     flag = false;
                     break;
                 }
-                figureArray[ny][nx] = (SGFigure) list.get(index);
+                figureArray[ny][nx] = list.get(index);
             }
             if (!flag) {
                 break;
@@ -4516,7 +4529,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     /**
      * Returns a two dimensional array of figure list.
      */
-    private ArrayList[][] getFigureListArray() {
+    private ArrayList<SGFigure>[][] getFigureListArray() {
         // get the visible figure list
         ArrayList<SGFigure> figureList = this.getVisibleFigureList();
         if (figureList.size() == 0) {
@@ -4527,7 +4540,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         float minWidth = Float.MAX_VALUE;
         float minHeight = Float.MAX_VALUE;
         for (int ii = 0; ii < figureList.size(); ii++) {
-            SGFigure figure = (SGFigure) figureList.get(ii);
+            SGFigure figure = figureList.get(ii);
             Rectangle2D rect = figure.getGraphRect();
             if (rect.getWidth() < minWidth) {
                 minWidth = (float) rect.getWidth();
@@ -4545,21 +4558,22 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         final int numY = (int) ((float) bbRect.getHeight() / dy) + 1;
 
         // get a two-dimensional array of figures
-        ArrayList[][] fListArray = new ArrayList[numX][numY];
+        @SuppressWarnings("unchecked")
+        ArrayList<SGFigure>[][] fListArray = new ArrayList[numX][numY];
         for (int ii = 0; ii < numX; ii++) {
             for (int jj = 0; jj < numY; jj++) {
-                fListArray[ii][jj] = new ArrayList();
+                fListArray[ii][jj] = new ArrayList<SGFigure>();
             }
         }
         for (int ii = 0; ii < figureList.size(); ii++) {
-            SGFigure figure = (SGFigure) figureList.get(ii);
+            SGFigure figure = figureList.get(ii);
             Rectangle2D gRect = figure.getGraphRect();
             int nx = (int) ((gRect.getCenterX() - bbRect.getX()) / dx);
             int ny = (int) ((gRect.getCenterY() - bbRect.getY()) / dy);
             fListArray[nx][ny].add(figure);
         }
 
-        ArrayList numListX = new ArrayList();
+        ArrayList<Integer> numListX = new ArrayList<Integer>();
         for (int nx = 0; nx < numX; nx++) {
             boolean flag = false;
             for (int ny = 0; ny < numY; ny++) {
@@ -4573,7 +4587,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
             }
         }
 
-        ArrayList numListY = new ArrayList();
+        ArrayList<Integer> numListY = new ArrayList<Integer>();
         for (int ny = 0; ny < numY; ny++) {
             boolean flag = false;
             for (int nx = 0; nx < numX; nx++) {
@@ -4590,7 +4604,8 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         final int sx = numListX.size();
         final int sy = numListY.size();
 
-        ArrayList[][] figureListArray = new ArrayList[sx][sy];
+        @SuppressWarnings("unchecked")
+        ArrayList<SGFigure>[][] figureListArray = new ArrayList[sx][sy];
         for (int ii = 0; ii < sx; ii++) {
             final int nx = ((Integer) numListX.get(ii)).intValue();
             for (int jj = 0; jj < sy; jj++) {
@@ -4606,7 +4621,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      *
      * @return
      */
-    private boolean alignFiguresLeftAndBottom(ArrayList[][] figureListArray) {
+    private boolean alignFiguresLeftAndBottom(ArrayList<SGFigure>[][] figureListArray) {
         final int sx = figureListArray.length;
         final int sy = figureListArray[0].length;
 
@@ -4617,13 +4632,13 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         final float[][] rightArray = new float[sx][sy];
         for (int ii = 0; ii < sx; ii++) {
             for (int jj = 0; jj < sy; jj++) {
-                ArrayList list = figureListArray[ii][jj];
+                ArrayList<SGFigure> list = figureListArray[ii][jj];
                 float maxTop = 0.0f;
                 float maxBottom = 0.0f;
                 float maxLeft = 0.0f;
                 float maxRight = 0.0f;
                 for (int kk = 0; kk < list.size(); kk++) {
-                    SGFigure figure = (SGFigure) list.get(kk);
+                    SGFigure figure = list.get(kk);
                     Rectangle2D rect = figure.getGraphRect();
                     final float width = (float) rect.getWidth();
                     final float height = (float) rect.getHeight();
@@ -4744,9 +4759,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         boolean flag = true;
         for (int ny = 0; ny < sy; ny++) {
             for (int nx = 0; nx < sx; nx++) {
-                ArrayList list = figureListArray[nx][ny];
+                ArrayList<SGFigure> list = figureListArray[nx][ny];
                 for (int ii = 0; ii < list.size(); ii++) {
-                    SGFigure figure = (SGFigure) list.get(ii);
+                    SGFigure figure = list.get(ii);
                     if (figure == null) {
                         flag = false;
                         break;
@@ -4791,7 +4806,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      */
     public boolean alignFiguresByGraphArea() {
         // get the visible figure list
-        ArrayList figureList = this.getVisibleFigureList();
+        ArrayList<SGFigure> figureList = this.getVisibleFigureList();
         if (figureList.size() == 0) {
             return true;
         }
@@ -4802,7 +4817,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         float minWidth = Float.MAX_VALUE;
         float minHeight = Float.MAX_VALUE;
         for (int ii = 0; ii < figureList.size(); ii++) {
-            SGFigure figure = (SGFigure) figureList.get(ii);
+            SGFigure figure = figureList.get(ii);
             Rectangle2D rect = figure.getGraphRect();
             if (rect.getWidth() < minWidth) {
                 minWidth = (float) rect.getWidth();
@@ -4823,14 +4838,15 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         final int numY = (int) ((float) bbRect.getHeight() / dy) + 1;
 
         // get a two-dimensional array of figures
-        ArrayList[][] fListArray = new ArrayList[numX][numY];
+        @SuppressWarnings("unchecked")
+        ArrayList<SGFigure>[][] fListArray = new ArrayList[numX][numY];
         for (int ii = 0; ii < numX; ii++) {
             for (int jj = 0; jj < numY; jj++) {
-                fListArray[ii][jj] = new ArrayList();
+                fListArray[ii][jj] = new ArrayList<SGFigure>();
             }
         }
         for (int ii = 0; ii < figureList.size(); ii++) {
-            SGFigure figure = (SGFigure) figureList.get(ii);
+            SGFigure figure = figureList.get(ii);
             Rectangle2D gRect = figure.getGraphRect();
 
             // int nx = (int)( ( gRect.getCenterX() - cRect.getX() )/dx );
@@ -4842,7 +4858,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
             fListArray[nx][ny].add(figure);
         }
 
-        ArrayList numListX = new ArrayList();
+        ArrayList<Integer> numListX = new ArrayList<Integer>();
         for (int nx = 0; nx < numX; nx++) {
             boolean flag = false;
             for (int ny = 0; ny < numY; ny++) {
@@ -4856,7 +4872,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
             }
         }
 
-        ArrayList numListY = new ArrayList();
+        ArrayList<Integer> numListY = new ArrayList<Integer>();
         for (int ny = 0; ny < numY; ny++) {
             boolean flag = false;
             for (int nx = 0; nx < numX; nx++) {
@@ -4873,7 +4889,8 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         final int sx = numListX.size();
         final int sy = numListY.size();
 
-        ArrayList[][] figureListArray = new ArrayList[sx][sy];
+        @SuppressWarnings("unchecked")
+        ArrayList<SGFigure>[][] figureListArray = new ArrayList[sx][sy];
         for (int ii = 0; ii < sx; ii++) {
             final int nx = ((Integer) numListX.get(ii)).intValue();
             for (int jj = 0; jj < sy; jj++) {
@@ -4893,13 +4910,13 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
                     continue;
                 }
 
-                ArrayList list = figureListArray[ii][jj];
+                ArrayList<SGFigure> list = figureListArray[ii][jj];
                 float maxTop = 0.0f;
                 float maxBottom = 0.0f;
                 float maxLeft = 0.0f;
                 float maxRight = 0.0f;
                 for (int kk = 0; kk < list.size(); kk++) {
-                    SGFigure figure = (SGFigure) list.get(kk);
+                    SGFigure figure = list.get(kk);
                     Rectangle2D rect = figure.getGraphRect();
                     SGTuple2f tb = new SGTuple2f();
                     SGTuple2f lr = new SGTuple2f();
@@ -4995,9 +5012,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         boolean flag = true;
         for (int ny = 0; ny < sy; ny++) {
             for (int nx = 0; nx < sx; nx++) {
-                ArrayList list = figureListArray[nx][ny];
+                ArrayList<SGFigure> list = figureListArray[nx][ny];
                 for (int ii = 0; ii < list.size(); ii++) {
-                    SGFigure figure = (SGFigure) list.get(ii);
+                    SGFigure figure = list.get(ii);
                     if (figure == null) {
                         flag = false;
                         break;
@@ -5050,13 +5067,13 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     private boolean alignFiguresByGraphAreaNew() {
 
         // get the visible figure list
-        ArrayList figureList = this.getVisibleFigureList();
+        ArrayList<SGFigure> figureList = this.getVisibleFigureList();
         if (figureList.size() == 0) {
             return true;
         }
 
         // get a two-dimensional array of the list of figures
-        ArrayList[][] figureListArray = this.getFigureListArray();
+        ArrayList<SGFigure>[][] figureListArray = this.getFigureListArray();
         if (figureListArray == null) {
             return false;
         }
@@ -5341,9 +5358,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     }
 
     boolean updateGraphRectOfAllFigures() {
-        ArrayList list = this.getVisibleFigureList();
+        ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             figure.updateGraphRect();
         }
         return true;
@@ -5477,9 +5494,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         if (this.isChanged()) {
             return true;
         }
-        List fList = this.getVisibleFigureList();
+        List<SGFigure> fList = this.getVisibleFigureList();
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGIUndoable obj = (SGIUndoable) fList.get(ii);
+            SGIUndoable obj = fList.get(ii);
             if (obj.isChangedRoot()) {
                 return true;
             }
@@ -5555,7 +5572,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
         // delete forward history of figures
         for (int ii = 0; ii < this.mFigureList.size(); ii++) {
-            SGFigure f = (SGFigure) this.mFigureList.get(ii);
+            SGFigure f = this.mFigureList.get(ii);
             if (f.deleteForwardHistory() == false) {
         	return false;
             }
@@ -5578,7 +5595,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
     // delete useless figures in histories
     private boolean deleteUselessFigures() {
-        Set set = this.getAvailableChildSet();
+        Set<SGFigure> set = this.getAvailableChildSet();
         boolean gc = false;
         List<SGFigure> cList = new ArrayList<SGFigure>(this.mFigureList);
         for (int ii = cList.size() - 1; ii >= 0; ii--) {
@@ -5794,7 +5811,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
             boolean isInside = true;
             Rectangle pRect = this.getPaperRect().getBounds();
             for (int ii = 0; ii < list.size(); ii++) {
-                SGFigure figure = (SGFigure) list.get(ii);
+                SGFigure figure = list.get(ii);
                 Rectangle rect = figure.getBoundingBox().getBounds();
                 if (pRect.contains(rect) == false) {
                     isInside = false;
@@ -5810,14 +5827,14 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
         // preprocessing for image export
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             figure.beforeExport();
         }
 
         // record the location of figures
         SGTuple2f[] locationArray = new SGTuple2f[list.size()];
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             locationArray[ii] = new SGTuple2f(figure.mGraphRectX,
                     figure.mGraphRectY);
         }
@@ -5828,7 +5845,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         // set the location of figures
         Rectangle2D cRect = this.getClientRect();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             figure.setGraphRectLocation(figure.getGraphRectX()
                     - (float) cRect.getX(), figure.getGraphRectY()
                     - (float) cRect.getY());
@@ -5850,7 +5867,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         // add figures to the export panel
         Rectangle2D vBounds = new Rectangle2D.Float(0.0f, 0.0f, width, height);
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             ePanel.add(figure);
             // Rectangle bounds = new Rectangle(
             // 0, 0, figure.getWidth(), figure.getHeight() );
@@ -5868,12 +5885,12 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
         // set invisible
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             figure.setVisible(false);
         }
 
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             figure.setMode(MODE_EXPORT_AS_IMAGE);
         }
 
@@ -5904,7 +5921,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         // set the location
         // SGTuple2f vpSize = this.getViewportSize();
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure figure = (SGFigure) fList.get(ii);
+            SGFigure figure = fList.get(ii);
             figure.mGraphRectX = locationArray[ii].x;
             figure.mGraphRectY = locationArray[ii].y;
             figure.updateGraphRect();
@@ -5913,7 +5930,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
 
         // postprocessing for image export
         for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure figure = (SGFigure) fList.get(ii);
+            SGFigure figure = fList.get(ii);
             figure.afterExport();
         }
 
@@ -6099,9 +6116,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         property.appendChild(windowElement);
 
         // figures
-        ArrayList list = this.getVisibleFigureList();
+        ArrayList<SGFigure> list = this.getVisibleFigureList();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGFigure figure = (SGFigure) list.get(ii);
+            SGFigure figure = list.get(ii);
             Element el = figure.createElement(document, params);
             if (el == null) {
                 return false;
@@ -6394,9 +6411,9 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         }
 
         // clear focused objects in figures
-        List listAll = this.mFigureList;
+        List<SGFigure> listAll = this.mFigureList;
         for (int ii = 0; ii < listAll.size(); ii++) {
-            SGFigure fig = (SGFigure) listAll.get(ii);
+            SGFigure fig = listAll.get(ii);
             fig.clearFocusedObjects();
         }
 
@@ -6572,7 +6589,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     boolean showPropertyDialogForSelectedObjects(final SGFigure figure,
             final SGIFigureElement element) {
 
-        ArrayList figList = this.getVisibleFigureList();
+        ArrayList<SGFigure> figList = this.getVisibleFigureList();
         
         // clears focused objects
         this.clearFocusedObjects(figure, element, figList);
@@ -6600,7 +6617,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     boolean showPropertyDialogForAllVisibleObjects(final SGFigure figure,
             final SGIFigureElement element) {
 
-        ArrayList figList = this.getVisibleFigureList();
+        ArrayList<SGFigure> figList = this.getVisibleFigureList();
         
         // clears focused objects
         this.clearFocusedObjects(figure, element, figList);
@@ -6628,7 +6645,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     boolean showPropertyDialogForAllObjects(final SGFigure figure,
             final SGIFigureElement element) {
 
-        ArrayList figList = this.getVisibleFigureList();
+        ArrayList<SGFigure> figList = this.getVisibleFigureList();
         
         // clears focused objects
         this.clearFocusedObjects(figure, element, figList);
@@ -6660,13 +6677,13 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
         // sets the class object of property observer
         Class<?> cl = element.getPropertyDialogObserverClass();
         for (int ii = 0; ii < figList.size(); ii++) {
-        	SGFigure fig = (SGFigure) figList.get(ii);
+        	SGFigure fig = figList.get(ii);
         	fig.setPropertyDialogObserverClass(cl);
         }
 
         // clears focused objects
         for (int ii = 0; ii < figList.size(); ii++) {
-            SGFigure fig = (SGFigure) figList.get(ii);
+            SGFigure fig = figList.get(ii);
             fig.clearFocusedObjects(element);
             if (fig.equals(figure) == false) {
                 fig.setSelected(false);
@@ -6682,11 +6699,11 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
     private List<SGIPropertyDialogObserver> getPropertyDialogObserverList(
     		SGIFigureElement element, ArrayList<SGFigure> figList, 
     		PROPERTY_SETTING_CONDITION condition) {
-        List<SGIPropertyDialogObserver> obsList = new ArrayList();
-        Class cl = element.getClass();
+        List<SGIPropertyDialogObserver> obsList = new ArrayList<>();
+        Class<?> cl = element.getClass();
         Class<?> obsClass = element.getPropertyDialogObserverClass();
         for (int ii = 0; ii < figList.size(); ii++) {
-            SGFigure fig = (SGFigure) figList.get(ii);
+            SGFigure fig = figList.get(ii);
             SGIFigureElement el = fig.getIFigureElement(cl);
             if (el == null) {
                 continue;
@@ -6757,7 +6774,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      */
     private void showPropertyDialog(SGPropertyDialog dg,
             SGIPropertyDialogObserver l) {
-        ArrayList list = new ArrayList();
+        ArrayList<SGIPropertyDialogObserver> list = new ArrayList<>();
         list.add(l);
         this.showPropertyDialog(dg, list);
     }
@@ -6983,7 +7000,7 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
      */
     public static class WindowProperties extends SGProperties {
 
-        private ArrayList mVisibleFigureList = new ArrayList();
+        private ArrayList<SGFigure> mVisibleFigureList = new ArrayList<>();
 
         private float mPaperWidth;
 
@@ -7071,8 +7088,8 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
             return true;
         }
 
-        public List getVisibleFigureList() {
-            List list = new ArrayList(this.mVisibleFigureList);
+        public List<SGFigure> getVisibleFigureList() {
+            List<SGFigure> list = new ArrayList<>(this.mVisibleFigureList);
             return list;
         }
 
@@ -7120,11 +7137,11 @@ public class SGDrawingWindow extends JFrame implements ComponentListener,
             return this.mImage;
         }
 
-        public void setVisibleFigureList(final List list) {
+        public void setVisibleFigureList(final List<SGFigure> list) {
             if (list == null) {
                 throw new IllegalArgumentException("list==null");
             }
-            this.mVisibleFigureList = new ArrayList(list);
+            this.mVisibleFigureList = new ArrayList<>(list);
         }
 
         public void setPaperWidth(final float w) {

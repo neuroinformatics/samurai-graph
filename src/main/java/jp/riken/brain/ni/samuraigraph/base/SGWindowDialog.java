@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -709,8 +710,9 @@ public class SGWindowDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getColorSelectionButtonsList() {
-        final ArrayList list = new ArrayList();
+    @Override
+    public List<SGColorSelectionButton> getColorSelectionButtonsList() {
+        final ArrayList<SGColorSelectionButton> list = new ArrayList<SGColorSelectionButton>();
         list.add(this.mBackgroundColorButton);
         list.add(this.mGridLinesColorButton);
         return list;
@@ -719,8 +721,9 @@ public class SGWindowDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getTextFieldComponentsList() {
-        final List list = this.getFormattedTextFieldsListFromSpinners();
+    @Override
+    public List<JTextField> getTextFieldComponentsList() {
+        final List<JTextField> list = new ArrayList<JTextField>(this.getFormattedTextFieldsListFromSpinners());
         list.addAll(this.getAxisNumberTextFieldList());
         return list;
     }
@@ -730,8 +733,9 @@ public class SGWindowDialog extends SGPropertyDialog implements
      * 
      * @return
      */
-    public List getAxisNumberTextFieldList() {
-        List list = new ArrayList();
+    @Override
+    public List<SGTextField> getAxisNumberTextFieldList() {
+        List<SGTextField> list = new ArrayList<SGTextField>();
         list.add(this.mImageScaleTextField);
         return list;
     }
@@ -739,8 +743,9 @@ public class SGWindowDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getSpinnerList() {
-        List list = new ArrayList();
+    @Override
+    public List<SGSpinner> getSpinnerList() {
+        List<SGSpinner> list = new ArrayList<SGSpinner>();
 
         list.add(this.mWidthSpinner);
         list.add(this.mHeightSpinner);

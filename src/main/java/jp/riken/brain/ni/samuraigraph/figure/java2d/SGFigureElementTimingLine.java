@@ -1744,8 +1744,8 @@ public class SGFigureElementTimingLine extends SGFigureElement2D implements
          * @return
          *       a list of child nodes
          */
-        public ArrayList getChildNodes() {
-            return new ArrayList();
+        public ArrayList<SGINode> getChildNodes() {
+            return new ArrayList<SGINode>();
         }
 
         //

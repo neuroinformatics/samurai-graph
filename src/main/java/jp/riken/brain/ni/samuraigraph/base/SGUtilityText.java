@@ -1059,9 +1059,9 @@ public class SGUtilityText implements SGIConstants, SGIDrawingElementConstants,
 
         // create an URL instance
         try {
-            URL url = new URL(spec);
+            URL url = java.net.URI.create(spec).toURL();
             doc = getDocument(url);
-        } catch (MalformedURLException ex) {
+        } catch (MalformedURLException | IllegalArgumentException ex) {
             return null;
         }
 

@@ -755,9 +755,9 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
             final MouseEvent e) {
         final int x = e.getX();
         final int y = e.getY();
-        final int mod = e.getModifiers();
-        final boolean ctrl = (mod & InputEvent.CTRL_MASK) != 0;
-        final boolean shift = (mod & InputEvent.SHIFT_MASK) != 0;
+        final int mod = e.getModifiersEx();
+        final boolean ctrl = (mod & InputEvent.CTRL_DOWN_MASK) != 0;
+        final boolean shift = (mod & InputEvent.SHIFT_DOWN_MASK) != 0;
         final int cnt = e.getClickCount();
 
         // clicked on the line elements
@@ -2001,8 +2001,8 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
          * @return
          *       a list of child nodes
          */
-        public ArrayList getChildNodes() {
-            return new ArrayList();
+        public ArrayList<SGINode> getChildNodes() {
+            return new ArrayList<SGINode>();
         }
 
         /**

@@ -25,7 +25,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable.MDArrayDataType;
 import org.w3c.dom.Element;
 
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ch.systemsx.cisd.base.mdarray.MDDoubleArray;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
 
@@ -908,7 +908,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
      * @return true if succeeded
      */
 	@Override
-    protected boolean addVariables(NetcdfFileWriteable ncWrite) {
+    protected boolean addVariables(NetcdfFileWriter ncWrite) {
 
 		// add time dimensions
 		Dimension timeDim = this.addTimeVariable(ncWrite);
@@ -985,7 +985,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
      *           a netCDF file
      * @return true if succeeded
      */
-    protected boolean writeData(NetcdfFileWriteable ncWrite) {
+    protected boolean writeData(NetcdfFileWriter ncWrite) {
 
 		// time variable
     	if (!this.writeTimeData(ncWrite)) {

@@ -26,7 +26,7 @@ import ucar.ma2.Array;
 import ucar.ma2.DataType;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 import ch.systemsx.cisd.hdf5.HDF5FactoryProvider;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
@@ -632,28 +632,27 @@ public abstract class SGSDArrayData extends SGArrayData implements SGITextDataCo
     protected static final String ATTRIBUTE_KEY_LONG_NAME = "long_name";
 
     // Creates the dimension of indices.
-    protected Dimension addIndexDimension(NetcdfFileWriteable ncfile, int len) {
+    protected Dimension addIndexDimension(NetcdfFileWriter ncfile, int len) {
 		Dimension serialNumberDim = new Dimension(INDEX_DIMENSION_NAME, len);
-		ncfile.addDimension(null, serialNumberDim);
+		ncfile.addDimension(null, serialNumberDim.getShortName(), serialNumberDim.getLength());
 		return serialNumberDim;
     }
     
 	// Creates the variable of indices.
-    protected Variable addIndexVarialbe(NetcdfFileWriteable ncfile, Dimension dim) {
-		Variable var = new Variable(ncfile, null, null,
-				INDEX_DIMENSION_NAME, DataType.INT, dim.getName());
-		ncfile.addVariable(null, var);
+    protected Variable addIndexVarialbe(NetcdfFileWriter ncfile, Dimension dim) {
+		Variable var = ncfile.addVariable(null, INDEX_DIMENSION_NAME, DataType.INT, dim.getShortName());
+		// ncfile.addVariable(null, var); // already added by addVariable
 		return var;
     }
     
-    protected void writeIndexVarialbe(NetcdfFileWriteable ncfile,
+    protected void writeIndexVarialbe(NetcdfFileWriter ncfile,
 			Variable var) throws IOException, InvalidRangeException {
 		final int len = var.getDimension(0).getLength();
 		Array indexArray = Array.factory(DataType.INT, new int[] { len });
 		for (int ii = 0; ii < len; ii++) {
 			indexArray.setInt(ii, ii);
 		}
-		ncfile.write(var.getShortName(), indexArray);
+		ncfile.write(ncfile.findVariable(var.getShortName()), indexArray);
 	}
     
     /**
@@ -785,9 +784,9 @@ public abstract class SGSDArrayData extends SGArrayData implements SGITextDataCo
      */
 	@Override
     public boolean saveToNetCDFFile(final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
-		NetcdfFileWriteable ncWrite = null;
+		NetcdfFileWriter ncWrite = null;
 		try {
-			ncWrite = NetcdfFileWriteable.createNew(file.getAbsolutePath());
+			ncWrite = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
 			if (!this.exportToNetCDFFile(ncWrite, mode, policy)) {
 				return false;
 			}
@@ -817,7 +816,7 @@ public abstract class SGSDArrayData extends SGArrayData implements SGITextDataCo
      *           the policy for exporting data
      * @return true if succeeded
      */
-    public abstract boolean exportToNetCDFFile(NetcdfFileWriteable ncWrite, final SGExportParameter mode, 
+    public abstract boolean exportToNetCDFFile(NetcdfFileWriter ncWrite, final SGExportParameter mode, 
 			SGDataBufferPolicy policy) throws IOException, InvalidRangeException;
 
     /**

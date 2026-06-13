@@ -156,7 +156,7 @@ import org.w3c.dom.NodeList;
 
 import ucar.nc2.Attribute;
 import ucar.nc2.NetcdfFile;
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ch.systemsx.cisd.hdf5.HDF5FactoryProvider;
 import ch.systemsx.cisd.hdf5.IHDF5Reader;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
@@ -4463,9 +4463,9 @@ class SGMainFunctions implements ActionListener, SGIConstants,
     	if (!reader.hasAttribute("/", ATTR_NAME_SAMURAI_GRAPH_COMMAND)) {
     		return false;
     	}
-    	final String commands = reader.getStringAttribute("/", ATTR_NAME_SAMURAI_GRAPH_COMMAND);
+    	final String commands = reader.string().getAttr("/", ATTR_NAME_SAMURAI_GRAPH_COMMAND);
 		if (commands != null) {
-			return this.execCommand(commands, reader.getFile().getPath(), wnd);
+			return this.execCommand(commands, reader.file().getFile().getPath(), wnd);
 		}
 		return false;
     }
@@ -4474,9 +4474,9 @@ class SGMainFunctions implements ActionListener, SGIConstants,
     	if (!reader.hasAttribute("/", ATTR_NAME_SAMURAI_GRAPH_PROPERTIES)) {
     		return false;
     	}
-    	final String commands = reader.getStringAttribute("/", ATTR_NAME_SAMURAI_GRAPH_PROPERTIES);
+    	final String commands = reader.string().getAttr("/", ATTR_NAME_SAMURAI_GRAPH_PROPERTIES);
 		if (commands != null) {
-			return this.applyProperties(commands, reader.getFile().getPath(), wnd);
+			return this.applyProperties(commands, reader.file().getFile().getPath(), wnd);
 		}
 		return false;
     }
@@ -5947,15 +5947,15 @@ class SGMainFunctions implements ActionListener, SGIConstants,
 			}
 			
 			// adds global attributes
-			NetcdfFileWriteable ncWrite = null;
+			NetcdfFileWriter ncWrite = null;
 	        try {
-	        	ncWrite = NetcdfFileWriteable.openExisting(path);
+	        	ncWrite = NetcdfFileWriter.openExisting(path);
 	        	final Attribute curAttr = ncWrite.findGlobalAttribute(attrName);
 	        	ncWrite.setRedefineMode(true);
 	        	if (curAttr != null) {
-	        		ncWrite.deleteGlobalAttribute(attrName);
+	        		ncWrite.deleteGroupAttribute(null, attrName);
 	        	}
-	        	ncWrite.addGlobalAttribute(attrName, savedString);
+	        	ncWrite.addGroupAttribute(null, new Attribute(attrName, savedString));
 	        	ncWrite.setRedefineMode(false);
 	        	Attribute attr = new Attribute(attrName, savedString);
 	        	ncWrite.updateAttribute(null, attr);
@@ -5973,7 +5973,7 @@ class SGMainFunctions implements ActionListener, SGIConstants,
 				// updates the attribute
 		        try {
 			        hdfWriter = HDF5FactoryProvider.get().open(new File(path));
-			        hdfWriter.setStringAttribute("/", attrName, savedString);
+			        hdfWriter.string().setAttr("/", attrName, savedString);
 		        } catch (Exception e) {
                     if (e.getClass().getName().contains("HDF5Exception")) {
                         e.printStackTrace();

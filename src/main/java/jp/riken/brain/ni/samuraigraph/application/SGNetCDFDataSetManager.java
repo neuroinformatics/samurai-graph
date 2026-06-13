@@ -55,7 +55,7 @@ import ucar.nc2.Attribute;
 import ucar.nc2.Dimension;
 import ucar.nc2.Group;
 import ucar.nc2.NetcdfFile;
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConstants {
@@ -102,7 +102,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 		byte[] byteArray = null;
 	}
 	
-	private ByteData createImageVariable(NetcdfFileWriteable ncfile,
+	private ByteData createImageVariable(NetcdfFileWriter ncfile,
 			SGDrawingWindow wnd) throws IOException, InvalidRangeException {
 
 		BackgroundImage bgImg = wnd.getBackgroundImage();
@@ -115,11 +115,11 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 		}
 		
 		// create dimension and variable
-		Dimension dim = new Dimension(DIMENSION_NAME_BACKGROUND_IMAGE_BYTE_INDEX, imageByteArray.length);
-		ncfile.addDimension(null, dim);
-		Variable var = new Variable(ncfile, null, null, VARIABLE_NAME_BACKGROUND_IMAGE,
-				DataType.BYTE, dim.getName());
-		ncfile.addVariable(null, var);
+		Dimension dim = ncfile.addDimension(null, DIMENSION_NAME_BACKGROUND_IMAGE_BYTE_INDEX, imageByteArray.length);
+		List<Dimension> dims = new ArrayList<>();
+		dims.add(dim);
+		Variable var = ncfile.addVariable(null, VARIABLE_NAME_BACKGROUND_IMAGE,
+				DataType.BYTE, dims);
 
 		// add an attribute
 		var.addAttribute(SGDataUtility
@@ -136,7 +136,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 		return ret;
 	}
 	
-	private void writeImageData(NetcdfFileWriteable ncfile, ByteData imageData)
+	private void writeImageData(NetcdfFileWriter ncfile, ByteData imageData)
 			throws IOException, InvalidRangeException {
 		Variable var = imageData.var;
 		byte[] byteArray = imageData.byteArray;
@@ -145,7 +145,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 		for (int ii = 0; ii < byteArray.length; ii++) {
 			array.setByte(index.set(ii), byteArray[ii]);
 		}
-		ncfile.write(var.getShortName(), array);
+		ncfile.write(var, array);
 	}
     
     // save background image
@@ -160,9 +160,10 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     	sb.append(SGIApplicationConstants.NETCDF_FILE_EXTENSION);
         String fname = sb.toString();
         File file = new File(fname);
-        NetcdfFileWriteable ncfile = null;
+        NetcdfFileWriter ncfile = null;
         try {
-            ncfile = NetcdfFileWriteable.createNew(file.getAbsolutePath(), true);
+            ncfile = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
+            ncfile.setFill(true);
             
             // create image variable
             ByteData imageData = this.createImageVariable(ncfile, wnd);
@@ -217,14 +218,14 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         return flist;
     }
 
-    private void copyNetcdfTempFileHeaderToOutFile(final File[] files, final NetcdfFileWriteable outNcfile)
+    private void copyNetcdfTempFileHeaderToOutFile(final File[] files, final NetcdfFileWriter outNcfile)
     throws IOException {
         for (int i = 0; i < files.length; i++) {
             File file = files[i];
             String groupName = this.getGroupNameFromDataFile(file);
 
             NetcdfFile ncfile = null;
-            Group group = new Group(outNcfile, null, groupName);
+            Group group = outNcfile.addGroup(null, groupName);
             try {
                 ncfile = SGApplicationUtility.openNetCDF(file.getAbsolutePath());
 
@@ -233,13 +234,13 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
                 List<Variable> vars = ncfile.getVariables();
 
                 for (Dimension dim : dims) {
-                    String name = dim.getName();
+                    String name = dim.getShortName();
                     dim.setName(this.getGroupVariableName(groupName, name));
-                    outNcfile.addDimension(null, dim);
+                    outNcfile.addDimension(null, dim.getShortName(), dim.getLength());
                 }
                 for (Attribute gattr : gattrs) {
                 	// skips an attribute of the properties
-                	if (ATTRIBUTE_PROPERTY.equals(gattr.getName())) {
+                	if (ATTRIBUTE_PROPERTY.equals(gattr.getShortName())) {
                 		continue;
                 	}
                     group.addAttribute(gattr);
@@ -252,8 +253,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
                         for (int j = 0; j < groupNames.length-1; j++) {
                             Group g2 = g.findGroup(groupNames[j]);
                             if (g2==null) {
-                                g2 = new Group(outNcfile, g, groupNames[j]);
-                                g.addGroup(g2);
+                                g2 = outNcfile.addGroup(g, groupNames[j]);
                             }
                             g = g2;
                         }
@@ -264,8 +264,6 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
                     }
                 }
 
-                outNcfile.addGroup(null, group);
-
             } finally {
                 if (null!=ncfile) {
                     ncfile.close();
@@ -275,7 +273,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
     }
 
-    private void copyNetcdfTempFileArrayToOutFile(final File[] files, final NetcdfFileWriteable outNcfile)
+    private void copyNetcdfTempFileArrayToOutFile(final File[] files, final NetcdfFileWriter outNcfile)
     throws IOException, InvalidRangeException {
         for (int i = 0; i < files.length; i++) {
             File file = files[i];
@@ -288,7 +286,8 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
                 List<Variable> vars = ncfile.getVariables();
                 for (Variable v : vars) {
                     Array array = v.read();
-                    outNcfile.write(this.getGroupVariableName(groupName, v.getShortName()), array);
+                    Variable targetVar = outNcfile.findVariable(this.getGroupVariableName(groupName, v.getShortName()));
+                    outNcfile.write(targetVar, array);
                 }
             } finally {
                 if (null!=ncfile) {
@@ -304,10 +303,10 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     throws IOException, InvalidRangeException {
         File[] files = datasetTempDir.listFiles();
 
-        NetcdfFileWriteable outNcfile = null;
+        NetcdfFileWriter outNcfile = null;
         try {
-            outNcfile = NetcdfFileWriteable.createNew(outFile.getAbsolutePath());
-            outNcfile.addGlobalAttribute(ATTRIBUTE_PROPERTY, propertyString);
+            outNcfile = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, outFile.getAbsolutePath());
+            outNcfile.addGroupAttribute(null, new Attribute(ATTRIBUTE_PROPERTY, propertyString));
 
             this.copyNetcdfTempFileHeaderToOutFile(files, outNcfile);
 
@@ -379,7 +378,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         Set<String> set = new HashSet<String>();
         for (int i = 0; i < dims.size(); i++) {
         	Dimension dim = dims.get(i);
-        	String name = dim.getName();
+        	String name = dim.getShortName();
         	String[] names = name.split("/");
         	String groupName = names[0].trim();
             if (!"".equals(groupName)) {
@@ -402,7 +401,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         String dataNamePrefix = sb.toString();
         int count = 0;
         for (int i = 0; i < groups.size(); i++) {
-            if (groups.get(i).getName().startsWith(dataNamePrefix)) {
+            if (groups.get(i).getShortName().startsWith(dataNamePrefix)) {
                 count++;
             }
         }
@@ -862,7 +861,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         List<Group> groups = rootGroup.getGroups();
         for (int ii = groups.size() - 1; ii >= 0; ii--) {
         	Group g = groups.get(ii);
-        	String gName = g.getName().toLowerCase();
+        	String gName = g.getShortName().toLowerCase();
         	final String clenStr = "clen";
         	final int clenIndex = gName.lastIndexOf(clenStr);
         	if (clenIndex == -1) {
@@ -956,7 +955,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
             ncfile = SGApplicationUtility.openNetCDF(location);
             List<Attribute> attrList = ncfile.getGlobalAttributes();
             for (Attribute attr : attrList) {
-                if (ATTRIBUTE_PROPERTY.equals(attr.getName()) &&
+                if (ATTRIBUTE_PROPERTY.equals(attr.getShortName()) &&
                         attr.isString() && attr.getStringValue().length()>0) {
                     return true;
                 }

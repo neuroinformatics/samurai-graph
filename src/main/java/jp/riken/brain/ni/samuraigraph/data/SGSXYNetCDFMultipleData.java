@@ -41,7 +41,7 @@ import ucar.ma2.DataType;
 import ucar.ma2.Index;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 /**
@@ -557,7 +557,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
         }
 
         // check the dimension
-        Dimension pickUpDim = ncfile.findDimension(pickUpDimName);
+        Dimension pickUpDim = ncfile.getNetcdfFile().findDimension(pickUpDimName);
         if (pickUpDim == null) {
             throw new IllegalArgumentException("Picked up dimension is not found: " + pickUpDimName);
         }
@@ -654,7 +654,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
         this.mErrorBarHolderVariables = this.createVariableArray(ehVar);
         this.mTickLabelVariables = this.createVariableArray(tlVar);
         this.mTickLabelHolderVariables = this.createVariableArray(thVar);
-        this.mPickUpDimensionInfo = new SGNetCDFPickUpDimensionInfo(pickUpDim.getName(),
+        this.mPickUpDimensionInfo = new SGNetCDFPickUpDimensionInfo(pickUpDim.getShortName(),
         		(SGIntegerSeriesSet) pickUpIndices.clone());
         if (!this.isIndexAvailable()) {
             this.mStride = this.createStride(stride, cDim);
@@ -1007,7 +1007,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
     public String getDimensionName() {
     	Dimension dim = this.getDimension();
     	if (dim != null) {
-    		return dim.getName();
+    		return dim.getShortName();
     	} else {
     		return null;
     	}
@@ -1440,7 +1440,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 							this.isStrideAvailable());
 				}
 	            for (Dimension dim : dimList) {
-	                String name = dim.getName();
+	                String name = dim.getShortName();
 	                Integer origin;
 	                if (name.equals(dimName)) {
 	                    origin = this.mDimensionIndices[ii];
@@ -1715,7 +1715,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 				if (this.isDimensionPicked()) {
 					if (var.isCoordinateVariable()) {
 						Dimension dim = var.getDimension(0);
-						if (dim.getName().equals(this.getDimensionName())) {
+						if (dim.getShortName().equals(this.getDimensionName())) {
 							type = PICKUP;
 						}
 					}
@@ -3149,7 +3149,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 	}
 	
 	@Override
-	protected boolean exportToFile(NetcdfFileWriteable ncWrite, 
+	protected boolean exportToFile(NetcdfFileWriter ncWrite, 
 			final SGExportParameter mode, SGDataBufferPolicy policy)
 			throws IOException, InvalidRangeException {
 	
@@ -3242,7 +3242,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 			dateDimName = dVar.getName();
 			validDateDimName = this.getValidName(dateDimName);
 			Dimension strLengthDim = dVar.getLengthDimension();
-			dateLenDimName = strLengthDim.getName();
+			dateLenDimName = strLengthDim.getShortName();
 			validDateLenDimName = this.getValidName(dateLenDimName);
 			dateStrArray = new String[dateArray.length];
 			for (int ii = 0; ii < dateArray.length; ii++) {
@@ -3250,7 +3250,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 			}
 			final int maxLength = this.getMaxLength(dateStrArray);
 			Dimension dim = new Dimension(validDateLenDimName, maxLength);
-			ncWrite.addDimension(null, dim);
+			ncWrite.addDimension(null, dim.getShortName(), dim.getLength());
 		}
 
 		//
@@ -3575,7 +3575,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
         return true;
 	}
 	
-	private void writeValues(NetcdfFileWriteable ncWrite, Variable var, DataType dataType, 
+	private void writeValues(NetcdfFileWriter ncWrite, Variable var, DataType dataType, 
 			double[] values, int[] shape) throws IOException, InvalidRangeException {
 //		this.setFillValue(var, values);
 		Array array = Array.factory(dataType, shape);
@@ -3583,7 +3583,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 		this.writeValues(ncWrite, var, array);
 	}
 
-	private void writeValues(NetcdfFileWriteable ncWrite, Variable var, DataType dataType, 
+	private void writeValues(NetcdfFileWriter ncWrite, Variable var, DataType dataType, 
 			double[][] values, int[] shape) throws IOException, InvalidRangeException {
 //		this.setFillValue(var, values);
 		Array array = Array.factory(dataType, shape);
@@ -3615,7 +3615,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 		return ret;
 	}
 	
-	private void addErrorVariables(NetcdfFileWriteable ncWrite, final int num, 
+	private void addErrorVariables(NetcdfFileWriter ncWrite, final int num, 
 			SGNetCDFVariable[] lowerErrorVars, SGNetCDFVariable[] upperErrorVars, SGExportParameter mode, 
 			SGDataBufferPolicy policy, Boolean[] sameErrorVariableFlags, String[] dimNames,
 			Variable[] leVars, Variable[] ueVars, DataType[] leDataTypes, DataType[] ueDataTypes) {
@@ -3644,7 +3644,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 		}
 	}
 	
-	private void addTickLabelVariables(NetcdfFileWriteable ncWrite, final int num, 
+	private void addTickLabelVariables(NetcdfFileWriter ncWrite, final int num, 
 			SGNetCDFVariable[] tickLabelVars, SGExportParameter mode, 
 			SGDataBufferPolicy policy, String[] dimNames, String[] lenDimNames, Variable[] tlVars, 
 			DataType[] tlDataTypes) {
@@ -3669,7 +3669,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 		}
 	}
 	
-	private void addTickLabelDimension(NetcdfFileWriteable ncWrite, final int num, 
+	private void addTickLabelDimension(NetcdfFileWriter ncWrite, final int num, 
 			SGNetCDFVariable[] tickLabelVars, String[][] tickLabels,
 			String[] lenDimNames, String[][] tlStrArray) throws IOException {
 		
@@ -3685,7 +3685,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 					}
 				}
 				Dimension dim = new Dimension(lenDimName, maxLength);
-				ncWrite.addDimension(null, dim);
+				ncWrite.addDimension(null, dim.getShortName(), dim.getLength());
 				lenDimNames[0] = lenDimName;
 				for (int ii = 0; ii < tlStrArray.length; ii++) {
 					tlStrArray[ii] = tickLabels[ii];
@@ -3699,7 +3699,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 					if (var instanceof SGCharVariable) {
 						SGCharVariable cVar = (SGCharVariable) var;
 						Dimension strLengthDim = cVar.getLengthDimension();
-						String oldLenDimName = strLengthDim.getName();
+						String oldLenDimName = strLengthDim.getShortName();
 						lenDimNames[ii] = this.getValidName(oldLenDimName);
 						SGIStringModifier mod = cVar.getModifier();
 						if (tickLabels[ii] != null) {
@@ -3721,7 +3721,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 					final int maxLength = this.getMaxLength(strArray);
 					tlStrArray[ii] = strArray;
 					Dimension dim = new Dimension(lenDimNames[ii], maxLength);
-					ncWrite.addDimension(null, dim);
+					ncWrite.addDimension(null, dim.getShortName(), dim.getLength());
 				}
 			}
 		}
@@ -3738,9 +3738,9 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 		return maxLength;
 	}
 	
-	private void writeCharValue(NetcdfFileWriteable ncWrite, String varName, String lenDimName, 
+	private void writeCharValue(NetcdfFileWriter ncWrite, String varName, String lenDimName, 
 			String[] strArray) throws IOException, InvalidRangeException {
-		Dimension strLengthDim = ncWrite.findDimension(lenDimName);
+		Dimension strLengthDim = ncWrite.getNetcdfFile().findDimension(lenDimName);
         ArrayByte array = new ArrayByte(new int[] { strArray.length, strLengthDim.getLength() });
 		Index index = array.getIndex();
 		int[] shape = index.getShape();
@@ -3751,12 +3751,12 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
         		array.setByte(index.set(ii, jj), byteArray[jj]);
         	}
         }
-		ncWrite.write(varName, array);
+		ncWrite.write(ncWrite.findVariable(varName), array);
 	}
 
-	private void writeCharValue(NetcdfFileWriteable ncWrite, String varName, String lenDimName, 
+	private void writeCharValue(NetcdfFileWriter ncWrite, String varName, String lenDimName, 
 			String[][] strArray) throws IOException, InvalidRangeException {
-		Dimension strLengthDim = ncWrite.findDimension(lenDimName);
+		Dimension strLengthDim = ncWrite.getNetcdfFile().findDimension(lenDimName);
         ArrayByte array = new ArrayByte(new int[] { strArray.length, strArray[0].length, 
         		strLengthDim.getLength() });
 		Index index = array.getIndex();
@@ -3770,7 +3770,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
             	}
         	}
         }
-		ncWrite.write(varName, array);
+		ncWrite.write(ncWrite.findVariable(varName), array);
 	}
 
 	/**
@@ -4378,7 +4378,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData implements
 	}
 
 	@Override
-    protected Array setEditedValues(NetcdfFileWriteable ncWrite,
+    protected Array setEditedValues(NetcdfFileWriter ncWrite,
     		String varName, Array array, final boolean all) {
 		
 		for (int ii = 0; ii < this.mEditedDataValueList.size(); ii++) {

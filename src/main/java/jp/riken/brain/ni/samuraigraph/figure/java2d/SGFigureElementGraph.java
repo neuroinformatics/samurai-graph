@@ -7,6 +7,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1073,7 +1074,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements
         }
 
         GraphProperties gp = (GraphProperties) p;
-        gp.visibleElementGroupList = new ArrayList(this.getVisibleChildList());
+        gp.visibleElementGroupList = new ArrayList<SGIChildObject>(this.getVisibleChildList());
 
         return true;
     }
@@ -1363,7 +1364,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements
      */
     public static class GraphProperties extends SGProperties {
 
-        ArrayList visibleElementGroupList = new ArrayList();
+        ArrayList<SGIChildObject> visibleElementGroupList = new ArrayList<SGIChildObject>();
 
         /**
          *
@@ -1891,11 +1892,11 @@ public class SGFigureElementGraph extends SGFigureElementForData implements
                 }
                 if (null!=axis) {
                     barWidth = SGUtilityNumber.getNumberInRangeOrder(barWidth, axis,
-                            SGIBarConstants.BAR_EFFECTIVE_DIGIT, BigDecimal.ROUND_HALF_UP);
+                            SGIBarConstants.BAR_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
                     barInterval = SGUtilityNumber.getNumberInRangeOrder(barInterval, axis,
-                            SGIBarConstants.BAR_EFFECTIVE_DIGIT, BigDecimal.ROUND_HALF_UP);
+                            SGIBarConstants.BAR_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
                     shift = SGUtilityNumber.getNumberInRangeOrder(shift, axis,
-                            SGIBarConstants.BAR_EFFECTIVE_DIGIT, BigDecimal.ROUND_HALF_UP);
+                            SGIBarConstants.BAR_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
                 } else {
                     continue;
                 }

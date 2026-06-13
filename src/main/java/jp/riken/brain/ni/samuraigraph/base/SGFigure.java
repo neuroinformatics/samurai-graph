@@ -516,7 +516,7 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
      *           a class object
      * @return an figure element
      */
-    public SGIFigureElement getIFigureElement(final Class cl) {
+    public SGIFigureElement getIFigureElement(final Class<?> cl) {
         if (cl == null) {
             throw new IllegalArgumentException("");
         }
@@ -1978,9 +1978,9 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
         final List<SGFigure> fList = wnd.getFocusedFigureList();
 
         // Neither CTRL key nor SHIFT key is pressed.
-        final int mod = e.getModifiers();
-        if (((mod & InputEvent.CTRL_MASK) == 0)
-                && ((mod & InputEvent.SHIFT_MASK) == 0)) {
+        final int mod = e.getModifiersEx();
+        if (((mod & InputEvent.CTRL_DOWN_MASK) == 0)
+                && ((mod & InputEvent.SHIFT_DOWN_MASK) == 0)) {
             // If the list already contains this object.
             if (fList.contains(this)) {
                 // There is nothing to do.
@@ -2960,7 +2960,7 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
      */
     public boolean updateHistory() {
 
-        ArrayList list = new ArrayList();
+        List<SGIUndoable> list = new ArrayList<>();
         SGIFigureElement[] array = this.getIFigureElementArray();
         for (int ii = 0; ii < array.length; ii++) {
             SGIFigureElement element = array[ii];
@@ -3729,7 +3729,7 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
      * @return true if succeeded
      */
     boolean createCopiedDataObjects(List<SGData> dataList, List<String> dataNameList,
-            List<Map<Class, SGProperties>> propertiesMapList) {
+            List<Map<Class<? extends SGIFigureElement>, SGProperties>> propertiesMapList) {
     	List<SGData> gList = this.getGraphElement().getFocusedDataList();
         List<SGData> lList = this.getLegendElement().getFocusedDataList();
         return this.cutOrCopyFocusedDataObjects(
@@ -3748,7 +3748,7 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
      * @return true if succeeded
      */
     boolean cutFocusedDataObjects(List<SGData> dataList, List<String> dataNameList,
-            List<Map<Class, SGProperties>> propertiesMapList) {
+            List<Map<Class<? extends SGIFigureElement>, SGProperties>> propertiesMapList) {
         List<SGData> gList = this.getGraphElement().cutFocusedData();
         List<SGData> lList = this.getLegendElement().cutFocusedData();
         return this.cutOrCopyFocusedDataObjects(
@@ -3758,7 +3758,7 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
     private boolean cutOrCopyFocusedDataObjects(
 	    boolean isCopy, List<SGData> gList, List<SGData> lList,
 	    List<SGData> dataList, List<String> dataNameList,
-            List<Map<Class, SGProperties>> propertiesMapList) {
+            List<Map<Class<? extends SGIFigureElement>, SGProperties>> propertiesMapList) {
 
     	List<SGData> fList = new ArrayList<SGData>();
 		fList.addAll(gList);
@@ -3776,7 +3776,7 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
             String name = this.getDataName(data);
             dataNameList.add(name);
 
-            Map<Class, SGProperties> map = this.getDataPropertiesMap(data);
+            Map<Class<? extends SGIFigureElement>, SGProperties> map = this.getDataPropertiesMap(data);
             propertiesMapList.add(map);
         }
 
@@ -3838,8 +3838,8 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
      * @param data
      * @return
      */
-    public Map<Class, SGProperties> getDataPropertiesMap(SGData data) {
-        Map<Class, SGProperties> map = new HashMap<Class, SGProperties>();
+    public Map<Class<? extends SGIFigureElement>, SGProperties> getDataPropertiesMap(SGData data) {
+        Map<Class<? extends SGIFigureElement>, SGProperties> map = new HashMap<Class<? extends SGIFigureElement>, SGProperties>();
 
         SGIFigureElement[] array = this.getIFigureElementArray();
         for (int ii = 0; ii < array.length; ii++) {

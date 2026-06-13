@@ -76,7 +76,7 @@ public class SGColorBarDialog extends SGAxisDialog
         mStyleTabPanel = new javax.swing.JPanel();
         mStyleSubPanel = new javax.swing.JPanel();
         mColorBarStyleLabel = new javax.swing.JLabel();
-        mColorBarStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mColorBarStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mColorBarRenderParentPanel = new javax.swing.JPanel();
         mReversedOrderCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
         mGradientColorPanel = new javax.swing.JPanel();
@@ -374,7 +374,7 @@ public class SGColorBarDialog extends SGAxisDialog
     private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mColor2Button;
     private javax.swing.JLabel mColor2Label;
     private javax.swing.JPanel mColorBarRenderParentPanel;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mColorBarStyleComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mColorBarStyleComboBox;
     private javax.swing.JLabel mColorBarStyleLabel;
     private javax.swing.JLabel mDirectionLabel;
     private javax.swing.JPanel mDirectionPanel;
@@ -756,7 +756,7 @@ public class SGColorBarDialog extends SGAxisDialog
         final String style = this.getColorBarStyle();
         
         // check values
-        ArrayList list = new ArrayList();
+        ArrayList<String> list = new ArrayList<String>();
         if (l.hasValidXAxisValue(xLocation, xValue) == false) {
             list.add("X");
         }

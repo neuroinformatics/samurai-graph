@@ -84,7 +84,7 @@ public abstract class SGDialog extends JDialog implements ActionListener,
     public static final String NEXT_BUTTON_TEXT = "Next>";
 
     // A list of action listeners.
-    private ArrayList mActionListenerList = new ArrayList();
+    private ArrayList<ActionListener> mActionListenerList = new ArrayList<>();
 
     // Closed option of the dialog.
     private int mCloseOption = -1;
@@ -337,9 +337,9 @@ public abstract class SGDialog extends JDialog implements ActionListener,
      * Add an action listener.
      */
     public void addActionListener(final ActionListener l) {
-        ArrayList list = this.mActionListenerList;
+        ArrayList<ActionListener> list = this.mActionListenerList;
         for (int ii = 0; ii < list.size(); ii++) {
-            final ActionListener el = (ActionListener) list.get(ii);
+            final ActionListener el = list.get(ii);
             if (el.equals(l)) {
                 return;
             }
@@ -351,9 +351,9 @@ public abstract class SGDialog extends JDialog implements ActionListener,
      * Remove an action listener.
      */
     public void removeActionListener(ActionListener l) {
-        ArrayList list = this.mActionListenerList;
+        ArrayList<ActionListener> list = this.mActionListenerList;
         for (int ii = list.size() - 1; ii >= 0; ii--) {
-            final ActionListener el = (ActionListener) list.get(ii);
+            final ActionListener el = list.get(ii);
             if (el.equals(l)) {
                 list.remove(l);
             }
@@ -367,9 +367,9 @@ public abstract class SGDialog extends JDialog implements ActionListener,
      *            the command to notify to the listeners
      */
     protected void notifyToListener(final String command) {
-        ArrayList list = this.mActionListenerList;
+        ArrayList<ActionListener> list = this.mActionListenerList;
         for (int ii = 0; ii < list.size(); ii++) {
-            final ActionListener el = (ActionListener) list.get(ii);
+            final ActionListener el = list.get(ii);
             el.actionPerformed(this.getActionEvent(command));
         }
     }

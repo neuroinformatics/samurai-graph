@@ -39,7 +39,7 @@ import ucar.ma2.Array;
 import ucar.ma2.ArrayObject;
 import ucar.ma2.Index;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 import ch.systemsx.cisd.base.mdarray.MDDoubleArray;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
@@ -2853,7 +2853,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
      * @return true if succeeded
      */
 	@Override
-    protected boolean addVariables(NetcdfFileWriteable ncWrite) {
+    protected boolean addVariables(NetcdfFileWriter ncWrite) {
 
 		// get the number of points
 		final int num = this.getAllPointsNumber();
@@ -2879,7 +2879,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
 		this.getVariableNames(xNameList, yNameList, leNameList, ueNameList, tlNameList);
 
 		// add index dimension
-		Dimension indexDim = ncWrite.addDimension(INDEX_DIM_NAME, num);
+		Dimension indexDim = ncWrite.addDimension(null, INDEX_DIM_NAME, num);
 
 		// add time dimensions
 		Dimension timeDim = this.addTimeVariable(ncWrite);
@@ -2900,7 +2900,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
 				SGMDArrayVariable var = this.findVariable(name);
 				int[] dims = var.getDimensions();
 				final int len = dims[dimension];
-				pickUpDim = ncWrite.addDimension(PICKUP_DIM_NAME, len);
+				pickUpDim = ncWrite.addDimension(null, PICKUP_DIM_NAME, len);
 				break;
 			}
 		}
@@ -2995,7 +2995,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
     	this.addDimension(var, SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, pickUpDim, dimList);
     }
 
-	private boolean addDoubleVariable(NetcdfFileWriteable ncWrite, Dimension indexDim,
+	private boolean addDoubleVariable(NetcdfFileWriter ncWrite, Dimension indexDim,
 			Dimension timeDim, Dimension pickUpDim, String name) {
 		SGMDArrayVariable var = this.findVariable(name);
 		List<Dimension> dimList = new ArrayList<Dimension>();
@@ -3005,7 +3005,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
 		return this.addDoubleVariable(ncWrite, dimList, name);
 	}
 
-	private boolean addStringVariable(NetcdfFileWriteable ncWrite, Dimension indexDim,
+	private boolean addStringVariable(NetcdfFileWriter ncWrite, Dimension indexDim,
 			Dimension timeDim, Dimension pickUpDim, String name, final int maxStrLen) {
 		SGMDArrayVariable var = this.findVariable(name);
 		List<Dimension> dimList = new ArrayList<Dimension>();
@@ -3022,7 +3022,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
      *           a netCDF file
      * @return true if succeeded
      */
-    protected boolean writeData(NetcdfFileWriteable ncWrite) {
+    protected boolean writeData(NetcdfFileWriter ncWrite) {
 
 		// get the number of points
 		final int num = this.getAllPointsNumber();
@@ -3039,7 +3039,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
 		this.getVariableNames(xNameList, yNameList, leNameList, ueNameList, tlNameList);
 
 		// index
-		Dimension indexDim = ncWrite.findDimension(INDEX_DIM_NAME);
+		Dimension indexDim = ncWrite.getNetcdfFile().findDimension(INDEX_DIM_NAME);
 		if (!this.writeSequentialIntegerNumbers(ncWrite, INDEX_DIM_NAME, indexDim.getLength())) {
 			return false;
 		}
@@ -3050,7 +3050,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
     	}
 
 		// pickup
-		Dimension pickUpDim = ncWrite.findDimension(PICKUP_DIM_NAME);
+		Dimension pickUpDim = ncWrite.getNetcdfFile().findDimension(PICKUP_DIM_NAME);
 		if (pickUpDim != null) {
 			if (!this.writeSequentialIntegerNumbers(ncWrite, PICKUP_DIM_NAME, pickUpDim.getLength())) {
 				return false;
@@ -3101,7 +3101,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
     	return true;
     }
 
-    private boolean writeDoubleData(NetcdfFileWriteable ncWrite, List<String> nameList) {
+    private boolean writeDoubleData(NetcdfFileWriter ncWrite, List<String> nameList) {
 		for (int ii = 0; ii < nameList.size(); ii++) {
 			String varName = nameList.get(ii);
 			SGMDArrayVariable mdVar = this.findVariable(varName);
@@ -3109,7 +3109,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
 			Variable ncVar = ncWrite.findVariable(varName);
 			List<Dimension> ncDimList = ncVar.getDimensions();
 			for (Dimension dim : ncDimList) {
-				String dimName = dim.getName();
+				String dimName = dim.getShortName();
 				Integer index = null;
 				if (INDEX_DIM_NAME.equals(dimName)) {
 					index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
@@ -3142,7 +3142,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
 		return true;
     }
 
-    private boolean writeStringData(NetcdfFileWriteable ncWrite, List<String> nameList) {
+    private boolean writeStringData(NetcdfFileWriter ncWrite, List<String> nameList) {
 		for (int ii = 0; ii < nameList.size(); ii++) {
 			String varName = nameList.get(ii);
 			SGMDArrayVariable mdVar = this.findVariable(varName);
@@ -3150,7 +3150,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
 			Variable ncVar = ncWrite.findVariable(varName);
 			List<Dimension> ncDimList = ncVar.getDimensions();
 			for (Dimension dim : ncDimList) {
-				String dimName = dim.getName();
+				String dimName = dim.getShortName();
 				Integer index = null;
 				if (INDEX_DIM_NAME.equals(dimName)) {
 					index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
@@ -3183,11 +3183,11 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
 		return true;
     }
 
-    private boolean write1DStringArray(NetcdfFileWriteable ncWrite, String varName,
+    private boolean write1DStringArray(NetcdfFileWriter ncWrite, String varName,
     		List<Dimension> ncDimList, Map<String, Integer> mdArrayIndexMap, final int index) {
     	SGMDArrayVariable mdVar = this.findVariable(varName);
     	Dimension ncDim = ncDimList.get(0);
-    	Integer dimension = mdArrayIndexMap.get(ncDim.getName());
+    	Integer dimension = mdArrayIndexMap.get(ncDim.getShortName());
     	final int num = ncDim.getLength();
     	String[] textArray = new String[num];
         for (int ii = 0; ii < num; ii++) {
@@ -3205,7 +3205,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
 		return true;
     }
 
-    private boolean write2DStringArray(NetcdfFileWriteable ncWrite, String varName,
+    private boolean write2DStringArray(NetcdfFileWriter ncWrite, String varName,
     		List<Dimension> ncDimList, Map<String, Integer> mdArrayIndexMap, final int index) {
     	SGMDArrayVariable mdVar = this.findVariable(varName);
     	Integer timeDimIndex = mdArrayIndexMap.get(TIME_DIM_NAME);
@@ -3239,7 +3239,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData implements
 		return true;
     }
 
-    private boolean write3DStringArray(NetcdfFileWriteable ncWrite, String varName,
+    private boolean write3DStringArray(NetcdfFileWriter ncWrite, String varName,
     		List<Dimension> ncDimList, Map<String, Integer> mdArrayIndexMap, final int index) {
     	SGMDArrayVariable mdVar = this.findVariable(varName);
     	final int firstDimLen = this.getAllPointsNumber();

@@ -53,7 +53,7 @@ public class SGHDF5File extends SGMDArrayFile {
 	private static List<String> findDataSet(final IHDF5Reader reader, final String groupName,
 			final int depth) {
 		List<String> ret = new ArrayList<String>();
-		List<String> members = reader.getAllGroupMembers(groupName);
+		List<String> members = reader.object().getAllGroupMembers(groupName);
 		for (String member : members) {
 			StringBuffer sb = new StringBuffer();
 			if (depth > 0) {
@@ -62,18 +62,18 @@ public class SGHDF5File extends SGMDArrayFile {
 			}
 			sb.append(member);
 			String path = sb.toString();
-			if (reader.isDataSet(path)) {
+			if (reader.object().isDataSet(path)) {
 				if (canAccept(reader, path)) {
 					ret.add(path);
 				}
-			} else if (reader.isGroup(path)) {
-				List<String> groupMemberPaths = reader.getGroupMemberPaths(path);
+			} else if (reader.object().isGroup(path)) {
+				List<String> groupMemberPaths = reader.object().getGroupMemberPaths(path);
 				for (String groupMemberPath: groupMemberPaths) {
-					if (reader.isDataSet(groupMemberPath)) {
+					if (reader.object().isDataSet(groupMemberPath)) {
 						if (canAccept(reader, groupMemberPath)) {
 							ret.add(groupMemberPath);
 						}
-					} else if (reader.isGroup(groupMemberPath)) {
+					} else if (reader.object().isGroup(groupMemberPath)) {
 						List<String> list = findDataSet(reader, groupMemberPath, depth + 1);
 						ret.addAll(list);
 					}
@@ -116,7 +116,7 @@ public class SGHDF5File extends SGMDArrayFile {
      */
 	@Override
 	public String getPath() {
-		return this.mReader.getFile().getPath();
+		return this.mReader.file().getFile().getPath();
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class SGHDF5File extends SGMDArrayFile {
 			return false;
 		}
 		SGHDF5File hdf5file = (SGHDF5File) obj;
-		if (!this.mReader.getFile().equals(hdf5file.mReader.getFile())) {
+		if (!this.mReader.file().getFile().equals(hdf5file.mReader.file().getFile())) {
 			return false;
 		}
 		return true;
@@ -149,7 +149,7 @@ public class SGHDF5File extends SGMDArrayFile {
 	@Override
 	public List<SGAttribute> getAttributes() {
 		final String path = "/";
-		List<String> names = this.mReader.getAllAttributeNames(path);
+		List<String> names = this.mReader.object().getAllAttributeNames(path);
 		return SGDataUtility.findHDF5Attributes(this.mReader, path, names);
 	}
 }

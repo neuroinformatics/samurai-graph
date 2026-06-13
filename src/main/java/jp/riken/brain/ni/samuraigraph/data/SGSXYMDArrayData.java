@@ -25,7 +25,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 
 import org.w3c.dom.Element;
 
-import ucar.nc2.NetcdfFileWriteable;
+import ucar.nc2.NetcdfFileWriter;
 import ch.systemsx.cisd.base.mdarray.MDDoubleArray;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
 
@@ -1375,7 +1375,7 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
      * @return true if succeeded
      */
 	@Override
-    protected boolean addVariables(NetcdfFileWriteable ncWrite) {
+    protected boolean addVariables(NetcdfFileWriter ncWrite) {
     	// do nothing
     	return true;
     }
@@ -1388,7 +1388,7 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
      * @return true if succeeded
      */
 	@Override
-    protected boolean writeData(NetcdfFileWriteable ncWrite) {
+    protected boolean writeData(NetcdfFileWriter ncWrite) {
     	// do nothing
     	return true;
     }

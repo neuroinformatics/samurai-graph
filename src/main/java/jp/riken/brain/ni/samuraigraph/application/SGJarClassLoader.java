@@ -127,7 +127,14 @@ public class SGJarClassLoader extends ClassLoader {
         int idx = className.lastIndexOf('.');
         if (idx != -1) {
             String name = className.substring(0, idx);      // package name of given class
-            if (getPackage(name) == null) {
+            boolean found = false;
+            for (Package pkg : getPackages()) {
+                if (pkg.getName().equals(name)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
                 definePackage(name, null, null, null, null, null, null, null);   // define package by using its name.
                 return;
             }

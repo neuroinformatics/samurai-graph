@@ -30,6 +30,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
+import jp.riken.brain.ni.samuraigraph.base.SGINode;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
@@ -971,8 +972,8 @@ public class SGFigureElementGrid extends SGFigureElement2D implements
      * 
      * @return a list of chid nodes
      */
-    public ArrayList getChildNodes() {
-        return new ArrayList();
+    public ArrayList<SGINode> getChildNodes() {
+        return new ArrayList<SGINode>();
     }
 
     /**

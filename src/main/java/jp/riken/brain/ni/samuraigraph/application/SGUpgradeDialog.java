@@ -44,7 +44,7 @@ public class SGUpgradeDialog extends SGDialog {
         java.awt.GridBagConstraints gridBagConstraints;
 
         mPanel = new javax.swing.JPanel();
-        mUpgradeCycleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mUpgradeCycleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<String>();
         mUpgradeButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
         mUpgradeCycleLabel = new javax.swing.JLabel();
         mButtonPanel = new javax.swing.JPanel();
@@ -114,7 +114,7 @@ public class SGUpgradeDialog extends SGDialog {
     private jp.riken.brain.ni.samuraigraph.base.SGButton mOKButton;
     private javax.swing.JPanel mPanel;
     private jp.riken.brain.ni.samuraigraph.base.SGButton mUpgradeButton;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mUpgradeCycleComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mUpgradeCycleComboBox;
     private javax.swing.JLabel mUpgradeCycleLabel;
     // End of variables declaration//GEN-END:variables
 

@@ -532,7 +532,7 @@ class SGColorBarAxis extends SGAxisElement
         // draw focused anchors
         if (this.mAxisElement.isSymbolsVisibleAroundFocusedObjects()
                 && this.isSelected()) {
-            ArrayList pList = this.getAnchorPointList();
+            ArrayList<Point2D> pList = this.getAnchorPointList();
             SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(
                     pList, g2d);
         }
@@ -555,7 +555,7 @@ class SGColorBarAxis extends SGAxisElement
 
         // draw child anchors
         if (this.mAxisElement.isSymbolsVisibleAroundAllObjects()) {
-            ArrayList pList = this.getAnchorPointList();
+            ArrayList<Point2D> pList = this.getAnchorPointList();
             SGUtilityForFigureElementJava2D.drawAnchorAsChildObject(pList,
                     g2d);
         }
@@ -567,8 +567,8 @@ class SGColorBarAxis extends SGAxisElement
      * @return
      *         a list of points to draw anchors
      */
-    private ArrayList getAnchorPointList() {
-        ArrayList list = new ArrayList();
+    private ArrayList<Point2D> getAnchorPointList() {
+        ArrayList<Point2D> list = new ArrayList<Point2D>();
         Rectangle2D rect = this.getColorBarRectangle();
         final float x = (float) rect.getX();
         final float y = (float) rect.getY();
@@ -1640,8 +1640,9 @@ class SGColorBarAxis extends SGAxisElement
      * 
      * @return the list of child nodes
      */
-    public ArrayList getChildNodes() {
-        return new ArrayList();
+    @Override
+    public ArrayList<SGINode> getChildNodes() {
+        return new ArrayList<>();
     }
 
     /**

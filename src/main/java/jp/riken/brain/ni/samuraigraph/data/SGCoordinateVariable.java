@@ -53,7 +53,7 @@ public class SGCoordinateVariable extends SGNetCDFVariable {
 	 * @return the name
 	 */
 	public String getName() {
-		return this.mDimension.getName();
+		return this.mDimension.getShortName();
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class SGCoordinateVariable extends SGNetCDFVariable {
 	}
 
 	public int findDimensionIndex(final String name) {
-		if (this.mDimension.getName().equals(name)) {
+		if (this.mDimension.getShortName().equals(name)) {
 			return 0;
 		} else {
 			return -1;
@@ -137,7 +137,7 @@ public class SGCoordinateVariable extends SGNetCDFVariable {
 	 * @return the name to identify this variable
 	 */
 	public String getIdentifiableNameInPriorityOrder() {
-		return this.mDimension.getName();
+		return this.mDimension.getShortName();
 	}
 
 	/**

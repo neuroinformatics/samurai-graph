@@ -354,8 +354,8 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
      * 
      * @return a list of chid nodes
      */
-    public ArrayList getChildNodes() {
-        return new ArrayList();
+    public ArrayList<SGINode> getChildNodes() {
+        return new ArrayList<SGINode>();
     }
 
     /**

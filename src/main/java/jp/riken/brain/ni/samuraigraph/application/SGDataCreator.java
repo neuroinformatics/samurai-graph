@@ -1446,7 +1446,7 @@ public class SGDataCreator implements SGIConstants, SGIDataColumnTypeConstants, 
         if (dim == null) {
             return null;
         }
-        final String dimName = dim.getName();
+        final String dimName = dim.getShortName();
         SGIntegerSeriesSet indices = (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
         if (indices == null) {
         	Integer start = (Integer) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START);

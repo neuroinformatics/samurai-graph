@@ -905,8 +905,8 @@ public class SGClientPanel extends JLayeredPane implements
     public void mouseWheelMoved(MouseWheelEvent e) {
 
         final int amount = e.getScrollAmount() * e.getWheelRotation();
-        final int mod = e.getModifiers();
-        final boolean ctrl = ((mod & InputEvent.CTRL_MASK) != 0);
+        final int mod = e.getModifiersEx();
+        final boolean ctrl = ((mod & InputEvent.CTRL_DOWN_MASK) != 0);
         if (ctrl) {
             // zoom in / out
             
