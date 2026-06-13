@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
 import javax.swing.JColorChooser;
@@ -14,90 +13,84 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-/**
- * A dialog with a color chooser.
- * 
- */
+/** A dialog with a color chooser. */
 public class SGColorDialog extends JDialog {
 
-    private static final long serialVersionUID = 1972378173252289790L;
-    
-    public static final String TITLE = "Color Dialog";
+  private static final long serialVersionUID = 1972378173252289790L;
 
-    // a panel to set color chooser
-    private JPanel mColorChooserPanel = new JPanel();
+  public static final String TITLE = "Color Dialog";
 
-    // a color chooser object
-    private JColorChooser mColorChooser = new JColorChooser();
+  // a panel to set color chooser
+  private JPanel mColorChooserPanel = new JPanel();
 
-    /**
-     * Constructs a SGColorDialog.
-     */
-    public SGColorDialog(final Dialog parent) {
-        super(parent, false);
+  // a color chooser object
+  private JColorChooser mColorChooser = new JColorChooser();
 
-        // initialize
-        this.init();
-    }
+  /** Constructs a SGColorDialog. */
+  public SGColorDialog(final Dialog parent) {
+    super(parent, false);
 
-    private void init() {
-    	this.setTitle(TITLE);
-    	
-        // hides the preview panel
-        this.mColorChooser.setPreviewPanel(new JPanel());
+    // initialize
+    this.init();
+  }
 
-        // adds the color chooser to a color chooser panel
-        this.mColorChooserPanel.setLayout(new BorderLayout());
-        this.mColorChooserPanel.add(this.mColorChooser, BorderLayout.CENTER);
+  private void init() {
+    this.setTitle(TITLE);
 
-        // sets color chooser panel to this dialog
-        this.setContentPane(this.mColorChooserPanel);
+    // hides the preview panel
+    this.mColorChooser.setPreviewPanel(new JPanel());
 
-        // disables resize
-        this.setResizable(false);
+    // adds the color chooser to a color chooser panel
+    this.mColorChooserPanel.setLayout(new BorderLayout());
+    this.mColorChooserPanel.add(this.mColorChooser, BorderLayout.CENTER);
 
-        // enables to close this dialog when the Esc key is pressed
-        AbstractAction act = new AbstractAction("") {
-            private static final long serialVersionUID = 4743921657783211757L;
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
+    // sets color chooser panel to this dialog
+    this.setContentPane(this.mColorChooserPanel);
+
+    // disables resize
+    this.setResizable(false);
+
+    // enables to close this dialog when the Esc key is pressed
+    AbstractAction act =
+        new AbstractAction("") {
+          private static final long serialVersionUID = 4743921657783211757L;
+
+          public void actionPerformed(ActionEvent e) {
+            setVisible(false);
+          }
         };
-        InputMap imap = this.getRootPane().getInputMap(
-            JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close-it");
-        this.getRootPane().getActionMap().put("close-it", act);
-        
-        // packs
-        this.pack();
-    }
+    InputMap imap = this.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close-it");
+    this.getRootPane().getActionMap().put("close-it", act);
 
-    /**
-     * Returns the color chooser.
-     * 
-     * @return JColorChooser object
-     */
-    public JColorChooser getColorChooser() {
-        return this.mColorChooser;
-    }
+    // packs
+    this.pack();
+  }
 
-    /**
-     * Returns the selected color.
-     * 
-     * @return the selected color
-     */
-    public Color getSelectedColor() {
-    	return this.mColorChooser.getColor();
-    }
+  /**
+   * Returns the color chooser.
+   *
+   * @return JColorChooser object
+   */
+  public JColorChooser getColorChooser() {
+    return this.mColorChooser;
+  }
 
-    /**
-     * Sets the selected color.
-     * 
-     * @param color
-     *           the color to set
-     */
-    public void setSelectedColor(final Color color) {
-    	this.mColorChooser.setColor(color);
-    }
+  /**
+   * Returns the selected color.
+   *
+   * @return the selected color
+   */
+  public Color getSelectedColor() {
+    return this.mColorChooser.getColor();
+  }
 
+  /**
+   * Sets the selected color.
+   *
+   * @param color the color to set
+   */
+  public void setSelectedColor(final Color color) {
+    this.mColorChooser.setColor(color);
+  }
 }

@@ -2,159 +2,156 @@ package jp.riken.brain.ni.samuraigraph.figure;
 
 import java.awt.Color;
 import java.awt.Font;
-
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 
-/**
- * Constants for the two-dimensional scalar type data.
- */
+/** Constants for the two-dimensional scalar type data. */
 public interface SGISXYDataConstants extends SGIConstants {
-	
-	enum ELEMENT_TYPE {
-		Line,
-		Symbol,
-		Bar,
-		ErrorBar,
-		TickLabel,
-		Void,
-	};
 
-    public static final String KEY_SHIFT_X = "ShiftX";
-    
-    public static final String KEY_SHIFT_Y = "ShiftY";
+  enum ELEMENT_TYPE {
+    Line,
+    Symbol,
+    Bar,
+    ErrorBar,
+    TickLabel,
+    Void,
+  };
 
-    //
-    // Line
-    //
+  public static final String KEY_SHIFT_X = "ShiftX";
 
-    // Visible
-    public static final boolean DEFAULT_LINE_VISIBLE = true;
+  public static final String KEY_SHIFT_Y = "ShiftY";
 
-    // Width
-    public static final float DEFAULT_LINE_WIDTH = 1.0f;
+  //
+  // Line
+  //
 
-    // Type
-    public static final int DEFAULT_LINE_TYPE = SGILineConstants.LINE_TYPE_SOLID;
+  // Visible
+  public static final boolean DEFAULT_LINE_VISIBLE = true;
 
-    // Color
-    public static final Color DEFAULT_LINE_COLOR = Color.BLACK;
+  // Width
+  public static final float DEFAULT_LINE_WIDTH = 1.0f;
 
-    // Shift X
-    public static final double DEFAULT_LINE_SHIFT_X = 0.0;
-    
-    // Shift Y
-    public static final double DEFAULT_LINE_SHIFT_Y = 0.0;
-    
-    //
-    // Symbol
-    //
+  // Type
+  public static final int DEFAULT_LINE_TYPE = SGILineConstants.LINE_TYPE_SOLID;
 
-    // Visible
-    public static final boolean DEFAULT_SYMBOL_VISIBLE = false;
+  // Color
+  public static final Color DEFAULT_LINE_COLOR = Color.BLACK;
 
-    // Type
-    public static final int DEFAULT_SYMBOL_TYPE = SGISymbolConstants.SYMBOL_TYPE_CIRCLE;
+  // Shift X
+  public static final double DEFAULT_LINE_SHIFT_X = 0.0;
 
-    // Body Size
-    public static final float DEFAULT_SYMBOL_SIZE = 0.3f;
+  // Shift Y
+  public static final double DEFAULT_LINE_SHIFT_Y = 0.0;
 
-    // Body Color
-    public static final Color DEFAULT_SYMBOL_BODY_COLOR = Color.WHITE;
-    
-    // Body Transparency
-    public static final int DEFAULT_SYMBOL_BODY_TRANSPARENCY = SGTransparentPaint.ALL_OPAQUE_VALUE;
+  //
+  // Symbol
+  //
 
-    // Line Width
-    public static final float DEFAULT_SYMBOL_LINE_WIDTH = 1.0f;
+  // Visible
+  public static final boolean DEFAULT_SYMBOL_VISIBLE = false;
 
-    // Line Color
-    public static final Color DEFAULT_SYMBOL_LINE_COLOR = Color.BLACK;
-    
-    // Line Visible
-    public static final boolean DEFAULT_SYMBOL_LINE_VISIBLE = true;
+  // Type
+  public static final int DEFAULT_SYMBOL_TYPE = SGISymbolConstants.SYMBOL_TYPE_CIRCLE;
 
-    //
-    // Bar
-    //
+  // Body Size
+  public static final float DEFAULT_SYMBOL_SIZE = 0.3f;
 
-    // Visible
-    public static final boolean DEFAULT_BAR_VISIBLE = false;
+  // Body Color
+  public static final Color DEFAULT_SYMBOL_BODY_COLOR = Color.WHITE;
 
-    // Baseline
-    public static final double DEFAULT_BAR_BASELINE_VALUE = 0.0;
+  // Body Transparency
+  public static final int DEFAULT_SYMBOL_BODY_TRANSPARENCY = SGTransparentPaint.ALL_OPAQUE_VALUE;
 
-    // Body Width
-    public static final float DEFAULT_BAR_WIDTH = 0.5f;
+  // Line Width
+  public static final float DEFAULT_SYMBOL_LINE_WIDTH = 1.0f;
 
-    // Body Color
-    public static final Color DEFAULT_BAR_COLOR = Color.WHITE;
+  // Line Color
+  public static final Color DEFAULT_SYMBOL_LINE_COLOR = Color.BLACK;
 
-    // Edge Line Width
-    public static final float DEFAULT_BAR_EDGE_LINE_WIDTH = 0.5f;
+  // Line Visible
+  public static final boolean DEFAULT_SYMBOL_LINE_VISIBLE = true;
 
-    // Edge Line Color
-    public static final Color DEFAULT_BAR_EDGE_LINE_COLOR = Color.BLACK;
-    
-    // Edge Line Visible
-    public static final boolean DEFAULT_BAR_EDGE_LINE_VISIBLE = true;
+  //
+  // Bar
+  //
 
-    // Shift X
-    public static final double DEFAULT_BAR_SHIFT_X = 0.0;
-    
-    // Shift Y
-    public static final double DEFAULT_BAR_SHIFT_Y = 0.0;
-    
-    // Interval
-    public static final double DEFAULT_BAR_INTERVAL = 0.0;
-    
-    //
-    // Error Bar
-    //
+  // Visible
+  public static final boolean DEFAULT_BAR_VISIBLE = false;
 
-    // Visible
-    public static final boolean DEFAULT_ERROR_BAR_VISIBLE = true;
+  // Baseline
+  public static final double DEFAULT_BAR_BASELINE_VALUE = 0.0;
 
-    // Symbol Type
-    public static final int DEFAULT_ERROR_BAR_SYMBOL_TYPE = SGIErrorBarConstants.SYMBOL_TYPE_TRANSVERSELINE;
+  // Body Width
+  public static final float DEFAULT_BAR_WIDTH = 0.5f;
 
-    // Symbol Color
-    public static final Color DEFAULT_ERROR_BAR_COLOR = Color.BLACK;
+  // Body Color
+  public static final Color DEFAULT_BAR_COLOR = Color.WHITE;
 
-    // Symbol Size
-    public static final float DEFAULT_ERROR_BAR_SYMBOL_SIZE = 0.25f;
+  // Edge Line Width
+  public static final float DEFAULT_BAR_EDGE_LINE_WIDTH = 0.5f;
 
-    // Line Width
-    public static final float DEFAULT_ERROR_BAR_LINE_WIDTH = 1.0f;
+  // Edge Line Color
+  public static final Color DEFAULT_BAR_EDGE_LINE_COLOR = Color.BLACK;
 
-    // Style
-    public static final int DEFAULT_ERROR_BAR_STYLE = SGIErrorBarConstants.ERROR_BAR_BOTHSIDES;
+  // Edge Line Visible
+  public static final boolean DEFAULT_BAR_EDGE_LINE_VISIBLE = true;
 
-    // Error Bars Position
-    public static final boolean DEFAULT_ERROR_BAR_POSITION_IS_LINE = true;
-    
-    //
-    // Tick Label
-    //
+  // Shift X
+  public static final double DEFAULT_BAR_SHIFT_X = 0.0;
 
-    // Visible
-    public static final boolean DEFAULT_TICK_LABEL_VISIBLE = true;
+  // Shift Y
+  public static final double DEFAULT_BAR_SHIFT_Y = 0.0;
 
-    // Font
-    public static final String DEFAULT_TICK_LABEL_FONT_NAME = "Serif";
+  // Interval
+  public static final double DEFAULT_BAR_INTERVAL = 0.0;
 
-    public static final int DEFAULT_TICK_LABEL_FONT_STYLE = Font.PLAIN;
+  //
+  // Error Bar
+  //
 
-    // Size
-    public static final float DEFAULT_TICK_LABEL_FONT_SIZE = 16.0f;
+  // Visible
+  public static final boolean DEFAULT_ERROR_BAR_VISIBLE = true;
 
-    // Color
-    public static final Color DEFAULT_TICK_LABEL_FONT_COLOR = Color.BLACK;
+  // Symbol Type
+  public static final int DEFAULT_ERROR_BAR_SYMBOL_TYPE =
+      SGIErrorBarConstants.SYMBOL_TYPE_TRANSVERSELINE;
 
-    // Angle
-    public static final float DEFAULT_TICK_LABEL_ANGLE = 0.0f;
+  // Symbol Color
+  public static final Color DEFAULT_ERROR_BAR_COLOR = Color.BLACK;
 
-    // Tick label Position
-    public static final boolean DEFAULT_TICK_LABEL_POSITION_IS_LINE = true;
+  // Symbol Size
+  public static final float DEFAULT_ERROR_BAR_SYMBOL_SIZE = 0.25f;
 
+  // Line Width
+  public static final float DEFAULT_ERROR_BAR_LINE_WIDTH = 1.0f;
+
+  // Style
+  public static final int DEFAULT_ERROR_BAR_STYLE = SGIErrorBarConstants.ERROR_BAR_BOTHSIDES;
+
+  // Error Bars Position
+  public static final boolean DEFAULT_ERROR_BAR_POSITION_IS_LINE = true;
+
+  //
+  // Tick Label
+  //
+
+  // Visible
+  public static final boolean DEFAULT_TICK_LABEL_VISIBLE = true;
+
+  // Font
+  public static final String DEFAULT_TICK_LABEL_FONT_NAME = "Serif";
+
+  public static final int DEFAULT_TICK_LABEL_FONT_STYLE = Font.PLAIN;
+
+  // Size
+  public static final float DEFAULT_TICK_LABEL_FONT_SIZE = 16.0f;
+
+  // Color
+  public static final Color DEFAULT_TICK_LABEL_FONT_COLOR = Color.BLACK;
+
+  // Angle
+  public static final float DEFAULT_TICK_LABEL_ANGLE = 0.0f;
+
+  // Tick label Position
+  public static final boolean DEFAULT_TICK_LABEL_POSITION_IS_LINE = true;
 }

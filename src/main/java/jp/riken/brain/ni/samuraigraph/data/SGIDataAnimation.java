@@ -5,50 +5,40 @@ import jp.riken.brain.ni.samuraigraph.base.SGIAnimation;
 
 public interface SGIDataAnimation extends SGIAnimation {
 
-	/**
-	 * Prepares for the animation.
-	 * 
-	 */
-	public void prepareForChanges();
-	
-    /**
-     * Saves all changes of this data source.
-     *
-     */
-    public void saveChanges();
+  /** Prepares for the animation. */
+  public void prepareForChanges();
 
-    /**
-     * Cancels all changes of this data source.
-     *
-     */
-    public void cancelChanges();
+  /** Saves all changes of this data source. */
+  public void saveChanges();
 
-    /**
-     * Returns the name of data source.
-     *
-     * @return the name of this animation data source
-     */
-    public String getDataSourceName();
+  /** Cancels all changes of this data source. */
+  public void cancelChanges();
 
-    /**
-     * Returns the unit string of data source.
-     *
-     * @return the unit string of data source
-     */
-    public String getDataSourceUnitString();
+  /**
+   * Returns the name of data source.
+   *
+   * @return the name of this animation data source
+   */
+  public String getDataSourceName();
 
-    /**
-     * Returns the current value of data object.
-     *
-     * @return the current value of data object
-     */
-    public Number getCurrentValue();
+  /**
+   * Returns the unit string of data source.
+   *
+   * @return the unit string of data source
+   */
+  public String getDataSourceUnitString();
 
-    /**
-     * Returns the data.
-     *
-     * @return the data
-     */
-    public SGData getData();
+  /**
+   * Returns the current value of data object.
+   *
+   * @return the current value of data object
+   */
+  public Number getCurrentValue();
 
+  /**
+   * Returns the data.
+   *
+   * @return the data
+   */
+  public SGData getData();
 }
