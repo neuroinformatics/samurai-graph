@@ -36,7 +36,7 @@ public abstract class SGPropertyDialog extends SGDialog implements
     /**
      * List of the property setting listeners.
      */
-    protected List<SGIPropertyDialogObserver> mPropertyDialogObserverList = new ArrayList<SGIPropertyDialogObserver>();
+    protected transient List<SGIPropertyDialogObserver> mPropertyDialogObserverList = new ArrayList<SGIPropertyDialogObserver>();
 
     public SGPropertyDialog() {
         super();
@@ -569,7 +569,7 @@ public abstract class SGPropertyDialog extends SGDialog implements
     private String mInputErrorMessage = "";
 
     // The list of name of components set erroneous input value.
-    private final List<String> mInputErrorComponentNameList = new ArrayList<String>();
+    private transient final List<String> mInputErrorComponentNameList = new ArrayList<String>();
 
     private static final String ERR_MSG_HEADER = "The input values are illegal in the following components:\n";
 

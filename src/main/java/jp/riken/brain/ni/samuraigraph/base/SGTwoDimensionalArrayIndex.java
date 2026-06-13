@@ -42,6 +42,13 @@ public class SGTwoDimensionalArrayIndex implements SGIIndex {
 		}
 		return true;
 	}
+
+	@Override
+	public int hashCode() {
+		int result = mRow;
+		result = 31 * result + mColumn;
+		return result;
+	}
 	
     /**
      * Clones this object.

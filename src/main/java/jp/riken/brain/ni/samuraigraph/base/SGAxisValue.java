@@ -21,7 +21,7 @@ public abstract class SGAxisValue implements Comparable<SGAxisValue> {
 		if (!(o instanceof SGAxisValue)) {
 			throw new IllegalArgumentException("!(o instanceof SGAxisValue)");
 		}
-		SGAxisValue aValue = (SGAxisValue) o;
+		SGAxisValue aValue = o;
 		return Double.valueOf(this.getValue()).compareTo(Double.valueOf(aValue.getValue()));
 	}
 

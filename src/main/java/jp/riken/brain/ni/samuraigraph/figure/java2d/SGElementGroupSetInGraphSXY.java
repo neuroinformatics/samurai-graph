@@ -842,8 +842,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
         rectList.add(rectAll);
 
         // join the rectangles
-        @SuppressWarnings("rawtypes")
-        Rectangle2D uniRect = SGUtility.createUnion((ArrayList) rectList);
+        Rectangle2D uniRect = SGUtility.createUnion(rectList);
         if (uniRect == null) {
             return null;
         }
@@ -1418,7 +1417,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
      * @return true if succeeded
      *
      */
-    protected boolean setElementGroupProperties(List elementGroupPropertiesList) {
+    protected boolean setElementGroupProperties(List<SGProperties> elementGroupPropertiesList) {
 
         for (int ii = 0; ii < elementGroupPropertiesList.size(); ii++) {
             SGProperties gp = (SGProperties) elementGroupPropertiesList.get(ii);

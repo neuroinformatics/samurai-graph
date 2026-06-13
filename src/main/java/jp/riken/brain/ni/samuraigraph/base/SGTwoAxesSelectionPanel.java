@@ -46,9 +46,9 @@ public class SGTwoAxesSelectionPanel extends SGAxisSelectionPanel {
         this.mVerticalController.add(this.mRightLine);
     }
 
-    private SGExclusiveAccessController mHorizontalController = new SGExclusiveAccessController();
+    private transient SGExclusiveAccessController mHorizontalController = new SGExclusiveAccessController();
 
-    private SGExclusiveAccessController mVerticalController = new SGExclusiveAccessController();
+    private transient SGExclusiveAccessController mVerticalController = new SGExclusiveAccessController();
 
     protected void updateImage() {
         this.mAxisImagePanel.setTopSelected(this.isTopSelected());

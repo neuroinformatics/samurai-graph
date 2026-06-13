@@ -21,7 +21,7 @@ public class SGColorSelectionButton extends SGButton {
     // a flag whether the color is set to this button
     private boolean mColorSetFlag = true;
 
-    private Icon mColorSelectionButtonEmphasisIcon = null;
+    private transient Icon mColorSelectionButtonEmphasisIcon = null;
 
     static {
     	

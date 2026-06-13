@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 
@@ -19,6 +20,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGAxisStepValue;
 import jp.riken.brain.ni.samuraigraph.base.SGAxisValue;
 import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
+import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
@@ -117,7 +119,7 @@ public class SGXYFigureDialog extends SGPropertyDialog implements
         mBaselineYLabel = new javax.swing.JLabel();
         mBaselineYTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
         mGridLineTypeLabel = new javax.swing.JLabel();
-        mGridLineTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mGridLineTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mGridLineWidthLabel = new javax.swing.JLabel();
         mGridLineWidthSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mGridLineColorLabel = new javax.swing.JLabel();
@@ -696,7 +698,7 @@ public class SGXYFigureDialog extends SGPropertyDialog implements
     private javax.swing.JLabel mGridLineColorLabel;
     private javax.swing.JLabel mGridLineLabel;
     private javax.swing.JSeparator mGridLineSeparator;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mGridLineTypeComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mGridLineTypeComboBox;
     private javax.swing.JLabel mGridLineTypeLabel;
     private javax.swing.JLabel mGridLineWidthLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mGridLineWidthSpinner;
@@ -1340,8 +1342,9 @@ public class SGXYFigureDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getTextFieldComponentsList() {
-        final List list = this.getFormattedTextFieldsListFromSpinners();
+    public List<JTextField> getTextFieldComponentsList() {
+        final List<JTextField> list = new ArrayList<JTextField>();
+        list.addAll(this.getFormattedTextFieldsListFromSpinners());
         list.addAll(this.getAxisNumberTextFieldList());
         return list;
     }
@@ -1351,8 +1354,8 @@ public class SGXYFigureDialog extends SGPropertyDialog implements
      * 
      * @return
      */
-    public List getAxisNumberTextFieldList() {
-        ArrayList list = new ArrayList();
+    public List<SGTextField> getAxisNumberTextFieldList() {
+        ArrayList<SGTextField> list = new ArrayList<SGTextField>();
         list.add(this.mStepXTextField);
         list.add(this.mStepYTextField);
         list.add(this.mBaselineXTextField);
@@ -1363,8 +1366,8 @@ public class SGXYFigureDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getColorSelectionButtonsList() {
-        final ArrayList list = new ArrayList();
+    public List<SGColorSelectionButton> getColorSelectionButtonsList() {
+        final ArrayList<SGColorSelectionButton> list = new ArrayList<SGColorSelectionButton>();
         list.add(this.mBackgroundColorButton);
         list.add(this.mFrameColorButton);
         list.add(this.mGridLineColorButton);
@@ -1374,8 +1377,8 @@ public class SGXYFigureDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getSpinnerList() {
-        ArrayList list = new ArrayList();
+    public List<SGSpinner> getSpinnerList() {
+        ArrayList<SGSpinner> list = new ArrayList<SGSpinner>();
         list.add(this.mXSpinner);
         list.add(this.mYSpinner);
         list.add(this.mWidthSpinner);

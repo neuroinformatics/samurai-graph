@@ -70,7 +70,7 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
         }
         
         // set to attributes
-        this.mColors = (Color[]) colors.clone();
+        this.mColors = colors.clone();
         
         // initialize
         this.init();
@@ -112,7 +112,7 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
             SGColorMap model = (SGColorMap) super.clone();
             model.mAxis = (SGAxis) this.mAxis.clone();
             if (this.mColors != null) {
-                model.mColors = (Color[]) this.mColors.clone();
+                model.mColors = this.mColors.clone();
             }
             return model;
         } catch (CloneNotSupportedException ex) {
@@ -223,7 +223,7 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
      */
     public Color[] getColors() {
         if (this.mColors != null) {
-            return (Color[]) this.mColors.clone();
+            return this.mColors.clone();
         } else {
             return null;
         }
@@ -363,6 +363,13 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
     			return false;
     		}
     		return true;
+    	}
+
+    	@Override
+    	public int hashCode() {
+    		int result = java.util.Arrays.hashCode(colors);
+    		result = 31 * result + (reversedOrder ? 1 : 0);
+    		return result;
     	}
     	
     	@Override

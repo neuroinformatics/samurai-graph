@@ -17,7 +17,7 @@ public class SGImagePanel extends JPanel implements SGIDisposable {
     /**
      * An image object.
      */
-    private SGImage mImage = new SGImage(this);
+    private transient SGImage mImage = new SGImage(this);
 
     /**
      * 

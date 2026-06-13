@@ -108,4 +108,11 @@ public class SGAttribute {
 		return true;
 	}
 
+	@Override
+	public int hashCode() {
+		int result = mName.hashCode();
+		result = 31 * result + mValueList.hashCode();
+		return result;
+	}
+
 }

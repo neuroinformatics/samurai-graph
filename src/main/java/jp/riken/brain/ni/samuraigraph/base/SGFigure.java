@@ -454,7 +454,7 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
      */
     public SGIFigureElement[] getIFigureElementArray() {
         ArrayList<SGIFigureElement> list = new ArrayList<SGIFigureElement>(this.mFigureElementMap.values());
-        SGIFigureElement[] array = (SGIFigureElement[]) list
+        SGIFigureElement[] array = list
                 .toArray(new SGIFigureElement[] {});
         return array;
     }
@@ -566,7 +566,7 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
             throw new IllegalArgumentException("");
         }
 
-        final Class cl = f.getClass();
+        final Class<?> cl = f.getClass();
         Iterator<SGIFigureElement> itr = this.mFigureElementMap.values().iterator();
         while (itr.hasNext()) {
             final SGIFigureElement ff = itr.next();
@@ -1137,7 +1137,7 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
         List<SGData> list = this.getVisibleDataList();
         List<String> dNameList = new ArrayList<String>();
         for (int ii = 0; ii < list.size(); ii++) {
-            SGData data = (SGData) list.get(ii);
+            SGData data = list.get(ii);
             String dName = this.getDataName(data);
             dNameList.add(dName);
         }
@@ -3432,8 +3432,8 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
         // add an attribute for the index in legend
         SGIFigureElementLegend lElement = this.getLegendElement();
         for (int ii = 0; ii < elList.size(); ii++) {
-            Element el = (Element) elList.get(ii);
-            SGData data = (SGData) dataList.get(ii);
+            Element el = elList.get(ii);
+            SGData data = dataList.get(ii);
             final int index = lElement.getIndex(data);
             if (index < 0) {
         	return false;
@@ -3918,7 +3918,7 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
         // delete data objects
 		SGIFigureElement[] array = this.getIFigureElementArray();
         for (int ii = 0; ii < this.mDataList.size(); ii++) {
-            SGData data = (SGData) this.mDataList.get(ii);
+            SGData data = this.mDataList.get(ii);
 		    for (int jj = 0; jj < array.length; jj++) {
 		        array[jj].removeData(data);
 		    }
@@ -4032,6 +4032,23 @@ public abstract class SGFigure implements ActionListener, SGIConstants,
             	return false;
             }
             return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = Float.hashCode(mX);
+            result = 31 * result + Float.hashCode(mY);
+            result = 31 * result + Float.hashCode(mWidth);
+            result = 31 * result + Float.hashCode(mHeight);
+            result = 31 * result + Float.hashCode(mSpaceLineAndNumber);
+            result = 31 * result + Float.hashCode(mSpaceNumberAndTitle);
+            result = 31 * result + mBackgroundColor.hashCode();
+            result = 31 * result + (mTransparentFlag ? 1 : 0);
+            result = 31 * result + (mLegendVisibleFlag ? 1 : 0);
+            result = 31 * result + (mColorBarVisibleFlag ? 1 : 0);
+            result = 31 * result + (mAxisScaleVisibleFlag ? 1 : 0);
+            result = 31 * result + (mDataAnchorFlag ? 1 : 0);
+            return result;
         }
     }
 

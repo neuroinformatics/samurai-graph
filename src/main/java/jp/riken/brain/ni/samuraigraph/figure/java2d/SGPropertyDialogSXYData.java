@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 
@@ -128,7 +129,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
         mLineColorLabel = new javax.swing.JLabel();
         mLineColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
         mLineTypeLabel = new javax.swing.JLabel();
-        mLineTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mLineTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mLineConnectCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
         mLineSymbolLabel = new javax.swing.JLabel();
         mLineSymbolSeparator = new javax.swing.JSeparator();
@@ -136,7 +137,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
         mSymbolVisibleCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
         mSymbolTypePanel = new javax.swing.JPanel();
         mSymbolTypeLabel = new javax.swing.JLabel();
-        mSymbolTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mSymbolTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mSymbolBodyLabel = new javax.swing.JLabel();
         mSymbolBodySeparator = new javax.swing.JSeparator();
         mSymbolSizeLabel = new javax.swing.JLabel();
@@ -212,7 +213,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
         mErrorBarSymbolSizeSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mErrorBarColorLabel = new javax.swing.JLabel();
         mErrorBarTypeLabel = new javax.swing.JLabel();
-        mErrorBarTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mErrorBarTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mErrorBarColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
         mErrorBarStyleLabel = new javax.swing.JLabel();
         mErrorBarSymbolLabel = new javax.swing.JLabel();
@@ -245,8 +246,8 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
         mTickLabelFontSeparator = new javax.swing.JSeparator();
         mTickLabelTextLabel = new javax.swing.JLabel();
         mTickLanelAngleSeparator = new javax.swing.JSeparator();
-        mTickLabelFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
-        mTickLabelFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mTickLabelFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
+        mTickLabelFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mTickLabelFontNameLabel = new javax.swing.JLabel();
         mTickLabelFontStyleLabel = new javax.swing.JLabel();
         mTickLabelFormatLabel = new javax.swing.JLabel();
@@ -255,7 +256,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
         mTickLabelDecimalPlacesSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mTickLabelDecimalPlacesLabel = new javax.swing.JLabel();
         mTickLabelExponentLabel = new javax.swing.JLabel();
-        mTickLabelDateFormatComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mTickLabelDateFormatComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mExponentPanel = new javax.swing.JPanel();
         mTickLabelExponentSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mTickLabelExponentBaseLabel = new javax.swing.JLabel();
@@ -1740,7 +1741,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
     private javax.swing.JSeparator mErrorBarSymbolSeparator;
     private javax.swing.JLabel mErrorBarSymbolSizeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mErrorBarSymbolSizeSpinner;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mErrorBarTypeComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mErrorBarTypeComboBox;
     private javax.swing.JLabel mErrorBarTypeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mErrorBarUpsideRadioButton;
     private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mErrorBarVisibleCheckBox;
@@ -1757,7 +1758,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
     private javax.swing.JLabel mLineSymbolLabel;
     private javax.swing.JPanel mLineSymbolPanel;
     private javax.swing.JSeparator mLineSymbolSeparator;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mLineTypeComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mLineTypeComboBox;
     private javax.swing.JLabel mLineTypeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mLineVisibleCheckBox;
     private javax.swing.JLabel mLineWidthLabel;
@@ -1791,7 +1792,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mSymbolLineWidthSpinner;
     private javax.swing.JLabel mSymbolSizeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mSymbolSizeSpinner;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mSymbolTypeComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mSymbolTypeComboBox;
     private javax.swing.JLabel mSymbolTypeLabel;
     private javax.swing.JPanel mSymbolTypePanel;
     private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mSymbolVisibleCheckBox;
@@ -1801,7 +1802,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelAngleSpinner;
     private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mTickLabelColorButton;
     private javax.swing.JLabel mTickLabelColorLabel;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mTickLabelDateFormatComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mTickLabelDateFormatComboBox;
     private javax.swing.JLabel mTickLabelDateFormatLabel;
     private javax.swing.JLabel mTickLabelDecimalPlacesLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelDecimalPlacesSpinner;
@@ -1809,12 +1810,12 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
     private javax.swing.JLabel mTickLabelExponentLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelExponentSpinner;
     private javax.swing.JLabel mTickLabelFontLabel;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mTickLabelFontNameComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mTickLabelFontNameComboBox;
     private javax.swing.JLabel mTickLabelFontNameLabel;
     private javax.swing.JSeparator mTickLabelFontSeparator;
     private javax.swing.JLabel mTickLabelFontSizeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelFontSizeSpinner;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mTickLabelFontStyleComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mTickLabelFontStyleComboBox;
     private javax.swing.JLabel mTickLabelFontStyleLabel;
     private javax.swing.JLabel mTickLabelFormatLabel;
     private javax.swing.JPanel mTickLabelFormatPanel;
@@ -3042,8 +3043,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements
     /**
      *
      */
-    public List getTextFieldComponentsList() {
-        final List list = this.getFormattedTextFieldsListFromSpinners();
+    public List<JTextField> getTextFieldComponentsList() {
+        final List<JTextField> list = new ArrayList<JTextField>();
+        list.addAll(this.getFormattedTextFieldsListFromSpinners());
         list.addAll(this.getAxisNumberTextFieldList());
         list.add(this.mNameField);
         return list;

@@ -842,7 +842,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
      * @return true if succeeded
      * 
      */
-    protected boolean setElementGroupProperties(List elementGroupPropertiesList) {
+    protected boolean setElementGroupProperties(List<SGProperties> elementGroupPropertiesList) {
         for (int ii = 0; ii < elementGroupPropertiesList.size(); ii++) {
             SGProperties gp = (SGProperties) elementGroupPropertiesList.get(ii);
             SGElementGroup group = null;

@@ -404,7 +404,7 @@ public class SGFigureElementString extends SGFigureElement2D implements
         if (this.mSymbolsVisibleFlagAroundAllObjects) {
             for (int ii = 0; ii < list.size(); ii++) {
                 LabelElement el = (LabelElement) list.get(ii);
-                ArrayList pList = el.getAnchorPointList();
+                ArrayList<Point2D> pList = el.getAnchorPointList();
                 SGUtilityForFigureElementJava2D.drawAnchorAsChildObject(pList,
                         g2d);
             }
@@ -412,11 +412,11 @@ public class SGFigureElementString extends SGFigureElement2D implements
 
         // draw symbols around focused objects
         if (this.mSymbolsVisibleFlagAroundFocusedObjects) {
-            ArrayList fList = new ArrayList();
+            ArrayList<SGISelectable> fList = new ArrayList<>();
             this.getFocusedObjectsList(fList);
             for (int ii = 0; ii < fList.size(); ii++) {
                 LabelElement el = (LabelElement) fList.get(ii);
-                ArrayList pList = el.getAnchorPointList();
+                ArrayList<Point2D> pList = el.getAnchorPointList();
                 SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(
                         pList, g2d);
             }
@@ -555,7 +555,7 @@ public class SGFigureElementString extends SGFigureElement2D implements
         Rectangle2D graphRect = this.getGraphRect();
 
         List<SGIChildObject> sList = this.getVisibleChildList();
-        ArrayList rectList = new ArrayList();
+        ArrayList<Rectangle2D> rectList = new ArrayList<>();
         for (int ii = 0; ii < sList.size(); ii++) {
             LabelElement el = (LabelElement) sList.get(ii);
             rectList.add(el.getElementBounds());
@@ -567,7 +567,7 @@ public class SGFigureElementString extends SGFigureElement2D implements
 
         Rectangle2D sRect = SGUtility.createUnion(rectList);
 
-        ArrayList list = new ArrayList();
+        ArrayList<Rectangle2D> list = new ArrayList<>();
         list.add(graphRect);
         list.add(sRect);
 
@@ -1247,9 +1247,9 @@ public class SGFigureElementString extends SGFigureElement2D implements
     /**
      * 
      */
-    protected Set getAvailableChildSet() {
-        Set set = new HashSet();
-        List mList = this.getMementoList();
+    protected Set<SGIChildObject> getAvailableChildSet() {
+        Set<SGIChildObject> set = new HashSet<>();
+        List<SGProperties> mList = this.getMementoList();
         for (int ii = 0; ii < mList.size(); ii++) {
             StringElementProperties p = (StringElementProperties) mList.get(ii);
             set.addAll(p.visibleStringElementList);
@@ -1633,8 +1633,8 @@ public class SGFigureElementString extends SGFigureElement2D implements
          * 
          * @return
          */
-        private ArrayList getAnchorPointList() {
-            ArrayList list = new ArrayList();
+        private ArrayList<Point2D> getAnchorPointList() {
+            ArrayList<Point2D> list = new ArrayList<>();
 
             Rectangle2D rect = this.getElementBounds();
             final float x = (float) rect.getX();
@@ -2456,7 +2456,7 @@ public class SGFigureElementString extends SGFigureElement2D implements
      */
     public SGProperties getProperties() {
         StringElementProperties p = new StringElementProperties();
-        p.visibleStringElementList = new ArrayList(this.getVisibleChildList());
+        p.visibleStringElementList = new ArrayList<SGIChildObject>(this.getVisibleChildList());
         return p;
     }
 
@@ -2481,7 +2481,7 @@ public class SGFigureElementString extends SGFigureElement2D implements
      * 
      */
     public static class StringElementProperties extends SGProperties {
-        ArrayList visibleStringElementList = new ArrayList();
+        ArrayList<SGIChildObject> visibleStringElementList = new ArrayList<>();
 
         public StringElementProperties() {
             super();

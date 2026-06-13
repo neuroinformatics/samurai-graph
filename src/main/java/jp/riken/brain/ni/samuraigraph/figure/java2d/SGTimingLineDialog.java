@@ -6,14 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
+import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGISingleAxisDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGSingleAxisSelectionPanel;
+import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
+import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
@@ -65,7 +69,7 @@ public class SGTimingLineDialog extends SGPropertyDialog
         mColorLabel = new javax.swing.JLabel();
         mLineWidthSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
         mLineColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
-        mLineTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mLineTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mAnchoredCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
         mRightSpaceLabel = new javax.swing.JLabel();
         mLeftSpaceLabel = new javax.swing.JLabel();
@@ -241,7 +245,7 @@ public class SGTimingLineDialog extends SGPropertyDialog
     private javax.swing.JPanel mHeadPanel;
     private javax.swing.JLabel mLeftSpaceLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mLineColorButton;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mLineTypeComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mLineTypeComboBox;
     private javax.swing.JLabel mLineTypeLabel;
     private javax.swing.JLabel mLineWidthLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mLineWidthSpinner;
@@ -417,8 +421,8 @@ public class SGTimingLineDialog extends SGPropertyDialog
     /**
      * 
      */
-    public List getColorSelectionButtonsList() {
-        final List list = new ArrayList();
+    public List<SGColorSelectionButton> getColorSelectionButtonsList() {
+        final List<SGColorSelectionButton> list = new ArrayList<>();
         list.add(this.mLineColorButton);
         return list;
     }
@@ -426,8 +430,8 @@ public class SGTimingLineDialog extends SGPropertyDialog
     /**
      * 
      */
-    public List getTextFieldComponentsList() {
-        final List list = this.getFormattedTextFieldsListFromSpinners();
+    public List<JTextField> getTextFieldComponentsList() {
+        final List<JTextField> list = new ArrayList<>(this.getFormattedTextFieldsListFromSpinners());
         list.addAll(this.getAxisNumberTextFieldList());
         return list;
     }
@@ -437,8 +441,8 @@ public class SGTimingLineDialog extends SGPropertyDialog
      * 
      * @return
      */
-    public List getAxisNumberTextFieldList() {
-        final List list = new ArrayList();
+    public List<SGTextField> getAxisNumberTextFieldList() {
+        final List<SGTextField> list = new ArrayList<>();
         list.add(this.mValueTextField);
         return list;
     }
@@ -446,8 +450,8 @@ public class SGTimingLineDialog extends SGPropertyDialog
     /**
      * 
      */
-    public List getSpinnerList() {
-        List list = new ArrayList();
+    public List<SGSpinner> getSpinnerList() {
+        List<SGSpinner> list = new ArrayList<>();
         list.add(this.mLineWidthSpinner);
         return list;
     }

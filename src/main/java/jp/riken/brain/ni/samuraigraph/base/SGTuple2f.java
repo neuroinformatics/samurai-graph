@@ -130,6 +130,13 @@ public class SGTuple2f implements Cloneable {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        int result = Float.hashCode(x);
+        result = 31 * result + Float.hashCode(y);
+        return result;
+    }
+
     /**
      * Clear both components.
      * 

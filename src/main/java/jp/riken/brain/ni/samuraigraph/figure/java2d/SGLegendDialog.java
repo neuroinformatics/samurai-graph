@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 
@@ -74,9 +75,9 @@ public class SGLegendDialog extends SGPropertyDialog implements
         mFontFamilyLabel = new javax.swing.JLabel();
         mFontSizeLabel = new javax.swing.JLabel();
         mStringColorLabel = new javax.swing.JLabel();
-        mFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mFontSizeSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-        mFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox();
+        mFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
         mStringColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
         mStringLabel = new javax.swing.JLabel();
         mStringSeparator = new javax.swing.JSeparator();
@@ -506,10 +507,10 @@ public class SGLegendDialog extends SGPropertyDialog implements
     private jp.riken.brain.ni.samuraigraph.base.SGButton mCancelButton;
     private javax.swing.JSeparator mDataSeparator;
     private javax.swing.JLabel mFontFamilyLabel;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mFontNameComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mFontNameComboBox;
     private javax.swing.JLabel mFontSizeLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGSpinner mFontSizeSpinner;
-    private jp.riken.brain.ni.samuraigraph.base.SGComboBox mFontStyleComboBox;
+    private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mFontStyleComboBox;
     private javax.swing.JLabel mFontStyleLabel;
     private javax.swing.JLabel mFrameLabel;
     private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mFrameLineColorButton;
@@ -1123,8 +1124,9 @@ public class SGLegendDialog extends SGPropertyDialog implements
     /**
      * 
      */
-    public List getTextFieldComponentsList() {
-        final List list = this.getFormattedTextFieldsListFromSpinners();
+    public List<JTextField> getTextFieldComponentsList() {
+        final List<JTextField> list = new ArrayList<JTextField>();
+        list.addAll(this.getFormattedTextFieldsListFromSpinners());
         list.addAll(this.getAxisNumberTextFieldList());
         return list;
     }
@@ -1398,7 +1400,7 @@ public class SGLegendDialog extends SGPropertyDialog implements
         final Number dataWidth = this.getSymbolSpan();
 
         // check values
-        ArrayList list = new ArrayList();
+        ArrayList<String> list = new ArrayList<String>();
         if (legend.hasValidXAxisValue(xConfig, xValue) == false) {
             list.add("X");
         }
@@ -1410,7 +1412,7 @@ public class SGLegendDialog extends SGPropertyDialog implements
             sb.append(ERRMSG_AXIS_VALUE_INVALID);
             sb.append(":\n");
             for (int ii = 0; ii < list.size(); ii++) {
-                String str = (String) list.get(ii);
+                String str = list.get(ii);
                 sb.append('-');
                 sb.append(str);
                 sb.append('\n');
