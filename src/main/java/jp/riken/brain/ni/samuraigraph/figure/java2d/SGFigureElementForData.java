@@ -526,7 +526,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
     // create tick label instance
     SGElementGroupTickLabel tickLabels = groupSet.createTickLabels(data);
 
-    if (!multiple) {
+    if (!multiple && data != null) {
       // set decimal places and exponents of data object to tick labels
       final int dp = data.getDecimalPlaces();
       final int exp = data.getExponent();

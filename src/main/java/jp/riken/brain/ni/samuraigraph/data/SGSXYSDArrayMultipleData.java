@@ -393,11 +393,11 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     for (int ii = 0; ii < dataArray.length; ii++) {
       Integer x = by ? xIndex : this.mXIndices[ii];
       Integer y = by ? this.mYIndices[ii] : yIndex;
-      Integer le = be ? lArray[ii] : null;
-      Integer ue = be ? uArray[ii] : null;
-      Integer eh = be ? ehArray[ii] : null;
-      Integer t = bt ? tArray[ii] : null;
-      Integer th = bt ? thArray[ii] : null;
+      Integer le = (be && lArray != null) ? lArray[ii] : null;
+      Integer ue = (be && uArray != null) ? uArray[ii] : null;
+      Integer eh = (be && ehArray != null) ? ehArray[ii] : null;
+      Integer t = (bt && tArray != null) ? tArray[ii] : null;
+      Integer th = (bt && thArray != null) ? thArray[ii] : null;
       SGSXYSDArrayData data =
           new SGSXYSDArrayData(
               this.getDataFile(),
@@ -1277,10 +1277,11 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       uIndices = uList.toArray(new Integer[uList.size()]);
     }
     Integer[] ehIndices = null;
-    if (lList.size() != 0) {
+    if (lList.size() != 0 && lIndices != null && uIndices != null) {
       ehIndices = new Integer[lList.size()];
       List<Integer> ehueList = new ArrayList<Integer>();
       for (int ii = 0; ii < ehIndices.length; ii++) {
+        if (uIndices[ii] == null) return false;
         String str = columns[uIndices[ii].intValue()];
         Integer eh = SGDataUtility.getAppendedColumnIndex(str, columnTitles);
         if (eh == null) {
@@ -1289,6 +1290,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         ehueList.add(eh);
       }
       for (int ii = 0; ii < ehIndices.length; ii++) {
+        if (lIndices[ii] == null) return false;
         String str = columns[lIndices[ii].intValue()];
         Integer eh = SGDataUtility.getAppendedColumnIndex(str, columnTitles);
         if (eh == null) {
@@ -1306,9 +1308,10 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       tIndices = tList.toArray(new Integer[tList.size()]);
     }
     Integer[] thIndices = null;
-    if (tList.size() != 0) {
+    if (tList.size() != 0 && tIndices != null) {
       thIndices = new Integer[tList.size()];
       for (int ii = 0; ii < thIndices.length; ii++) {
+        if (tIndices[ii] == null) return false;
         String str = columns[tIndices[ii].intValue()];
         Integer th = SGDataUtility.getAppendedColumnIndex(str, columnTitles);
         if (th == null) {
@@ -1583,7 +1586,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     SGDataColumn[] columns = this.getDataFile().mDataColumns;
     boolean[] sameErrorVariableFlags = be ? this.getSameErrorVariableFlags() : null;
     int len = this.mXIndices.length + this.mYIndices.length;
-    if (be) {
+    if (be && sameErrorVariableFlags != null) {
       for (int ii = 0; ii < sameErrorVariableFlags.length; ii++) {
         final int num = sameErrorVariableFlags[ii] ? 1 : 2;
         len += num;
@@ -1602,7 +1605,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       colArray[ii + offset] = columns[this.mYIndices[ii].intValue()];
     }
     offset += this.mYIndices.length;
-    if (be) {
+    if (be && sameErrorVariableFlags != null && this.mLowerErrorIndices != null && this.mUpperErrorIndices != null) {
       int tmp = offset;
       int cnt = 0;
       for (int ii = 0; ii < sameErrorVariableFlags.length; ii++) {

@@ -388,10 +388,8 @@ public class SGStringElementDialog extends SGPropertyDialog
     this.setTitle(SGStringElementDialog.TITLE);
 
     // set up the combo boxes
-    @SuppressWarnings("unchecked")
     JComboBox<String> fontNameCb = this.mFontNameComboBox;
     this.initFontFamilyNameComboBox(fontNameCb);
-    @SuppressWarnings("unchecked")
     JComboBox<String> fontStyleCb = this.mFontStyleComboBox;
     this.initFontStyleComboBox(fontStyleCb);
 

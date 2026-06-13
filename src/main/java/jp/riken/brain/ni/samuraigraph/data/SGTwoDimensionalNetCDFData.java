@@ -129,7 +129,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
       this.checkNonCoordinateVariable(yVar, indexDim);
     } else {
       Dimension xDim, yDim;
-      if (xIndexInfo != null) {
+      if (xIndexInfo != null && xIndexVar != null) {
         xDim = xIndexVar.getDimension(0);
         this.checkNonCoordinateVariable(xVar, xDim);
       } else {
@@ -139,7 +139,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
         }
         xDim = xVar.getDimension(0);
       }
-      if (yIndexInfo != null) {
+      if (yIndexInfo != null && yIndexVar != null) {
         yDim = yIndexVar.getDimension(0);
         this.checkNonCoordinateVariable(yVar, yDim);
       } else {

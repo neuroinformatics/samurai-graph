@@ -369,7 +369,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     SGMDArrayVariable[] leVars = null;
     SGMDArrayVariable[] ueVars = null;
     SGMDArrayVariable[] ehVars = null;
-    if (leInfo != null && leInfo.length != 0) {
+    if (leInfo != null && leInfo.length != 0 && ueInfo != null && ehInfo != null) {
       leVars = new SGMDArrayVariable[leInfo.length];
       for (int ii = 0; ii < leInfo.length; ii++) {
         SGMDArrayVariable var = this.initVariable(mdFile, leInfo[ii]);
@@ -413,7 +413,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     }
     SGMDArrayVariable[] tlVars = null;
     SGMDArrayVariable[] thVars = null;
-    if (tlInfo != null && tlInfo.length != 0) {
+    if (tlInfo != null && tlInfo.length != 0 && thInfo != null) {
       tlVars = new SGMDArrayVariable[tlInfo.length];
       for (int ii = 0; ii < tlInfo.length; ii++) {
         SGMDArrayVariable var = this.initVariable(mdFile, tlInfo[ii]);
@@ -531,10 +531,10 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       throw new IllegalArgumentException("Both of x and y indices are invalid.");
     }
     Map<String, Integer> pickUpDimMap = new HashMap<String, Integer>();
-    if (xValid) {
+    if (xValid && xInfo != null) {
       pickUpDimMap.put(xInfo.getName(), xPickUpDim);
     }
-    if (yValid) {
+    if (yValid && yInfo != null) {
       pickUpDimMap.put(yInfo.getName(), yPickUpDim);
     }
 
@@ -1447,7 +1447,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
             Integer pickUpDim = var.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
             origins[pickUpDim] = pickUpIndices[ii];
           }
-          if (leVar != null && ueVar != null) {
+          if (leVar != null && ueVar != null && leInfo != null && ueInfo != null) {
             if (varName.equals(leVar.getName())) {
               final Integer index = leInfo.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
               if (index != null && index != -1) {
@@ -1460,7 +1460,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
               }
             }
           }
-          if (tlVar != null) {
+          if (tlVar != null && tlInfo != null) {
             if (varName.equals(tlVar.getName())) {
               final Integer index = tlInfo.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
               if (index != null && index != -1) {
@@ -3309,18 +3309,20 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     Integer genericIndex = var.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
     Integer pickUpIndex = var.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
     Integer timeIndex = var.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
+    final int pIdx = (pickUpIndex != null) ? pickUpIndex.intValue() : -1;
+    final int tIdx = (timeIndex != null) ? timeIndex.intValue() : -1;
     int[] dimension = var.getDimensions();
     final int genericNum = dimension[genericIndex];
-    final int pickUpNum = (pickUpIndex != null && pickUpIndex != -1) ? dimension[pickUpIndex] : -1;
-    final int timeNum = (timeIndex != null && timeIndex != -1) ? dimension[timeIndex] : -1;
+    final int pickUpNum = (pIdx != -1) ? dimension[pIdx] : -1;
+    final int timeNum = (tIdx != -1) ? dimension[tIdx] : -1;
     for (int ii = 0; ii < genericNum; ii++) {
       if (pickUpNum != -1 && timeNum != -1) {
         for (int jj = 0; jj < pickUpNum; jj++) {
           for (int kk = 0; kk < timeNum; kk++) {
             int[] origins = var.getOrigins();
             origins[genericIndex] = ii;
-            origins[pickUpIndex] = jj;
-            origins[timeIndex] = kk;
+            origins[pIdx] = jj;
+            origins[tIdx] = kk;
             maxLength = this.getMaxLength(var, origins, maxLength);
           }
         }
@@ -3328,7 +3330,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         for (int jj = 0; jj < pickUpNum; jj++) {
           int[] origins = var.getOrigins();
           origins[genericIndex] = ii;
-          origins[pickUpIndex] = jj;
+          origins[pIdx] = jj;
           maxLength = this.getMaxLength(var, origins, maxLength);
         }
 
@@ -3336,7 +3338,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         for (int kk = 0; kk < timeNum; kk++) {
           int[] origins = var.getOrigins();
           origins[genericIndex] = ii;
-          origins[timeIndex] = kk;
+          origins[tIdx] = kk;
           maxLength = this.getMaxLength(var, origins, maxLength);
         }
       } else {
@@ -3611,7 +3613,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       if (this.mYVariables == null || this.mYVariables.length == 0) {
         yDataTypes = new MDArrayDataType[1];
         final VALUE_TYPE valueType = shift ? VALUE_TYPE.FLOAT : VALUE_TYPE.INTEGER;
-        xDataTypes[0] = new MDArrayDataType(valueType);
+        yDataTypes[0] = new MDArrayDataType(valueType);
       } else {
         yDataTypes = new MDArrayDataType[this.mYVariables.length];
         for (int ii = 0; ii < this.mYVariables.length; ii++) {

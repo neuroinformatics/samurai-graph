@@ -1087,6 +1087,9 @@ public abstract class SGNetCDFData extends SGArrayData
     if (dim1Array != null) {
       ret = dim1Array;
     } else {
+      if (dim2Array == null) {
+        return null;
+      }
       boolean reversed = false;
       if (!cDimList.equals(redDimList)) {
         reversed = true;

@@ -214,7 +214,7 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
       holderValues = yHolderFlag ? yValues : xValues;
     }
     if (leValues != null && ueValues != null) {
-      if (leValues.length != holderValues.length) {
+      if (holderValues == null || leValues.length != holderValues.length) {
         throw new IllegalArgumentException("leValues.length != multipleValues.length");
       }
       if (leValues.length != ueValues.length) {
@@ -261,7 +261,7 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
       this.mSameErrorVariableFlags = sameErrorVariableFlags.clone();
     }
     if (tickLabels != null) {
-      if (tickLabels.length != holderValues.length) {
+      if (holderValues == null || tickLabels.length != holderValues.length) {
         throw new IllegalArgumentException("tickLabels.length != multipleValues.length");
       }
       this.mTickLabels = this.copyValues(tickLabels);
@@ -458,16 +458,16 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
         (this.mSameErrorVariableFlags != null) ? new Boolean[indices.length] : null;
     String[][] tickLabels = (this.mTickLabels != null) ? new String[indices.length][] : null;
     for (int ii = 0; ii < indices.length; ii++) {
-      if (this.mLowerErrorValues != null) {
+      if (lowerErrorValues != null) {
         lowerErrorValues[ii] = this.mLowerErrorValues[indices[ii]];
       }
-      if (this.mUpperErrorValues != null) {
+      if (upperErrorValues != null) {
         upperErrorValues[ii] = this.mUpperErrorValues[indices[ii]];
       }
-      if (this.mSameErrorVariableFlags != null) {
+      if (sameErrorVariableFlags != null) {
         sameErrorVariableFlags[ii] = this.mSameErrorVariableFlags[indices[ii]];
       }
-      if (this.mTickLabels != null) {
+      if (tickLabels != null) {
         tickLabels[ii] = this.mTickLabels[indices[ii]];
       }
     }

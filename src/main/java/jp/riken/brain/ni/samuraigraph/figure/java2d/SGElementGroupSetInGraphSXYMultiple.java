@@ -618,14 +618,22 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       }
       elLineStyles.appendChild(elLineStyle);
     }
-    elLine.appendChild(elLineStyles);
+    if (elLine != null) {
+      elLine.appendChild(elLineStyles);
+    } else {
+      el.appendChild(elLineStyles);
+    }
 
     // color maps
     Element elColorMaps = this.mLineColorMapManager.createElement(document, params);
     if (elColorMaps == null) {
       return null;
     }
-    elLine.appendChild(elColorMaps);
+    if (elLine != null) {
+      elLine.appendChild(elColorMaps);
+    } else {
+      el.appendChild(elColorMaps);
+    }
 
     return el;
   }
@@ -2822,6 +2830,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
               pickUpEnd,
               pickUpStep,
               SGPropertyResults.INVALID_INPUT_VALUE);
+          return;
         }
         Dimension dim = pickUpVar.getDimension(0);
         final int len = dim.getLength();
