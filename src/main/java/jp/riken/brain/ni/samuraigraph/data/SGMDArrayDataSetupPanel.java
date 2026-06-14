@@ -6,11 +6,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -2446,23 +2443,20 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     this.mSXYDataPickUpDimensionIndexPanel.clearAll();
 
     SGDataColumnInfo[] cols = this.getDataColumnInfoArray();
-    @SuppressWarnings("unchecked")
-    Map<String, Integer> dimensionIndexMap =
-        (Map<String, Integer>)
-            infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP);
+    Map<?, ?> dimensionIndexMap =
+        (infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
+                instanceof Map<?, ?> m)
+            ? m
+            : null;
     if (dimensionIndexMap != null) {
       this.mSXYDataPickUpDimensionIndexPanel.setEnabled(true);
       SGIntegerSeriesSet indices =
           (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
       List<String> pickUpDimensionList = new ArrayList<String>();
-      Set<Entry<String, Integer>> dimensionIndexEntrySet = dimensionIndexMap.entrySet();
-      Iterator<Entry<String, Integer>> dimensionIndexEntryIterator =
-          dimensionIndexEntrySet.iterator();
-      while (dimensionIndexEntryIterator.hasNext()) {
-        Entry<String, Integer> entry = dimensionIndexEntryIterator.next();
-        Integer index = entry.getValue();
+      for (Map.Entry<?, ?> entry : dimensionIndexMap.entrySet()) {
+        String name = (String) entry.getKey();
+        Integer index = (Integer) entry.getValue();
         if (this.isValidDimensionIndex(index)) {
-          String name = entry.getKey();
           SGMDArrayDataColumnInfo mdCol =
               (SGMDArrayDataColumnInfo) SGDataUtility.findColumnWithName(cols, name);
           String columnType = mdCol.getColumnType();

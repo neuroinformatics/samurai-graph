@@ -3054,7 +3054,7 @@ public class SGDrawingWindow extends JFrame
    */
   public List<SGData> getCopiedObjectsDataList() {
     List<SGData> list = new ArrayList<SGData>();
-    SGUtility.copyObjects(this.mCopiedDataObjectsList, list);
+    SGUtility.copyObjects((List<? extends SGICopiable>) this.mCopiedDataObjectsList, list);
     return list;
   }
 

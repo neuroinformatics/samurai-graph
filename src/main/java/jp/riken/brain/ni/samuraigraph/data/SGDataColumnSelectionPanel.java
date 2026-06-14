@@ -588,20 +588,18 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     }
 
     /** Returns the combo box component. */
-    @SuppressWarnings("unchecked")
     public Component getTableCellEditorComponent(
         JTable table, Object value, boolean isSelected, int row, int column) {
 
       String[] items = getColumnTypeEditorComboBoxItems(row);
 
       // set up new combo box items
-      JComboBox<String> cb =
-          (JComboBox<String>)
-              super.getTableCellEditorComponent(table, value, isSelected, row, column);
+      Component comp = super.getTableCellEditorComponent(table, value, isSelected, row, column);
+      if (comp instanceof JComboBox cb) {
+        setColumnTypeEditorComboBoxItems(cb, items, value);
+      }
 
-      setColumnTypeEditorComboBoxItems(cb, items, value);
-
-      return cb;
+      return comp;
     }
   }
 
@@ -617,10 +615,9 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
      *
      * @param comboBox
      */
-    @SuppressWarnings("unchecked")
     public DataColumnCellRenderer(JComboBox<?> cb) {
       super();
-      this.mComboBox = (SGComboBox<Object>) cb;
+      this.mComboBox = new SGComboBox<Object>();
     }
 
     /** Returns the combo box component. */
@@ -965,7 +962,7 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     return this.mTable.getValueAt(dataColumnIndex, tableColumnIndex);
   }
 
-  void setColumnTypeEditorComboBoxItems(JComboBox<String> cb, String[] items, Object selectedItem) {
+  void setColumnTypeEditorComboBoxItems(JComboBox<?> cb, String[] items, Object selectedItem) {
     cb.removeAllItems();
     for (int ii = 0; ii < items.length; ii++) {
       this.mColumnTypeEditorComboBox.addItem(items[ii]);

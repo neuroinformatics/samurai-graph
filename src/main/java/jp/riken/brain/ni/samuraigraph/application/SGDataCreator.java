@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import jp.riken.brain.ni.samuraigraph.base.SGBufferedFileReader;
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer.Token;
@@ -2137,16 +2136,12 @@ public class SGDataCreator
   }
 
   private boolean setTimeIndexMap(SGMDArrayData mdData, Map<String, Object> infoMap) {
-    @SuppressWarnings("unchecked")
-    Map<String, Integer> timeIndexMap =
-        (Map<String, Integer>)
-            infoMap.get(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP);
-    if (timeIndexMap != null) {
-      Iterator<Entry<String, Integer>> itr = timeIndexMap.entrySet().iterator();
-      while (itr.hasNext()) {
-        Entry<String, Integer> entry = itr.next();
-        String name = entry.getKey();
-        Integer dim = entry.getValue();
+    Object timeIndexMapObj =
+        infoMap.get(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP);
+    if (timeIndexMapObj instanceof Map<?, ?> timeIndexMap) {
+      for (Map.Entry<?, ?> entry : timeIndexMap.entrySet()) {
+        String name = (String) entry.getKey();
+        Integer dim = (Integer) entry.getValue();
         if (!mdData.setTimeDimensionIndex(name, dim)) {
           return false;
         }
@@ -2679,11 +2674,11 @@ public class SGDataCreator
 
     } else {
 
-      @SuppressWarnings("unchecked")
-      Map<String, Integer> pickUpDimensionIndexMap =
-          (Map<String, Integer>)
-              infoMap.get(
-                  SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP);
+      Map<?, ?> pickUpDimensionIndexMap =
+          (infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
+                  instanceof Map<?, ?> m)
+              ? m
+              : null;
 
       int[] dimIndices = indices.getNumbers();
       for (int ii = 0; ii < dimIndices.length; ii++) {
@@ -2713,14 +2708,11 @@ public class SGDataCreator
 
         Map<String, int[]> originMap = data.getOriginMap();
 
-        Iterator<Entry<String, Integer>> pickUpDimensionIndexItr =
-            pickUpDimensionIndexMap.entrySet().iterator();
-        while (pickUpDimensionIndexItr.hasNext()) {
-          Entry<String, Integer> entry = pickUpDimensionIndexItr.next();
-          String name = entry.getKey();
-          Integer pIndex = entry.getValue();
+        for (Map.Entry<?, ?> entry : pickUpDimensionIndexMap.entrySet()) {
+          String name = (String) entry.getKey();
+          Integer pIndex = (Integer) entry.getValue();
           if (pIndex != -1) {
-            Integer pickUpDim = pickUpDimensionIndexMap.get(name);
+            Integer pickUpDim = (Integer) pickUpDimensionIndexMap.get(name);
             int[] origins = originMap.get(name).clone();
             origins[pickUpDim] = pickUpIndex;
             data.setOrigin(name, origins);

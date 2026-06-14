@@ -1808,7 +1808,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param objList the object list
    * @return true if succeeded
    */
-  @SuppressWarnings("unchecked")
   protected <T> boolean moveFocusedObjects(final boolean toTail, final List<T> objList) {
     // get the focused objects
     List<SGISelectable> list = this.getFocusedObjectsList();
@@ -1822,13 +1821,11 @@ public abstract class SGFigureElement implements SGIFigureElement {
     // move focused objects
     if (toTail) {
       for (int ii = 0; ii < list.size(); ii++) {
-        Object el = list.get(ii);
-        SGUtility.moveObjectToTail((T) el, objList);
+        SGUtility.moveObjectToRawList(list.get(ii), objList, true);
       }
     } else {
       for (int ii = list.size() - 1; ii >= 0; ii--) {
-        Object el = list.get(ii);
-        SGUtility.moveObjectToHead((T) el, objList);
+        SGUtility.moveObjectToRawList(list.get(ii), objList, false);
       }
     }
 
@@ -1848,7 +1845,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param objList the object list
    * @return true if succeeded
    */
-  @SuppressWarnings("unchecked")
   protected <T> boolean moveFocusedObjects(final int num, final List<T> objList) {
     // get the focused objects
     List<SGISelectable> list = this.getFocusedObjectsList();
@@ -1858,7 +1854,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
     // record the list before edited
     List<T> objListOld = new ArrayList<>(objList);
-    if (SGUtility.moveObject((List<T>) (List<?>) list, objList, num) == false) {
+    if (SGUtility.moveObjectRawList(list, objList, num) == false) {
       return false;
     }
 

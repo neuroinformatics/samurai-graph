@@ -1332,15 +1332,20 @@ public class SGDefaultColumnTypeUtility
     }
 
     // pick up
-    @SuppressWarnings("unchecked")
-    Map<String, Integer> dimensionIndexMap =
-        (Map<String, Integer>)
-            infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP);
+    Map<?, ?> dimensionIndexMap =
+        (infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
+                instanceof Map<?, ?> m)
+            ? m
+            : null;
     SGMDArrayPickUpDimensionInfo pickUpInfo = null;
     if (dimensionIndexMap != null) {
       SGIntegerSeriesSet pickUpDimensionIndices =
           (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
-      pickUpInfo = new SGMDArrayPickUpDimensionInfo(dimensionIndexMap, pickUpDimensionIndices);
+      Map<String, Integer> typedMap = new java.util.HashMap<>();
+      for (Map.Entry<?, ?> entry : dimensionIndexMap.entrySet()) {
+        typedMap.put((String) entry.getKey(), (Integer) entry.getValue());
+      }
+      pickUpInfo = new SGMDArrayPickUpDimensionInfo(typedMap, pickUpDimensionIndices);
     }
 
     // x and y values

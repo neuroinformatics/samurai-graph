@@ -51,7 +51,6 @@ import java.lang.reflect.Method;
  * @author Eric Albert (<a href="mailto:ejalbert@cs.stanford.edu">ejalbert@cs.stanford.edu</a>)
  * @version 1.4b1 (Released June 20, 2001)
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
 public class SGBrowserLauncher {
 
   /**
@@ -73,22 +72,22 @@ public class SGBrowserLauncher {
   private static boolean loadedWithoutErrors;
 
   /** The com.apple.mrj.MRJFileUtils class */
-  private static Class mrjFileUtilsClass;
+  private static Class<?> mrjFileUtilsClass;
 
   /** The com.apple.mrj.MRJOSType class */
-  private static Class mrjOSTypeClass;
+  private static Class<?> mrjOSTypeClass;
 
   /** The com.apple.MacOS.AEDesc class */
-  private static Class aeDescClass;
+  private static Class<?> aeDescClass;
 
   /** The <init>(int) method of com.apple.MacOS.AETarget */
-  private static Constructor aeTargetConstructor;
+  private static Constructor<?> aeTargetConstructor;
 
   /** The <init>(int, int, int) method of com.apple.MacOS.AppleEvent */
-  private static Constructor appleEventConstructor;
+  private static Constructor<?> appleEventConstructor;
 
   /** The <init>(String) method of com.apple.MacOS.AEDesc */
-  private static Constructor aeDescConstructor;
+  private static Constructor<?> aeDescConstructor;
 
   /** The findFolder method of com.apple.mrj.MRJFileUtils */
   private static Method findFolder;
@@ -261,10 +260,10 @@ public class SGBrowserLauncher {
     switch (jvm) {
       case MRJ_2_0:
         try {
-          Class aeTargetClass = Class.forName("com.apple.MacOS.AETarget"); // $NON-NLS-1$
-          Class osUtilsClass = Class.forName("com.apple.MacOS.OSUtils"); // $NON-NLS-1$
-          Class appleEventClass = Class.forName("com.apple.MacOS.AppleEvent"); // $NON-NLS-1$
-          Class aeClass = Class.forName("com.apple.MacOS.ae"); // $NON-NLS-1$
+          Class<?> aeTargetClass = Class.forName("com.apple.MacOS.AETarget"); // $NON-NLS-1$
+          Class<?> osUtilsClass = Class.forName("com.apple.MacOS.OSUtils"); // $NON-NLS-1$
+          Class<?> appleEventClass = Class.forName("com.apple.MacOS.AppleEvent"); // $NON-NLS-1$
+          Class<?> aeClass = Class.forName("com.apple.MacOS.ae"); // $NON-NLS-1$
           aeDescClass = Class.forName("com.apple.MacOS.AEDesc"); // $NON-NLS-1$
 
           aeTargetConstructor = aeTargetClass.getDeclaredConstructor(new Class[] {int.class});
@@ -339,7 +338,7 @@ public class SGBrowserLauncher {
         break;
       case MRJ_3_0:
         try {
-          Class linker = Class.forName("com.apple.mrj.jdirect.Linker"); // $NON-NLS-1$
+          Class<?> linker = Class.forName("com.apple.mrj.jdirect.Linker"); // $NON-NLS-1$
           Constructor constructor = linker.getConstructor(new Class[] {Class.class});
           //				linkage = constructor
           //						.newInstance(new Object[] { SGBrowserLauncher.class });

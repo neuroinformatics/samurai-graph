@@ -483,8 +483,8 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
       return sb.toString();
     }
 
-    public List getElementGroupPropertiesList() {
-      return new ArrayList(mElementGroupPropertiesList);
+    public List<SGProperties> getElementGroupPropertiesList() {
+      return new ArrayList<SGProperties>(mElementGroupPropertiesList);
     }
 
     public void setElementGroupPropertiesList(List<SGProperties> elementGroupPropertiesList) {
