@@ -395,12 +395,8 @@ public class SGUtility implements SGIDrawingElementConstants {
     }
 
     for (int ii = 0; ii < list1.size(); ii++) {
-      Object obj = list1.get(ii);
-      if ((obj instanceof SGICopiable) == false) {
-        throw new IllegalArgumentException("Not copiable objects are included.");
-      }
-      SGICopiable cp = (SGICopiable) obj;
-      list2.add((SGICopiable) cp.copy());
+      SGICopiable cp = (SGICopiable) list1.get(ii);
+      list2.add(cp.copy());
     }
 
     return true;

@@ -580,7 +580,7 @@ public class SGApplicationUtility
         }
 
         // read text data from file
-        List<String>[] listArray = createListArray(path);
+        ArrayList<List<String>> listArray = createListArray(path);
         if (listArray == null) {
           return null;
         }
@@ -1333,10 +1333,10 @@ public class SGApplicationUtility
    * @return
    * @throws FileNotFoundException
    */
-  @SuppressWarnings("unchecked")
-  public static List<String>[] createListArray(final String path) throws FileNotFoundException {
+  public static ArrayList<List<String>> createListArray(final String path)
+      throws FileNotFoundException {
 
-    List<String>[] listArray = null;
+    ArrayList<List<String>> listArray = null;
     int colNum = -1;
 
     // read the file
@@ -1369,9 +1369,9 @@ public class SGApplicationUtility
           colNum = tokenList.size();
 
           // create list array
-          listArray = (List<String>[]) new List<?>[colNum];
-          for (int ii = 0; ii < listArray.length; ii++) {
-            listArray[ii] = new ArrayList<String>();
+          listArray = new ArrayList<List<String>>(colNum);
+          for (int ii = 0; ii < colNum; ii++) {
+            listArray.add(new ArrayList<String>());
           }
 
         } else {
@@ -1420,7 +1420,7 @@ public class SGApplicationUtility
         // array of the tokens
         for (int ii = 0; ii < colNum; ii++) {
           Token token = (Token) tokenList.get(ii);
-          listArray[ii].add(token.getString());
+          listArray.get(ii).add(token.getString());
         }
       }
     } catch (FileNotFoundException e) {
@@ -1434,19 +1434,19 @@ public class SGApplicationUtility
     }
 
     // check arrays
-    if (listArray == null || listArray.length == 0) {
+    if (listArray == null || listArray.size() == 0) {
       return null;
     }
-    for (int ii = 0; ii < listArray.length; ii++) {
-      if (listArray[ii].size() == 0) {
+    for (int ii = 0; ii < listArray.size(); ii++) {
+      if (listArray.get(ii).size() == 0) {
         return null;
       }
     }
 
     // check array index
-    final int dataLength = listArray[0].size();
-    for (int ii = 1; ii < listArray.length; ii++) {
-      if (listArray[ii].size() != dataLength) {
+    final int dataLength = listArray.get(0).size();
+    for (int ii = 1; ii < listArray.size(); ii++) {
+      if (listArray.get(ii).size() != dataLength) {
         return null;
       }
     }
@@ -1472,7 +1472,7 @@ public class SGApplicationUtility
   /** Create an array of data column objects. */
   static SGDataColumn[] createColumnArray(
       SGDataColumnInfo[] colInfo,
-      List<String>[] listArray,
+      ArrayList<List<String>> listArray,
       Map<String, Object> infoMap,
       final int mode,
       final String versionNumber) {
@@ -1481,9 +1481,9 @@ public class SGApplicationUtility
     final String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
 
     // check data length
-    final int len = listArray[0].size();
-    for (int ii = 1; ii < listArray.length; ii++) {
-      if (listArray[ii].size() != len) {
+    final int len = listArray.get(0).size();
+    for (int ii = 1; ii < listArray.size(); ii++) {
+      if (listArray.get(ii).size() != len) {
         return null;
       }
     }
@@ -1493,10 +1493,10 @@ public class SGApplicationUtility
       String title = colInfo[ii].getTitle();
       String valueType = colInfo[ii].getValueType();
       if (VALUE_TYPE_NUMBER.equals(valueType)) {
-        if (ii >= listArray.length) {
+        if (ii >= listArray.size()) {
           return null;
         }
-        List<String> valueList = listArray[ii];
+        List<String> valueList = listArray.get(ii);
         if (SGDataUtility.hasTickLabels(dataType)) {
           for (int jj = 0; jj < len; jj++) {
             String value = valueList.get(jj);
@@ -1523,10 +1523,10 @@ public class SGApplicationUtility
           columns[ii] = new SGNumberDataColumn(title, dArray);
         }
       } else if (VALUE_TYPE_TEXT.equals(valueType)) {
-        if (ii >= listArray.length) {
+        if (ii >= listArray.size()) {
           return null;
         }
-        List<String> valueList = listArray[ii];
+        List<String> valueList = listArray.get(ii);
         String[] sArray = new String[len];
         for (int jj = 0; jj < len; jj++) {
           sArray[jj] = valueList.get(jj);
@@ -1541,10 +1541,10 @@ public class SGApplicationUtility
           columns[ii] = new SGTextDataColumn(title, sArray);
         }
       } else if (VALUE_TYPE_DATE.equals(valueType)) {
-        if (ii >= listArray.length) {
+        if (ii >= listArray.size()) {
           return null;
         }
-        List<String> valueList = listArray[ii];
+        List<String> valueList = listArray.get(ii);
         SGDate[] dArray = new SGDate[len];
         for (int jj = 0; jj < len; jj++) {
           String value = valueList.get(jj);

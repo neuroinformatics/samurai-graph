@@ -1434,8 +1434,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     boolean succeeded = true;
     String[] colNames = new String[values.length];
     String[] colValues = new String[values.length];
-    @SuppressWarnings("unchecked")
-    Map<String, Integer>[] colDims = (Map<String, Integer>[]) new Map<?, ?>[values.length];
+    ArrayList<Map<String, Integer>> colDims = new ArrayList<Map<String, Integer>>(values.length);
     if (isSDArrayData || isNetCDFData) {
       for (int ii = 0; ii < values.length; ii++) {
         String[] tokens = values[ii].split(":");
@@ -1473,9 +1472,10 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
             break;
           }
 
-          colDims[ii] = new HashMap<String, Integer>();
-          colDims[ii].put(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, dim);
-          colDims[ii].put(SGIMDArrayConstants.KEY_TIME_DIMENSION, -1); // fixed value
+          Map<String, Integer> dimMap = new HashMap<String, Integer>();
+          dimMap.put(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, dim);
+          dimMap.put(SGIMDArrayConstants.KEY_TIME_DIMENSION, -1); // fixed value
+          colDims.add(dimMap);
           colNames[ii] = varName;
           colValues[ii] = tokens[2].trim();
         }
@@ -1497,7 +1497,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
             succeeded = false;
             break;
           }
-          colDims[ii] = new HashMap<String, Integer>();
+          Map<String, Integer> dimMap = new HashMap<String, Integer>();
           if (tokens.length == 3) {
             String varName = tokens[0].trim();
             colNames[ii] = varName;
@@ -1517,7 +1517,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
               succeeded = false;
               break;
             }
-            colDims[ii].put(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, dim);
+            dimMap.put(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, dim);
           } else if (tokens.length == 4) {
             String varName = tokens[0].trim();
             colNames[ii] = varName;
@@ -1546,14 +1546,15 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
               succeeded = false;
               break;
             }
-            colDims[ii].put(keyX, dimX);
-            colDims[ii].put(keyY, dimY);
-            colDims[ii].put(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, -1); // fixed value
+            dimMap.put(keyX, dimX);
+            dimMap.put(keyY, dimY);
+            dimMap.put(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, -1); // fixed value
           } else {
             succeeded = false;
             break;
           }
-          colDims[ii].put(SGIMDArrayConstants.KEY_TIME_DIMENSION, -1); // fixed value
+          dimMap.put(SGIMDArrayConstants.KEY_TIME_DIMENSION, -1); // fixed value
+          colDims.add(dimMap);
         }
       }
     }
@@ -1727,7 +1728,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       SGMDArrayData mdData,
       String[] colNames,
       String[] colValues,
-      Map<String, Integer>[] colDims,
+      ArrayList<Map<String, Integer>> colDims,
       SGPropertyMap map,
       SGPropertyResults result) {
     boolean succeeded = true;
@@ -1736,10 +1737,11 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
 
     // create an array of column types
     String[] columnTypes = new String[vars.length];
-    @SuppressWarnings("unchecked")
-    Map<String, Integer>[] dimensionMaps = (Map<String, Integer>[]) new Map<?, ?>[vars.length];
-    for (int ii = 0; ii < columnTypes.length; ii++) {
+    ArrayList<Map<String, Integer>> dimensionMaps =
+        new ArrayList<Map<String, Integer>>(vars.length);
+    for (int ii = 0; ii < vars.length; ii++) {
       columnTypes[ii] = "";
+      dimensionMaps.add(null);
     }
     for (int ii = 0; ii < colNames.length; ii++) {
       final int index = mdData.getVariableIndex(colNames[ii]);
@@ -1748,7 +1750,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
         break;
       }
       columnTypes[index] = colValues[ii];
-      dimensionMaps[index] = colDims[ii];
+      dimensionMaps.set(index, colDims.get(ii));
     }
     if (!succeeded) {
       this.setFailedColumnTypeResult(map, result);
@@ -1758,9 +1760,9 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     for (int ii = 0; ii < columns.length; ii++) {
       SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) columns[ii];
       mdInfo.setColumnType(columnTypes[ii]);
-      if (dimensionMaps[ii] != null) {
+      if (dimensionMaps.get(ii) != null) {
         mdInfo.clearDimensionIndices();
-        mdInfo.putAllDimensionIndices(dimensionMaps[ii]);
+        mdInfo.putAllDimensionIndices(dimensionMaps.get(ii));
       }
     }
 

@@ -2136,8 +2136,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
 
   private boolean mIgnoreComboBoxEventFlag = false;
 
-  @SuppressWarnings({"rawtypes", "unchecked"})
-  private void addIndexItems(JComboBox cb, final int len) {
+  private void addIndexItems(JComboBox<String> cb, final int len) {
     this.mIgnoreComboBoxEventFlag = true;
     for (int ii = 0; ii < len; ii++) {
       cb.addItem(Integer.toString(ii));
