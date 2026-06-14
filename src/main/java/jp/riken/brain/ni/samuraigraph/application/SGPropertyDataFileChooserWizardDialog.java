@@ -723,8 +723,8 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         obj = new ArrayList<Object>();
         map.put(id, obj);
       }
-      @SuppressWarnings("unchecked")
-      ArrayList<Object> list = (ArrayList<Object>) obj;
+      ArrayList<Object> list =
+          (obj instanceof ArrayList<?> al) ? new ArrayList<>(al) : new ArrayList<Object>();
 
       // add the path to the list
       Object name = this.mTable.getValueAt(ii, nameColIndex);

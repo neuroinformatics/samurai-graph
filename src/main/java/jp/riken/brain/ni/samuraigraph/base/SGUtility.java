@@ -388,14 +388,13 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @param list2 a list to set the copied objects
    * @return true if succeeded
    */
-  @SuppressWarnings({"rawtypes", "unchecked"})
-  public static boolean copyObjects(final List list1, final List list2) {
+  public static boolean copyObjects(final List<? extends SGICopiable> list1, final List list2) {
     if (list1 == null || list2 == null) {
       throw new IllegalArgumentException("list1==null || list2==null");
     }
 
     for (int ii = 0; ii < list1.size(); ii++) {
-      SGICopiable cp = (SGICopiable) list1.get(ii);
+      SGICopiable cp = list1.get(ii);
       list2.add(cp.copy());
     }
 
@@ -1034,6 +1033,56 @@ public class SGUtility implements SGIDrawingElementConstants {
       }
     }
 
+    return true;
+  }
+
+  /** Moves an object to the head or tail of a list. */
+  public static boolean moveObjectToRawList(
+      final Object obj, final List list, final boolean toTail) {
+    final int index = list.indexOf(obj);
+    if (index == -1) {
+      return false;
+    }
+    list.remove(obj);
+    if (toTail) {
+      list.add(obj);
+    } else {
+      list.add(0, obj);
+    }
+    return true;
+  }
+
+  /** Moves objects from one list to another. */
+  public static boolean moveObjectRawList(final List movedList, final List list, final int num) {
+    if (num > 0) {
+      for (int ii = movedList.size() - 1; ii >= 0; ii--) {
+        Object obj = movedList.get(ii);
+        final int index = list.indexOf(obj);
+        if (index == -1) {
+          return false;
+        }
+        final int indexNew = index + num;
+        if (indexNew > list.size() - 1) {
+          continue;
+        }
+        list.remove(obj);
+        list.add(indexNew, obj);
+      }
+    } else {
+      for (int ii = 0; ii < movedList.size(); ii++) {
+        Object obj = movedList.get(ii);
+        final int index = list.indexOf(obj);
+        if (index == -1) {
+          return false;
+        }
+        final int indexNew = index + num;
+        if (indexNew < 0) {
+          continue;
+        }
+        list.remove(obj);
+        list.add(indexNew, obj);
+      }
+    }
     return true;
   }
 

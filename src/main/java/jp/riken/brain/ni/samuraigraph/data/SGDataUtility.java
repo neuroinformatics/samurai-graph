@@ -1714,11 +1714,11 @@ public class SGDataUtility
 
     if (isSXYTypeData(dataType)) {
       // picked up dimension
-      @SuppressWarnings("unchecked")
-      Map<String, Integer> dimensionIndexMap =
-          (Map<String, Integer>)
-              infoMap.get(
-                  SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP);
+      Map<?, ?> dimensionIndexMap =
+          (infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
+                  instanceof Map<?, ?> m)
+              ? m
+              : null;
       SGMDArrayDataColumnInfo pickUpColumn = null;
       for (int ii = 0; ii < cols.length; ii++) {
         SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) cols[ii];
@@ -1739,7 +1739,8 @@ public class SGDataUtility
         }
 
         int[] dims = pickUpColumn.getDimensions();
-        Integer dimIndex = dimensionIndexMap.get(pickUpColumn.getName());
+        Object dimIndexObj = dimensionIndexMap.get(pickUpColumn.getName());
+        Integer dimIndex = (dimIndexObj instanceof Integer) ? (Integer) dimIndexObj : null;
         if (!isValidPickUpValue(dimIndex)) {
           throw new Error("Invalid dimension index: " + dimIndex);
         }
@@ -3808,14 +3809,16 @@ public class SGDataUtility
      * }
      */
 
-    @SuppressWarnings("unchecked")
-    Map<String, Integer> timeDimensionMap =
-        (Map<String, Integer>)
-            infoMap.get(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP);
-    @SuppressWarnings("unchecked")
-    Map<String, Integer> pickupDimensionMap =
-        (Map<String, Integer>)
-            infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP);
+    Map<?, ?> timeDimensionMap =
+        (infoMap.get(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP)
+                instanceof Map<?, ?> m1)
+            ? m1
+            : null;
+    Map<?, ?> pickupDimensionMap =
+        (infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
+                instanceof Map<?, ?> m2)
+            ? m2
+            : null;
     for (int ii = 0; ii < colArray.length; ii++) {
       SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) colArray[ii];
       final int generic = mdCol.getGenericDimensionIndex();
@@ -3823,7 +3826,10 @@ public class SGDataUtility
       boolean tValid = false;
       Integer timeDimension = null;
       if (timeDimensionMap != null) {
-        timeDimension = timeDimensionMap.get(mdCol.getName());
+        Object td = timeDimensionMap.get(mdCol.getName());
+        if (td instanceof Integer) {
+          timeDimension = (Integer) td;
+        }
         tValid = (timeDimension != null && timeDimension != -1);
         if (tValid && timeDimension != null) {
           if (timeDimension < 0 || timeDimension >= dims.length) {
@@ -3836,7 +3842,8 @@ public class SGDataUtility
         }
       }
       if (pickupDimensionMap != null) {
-        Integer pickupDimension = pickupDimensionMap.get(mdCol.getName());
+        Object pd = pickupDimensionMap.get(mdCol.getName());
+        Integer pickupDimension = (pd instanceof Integer) ? (Integer) pd : null;
         final boolean pValid = (pickupDimension != null && pickupDimension != -1);
         if (pValid && pickupDimension != null) {
           if (pickupDimension < 0 || pickupDimension >= dims.length) {

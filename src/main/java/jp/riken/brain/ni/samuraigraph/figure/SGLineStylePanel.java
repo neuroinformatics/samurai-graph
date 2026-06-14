@@ -813,8 +813,7 @@ public class SGLineStylePanel extends javax.swing.JPanel
     }
   }
 
-  private void setLineTypeEditorComboBoxItems(
-      JComboBox<String> cb, String[] items, Object selectedItem) {
+  private void setLineTypeEditorComboBoxItems(JComboBox cb, String[] items, Object selectedItem) {
     cb.removeAllItems();
     for (int ii = 0; ii < items.length; ii++) {
       this.mLineTypeEditorComboBox.addItem(items[ii]);
@@ -832,12 +831,11 @@ public class SGLineStylePanel extends javax.swing.JPanel
 
     public Component getTableCellEditorComponent(
         JTable table, Object value, boolean isSelected, int row, int column) {
-      @SuppressWarnings("unchecked")
-      JComboBox<String> cb =
-          (JComboBox<String>)
-              super.getTableCellEditorComponent(table, value, isSelected, row, column);
-      setLineTypeEditorComboBoxItems(cb, SGILineConstants.LINE_NAME_ARRAY, value);
-      return cb;
+      Component comp = super.getTableCellEditorComponent(table, value, isSelected, row, column);
+      if (comp instanceof JComboBox cb) {
+        setLineTypeEditorComboBoxItems(cb, SGILineConstants.LINE_NAME_ARRAY, value);
+      }
+      return comp;
     }
   }
 

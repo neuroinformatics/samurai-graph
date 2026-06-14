@@ -1304,19 +1304,22 @@ public class SGApplicationUtility
     infoMap.put(
         SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE,
         pfInfoMap.get(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE));
-    @SuppressWarnings("unchecked")
-    Map<String, SGIntegerSeriesSet> strideMap =
-        (Map<String, SGIntegerSeriesSet>)
-            pfInfoMap.get(SGIDataInformationKeyConstants.KEY_ALL_STRIDE);
+    Map<?, ?> strideMap =
+        (pfInfoMap.get(SGIDataInformationKeyConstants.KEY_ALL_STRIDE) instanceof Map<?, ?> m1)
+            ? m1
+            : null;
     if (strideMap != null) {
-      infoMap.putAll(strideMap);
+      for (Map.Entry<?, ?> entry : strideMap.entrySet()) {
+        infoMap.put((String) entry.getKey(), entry.getValue());
+      }
     }
 
     // updates time dimension map
-    @SuppressWarnings("unchecked")
-    Map<String, Integer> timeDimensionMap =
-        (Map<String, Integer>)
-            pfInfoMap.get(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP);
+    Map<?, ?> timeDimensionMap =
+        (pfInfoMap.get(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP)
+                instanceof Map<?, ?> m2)
+            ? m2
+            : null;
     if (timeDimensionMap != null) {
       infoMap.put(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP, timeDimensionMap);
     }
@@ -1796,9 +1799,14 @@ public class SGApplicationUtility
       if ((dtde.getDropAction() & DnDConstants.ACTION_COPY_OR_MOVE) != 0) {
         Transferable trans = dtde.getTransferable();
         if (dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
-          @SuppressWarnings("unchecked")
-          List<File> list = (List<File>) trans.getTransferData(DataFlavor.javaFileListFlavor);
-          fileList.addAll(list);
+          Object transferred = trans.getTransferData(DataFlavor.javaFileListFlavor);
+          if (transferred instanceof List<?> list) {
+            for (Object item : list) {
+              if (item instanceof File) {
+                fileList.add((File) item);
+              }
+            }
+          }
         } else if (dtde.isDataFlavorSupported(DataFlavor.stringFlavor)) {
           String str;
           String ss = (String) trans.getTransferData(DataFlavor.stringFlavor);
