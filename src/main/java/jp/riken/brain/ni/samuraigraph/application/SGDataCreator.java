@@ -780,14 +780,14 @@ public class SGDataCreator
       }
 
       // check all values
-      List<String>[] listArray = SGApplicationUtility.createListArray(path);
+      ArrayList<List<String>> listArray = SGApplicationUtility.createListArray(path);
       if (listArray == null) {
         return false;
       }
       List<Integer> indexList = new ArrayList<Integer>();
-      for (int ii = 0; ii < listArray.length; ii++) {
+      for (int ii = 0; ii < listArray.size(); ii++) {
         Integer firstIndex = firstIndexList.get(ii);
-        List<String> list = listArray[ii];
+        List<String> list = listArray.get(ii);
         if (firstIndex.intValue() != 0) {
           // number
           boolean err = false;
@@ -959,14 +959,14 @@ public class SGDataCreator
       if (numColList.size() != 0 || dateColList.size() != 0) {
 
         // get all values
-        List<String>[] listArray = SGApplicationUtility.createListArray(path);
+        ArrayList<List<String>> listArray = SGApplicationUtility.createListArray(path);
         if (listArray == null) {
           return null;
         }
 
         // get the length
-        if (listArray.length > 0) {
-          List<String> list = listArray[0];
+        if (listArray.size() > 0) {
+          List<String> list = listArray.get(0);
           len = list.size();
         }
 
@@ -974,7 +974,7 @@ public class SGDataCreator
         List<Integer> errNumColList = new ArrayList<Integer>();
         for (int ii = 0; ii < numColList.size(); ii++) {
           Integer colIndex = numColList.get(ii);
-          List<String> list = listArray[colIndex.intValue()];
+          List<String> list = listArray.get(colIndex.intValue());
           boolean valid = true;
           for (int jj = 0; jj < list.size(); jj++) {
             String value = list.get(jj);
@@ -992,7 +992,7 @@ public class SGDataCreator
         List<Integer> errDateColList = new ArrayList<Integer>();
         for (int ii = 0; ii < dateColList.size(); ii++) {
           Integer colIndex = dateColList.get(ii);
-          List<String> list = listArray[colIndex.intValue()];
+          List<String> list = listArray.get(colIndex.intValue());
           boolean valid = true;
           for (int jj = 0; jj < list.size(); jj++) {
             String value = list.get(jj);

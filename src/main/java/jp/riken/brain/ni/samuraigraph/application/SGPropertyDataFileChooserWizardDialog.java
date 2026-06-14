@@ -610,8 +610,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     String[] nameArray = new String[dataNum];
     String[] fileArray = new String[dataNum];
     SGButton[] btnArray = new SGButton[dataNum];
-    @SuppressWarnings("unchecked")
-    Map<String, Object>[] mapArray = (Map<String, Object>[]) new Map<?, ?>[dataNum];
+    ArrayList<Map<String, Object>> mapArray = new ArrayList<Map<String, Object>>(dataNum);
     SGTuple2f[] figureSizeArray = new SGTuple2f[dataNum];
     for (int ii = 0; ii < dataNum; ii++) {
       SGPropertyFileData data = dataList.get(ii);
@@ -627,7 +626,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         fileArray[ii] = NO_DATA;
       }
       btnArray[ii] = new SGButton(" ");
-      mapArray[ii] = new HashMap<String, Object>(data.getInfoMap());
+      mapArray.add(new HashMap<String, Object>(data.getInfoMap()));
       figureSizeArray[ii] = data.getFigureSize();
     }
 
@@ -636,7 +635,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     for (int ii = 0; ii < dataNum; ii++) {
       this.mDataFileArray[ii] =
           new DataFile(
-              idArray[ii], figureSizeArray[ii], typeArray[ii], nameArray[ii], mapArray[ii]);
+              idArray[ii], figureSizeArray[ii], typeArray[ii], nameArray[ii], mapArray.get(ii));
       this.mDataFileArray[ii].hasData = !(NO_DATA.equals(fileArray[ii]));
     }
 

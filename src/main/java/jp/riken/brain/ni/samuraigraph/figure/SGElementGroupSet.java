@@ -406,7 +406,6 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
   }
 
   /** A class of properties of a group set. */
-  @SuppressWarnings({"rawtypes", "unchecked"})
   public static class ElementGroupSetProperties extends SGProperties {
 
     /** visibility */
@@ -428,10 +427,10 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
     public Object copy() {
       Object obj = super.copy();
       ElementGroupSetProperties p = (ElementGroupSetProperties) obj;
-      List list = new ArrayList();
+      List<SGProperties> list = new ArrayList<>();
       for (int ii = 0; ii < this.mElementGroupPropertiesList.size(); ii++) {
-        SGProperties gp = (SGProperties) this.mElementGroupPropertiesList.get(ii);
-        list.add(gp.copy());
+        SGProperties gp = this.mElementGroupPropertiesList.get(ii);
+        list.add((SGProperties) gp.copy());
       }
       p.mElementGroupPropertiesList = list;
       return p;
@@ -441,7 +440,7 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
     public void dispose() {
       super.dispose();
       for (int ii = 0; ii < this.mElementGroupPropertiesList.size(); ii++) {
-        SGProperties p = (SGProperties) this.mElementGroupPropertiesList.get(ii);
+        SGProperties p = this.mElementGroupPropertiesList.get(ii);
         p.dispose();
       }
       this.mElementGroupPropertiesList.clear();

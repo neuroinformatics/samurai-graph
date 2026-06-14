@@ -2523,17 +2523,16 @@ public class SGFigureElementLegend extends SGFigureElementForData
       indexArrayNew[ii] = indexArray[ii] - indexMin;
     }
     int lenNew = indexMax - indexMin + 1;
-    @SuppressWarnings("unchecked")
-    List<SGData>[] dListArray = (List<SGData>[]) new ArrayList<?>[lenNew];
+    ArrayList<List<SGData>> dListArray = new ArrayList<List<SGData>>(lenNew);
     for (int ii = 0; ii < lenNew; ii++) {
-      dListArray[ii] = new ArrayList<SGData>();
+      dListArray.add(new ArrayList<SGData>());
     }
     for (int ii = 0; ii < len; ii++) {
-      dListArray[indexArrayNew[ii]].add(dataArray[ii]);
+      dListArray.get(indexArrayNew[ii]).add(dataArray[ii]);
     }
     List<SGData> oDataList = new ArrayList<SGData>();
     for (int ii = 0; ii < lenNew; ii++) {
-      oDataList.addAll(dListArray[ii]);
+      oDataList.addAll(dListArray.get(ii));
     }
 
     // sort the legend objects
