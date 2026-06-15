@@ -20,3 +20,4 @@ pom.xml text eol=lf
 
 # Declare files that must always be CRLF
 *.bat text eol=crlf
+*.cmd text eol=crlf
