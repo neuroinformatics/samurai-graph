@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import foxtrot.Task;
-import foxtrot.Worker;
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import jp.riken.brain.ni.samuraigraph.application.SGArchiveFileCreator.ArchiveFile;
 import jp.riken.brain.ni.samuraigraph.application.SGMainFunctions.WrappedData;
+import jp.riken.brain.ni.samuraigraph.base.SGAsyncWorker;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
@@ -249,16 +248,13 @@ class SGDataSetManager
     } else {
       try {
         result =
-            (Boolean)
-                Worker.post(
-                    new Task() {
-                      public Object run() throws Exception {
-                        if (!loadDataSet(wnd, archiveFile)) {
-                          return Boolean.FALSE;
-                        }
-                        return Boolean.TRUE;
-                      }
-                    });
+            SGAsyncWorker.post(
+                () -> {
+                  if (!loadDataSet(wnd, archiveFile)) {
+                    return Boolean.FALSE;
+                  }
+                  return Boolean.TRUE;
+                });
 
       } catch (Exception ex) {
         result = Boolean.FALSE;

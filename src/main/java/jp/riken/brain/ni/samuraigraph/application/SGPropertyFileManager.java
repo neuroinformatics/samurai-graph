@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import foxtrot.Task;
-import foxtrot.Worker;
 import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -15,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import jp.riken.brain.ni.samuraigraph.application.SGMainFunctions.WrappedData;
+import jp.riken.brain.ni.samuraigraph.base.SGAsyncWorker;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
@@ -304,22 +303,19 @@ class SGPropertyFileManager
     } else {
       try {
         result =
-            (Boolean)
-                Worker.post(
-                    new Task() {
-                      public Object run() throws Exception {
-                        if (!setPropertyFile(
-                            wnd,
-                            doc,
-                            wDataArray,
-                            false,
-                            versionNumber,
-                            LOAD_PROPERTIES_FROM_PROPERTY_FILE)) {
-                          return Boolean.FALSE;
-                        }
-                        return Boolean.TRUE;
-                      }
-                    });
+            SGAsyncWorker.post(
+                () -> {
+                  if (!setPropertyFile(
+                      wnd,
+                      doc,
+                      wDataArray,
+                      false,
+                      versionNumber,
+                      LOAD_PROPERTIES_FROM_PROPERTY_FILE)) {
+                    return Boolean.FALSE;
+                  }
+                  return Boolean.TRUE;
+                });
 
       } catch (Exception ex) {
         result = Boolean.FALSE;
