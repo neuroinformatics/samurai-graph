@@ -14,7 +14,6 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
-import java.util.List;
 import java.util.Properties;
 import javax.imageio.ImageIO;
 import javax.print.PrintService;
@@ -34,7 +33,6 @@ import org.freehep.graphics2d.VectorGraphics;
 import org.freehep.graphicsbase.util.UserProperties;
 import org.freehep.graphicsbase.util.export.ExportDialog;
 import org.freehep.graphicsbase.util.export.ExportFileType;
-import org.freehep.graphicsbase.util.export.ExportFileTypeRegistry;
 import org.freehep.graphicsio.FontConstants;
 import org.freehep.graphicsio.ImageConstants;
 import org.freehep.graphicsio.ImageGraphics2D;
@@ -140,7 +138,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
   /** Default constructor. */
   public SGImageExportManager() {
     ExportFileType.setClassLoader(SGImageExportManager.class.getClassLoader());
-    ensureExportFileTypesRegistered();
     this.mExportDialog = new ExportDialog();
     ExportDialogActionListener bl = new ExportDialogActionListener();
     try {
@@ -151,47 +148,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
       cb.addActionListener(bl);
     } catch (Exception ex) {
       ex.printStackTrace();
-    }
-  }
-
-  /**
-   * Ensures all ExportFileType instances are registered. Falls back to manually instantiating and
-   * registering each known ExportFileType class when ServiceLoader discovery is incomplete.
-   */
-  @SuppressWarnings("unchecked")
-  private static void ensureExportFileTypesRegistered() {
-    List<ExportFileType> types = ExportFileType.getExportFileTypes();
-    if (types.size() > 1) {
-      // ServiceLoader discovered multiple types, likely working correctly
-      return;
-    }
-
-    // Fallback: manually instantiate and register all known ExportFileType classes
-    String[] classNames = {
-      "org.freehep.graphicsio.emf.EMFExportFileType",
-      "org.freehep.graphicsio.java.JAVAExportFileType",
-      "org.freehep.graphicsio.pdf.PDFExportFileType",
-      "org.freehep.graphicsio.ps.EPSExportFileType",
-      "org.freehep.graphicsio.ps.PSExportFileType",
-      "org.freehep.graphicsio.svg.SVGExportFileType",
-      "org.freehep.graphicsio.swf.SWFExportFileType",
-      "org.freehep.graphicsio.exportchooser.ImageIOExportFileType",
-      "org.freehep.graphicsio.gif.GIFExportFileType",
-      "org.freehep.graphicsio.png.PNGExportFileType",
-      "org.freehep.graphicsio.jpeg.JPEGExportFileType",
-      "org.freehep.graphicsio.raw.RawExportFileType",
-      "org.freehep.graphicsio.ppm.PPMExportFileType"
-    };
-
-    for (String className : classNames) {
-      try {
-        Class<?> clazz = Class.forName(className);
-        ExportFileType type = (ExportFileType) clazz.getDeclaredConstructor().newInstance();
-        ExportFileTypeRegistry.getDefaultInstance(SGImageExportManager.class.getClassLoader())
-            .add(type);
-      } catch (Exception e) {
-        // Class not available on classpath, skip silently
-      }
     }
   }
 
