@@ -14,6 +14,7 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
+import java.util.List;
 import java.util.Properties;
 import javax.imageio.ImageIO;
 import javax.print.PrintService;
@@ -32,6 +33,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.freehep.graphics2d.VectorGraphics;
 import org.freehep.graphicsbase.util.UserProperties;
 import org.freehep.graphicsbase.util.export.ExportDialog;
+import org.freehep.graphicsbase.util.export.ExportFileType;
+import org.freehep.graphicsbase.util.export.ExportFileTypeRegistry;
 import org.freehep.graphicsio.FontConstants;
 import org.freehep.graphicsio.ImageConstants;
 import org.freehep.graphicsio.ImageGraphics2D;
@@ -123,7 +126,7 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
   public static final String KEY_ROUND_SIZE_32 = "RoundSize32";
 
   /** An export dialog. */
-  private final ExportDialog mExportDialog = new ExportDialog();
+  private ExportDialog mExportDialog = null;
 
   /** */
   private String mBaseDirectoryName = null;
@@ -136,6 +139,9 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
 
   /** Default constructor. */
   public SGImageExportManager() {
+    ExportFileType.setClassLoader(SGImageExportManager.class.getClassLoader());
+    ensureExportFileTypesRegistered();
+    this.mExportDialog = new ExportDialog();
     ExportDialogActionListener bl = new ExportDialogActionListener();
     try {
       java.lang.reflect.Field typeField =
@@ -145,6 +151,45 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
       cb.addActionListener(bl);
     } catch (Exception ex) {
       ex.printStackTrace();
+    }
+  }
+
+  /**
+   * Ensures all ExportFileType instances are registered. Falls back to manually instantiating and
+   * registering each known ExportFileType class when ServiceLoader discovery is incomplete.
+   */
+  @SuppressWarnings("unchecked")
+  private static void ensureExportFileTypesRegistered() {
+    List<ExportFileType> types = ExportFileType.getExportFileTypes();
+    if (types.size() > 1) {
+      // ServiceLoader discovered multiple types, likely working correctly
+      return;
+    }
+
+    // Fallback: manually instantiate and register all known ExportFileType classes
+    String[] classNames = {
+      "org.freehep.graphicsio.emf.EMFExportFileType",
+      "org.freehep.graphicsio.java.JAVAExportFileType",
+      "org.freehep.graphicsio.pdf.PDFExportFileType",
+      "org.freehep.graphicsio.ps.EPSExportFileType",
+      "org.freehep.graphicsio.ps.PSExportFileType",
+      "org.freehep.graphicsio.svg.SVGExportFileType",
+      "org.freehep.graphicsio.swf.SWFExportFileType",
+      "org.freehep.graphicsio.exportchooser.ImageIOExportFileType",
+      "org.freehep.graphicsio.gif.GIFExportFileType",
+      "org.freehep.graphicsio.raw.RawExportFileType",
+      "org.freehep.graphicsio.ppm.PPMExportFileType"
+    };
+
+    for (String className : classNames) {
+      try {
+        Class<?> clazz = Class.forName(className);
+        ExportFileType type = (ExportFileType) clazz.getDeclaredConstructor().newInstance();
+        ExportFileTypeRegistry.getDefaultInstance(SGImageExportManager.class.getClassLoader())
+            .add(type);
+      } catch (Exception e) {
+        // Class not available on classpath, skip silently
+      }
     }
   }
 
@@ -210,15 +255,19 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
     Color bg = target.getBackground();
     Properties p = getExportDialogProperties(ed);
 
-    // directory
+    // directory — extract just the filename to avoid path duplication
     String key = getSaveAsFileConstant();
     String baseDir = this.mBaseDirectoryName;
+    String fileName = new File(this.mExportFileName).getName();
     String path = p.getProperty(key);
     if (path != null) {
-      String pathNew = SGApplicationUtility.getPathName(baseDir, this.mExportFileName);
+      String pathNew = SGApplicationUtility.getPathName(baseDir, fileName);
       p.setProperty(key, pathNew);
     }
-    String defFile = SGApplicationUtility.getPathName(baseDir, this.mExportFileName);
+    String defFile = SGApplicationUtility.getPathName(baseDir, fileName);
+
+    // Set baseDir on ExportDialog to avoid path duplication
+    setExportDialogBaseDir(ed, baseDir);
 
     // background color
     for (int ii = 0; ii < VECTOR_BG_KEY_ARRAY.length; ii++) {
@@ -1278,6 +1327,22 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
     } catch (Exception ex) {
       ex.printStackTrace();
       return "org.freehep.graphicsbase.util.export.ExportDialog.SaveAsFile";
+    }
+  }
+
+  /**
+   * Sets the baseDir field on ExportDialog via reflection to prevent path duplication.
+   *
+   * @param ed the export dialog
+   * @param baseDir the base directory
+   */
+  private static void setExportDialogBaseDir(ExportDialog ed, String baseDir) {
+    try {
+      java.lang.reflect.Field baseDirField = ExportDialog.class.getDeclaredField("baseDir");
+      baseDirField.setAccessible(true);
+      baseDirField.set(ed, baseDir);
+    } catch (Exception ex) {
+      ex.printStackTrace();
     }
   }
 }
