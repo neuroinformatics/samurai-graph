@@ -4,8 +4,6 @@ import ch.systemsx.cisd.hdf5.HDF5FactoryProvider;
 import ch.systemsx.cisd.hdf5.IHDF5Reader;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import com.jmatio.io.MatFileReader;
-import foxtrot.Task;
-import foxtrot.Worker;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Frame;
@@ -53,6 +51,7 @@ import jp.riken.brain.ni.samuraigraph.application.SGDataCreator.CreatedData;
 import jp.riken.brain.ni.samuraigraph.application.SGDataCreator.CreatedDataSet;
 import jp.riken.brain.ni.samuraigraph.application.SGDataCreator.FileColumn;
 import jp.riken.brain.ni.samuraigraph.application.SGDataCreator.SDArrayFileParseResult;
+import jp.riken.brain.ni.samuraigraph.base.SGAsyncWorker;
 import jp.riken.brain.ni.samuraigraph.base.SGBufferedFileReader;
 import jp.riken.brain.ni.samuraigraph.base.SGColorMap;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
@@ -3512,21 +3511,17 @@ class SGMainFunctions
     } else {
       try {
         result =
-            (SGStatus)
-                Worker.post(
-                    new Task() {
-                      public Object run() throws Exception {
-                        return drawGraphSub(
-                            wnd,
-                            figureID,
-                            colInfoSet,
-                            infoMap,
-                            dataSource,
-                            dataIdArray,
-                            showDialog,
-                            figureLocation);
-                      }
-                    });
+            SGAsyncWorker.post(
+                () ->
+                    drawGraphSub(
+                        wnd,
+                        figureID,
+                        colInfoSet,
+                        infoMap,
+                        dataSource,
+                        dataIdArray,
+                        showDialog,
+                        figureLocation));
       } catch (Exception ex) {
         result = new SGStatus(false);
         ex.printStackTrace();
@@ -5063,14 +5058,7 @@ class SGMainFunctions
       result = SGMainFunctionsSplitMerge.splitData(wnd);
     } else {
       try {
-        result =
-            (Boolean)
-                Worker.post(
-                    new Task() {
-                      public Object run() throws Exception {
-                        return SGMainFunctionsSplitMerge.splitData(wnd);
-                      }
-                    });
+        result = SGAsyncWorker.post(() -> SGMainFunctionsSplitMerge.splitData(wnd));
       } catch (Exception ex) {
         result = Boolean.FALSE;
         ex.printStackTrace();
@@ -5094,14 +5082,7 @@ class SGMainFunctions
       result = SGMainFunctionsSplitMerge.mergeData(wnd);
     } else {
       try {
-        result =
-            (Boolean)
-                Worker.post(
-                    new Task() {
-                      public Object run() throws Exception {
-                        return SGMainFunctionsSplitMerge.mergeData(wnd);
-                      }
-                    });
+        result = SGAsyncWorker.post(() -> SGMainFunctionsSplitMerge.mergeData(wnd));
       } catch (Exception ex) {
         result = Boolean.FALSE;
         ex.printStackTrace();
@@ -6512,14 +6493,11 @@ class SGMainFunctions
     } else {
       try {
         result =
-            (SGStatus)
-                Worker.post(
-                    new Task() {
-                      public Object run() throws Exception {
-                        fitAxisRangeToFocusedDataSub(wnd, command);
-                        return new SGStatus(true);
-                      }
-                    });
+            SGAsyncWorker.post(
+                () -> {
+                  fitAxisRangeToFocusedDataSub(wnd, command);
+                  return new SGStatus(true);
+                });
       } catch (Exception ex) {
         result = new SGStatus(false);
         ex.printStackTrace();

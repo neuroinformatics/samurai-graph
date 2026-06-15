@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import foxtrot.Task;
-import foxtrot.Worker;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -23,6 +21,7 @@ import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentEvent;
@@ -784,34 +783,33 @@ public class SGDataAnimationDialog extends SGDialog
       progressDialog.setCenter(this);
       progressDialog.setVisible(true);
       try {
-        Worker.post(
-            new Task() {
-              public Object run() throws Exception {
-                wnd.startExport(true);
-                for (int ii = 0; ii < imageNum; ii++) {
-                  progressDialog.setProgress(ii + 1);
-                  if (progressDialog.isCanceled()) {
-                    break;
-                  }
-                  String indexString = String.format(format, indices[ii]);
-                  StringBuffer sb = new StringBuffer();
-                  sb.append(dir);
-                  sb.append(SGIConstants.FILE_SEPARATOR);
-                  sb.append(name);
-                  sb.append('_');
-                  sb.append(indexString);
-                  sb.append('.');
-                  sb.append(extension);
-                  String path = sb.toString();
-                  progressDialog.setStatusText(path);
-                  setCurrentFrameIndex(indices[ii]);
-                  wnd.exportAsImage(map, type, path, true, false);
-                }
-                wnd.endExport(true);
-                progressDialog.setVisible(false);
-                return true;
+        new SwingWorker<Boolean, Void>() {
+          protected Boolean doInBackground() throws Exception {
+            wnd.startExport(true);
+            for (int ii = 0; ii < imageNum; ii++) {
+              progressDialog.setProgress(ii + 1);
+              if (progressDialog.isCanceled()) {
+                break;
               }
-            });
+              String indexString = String.format(format, indices[ii]);
+              StringBuffer sb = new StringBuffer();
+              sb.append(dir);
+              sb.append(SGIConstants.FILE_SEPARATOR);
+              sb.append(name);
+              sb.append('_');
+              sb.append(indexString);
+              sb.append('.');
+              sb.append(extension);
+              String path = sb.toString();
+              progressDialog.setStatusText(path);
+              setCurrentFrameIndex(indices[ii]);
+              wnd.exportAsImage(map, type, path, true, false);
+            }
+            wnd.endExport(true);
+            progressDialog.setVisible(false);
+            return true;
+          }
+        }.execute();
       } catch (Exception e1) {
         e1.printStackTrace();
       }
