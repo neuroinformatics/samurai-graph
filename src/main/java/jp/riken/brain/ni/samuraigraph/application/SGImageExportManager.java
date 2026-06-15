@@ -177,6 +177,8 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
       "org.freehep.graphicsio.swf.SWFExportFileType",
       "org.freehep.graphicsio.exportchooser.ImageIOExportFileType",
       "org.freehep.graphicsio.gif.GIFExportFileType",
+      "org.freehep.graphicsio.png.PNGExportFileType",
+      "org.freehep.graphicsio.jpeg.JPEGExportFileType",
       "org.freehep.graphicsio.raw.RawExportFileType",
       "org.freehep.graphicsio.ppm.PPMExportFileType"
     };
@@ -255,7 +257,8 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
     Color bg = target.getBackground();
     Properties p = getExportDialogProperties(ed);
 
-    // directory — extract just the filename to avoid path duplication
+    // directory — set baseDir on ExportDialog and pass only the filename to avoid
+    // path duplication (freehep concatenates baseDir + defFile internally)
     String key = getSaveAsFileConstant();
     String baseDir = this.mBaseDirectoryName;
     String fileName = new File(this.mExportFileName).getName();
@@ -264,10 +267,9 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
       String pathNew = SGApplicationUtility.getPathName(baseDir, fileName);
       p.setProperty(key, pathNew);
     }
-    String defFile = SGApplicationUtility.getPathName(baseDir, fileName);
-
     // Set baseDir on ExportDialog to avoid path duplication
     setExportDialogBaseDir(ed, baseDir);
+    String defFile = fileName;
 
     // background color
     for (int ii = 0; ii < VECTOR_BG_KEY_ARRAY.length; ii++) {
