@@ -5,11 +5,13 @@ This document serves as the guide for AI agents (and human developers) contribut
 ## 1. Code Style & Language Guidelines
 
 ### Comment Language
+
 - **ALL comments inside the source code must be written in English.**
 - This applies to Javadoc comments, inline comments, blocks of notes, and debug logs.
 - Do not write comments in Japanese or other languages.
 
 ### Code Formatting
+
 - This project utilizes [Spotless](https://github.com/diffplug/spotless) to enforce uniform code styling (Google Java Format).
 - Always format the files using the Maven Spotless plugin before building or committing.
 
@@ -20,22 +22,29 @@ This document serves as the guide for AI agents (and human developers) contribut
 After making any code modifications, you **MUST** run the verification process in the exact order below to ensure the code style is pristine and that no compilation or lint issues are introduced.
 
 ### Step 1: Apply Formatter
+
 Format all changed files using:
+
 ```bash
 mvn spotless:apply
 ```
 
 ### Step 2: Clean Build Artifacts
+
 Clean the project to avoid state pollution from prior builds:
+
 ```bash
 mvn clean
 ```
 
 ### Step 3: Compile with Lint Warning Flags
+
 Compile the source code with lint flags to verify there are no compilation warnings, deprecation warnings, or lint failures:
+
 ```bash
 mvn compile
 ```
+
 *(Note: The `pom.xml` is configured to automatically pass `-Xlint:all` to the compiler. Carefully review the output of `mvn compile` and resolve any compiler warnings introduced by your changes.)*
 
 ---
