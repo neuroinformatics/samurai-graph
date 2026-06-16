@@ -6,7 +6,7 @@ mkdir tmp
 cd tmp
 cvs -d cvs.sourceforge.jp:/cvsroot/samurai-graph co -P samurai-graph
 cd samurai-graph
-version=`grep "samurai-graph.version" src/resources/samurai-graph.properties | sed -e "s+^samurai-graph.version=++g" -e 's+.$++'`
+version=`grep "samurai-graph.version" src/main/resources/resources/samurai-graph.properties | sed -e "s+^samurai-graph.version=++g" -e 's+.$++'`
 rm -rf `find . -name '*.jar'`
 rm -rf `find . -name '*.exe'`
 rm -rf `find . -name '*.dll'`

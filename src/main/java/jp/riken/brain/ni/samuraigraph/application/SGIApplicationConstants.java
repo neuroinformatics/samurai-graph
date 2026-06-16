@@ -6,7 +6,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGIDataFileConstants;
 public interface SGIApplicationConstants extends SGIDataFileConstants {
 
   /** Application resource directory */
-  public static final String APPLICATION_RESOURCE_DIRECTORY = "resources";
+  public static final String APPLICATION_RESOURCE_DIRECTORY = "";
 
   /** Name of the property file. */
   public static final String APPLICATION_PROPERTY_FILENAME = "samurai-graph.properties";

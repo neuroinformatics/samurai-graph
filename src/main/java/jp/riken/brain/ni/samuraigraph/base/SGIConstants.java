@@ -74,7 +74,7 @@ public interface SGIConstants {
   public static final String TMP_DIR = System.getProperty("java.io.tmpdir");
 
   /** Directory name of resources. */
-  public static final String RESOURCES_DIRNAME = "/resources/";
+  public static final String RESOURCES_DIRNAME = "/";
 
   /** A constant for the Windows systems. */
   public static final String OS_NAME_WINDOWS = "windows";

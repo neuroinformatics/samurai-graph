@@ -3,12 +3,12 @@ Memorandum of How To Release.
 1. update change logs.
   - update product.xml in web resources 'web/htdocs/product.xml'.
   - run synchronization script.
-    % cd src/main/java/changelog
+    % cd changelog
     % ./make.sh  (make.bat)
 
 2. update version number.
 
-  - src/resources/samurai-graph.properties
+  - src/main/resources/resources/samurai-graph.properties
     samurai-graph.version=2.0.0
 
   - installer/win32/resources/vector/README.txt

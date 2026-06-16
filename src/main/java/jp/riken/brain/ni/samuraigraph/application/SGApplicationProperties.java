@@ -72,11 +72,11 @@ public class SGApplicationProperties implements SGIApplicationConstants {
     Properties prop = new Properties();
     InputStream is = null;
     try {
-      StringBuffer sb = new StringBuffer();
-      sb.append(APPLICATION_RESOURCE_DIRECTORY);
-      sb.append('/');
-      sb.append(APPLICATION_PROPERTY_FILENAME);
-      is = ClassLoader.getSystemResourceAsStream(sb.toString());
+      String resourcePath =
+          APPLICATION_RESOURCE_DIRECTORY.isEmpty()
+              ? APPLICATION_PROPERTY_FILENAME
+              : APPLICATION_RESOURCE_DIRECTORY + "/" + APPLICATION_PROPERTY_FILENAME;
+      is = ClassLoader.getSystemResourceAsStream(resourcePath);
       prop.load(is);
 
       // get version number
