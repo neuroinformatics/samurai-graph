@@ -2,14 +2,19 @@
     "version": "0.2",
     "language": "en,en-GB",
     "words": [
+        "codehaus",
         "diffplug",
         "freehep",
         "googlecode",
         "graphicsbase",
         "graphicsio",
         "imagej",
+        "releasedate",
+        "releasedesc",
+        "releaseinfo",
         "riken",
         "samuraigraph",
+        "stylesheet",
         "Unidata",
         "Xlint"
     ]

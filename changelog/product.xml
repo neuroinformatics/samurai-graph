@@ -1,0 +1,553 @@
+<?xml version="1.0"?>
+<product>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 2.0.0</releasedesc>
+      <releasedate>2010-11-23</releasedate>
+      <changelog>
+        <itemize>
+          <item>Added the netCDF files as the input file format.</item>
+          <item>Added the netCDF file to the file format of data set.</item>
+          <item>Enabled to switch the orientation of the bar graph and error bars between horizontal and vertical.</item>
+          <item>Enabled to shift the location of the line graph and the bar graph.</item>
+          <item>Enabled to switch whether to move or not the symbols such as the shape objects as axis range is changed.</item>
+          <item>Enabled to change the angle of the tick labels and the scale numbers.</item>
+          <item>Added functions to paint the background of the shape objects in a simple color, a pattern or gradation with transparency.</item>
+          <item>Added pseudo-color map to the graph type.</item>
+          <item>Revised the wizard dialogs for input data.</item>
+          <item>Added functions to operate the application from command-line input.</item>
+          <item>Improved scalar-type XY data significantly.</item>
+          <item>Revised commands of the paper size in the menu bar.</item>
+          <item>Added commands to change the front-back order of the objects.</item>
+          <item>Added commands to change the up-down order of the legend.</item>
+          <item>Fixed to show error bars above and below each data point ignoring the sign of error values.</item>
+          <item>Enabled to input the file name by drag-and-drop onto the text field on a dialog.</item>
+          <item>Enabled to zoom in or out the graph by holding down the control key and scrolling the mouse wheel.</item>
+          <item>Improved the grid lines for log-scaled axes.</item>
+          <item>Fixed cumulative minor bugs.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 1.0.7</releasedesc>
+      <releasedate>2008-1-19</releasedate>
+      <changelog>
+        <itemize>
+          <item>Added Microsoft Vista support.</item>
+          <item>Supported to move symbol by keyboard operation.</item>
+          <item>Fixed to show axis property dialog on Java 6.</item>
+          <item>Fixed broken color button design on Java 5 and 6.</item>
+          <item>Fixed broken toolbar design for GTK+ Look and Feel.</item>
+          <item>Fixed bug for tick label of log scale axis.</item>
+          <item>Fixed cumulative minor bugs.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 1.0.6</releasedesc>
+      <releasedate>2006-8-24</releasedate>
+      <changelog>
+        <itemize>
+          <item>Fixed property file and data set file loading bug.</item>
+          <item>Fixed print out bug for JRE 1.5.</item>
+          <item>Increased the backward compatibility of property file.</item>
+          <item>Changed MacOS X Java application bundler to the Universal Binary.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 1.0.5</releasedesc>
+      <releasedate>2006-2-22</releasedate>
+      <changelog>
+        <itemize>
+          <item>Enabled to invert maximum and minimum coordinates.</item>
+          <item>Fixed data set saving bug.</item>
+          <item>Fixed structured string rendering bug.</item>
+          <item>Improved progress bar information.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 1.0.4</releasedesc>
+      <releasedate>2005-12-16</releasedate>
+      <changelog>
+        <itemize>
+          <item>Enabled to use label strings in first line of data file.</item>
+          <item>Fixed string rendering bug for super/subscript.</item>
+          <item>Fixed font style bug for PDF file output.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 1.0.3</releasedesc>
+      <releasedate>2005-10-8</releasedate>
+      <changelog>
+        <itemize>
+          <item>Fixed property panel bug for log scaled data.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 1.0.2</releasedesc>
+      <releasedate>2005-9-1</releasedate>
+      <changelog>
+        <itemize>
+          <item>Fixed label of max/min axis value invisible bug.</item>
+          <item>Fixed network update check bug.</item>
+          <item>Supported drag and drop handling on UNIX/Linux.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 1.0.1</releasedesc>
+      <releasedate>2005-8-23</releasedate>
+      <changelog>
+        <itemize>
+          <item>Fixed critical bug in Multiple XY data drawing.</item>
+          <item>Enabled to handle basic apple events on MacOS X.</item>
+          <item>Fixed startup null pointer exception error on UNIX.</item>
+          <item>Supported comment line in data file.</item>
+          <item>Supported look and feel depending shortcut menu key.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 1.0.0</releasedesc>
+      <releasedate>2005-7-28</releasedate>
+      <changelog>
+        <itemize>
+          <item>Added a function of two-dimensional vector graph.</item>
+          <item>Enabled to save data and properties as an archive file.</item>
+          <item>Added a function drawing an image in the background of a window.</item>
+          <item>Revised the bounding box of text strings.</item>
+          <item>Changed the policy of loading a property file: a new window is not created, and properties are applied to the window directly.</item>
+          <item>Added a status bar in the window.</item>
+          <item>Fixed the following bugs.<itemize>
+              <item>Application freezes or becomes unstable with some form of data.</item>
+              <item>The StackOverflowError can occur by mouse wheel.</item>
+              <item>With some data, Axis numbers are set to be integer improperly.</item>
+              <item>Once canceled downloading the new version, it is failed to restart the upgrade.</item>
+            </itemize>
+          </item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.9.1</releasedesc>
+      <releasedate>2005-6-27</releasedate>
+      <changelog>
+        <itemize>
+          <item>Enabled to set the width of symbol in the legend.</item>
+          <item>Enabled to translate timing lines by mouse drag.</item>
+          <item>Modified to set the width of bars for data by axis value.</item>
+          <item>Enabled to add subscript and superscript recursively.</item>
+          <item>Revised error messages for illegal input values.</item>
+          <item>Added a function to clear the undo buffer.</item>
+          <item>Fixed following bugs in axes.<itemize>
+              <item>Application freezes when the negative step value is set.</item>
+              <item>Unable to use the exponent.</item>
+              <item>Unable to set the frame line width.</item>
+            </itemize>
+          </item>
+          <item>Fixed following bugs.<itemize>
+              <item>When axis scale is set to log scale, location of the objects are set incorrectly.</item>
+              <item>Failed to read data files in which double quotation marks exist in the text string for the tick labels.</item>
+              <item>Discarded objects are not freed from memory.</item>
+            </itemize>
+          </item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.9.0</releasedesc>
+      <releasedate>2005-6-15</releasedate>
+      <changelog>
+        <itemize>
+          <item>Added a new type of data in which the x-values are given as text strings of date.</item>
+          <item>Modified to show the confirmation dialog in closing a window or exiting the application.</item>
+          <item>Revised the GUI to select axes in the property dialog.</item>
+          <item>Modified to move figures to front or back not by mouse click but by the menu commands.</item>
+          <item>Fixed following bugs.<itemize>
+              <item>Selected font is not set correctly in certain cases.</item>
+              <item>Text strings not enclosed in double quotation marks are accepted.</item>
+            </itemize>
+          </item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.8.0</releasedesc>
+      <releasedate>2005-5-27</releasedate>
+      <changelog>
+        <itemize>
+          <item>Added a function to insert shapes into figures: rectangles, ellipses, arrows and lines.</item>
+          <item>Fixed following bugs.<itemize>
+              <item>The menu item with a check-box, [Layout]-[Grid]-[Snap to Grid], is selected contrary to the situation.</item>
+              <item>The menu items under [Layout]-[Paper Size] do not work normally.</item>
+              <item>For data with many points, the property dialog does not work normally.</item>
+              <item>The size of heads of error bars cannot be set correctly with the property dialog.</item>
+              <item>Senseless words are displayed in the change logs in Java Runtime Environment 5.0.</item>
+            </itemize>
+          </item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.7.1</releasedesc>
+      <releasedate>2005-5-16</releasedate>
+      <changelog>
+        <itemize>
+          <item>Resolved the high load average problem in some platforms such as MacOS X and Linux.</item>
+          <item>Fixed a bug that it is failed to find Java Runtime Environment on installation in Windows platform.</item>
+          <item>Revised the layout of the tool bar.</item>
+          <item>Fixed incorrect name of a tool bar, from "Arrange" to "Layout".</item>
+          <item>Enabled to align figures on grid lines by mouse drag.</item>
+          <item>Enabled to add a timing line without clicking axis lines.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.7.0</releasedesc>
+      <releasedate>2005-5-11</releasedate>
+      <changelog>
+        <itemize>
+          <item>Revised the functions to set objects' properties.<itemize>
+              <item>Enabled to set properties of multiple objects at the one time.</item>
+              <item>Enabled to display the property dialog of data by double-clicking the corresponding graphic symbols in legend.</item>
+              <item>Enabled to display the property dialog for each objects from the menu with the tree structure in the menu bar.</item>
+            </itemize>
+          </item>
+          <item>Revised the tool bar in the window.<itemize>
+              <item>Added new buttons for print, undo, redo, cut, copy and paste.</item>
+              <item>Enabled to set visibility of each button-groups.</item>
+              <item>Enabled to move button-groups by mouse drag.</item>
+              <item>Added an item for auto-zoom to the combo box displaying the magnification.</item>
+            </itemize>
+          </item>
+          <item>Enabled to edit all editable text both in the property dialog and by inline editing.</item>
+          <item>Modified to draw an error bar of data in the legend.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.6.1</releasedesc>
+      <releasedate>2005-3-24</releasedate>
+      <changelog>
+        <itemize>
+          <item>Fixed following bugs related to scalar XY-type multiple data.<itemize>
+              <item>Unable to set properties with the property dialog.</item>
+              <item>Failed to clip the drawn image of data when exporting or printing.</item>
+            </itemize>
+          </item>
+          <item>Added new types of line and symbol.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.6.0</releasedesc>
+      <releasedate>2005-3-18</releasedate>
+      <changelog>
+        <itemize>
+          <item>Associated Samurai Graph application to the property file with the file extension .sgp under Windows environment. By the double click of a property file icon, Samurai Graph is launched with a multiple data file chooser dialog. File association is created by Samurai Graph installer.</item>
+          <item>To set the file association, the multiple running of Samurai Graph application was allowed.</item>
+          <item>Added a progress bar to the splash window displayed during the start-up.</item>
+          <item>Modified the function for auto arrangement of figures. Figures are arranged along grid lines in the paper.</item>
+          <item>Revised the multiple data-file chooser dialog.<itemize>
+              <item>Enabled to edit the cell for the filename of data.</item>
+              <item>Modified to show the tooltip text for the filename of data.</item>
+            </itemize>
+          </item>
+          <item>Added margin around the data names in the legend.</item>
+          <item>Modified the function for the menu command, "Zoom Way Out". The suitable magnification is selected so that the pane include the paper entirely.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.5.2</releasedesc>
+      <releasedate>2005-3-4</releasedate>
+      <changelog>
+        <itemize>
+          <item>Added arrows to resize the paper by mouse drag.</item>
+          <item>Revised display of the ruler.</item>
+          <item>Fixed a bug in the method reading the property file.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.5.1</releasedesc>
+      <releasedate>2005-2-23</releasedate>
+      <changelog>
+        <itemize>
+          <item>Added a function to draw grid lines in the figure.</item>
+          <item>Revised the function exporting images.</item>
+          <item>Fixed cumulative bugs.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.5.0</releasedesc>
+      <releasedate>2005-2-15</releasedate>
+      <changelog>
+        <itemize>
+          <item>Added the print function.</item>
+          <item>Revised the preview dialog for exporting and printing the image.</item>
+          <item>Revised the dialog to display change logs.</item>
+          <item>Modified to use the default look and feel.</item>
+          <item>Modified to reflect the background color of the window to the exported image.</item>
+          <item>Modified to record the last recently used directory on the file choice.</item>
+          <item>Modified to set the rubber banding by default when figures are moved by mouse drag.</item>
+          <item>Fixed cumulative bugs.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.4.1</releasedesc>
+      <releasedate>2005-2-3</releasedate>
+      <changelog>
+        <itemize>
+          <item>Fixed bugs in undo/redo function. Undo/redo of addition/deletion of figures do not work well.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.4.0</releasedesc>
+      <releasedate>2005-1-31</releasedate>
+      <changelog>
+        <itemize>
+          <item>Added functions to copy, cut, paste and duplicate the selected objects - data, symbols and figures.</item>
+          <item>Refined the about dialog.</item>
+          <item>Fixed cumulative bugs.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.3.2</releasedesc>
+      <releasedate>2005-1-19</releasedate>
+      <changelog>
+        <itemize>
+          <item>Fixed the following bugs.<itemize>
+              <item>Bugs on installation of the new version of Samurai Graph by auto-upgrade.</item>
+              <item>Error bar is not drawn correctly with axes in the log scale.</item>
+              <item>Bounding box is drawn when exported to image files.</item>
+            </itemize>
+          </item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.3.1</releasedesc>
+      <releasedate>2005-1-13</releasedate>
+      <changelog>
+        <itemize>
+          <item>Fixed a bug that the uninstallation fails when the application is running. Modified to execute Samurai Graph when uninstaller is executed.</item>
+          <item>Forbade the multiple running of Samurai Graph. When users try to it, a new window opens in the existing process.</item>
+          <item>Fixed cumulative bugs.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.3.0</releasedesc>
+      <releasedate>2004-12-27</releasedate>
+      <changelog>
+        <itemize>
+          <item>Modified the overall properties and the usage of the property files.<itemize>
+              <item>Modified to write property files in XML format, and we assigned the original file extension to them.</item>
+              <item>Enabled to use a property file by drag and drop into the window.</item>
+              <item>Improved the dialog to select data files to be used with a property file.</item>
+            </itemize>
+          </item>
+          <item>Enabled to select the objects such as figures, data, various symbols and legend, and to edit them.<itemize>
+              <item>Modified to select objects by mouse click.</item>
+              <item>Enabled to delete selected objects by hitting the delete key or by executing the menu command.</item>
+              <item>Enabled to move selected objects by mouse drag.</item>
+            </itemize>
+          </item>
+          <item>The symbols and the legend are related to the axes like data objects.</item>
+          <item>Include change logs into the release file.</item>
+          <item>Enabled to use proxy connection on auto-upgrade.</item>
+          <item>Improved the features of spinners.</item>
+          <item>Improved the menu items to insert various symbols.</item>
+          <item>Changed the default location and background color of the legend.</item>
+          <item>Enabled to hide lines of significant difference symbols.</item>
+          <item>Enabled to hide the entry of data in the legend.</item>
+          <item>Fixed cumulative bugs.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.2.0</releasedesc>
+      <releasedate>2004-11-10</releasedate>
+      <changelog>
+        <itemize>
+          <item>Arranged menu entries in the menubar.<itemize>
+              <item>Hid temporary entry for not implemented features.</item>
+              <item>Added new entries for some features below:<itemize>
+                  <item>Insert Symbol (label, significant difference, line-break, timing line)</item>
+                  <item>Zooming</item>
+                  <item>Grid Properties</item>
+                  <item>Version upgrade</item>
+                  <item>Change Logs</item>
+                </itemize>
+              </item>
+              <item>Remapped short cut keys of major functions.</item>
+            </itemize>
+          </item>
+          <item>Arranged menu entries in the popup menu of some objects.<itemize>
+              <item>Added property entry for all popup menus.</item>
+            </itemize>
+          </item>
+          <item>Added version upgrade feature.<itemize>
+              <item>It can to check latest version via network at start up time. If newer version is available, information about it is displayed.<itemize>
+                  <item>On Windows, it can automatically upgrade to latest version.</item>
+                  <item>On other platforms, it can download latest version.</item>
+                </itemize>
+              </item>
+              <item>Added menu entry [Help]-[Upgrade] to menubar.</item>
+              <item>property dialog<itemize>
+                  <item>Frequency setting for automatically latest version checking</item>
+                  <item>Manually upgrade button</item>
+                </itemize>
+              </item>
+            </itemize>
+          </item>
+          <item>Other new features and changes<itemize>
+              <item>Added splash window.</item>
+              <item>Hid vector type data entry from data type selection dialog.</item>
+              <item>Added automatically zoom out to fit a window function. It can to use by menu entry [Layout]-[Zoom]-[Auto Zoom].</item>
+              <item>Added toggle switch of the grid line visible status. It can to switch from menu entry [Layout]-[Grid]-[Visible] or window property dialog.</item>
+              <item>Added recovery sequence for symbol insert failure. If you fail symbol inserting, the message dialog is shown and you can continue insert operation.</item>
+              <item>Changed symbol superposition policies. Superposition of same type symbol (label, significant difference, break-line, timing line) can to change by popup menu.</item>
+              <item>Changed action of label popup menu showing to use of right button click of mouse on the label symbol.</item>
+              <item>Added popup menu entry for axis and legend visible control.</item>
+              <item>Changed show action of axis property dialog at axis invisible. It can to show by double click operation of left button of mouse on rectangle border of the figure.</item>
+              <item>Added change logs dialog. It can to show by menubar entry [Help]-[Change Log].</item>
+            </itemize>
+          </item>
+          <item>Fixed cumulative bugs.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.1.4</releasedesc>
+      <releasedate>2004-10-5</releasedate>
+      <changelog>
+        <itemize>
+          <item>Fixed a bug - The location of the paper was set wrongly in the start-up 
+      of the application, and the paper was drawn at the lower position.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.1.3</releasedesc>
+      <releasedate>2004-10-4</releasedate>
+      <changelog>
+        <itemize>
+          <item>Enabled the addition of axis break symbols using the toggle button 
+        in the tool bar.</item>
+          <item>Disabled the automatic pullback of the figures to inside of the paper.</item>
+          <item>Disabled the following components when the figures do not exist:<itemize>
+              <item>Buttons in the tool bar<itemize>
+                  <item>The button to set the bounds of the paper using the bounding box 
+            of figures.</item>
+                  <item>Toggle buttons to add labels, symbols of significant difference, 
+            timing lines and symbols of axis break.</item>
+                </itemize>
+              </item>
+              <item>Menu items in the menu bar<itemize>
+                  <item>[Layout]-[Bounding Box] ... Set the bounds of the paper using the 
+            bounding box of figures.</item>
+                  <item>[Layout]-[Align Figures] ... Align the figures.</item>
+                </itemize>
+              </item>
+            </itemize>
+          </item>
+          <item>Enabled the scroll in the vertical direction by the mouse wheel.</item>
+          <item>Implemented the about dialog. It can be displayed by selecting the 
+        menu [Help]-[About] in the menu bar.</item>
+          <item>Fixed the following bugs occurred in the Mac OS X environment:<itemize>
+              <item>As the window moves, the selected figures moves in the window pane.</item>
+              <item>Unable to add data to the figure by drag-and-drop of data files.</item>
+            </itemize>
+          </item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.1.2</releasedesc>
+      <releasedate>2004-9-16</releasedate>
+      <changelog>
+        <itemize>
+          <item>Revised graph and strings objects creating algorithm to speed up.</item>
+          <item>Added new distribute package for MacOS X.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 0.1.1</releasedesc>
+      <releasedate>2004-9-6</releasedate>
+      <changelog>
+        <itemize>
+          <item>Improved new features of significant difference symbol. 
+      It can to flip vertical and horizontal direction.</item>
+          <item>Several bugs fixed.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+</product>
