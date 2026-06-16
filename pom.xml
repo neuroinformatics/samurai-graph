@@ -6,7 +6,7 @@
     <groupId>jp.riken.brain.ni</groupId>
     <artifactId>samurai-graph</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.0</version>
+    <version>2.2.0</version>
     <name>samurai-graph</name>
     <url>https://github.com/neuroinformatics/samurai-graph</url>
 
@@ -24,11 +24,12 @@
                 <excludes>
                     <exclude>**/*.java</exclude>
                 </excludes>
+                <filtering>true</filtering>
             </resource>
         </resources>
         <plugins>
 
-            <!-- Written for Java 1.8 -->
+            <!-- Written for Java 21 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -123,7 +124,7 @@
 
     <dependencies>
 
-	<!-- org.freehep -->
+	    <!-- org.freehep -->
         <dependency>
             <groupId>org.freehep</groupId>
             <artifactId>freehep-graphicsbase</artifactId>
@@ -170,20 +171,13 @@
             <version>2.4</version>
         </dependency>
 
-        <!-- SLF4J binding: route SLF4J calls through existing log4j2 -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j2-impl</artifactId>
-            <version>2.26.0</version>
-        </dependency>
- 
         <!-- netcdf -->
         <dependency>
             <groupId>edu.ucar</groupId>
             <artifactId>netcdfAll</artifactId>
             <version>4.6.16.1</version>
         </dependency>
- 
+
         <dependency>
             <groupId>ch.systems.cisd</groupId>
             <artifactId>jhdf5</artifactId>
@@ -213,7 +207,12 @@
             <artifactId>log4j-core</artifactId>
             <version>2.26.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <version>2.26.0</version>
+        </dependency>
+ 
     </dependencies>
 
 </project>
