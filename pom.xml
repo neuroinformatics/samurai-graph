@@ -95,6 +95,40 @@
                 </configuration>
             </plugin>
 
+            <!-- Generate ChangeLog.html from product.xml via XSLT -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>xml-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-changelog</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>transform</goal>
+                        </goals>
+                        <configuration>
+                            <transformationSets>
+                                 <transformationSet>
+                                    <dir>changelog</dir>
+                                   <includes>
+                                       <include>product.xml</include>
+                                   </includes>
+                                   <stylesheet>changelog/ChangeLog.xsl</stylesheet>
+                                   <fileMappers>
+                                        <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
+                                            <pattern>product\.xml$</pattern>
+                                            <replacement>ChangeLog.html</replacement>
+                                        </fileMapper>
+                                    </fileMappers>
+                                    <outputDir>${project.build.outputDirectory}</outputDir>
+                                </transformationSet>
+                            </transformationSets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
