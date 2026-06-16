@@ -388,6 +388,7 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @param list2 a list to set the copied objects
    * @return true if succeeded
    */
+  @SuppressWarnings("unchecked")
   public static boolean copyObjects(final List<? extends SGICopiable> list1, final List list2) {
     if (list1 == null || list2 == null) {
       throw new IllegalArgumentException("list1==null || list2==null");
@@ -1037,6 +1038,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   }
 
   /** Moves an object to the head or tail of a list. */
+  @SuppressWarnings("unchecked")
   public static boolean moveObjectToRawList(
       final Object obj, final List list, final boolean toTail) {
     final int index = list.indexOf(obj);
@@ -1053,6 +1055,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   }
 
   /** Moves objects from one list to another. */
+  @SuppressWarnings("unchecked")
   public static boolean moveObjectRawList(final List movedList, final List list, final int num) {
     if (num > 0) {
       for (int ii = movedList.size() - 1; ii >= 0; ii--) {

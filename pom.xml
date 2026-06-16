@@ -52,12 +52,60 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer"/>
                             </transformers>
                             <filters>
+                                <!-- Exclude ExportFileTypeRegistry class from freehep-graphicsbase -->
                                 <filter>
                                     <artifact>org.freehep:freehep-graphicsbase</artifact>
                                     <excludes>
                                         <exclude>org/freehep/graphicsbase/util/export/ExportFileTypeRegistry.class</exclude>
+                                    </excludes>
+                                </filter>
+                               <!-- Exclude ncsa.hdf from jhdf5 (overlaps with netcdfAll) -->
+                                <filter>
+                                    <artifact>ch.systems.cisd:jhdf5</artifact>
+                                    <excludes>
+                                        <exclude>ncsa/hdf/**</exclude>
+                                    </excludes>
+                                </filter>
+                                <!-- Exclude bundled SLF4J from netcdfAll (we manage our own) -->
+                                <filter>
+                                    <artifact>edu.ucar:netcdfAll</artifact>
+                                    <excludes>
+                                        <exclude>org/slf4j/**</exclude>
+                                        <exclude>META-INF/maven/org.slf4j/**</exclude>
+                                    </excludes>
+                                </filter>
+                                <!-- Exclude test-only dependencies -->
+                                <filter>
+                                    <artifact>junit:junit</artifact>
+                                    <excludes>
+                                        <exclude>**</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>org.hamcrest:hamcrest-core</artifact>
+                                    <excludes>
+                                        <exclude>**</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>org.freehep:freehep-graphicsio-tests</artifact>
+                                    <excludes>
+                                        <exclude>**</exclude>
+                                    </excludes>
+                                </filter>
+                                <!-- Global: exclude module-info, duplicate license/manifest files -->
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>module-info.class</exclude>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
+                                        <exclude>META-INF/LICENSE*</exclude>
+                                        <exclude>META-INF/NOTICE*</exclude>
+                                        <exclude>META-INF/DEPENDENCIES*</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
@@ -92,6 +140,32 @@
                             <style>GOOGLE</style>
                         </googleJavaFormat>
                     </java>
+                </configuration>
+            </plugin>
+
+            <!-- Suppress unused declared dependencies warnings for runtime-only deps -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <ignoredUnusedDeclaredDependencies>
+                        <!-- Required at runtime for FreeHEP SPI-based Java image format discovery -->
+                        <ignoredUnusedDeclaredDependency>org.freehep:freehep-graphicsio-java</ignoredUnusedDeclaredDependency>
+                        <!-- SLF4J→Log4j2 bridge required at runtime for libraries using SLF4J -->
+                        <ignoredUnusedDeclaredDependency>org.apache.logging.log4j:log4j-slf4j2-impl</ignoredUnusedDeclaredDependency>
+                    </ignoredUnusedDeclaredDependencies>
+                </configuration>
+            </plugin>
+
+            <!-- Explicitly set UTF-8 encoding for filtered resources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <propertiesEncoding>UTF-8</propertiesEncoding>
                 </configuration>
             </plugin>
 
@@ -211,7 +285,7 @@
             <artifactId>jhdf5</artifactId>
             <version>14.12.0</version>
         </dependency>
- 
+
         <dependency>
             <groupId>com.diffplug.matsim</groupId>
             <artifactId>matfilerw</artifactId>
