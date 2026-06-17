@@ -16,7 +16,7 @@ public class SGDataColumnInfoSet implements Cloneable {
     if (infoArray == null) {
       throw new IllegalArgumentException("infoArray == null");
     }
-    this.mDataColumnInfoArray = (SGDataColumnInfo[]) infoArray.clone();
+    this.mDataColumnInfoArray = infoArray.clone();
   }
 
   /**
@@ -28,7 +28,7 @@ public class SGDataColumnInfoSet implements Cloneable {
     if (this.mDataColumnInfoArray == null) {
       return new SGDataColumnInfo[] {};
     } else {
-      return (SGDataColumnInfo[]) this.mDataColumnInfoArray.clone();
+      return this.mDataColumnInfoArray.clone();
     }
   }
 

@@ -1392,7 +1392,7 @@ public class SGApplicationUtility
         // Checks whether all tokens consist of spaces.
         boolean spacesOnly = true;
         for (int ii = 0; ii < colNum; ii++) {
-          Token token = (Token) tokenList.get(ii);
+          Token token = tokenList.get(ii);
           String str = token.getString();
           char[] cArray = str.toCharArray();
           for (int jj = 0; jj < cArray.length; jj++) {
@@ -1422,7 +1422,7 @@ public class SGApplicationUtility
 
         // array of the tokens
         for (int ii = 0; ii < colNum; ii++) {
-          Token token = (Token) tokenList.get(ii);
+          Token token = tokenList.get(ii);
           listArray.get(ii).add(token.getString());
         }
       }
@@ -1464,7 +1464,7 @@ public class SGApplicationUtility
       return false;
     }
     for (int ii = 0; ii < indexList.size(); ii++) {
-      Integer val = (Integer) indexList.get(ii);
+      Integer val = indexList.get(ii);
       if (val.intValue() != 0) {
         ret = false;
       }

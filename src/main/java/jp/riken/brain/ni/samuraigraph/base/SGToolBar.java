@@ -364,7 +364,7 @@ public class SGToolBar extends JToolBar
       if (array[ii] instanceof JCheckBoxMenuItem) {
         JCheckBoxMenuItem item = (JCheckBoxMenuItem) array[ii];
         String command = item.getActionCommand();
-        JToolBar bar = (JToolBar) map.get(command);
+        JToolBar bar = map.get(command);
         item.setSelected(bar.isVisible());
       }
     }

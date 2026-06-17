@@ -1339,11 +1339,6 @@ public abstract class SGNetCDFData extends SGArrayData
    *
    * @return a map of stride of dimensions
    */
-  /**
-   * Returns a map of stride of dimensions. The keys are the name of dimensions.
-   *
-   * @return a map of stride of dimensions
-   */
   protected abstract Map<String, SGIntegerSeriesSet> getDimensionStrideMap();
 
   /**
@@ -1383,7 +1378,7 @@ public abstract class SGNetCDFData extends SGArrayData
 
   protected static SGNetCDFVariable[] copyVariables(SGNetCDFVariable[] vars) {
     if (vars != null) {
-      return (SGNetCDFVariable[]) vars.clone();
+      return vars.clone();
     } else {
       return null;
     }
