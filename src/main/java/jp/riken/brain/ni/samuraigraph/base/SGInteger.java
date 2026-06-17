@@ -163,6 +163,14 @@ public class SGInteger implements Cloneable {
     return true;
   }
 
+  @Override
+  public int hashCode() {
+    int result = super.hashCode();
+    result = 31 * result + (this.mText != null ? this.mText.hashCode() : 0);
+    result = 31 * result + (this.mNumber != null ? this.mNumber.hashCode() : 0);
+    return result;
+  }
+
   /**
    * Parses a given text string and returns an integer series object.
    *

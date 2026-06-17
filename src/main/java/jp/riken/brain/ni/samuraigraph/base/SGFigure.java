@@ -944,7 +944,7 @@ public abstract class SGFigure
     }
 
     // add to the figure elements
-    SGIFigureElement[] newArray = (SGIFigureElement[]) list.toArray(new SGIFigureElement[] {});
+    SGIFigureElement[] newArray = list.toArray(new SGIFigureElement[0]);
     final float ratio = (max - min) / newArray.length;
     for (int ii = 0; ii < newArray.length; ii++) {
       progress.setProgressValue(ratio * ii + min);
@@ -3184,7 +3184,7 @@ public abstract class SGFigure
 
     // append new Element objects to the parent
     for (int ii = 0; ii < elList.size(); ii++) {
-      Element el = (Element) elList.get(ii);
+      Element el = elList.get(ii);
       parent.appendChild(el);
     }
 

@@ -844,7 +844,7 @@ public class SGMenuBar extends JMenuBar
     // throw an action event to listeners
     ActionEvent eNew = new ActionEvent(this, e.getID(), e.getActionCommand(), e.getModifiers());
     for (int ii = 0; ii < this.mActionListenerList.size(); ii++) {
-      final ActionListener el = (ActionListener) this.mActionListenerList.get(ii);
+      final ActionListener el = this.mActionListenerList.get(ii);
       el.actionPerformed(eNew);
     }
   }

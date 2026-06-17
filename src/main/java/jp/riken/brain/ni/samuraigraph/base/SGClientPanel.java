@@ -794,17 +794,6 @@ public class SGClientPanel extends JLayeredPane
   // event
   //
   /**
-   * The listener interface for receiving keyboard events (keystrokes).
-   *
-   * @see KeyAdapter
-   * @see KeyEvent
-   * @see <a href="http://java.sun.com/docs/books/tutorial/post1.0/ui/keylistener.html">Tutorial:
-   *     Writing a Key Listener</a>
-   * @see <a href="http://www.awl.com/cp/javaseries/jcl1_2.html">Reference: The Java Class Libraries
-   *     (update file)</a>
-   */
-
-  /**
    * Invoked when a key has been typed. See the class description for {@link KeyEvent} for a
    * definition of a key typed event.
    */
@@ -1340,7 +1329,7 @@ public class SGClientPanel extends JLayeredPane
         if (array[ii] instanceof JMenuItem) {
           item = (JMenuItem) array[ii];
           String command = item.getActionCommand();
-          Boolean b = (Boolean) this.mPopupMenuEnabledMap.get(command);
+          Boolean b = this.mPopupMenuEnabledMap.get(command);
           if (b != null) {
             item.setEnabled(b.booleanValue());
           }
@@ -1437,7 +1426,7 @@ public class SGClientPanel extends JLayeredPane
       if (b) {
 
         for (int ii = figureList.size() - 1; ii >= 0; ii--) {
-          SGFigure figure = (SGFigure) figureList.get(ii);
+          SGFigure figure = figureList.get(ii);
           figure.onMouseReleased(e);
 
           // coordinate of pressed point
@@ -1595,7 +1584,7 @@ public class SGClientPanel extends JLayeredPane
 
       ArrayList<SGFigure> list = this.mWnd.getVisibleFigureList();
       for (int ii = list.size() - 1; ii >= 0; ii--) {
-        SGFigure figure = (SGFigure) list.get(ii);
+        SGFigure figure = list.get(ii);
         if (figure.onMouseDragged(e) == true) {
           this.mWnd.repaintContentPane();
           return;
@@ -1621,7 +1610,7 @@ public class SGClientPanel extends JLayeredPane
       ArrayList<SGFigure> list = this.mWnd.getVisibleFigureList();
       boolean inExtraRegion = false;
       for (int ii = list.size() - 1; ii >= 0; ii--) {
-        SGFigure figure = (SGFigure) list.get(ii);
+        SGFigure figure = list.get(ii);
         if (inExtraRegion) {
           figure.setExtraRegionFlag(false);
         } else {
@@ -1633,7 +1622,7 @@ public class SGClientPanel extends JLayeredPane
       }
 
       for (int ii = list.size() - 1; ii >= 0; ii--) {
-        SGFigure figure = (SGFigure) list.get(ii);
+        SGFigure figure = list.get(ii);
         if (figure.onMouseMoved(e)) {
           break;
         }
@@ -1641,7 +1630,7 @@ public class SGClientPanel extends JLayeredPane
 
       String axisValueString = "";
       for (int ii = list.size() - 1; ii >= 0; ii--) {
-        SGFigure figure = (SGFigure) list.get(ii);
+        SGFigure figure = list.get(ii);
         Rectangle2D rect = figure.getGraphRect();
         if (rect.contains(x, y)) {
           axisValueString = figure.getAxisValueString(x, y);
@@ -1684,7 +1673,7 @@ public class SGClientPanel extends JLayeredPane
       boolean effective = false;
       ArrayList<SGFigure> list = this.mWnd.getVisibleFigureList();
       for (int ii = list.size() - 1; ii >= 0; ii--) {
-        SGFigure figure = (SGFigure) list.get(ii);
+        SGFigure figure = list.get(ii);
         if (figure.onKeyPressed(e)) {
           effective = true;
         }

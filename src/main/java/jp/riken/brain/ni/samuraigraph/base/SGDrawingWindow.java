@@ -155,7 +155,7 @@ public class SGDrawingWindow extends JFrame
 
     // dispose copied objects
     for (int ii = 0; ii < this.mCopiedDataObjectsList.size(); ii++) {
-      SGData data = (SGData) this.mCopiedDataObjectsList.get(ii);
+      SGData data = this.mCopiedDataObjectsList.get(ii);
       data.dispose();
     }
     for (int ii = 0; ii < this.mCopiedDataPropertiesMapList.size(); ii++) {

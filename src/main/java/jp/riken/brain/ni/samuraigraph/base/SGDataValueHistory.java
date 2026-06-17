@@ -220,6 +220,16 @@ public abstract class SGDataValueHistory implements Cloneable {
     }
 
     @Override
+    public int hashCode() {
+      int result = super.hashCode();
+      result = 31 * result + (this.mVarName != null ? this.mVarName.hashCode() : 0);
+      result =
+          31 * result + (this.mAnimationDimName != null ? this.mAnimationDimName.hashCode() : 0);
+      result = 31 * result + this.mAnimationDimIndex;
+      return result;
+    }
+
+    @Override
     protected String paramString() {
       StringBuffer sb = new StringBuffer();
       sb.append(super.paramString());
@@ -379,6 +389,14 @@ public abstract class SGDataValueHistory implements Cloneable {
       }
 
       @Override
+      public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (this.mXDimName != null ? this.mXDimName.hashCode() : 0);
+        result = 31 * result + (this.mYDimName != null ? this.mYDimName.hashCode() : 0);
+        return result;
+      }
+
+      @Override
       protected String paramString() {
         StringBuffer sb = new StringBuffer();
         sb.append(super.paramString());
@@ -468,6 +486,15 @@ public abstract class SGDataValueHistory implements Cloneable {
       }
 
       @Override
+      public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (this.mDimName != null ? this.mDimName.hashCode() : 0);
+        result = 31 * result + (this.mPickUpDimName != null ? this.mPickUpDimName.hashCode() : 0);
+        result = 31 * result + this.mPickUpDimIndex;
+        return result;
+      }
+
+      @Override
       protected String paramString() {
         StringBuffer sb = new StringBuffer();
         sb.append(super.paramString());
@@ -537,6 +564,15 @@ public abstract class SGDataValueHistory implements Cloneable {
         return false;
       }
       return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int result = super.hashCode();
+      result = 31 * result + (this.mVarName != null ? this.mVarName.hashCode() : 0);
+      result = 31 * result + this.mAnimationDimension;
+      result = 31 * result + this.mAnimationDimIndex;
+      return result;
     }
 
     @Override
@@ -618,6 +654,13 @@ public abstract class SGDataValueHistory implements Cloneable {
       }
 
       @Override
+      public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + this.mDimension;
+        return result;
+      }
+
+      @Override
       protected String paramString() {
         StringBuffer sb = new StringBuffer();
         sb.append(super.paramString());
@@ -689,6 +732,14 @@ public abstract class SGDataValueHistory implements Cloneable {
           return false;
         }
         return true;
+      }
+
+      @Override
+      public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + this.mXDimension;
+        result = 31 * result + this.mYDimension;
+        return result;
       }
 
       @Override
@@ -773,6 +824,9 @@ public abstract class SGDataValueHistory implements Cloneable {
         if (!(obj instanceof MD1)) {
           return false;
         }
+        if (!super.equals(obj)) {
+          return false;
+        }
         MD1 value = (MD1) obj;
         if (this.mDimension != value.mDimension) {
           return false;
@@ -784,6 +838,15 @@ public abstract class SGDataValueHistory implements Cloneable {
           return false;
         }
         return true;
+      }
+
+      @Override
+      public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + this.mDimension;
+        result = 31 * result + this.mPickUpDimension;
+        result = 31 * result + this.mPickUpDimIndex;
+        return result;
       }
 
       @Override
