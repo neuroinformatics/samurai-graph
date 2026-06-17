@@ -1133,7 +1133,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
         }
       }
     }
-    writer.writeDoubleMDArray(zName, zArray);
+    writer.float64().writeMDArray(zName, zArray);
 
     return true;
   }

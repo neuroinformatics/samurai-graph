@@ -2,6 +2,7 @@ package jp.riken.brain.ni.samuraigraph.application;
 
 import ch.systemsx.cisd.hdf5.IHDF5Reader;
 import com.jmatio.io.MatFileReader;
+import hdf.hdf5lib.exceptions.HDF5Exception;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -55,7 +56,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGSXYZSDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYSDArrayData;
-import ncsa.hdf.hdf5lib.exceptions.HDF5Exception;
 import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFile;
 

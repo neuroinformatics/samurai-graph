@@ -2007,12 +2007,7 @@ public abstract class SGNetCDFData extends SGArrayData
         String validDimName = this.getValidName(curDimName);
         Dimension dim =
             ncWrite.addDimension(
-                null,
-                validDimName,
-                len,
-                curDim.isShared(),
-                curDim.isUnlimited(),
-                curDim.isVariableLength());
+                validDimName, len, curDim.isUnlimited(), curDim.isVariableLength());
         addedDimMap.put(curDimName, dim);
         addedVarDimCurDimNameMap.put(validDimName, curDimName);
       }

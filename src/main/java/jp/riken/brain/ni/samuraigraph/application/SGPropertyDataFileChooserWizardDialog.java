@@ -2,6 +2,7 @@ package jp.riken.brain.ni.samuraigraph.application;
 
 import ch.systemsx.cisd.hdf5.IHDF5Reader;
 import com.jmatio.io.MatFileReader;
+import hdf.hdf5lib.exceptions.HDF5Exception;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
@@ -71,7 +72,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFFile;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayFile;
-import ncsa.hdf.hdf5lib.exceptions.HDF5Exception;
 import ucar.nc2.NetcdfFile;
 
 /** A dialog to choose multiple data files for the property file. */

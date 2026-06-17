@@ -2350,7 +2350,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
             }
           }
 
-          ArrayByte array = new ArrayByte(new int[] {dataNum, maxLength});
+          ArrayByte array = new ArrayByte(new int[] {dataNum, maxLength}, true);
           Index index = array.getIndex();
           for (int j = 0; j < dataNum; j++) {
             for (int k = 0; k < byteArrays[j].length; k++) {

@@ -4,6 +4,7 @@ import ch.systemsx.cisd.hdf5.HDF5FactoryProvider;
 import ch.systemsx.cisd.hdf5.IHDF5Reader;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
 import com.jmatio.io.MatFileReader;
+import hdf.hdf5lib.exceptions.HDF5Exception;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Frame;
@@ -147,7 +148,6 @@ import jp.riken.brain.ni.samuraigraph.figure.SGXYFigure;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupSetInGraph;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetForData;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetMultipleSXY;
-import ncsa.hdf.hdf5lib.exceptions.HDF5Exception;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -4522,7 +4522,7 @@ class SGMainFunctions
   }
 
   private boolean execCommand(IHDF5Reader reader, SGDrawingWindow wnd) {
-    if (!reader.hasAttribute("/", ATTR_NAME_SAMURAI_GRAPH_COMMAND)) {
+    if (!reader.object().hasAttribute("/", ATTR_NAME_SAMURAI_GRAPH_COMMAND)) {
       return false;
     }
     final String commands = reader.string().getAttr("/", ATTR_NAME_SAMURAI_GRAPH_COMMAND);
@@ -4533,7 +4533,7 @@ class SGMainFunctions
   }
 
   private boolean applyProperties(IHDF5Reader reader, SGDrawingWindow wnd) {
-    if (!reader.hasAttribute("/", ATTR_NAME_SAMURAI_GRAPH_PROPERTIES)) {
+    if (!reader.object().hasAttribute("/", ATTR_NAME_SAMURAI_GRAPH_PROPERTIES)) {
       return false;
     }
     final String commands = reader.string().getAttr("/", ATTR_NAME_SAMURAI_GRAPH_PROPERTIES);
