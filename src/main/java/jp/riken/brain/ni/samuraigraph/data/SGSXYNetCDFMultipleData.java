@@ -3915,7 +3915,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       NetcdfFileWriter ncWrite, String varName, String lenDimName, String[] strArray)
       throws IOException, InvalidRangeException {
     Dimension strLengthDim = ncWrite.getNetcdfFile().findDimension(lenDimName);
-    ArrayByte array = new ArrayByte(new int[] {strArray.length, strLengthDim.getLength()});
+    ArrayByte array = new ArrayByte(new int[] {strArray.length, strLengthDim.getLength()}, true);
     Index index = array.getIndex();
     int[] shape = index.getShape();
     for (int ii = 0; ii < shape[0]; ii++) {
@@ -3933,7 +3933,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       throws IOException, InvalidRangeException {
     Dimension strLengthDim = ncWrite.getNetcdfFile().findDimension(lenDimName);
     ArrayByte array =
-        new ArrayByte(new int[] {strArray.length, strArray[0].length, strLengthDim.getLength()});
+        new ArrayByte(
+            new int[] {strArray.length, strArray[0].length, strLengthDim.getLength()}, true);
     Index index = array.getIndex();
     int[] shape = index.getShape();
     for (int ii = 0; ii < shape[0]; ii++) {

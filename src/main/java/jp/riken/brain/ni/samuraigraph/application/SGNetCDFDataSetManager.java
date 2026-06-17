@@ -135,7 +135,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       throws IOException, InvalidRangeException {
     Variable var = imageData.var;
     byte[] byteArray = imageData.byteArray;
-    ArrayByte array = new ArrayByte(new int[] {byteArray.length});
+    ArrayByte array = new ArrayByte(new int[] {byteArray.length}, true);
     Index index = array.getIndex();
     for (int ii = 0; ii < byteArray.length; ii++) {
       array.setByte(index.set(ii), byteArray[ii]);

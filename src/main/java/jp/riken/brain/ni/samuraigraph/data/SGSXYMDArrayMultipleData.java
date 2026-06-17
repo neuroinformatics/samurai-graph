@@ -39,6 +39,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable.VALUE_TYPE;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayObject;
+import ucar.ma2.DataType;
 import ucar.ma2.Index;
 import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFileWriter;
@@ -3212,7 +3213,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       String str = mdVar.getString(dimension, ii);
       textArray[ii] = SGDataUtility.encodeString(str);
     }
-    Array array = new ArrayObject.D1(String.class, num);
+    Array array = new ArrayObject.D1(DataType.STRING, String.class, false, num);
     Index tempIndex = array.getIndex();
     for (int ii = 0; ii < num; ii++) {
       array.setObject(tempIndex.set(ii), textArray[ii]);
@@ -3250,7 +3251,8 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         textArray[ii][jj] = SGDataUtility.encodeString(str);
       }
     }
-    Array array = new ArrayObject.D2(String.class, firstDimLen, secondDimLen);
+    Array array =
+        new ArrayObject.D2(DataType.STRING, String.class, false, firstDimLen, secondDimLen);
     Index tempIndex = array.getIndex();
     for (int ii = 0; ii < firstDimLen; ii++) {
       for (int jj = 0; jj < secondDimLen; jj++) {
@@ -3289,7 +3291,9 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         }
       }
     }
-    Array array = new ArrayObject.D3(String.class, firstDimLen, secondDimLen, thirdDimLen);
+    Array array =
+        new ArrayObject.D3(
+            DataType.STRING, String.class, false, firstDimLen, secondDimLen, thirdDimLen);
     Index tempIndex = array.getIndex();
     for (int ii = 0; ii < firstDimLen; ii++) {
       for (int jj = 0; jj < secondDimLen; jj++) {

@@ -27,7 +27,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.15.0</version>
                 <configuration>
                     <source>21</source>
                     <target>21</target>
@@ -42,7 +42,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.6.2</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -51,6 +51,9 @@
                         </goals>
                         <configuration>
                             <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>jp.riken.brain.ni.samuraigraph.application.SGDrawingServer</mainClass>
+                                </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer"/>
@@ -63,19 +66,11 @@
                                         <exclude>org/freehep/graphicsbase/util/export/ExportFileTypeRegistry.class</exclude>
                                     </excludes>
                                 </filter>
-                               <!-- Exclude ncsa.hdf from jhdf5 (overlaps with netcdfAll) -->
+                                <!-- Exclude ncsa.hdf from jhdf5 (overlaps with cdm-core) -->
                                 <filter>
-                                    <artifact>ch.systems.cisd:jhdf5</artifact>
+                                    <artifact>cisd:jhdf5</artifact>
                                     <excludes>
                                         <exclude>ncsa/hdf/**</exclude>
-                                    </excludes>
-                                </filter>
-                                <!-- Exclude bundled SLF4J from netcdfAll (we manage our own) -->
-                                <filter>
-                                    <artifact>edu.ucar:netcdfAll</artifact>
-                                    <excludes>
-                                        <exclude>org/slf4j/**</exclude>
-                                        <exclude>META-INF/maven/org.slf4j/**</exclude>
                                     </excludes>
                                 </filter>
                                 <!-- Exclude test-only dependencies -->
@@ -114,25 +109,11 @@
                 </executions>
             </plugin>
 
-            <!-- Configure JAR plugin to set Main-Class -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.1</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>jp.riken.brain.ni.samuraigraph.application.SGDrawingServer</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-
             <!-- Spotless: Java code formatter (Google Java Format) -->
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>2.46.1</version>
+                <version>3.6.0</version>
                 <configuration>
                     <java>
                         <googleJavaFormat>
@@ -147,11 +128,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.6.1</version>
                 <configuration>
                     <ignoredUnusedDeclaredDependencies>
-                        <!-- Required at runtime for FreeHEP SPI-based Java image format discovery -->
-                        <ignoredUnusedDeclaredDependency>org.freehep:freehep-graphicsio-java</ignoredUnusedDeclaredDependency>
                         <!-- SLF4J→Log4j2 bridge required at runtime for libraries using SLF4J -->
                         <ignoredUnusedDeclaredDependency>org.apache.logging.log4j:log4j-slf4j2-impl</ignoredUnusedDeclaredDependency>
                     </ignoredUnusedDeclaredDependencies>
@@ -162,7 +141,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.5.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <propertiesEncoding>UTF-8</propertiesEncoding>
@@ -173,7 +152,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>xml-maven-plugin</artifactId>
-                <version>1.1.0</version>
+                <version>1.2.1</version>
                 <executions>
                     <execution>
                         <id>generate-changelog</id>
@@ -226,7 +205,7 @@
 
     <dependencies>
 
-	    <!-- org.freehep -->
+        <!-- Image export (FreeHEP) -->
         <dependency>
             <groupId>org.freehep</groupId>
             <artifactId>freehep-graphicsbase</artifactId>
@@ -245,11 +224,6 @@
         <dependency>
             <groupId>org.freehep</groupId>
             <artifactId>freehep-graphicsio-emf</artifactId>
-            <version>2.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.freehep</groupId>
-            <artifactId>freehep-graphicsio-java</artifactId>
             <version>2.4</version>
         </dependency>
         <dependency>
@@ -273,32 +247,60 @@
             <version>2.4</version>
         </dependency>
 
-        <!-- netcdf -->
+        <!-- NetCDF file I/O -->
         <dependency>
             <groupId>edu.ucar</groupId>
-            <artifactId>netcdfAll</artifactId>
-            <version>4.6.16.1</version>
+            <artifactId>cdm-core</artifactId>
+            <version>5.9.1</version>
         </dependency>
-
+        <!-- Required at compile time for cdm-core ImmutableList API (cdm-core only declares it as runtime) -->
         <dependency>
-            <groupId>ch.systems.cisd</groupId>
-            <artifactId>jhdf5</artifactId>
-            <version>14.12.0</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.4.8-jre</version>
         </dependency>
 
+        <!-- HDF5 file I/O -->
+        <dependency>
+            <groupId>cisd</groupId>
+            <artifactId>jhdf5</artifactId>
+            <version>19.04.1</version>
+        </dependency>
+        <dependency>
+            <groupId>cisd</groupId>
+            <artifactId>base</artifactId>
+            <version>18.09.0</version>
+        </dependency>
+
+        <!-- MATLAB file I/O -->
         <dependency>
             <groupId>com.diffplug.matsim</groupId>
             <artifactId>matfilerw</artifactId>
             <version>3.1.1</version>
         </dependency>
- 
+
+        <!-- Date/time handling -->
         <dependency>
-            <groupId>com.googlecode.juniversalchardet</groupId>
-            <artifactId>juniversalchardet</artifactId>
-            <version>1.0.3</version>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.12.7</version>
         </dependency>
- 
-        <!-- log4j -->
+
+        <!-- Native library loading (for JNA-based plugins) -->
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.15.0</version>
+        </dependency>
+
+        <!-- Character encoding detection -->
+        <dependency>
+            <groupId>com.github.albfernandez</groupId>
+            <artifactId>juniversalchardet</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
+        <!-- Logging -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -314,7 +316,7 @@
             <artifactId>log4j-slf4j2-impl</artifactId>
             <version>2.26.0</version>
         </dependency>
- 
+
     </dependencies>
 
 </project>

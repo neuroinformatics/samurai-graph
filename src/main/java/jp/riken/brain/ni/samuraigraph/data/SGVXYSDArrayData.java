@@ -1398,8 +1398,8 @@ public class SGVXYSDArrayData extends SGSDArrayData
         }
       }
     }
-    writer.writeDoubleMDArray(fName, fArray);
-    writer.writeDoubleMDArray(sName, sArray);
+    writer.float64().writeMDArray(fName, fArray);
+    writer.float64().writeMDArray(sName, sArray);
 
     return true;
   }

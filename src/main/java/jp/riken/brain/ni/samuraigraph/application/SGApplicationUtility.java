@@ -3,6 +3,7 @@ package jp.riken.brain.ni.samuraigraph.application;
 import ch.systemsx.cisd.hdf5.HDF5FactoryProvider;
 import ch.systemsx.cisd.hdf5.IHDF5Reader;
 import com.jmatio.io.MatFileReader;
+import hdf.hdf5lib.exceptions.HDF5Exception;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -74,7 +75,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGSDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGSamplingDataColumn;
 import jp.riken.brain.ni.samuraigraph.data.SGTextDataColumn;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGStringBraceModifier;
-import ncsa.hdf.hdf5lib.exceptions.HDF5Exception;
 import org.w3c.dom.DOMImplementation;
 import ucar.nc2.NetcdfFile;
 
