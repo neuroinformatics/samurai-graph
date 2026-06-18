@@ -4,11 +4,7 @@ import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JRadioButton;
 
-/**
- * The original radio button class.
- *
- * @author kuromaru
- */
+/** The original radio button class. */
 public class SGRadioButton extends JRadioButton
 // implements KeyListener, SGIConstants
 {

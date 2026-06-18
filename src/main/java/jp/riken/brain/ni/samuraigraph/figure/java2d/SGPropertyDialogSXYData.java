@@ -211,7 +211,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     mErrorBarSymbolLabel = new javax.swing.JLabel();
     mErrorBarStyleSeparator = new javax.swing.JSeparator();
     mErrorBarSymbolSeparator = new javax.swing.JSeparator();
-    mErrorBarSylePanel = new javax.swing.JPanel();
+    mErrorBarStylePanel = new javax.swing.JPanel();
     mErrorBarBothsidesRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
     mErrorBarUpsideRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
     mErrorBarDownsideRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
@@ -237,7 +237,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     mTickLabelFontLabel = new javax.swing.JLabel();
     mTickLabelFontSeparator = new javax.swing.JSeparator();
     mTickLabelTextLabel = new javax.swing.JLabel();
-    mTickLanelAngleSeparator = new javax.swing.JSeparator();
+    mTickLabelAngleSeparator = new javax.swing.JSeparator();
     mTickLabelFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mTickLabelFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mTickLabelFontNameLabel = new javax.swing.JLabel();
@@ -1155,7 +1155,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.insets = new java.awt.Insets(0, 65, 0, 10);
     mErrorBarSubPanel.add(mErrorBarSymbolSeparator, gridBagConstraints);
 
-    mErrorBarSylePanel.setLayout(new java.awt.GridBagLayout());
+    mErrorBarStylePanel.setLayout(new java.awt.GridBagLayout());
 
     mErrorBarBothsidesRadioButton.setText("Bothsides");
     mErrorBarBothsidesRadioButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -1163,7 +1163,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mErrorBarSylePanel.add(mErrorBarBothsidesRadioButton, gridBagConstraints);
+    mErrorBarStylePanel.add(mErrorBarBothsidesRadioButton, gridBagConstraints);
 
     mErrorBarUpsideRadioButton.setText("Upside");
     mErrorBarUpsideRadioButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -1171,7 +1171,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 0;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mErrorBarSylePanel.add(mErrorBarUpsideRadioButton, gridBagConstraints);
+    mErrorBarStylePanel.add(mErrorBarUpsideRadioButton, gridBagConstraints);
 
     mErrorBarDownsideRadioButton.setText("Downside");
     mErrorBarDownsideRadioButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -1179,7 +1179,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.gridx = 2;
     gridBagConstraints.gridy = 0;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mErrorBarSylePanel.add(mErrorBarDownsideRadioButton, gridBagConstraints);
+    mErrorBarStylePanel.add(mErrorBarDownsideRadioButton, gridBagConstraints);
 
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -1187,7 +1187,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.gridwidth = 4;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 10);
-    mErrorBarSubPanel.add(mErrorBarSylePanel, gridBagConstraints);
+    mErrorBarSubPanel.add(mErrorBarStylePanel, gridBagConstraints);
 
     mErrorBarLineWidthPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -1392,7 +1392,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(0, 55, 0, 10);
-    mTickLabelSubPanel.add(mTickLanelAngleSeparator, gridBagConstraints);
+    mTickLabelSubPanel.add(mTickLabelAngleSeparator, gridBagConstraints);
 
     mTickLabelFontStyleComboBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
     mTickLabelFontStyleComboBox.setPreferredSize(new java.awt.Dimension(100, 22));
@@ -1728,7 +1728,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   private javax.swing.JLabel mErrorBarStyleLabel;
   private javax.swing.JSeparator mErrorBarStyleSeparator;
   private javax.swing.JPanel mErrorBarSubPanel;
-  private javax.swing.JPanel mErrorBarSylePanel;
+  private javax.swing.JPanel mErrorBarStylePanel;
   private javax.swing.JLabel mErrorBarSymbolLabel;
   private javax.swing.JSeparator mErrorBarSymbolSeparator;
   private javax.swing.JLabel mErrorBarSymbolSizeLabel;
@@ -1816,7 +1816,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   private javax.swing.JPanel mTickLabelSubPanel;
   private javax.swing.JLabel mTickLabelTextLabel;
   private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mTickLabelVisibleCheckBox;
-  private javax.swing.JSeparator mTickLanelAngleSeparator;
+  private javax.swing.JSeparator mTickLabelAngleSeparator;
 
   private SGTwoAxesSelectionPanel mAxisPanel = new SGTwoAxesSelectionPanel();
 
@@ -1900,11 +1900,11 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
     // create a button group for the radio buttons of bar body paint types
     this.mNoBarBodyColorStyleSelectionRadioButton.setVisible(false);
-    final ButtonGroup barBodyColorStyleButtonGrouop = new ButtonGroup();
-    barBodyColorStyleButtonGrouop.add(this.mBarBodyColorFillRadioButton);
-    barBodyColorStyleButtonGrouop.add(this.mBarBodyColorPatternRadioButton);
-    barBodyColorStyleButtonGrouop.add(this.mBarBodyColorGradationRadioButton);
-    barBodyColorStyleButtonGrouop.add(this.mNoBarBodyColorStyleSelectionRadioButton);
+    final ButtonGroup barBodyColorStyleButtonGroup = new ButtonGroup();
+    barBodyColorStyleButtonGroup.add(this.mBarBodyColorFillRadioButton);
+    barBodyColorStyleButtonGroup.add(this.mBarBodyColorPatternRadioButton);
+    barBodyColorStyleButtonGroup.add(this.mBarBodyColorGradationRadioButton);
+    barBodyColorStyleButtonGroup.add(this.mNoBarBodyColorStyleSelectionRadioButton);
 
     // create a button group for the radio buttons of error bar position
     this.mNoErrorBarPositionRadioButton.setVisible(false);
@@ -2395,9 +2395,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
   public boolean setSymbolInnerPaint(final SGIPaint paint) {
     if (paint instanceof SGFillPaint) {
-      SGFillPaint fpaint = (SGFillPaint) paint;
-      this.setSymbolInnerColor(SGFillPaint.getOpaqueColor((Color) fpaint.getPaint(null)));
-      this.setSymbolInnerTransparent(Integer.valueOf(fpaint.getTransparencyPercent()));
+      SGFillPaint fPaint = (SGFillPaint) paint;
+      this.setSymbolInnerColor(SGFillPaint.getOpaqueColor((Color) fPaint.getPaint(null)));
+      this.setSymbolInnerTransparent(Integer.valueOf(fPaint.getTransparencyPercent()));
       return true;
     } else {
       return false;
@@ -2605,22 +2605,22 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       this.setBarBodyTransparent(Integer.valueOf(selectablePaint.getTransparencyPercent()));
       return true;
     } else if (paint instanceof SGFillPaint) {
-      SGFillPaint fpaint = (SGFillPaint) paint;
+      SGFillPaint fPaint = (SGFillPaint) paint;
       this.setBarBodyColorStyle(SGSelectablePaint.STYLE_INDEX_FILL);
-      this.setBarBodyFillPaintColor(SGFillPaint.getOpaqueColor((Color) fpaint.getPaint(null)));
-      this.setBarBodyTransparent(Integer.valueOf(fpaint.getTransparencyPercent()));
+      this.setBarBodyFillPaintColor(SGFillPaint.getOpaqueColor((Color) fPaint.getPaint(null)));
+      this.setBarBodyTransparent(Integer.valueOf(fPaint.getTransparencyPercent()));
       return true;
     } else if (paint instanceof SGPatternPaint) {
-      SGPatternPaint ppaint = (SGPatternPaint) paint;
+      SGPatternPaint pPaint = (SGPatternPaint) paint;
       this.setBarBodyColorStyle(SGSelectablePaint.STYLE_INDEX_PATTERN);
-      this.setBarBodyPatternPaint(ppaint);
-      this.setBarBodyTransparent(Integer.valueOf(ppaint.getTransparencyPercent()));
+      this.setBarBodyPatternPaint(pPaint);
+      this.setBarBodyTransparent(Integer.valueOf(pPaint.getTransparencyPercent()));
       return true;
     } else if (paint instanceof SGGradationPaint) {
-      SGGradationPaint gpaint = (SGGradationPaint) paint;
+      SGGradationPaint gPaint = (SGGradationPaint) paint;
       this.setBarBodyColorStyle(SGSelectablePaint.STYLE_INDEX_GRADATION);
-      this.setBarBodyGradationPaint(gpaint);
-      this.setBarBodyTransparent(Integer.valueOf(gpaint.getTransparencyPercent()));
+      this.setBarBodyGradationPaint(gPaint);
+      this.setBarBodyTransparent(Integer.valueOf(gPaint.getTransparencyPercent()));
       return true;
     } else {
       return false;
@@ -3558,16 +3558,16 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       }
     }
 
-    int xcount = 0;
-    int ycount = 0;
+    int xCount = 0;
+    int yCount = 0;
     for (int i = 0; i < cols.length; i++) {
       if (SGIDataColumnTypeConstants.X_VALUE.equals(cols[i].getColumnType())) {
-        xcount++;
+        xCount++;
       } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(cols[i].getColumnType())) {
-        ycount++;
+        yCount++;
       }
     }
-    if (xcount > 1 || ycount > 1) {
+    if (xCount > 1 || yCount > 1) {
       return false;
     } else {
       return true;
@@ -3587,14 +3587,14 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     if (SGDataUtility.isMultipleData(dataType)) {
       if (SGDataUtility.isNetCDFDimensionData(dataType)) {
         if (obs.getData() instanceof SGSXYNetCDFMultipleData) {
-          SGSXYNetCDFMultipleData ndata = (SGSXYNetCDFMultipleData) obs.getData();
-          if (ndata.getDimensionIndices().length > 1) {
+          SGSXYNetCDFMultipleData ncData = (SGSXYNetCDFMultipleData) obs.getData();
+          if (ncData.getDimensionIndices().length > 1) {
             return true;
           }
         }
       } else if (SGDataUtility.isMDArrayDimensionData(data)) {
-        SGSXYMDArrayMultipleData ndata = (SGSXYMDArrayMultipleData) obs.getData();
-        if (ndata.getDimensionIndices().length > 1) {
+        SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) obs.getData();
+        if (mdData.getDimensionIndices().length > 1) {
           return true;
         }
       } else {
@@ -3705,7 +3705,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     }
 
     if (this.isTabEnabled(this.mTickLabelPanel)) {
-      if (!SGDateUtility.checkDateComboBoxInputValidatity(this.mTickLabelDateFormatComboBox)) {
+      if (!SGDateUtility.checkDateComboBoxInputValidity(this.mTickLabelDateFormatComboBox)) {
         String desc = this.mTickLabelDateFormatComboBox.getDescription();
         this.addInputErrorDescription(desc);
         valid = false;

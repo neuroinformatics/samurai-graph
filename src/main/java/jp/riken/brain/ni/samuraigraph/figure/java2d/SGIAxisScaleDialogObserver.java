@@ -26,7 +26,7 @@ public interface SGIAxisScaleDialogObserver
 
   public boolean isXAxisInverted();
 
-  public boolean isXAxisTitleDownside();
+  public boolean isXAxisTitleDownSide();
 
   public String getXAxisText();
 
@@ -38,7 +38,7 @@ public interface SGIAxisScaleDialogObserver
 
   public boolean isYAxisInverted();
 
-  public boolean isYAxisTitleLeftside();
+  public boolean isYAxisTitleLeftSide();
 
   public String getYAxisText();
 
@@ -72,7 +72,7 @@ public interface SGIAxisScaleDialogObserver
 
   public boolean setXLengthValue(final double value);
 
-  public boolean setXAxisTitleDownside(final boolean b);
+  public boolean setXAxisTitleDownSide(final boolean b);
 
   public boolean setXAxisText(final String text);
 
@@ -82,7 +82,7 @@ public interface SGIAxisScaleDialogObserver
 
   public boolean setYLengthValue(final double value);
 
-  public boolean setYAxisTitleLeftside(final boolean b);
+  public boolean setYAxisTitleLeftSide(final boolean b);
 
   public boolean setYAxisText(final String text);
 

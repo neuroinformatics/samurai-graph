@@ -57,12 +57,12 @@ public abstract class SGElementGroupBarForData extends SGElementGroupBar
         this.setVertical(vertical);
       } else {
         if (data instanceof SGSXYNetCDFData) {
-          SGSXYNetCDFData ndata = (SGSXYNetCDFData) data;
-          final boolean vertical = ndata.isXVariableCoordinate();
+          SGSXYNetCDFData ncData = (SGSXYNetCDFData) data;
+          final boolean vertical = ncData.isXVariableCoordinate();
           this.setVertical(vertical);
         } else if (data instanceof SGSXYNetCDFMultipleData) {
-          SGSXYNetCDFMultipleData ndata = (SGSXYNetCDFMultipleData) data;
-          final boolean vertical = ndata.isXVariableCoordinate();
+          SGSXYNetCDFMultipleData ncData = (SGSXYNetCDFMultipleData) data;
+          final boolean vertical = ncData.isXVariableCoordinate();
           this.setVertical(vertical);
         }
       }

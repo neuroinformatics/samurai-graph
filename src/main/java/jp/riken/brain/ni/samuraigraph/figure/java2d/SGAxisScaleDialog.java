@@ -113,8 +113,8 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     mYLengthValuePanel = new javax.swing.JPanel();
     mYLengthValueTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
     mYLengthValueDateButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mYAxisLeftsideRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
-    mYAxisRightsideRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
+    mYAxisLeftSideRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
+    mYAxisRightSideRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
     mYAxisThirdPanel = new javax.swing.JPanel();
     mLocationAxisLengthModePanel = new javax.swing.JPanel();
     mLocationLabel = new javax.swing.JLabel();
@@ -615,22 +615,22 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     gridBagConstraints.gridy = 0;
     mYAxisFirstPanel.add(mYLengthValuePanel, gridBagConstraints);
 
-    mYAxisLeftsideRadioButton.setText("Leftside");
-    mYAxisLeftsideRadioButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+    mYAxisLeftSideRadioButton.setText("Left side");
+    mYAxisLeftSideRadioButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 3;
     gridBagConstraints.gridy = 0;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
-    mYAxisFirstPanel.add(mYAxisLeftsideRadioButton, gridBagConstraints);
+    mYAxisFirstPanel.add(mYAxisLeftSideRadioButton, gridBagConstraints);
 
-    mYAxisRightsideRadioButton.setText("Rightside");
-    mYAxisRightsideRadioButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+    mYAxisRightSideRadioButton.setText("Right side");
+    mYAxisRightSideRadioButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 4;
     gridBagConstraints.gridy = 0;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mYAxisFirstPanel.add(mYAxisRightsideRadioButton, gridBagConstraints);
+    mYAxisFirstPanel.add(mYAxisRightSideRadioButton, gridBagConstraints);
 
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -823,9 +823,9 @@ public class SGAxisScaleDialog extends SGPropertyDialog
   private jp.riken.brain.ni.samuraigraph.base.SGTextField mXValueTextField;
   private javax.swing.JPanel mYAxisFirstPanel;
   private javax.swing.JLabel mYAxisLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mYAxisLeftsideRadioButton;
+  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mYAxisLeftSideRadioButton;
   private javax.swing.JPanel mYAxisPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mYAxisRightsideRadioButton;
+  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mYAxisRightSideRadioButton;
   private javax.swing.JPanel mYAxisSecondPanel;
   private javax.swing.JSeparator mYAxisSeparator;
   private jp.riken.brain.ni.samuraigraph.base.SGTextField mYAxisTextField;
@@ -873,8 +873,8 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     xAxisButtonGroup.add(this.mXAxisDummyRadioButton);
 
     ButtonGroup yAxisButtonGroup = new ButtonGroup();
-    yAxisButtonGroup.add(this.mYAxisLeftsideRadioButton);
-    yAxisButtonGroup.add(this.mYAxisRightsideRadioButton);
+    yAxisButtonGroup.add(this.mYAxisLeftSideRadioButton);
+    yAxisButtonGroup.add(this.mYAxisRightSideRadioButton);
     yAxisButtonGroup.add(this.mYAxisDummyRadioButton);
 
     //
@@ -936,8 +936,8 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     this.mYAxisVisibleCheckBox.addActionListener(this);
     this.mXAxisDownsideRadioButton.addActionListener(this);
     this.mXAxisUpsideRadioButton.addActionListener(this);
-    this.mYAxisLeftsideRadioButton.addActionListener(this);
-    this.mYAxisRightsideRadioButton.addActionListener(this);
+    this.mYAxisLeftSideRadioButton.addActionListener(this);
+    this.mYAxisRightSideRadioButton.addActionListener(this);
     this.mXAxisTextField
         .getDocument()
         .addDocumentListener(
@@ -1011,8 +1011,8 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     SGComponentGroupElement[] yAxisComponents = {
       new SGComponentGroupElement(this.mYLengthLabel),
       new SGComponentGroupElement(this.mYLengthValueTextField),
-      new SGComponentGroupElement(this.mYAxisLeftsideRadioButton),
-      new SGComponentGroupElement(this.mYAxisRightsideRadioButton),
+      new SGComponentGroupElement(this.mYAxisLeftSideRadioButton),
+      new SGComponentGroupElement(this.mYAxisRightSideRadioButton),
       new SGComponentGroupElement(this.mYAxisTextLabel),
       new SGComponentGroupElement(this.mYAxisTextField),
       new SGComponentGroupElement(this.mYAxisUnitLabel),
@@ -1206,7 +1206,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     final String xAxisUnit = this.getXAxisUnitText();
     final Boolean yAxisVisible = this.getYAxisVisible();
     final Number yLength = this.getYLength();
-    final Boolean yAxisLeftside = this.isYAxisLeftside();
+    final Boolean yAxisLeftSide = this.isYAxisLeftSide();
     final String yAxisText = this.getYAxisText();
     final String yAxisUnit = this.getYAxisUnitText();
     final Number lineWidth = this.getLineWidth();
@@ -1281,7 +1281,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog
 
     // x downside
     if (xAxisDownside != null) {
-      scale.setXAxisTitleDownside(xAxisDownside.booleanValue());
+      scale.setXAxisTitleDownSide(xAxisDownside.booleanValue());
     }
 
     // x axis text
@@ -1304,9 +1304,9 @@ public class SGAxisScaleDialog extends SGPropertyDialog
       scale.setYLengthValue(yLength.doubleValue());
     }
 
-    // y leftside
-    if (yAxisLeftside != null) {
-      scale.setYAxisTitleLeftside(yAxisLeftside.booleanValue());
+    // y left side
+    if (yAxisLeftSide != null) {
+      scale.setYAxisTitleLeftSide(yAxisLeftSide.booleanValue());
     }
 
     // y axis text
@@ -1384,7 +1384,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     final String[] xAxisUnitArray = new String[num];
     final boolean[] yAxisVisibleArray = new boolean[num];
     final double[] yLengthArray = new double[num];
-    final boolean[] yAxisLeftsideArray = new boolean[num];
+    final boolean[] yAxisLeftSideArray = new boolean[num];
     final String[] yAxisTextArray = new String[num];
     final String[] yAxisUnitArray = new String[num];
     final float[] lineWidthArray = new float[num];
@@ -1404,12 +1404,12 @@ public class SGAxisScaleDialog extends SGPropertyDialog
       yValueArray[ii] = l.getYValue();
       xAxisVisibleArray[ii] = l.isXAxisVisible();
       xLengthArray[ii] = l.getXLengthValue();
-      xAxisDownsideArray[ii] = l.isXAxisTitleDownside();
+      xAxisDownsideArray[ii] = l.isXAxisTitleDownSide();
       xAxisTextArray[ii] = l.getXAxisText();
       xAxisUnitArray[ii] = l.getXAxisUnit();
       yAxisVisibleArray[ii] = l.isYAxisVisible();
       yLengthArray[ii] = l.getYLengthValue();
-      yAxisLeftsideArray[ii] = l.isYAxisTitleLeftside();
+      yAxisLeftSideArray[ii] = l.isYAxisTitleLeftSide();
       yAxisTextArray[ii] = l.getYAxisText();
       yAxisUnitArray[ii] = l.getYAxisUnit();
       lineWidthArray[ii] = l.getLineWidth(LINE_WIDTH_UNIT);
@@ -1434,7 +1434,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     String xAxisText = SGUtility.checkEquality(xAxisTextArray);
     String xAxisUnit = SGUtility.checkEquality(xAxisUnitArray);
     Double yLength = SGUtility.checkEquality(yLengthArray);
-    Boolean yAxisLeftside = SGUtility.checkEquality(yAxisLeftsideArray);
+    Boolean yAxisLeftSide = SGUtility.checkEquality(yAxisLeftSideArray);
     String yAxisText = SGUtility.checkEquality(yAxisTextArray);
     String yAxisUnit = SGUtility.checkEquality(yAxisUnitArray);
     Float space = SGUtility.checkEquality(spaceArray);
@@ -1461,8 +1461,8 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     this.setXAxisUnitText(xAxisUnit);
     this.setYAxisVisible(yAxisVisible);
     this.setYLength(yLength);
-    if (yAxisLeftside != null) {
-      this.setYAxisLeftside(yAxisLeftside.booleanValue());
+    if (yAxisLeftSide != null) {
+      this.setYAxisLeftSide(yAxisLeftSide.booleanValue());
     } else {
       this.mYAxisDummyRadioButton.setSelected(true);
     }
@@ -1713,9 +1713,9 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     return true;
   }
 
-  public boolean setYAxisLeftside(final boolean b) {
-    this.mYAxisLeftsideRadioButton.setSelected(b);
-    this.mYAxisRightsideRadioButton.setSelected(!b);
+  public boolean setYAxisLeftSide(final boolean b) {
+    this.mYAxisLeftSideRadioButton.setSelected(b);
+    this.mYAxisRightSideRadioButton.setSelected(!b);
     return true;
   }
 
@@ -1726,10 +1726,10 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     return Boolean.valueOf(this.mXAxisDownsideRadioButton.isSelected());
   }
 
-  public Boolean isYAxisLeftside() {
+  public Boolean isYAxisLeftSide() {
     if (this.mYAxisDummyRadioButton.isSelected()) {
       return null;
     }
-    return Boolean.valueOf(this.mYAxisLeftsideRadioButton.isSelected());
+    return Boolean.valueOf(this.mYAxisLeftSideRadioButton.isSelected());
   }
 }

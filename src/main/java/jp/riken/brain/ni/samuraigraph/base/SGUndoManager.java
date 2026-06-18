@@ -93,7 +93,7 @@ public class SGUndoManager implements SGIDisposable {
         flag = undoable.undo();
       }
       if (!flag) {
-        throw new Error("undo erorr:" + undoable);
+        throw new Error("undo error:" + undoable);
       }
     }
 
@@ -123,7 +123,7 @@ public class SGUndoManager implements SGIDisposable {
         flag = undoable.redo();
       }
       if (!flag) {
-        throw new Error("redo erorr:" + undoable);
+        throw new Error("redo error:" + undoable);
       }
     }
 
@@ -263,7 +263,7 @@ public class SGUndoManager implements SGIDisposable {
   }
 
   /**
-   * Retuens the present index in the series of changed objects lists.
+   * Returns the present index in the series of changed objects lists.
    *
    * @return the present index in the series of changed objects lists
    */

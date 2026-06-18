@@ -10,7 +10,7 @@ import ucar.nc2.Dimension;
 
 public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
 
-  private boolean mIsTickLabelSubstitue = false;
+  private boolean mIsTickLabelSubstitute = false;
 
   public SGSXYNetCDFDateData(
       final SGNetCDFFile ncfile,
@@ -54,7 +54,7 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
         this.mTickLabelVariable = this.mYVariable;
         this.mTickLabelHolderVariable = this.mXVariable;
       }
-      this.mIsTickLabelSubstitue = true;
+      this.mIsTickLabelSubstitute = true;
     }
   }
 
@@ -80,7 +80,7 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
   @Override
   public SGNetCDFVariable[] getAssignedVariables() {
     final boolean be = this.isErrorBarAvailable();
-    final boolean bt = this.isTickLabelAvailable() && this.mIsTickLabelSubstitue == false;
+    final boolean bt = this.isTickLabelAvailable() && this.mIsTickLabelSubstitute == false;
     if (be && bt) {
       return new SGNetCDFVariable[] {
         this.mXVariable,
@@ -112,7 +112,7 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
       el.setAttribute(KEY_UPPER_ERROR_VALUE_NAMES, this.mUpperErrorVariable.getName());
       el.setAttribute(KEY_ERROR_BAR_HOLDER_NAMES, this.mErrorBarHolderVariable.getName());
     }
-    if (this.isTickLabelAvailable() && this.mIsTickLabelSubstitue == false) {
+    if (this.isTickLabelAvailable() && this.mIsTickLabelSubstitute == false) {
       el.setAttribute(KEY_TICK_LABEL_NAMES, this.mTickLabelVariable.getName());
       el.setAttribute(KEY_TICK_LABEL_HOLDER_NAMES, this.mTickLabelHolderVariable.getName());
     }
@@ -124,7 +124,7 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
     // Convert this class (SGSXYNetCDFData) to class
     // (SGSXYMultipleVariableNetCDFData).
     final boolean be = this.isErrorBarAvailable();
-    final boolean bt = this.isTickLabelAvailable() && !this.mIsTickLabelSubstitue;
+    final boolean bt = this.isTickLabelAvailable() && !this.mIsTickLabelSubstitute;
     SGNetCDFDataColumnInfo[] x = SGDataUtility.createDataColumnInfoArray(this.mXVariable, X_VALUE);
     SGNetCDFDataColumnInfo[] y = SGDataUtility.createDataColumnInfoArray(this.mYVariable, Y_VALUE);
     SGNetCDFDataColumnInfo[] le =
@@ -186,7 +186,7 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
   @Override
   // Override for the condition
   protected SGNetCDFDataColumnInfo createTickLabelInfo(SGNetCDFVariable var) {
-    if (this.isTickLabelAvailable() && !this.mIsTickLabelSubstitue) {
+    if (this.isTickLabelAvailable() && !this.mIsTickLabelSubstitute) {
       String thName = this.mTickLabelHolderVariable.getName();
       return SGDataUtility.createDataColumnInfo(this.mTickLabelVariable, TICK_LABEL, thName);
     } else {

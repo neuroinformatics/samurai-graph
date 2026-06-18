@@ -33,9 +33,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-/**
- * @author okumura
- */
 class SGPropertyFileManager
     implements ActionListener,
         SGIConstants,
@@ -50,7 +47,7 @@ class SGPropertyFileManager
   private SGPropertyFileCreator mPropertyFileCreator = null;
 
   /** Property file chooser */
-  private SGPropertyFileChooserWizardDialog mPropertyFileChooserWizardDilaog = null;
+  private SGPropertyFileChooserWizardDialog mPropertyFileChooserWizardDialog = null;
 
   /** Multiple data file chooser */
   private SGPropertyDataFileChooserWizardDialog mMultiDataFileChooserWizardDialog = null;
@@ -65,7 +62,7 @@ class SGPropertyFileManager
     super();
     this.mMain = main;
     this.mPropertyFileCreator = new SGPropertyFileCreator();
-    this.mPropertyFileChooserWizardDilaog = null;
+    this.mPropertyFileChooserWizardDialog = null;
     this.mMultiDataFileChooserWizardDialog = null;
   }
 
@@ -134,32 +131,32 @@ class SGPropertyFileManager
     this.createAllWizardDialogsToLoadPropertyFromToolBar(wnd);
 
     // sets the current file path
-    this.mPropertyFileChooserWizardDilaog.setCurrentFile(
+    this.mPropertyFileChooserWizardDialog.setCurrentFile(
         this.mMain.getCurrentFileDirectory(), null);
 
     // set location
-    this.mPropertyFileChooserWizardDilaog.setCenter(wnd);
+    this.mPropertyFileChooserWizardDialog.setCenter(wnd);
 
     // show the first wizard dialog
-    this.mPropertyFileChooserWizardDilaog.setVisible(true);
+    this.mPropertyFileChooserWizardDialog.setVisible(true);
 
     /*
     // update the selected file name
-    File pf = this.mPropertyFileChooserWizardDilaog.getSelectedFile();
-    String dfpath = this.mMultiDataFileChooserWizardDialog.getSelectedFilepath();
-    final long pUsed = this.mPropertyFileChooserWizardDilaog.lastUsed();
+    File pf = this.mPropertyFileChooserWizardDialog.getSelectedFile();
+    String dfPath = this.mMultiDataFileChooserWizardDialog.getSelectedFilepath();
+    final long pUsed = this.mPropertyFileChooserWizardDialog.lastUsed();
     final long dUsed = this.mMultiDataFileChooserWizardDialog.lastUsed();
-    if (pf != null && dfpath != null && !"".equals(dfpath.trim())) {
+    if (pf != null && dfPath != null && !"".equals(dfPath.trim())) {
         if (pUsed < dUsed) {
-            File df = new File(dfpath);
+            File df = new File(dfPath);
         	this.mMain.updateCurrentFile(df, FILE_TYPE.TXT_DATA);
         } else {
         	this.mMain.updateCurrentFile(pf, FILE_TYPE.PROPERTY);
         }
     } else if (pf != null) {
     	this.mMain.updateCurrentFile(pf, FILE_TYPE.PROPERTY);
-    } else if (dfpath != null && !"".equals(dfpath.trim())) {
-        File df = new File(dfpath);
+    } else if (dfPath != null && !"".equals(dfPath.trim())) {
+        File df = new File(dfPath);
     	this.mMain.updateCurrentFile(df, FILE_TYPE.TXT_DATA);
     }
     */
@@ -224,16 +221,16 @@ class SGPropertyFileManager
     // end progress
     wnd.endProgress();
 
-    int errcode;
+    int errCode;
     if (!result) {
-      errcode = SGIConstants.PROPERTY_FILE_INCORRECT;
+      errCode = SGIConstants.PROPERTY_FILE_INCORRECT;
     } else {
       // create figure objects in a window
-      errcode =
+      errCode =
           this.mMain.createFiguresFromPropertyFile(
               elWnd, wnd, wDataArray, readDataProperty, versionNumber, mode);
 
-      if (errcode == SGIConstants.SUCCESSFUL_COMPLETION) {
+      if (errCode == SGIConstants.SUCCESSFUL_COMPLETION) {
         // add history
         wnd.initPropertiesHistory();
 
@@ -247,7 +244,7 @@ class SGPropertyFileManager
 
     // set the message
     String msg = null;
-    switch (errcode) {
+    switch (errCode) {
       case SGIConstants.SUCCESSFUL_COMPLETION:
         msg = MSG_SUCCESSFUL_COMPLETION;
         break;
@@ -267,7 +264,7 @@ class SGPropertyFileManager
         msg = MSG_DATA_FILE_OPEN_FAILURE;
         break;
       default:
-        msg = MSG_UNKNOWN_ERROR_OCCURED;
+        msg = MSG_UNKNOWN_ERROR_OCCURRED;
     }
 
     // show the message dialog
@@ -615,8 +612,8 @@ class SGPropertyFileManager
   /** */
   private void createAllWizardDialogsToLoadPropertyFromToolBar(final SGDrawingWindow owner) {
 
-    if (this.mPropertyFileChooserWizardDilaog != null) {
-      SGDrawingWindow curOwner = this.mPropertyFileChooserWizardDilaog.getOwnerWindow();
+    if (this.mPropertyFileChooserWizardDialog != null) {
+      SGDrawingWindow curOwner = this.mPropertyFileChooserWizardDialog.getOwnerWindow();
       if (curOwner.equals(owner)) {
         return;
       }
@@ -627,10 +624,10 @@ class SGPropertyFileManager
     //
 
     // dialog to load property file
-    this.mPropertyFileChooserWizardDilaog = new SGPropertyFileChooserWizardDialog(owner, true);
-    this.mPropertyFileChooserWizardDilaog.getPreviousButton().setVisible(false);
-    this.mPropertyFileChooserWizardDilaog.getOKButton().setVisible(false);
-    this.mPropertyFileChooserWizardDilaog.pack();
+    this.mPropertyFileChooserWizardDialog = new SGPropertyFileChooserWizardDialog(owner, true);
+    this.mPropertyFileChooserWizardDialog.getPreviousButton().setVisible(false);
+    this.mPropertyFileChooserWizardDialog.getOKButton().setVisible(false);
+    this.mPropertyFileChooserWizardDialog.pack();
 
     // dialog to select data files
     this.mMultiDataFileChooserWizardDialog = new SGPropertyDataFileChooserWizardDialog(owner, true);
@@ -641,13 +638,13 @@ class SGPropertyFileManager
     SGExtensionFileFilter ff = new SGExtensionFileFilter();
     ff.setExplanation(PROPERTY_FILE_DESCRIPTION);
     ff.addExtension(PROPERTY_FILE_EXTENSION);
-    this.mPropertyFileChooserWizardDilaog.setFileFilter(ff);
+    this.mPropertyFileChooserWizardDialog.setFileFilter(ff);
 
     // get current directory
     String dir = this.mMain.getCurrentFileDirectory();
 
     // set the selected file name
-    this.mPropertyFileChooserWizardDilaog.setCurrentFile(
+    this.mPropertyFileChooserWizardDialog.setCurrentFile(
         dir, this.mMain.getCurrentFileName(FILE_TYPE.PROPERTY));
 
     // set the selected file name
@@ -658,14 +655,14 @@ class SGPropertyFileManager
     // next and previous dialog
     //
 
-    this.mPropertyFileChooserWizardDilaog.setNext(this.mMultiDataFileChooserWizardDialog);
-    this.mMultiDataFileChooserWizardDialog.setPrevious(this.mPropertyFileChooserWizardDilaog);
+    this.mPropertyFileChooserWizardDialog.setNext(this.mMultiDataFileChooserWizardDialog);
+    this.mMultiDataFileChooserWizardDialog.setPrevious(this.mPropertyFileChooserWizardDialog);
 
     //
     // add action listener
     //
 
-    this.mPropertyFileChooserWizardDilaog.addActionListener(this);
+    this.mPropertyFileChooserWizardDialog.addActionListener(this);
     this.mMultiDataFileChooserWizardDialog.addActionListener(this);
   }
 
@@ -735,7 +732,7 @@ class SGPropertyFileManager
     // String command = e.getActionCommand();
 
     // Load Property
-    if (source.equals(this.mPropertyFileChooserWizardDilaog)
+    if (source.equals(this.mPropertyFileChooserWizardDialog)
         || source.equals(this.mMultiDataFileChooserWizardDialog)
         || source.equals(this.mMultiDataFileChooserWizardDialogDD)) {
       this.loadProperty(e);

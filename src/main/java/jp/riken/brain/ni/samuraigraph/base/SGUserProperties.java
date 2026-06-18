@@ -3,11 +3,7 @@ package jp.riken.brain.ni.samuraigraph.base;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Properties for users.
- *
- * @author kuromaru
- */
+/** Properties for users. */
 public class SGUserProperties {
 
   private Map<String, String> mProperties = new HashMap<String, String>();

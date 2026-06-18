@@ -67,14 +67,14 @@ class SGWindowManager
   SGWindowManager(
       final SGMainFunctions main,
       final SGSplashWindow sw,
-      final float minprog,
-      final float maxprog) {
+      final float minProg,
+      final float maxProg) {
     super();
     this.mMain = main;
-    final float step = (maxprog - minprog) / 3;
-    sw.setProgressValue(minprog + step);
+    final float step = (maxProg - minProg) / 3;
+    sw.setProgressValue(minProg + step);
     this.mWndMap = new TreeMap<Integer, SGDrawingWindow>();
-    sw.setProgressValue(minprog + step * 2);
+    sw.setProgressValue(minProg + step * 2);
     this.mImageFileCreator = new SGImageExportManager();
   }
 
@@ -682,46 +682,46 @@ class SGWindowManager
    * Called while a drag operation is ongoing, when the mouse pointer enters the operable part of
    * the drop site for the <code>DropTarget</code> registered with this listener.
    *
-   * @param dtde the <code>DropTargetDragEvent</code>
+   * @param event the <code>DropTargetDragEvent</code>
    */
-  public void dragEnter(final DropTargetDragEvent dtde) {
-    dtde.acceptDrag(DnDConstants.ACTION_COPY_OR_MOVE);
+  public void dragEnter(final DropTargetDragEvent event) {
+    event.acceptDrag(DnDConstants.ACTION_COPY_OR_MOVE);
   }
 
   /**
    * Called when a drag operation is ongoing, while the mouse pointer is still over the operable
    * part of the drop site for the <code>DropTarget</code> registered with this listener.
    *
-   * @param dtde the <code>DropTargetDragEvent</code>
+   * @param event the <code>DropTargetDragEvent</code>
    */
-  public void dragOver(final DropTargetDragEvent dtde) {}
+  public void dragOver(final DropTargetDragEvent event) {}
 
   /**
    * Called if the user has modified the current drop gesture.
    *
-   * @param dtde the <code>DropTargetDragEvent</code>
+   * @param event the <code>DropTargetDragEvent</code>
    */
-  public void dropActionChanged(final DropTargetDragEvent dtde) {}
+  public void dropActionChanged(final DropTargetDragEvent event) {}
 
   /**
    * Called while a drag operation is ongoing, when the mouse pointer has exited the operable part
    * of the drop site for the <code>DropTarget</code> registered with this listener.
    *
-   * @param dte the <code>DropTargetEvent</code>
+   * @param event the <code>DropTargetEvent</code>
    */
-  public void dragExit(final DropTargetEvent dte) {}
+  public void dragExit(final DropTargetEvent event) {}
 
   /**
    * Called when the drag operation has terminated with a drop on the operable part of the drop site
    * for the <code>DropTarget</code> registered with this listener.
    *
-   * @param dtde the <code>DropTargetDropEvent</code>
+   * @param event the <code>DropTargetDropEvent</code>
    */
-  public void drop(final DropTargetDropEvent dtde) {
+  public void drop(final DropTargetDropEvent event) {
     // get dropped file list
-    List<File> fileList = SGApplicationUtility.getDroppedFileList(dtde);
+    List<File> fileList = SGApplicationUtility.getDroppedFileList(event);
     if (fileList != null && fileList.size() != 0) {
-      new DropEventHandler(this.mMain, dtde, fileList);
+      new DropEventHandler(this.mMain, event, fileList);
     }
   }
 
@@ -826,19 +826,19 @@ class SGWindowManager
     /**
      * Builds an event handler object.
      *
-     * @param dtde the drop event
+     * @param event the drop event
      * @param fileList the list of dropped files
      */
-    DropEventHandler(SGMainFunctions main, DropTargetDropEvent dtde, List<File> fileList) {
+    DropEventHandler(SGMainFunctions main, DropTargetDropEvent event, List<File> fileList) {
       super();
 
       // set to attributes
       this.mMain = main;
       this.mDroppedFileList = fileList;
-      DropTarget tg = (DropTarget) dtde.getSource();
+      DropTarget tg = (DropTarget) event.getSource();
       Component com = tg.getComponent();
       SGDrawingWindow wnd = (SGDrawingWindow) com;
-      this.mDroppedPoint = dtde.getLocation();
+      this.mDroppedPoint = event.getLocation();
       this.mDroppedWindow = wnd;
 
       // start this thread
@@ -875,7 +875,7 @@ class SGWindowManager
     Object source = e.getSource();
     if (source instanceof SGDrawingWindow) {
       SGDrawingWindow wnd = (SGDrawingWindow) source;
-      this.mMain.updatWindowInfoInPreferences(wnd);
+      this.mMain.updateWindowInfoInPreferences(wnd);
     }
   }
 

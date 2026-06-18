@@ -34,7 +34,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGICopiable;
+import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
@@ -862,12 +862,12 @@ public abstract class SGFigureElement implements SGIFigureElement {
     final double max = range.y;
 
     final int type = axis.getScaleType();
-    final boolean invcoord = axis.isInvertCoordinates();
+    final boolean invCoord = axis.isInvertCoordinates();
 
     // calculate the ratio in the graph rectangle
     float ratio = 0.0f;
     if (type == SGAxis.LINEAR_SCALE) {
-      if (invcoord) ratio = (float) ((max - value) / (max - min));
+      if (invCoord) ratio = (float) ((max - value) / (max - min));
       else ratio = (float) ((value - min) / (max - min));
     } else if (type == SGAxis.LOG_SCALE) {
       if (value <= 0.0) {
@@ -878,7 +878,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
       final double logMax = Math.log(max);
       final double logValue = Math.log(value);
 
-      if (invcoord) ratio = (float) ((logMax - logValue) / (logMax - logMin));
+      if (invCoord) ratio = (float) ((logMax - logValue) / (logMax - logMin));
       else ratio = (float) ((logValue - logMin) / (logMax - logMin));
     }
 
@@ -911,12 +911,12 @@ public abstract class SGFigureElement implements SGIFigureElement {
     }
 
     final int type = axis.getScaleType();
-    final boolean invcoord = axis.isInvertCoordinates();
+    final boolean invCoord = axis.isInvertCoordinates();
 
     // calculate the ratio in the graph rectangle
     float ratio;
     if (horizontal) {
-      if (invcoord) {
+      if (invCoord) {
         if (this.mGraphRectWidth == 0.0f) {
           ratio = 1.0f;
         } else {
@@ -930,7 +930,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
         }
       }
     } else {
-      if (invcoord) {
+      if (invCoord) {
         if (this.mGraphRectHeight == 0.0f) {
           ratio = 0.0f;
         } else {
@@ -1197,11 +1197,11 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param list
    * @return
    */
-  protected List<SGICopiable> getCopyList(List<SGICopiable> list) {
-    List<SGICopiable> cList = new ArrayList<SGICopiable>();
+  protected List<SGICopyable> getCopyList(List<SGICopyable> list) {
+    List<SGICopyable> cList = new ArrayList<SGICopyable>();
     for (int ii = 0; ii < list.size(); ii++) {
-      SGICopiable obj = (SGICopiable) list.get(ii);
-      cList.add((SGICopiable) obj.copy());
+      SGICopyable obj = (SGICopyable) list.get(ii);
+      cList.add((SGICopyable) obj.copy());
     }
     return cList;
   }
@@ -1240,17 +1240,17 @@ public abstract class SGFigureElement implements SGIFigureElement {
   }
 
   /**
-   * Returns the list of focused copiable objects.
+   * Returns the list of focused copyable objects.
    *
-   * @return a list of focused copiable objects
+   * @return a list of focused copyable objects
    */
-  protected List<SGICopiable> getCopiableFocusedObjectsList() {
-    List<SGICopiable> list = new ArrayList<SGICopiable>();
+  protected List<SGICopyable> getCopyableFocusedObjectsList() {
+    List<SGICopyable> list = new ArrayList<SGICopyable>();
     List<SGISelectable> fList = this.getFocusedObjectsList();
     for (int ii = fList.size() - 1; ii >= 0; ii--) {
       Object obj = fList.get(ii);
-      if (obj instanceof SGICopiable) {
-        SGICopiable c = (SGICopiable) obj;
+      if (obj instanceof SGICopyable) {
+        SGICopyable c = (SGICopyable) obj;
         list.add(c);
       }
     }
@@ -1278,12 +1278,12 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @return list of duplicated objects
    */
-  protected List<SGICopiable> duplicateObjects() {
-    // get the list of copiable focused objects
-    List<SGICopiable> list = this.getCopiableFocusedObjectsList();
+  protected List<SGICopyable> duplicateObjects() {
+    // get the list of copyable focused objects
+    List<SGICopyable> list = this.getCopyableFocusedObjectsList();
 
     // create copies
-    List<SGICopiable> cList = this.getCopyList(list);
+    List<SGICopyable> cList = this.getCopyList(list);
 
     // clear all focused objects
     this.clearFocusedObjects();
@@ -1296,9 +1296,9 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @return list of copied objects
    */
-  public List<SGICopiable> getCopiedObjectsList() {
-    // get the list of copiable focused objects
-    List<SGICopiable> list = this.getCopiableFocusedObjectsList();
+  public List<SGICopyable> getCopiedObjectsList() {
+    // get the list of copyable focused objects
+    List<SGICopyable> list = this.getCopyableFocusedObjectsList();
 
     // create copies
     return this.getCopyList(list);
@@ -1310,17 +1310,17 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param list of the objects to be pasted
    * @return true:succeeded, false:failed
    */
-  public boolean paste(List<SGICopiable> list) {
+  public boolean paste(List<SGICopyable> list) {
     return true;
   }
 
   /**
-   * Cut focused copiable objects.
+   * Cut focused copyable objects.
    *
    * @return a list of cut objects
    */
-  public List<SGICopiable> cutFocusedObjects() {
-    List<SGICopiable> list = this.getCopiedObjectsList();
+  public List<SGICopyable> cutFocusedObjects() {
+    List<SGICopyable> list = this.getCopiedObjectsList();
     this.hideSelectedObjects();
     return list;
   }

@@ -226,13 +226,13 @@ public class SGCommandDataFileChooserWizardDialog extends SGSingleFileChooserWiz
   }
 
   @Override
-  public void checkNetCDFURLTextField() {
+  public void checkNetCDFUrlTextField() {
     this.onNext();
   }
 
   @Override
-  public void acceptNetCDFUrl(final boolean accpet) {
-    super.acceptFile(accpet);
+  public void acceptNetCDFUrl(final boolean accept) {
+    super.acceptFile(accept);
   }
 
   public void setVisibleUrlOfNetCDF(final boolean visible) {

@@ -42,9 +42,9 @@ public interface SGIApplicationConstants extends SGIDataFileConstants {
     NULL,
   }
 
-  static final String PROGRESS_MESSAGE_READFILE = "Read File";
+  static final String PROGRESS_MESSAGE_READ_FILE = "Read File";
 
-  static final String PROGRESS_MESSAGE_CREATEDATA = "Create Data";
+  static final String PROGRESS_MESSAGE_CREATE_DATA = "Create Data";
 
   /** The name of an attribute for Samurai Graph properties. */
   public static final String ATTR_NAME_SAMURAI_GRAPH_PROPERTIES = "samurai_graph_properties";

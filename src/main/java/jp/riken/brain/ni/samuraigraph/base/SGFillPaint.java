@@ -20,7 +20,7 @@ public class SGFillPaint extends SGTransparentPaint {
 
   @Override
   public Paint getPaint(final Rectangle2D rect) {
-    return getTransparentedColor(this.mColor);
+    return getTransparentColor(this.mColor);
   }
 
   public Color getColor() {

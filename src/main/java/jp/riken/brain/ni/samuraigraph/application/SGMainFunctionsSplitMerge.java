@@ -118,10 +118,10 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
             && !SGDataUtility.isMDArrayData(dataType)) {
           throw new Error("Unsupported data type: " + data.getDataType());
         }
-        SGISXYTypeMultipleData dataMult = (SGISXYTypeMultipleData) data;
-        String dataNameMult = gElement.getDataName(data);
+        SGISXYTypeMultipleData dataMulti = (SGISXYTypeMultipleData) data;
+        String dataNameMulti = gElement.getDataName(data);
 
-        SGISXYTypeMultipleData[] subArray = dataMult.getSXYTypeMultipleDataArray();
+        SGISXYTypeMultipleData[] subArray = dataMulti.getSXYTypeMultipleDataArray();
         if (subArray.length == 1) {
           subArray[0].dispose();
           continue;
@@ -131,8 +131,8 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
           dataArray[ii] = (SGData) subArray[ii];
         }
 
-        String[] nameArray = getNameOfSplittedData(dataMult, dataArray, dataNameMult, dataType);
-        SGProperties pMult = gElement.getDataProperties((SGData) dataMult);
+        String[] nameArray = getNameOfSplittedData(dataMulti, dataArray, dataNameMulti, dataType);
+        SGProperties pMulti = gElement.getDataProperties((SGData) dataMulti);
 
         final float diff = 1.0f / (dataArray.length + 1);
         for (int ii = 0; ii < dataArray.length; ii++) {
@@ -148,7 +148,7 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
           for (int jj = 0; jj < elArray.length; jj++) {
 
             // synchronize the properties for duplicated data object
-            SGProperties sp = elArray[jj].synchronizeDataProperties(pMult, dp);
+            SGProperties sp = elArray[jj].synchronizeDataProperties(pMulti, dp);
             if (sp == null) {
               continue;
             }
@@ -175,7 +175,7 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
           dList.add(dataArray[ii]);
         }
 
-        gElement.hideNetCDFLabels(fes, (SGData) dataMult);
+        gElement.hideNetCDFLabels(fes, (SGData) dataMulti);
       }
     }
 
@@ -237,26 +237,26 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
   /**
    * Returns the names of split data.
    *
-   * @param dataMult
+   * @param dataMulti
    * @param dataArray
-   * @param dataNameMult
+   * @param dataNameMulti
    * @param dataType
    * @return the names of split data
    */
   static String[] getNameOfSplittedData(
-      final SGISXYTypeMultipleData dataMult,
+      final SGISXYTypeMultipleData dataMulti,
       final SGData[] dataArray,
-      final String dataNameMult,
+      final String dataNameMulti,
       final String dataType) {
 
     String[] nameArray = new String[dataArray.length];
 
     for (int ii = 0; ii < dataArray.length; ii++) {
       StringBuffer sb = new StringBuffer();
-      sb.append(dataNameMult);
+      sb.append(dataNameMulti);
       String suffix = "";
       if (SGDataUtility.isSDArrayData(dataType)) {
-        SGSXYSDArrayMultipleData aData = (SGSXYSDArrayMultipleData) dataMult;
+        SGSXYSDArrayMultipleData aData = (SGSXYSDArrayMultipleData) dataMulti;
         SGDataColumn[] cols = aData.getMultipleColumns();
         String title = cols[ii].getTitle();
         if (title == null || "".equals(title)) {
@@ -268,8 +268,8 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
         sb.append("\\_");
         sb.append(suffix);
       } else if (SGDataUtility.isNetCDFData(dataType)) {
-        if (dataMult instanceof SGSXYNetCDFMultipleData) {
-          SGSXYNetCDFMultipleData nData = (SGSXYNetCDFMultipleData) dataMult;
+        if (dataMulti instanceof SGSXYNetCDFMultipleData) {
+          SGSXYNetCDFMultipleData nData = (SGSXYNetCDFMultipleData) dataMulti;
           if (nData.isDimensionPicked()) {
             SGIntegerSeriesSet indices = nData.getPickUpDimensionInfo().getIndices();
             final int[] array = indices.getNumbers();
@@ -297,8 +297,8 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
           }
         }
       } else {
-        if (dataMult instanceof SGSXYMDArrayMultipleData) {
-          SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) dataMult;
+        if (dataMulti instanceof SGSXYMDArrayMultipleData) {
+          SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) dataMulti;
           if (mdData.isDimensionPicked()) {
             SGMDArrayPickUpDimensionInfo mdInfo =
                 (SGMDArrayPickUpDimensionInfo) mdData.getPickUpDimensionInfo();
@@ -315,14 +315,14 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
           }
         }
         /*
-                        if (dataMult instanceof SGSXYMultipleVariableMDData) {
-                        	SGSXYMultipleVariableMDData mdData = (SGSXYMultipleVariableMDData) dataMult;
+                        if (dataMulti instanceof SGSXYMultipleVariableMDData) {
+                        	SGSXYMultipleVariableMDData mdData = (SGSXYMultipleVariableMDData) dataMulti;
                             SGMDVariable[] vars = mdData.getMultipleVariables();
                             suffix = SGUtility.addEscapeChar(vars[ii].getSimpleName());
                             sb.append("\\_");
                             sb.append(suffix);
-                        } else if (dataMult instanceof SGSXYMultipleDimensionMDData) {
-                        	SGSXYMultipleDimensionMDData mdData = (SGSXYMultipleDimensionMDData) dataMult;
+                        } else if (dataMulti instanceof SGSXYMultipleDimensionMDData) {
+                        	SGSXYMultipleDimensionMDData mdData = (SGSXYMultipleDimensionMDData) dataMulti;
                         	SGMDPickUpDimensionInfo mdInfo = (SGMDPickUpDimensionInfo) mdData.getPickUpDimensionInfo();
         //                    final int start = mdInfo.getStart();
         //                    final int end = mdInfo.getEnd();
@@ -463,35 +463,35 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
       List<SGData> store = entry.getValue();
       mergedDataList.addAll(store);
 
-      SGISXYTypeMultipleData dataMult = null;
+      SGISXYTypeMultipleData dataMulti = null;
       SGData dataLast = store.get(store.size() - 1);
       SGProperties pLast = gElement.getDataProperties(dataLast);
       Map<Class<? extends SGIFigureElement>, SGProperties> propertiesMap =
           new HashMap<Class<? extends SGIFigureElement>, SGProperties>();
 
       if (SGDataUtility.isSDArrayData(dataLast)) {
-        dataMult = SGSXYSDArrayMultipleData.merge(store);
+        dataMulti = SGSXYSDArrayMultipleData.merge(store);
       } else if (SGDataUtility.isNetCDFData(dataLast)) {
         if (dataLast instanceof SGSXYNetCDFMultipleData) {
-          dataMult = SGSXYNetCDFMultipleData.merge(store);
+          dataMulti = SGSXYNetCDFMultipleData.merge(store);
         }
       } else if (SGDataUtility.isMDArrayData(dataLast)) {
-        dataMult = SGSXYMDArrayMultipleData.merge(store);
+        dataMulti = SGSXYMDArrayMultipleData.merge(store);
       } else {
         return null;
       }
-      if (dataMult == null) {
+      if (dataMulti == null) {
         return null;
       }
-      String name = getNameOfMergedData((SGData) dataMult);
+      String name = getNameOfMergedData((SGData) dataMulti);
 
-      if (null != dataMult) {
+      if (null != dataMulti) {
         // get data properties
-        SGProperties pMult = ((SGData) dataMult).getProperties();
+        SGProperties pMulti = ((SGData) dataMulti).getProperties();
 
         for (int jj = 0; jj < elArray.length; jj++) {
           // synchronize the properties for duplicated data object
-          SGProperties sp = elArray[jj].synchronizeDataProperties(pLast, pMult);
+          SGProperties sp = elArray[jj].synchronizeDataProperties(pLast, pMulti);
           if (sp == null) {
             continue;
           }
@@ -513,11 +513,11 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
 
           propertiesMap.put(elArray[jj].getClass(), sp);
         }
-        if (figure.addData((SGData) dataMult, name, propertiesMap) == false) {
+        if (figure.addData((SGData) dataMulti, name, propertiesMap) == false) {
           return null;
         }
 
-        dList.add((SGData) dataMult);
+        dList.add((SGData) dataMulti);
       }
 
       count++;

@@ -22,7 +22,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGICopiable;
+import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIData;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
@@ -285,8 +285,8 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
 
   private void updateBarVerticalOfNetCDFData(SGElementGroupSetInGraph groupSet, SGData data) {
     if (data instanceof SGSXYNetCDFData) {
-      SGSXYNetCDFData ndata = (SGSXYNetCDFData) data;
-      boolean vertical = ndata.isXVariableCoordinate();
+      SGSXYNetCDFData ncData = (SGSXYNetCDFData) data;
+      boolean vertical = ncData.isXVariableCoordinate();
       if (groupSet instanceof SGElementGroupSetInGraphSXYMultiple) {
         SGElementGroupSetInGraphSXYMultiple gs = (SGElementGroupSetInGraphSXYMultiple) groupSet;
         if (gs.isBarVertical() != vertical) {
@@ -299,8 +299,8 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
         }
       }
     } else if (data instanceof SGSXYNetCDFMultipleData) {
-      SGSXYNetCDFMultipleData ndata = (SGSXYNetCDFMultipleData) data;
-      boolean vertical = ndata.isXVariableCoordinate();
+      SGSXYNetCDFMultipleData ncData = (SGSXYNetCDFMultipleData) data;
+      boolean vertical = ncData.isXVariableCoordinate();
       if (groupSet instanceof SGElementGroupSetInGraphSXYMultiple) {
         SGElementGroupSetInGraphSXYMultiple gs = (SGElementGroupSetInGraphSXYMultiple) groupSet;
         if (gs.isBarVertical() != vertical) {
@@ -359,7 +359,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
       final SGIFigureElementAxis aElement = (SGIFigureElementAxis) element;
       flag = this.synchronizeToAxisElement(aElement, msg);
     } else if (element instanceof SGIFigureElementString) {
-      if (NOTIFY_NETCDF_DATALABEL_WILL_BE_HIDDEN.equals(msg)) {
+      if (NOTIFY_NETCDF_DATA_LABEL_WILL_BE_HIDDEN.equals(msg)) {
         SGIFigureElementString sElement = (SGIFigureElementString) element;
         this.removeHiddenNetCDFLabels(sElement);
       }
@@ -470,7 +470,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
     final double min = range.x;
     final double max = range.y;
     final int type = axis.getScaleType();
-    final boolean invcoord = axis.isInvertCoordinates();
+    final boolean invCoord = axis.isInvertCoordinates();
 
     // transform to the values in the graph
     double minInScale = 0.0;
@@ -496,7 +496,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
       }
       // ratio in the graph area rectangle
       float ratio;
-      if (invcoord) {
+      if (invCoord) {
         ratio = (float) ((maxInScale - valueInScale[ii]) / (maxInScale - minInScale));
       } else {
         ratio = (float) ((valueInScale[ii] - minInScale) / (maxInScale - minInScale));
@@ -539,8 +539,8 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
     final int typeX = axisX.getScaleType();
     final int typeY = axisY.getScaleType();
 
-    final boolean invcoordX = axisX.isInvertCoordinates();
-    final boolean invcoordY = axisY.isInvertCoordinates();
+    final boolean invCoordX = axisX.isInvertCoordinates();
+    final boolean invCoordY = axisY.isInvertCoordinates();
 
     // transform to the values in the graph
     double minXInScale = 0.0;
@@ -585,12 +585,12 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
       }
       // ratio in the graph area rectangle
       float xRatio, yRatio;
-      if (invcoordX) {
+      if (invCoordX) {
         xRatio = (float) ((maxXInScale - xInScale[ii]) / (maxXInScale - minXInScale));
       } else {
         xRatio = (float) ((xInScale[ii] - minXInScale) / (maxXInScale - minXInScale));
       }
-      if (invcoordY) {
+      if (invCoordY) {
         yRatio = (float) (1.0 - (maxYInScale - yInScale[ii]) / (maxYInScale - minYInScale));
       } else {
         yRatio = (float) (1.0 - (yInScale[ii] - minYInScale) / (maxYInScale - minYInScale));
@@ -683,14 +683,14 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
   }
 
   /**
-   * Cut focused copiable objects.
+   * Cut focused copyable objects.
    *
    * @return a list of cut objects
    */
-  public List<SGICopiable> cutFocusedObjects() {
+  public List<SGICopyable> cutFocusedObjects() {
     // returns an empty list because no objects exist that can be cut
     // other than data
-    return new ArrayList<SGICopiable>();
+    return new ArrayList<SGICopyable>();
   }
 
   /**
@@ -1308,9 +1308,9 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
   }
 
   protected SGIElementGroupSetMultipleSXY createMultipleSXYGroupSetInstance(
-      SGISXYTypeMultipleData dataMultSXY) {
+      SGISXYTypeMultipleData dataMultiSXY) {
     SGElementGroupSetInGraphSXYMultiple groupSet =
-        new SGElementGroupSetInGraphSXYMultiple((SGData) dataMultSXY, this);
+        new SGElementGroupSetInGraphSXYMultiple((SGData) dataMultiSXY, this);
     return groupSet;
   }
 
@@ -1491,21 +1491,21 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
     Map<String, String> mapChanged = new HashMap<String, String>();
     Map<String, String> newMap = new HashMap<String, String>();
 
-    String[] oldstr = oldString.split(", ");
-    String[] newstr = newString.split(", ");
-    for (int i = 0; i < newstr.length; i++) {
-      String[] values = newstr[i].split("=");
+    String[] oldStr = oldString.split(", ");
+    String[] newStr = newString.split(", ");
+    for (int i = 0; i < newStr.length; i++) {
+      String[] values = newStr[i].split("=");
       newMap.put(values[0], values[1]);
     }
-    for (int i = 0; i < oldstr.length; i++) {
-      String[] values = oldstr[i].split("=");
+    for (int i = 0; i < oldStr.length; i++) {
+      String[] values = oldStr[i].split("=");
       String newValue = newMap.get(values[0]);
       if (null == newValue) {
         // delete
-        mapChanged.put(oldstr[i], "");
+        mapChanged.put(oldStr[i], "");
       } else if (null != newValue && newValue.equals(values[1]) == false) {
         // change
-        mapChanged.put(oldstr[i], values[0] + "=" + newValue);
+        mapChanged.put(oldStr[i], values[0] + "=" + newValue);
       }
     }
     StringBuffer sb = new StringBuffer();
@@ -1513,8 +1513,8 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
     for (Entry<String, String> e : newMap.entrySet()) {
       String key = e.getKey();
       boolean notfound = true;
-      for (int i = 0; i < oldstr.length; i++) {
-        String[] values = oldstr[i].split("=");
+      for (int i = 0; i < oldStr.length; i++) {
+        String[] values = oldStr[i].split("=");
         if (key.equals(values[0])) {
           notfound = false;
           break;
@@ -1870,8 +1870,8 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
     } else if (gs instanceof SGElementGroupSetInGraphSXYMultiple) {
       SGElementGroupSetInGraphSXYMultiple egs = (SGElementGroupSetInGraphSXYMultiple) gs;
       if (egs.isBarVisible()) {
-        List<SGElementGroupBar> barlist = egs.getBarGroupsIgnoreNull();
-        return barlist.size() - 1;
+        List<SGElementGroupBar> barList = egs.getBarGroupsIgnoreNull();
+        return barList.size() - 1;
       }
     }
     return 0;

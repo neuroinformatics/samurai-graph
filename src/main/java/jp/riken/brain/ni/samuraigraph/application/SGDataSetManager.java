@@ -37,7 +37,7 @@ class SGDataSetManager
         SGIApplicationTextConstants,
         SGIArchiveFileConstants {
 
-  private static final String DATASET_TEMPDIR_NAME = "SamuraiGraphArcvhive";
+  private static final String DATASET_TEMPDIR_NAME = "SamuraiGraphArchive";
 
   private static final String DATASET_PROPERTY_FILENAME =
       SGPropertyFileCreator.DEFAULT_PROPERTY_FILE_NAME_WITH_EXTENSION;
@@ -65,14 +65,14 @@ class SGDataSetManager
   private List<File> mDataSetFileList = new ArrayList<File>();
 
   SGDataSetManager(
-      SGMainFunctions main, final SGSplashWindow sw, final float minprog, final float maxprog) {
+      SGMainFunctions main, final SGSplashWindow sw, final float minProg, final float maxProg) {
 
     super();
     this.mMain = main;
-    final float step = (maxprog - minprog) / 3;
-    sw.setProgressValue(minprog + step);
+    final float step = (maxProg - minProg) / 3;
+    sw.setProgressValue(minProg + step);
     this.mArchiveFileExtractor = new SGArchiveFileExtractor();
-    sw.setProgressValue(minprog + step * 2.0f);
+    sw.setProgressValue(minProg + step * 2.0f);
     this.mArchiveFileCreator = new SGArchiveFileCreator();
   }
 
@@ -87,25 +87,25 @@ class SGDataSetManager
       return false;
     }
 
-    int errcode = -1;
-    errcode = this.mArchiveFileExtractor.extract(wnd, datasetTempDir.getPath(), file);
+    int errCode = -1;
+    errCode = this.mArchiveFileExtractor.extract(wnd, datasetTempDir.getPath(), file);
 
-    if (errcode == -1 || errcode == -2) {
+    if (errCode == -1 || errCode == -2) {
       this.mArchiveFileExtractor.deleteExtractedFiles();
       datasetTempDir.delete();
       return false;
-    } else if (errcode == CANCEL_OPTION) {
+    } else if (errCode == CANCEL_OPTION) {
       this.mArchiveFileExtractor.deleteExtractedFiles();
       datasetTempDir.delete();
       return true;
     }
-    final ArrayList<File> flist = this.mArchiveFileExtractor.getExtractedFileList();
+    final ArrayList<File> fList = this.mArchiveFileExtractor.getExtractedFileList();
 
     // get property file name
-    final String pfname =
+    final String pFname =
         SGApplicationUtility.getPathName(
             datasetTempDir.getAbsolutePath(), DATASET_PROPERTY_FILENAME);
-    if (!flist.contains(new File(pfname))) {
+    if (!fList.contains(new File(pFname))) {
       this.mArchiveFileExtractor.deleteExtractedFiles();
       datasetTempDir.delete();
       return false;
@@ -113,8 +113,8 @@ class SGDataSetManager
 
     // the number of data files
     int dataFileNum = 0;
-    for (int ii = 0; ii < flist.size(); ii++) {
-      File f = flist.get(ii);
+    for (int ii = 0; ii < fList.size(); ii++) {
+      File f = fList.get(ii);
       String path = f.getPath();
       if (this.isDataFile(path)) {
         dataFileNum++;
@@ -122,13 +122,13 @@ class SGDataSetManager
     }
 
     // get data file name list
-    final ArrayList<String> dfnameList = new ArrayList<String>();
-    this._sortDataList(datasetTempDir, flist, dataFileNum, dfnameList);
+    final ArrayList<String> dFnameList = new ArrayList<String>();
+    this._sortDataList(datasetTempDir, fList, dataFileNum, dFnameList);
 
     // get the image file
     File imageFile = null;
-    for (int ii = 0; ii < flist.size(); ii++) {
-      File f = flist.get(ii);
+    for (int ii = 0; ii < fList.size(); ii++) {
+      File f = fList.get(ii);
       String path = f.getPath();
       //            String[] imgArray = SGIImageConstants.DRAWABLE_IMAGE_EXTENSIONS;
       //            for (int jj = 0; jj < imgArray.length; jj++) {
@@ -148,7 +148,7 @@ class SGDataSetManager
     }
 
     // load
-    boolean result = _loadDataSet(wnd, pfname, dfnameList, imageFile);
+    boolean result = _loadDataSet(wnd, pFname, dFnameList, imageFile);
     //        this.mArchiveFileExtractor.deleteExtractedFiles();
     //        datasetTempDir.delete();
     this.mDataSetFolderList.add(datasetTempDir);
@@ -184,7 +184,7 @@ class SGDataSetManager
 
   boolean loadDataSet(final SGDrawingWindow wnd, final File archiveFile) {
 
-    int errcode = -1;
+    int errCode = -1;
     // extract
     File file = archiveFile;
     if (file == null) {
@@ -197,7 +197,7 @@ class SGDataSetManager
       file = this.mArchiveFileExtractor.getArchiveFileFromFileChooser(wnd);
     }
     if (file == null) {
-      errcode = CANCEL_OPTION;
+      errCode = CANCEL_OPTION;
       return true;
     } else {
       try {
@@ -211,11 +211,11 @@ class SGDataSetManager
           if (FILE_TYPE.NETCDF_DATA.equals(type)) {
             SGNetCDFDataSetManager netcdfDatasetManager = new SGNetCDFDataSetManager(this.mMain);
             try {
-              errcode = netcdfDatasetManager.load(wnd, file);
+              errCode = netcdfDatasetManager.load(wnd, file);
             } catch (IOException e) {
               return false;
             }
-            if (errcode == OK_OPTION) {
+            if (errCode == OK_OPTION) {
               File f = this.mArchiveFileExtractor.getCurrentFile();
               if (f != null) {
                 this.mMain.updateCurrentFile(f, FILE_TYPE.DATASET);
@@ -294,9 +294,9 @@ class SGDataSetManager
   // sort the list of data files
   private void _sortDataList(
       File datasetTempDir,
-      ArrayList<File> flist,
+      ArrayList<File> fList,
       final int dataFileNum,
-      ArrayList<String> dfnameList) {
+      ArrayList<String> dFnameList) {
 
     StringBuffer sb = new StringBuffer();
     sb.append(datasetTempDir.getAbsolutePath());
@@ -314,11 +314,11 @@ class SGDataSetManager
         sb2.append(jj);
         //                sb2.append(".csv");
         String fnameHeader = sb2.toString();
-        //                if (!flist.contains(new File(fname))) {
+        //                if (!fList.contains(new File(fname))) {
         //                    break;
         //                }
         String fname = null;
-        for (File f : flist) {
+        for (File f : fList) {
           String path = f.getAbsolutePath();
           if (path.startsWith(fnameHeader)) {
             fname = path;
@@ -328,7 +328,7 @@ class SGDataSetManager
         if (fname == null) {
           break;
         }
-        dfnameList.add(fname);
+        dFnameList.add(fname);
         fileCnt++;
       }
       if (fileCnt >= dataFileNum) {
@@ -339,11 +339,11 @@ class SGDataSetManager
 
   private boolean _loadDataSet(
       final SGDrawingWindow wnd,
-      final String pfname,
-      final ArrayList<String> dfnameList,
+      final String pFname,
+      final ArrayList<String> dFnameList,
       final File imageFile) {
 
-    final File pfile = new File(pfname);
+    final File pfile = new File(pFname);
     if (pfile.exists() == false) {
       return false;
     }
@@ -388,17 +388,17 @@ class SGDataSetManager
       dataNumArray[ii] = nListData.getLength();
       cnt += dataNumArray[ii];
     }
-    if (cnt != dfnameList.size()) {
+    if (cnt != dFnameList.size()) {
       return false;
     }
 
     // create wrapped data
-    WrappedData[] wDataArray = new WrappedData[dfnameList.size()];
+    WrappedData[] wDataArray = new WrappedData[dFnameList.size()];
     cnt = 0;
     for (int ii = 0; ii < figureNum; ii++) {
       final int dataNum = dataNumArray[ii];
       for (int jj = 0; jj < dataNum; jj++) {
-        String fileName = (String) dfnameList.get(cnt);
+        String fileName = (String) dFnameList.get(cnt);
         final int figureID = ii + 1;
         SGPropertyFileData pfData = new SGPropertyFileData(figureID, null, null, null);
         pfData.setFileName(fileName);
@@ -478,7 +478,7 @@ class SGDataSetManager
     }
     String name = SGApplicationUtility.appendExtension(fileName, ARCHIVE_FILE_TYPE_SGA);
 
-    ArrayList<File> flist;
+    ArrayList<File> fList;
 
     // create temporary directory
     File datasetTempDir = this.getDataSetTempDir();
@@ -491,17 +491,17 @@ class SGDataSetManager
     this.mArchiveFileCreator.setCurrentFile(dir, name);
 
     // show a file chooser and get selected file
-    ArchiveFile zfile = null;
+    ArchiveFile zFile = null;
     try {
-      zfile = this.mArchiveFileCreator.getArchiveFileFromFileChooser(wnd);
+      zFile = this.mArchiveFileCreator.getArchiveFileFromFileChooser(wnd);
     } catch (IOException e) {
       SGUtility.showErrorMessageDialog(wnd, e.getMessage(), TITLE_ERROR);
       return ERROR_OPTION;
     }
-    if (zfile == null) {
+    if (zFile == null) {
       return CANCEL_OPTION;
     }
-    final String fileDesc = zfile.desc;
+    final String fileDesc = zFile.desc;
 
     // create an archive file
     if (fileDesc != null) {
@@ -524,18 +524,18 @@ class SGDataSetManager
           }
         }
 
-        flist = _dumpDataSet(wnd, datasetTempDir, new SGExportParameter(mode));
+        fList = _dumpDataSet(wnd, datasetTempDir, new SGExportParameter(mode));
 
-        if (flist == null) {
+        if (fList == null) {
           JOptionPane.showMessageDialog(wnd, failed);
           datasetTempDir.delete();
           return ERROR_OPTION;
         }
-        int ret = this.mArchiveFileCreator.create(wnd, datasetTempDir.getPath(), zfile.file);
+        int ret = this.mArchiveFileCreator.create(wnd, datasetTempDir.getPath(), zFile.file);
 
         // delete temporary files
-        for (int kk = 0; kk < flist.size(); kk++) {
-          File f = (File) flist.get(kk);
+        for (int kk = 0; kk < fList.size(); kk++) {
+          File f = (File) fList.get(kk);
           f.delete();
         }
         datasetTempDir.delete();
@@ -555,7 +555,7 @@ class SGDataSetManager
         //                SGNetCDFDataSetManager netcdfDatasetManager = new
         // SGNetCDFDataSetManager(this.mMain);
         //                int result = netcdfDatasetManager.save(wnd, versionString, datasetTempDir,
-        // zfile.file);
+        // zFile.file);
         //
         //                // delete temporary files
         //                File[] tempFiles = datasetTempDir.listFiles();
@@ -591,7 +591,7 @@ class SGDataSetManager
   public int saveDataSet(
       final SGDrawingWindow wnd, final String filePath, final String archiveType) {
 
-    ArrayList<File> flist = null;
+    ArrayList<File> fList = null;
 
     // create temporary directory
     File datasetTempDir = this.getDataSetTempDir();
@@ -618,8 +618,8 @@ class SGDataSetManager
         }
       }
 
-      flist = _dumpDataSet(wnd, datasetTempDir, new SGExportParameter(mode));
-      if (flist == null) {
+      fList = _dumpDataSet(wnd, datasetTempDir, new SGExportParameter(mode));
+      if (fList == null) {
         datasetTempDir.delete();
         return ERROR_OPTION;
       }
@@ -627,8 +627,8 @@ class SGDataSetManager
       int ret = this.mArchiveFileCreator.create(wnd, datasetTempDir.getPath(), outFile);
 
       // delete temporary files
-      for (int kk = 0; kk < flist.size(); kk++) {
-        File f = (File) flist.get(kk);
+      for (int kk = 0; kk < fList.size(); kk++) {
+        File f = (File) fList.get(kk);
         f.delete();
       }
       datasetTempDir.delete();
@@ -669,16 +669,16 @@ class SGDataSetManager
    */
   private ArrayList<File> _dumpDataSet(
       final SGDrawingWindow wnd, final File datasetDir, final SGExportParameter mode) {
-    ArrayList<File> flist = new ArrayList<File>();
+    ArrayList<File> fList = new ArrayList<File>();
 
     // output property file
-    final String pfname =
+    final String pFname =
         SGApplicationUtility.getPathName(datasetDir.getPath(), DATASET_PROPERTY_FILENAME);
-    int ret = this.mMain.mPropertyFileManager.saveProperties(wnd, pfname, mode);
+    int ret = this.mMain.mPropertyFileManager.saveProperties(wnd, pFname, mode);
     if (ret != OK_OPTION) {
       return null;
     }
-    flist.add(new File(pfname));
+    fList.add(new File(pFname));
 
     // output data files
     ArrayList<SGFigure> figures = wnd.getVisibleFigureList();
@@ -703,16 +703,16 @@ class SGDataSetManager
         SGIElementGroupSetForData gs = (SGIElementGroupSetForData) gElement.getChild(data);
         File file = new File(fname);
         if (!gs.saveData(file, mode, null)) {
-          for (int kk = 0; kk < flist.size(); kk++) {
-            File f = (File) flist.get(kk);
+          for (int kk = 0; kk < fList.size(); kk++) {
+            File f = (File) fList.get(kk);
             f.delete();
           }
           return null;
         }
-        flist.add(file);
+        fList.add(file);
       }
     }
-    return flist;
+    return fList;
   }
 
   void clearDataSetFiles() {

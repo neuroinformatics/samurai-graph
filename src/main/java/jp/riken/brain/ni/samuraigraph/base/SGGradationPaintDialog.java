@@ -20,11 +20,7 @@ import javax.swing.colorchooser.ColorSelectionModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/**
- * Property dialog for gradation painting.
- *
- * @author minemoto
- */
+/** Property dialog for gradation painting. */
 public class SGGradationPaintDialog extends JDialog
     implements ActionListener, FocusListener, ChangeListener {
 
@@ -42,7 +38,7 @@ public class SGGradationPaintDialog extends JDialog
   private SGRadioButton mDirectionVerticalRadioButton = null;
   private SGRadioButton mDirectionHorizontalRadioButton = null;
   private SGRadioButton mDirectionUpperRightRadioButton = null;
-  private SGRadioButton mDirectionLowerRigthRadioButton = null;
+  private SGRadioButton mDirectionLowerRightRadioButton = null;
 
   private JPanel mOrderPanel = null;
   private SGGradationPaintSelectionButton mOrderButtonPanel1 = null;
@@ -83,7 +79,7 @@ public class SGGradationPaintDialog extends JDialog
     this.mDirectionVerticalRadioButton = new SGRadioButton();
     this.mDirectionHorizontalRadioButton = new SGRadioButton();
     this.mDirectionUpperRightRadioButton = new SGRadioButton();
-    this.mDirectionLowerRigthRadioButton = new SGRadioButton();
+    this.mDirectionLowerRightRadioButton = new SGRadioButton();
     this.mOrderPanel = new JPanel();
     this.mOrderButtonPanel1 = new SGGradationPaintSelectionButton();
     this.mOrderButtonPanel2 = new SGGradationPaintSelectionButton();
@@ -152,13 +148,13 @@ public class SGGradationPaintDialog extends JDialog
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 10);
     mDirectionPanel.add(mDirectionUpperRightRadioButton, gridBagConstraints);
 
-    mDirectionLowerRigthRadioButton.setText("Diagonal (lower right)");
-    mDirectionLowerRigthRadioButton.setFont(new java.awt.Font("Dialog", 0, 11));
+    mDirectionLowerRightRadioButton.setText("Diagonal (lower right)");
+    mDirectionLowerRightRadioButton.setFont(new java.awt.Font("Dialog", 0, 11));
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 3;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 10);
-    mDirectionPanel.add(mDirectionLowerRigthRadioButton, gridBagConstraints);
+    mDirectionPanel.add(mDirectionLowerRightRadioButton, gridBagConstraints);
 
     mOrderPanel.setLayout(new GridBagLayout());
     mOrderPanel.setBorder(BorderFactory.createTitledBorder("Order"));
@@ -221,7 +217,7 @@ public class SGGradationPaintDialog extends JDialog
     group.add(this.mDirectionVerticalRadioButton);
     group.add(this.mDirectionHorizontalRadioButton);
     group.add(this.mDirectionUpperRightRadioButton);
-    group.add(this.mDirectionLowerRigthRadioButton);
+    group.add(this.mDirectionLowerRightRadioButton);
 
     return true;
   }
@@ -243,7 +239,7 @@ public class SGGradationPaintDialog extends JDialog
     this.mDirectionHorizontalRadioButton.addActionListener(this);
     this.mDirectionVerticalRadioButton.addActionListener(this);
     this.mDirectionUpperRightRadioButton.addActionListener(this);
-    this.mDirectionLowerRigthRadioButton.addActionListener(this);
+    this.mDirectionLowerRightRadioButton.addActionListener(this);
 
     this.mOrderButtonPanel1.addActionListener(this);
     this.mOrderButtonPanel2.addActionListener(this);
@@ -274,7 +270,7 @@ public class SGGradationPaintDialog extends JDialog
     this.mDirectionVerticalRadioButton = null;
     this.mDirectionHorizontalRadioButton = null;
     this.mDirectionUpperRightRadioButton = null;
-    this.mDirectionLowerRigthRadioButton = null;
+    this.mDirectionLowerRightRadioButton = null;
 
     this.mOrderButtonPanel1 = null;
     this.mOrderButtonPanel2 = null;
@@ -327,14 +323,14 @@ public class SGGradationPaintDialog extends JDialog
     } else if (source == this.mDirectionHorizontalRadioButton
         || source == this.mDirectionVerticalRadioButton
         || source == this.mDirectionUpperRightRadioButton
-        || source == this.mDirectionLowerRigthRadioButton) {
+        || source == this.mDirectionLowerRightRadioButton) {
       updateOrderButtonPanel();
       fireGradationModelChanged();
     }
   }
 
   private boolean updateOrderButtonPanel() {
-    SGGradationPaint gpaint = new SGGradationPaint();
+    SGGradationPaint gPaint = new SGGradationPaint();
     Color color1 = this.mColorSelectionButton1.getColor();
     Color color2 = this.mColorSelectionButton2.getColor();
     int directionIndex = -1;
@@ -344,21 +340,21 @@ public class SGGradationPaintDialog extends JDialog
       directionIndex = SGGradationPaint.INDEX_DIRECTION_VERTICAL;
     } else if (this.mDirectionUpperRightRadioButton.isSelected()) {
       directionIndex = SGGradationPaint.INDEX_DIRECTION_DIAGONAL_UP_RIGHT;
-    } else if (this.mDirectionLowerRigthRadioButton.isSelected()) {
+    } else if (this.mDirectionLowerRightRadioButton.isSelected()) {
       directionIndex = SGGradationPaint.INDEX_DIRECTION_DIAGONAL_LOW_RIGHT;
     } else {
       return false;
     }
-    gpaint.setColors(new Color[] {color1, color2});
-    gpaint.setDirection(directionIndex);
-    gpaint.setOrder(SGGradationPaint.INDEX_ORDER_COLOR_1_2);
-    this.mOrderButtonPanel1.setGradationPaint(gpaint);
-    gpaint.setOrder(SGGradationPaint.INDEX_ORDER_COLOR_2_1);
-    this.mOrderButtonPanel2.setGradationPaint(gpaint);
-    gpaint.setOrder(SGGradationPaint.INDEX_ORDER_COLOR_1_2_1);
-    this.mOrderButtonPanel3.setGradationPaint(gpaint);
-    gpaint.setOrder(SGGradationPaint.INDEX_ORDER_COLOR_2_1_2);
-    this.mOrderButtonPanel4.setGradationPaint(gpaint);
+    gPaint.setColors(new Color[] {color1, color2});
+    gPaint.setDirection(directionIndex);
+    gPaint.setOrder(SGGradationPaint.INDEX_ORDER_COLOR_1_2);
+    this.mOrderButtonPanel1.setGradationPaint(gPaint);
+    gPaint.setOrder(SGGradationPaint.INDEX_ORDER_COLOR_2_1);
+    this.mOrderButtonPanel2.setGradationPaint(gPaint);
+    gPaint.setOrder(SGGradationPaint.INDEX_ORDER_COLOR_1_2_1);
+    this.mOrderButtonPanel3.setGradationPaint(gPaint);
+    gPaint.setOrder(SGGradationPaint.INDEX_ORDER_COLOR_2_1_2);
+    this.mOrderButtonPanel4.setGradationPaint(gPaint);
     return true;
   }
 
@@ -463,7 +459,7 @@ public class SGGradationPaintDialog extends JDialog
         this.mDirectionUpperRightRadioButton.setSelected(true);
         break;
       case SGGradationPaint.INDEX_DIRECTION_DIAGONAL_LOW_RIGHT:
-        this.mDirectionLowerRigthRadioButton.setSelected(true);
+        this.mDirectionLowerRightRadioButton.setSelected(true);
         break;
       default:
         break;
@@ -488,7 +484,7 @@ public class SGGradationPaintDialog extends JDialog
   }
 
   public SGGradationPaint getGradationPaint() {
-    SGGradationPaint gpaint = new SGGradationPaint();
+    SGGradationPaint gPaint = new SGGradationPaint();
     Color color1 = this.mColorSelectionButton1.getColor();
     Color color2 = this.mColorSelectionButton2.getColor();
     int directionIndex = -1;
@@ -498,7 +494,7 @@ public class SGGradationPaintDialog extends JDialog
       directionIndex = SGGradationPaint.INDEX_DIRECTION_VERTICAL;
     } else if (this.mDirectionUpperRightRadioButton.isSelected()) {
       directionIndex = SGGradationPaint.INDEX_DIRECTION_DIAGONAL_UP_RIGHT;
-    } else if (this.mDirectionLowerRigthRadioButton.isSelected()) {
+    } else if (this.mDirectionLowerRightRadioButton.isSelected()) {
       directionIndex = SGGradationPaint.INDEX_DIRECTION_DIAGONAL_LOW_RIGHT;
     } else {
       return null;
@@ -517,10 +513,10 @@ public class SGGradationPaintDialog extends JDialog
       return null;
     }
 
-    gpaint.setColors(new Color[] {color1, color2});
-    gpaint.setDirection(directionIndex);
-    gpaint.setOrder(orderIndex);
-    return gpaint;
+    gPaint.setColors(new Color[] {color1, color2});
+    gPaint.setDirection(directionIndex);
+    gPaint.setOrder(orderIndex);
+    return gPaint;
   }
 
   private List<ChangeListener> _listener = new ArrayList<ChangeListener>();

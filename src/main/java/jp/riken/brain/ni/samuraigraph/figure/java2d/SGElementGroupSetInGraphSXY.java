@@ -1469,7 +1469,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
       }
       if (this.isBarVisible()) {
         // minimum left shift size of bars.
-        // If this groupset has multiple bar series, minimum shift means shiftx point minus
+        // If this groupset has multiple bar series, minimum shift means shift x point minus
         // bar widths of series which are enabled to be visible.
         double barLeftShift = this.getBarOffsetX();
         if (this.isBarVertical()) {
@@ -1512,7 +1512,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
       }
       if (this.isBarVisible()) {
         // maximum right shift size of bars.
-        // If this groupset has multiple bar series, maximum shift means shiftx point plus
+        // If this groupset has multiple bar series, maximum shift means shift x point plus
         // bar widths of series which are enabled to be visible.
         double barRightShift = this.getBarOffsetX();
         if (this.isBarVertical()) {

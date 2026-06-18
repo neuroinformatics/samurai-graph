@@ -29,7 +29,7 @@ public final class SGPreviewDialog extends SGDialog implements AdjustmentListene
   /** Serial Version UID */
   private static final long serialVersionUID = 5440130689425050199L;
 
-  /** The OK buttton. */
+  /** The OK button. */
   private JButton mOKButton;
 
   /** The cancel button. */

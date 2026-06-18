@@ -24,7 +24,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
-import jp.riken.brain.ni.samuraigraph.base.SGICopiable;
+import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
@@ -857,7 +857,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
         if (!el.isAnchored()) {
           SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(pList, g2d);
         } else {
-          SGUtilityForFigureElementJava2D.drawAnchorPointsAsAnchoredForcusObject(pList, g2d);
+          SGUtilityForFigureElementJava2D.drawAnchorPointsAsAnchoredFocusObject(pList, g2d);
         }
       }
     }
@@ -961,7 +961,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     final int ox = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_X);
     final int oy = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_Y);
 
-    List<SGICopiable> cList = this.duplicateObjects();
+    List<SGICopyable> cList = this.duplicateObjects();
     for (int ii = 0; ii < cList.size(); ii++) {
       // duplicate
       TimingLine el = (TimingLine) cList.get(ii);
@@ -996,7 +996,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
    * @param list of the objects to be pasted
    * @return true:succeeded, false:failed
    */
-  public boolean paste(List<SGICopiable> list) {
+  public boolean paste(List<SGICopyable> list) {
     final float mag = this.getMagnification();
     final int ox = (int) (mag * OFFSET_DUPLICATED_OBJECT_X);
     final int oy = (int) (mag * OFFSET_DUPLICATED_OBJECT_Y);
@@ -1101,7 +1101,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
   protected class TimingLine extends SGDrawingElementLine2D
       implements ActionListener,
           SGIUndoable,
-          SGICopiable,
+          SGICopyable,
           SGIChildObject,
           SGIMovable,
           SGITimingLineDialogObserver,
@@ -2160,9 +2160,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     }
   }
 
-  /**
-   * @author okumura
-   */
   public static class TimingLineProperties extends SGDrawingElementLine.LineProperties {
 
     protected double mValue;

@@ -18,7 +18,7 @@ public class SGNetCDFDataColumnInfo extends SGDataColumnInfo {
   private int mOrigin = 0;
 
   /** The flag whether the netCDF variable is of coordinate variable. */
-  private boolean mCoorinateVariableFlag = false;
+  private boolean mCoordinateVariableFlag = false;
 
   /** The list of information of dimensions. */
   private List<SGDimensionInfo> mDimensionList = new ArrayList<SGDimensionInfo>();
@@ -34,7 +34,7 @@ public class SGNetCDFDataColumnInfo extends SGDataColumnInfo {
       final SGNetCDFVariable var, final String title, final String valueType) {
     super(title, valueType);
     this.mName = var.getName();
-    this.mCoorinateVariableFlag = var.isCoordinateVariable();
+    this.mCoordinateVariableFlag = var.isCoordinateVariable();
     this.mUnitsString = var.getUnitsString();
 
     List<Dimension> dimList = var.getDimensions();
@@ -80,7 +80,7 @@ public class SGNetCDFDataColumnInfo extends SGDataColumnInfo {
       final SGNetCDFDataColumnInfo info, final String title, final String valueType) {
     super(title, valueType);
     this.mName = info.getName();
-    this.mCoorinateVariableFlag = info.mCoorinateVariableFlag;
+    this.mCoordinateVariableFlag = info.mCoordinateVariableFlag;
     this.mOrigin = info.mOrigin;
     this.mDimensionList.addAll(info.mDimensionList);
   }
@@ -91,7 +91,7 @@ public class SGNetCDFDataColumnInfo extends SGDataColumnInfo {
    * @return true if the variable is of a coordinate variable
    */
   public boolean isCoordinateVariable() {
-    return this.mCoorinateVariableFlag;
+    return this.mCoordinateVariableFlag;
   }
 
   /**
@@ -186,7 +186,7 @@ public class SGNetCDFDataColumnInfo extends SGDataColumnInfo {
     if (!SGUtility.equals(this.mName, col.mName)) {
       return false;
     }
-    if (this.mCoorinateVariableFlag != col.mCoorinateVariableFlag) {
+    if (this.mCoordinateVariableFlag != col.mCoordinateVariableFlag) {
       return false;
     }
     if (!SGUtility.equals(this.mDimensionList, col.mDimensionList)) {

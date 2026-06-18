@@ -25,7 +25,7 @@ public class SGStatusBar extends JPanel implements SGIConstants, SGIProgressCont
 
   private MessagePanel mMessagePanel;
 
-  private PositionPanel mPositionPanal;
+  private PositionPanel mPositionPanel;
 
   private AxisValuePanel mAxisValuePanel;
 
@@ -99,7 +99,7 @@ public class SGStatusBar extends JPanel implements SGIConstants, SGIProgressCont
     // set to attribute
     this.mProgressPanel = progPanel;
     this.mMessagePanel = msgPanel;
-    this.mPositionPanal = posPanel;
+    this.mPositionPanel = posPanel;
     this.mAxisValuePanel = axisValuePanel;
   }
 
@@ -123,9 +123,9 @@ public class SGStatusBar extends JPanel implements SGIConstants, SGIProgressCont
   }
 
   /**
-   * Sets the messsage of the progress.
+   * Sets the message of the progress.
    *
-   * @param msg progress messasge
+   * @param msg progress message
    */
   @Override
   public void setProgressMessage(final String msg) {
@@ -145,7 +145,7 @@ public class SGStatusBar extends JPanel implements SGIConstants, SGIProgressCont
   void drawPosition(final float x, final float y) {
     final DecimalFormat df = new DecimalFormat("0.0");
     final String strPos = df.format(x) + " : " + df.format(y);
-    this.mPositionPanal.setText(strPos);
+    this.mPositionPanel.setText(strPos);
     this.repaint();
   }
 

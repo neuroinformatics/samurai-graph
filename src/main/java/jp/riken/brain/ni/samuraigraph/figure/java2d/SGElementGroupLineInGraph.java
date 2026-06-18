@@ -15,11 +15,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import org.w3c.dom.Element;
 
-/**
- * A group of lines in the graph object.
- *
- * @author kuromaru
- */
+/** A group of lines in the graph object. */
 public class SGElementGroupLineInGraph extends SGElementGroupLineForData
     implements SGIElementGroupSXYInGraph, SGIStrokeEditDialogObserver {
 

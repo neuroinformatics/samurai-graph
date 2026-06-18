@@ -29,7 +29,7 @@ public interface SGIApplicationTextConstants {
 
   public static final String MSG_DISCARD_WITHOUT_SAVING = "Discard without saving";
 
-  public static final String MSG_UNKNOWN_ERROR_OCCURED = "Unknown error occured";
+  public static final String MSG_UNKNOWN_ERROR_OCCURRED = "Unknown error occurred";
 
   /** Error message for the values out of range in a HDF5 file. */
   public static final String MSG_HDF5_VALUES_OUT_OF_RANGE =

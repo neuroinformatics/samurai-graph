@@ -168,23 +168,23 @@ public class SGPaintUtility implements SGIPaintConstant {
           paint.setPatternIndex(typeIndex.intValue());
         }
       }
-      SGGradationPaint gpaint = new SGGradationPaint();
+      SGGradationPaint gPaint = new SGGradationPaint();
       if (null != gradationColor1 && null != gradationColor2) {
-        gpaint.setColors(new Color[] {gradationColor1, gradationColor2});
+        gPaint.setColors(new Color[] {gradationColor1, gradationColor2});
       }
       if (null != gradationDirection) {
         Integer directionIndex = SGGradationPaint.getDirectionIndex(gradationDirection);
         if (null != directionIndex) {
-          gpaint.setDirection(directionIndex.intValue());
+          gPaint.setDirection(directionIndex.intValue());
         }
       }
       if (null != gradationOrder) {
         Integer orderIndex = SGGradationPaint.getOrderIndex(gradationOrder);
         if (null != orderIndex) {
-          gpaint.setOrder(orderIndex.intValue());
+          gPaint.setOrder(orderIndex.intValue());
         }
       }
-      paint.setGradationPaint(gpaint);
+      paint.setGradationPaint(gPaint);
 
       Integer paintStyleIndex = SGSelectablePaint.getStyleIndex(paintStyle);
       if (null != paintStyleIndex) {

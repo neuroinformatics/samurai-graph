@@ -1005,7 +1005,7 @@ public class SGDataViewerDialog extends SGDialog {
     this.mTable.getTableHeader().addMouseMotionListener(l);
   }
 
-  public void addHilightChangedActionListener(ActionListener l) {
+  public void addHighlightChangedActionListener(ActionListener l) {
     this.mHighlightDataCheckBox.addActionListener(l);
   }
 
@@ -1013,7 +1013,7 @@ public class SGDataViewerDialog extends SGDialog {
     return this.mHideEmptyCellsCheckBox.isSelected();
   }
 
-  public boolean isHilighting() {
+  public boolean isHighlighting() {
     return this.mHighlightDataCheckBox.isSelected();
   }
 

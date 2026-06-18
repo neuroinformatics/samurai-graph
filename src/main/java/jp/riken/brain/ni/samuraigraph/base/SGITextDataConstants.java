@@ -1,13 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-/**
- * An interface that declares static constants for text data.
- *
- * @author kuromaru
- */
+/** An interface that declares static constants for text data. */
 public interface SGITextDataConstants {
 
-  public static final String DOUBLE_QUATE = "\""; // $NON-NLS-1$
+  public static final String DOUBLE_QUOTE = "\""; // $NON-NLS-1$
 
   public static final String WHITE_SPACE = " \t\n\r\f"; // $NON-NLS-1$
 
@@ -15,7 +11,7 @@ public interface SGITextDataConstants {
 
   public static final int SEPARATOR_LEN = 1;
 
-  public static final int DOUBLE_QUATE_LEN = 1;
+  public static final int DOUBLE_QUOTE_LEN = 1;
 
   /** A text string that denotes a value "Not a number". */
   public static final String NOT_A_NUMBER_VALUE = "NaN";

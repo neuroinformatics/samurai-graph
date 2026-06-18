@@ -2671,23 +2671,23 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       List<SGNetCDFVariable> timeList = new ArrayList<SGNetCDFVariable>();
       List<SGNetCDFVariable> indexList = new ArrayList<SGNetCDFVariable>();
       for (SGData data : dataList) {
-        SGSXYNetCDFMultipleData dataMult = (SGSXYNetCDFMultipleData) data;
-        SGNetCDFVariable[] xVars = dataMult.getXVariables();
-        SGNetCDFVariable[] yVars = dataMult.getYVariables();
-        SGNetCDFVariable[] leVars = dataMult.getLowerErrorVariables();
-        SGNetCDFVariable[] ueVars = dataMult.getUpperErrorVariables();
-        SGNetCDFVariable[] ehVars = dataMult.getErrorHolderVariables();
-        SGNetCDFVariable[] tlVars = dataMult.getTickLabelVariables();
-        SGNetCDFVariable[] thVars = dataMult.getTickLabelHolderVariables();
-        SGNetCDFVariable timeVar = dataMult.getTimeVariable();
-        SGNetCDFVariable indexVar = dataMult.getIndexVariable();
+        SGSXYNetCDFMultipleData dataMulti = (SGSXYNetCDFMultipleData) data;
+        SGNetCDFVariable[] xVars = dataMulti.getXVariables();
+        SGNetCDFVariable[] yVars = dataMulti.getYVariables();
+        SGNetCDFVariable[] leVars = dataMulti.getLowerErrorVariables();
+        SGNetCDFVariable[] ueVars = dataMulti.getUpperErrorVariables();
+        SGNetCDFVariable[] ehVars = dataMulti.getErrorHolderVariables();
+        SGNetCDFVariable[] tlVars = dataMulti.getTickLabelVariables();
+        SGNetCDFVariable[] thVars = dataMulti.getTickLabelHolderVariables();
+        SGNetCDFVariable timeVar = dataMulti.getTimeVariable();
+        SGNetCDFVariable indexVar = dataMulti.getIndexVariable();
         for (int ii = 0; ii < xVars.length; ii++) {
           xList.add(xVars[ii]);
         }
         for (int ii = 0; ii < yVars.length; ii++) {
           yList.add(yVars[ii]);
         }
-        if (dataMult.isErrorBarAvailable()) {
+        if (dataMulti.isErrorBarAvailable()) {
           for (int ii = 0; ii < leVars.length; ii++) {
             leList.add(leVars[ii]);
           }
@@ -2698,7 +2698,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
             ehList.add(ehVars[ii]);
           }
         }
-        if (dataMult.isTickLabelAvailable()) {
+        if (dataMulti.isTickLabelAvailable()) {
           for (int ii = 0; ii < tlVars.length; ii++) {
             tlList.add(tlVars[ii]);
           }

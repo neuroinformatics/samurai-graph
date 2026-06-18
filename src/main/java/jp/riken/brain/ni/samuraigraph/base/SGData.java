@@ -5,7 +5,7 @@ import java.util.Map;
 import org.w3c.dom.Element;
 
 /** The base class of all data classes. */
-public abstract class SGData implements Cloneable, SGICopiable, SGIData {
+public abstract class SGData implements Cloneable, SGICopyable, SGIData {
 
   /** The data source. */
   private SGIDataSource mDataSource = null;

@@ -130,7 +130,7 @@ public interface SGIFigureElement
   /**
    * Synchronize this component to the other component. <br>
    *
-   * @param element - the SGFigureElement object whose property has chenged.
+   * @param element - the SGFigureElement object whose property has changed.
    * @param msg - message
    * @return true:succeeded, false:failed
    */
@@ -354,14 +354,14 @@ public interface SGIFigureElement
    *
    * @return list of copied objects
    */
-  public List<SGICopiable> getCopiedObjectsList();
+  public List<SGICopyable> getCopiedObjectsList();
 
   /**
-   * Cut focused copiable objects.
+   * Cut focused copyable objects.
    *
    * @return a list of cut objects
    */
-  public List<SGICopiable> cutFocusedObjects();
+  public List<SGICopyable> cutFocusedObjects();
 
   /**
    * Paste the objects.
@@ -369,7 +369,7 @@ public interface SGIFigureElement
    * @param list of the objects to be pasted
    * @return true:succeeded, false:failed
    */
-  public boolean paste(List<SGICopiable> list);
+  public boolean paste(List<SGICopyable> list);
 
   /**
    * Move the focused objects to the head or the tail of the list

@@ -44,15 +44,15 @@ public class SGSplashWindow extends JWindow {
     imgPanel.setLayout(null);
 
     // set text and position of the version number label
-    final String vertext = "Version " + version;
-    JLabel vLabel = new JLabel(vertext);
+    final String verText = "Version " + version;
+    JLabel vLabel = new JLabel(verText);
     final Font font = new Font("Serif", 1, 14);
     vLabel.setFont(font);
     final Dimension dim = vLabel.getPreferredSize();
     final int vw = dim.width;
     final int vh = dim.height;
-    final int vx = verpos_r - vw;
-    final int vy = (verpos_b - verpos_t - vh) / 2 + verpos_t;
+    final int vx = verPosR - vw;
+    final int vy = (verPosB - verPosT - vh) / 2 + verPosT;
     vLabel.setBounds(vx, vy, vw, vh);
 
     // creates a progress bar
@@ -76,13 +76,13 @@ public class SGSplashWindow extends JWindow {
     this.getContentPane().add(imgPanel);
   }
 
-  private static final int verpos_r = 375; // right position of the version
+  private static final int verPosR = 375; // right position of the version
   // label
 
-  private static final int verpos_t = 125; // top position of the version
+  private static final int verPosT = 125; // top position of the version
   // label
 
-  private static final int verpos_b = 155; // bottom position of the
+  private static final int verPosB = 155; // bottom position of the
 
   // version label
 

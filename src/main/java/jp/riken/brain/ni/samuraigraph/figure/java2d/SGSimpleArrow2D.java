@@ -9,11 +9,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementSymbol;
 import jp.riken.brain.ni.samuraigraph.figure.SGStroke;
 
-/**
- * The base class for a simple arrow with Java2D.
- *
- * @author kuromaru
- */
+/** The base class for a simple arrow with Java2D. */
 public abstract class SGSimpleArrow2D extends SGDrawingElementArrow2D {
 
   /** The start point. */

@@ -159,7 +159,7 @@ public interface SGIScaleConstants extends SGILineAndStringConstants {
 
   public static final String COM_SCALE_Y_AXIS_LENGTH = "YAxisLength";
 
-  public static final String COM_SCALE_Y_AXIS_TITLE_LEFTSIDE = "YAxisTitleLeftside";
+  public static final String COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE = "YAxisTitleLeftside";
 
   public static final String COM_SCALE_Y_AXIS_TITLE_TEXT = "YAxisTitleText";
 

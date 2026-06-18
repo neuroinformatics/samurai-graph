@@ -55,7 +55,7 @@ public class SGDate implements Comparable<SGDate> {
 
   // static initializer
   static {
-    final Calendar cal = SGDateUtility.getUTCCalendarInstacne();
+    final Calendar cal = SGDateUtility.getUTCCalendarInstance();
     for (String f : DEFAULT_DATE_FORMAT_ARRAY) {
       DateFormat format = new SimpleDateFormat(f);
       format.setCalendar(cal);

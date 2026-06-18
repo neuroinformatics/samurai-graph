@@ -98,7 +98,7 @@ public class SGFigureCreator implements SGIFigureConstants {
       "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementSignificantDifference";
 
   private static final String CLASS_NAME_OF_TIMING_LINE_ELEMENT_3D =
-      "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementTimingLinet";
+      "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementTimingLine";
 
   private static final String CLASS_NAME_OF_SHAPE_ELEMENT_3D =
       "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementShape";
@@ -123,7 +123,7 @@ public class SGFigureCreator implements SGIFigureConstants {
   private static final String PROPERTY_NAME_OF_SIGNIFICANT_DIFFERENCE_ELEMENT =
       "SGSignificantDifferenceElement";
 
-  private static final String PROPERTY_NAME_OF_TIMING_LINE_ELEMENT = "SGFigureElementTimingLinet";
+  private static final String PROPERTY_NAME_OF_TIMING_LINE_ELEMENT = "SGFigureElementTimingLine";
 
   private static final String PROPERTY_NAME_OF_SHAPE_ELEMENT = "SGFigureElementShape";
 

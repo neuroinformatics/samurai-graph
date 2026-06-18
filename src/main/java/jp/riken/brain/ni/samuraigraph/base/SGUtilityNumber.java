@@ -31,8 +31,8 @@ public class SGUtilityNumber implements SGIConstants {
       throw new IllegalArgumentException("d is not a number");
     }
 
-    final double absd = Math.abs(d);
-    final double log = Math.log10(absd);
+    final double abs = Math.abs(d);
+    final double log = Math.log10(abs);
     int order = (int) Math.floor(log);
     return order;
   }
@@ -777,7 +777,7 @@ public class SGUtilityNumber implements SGIConstants {
   public static String[] getStringArray(final double[] values, final int dp, final int exp) {
 
     if (dp < 0) {
-      throw new IllegalArgumentException("Decimal places must not be negatie: " + dp);
+      throw new IllegalArgumentException("Decimal places must not be negative: " + dp);
     }
 
     // create NumberFormat object

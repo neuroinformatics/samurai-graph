@@ -1,7 +1,9 @@
+/* spell-checker: disable */
+
 /* ------------------------------
  * CSVTokenizer.java
  * ------------------------------
- * (C)opyright 2003, abupon (Manabu Hashimoto)
+ * Copyright 2003, abupon (Manabu Hashimoto)
  * This class is based on the CSV tokenizer found at
  * http://sourceforge.net/projects/csvtokenizer/
  */
@@ -33,9 +35,9 @@ import java.util.NoSuchElementException;
  * <blockquote>
  *
  * <pre>
- * CSVTokenizer csvt = new CSVTokenizer(&quot;this,is,a,test&quot;);
- * while (csvt.hasMoreTokens()) {
- *     println(csvt.nextToken());
+ * CSVTokenizer tokenizer = new CSVTokenizer(&quot;this,is,a,test&quot;);
+ * while (tokenizer.hasMoreTokens()) {
+ *     println(tokenizer.nextToken());
  * }
  * </pre>
  *
@@ -170,36 +172,36 @@ public class SGCSVTokenizer implements Enumeration<SGCSVTokenizer.Token>, SGITex
     if (!this.hasMoreTokens()) {
       throw new NoSuchElementException();
     }
-    if (this.record.startsWith(SGCSVTokenizer.DOUBLE_QUATE, this.currentIndex)) {
-      String rec = this.record.substring(this.currentIndex + SGCSVTokenizer.DOUBLE_QUATE_LEN);
+    if (this.record.startsWith(SGCSVTokenizer.DOUBLE_QUOTE, this.currentIndex)) {
+      String rec = this.record.substring(this.currentIndex + SGCSVTokenizer.DOUBLE_QUOTE_LEN);
       //            token = ""; //$NON-NLS-1$
       isText = true;
       for (; ; ) {
-        end = rec.indexOf(SGCSVTokenizer.DOUBLE_QUATE);
+        end = rec.indexOf(SGCSVTokenizer.DOUBLE_QUOTE);
         if (end < 0) {
           throw new IllegalArgumentException("Illegal format"); // $NON-NLS-1$
         }
-        if (!rec.startsWith(SGCSVTokenizer.DOUBLE_QUATE, end + 1)) {
+        if (!rec.startsWith(SGCSVTokenizer.DOUBLE_QUOTE, end + 1)) {
           sb.append(rec.substring(0, end));
           //                    token = token + rec.substring(0, end);
           break;
         }
         sb.append(rec.substring(0, end + 1));
         //                token = token + rec.substring(0, end + 1);
-        rec = rec.substring(end + SGCSVTokenizer.DOUBLE_QUATE_LEN * 2);
+        rec = rec.substring(end + SGCSVTokenizer.DOUBLE_QUOTE_LEN * 2);
         this.currentIndex++;
       }
       // don't trim string
       //            this.currentIndex += token.length()
-      //                    + SGCSVTokenizer.DOUBLE_QUATE_LEN * 2;
-      this.currentIndex += sb.length() + SGCSVTokenizer.DOUBLE_QUATE_LEN * 2;
+      //                    + SGCSVTokenizer.DOUBLE_QUOTE_LEN * 2;
+      this.currentIndex += sb.length() + SGCSVTokenizer.DOUBLE_QUOTE_LEN * 2;
       if (this.is_csv_mode) {
         this.currentIndex = nextTokenIndexOf(this.currentIndex);
       }
       this.currentIndex += SGCSVTokenizer.SEPARATOR_LEN;
       this.currentIndex = nextTokenIndexOf(this.currentIndex);
       // this.currentIndex += (token.length()
-      // + SGCSVTokenizer.DOUBLE_QUATE_LEN * 2 +
+      // + SGCSVTokenizer.DOUBLE_QUOTE_LEN * 2 +
       // SGCSVTokenizer.SEPARATOR_LEN);
       // this.currentIndex = nextTokenIndexOf(this.currentIndex);
       // if (!this.is_csv_mode) {
@@ -323,11 +325,7 @@ public class SGCSVTokenizer implements Enumeration<SGCSVTokenizer.Token>, SGITex
     return nextToken();
   }
 
-  /**
-   * A token class.
-   *
-   * @author kuromaru
-   */
+  /** A token class. */
   public static class Token {
 
     // a text string
@@ -377,15 +375,15 @@ public class SGCSVTokenizer implements Enumeration<SGCSVTokenizer.Token>, SGITex
   // String expect;
   // String result;
 
-  // str = "1, \t 2, \"\" 3, 4, \"a, \"\"\\hoge\"";
-  // str = "1, \t 2, \"\" 3, b 4, a hoge";
+  // str = "1, \t 2, \"\" 3, 4, \"a, \"\"\\foobar\"";
+  // str = "1, \t 2, \"\" 3, b 4, a foobar";
   // System.out.println("String : [" + str + "]");
-  // SGCSVTokenizer csvt = new SGCSVTokenizer(str, true);
+  // SGCSVTokenizer tokenizer = new SGCSVTokenizer(str, true);
   // i = 1;
-  // while (csvt.hasMoreTokens()) {
+  // while (tokenizer.hasMoreTokens()) {
   // try {
   // expect = String.valueOf(i++);
-  // result = csvt.nextToken();
+  // result = tokenizer.nextToken();
   // System.out.print(expect + ": [");
   // System.out.println(result + "]");
   // } catch (NoSuchElementException e) {
@@ -439,9 +437,9 @@ public class SGCSVTokenizer implements Enumeration<SGCSVTokenizer.Token>, SGITex
 
     System.out.println("#" + str + "#");
 
-    SGCSVTokenizer csvt = new SGCSVTokenizer(str, true);
-    while (csvt.hasMoreTokens()) {
-      Token token = csvt.nextToken();
+    SGCSVTokenizer tokenizer = new SGCSVTokenizer(str, true);
+    while (tokenizer.hasMoreTokens()) {
+      Token token = tokenizer.nextToken();
       System.out.println("*" + token.getString() + "*");
     }
   }

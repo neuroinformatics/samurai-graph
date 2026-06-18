@@ -512,14 +512,14 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       leVar = this.initVariable(mdFile, leInfo);
       ueVar = this.initVariable(mdFile, ueInfo);
       String hName = SGDataUtility.getHolderName(leInfo);
-      ehVar = this.getHoderVariable(hName, xVar, yVar);
+      ehVar = this.getHolderVariable(hName, xVar, yVar);
     }
     SGMDArrayVariable tlVar = null;
     SGMDArrayVariable thVar = null;
     if (tlInfo != null) {
       tlVar = this.initVariable(mdFile, tlInfo);
       String hName = SGDataUtility.getHolderName(tlInfo);
-      thVar = this.getHoderVariable(hName, xVar, yVar);
+      thVar = this.getHolderVariable(hName, xVar, yVar);
     }
 
     final Integer xPickUpDim =
@@ -556,7 +556,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     this.initTimeStride();
   }
 
-  private SGMDArrayVariable getHoderVariable(
+  private SGMDArrayVariable getHolderVariable(
       String hName, SGMDArrayVariable xVar, SGMDArrayVariable yVar) {
     SGMDArrayVariable hVar = null;
     if (xVar == null) {
@@ -2010,8 +2010,8 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     // checks the length
     int dimLen = -1;
     for (SGData data : dataList) {
-      SGSXYMDArrayMultipleData dataMult = (SGSXYMDArrayMultipleData) data;
-      final int len = dataMult.getAllPointsNumber();
+      SGSXYMDArrayMultipleData dataMulti = (SGSXYMDArrayMultipleData) data;
+      final int len = dataMulti.getAllPointsNumber();
       if (dimLen == -1) {
         dimLen = len;
       } else {
@@ -2098,22 +2098,22 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       List<SGMDArrayVariable> tlList = new ArrayList<SGMDArrayVariable>();
       List<SGMDArrayVariable> thList = new ArrayList<SGMDArrayVariable>();
       for (SGData data : dataList) {
-        SGSXYMDArrayMultipleData dataMult = (SGSXYMDArrayMultipleData) data;
+        SGSXYMDArrayMultipleData dataMulti = (SGSXYMDArrayMultipleData) data;
 
-        SGMDArrayVariable[] xVars = dataMult.getXVariables();
-        SGMDArrayVariable[] yVars = dataMult.getYVariables();
-        SGMDArrayVariable[] leVars = dataMult.getLowerErrorVariables();
-        SGMDArrayVariable[] ueVars = dataMult.getUpperErrorVariables();
-        SGMDArrayVariable[] ehVars = dataMult.getErrorHolderVariables();
-        SGMDArrayVariable[] tlVars = dataMult.getTickLabelVariables();
-        SGMDArrayVariable[] thVars = dataMult.getTickLabelHolderVariables();
+        SGMDArrayVariable[] xVars = dataMulti.getXVariables();
+        SGMDArrayVariable[] yVars = dataMulti.getYVariables();
+        SGMDArrayVariable[] leVars = dataMulti.getLowerErrorVariables();
+        SGMDArrayVariable[] ueVars = dataMulti.getUpperErrorVariables();
+        SGMDArrayVariable[] ehVars = dataMulti.getErrorHolderVariables();
+        SGMDArrayVariable[] tlVars = dataMulti.getTickLabelVariables();
+        SGMDArrayVariable[] thVars = dataMulti.getTickLabelHolderVariables();
         for (int ii = 0; ii < xVars.length; ii++) {
           xList.add(xVars[ii]);
         }
         for (int ii = 0; ii < yVars.length; ii++) {
           yList.add(yVars[ii]);
         }
-        if (dataMult.isErrorBarAvailable()) {
+        if (dataMulti.isErrorBarAvailable()) {
           for (int ii = 0; ii < leVars.length; ii++) {
             leList.add(leVars[ii]);
           }
@@ -2124,7 +2124,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
             ehList.add(ehVars[ii]);
           }
         }
-        if (dataMult.isTickLabelAvailable()) {
+        if (dataMulti.isTickLabelAvailable()) {
           for (int ii = 0; ii < tlVars.length; ii++) {
             tlList.add(tlVars[ii]);
           }

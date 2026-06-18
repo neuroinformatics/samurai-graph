@@ -88,26 +88,26 @@ public abstract class SGSingleFileChooserWizardDialog extends SGFileChooserWizar
   protected abstract JButton getFileChooserButton();
 
   /** */
-  public void dragEnter(final DropTargetDragEvent dtde) {
-    dtde.acceptDrag(DnDConstants.ACTION_COPY_OR_MOVE);
+  public void dragEnter(final DropTargetDragEvent event) {
+    event.acceptDrag(DnDConstants.ACTION_COPY_OR_MOVE);
   }
 
   /** */
-  public void dragExit(final DropTargetEvent dte) {}
+  public void dragExit(final DropTargetEvent event) {}
 
   /** */
-  public void dragOver(final DropTargetDragEvent dtde) {}
+  public void dragOver(final DropTargetDragEvent event) {}
 
   /**
    * Called when files are dropped onto this dialog. This method only sets the file path to the text
    * field.
    *
-   * @param dtde drop event
+   * @param event drop event
    */
-  public void drop(final DropTargetDropEvent dtde) {
+  public void drop(final DropTargetDropEvent event) {
 
     // get dropped file list
-    List<File> fileList = SGApplicationUtility.getDroppedFileList(dtde);
+    List<File> fileList = SGApplicationUtility.getDroppedFileList(event);
     if (fileList == null || fileList.size() == 0) {
       return;
     }
@@ -120,7 +120,7 @@ public abstract class SGSingleFileChooserWizardDialog extends SGFileChooserWizar
   }
 
   /** */
-  public void dropActionChanged(final DropTargetDragEvent dtde) {}
+  public void dropActionChanged(final DropTargetDragEvent event) {}
 
   //    /**
   //     * Called when the text field is edited.
@@ -141,8 +141,8 @@ public abstract class SGSingleFileChooserWizardDialog extends SGFileChooserWizar
   //    }
 
   @Override
-  public void actionPerformed(final ActionEvent e) {
-    Object source = e.getSource();
+  public void actionPerformed(final ActionEvent event) {
+    Object source = event.getSource();
     if (source.equals(this.getFileChooserButton())) {
       String inputFileName = this.getFileName();
       File inputFile = new File(inputFileName);
@@ -177,7 +177,7 @@ public abstract class SGSingleFileChooserWizardDialog extends SGFileChooserWizar
     }
 
     // calls the method of the super class
-    super.actionPerformed(e);
+    super.actionPerformed(event);
   }
 
   /**

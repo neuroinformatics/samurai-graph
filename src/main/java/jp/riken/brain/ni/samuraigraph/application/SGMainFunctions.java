@@ -670,7 +670,7 @@ class SGMainFunctions
   private SGFigureIDSelectionWizardDialog mFigureIDSelectionWizardDialog = null;
 
   /** A wizard dialog to select a single data file. */
-  private SGSingleDataFileChooserWizardDialog mSingleDataFileChooserWizardDilaog = null;
+  private SGSingleDataFileChooserWizardDialog mSingleDataFileChooserWizardDialog = null;
 
   /** A wizard dialog to select the file type. */
   private SGFileTypeSelectionWizardDialog mFileTypeSelectionWizardDialog = null;
@@ -711,7 +711,7 @@ class SGMainFunctions
 
     // common to all data types
     this.mFigureIDSelectionWizardDialog = new SGFigureIDSelectionWizardDialog(owner, true);
-    this.mSingleDataFileChooserWizardDilaog = new SGSingleDataFileChooserWizardDialog(owner, true);
+    this.mSingleDataFileChooserWizardDialog = new SGSingleDataFileChooserWizardDialog(owner, true);
     this.mDataTypeWizardDialog = new SGDataTypeWizardDialog(owner, true);
     this.mPlotTypeSelectionWizardDialog = new SGPlotTypeSelectionWizardDialog(owner, true);
 
@@ -739,11 +739,11 @@ class SGMainFunctions
 
     // sets the selected file name
     String path = this.getCurrentFileDirectory();
-    this.mSingleDataFileChooserWizardDilaog.setCurrentFile(path, null);
+    this.mSingleDataFileChooserWizardDialog.setCurrentFile(path, null);
 
     // add action listener
     this.mFigureIDSelectionWizardDialog.addActionListener(this);
-    this.mSingleDataFileChooserWizardDilaog.addActionListener(this);
+    this.mSingleDataFileChooserWizardDialog.addActionListener(this);
     this.mFileTypeSelectionWizardDialog.addActionListener(this);
     this.mDataTypeWizardDialog.addActionListener(this);
     this.mSDArrayDataSetupWizardDialog.addActionListener(this);
@@ -753,7 +753,7 @@ class SGMainFunctions
 
     // add window listener
     this.mFigureIDSelectionWizardDialog.addWindowListener(this);
-    this.mSingleDataFileChooserWizardDilaog.addWindowListener(this);
+    this.mSingleDataFileChooserWizardDialog.addWindowListener(this);
     this.mFileTypeSelectionWizardDialog.addWindowListener(this);
     this.mDataTypeWizardDialog.addWindowListener(this);
     this.mSDArrayDataSetupWizardDialog.addWindowListener(this);
@@ -763,7 +763,7 @@ class SGMainFunctions
 
     // packs the dialogs
     this.mFigureIDSelectionWizardDialog.pack();
-    this.mSingleDataFileChooserWizardDilaog.pack();
+    this.mSingleDataFileChooserWizardDialog.pack();
     this.mFileTypeSelectionWizardDialog.pack();
   }
 
@@ -778,25 +778,25 @@ class SGMainFunctions
       case DATA_ADDITION_TOOL_BAR:
         this.mFigureIDSelectionWizardDialog.setPrevious(null);
 
-        this.mFigureIDSelectionWizardDialog.setNext(this.mSingleDataFileChooserWizardDilaog);
-        this.mSingleDataFileChooserWizardDilaog.setPrevious(this.mFigureIDSelectionWizardDialog);
+        this.mFigureIDSelectionWizardDialog.setNext(this.mSingleDataFileChooserWizardDialog);
+        this.mSingleDataFileChooserWizardDialog.setPrevious(this.mFigureIDSelectionWizardDialog);
 
         if (dataTypeDialog != null) {
           if (isFileTypeDialogPrev) {
-            this.mSingleDataFileChooserWizardDilaog.setNext(this.mFileTypeSelectionWizardDialog);
+            this.mSingleDataFileChooserWizardDialog.setNext(this.mFileTypeSelectionWizardDialog);
             this.mFileTypeSelectionWizardDialog.setPrevious(
-                this.mSingleDataFileChooserWizardDilaog);
+                this.mSingleDataFileChooserWizardDialog);
 
             this.mFileTypeSelectionWizardDialog.setNext(dataTypeDialog);
             dataTypeDialog.setPrevious(this.mFileTypeSelectionWizardDialog);
           } else {
-            this.mSingleDataFileChooserWizardDilaog.setNext(dataTypeDialog);
-            dataTypeDialog.setPrevious(this.mSingleDataFileChooserWizardDilaog);
+            this.mSingleDataFileChooserWizardDialog.setNext(dataTypeDialog);
+            dataTypeDialog.setPrevious(this.mSingleDataFileChooserWizardDialog);
           }
         }
 
         // packs
-        this.mSingleDataFileChooserWizardDilaog.pack();
+        this.mSingleDataFileChooserWizardDialog.pack();
         if (dataTypeDialog != null) {
           dataTypeDialog.pack();
         }
@@ -2040,12 +2040,12 @@ class SGMainFunctions
       dg.showPrevious();
     } else if (command.equals(SGDialog.NEXT_BUTTON_TEXT)) {
       if (dg.equals(this.mFigureIDSelectionWizardDialog)) {
-        this.mSingleDataFileChooserWizardDilaog.setCurrentFile(
+        this.mSingleDataFileChooserWizardDialog.setCurrentFile(
             this.getCurrentFileDirectory(), null);
         dg.showNext();
-      } else if (dg.equals(this.mSingleDataFileChooserWizardDilaog)) {
-        if (this.mSingleDataFileChooserWizardDilaog.isLocalFileSelected()) {
-          String fileName = this.mSingleDataFileChooserWizardDilaog.getFileName();
+      } else if (dg.equals(this.mSingleDataFileChooserWizardDialog)) {
+        if (this.mSingleDataFileChooserWizardDialog.isLocalFileSelected()) {
+          String fileName = this.mSingleDataFileChooserWizardDialog.getFileName();
           File file = new File(fileName);
           String filePath = file.getAbsolutePath();
           FILE_TYPE fileType = SGApplicationUtility.identifyDataFileType(filePath);
@@ -2069,14 +2069,14 @@ class SGMainFunctions
             // for TXT, NetCDF-3 or MATLAB file
             if (FILE_TYPE.TXT_DATA.equals(fileType)) {
               if (this.toSDArrayDataTypeDialog(
-                      this.mSingleDataFileChooserWizardDilaog, this.mDataTypeWizardDialog, file)
+                      this.mSingleDataFileChooserWizardDialog, this.mDataTypeWizardDialog, file)
                   == false) {
                 return false;
               }
             } else if (FILE_TYPE.NETCDF_DATA.equals(fileType)
                 || FILE_TYPE.MATLAB_DATA.equals(fileType)) {
               if (this.toNetCDFOrMDArrayDataTypeDialog(
-                      this.mSingleDataFileChooserWizardDilaog, this.mDataTypeWizardDialog, file)
+                      this.mSingleDataFileChooserWizardDialog, this.mDataTypeWizardDialog, file)
                   == false) {
                 return false;
               }
@@ -2084,7 +2084,7 @@ class SGMainFunctions
           }
 
           // set to the file chooser because file path is due to be taken from file chooser dialog
-          this.mSingleDataFileChooserWizardDilaog.setSelectedFile(file);
+          this.mSingleDataFileChooserWizardDialog.setSelectedFile(file);
 
         } else {
           this.mDataTypeWizardDialog.setDataFileType(FILE_TYPE.NETCDF_DATA);
@@ -2101,9 +2101,9 @@ class SGMainFunctions
 
         FILE_TYPE fileType = this.mFileTypeSelectionWizardDialog.getSelectedFileType();
         if (FILE_TYPE.NETCDF_DATA.equals(fileType) || FILE_TYPE.HDF5_DATA.equals(fileType)) {
-          String fileName = this.mSingleDataFileChooserWizardDilaog.getFileName();
+          String fileName = this.mSingleDataFileChooserWizardDialog.getFileName();
           if (this.toNetCDFOrMDArrayDataTypeDialog(
-                  this.mSingleDataFileChooserWizardDilaog,
+                  this.mSingleDataFileChooserWizardDialog,
                   this.mDataTypeWizardDialog,
                   new File(fileName))
               == false) {
@@ -2122,7 +2122,7 @@ class SGMainFunctions
         FILE_TYPE dataFileType = this.mDataTypeWizardDialog.getDataFileType();
         if (FILE_TYPE.TXT_DATA.equals(dataFileType)) {
           final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
-          File f = this.mSingleDataFileChooserWizardDilaog.getSelectedFile();
+          File f = this.mSingleDataFileChooserWizardDialog.getSelectedFile();
           String path = f.getPath();
           if (this.makeTransition(
                   this.mDataTypeWizardDialog,
@@ -2136,8 +2136,8 @@ class SGMainFunctions
 
         } else if (FILE_TYPE.NETCDF_DATA.equals(dataFileType)) {
           final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
-          String fileName = this.mSingleDataFileChooserWizardDilaog.getFileName();
-          if (this.mSingleDataFileChooserWizardDilaog.isLocalFileSelected()) {
+          String fileName = this.mSingleDataFileChooserWizardDialog.getFileName();
+          if (this.mSingleDataFileChooserWizardDialog.isLocalFileSelected()) {
             if (this.makeTransition(
                     this.mDataTypeWizardDialog,
                     this.mNetCDFDataSetupWizardDialog,
@@ -2162,13 +2162,13 @@ class SGMainFunctions
             } else {
               SGUtility.showErrorMessageDialog(dg, ERRMSG_URL_OF_NETCDF, SGIConstants.TITLE_ERROR);
               this.mDataTypeWizardDialog.setVisible(false);
-              this.mSingleDataFileChooserWizardDilaog.setVisible(true);
+              this.mSingleDataFileChooserWizardDialog.setVisible(true);
             }
           }
         } else if (FILE_TYPE.HDF5_DATA.equals(dataFileType)
             || FILE_TYPE.MATLAB_DATA.equals(dataFileType)) {
           final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
-          String path = this.mSingleDataFileChooserWizardDilaog.getFileName();
+          String path = this.mSingleDataFileChooserWizardDialog.getFileName();
           String dataName = SGUtility.createDataNameBase(path);
           if (this.makeTransition(
                   this.mDataTypeWizardDialog,
@@ -2222,11 +2222,11 @@ class SGMainFunctions
     final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
 
     // data path
-    String filename = this.mSingleDataFileChooserWizardDilaog.getFileName();
+    String filename = this.mSingleDataFileChooserWizardDialog.getFileName();
     String path = filename;
-    if (this.mSingleDataFileChooserWizardDilaog.isLocalFileSelected()) {
+    if (this.mSingleDataFileChooserWizardDialog.isLocalFileSelected()) {
       // path of the local data file
-      File f = this.mSingleDataFileChooserWizardDilaog.getSelectedFile();
+      File f = this.mSingleDataFileChooserWizardDialog.getSelectedFile();
       path = f.getPath();
     }
 
@@ -2669,7 +2669,7 @@ class SGMainFunctions
     int length = -1;
     try {
       SDArrayFileParseResult result =
-          this.mDataCreator.parseFileComlumnType(
+          this.mDataCreator.parseFileColumnType(
               pathName, dataType, isPropertyFileData, versionNumber);
       if (result == null) {
         return null;
@@ -3248,7 +3248,7 @@ class SGMainFunctions
     this.mFigureIDSelectionWizardDialog.setVisible(true);
 
     // update the selected file name
-    File f = this.mSingleDataFileChooserWizardDilaog.getSelectedFile();
+    File f = this.mSingleDataFileChooserWizardDialog.getSelectedFile();
     if (f == null) {
       return false;
     }
@@ -3535,7 +3535,7 @@ class SGMainFunctions
   /** Returns true if given object is a wizard dialog for data-addition. */
   private boolean isDataAdditionDialog(Object obj) {
     return obj.equals(this.mFigureIDSelectionWizardDialog)
-        || obj.equals(this.mSingleDataFileChooserWizardDilaog)
+        || obj.equals(this.mSingleDataFileChooserWizardDialog)
         || obj.equals(this.mFileTypeSelectionWizardDialog)
         || obj.equals(this.mDataTypeWizardDialog)
         || obj.equals(this.mSDArrayDataSetupWizardDialog)
@@ -3739,7 +3739,7 @@ class SGMainFunctions
   // Exit the application.
   void exitApplication(final int status) {
     if (status != 0) {
-      String msg = "A fatal error has occured.\n" + "The current application will be terminated.";
+      String msg = "A fatal error has occurred.\n" + "The current application will be terminated.";
       String title = " Forced termination";
       SGUtility.showMessageDialog(null, msg, title, JOptionPane.ERROR_MESSAGE);
     }
@@ -4019,7 +4019,7 @@ class SGMainFunctions
   }
 
   // Updates the information of the window in the preferences.
-  void updatWindowInfoInPreferences(final SGDrawingWindow wnd) {
+  void updateWindowInfoInPreferences(final SGDrawingWindow wnd) {
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
 
     // updates the preferences
@@ -4793,7 +4793,7 @@ class SGMainFunctions
   }
 
   /**
-   * A wrapped data in a figure. This class object is used in paste and duplication of fiugres. The
+   * A wrapped data in a figure. This class object is used in paste and duplication of figures. The
    * attribute <code>serialFigureNo</code> is not the figure ID but the serial number of copied
    * figures.
    */
@@ -4893,7 +4893,7 @@ class SGMainFunctions
         continue;
       }
 
-      // start or end a block comment only when the file input sream is opened
+      // start or end a block comment only when the file input stream is opened
       if (inFile) {
         //              if (tLine.startsWith(BLOCK_COMMENT_START)) {
         //              this.mBlockComment = true;
@@ -4909,32 +4909,32 @@ class SGMainFunctions
         //            }
 
         // remove block comment.
-        int spos = tLine.indexOf(BLOCK_COMMENT_START);
-        int epos = tLine.indexOf(BLOCK_COMMENT_END);
-        if (this.mBlockComment && ((spos < 0 && epos >= 0) || (epos >= 0 && spos > epos + 1))) {
+        int sPos = tLine.indexOf(BLOCK_COMMENT_START);
+        int ePos = tLine.indexOf(BLOCK_COMMENT_END);
+        if (this.mBlockComment && ((sPos < 0 && ePos >= 0) || (ePos >= 0 && sPos > ePos + 1))) {
           // "... */" in block comment
-          tLine = tLine.substring(epos + 2);
+          tLine = tLine.substring(ePos + 2);
           this.mBlockComment = false;
-          spos = tLine.indexOf(BLOCK_COMMENT_START);
-          epos = tLine.indexOf(BLOCK_COMMENT_END);
+          sPos = tLine.indexOf(BLOCK_COMMENT_START);
+          ePos = tLine.indexOf(BLOCK_COMMENT_END);
         }
 
         if (this.mBlockComment) {
           continue;
         }
 
-        while (spos >= 0 && epos >= 1 && spos + 1 < epos) {
+        while (sPos >= 0 && ePos >= 1 && sPos + 1 < ePos) {
           //   "/* ... */"
-          tLine = tLine.substring(0, spos) + tLine.substring(epos + 2);
-          spos = tLine.indexOf(BLOCK_COMMENT_START);
-          epos = tLine.indexOf(BLOCK_COMMENT_END);
+          tLine = tLine.substring(0, sPos) + tLine.substring(ePos + 2);
+          sPos = tLine.indexOf(BLOCK_COMMENT_START);
+          ePos = tLine.indexOf(BLOCK_COMMENT_END);
         }
 
-        spos = tLine.indexOf(BLOCK_COMMENT_START);
-        if (spos >= 0) {
+        sPos = tLine.indexOf(BLOCK_COMMENT_START);
+        if (sPos >= 0) {
           // "/* ..."
           this.mBlockComment = true;
-          tLine = tLine.substring(0, spos);
+          tLine = tLine.substring(0, sPos);
         }
         tLine = tLine.trim();
         if (tLine.length() == 0) {
@@ -6372,7 +6372,7 @@ class SGMainFunctions
               setDataSelectedValues(dg, figureIdMap);
             }
           });
-      dg.addHilightChangedActionListener(
+      dg.addHighlightChangedActionListener(
           new ActionListener() {
 
             @Override

@@ -40,7 +40,7 @@ public class SGDataPluginOutput implements Cloneable {
     }
   }
 
-  public SGDataBuffer[] getDataBufffers() {
+  public SGDataBuffer[] getDataBuffers() {
     return this.mDataBuffers.clone();
   }
 

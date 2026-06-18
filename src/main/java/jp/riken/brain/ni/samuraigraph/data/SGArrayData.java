@@ -429,7 +429,7 @@ public abstract class SGArrayData extends SGData
    */
   public abstract String getToolTipTextNotSpatiallyVaried();
 
-  // Returns true if NaN is assigned by fill value and valu range.
+  // Returns true if NaN is assigned by fill value and value range.
   protected boolean isNaNAssignedInvalidValue(
       final int col, final int row, String columnType, final double d) {
     if (Double.isNaN(d)) {

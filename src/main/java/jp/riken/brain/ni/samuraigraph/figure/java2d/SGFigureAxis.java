@@ -259,7 +259,7 @@ class SGFigureAxis extends SGAxisElement {
    */
   protected boolean setLocationOfScaleNumbers() {
     final int loc = this.getLocationInPlane();
-    final boolean invcoord = this.isInvertCoordinates();
+    final boolean invCoord = this.isInvertCoordinates();
     final float gx = this.mAxisElement.getGraphRectX();
     final float gy = this.mAxisElement.getGraphRectY();
     final float gw = this.mAxisElement.getGraphRectWidth();
@@ -295,7 +295,7 @@ class SGFigureAxis extends SGAxisElement {
       float y;
       switch (loc) {
         case SGIFigureElementAxis.AXIS_HORIZONTAL_1: // bottom
-          if (invcoord) {
+          if (invCoord) {
             x =
                 (float)
                     (gx
@@ -314,7 +314,7 @@ class SGFigureAxis extends SGAxisElement {
           y = gy + gh + spaceLN - this.getMagnifiedShift();
           break;
         case SGIFigureElementAxis.AXIS_HORIZONTAL_2: // top
-          if (invcoord) {
+          if (invCoord) {
             x =
                 (float)
                     (gx
@@ -333,7 +333,7 @@ class SGFigureAxis extends SGAxisElement {
           y = gy - spaceLN - (float) rect.getHeight() + this.getMagnifiedShift();
           break;
         case SGIFigureElementAxis.AXIS_VERTICAL_1: // left
-          if (invcoord) {
+          if (invCoord) {
             y =
                 (float)
                     (gy
@@ -354,7 +354,7 @@ class SGFigureAxis extends SGAxisElement {
           x = gx - spaceLN - (float) rect.getWidth() + this.getMagnifiedShift();
           break;
         case SGIFigureElementAxis.AXIS_VERTICAL_2: // right
-          if (invcoord) {
+          if (invCoord) {
             y =
                 (float)
                     (gy
@@ -618,7 +618,7 @@ class SGFigureAxis extends SGAxisElement {
     final float gw = this.mAxisElement.getGraphRectWidth();
     final float gh = this.mAxisElement.getGraphRectHeight();
     final float mag = this.mAxisElement.getMagnification();
-    final boolean invcoord = this.isInvertCoordinates();
+    final boolean invCoord = this.isInvertCoordinates();
     double min;
     double max;
     double valueInScale;
@@ -646,7 +646,7 @@ class SGFigureAxis extends SGAxisElement {
     final double range = max - min;
     switch (loc) {
       case SGIFigureElementAxis.AXIS_HORIZONTAL_1: // bottom
-        if (invcoord) {
+        if (invCoord) {
           x = gx + gw * (max - valueInScale) / range;
         } else {
           x = gx + gw * (valueInScale - min) / range;
@@ -661,7 +661,7 @@ class SGFigureAxis extends SGAxisElement {
         end = new SGTuple2f((float) x, (float) yEnd);
         break;
       case SGIFigureElementAxis.AXIS_HORIZONTAL_2: // top
-        if (invcoord) {
+        if (invCoord) {
           x = gx + gw * (max - valueInScale) / range;
         } else {
           x = gx + gw * (valueInScale - min) / range;
@@ -676,7 +676,7 @@ class SGFigureAxis extends SGAxisElement {
         end = new SGTuple2f((float) x, (float) yEnd);
         break;
       case SGIFigureElementAxis.AXIS_VERTICAL_1: // left
-        if (invcoord) {
+        if (invCoord) {
           y = gy + gh * (1.0 - (max - valueInScale) / range);
         } else {
           y = gy + gh * (1.0 - (valueInScale - min) / range);
@@ -691,7 +691,7 @@ class SGFigureAxis extends SGAxisElement {
         end = new SGTuple2f((float) xEnd, (float) y);
         break;
       case SGIFigureElementAxis.AXIS_VERTICAL_2: // right
-        if (invcoord) {
+        if (invCoord) {
           y = gy + gh * (1.0 - (max - valueInScale) / range);
         } else {
           y = gy + gh * (1.0 - (valueInScale - min) / range);
@@ -731,7 +731,7 @@ class SGFigureAxis extends SGAxisElement {
       case AXIS_VERTICAL_1:
       case AXIS_VERTICAL_2:
         // vertical axes
-        range = this.dragScaleNumberPerpendiculer(e, line);
+        range = this.dragScaleNumberPerpendicular(e, line);
         break;
       default:
         throw new Error("Invalid location: " + loc);
@@ -753,7 +753,7 @@ class SGFigureAxis extends SGAxisElement {
       case AXIS_VERTICAL_1:
       case AXIS_VERTICAL_2:
         // vertical axes
-        range = this.dragScaleLinePerpendiculer(e, line);
+        range = this.dragScaleLinePerpendicular(e, line);
         break;
       default:
         throw new Error("Invalid location: " + loc);

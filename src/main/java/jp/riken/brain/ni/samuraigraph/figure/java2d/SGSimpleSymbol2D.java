@@ -79,7 +79,7 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol2D {
   /**
    * Sets the line color.
    *
-   * @param color the line colot to set
+   * @param color the line color to set
    * @return true if succeeded
    */
   public boolean setLineColor(final Color color) {

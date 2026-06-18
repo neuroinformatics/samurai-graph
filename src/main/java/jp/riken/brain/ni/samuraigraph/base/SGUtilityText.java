@@ -418,10 +418,10 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
       return false;
     }
 
-    SGCSVTokenizer csvt = new SGCSVTokenizer(str, isDataFile);
-    while (csvt.hasMoreTokens()) {
+    SGCSVTokenizer tokenizer = new SGCSVTokenizer(str, isDataFile);
+    while (tokenizer.hasMoreTokens()) {
       try {
-        Token result = csvt.nextToken();
+        Token result = tokenizer.nextToken();
         tokenList.add(result);
       } catch (NoSuchElementException e) {
       }
@@ -1022,11 +1022,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     return doc;
   }
 
-  /**
-   * property entity resolver
-   *
-   * @author okumura
-   */
+  /** property entity resolver */
   private static class PropertyEntityResolver implements EntityResolver {
     public InputSource resolveEntity(final String publicId, final String systemId)
         throws SAXException, IOException {
@@ -1760,10 +1756,10 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
 
       // tokenize the line
       tokenList.clear();
-      SGCSVTokenizer csvt = new SGCSVTokenizer(line, true);
-      while (csvt.hasMoreTokens()) {
+      SGCSVTokenizer tokenizer = new SGCSVTokenizer(line, true);
+      while (tokenizer.hasMoreTokens()) {
         try {
-          Token result = csvt.nextToken();
+          Token result = tokenizer.nextToken();
           tokenList.add(result);
         } catch (NoSuchElementException e) {
         }
@@ -1899,10 +1895,10 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * @return
    */
   public static String[][] readStringMaps(final String str) {
-    String[] uncsv = str.split(",");
-    String[][] result = new String[uncsv.length][2];
-    for (int i = 0; i < uncsv.length; i++) {
-      String[] unequal = uncsv[i].split("=");
+    String[] unCsv = str.split(",");
+    String[][] result = new String[unCsv.length][2];
+    for (int i = 0; i < unCsv.length; i++) {
+      String[] unequal = unCsv[i].split("=");
       if (unequal.length >= 2) {
         result[i][0] = unequal[0].trim();
         result[i][1] = unequal[1].trim();
@@ -2251,10 +2247,10 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     }
     UniversalDetector detector = new UniversalDetector(null);
     byte[] buf = new byte[4096];
-    int nread = -1;
+    int nRead = -1;
     try {
-      while ((nread = fis.read(buf)) > 0 && !detector.isDone()) {
-        detector.handleData(buf, 0, nread);
+      while ((nRead = fis.read(buf)) > 0 && !detector.isDone()) {
+        detector.handleData(buf, 0, nRead);
       }
     } catch (IOException e) {
       return null;

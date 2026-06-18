@@ -4,11 +4,7 @@ import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
 
-/**
- * The original button class.
- *
- * @author kuromaru
- */
+/** The original button class. */
 public class SGButton extends JButton {
 
   /** Serial Version UID */

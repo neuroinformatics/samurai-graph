@@ -2,9 +2,7 @@ package jp.riken.brain.ni.samuraigraph.base;
 
 import java.awt.Color;
 
-/**
- * @author okumura
- */
+/** Client panel interface. */
 public interface SGIClientPanel {
 
   public float getPaperWidth(final String unit);

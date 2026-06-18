@@ -45,25 +45,25 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
   public abstract float getY();
 
   /**
-   * Returns the location of this recgtangle.
+   * Returns the location of this rectangle.
    *
-   * @return the location of this recgtangle
+   * @return the location of this rectangle
    */
   public SGTuple2f getLocation() {
     return new SGTuple2f(this.getX(), this.getY());
   }
 
   /**
-   * Returns the width of this recgtangle.
+   * Returns the width of this rectangle.
    *
-   * @return the width of this recgtangle
+   * @return the width of this rectangle
    */
   public abstract float getWidth();
 
   /**
-   * Returns the height of this recgtangle.
+   * Returns the height of this rectangle.
    *
-   * @return the height of this recgtangle
+   * @return the height of this rectangle
    */
   public abstract float getHeight();
 

@@ -1059,12 +1059,12 @@ public class SGSXYNetCDFData extends SGNetCDFData
 
     SGNetCDFVariable ehVar = null;
     if (lCol != null && uCol != null) {
-      Integer ehle = SGDataUtility.getColumnIndexOfAppendedColumnTitle(lCol, this);
-      Integer ehue = SGDataUtility.getColumnIndexOfAppendedColumnTitle(uCol, this);
-      if (ehle == null || ehue == null || ehle.equals(ehue) == false) {
+      Integer ehLe = SGDataUtility.getColumnIndexOfAppendedColumnTitle(lCol, this);
+      Integer ehUe = SGDataUtility.getColumnIndexOfAppendedColumnTitle(uCol, this);
+      if (ehLe == null || ehUe == null || ehLe.equals(ehUe) == false) {
         return false;
       }
-      ehVar = varList.get(ehle.intValue());
+      ehVar = varList.get(ehLe.intValue());
     }
 
     SGNetCDFVariable thVar = null;

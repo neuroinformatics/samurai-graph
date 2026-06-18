@@ -32,7 +32,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGGradationPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGIAnchored;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGICopiable;
+import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
@@ -627,7 +627,7 @@ public class SGFigureElementShape extends SGFigureElement2D
     final int ox = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_X);
     final int oy = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_Y);
 
-    List<SGICopiable> cList = this.duplicateObjects();
+    List<SGICopyable> cList = this.duplicateObjects();
     for (int ii = 0; ii < cList.size(); ii++) {
       // duplicate
       ShapeObject el = (ShapeObject) cList.get(ii);
@@ -660,7 +660,7 @@ public class SGFigureElementShape extends SGFigureElement2D
    * @param list of the objects to be pasted
    * @return true:succeeded, false:failed
    */
-  public boolean paste(List<SGICopiable> list) {
+  public boolean paste(List<SGICopyable> list) {
     final float mag = this.getMagnification();
     final int ox = (int) (mag * OFFSET_DUPLICATED_OBJECT_X);
     final int oy = (int) (mag * OFFSET_DUPLICATED_OBJECT_Y);
@@ -1101,7 +1101,7 @@ public class SGFigureElementShape extends SGFigureElement2D
         if (!sh.getIElement().isAnchored()) {
           SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(pList, g2d);
         } else {
-          SGUtilityForFigureElementJava2D.drawAnchorPointsAsAnchoredForcusObject(pList, g2d);
+          SGUtilityForFigureElementJava2D.drawAnchorPointsAsAnchoredFocusObject(pList, g2d);
         }
       }
     }
@@ -1230,16 +1230,16 @@ public class SGFigureElementShape extends SGFigureElement2D
 
     public void translateSub(final float dx, final float dy);
 
-    public SGProperties getMement();
+    public SGProperties getMemento();
 
     public boolean setMagnification(final float mag);
 
     /**
      * @param p
      * @return
-     * @uml.property name="mement"
+     * @uml.property name="memento"
      */
-    public boolean setMement(final SGProperties p);
+    public boolean setMemento(final SGProperties p);
 
     public String getName();
 
@@ -1337,7 +1337,7 @@ public class SGFigureElementShape extends SGFigureElement2D
           SGIUndoable,
           SGIChildObject,
           SGIMovable,
-          SGICopiable,
+          SGICopyable,
           SGIPropertyDialogObserver,
           SGIAnchored {
 
@@ -1866,7 +1866,7 @@ public class SGFigureElementShape extends SGFigureElement2D
 
     /** */
     public SGProperties getMemento() {
-      return this.mElement.getMement();
+      return this.mElement.getMemento();
     }
 
     /** */
@@ -1885,7 +1885,7 @@ public class SGFigureElementShape extends SGFigureElement2D
       if (yAxis == null) return false;
       this.setYAxis(yAxis);
 
-      return this.mElement.setMement(p);
+      return this.mElement.setMemento(p);
     }
 
     /**
@@ -2193,16 +2193,16 @@ public class SGFigureElementShape extends SGFigureElement2D
 
     /** */
     private boolean init() {
-      this.setWidth(DEFAULT_SHAPE_RETANGLE_WIDTH, cm);
-      this.setHeight(DEFAULT_SHAPE_RETANGLE_HEIGHT, cm);
+      this.setWidth(DEFAULT_SHAPE_RECTANGLE_WIDTH, cm);
+      this.setHeight(DEFAULT_SHAPE_RECTANGLE_HEIGHT, cm);
 
       SGSelectablePaint paint = new SGSelectablePaint();
       paint.setFillColor(DEFAULT_SHAPE_RECTANGLE_INNER_COLOR);
       paint.setSelectedPaintStyle(SGSelectablePaint.STYLE_INDEX_FILL);
       this.setInnerPaint(paint);
 
-      this.setEdgeLineWidth(DEFAULT_SHAPE_RCTANGLE_EDGE_LINE_WIDTH, LINE_WIDTH_UNIT);
-      this.setEdgeLineType(DEFAULT_SHAPE_RCTANGLE_EDGE_LINE_TYPE);
+      this.setEdgeLineWidth(DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_WIDTH, LINE_WIDTH_UNIT);
+      this.setEdgeLineType(DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_TYPE);
       this.setEdgeLineColor(DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_COLOR);
       this.setEdgeLineVisible(DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_VISIBLE);
 
@@ -2744,12 +2744,12 @@ public class SGFigureElementShape extends SGFigureElement2D
     }
 
     /** */
-    public SGProperties getMement() {
+    public SGProperties getMemento() {
       return this.getProperties();
     }
 
     /** */
-    public boolean setMement(SGProperties p) {
+    public boolean setMemento(SGProperties p) {
       return this.setProperties(p);
     }
 
@@ -4134,12 +4134,12 @@ public class SGFigureElementShape extends SGFigureElement2D
     }
 
     /** */
-    public SGProperties getMement() {
+    public SGProperties getMemento() {
       return this.getProperties();
     }
 
     /** */
-    public boolean setMement(SGProperties p) {
+    public boolean setMemento(SGProperties p) {
       return this.setProperties(p);
     }
 

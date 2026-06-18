@@ -13,7 +13,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGICopiable;
+import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
@@ -25,16 +25,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-/**
- * SGMainFunctions :: ClipBoardManager class
- *
- * @author okumura
- */
+/** SGMainFunctions :: ClipBoardManager class */
 class SGClipBoardManager
     implements SGIDisposable, SGIConstants, SGIApplicationTextConstants, SGIPropertyFileConstants {
 
   /** The list of copied objects. */
-  private List<SGICopiable> mCopiedObjectsBuffer = new ArrayList<SGICopiable>();
+  private List<SGICopyable> mCopiedObjectsBuffer = new ArrayList<SGICopyable>();
 
   /** The list of copied data objects. */
   private List<SGData> mCopiedDataObjectBuffer = new ArrayList<SGData>();
@@ -112,7 +108,7 @@ class SGClipBoardManager
 
     // get copied objects list and add them to the buffer of the
     // attribute
-    List<SGICopiable> cList = wnd.getCopiedObjectsList();
+    List<SGICopyable> cList = wnd.getCopiedObjectsList();
     this.mCopiedObjectsBuffer.addAll(cList);
 
     List<SGData> dList = wnd.getCopiedObjectsDataList();

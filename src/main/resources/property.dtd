@@ -2,8 +2,6 @@
 <!-- Samurai Graph Property DTD V1.0 ...................................... -->
 <!-- File property.dtd .................................................... -->
 
-<!-- $Id: property.dtd,v 1.3 2012/03/22 09:04:38 kuromaru Exp $ -->
-
 <!-- This is the driver file for V1.0 of the Samurai Graph Property XML DTD.
      Please use the following formal public identifier to identify it:
 
@@ -655,4 +653,3 @@
 <!ATTLIST ColorStyle Color2 CDATA #IMPLIED >
 <!ATTLIST ColorStyle Name CDATA #REQUIRED >
 <!ATTLIST ColorStyle ReversedOrder NMTOKEN #REQUIRED >
-

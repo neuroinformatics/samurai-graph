@@ -78,9 +78,9 @@ public class SGGradationPaintSelectionButton extends SGButton implements ChangeL
   public void stateChanged(ChangeEvent e) {
     Object source = e.getSource();
     if (source instanceof SGGradationPaintDialog) {
-      SGGradationPaint gpaint = ((SGGradationPaintDialog) source).getGradationPaint();
-      if (!this.mGradationPaint.equals(gpaint)) {
-        this.mGradationPaint = gpaint;
+      SGGradationPaint gPaint = ((SGGradationPaintDialog) source).getGradationPaint();
+      if (!this.mGradationPaint.equals(gPaint)) {
+        this.mGradationPaint = gPaint;
         repaint();
       }
     }

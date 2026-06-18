@@ -1348,11 +1348,11 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   @Override
   public void setDataSource(SGIDataSource src) {
     super.setDataSource(src);
-    SGMDArrayFile mdfile = (SGMDArrayFile) src;
-    this.mXVariable = this.findVariable(mdfile, this.mXVariable);
-    this.mYVariable = this.findVariable(mdfile, this.mYVariable);
-    this.mFirstComponentVariable = this.findVariable(mdfile, this.mFirstComponentVariable);
-    this.mSecondComponentVariable = this.findVariable(mdfile, this.mSecondComponentVariable);
+    SGMDArrayFile mdFile = (SGMDArrayFile) src;
+    this.mXVariable = this.findVariable(mdFile, this.mXVariable);
+    this.mYVariable = this.findVariable(mdFile, this.mYVariable);
+    this.mFirstComponentVariable = this.findVariable(mdFile, this.mFirstComponentVariable);
+    this.mSecondComponentVariable = this.findVariable(mdFile, this.mSecondComponentVariable);
   }
 
   /**

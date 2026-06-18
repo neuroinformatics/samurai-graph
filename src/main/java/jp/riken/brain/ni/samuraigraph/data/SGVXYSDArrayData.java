@@ -1124,15 +1124,15 @@ public class SGVXYSDArrayData extends SGSDArrayData
     if (colArray.length < 4) {
       return false;
     }
-    SGNumberDataColumn colx = (SGNumberDataColumn) colArray[0];
-    SGNumberDataColumn coly = (SGNumberDataColumn) colArray[1];
-    SGNumberDataColumn colc1 = (SGNumberDataColumn) colArray[2];
-    SGNumberDataColumn colc2 = (SGNumberDataColumn) colArray[3];
+    SGNumberDataColumn colX = (SGNumberDataColumn) colArray[0];
+    SGNumberDataColumn colY = (SGNumberDataColumn) colArray[1];
+    SGNumberDataColumn colC1 = (SGNumberDataColumn) colArray[2];
+    SGNumberDataColumn colC2 = (SGNumberDataColumn) colArray[3];
 
-    double[] xvalues = colx.getArray();
-    double[] yvalues = coly.getArray();
-    double[] c1values = colc1.getArray();
-    double[] c2values = colc2.getArray();
+    double[] xValues = colX.getArray();
+    double[] yValues = colY.getArray();
+    double[] c1Values = colC1.getArray();
+    double[] c2Values = colC2.getArray();
 
     NetcdfFileWriter ncfile = null;
     try {
@@ -1142,82 +1142,82 @@ public class SGVXYSDArrayData extends SGSDArrayData
       // Creates the dimension and variable of indices.
       Dimension indexDim = this.addIndexDimension(ncfile, dataNum);
       String indexDimName = indexDim.getShortName();
-      Variable indexVar = this.addIndexVarialbe(ncfile, indexDim);
+      Variable indexVar = this.addIndexVariable(ncfile, indexDim);
       indexVar.addAttribute(
           SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
       // Add data columns as variables.
-      Variable varx = ncfile.addVariable(null, "column0", DataType.DOUBLE, indexDimName);
-      Variable vary = ncfile.addVariable(null, "column1", DataType.DOUBLE, indexDimName);
-      Variable varc1 = ncfile.addVariable(null, "column2", DataType.DOUBLE, indexDimName);
-      Variable varc2 = ncfile.addVariable(null, "column3", DataType.DOUBLE, indexDimName);
-      String title = colx.getTitle();
+      Variable varX = ncfile.addVariable(null, "column0", DataType.DOUBLE, indexDimName);
+      Variable varY = ncfile.addVariable(null, "column1", DataType.DOUBLE, indexDimName);
+      Variable varC1 = ncfile.addVariable(null, "column2", DataType.DOUBLE, indexDimName);
+      Variable varC2 = ncfile.addVariable(null, "column3", DataType.DOUBLE, indexDimName);
+      String title = colX.getTitle();
       if (null != title && "".equals(title.trim()) == false) {
         Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-        varx.addAttribute(attr);
+        varX.addAttribute(attr);
       }
-      title = coly.getTitle();
+      title = colY.getTitle();
       if (null != title && "".equals(title.trim()) == false) {
         Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-        vary.addAttribute(attr);
+        varY.addAttribute(attr);
       }
-      title = colc1.getTitle();
+      title = colC1.getTitle();
       if (null != title && "".equals(title.trim()) == false) {
         Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-        varc1.addAttribute(attr);
+        varC1.addAttribute(attr);
       }
-      title = colc2.getTitle();
+      title = colC2.getTitle();
       if (null != title && "".equals(title.trim()) == false) {
         Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-        varc2.addAttribute(attr);
+        varC2.addAttribute(attr);
       }
 
-      // ncfile.addVariable(null, varx); // already added by addVariable
-      // ncfile.addVariable(null, vary); // already added by addVariable
-      // ncfile.addVariable(null, varc1); // already added by addVariable
-      // ncfile.addVariable(null, varc2); // already added by addVariable
+      // ncfile.addVariable(null, varX); // already added by addVariable
+      // ncfile.addVariable(null, varY); // already added by addVariable
+      // ncfile.addVariable(null, varC1); // already added by addVariable
+      // ncfile.addVariable(null, varC2); // already added by addVariable
 
       String[] varNames = new String[colArray.length];
-      varNames[0] = varx.getShortName();
-      varNames[1] = vary.getShortName();
-      varNames[2] = varc1.getShortName();
-      varNames[3] = varc2.getShortName();
+      varNames[0] = varX.getShortName();
+      varNames[1] = varY.getShortName();
+      varNames[2] = varC1.getShortName();
+      varNames[3] = varC2.getShortName();
 
-      varx.addAttribute(SGDataUtility.getValueTypeAttribute(colx.getValueType()));
-      vary.addAttribute(SGDataUtility.getValueTypeAttribute(coly.getValueType()));
-      varc1.addAttribute(SGDataUtility.getValueTypeAttribute(colc1.getValueType()));
-      varc2.addAttribute(SGDataUtility.getValueTypeAttribute(colc2.getValueType()));
+      varX.addAttribute(SGDataUtility.getValueTypeAttribute(colX.getValueType()));
+      varY.addAttribute(SGDataUtility.getValueTypeAttribute(colY.getValueType()));
+      varC1.addAttribute(SGDataUtility.getValueTypeAttribute(colC1.getValueType()));
+      varC2.addAttribute(SGDataUtility.getValueTypeAttribute(colC2.getValueType()));
 
       ncfile.create();
 
       // add values
 
-      Array xarray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
-      for (int i = 0; i < xvalues.length; i++) {
-        xarray.setDouble(i, xvalues[i]);
+      Array xArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+      for (int i = 0; i < xValues.length; i++) {
+        xArray.setDouble(i, xValues[i]);
       }
-      ncfile.write(ncfile.findVariable(varNames[0]), xarray);
+      ncfile.write(ncfile.findVariable(varNames[0]), xArray);
 
-      Array yarray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
-      for (int i = 0; i < yvalues.length; i++) {
-        yarray.setDouble(i, yvalues[i]);
+      Array yArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+      for (int i = 0; i < yValues.length; i++) {
+        yArray.setDouble(i, yValues[i]);
       }
-      ncfile.write(ncfile.findVariable(varNames[1]), yarray);
+      ncfile.write(ncfile.findVariable(varNames[1]), yArray);
 
-      Array c1array = Array.factory(DataType.DOUBLE, new int[] {dataNum});
-      for (int i = 0; i < c1values.length; i++) {
-        c1array.setDouble(i, c1values[i]);
+      Array c1Array = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+      for (int i = 0; i < c1Values.length; i++) {
+        c1Array.setDouble(i, c1Values[i]);
       }
-      ncfile.write(ncfile.findVariable(varNames[2]), c1array);
+      ncfile.write(ncfile.findVariable(varNames[2]), c1Array);
 
-      Array c2array = Array.factory(DataType.DOUBLE, new int[] {dataNum});
-      for (int i = 0; i < c2values.length; i++) {
-        c2array.setDouble(i, c2values[i]);
+      Array c2Array = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+      for (int i = 0; i < c2Values.length; i++) {
+        c2Array.setDouble(i, c2Values[i]);
       }
-      ncfile.write(ncfile.findVariable(varNames[3]), c2array);
+      ncfile.write(ncfile.findVariable(varNames[3]), c2Array);
 
       // write serial numbers
-      this.writeIndexVarialbe(ncfile, indexVar);
+      this.writeIndexVariable(ncfile, indexVar);
 
     } catch (IOException e) {
       return false;

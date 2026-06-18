@@ -50,7 +50,7 @@ public class SGSimpleRectangle2D extends SGDrawingElementRectangle2D {
     this.mStroke.setJoin(BasicStroke.JOIN_MITER);
   }
 
-  /** Dispose this rectgangle. */
+  /** Dispose this rectangle. */
   public void dispose() {
     super.dispose();
     this.mEdgeLineColor = null;
@@ -59,18 +59,18 @@ public class SGSimpleRectangle2D extends SGDrawingElementRectangle2D {
   }
 
   /**
-   * Returns the width of this recgtangle.
+   * Returns the width of this rectangle.
    *
-   * @return the width of this recgtangle
+   * @return the width of this rectangle
    */
   public float getWidth() {
     return this.mWidth;
   }
 
   /**
-   * Returns the height of this recgtangle.
+   * Returns the height of this rectangle.
    *
-   * @return the height of this recgtangle
+   * @return the height of this rectangle
    */
   public float getHeight() {
     return this.mHeight;

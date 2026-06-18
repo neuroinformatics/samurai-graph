@@ -142,29 +142,29 @@ public class SGAboutDialog extends SGDialog implements SGIApplicationConstants {
 
   private static String NEUROINFORMATICS_LAB_URL = "http://www.ni.brain.riken.jp/";
 
-  private static final int verpos_r = 375; // right position of the version
+  private static final int verPosR = 375; // right position of the version
   // label
 
-  private static final int verpos_t = 125; // top position of the version
+  private static final int verPosT = 125; // top position of the version
   // label
 
-  private static final int verpos_b = 155; // bottom position of the
+  private static final int verPosB = 155; // bottom position of the
 
   // version label
 
   /** is links(hand) cursor shape? */
-  private boolean is_linkcursor = false;
+  private boolean isLinkCursor = false;
 
   /** change cursor shape, true : links (hand), false : normal */
   private void setLinkCursorForm(boolean m) {
-    if (this.is_linkcursor == false && m == true) {
+    if (this.isLinkCursor == false && m == true) {
       final Cursor cur = new Cursor(Cursor.HAND_CURSOR);
       setCursor(cur);
-      this.is_linkcursor = true;
-    } else if (this.is_linkcursor == true && m == false) {
+      this.isLinkCursor = true;
+    } else if (this.isLinkCursor == true && m == false) {
       final Cursor cur = Cursor.getDefaultCursor();
       setCursor(cur);
-      this.is_linkcursor = false;
+      this.isLinkCursor = false;
     }
   }
 
@@ -182,16 +182,16 @@ public class SGAboutDialog extends SGDialog implements SGIApplicationConstants {
     this.mImagePanel.setImage(image);
 
     // set text and position of the version number label .
-    final String vertext = "Version " + version;
-    this.mVersionLabel.setText(vertext);
+    final String verText = "Version " + version;
+    this.mVersionLabel.setText(verText);
 
     final Font font = this.mVersionLabel.getFont();
-    final Rectangle2D verrect =
-        font.getStringBounds(vertext, new FontRenderContext(null, false, false));
-    final int vh = (int) verrect.getHeight();
-    final int vw = (int) verrect.getWidth();
-    final int h = (verpos_b - verpos_t - vh) / 2 + verpos_t;
-    final int w = verpos_r - vw;
+    final Rectangle2D verRect =
+        font.getStringBounds(verText, new FontRenderContext(null, false, false));
+    final int vh = (int) verRect.getHeight();
+    final int vw = (int) verRect.getWidth();
+    final int h = (verPosB - verPosT - vh) / 2 + verPosT;
+    final int w = verPosR - vw;
     this.mVersionLabel.setSize(vw, vh);
     this.mVersionLabel.setBounds(w, h, vw, vh);
 

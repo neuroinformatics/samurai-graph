@@ -365,7 +365,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
   }
 
   /**
-   * Retruns the location at a given index.
+   * Returns the location at a given index.
    *
    * @param index the index
    * @return the location

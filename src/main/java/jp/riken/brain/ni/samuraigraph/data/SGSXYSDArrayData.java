@@ -818,14 +818,14 @@ public class SGSXYSDArrayData extends SGSDArrayData
 
     Integer eh = null;
     if (le != null && ue != null) {
-      String strle = columns[le.intValue()];
-      String strue = columns[ue.intValue()];
-      Integer ehle = SGDataUtility.getAppendedColumnIndex(strle, columnTitles);
-      Integer ehue = SGDataUtility.getAppendedColumnIndex(strue, columnTitles);
-      if (ehle == null || ehue == null || ehle.equals(ehue) == false) {
+      String strLe = columns[le.intValue()];
+      String strUe = columns[ue.intValue()];
+      Integer ehLe = SGDataUtility.getAppendedColumnIndex(strLe, columnTitles);
+      Integer ehUe = SGDataUtility.getAppendedColumnIndex(strUe, columnTitles);
+      if (ehLe == null || ehUe == null || ehLe.equals(ehUe) == false) {
         return false;
       }
-      eh = ehle;
+      eh = ehLe;
     }
 
     Integer th = null;
@@ -1075,43 +1075,43 @@ public class SGSXYSDArrayData extends SGSDArrayData
   public SGDataColumn[] getUsedDataColumnsClone() {
     SGDataColumn[] columns = this.getDataFile().mDataColumns;
     String[] columnTypes = this.getCurrentColumnType();
-    List<SGDataColumn> collist = new ArrayList<SGDataColumn>();
+    List<SGDataColumn> colList = new ArrayList<SGDataColumn>();
 
     int index = this.mXIndex.intValue();
     SGDataColumn col = (SGDataColumn) columns[index].clone();
     col.setColumnType(columnTypes[index]);
-    collist.add(col);
+    colList.add(col);
 
     index = this.mYIndex.intValue();
     col = (SGDataColumn) columns[index].clone();
     col.setColumnType(columnTypes[index]);
-    collist.add(col);
+    colList.add(col);
 
     if (this.isErrorBarAvailable()) {
       if (this.mLowerErrorIndex.equals(this.mUpperErrorIndex)) {
         index = this.mLowerErrorIndex.intValue();
         col = (SGDataColumn) columns[index].clone();
         col.setColumnType(columnTypes[index]);
-        collist.add(col);
+        colList.add(col);
       } else {
         index = this.mLowerErrorIndex.intValue();
         col = (SGDataColumn) columns[index].clone();
         col.setColumnType(columnTypes[index]);
-        collist.add(col);
+        colList.add(col);
         index = this.mUpperErrorIndex.intValue();
         col = (SGDataColumn) columns[index].clone();
         col.setColumnType(columnTypes[index]);
-        collist.add(col);
+        colList.add(col);
       }
     }
     if (this.isTickLabelAvailable()) {
       index = this.mTickLabelIndex.intValue();
       col = (SGDataColumn) columns[index].clone();
       col.setColumnType(columnTypes[index]);
-      collist.add(col);
+      colList.add(col);
     }
 
-    return collist.toArray(new SGDataColumn[collist.size()]);
+    return colList.toArray(new SGDataColumn[colList.size()]);
   }
 
   /**
@@ -1250,7 +1250,7 @@ public class SGSXYSDArrayData extends SGSDArrayData
     return this.getColumn(this.mErrorBarHolderIndex);
   }
 
-  public SGDataColumn getTickLableColumn() {
+  public SGDataColumn getTickLabelColumn() {
     return this.getColumn(this.mTickLabelIndex);
   }
 

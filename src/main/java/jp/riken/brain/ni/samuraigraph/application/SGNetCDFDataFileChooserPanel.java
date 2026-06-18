@@ -12,9 +12,6 @@ import javax.swing.text.JTextComponent;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import ucar.nc2.NetcdfFile;
 
-/**
- * @author minemoto
- */
 public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     implements ActionListener, ChangeListener {
 
@@ -33,10 +30,10 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     mLocalFilePanel = new javax.swing.JPanel();
     mDataFileNameTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
     mShowFileChooserButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mNetCDFURLPanel = new javax.swing.JPanel();
-    mNetCDFURLTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
-    mNetCDFURLCheckValidButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mNetCDFURLSpacerLabel = new javax.swing.JLabel();
+    mNetCDFUrlPanel = new javax.swing.JPanel();
+    mNetCDFUrlTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
+    mNetCDFUrlCheckValidButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
+    mNetCDFUrlSpacerLabel = new javax.swing.JLabel();
 
     setLayout(new java.awt.GridBagLayout());
 
@@ -68,65 +65,65 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
 
     mTabbedPane.addTab("Local File", mLocalFilePanel);
 
-    mNetCDFURLPanel.setFont(new java.awt.Font("Dialog", 1, 12));
-    mNetCDFURLPanel.setLayout(new java.awt.GridBagLayout());
+    mNetCDFUrlPanel.setFont(new java.awt.Font("Dialog", 1, 12));
+    mNetCDFUrlPanel.setLayout(new java.awt.GridBagLayout());
 
-    mNetCDFURLTextField.setFont(new java.awt.Font("Dialog", 0, 12));
-    mNetCDFURLTextField.setMinimumSize(new java.awt.Dimension(250, 22));
-    mNetCDFURLTextField.setPreferredSize(new java.awt.Dimension(250, 22));
+    mNetCDFUrlTextField.setFont(new java.awt.Font("Dialog", 0, 12));
+    mNetCDFUrlTextField.setMinimumSize(new java.awt.Dimension(250, 22));
+    mNetCDFUrlTextField.setPreferredSize(new java.awt.Dimension(250, 22));
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 5);
-    mNetCDFURLPanel.add(mNetCDFURLTextField, gridBagConstraints);
+    mNetCDFUrlPanel.add(mNetCDFUrlTextField, gridBagConstraints);
 
-    mNetCDFURLCheckValidButton.setText("Open");
-    mNetCDFURLCheckValidButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mNetCDFURLCheckValidButton.setMaximumSize(new java.awt.Dimension(80, 25));
-    mNetCDFURLCheckValidButton.setMinimumSize(new java.awt.Dimension(80, 25));
-    mNetCDFURLCheckValidButton.setPreferredSize(new java.awt.Dimension(80, 25));
+    mNetCDFUrlCheckValidButton.setText("Open");
+    mNetCDFUrlCheckValidButton.setFont(new java.awt.Font("Dialog", 1, 12));
+    mNetCDFUrlCheckValidButton.setMaximumSize(new java.awt.Dimension(80, 25));
+    mNetCDFUrlCheckValidButton.setMinimumSize(new java.awt.Dimension(80, 25));
+    mNetCDFUrlCheckValidButton.setPreferredSize(new java.awt.Dimension(80, 25));
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 0;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
     gridBagConstraints.insets = new java.awt.Insets(20, 5, 20, 20);
-    mNetCDFURLPanel.add(mNetCDFURLCheckValidButton, gridBagConstraints);
+    mNetCDFUrlPanel.add(mNetCDFUrlCheckValidButton, gridBagConstraints);
 
-    mNetCDFURLSpacerLabel.setFont(new java.awt.Font("Dialog", 0, 12));
+    mNetCDFUrlSpacerLabel.setFont(new java.awt.Font("Dialog", 0, 12));
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 0;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
     gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 15);
-    mNetCDFURLPanel.add(mNetCDFURLSpacerLabel, gridBagConstraints);
+    mNetCDFUrlPanel.add(mNetCDFUrlSpacerLabel, gridBagConstraints);
 
-    mTabbedPane.addTab("URL of NetCDF", mNetCDFURLPanel);
+    mTabbedPane.addTab("URL of NetCDF", mNetCDFUrlPanel);
 
     add(mTabbedPane, new java.awt.GridBagConstraints());
   }
 
   private jp.riken.brain.ni.samuraigraph.base.SGTextField mDataFileNameTextField;
   private javax.swing.JPanel mLocalFilePanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mNetCDFURLCheckValidButton;
-  private javax.swing.JPanel mNetCDFURLPanel;
-  private javax.swing.JLabel mNetCDFURLSpacerLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGTextField mNetCDFURLTextField;
+  private jp.riken.brain.ni.samuraigraph.base.SGButton mNetCDFUrlCheckValidButton;
+  private javax.swing.JPanel mNetCDFUrlPanel;
+  private javax.swing.JLabel mNetCDFUrlSpacerLabel;
+  private jp.riken.brain.ni.samuraigraph.base.SGTextField mNetCDFUrlTextField;
   private jp.riken.brain.ni.samuraigraph.base.SGButton mShowFileChooserButton;
   private javax.swing.JTabbedPane mTabbedPane;
 
   private void initProperty() {
     // add an action event listener
-    this.mNetCDFURLCheckValidButton.addActionListener(this);
-    this.mNetCDFURLTextField.addActionListener(this);
+    this.mNetCDFUrlCheckValidButton.addActionListener(this);
+    this.mNetCDFUrlTextField.addActionListener(this);
 
     // add change listener
     this.mTabbedPane.addChangeListener(this);
 
     this.mTabbedPane.setSelectedIndex(0);
 
-    this.mNetCDFURLCheckValidButton.setVisible(false);
-    this.mNetCDFURLTextField.setPreferredSize(new java.awt.Dimension(340, 22));
+    this.mNetCDFUrlCheckValidButton.setVisible(false);
+    this.mNetCDFUrlTextField.setPreferredSize(new java.awt.Dimension(340, 22));
   }
 
   protected JTextComponent getLocalFileNameTextComponent() {
@@ -134,7 +131,7 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
   }
 
   protected JTextComponent getNetCDFUrlTextComponent() {
-    return this.mNetCDFURLTextField;
+    return this.mNetCDFUrlTextField;
   }
 
   protected JButton getLocalFileChooserButton() {
@@ -145,12 +142,12 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     this.mDataFileNameTextField.requestFocusInWindow();
   }
 
-  public void setVisibleOfNetCDFURLCheckButton(final boolean visible) {
-    this.mNetCDFURLCheckValidButton.setVisible(visible);
+  public void setVisibleOfNetCDFUrlCheckButton(final boolean visible) {
+    this.mNetCDFUrlCheckValidButton.setVisible(visible);
     if (visible == true) {
-      this.mNetCDFURLTextField.setPreferredSize(new java.awt.Dimension(250, 22));
+      this.mNetCDFUrlTextField.setPreferredSize(new java.awt.Dimension(250, 22));
     } else {
-      this.mNetCDFURLTextField.setPreferredSize(new java.awt.Dimension(340, 22));
+      this.mNetCDFUrlTextField.setPreferredSize(new java.awt.Dimension(340, 22));
     }
   }
 
@@ -163,8 +160,8 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     if (this.mTabbedPane.getSelectedComponent().equals(this.mLocalFilePanel)) {
       return this.mDataFileNameTextField.getText().trim();
     } else {
-      if (this.mNetCDFURLCheckValidButton.isVisible() == false) {
-        return this.mNetCDFURLTextField.getText().trim();
+      if (this.mNetCDFUrlCheckValidButton.isVisible() == false) {
+        return this.mNetCDFUrlTextField.getText().trim();
       } else {
         return this.validUrlLocationInputted;
       }
@@ -173,9 +170,9 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
 
   protected void setFileName(final String fileName) {
     if (isNetcdfUrl(fileName)) {
-      this.mNetCDFURLTextField.setText(fileName);
-      this.mTabbedPane.setSelectedComponent(this.mNetCDFURLPanel);
-      this.checkValidationOfNetCDFURLAndFireResult(false);
+      this.mNetCDFUrlTextField.setText(fileName);
+      this.mTabbedPane.setSelectedComponent(this.mNetCDFUrlPanel);
+      this.checkValidationOfNetCDFUrlAndFireResult(false);
     } else {
       this.mDataFileNameTextField.setText(fileName);
       this.mTabbedPane.setSelectedComponent(this.mLocalFilePanel);
@@ -195,7 +192,7 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     if (flag) {
       this.mTabbedPane.setSelectedComponent(this.mLocalFilePanel);
     } else {
-      this.mTabbedPane.setSelectedComponent(this.mNetCDFURLPanel);
+      this.mTabbedPane.setSelectedComponent(this.mNetCDFUrlPanel);
     }
   }
 
@@ -203,8 +200,8 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
    * @return true if netCDF URL is selected and the url is set.
    */
   public boolean isNetCDFUrlAcceptable() {
-    if (this.mTabbedPane.getSelectedComponent().equals(this.mNetCDFURLPanel)) {
-      if (this.mNetCDFURLCheckValidButton.isVisible() == false) {
+    if (this.mTabbedPane.getSelectedComponent().equals(this.mNetCDFUrlPanel)) {
+      if (this.mNetCDFUrlCheckValidButton.isVisible() == false) {
         return true;
       } else {
         if (isValidUrlLocationNotChanged()) {
@@ -221,18 +218,18 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
   @Override
   public void actionPerformed(ActionEvent e) {
     Object source = e.getSource();
-    if (source == this.mNetCDFURLCheckValidButton) {
-      this.checkValidationOfNetCDFURLAndFireResult(true);
-    } else if (source == this.mNetCDFURLTextField) {
-      if (this.mNetCDFURLCheckValidButton.isVisible()) {
-        this.checkValidationOfNetCDFURLAndFireResult(true);
+    if (source == this.mNetCDFUrlCheckValidButton) {
+      this.checkValidationOfNetCDFUrlAndFireResult(true);
+    } else if (source == this.mNetCDFUrlTextField) {
+      if (this.mNetCDFUrlCheckValidButton.isVisible()) {
+        this.checkValidationOfNetCDFUrlAndFireResult(true);
       } else {
-        this.fireCheckNetCDFURLTextField();
+        this.fireCheckNetCDFUrlTextField();
       }
     }
   }
 
-  protected void checkValidationOfNetCDFURLAndFireResult(final boolean showDialog) {
+  protected void checkValidationOfNetCDFUrlAndFireResult(final boolean showDialog) {
     if (isValidUrlLocation(showDialog)) {
       this.fireAcceptNetCDFUrl(true);
     } else {
@@ -248,8 +245,8 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
         this.mDataFileNameTextField.requestFocusInWindow();
         this.fireCheckLocalFileTextField();
       } else {
-        this.mNetCDFURLTextField.requestFocusInWindow();
-        if (this.mNetCDFURLCheckValidButton.isVisible() == false) {
+        this.mNetCDFUrlTextField.requestFocusInWindow();
+        if (this.mNetCDFUrlCheckValidButton.isVisible() == false) {
           this.fireAcceptNetCDFUrl(true);
         } else {
           if (isValidUrlLocationNotChanged()) {
@@ -274,7 +271,7 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     if (null == this.validUrlLocationInputted || this.validUrlLocationInputted.equals("")) {
       return false;
     }
-    if (this.mNetCDFURLTextField.getText().trim().equals(this.validUrlLocationInputted)) {
+    if (this.mNetCDFUrlTextField.getText().trim().equals(this.validUrlLocationInputted)) {
       return true;
     } else {
       return false;
@@ -290,13 +287,13 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
   public boolean isValidUrlLocation(final boolean showDialog) {
     boolean valid =
         isValidUrlLocationOfNetCDF(
-            this.mNetCDFURLTextField.getText().trim(), this.mNetCDFURLTextField, showDialog);
+            this.mNetCDFUrlTextField.getText().trim(), this.mNetCDFUrlTextField, showDialog);
 
     if (valid == false) {
-      this.mNetCDFURLTextField.requestFocusInWindow();
+      this.mNetCDFUrlTextField.requestFocusInWindow();
       return false;
     } else {
-      this.validUrlLocationInputted = this.mNetCDFURLTextField.getText().trim();
+      this.validUrlLocationInputted = this.mNetCDFUrlTextField.getText().trim();
       return true;
     }
   }
@@ -342,12 +339,12 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     /**
      * Accept the url of netCDF.
      *
-     * <p>This is called when netCDF URL location is set or when the netCDF URL raido button
+     * <p>This is called when netCDF URL location is set or when the netCDF URL radio button
      * actions.
      *
-     * @param accpet true if url of netCDF is accepted.
+     * @param accept true if url of netCDF is accepted.
      */
-    public void acceptNetCDFUrl(final boolean accpet);
+    public void acceptNetCDFUrl(final boolean accept);
 
     /**
      * Check whether the url of netcdf is valid or not.
@@ -355,7 +352,7 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
      * <p>This is called when the netcdf url check valid button is not visible and the netcdf url
      * text field actions.
      */
-    public void checkNetCDFURLTextField();
+    public void checkNetCDFUrlTextField();
 
     /**
      * Check the local file name is valid.
@@ -378,9 +375,9 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     }
   }
 
-  protected void fireCheckNetCDFURLTextField() {
+  protected void fireCheckNetCDFUrlTextField() {
     for (int i = 0; i < listeners.size(); i++) {
-      listeners.get(i).checkNetCDFURLTextField();
+      listeners.get(i).checkNetCDFUrlTextField();
     }
   }
 
@@ -415,12 +412,12 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
   }
 
   /**
-   * Set unenabled to Url of netCDF panel if text data file is used.
+   * Set enabled to Url of netCDF panel if text data file is used.
    *
    * @param enabled
    */
   public void setEnabledUrlOfNetCDFPanel(final boolean enabled) {
-    this.mTabbedPane.setEnabledAt(this.mTabbedPane.indexOfComponent(this.mNetCDFURLPanel), enabled);
+    this.mTabbedPane.setEnabledAt(this.mTabbedPane.indexOfComponent(this.mNetCDFUrlPanel), enabled);
     this.mTabbedPane.setSelectedComponent(this.mLocalFilePanel);
   }
 }

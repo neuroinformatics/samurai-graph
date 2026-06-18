@@ -259,7 +259,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
   /**
    * Returns the X axis for a given data.
    *
-   * @param data a data obejct
+   * @param data a data object
    * @return an axis object related to this data for the X-direction
    */
   public SGAxis getXAxis(final SGData data) {
@@ -273,7 +273,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
   /**
    * Returns the Y axis for a given data.
    *
-   * @param data a data obejct
+   * @param data a data object
    * @return an axis object related to this data for the Y-direction
    */
   public SGAxis getYAxis(final SGData data) {
@@ -701,8 +701,8 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
     }
 
     // set the magnitude per cm
-    final float percmReduced = this.getInitialMagnitudePerCM(data);
-    groupSet.setMagnitudePerCM(percmReduced);
+    final float perCmReduced = this.getInitialMagnitudePerCM(data);
+    groupSet.setMagnitudePerCM(perCmReduced);
     groupSet.setDirectionInvariant(data.isPolar());
 
     return groupSet;
@@ -825,14 +825,14 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
   protected boolean updateChildGroupSet(SGIElementGroupSetMultipleSXY groupSet) {
 
     // get current values
-    final SGISXYTypeMultipleData dataMult = (SGISXYTypeMultipleData) groupSet.getData();
+    final SGISXYTypeMultipleData dataMulti = (SGISXYTypeMultipleData) groupSet.getData();
     final SGAxis axisX = groupSet.getXAxis();
     final SGAxis axisY = groupSet.getYAxis();
     final String name = groupSet.getName();
     final SGIElementGroupSetForData[] gsArray = groupSet.getChildGroupSetArray();
 
     // get new data array
-    final SGISXYTypeSingleData[] sxyArray = dataMult.getSXYDataArray();
+    final SGISXYTypeSingleData[] sxyArray = dataMulti.getSXYDataArray();
 
     try {
       for (int ii = 0; ii < gsArray.length; ii++) {
@@ -931,7 +931,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
   protected abstract SGIElementGroupSetVXY createVXYGroupSetInstance(SGIVXYTypeData dataVXY);
 
   protected abstract SGIElementGroupSetMultipleSXY createMultipleSXYGroupSetInstance(
-      SGISXYTypeMultipleData dataMultSXY);
+      SGISXYTypeMultipleData dataMultiSXY);
 
   protected abstract SGIElementGroupSetSXYZ createSXYZGroupSetInstance(SGISXYZTypeData dataSXYZ);
 
@@ -1067,10 +1067,10 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
         return null;
       }
     } else if (data instanceof SGISXYTypeMultipleData) {
-      SGISXYTypeMultipleData dataMultSXY = (SGISXYTypeMultipleData) data;
-      gs = this.createGroupSetMultipleSXY(dataMultSXY, axisX, axisY, name);
+      SGISXYTypeMultipleData dataMultiSXY = (SGISXYTypeMultipleData) data;
+      gs = this.createGroupSetMultipleSXY(dataMultiSXY, axisX, axisY, name);
       SGIElementGroupSetMultipleSXY groupSet = (SGIElementGroupSetMultipleSXY) gs;
-      if (this.setPropertyOfElementGroupSetForMultipleSXY(el, groupSet, dataMultSXY) == ic) {
+      if (this.setPropertyOfElementGroupSetForMultipleSXY(el, groupSet, dataMultiSXY) == ic) {
         return null;
       }
     } else if (data instanceof SGIVXYTypeData) {
@@ -1965,8 +1965,8 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
       if (data.equals(d)) {
         continue;
       }
-      SGIDataSource dsrc = d.getDataSource();
-      if (dataSource.equals(dsrc)) {
+      SGIDataSource dSrc = d.getDataSource();
+      if (dataSource.equals(dSrc)) {
         return true;
       }
     }

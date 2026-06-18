@@ -216,7 +216,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
   private SGPropertyFileDataDialog mPropertyFileDataDialog = null;
 
   /** A dialog to select the data file. */
-  private SGSingleDataFileChooserWizardDialog mSingleDataFileChooserWizardDilaog = null;
+  private SGSingleDataFileChooserWizardDialog mSingleDataFileChooserWizardDialog = null;
 
   /** The row index setting up the data file or URL. */
   private int mCurDataSetupRowIndex = -1;
@@ -371,7 +371,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         infoMap.put(SGIDataInformationKeyConstants.KEY_ALL_STRIDE, strideMap);
 
         if (this.mPropertyFileDataDialog instanceof SGPropertyFileSDArrayDataDialog) {
-          // SDAray
+          // SDArray
 
         } else if (this.mPropertyFileDataDialog instanceof SGPropertyFileNetCDFDataDialog) {
           // NetCDF
@@ -415,19 +415,19 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         // update the buttons
         this.updateAvailableButtons();
       } else if (command.equals(CANCEL_BUTTON_TEXT)) {
-        if (this.mSingleDataFileChooserWizardDilaog != null) {
-          this.mSingleDataFileChooserWizardDilaog.setVisible(true);
+        if (this.mSingleDataFileChooserWizardDialog != null) {
+          this.mSingleDataFileChooserWizardDialog.setVisible(true);
         }
       }
       this.mCurDataSetupRowIndex = -1;
 
-    } else if (source.equals(this.mSingleDataFileChooserWizardDilaog)) {
+    } else if (source.equals(this.mSingleDataFileChooserWizardDialog)) {
 
       if (command.equals(OK_BUTTON_TEXT)) {
-        if (this.mSingleDataFileChooserWizardDilaog == null) {
+        if (this.mSingleDataFileChooserWizardDialog == null) {
           return;
         }
-        this.mSingleDataFileChooserWizardDilaog.setVisible(false);
+        this.mSingleDataFileChooserWizardDialog.setVisible(false);
 
         // selected data file object
         DataFile dataFile = mDataFileArray[this.mCurDataSetupRowIndex];
@@ -436,7 +436,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         SGDataColumnInfoSet dataColumnInfoSet = dataFile.dataColInfoSet;
         SGTuple2f figureSize = dataFile.figureSize;
         infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, figureSize);
-        String fileName = this.mSingleDataFileChooserWizardDilaog.getFileName();
+        String fileName = this.mSingleDataFileChooserWizardDialog.getFileName();
         if (this.showPropertyFileDataDialog(fileName, dataType, dataColumnInfoSet, infoMap)
             == false) {
 
@@ -444,7 +444,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
           SGApplicationUtility.showDataFileInvalidMessageDialog(this.getOwner());
 
           // shows a dialog again
-          this.mSingleDataFileChooserWizardDilaog.setVisible(true);
+          this.mSingleDataFileChooserWizardDialog.setVisible(true);
         }
       }
     }
@@ -683,22 +683,22 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     // set up the column with buttons
     final int colIndexButton = this.getColumnIndex(COLUMN_NAME_BUTTON);
     TableColumn colButton = this.mTable.getColumnModel().getColumn(colIndexButton);
-    ButtonColumn bcol = new ButtonColumn();
+    ButtonColumn bCol = new ButtonColumn();
     colButton.setMinWidth(SGTable.ROW_HEIGHT);
     colButton.setMaxWidth(SGTable.ROW_HEIGHT);
     colButton.setResizable(false);
-    colButton.setCellEditor(bcol);
-    colButton.setCellRenderer(bcol);
+    colButton.setCellEditor(bCol);
+    colButton.setCellRenderer(bCol);
 
     // set up the column for file names
     final int colIndexFileName = this.getColumnIndex(COLUMN_NAME_FILE_NAME);
     TableColumn colFileName = this.mTable.getColumnModel().getColumn(colIndexFileName);
     JTextField textField = new JTextField();
     textField.setBorder(BorderFactory.createEmptyBorder());
-    FileNameColumnCellEditor fcolEditor = new FileNameColumnCellEditor(textField);
-    colFileName.setCellEditor(fcolEditor);
-    FileNameColumnCellRenderer fcolRenderer = new FileNameColumnCellRenderer();
-    colFileName.setCellRenderer(fcolRenderer);
+    FileNameColumnCellEditor fColEditor = new FileNameColumnCellEditor(textField);
+    colFileName.setCellEditor(fColEditor);
+    FileNameColumnCellRenderer fColRenderer = new FileNameColumnCellRenderer();
+    colFileName.setCellRenderer(fColRenderer);
   }
 
   /**
@@ -763,24 +763,24 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
   }
 
   /** */
-  public void dragEnter(final DropTargetDragEvent dtde) {
-    dtde.acceptDrag(DnDConstants.ACTION_COPY_OR_MOVE);
+  public void dragEnter(final DropTargetDragEvent event) {
+    event.acceptDrag(DnDConstants.ACTION_COPY_OR_MOVE);
   }
 
   /** */
-  public void dragExit(final DropTargetEvent dte) {}
+  public void dragExit(final DropTargetEvent event) {}
 
   /** */
-  public void dragOver(final DropTargetDragEvent dtde) {}
+  public void dragOver(final DropTargetDragEvent event) {}
 
   /** */
-  public void drop(final DropTargetDropEvent dtde) {
+  public void drop(final DropTargetDropEvent event) {
 
     JTable table = this.mTable;
     JTableHeader header = table.getTableHeader();
     JViewport vp = this.mScrollPane.getViewport();
     Point vpPos = vp.getViewPosition();
-    Point location = dtde.getLocation();
+    Point location = event.getLocation();
     Insets ins = this.getInsets();
     final int originX = ins.left - vpPos.x;
     final int originY = ins.top + this.mScrollPane.getY() - vpPos.y + header.getHeight();
@@ -799,7 +799,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     }
 
     // get dropped file list
-    List<?> fileList = SGApplicationUtility.getDroppedFileList(dtde);
+    List<?> fileList = SGApplicationUtility.getDroppedFileList(event);
     if (fileList == null || fileList.size() == 0) {
       return;
     }
@@ -847,7 +847,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
   }
 
   /** */
-  public void dropActionChanged(final DropTargetDragEvent dtde) {}
+  public void dropActionChanged(final DropTargetDragEvent event) {}
 
   /** The original table model. */
   private class OriginalTableModel extends DefaultTableModel {
@@ -997,7 +997,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     }
 
     @Override
-    public void checkNetCDFURLTextField() {
+    public void checkNetCDFUrlTextField() {
       this.onOK();
     }
 
@@ -1008,8 +1008,8 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     }
 
     @Override
-    public void acceptNetCDFUrl(final boolean accpet) {
-      this.acceptFile(accpet);
+    public void acceptNetCDFUrl(final boolean accept) {
+      this.acceptFile(accept);
     }
   }
 
@@ -1046,34 +1046,34 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
       // create a dialog
       this.createPropertyFileDataDialog(dataType);
 
-      if (this.mSingleDataFileChooserWizardDilaog == null) {
-        this.mSingleDataFileChooserWizardDilaog =
+      if (this.mSingleDataFileChooserWizardDialog == null) {
+        this.mSingleDataFileChooserWizardDialog =
             new PropertySingleDataFileChooserDialog(this.getOwnerWindow(), true);
-        this.mSingleDataFileChooserWizardDilaog.setPrevious(null);
-        this.mSingleDataFileChooserWizardDilaog.setNext(null);
+        this.mSingleDataFileChooserWizardDialog.setPrevious(null);
+        this.mSingleDataFileChooserWizardDialog.setNext(null);
       }
-      this.mSingleDataFileChooserWizardDilaog.setVisibleUrlOfNetCDF(
+      this.mSingleDataFileChooserWizardDialog.setVisibleUrlOfNetCDF(
           SGDataUtility.isNetCDFData(dataType));
-      this.mSingleDataFileChooserWizardDilaog.addActionListener(this);
+      this.mSingleDataFileChooserWizardDialog.addActionListener(this);
 
       if (null == fileName || fileName.equals("")) {
         String path = this.getCurrentFileDirectory();
-        this.mSingleDataFileChooserWizardDilaog.setCurrentFile(path, fileName);
+        this.mSingleDataFileChooserWizardDialog.setCurrentFile(path, fileName);
       } else {
         File f = new File(fileName);
         if (f.exists()) {
-          this.mSingleDataFileChooserWizardDilaog.setSelectedFile(f);
-          this.mSingleDataFileChooserWizardDilaog.setFileName(fileName);
+          this.mSingleDataFileChooserWizardDialog.setSelectedFile(f);
+          this.mSingleDataFileChooserWizardDialog.setFileName(fileName);
         } else {
           String path = this.getCurrentFileDirectory();
-          this.mSingleDataFileChooserWizardDilaog.setCurrentFile(path, fileName);
-          this.mSingleDataFileChooserWizardDilaog.setFileName(fileName);
+          this.mSingleDataFileChooserWizardDialog.setCurrentFile(path, fileName);
+          this.mSingleDataFileChooserWizardDialog.setFileName(fileName);
         }
       }
-      this.mSingleDataFileChooserWizardDilaog.pack();
+      this.mSingleDataFileChooserWizardDialog.pack();
 
-      this.mSingleDataFileChooserWizardDilaog.setLocation(this.getX() + 20, this.getY() + 20);
-      this.mSingleDataFileChooserWizardDilaog.setVisible(true);
+      this.mSingleDataFileChooserWizardDialog.setLocation(this.getX() + 20, this.getY() + 20);
+      this.mSingleDataFileChooserWizardDialog.setVisible(true);
 
     } else if (colIndex == colIndexFileName) {
       this.mFocusedRowIndex = rowIndex;
@@ -1142,7 +1142,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     }
 
     // show the dialog
-    this.mPropertyFileDataDialog.setPrevious(this.mSingleDataFileChooserWizardDilaog);
+    this.mPropertyFileDataDialog.setPrevious(this.mSingleDataFileChooserWizardDialog);
     this.mPropertyFileDataDialog.pack();
     this.mPropertyFileDataDialog.setLocation(this.getX() + 20, this.getY() + 20);
     this.mPropertyFileDataDialog.setVisible(true);
@@ -1237,7 +1237,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
           // parse the data file
           try {
             SDArrayFileParseResult result =
-                mDataCreator.parseFileComlumnType(fileName, dataType, true, this.mVersionNumber);
+                mDataCreator.parseFileColumnType(fileName, dataType, true, this.mVersionNumber);
             if (result == null) {
               return false;
             }

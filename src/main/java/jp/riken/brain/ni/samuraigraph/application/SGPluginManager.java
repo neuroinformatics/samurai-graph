@@ -65,23 +65,23 @@ public class SGPluginManager implements SGIDisposable {
   /**
    * Load jar files.
    *
-   * @param jarfiles
+   * @param jarFiles
    * @return true if all jar files are loaded. false if some exception occurred.
    */
-  private boolean loadJars(File[] jarfiles) {
+  private boolean loadJars(File[] jarFiles) {
     boolean result = true;
-    for (int i = 0; i < jarfiles.length; i++) {
+    for (int i = 0; i < jarFiles.length; i++) {
       try {
-        this.loadJar(jarfiles[i], this.mClassList);
+        this.loadJar(jarFiles[i], this.mClassList);
       } catch (Exception e) {
-        this.mExceptionList.add(new PluginException(e, jarfiles[i].getName()));
+        this.mExceptionList.add(new PluginException(e, jarFiles[i].getName()));
         result = false;
       }
     }
     return result;
   }
 
-  private void loadJar(final File jarfile, List<Class<?>> clslist)
+  private void loadJar(final File jarFile, List<Class<?>> clsList)
       throws ClassNotFoundException,
           ZipException,
           IOException,
@@ -89,7 +89,7 @@ public class SGPluginManager implements SGIDisposable {
           IllegalAccessException,
           NoSuchMethodException,
           java.lang.reflect.InvocationTargetException {
-    ZipFile zip = new ZipFile(jarfile);
+    ZipFile zip = new ZipFile(jarFile);
     SGJarClassLoader jcl = new SGJarClassLoader(zip);
 
     List<Class<?>> clsInJar = new ArrayList<Class<?>>();
@@ -109,7 +109,7 @@ public class SGPluginManager implements SGIDisposable {
         }
       }
     }
-    clslist.addAll(clsInJar);
+    clsList.addAll(clsInJar);
   }
 
   /** Disposes of this object. */
@@ -234,7 +234,7 @@ public class SGPluginManager implements SGIDisposable {
   /**
    * Return jar filename if some exceptions occurred and failed to load it.
    *
-   * @return "" if succeeds. Return jar filenaem if failed.
+   * @return "" if succeeds. Return jar filename if failed.
    */
   public String getFirstExceptionJarFilename() {
     if (this.mExceptionList.size() == 0) {

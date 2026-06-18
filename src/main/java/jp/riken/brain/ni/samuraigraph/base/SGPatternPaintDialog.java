@@ -257,11 +257,11 @@ public class SGPatternPaintDialog extends JDialog
     int typeIndex =
         SGPatternPaint.getTypeFromName((String) this.mPatternSelectionComboBox.getSelectedItem());
 
-    SGPatternPaint ppaint = new SGPatternPaint();
-    ppaint.setColor(color);
-    ppaint.setTypeIndex(typeIndex);
+    SGPatternPaint pPaint = new SGPatternPaint();
+    pPaint.setColor(color);
+    pPaint.setTypeIndex(typeIndex);
 
-    return ppaint;
+    return pPaint;
   }
 
   private List<ChangeListener> _listener = new ArrayList<ChangeListener>();

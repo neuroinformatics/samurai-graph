@@ -211,7 +211,7 @@ public interface SGIConstants {
 
   public static final String LAF_WINDOWS = "Windows";
 
-  public static final String LAF_WINDOWSCLASSIC = "Windows Classic";
+  public static final String LAF_WINDOWS_CLASSIC = "Windows Classic";
 
   public static final String LAF_AQUA = "Aqua";
 

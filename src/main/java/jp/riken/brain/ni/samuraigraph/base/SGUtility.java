@@ -384,18 +384,18 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * Copy the list of copied objects.
    *
-   * @param list1 a list which contains copiable objects to be copied
+   * @param list1 a list which contains copyable objects to be copied
    * @param list2 a list to set the copied objects
    * @return true if succeeded
    */
   @SuppressWarnings("unchecked")
-  public static boolean copyObjects(final List<? extends SGICopiable> list1, final List<?> list2) {
+  public static boolean copyObjects(final List<? extends SGICopyable> list1, final List<?> list2) {
     if (list1 == null || list2 == null) {
       throw new IllegalArgumentException("list1==null || list2==null");
     }
 
     for (int ii = 0; ii < list1.size(); ii++) {
-      SGICopiable cp = list1.get(ii);
+      SGICopyable cp = list1.get(ii);
       ((List) list2).add(cp.copy());
     }
 
@@ -925,7 +925,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * Moves an object to the tail of the list.
    *
-   * @param obj an objct to be moved
+   * @param obj an object to be moved
    * @param list the list which contains the object
    * @return true if succeeded
    */
@@ -936,7 +936,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * Moves an object to next position of the list.
    *
-   * @param obj an objct to be moved
+   * @param obj an object to be moved
    * @param list the list which contains the object
    * @return true if succeeded
    */
@@ -949,7 +949,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * Moves an object to previous position of the list.
    *
-   * @param obj an objct to be moved
+   * @param obj an object to be moved
    * @param list the list which contains the object
    * @return true if succeeded
    */
@@ -962,7 +962,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * Moves an object to the head of the list.
    *
-   * @param obj an objct to be moved
+   * @param obj an object to be moved
    * @param list the list which contains the object
    * @return true if succeeded
    */
@@ -1328,30 +1328,30 @@ public class SGUtility implements SGIDrawingElementConstants {
    *
    * @param value an input value
    * @param unit the unit for the input value
-   * @param convUnit the unit to convert
+   * @param outputUnit the unit for converted result
    * @param min the minimum value for converted result
-   * @param max the minimum value for converted result
+   * @param max the maximum value for converted result
    * @param order the minimal order for converted result
    */
   public static Float calcPropertyValue(
       final float value,
       final String unit,
-      final String convUnit,
+      final String outputUnit,
       final double min,
       final double max,
       final int order) {
 
-    Float cValue = calcPropertyValueInUnit(value, unit, convUnit, min, max, order);
+    Float cValue = calcPropertyValueInUnit(value, unit, outputUnit, min, max, order);
     if (cValue == null) {
       return null;
     }
 
     // convert the value into a given unit
     final float vNew;
-    if (convUnit == null) {
+    if (outputUnit == null) {
       vNew = cValue.floatValue();
     } else {
-      vNew = (float) SGUtilityText.convertToPoint(cValue.floatValue(), convUnit);
+      vNew = (float) SGUtilityText.convertToPoint(cValue.floatValue(), outputUnit);
     }
     return Float.valueOf(vNew);
   }
@@ -1361,15 +1361,15 @@ public class SGUtility implements SGIDrawingElementConstants {
    *
    * @param value an input value
    * @param unit the unit for the input value
-   * @param convUnit the unit to convert
+   * @param outputUnit the unit for converted result
    * @param min the minimum value for converted result
-   * @param max the minimum value for converted result
+   * @param max the maximum value for converted result
    * @param order the minimal order for converted result
    */
   public static Float calcPropertyValueInUnit(
       final float value,
       final String unit,
-      final String convUnit,
+      final String outputUnit,
       final double min,
       final double max,
       final int order) {
@@ -1380,31 +1380,31 @@ public class SGUtility implements SGIDrawingElementConstants {
     }
 
     // convert a given value to a value in a given unit
-    double vConv;
-    if (unit == null || convUnit == null) {
+    double vConverted;
+    if (unit == null || outputUnit == null) {
       if (value < min) {
         return null;
       } else if (value > max) {
         return null;
       } else {
-        vConv = value;
+        vConverted = value;
       }
     } else {
-      final double conv = SGUtilityText.convert(value, unit, convUnit);
-      if (conv < min) {
+      final double convertedValue = SGUtilityText.convert(value, unit, outputUnit);
+      if (convertedValue < min) {
         return null;
-      } else if (conv > max) {
+      } else if (convertedValue > max) {
         return null;
       } else {
-        vConv = conv;
+        vConverted = convertedValue;
       }
     }
 
     // round off the value in a given unit
     final int digit = order - 1;
-    final double convOff = SGUtilityNumber.roundOffNumber(vConv, digit);
+    final double roundedValue = SGUtilityNumber.roundOffNumber(vConverted, digit);
 
-    return Float.valueOf((float) convOff);
+    return Float.valueOf((float) roundedValue);
   }
 
   /**

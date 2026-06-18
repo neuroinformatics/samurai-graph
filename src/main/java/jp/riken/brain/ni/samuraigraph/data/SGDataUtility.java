@@ -1061,10 +1061,10 @@ public class SGDataUtility
   }
 
   // returns a list of number convertible column index
-  public static List<Integer> getColumnIndexListOfNumber(final List<Token> tokenlist) {
+  public static List<Integer> getColumnIndexListOfNumber(final List<Token> tokenList) {
     List<Integer> list = new ArrayList<Integer>();
-    for (int ii = 0; ii < tokenlist.size(); ii++) {
-      Token token = (Token) tokenlist.get(ii);
+    for (int ii = 0; ii < tokenList.size(); ii++) {
+      Token token = (Token) tokenList.get(ii);
       final String str = token.getString();
       if (token.isDoubleQuoted()) {
         list.add(Integer.valueOf(0));
@@ -2215,7 +2215,7 @@ public class SGDataUtility
   /**
    * Returns the bounds from given array.
    *
-   * @param array an array of values to search the mininum and maximum value
+   * @param array an array of values to search the minimum and maximum value
    * @return the bounds of given array
    */
   public static SGValueRange getBounds(final double[] array) {
@@ -3298,7 +3298,7 @@ public class SGDataUtility
       final List<SGDataColumnInfo> colInfoList,
       final Integer singleIndex,
       final String singleColumnType,
-      final String multColumnType) {
+      final String multiColumnType) {
 
     String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
     String[] compColType = new String[curColType.length];
@@ -3311,7 +3311,7 @@ public class SGDataUtility
         SGDataColumnInfo colInfo = colInfoList.get(ii);
         String valueType = colInfo.getValueType();
         if (VALUE_TYPE_NUMBER.equals(valueType)) {
-          compColType[ii] = multColumnType;
+          compColType[ii] = multiColumnType;
         } else {
           compColType[ii] = curColType[ii];
         }
@@ -3330,7 +3330,7 @@ public class SGDataUtility
           }
           List<SGDimensionInfo> dimList = nColInfo.getDimensions();
           if (dimList.contains(cDim)) {
-            compColType[ii] = multColumnType;
+            compColType[ii] = multiColumnType;
           } else {
             compColType[ii] = "";
           }
@@ -3408,7 +3408,7 @@ public class SGDataUtility
     }
 
     boolean errorbarFlag = false;
-    boolean ticklabelFlag = false;
+    boolean tickLabelFlag = false;
     if (leValueNames != null
         && leValueNames.length > 0
         && ueValueNames != null
@@ -3424,7 +3424,7 @@ public class SGDataUtility
         && thValueNames != null
         && thValueNames.length > 0
         && tlValueNames.length == thValueNames.length) {
-      ticklabelFlag = true;
+      tickLabelFlag = true;
     }
     if (errorbarFlag && leValueNames != null && ueValueNames != null && ehValueNames != null) {
       for (int i = 0; i < leValueNames.length; i++) {
@@ -3441,7 +3441,7 @@ public class SGDataUtility
         }
       }
     }
-    if (ticklabelFlag && tlValueNames != null && thValueNames != null) {
+    if (tickLabelFlag && tlValueNames != null && thValueNames != null) {
       for (int i = 0; i < tlValueNames.length; i++) {
         int tlVarIndex = nc.getVariableIndex(tlValueNames[i]);
         columns[tlVarIndex].setColumnType(
@@ -3995,8 +3995,8 @@ public class SGDataUtility
       if (!(data instanceof SGISXYMultipleDimensionData)) {
         continue;
       }
-      SGISXYMultipleDimensionData dataMult = (SGISXYMultipleDimensionData) data;
-      SGIntegerSeriesSet indices = dataMult.getIndices();
+      SGISXYMultipleDimensionData dataMulti = (SGISXYMultipleDimensionData) data;
+      SGIntegerSeriesSet indices = dataMulti.getIndices();
       int[] indexArray = indices.getNumbers();
       for (int jj = 0; jj < indexArray.length; jj++) {
         indexSet.add(indexArray[jj]);
@@ -4425,21 +4425,21 @@ public class SGDataUtility
    * Rounds the input value of the magnitude per centimeter of vector type data using the maximum
    * length of vectors.
    *
-   * @param magpercm the magnitude per centimeter of vector type data
+   * @param magPerCm the magnitude per centimeter of vector type data
    * @param data the vector type data
    * @return rounded value
    */
-  public static float roundMagnitudePerCM(final float magpercm, final SGIVXYTypeData data) {
-    if (Float.isNaN(magpercm)) {
+  public static float roundMagnitudePerCM(final float magPerCm, final SGIVXYTypeData data) {
+    if (Float.isNaN(magPerCm)) {
       return Float.NaN;
     }
     final double[] mArray = data.getMagnitudeArray(false);
     final double max = SGUtilityNumber.max(mArray);
     if (Double.isNaN(max) || max <= 0.0) {
-      return magpercm;
+      return magPerCm;
     }
-    final float magpercmReduced = roundMagnitudePerCM(magpercm, max);
-    return magpercmReduced;
+    final float magPerCmReduced = roundMagnitudePerCM(magPerCm, max);
+    return magPerCmReduced;
   }
 
   /**
@@ -4455,9 +4455,9 @@ public class SGDataUtility
       // Returns the default magnitude of a vector per centimeter.
       return 1.0f;
     }
-    final float magpercm = (float) max;
-    final float magpercmReduced = roundMagnitudePerCM(magpercm, max);
-    return magpercmReduced;
+    final float magPerCm = (float) max;
+    final float magPerCmReduced = roundMagnitudePerCM(magPerCm, max);
+    return magPerCmReduced;
   }
 
   /**
@@ -5222,7 +5222,7 @@ public class SGDataUtility
   }
 
   /**
-   * Returns a text string that variable names are binded into curly bracket comma separately.
+   * Returns a text string that variable names are bound into curly bracket comma separately.
    *
    * @param vars the array of variables
    * @return created text string

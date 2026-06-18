@@ -77,6 +77,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGTextDataColumn;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGStringBraceModifier;
 import org.w3c.dom.DOMImplementation;
 import ucar.nc2.NetcdfFile;
+import ucar.nc2.NetcdfFiles;
 
 /** This class provides static methods for the application. */
 public class SGApplicationUtility
@@ -576,7 +577,7 @@ public class SGApplicationUtility
       if (SGDataUtility.isSDArrayData(dataType)) {
 
         if (showProgress && progress != null) {
-          progress.setProgressMessage(PROGRESS_MESSAGE_READFILE);
+          progress.setProgressMessage(PROGRESS_MESSAGE_READ_FILE);
         }
 
         // read text data from file
@@ -587,7 +588,7 @@ public class SGApplicationUtility
 
         if (showProgress && progress != null) {
           // allocate memory
-          progress.setProgressMessage(PROGRESS_MESSAGE_CREATEDATA);
+          progress.setProgressMessage(PROGRESS_MESSAGE_CREATE_DATA);
         }
 
         // create columns
@@ -655,7 +656,7 @@ public class SGApplicationUtility
   }
 
   public static NetcdfFile openNetCDF(final String path) throws IOException {
-    NetcdfFile ncFile = NetcdfFile.open(path);
+    NetcdfFile ncFile = NetcdfFiles.open(path);
     return ncFile;
   }
 
@@ -1415,7 +1416,7 @@ public class SGApplicationUtility
 
         if (isFirstLine) {
           isFirstLine = false;
-          if (evaluteTitleList(indexList)) {
+          if (evaluateTitleList(indexList)) {
             continue;
           }
         }
@@ -1458,7 +1459,7 @@ public class SGApplicationUtility
   }
 
   // check title list
-  static boolean evaluteTitleList(final List<Integer> indexList) {
+  static boolean evaluateTitleList(final List<Integer> indexList) {
     boolean ret = true;
     if (indexList.size() == 0) {
       return false;
@@ -1633,7 +1634,7 @@ public class SGApplicationUtility
     // NetCDF
     boolean netcdf = true;
     try {
-      if (!NetcdfFile.canOpen(path)) {
+      if (!NetcdfFiles.canOpen(path)) {
         netcdf = false;
       }
     } catch (IOException e) {
@@ -1772,16 +1773,16 @@ public class SGApplicationUtility
   public static String getPropertyString(
       SGDrawingWindow wnd, SGExportParameter params, String versionString) throws IOException {
     SGPropertyFileCreator propFileCreator = new SGPropertyFileCreator();
-    ByteArrayOutputStream baos = null;
+    ByteArrayOutputStream baOs = null;
     try {
-      baos = new ByteArrayOutputStream();
-      propFileCreator.create(wnd, baos, params, versionString);
-      return baos.toString(SGIConstants.CHAR_SET_NAME_UTF8);
+      baOs = new ByteArrayOutputStream();
+      propFileCreator.create(wnd, baOs, params, versionString);
+      return baOs.toString(SGIConstants.CHAR_SET_NAME_UTF8);
     } catch (Exception e) {
       return null;
     } finally {
-      if (null != baos) {
-        baos.close();
+      if (null != baOs) {
+        baOs.close();
       }
     }
   }
@@ -1789,16 +1790,16 @@ public class SGApplicationUtility
   /**
    * Returns a list of dropped files.
    *
-   * @param dtde a drop event
+   * @param event a drop event
    * @return A file list. If some error occurs, returns null.
    */
-  public static List<File> getDroppedFileList(final DropTargetDropEvent dtde) {
+  public static List<File> getDroppedFileList(final DropTargetDropEvent event) {
     List<File> fileList = new ArrayList<File>();
-    dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
+    event.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
     try {
-      if ((dtde.getDropAction() & DnDConstants.ACTION_COPY_OR_MOVE) != 0) {
-        Transferable trans = dtde.getTransferable();
-        if (dtde.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+      if ((event.getDropAction() & DnDConstants.ACTION_COPY_OR_MOVE) != 0) {
+        Transferable trans = event.getTransferable();
+        if (event.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
           Object transferred = trans.getTransferData(DataFlavor.javaFileListFlavor);
           if (transferred instanceof List<?> list) {
             for (Object item : list) {
@@ -1807,7 +1808,7 @@ public class SGApplicationUtility
               }
             }
           }
-        } else if (dtde.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+        } else if (event.isDataFlavorSupported(DataFlavor.stringFlavor)) {
           String str;
           String ss = (String) trans.getTransferData(DataFlavor.stringFlavor);
           StringTokenizer st = new StringTokenizer(ss, "\n");
@@ -1820,12 +1821,12 @@ public class SGApplicationUtility
       }
     } catch (Exception ex) {
       // notify drop failed
-      dtde.dropComplete(false);
+      event.dropComplete(false);
       return null;
     }
 
     // notify drop succeeded
-    dtde.dropComplete(true);
+    event.dropComplete(true);
 
     return fileList;
   }

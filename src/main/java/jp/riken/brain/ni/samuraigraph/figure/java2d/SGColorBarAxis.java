@@ -668,7 +668,7 @@ class SGColorBarAxis extends SGAxisElement
       case AXIS_NORMAL_VERTICAL_LEFT:
       case AXIS_NORMAL_VERTICAL_RIGHT:
         // vertical axes
-        range = this.dragScaleNumberPerpendiculer(e, this.mAxisLines[0]);
+        range = this.dragScaleNumberPerpendicular(e, this.mAxisLines[0]);
         break;
       default:
         throw new Error("Invalid location: " + loc);
@@ -689,7 +689,7 @@ class SGColorBarAxis extends SGAxisElement
       case AXIS_NORMAL_VERTICAL_LEFT:
       case AXIS_NORMAL_VERTICAL_RIGHT:
         // vertical axes
-        range = this.dragScaleLinePerpendiculer(e, this.mAxisLines[0]);
+        range = this.dragScaleLinePerpendicular(e, this.mAxisLines[0]);
         break;
       default:
         throw new Error("Invalid location: " + loc);
@@ -749,7 +749,7 @@ class SGColorBarAxis extends SGAxisElement
     }
 
     final float mag = this.mAxisElement.getMagnification();
-    final boolean invcoord = this.isInvertCoordinates();
+    final boolean invCoord = this.isInvertCoordinates();
 
     double min;
     double max;
@@ -784,7 +784,7 @@ class SGColorBarAxis extends SGAxisElement
     if (DIRECTION_HORIZONTAL_LOWER.equals(this.mDirection)
         || DIRECTION_HORIZONTAL_UPPER.equals(this.mDirection)) {
       final double x;
-      if (invcoord) {
+      if (invCoord) {
         x = this.getX() + len * (max - valueInScale) / (max - min);
       } else {
         x = this.getX() + len * (valueInScale - min) / (max - min);
@@ -802,7 +802,7 @@ class SGColorBarAxis extends SGAxisElement
     } else if (DIRECTION_VERTICAL_LEFT.equals(this.mDirection)
         || DIRECTION_VERTICAL_RIGHT.equals(this.mDirection)) {
       final double y;
-      if (invcoord) {
+      if (invCoord) {
         y = this.getY() + len * (1.0 - (max - valueInScale) / (max - min));
       } else {
         y = this.getY() + len * (1.0 - (valueInScale - min) / (max - min));
@@ -928,7 +928,7 @@ class SGColorBarAxis extends SGAxisElement
    * @return true if succeeded
    */
   protected boolean setLocationOfScaleNumbers() {
-    final boolean invcoord = this.isInvertCoordinates();
+    final boolean invCoord = this.isInvertCoordinates();
     final int scaleType = this.mAxis.getScaleType();
     final float mag = this.mAxisElement.getMagnification();
     final float factor = mag / SGIConstants.CM_POINT_RATIO;
@@ -969,7 +969,7 @@ class SGColorBarAxis extends SGAxisElement
           || DIRECTION_HORIZONTAL_UPPER.equals(this.mDirection)) {
 
         final float x;
-        if (invcoord) {
+        if (invCoord) {
           x =
               (float)
                   (this.getX()
@@ -997,7 +997,7 @@ class SGColorBarAxis extends SGAxisElement
           || DIRECTION_VERTICAL_RIGHT.equals(this.mDirection)) {
 
         final float y;
-        if (invcoord) {
+        if (invCoord) {
           y =
               (float)
                   (this.getY()
@@ -1237,7 +1237,7 @@ class SGColorBarAxis extends SGAxisElement
         this.mAxisElement.calcValue(this.mAxisElement.getComponent().getY(), axis, false);
     currentValue = SGUtilityNumber.getNumberInRangeOrder(currentValue, axis);
 
-    // if values from the dialog is diffrent from the current values,
+    // if values from the dialog is different from the current values,
     // set the values from the dialog
     float y;
     if (value == currentValue) {

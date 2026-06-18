@@ -35,7 +35,7 @@ public class SGImage implements SGIDisposable {
   public SGImage(final ImageObserver obs) {
     super();
     this.setImageObserver(obs);
-    this.setDafaultImageSize();
+    this.setDefaultImageSize();
   }
 
   /**
@@ -45,7 +45,7 @@ public class SGImage implements SGIDisposable {
     super();
     this.setImage(image);
     this.setImageObserver(obs);
-    this.setDafaultImageSize();
+    this.setDefaultImageSize();
   }
 
   /**
@@ -174,7 +174,7 @@ public class SGImage implements SGIDisposable {
   /**
    * @return
    */
-  public boolean setDafaultImageSize() {
+  public boolean setDefaultImageSize() {
     if (this.mImageObserver == null || this.mImage == null) {
       return false;
     }

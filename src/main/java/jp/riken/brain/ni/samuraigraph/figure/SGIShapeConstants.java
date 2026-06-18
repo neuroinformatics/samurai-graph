@@ -15,7 +15,7 @@ public interface SGIShapeConstants {
   public static final String SHAPE_TYPE_LINE = "Line";
 
   //
-  // Default vaules
+  // Default values
   //
 
   // X Axis
@@ -74,19 +74,19 @@ public interface SGIShapeConstants {
   //
 
   // Width
-  public static final float DEFAULT_SHAPE_RETANGLE_WIDTH = 5.0f;
+  public static final float DEFAULT_SHAPE_RECTANGLE_WIDTH = 5.0f;
 
   // Height
-  public static final float DEFAULT_SHAPE_RETANGLE_HEIGHT = 4.0f;
+  public static final float DEFAULT_SHAPE_RECTANGLE_HEIGHT = 4.0f;
 
   // Color
   public static final Color DEFAULT_SHAPE_RECTANGLE_INNER_COLOR = Color.WHITE;
 
   // Edge Line Width
-  public static final float DEFAULT_SHAPE_RCTANGLE_EDGE_LINE_WIDTH = DEFAULT_SHAPE_LINE_WIDTH;
+  public static final float DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_WIDTH = DEFAULT_SHAPE_LINE_WIDTH;
 
   // Edge Line Type
-  public static final int DEFAULT_SHAPE_RCTANGLE_EDGE_LINE_TYPE = DEFAULT_SHAPE_LINE_TYPE;
+  public static final int DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_TYPE = DEFAULT_SHAPE_LINE_TYPE;
 
   // Edge Line Color
   public static final Color DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_COLOR = DEFAULT_SHAPE_LINE_COLOR;
@@ -94,7 +94,7 @@ public interface SGIShapeConstants {
   // Edge Line Visibility
   public static final boolean DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_VISIBLE = true;
 
-  // Transparecy
+  // Transparency
   public static final boolean DEFAULT_SHAPE_RECTANGLE_TRANSPARENT = false;
 
   // Anchored

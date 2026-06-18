@@ -50,20 +50,20 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
 
   /**
    * @param destDirName
-   * @param zfileName
+   * @param zFileName
    * @return always 0 if succeeds.
    * @throws IOException
    */
-  private int extract(final String destDirName, final String zfileName) throws IOException {
+  private int extract(final String destDirName, final String zFileName) throws IOException {
     this.mFileList.clear();
     File destDir = new File(destDirName);
     if (!destDir.isDirectory()) {
       throw new IOException("Couldn't access dir " + destDir);
     }
-    ZipFile zfile = null;
+    ZipFile zFile = null;
     try {
-      zfile = new ZipFile(zfileName);
-      Enumeration<? extends ZipEntry> entries = zfile.entries();
+      zFile = new ZipFile(zFileName);
+      Enumeration<? extends ZipEntry> entries = zFile.entries();
       while (entries.hasMoreElements()) {
         ZipEntry ze = entries.nextElement();
         String path = SGApplicationUtility.getPathName(destDir.getAbsolutePath(), ze.getName());
@@ -75,7 +75,7 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
           BufferedInputStream is = null;
           BufferedOutputStream os = null;
           try {
-            is = new BufferedInputStream(zfile.getInputStream(ze));
+            is = new BufferedInputStream(zFile.getInputStream(ze));
             File dest = f.getParentFile();
             if (!dest.exists() && !dest.mkdirs())
               throw new IOException("Couldn't create dir " + dest);
@@ -92,9 +92,9 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
         }
       }
     } finally {
-      if (zfile != null) {
+      if (zFile != null) {
         try {
-          zfile.close();
+          zFile.close();
         } catch (IOException e) {
         }
       }
@@ -133,14 +133,14 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
   }
 
   public boolean deleteExtractedFiles() {
-    ArrayList<File> dirlist = new ArrayList<File>();
+    ArrayList<File> dirList = new ArrayList<File>();
     for (int ii = 0; ii < this.mFileList.size(); ii++) {
       File f = (File) this.mFileList.get(ii);
-      if (f.isDirectory()) dirlist.add(f);
+      if (f.isDirectory()) dirList.add(f);
       f.delete();
     }
-    for (int ii = dirlist.size() - 1; ii >= 0; ii--) {
-      File f = (File) dirlist.get(ii);
+    for (int ii = dirList.size() - 1; ii >= 0; ii--) {
+      File f = (File) dirList.get(ii);
       f.delete();
     }
     this.mFileList.clear();

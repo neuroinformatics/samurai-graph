@@ -555,7 +555,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     /**
      * Sets the line color.
      *
-     * @param color the line colot to set
+     * @param color the line color to set
      * @return true if succeeded
      */
     public boolean setLineColor(final Color color) {
@@ -831,9 +831,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     return true;
   }
 
-  /**
-   * @author okumura
-   */
   public static class SymbolProperties extends ElementGroupProperties {
     private SGDrawingElementSymbol.SymbolProperties mSymbolProperties =
         new SGDrawingElementSymbol.SymbolProperties();

@@ -1460,7 +1460,7 @@ public abstract class SGAxisElement
         oldValueInScale = Math.log10(elValue);
         break;
       default:
-        throw new Error("Ivalid scaleType: " + scaleType);
+        throw new Error("Invalid scaleType: " + scaleType);
     }
     ValueInScale value = new ValueInScale();
     value.minValueTempInScale = minValueTempInScale;
@@ -1474,7 +1474,7 @@ public abstract class SGAxisElement
 
   /** Called when a scale number is dragged horizontally. */
   protected AxisValueRange dragScaleNumberHorizontal(MouseEvent e, ElementLineAxis line) {
-    final boolean invcoord = this.isInvertCoordinates();
+    final boolean invCoord = this.isInvertCoordinates();
     final ElementStringNumber el = (ElementStringNumber) this.mDraggingElement;
     ValueInScale value = this.getValueTempInScale(el.mValue);
     final double minValueTempInScale = value.minValueTempInScale;
@@ -1487,7 +1487,7 @@ public abstract class SGAxisElement
     final float minCoordinate = line.getStart().x;
     final float maxCoordinate = line.getEnd().x;
 
-    if (invcoord) {
+    if (invCoord) {
       if (draggedCoordinate < minCoordinate) {
         draggedCoordinate = minCoordinate;
       }
@@ -1504,7 +1504,7 @@ public abstract class SGAxisElement
     }
 
     final double valueInScale;
-    if (invcoord) {
+    if (invCoord) {
       valueInScale =
           minValueTempInScale
               + (maxValueTempInScale - minValueTempInScale)
@@ -1541,8 +1541,8 @@ public abstract class SGAxisElement
   }
 
   /** Called when a scale number is dragged vertically. */
-  protected AxisValueRange dragScaleNumberPerpendiculer(MouseEvent e, ElementLineAxis line) {
-    final boolean invcoord = this.isInvertCoordinates();
+  protected AxisValueRange dragScaleNumberPerpendicular(MouseEvent e, ElementLineAxis line) {
+    final boolean invCoord = this.isInvertCoordinates();
     final ElementStringNumber el = (ElementStringNumber) this.mDraggingElement;
     ValueInScale value = this.getValueTempInScale(el.mValue);
     final double minValueTempInScale = value.minValueTempInScale;
@@ -1554,7 +1554,7 @@ public abstract class SGAxisElement
         e.getY() - this.mAxisElement.mPressedElementOrigin.y + (float) rect.getHeight() / 2.0f;
     final float minCoordinate = line.getEnd().y;
     final float maxCoordinate = line.getStart().y;
-    if (invcoord) {
+    if (invCoord) {
       if (draggedCoordinate <= minCoordinate) {
         return null;
       }
@@ -1571,7 +1571,7 @@ public abstract class SGAxisElement
     }
 
     final double valueInScale;
-    if (invcoord) {
+    if (invCoord) {
       valueInScale =
           minValueTempInScale
               + (maxValueTempInScale - minValueTempInScale)
@@ -1664,7 +1664,7 @@ public abstract class SGAxisElement
   }
 
   /** Called when a scale line is dragged vertically. */
-  protected AxisValueRange dragScaleLinePerpendiculer(MouseEvent e, ElementLineAxis line) {
+  protected AxisValueRange dragScaleLinePerpendicular(MouseEvent e, ElementLineAxis line) {
     final ElementLineTickMark el = (ElementLineTickMark) this.mDraggingElement;
     ValueInScale value = this.getValueTempInScale(el.mValue);
     final double minValueTempInScale = value.minValueTempInScale;
@@ -1730,7 +1730,7 @@ public abstract class SGAxisElement
         maxValue = Math.pow(10.0, maxValueInScale);
         break;
       default:
-        throw new Error("Ivalid scaleType: " + scaleType);
+        throw new Error("Invalid scaleType: " + scaleType);
     }
     AxisValueRange range = new AxisValueRange();
     final boolean dateMode = this.getDateMode();
@@ -3351,7 +3351,7 @@ public abstract class SGAxisElement
         }
         result.putResult(k, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_EXPONENT_VALUE.equalsIgnoreCase(key)
-          || COM_AXIS_NUMBER_FORMAT_EXPONTNE_VALUE.equalsIgnoreCase(key)) {
+          || COM_AXIS_NUMBER_FORMAT_EXPONENT_VALUE.equalsIgnoreCase(key)) {
         String k = map.getOriginalKey(key);
         Integer num = SGUtilityText.getInteger(value);
         if (num == null) {
@@ -4237,14 +4237,14 @@ public abstract class SGAxisElement
    * @return true if succeeded
    */
   public boolean setSpaceAxisLineAndNumbers(final float space, final String unit) {
-    final double conv = SGUtilityText.convert(space, unit, SPACE_UNIT);
-    if (conv < SPACE_BETWEEN_LINE_AND_NUMBERS_MIN) {
+    final double value = SGUtilityText.convert(space, unit, SPACE_UNIT);
+    if (value < SPACE_BETWEEN_LINE_AND_NUMBERS_MIN) {
       return false;
     }
-    if (conv > SPACE_BETWEEN_LINE_AND_NUMBERS_MAX) {
+    if (value > SPACE_BETWEEN_LINE_AND_NUMBERS_MAX) {
       return false;
     }
-    return this.setSpaceAxisLineAndNumbers(this.roundOffSpace((float) conv));
+    return this.setSpaceAxisLineAndNumbers(this.roundOffSpace((float) value));
   }
 
   /**
@@ -4285,14 +4285,14 @@ public abstract class SGAxisElement
    * @return true if succeeded
    */
   public boolean setSpaceTitleAndNumbers(final float space, final String unit) {
-    final double conv = SGUtilityText.convert(space, unit, SPACE_UNIT);
-    if (conv < SPACE_BETWEEN_TITLE_AND_NUMBERS_MIN) {
+    final double value = SGUtilityText.convert(space, unit, SPACE_UNIT);
+    if (value < SPACE_BETWEEN_TITLE_AND_NUMBERS_MIN) {
       return false;
     }
-    if (conv > SPACE_BETWEEN_TITLE_AND_NUMBERS_MAX) {
+    if (value > SPACE_BETWEEN_TITLE_AND_NUMBERS_MAX) {
       return false;
     }
-    return this.setSpaceTitleAndNumbers(this.roundOffSpace((float) conv));
+    return this.setSpaceTitleAndNumbers(this.roundOffSpace((float) value));
   }
 
   /**
@@ -4333,14 +4333,14 @@ public abstract class SGAxisElement
    * @return true if succeeded
    */
   public boolean setTitleShiftFromCenter(final float shift, final String unit) {
-    final double conv = SGUtilityText.convert(shift, unit, SPACE_UNIT);
-    if (conv < TITLE_SHIFT_MIN) {
+    final double value = SGUtilityText.convert(shift, unit, SPACE_UNIT);
+    if (value < TITLE_SHIFT_MIN) {
       return false;
     }
-    if (conv > TITLE_SHIFT_MAX) {
+    if (value > TITLE_SHIFT_MAX) {
       return false;
     }
-    return this.setTitleShiftFromCenter(this.roundOffSpace((float) conv));
+    return this.setTitleShiftFromCenter(this.roundOffSpace((float) value));
   }
 
   /**
@@ -4411,14 +4411,14 @@ public abstract class SGAxisElement
    * @return true if succeeded
    */
   public boolean setExponentLocationX(final float x, final String unit) {
-    final double conv = SGUtilityText.convert(x, unit, EXPONENT_LOCATION_UNIT);
-    if (conv < EXPONENT_LOCATION_MIN) {
+    final double value = SGUtilityText.convert(x, unit, EXPONENT_LOCATION_UNIT);
+    if (value < EXPONENT_LOCATION_MIN) {
       return false;
     }
-    if (conv > EXPONENT_LOCATION_MAX) {
+    if (value > EXPONENT_LOCATION_MAX) {
       return false;
     }
-    return this.setExponentLocationX(this.roundOffExponentShift((float) conv));
+    return this.setExponentLocationX(this.roundOffExponentShift((float) value));
   }
 
   /**
@@ -4429,14 +4429,14 @@ public abstract class SGAxisElement
    * @return true if succeeded
    */
   public boolean setExponentLocationY(final float y, final String unit) {
-    final double conv = SGUtilityText.convert(y, unit, EXPONENT_LOCATION_UNIT);
-    if (conv < EXPONENT_LOCATION_MIN) {
+    final double value = SGUtilityText.convert(y, unit, EXPONENT_LOCATION_UNIT);
+    if (value < EXPONENT_LOCATION_MIN) {
       return false;
     }
-    if (conv > EXPONENT_LOCATION_MAX) {
+    if (value > EXPONENT_LOCATION_MAX) {
       return false;
     }
-    return this.setExponentLocationY(this.roundOffExponentShift((float) conv));
+    return this.setExponentLocationY(this.roundOffExponentShift((float) value));
   }
 
   public boolean isHorizontal() {
@@ -5405,46 +5405,46 @@ public abstract class SGAxisElement
     }
 
     private float[] movePositionForRotation() {
-      float thisx = this.getX();
-      float thisy = this.getY();
+      float thisX = this.getX();
+      float thisY = this.getY();
       float angle = this.getAngle();
       Rectangle2D rect = super.getElementBounds();
-      if (thisy > rect.getY()) {
-        float diffy = thisy - (float) rect.getY();
-        this.setLocation(thisx, thisy + diffy);
+      if (thisY > rect.getY()) {
+        float diffY = thisY - (float) rect.getY();
+        this.setLocation(thisX, thisY + diffY);
       }
       if (angle > 90 && angle <= 120) {
-        float diffx = (float) rect.getWidth();
-        this.setLocation(thisx + diffx / 30.0f * (angle - 90.0f), thisy);
+        float diffX = (float) rect.getWidth();
+        this.setLocation(thisX + diffX / 30.0f * (angle - 90.0f), thisY);
       } else if (angle > 120) {
-        float diffx = (float) rect.getWidth();
-        this.setLocation(thisx + diffx, thisy);
+        float diffX = (float) rect.getWidth();
+        this.setLocation(thisX + diffX, thisY);
       } else if (angle < 0.0 && angle >= -90.0f) {
-        float diffx = (float) rect.getWidth();
-        this.setLocation(thisx + diffx / 90.0f * (-angle), thisy);
+        float diffX = (float) rect.getWidth();
+        this.setLocation(thisX + diffX / 90.0f * (-angle), thisY);
       } else if (angle < -90.0f) {
-        float diffx = (float) rect.getWidth();
-        this.setLocation(thisx + diffx, thisy);
+        float diffX = (float) rect.getWidth();
+        this.setLocation(thisX + diffX, thisY);
       }
 
       if (this.mLocationInPlane == SGIFigureElementAxis.AXIS_VERTICAL_1
           || mLocationInPlane == SGIFigureElementAxis.AXIS_NORMAL_VERTICAL_LEFT) {
         Rectangle2D replacedRect = super.getElementBounds();
-        float diffx =
-            (float) (replacedRect.getX() + replacedRect.getWidth() - thisx - rect.getWidth());
-        if (diffx > 0) {
-          this.setLocation(this.getX() - diffx, thisy);
+        float diffX =
+            (float) (replacedRect.getX() + replacedRect.getWidth() - thisX - rect.getWidth());
+        if (diffX > 0) {
+          this.setLocation(this.getX() - diffX, thisY);
         }
       } else if (this.mLocationInPlane == SGIFigureElementAxis.AXIS_VERTICAL_2
           || mLocationInPlane == SGIFigureElementAxis.AXIS_NORMAL_VERTICAL_RIGHT) {
         Rectangle2D replacedRect = super.getElementBounds();
-        float diffx = (float) (replacedRect.getX() - thisx);
-        if (diffx > 0) {
-          this.setLocation(this.getX() - diffx, thisy);
+        float diffX = (float) (replacedRect.getX() - thisX);
+        if (diffX > 0) {
+          this.setLocation(this.getX() - diffX, thisY);
         }
       }
 
-      return new float[] {thisx, thisy};
+      return new float[] {thisX, thisY};
     }
 
     @Override

@@ -92,7 +92,7 @@ public abstract class SGTransparentPaint implements SGIPaint {
     return result;
   }
 
-  public Color getTransparentedColor(final Color color) {
+  public Color getTransparentColor(final Color color) {
     if (this.mAlpha > OPAQUE_THRESHOLD_VALUE) {
       return color;
     }

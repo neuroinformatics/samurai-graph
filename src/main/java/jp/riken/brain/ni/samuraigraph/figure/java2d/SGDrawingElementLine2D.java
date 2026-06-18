@@ -66,8 +66,8 @@ public abstract class SGDrawingElementLine2D extends SGDrawingElementLine
     if (lw < MINIMUM_LINE_WIDTH) {
       lw = MINIMUM_LINE_WIDTH;
     }
-    final double lensq = Line2D.ptSegDistSq(start.x, start.y, end.x, end.y, x, y);
-    return (lensq < lw * lw);
+    final double lenSq = Line2D.ptSegDistSq(start.x, start.y, end.x, end.y, x, y);
+    return (lenSq < lw * lw);
   }
 
   /**

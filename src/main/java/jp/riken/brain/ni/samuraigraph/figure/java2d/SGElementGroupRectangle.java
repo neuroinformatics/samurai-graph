@@ -43,7 +43,7 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
   /** The inner paint of symbols. */
   protected SGIPaint mInnerPaint = new SGFillPaint();
 
-  /** The default construcor. */
+  /** The default constructor. */
   public SGElementGroupRectangle() {
     super();
 
@@ -69,7 +69,7 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
   }
 
   /**
-   * Retruns the x-coordinate of the rectangle at a given index.
+   * Returns the x-coordinate of the rectangle at a given index.
    *
    * @param index the index
    * @return the x-coordinate
@@ -77,7 +77,7 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
   public abstract float getX(final int index);
 
   /**
-   * Retruns the y-coordinate of the rectangle at a given index.
+   * Returns the y-coordinate of the rectangle at a given index.
    *
    * @param index the index
    * @return the y-coordinate
@@ -659,11 +659,7 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     return true;
   }
 
-  /**
-   * A rectangle in a group.
-   *
-   * @author kuromaru
-   */
+  /** A rectangle in a group. */
   protected static class RectInGroup extends SGDrawingElementRectangle2D {
 
     // a group of rectangles

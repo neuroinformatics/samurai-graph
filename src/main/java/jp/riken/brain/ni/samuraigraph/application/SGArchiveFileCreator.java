@@ -39,27 +39,27 @@ public class SGArchiveFileCreator extends SGFileHandler
   }
 
   /** Create a dataset archive file. */
-  public int create(final SGDrawingWindow wnd, final String rootdir, final String pathName) {
-    File zfile = new File(pathName);
-    return this.create(wnd, rootdir, zfile);
+  public int create(final SGDrawingWindow wnd, final String rootDir, final String pathName) {
+    File zFile = new File(pathName);
+    return this.create(wnd, rootDir, zFile);
   }
 
   //
-  public int create(final SGDrawingWindow wnd, final String rootdir, final File zfile) {
-    final File root = new File(rootdir);
+  public int create(final SGDrawingWindow wnd, final String rootDir, final File zFile) {
+    final File root = new File(rootDir);
     if (!root.isDirectory()) {
       return -1;
     }
 
     // get file list
-    List<File> flist = getFileList(root);
-    if (flist.size() == 0) {
+    List<File> fList = getFileList(root);
+    if (fList.size() == 0) {
       return -2;
     }
 
-    final String rootname = root.getAbsolutePath() + File.separator;
+    final String rootName = root.getAbsolutePath() + File.separator;
 
-    ByteArrayOutputStream baos = null;
+    ByteArrayOutputStream baOs = null;
     ZipOutputStream zos = null;
 
     FileOutputStream fos = null;
@@ -67,17 +67,17 @@ public class SGArchiveFileCreator extends SGFileHandler
 
     try {
       // check file size
-      baos = new ByteArrayOutputStream();
-      zos = new ZipOutputStream(baos);
+      baOs = new ByteArrayOutputStream();
+      zos = new ZipOutputStream(baOs);
 
-      List<ZipEntry> zental = new ArrayList<ZipEntry>(); // array list of ZipEntry
-      for (int ii = 0; ii < flist.size(); ii++) {
-        File file = flist.get(ii);
+      List<ZipEntry> entries = new ArrayList<ZipEntry>(); // array list of ZipEntry
+      for (int ii = 0; ii < fList.size(); ii++) {
+        File file = fList.get(ii);
         String fname = file.getAbsolutePath();
-        String entryname = fname.substring(rootname.length());
-        ZipEntry zent = new ZipEntry(entryname);
-        zental.add(zent);
-        writeFileEntry(zos, file, zent);
+        String entryname = fname.substring(rootName.length());
+        ZipEntry entry = new ZipEntry(entryname);
+        entries.add(entry);
+        writeFileEntry(zos, file, entry);
       }
 
       BackgroundImage bgImg = wnd.getBackgroundImage();
@@ -96,16 +96,16 @@ public class SGArchiveFileCreator extends SGFileHandler
       }
 
       zos.close();
-      baos.close();
+      baOs.close();
 
       // create zip file image
-      baos = new ByteArrayOutputStream();
-      zos = new ZipOutputStream(baos);
+      baOs = new ByteArrayOutputStream();
+      zos = new ZipOutputStream(baOs);
 
-      for (int ii = 0; ii < flist.size(); ii++) {
-        File file = flist.get(ii);
-        ZipEntry zent = zental.get(ii);
-        writeFileEntry(zos, file, zent);
+      for (int ii = 0; ii < fList.size(); ii++) {
+        File file = fList.get(ii);
+        ZipEntry entry = entries.get(ii);
+        writeFileEntry(zos, file, entry);
       }
 
       if (bgImg != null) {
@@ -115,8 +115,8 @@ public class SGArchiveFileCreator extends SGFileHandler
       zos.finish();
 
       // get compressed data and write zip file
-      byte[] bufResult = baos.toByteArray();
-      fos = new FileOutputStream(zfile);
+      byte[] bufResult = baOs.toByteArray();
+      fos = new FileOutputStream(zFile);
       bos = new BufferedOutputStream(fos);
       bos.write(bufResult, 0, bufResult.length);
     } catch (FileNotFoundException ex) {
@@ -134,7 +134,7 @@ public class SGArchiveFileCreator extends SGFileHandler
       } catch (Exception e) {
       }
       try {
-        if (baos != null) baos.close();
+        if (baOs != null) baOs.close();
       } catch (Exception e) {
       }
       try {
@@ -187,13 +187,13 @@ public class SGArchiveFileCreator extends SGFileHandler
   }
 
   /** Change file extension in chooser text filename field by selecting file filter. */
-  public static class FileFileterPropertyChangeListenr implements PropertyChangeListener {
+  public static class FileFilterPropertyChangeListener implements PropertyChangeListener {
 
     private final SGFileChooser chooser;
 
     private File currentFile = null;
 
-    public FileFileterPropertyChangeListenr(SGFileChooser chooser, File currentFile) {
+    public FileFilterPropertyChangeListener(SGFileChooser chooser, File currentFile) {
       this.chooser = chooser;
       this.currentFile = currentFile;
     }
@@ -236,8 +236,8 @@ public class SGArchiveFileCreator extends SGFileHandler
 
     // add property change listener for selection of file filter.
     String path = SGApplicationUtility.getPathName(this.mCurrentDirectory, this.mCurrentFileName);
-    FileFileterPropertyChangeListenr ffChangeListener =
-        new FileFileterPropertyChangeListenr((SGFileChooser) chooser, new File(path));
+    FileFilterPropertyChangeListener ffChangeListener =
+        new FileFilterPropertyChangeListener((SGFileChooser) chooser, new File(path));
     chooser.addPropertyChangeListener(ffChangeListener);
 
     return chooser;
@@ -304,21 +304,21 @@ public class SGArchiveFileCreator extends SGFileHandler
    * @param dir : root directory
    */
   private static List<File> getFileList(final File dir) {
-    String absdirname = dir.getAbsolutePath();
+    String absDirname = dir.getAbsolutePath();
     List<File> list = new ArrayList<File>();
     // get file list
-    List<File> flist = _getDirFileList(absdirname);
+    List<File> fList = _getDirFileList(absDirname);
     // check file list
-    for (int ii = 0; ii < flist.size(); ii++) {
-      File file = flist.get(ii);
-      String absfname = file.getAbsolutePath();
+    for (int ii = 0; ii < fList.size(); ii++) {
+      File file = fList.get(ii);
+      String absFname = file.getAbsolutePath();
       if (!file.isFile()) {
         continue; // this is not file
       }
-      if (!absfname.startsWith(absdirname)) {
-        continue; // this file not exist in rootdir
+      if (!absFname.startsWith(absDirname)) {
+        continue; // this file not exist in root dir
       }
-      file = new File(absfname);
+      file = new File(absFname);
       list.add(file);
     }
     return list;
@@ -329,22 +329,22 @@ public class SGArchiveFileCreator extends SGFileHandler
    *
    * @param zos : archive file output stream
    * @param file : target file
-   * @param zentry : Zip Entry
+   * @param entry : Zip Entry
    * @throws ZipException
    * @throws IOException
    */
   private static void writeFileEntry(
-      final ZipOutputStream zos, final File file, final ZipEntry zentry)
+      final ZipOutputStream zos, final File file, final ZipEntry entry)
       throws ZipException, IOException {
     byte[] buf = _getFileBytes(file);
-    zos.putNextEntry(zentry); // start writing target file
+    zos.putNextEntry(entry); // start writing target file
     zos.write(buf, 0, buf.length);
     zos.closeEntry(); // end of writing target file
   }
 
-  private static void writeFileEntry(final ZipOutputStream zos, byte[] b, final ZipEntry zentry)
+  private static void writeFileEntry(final ZipOutputStream zos, byte[] b, final ZipEntry entry)
       throws ZipException, IOException {
-    zos.putNextEntry(zentry); // start writing target file
+    zos.putNextEntry(entry); // start writing target file
     zos.write(b, 0, b.length);
     zos.closeEntry(); // end of writing target file
   }

@@ -1020,9 +1020,9 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 
       // adds the global attributes
       List<SGAttribute> globalAttrList = mdFile.getAttributes();
-      for (SGAttribute gattr : globalAttrList) {
-        String name = gattr.getName();
-        List<Object> values = gattr.getValues();
+      for (SGAttribute gAttr : globalAttrList) {
+        String name = gAttr.getName();
+        List<Object> values = gAttr.getValues();
         Attribute attr = new Attribute(name, values);
         ncWrite.addGroupAttribute(null, attr);
       }
@@ -1084,9 +1084,9 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 
       // adds the global attributes
       List<SGAttribute> globalAttrList = mdFile.getAttributes();
-      for (SGAttribute gattr : globalAttrList) {
-        String name = gattr.getName();
-        List<Object> values = gattr.getValues();
+      for (SGAttribute gAttr : globalAttrList) {
+        String name = gAttr.getName();
+        List<Object> values = gAttr.getValues();
         Attribute attr = new Attribute(name, values);
         ncWrite.addGroupAttribute(null, attr);
       }
@@ -1946,22 +1946,22 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     }
   }
 
-  protected SGMDArrayVariable findVariable(SGMDArrayFile mdfile, SGMDArrayVariable var) {
+  protected SGMDArrayVariable findVariable(SGMDArrayFile mdFile, SGMDArrayVariable var) {
     if (var == null) {
       return null;
     }
-    SGMDArrayVariable ret = mdfile.findVariable(var.getName());
+    SGMDArrayVariable ret = mdFile.findVariable(var.getName());
     ret.setDimensionIndices(new HashMap<String, Integer>(var.getDimensionIndices()));
     return ret;
   }
 
-  protected SGMDArrayVariable[] findVariables(SGMDArrayFile mdfile, SGMDArrayVariable[] vars) {
+  protected SGMDArrayVariable[] findVariables(SGMDArrayFile mdFile, SGMDArrayVariable[] vars) {
     if (vars == null) {
       return null;
     }
     SGMDArrayVariable[] ret = new SGMDArrayVariable[vars.length];
     for (int ii = 0; ii < vars.length; ii++) {
-      SGMDArrayVariable var = this.findVariable(mdfile, vars[ii]);
+      SGMDArrayVariable var = this.findVariable(mdFile, vars[ii]);
       ret[ii] = var;
     }
     return ret;
