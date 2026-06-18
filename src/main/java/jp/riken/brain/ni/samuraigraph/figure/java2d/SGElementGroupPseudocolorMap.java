@@ -601,10 +601,10 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
     return this.mFocusedFlag;
   }
 
-  private SGElementGroupSetInGraph mGroupSet = null;
+  // private SGElementGroupSetInGraph mGroupSet = null;
 
   public boolean setElementGroupSet(SGElementGroupSetInGraph gs) {
-    this.mGroupSet = gs;
+    // this.mGroupSet = gs;
     return true;
   }
 

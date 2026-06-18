@@ -66,6 +66,7 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
       Enumeration<? extends ZipEntry> entries = zFile.entries();
       while (entries.hasMoreElements()) {
         ZipEntry ze = entries.nextElement();
+        if (ze == null) continue;
         String path = SGApplicationUtility.getPathName(destDir.getAbsolutePath(), ze.getName());
         File f = new File(path);
         if (ze.isDirectory()) {

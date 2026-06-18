@@ -459,6 +459,9 @@ public class SGFigureCreator implements SGIFigureConstants {
     }
 
     SGIFigureElement element = (SGIFigureElement) obj;
+    if (element == null) {
+      return null;
+    }
     element.setWindow(wnd);
     element.setComponent(figure.getComponent());
     element.addActionListener(figure);

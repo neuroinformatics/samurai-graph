@@ -740,12 +740,16 @@ public class SGLineStylePanel extends javax.swing.JPanel
 
     @Override
     public void addCellEditorListener(CellEditorListener l) {
-      listenerList.add(CellEditorListener.class, l);
+      if (l != null) {
+        listenerList.add(CellEditorListener.class, l);
+      }
     }
 
     @Override
     public void removeCellEditorListener(CellEditorListener l) {
-      listenerList.remove(CellEditorListener.class, l);
+      if (l != null) {
+        listenerList.remove(CellEditorListener.class, l);
+      }
     }
 
     public CellEditorListener[] getCellEditorListeners() {

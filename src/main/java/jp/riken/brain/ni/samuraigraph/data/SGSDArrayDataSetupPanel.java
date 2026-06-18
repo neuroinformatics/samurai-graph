@@ -170,9 +170,6 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
     map.put(comp, new SGComponentGroupElement(comp));
   }
 
-  /** The data source. */
-  private SGSDArrayFile mSDArrayFile = null;
-
   @Override
   public boolean checkSelectedItems() {
     // check selected items of the table
@@ -333,7 +330,6 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
     this.clear();
 
     // set to the attribute
-    this.mSDArrayFile = sdFile;
     this.mDataType = dataType;
     this.mInfoMap = new HashMap<String, Object>(infoMap);
     this.mInfoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);

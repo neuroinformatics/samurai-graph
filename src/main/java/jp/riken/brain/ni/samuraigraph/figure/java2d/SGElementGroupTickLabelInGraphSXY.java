@@ -106,9 +106,6 @@ public class SGElementGroupTickLabelInGraphSXY extends SGElementGroupTickLabelIn
     }
 
     final Boolean alignHorizontal = this.hasHorizontalAlignment();
-    if (alignHorizontal == null) {
-      return false;
-    }
 
     // initialize the drawing elements and locations
     if (this.mDrawingElementArray == null || this.mDrawingElementArray.length != num) {

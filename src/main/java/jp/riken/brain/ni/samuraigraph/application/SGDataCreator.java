@@ -2142,7 +2142,7 @@ public class SGDataCreator
       for (Map.Entry<?, ?> entry : timeIndexMap.entrySet()) {
         String name = (String) entry.getKey();
         Integer dim = (Integer) entry.getValue();
-        if (!mdData.setTimeDimensionIndex(name, dim)) {
+        if (dim != null && !mdData.setTimeDimensionIndex(name, dim)) {
           return false;
         }
       }
@@ -2708,14 +2708,18 @@ public class SGDataCreator
 
         Map<String, int[]> originMap = data.getOriginMap();
 
-        for (Map.Entry<?, ?> entry : pickUpDimensionIndexMap.entrySet()) {
-          String name = (String) entry.getKey();
-          Integer pIndex = (Integer) entry.getValue();
-          if (pIndex != -1) {
-            Integer pickUpDim = (Integer) pickUpDimensionIndexMap.get(name);
-            int[] origins = originMap.get(name).clone();
-            origins[pickUpDim] = pickUpIndex;
-            data.setOrigin(name, origins);
+        if (pickUpDimensionIndexMap != null) {
+          for (Map.Entry<?, ?> entry : pickUpDimensionIndexMap.entrySet()) {
+            String name = (String) entry.getKey();
+            Integer pIndex = (Integer) entry.getValue();
+            if (pIndex != -1) {
+              Integer pickUpDim = (Integer) pickUpDimensionIndexMap.get(name);
+              if (pickUpDim != null) {
+                int[] origins = originMap.get(name).clone();
+                origins[pickUpDim] = pickUpIndex;
+                data.setOrigin(name, origins);
+              }
+            }
           }
         }
 

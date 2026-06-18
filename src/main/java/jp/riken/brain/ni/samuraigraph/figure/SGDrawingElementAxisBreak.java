@@ -1,7 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
 import java.awt.Color;
-import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
@@ -563,7 +562,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     Number num = null;
     Color cl = null;
     Boolean b = null;
-    List<Color> list = null;
 
     // width
     str = el.getAttribute(SGIAxisBreakConstants.KEY_LENGTH);

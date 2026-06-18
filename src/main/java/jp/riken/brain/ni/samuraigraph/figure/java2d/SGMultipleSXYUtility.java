@@ -169,9 +169,6 @@ public class SGMultipleSXYUtility {
   public static boolean setLineWidth(
       SGIElementGroupSetMultipleSXY gs, final float width, final String unit) {
     final Float value = (float) SGUtility.getLineWidth(width, unit);
-    if (value == null) {
-      return false;
-    }
     SGElementGroupLine lineGroup = gs.getLineGroup();
     SGLineStyle style = lineGroup.getLineStyle();
     style.setLineWidth(value);
@@ -188,9 +185,6 @@ public class SGMultipleSXYUtility {
   public static boolean setLineWidth(
       SGIElementGroupSetMultipleSXY gs, final float width, final String unit, final int index) {
     final Float value = (float) SGUtility.getLineWidth(width, unit);
-    if (value == null) {
-      return false;
-    }
     SGElementGroupLine lineGroup = gs.getLineGroup();
     SGLineStyle style = lineGroup.getLineStyle();
     style.setLineWidth(value);
