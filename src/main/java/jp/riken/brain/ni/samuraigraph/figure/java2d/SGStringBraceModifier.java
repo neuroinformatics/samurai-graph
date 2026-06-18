@@ -254,11 +254,11 @@ public class SGStringBraceModifier implements SGIStringModifier {
         final String str,
         final String name,
         final int style,
-        final float subsize,
+        final float subSize,
         final Color cl,
         final float mag,
         final float angle) {
-      return new DrawingElementString2DExtendedOlder(str, name, style, subsize, cl, mag, angle);
+      return new DrawingElementString2DExtendedOlder(str, name, style, subSize, cl, mag, angle);
     }
   }
 }

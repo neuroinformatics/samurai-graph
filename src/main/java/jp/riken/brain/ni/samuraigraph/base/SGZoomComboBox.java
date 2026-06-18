@@ -106,7 +106,7 @@ public class SGZoomComboBox extends JComboBox<String> implements SGIRootObjectCo
     this.mExternalFlag = false;
   }
 
-  // a flag to controll the event handling
+  // a flag to control the event handling
   private boolean mExternalFlag = false;
 
   /** Called in action event handler method. */

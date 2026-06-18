@@ -6,11 +6,7 @@ import java.awt.Paint;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-/**
- * Paint using gradation.
- *
- * @author minemoto
- */
+/** Paint using gradation. */
 public class SGGradationPaint extends SGTransparentPaint implements SGIDisposable {
 
   public static final String NAME_UNKNOWN = "UNKNOWN";
@@ -90,8 +86,8 @@ public class SGGradationPaint extends SGTransparentPaint implements SGIDisposabl
   public Paint getPaint(final Rectangle2D rect) {
     return getLinearGradientPaint(
         rect,
-        getTransparentedColor(this.mColors[0]),
-        getTransparentedColor(this.mColors[1]),
+        getTransparentColor(this.mColors[0]),
+        getTransparentColor(this.mColors[1]),
         this.mDirectionIndex,
         this.mOrderIndex);
   }

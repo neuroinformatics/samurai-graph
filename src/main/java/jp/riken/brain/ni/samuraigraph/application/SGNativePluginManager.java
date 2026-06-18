@@ -388,7 +388,7 @@ public class SGNativePluginManager
 
   static final String ERRMSG_FUNCTION_NOT_FOUND = "Function is not found: ";
 
-  static final String ERRMSG_FATAL_ERROR = "A fatal error occured.";
+  static final String ERRMSG_FATAL_ERROR = "A fatal error occurred.";
 
   static final String ERRMSG_CALCULATION_FAILED = "Calculation failed.";
 
@@ -452,7 +452,7 @@ public class SGNativePluginManager
       result.showMessage(wnd);
       return;
     }
-    final SGDataBuffer[] oBuffers = output.getDataBufffers();
+    final SGDataBuffer[] oBuffers = output.getDataBuffers();
     if (oBuffers == null) {
       result.mErrorMessage = ERRMSG_CALCULATION_FAILED;
       result.showMessage(wnd);

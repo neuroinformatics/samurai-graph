@@ -1070,9 +1070,9 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         vNameList.add(info.getName());
       }
     }
-    SGDimensionPanel[] coms = this.getDimensionPanels(this.mOriginPanel);
-    for (int ii = 0; ii < coms.length; ii++) {
-      SGNetCDFDimensionPanel p = (SGNetCDFDimensionPanel) coms[ii];
+    SGDimensionPanel[] dPanels = this.getDimensionPanels(this.mOriginPanel);
+    for (int ii = 0; ii < dPanels.length; ii++) {
+      SGNetCDFDimensionPanel p = (SGNetCDFDimensionPanel) dPanels[ii];
       String vName = p.getDimensionName();
       final boolean enabled = !vNameList.contains(vName);
       p.setComponentsEnabled(enabled);
@@ -1160,9 +1160,9 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
    * @return the panel object for a given coordinate variable
    */
   private SGNetCDFDimensionPanel getDimensionPanel(String name) {
-    SGDimensionPanel[] coms = this.getDimensionPanels(this.mOriginPanel);
-    for (int ii = 0; ii < coms.length; ii++) {
-      SGNetCDFDimensionPanel p = (SGNetCDFDimensionPanel) coms[ii];
+    SGDimensionPanel[] dPanels = this.getDimensionPanels(this.mOriginPanel);
+    for (int ii = 0; ii < dPanels.length; ii++) {
+      SGNetCDFDimensionPanel p = (SGNetCDFDimensionPanel) dPanels[ii];
       String cName = p.getDimensionName();
       if (name.equals(cName)) {
         return p;

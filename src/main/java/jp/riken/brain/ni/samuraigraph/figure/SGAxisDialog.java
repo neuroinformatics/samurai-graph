@@ -1836,7 +1836,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     }
 
     // combo box for date format
-    if (!SGDateUtility.checkDateComboBoxInputValidatity(this.mNumberDateFormatComboBox)) {
+    if (!SGDateUtility.checkDateComboBoxInputValidity(this.mNumberDateFormatComboBox)) {
       String desc = this.mNumberDateFormatComboBox.getDescription();
       this.addInputErrorDescription(desc);
       valid = false;

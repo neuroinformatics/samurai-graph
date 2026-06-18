@@ -197,7 +197,7 @@ public abstract class SGDialog extends JDialog
 
   // initialization method
   private void initialize() {
-    // set unresizable
+    // disable resizing
     this.setResizable(false);
 
     // add as a listener

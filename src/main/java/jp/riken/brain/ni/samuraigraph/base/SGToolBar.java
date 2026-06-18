@@ -693,7 +693,7 @@ public class SGToolBar extends JToolBar
    * @param command
    * @param b
    */
-  public void setInsertTogglebuttonSelected(final String command, final boolean b) {
+  public void setInsertToggleButtonSelected(final String command, final boolean b) {
     Object obj = this.getButton(command);
     if (obj != null) {
       AbstractButton btn = (AbstractButton) obj;
@@ -706,7 +706,7 @@ public class SGToolBar extends JToolBar
   /**
    * @param command
    */
-  public boolean isInsertTogglebuttonSelected(final String command) {
+  public boolean isInsertToggleButtonSelected(final String command) {
     Object obj = this.getButton(command);
     if (obj != null) {
       AbstractButton btn = (AbstractButton) obj;

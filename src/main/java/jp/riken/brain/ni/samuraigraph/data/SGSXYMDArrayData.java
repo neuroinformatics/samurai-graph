@@ -338,21 +338,21 @@ public class SGSXYMDArrayData extends SGMDArrayData
 
     SGMDArrayVariable ehVar = null;
     if (lCol != null && uCol != null) {
-      Integer ehle = SGDataUtility.getColumnIndexOfAppendedColumnTitle(lCol, this);
-      Integer ehue = SGDataUtility.getColumnIndexOfAppendedColumnTitle(uCol, this);
-      if (ehle == null || ehue == null || ehle.equals(ehue) == false) {
+      Integer ehIdxL = SGDataUtility.getColumnIndexOfAppendedColumnTitle(lCol, this);
+      Integer ehIdxU = SGDataUtility.getColumnIndexOfAppendedColumnTitle(uCol, this);
+      if (ehIdxL == null || ehIdxU == null || ehIdxL.equals(ehIdxU) == false) {
         return false;
       }
-      ehVar = vars[ehle];
+      ehVar = vars[ehIdxL];
     }
 
     SGMDArrayVariable thVar = null;
     if (tCol != null) {
-      Integer th = SGDataUtility.getColumnIndexOfAppendedColumnTitle(tCol, this);
-      if (th == null) {
+      Integer thIdx = SGDataUtility.getColumnIndexOfAppendedColumnTitle(tCol, this);
+      if (thIdx == null) {
         return false;
       }
-      thVar = vars[th];
+      thVar = vars[thIdx];
     }
 
     // set variables
@@ -1515,17 +1515,17 @@ public class SGSXYMDArrayData extends SGMDArrayData
   @Override
   public void setDataSource(SGIDataSource src) {
     super.setDataSource(src);
-    SGMDArrayFile mdfile = (SGMDArrayFile) src;
-    this.mXVariable = this.findVariable(mdfile, this.mXVariable);
-    this.mYVariable = this.findVariable(mdfile, this.mYVariable);
+    SGMDArrayFile mdFile = (SGMDArrayFile) src;
+    this.mXVariable = this.findVariable(mdFile, this.mXVariable);
+    this.mYVariable = this.findVariable(mdFile, this.mYVariable);
     if (this.isErrorBarAvailable()) {
-      this.mLowerErrorVariable = this.findVariable(mdfile, this.mLowerErrorVariable);
-      this.mUpperErrorVariable = this.findVariable(mdfile, this.mUpperErrorVariable);
-      this.mErrorBarHolderVariable = this.findVariable(mdfile, this.mErrorBarHolderVariable);
+      this.mLowerErrorVariable = this.findVariable(mdFile, this.mLowerErrorVariable);
+      this.mUpperErrorVariable = this.findVariable(mdFile, this.mUpperErrorVariable);
+      this.mErrorBarHolderVariable = this.findVariable(mdFile, this.mErrorBarHolderVariable);
     }
     if (this.isTickLabelAvailable()) {
-      this.mTickLabelVariable = this.findVariable(mdfile, this.mTickLabelVariable);
-      this.mTickLabelHolderVariable = this.findVariable(mdfile, this.mTickLabelHolderVariable);
+      this.mTickLabelVariable = this.findVariable(mdFile, this.mTickLabelVariable);
+      this.mTickLabelHolderVariable = this.findVariable(mdFile, this.mTickLabelHolderVariable);
     }
   }
 

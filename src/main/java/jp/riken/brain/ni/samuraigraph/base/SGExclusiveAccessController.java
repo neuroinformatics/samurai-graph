@@ -2,7 +2,7 @@ package jp.riken.brain.ni.samuraigraph.base;
 
 import java.util.ArrayList;
 
-/** A class to controll exclusive access of selectable objects. */
+/** A class to control exclusive access of selectable objects. */
 public class SGExclusiveAccessController {
   //
   private ArrayList<SGISelectable> mSelectableList = new ArrayList<SGISelectable>();

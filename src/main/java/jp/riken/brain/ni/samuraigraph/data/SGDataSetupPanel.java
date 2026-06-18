@@ -230,11 +230,11 @@ public abstract class SGDataSetupPanel extends JPanel
   protected final TemporaryColumnInfo mTemporaryColumnInfo = new TemporaryColumnInfo();
 
   protected SGDimensionPanel[] getDimensionPanels(JPanel p) {
-    Component[] coms = p.getComponents();
+    Component[] comps = p.getComponents();
     List<SGDimensionPanel> dpList = new ArrayList<SGDimensionPanel>();
-    for (int ii = 0; ii < coms.length; ii++) {
-      if (coms[ii] instanceof SGDimensionPanel) {
-        dpList.add((SGDimensionPanel) coms[ii]);
+    for (int ii = 0; ii < comps.length; ii++) {
+      if (comps[ii] instanceof SGDimensionPanel) {
+        dpList.add((SGDimensionPanel) comps[ii]);
       }
     }
     SGDimensionPanel[] dpArray = new SGDimensionPanel[dpList.size()];

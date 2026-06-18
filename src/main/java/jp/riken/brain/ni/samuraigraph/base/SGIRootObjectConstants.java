@@ -193,7 +193,7 @@ public interface SGIRootObjectConstants extends SGIConstants {
 
   public static final String MENUBARCMD_HELP = MENUBAR_HELP;
 
-  public static final String MENUBAR_LOOKANDFEEL = "Look & Feel";
+  public static final String MENUBAR_LOOK_AND_FEEL = "Look & Feel";
 
   public static final String MENUBARCMD_LAF_METAL = LAF_METAL;
 
@@ -201,7 +201,7 @@ public interface SGIRootObjectConstants extends SGIConstants {
 
   public static final String MENUBARCMD_LAF_WINDOWS = LAF_WINDOWS;
 
-  public static final String MENUBARCMD_LAF_WINDOWSCLASSIC = LAF_WINDOWSCLASSIC;
+  public static final String MENUBARCMD_LAF_WINDOWS_CLASSIC = LAF_WINDOWS_CLASSIC;
 
   public static final String MENUBARCMD_LAF_AQUA = LAF_AQUA;
 
@@ -217,7 +217,7 @@ public interface SGIRootObjectConstants extends SGIConstants {
   public static final String LAF_CLASS_NAME_WINDOWS =
       "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
 
-  public static final String LAF_CLASS_NAME_WINDOWSCLASSIC =
+  public static final String LAF_CLASS_NAME_WINDOWS_CLASSIC =
       "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel";
 
   public static final String MENUBARCMD_UPGRADE = "Upgrade";

@@ -45,14 +45,14 @@ public abstract class SGDrawingElementBar extends SGDrawingElementRectangle
   public abstract boolean setWidthValue(final double value);
 
   /**
-   * Returns whether this bar is vertlcal.
+   * Returns whether this bar is vertical.
    *
-   * @return true if the bar is vertlcal
+   * @return true if the bar is vertical
    */
   public abstract boolean isVertical();
 
   /**
-   * Sets whether this bar is vertlcal.
+   * Sets whether this bar is vertical.
    *
    * @param b true to set vertical
    * @return true if succeeded

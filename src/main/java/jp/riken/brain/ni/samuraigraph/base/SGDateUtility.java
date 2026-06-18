@@ -178,7 +178,7 @@ public class SGDateUtility {
    *
    * @return an instance of UTC Calendar object
    */
-  public static Calendar getUTCCalendarInstacne() {
+  public static Calendar getUTCCalendarInstance() {
     return Calendar.getInstance(getUTCTimeZoneInstance());
   }
 
@@ -262,7 +262,7 @@ public class SGDateUtility {
     return true;
   }
 
-  public static boolean checkDateComboBoxInputValidatity(SGComboBox<?> cb) {
+  public static boolean checkDateComboBoxInputValidity(SGComboBox<?> cb) {
     Object dateFormatItem = cb.getSelectedItem();
     if (dateFormatItem != null) {
       String pattern = dateFormatItem.toString();

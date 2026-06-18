@@ -1,5 +1,5 @@
 /*
- * SGDataColumnSelctionDialog.java
+ * SGSDArrayDataSetupWizardDialog.java
  *
  * Created on 2009/07/01, 15:50:03
  */
@@ -21,7 +21,7 @@ public class SGSDArrayDataSetupWizardDialog extends SGDataSetupWizardDialog {
   /** Serial Version UID. */
   private static final long serialVersionUID = -3351323186366134225L;
 
-  /** Creates new form SGDataColumnSelctionDialog */
+  /** Creates new form SGSDArrayDataSetupWizardDialog */
   public SGSDArrayDataSetupWizardDialog(java.awt.Frame parent, boolean modal) {
     super(parent, modal);
     initComponents();

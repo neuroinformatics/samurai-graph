@@ -510,7 +510,7 @@ public abstract class SGFigure
       array[ii].clearFocusedObjects(ori);
     }
 
-    // deseclet this figure
+    // unselect this figure
     this.setSelected(false);
   }
 
@@ -744,19 +744,19 @@ public abstract class SGFigure
   public static Float calcFigureScale(
       final float value,
       final String unit,
-      final String convUnit,
+      final String outputUnit,
       final double min,
       final double max) {
-    return SGUtility.calcPropertyValue(value, unit, convUnit, min, max, LENGTH_MINIMAL_ORDER);
+    return SGUtility.calcPropertyValue(value, unit, outputUnit, min, max, LENGTH_MINIMAL_ORDER);
   }
 
   // check whether two values in units of pt are equal in FIGURE_SIZE_UNIT
   private boolean equalLength(final float v1, final float v2) {
     final float diff = Math.abs(v1 - v2);
-    final double conv = SGUtilityText.convert(diff, SGIConstants.pt, FIGURE_SIZE_UNIT);
+    final double value = SGUtilityText.convert(diff, SGIConstants.pt, FIGURE_SIZE_UNIT);
     final double ten =
         SGUtilityNumber.getPowersOfTen(SGIRootObjectConstants.LENGTH_MINIMAL_ORDER - 1);
-    return (conv < ten);
+    return (value < ten);
   }
 
   /**
@@ -1074,7 +1074,7 @@ public abstract class SGFigure
   /**
    * Zoom in/out this component.
    *
-   * @return true:secceeded, false:failed
+   * @return true:succeeded, false:failed
    */
   public boolean setMagnification(final float mag) {
 
@@ -1088,7 +1088,7 @@ public abstract class SGFigure
     }
     this.updateGraphRect();
 
-    // if the dragging rectanlgle is visible,
+    // if the dragging rectangle is visible,
     // set it to be equal to the graph area rectangle
     // if( SGFigure.mRubberBandFlag )
     // {
@@ -1724,7 +1724,7 @@ public abstract class SGFigure
   private boolean pressFigureElement(MouseEvent e) {
     SGIFigureElement el = this.onFigureElementPressed(e);
     if (el != null) {
-      // aftertreatment
+      // after treatment
       this.afterPressed(e);
       return true;
     }
@@ -1745,7 +1745,7 @@ public abstract class SGFigure
     // clear all selected objects in this figure
     this.clearFocusedObjects();
 
-    // aftertreatment
+    // after treatment
     this.afterPressed(e);
 
     return true;
@@ -2529,7 +2529,7 @@ public abstract class SGFigure
     final String command = e.getActionCommand();
     final Object source = e.getSource();
 
-    // an event from SGIFIgureElement
+    // an event from SGIFFigureElement
     if (source instanceof SGIFigureElement) {
       // get the source SGIFigureElement object
       final SGIFigureElement element = (SGIFigureElement) e.getSource();
@@ -2589,7 +2589,7 @@ public abstract class SGFigure
       } else if (command.equals(MENUCMD_DELETE)) {
         this.mWnd.doDelete();
       } else if (command.equals(MENUCMD_INSERT_NETCDF_LABEL)) {
-        this.mWnd.doInserNetCDFLabel();
+        this.mWnd.doInsertNetCDFLabel();
         this.notifyToRoot();
       } else if (command.equals(MENUCMD_ANIMATION)) {
         this.mMouseInExtraRegionFlag = false;
@@ -3424,8 +3424,8 @@ public abstract class SGFigure
    *
    * @return list of copies of focused objects
    */
-  protected List<SGICopiable> createCopiedObjects() {
-    List<SGICopiable> list = new ArrayList<SGICopiable>();
+  protected List<SGICopyable> createCopiedObjects() {
+    List<SGICopyable> list = new ArrayList<SGICopyable>();
     SGIFigureElement[] array = this.getIFigureElementArray();
     for (int ii = 0; ii < array.length; ii++) {
       list.addAll(array[ii].getCopiedObjectsList());
@@ -3438,8 +3438,8 @@ public abstract class SGFigure
    *
    * @return list of cut objects
    */
-  protected List<SGICopiable> cutFocusedObjects() {
-    List<SGICopiable> list = new ArrayList<SGICopiable>();
+  protected List<SGICopyable> cutFocusedObjects() {
+    List<SGICopyable> list = new ArrayList<SGICopyable>();
     SGIFigureElement[] array = this.getIFigureElementArray();
     for (int ii = 0; ii < array.length; ii++) {
       list.addAll(array[ii].cutFocusedObjects());
@@ -3582,7 +3582,7 @@ public abstract class SGFigure
    * @param list of the objects to be pasted
    * @return true:succeeded, false:failed
    */
-  public boolean paste(List<SGICopiable> list) {
+  public boolean paste(List<SGICopyable> list) {
     SGIFigureElement[] array = this.getIFigureElementArray();
     for (int ii = 0; ii < array.length; ii++) {
       if (array[ii].paste(list) == false) {
@@ -4112,9 +4112,9 @@ public abstract class SGFigure
   void setAnchoredToFocusedObjects(final boolean isAnchored) {
     SGIFigureElement[] figureElement = this.getIFigureElementArray();
     for (int i = 0; i < figureElement.length; i++) {
-      List<SGISelectable> alist = figureElement[i].getFocusedObjectsList();
-      for (int j = 0; j < alist.size(); j++) {
-        Object obj = alist.get(j);
+      List<SGISelectable> aList = figureElement[i].getFocusedObjectsList();
+      for (int j = 0; j < aList.size(); j++) {
+        Object obj = aList.get(j);
         if (obj instanceof SGIAnchored) {
           SGIAnchored el = (SGIAnchored) obj;
           if (el.isAnchored() != isAnchored) {

@@ -594,13 +594,13 @@ public abstract class SGSDArrayData extends SGArrayData
   }
 
   // Creates the variable of indices.
-  protected Variable addIndexVarialbe(NetcdfFileWriter ncfile, Dimension dim) {
+  protected Variable addIndexVariable(NetcdfFileWriter ncfile, Dimension dim) {
     Variable var = ncfile.addVariable(null, INDEX_DIMENSION_NAME, DataType.INT, dim.getShortName());
     // ncfile.addVariable(null, var); // already added by addVariable
     return var;
   }
 
-  protected void writeIndexVarialbe(NetcdfFileWriter ncfile, Variable var)
+  protected void writeIndexVariable(NetcdfFileWriter ncfile, Variable var)
       throws IOException, InvalidRangeException {
     final int len = var.getDimension(0).getLength();
     Array indexArray = Array.factory(DataType.INT, new int[] {len});

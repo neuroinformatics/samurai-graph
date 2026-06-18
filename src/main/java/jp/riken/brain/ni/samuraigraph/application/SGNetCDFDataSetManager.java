@@ -178,7 +178,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
   private List<File> saveDataToFiles(final SGDrawingWindow wnd, final File datasetTempDir)
       throws IOException, InvalidRangeException {
-    List<File> flist = new ArrayList<File>();
+    List<File> fList = new ArrayList<File>();
     ArrayList<SGFigure> figures = wnd.getVisibleFigureList();
     for (int ii = 0; ii < figures.size(); ii++) {
       SGFigure figure = (SGFigure) figures.get(ii);
@@ -203,12 +203,12 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
           file = null;
         }
         if (null != file) {
-          flist.add(file);
+          fList.add(file);
         }
       }
     }
 
-    return flist;
+    return fList;
   }
 
   private void copyNetcdfTempFileHeaderToOutFile(
@@ -222,7 +222,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       try {
         ncfile = SGApplicationUtility.openNetCDF(file.getAbsolutePath());
 
-        List<Attribute> gattrs = ncfile.getGlobalAttributes();
+        List<Attribute> gAttrs = ncfile.getGlobalAttributes();
         List<Dimension> dims = ncfile.getDimensions();
         List<Variable> vars = ncfile.getVariables();
 
@@ -231,12 +231,12 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
           dim.setName(this.getGroupVariableName(groupName, name));
           outNcfile.addDimension(null, dim.getShortName(), dim.getLength());
         }
-        for (Attribute gattr : gattrs) {
+        for (Attribute gAttr : gAttrs) {
           // skips an attribute of the properties
-          if (ATTRIBUTE_PROPERTY.equals(gattr.getShortName())) {
+          if (ATTRIBUTE_PROPERTY.equals(gAttr.getShortName())) {
             continue;
           }
-          group.addAttribute(gattr);
+          group.addAttribute(gAttr);
         }
         for (Variable v : vars) {
           String varName = v.getShortName();
@@ -723,16 +723,16 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     // end progress
     wnd.endProgress();
 
-    int errcode;
+    int errCode;
     if (!result) {
-      errcode = SGIConstants.PROPERTY_FILE_INCORRECT;
+      errCode = SGIConstants.PROPERTY_FILE_INCORRECT;
     } else {
       // create figure objects in a window
       final boolean readDataProperty = true;
-      errcode =
+      errCode =
           this.createFiguresFromPropertyFile(elWnd, wnd, ncfile, readDataProperty, versionNumber);
 
-      if (errcode == SGIConstants.SUCCESSFUL_COMPLETION) {
+      if (errCode == SGIConstants.SUCCESSFUL_COMPLETION) {
         // add history
         wnd.initPropertiesHistory();
 
@@ -746,7 +746,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
     // set the message
     String msg = null;
-    switch (errcode) {
+    switch (errCode) {
       case SGIConstants.SUCCESSFUL_COMPLETION:
         msg = SGIApplicationTextConstants.MSG_SUCCESSFUL_COMPLETION;
         break;
@@ -766,7 +766,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         msg = SGIApplicationTextConstants.MSG_DATA_FILE_OPEN_FAILURE;
         break;
       default:
-        msg = SGIApplicationTextConstants.MSG_UNKNOWN_ERROR_OCCURED;
+        msg = SGIApplicationTextConstants.MSG_UNKNOWN_ERROR_OCCURRED;
     }
 
     // show the message dialog
@@ -874,15 +874,15 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     for (int ii = groups.size() - 1; ii >= 0; ii--) {
       Group g = groups.get(ii);
       String gName = g.getShortName().toLowerCase();
-      final String clenStr = "clen";
-      final int clenIndex = gName.lastIndexOf(clenStr);
-      if (clenIndex == -1) {
+      final String cLenStr = "clen";
+      final int cLenIndex = gName.lastIndexOf(cLenStr);
+      if (cLenIndex == -1) {
         continue;
       }
-      if (gName.endsWith(clenStr)) {
+      if (gName.endsWith(cLenStr)) {
         continue;
       }
-      final String suffix = gName.substring(clenIndex + clenStr.length());
+      final String suffix = gName.substring(cLenIndex + cLenStr.length());
       Integer num = SGUtilityText.getInteger(suffix);
       if (num == null) {
         continue;

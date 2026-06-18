@@ -47,7 +47,7 @@ public interface SGIFigureElementConstants {
 
   public static final String NOTIFY_CHANGE_CURSOR = "Notify the change of cursor";
 
-  public static final String NOTIFY_DATA_CLICKED = "Notigy a data object is clicked";
+  public static final String NOTIFY_DATA_CLICKED = "Notify a data object is clicked";
 
   public static final String NOTIFY_DATA_SELECTION = "Notify the selection of data";
 
@@ -55,7 +55,7 @@ public interface SGIFigureElementConstants {
 
   public static final String NOTIFY_DATA_WILL_BE_HIDDEN = "Data objects will be hidden";
 
-  public static final String NOTIFY_NETCDF_DATALABEL_WILL_BE_HIDDEN = "Data label will be hidden";
+  public static final String NOTIFY_NETCDF_DATA_LABEL_WILL_BE_HIDDEN = "Data label will be hidden";
 
   public static final String NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW =
       "Data structure is changed on preview";

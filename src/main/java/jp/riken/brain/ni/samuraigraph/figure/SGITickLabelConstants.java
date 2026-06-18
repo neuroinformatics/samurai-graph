@@ -15,5 +15,5 @@ public interface SGITickLabelConstants extends SGIDrawingElementConstants {
 
   public static final String TAG_NAME_TICK_LABELS = "TickLabels";
 
-  public static final String KEY_TICK_LABEL_ALIGN_HORIAONTALLY = "AlignHorizontally";
+  public static final String KEY_TICK_LABEL_ALIGN_HORIZONTALLY = "AlignHorizontally";
 }

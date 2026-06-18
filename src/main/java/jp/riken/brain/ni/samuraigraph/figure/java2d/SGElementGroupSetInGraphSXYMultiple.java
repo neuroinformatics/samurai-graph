@@ -281,8 +281,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     super.setClipFlag(b);
     ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
     for (int ii = 0; ii < list.size(); ii++) {
-      SGElementGroupSetInGraph grouptSet = (SGElementGroupSetInGraph) list.get(ii);
-      grouptSet.setClipFlag(b);
+      SGElementGroupSetInGraph groupSet = (SGElementGroupSetInGraph) list.get(ii);
+      groupSet.setClipFlag(b);
     }
   }
 
@@ -397,8 +397,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     if ((data instanceof SGISXYTypeMultipleData) == false) {
       return false;
     }
-    SGISXYTypeMultipleData dataMult = (SGISXYTypeMultipleData) data;
-    SGISXYTypeSingleData[] sxyArray = dataMult.getSXYDataArray();
+    SGISXYTypeMultipleData dataMulti = (SGISXYTypeMultipleData) data;
+    SGISXYTypeSingleData[] sxyArray = dataMulti.getSXYDataArray();
     final int dataNum = sxyArray.length;
 
     try {
@@ -414,7 +414,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       }
 
       // updates the cache
-      SGDataUtility.updateCache(dataMult, sxyArray);
+      SGDataUtility.updateCache(dataMulti, sxyArray);
 
     } finally {
       if (sxyArray != null) {
@@ -2251,7 +2251,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       }
       if (this.isBarVisible()) {
         // minimum left shift size of bars.
-        // If this groupset has multiple bar series, minimum shift means shiftx point minus
+        // If this groupset has multiple bar series, minimum shift means shift x point minus
         // bar widths of series which are enabled to be visible.
         double barLeftShift = this.getBarOffsetX();
         if (this.isBarVertical()) {
@@ -2293,7 +2293,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       }
       if (this.isBarVisible()) {
         // maximum right shift size of bars.
-        // If this groupset has multiple bar series, maximum shift means shiftx point plus
+        // If this groupset has multiple bar series, maximum shift means shift x point plus
         // bar widths of series which are enabled to be visible.
         double barRightShift = this.getBarOffsetX();
         if (this.isBarVertical()) {
@@ -3609,9 +3609,9 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   @Override
   public boolean setLineStyle(final SGLineStyle style, final int index) {
     for (SGIElementGroupSetForData gs : this.mElementGroupSetList) {
-      SGElementGroupSetInGraphSXY gsxy = (SGElementGroupSetInGraphSXY) gs;
-      if (gsxy.getSeriesIndex() == index) {
-        gsxy.setLineStyle(style);
+      SGElementGroupSetInGraphSXY gsXY = (SGElementGroupSetInGraphSXY) gs;
+      if (gsXY.getSeriesIndex() == index) {
+        gsXY.setLineStyle(style);
         break;
       }
     }

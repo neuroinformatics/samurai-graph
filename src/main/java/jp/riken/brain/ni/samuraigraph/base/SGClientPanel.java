@@ -863,7 +863,7 @@ public class SGClientPanel extends JLayeredPane
         magDiff = (magDiff > 0.0f ? 1.0f : -1.0f);
       }
 
-      // new magnifiacation
+      // new magnification
       float magNew = mag + magDiff;
       if (magNew < MIN_MAGNIFICATION_VALUE) {
         magNew = MIN_MAGNIFICATION_VALUE;
@@ -1256,7 +1256,7 @@ public class SGClientPanel extends JLayeredPane
     private static final String DIALOG_TITLE_ADDITION_ERROR = "Failed to add a symbol.";
 
     private static final String ERRMSG_CLICK_GRAPH_RECTANGLE =
-        "Click within the recatngle of figure.";
+        "Click within the rectangle of figure.";
 
     /** Popup menu. */
     private JPopupMenu mPopupMenu = null;
@@ -1709,7 +1709,7 @@ public class SGClientPanel extends JLayeredPane
       if (this.mImage.setImage(img) == false) {
         return false;
       }
-      this.mImage.setDafaultImageSize();
+      this.mImage.setDefaultImageSize();
       return true;
     }
 

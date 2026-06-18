@@ -1,10 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-/**
- * A class of the stroke dash of a line.
- *
- * @author kuromaru
- */
+/** A class of the stroke dash of a line. */
 public class SGStrokeDash implements Cloneable {
 
   // the number of the first line segments

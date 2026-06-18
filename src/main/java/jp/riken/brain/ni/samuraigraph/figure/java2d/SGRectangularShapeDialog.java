@@ -1186,22 +1186,22 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
       this.setTransparent(Integer.valueOf(selectablePaint.getTransparencyPercent()));
       return true;
     } else if (paint instanceof SGFillPaint) {
-      SGFillPaint fpaint = (SGFillPaint) paint;
+      SGFillPaint fPaint = (SGFillPaint) paint;
       this.setInnerPaintStyle(SGSelectablePaint.STYLE_INDEX_FILL);
-      this.setInnerFillPaintColor(SGFillPaint.getOpaqueColor((Color) fpaint.getPaint(null)));
-      this.setTransparent(Integer.valueOf(fpaint.getTransparencyPercent()));
+      this.setInnerFillPaintColor(SGFillPaint.getOpaqueColor((Color) fPaint.getPaint(null)));
+      this.setTransparent(Integer.valueOf(fPaint.getTransparencyPercent()));
       return true;
     } else if (paint instanceof SGPatternPaint) {
-      SGPatternPaint ppaint = (SGPatternPaint) paint;
+      SGPatternPaint pPaint = (SGPatternPaint) paint;
       this.setInnerPaintStyle(SGSelectablePaint.STYLE_INDEX_PATTERN);
-      this.setInnerPatternPaint(ppaint);
-      this.setTransparent(Integer.valueOf(ppaint.getTransparencyPercent()));
+      this.setInnerPatternPaint(pPaint);
+      this.setTransparent(Integer.valueOf(pPaint.getTransparencyPercent()));
       return true;
     } else if (paint instanceof SGGradationPaint) {
-      SGGradationPaint gpaint = (SGGradationPaint) paint;
+      SGGradationPaint gPaint = (SGGradationPaint) paint;
       this.setInnerPaintStyle(SGSelectablePaint.STYLE_INDEX_GRADATION);
-      this.setInnerGradationPaint(gpaint);
-      this.setTransparent(Integer.valueOf(gpaint.getTransparencyPercent()));
+      this.setInnerGradationPaint(gPaint);
+      this.setTransparent(Integer.valueOf(gPaint.getTransparencyPercent()));
       return true;
     } else {
       return false;

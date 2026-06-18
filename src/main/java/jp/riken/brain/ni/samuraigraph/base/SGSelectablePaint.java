@@ -158,13 +158,13 @@ public class SGSelectablePaint extends SGTransparentPaint {
     return this.mPatternPaint.setTypeIndex(type);
   }
 
-  public boolean setGradationPaint(final SGGradationPaint gpaint) {
-    if (null == gpaint) {
+  public boolean setGradationPaint(final SGGradationPaint gPaint) {
+    if (null == gPaint) {
       return false;
     }
-    this.mGradationPaint.setColors(gpaint.getColors());
-    this.mGradationPaint.setDirection(gpaint.getDirectionIndex());
-    this.mGradationPaint.setOrder(gpaint.getOrderIndex());
+    this.mGradationPaint.setColors(gPaint.getColors());
+    this.mGradationPaint.setDirection(gPaint.getDirectionIndex());
+    this.mGradationPaint.setOrder(gPaint.getOrderIndex());
     return true;
   }
 

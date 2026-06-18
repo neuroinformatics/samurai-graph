@@ -70,9 +70,9 @@ public interface SGIFigureElementForData extends SGIFigureElement {
   public List<SGData> cutFocusedData();
 
   /**
-   * Returns a list of labels for data obejcts.
+   * Returns a list of labels for data objects.
    *
-   * @return a list of labels for data obejcts
+   * @return a list of labels for data objects
    */
   public List<DataLabel> getDataLabelList();
 
@@ -83,7 +83,7 @@ public interface SGIFigureElementForData extends SGIFigureElement {
 
     private Point mLocation = new Point();
 
-    /** The default constaructor. */
+    /** The default constructor. */
     public DataLabel(final String text, final int x, final int y) {
       super();
       this.mText = text;

@@ -19,7 +19,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementString;
 public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
 
   /** The super/subscript font size scaling factor */
-  private static final float SCRIPT_FONTFACTOR = 1.4f;
+  private static final float SCRIPT_FONT_FACTOR = 1.4f;
 
   /** The list of string elements of base characters. */
   protected List<SGDrawingElementString2D> mBaseElementList =
@@ -182,7 +182,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
       return true;
     }
     Font f = new Font(name, style, (int) size);
-    Font f2 = new Font(name, style, (int) (size / SCRIPT_FONTFACTOR));
+    Font f2 = new Font(name, style, (int) (size / SCRIPT_FONT_FACTOR));
     for (int ii = 0; ii < this.mBaseElementList.size(); ii++) {
       SGDrawingElementString2D el = this.mBaseElementList.get(ii);
       el.setFont(f.getFamily(), f.getStyle(), f.getSize());
@@ -290,7 +290,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
     final Color cl = this.getColor();
     final float mag = this.getMagnification();
     final float angle = this.getAngle();
-    final float subsize = size / SCRIPT_FONTFACTOR;
+    final float subSize = size / SCRIPT_FONT_FACTOR;
 
     // clear all lists
     this.mBaseElementList.clear();
@@ -325,7 +325,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
       Object sb = subList.get(ii);
       if (sb != null) {
         str = (String) sb;
-        el = this.createIndexInstance(str, name, style, subsize, cl, mag, angle);
+        el = this.createIndexInstance(str, name, style, subSize, cl, mag, angle);
         this.mSubscriptElementList.add(el);
       } else {
         this.mSubscriptElementList.add(null);
@@ -335,7 +335,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
       Object sp = superList.get(ii);
       if (sp != null) {
         str = (String) sp;
-        el = this.createIndexInstance(str, name, style, subsize, cl, mag, angle);
+        el = this.createIndexInstance(str, name, style, subSize, cl, mag, angle);
         this.mSuperscriptElementList.add(el);
       } else {
         this.mSuperscriptElementList.add(null);
@@ -349,11 +349,11 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
       final String str,
       final String name,
       final int style,
-      final float subsize,
+      final float subSize,
       final Color cl,
       final float mag,
       final float angle) {
-    return new SGDrawingElementString2DExtended(str, name, style, subsize, cl, mag, angle);
+    return new SGDrawingElementString2DExtended(str, name, style, subSize, cl, mag, angle);
   }
 
   /**
@@ -498,7 +498,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
         final float base_ny = y - base_dx * sv + base_dy * cv;
         // set location
         base_el.setLocation(base_nx, base_ny);
-        // get advance of baselist
+        // get advance of base list
         base_advance = base_el.getAdvance();
       }
 
@@ -598,7 +598,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
         // get visual descent
         final float tmp_bvd = (float) base_el.getStringRect().getHeight() - tmp_bva;
         if (tmp_bvd > base_visual_descent) base_visual_descent = tmp_bvd;
-        // get advance of baselist
+        // get advance of base list
         base_advance = base_el.getAdvance();
       }
 
@@ -611,7 +611,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
           // get height of superscript
           final float tmp_sp_height = (float) super_el.getStringRect().getHeight();
           if (tmp_sp_height > super_height) super_height = tmp_sp_height;
-          // get advance of superlist
+          // get advance of super list
           super_advance = super_el.getAdvance();
         }
       }
@@ -625,7 +625,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
           // get height of subscript
           final float tmp_sb_height = (float) sub_el.getStringRect().getHeight();
           if (tmp_sb_height > sub_height) sub_height = tmp_sb_height;
-          // get advance of sublist
+          // get advance of sub list
           sub_advance = sub_el.getAdvance();
         }
       }

@@ -26,7 +26,7 @@ public abstract class SGDrawingElementSymbol2D extends SGDrawingElementSymbol
   public static final float MIN_SIZE = 6.0f;
 
   /**
-   * Returns whether this symbol containts a given point.
+   * Returns whether this symbol contains a given point.
    *
    * @param x the x coordinate
    * @param y the y coordinate

@@ -16,7 +16,7 @@ public class SGMacOSXAdapter extends ApplicationAdapter
 	}
 
 	/**
-	 * register macos x application menu handler hooks to exsisting java app handlers
+	 * register macos x application menu handler hooks to existing java app handlers
 	 * @param ds - main application instance
 	 */
 	public static void registerMacOSXApplication( )
@@ -29,7 +29,7 @@ public class SGMacOSXAdapter extends ApplicationAdapter
 			mAdapter = new SGMacOSXAdapter( );
 		}
 		mApp.addApplicationListener( mAdapter );
-		// disable preferecnes
+		// disable preferences
 //		enablePrefs(false);
 	}
  

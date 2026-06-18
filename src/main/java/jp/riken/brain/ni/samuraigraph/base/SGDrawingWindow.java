@@ -113,7 +113,7 @@ public class SGDrawingWindow extends JFrame
   private List<SGFigure> mCopiedFiguresList = new ArrayList<SGFigure>();
 
   /** The list of copied objects in this window such as labels or symbols. */
-  private List<SGICopiable> mCopiedObjectsList = new ArrayList<SGICopiable>();
+  private List<SGICopyable> mCopiedObjectsList = new ArrayList<SGICopyable>();
 
   /** The list of copied data objects in this window. */
   private List<SGData> mCopiedDataObjectsList = new ArrayList<SGData>();
@@ -315,7 +315,7 @@ public class SGDrawingWindow extends JFrame
     }
     SGToolBar tBar = this.mToolBar;
     if (tBar.hasButton(command)) {
-      tBar.setInsertTogglebuttonSelected(command, b);
+      tBar.setInsertToggleButtonSelected(command, b);
     }
   }
 
@@ -2150,7 +2150,7 @@ public class SGDrawingWindow extends JFrame
    * @param propertiesMapList a list of property map
    */
   public void pasteToFigures(
-      List<SGICopiable> list,
+      List<SGICopyable> list,
       List<SGData> dataList,
       List<String> nameList,
       List<Map<Class<? extends SGIFigureElement>, SGProperties>> propertiesMapList) {
@@ -2479,7 +2479,7 @@ public class SGDrawingWindow extends JFrame
       if (source.equals(this.mMenuBar)) {
         selected = this.mMenuBar.isInsertToggleItemSelected(command);
       } else if (source.equals(this.mToolBar)) {
-        selected = this.mToolBar.isInsertTogglebuttonSelected(command);
+        selected = this.mToolBar.isInsertToggleButtonSelected(command);
       } else {
         return;
       }
@@ -2994,7 +2994,7 @@ public class SGDrawingWindow extends JFrame
     List<SGFigure> fList = this.getVisibleFigureList();
 
     // get objects from all visible figures
-    List<SGICopiable> copiedObjList = new ArrayList<SGICopiable>();
+    List<SGICopyable> copiedObjList = new ArrayList<SGICopyable>();
     List<SGData> dataList = new ArrayList<SGData>();
     List<String> dataNameList = new ArrayList<String>();
     List<Map<Class<? extends SGIFigureElement>, SGProperties>> propertiesMapList =
@@ -3041,8 +3041,8 @@ public class SGDrawingWindow extends JFrame
    *
    * @return a list of copied objects
    */
-  public List<SGICopiable> getCopiedObjectsList() {
-    List<SGICopiable> list = new ArrayList<SGICopiable>();
+  public List<SGICopyable> getCopiedObjectsList() {
+    List<SGICopyable> list = new ArrayList<SGICopyable>();
     SGUtility.copyObjects(this.mCopiedObjectsList, list);
     return list;
   }
@@ -3054,7 +3054,7 @@ public class SGDrawingWindow extends JFrame
    */
   public List<SGData> getCopiedObjectsDataList() {
     List<SGData> list = new ArrayList<SGData>();
-    SGUtility.copyObjects((List<? extends SGICopiable>) this.mCopiedDataObjectsList, list);
+    SGUtility.copyObjects((List<? extends SGICopyable>) this.mCopiedDataObjectsList, list);
     return list;
   }
 
@@ -3089,7 +3089,7 @@ public class SGDrawingWindow extends JFrame
   public void clearCopiedObjectsList() {
 
     // disposes all copied objects
-    for (SGICopiable cp : this.mCopiedObjectsList) {
+    for (SGICopyable cp : this.mCopiedObjectsList) {
       if (cp instanceof SGIDisposable) {
         SGIDisposable d = (SGIDisposable) cp;
         d.dispose();
@@ -3136,7 +3136,7 @@ public class SGDrawingWindow extends JFrame
   // }
 
   /** Insert a label for netCDF data. */
-  void doInserNetCDFLabel() {
+  void doInsertNetCDFLabel() {
     List<SGFigure> fList = this.getVisibleFigureList();
     for (int ii = 0; ii < fList.size(); ii++) {
       SGFigure f = fList.get(ii);
@@ -3415,9 +3415,9 @@ public class SGDrawingWindow extends JFrame
   }
 
   /**
-   * Set the messsage of the Progress bar.
+   * Set the message of the Progress bar.
    *
-   * @param msg progress messasge
+   * @param msg progress message
    */
   @Override
   public void setProgressMessage(final String msg) {
@@ -6629,7 +6629,7 @@ public class SGDrawingWindow extends JFrame
 
     private Color mGridColor;
 
-    private float mGridInverval;
+    private float mGridInterval;
 
     private float mGridLineWidth;
 
@@ -6655,7 +6655,7 @@ public class SGDrawingWindow extends JFrame
           mBackgroundColor,
           mGridVisible,
           mGridColor,
-          mGridInverval,
+          mGridInterval,
           mGridLineWidth,
           mImageLocationX,
           mImageLocationY,
@@ -6689,7 +6689,7 @@ public class SGDrawingWindow extends JFrame
       if (p.mBackgroundColor.equals(this.mBackgroundColor) == false) return false;
       if (p.mGridVisible != this.mGridVisible) return false;
       if (p.mGridColor.equals(this.mGridColor) == false) return false;
-      if (p.mGridInverval != this.mGridInverval) return false;
+      if (p.mGridInterval != this.mGridInterval) return false;
       if (p.mGridLineWidth != this.mGridLineWidth) return false;
       if (p.mImageLocationX != this.mImageLocationX) return false;
       if (p.mImageLocationY != this.mImageLocationY) return false;
@@ -6729,7 +6729,7 @@ public class SGDrawingWindow extends JFrame
     }
 
     public Float getGridInterval() {
-      return Float.valueOf(this.mGridInverval);
+      return Float.valueOf(this.mGridInterval);
     }
 
     public Float getGridLineWidth() {
@@ -6795,7 +6795,7 @@ public class SGDrawingWindow extends JFrame
       if (num < 0.0f) {
         throw new IllegalArgumentException("num<0.0f");
       }
-      this.mGridInverval = num;
+      this.mGridInterval = num;
     }
 
     public void setGridLineWidth(final float num) {
@@ -6877,7 +6877,7 @@ public class SGDrawingWindow extends JFrame
     this.repaintContentPane();
   }
 
-  /** Assignes line colors. */
+  /** Assigns line colors. */
   public void doAssignLineColors() {
     // notify the command
     this.notifyToListener(MENUBARCMD_ASSIGN_LINE_COLORS);

@@ -4,11 +4,7 @@ import java.awt.Color;
 import java.awt.Paint;
 import java.awt.geom.Rectangle2D;
 
-/**
- * Paint filled with Color.WHITE.
- *
- * @author minemoto
- */
+/** Paint filled with Color.WHITE. */
 public class SGNullPaint extends SGTransparentPaint {
 
   private final Color mColor;

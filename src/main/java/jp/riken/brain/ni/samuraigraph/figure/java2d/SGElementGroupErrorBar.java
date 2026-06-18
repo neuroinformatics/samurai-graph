@@ -277,7 +277,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
   }
 
   /**
-   * Retruns the location of the start point at a given index.
+   * Returns the location of the start point at a given index.
    *
    * @param index the index
    * @return the location of the start point at a given index
@@ -285,7 +285,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
   public abstract SGTuple2f getStartLocation(final int index);
 
   /**
-   * Retruns the location of the upper end point at a given index.
+   * Returns the location of the upper end point at a given index.
    *
    * @param index the index
    * @return the location of the upper end point at a given index
@@ -293,7 +293,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
   public abstract SGTuple2f getUpperEndLocation(final int index);
 
   /**
-   * Retruns the location of the lower end point at a given index.
+   * Returns the location of the lower end point at a given index.
    *
    * @param index the index
    * @return the location of the lower end point at a given index
@@ -665,9 +665,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
   // return true;
   // }
 
-  /**
-   * @author okumura
-   */
   public static class ErrorBarProperties extends ElementGroupProperties {
 
     private SGDrawingElementErrorBar.ErrorBarProperties mErrorBarProperties =

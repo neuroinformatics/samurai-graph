@@ -579,7 +579,7 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
 
     public static void write(SGDataPluginInput input, Pointer p) {
       InputDataStructure st = new InputDataStructure(p);
-      st.dataBufferPointer = toPointer(input.getDataBufffers());
+      st.dataBufferPointer = toPointer(input.getDataBuffers());
       String[] parameters = input.getParameters();
       st.parametersNum = parameters.length;
       st.parametersPointer = toPointer(parameters);

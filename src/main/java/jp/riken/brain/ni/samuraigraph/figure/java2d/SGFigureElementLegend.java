@@ -51,7 +51,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGICopiable;
+import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
@@ -429,8 +429,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
   private void updateBarVerticalOfNetCDFData(ElementGroupSetInLegend legend, SGData data) {
     if (data instanceof SGSXYNetCDFData) {
-      SGSXYNetCDFData ndata = (SGSXYNetCDFData) data;
-      boolean vertical = ndata.isXVariableCoordinate();
+      SGSXYNetCDFData ncData = (SGSXYNetCDFData) data;
+      boolean vertical = ncData.isXVariableCoordinate();
       if (legend instanceof ElementGroupSetInLegendMultipleSXY) {
         ElementGroupSetInLegendMultipleSXY gs = (ElementGroupSetInLegendMultipleSXY) legend;
         if (gs.isBarVertical() != vertical) {
@@ -443,8 +443,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
         }
       }
     } else if (data instanceof SGSXYNetCDFMultipleData) {
-      SGSXYNetCDFMultipleData ndata = (SGSXYNetCDFMultipleData) data;
-      boolean vertical = ndata.isXVariableCoordinate();
+      SGSXYNetCDFMultipleData ncData = (SGSXYNetCDFMultipleData) data;
+      boolean vertical = ncData.isXVariableCoordinate();
       if (legend instanceof ElementGroupSetInLegendMultipleSXY) {
         ElementGroupSetInLegendMultipleSXY gs = (ElementGroupSetInLegendMultipleSXY) legend;
         if (gs.isBarVertical() != vertical) {
@@ -565,18 +565,18 @@ public class SGFigureElementLegend extends SGFigureElementForData
   }
 
   /**
-   * Returns the x-coordinate of the legend in the fiugre.
+   * Returns the x-coordinate of the legend in the figure.
    *
-   * @return the x-coordinate of the legend in the fiugre
+   * @return the x-coordinate of the legend in the figure
    */
   public float getLegendX() {
     return this.mGraphRectX + this.mLegendX * this.mMagnification;
   }
 
   /**
-   * Returns the y-coordinate of the legend in the fiugre.
+   * Returns the y-coordinate of the legend in the figure.
    *
-   * @return the y-coordinate of the legend in the fiugre
+   * @return the y-coordinate of the legend in the figure
    */
   public float getLegendY() {
     return this.mGraphRectY + this.mLegendY * this.mMagnification;
@@ -642,7 +642,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     // the next value to set
     final double nextValue = SGUtilityNumber.getNumberInRangeOrder(value, axis);
 
-    // if values from the dialog is diffrent from the current values,
+    // if values from the dialog is different from the current values,
     // set the values from the dialog
     float x;
     if (nextValue == currentValue) {
@@ -684,7 +684,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     // the next value to set
     final double nextValue = SGUtilityNumber.getNumberInRangeOrder(value, axis);
 
-    // if values from the dialog is diffrent from the current values,
+    // if values from the dialog is different from the current values,
     // set the values from the dialog
     float y;
     if (nextValue == currentValue) {
@@ -2293,12 +2293,12 @@ public class SGFigureElementLegend extends SGFigureElementForData
    */
   public boolean cancel() {
 
-    // set temporay properties to drawing elements to cancel the change
+    // set temporary properties to drawing elements to cancel the change
     if (this.setProperties(this.mTemporaryProperties) == false) {
       return false;
     }
 
-    // clear temporay properties
+    // clear temporary properties
     this.mTemporaryProperties = null;
 
     // update drawing elements
@@ -2420,14 +2420,14 @@ public class SGFigureElementLegend extends SGFigureElementForData
   }
 
   /**
-   * Cut focused copiable objects.
+   * Cut focused copyable objects.
    *
    * @return a list of cut objects
    */
-  public List<SGICopiable> cutFocusedObjects() {
+  public List<SGICopyable> cutFocusedObjects() {
     // returns an empty list because no objects exist that can be cut
     // other than data
-    return new ArrayList<SGICopiable>();
+    return new ArrayList<SGICopyable>();
   }
 
   /**
@@ -2987,15 +2987,15 @@ public class SGFigureElementLegend extends SGFigureElementForData
       final float advance = this.mDrawingString.getAdvance();
       final float top = -visual_y + strike_through_offset;
       final float bottom = visual_height - top;
-      float glowh = 0.0f;
-      float glowy = 0.0f;
+      float glowH = 0.0f;
+      float glowY = 0.0f;
       if (bottom > top) {
-        glowh = bottom - top;
-        glowy = glowh;
+        glowH = bottom - top;
+        glowY = glowH;
       } else {
-        glowh = top - bottom;
+        glowH = top - bottom;
       }
-      rect.setRect(0, glowy, advance, visual_height + glowh);
+      rect.setRect(0, glowY, advance, visual_height + glowH);
       return rect;
     }
 
@@ -3127,7 +3127,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
     /** Prepare before the property setting starts. */
     public boolean prepare() {
-      // create temporay properties
+      // create temporary properties
       this.mTemporaryPropertiesInner = this.getProperties();
       return true;
     }
@@ -4471,9 +4471,9 @@ public class SGFigureElementLegend extends SGFigureElementForData
     @Override
     public boolean setLineStyle(final SGLineStyle style, final int index) {
       for (SGIElementGroupSetForData gs : this.mElementGroupSetList) {
-        ElementGroupSetInLegendSXY gsxy = (ElementGroupSetInLegendSXY) gs;
-        if (gsxy.getSeriesIndex() == index) {
-          gsxy.setLineStyle(style);
+        ElementGroupSetInLegendSXY gsXY = (ElementGroupSetInLegendSXY) gs;
+        if (gsXY.getSeriesIndex() == index) {
+          gsXY.setLineStyle(style);
           break;
         }
       }
@@ -6047,9 +6047,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
   }
 
-  /**
-   * @author okumura
-   */
   private class ElementGroupBar extends SGElementGroupBarForData implements ILegendElement {
 
     /** A group set that this element group belongs. */
@@ -6216,9 +6213,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
   }
 
-  /**
-   * @author okumura
-   */
   private class ElementGroupSymbol extends SGElementGroupSymbolForData implements ILegendElement {
 
     /** A group set that this element group belongs. */
@@ -6346,7 +6340,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
 
     /**
-     * Retruns the location at a given index.
+     * Returns the location at a given index.
      *
      * @param index the index
      * @return the location
@@ -6356,9 +6350,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
   }
 
-  /**
-   * @author okumura
-   */
   private class ElementGroupArrow extends SGElementGroupArrowForData implements ILegendElement {
 
     /** A group set that this element group belongs. */
@@ -6500,12 +6491,12 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
     private boolean updateMagnitudeString() {
       ElementGroupSetInLegendVXY groupSet = (ElementGroupSetInLegendVXY) this.mGroupSet;
-      final float percm = groupSet.getMagnitudePerCM();
-      if (Float.isNaN(percm)) {
+      final float perCm = groupSet.getMagnitudePerCM();
+      if (Float.isNaN(perCm)) {
         this.mMagnitudeString.setString("NaN");
       } else {
         final float span = SGFigureElementLegend.this.getSymbolSpan(cm);
-        final float value = percm * span;
+        final float value = perCm * span;
         final float valueReduced =
             (float)
                 SGUtilityNumber.getNumberInNumberOrder(
@@ -6783,9 +6774,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
   }
 
-  /**
-   * @author okumura
-   */
   private class ElementGroupTickLabels extends SGElementGroupTickLabelForData
       implements ILegendElement {
 
@@ -6897,9 +6885,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return true;
   }
 
-  /**
-   * @author okumura
-   */
   public static class LegendProperties extends SGProperties {
 
     float x;
@@ -7004,7 +6989,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
       sb.append(this.backgroundPaint.getColor());
       sb.append(", transparent=");
       sb.append(this.backgroundPaint.getTransparencyPercent());
-      sb.append(", grouopSetList=");
+      sb.append(", groupSetList=");
       sb.append(this.visibleElementGroupList.toString());
       sb.append("]");
       return sb.toString();
@@ -7046,8 +7031,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
   }
 
   protected SGIElementGroupSetMultipleSXY createMultipleSXYGroupSetInstance(
-      SGISXYTypeMultipleData dataMultSXY) {
-    return new ElementGroupSetInLegendMultipleSXY((SGData) dataMultSXY);
+      SGISXYTypeMultipleData dataMultiSXY) {
+    return new ElementGroupSetInLegendMultipleSXY((SGData) dataMultiSXY);
   }
 
   protected SGIElementGroupSetSXYZ createSXYZGroupSetInstance(SGISXYZTypeData dataSXYZ) {

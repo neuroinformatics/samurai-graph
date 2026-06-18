@@ -80,7 +80,7 @@ public class SGUtilityForFigureElementJava2D
    * @param pointList list of the location of anchors
    * @param g2d graphic context
    */
-  public static void drawAnchorPointsAsAnchoredForcusObject(
+  public static void drawAnchorPointsAsAnchoredFocusObject(
       final List<Point2D> pointList, final Graphics2D g2d) {
     for (int ii = 0; ii < pointList.size(); ii++) {
       Point2D pos = (Point2D) pointList.get(ii);
@@ -538,7 +538,7 @@ public class SGUtilityForFigureElementJava2D
    * @param width - the width of a BasicStroke
    * @param cap - the decoration of the ends of a BasicStroke
    * @param join - the decoration applied where path segments meet
-   * @param miterLimit - the limit to trim the miter join. The miterlimit must be greater than or
+   * @param miterLimit - the limit to trim the miter join. The miter limit must be greater than or
    *     equal to 1.0f.
    * @param dashPhase - the offset to start the dashing pattern
    * @return a BasicStroke object

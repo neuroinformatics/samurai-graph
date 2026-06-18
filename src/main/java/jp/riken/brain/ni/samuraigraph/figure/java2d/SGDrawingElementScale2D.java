@@ -30,8 +30,8 @@ public abstract class SGDrawingElementScale2D extends SGDrawingElementScale
   }
 
   protected boolean updateDrawingElementsLocation() {
-    final SGDrawingElementLine2D hline = (SGDrawingElementLine2D) this.getHorizontalLine();
-    final SGDrawingElementLine2D vline = (SGDrawingElementLine2D) this.getVerticalLine();
+    final SGDrawingElementLine2D hLine = (SGDrawingElementLine2D) this.getHorizontalLine();
+    final SGDrawingElementLine2D vLine = (SGDrawingElementLine2D) this.getVerticalLine();
 
     Point2D.Float jointPos = (Point2D.Float) this.getJoint();
     Point2D.Float hPos = (Point2D.Float) this.getHorizontalEnd();
@@ -40,8 +40,8 @@ public abstract class SGDrawingElementScale2D extends SGDrawingElementScale
     final SGTuple2f hEnd = new SGTuple2f(hPos.x, hPos.y);
     final SGTuple2f vEnd = new SGTuple2f(vPos.x, vPos.y);
 
-    hline.setTermPoints(joint, hEnd);
-    vline.setTermPoints(joint, vEnd);
+    hLine.setTermPoints(joint, hEnd);
+    vLine.setTermPoints(joint, vEnd);
 
     this.updateLabelLocation();
 
@@ -131,11 +131,11 @@ public abstract class SGDrawingElementScale2D extends SGDrawingElementScale
   }
 
   protected Rectangle2D getLineBounds() {
-    final SGDrawingElementLine2D hline = (SGDrawingElementLine2D) this.getHorizontalLine();
-    final SGDrawingElementLine2D vline = (SGDrawingElementLine2D) this.getVerticalLine();
+    final SGDrawingElementLine2D hLine = (SGDrawingElementLine2D) this.getHorizontalLine();
+    final SGDrawingElementLine2D vLine = (SGDrawingElementLine2D) this.getVerticalLine();
     ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
-    rectList.add(hline.getLineShape().getBounds2D());
-    rectList.add(vline.getLineShape().getBounds2D());
+    rectList.add(hLine.getLineShape().getBounds2D());
+    rectList.add(vLine.getLineShape().getBounds2D());
     Rectangle2D rect = SGUtility.createUnion(rectList);
     return rect;
   }

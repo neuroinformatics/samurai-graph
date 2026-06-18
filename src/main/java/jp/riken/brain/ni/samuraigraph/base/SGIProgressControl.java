@@ -20,9 +20,9 @@ public interface SGIProgressControl {
   public void setProgressValue(final float ratio);
 
   /**
-   * Sets the messsage of the progress.
+   * Sets the message of the progress.
    *
-   * @param msg progress messasge
+   * @param msg progress message
    */
   public void setProgressMessage(final String msg);
 }

@@ -70,9 +70,9 @@ public class SGPatternPaintSelectionButton extends SGButton implements ChangeLis
   public void stateChanged(ChangeEvent e) {
     Object source = e.getSource();
     if (source instanceof SGPatternPaintDialog) {
-      SGPatternPaint ppaint = ((SGPatternPaintDialog) source).getPatternPaint();
-      if (!this.mPatternPaint.equals(ppaint)) {
-        this.mPatternPaint = ppaint;
+      SGPatternPaint pPaint = ((SGPatternPaintDialog) source).getPatternPaint();
+      if (!this.mPatternPaint.equals(pPaint)) {
+        this.mPatternPaint = pPaint;
         repaint();
       }
     }

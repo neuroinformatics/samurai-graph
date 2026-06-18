@@ -10,11 +10,7 @@ import java.awt.TexturePaint;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-/**
- * Paint using pattern texture.
- *
- * @author minemoto
- */
+/** Paint using pattern texture. */
 public class SGPatternPaint extends SGTransparentPaint {
 
   public static final int INDEX_0_DEGREE = 0;
@@ -112,49 +108,49 @@ public class SGPatternPaint extends SGTransparentPaint {
     switch (this.mTypeIndex) {
       case INDEX_0_DEGREE:
         return getPatternPaint_Size3x3(
-            getTransparentedColor(this.mColor),
-            getTransparentedColor(Color.WHITE),
+            getTransparentColor(this.mColor),
+            getTransparentColor(Color.WHITE),
             0,
             this.mMagnification);
       case INDEX_45_DEGREE:
         return getPatternPaint_Size4x4(
-            getTransparentedColor(this.mColor),
-            getTransparentedColor(Color.WHITE),
+            getTransparentColor(this.mColor),
+            getTransparentColor(Color.WHITE),
             1,
             this.mMagnification);
       case INDEX_90_DEGREE:
         return getPatternPaint_Size3x3(
-            getTransparentedColor(this.mColor),
-            getTransparentedColor(Color.WHITE),
+            getTransparentColor(this.mColor),
+            getTransparentColor(Color.WHITE),
             3,
             this.mMagnification);
       case INDEX_135_DEGREE:
         return getPatternPaint_Size4x4(
-            getTransparentedColor(this.mColor),
-            getTransparentedColor(Color.WHITE),
+            getTransparentColor(this.mColor),
+            getTransparentColor(Color.WHITE),
             2,
             this.mMagnification);
       case INDEX_STRIPES_0_DEGREE:
         return getPatternPaint_Stripe_Size4x4(
-            getTransparentedColor(this.mColor),
-            getTransparentedColor(Color.WHITE),
+            getTransparentColor(this.mColor),
+            getTransparentColor(Color.WHITE),
             0,
             this.mMagnification);
       case INDEX_STRIPES_45_DEGREE:
         return getPatternPaint_Stripe_Size4x4(
-            getTransparentedColor(this.mColor),
-            getTransparentedColor(Color.WHITE),
+            getTransparentColor(this.mColor),
+            getTransparentColor(Color.WHITE),
             2,
             this.mMagnification);
       case INDEX_3_STRIPES_90_DEGREE:
         return getPatternPaint_3_stripes_Size5x5(
-            getTransparentedColor(this.mColor),
-            getTransparentedColor(Color.WHITE),
+            getTransparentColor(this.mColor),
+            getTransparentColor(Color.WHITE),
             this.mMagnification);
       case INDEX_45_DEGREE_WIDE:
         return getPatternPaint_Size10x10(
-            getTransparentedColor(this.mColor),
-            getTransparentedColor(Color.WHITE),
+            getTransparentColor(this.mColor),
+            getTransparentColor(Color.WHITE),
             1,
             this.mMagnification);
       default:

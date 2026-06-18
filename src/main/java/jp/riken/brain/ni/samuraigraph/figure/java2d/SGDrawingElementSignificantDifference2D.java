@@ -19,10 +19,6 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementSignificantDifference;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementString;
 
-/**
- * @author kuromaru To change the template for this generated type comment go to
- *     Window>Preferences>Java>Code Generation>Code and Comments
- */
 public abstract class SGDrawingElementSignificantDifference2D
     extends SGDrawingElementSignificantDifference implements SGIDrawingElementJava2D {
   /** */
@@ -64,9 +60,9 @@ public abstract class SGDrawingElementSignificantDifference2D
 
     final SGDrawingElementString2DExtended str =
         (SGDrawingElementString2DExtended) this.getStringElement();
-    final SGDrawingElementLine2D hline = (SGDrawingElementLine2D) this.getHorizontalLine();
-    final SGDrawingElementLine2D pline1 = (SGDrawingElementLine2D) this.getVerticalLine1();
-    final SGDrawingElementLine2D pline2 = (SGDrawingElementLine2D) this.getVerticalLine2();
+    final SGDrawingElementLine2D hLine = (SGDrawingElementLine2D) this.getHorizontalLine();
+    final SGDrawingElementLine2D pLine1 = (SGDrawingElementLine2D) this.getVerticalLine1();
+    final SGDrawingElementLine2D pLine2 = (SGDrawingElementLine2D) this.getVerticalLine2();
 
     final SGTuple2f leftTop = new SGTuple2f(this.getX(), this.getY());
 
@@ -78,9 +74,9 @@ public abstract class SGDrawingElementSignificantDifference2D
 
     // System.out.println(this.getX()+" "+this.getY());
 
-    hline.setTermPoints(leftTop, rightTop);
-    pline1.setTermPoints(leftTop, leftBottom);
-    pline2.setTermPoints(rightTop, rightBottom);
+    hLine.setTermPoints(leftTop, rightTop);
+    pLine1.setTermPoints(leftTop, leftBottom);
+    pLine2.setTermPoints(rightTop, rightBottom);
 
     final Rectangle2D rect = str.getElementBounds();
     final float strLeading = str.getLeading() * 2.0f;
@@ -182,13 +178,13 @@ public abstract class SGDrawingElementSignificantDifference2D
 
   /** */
   public Shape getConnectedShape() {
-    final SGDrawingElementLine2D hline = (SGDrawingElementLine2D) this.getHorizontalLine();
-    final SGDrawingElementLine2D pline1 = (SGDrawingElementLine2D) this.getVerticalLine1();
-    final SGDrawingElementLine2D pline2 = (SGDrawingElementLine2D) this.getVerticalLine2();
+    final SGDrawingElementLine2D hLine = (SGDrawingElementLine2D) this.getHorizontalLine();
+    final SGDrawingElementLine2D pLine1 = (SGDrawingElementLine2D) this.getVerticalLine1();
+    final SGDrawingElementLine2D pLine2 = (SGDrawingElementLine2D) this.getVerticalLine2();
     GeneralPath gp = new GeneralPath();
-    gp.append(pline1.getLineShape(), true);
-    gp.append(hline.getLineShape(), true);
-    gp.append(pline2.getLineShape(), true);
+    gp.append(pLine1.getLineShape(), true);
+    gp.append(hLine.getLineShape(), true);
+    gp.append(pLine2.getLineShape(), true);
     return gp;
   }
 
@@ -217,13 +213,13 @@ public abstract class SGDrawingElementSignificantDifference2D
 
   /** */
   public Rectangle2D getLineBounds() {
-    final SGDrawingElementLine2D hline = (SGDrawingElementLine2D) this.getHorizontalLine();
-    final SGDrawingElementLine2D pline1 = (SGDrawingElementLine2D) this.getVerticalLine1();
-    final SGDrawingElementLine2D pline2 = (SGDrawingElementLine2D) this.getVerticalLine2();
+    final SGDrawingElementLine2D hLine = (SGDrawingElementLine2D) this.getHorizontalLine();
+    final SGDrawingElementLine2D pLine1 = (SGDrawingElementLine2D) this.getVerticalLine1();
+    final SGDrawingElementLine2D pLine2 = (SGDrawingElementLine2D) this.getVerticalLine2();
     ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
-    rectList.add(hline.getLineShape().getBounds2D());
-    rectList.add(pline1.getLineShape().getBounds2D());
-    rectList.add(pline2.getLineShape().getBounds2D());
+    rectList.add(hLine.getLineShape().getBounds2D());
+    rectList.add(pLine1.getLineShape().getBounds2D());
+    rectList.add(pLine2.getLineShape().getBounds2D());
     Rectangle2D rect = SGUtility.createUnion(rectList);
 
     return rect;

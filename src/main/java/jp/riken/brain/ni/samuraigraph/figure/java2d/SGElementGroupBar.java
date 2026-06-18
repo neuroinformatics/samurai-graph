@@ -197,8 +197,8 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
     el.setAttribute(KEY_VERTICAL, Boolean.toString(this.mVerticalFlag));
     el.setAttribute(KEY_INTERVAL, Double.toString(this.mInterval));
-    el.setAttribute(KEY_OFFSETX, Double.toString(this.mOffsetX));
-    el.setAttribute(KEY_OFFSETY, Double.toString(this.mOffsetY));
+    el.setAttribute(KEY_OFFSET_X, Double.toString(this.mOffsetX));
+    el.setAttribute(KEY_OFFSET_Y, Double.toString(this.mOffsetY));
 
     return true;
   }
@@ -351,7 +351,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // bar offset x
-    str = el.getAttribute(KEY_OFFSETX);
+    str = el.getAttribute(KEY_OFFSET_X);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -364,7 +364,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // bar offset y
-    str = el.getAttribute(KEY_OFFSETY);
+    str = el.getAttribute(KEY_OFFSET_Y);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -698,9 +698,6 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     return true;
   }
 
-  /**
-   * @author okumura
-   */
   public static class BarProperties extends ElementGroupProperties {
     protected SGDrawingElementBar.BarProperties mBarProperties =
         new SGDrawingElementBar.BarProperties();

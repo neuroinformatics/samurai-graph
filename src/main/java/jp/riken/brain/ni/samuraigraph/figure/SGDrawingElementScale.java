@@ -36,9 +36,9 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
 
   protected String mVerticalUnit = null;
 
-  protected boolean mHorizontalTextDownside;
+  protected boolean mHorizontalTextDownSide;
 
-  protected boolean mVerticalTextLeftside;
+  protected boolean mVerticalTextLeftSide;
 
   protected float mTextAngle;
 
@@ -317,19 +317,19 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
   }
 
   public boolean isHorizontalTextDownside() {
-    return this.mHorizontalTextDownside;
+    return this.mHorizontalTextDownSide;
   }
 
   public void setHorizontalTextDownside(final boolean b) {
-    this.mHorizontalTextDownside = b;
+    this.mHorizontalTextDownSide = b;
   }
 
   public boolean isVerticalTextLeftside() {
-    return this.mVerticalTextLeftside;
+    return this.mVerticalTextLeftSide;
   }
 
   public void setVerticalTextLeftside(final boolean b) {
-    this.mVerticalTextLeftside = b;
+    this.mVerticalTextLeftSide = b;
   }
 
   public float getTextAngle() {
@@ -376,8 +376,8 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     sp.mVerticalText = this.mVerticalText;
     sp.mHorizontalUnit = this.mHorizontalUnit;
     sp.mVerticalUnit = this.mVerticalUnit;
-    sp.mHorizontalTextDownside = this.mHorizontalTextDownside;
-    sp.mVerticalTextLeftside = this.mVerticalTextLeftside;
+    sp.mHorizontalTextDownside = this.mHorizontalTextDownSide;
+    sp.mVerticalTextLeftside = this.mVerticalTextLeftSide;
     sp.mStringColor = this.mStringColor;
     return true;
   }
@@ -400,8 +400,8 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     this.setVerticalText(sp.mVerticalText);
     this.mHorizontalUnit = sp.mHorizontalUnit;
     this.mVerticalUnit = sp.mVerticalUnit;
-    this.mHorizontalTextDownside = sp.mHorizontalTextDownside;
-    this.mVerticalTextLeftside = sp.mVerticalTextLeftside;
+    this.mHorizontalTextDownSide = sp.mHorizontalTextDownside;
+    this.mVerticalTextLeftSide = sp.mVerticalTextLeftside;
     this.setStringColor(sp.mStringColor);
     return true;
   }
@@ -435,7 +435,7 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
         COM_SCALE_X_AXIS_VISIBLE,
         COM_SCALE_X_AXIS_TITLE_DOWNSIDE,
         COM_SCALE_Y_AXIS_VISIBLE,
-        COM_SCALE_Y_AXIS_TITLE_LEFTSIDE,
+        COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE,
         COM_SCALE_LINE_COLOR,
         COM_SCALE_FONT_COLOR,
         COM_SCALE_FONT_ANGLE);

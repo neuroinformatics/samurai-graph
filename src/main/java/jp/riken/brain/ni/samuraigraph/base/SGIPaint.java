@@ -4,11 +4,7 @@ import java.awt.Paint;
 import java.awt.geom.Rectangle2D;
 import org.w3c.dom.Element;
 
-/**
- * An interface of inner painting.
- *
- * @author minemoto
- */
+/** An interface of inner painting. */
 public interface SGIPaint extends Cloneable, SGIPaintConstant {
 
   public float getAlpha();

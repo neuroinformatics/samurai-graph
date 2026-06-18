@@ -1084,10 +1084,10 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   @Override
   public void setDataSource(SGIDataSource src) {
     super.setDataSource(src);
-    SGMDArrayFile mdfile = (SGMDArrayFile) src;
-    this.mXVariable = this.findVariable(mdfile, this.mXVariable);
-    this.mYVariable = this.findVariable(mdfile, this.mYVariable);
-    this.mZVariable = this.findVariable(mdfile, this.mZVariable);
+    SGMDArrayFile mdFile = (SGMDArrayFile) src;
+    this.mXVariable = this.findVariable(mdFile, this.mXVariable);
+    this.mYVariable = this.findVariable(mdFile, this.mYVariable);
+    this.mZVariable = this.findVariable(mdFile, this.mZVariable);
   }
 
   /**

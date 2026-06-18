@@ -395,7 +395,7 @@ public interface SGIAxisConstants extends SGIConstants {
   public static final String COM_AXIS_NUMBER_FORMAT_EXPONENT_VISIBLE =
       "NumberFormatExponentVisible";
 
-  public static final String COM_AXIS_NUMBER_FORMAT_EXPONTNE_VALUE = "NumberFormatExponentValue";
+  public static final String COM_AXIS_NUMBER_FORMAT_EXPONENT_VALUE = "NumberFormatExponentValue";
 
   // frame
   public static final String COM_AXIS_FRAME_VISIBLE = "FrameVisible";

@@ -769,7 +769,7 @@ public class SGDataCreator
       List<Integer> firstIndexList = SGDataUtility.getColumnIndexListOfNumber(firstTokenList);
 
       // skip titles if they exist
-      if (SGApplicationUtility.evaluteTitleList(firstIndexList)) {
+      if (SGApplicationUtility.evaluateTitleList(firstIndexList)) {
         // this is title. read next line for indexList
         firstTokenList = SGUtilityText.getFirstTokenList(br);
         if (firstTokenList == null || firstTokenList.size() == 0) {
@@ -869,7 +869,7 @@ public class SGDataCreator
    * @return result of parse
    * @throws FileNotFoundException
    */
-  public SDArrayFileParseResult parseFileComlumnType(
+  public SDArrayFileParseResult parseFileColumnType(
       final String path,
       final String dataType,
       final boolean isPropertyFileData,
@@ -894,7 +894,7 @@ public class SGDataCreator
 
       // get titles
       String[] titles = new String[colNum];
-      if (SGApplicationUtility.evaluteTitleList(indexList)) {
+      if (SGApplicationUtility.evaluateTitleList(indexList)) {
         // this line represents titles
         for (int ii = 0; ii < colNum; ii++) {
           Token token = tokenList.get(ii);
@@ -1819,7 +1819,7 @@ public class SGDataCreator
     final boolean isPolar = b.booleanValue();
 
     // allocate memory
-    progress.setProgressMessage(PROGRESS_MESSAGE_CREATEDATA);
+    progress.setProgressMessage(PROGRESS_MESSAGE_CREATE_DATA);
 
     // get column indices
     final String type1 = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
@@ -2023,7 +2023,7 @@ public class SGDataCreator
       final Map<String, Object> infoMap,
       final SGIProgressControl progress) {
 
-    progress.setProgressMessage(PROGRESS_MESSAGE_CREATEDATA);
+    progress.setProgressMessage(PROGRESS_MESSAGE_CREATE_DATA);
     progress.startIndeterminateProgress();
 
     CreatedDataSet cdSet = null;
@@ -2167,7 +2167,7 @@ public class SGDataCreator
       final Map<String, Object> infoMap,
       final SGIProgressControl progress) {
 
-    progress.setProgressMessage(PROGRESS_MESSAGE_CREATEDATA);
+    progress.setProgressMessage(PROGRESS_MESSAGE_CREATE_DATA);
     progress.startIndeterminateProgress();
 
     CreatedDataSet cdSet = null;
@@ -2757,7 +2757,7 @@ public class SGDataCreator
     final boolean isPolar = b.booleanValue();
 
     // allocate memory
-    progress.setProgressMessage(PROGRESS_MESSAGE_CREATEDATA);
+    progress.setProgressMessage(PROGRESS_MESSAGE_CREATE_DATA);
 
     // get column indices
     final String type1 = SGDataUtility.getVXYFirstComponentColumnType(infoMap);

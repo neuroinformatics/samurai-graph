@@ -53,14 +53,14 @@ public interface SGIUndoable {
   public void setChanged(boolean b);
 
   /**
-   * Returns a mement object.
+   * Returns a memento object.
    *
    * @return
    */
   public SGProperties getMemento();
 
   /**
-   * Set the mement object.
+   * Set the memento object.
    *
    * @param p - properties to be set
    * @return
@@ -69,14 +69,14 @@ public interface SGIUndoable {
   public boolean setMemento(SGProperties p);
 
   /**
-   * Returns whether this object can be undo its opration.
+   * Returns whether this object can be undo its operation.
    *
    * @return
    */
   public boolean isUndoable();
 
   /**
-   * Returns whether this object can be redo its opration.
+   * Returns whether this object can be redo its operation.
    *
    * @return
    */

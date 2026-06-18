@@ -186,22 +186,22 @@ public abstract class SGAxisSelectionPanel extends javax.swing.JPanel
 
   private boolean mRightFlag;
 
-  /** Returns whether the top axis is seleced. */
+  /** Returns whether the top axis is selected. */
   public boolean isTopSelected() {
     return this.mTopFlag;
   }
 
-  /** Returns whether the bottom axis is seleced. */
+  /** Returns whether the bottom axis is selected. */
   public boolean isBottomSelected() {
     return this.mBottomFlag;
   }
 
-  /** Returns whether the left axis is seleced. */
+  /** Returns whether the left axis is selected. */
   public boolean isLeftSelected() {
     return this.mLeftFlag;
   }
 
-  /** Returns whether the right axis is seleced. */
+  /** Returns whether the right axis is selected. */
   public boolean isRightSelected() {
     return this.mRightFlag;
   }

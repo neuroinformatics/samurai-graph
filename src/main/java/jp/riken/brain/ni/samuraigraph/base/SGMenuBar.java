@@ -34,7 +34,7 @@ public class SGMenuBar extends JMenuBar
   private boolean create() {
     JMenuBar menuBar = this;
 
-    final int shortcutmask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
+    final int shortcutMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
     // final int ctrl = ActionEvent.CTRL_MASK;
     final int shift = ActionEvent.SHIFT_MASK;
     final int alt = ActionEvent.ALT_MASK;
@@ -53,7 +53,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_CREATE_NEW_WINDOW,
           this,
           KeyEvent.VK_N,
-          KeyStroke.getKeyStroke(KeyEvent.VK_N, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_N, shortcutMask),
           true);
 
       // close window
@@ -62,7 +62,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_CLOSE_WINDOW,
           this,
           KeyEvent.VK_W,
-          KeyStroke.getKeyStroke(KeyEvent.VK_W, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_W, shortcutMask),
           true);
 
       menuFile.addSeparator();
@@ -73,7 +73,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_DRAW_GRAPH,
           this,
           KeyEvent.VK_D,
-          KeyStroke.getKeyStroke(KeyEvent.VK_O, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_O, shortcutMask),
           true);
 
       menuFile.addSeparator();
@@ -84,7 +84,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_RELOAD,
           this,
           KeyEvent.VK_R,
-          KeyStroke.getKeyStroke(KeyEvent.VK_R, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_R, shortcutMask),
           true);
 
       menuFile.addSeparator();
@@ -125,7 +125,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_EXPORT_AS_IMAGE,
           this,
           KeyEvent.VK_E,
-          KeyStroke.getKeyStroke(KeyEvent.VK_E, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_E, shortcutMask),
           false);
 
       // print
@@ -134,7 +134,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_PRINT,
           this,
           KeyEvent.VK_P,
-          KeyStroke.getKeyStroke(KeyEvent.VK_P, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_P, shortcutMask),
           false);
 
       menuFile.addSeparator();
@@ -145,7 +145,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_EXIT,
           this,
           KeyEvent.VK_X,
-          KeyStroke.getKeyStroke(KeyEvent.VK_Q, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_Q, shortcutMask),
           true);
     }
 
@@ -163,7 +163,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_UNDO,
           this,
           KeyEvent.VK_U,
-          KeyStroke.getKeyStroke(KeyEvent.VK_Z, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_Z, shortcutMask),
           false);
 
       // redo
@@ -172,7 +172,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_REDO,
           this,
           KeyEvent.VK_R,
-          KeyStroke.getKeyStroke(KeyEvent.VK_Y, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_Y, shortcutMask),
           false);
 
       menuEdit.addSeparator();
@@ -188,7 +188,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_CUT,
           this,
           KeyEvent.VK_T,
-          KeyStroke.getKeyStroke(KeyEvent.VK_X, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_X, shortcutMask),
           false);
 
       // copy
@@ -197,7 +197,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_COPY,
           this,
           KeyEvent.VK_C,
-          KeyStroke.getKeyStroke(KeyEvent.VK_C, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_C, shortcutMask),
           false);
 
       // paste
@@ -206,7 +206,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_PASTE,
           this,
           KeyEvent.VK_P,
-          KeyStroke.getKeyStroke(KeyEvent.VK_V, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_V, shortcutMask),
           false);
 
       menuEdit.addSeparator();
@@ -235,7 +235,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_DUPLICATE,
           this,
           KeyEvent.VK_I,
-          KeyStroke.getKeyStroke(KeyEvent.VK_D, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_D, shortcutMask),
           false);
 
       menuEdit.addSeparator();
@@ -535,7 +535,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_BRING_TO_FRONT,
           this,
           KeyEvent.VK_F,
-          KeyStroke.getKeyStroke(KeyEvent.VK_F, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_F, shortcutMask),
           false);
 
       // bring forward
@@ -544,7 +544,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_BRING_FORWARD,
           this,
           KeyEvent.VK_B,
-          KeyStroke.getKeyStroke(KeyEvent.VK_B, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_B, shortcutMask),
           false);
 
       // send backward
@@ -553,7 +553,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_SEND_BACKWARD,
           this,
           KeyEvent.VK_S,
-          KeyStroke.getKeyStroke(KeyEvent.VK_S, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_S, shortcutMask),
           false);
 
       // send to back
@@ -562,7 +562,7 @@ public class SGMenuBar extends JMenuBar
           MENUBARCMD_SEND_TO_BACK,
           this,
           KeyEvent.VK_K,
-          KeyStroke.getKeyStroke(KeyEvent.VK_K, shortcutmask),
+          KeyStroke.getKeyStroke(KeyEvent.VK_K, shortcutMask),
           false);
 
       menuArrange.addSeparator();
@@ -645,7 +645,7 @@ public class SGMenuBar extends JMenuBar
 
       /*
        * // Look and Feel { final JMenu menuLaf = new
-       * JMenu(MENUBAR_LOOKANDFEEL); menuLaf.setMnemonic( KeyEvent.VK_L );
+       * JMenu(MENUBAR_LOOK_AND_FEEL); menuLaf.setMnemonic( KeyEvent.VK_L );
        * menuHelp.add(menuLaf);
        *  // metal this.createMenuItem( menuLaf, MENUBARCMD_LAF_METAL,
        * LAF_METAL, this, KeyEvent.VK_T, null, true );
@@ -654,7 +654,7 @@ public class SGMenuBar extends JMenuBar
        *  // windows this.createMenuItem( menuLaf, MENUBARCMD_LAF_WINDOWS,
        * LAF_WINDOWS, this, KeyEvent.VK_W, null, true );
        *  // windows classic this.createMenuItem( menuLaf,
-       * MENUBARCMD_LAF_WINDOWSCLASSIC, LAF_WINDOWSCLASSIC, this,
+       * MENUBARCMD_LAF_WINDOWS_CLASSIC, LAF_WINDOWS_CLASSIC, this,
        * KeyEvent.VK_C, null, true );
        *  // aqua this.createMenuItem( menuLaf, MENUBARCMD_LAF_AQUA,
        * LAF_AQUA, this, KeyEvent.VK_A, null, true ); }

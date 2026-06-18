@@ -679,9 +679,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     return true;
   }
 
-  /**
-   * @author okumura
-   */
   public static class ArrowProperties extends ElementGroupProperties {
 
     private SGDrawingElementArrow.ArrowProperties mArrowProperties =
@@ -894,7 +891,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
      * @return true if succeeded
      */
     public boolean setHeadAngle(final Float openAngle, final Float closeAngle) {
-      // do nothig
+      // do nothing
       return true;
     }
 

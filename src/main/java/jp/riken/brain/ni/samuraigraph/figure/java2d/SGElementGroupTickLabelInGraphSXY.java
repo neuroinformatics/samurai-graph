@@ -141,17 +141,17 @@ public class SGElementGroupTickLabelInGraphSXY extends SGElementGroupTickLabelIn
     final SGAxis axis = alignHorizontal ? axisX : axisY;
 
     // calculate baseline height
-    float maxascent = 0.0f;
-    float maxdescent = 0.0f;
+    float maxAscent = 0.0f;
+    float maxDescent = 0.0f;
     for (int ii = 0; ii < num; ii++) {
       final TickLabelStringElement el = (TickLabelStringElement) this.mDrawingElementArray[ii];
       final float a = el.getAscent();
       final float b = el.getDescent();
-      if (a > maxascent) {
-        maxascent = a;
+      if (a > maxAscent) {
+        maxAscent = a;
       }
-      if (b > maxdescent) {
-        maxdescent = b;
+      if (b > maxDescent) {
+        maxDescent = b;
       }
     }
 
@@ -189,13 +189,13 @@ public class SGElementGroupTickLabelInGraphSXY extends SGElementGroupTickLabelIn
         float yDefault = 0.0f;
         if (axisLocationX == SGIFigureElementAxis.AXIS_HORIZONTAL_1) {
           if (angle == SGITickLabelConstants.ANGLE_HORIZONTAL) {
-            yDefault = maxascent - el.getAscent();
+            yDefault = maxAscent - el.getAscent();
           }
           space = this.calcSpace(SGIFigureElementAxis.AXIS_HORIZONTAL_1);
           yDefault += gy + gh + space;
         } else if (axisLocationX == SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
           if (angle == SGITickLabelConstants.ANGLE_HORIZONTAL) {
-            yDefault = -maxdescent + el.getDescent();
+            yDefault = -maxDescent + el.getDescent();
           }
           space = this.calcSpace(SGIFigureElementAxis.AXIS_HORIZONTAL_2);
           yDefault += gy - space - h;

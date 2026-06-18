@@ -326,9 +326,6 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
     return this.mUpperArrowElement.isVisible();
   }
 
-  /**
-   * @author okumura
-   */
   public static class ErrorBarProperties extends DrawingElementProperties {
 
     private SGDrawingElementArrow.ArrowProperties mArrowProperties =

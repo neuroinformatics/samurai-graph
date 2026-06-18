@@ -22,11 +22,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementAxisBreak;
 
-/**
- * @author kuromaru
- *     <p>To change the template for this generated type comment go to Window>Preferences>Java>Code
- *     Generation>Code and Comments
- */
 public abstract class SGDrawingElementAxisBreak2D extends SGDrawingElementAxisBreak
     implements SGIDrawingElementJava2D {
 

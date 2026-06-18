@@ -3,9 +3,7 @@ package jp.riken.brain.ni.samuraigraph.base;
 import javax.swing.ButtonGroup;
 import javax.swing.JToggleButton;
 
-/**
- * @author kuromaru
- */
+/** Panel for selecting a single axis. */
 public class SGSingleAxisSelectionPanel extends SGAxisSelectionPanel {
 
   /** */

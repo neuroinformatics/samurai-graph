@@ -61,7 +61,7 @@ public class SGSamplingDataColumn extends SGNumberDataColumn {
   }
 
   /**
-   * Calculates the sampling value at gien index.
+   * Calculates the sampling value at given index.
    *
    * @param n the index
    * @return the sampling value

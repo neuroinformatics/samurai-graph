@@ -2320,8 +2320,8 @@ public abstract class SGNetCDFData extends SGArrayData
           NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
 
       List<Attribute> globalAttrList = ncRead.getGlobalAttributes();
-      for (Attribute gattr : globalAttrList) {
-        ncWrite.addGroupAttribute(null, gattr);
+      for (Attribute gAttr : globalAttrList) {
+        ncWrite.addGroupAttribute(null, gAttr);
       }
 
       // maps for text variable

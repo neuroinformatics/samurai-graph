@@ -534,7 +534,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
 
     // get selected cells
     List<SGXYSimpleIndexBlock> blockList;
-    if (dg.isHilighting()) {
+    if (dg.isHighlighting()) {
       blockList = dg.getSelectedCells();
     } else {
       blockList = new ArrayList<SGXYSimpleIndexBlock>();

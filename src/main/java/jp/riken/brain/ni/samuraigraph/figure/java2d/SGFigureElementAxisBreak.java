@@ -25,7 +25,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
-import jp.riken.brain.ni.samuraigraph.base.SGICopiable;
+import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
@@ -279,7 +279,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
         if (!el.isAnchored()) {
           SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(pList, g2d);
         } else {
-          SGUtilityForFigureElementJava2D.drawAnchorPointsAsAnchoredForcusObject(pList, g2d);
+          SGUtilityForFigureElementJava2D.drawAnchorPointsAsAnchoredFocusObject(pList, g2d);
         }
       }
     }
@@ -856,7 +856,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
     final int ox = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_X);
     final int oy = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_Y);
 
-    List<SGICopiable> cList = this.duplicateObjects();
+    List<SGICopyable> cList = this.duplicateObjects();
     for (int ii = 0; ii < cList.size(); ii++) {
       // duplicate
       AxisBreakSymbol el = (AxisBreakSymbol) cList.get(ii);
@@ -887,7 +887,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
    * @param list of the objects to be pasted
    * @return true:succeeded, false:failed
    */
-  public boolean paste(List<SGICopiable> list) {
+  public boolean paste(List<SGICopyable> list) {
     final float mag = this.getMagnification();
     final int ox = (int) (mag * OFFSET_DUPLICATED_OBJECT_X);
     final int oy = (int) (mag * OFFSET_DUPLICATED_OBJECT_Y);
@@ -982,7 +982,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
           SGIUndoable,
           SGIChildObject,
           SGIMovable,
-          SGICopiable,
+          SGICopyable,
           SGIAxisBreakDialogObserver {
 
     /** ID number. */
@@ -1336,10 +1336,10 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
      * @return the location of this symbol
      */
     public SGTuple2f getLocation() {
-      final float basex = super.getX();
-      final float basey = super.getY();
-      final float x = this.getMagnification() * basex + SGFigureElementAxisBreak.this.mGraphRectX;
-      final float y = this.getMagnification() * basey + SGFigureElementAxisBreak.this.mGraphRectY;
+      final float baseX = super.getX();
+      final float baseY = super.getY();
+      final float x = this.getMagnification() * baseX + SGFigureElementAxisBreak.this.mGraphRectX;
+      final float y = this.getMagnification() * baseY + SGFigureElementAxisBreak.this.mGraphRectY;
       return new SGTuple2f(x, y);
     }
 

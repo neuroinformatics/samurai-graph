@@ -2209,9 +2209,9 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
 
   private void updateDimensionPanelsEnabled(final List<String> disabledDimList) {
     // set enable or disable the components
-    SGDimensionPanel[] coms = this.getDimensionPanels(this.mOriginPanel);
-    for (int ii = 0; ii < coms.length; ii++) {
-      SGMDArrayDimensionPanel p = (SGMDArrayDimensionPanel) coms[ii];
+    SGDimensionPanel[] dPanels = this.getDimensionPanels(this.mOriginPanel);
+    for (int ii = 0; ii < dPanels.length; ii++) {
+      SGMDArrayDimensionPanel p = (SGMDArrayDimensionPanel) dPanels[ii];
       if (!p.isVisible()) {
         continue;
       }
@@ -2525,17 +2525,17 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
       SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) cols[row];
       final int[] dims = mdInfo.getDimensions();
       final int[] origins = mdInfo.getOrigins();
-      Component[] coms = this.mOriginPanel.getComponents();
+      Component[] comps = this.mOriginPanel.getComponents();
       int dimCnt = 0;
-      for (int ii = 0; ii < coms.length; ii++) {
+      for (int ii = 0; ii < comps.length; ii++) {
         // sets the visibility
         final boolean visible = (dimCnt < dims.length);
-        coms[ii].setVisible(visible);
+        comps[ii].setVisible(visible);
         if (!visible) {
           continue;
         }
-        if (coms[ii] instanceof SGMDArrayDimensionPanel) {
-          SGMDArrayDimensionPanel p = (SGMDArrayDimensionPanel) coms[ii];
+        if (comps[ii] instanceof SGMDArrayDimensionPanel) {
+          SGMDArrayDimensionPanel p = (SGMDArrayDimensionPanel) comps[ii];
 
           // sets the parameters
           final double[] values = new double[dims[dimCnt]];
@@ -2557,9 +2557,9 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
 
     } else {
       // Note: This cannot happen.
-      Component[] coms = this.mOriginPanel.getComponents();
-      for (int ii = 0; ii < coms.length; ii++) {
-        coms[ii].setVisible(false);
+      Component[] comps = this.mOriginPanel.getComponents();
+      for (int ii = 0; ii < comps.length; ii++) {
+        comps[ii].setVisible(false);
       }
     }
   }

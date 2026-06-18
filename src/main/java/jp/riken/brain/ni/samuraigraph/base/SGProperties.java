@@ -1,7 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 /** The base class of properties. */
-public abstract class SGProperties implements SGIDisposable, Cloneable, SGICopiable {
+public abstract class SGProperties implements SGIDisposable, Cloneable, SGICopyable {
   /** The default constructor. */
   public SGProperties() {
     super();

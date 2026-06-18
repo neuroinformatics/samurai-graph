@@ -78,7 +78,7 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
   /**
    * Sets the line color.
    *
-   * @param color the line colot to set
+   * @param color the line color to set
    * @return true if succeeded
    */
   public abstract boolean setLineColor(final Color color);

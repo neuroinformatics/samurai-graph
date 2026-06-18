@@ -1,3 +1,5 @@
+/* spell-checker: disable */
+
 package jp.riken.brain.ni.samuraigraph.base;
 
 import java.io.File;
@@ -39,7 +41,7 @@ import java.lang.reflect.Method;
  * from this paragraph through the end of the comment is not removed. The author requests that he be
  * notified of any application, applet, or other binary that makes use of this code, but that's more
  * out of curiosity than anything and is not required. This software includes no warranty. The
- * author is not repsonsible for any loss of data or functionality or any adverse or unexpected
+ * author is not responsible for any loss of data or functionality or any adverse or unexpected
  * effects of using this software.
  *
  * <p>Credits: <br>
@@ -253,7 +255,7 @@ public class SGBrowserLauncher {
    * Called by a static initializer to load any classes, fields, and methods required at runtime to
    * locate the user's web browser.
    *
-   * @return <code>true</code> if all intialization succeeded <code>false</code> if any portion of
+   * @return <code>true</code> if all initialization succeeded <code>false</code> if any portion of
    *     the initialization failed
    */
   private static boolean loadClasses() {

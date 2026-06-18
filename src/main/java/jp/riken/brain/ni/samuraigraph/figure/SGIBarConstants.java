@@ -12,9 +12,9 @@ public interface SGIBarConstants extends SGIRectangleConstants {
 
   public static final String KEY_INTERVAL = "Interval";
 
-  public static final String KEY_OFFSETX = "OffsetX";
+  public static final String KEY_OFFSET_X = "OffsetX";
 
-  public static final String KEY_OFFSETY = "OffsetY";
+  public static final String KEY_OFFSET_Y = "OffsetY";
 
   public static final int BAR_EFFECTIVE_DIGIT = 6;
 }

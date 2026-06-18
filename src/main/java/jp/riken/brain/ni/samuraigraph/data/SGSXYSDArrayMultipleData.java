@@ -492,30 +492,30 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     if (super.setData(data) == false) {
       return false;
     }
-    SGSXYSDArrayMultipleData dataMult = (SGSXYSDArrayMultipleData) data;
-    if (dataMult.mXIndices != null) {
-      this.mXIndices = SGUtility.copyIntegerArray(dataMult.mXIndices);
+    SGSXYSDArrayMultipleData dataMulti = (SGSXYSDArrayMultipleData) data;
+    if (dataMulti.mXIndices != null) {
+      this.mXIndices = SGUtility.copyIntegerArray(dataMulti.mXIndices);
     }
-    if (dataMult.mYIndices != null) {
-      this.mYIndices = SGUtility.copyIntegerArray(dataMult.mYIndices);
+    if (dataMulti.mYIndices != null) {
+      this.mYIndices = SGUtility.copyIntegerArray(dataMulti.mYIndices);
     }
-    if (dataMult.mLowerErrorIndices != null) {
-      this.mLowerErrorIndices = SGUtility.copyIntegerArray(dataMult.mLowerErrorIndices);
+    if (dataMulti.mLowerErrorIndices != null) {
+      this.mLowerErrorIndices = SGUtility.copyIntegerArray(dataMulti.mLowerErrorIndices);
     }
-    if (dataMult.mUpperErrorIndices != null) {
-      this.mUpperErrorIndices = SGUtility.copyIntegerArray(dataMult.mUpperErrorIndices);
+    if (dataMulti.mUpperErrorIndices != null) {
+      this.mUpperErrorIndices = SGUtility.copyIntegerArray(dataMulti.mUpperErrorIndices);
     }
-    if (dataMult.mErrorBarHolderIndices != null) {
-      this.mErrorBarHolderIndices = SGUtility.copyIntegerArray(dataMult.mErrorBarHolderIndices);
+    if (dataMulti.mErrorBarHolderIndices != null) {
+      this.mErrorBarHolderIndices = SGUtility.copyIntegerArray(dataMulti.mErrorBarHolderIndices);
     }
-    if (dataMult.mTickLabelIndices != null) {
-      this.mTickLabelIndices = SGUtility.copyIntegerArray(dataMult.mTickLabelIndices);
+    if (dataMulti.mTickLabelIndices != null) {
+      this.mTickLabelIndices = SGUtility.copyIntegerArray(dataMulti.mTickLabelIndices);
     }
-    if (dataMult.mTickLabelHolderIndices != null) {
-      this.mTickLabelHolderIndices = SGUtility.copyIntegerArray(dataMult.mTickLabelHolderIndices);
+    if (dataMulti.mTickLabelHolderIndices != null) {
+      this.mTickLabelHolderIndices = SGUtility.copyIntegerArray(dataMulti.mTickLabelHolderIndices);
     }
-    this.mTickLabelStride = dataMult.getTickLabelStride();
-    this.mShift = dataMult.getShift();
+    this.mTickLabelStride = dataMulti.getTickLabelStride();
+    this.mShift = dataMulti.getShift();
     return true;
   }
 
@@ -946,9 +946,9 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     SGDataColumn[] columns = this.getExportedColumnsClone();
     for (int i = 0; i < columns.length; i++) {
       if (SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(columns[i].getValueType())) {
-        SGSamplingDataColumn scol = (SGSamplingDataColumn) columns[i];
+        SGSamplingDataColumn sCol = (SGSamplingDataColumn) columns[i];
         el.setAttribute(
-            SGIFigureElementGraph.KEY_SAMPLING_RATE, Double.toString(scol.getSamplingRate()));
+            SGIFigureElementGraph.KEY_SAMPLING_RATE, Double.toString(sCol.getSamplingRate()));
         break;
       }
     }
@@ -1279,7 +1279,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     Integer[] ehIndices = null;
     if (lList.size() != 0 && lIndices != null && uIndices != null) {
       ehIndices = new Integer[lList.size()];
-      List<Integer> ehueList = new ArrayList<Integer>();
+      List<Integer> ehUeList = new ArrayList<Integer>();
       for (int ii = 0; ii < ehIndices.length; ii++) {
         if (uIndices[ii] == null) return false;
         String str = columns[uIndices[ii].intValue()];
@@ -1287,7 +1287,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         if (eh == null) {
           return false;
         }
-        ehueList.add(eh);
+        ehUeList.add(eh);
       }
       for (int ii = 0; ii < ehIndices.length; ii++) {
         if (lIndices[ii] == null) return false;
@@ -1296,7 +1296,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         if (eh == null) {
           return false;
         }
-        if (ehueList.contains(eh) == false) {
+        if (ehUeList.contains(eh) == false) {
           return false;
         }
         ehIndices[ii] = eh;
@@ -1635,20 +1635,20 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   public SGDataColumn[] getUsedDataColumnsClone() {
     SGDataColumn[] columns = this.getDataFile().mDataColumns;
     String[] columnTypes = this.getCurrentColumnType();
-    List<SGDataColumn> collist = new ArrayList<SGDataColumn>();
+    List<SGDataColumn> colList = new ArrayList<SGDataColumn>();
 
     for (int i = 0; i < this.mXIndices.length; i++) {
       int index = this.mXIndices[i].intValue();
       SGDataColumn col = (SGDataColumn) columns[index].clone();
       col.setColumnType(columnTypes[index]);
-      collist.add(col);
+      colList.add(col);
     }
 
     for (int i = 0; i < this.mYIndices.length; i++) {
       int index = this.mYIndices[i].intValue();
       SGDataColumn col = (SGDataColumn) columns[index].clone();
       col.setColumnType(columnTypes[index]);
-      collist.add(col);
+      colList.add(col);
     }
 
     if (this.isErrorBarAvailable()) {
@@ -1658,14 +1658,14 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         if (index1 == index2) {
           SGDataColumn col = (SGDataColumn) columns[index1].clone();
           col.setColumnType(columnTypes[index1]);
-          collist.add(col);
+          colList.add(col);
         } else {
           SGDataColumn col = (SGDataColumn) columns[index1].clone();
           col.setColumnType(columnTypes[index1]);
-          collist.add(col);
+          colList.add(col);
           col = (SGDataColumn) columns[index2].clone();
           col.setColumnType(columnTypes[index2]);
-          collist.add(col);
+          colList.add(col);
         }
       }
     }
@@ -1674,11 +1674,11 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         int index = this.mTickLabelIndices[i].intValue();
         SGDataColumn col = (SGDataColumn) columns[index].clone();
         col.setColumnType(columnTypes[index]);
-        collist.add(col);
+        colList.add(col);
       }
     }
 
-    return collist.toArray(new SGDataColumn[collist.size()]);
+    return colList.toArray(new SGDataColumn[colList.size()]);
   }
 
   /**
@@ -1803,7 +1803,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return this.getColumns(this.mErrorBarHolderIndices);
   }
 
-  public SGDataColumn[] getTickLableColumns() {
+  public SGDataColumn[] getTickLabelColumns() {
     return this.getColumns(this.mTickLabelIndices);
   }
 
@@ -1869,73 +1869,73 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         (SGSXYSDArrayMultipleData) dataList.get(dataList.size() - 1);
     SGDataSourceObserver obs = data0.getDataSourceObserver();
 
-    Set<Integer> xset = new TreeSet<Integer>();
-    Set<Integer> yset = new TreeSet<Integer>();
-    Set<Integer> leset = new TreeSet<Integer>();
-    Set<Integer> ueset = new TreeSet<Integer>();
-    Set<Integer> ehset = new TreeSet<Integer>();
-    Set<Integer> tset = new TreeSet<Integer>();
-    Set<Integer> thset = new TreeSet<Integer>();
+    Set<Integer> xSet = new TreeSet<Integer>();
+    Set<Integer> ySet = new TreeSet<Integer>();
+    Set<Integer> leSet = new TreeSet<Integer>();
+    Set<Integer> ueSet = new TreeSet<Integer>();
+    Set<Integer> ehSet = new TreeSet<Integer>();
+    Set<Integer> tSet = new TreeSet<Integer>();
+    Set<Integer> thSet = new TreeSet<Integer>();
     for (SGData data : dataList) {
-      SGSXYSDArrayMultipleData dataMult = (SGSXYSDArrayMultipleData) data;
-      Integer[] x = dataMult.getXIndices();
-      Integer[] y = dataMult.getYIndices();
-      Integer[] le = dataMult.getLowerErrorIndices();
-      Integer[] ue = dataMult.getUpperErrorIndices();
-      Integer[] eh = dataMult.getErrorBarHolderIndices();
-      Integer[] t = dataMult.getTickLabelIndices();
-      Integer[] th = dataMult.getTickLabelHolderIndices();
+      SGSXYSDArrayMultipleData dataMulti = (SGSXYSDArrayMultipleData) data;
+      Integer[] x = dataMulti.getXIndices();
+      Integer[] y = dataMulti.getYIndices();
+      Integer[] le = dataMulti.getLowerErrorIndices();
+      Integer[] ue = dataMulti.getUpperErrorIndices();
+      Integer[] eh = dataMulti.getErrorBarHolderIndices();
+      Integer[] t = dataMulti.getTickLabelIndices();
+      Integer[] th = dataMulti.getTickLabelHolderIndices();
       if (null != x) {
         for (int i = 0; i < x.length; i++) {
-          xset.add(x[i]);
+          xSet.add(x[i]);
         }
       }
       if (null != y) {
         for (int i = 0; i < y.length; i++) {
-          yset.add(y[i]);
+          ySet.add(y[i]);
         }
       }
       if (null != le) {
         for (int i = 0; i < le.length; i++) {
-          leset.add(le[i]);
+          leSet.add(le[i]);
         }
       }
       if (null != ue) {
         for (int i = 0; i < ue.length; i++) {
-          ueset.add(ue[i]);
+          ueSet.add(ue[i]);
         }
       }
       if (null != eh) {
         for (int i = 0; i < eh.length; i++) {
-          ehset.add(eh[i]);
+          ehSet.add(eh[i]);
         }
       }
       if (null != t) {
         for (int i = 0; i < t.length; i++) {
-          tset.add(t[i]);
+          tSet.add(t[i]);
         }
       }
       if (null != th) {
         for (int i = 0; i < th.length; i++) {
-          thset.add(th[i]);
+          thSet.add(th[i]);
         }
       }
     }
 
-    Integer[] x = new Integer[xset.size()];
-    Integer[] y = new Integer[yset.size()];
-    Integer[] le = new Integer[leset.size()];
-    Integer[] ue = new Integer[ueset.size()];
-    Integer[] eh = new Integer[ehset.size()];
-    Integer[] t = new Integer[tset.size()];
-    Integer[] th = new Integer[thset.size()];
-    xset.toArray(x);
-    yset.toArray(y);
-    leset.toArray(le);
-    ueset.toArray(ue);
-    ehset.toArray(eh);
-    tset.toArray(t);
-    thset.toArray(th);
+    Integer[] x = new Integer[xSet.size()];
+    Integer[] y = new Integer[ySet.size()];
+    Integer[] le = new Integer[leSet.size()];
+    Integer[] ue = new Integer[ueSet.size()];
+    Integer[] eh = new Integer[ehSet.size()];
+    Integer[] t = new Integer[tSet.size()];
+    Integer[] th = new Integer[thSet.size()];
+    xSet.toArray(x);
+    ySet.toArray(y);
+    leSet.toArray(le);
+    ueSet.toArray(ue);
+    ehSet.toArray(eh);
+    tSet.toArray(t);
+    thSet.toArray(th);
 
     // a measure for data objects with date type column
     if (t.length != th.length && t.length == 1) {
@@ -2235,7 +2235,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       // Creates the dimension and variable of indices
       Dimension indexDim = this.addIndexDimension(ncfile, dataNum);
       String indexDimName = indexDim.getShortName();
-      Variable indexVar = this.addIndexVarialbe(ncfile, indexDim);
+      Variable indexVar = this.addIndexVariable(ncfile, indexDim);
       indexVar.addAttribute(
           SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
@@ -2260,8 +2260,8 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
           }
 
           String dimName = "clen" + i;
-          Dimension dimc = new Dimension(dimName, maxLength);
-          ncfile.addDimension(null, dimc.getShortName(), dimc.getLength());
+          Dimension dimC = new Dimension(dimName, maxLength);
+          ncfile.addDimension(null, dimC.getShortName(), dimC.getLength());
 
           textDimensionName[i] = dimName;
           maxTextLength[i] = maxLength;
@@ -2362,7 +2362,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       }
 
       // write serial numbers
-      this.writeIndexVarialbe(ncfile, indexVar);
+      this.writeIndexVariable(ncfile, indexVar);
 
     } catch (IOException e) {
       return false;

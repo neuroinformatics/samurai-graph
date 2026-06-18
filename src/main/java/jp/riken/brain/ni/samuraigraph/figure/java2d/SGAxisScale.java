@@ -91,8 +91,8 @@ class SGAxisScale extends SGDrawingElementScale2D
     this.mXAxis = xAxis;
     this.mYAxis = yAxis;
 
-    this.setXAxisTitleDownside(true);
-    this.setYAxisTitleLeftside(true);
+    this.setXAxisTitleDownSide(true);
+    this.setYAxisTitleLeftSide(true);
 
     this.setLineWidth(DEFAULT_SCALE_SYMBOL_LINE_WIDTH, LINE_WIDTH_UNIT);
     this.setLineColor(DEFAULT_SCALE_SYMBOL_COLOR);
@@ -816,14 +816,14 @@ class SGAxisScale extends SGDrawingElementScale2D
           continue;
         }
         result.putResult(COM_SCALE_Y_AXIS_LENGTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_Y_AXIS_TITLE_LEFTSIDE.equalsIgnoreCase(key)) {
+      } else if (COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE.equalsIgnoreCase(key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_SCALE_Y_AXIS_TITLE_LEFTSIDE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setVerticalTextLeftside(b);
-        result.putResult(COM_SCALE_Y_AXIS_TITLE_LEFTSIDE, SGPropertyResults.SUCCEEDED);
+        result.putResult(COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE, SGPropertyResults.SUCCEEDED);
       } else if (COM_SCALE_Y_AXIS_TITLE_TEXT.equalsIgnoreCase(key)) {
         if (map.isDoubleQuoted(key) == false) {
           result.putResult(COM_SCALE_Y_AXIS_TITLE_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1495,11 +1495,11 @@ class SGAxisScale extends SGDrawingElementScale2D
    */
   @Override
   public SGTuple2f getLocation() {
-    final float basex = super.getX();
-    final float basey = super.getY();
+    final float baseX = super.getX();
+    final float baseY = super.getY();
     final float mag = this.getMagnification();
-    final float x = this.mAxisElement.getGraphRectX() + mag * basex;
-    final float y = this.mAxisElement.getGraphRectY() + mag * basey;
+    final float x = this.mAxisElement.getGraphRectX() + mag * baseX;
+    final float y = this.mAxisElement.getGraphRectY() + mag * baseY;
     return new SGTuple2f(x, y);
   }
 
@@ -1715,24 +1715,24 @@ class SGAxisScale extends SGDrawingElementScale2D
   }
 
   @Override
-  public boolean isXAxisTitleDownside() {
-    return this.mHorizontalTextDownside;
+  public boolean isXAxisTitleDownSide() {
+    return this.mHorizontalTextDownSide;
   }
 
   @Override
-  public boolean isYAxisTitleLeftside() {
-    return this.mVerticalTextLeftside;
+  public boolean isYAxisTitleLeftSide() {
+    return this.mVerticalTextLeftSide;
   }
 
   @Override
-  public boolean setXAxisTitleDownside(boolean b) {
-    this.mHorizontalTextDownside = b;
+  public boolean setXAxisTitleDownSide(boolean b) {
+    this.mHorizontalTextDownSide = b;
     return true;
   }
 
   @Override
-  public boolean setYAxisTitleLeftside(boolean b) {
-    this.mVerticalTextLeftside = b;
+  public boolean setYAxisTitleLeftSide(boolean b) {
+    this.mVerticalTextLeftSide = b;
     return true;
   }
 

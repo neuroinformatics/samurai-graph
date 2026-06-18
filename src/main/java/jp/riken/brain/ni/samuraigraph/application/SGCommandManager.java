@@ -100,7 +100,7 @@ class SGCommandManager
           if (aKey == null || key.equalsIgnoreCase(aKey)) {
             // When the property key of the alias is null, the alias is applied to
             // all properties.
-            if (alias.getRepr().equals(value)) {
+            if (alias.getRep().equals(value)) {
               // Replaces the value.
               value = alias.getValue();
             }
@@ -175,9 +175,9 @@ class SGCommandManager
   }
 
   private Integer getNewWindowId(final List<String> argsList, List<String> paramsList) {
-    final int argn = argsList.size();
+    final int argc = argsList.size();
     // Window()
-    if (argn == 0) {
+    if (argc == 0) {
       // returns current window ID
       SGDrawingWindow cur = this.mWindowManager.getCurrentWindow();
       if (cur == null) {
@@ -207,8 +207,8 @@ class SGCommandManager
         Integer maxId = idList.get(idList.size() - 1);
         ret = maxId + 1;
       }
-      if (argn > 1) {
-        paramsList.addAll(argsList.subList(1, argn));
+      if (argc > 1) {
+        paramsList.addAll(argsList.subList(1, argc));
       }
       return ret;
     }
@@ -219,16 +219,16 @@ class SGCommandManager
       return null;
     }
     // ex. Windows(1), Window(1, BackgroundColor=RED, ...)
-    if (argn > 1) {
-      paramsList.addAll(argsList.subList(1, argn));
+    if (argc > 1) {
+      paramsList.addAll(argsList.subList(1, argc));
     }
     return id;
   }
 
   private boolean checkIdUpperRange(final String str) {
     BigInteger bIntMax = new BigInteger(Integer.toString(Integer.MAX_VALUE));
-    BigInteger bnum = new BigInteger(str);
-    if (bnum.compareTo(bIntMax) > 0) {
+    BigInteger bNum = new BigInteger(str);
+    if (bNum.compareTo(bIntMax) > 0) {
       return false;
     }
     return true;
@@ -374,7 +374,7 @@ class SGCommandManager
 
   // commands in the menu-bar File
   private int execMenuBarCommandFile(final String command, final List<String> argsList) {
-    final int argn = argsList.size();
+    final int argc = argsList.size();
     final SGDrawingWindow wnd = this.mWindowManager.getCurrentWindow();
     if (wnd == null) {
       return STATUS_FAILED;
@@ -383,7 +383,7 @@ class SGCommandManager
     /*
             // load property
             if (COM_LOAD_PROPERTY.equalsIgnoreCase(command)) {
-                if (argn < 1) {
+                if (argc < 1) {
                     return STATUS_FAILED;
                 }
                 if (aWnd == null) {
@@ -432,12 +432,12 @@ class SGCommandManager
     //                dataNumArray[ii] = nListData.getLength();
     //                cnt += dataNumArray[ii];
     //            }
-    //            if (cnt != argn - 1) {
+    //            if (cnt != argc - 1) {
     //                return STATUS_FAILED;
     //            }
     //
     //            // list of path-names of data files
-    //            ArrayList pathList = new ArrayList(argsList.subList(1, argn));
+    //            ArrayList pathList = new ArrayList(argsList.subList(1, argc));
     //
     //            // create a data map
     //            Map dataMap = new TreeMap();
@@ -468,7 +468,7 @@ class SGCommandManager
             }
             // save property
             else if (COM_SAVE_PROPERTY.equalsIgnoreCase(command)) {
-                if (argn < 1) {
+                if (argc < 1) {
                     return STATUS_FAILED;
                 }
                 if (aWnd == null) {
@@ -504,7 +504,7 @@ class SGCommandManager
     */
     // load data set
     if (COM_LOAD_DATA_SET.equalsIgnoreCase(command)) {
-      if (argn < 1) {
+      if (argc < 1) {
         return STATUS_FAILED;
       }
       String str1 = (String) argsList.get(0); // path
@@ -531,7 +531,7 @@ class SGCommandManager
     }
     // save data set
     else if (COM_SAVE_DATA_SET.equalsIgnoreCase(command)) {
-      if (argn < 2) {
+      if (argc < 2) {
         return STATUS_FAILED;
       }
       if (wnd.getVisibleFigureList().size() == 0) {
@@ -589,9 +589,6 @@ class SGCommandManager
     }
     // exit
     else if (COM_EXIT.equalsIgnoreCase(command)) {
-      //            if (argn != 0) {
-      //                return STATUS_FAILED;
-      //            }
       this.mWindowManager.closeAllWindowWithoutConfirmation();
       return STATUS_SUCCEEDED;
     }
@@ -706,7 +703,7 @@ class SGCommandManager
    */
   private int execFigureCommand(final String command, final List<String> argsList) {
 
-    final int argn = argsList.size();
+    final int argc = argsList.size();
     SGDrawingWindow wnd = mWindowManager.getCurrentWindow();
     if (wnd == null) {
       return STATUS_FAILED;
@@ -717,7 +714,7 @@ class SGCommandManager
       if (figureId == null) {
         return STATUS_FAILED;
       }
-      final List<String> paramsList = new ArrayList<String>(argsList.subList(1, argn));
+      final List<String> paramsList = new ArrayList<String>(argsList.subList(1, argc));
 
       // create a new figure if it does not exist
       SGFigure figure = wnd.getFigure(figureId);
@@ -1152,8 +1149,8 @@ class SGCommandManager
       }
       return STATUS_SUCCEEDED;
     } else if (COM_DELETE_DATA.equalsIgnoreCase(command)) {
-      final int argn = argsList.size();
-      int[] dataIdArray = new int[argn];
+      final int argc = argsList.size();
+      int[] dataIdArray = new int[argc];
       List<Integer> dataIdList = new ArrayList<Integer>();
       for (int ii = 0; ii < dataIdArray.length; ii++) {
         String str = argsList.get(ii);
@@ -1162,10 +1159,10 @@ class SGCommandManager
           dataIdList.add(num);
         }
       }
-      if (argn != dataIdList.size()) {
+      if (argc != dataIdList.size()) {
         return STATUS_FAILED;
       }
-      for (int i = 0; i < argn; i++) {
+      for (int i = 0; i < argc; i++) {
         dataIdArray[i] = dataIdList.get(i).intValue();
       }
 
@@ -1188,8 +1185,8 @@ class SGCommandManager
         return this.fitAxesOlder(command, argsList, figure);
       }
     } else if (COM_ALIGN_BARS.equalsIgnoreCase(command)) {
-      //            final int argn = argsList.size();
-      //            if (argn != 0) {
+      //            final int argc = argsList.size();
+      //            if (argc != 0) {
       //                return STATUS_FAILED;
       //            }
       if (figure.alignVisibleBars() == false) {
@@ -1197,11 +1194,11 @@ class SGCommandManager
       }
       return STATUS_SUCCEEDED;
     } else if (COM_SPLIT.equalsIgnoreCase(command)) {
-      final int argn = argsList.size();
-      if (argn == 0) {
+      final int argc = argsList.size();
+      if (argc == 0) {
         return STATUS_FAILED;
       }
-      int[] dataIdArray = new int[argn];
+      int[] dataIdArray = new int[argc];
       for (int ii = 0; ii < dataIdArray.length; ii++) {
         String str = argsList.get(ii);
         Integer num = SGUtilityText.getInteger(str);
@@ -1219,11 +1216,11 @@ class SGCommandManager
 
       return STATUS_SUCCEEDED;
     } else if (COM_MERGE.equalsIgnoreCase(command)) {
-      final int argn = argsList.size();
-      if (argn == 0) {
+      final int argc = argsList.size();
+      if (argc == 0) {
         return STATUS_FAILED;
       }
-      int[] dataIdArray = new int[argn];
+      int[] dataIdArray = new int[argc];
       for (int ii = 0; ii < dataIdArray.length; ii++) {
         String str = argsList.get(ii);
         Integer num = SGUtilityText.getInteger(str);
@@ -1241,11 +1238,11 @@ class SGCommandManager
 
       return STATUS_SUCCEEDED;
     } else if (COM_INSERT_NETCDF_DATA_LABEL.equalsIgnoreCase(command)) {
-      final int argn = argsList.size();
-      if (argn == 0) {
+      final int argc = argsList.size();
+      if (argc == 0) {
         return STATUS_FAILED;
       }
-      int[] dataIdArray = new int[argn];
+      int[] dataIdArray = new int[argc];
       for (int ii = 0; ii < dataIdArray.length; ii++) {
         String str = argsList.get(ii);
         Integer num = SGUtilityText.getInteger(str);
@@ -1392,8 +1389,8 @@ class SGCommandManager
       if (id == null) {
         return STATUS_FAILED;
       }
-      final int argn = argsList.size();
-      final List<String> paramsList = new ArrayList<String>(argsList.subList(1, argn));
+      final int argc = argsList.size();
+      final List<String> paramsList = new ArrayList<String>(argsList.subList(1, argc));
       SGPropertyMap map = this.getPropertiesMap(command, paramsList);
       if (map == null) {
         return STATUS_FAILED;
@@ -1498,11 +1495,11 @@ class SGCommandManager
   private int fitAxesOlder(String command, List<String> argsList, SGFigure figure) {
     // for backward compatibility
     // version number <= 2.0.0
-    final int argn = argsList.size();
-    if (argn == 0) {
+    final int argc = argsList.size();
+    if (argc == 0) {
       return STATUS_FAILED;
     }
-    int[] dataIdArray = new int[argn];
+    int[] dataIdArray = new int[argc];
     List<Integer> dataIdList = new ArrayList<Integer>();
     for (int ii = 0; ii < dataIdArray.length; ii++) {
       String str = argsList.get(ii);
@@ -1517,10 +1514,10 @@ class SGCommandManager
       }
       return STATUS_SUCCEEDED;
     }
-    if (argn != dataIdList.size()) {
+    if (argc != dataIdList.size()) {
       return STATUS_FAILED;
     }
-    for (int i = 0; i < argn; i++) {
+    for (int i = 0; i < argc; i++) {
       dataIdArray[i] = dataIdList.get(i).intValue();
     }
 
@@ -1542,11 +1539,11 @@ class SGCommandManager
   private int execGlobalCommand(final String command, final List<String> argsList) {
 
     if (COM_COMMAND_SLEEP.equalsIgnoreCase(command)) {
-      final int argn = argsList.size();
-      if (argn == 0) {
+      final int argc = argsList.size();
+      if (argc == 0) {
         return STATUS_FAILED;
       }
-      int[] dataIdArray = new int[argn];
+      int[] dataIdArray = new int[argc];
       List<Double> dataList = new ArrayList<Double>();
       for (int ii = 0; ii < dataIdArray.length; ii++) {
         String str = argsList.get(ii);
@@ -1558,7 +1555,7 @@ class SGCommandManager
       if (dataList.size() != 1) {
         return STATUS_FAILED;
       }
-      if (argn != dataList.size()) {
+      if (argc != dataList.size()) {
         return STATUS_FAILED;
       }
       try { // sleep
@@ -1839,21 +1836,21 @@ class SGCommandManager
    *
    * @param command the command applying the new alias
    * @param key the property key applying the new alias
-   * @param repr the string representation of the new alias
+   * @param rep the string representation of the new alias
    * @param value the value for the new alias
    */
-  public void addAlias(String command, String key, String repr, String value) {
-    Alias a = new Alias(command, key, repr, value);
-    this.mAliasMap.put(repr, a);
+  public void addAlias(String command, String key, String rep, String value) {
+    Alias a = new Alias(command, key, rep, value);
+    this.mAliasMap.put(rep, a);
   }
 
   /**
    * Removes the alias.
    *
-   * @param repr the string representation of the alias to remove
+   * @param rep the string representation of the alias to remove
    */
-  public void removeAlias(String repr) {
-    this.mAliasMap.remove(repr);
+  public void removeAlias(String rep) {
+    this.mAliasMap.remove(rep);
   }
 
   /** The alias class. */
@@ -1866,7 +1863,7 @@ class SGCommandManager
     private String mKey = null;
 
     // The string representation of the alias.
-    private String mRepr = null;
+    private String mRep = null;
 
     // The value of this alias.
     private String mValue = null;
@@ -1876,16 +1873,16 @@ class SGCommandManager
      *
      * @param command the command applying the new alias
      * @param key the property key applying the new alias
-     * @param repr the string representation of the new alias
+     * @param rep the string representation of the new alias
      * @param value the value of the new alias
      */
-    public Alias(String command, String key, String repr, String value) {
-      if (repr == null || value == null) {
-        throw new IllegalArgumentException("repr == null || value == null");
+    public Alias(String command, String key, String rep, String value) {
+      if (rep == null || value == null) {
+        throw new IllegalArgumentException("rep == null || value == null");
       }
       this.mCommand = command;
       this.mKey = key;
-      this.mRepr = repr;
+      this.mRep = rep;
       this.mValue = value;
     }
 
@@ -1912,8 +1909,8 @@ class SGCommandManager
      *
      * @return the string representation of this alias
      */
-    public String getRepr() {
-      return this.mRepr;
+    public String getRep() {
+      return this.mRep;
     }
 
     /**

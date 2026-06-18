@@ -757,9 +757,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     return true;
   }
 
-  /**
-   * @author okumura
-   */
   public static class ArrowProperties extends DrawingElementProperties {
 
     private SGDrawingElementLine.LineProperties mLineProperties =

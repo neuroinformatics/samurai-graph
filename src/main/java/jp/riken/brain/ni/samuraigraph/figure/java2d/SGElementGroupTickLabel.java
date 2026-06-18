@@ -24,7 +24,7 @@ public abstract class SGElementGroupTickLabel extends SGElementGroupString
       return false;
     }
     el.setAttribute(KEY_ANGLE, Float.toString(this.mAngle));
-    el.setAttribute(KEY_TICK_LABEL_ALIGN_HORIAONTALLY, Boolean.toString(this.mAlignHorizontalFlag));
+    el.setAttribute(KEY_TICK_LABEL_ALIGN_HORIZONTALLY, Boolean.toString(this.mAlignHorizontalFlag));
     return true;
   }
 
@@ -65,7 +65,7 @@ public abstract class SGElementGroupTickLabel extends SGElementGroupString
     }
 
     // vertical
-    str = el.getAttribute(KEY_TICK_LABEL_ALIGN_HORIAONTALLY);
+    str = el.getAttribute(KEY_TICK_LABEL_ALIGN_HORIZONTALLY);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {

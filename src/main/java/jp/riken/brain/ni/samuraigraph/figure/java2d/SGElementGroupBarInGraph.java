@@ -12,9 +12,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import org.w3c.dom.Element;
 
-/**
- * @author okumura
- */
 public class SGElementGroupBarInGraph extends SGElementGroupBarForData
     implements SGIElementGroupSXYInGraph {
 
