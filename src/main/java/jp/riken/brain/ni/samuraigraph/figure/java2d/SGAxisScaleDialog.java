@@ -48,7 +48,6 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     java.awt.GridBagConstraints gridBagConstraints;
 
     mAxisLengthModeLabel = new javax.swing.JLabel();
-    mAxisLengthModeSeparator = new javax.swing.JSeparator();
     mAxisLengthModeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
     mButtonPanel = new javax.swing.JPanel();
     mOKButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
@@ -762,7 +761,6 @@ public class SGAxisScaleDialog extends SGPropertyDialog
 
   private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mAxisLengthModeComboBox;
   private javax.swing.JLabel mAxisLengthModeLabel;
-  private javax.swing.JSeparator mAxisLengthModeSeparator;
   private javax.swing.JPanel mButtonPanel;
   private jp.riken.brain.ni.samuraigraph.base.SGButton mCancelButton;
   private javax.swing.JLabel mFontAngleLabel;

@@ -806,6 +806,9 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
 
     // get only the first file
     File file = (File) fileList.get(0);
+    if (file == null) {
+      return;
+    }
 
     // set the value to the cell
     table.setValueAt(file.getPath(), rowIndex, column);

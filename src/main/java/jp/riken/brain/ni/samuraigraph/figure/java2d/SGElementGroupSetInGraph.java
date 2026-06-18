@@ -620,6 +620,9 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     ElementGroupSetPropertiesInFigureElement prev =
         (ElementGroupSetPropertiesInFigureElement)
             mementoList.get(this.mUndoManager.getMementoIndex());
+    if (prev == null) {
+      return;
+    }
     ArrayDataProperties dpPrev = (ArrayDataProperties) prev.dataProperties;
     List<SGDataValueHistory> prevDataValueList = dpPrev.getEditedDataValueList();
     ElementGroupSetPropertiesInFigureElement cur =

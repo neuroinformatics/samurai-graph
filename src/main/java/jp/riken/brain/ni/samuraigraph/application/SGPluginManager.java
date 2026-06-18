@@ -96,7 +96,7 @@ public class SGPluginManager implements SGIDisposable {
     Enumeration<? extends ZipEntry> entry = zip.entries();
     while (entry.hasMoreElements()) {
       ZipEntry ze = entry.nextElement();
-      if (!ze.isDirectory()) {
+      if (ze != null && !ze.isDirectory()) {
         String entryName = ze.getName();
         if (entryName.endsWith(".class")) {
           jcl.setDelegateFirst(false);
@@ -195,11 +195,13 @@ public class SGPluginManager implements SGIDisposable {
         Object obj = list.get(i).getDeclaredConstructor().newInstance();
         SGIPluginOutputDataToFile plugin = (SGIPluginOutputDataToFile) obj;
 
-        SGExtensionFileFilter filter = new SGExtensionFileFilter();
-        filter.setExplanation(plugin.getDescription());
-        filter.addExtension(plugin.getExtension());
+        if (plugin != null) {
+          SGExtensionFileFilter filter = new SGExtensionFileFilter();
+          filter.setExplanation(plugin.getDescription());
+          filter.addExtension(plugin.getExtension());
 
-        pluginMap.put(filter, plugin);
+          pluginMap.put(filter, plugin);
+        }
       } catch (Exception e) {
       }
     }

@@ -2484,8 +2484,12 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       for (int ii = 0; ii < mementoList.size(); ii++) {
         ElementGroupSetPropertiesInFigureElement memento =
             (ElementGroupSetPropertiesInFigureElement) mementoList.get(ii);
-        ArrayDataProperties ap = (ArrayDataProperties) memento.dataProperties;
-        ap.clearEditedDataValueList();
+        if (memento != null) {
+          ArrayDataProperties ap = (ArrayDataProperties) memento.dataProperties;
+          if (ap != null) {
+            ap.clearEditedDataValueList();
+          }
+        }
       }
 
       data.setDataSource(srcNew);

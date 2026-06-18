@@ -4202,7 +4202,6 @@ public class SGFigureElementShape extends SGFigureElement2D
       this.mEndYValue = y2.doubleValue();
 
       final Boolean anchored = rp.getAnchored();
-      if (anchored == null) return false;
       this.mIsAnchored = anchored.booleanValue();
 
       // System.out.println(x1+" "+x2);

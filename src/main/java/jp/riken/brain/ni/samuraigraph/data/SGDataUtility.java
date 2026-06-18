@@ -1739,12 +1739,13 @@ public class SGDataUtility
         }
 
         int[] dims = pickUpColumn.getDimensions();
-        Object dimIndexObj = dimensionIndexMap.get(pickUpColumn.getName());
+        Object dimIndexObj =
+            (dimensionIndexMap != null) ? dimensionIndexMap.get(pickUpColumn.getName()) : null;
         Integer dimIndex = (dimIndexObj instanceof Integer) ? (Integer) dimIndexObj : null;
         if (!isValidPickUpValue(dimIndex)) {
           throw new Error("Invalid dimension index: " + dimIndex);
         }
-        if (dimIndex < 0 || dims.length < dimIndex) {
+        if (dimIndex == null || dimIndex < 0 || dims.length < dimIndex) {
           throw new Error("Invalid dimension index: " + dimIndex);
         }
         pickUpDimLen = dims[dimIndex];

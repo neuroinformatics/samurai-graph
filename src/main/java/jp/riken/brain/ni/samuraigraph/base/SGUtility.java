@@ -396,7 +396,9 @@ public class SGUtility implements SGIDrawingElementConstants {
 
     for (int ii = 0; ii < list1.size(); ii++) {
       SGICopyable cp = list1.get(ii);
-      ((List) list2).add(cp.copy());
+      if (cp != null) {
+        ((List) list2).add(cp.copy());
+      }
     }
 
     return true;
@@ -1101,7 +1103,9 @@ public class SGUtility implements SGIDrawingElementConstants {
     for (int ii = 0; ii < list.size(); ii++) {
       T el = list.get(ii);
       final boolean b = listVisible.contains(el);
-      el.setVisible(b);
+      if (el != null) {
+        el.setVisible(b);
+      }
       if (!b) {
         listInvisible.add(el);
       }

@@ -739,27 +739,28 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
     return result;
   }
 
-  private int getRoundNumber(SGPropertyMap prop) {
-    String roundSize8Str = prop.getValue(KEY_ROUND_SIZE_8);
-    Boolean roundSize8 = (roundSize8Str != null) ? SGUtilityText.getBoolean(roundSize8Str) : null;
-    String roundSize16Str = prop.getValue(KEY_ROUND_SIZE_16);
-    Boolean roundSize16 =
-        (roundSize16Str != null) ? SGUtilityText.getBoolean(roundSize16Str) : null;
-    String roundSize32Str = prop.getValue(KEY_ROUND_SIZE_32);
-    Boolean roundSize32 =
-        (roundSize32Str != null) ? SGUtilityText.getBoolean(roundSize32Str) : null;
-    final int roundNum;
-    if (roundSize32 != null && roundSize32) {
-      roundNum = 32;
-    } else if (roundSize16 != null && roundSize16) {
-      roundNum = 16;
-    } else if (roundSize8 != null && roundSize8) {
-      roundNum = 8;
-    } else {
-      roundNum = 1;
-    }
-    return roundNum;
-  }
+  // private int getRoundNumber(SGPropertyMap prop) {
+  //   String roundSize8Str = prop.getValue(KEY_ROUND_SIZE_8);
+  //   Boolean roundSize8 = (roundSize8Str != null) ? SGUtilityText.getBoolean(roundSize8Str) :
+  // null;
+  //   String roundSize16Str = prop.getValue(KEY_ROUND_SIZE_16);
+  //   Boolean roundSize16 =
+  //       (roundSize16Str != null) ? SGUtilityText.getBoolean(roundSize16Str) : null;
+  //   String roundSize32Str = prop.getValue(KEY_ROUND_SIZE_32);
+  //   Boolean roundSize32 =
+  //       (roundSize32Str != null) ? SGUtilityText.getBoolean(roundSize32Str) : null;
+  //   final int roundNum;
+  //   if (roundSize32 != null && roundSize32) {
+  //     roundNum = 32;
+  //   } else if (roundSize16 != null && roundSize16) {
+  //     roundNum = 16;
+  //   } else if (roundSize8 != null && roundSize8) {
+  //     roundNum = 8;
+  //   } else {
+  //     roundNum = 1;
+  //   }
+  //   return roundNum;
+  // }
 
   /**
    * Sets a text string to the image properties from given candidates.
