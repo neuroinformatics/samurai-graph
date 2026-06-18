@@ -299,6 +299,19 @@
             <version>2.5.0</version>
         </dependency>
 
+        <!-- CSV parsing -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.14.0</version>
+        </dependency>
+        <!-- commons-io required by commons-csv 1.14.0 (jhdf5 pulls in 2.6 which is too old) -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.18.0</version>
+        </dependency>
+
         <!-- Logging -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

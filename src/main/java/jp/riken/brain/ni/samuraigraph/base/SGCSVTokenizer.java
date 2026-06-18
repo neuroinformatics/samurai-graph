@@ -1,43 +1,37 @@
-/* spell-checker: disable */
-
-/* ------------------------------
- * CSVTokenizer.java
- * ------------------------------
- * Copyright 2003, abupon (Manabu Hashimoto)
- * This class is based on the CSV tokenizer found at
- * http://sourceforge.net/projects/csvtokenizer/
- */
-
 package jp.riken.brain.ni.samuraigraph.base;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.csv.QuoteMode;
 
 /**
- * The csv tokenizer class allows an application to break a Comma Separated Value format into
- * tokens. The tokenization method is much simpler than the one used by the <code>StringTokenizer
- * </code> class. The <code>CSVTokenizer</code> methods do not distinguish among identifiers,
- * numbers, and quoted strings, nor do they recognize and skip comments.
+ * The CSV tokenizer class allows an application to break a Comma Separated Value format string or
+ * line into tokens. Tokens may be quoted (double-quoted) or unquoted. In CSV mode
+ * (comma-separated), tokens are separated by commas. In non-CSV mode, tokens are separated by
+ * whitespace.
  *
- * <p>The set of separator (the characters that separate tokens) may be specified either at creation
- * time or on a per-token basis.
+ * <p>A token is returned as a {@link Token} object that provides the string value and whether it
+ * was originally enclosed in double quotes.
  *
- * <p>A <tt>CSVTokenizer</tt> object internally maintains a current position within the string to be
- * tokenized. Some operations advance this current position past the characters processed.
- *
- * <p>A token is returned by taking a substring of the string that was used to create the
- * <tt>CSVTokenizer</tt> object.
+ * <p>Comment lines (starting with {@code #} when {@code isDataFile} is true) are detected but yield
+ * no tokens via {@link #hasMoreTokens()}.
  *
  * <p>The following is one example of the use of the tokenizer. The code:
  *
  * <blockquote>
  *
  * <pre>
- * CSVTokenizer tokenizer = new CSVTokenizer(&quot;this,is,a,test&quot;);
+ * SGCSVTokenizer tokenizer = new SGCSVTokenizer(&quot;this,is,a,test&quot;, false);
  * while (tokenizer.hasMoreTokens()) {
- *     println(tokenizer.nextToken());
+ *     System.out.println(tokenizer.nextToken().getString());
  * }
  * </pre>
  *
@@ -48,399 +42,437 @@ import java.util.NoSuchElementException;
  * <blockquote>
  *
  * <pre>
- *
  *        this
  *        is
  *        a
  *        test
- *
  * </pre>
  *
  * </blockquote>
  *
- * @author abupon
- * @version
- * @see
- * @since
+ * @see SGITextDataConstants
  */
-public class SGCSVTokenizer implements Enumeration<SGCSVTokenizer.Token>, SGITextDataConstants {
+public class SGCSVTokenizer implements Iterator<SGCSVTokenizer.Token>, SGITextDataConstants {
 
-  private String record;
+  private final boolean isCommentLine;
+  private final Iterator<CSVRecord> recordIterator;
+  private final List<RawToken> rawTokens;
+  private int rawTokenIndex;
 
-  private int currentIndex;
+  /** Stores raw token information (value and whether it was double-quoted). */
+  private static class RawToken {
 
-  private boolean is_csv_mode = false;
+    private final String value;
+    private final boolean doubleQuoted;
 
-  private boolean is_comment_line = false;
-
-  /** A list of characters of white space. */
-  private static List<Character> mWhiteSpaceList = new ArrayList<Character>();
-
-  /** An array of text strings for a header of a comment line. */
-  private static final String[] COMMENT_HEADER_CONSTANTS = {HEADER_NOT_A_COMMENT_LINE};
-
-  /** An array of comment headers. */
-  private static final String[] mCommentHeaders;
-
-  static {
-    // add to a list of white space characters
-    for (int ii = 0; ii < WHITE_SPACE.length(); ii++) {
-      mWhiteSpaceList.add(Character.valueOf(WHITE_SPACE.charAt(ii)));
+    RawToken(String value, boolean doubleQuoted) {
+      this.value = value;
+      this.doubleQuoted = doubleQuoted;
     }
 
-    // create regular expression patterns
-    mCommentHeaders = new String[COMMENT_HEADER_CONSTANTS.length];
-    for (int ii = 0; ii < COMMENT_HEADER_CONSTANTS.length; ii++) {
-      StringBuffer sb = new StringBuffer();
-      sb.append(DATA_COMMENT_HEADER_PREFIX);
-      sb.append(COMMENT_HEADER_CONSTANTS[ii]);
-      sb.append(DATA_COMMENT_HEADER_SUFFIX);
-      mCommentHeaders[ii] = sb.toString();
+    String getValue() {
+      return value;
+    }
+
+    boolean isDoubleQuoted() {
+      return doubleQuoted;
     }
   }
 
   /**
-   * Constructs a csv tokenizer for the specified string. <code>theSeparator</code> argument is the
-   * separator for separating tokens.
+   * Constructs a CSV tokenizer for the specified string.
    *
    * @param aString a string to be parsed.
-   * @param isDataFile a data file reading flag
+   * @param isDataFile a data file reading flag. If true and the string starts with {@code #}, the
+   *     line is treated as a comment and {@link #hasMoreTokens()} will return false.
    */
   public SGCSVTokenizer(final String aString, final boolean isDataFile) {
-    this.record = aString.trim();
-    this.currentIndex = 0;
-    // check comment line
-    if (isDataFile && this.record.startsWith(DATA_COMMENT_PREFIX)) { // $NON-NLS-1$
-      this.is_comment_line = true;
-      for (int ii = 0; ii < mCommentHeaders.length; ii++) {
-        this.record = this.record.substring(DATA_COMMENT_PREFIX.length());
-        final int headLen = mCommentHeaders[ii].length();
-        if (this.record.startsWith(mCommentHeaders[ii]) && this.record.length() != headLen) {
-          this.is_comment_line = false;
-          this.record = this.record.substring(headLen);
-          break;
-        }
-      }
+    if (aString == null) {
+      throw new IllegalArgumentException("aString must not be null");
     }
-    // check comma separated mode
-    char c;
-    boolean in_quote = false;
-    for (int ii = 0; ii < this.record.length(); ii++) {
-      c = this.record.charAt(ii);
-      if (in_quote) {
+
+    String trimmed = aString.trim();
+
+    // Check for comment line
+    this.isCommentLine = isDataFile && trimmed.startsWith(DATA_COMMENT_PREFIX);
+
+    if (this.isCommentLine) {
+      this.recordIterator = null;
+      this.rawTokens = new ArrayList<>(0);
+      this.rawTokenIndex = 0;
+      return;
+    }
+
+    // Detect CSV mode: check if there are commas outside of quotes
+    boolean isCsvMode = isCommaSeparated(trimmed);
+
+    // Parse using Apache Commons CSV
+    this.rawTokens = parseTokens(trimmed, isCsvMode);
+    this.rawTokenIndex = 0;
+    this.recordIterator = null;
+  }
+
+  /**
+   * Constructs a CSV tokenizer for the specified reader. Reads the first line from the reader.
+   *
+   * @param reader a reader to read from
+   * @param isDataFile a data file reading flag. If true and the line starts with {@code #}, the
+   *     line is treated as a comment.
+   * @throws IOException if an I/O error occurs
+   */
+  public SGCSVTokenizer(final Reader reader, final boolean isDataFile) throws IOException {
+    try (BufferedReader br = new BufferedReader(reader)) {
+      String line = br.readLine();
+      if (line == null) {
+        this.isCommentLine = false;
+        this.rawTokens = new ArrayList<>(0);
+        this.rawTokenIndex = 0;
+        this.recordIterator = null;
+        return;
+      }
+
+      String trimmed = line.trim();
+      this.isCommentLine = isDataFile && trimmed.startsWith(DATA_COMMENT_PREFIX);
+
+      if (this.isCommentLine) {
+        this.recordIterator = null;
+        this.rawTokens = new ArrayList<>(0);
+        this.rawTokenIndex = 0;
+        return;
+      }
+
+      boolean isCsvMode = isCommaSeparated(trimmed);
+      this.rawTokens = parseTokens(trimmed, isCsvMode);
+      this.rawTokenIndex = 0;
+      this.recordIterator = null;
+    }
+  }
+
+  /**
+   * Checks whether the string uses comma as a separator (outside of quoted fields).
+   *
+   * @param record the string to check
+   * @return true if the string contains commas outside of double-quoted fields
+   */
+  private static boolean isCommaSeparated(String record) {
+    boolean inQuote = false;
+    for (int i = 0; i < record.length(); i++) {
+      char c = record.charAt(i);
+      if (inQuote) {
         if (c == '"') {
-          in_quote = false;
+          // Check for escaped quote ("")
+          if (i + 1 < record.length() && record.charAt(i + 1) == '"') {
+            i++; // Skip the next quote
+          } else {
+            inQuote = false;
+          }
         }
       } else {
         if (c == '"') {
-          in_quote = true;
+          inQuote = true;
         } else if (c == ',') {
-          this.is_csv_mode = true;
+          return true;
         }
       }
     }
+    return false;
   }
 
   /**
-   * Tests if there are more tokens available from this tokenizer's string. If this method returns
-   * <tt>true</tt>, then a subsequent call to <tt>nextToken</tt> with no argument will successfully
-   * return a token.
+   * Parses the string into raw tokens using Apache Commons CSV.
    *
-   * @return <code>true</code> if and only if there is at least one token in the string after the
-   *     current position; <code>false</code> otherwise.
+   * @param record the string to parse
+   * @param isCsvMode true if comma-separated mode, false if whitespace-delimited
+   * @return a list of raw tokens
    */
-  public boolean hasMoreTokens() {
-    if (this.is_comment_line) {
+  private static List<RawToken> parseTokens(String record, boolean isCsvMode) {
+    List<RawToken> tokens = new ArrayList<>();
+
+    if (isCsvMode) {
+      // Use RFC 4180 compliant CSV parsing
+      CSVFormat format =
+          CSVFormat.Builder.create(CSVFormat.DEFAULT)
+              .setDelimiter(',')
+              .setQuote('"')
+              .setEscape('\\')
+              .setQuoteMode(QuoteMode.MINIMAL)
+              .setIgnoreEmptyLines(false)
+              .setTrim(false)
+              .get();
+
+      try (CSVParser parser = CSVParser.parse(record, format)) {
+        for (CSVRecord recordItem : parser) {
+          for (int i = 0; i < recordItem.size(); i++) {
+            String value = recordItem.get(i);
+            boolean quoted = isFieldQuoted(record, i, isCsvMode);
+            // Trim whitespace from unquoted tokens in CSV mode for compatibility
+            if (!quoted) {
+              value = value.trim();
+            }
+            tokens.add(new RawToken(value, quoted));
+          }
+        }
+      } catch (IOException e) {
+        // Should not happen with StringReader, but handle gracefully
+        throw new RuntimeException("Failed to parse CSV string", e);
+      }
+    } else {
+      // Non-CSV mode: whitespace-delimited
+      // We need to handle quoted fields within whitespace-delimited context
+      tokens = parseWhitespaceDelimited(record);
+    }
+
+    return tokens;
+  }
+
+  /** Parses a whitespace-delimited string, respecting quoted fields. */
+  private static List<RawToken> parseWhitespaceDelimited(String record) {
+    List<RawToken> tokens = new ArrayList<>();
+    int i = 0;
+    int len = record.length();
+
+    while (i < len) {
+      // Skip whitespace
+      while (i < len && Character.isWhitespace(record.charAt(i))) {
+        i++;
+      }
+      if (i >= len) {
+        break;
+      }
+
+      if (record.charAt(i) == '"') {
+        // Quoted field
+        StringBuilder sb = new StringBuilder();
+        i++; // skip opening quote
+        boolean doubleQuoted = true;
+        while (i < len) {
+          char c = record.charAt(i);
+          if (c == '"') {
+            if (i + 1 < len && record.charAt(i + 1) == '"') {
+              // Escaped quote
+              sb.append('"');
+              i += 2;
+            } else {
+              // End of quoted field
+              i++; // skip closing quote
+              break;
+            }
+          } else {
+            sb.append(c);
+            i++;
+          }
+        }
+        tokens.add(new RawToken(sb.toString().trim(), doubleQuoted));
+      } else {
+        // Unquoted field: read until whitespace
+        int start = i;
+        while (i < len && !Character.isWhitespace(record.charAt(i))) {
+          i++;
+        }
+        String value = record.substring(start, i).trim();
+        tokens.add(new RawToken(value, false));
+      }
+    }
+
+    return tokens;
+  }
+
+  /**
+   * Determines whether a specific field at the given index was quoted in the original string. This
+   * is a heuristic based on scanning the original record.
+   */
+  private static boolean isFieldQuoted(String record, int fieldIndex, boolean isCsvMode) {
+    if (!isCsvMode) {
+      // For non-CSV mode, check if the token starts with a quote
+      int pos = 0;
+      int currentField = 0;
+
+      while (pos < record.length() && currentField < fieldIndex) {
+        // Skip whitespace
+        while (pos < record.length() && Character.isWhitespace(record.charAt(pos))) {
+          pos++;
+        }
+        if (pos >= record.length()) break;
+
+        if (record.charAt(pos) == '"') {
+          // Skip quoted field
+          pos++;
+          while (pos < record.length()) {
+            if (record.charAt(pos) == '"') {
+              if (pos + 1 < record.length() && record.charAt(pos + 1) == '"') {
+                pos += 2;
+              } else {
+                pos++;
+                break;
+              }
+            } else {
+              pos++;
+            }
+          }
+        } else {
+          // Skip unquoted field
+          while (pos < record.length() && !Character.isWhitespace(record.charAt(pos))) {
+            pos++;
+          }
+        }
+        currentField++;
+      }
+
+      if (pos < record.length()) {
+        return record.charAt(pos) == '"';
+      }
       return false;
     }
-    return (this.currentIndex >= 0);
+
+    // For CSV mode, scan through fields to find the one at fieldIndex
+    int pos = 0;
+    int currentField = 0;
+
+    while (pos < record.length() && currentField < fieldIndex) {
+      if (record.charAt(pos) == '"') {
+        // Skip quoted field
+        pos++;
+        while (pos < record.length()) {
+          if (record.charAt(pos) == '"') {
+            if (pos + 1 < record.length() && record.charAt(pos + 1) == '"') {
+              pos += 2;
+            } else {
+              pos++;
+              break;
+            }
+          } else {
+            pos++;
+          }
+        }
+        // Skip comma
+        if (pos < record.length() && record.charAt(pos) == ',') {
+          pos++;
+        }
+      } else {
+        // Skip unquoted field
+        while (pos < record.length() && record.charAt(pos) != ',') {
+          pos++;
+        }
+        // Skip comma
+        if (pos < record.length() && record.charAt(pos) == ',') {
+          pos++;
+        }
+      }
+      currentField++;
+    }
+
+    if (pos < record.length()) {
+      return record.charAt(pos) == '"';
+    }
+    return false;
+  }
+
+  /**
+   * Tests if there are more tokens available from this tokenizer.
+   *
+   * @return {@code true} if and only if there is at least one token remaining; {@code false}
+   *     otherwise.
+   */
+  public boolean hasMoreTokens() {
+    if (this.isCommentLine) {
+      return false;
+    }
+    return this.rawTokenIndex < this.rawTokens.size();
   }
 
   /**
    * Returns the next token from this string tokenizer.
    *
-   * @return the next token from this string tokenizer.
-   * @exception NoSuchElementException if there are no more tokens in this tokenizer's string.
-   * @exception IllegalArgumentException if given parameter string format was wrong
+   * @return the next token.
+   * @throws NoSuchElementException if there are no more tokens.
    */
-  public Token nextToken() throws NoSuchElementException, IllegalArgumentException {
-    StringBuffer sb = new StringBuffer();
-    String token = null;
-    int start;
-    int end;
-    boolean isText = false;
-    if (!this.hasMoreTokens()) {
+  public Token nextToken() throws NoSuchElementException {
+    if (!hasMoreTokens()) {
       throw new NoSuchElementException();
     }
-    if (this.record.startsWith(SGCSVTokenizer.DOUBLE_QUOTE, this.currentIndex)) {
-      String rec = this.record.substring(this.currentIndex + SGCSVTokenizer.DOUBLE_QUOTE_LEN);
-      //            token = ""; //$NON-NLS-1$
-      isText = true;
-      for (; ; ) {
-        end = rec.indexOf(SGCSVTokenizer.DOUBLE_QUOTE);
-        if (end < 0) {
-          throw new IllegalArgumentException("Illegal format"); // $NON-NLS-1$
-        }
-        if (!rec.startsWith(SGCSVTokenizer.DOUBLE_QUOTE, end + 1)) {
-          sb.append(rec.substring(0, end));
-          //                    token = token + rec.substring(0, end);
-          break;
-        }
-        sb.append(rec.substring(0, end + 1));
-        //                token = token + rec.substring(0, end + 1);
-        rec = rec.substring(end + SGCSVTokenizer.DOUBLE_QUOTE_LEN * 2);
-        this.currentIndex++;
-      }
-      // don't trim string
-      //            this.currentIndex += token.length()
-      //                    + SGCSVTokenizer.DOUBLE_QUOTE_LEN * 2;
-      this.currentIndex += sb.length() + SGCSVTokenizer.DOUBLE_QUOTE_LEN * 2;
-      if (this.is_csv_mode) {
-        this.currentIndex = nextTokenIndexOf(this.currentIndex);
-      }
-      this.currentIndex += SGCSVTokenizer.SEPARATOR_LEN;
-      this.currentIndex = nextTokenIndexOf(this.currentIndex);
-      // this.currentIndex += (token.length()
-      // + SGCSVTokenizer.DOUBLE_QUOTE_LEN * 2 +
-      // SGCSVTokenizer.SEPARATOR_LEN);
-      // this.currentIndex = nextTokenIndexOf(this.currentIndex);
-      // if (!this.is_csv_mode) {
-      // this.currentIndex = nextTokenIndexOf(this.currentIndex);
-      // }
-      if (this.currentIndex >= this.record.length()) {
-        this.currentIndex = -1;
-      }
-      token = sb.toString();
-    } else {
-      start = this.currentIndex;
-      if (this.is_csv_mode) {
-        end = this.record.indexOf(SEPARATOR_COMMA, this.currentIndex);
-      } else {
-        end = nextSeparatorIndexOf(this.currentIndex);
-      }
-      if (end >= 0) {
-        //                token = this.record.substring(start, end);
-        sb.append(this.record.substring(start, end));
-        // if (this.is_csv_mode) {
-        // this.currentIndex = end + SEPARATOR_LEN;
-        // } else {
-        // this.currentIndex = nextTokenIndexOf(end);
-        // if (this.currentIndex == this.record.length())
-        // this.currentIndex = -1;
-        // }
-
-        final int offset = (this.is_csv_mode) ? SEPARATOR_LEN : 0;
-        this.currentIndex = nextTokenIndexOf(end + offset);
-        if (this.currentIndex == this.record.length()) {
-          boolean stop = true;
-          if (this.is_csv_mode) {
-            // to take into account commas at the end of the line
-            if (this.record.charAt(this.currentIndex - 1) == ',') {
-              stop = false;
-            }
-          }
-          if (stop) {
-            this.currentIndex = -1;
-          }
-        }
-        // if (this.currentIndex == this.record.length()) {
-        // this.currentIndex = -1;
-        // }
-
-      } else {
-        // end of line reached
-        if (this.currentIndex == this.record.length()) {
-          //                    token = ""; //$NON-NLS-1$
-        } else {
-          //                    token = this.record.substring(start);
-          sb.append(this.record.substring(start));
-        }
-        this.currentIndex = -1;
-      }
-      token = sb.toString();
-      token = token.trim();
-    }
-    // return token;
-    return new Token(token, isText);
-  }
-
-  private int nextSeparatorIndexOf(int fromIndex) {
-    char c;
-    int cnt = 0;
-    int ii;
-    int len = this.record.length();
-    if (len == fromIndex) {
-      return -1;
-    }
-    for (ii = fromIndex; ii < len; ii++) {
-      c = this.record.charAt(ii);
-      if (mWhiteSpaceList.contains(Character.valueOf(c))) {
-        break;
-      }
-      cnt++;
-    }
-    if (ii == len) {
-      return -1;
-    }
-    return cnt + fromIndex;
-  }
-
-  private int nextTokenIndexOf(int fromIndex) {
-    char c;
-    int cnt = 0;
-    int len = this.record.length();
-    for (int ii = fromIndex; ii < len; ii++) {
-      c = this.record.charAt(ii);
-      if (!mWhiteSpaceList.contains(Character.valueOf(c))) {
-        break;
-      }
-      cnt++;
-    }
-    return cnt + fromIndex;
+    RawToken raw = this.rawTokens.get(this.rawTokenIndex++);
+    return new Token(raw.getValue(), raw.isDoubleQuoted());
   }
 
   /**
-   * Returns the same value as the <code>hasMoreTokens</code> method. It exists so that this class
-   * can implement the <code>Enumeration</code> interface.
+   * Tests if there are more elements. Delegates to {@link #hasMoreTokens()}.
    *
-   * @return <code>true</code> if there are more tokens; <code>false</code> otherwise.
-   * @see java.util.Enumeration
-   * @see java.util.SGCSVTokenizer#hasMoreTokens()
+   * @return {@code true} if there are more elements.
+   */
+  @Override
+  public boolean hasNext() {
+    return hasMoreTokens();
+  }
+
+  /**
+   * Returns the next element. Delegates to {@link #nextToken()}.
+   *
+   * @return the next token.
+   * @throws NoSuchElementException if there are no more tokens.
+   */
+  @Override
+  public Token next() {
+    return nextToken();
+  }
+
+  /**
+   * Returns the same value as the {@code hasMoreTokens} method. It exists so that this class can
+   * implement the legacy {@code Enumeration} interface.
+   *
+   * @return {@code true} if there are more tokens.
    */
   public boolean hasMoreElements() {
     return hasMoreTokens();
   }
 
   /**
-   * Returns the same value as the <code>nextToken</code> method, except that its declared return
-   * value is <code>Object</code> rather than <code>String</code>. It exists so that this class can
-   * implement the <code>Enumeration</code> interface.
+   * Returns the same value as the {@code nextToken} method. It exists so that this class can
+   * implement the legacy {@code Enumeration} interface.
    *
-   * @return the next token in the string.
-   * @exception NoSuchElementException if there are no more tokens in this tokenizer's string.
-   * @see java.util.Enumeration
-   * @see java.util.SGCSVTokenizer#nextToken()
+   * @return the next token.
    */
   public Token nextElement() {
     return nextToken();
   }
 
-  /** A token class. */
+  /** A token containing a parsed value and metadata about quoting. */
   public static class Token {
 
-    // a text string
-    private String string;
-
-    // a flag whether this token is double-quoted
-    private boolean doubleQuoted;
+    private final String string;
+    private final boolean doubleQuoted;
 
     /**
-     * Builds a token.
+     * Creates a token.
      *
-     * @param string a text string
-     * @param dq whether this token is double-quoted
+     * @param string the token value
+     * @param doubleQuoted whether the token was enclosed in double quotes in the original input
      */
-    public Token(String string, boolean dq) {
+    public Token(String string, boolean doubleQuoted) {
       this.string = string;
-      this.doubleQuoted = dq;
-    }
-
-    /** Returns a text string of this token. */
-    public String toString() {
-      return this.getString();
+      this.doubleQuoted = doubleQuoted;
     }
 
     /**
-     * Returns a text string of this token.
+     * Returns the string value of this token.
      *
-     * @return a text string of this token
+     * @return the token value
      */
     public String getString() {
       return this.string;
     }
 
     /**
-     * Returns whether this token is double-quoted.
+     * Returns whether this token was enclosed in double quotes.
      *
-     * @return true when this token is double-quoted
+     * @return true if the token was double-quoted in the original input
      */
     public boolean isDoubleQuoted() {
       return this.doubleQuoted;
     }
-  }
 
-  // public static void main(String[] args) {
-  // int i = 1;
-  // String str;
-  // String expect;
-  // String result;
-
-  // str = "1, \t 2, \"\" 3, 4, \"a, \"\"\\foobar\"";
-  // str = "1, \t 2, \"\" 3, b 4, a foobar";
-  // System.out.println("String : [" + str + "]");
-  // SGCSVTokenizer tokenizer = new SGCSVTokenizer(str, true);
-  // i = 1;
-  // while (tokenizer.hasMoreTokens()) {
-  // try {
-  // expect = String.valueOf(i++);
-  // result = tokenizer.nextToken();
-  // System.out.print(expect + ": [");
-  // System.out.println(result + "]");
-  // } catch (NoSuchElementException e) {
-  // e.printStackTrace();
-  // System.exit(-1);
-  // }
-  // }
-
-  // }
-
-  public static void main(String[] args) {
-
-    // String str = ",,";
-    // String str = " , , ";
-    // String str = ",a, \t ";
-    // String str = " , a , \t ";
-
-    // String str = "x,y,,z";
-    // String str = "x,y,,z,";
-    // String str = "x, y, , z, ";
-
-    // space
-    // String str = "aaa bbb ccc";
-    // String str = "\"aa a\" \"bb\"\"b\" \"cc,c\"";
-    // String str = "\" aa a \" \" bb\"\"b \" \" cc,c \"";
-    // String str = "\"\"\"aa a\"\"\" \"\"\"bb\"\"b\"\"\" \"\"\"cc,c\"\"\"";
-    // String str = "\" \"\"aa a\"\" \" \" \"\"bb\"\"b\"\" \" \"  \"\"cc,c\"\" \"";
-    // String str = "\"\"\" aa a \"\"\" \"\"\" bb\"\"b \"\"\" \"\"\" cc,c\"\"\"";
-
-    // comma
-    // String str = "aaa,bbb,ccc";
-    // String str = "\"aa a\",\"bb\"\"b\",\"cc,c\"";
-    // String str = "\" aa a \",\" bb\"\"b \",\" cc,c \"";
-    // String str = "\"\"\"aa a\"\"\",\"\"\"bb\"\"b\"\"\",\"\"\"cc,c\"\"\"";
-    // String str = "\" \"\"aa a\"\" \",\" \"\"bb\"\"b\"\" \",\" \"\"cc,c\"\" \"";
-    // String str = "\" \"\" aa a\"\" \",\" \"\"bb\"\"b \"\" \",\" \"\"c c ,c\"\" \"";
-    // String str = "\" \"\" a ,a a\"\" \",\" \"\"bb \"\",b \"\" \",\" \"\"c \"\"c, c \"\" \"";
-
-    // comma + space
-    // String str = " aaa, bbb, ccc ";
-    // String str = " \"aa a\", \"bb\"\"b\", \"cc,c\" ";
-    // String str = " \" aa a \", \" bb\"\"b \", \" cc,c \" ";
-    // String str = " \"\"\"aa a\"\"\", \"\"\"bb\"\"b\"\"\", \"\"\"cc,c\"\"\" ";
-    // String str = " \" \"\"  aa a\"\" \", \" \"\"bb\"\"b  \"\" \", \" \"\"c c ,c\"\" \"";
-
-    // space + comma + space
-    // String str = "\"aaa\", bbb";
-    // String str = "\"aaa\" , bbb";
-    // String str = " \" \"\"aa a\"\" \"  ,  \" \"\"bb\"\"b\"\" \" ,  \" \"\"cc,c\"\" \"";
-    String str = "   \"  \"\"  aa a\"\" \"  ,  \" \"\"bb\"\"b  \"\"  \" ,  \" \"\" c c ,c\"\" \"  ";
-
-    System.out.println("#" + str + "#");
-
-    SGCSVTokenizer tokenizer = new SGCSVTokenizer(str, true);
-    while (tokenizer.hasMoreTokens()) {
-      Token token = tokenizer.nextToken();
-      System.out.println("*" + token.getString() + "*");
+    @Override
+    public String toString() {
+      return getString();
     }
   }
 }
