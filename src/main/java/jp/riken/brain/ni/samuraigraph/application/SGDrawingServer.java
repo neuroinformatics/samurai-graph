@@ -1,6 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -150,29 +149,9 @@ public class SGDrawingServer implements SGIApplicationConstants, SGIApplicationT
     boolean isMacOSX = (System.getProperty("os.name").toLowerCase().startsWith("mac os x"));
     if (isMacOSX) {
       try {
-        Class<?> osxAdapter =
-            Class.forName("jp.riken.brain.ni.samuraigraph.platform.macosx.SGMacOSXAdapter");
-        Method registerMethod = osxAdapter.getMethod("registerMacOSXApplication", (Class[]) null);
-        if (registerMethod != null) {
-          registerMethod.invoke(osxAdapter, (Object[]) null);
-        }
-      } catch (NoClassDefFoundError e) {
-        // This will be thrown first if the OSXAdapter is loaded on a
-        // system without the EAWT
-        // because OSXAdapter extends ApplicationAdapter in its def
-        System.err.println(
-            "This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled ("
-                + e
-                + ")");
-      } catch (ClassNotFoundException e) {
-        // This shouldn't be reached; if there's a problem with the
-        // OSXAdapter we should get the
-        // above NoClassDefFoundError first.
-        System.err.println(
-            "This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled ("
-                + e
-                + ")");
+        SGApplicationAdapter.registerApplication();
       } catch (Exception e) {
+        System.err.println("Failed to register macOS application handlers (" + e + ")");
         e.printStackTrace();
       }
     }
