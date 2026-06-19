@@ -10,7 +10,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.JTextComponent;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-import ucar.nc2.NetcdfFile;
+import ucar.nc2.NetcdfFiles;
 
 public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     implements ActionListener, ChangeListener {
@@ -309,7 +309,7 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
   public static boolean isValidUrlLocationOfNetCDF(
       final String location, final Component parentComponent, final boolean showDialog) {
     try {
-      if (NetcdfFile.canOpen(location)) {
+      if (NetcdfFiles.canOpen(location)) {
         return true;
       } else {
         if (showDialog) {

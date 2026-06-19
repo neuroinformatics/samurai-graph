@@ -671,7 +671,7 @@ public class SGDataCreator
 
     /*
     try {
-        if (NetcdfFile.canOpen(path)) {
+        if (NetcdfFiles.canOpen(path)) {
         	if (this.getNetCDFDataTypeCandidateList(path, cList) == false) {
         		return false;
         	}
@@ -697,7 +697,7 @@ public class SGDataCreator
       	// open the netCDF file
           NetcdfFile ncFile = null;
       	try {
-  			ncFile = NetcdfFile.open(path);
+  			ncFile = NetcdfFiles.open(path);
   		} catch (IOException e) {
   			return false;
           } finally {

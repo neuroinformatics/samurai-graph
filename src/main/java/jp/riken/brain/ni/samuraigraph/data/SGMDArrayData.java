@@ -1023,7 +1023,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       for (SGAttribute gAttr : globalAttrList) {
         String name = gAttr.getName();
         List<Object> values = gAttr.getValues();
-        Attribute attr = new Attribute(name, values);
+        Attribute attr = Attribute.builder().setName(name).setValues(values, false).build();
         ncWrite.addGroupAttribute(null, attr);
       }
 
@@ -1087,7 +1087,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       for (SGAttribute gAttr : globalAttrList) {
         String name = gAttr.getName();
         List<Object> values = gAttr.getValues();
-        Attribute attr = new Attribute(name, values);
+        Attribute attr = Attribute.builder().setName(name).setValues(values, false).build();
         ncWrite.addGroupAttribute(null, attr);
       }
 
@@ -1460,7 +1460,8 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   private void addAttributes(SGMDArrayVariable mdVar, Variable ncVar) {
     List<SGAttribute> attrList = mdVar.getAttributes();
     for (SGAttribute attr : attrList) {
-      Attribute a = new Attribute(attr.getName(), attr.getValues());
+      Attribute a =
+          Attribute.builder().setName(attr.getName()).setValues(attr.getValues(), false).build();
       ncVar.addAttribute(a);
     }
   }

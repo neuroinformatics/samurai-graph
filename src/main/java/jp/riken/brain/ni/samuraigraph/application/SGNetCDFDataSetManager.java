@@ -117,9 +117,11 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     Variable var = ncfile.addVariable(null, VARIABLE_NAME_BACKGROUND_IMAGE, DataType.BYTE, dims);
 
     // add an attribute
-    var.addAttribute(
-        SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_BYTE_DATA));
-    var.addAttribute(new Attribute(ATTRIBUTE_KEY_IMAGE_FILE_EXTENSION, bgImg.getExtension()));
+    var.attributes()
+        .addAttribute(
+            SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_BYTE_DATA));
+    var.attributes()
+        .addAttribute(new Attribute(ATTRIBUTE_KEY_IMAGE_FILE_EXTENSION, bgImg.getExtension()));
 
     // set to returned value
     ByteData ret = new ByteData();
@@ -236,7 +238,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
           if (ATTRIBUTE_PROPERTY.equals(gAttr.getShortName())) {
             continue;
           }
-          group.addAttribute(gAttr);
+          group.attributes().addAttribute(gAttr);
         }
         for (Variable v : vars) {
           String varName = v.getShortName();

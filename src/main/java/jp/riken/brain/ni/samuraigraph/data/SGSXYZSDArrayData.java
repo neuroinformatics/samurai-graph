@@ -833,27 +833,36 @@ public class SGSXYZSDArrayData extends SGSDArrayData
     ncWrite.addDimension(null, indexDim.getShortName(), indexDim.getLength());
 
     Variable indexVar = ncWrite.addVariable(null, indexName, DataType.INT, indexName);
-    indexVar.addAttribute(
-        new Attribute(
-            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+    indexVar
+        .attributes()
+        .addAttribute(
+            new Attribute(
+                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
+                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
     // ncWrite.addVariable(null, indexVar); // already added by addVariable
 
     Variable xVar = ncWrite.addVariable(null, xName, DataType.DOUBLE, indexName);
-    xVar.addAttribute(
-        new Attribute(
-            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+    xVar.attributes()
+        .addAttribute(
+            new Attribute(
+                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
+                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
     // ncWrite.addVariable(null, xVar); // already added by addVariable
 
     Variable yVar = ncWrite.addVariable(null, yName, DataType.DOUBLE, indexName);
-    yVar.addAttribute(
-        new Attribute(
-            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+    yVar.attributes()
+        .addAttribute(
+            new Attribute(
+                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
+                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
     // ncWrite.addVariable(null, yVar); // already added by addVariable
 
     Variable zVar = ncWrite.addVariable(null, zName, DataType.DOUBLE, indexName);
-    zVar.addAttribute(
-        new Attribute(
-            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+    zVar.attributes()
+        .addAttribute(
+            new Attribute(
+                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
+                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
     // ncWrite.addVariable(null, zVar); // already added by addVariable
 
     ncWrite.create();
@@ -904,8 +913,10 @@ public class SGSXYZSDArrayData extends SGSDArrayData
       Dimension indexDim = this.addIndexDimension(ncfile, dataNum);
       String indexDimName = indexDim.getShortName();
       Variable indexVar = this.addIndexVariable(ncfile, indexDim);
-      indexVar.addAttribute(
-          SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+      indexVar
+          .attributes()
+          .addAttribute(
+              SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
       // Add data columns as variables.
       Variable varX = ncfile.addVariable(null, "column0", DataType.DOUBLE, indexDimName);
@@ -914,17 +925,17 @@ public class SGSXYZSDArrayData extends SGSDArrayData
       String title = colX.getTitle();
       if (null != title && "".equals(title.trim()) == false) {
         Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-        varX.addAttribute(attr);
+        varX.attributes().addAttribute(attr);
       }
       title = colY.getTitle();
       if (null != title && "".equals(title.trim()) == false) {
         Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-        varY.addAttribute(attr);
+        varY.attributes().addAttribute(attr);
       }
       title = colZ.getTitle();
       if (null != title && "".equals(title.trim()) == false) {
         Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-        varZ.addAttribute(attr);
+        varZ.attributes().addAttribute(attr);
       }
 
       // ncfile.addVariable(null, varX); // already added by addVariable
@@ -936,9 +947,9 @@ public class SGSXYZSDArrayData extends SGSDArrayData
       varNames[1] = varY.getShortName();
       varNames[2] = varZ.getShortName();
 
-      varX.addAttribute(SGDataUtility.getValueTypeAttribute(colX.getValueType()));
-      varY.addAttribute(SGDataUtility.getValueTypeAttribute(colY.getValueType()));
-      varZ.addAttribute(SGDataUtility.getValueTypeAttribute(colZ.getValueType()));
+      varX.attributes().addAttribute(SGDataUtility.getValueTypeAttribute(colX.getValueType()));
+      varY.attributes().addAttribute(SGDataUtility.getValueTypeAttribute(colY.getValueType()));
+      varZ.attributes().addAttribute(SGDataUtility.getValueTypeAttribute(colZ.getValueType()));
 
       ncfile.create();
 

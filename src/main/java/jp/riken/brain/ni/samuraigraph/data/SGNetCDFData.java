@@ -2143,7 +2143,8 @@ public abstract class SGNetCDFData extends SGArrayData
       Dimension[] dims) {
     Variable var = ncWrite.addVariable(null, varName, dataType, java.util.Arrays.asList(dims));
     for (Attribute attr : attrList) {
-      var.addAttribute(new Attribute(attr.getShortName(), attr.getValues()));
+      var.addAttribute(
+          Attribute.builder().setName(attr.getShortName()).setValues(attr.getValues()).build());
     }
     return var;
   }
