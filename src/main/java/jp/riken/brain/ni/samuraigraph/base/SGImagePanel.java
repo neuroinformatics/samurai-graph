@@ -11,11 +11,12 @@ public class SGImagePanel extends JPanel implements SGIDisposable {
   private static final long serialVersionUID = 5727883543630249011L;
 
   /** An image object. */
-  private transient SGImage mImage = new SGImage(this);
+  private transient SGImage mImage;
 
   /** */
   public SGImagePanel() {
     super();
+    this.mImage = new SGImage(this);
   }
 
   /**

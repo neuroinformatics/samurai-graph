@@ -95,18 +95,18 @@ public class SGImage implements SGIDisposable {
    * @param x
    * @param y
    */
-  public boolean setImageLocation(final float x, final float y) {
+  public final boolean setImageLocation(final float x, final float y) {
     this.mX = x;
     this.mY = y;
     return true;
   }
 
-  public boolean setImageWidth(final float w) {
+  public final boolean setImageWidth(final float w) {
     this.mWidth = w;
     return true;
   }
 
-  public boolean setImageHeight(final float h) {
+  public final boolean setImageHeight(final float h) {
     this.mHeight = h;
     return true;
   }
@@ -115,7 +115,7 @@ public class SGImage implements SGIDisposable {
    * @param w
    * @param h
    */
-  public boolean setImageSize(final float w, final float h) {
+  public final boolean setImageSize(final float w, final float h) {
     this.setImageWidth(w);
     this.setImageHeight(h);
     return true;
@@ -127,7 +127,7 @@ public class SGImage implements SGIDisposable {
    * @param w
    * @param h
    */
-  public boolean setImageBounds(final float x, final float y, final float w, final float h) {
+  public final boolean setImageBounds(final float x, final float y, final float w, final float h) {
     this.setImageLocation(x, y);
     this.setImageSize(w, h);
     return true;
@@ -166,7 +166,7 @@ public class SGImage implements SGIDisposable {
   /**
    * @param image
    */
-  public boolean setImage(final Image image) {
+  public final boolean setImage(final Image image) {
     this.mImage = image;
     return true;
   }
@@ -174,7 +174,7 @@ public class SGImage implements SGIDisposable {
   /**
    * @return
    */
-  public boolean setDefaultImageSize() {
+  public final boolean setDefaultImageSize() {
     if (this.mImageObserver == null || this.mImage == null) {
       return false;
     }
@@ -197,7 +197,7 @@ public class SGImage implements SGIDisposable {
   /**
    * @param obs
    */
-  public boolean setImageObserver(final ImageObserver obs) {
+  public final boolean setImageObserver(final ImageObserver obs) {
     this.mImageObserver = obs;
     return true;
   }
