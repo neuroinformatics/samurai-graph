@@ -157,6 +157,7 @@ import org.w3c.dom.NodeList;
 import ucar.nc2.Attribute;
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.NetcdfFileWriter;
+import ucar.nc2.NetcdfFiles;
 
 /** The main thread. */
 class SGMainFunctions
@@ -4219,7 +4220,7 @@ class SGMainFunctions
             } else if (SGDataUtility.isNetCDFData(dataType)) {
               NetcdfFile ncFile = null;
               try {
-                if (NetcdfFile.canOpen(fileName) == false) {
+                if (NetcdfFiles.canOpen(fileName) == false) {
                   return di;
                 }
                 ncFile = SGApplicationUtility.openNetCDF(fileName);

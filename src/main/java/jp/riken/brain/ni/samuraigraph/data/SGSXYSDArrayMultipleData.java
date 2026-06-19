@@ -2125,32 +2125,39 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     ncWrite.addDimension(null, xDim.getShortName(), xDim.getLength());
 
     Variable xVar = ncWrite.addVariable(null, xName, DataType.DOUBLE, xName);
-    xVar.addAttribute(
-        new Attribute(
-            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+    xVar.attributes()
+        .addAttribute(
+            new Attribute(
+                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
+                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
     // ncWrite.addVariable(null, xVar); // already added by addVariable
 
     for (int ii = 0; ii < childNum; ii++) {
       Variable yVar = ncWrite.addVariable(null, yNames[ii], DataType.DOUBLE, xName);
-      yVar.addAttribute(
-          new Attribute(
-              SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+      yVar.attributes()
+          .addAttribute(
+              new Attribute(
+                  SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
+                  SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
       // ncWrite.addVariable(null, yVar); // already added by addVariable
     }
 
     if (eFlag) {
       Variable leVar = ncWrite.addVariable(null, leName, DataType.DOUBLE, xName);
-      leVar.addAttribute(
-          new Attribute(
-              SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+      leVar
+          .attributes()
+          .addAttribute(
+              new Attribute(
+                  SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
+                  SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
       // ncWrite.addVariable(null, leVar); // already added by addVariable
       Variable ueVar = ncWrite.addVariable(null, ueName, DataType.DOUBLE, xName);
-      ueVar.addAttribute(
-          new Attribute(
-              SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+      ueVar
+          .attributes()
+          .addAttribute(
+              new Attribute(
+                  SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
+                  SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
       // ncWrite.addVariable(null, ueVar); // already added by addVariable
     }
 
@@ -2170,9 +2177,12 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
 
       String dimString = xName + " " + lenName;
       Variable tlVar = ncWrite.addVariable(null, tlName, DataType.CHAR, dimString);
-      tlVar.addAttribute(
-          new Attribute(
-              SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_TEXT));
+      tlVar
+          .attributes()
+          .addAttribute(
+              new Attribute(
+                  SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
+                  SGIDataColumnTypeConstants.VALUE_TYPE_TEXT));
       // ncWrite.addVariable(null, tlVar); // already added by addVariable
     }
 
@@ -2236,8 +2246,10 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       Dimension indexDim = this.addIndexDimension(ncfile, dataNum);
       String indexDimName = indexDim.getShortName();
       Variable indexVar = this.addIndexVariable(ncfile, indexDim);
-      indexVar.addAttribute(
-          SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+      indexVar
+          .attributes()
+          .addAttribute(
+              SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
       // Add data columns as variables.
       SGDataColumn[] colArray = this.getExportedColumnsClone();
@@ -2277,7 +2289,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(colValueType)
             || SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(colValueType)) {
           var = ncfile.addVariable(null, varName, DataType.DOUBLE, indexDimName);
-          var.addAttribute(SGDataUtility.getValueTypeAttribute(col.getValueType()));
+          var.attributes().addAttribute(SGDataUtility.getValueTypeAttribute(col.getValueType()));
         } else if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(colValueType)
             || SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(colValueType)) {
           String[] dimNames = {indexDimName, textDimensionName[ii]};
@@ -2289,7 +2301,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
           } else {
             attrValueType = SGIDataColumnTypeConstants.VALUE_TYPE_DATE;
           }
-          var.addAttribute(SGDataUtility.getValueTypeAttribute(attrValueType));
+          var.attributes().addAttribute(SGDataUtility.getValueTypeAttribute(attrValueType));
         } else {
           throw new Error(
               "Illegal value type="
@@ -2304,7 +2316,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         String title = col.getTitle();
         if (null != title && !"".equals(title.trim())) {
           Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-          var.addAttribute(attr);
+          var.attributes().addAttribute(attr);
         }
 
         varNames[ii] = var.getShortName();

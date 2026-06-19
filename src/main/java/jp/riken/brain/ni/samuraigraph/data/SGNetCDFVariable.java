@@ -245,7 +245,11 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
   }
 
   public List<Attribute> getAttributes() {
-    return this.mVariable.getAttributes();
+    java.util.ArrayList<Attribute> result = new java.util.ArrayList<>();
+    for (Attribute attr : this.mVariable.attributes()) {
+      result.add(attr);
+    }
+    return result;
   }
 
   public String toString() {

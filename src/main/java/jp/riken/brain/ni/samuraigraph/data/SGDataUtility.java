@@ -52,7 +52,7 @@ import org.w3c.dom.NamedNodeMap;
 import ucar.ma2.DataType;
 import ucar.nc2.Attribute;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFile;
+import ucar.nc2.NetcdfFiles;
 import ucar.nc2.Variable;
 
 /** An utility class for data. */
@@ -3578,8 +3578,7 @@ public class SGDataUtility
    */
   public static boolean isSGDateVariable(final Variable var) {
     if (DataType.CHAR.equals(var.getDataType())) {
-      List<Attribute> attrList = var.getAttributes();
-      for (Attribute attr : attrList) {
+      for (Attribute attr : var.attributes()) {
         if (attr.isString()) {
           String name = attr.getShortName();
           String value = attr.getStringValue();
@@ -3603,8 +3602,7 @@ public class SGDataUtility
    */
   public static boolean isSGTextVariable(final Variable var) {
     if (DataType.CHAR.equals(var.getDataType())) {
-      List<Attribute> attrList = var.getAttributes();
-      for (Attribute attr : attrList) {
+      for (Attribute attr : var.attributes()) {
         if (attr.isString()) {
           String name = attr.getShortName();
           String value = attr.getStringValue();
@@ -3639,7 +3637,8 @@ public class SGDataUtility
    */
   public static boolean canOpenNetCDF(SGNetCDFData data) {
     try {
-      boolean isNetCDFFile = NetcdfFile.canOpen(data.getNetcdfFile().getNetcdfFile().getLocation());
+      boolean isNetCDFFile =
+          NetcdfFiles.canOpen(data.getNetcdfFile().getNetcdfFile().getLocation());
       return isNetCDFFile;
     } catch (Exception e) {
       return false;
