@@ -120,7 +120,7 @@ public class SGTuple2d implements Cloneable {
   }
 
   /** Clear both components. */
-  public void clear() {
+  public final void clear() {
     this.x = 0.0;
     this.y = 0.0;
   }
