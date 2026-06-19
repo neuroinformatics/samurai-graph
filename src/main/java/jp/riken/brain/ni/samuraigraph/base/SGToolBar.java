@@ -150,7 +150,7 @@ public class SGToolBar extends JToolBar
   private SGZoomComboBox mZoomComboBox;
 
   /** A popup menu. */
-  private JPopupMenu mPopupMenu = null;
+  private transient JPopupMenu mPopupMenu = null;
 
   /** Default constructor. */
   public SGToolBar() {
@@ -425,7 +425,7 @@ public class SGToolBar extends JToolBar
   //
 
   /** */
-  private List<ActionListener> mActionListenerList = new ArrayList<ActionListener>();
+  private transient List<ActionListener> mActionListenerList = new ArrayList<ActionListener>();
 
   /** */
   public void addActionListener(final ActionListener listener) {
@@ -528,7 +528,7 @@ public class SGToolBar extends JToolBar
   }
 
   /** */
-  private Map<String, JToolBar> mToolBarMap;
+  private transient Map<String, JToolBar> mToolBarMap;
 
   /** */
   public void actionPerformed(ActionEvent e) {

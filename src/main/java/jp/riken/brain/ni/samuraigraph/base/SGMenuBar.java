@@ -807,7 +807,7 @@ public class SGMenuBar extends JMenuBar
   }
 
   /** The list of action event listeners. */
-  private List<ActionListener> mActionListenerList = new ArrayList<ActionListener>();
+  private transient List<ActionListener> mActionListenerList = new ArrayList<ActionListener>();
 
   /**
    * Adds an action event listener.
@@ -909,7 +909,7 @@ public class SGMenuBar extends JMenuBar
   }
 
   /** The list of menu listeners. */
-  private List<MenuListener> mMenuListenerList = new ArrayList<MenuListener>();
+  private transient List<MenuListener> mMenuListenerList = new ArrayList<MenuListener>();
 
   /**
    * Adds a menu event listener.

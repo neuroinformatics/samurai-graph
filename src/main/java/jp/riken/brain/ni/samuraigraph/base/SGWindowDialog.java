@@ -525,7 +525,7 @@ public class SGWindowDialog extends SGPropertyDialog
   // }
 
   /** */
-  private SGComponentGroup mGridVisibleComponentGroup = new SGComponentGroup();
+  private transient SGComponentGroup mGridVisibleComponentGroup = new SGComponentGroup();
 
   /** */
   public Number getPaperWidth() {
