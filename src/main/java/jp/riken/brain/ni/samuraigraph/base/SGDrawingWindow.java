@@ -77,22 +77,22 @@ public class SGDrawingWindow extends JFrame
   private boolean mAutoZoomFlag = false;
 
   // A layered pane.
-  private SGClientPanel mClientPanel;
+  private transient SGClientPanel mClientPanel;
 
   // Property dialog of this window object
-  private SGWindowDialog mPropertyDialog = null;
+  private transient SGWindowDialog mPropertyDialog = null;
 
   // image file export manager
-  private SGIImageExportManager mImageExportManager;
+  private transient SGIImageExportManager mImageExportManager;
 
   // Temporary size of the view port, which is used in the lock mode.
-  private final SGTuple2f mTemporaryViewportSize = new SGTuple2f();
+  private final transient SGTuple2f mTemporaryViewportSize = new SGTuple2f();
 
   // The tool bar
-  private SGToolBar mToolBar;
+  private transient SGToolBar mToolBar;
 
   // The status bar.
-  private SGStatusBar mStatusBar;
+  private transient SGStatusBar mStatusBar;
 
   /** */
   private boolean mLockFigureFlag = false;
@@ -101,32 +101,33 @@ public class SGDrawingWindow extends JFrame
   private int mMode = MODE_DISPLAY;
 
   /** */
-  private SGProperties mTemporaryProperties = null;
+  private transient SGProperties mTemporaryProperties = null;
 
   /** */
-  private final SGTuple2f mPaperOrigin = new SGTuple2f();
+  private final transient SGTuple2f mPaperOrigin = new SGTuple2f();
 
   /** Bounds of the client area. */
-  private Rectangle2D mClientRect = null;
+  private transient Rectangle2D mClientRect = null;
 
   /** The list of copied figures in this window. */
-  private List<SGFigure> mCopiedFiguresList = new ArrayList<SGFigure>();
+  private transient List<SGFigure> mCopiedFiguresList = new ArrayList<SGFigure>();
 
   /** The list of copied objects in this window such as labels or symbols. */
-  private List<SGICopyable> mCopiedObjectsList = new ArrayList<SGICopyable>();
+  private transient List<SGICopyable> mCopiedObjectsList = new ArrayList<SGICopyable>();
 
   /** The list of copied data objects in this window. */
-  private List<SGData> mCopiedDataObjectsList = new ArrayList<SGData>();
+  private transient List<SGData> mCopiedDataObjectsList = new ArrayList<SGData>();
 
   /** The list of names of copied data objects. */
-  private List<String> mCopiedDataNameList = new ArrayList<String>();
+  private transient List<String> mCopiedDataNameList = new ArrayList<String>();
 
   /** The list of properties of copied data objects. */
-  private List<Map<Class<? extends SGIFigureElement>, SGProperties>> mCopiedDataPropertiesMapList =
-      new ArrayList<Map<Class<? extends SGIFigureElement>, SGProperties>>();
+  private transient List<Map<Class<? extends SGIFigureElement>, SGProperties>>
+      mCopiedDataPropertiesMapList =
+          new ArrayList<Map<Class<? extends SGIFigureElement>, SGProperties>>();
 
   /** The background image. */
-  private BackgroundImage mBackgroundImage = null;
+  private transient BackgroundImage mBackgroundImage = null;
 
   /** constructor */
   public SGDrawingWindow() {
@@ -585,7 +586,7 @@ public class SGDrawingWindow extends JFrame
   //
 
   /** The list of figures. */
-  private final List<SGFigure> mFigureList = new ArrayList<SGFigure>();
+  private final transient List<SGFigure> mFigureList = new ArrayList<SGFigure>();
 
   /**
    * Returns a figure with given ID.
@@ -1883,7 +1884,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  protected SGTuple2f mDraggedDirection = null;
+  protected transient SGTuple2f mDraggedDirection = null;
 
   protected int mFixedCoordinate = 0;
 
@@ -1962,7 +1963,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** */
-  private List<ActionListener> mActionListenerList = new ArrayList<>();
+  private transient List<ActionListener> mActionListenerList = new ArrayList<>();
 
   /** */
   public void addActionListener(final ActionListener listener) {
@@ -2047,7 +2048,7 @@ public class SGDrawingWindow extends JFrame
     this.mInsertFlagMap = map;
   }
 
-  private Map<String, Boolean> mInsertFlagMap;
+  private transient Map<String, Boolean> mInsertFlagMap;
 
   /**
    * @return
@@ -3117,7 +3118,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** The target object to paste the copied objects. */
-  private final List<SGISelectable> mPasteTargetList = new ArrayList<>();
+  private final transient List<SGISelectable> mPasteTargetList = new ArrayList<>();
 
   // /**
   // *
@@ -3441,7 +3442,7 @@ public class SGDrawingWindow extends JFrame
     return rect;
   }
 
-  private final Rectangle2D mTempPaperRect = new Rectangle2D.Float();
+  private final transient Rectangle2D mTempPaperRect = new Rectangle2D.Float();
 
   /**
    * @return
@@ -5002,7 +5003,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  private SGUndoManager mUndoManager = new SGUndoManager(this);
+  private transient SGUndoManager mUndoManager = new SGUndoManager(this);
 
   public SGProperties getMemento() {
     return this.getProperties();
@@ -5300,7 +5301,7 @@ public class SGDrawingWindow extends JFrame
     /** */
     private static final long serialVersionUID = 8728676638490853269L;
 
-    SGINode node;
+    transient SGINode node;
 
     NodeMenuItem(String text) {
       super(text);
@@ -5326,10 +5327,10 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** Information for exporting an image. */
-  private InfoForExport mExportInfo = null;
+  private transient InfoForExport mExportInfo = null;
 
   /** The target component. */
-  private ExportPanel mExportTarget = null;
+  private transient ExportPanel mExportTarget = null;
 
   /**
    * Preprocess for exporting this window as an image.
@@ -5594,13 +5595,13 @@ public class SGDrawingWindow extends JFrame
     private static final long serialVersionUID = 6760038313006131448L;
 
     // The list of printable objects.
-    private List<SGFigure> mFigureList = new ArrayList<SGFigure>();
+    private transient List<SGFigure> mFigureList = new ArrayList<SGFigure>();
 
     // The clipping flag.
     private boolean mClipFlag = true;
 
     // The background image.
-    private SGImage mImage = null;
+    private transient SGImage mImage = null;
 
     /** Default constructor. */
     public ExportPanel() {

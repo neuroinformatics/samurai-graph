@@ -75,25 +75,25 @@ public class SGClientPanel extends JLayeredPane
   protected boolean mRulerVisibleFlag = true;
 
   /** Paper Size */
-  private final SGTuple2f mPaperSize = new SGTuple2f();
+  private final transient SGTuple2f mPaperSize = new SGTuple2f();
 
   /** A panel to draw grid lines.<br> */
-  private PaperGridPanel mBackgroundPanel;
+  private transient PaperGridPanel mBackgroundPanel;
 
   /** Panel for figures.<br> */
-  private FigurePanel mFigurePanel;
+  private transient FigurePanel mFigurePanel;
 
   /** A panel to draw anchors.<br> */
-  private ForegroundPanel mForegroundPanel;
+  private transient ForegroundPanel mForegroundPanel;
 
   /** A panel to draw an image.<br> */
-  private ImagePanel mImagePanel;
+  private transient ImagePanel mImagePanel;
 
   /** A panel to draw scroll bars.<br> */
-  private ScrollBarsPanel mScrollBarsPanel;
+  private transient ScrollBarsPanel mScrollBarsPanel;
 
   /** A panel to draw rulers.<br> */
-  private RulerPanel mRulerPanel;
+  private transient RulerPanel mRulerPanel;
 
   // /**
   // * Bounds of the client area.
@@ -1354,7 +1354,7 @@ public class SGClientPanel extends JLayeredPane
       //            }
     }
 
-    private Map<String, Boolean> mPopupMenuEnabledMap = new HashMap<String, Boolean>();
+    private transient Map<String, Boolean> mPopupMenuEnabledMap = new HashMap<String, Boolean>();
 
     //
     // action event
@@ -1690,7 +1690,7 @@ public class SGClientPanel extends JLayeredPane
 
     private static final long serialVersionUID = 3909225890671157942L;
 
-    private SGImage mImage = null;
+    private transient SGImage mImage = null;
 
     private String mImageFilePath = null;
 
@@ -2052,9 +2052,9 @@ public class SGClientPanel extends JLayeredPane
     /** */
     private Font mRulerFont = null;
 
-    private Point2D mHorizontalLocation = null;
+    private transient Point2D mHorizontalLocation = null;
 
-    private Point2D mVerticalLocation = null;
+    private transient Point2D mVerticalLocation = null;
 
     private boolean mDrawHorizontalLineFlag = false;
 
