@@ -1033,6 +1033,13 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
 
     @Override
+    public int hashCode() {
+      return super.hashCode()
+          + Integer.hashCode(this.mDecimalPlaces)
+          + Integer.hashCode(this.mExponent);
+    }
+
+    @Override
     public boolean hasEqualSize(DataProperties dp) {
       if ((dp instanceof SXYNetCDFMultipleDataProperties) == false) {
         return false;
@@ -1113,25 +1120,25 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     public Object copy() {
       SXYNetCDFMultipleDataProperties p = (SXYNetCDFMultipleDataProperties) super.copy();
       if (this.xNames != null) {
-        p.xNames = (String[]) this.xNames;
+        p.xNames = this.xNames;
       }
       if (this.yNames != null) {
-        p.yNames = (String[]) this.yNames;
+        p.yNames = this.yNames;
       }
       if (this.lNames != null) {
-        p.lNames = (String[]) this.lNames;
+        p.lNames = this.lNames;
       }
       if (this.uNames != null) {
-        p.uNames = (String[]) this.uNames;
+        p.uNames = this.uNames;
       }
       if (this.ehNames != null) {
-        p.ehNames = (String[]) this.ehNames;
+        p.ehNames = this.ehNames;
       }
       if (this.tNames != null) {
-        p.tNames = (String[]) this.tNames;
+        p.tNames = this.tNames;
       }
       if (this.thNames != null) {
-        p.thNames = (String[]) this.thNames;
+        p.thNames = this.thNames;
       }
       if (this.mPickUpInfo != null) {
         p.mPickUpInfo = (SGNetCDFPickUpDimensionInfo) this.mPickUpInfo.clone();
