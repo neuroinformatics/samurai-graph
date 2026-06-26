@@ -245,6 +245,133 @@
         </plugins>
     </build>
 
+    <profiles>
+
+        <!-- Linux native packaging -->
+        <profile>
+            <id>dist-linux</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.panteleyev</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>build-linux-app-image</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jpackage</goal>
+                                </goals>
+                                <configuration>
+                                    <name>Samurai Graph</name>
+                                    <type>app-image</type>
+                                    <appVersion>${project.version}</appVersion>
+                                    <input>${project.build.directory}</input>
+                                    <mainJar>${project.build.finalName}-shaded.jar</mainJar>
+                                    <mainClass>jp.riken.brain.ni.samuraigraph.application.SGDrawingServer</mainClass>
+                                    <icon>distrib/icon/icon.png</icon>
+                                    <javaOptions>
+                                        <option>-Xmx2g</option>
+                                    </javaOptions>
+                                    <destination>${project.build.directory}/native</destination>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- macOS native packaging -->
+        <profile>
+            <id>dist-macos</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.panteleyev</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>build-macos-app-image</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jpackage</goal>
+                                </goals>
+                                <configuration>
+                                    <name>Samurai Graph</name>
+                                    <type>app-image</type>
+                                    <appVersion>${project.version}</appVersion>
+                                    <input>${project.build.directory}</input>
+                                    <mainJar>${project.build.finalName}-shaded.jar</mainJar>
+                                    <mainClass>jp.riken.brain.ni.samuraigraph.application.SGDrawingServer</mainClass>
+                                    <icon>distrib/icon/icon.icns</icon>
+                                    <javaOptions>
+                                        <option>-Xmx2g</option>
+                                    </javaOptions>
+                                    <destination>${project.build.directory}/native</destination>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Windows native packaging -->
+        <profile>
+            <id>dist-windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.panteleyev</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>build-windows-app-image</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jpackage</goal>
+                                </goals>
+                                <configuration>
+                                    <name>Samurai Graph</name>
+                                    <type>app-image</type>
+                                    <appVersion>${project.version}</appVersion>
+                                    <input>${project.build.directory}</input>
+                                    <mainJar>${project.build.finalName}-shaded.jar</mainJar>
+                                    <mainClass>jp.riken.brain.ni.samuraigraph.application.SGDrawingServer</mainClass>
+                                    <icon>distrib/icon/icon.ico</icon>
+                                    <javaOptions>
+                                        <option>-Xmx2g</option>
+                                    </javaOptions>
+                                    <destination>${project.build.directory}/native</destination>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
     <repositories>
         <repository>
             <id>unidata-all</id>
