@@ -1308,7 +1308,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
 
   @Override
   public Object[][] getValueTable(final SGExportParameter mode, SGDataBufferPolicy policy) {
-    return SGDataUtility.getValueTable(this, mode, policy);
+    return SGValueFormatter.getValueTable(this, mode, policy);
   }
 
   /**

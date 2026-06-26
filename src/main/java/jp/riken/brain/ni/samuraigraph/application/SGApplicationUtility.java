@@ -56,6 +56,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIProgressControl;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.data.SGCSVParser;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumn;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
@@ -1412,7 +1413,7 @@ public class SGApplicationUtility
         }
 
         // format check
-        List<Integer> indexList = SGDataUtility.getColumnIndexListOfNumber(tokenList);
+        List<Integer> indexList = SGCSVParser.getColumnIndexListOfNumber(tokenList);
 
         if (isFirstLine) {
           isFirstLine = false;
