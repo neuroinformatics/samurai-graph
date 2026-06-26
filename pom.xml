@@ -8,7 +8,21 @@
     <packaging>jar</packaging>
     <version>2.2.0</version>
     <name>samurai-graph</name>
+    <description>Samurai Graph is a scientific graphing application for visualizing experimental data from various file formats including CSV, NetCDF, HDF5, and MATLAB files.</description>
     <url>https://github.com/neuroinformatics/samurai-graph</url>
+
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License v2.1</name>
+            <url>https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/neuroinformatics/samurai-graph.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/neuroinformatics/samurai-graph.git</developerConnection>
+        <url>https://github.com/neuroinformatics/samurai-graph</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
