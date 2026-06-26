@@ -4,6 +4,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,10 +16,6 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 
 /** A class for date. */
 public class SGDate implements Comparable<SGDate> {
@@ -30,7 +31,7 @@ public class SGDate implements Comparable<SGDate> {
   private TimeZone mTimeZone = null;
 
   // The date and time.
-  private DateTime mDateTime = null;
+  private ZonedDateTime mDateTime = null;
 
   /** Array of default available date format. */
   private static final String[] DEFAULT_DATE_FORMAT_ARRAY = {"yy/MM/dd", "yy.MM.dd", "yy MM dd"};
@@ -96,12 +97,12 @@ public class SGDate implements Comparable<SGDate> {
     this.mString = str;
     this.mFormat = result.getFormat();
 
-    DateTime resultDateTime = result.getDateTime();
+    ZonedDateTime resultDateTime = result.getDateTime();
     if (resultDateTime != null) {
       this.mDateTime = result.getDateTime();
       this.mTimeZone = result.getTimeZone();
     } else {
-      this.mDateTime = new DateTime(result.getDate());
+      this.mDateTime = Instant.ofEpochMilli(result.getDate().getTime()).atZone(ZoneId.of("UTC"));
       this.mTimeZone = SGDateUtility.getUTCTimeZoneInstance();
     }
   }
@@ -111,10 +112,10 @@ public class SGDate implements Comparable<SGDate> {
     this(0L);
   }
 
-  public SGDate(DateTime dateTime) {
+  public SGDate(ZonedDateTime dateTime) {
     super();
     this.mDateTime = dateTime;
-    this.mTimeZone = dateTime.getZone().toTimeZone();
+    this.mTimeZone = TimeZone.getTimeZone(dateTime.getZone());
     this.mString = dateTime.toString();
     this.mFormat = null;
   }
@@ -145,30 +146,30 @@ public class SGDate implements Comparable<SGDate> {
   }
 
   /**
-   * Returns a DateTime object in UTC time zone.
+   * Returns a ZonedDateTime object in UTC time zone.
    *
-   * @return a DateTime object in UTC time zone
+   * @return a ZonedDateTime object in UTC time zone
    */
-  public DateTime getUTCDateTime() {
+  public ZonedDateTime getUTCDateTime() {
     return this.mDateTime;
   }
 
   /**
-   * Returns a DateTime object in given time zone.
+   * Returns a ZonedDateTime object in given time zone.
    *
    * @param timeZone the time zone
-   * @return a DateTime object in given time zone
+   * @return a ZonedDateTime object in given time zone
    */
-  public DateTime getDateTime(TimeZone timeZone) {
-    return this.mDateTime.toDateTime(DateTimeZone.forTimeZone(timeZone));
+  public ZonedDateTime getDateTime(TimeZone timeZone) {
+    return this.mDateTime.withZoneSameInstant(ZoneId.of(timeZone.getID()));
   }
 
   /**
-   * Returns a DateTime object in the time zone of this date.
+   * Returns a ZonedDateTime object in the time zone of this date.
    *
-   * @return a DateTime object in the time zone of this date
+   * @return a ZonedDateTime object in the time zone of this date
    */
-  public DateTime getDateTime() {
+  public ZonedDateTime getDateTime() {
     return this.getDateTime(this.mTimeZone);
   }
 
@@ -187,7 +188,7 @@ public class SGDate implements Comparable<SGDate> {
     final Calendar cal = Calendar.getInstance(this.mTimeZone);
 
     // sets the date
-    cal.setTime(this.mDateTime.toDate());
+    cal.setTime(Date.from(this.mDateTime.toInstant()));
     return cal;
   }
 
@@ -235,8 +236,8 @@ public class SGDate implements Comparable<SGDate> {
     private DateFormat mFormat;
     private TimeZone mTimeZone;
 
-    // for Joda Time library
-    private DateTime mDateTime;
+    // for java.time
+    private ZonedDateTime mDateTime;
 
     public DateParseResult(Date date, DateFormat format) {
       super();
@@ -250,7 +251,7 @@ public class SGDate implements Comparable<SGDate> {
       this.mTimeZone = SGDateUtility.getUTCTimeZoneInstance();
     }
 
-    public DateParseResult(DateTime dateTime, TimeZone timeZone) {
+    public DateParseResult(ZonedDateTime dateTime, TimeZone timeZone) {
       super();
       if (dateTime == null || timeZone == null) {
         throw new IllegalArgumentException("dateTime == null || timeZone == null");
@@ -267,7 +268,7 @@ public class SGDate implements Comparable<SGDate> {
       return this.mFormat;
     }
 
-    public DateTime getDateTime() {
+    public ZonedDateTime getDateTime() {
       return this.mDateTime;
     }
 
@@ -294,7 +295,7 @@ public class SGDate implements Comparable<SGDate> {
       Pattern p = Pattern.compile(regex);
       Matcher m = p.matcher(str);
       if (m.find()) {
-        ret = parseDateWithJodaTime(str);
+        ret = parseDateWithJavaTime(str);
         if (ret != null) {
           return ret;
         }
@@ -312,8 +313,8 @@ public class SGDate implements Comparable<SGDate> {
         return ret;
       }
 
-      // parse using Joda Time library
-      ret = parseDateWithJodaTime(str);
+      // parse using java.time
+      ret = parseDateWithJavaTime(str);
       if (ret != null) {
         return ret;
       }
@@ -330,8 +331,8 @@ public class SGDate implements Comparable<SGDate> {
         return ret;
       }
 
-      // parse using Joda Time library
-      ret = parseDateWithJodaTime(str);
+      // parse using java.time
+      ret = parseDateWithJavaTime(str);
       if (ret != null) {
         return ret;
       }
@@ -353,37 +354,37 @@ public class SGDate implements Comparable<SGDate> {
     return ret;
   }
 
-  private DateParseResult parseDateWithJodaTime(String str) {
+  private DateParseResult parseDateWithJavaTime(String str) {
     DateParseResult ret = null;
 
-    // parses using Joda-Time library
-    DateTime dateTime = null;
-    DateTimeZone zone = null;
+    // parses using java.time
+    ZonedDateTime dateTime = null;
+    ZoneId zone = null;
     try {
       // parses a text string with default settings
-      dateTime = DateTime.parse(str);
+      dateTime = ZonedDateTime.parse(str);
       if (dateTime != null) {
-        // gets the time zone from the DateTime object with default settings
+        // gets the time zone from the ZonedDateTime object with default settings
         zone = dateTime.getZone();
-        final int rawOffset = zone.toTimeZone().getRawOffset();
+        final int rawOffset = TimeZone.getTimeZone(zone).getRawOffset();
         if (rawOffset != 0) {
           // parses a text string with the parser in UTC time zone
-          DateTimeFormatter dtf = ISODateTimeFormat.dateTimeParser().withZoneUTC();
-          dateTime = DateTime.parse(str, dtf);
+          DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of("UTC"));
+          dateTime = ZonedDateTime.parse(str, dtf);
 
           // if a given text string for date does not have
           // the time zone, sets the UTC time zone
           Matcher m = JODA_TIME_ZONE_PATTERN.matcher(str);
           if (!m.find()) {
-            zone = DateTimeZone.forTimeZone(SGDateUtility.getUTCTimeZoneInstance());
+            zone = ZoneId.of("UTC");
           }
         }
       }
-      // Note: The DateTime object is always parsed in UTC time zone.
-    } catch (IllegalArgumentException e) {
+      // Note: The ZonedDateTime object is always parsed in UTC time zone.
+    } catch (DateTimeParseException e) {
     }
     if (dateTime != null && zone != null) {
-      ret = new DateParseResult(dateTime, zone.toTimeZone());
+      ret = new DateParseResult(dateTime, TimeZone.getTimeZone(zone));
     }
 
     return ret;

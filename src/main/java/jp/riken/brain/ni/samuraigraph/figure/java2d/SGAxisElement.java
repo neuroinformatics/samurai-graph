@@ -38,6 +38,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIMovable;
 import jp.riken.brain.ni.samuraigraph.base.SGIUndoable;
+import jp.riken.brain.ni.samuraigraph.base.SGPeriod;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
@@ -55,7 +56,6 @@ import jp.riken.brain.ni.samuraigraph.figure.SGIAxisDialogObserver;
 import jp.riken.brain.ni.samuraigraph.figure.SGIStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGStroke;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementAxis.AxisScaleElement;
-import org.joda.time.Period;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -2953,7 +2953,7 @@ public abstract class SGAxisElement
     if (str.length() != 0) {
       SGAxisStepValue step = null;
       if (dateMode) {
-        Period p = SGUtilityText.getPeriod(str);
+        SGPeriod p = SGUtilityText.getPeriod(str);
         if (p != null) {
           step = new SGAxisDateStepValue(p);
         }
@@ -5107,7 +5107,7 @@ public abstract class SGAxisElement
     String k = map.getOriginalKey(key);
     final SGAxisStepValue step;
     if (dateMode) {
-      Period p = SGUtilityText.getPeriod(value);
+      SGPeriod p = SGUtilityText.getPeriod(value);
       if (p == null) {
         result.putResult(k, SGPropertyResults.INVALID_INPUT_VALUE);
         return;
@@ -5150,7 +5150,7 @@ public abstract class SGAxisElement
     if (step instanceof SGAxisDoubleStepValue) {
       value = ((SGAxisDoubleStepValue) step).getValue();
     } else if (step instanceof SGAxisDateStepValue) {
-      Period p = ((SGAxisDateStepValue) step).getPeriod();
+      SGPeriod p = ((SGAxisDateStepValue) step).getPeriod();
       value = SGDateUtility.toApproximateDateValue(p);
     } else {
       throw new Error("This cannot happen.");

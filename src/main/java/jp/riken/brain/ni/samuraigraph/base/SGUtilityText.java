@@ -29,7 +29,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer.Token;
-import org.joda.time.Period;
 import org.mozilla.universalchardet.UniversalDetector;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
@@ -2263,10 +2262,10 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     return detector.getDetectedCharset();
   }
 
-  public static Period getPeriod(final String str) {
-    Period p = null;
+  public static SGPeriod getPeriod(final String str) {
+    SGPeriod p = null;
     try {
-      p = Period.parse(str);
+      p = SGPeriod.parse(str);
     } catch (IllegalArgumentException e) {
     }
     return p;

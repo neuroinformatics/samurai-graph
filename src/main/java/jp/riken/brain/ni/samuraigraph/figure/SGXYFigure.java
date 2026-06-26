@@ -24,6 +24,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementShape;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementSignificantDifference;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementString;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementTimingLine;
+import jp.riken.brain.ni.samuraigraph.base.SGPeriod;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
@@ -32,7 +33,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementGrid.GridProperties;
-import org.joda.time.Period;
 
 /** An XY-type figure. */
 public class SGXYFigure extends SGFigure
@@ -368,7 +368,7 @@ public class SGXYFigure extends SGFigure
       } else if (COM_FIGURE_GRID_STEP_X.equalsIgnoreCase(key)) {
         final SGAxisStepValue step;
         if (dateModeX) {
-          Period p = SGUtilityText.getPeriod(value);
+          SGPeriod p = SGUtilityText.getPeriod(value);
           if (p == null) {
             result.putResult(COM_FIGURE_GRID_STEP_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
@@ -420,7 +420,7 @@ public class SGXYFigure extends SGFigure
       } else if (COM_FIGURE_GRID_STEP_Y.equalsIgnoreCase(key)) {
         final SGAxisStepValue step;
         if (dateModeY) {
-          Period p = SGUtilityText.getPeriod(value);
+          SGPeriod p = SGUtilityText.getPeriod(value);
           if (p == null) {
             result.putResult(COM_FIGURE_GRID_STEP_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;

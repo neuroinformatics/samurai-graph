@@ -1,7 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 import java.text.ParseException;
-import org.joda.time.DateTime;
+import java.time.ZonedDateTime;
 
 public class SGAxisDateValue extends SGAxisValue {
 
@@ -26,7 +26,7 @@ public class SGAxisDateValue extends SGAxisValue {
     this(new SGDate(str));
   }
 
-  public SGAxisDateValue(DateTime dateTime) {
+  public SGAxisDateValue(ZonedDateTime dateTime) {
     this(new SGDate(dateTime));
   }
 
@@ -51,7 +51,7 @@ public class SGAxisDateValue extends SGAxisValue {
   public SGAxisValue plus(SGAxisStepValue step) {
     if (step instanceof SGAxisDateStepValue) {
       SGAxisDateStepValue p = (SGAxisDateStepValue) step;
-      DateTime dateTime = this.mDate.getUTCDateTime().plus(p.getPeriod());
+      ZonedDateTime dateTime = addPeriod(this.mDate.getUTCDateTime(), p.getPeriod());
       return new SGAxisDateValue(dateTime);
     } else if (step instanceof SGAxisDoubleStepValue) {
       SGAxisDoubleStepValue d = (SGAxisDoubleStepValue) step;
@@ -65,7 +65,7 @@ public class SGAxisDateValue extends SGAxisValue {
   public SGAxisValue minus(SGAxisStepValue step) {
     if (step instanceof SGAxisDateStepValue) {
       SGAxisDateStepValue p = (SGAxisDateStepValue) step;
-      DateTime dateTime = this.mDate.getUTCDateTime().minus(p.getPeriod());
+      ZonedDateTime dateTime = subtractPeriod(this.mDate.getUTCDateTime(), p.getPeriod());
       return new SGAxisDateValue(dateTime);
     } else if (step instanceof SGAxisDoubleStepValue) {
       SGAxisDoubleStepValue d = (SGAxisDoubleStepValue) step;
@@ -84,5 +84,31 @@ public class SGAxisDateValue extends SGAxisValue {
   public SGAxisValue adjustValue(SGAxisValue min, SGAxisValue max, final int digit) {
     // just returns this object
     return this;
+  }
+
+  private static ZonedDateTime addPeriod(ZonedDateTime dt, SGPeriod p) {
+    ZonedDateTime result = dt;
+    if (p.getYears() != 0) result = result.plusYears(p.getYears());
+    if (p.getMonths() != 0) result = result.plusMonths(p.getMonths());
+    if (p.getWeeks() != 0) result = result.plusWeeks(p.getWeeks());
+    if (p.getDays() != 0) result = result.plusDays(p.getDays());
+    if (p.getHours() != 0) result = result.plusHours(p.getHours());
+    if (p.getMinutes() != 0) result = result.plusMinutes(p.getMinutes());
+    if (p.getSeconds() != 0) result = result.plusSeconds(p.getSeconds());
+    if (p.getMillis() != 0) result = result.plus(java.time.Duration.ofMillis(p.getMillis()));
+    return result;
+  }
+
+  private static ZonedDateTime subtractPeriod(ZonedDateTime dt, SGPeriod p) {
+    ZonedDateTime result = dt;
+    if (p.getYears() != 0) result = result.minusYears(p.getYears());
+    if (p.getMonths() != 0) result = result.minusMonths(p.getMonths());
+    if (p.getWeeks() != 0) result = result.minusWeeks(p.getWeeks());
+    if (p.getDays() != 0) result = result.minusDays(p.getDays());
+    if (p.getHours() != 0) result = result.minusHours(p.getHours());
+    if (p.getMinutes() != 0) result = result.minusMinutes(p.getMinutes());
+    if (p.getSeconds() != 0) result = result.minusSeconds(p.getSeconds());
+    if (p.getMillis() != 0) result = result.minus(java.time.Duration.ofMillis(p.getMillis()));
+    return result;
   }
 }
