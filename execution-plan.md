@@ -129,9 +129,9 @@
 5. `mvn spotless:apply` → `mvn clean` → `mvn compile` で検証
 
 **完了基準:**
-- [ ] `mvn compile` が成功
-- [ ] `target/classes/` 内のPNG/GIFファイルが正常に読み込める
-- [ ] `samurai-graph.properties` の `${project.version}` 置換が正常に機能
+- [x] `mvn compile` が成功
+- [x] `target/classes/` 内のPNG/GIFファイルが正常に読み込める
+- [x] `samurai-graph.properties` の `${project.version}` 置換が正常に機能
 
 ---
 
@@ -158,9 +158,9 @@
 4. アプリケーション起動時にログ出力がコンソールに表示されることを確認
 
 **完了基準:**
-- [ ] `log4j2.xml` が `src/main/resources/` に配置
-- [ ] `mvn compile` が成功
-- [ ] アプリ起動時にINFOレベルのログが出力される
+- [x] `log4j2.xml` が `src/main/resources/` に配置
+- [x] `mvn compile` が成功
+- [x] アプリ起動時にINFOレベルのログが出力される
 
 ---
 
@@ -192,10 +192,10 @@
 5. 各開発者のローカル環境（Linux, macOS, Windows）で動作確認
 
 **完了基準:**
-- [ ] `.ci/run.sh` と `.ci/run.cmd` が作成
-- [ ] 各プラットフォームで1コマンド実行可能
-- [ ] 全ステップ成功時に正常終了（exit code 0）
-- [ ] 任意のステップ失敗時に即座終了（非0 exit code）
+- [x] `.ci/run.sh` と `.ci/run.cmd` が作成
+- [x] 各プラットフォームで1コマンド実行可能
+- [x] 全ステップ成功時に正常終了（exit code 0）
+- [x] 任意のステップ失敗時に即座終了（非0 exit code）
 
 **備考:**
 - GitHub Actions（TASK-003-2）は本タスク完了後の次のステップ
@@ -252,9 +252,9 @@
 2. `mvn clean compile` でビルド確認
 
 **完了基準:**
-- [ ] 各メタデータセクションが追加
-- [ ] `mvn compile` が成功
-- [ ] `mvn help:effective-pom` でメタデータが正しく反映されている
+- [x] 各メタデータセクションが追加
+- [x] `mvn compile` が成功
+- [x] `mvn help:effective-pom` でメタデータが正しく反映されている
 
 ---
 
@@ -278,8 +278,8 @@
 4. `mvn clean compile` でビルド確認
 
 **完了基準:**
-- [ ] 未使用リポジトリが削除
-- [ ] `mvn compile` が成功（依存解決エラーなし）
+- [x] 未使用リポジトリが削除
+- [x] `mvn compile` が成功（依存解決エラーなし）
 
 ---
 
@@ -434,10 +434,10 @@
 5. `mvn test` でテスト確認
 
 **完了基準:**
-- [ ] `joda-time` のインポートが0箇所
-- [ ] `pom.xml` から `joda-time` が削除
-- [ ] `mvn compile` が成功
-- [ ] テストが全成功
+- [x] `joda-time` のインポートが0箇所
+- [x] `pom.xml` から `joda-time` が削除
+- [x] `mvn compile` が成功
+- [x] テストが全成功
 
 ---
 
@@ -461,9 +461,9 @@
 4. `mvn test` でテスト確認
 
 **完了基準:**
-- [ ] `pom.xml` から `freehep-graphicsio-swf` が削除
-- [ ] ソースコードにSWF参照が残っていない
-- [ ] `mvn compile` が成功
+- [x] `pom.xml` から `freehep-graphicsio-swf` が削除
+- [x] ソースコードにSWF参照が残っていない
+- [x] `mvn compile` が成功
 
 ---
 
@@ -492,9 +492,9 @@
 4. 調査結果をドキュメント化
 
 **完了基準:**
-- [ ] 使用箇所の特定が完了
-- [ ] 代替候補の評価が完了
-- [ ] 移行コストの見積もりが作成
+- [x] 使用箇所の特定が完了
+- [x] 代替候補の評価が完了
+- [x] 移行コストの見積もりが作成
 
 ---
 
@@ -557,10 +557,10 @@
 6. 旧クラスの委譲メソッドに `@Deprecated` を付与
 
 **完了基準:**
-- [ ] 新クラスが作成されメソッドが移動
-- [ ] `mvn compile` が成功
-- [ ] テストが全成功
-- [ ] 旧クラスの行数が減少
+- [x] 新クラスが作成されメソッドが移動
+- [x] `mvn compile` が成功
+- [x] テストが全成功
+- [x] 旧クラスの行数が減少
 
 ---
 
@@ -587,9 +587,9 @@
 4. テストで動作確認
 
 **完了基準:**
-- [ ] 新クラスが作成されメソッドが移動
-- [ ] `mvn compile` が成功
-- [ ] テストが全成功
+- [x] 新クラスが作成されメソッドが移動
+- [x] `mvn compile` が成功
+- [x] テストが全成功
 - [ ] `SGDataUtility` の行数が3,000行以下に減少
 
 ---
@@ -713,9 +713,9 @@
 4. `mvn compile` で `ChangeLog.html` の生成確認
 
 **完了基準:**
-- [ ] v2.1.0 と v2.2.0 のエントリーが追加
-- [ ] `mvn compile` が成功
-- [ ] `target/classes/ChangeLog.html` に反映
+- [x] v2.1.0 と v2.2.0 のエントリーが追加
+- [x] `mvn compile` が成功
+- [x] `target/classes/ChangeLog.html` に反映
 
 ---
 
@@ -744,8 +744,8 @@
 3. 解決済みのTODO/FIXMEを削除
 
 **完了基準:**
-- [ ] 全8件のTODO/FIXMEが対応済み（解決またはissue化）
-- [ ] `mvn compile` が成功
+- [x] 全8件のTODO/FIXMEが対応済み（解決またはissue化）
+- [x] `mvn compile` が成功
 
 ---
 
@@ -768,7 +768,7 @@
 3. 必要であればプレースホルダとして `package-info.java` を配置
 
 **完了基準:**
-- [ ] 空ディレクトリが削除 または `package-info.java` が配置
+- [x] 空ディレクトリが削除 または `package-info.java` が配置
 - [ ] `mvn compile` が成功
 
 ---
@@ -795,9 +795,9 @@
 3. `mvn clean compile` でルール動作確認
 
 **完了基準:**
-- [ ] プラグインが設定
-- [ ] `mvn compile` が成功
-- [ ] Java 21 未満の環境でビルドが失敗することを確認
+- [x] プラグインが設定
+- [x] `mvn compile` が成功
+- [x] Java 21 未満の環境でビルドが失敗することを確認
 
 ---
 
@@ -805,7 +805,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| ステータス | [ ] TODO |
+| ステータス | [x] DONE |
 | 優先度 | P1 |
 | 対応元 | M5 |
 | 推定工数 | 3-5日 |
@@ -879,15 +879,15 @@
    - 各プラットフォームでのインストール・起動方法を記載
 
 **完了基準:**
-- [ ] 旧 `installer/`、`helper/` が削除
-- [ ] `jpackage-maven-plugin` が `pom.xml` に統合
+- [x] 旧 `installer/`、`helper/` が削除
+- [x] `jpackage-maven-plugin` が `pom.xml` に統合
 - [ ] 各プラットフォームでネイティブパッケージが生成される:
   - [ ] Windows: `.msi` インストーラー
   - [ ] macOS: `.dmg` ディスクイメージ
   - [ ] Linux: `.deb` パッケージ
 - [ ] 生成されたパッケージを実際にインストールし、アプリケーションが起動することを確認
 - [ ] JREがバンドルされており、Java未インストール環境でも動作することを確認
-- [ ] `RELEASE.md` にリリース手順が文書化
+- [x] `RELEASE.md` にリリース手順が文書化
 
 **備考:**
 - `jpackage` はJDK 14以降に標準搭載されており、追加依存不要
