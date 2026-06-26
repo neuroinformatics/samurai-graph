@@ -417,9 +417,9 @@ class SGDataUtilityTest {
     assertThat(result).isEqualTo("myVariable");
   }
 
-    @Test
-    void removeHeaderTitle_returnsRemainingText() {
-        String result = SGDataUtility.removeHeaderTitle("X for No.1");
-        assertThat(result).isEqualTo("No.1");
-    }
+  @Test
+  void removeHeaderTitle_returnsRemainingText() {
+    String result = SGDataUtility.removeHeaderTitle("X for No.1");
+    assertThat(result).isEqualTo("No.1");
+  }
 }
