@@ -2,6 +2,52 @@
 <product>
   <release>
     <releaseinfo>
+      <releasedesc>Samurai Graph 2.2.0</releasedesc>
+      <releasedate>2026-06-27</releasedate>
+      <changelog>
+        <itemize>
+          <item>Added JUnit 5 test framework with AssertJ and Mockito.</item>
+          <item>Added unit tests for data parsing utilities and data buffer classes.</item>
+          <item>Added log4j2 configuration for structured logging.</item>
+          <item>Added local CI verification scripts for build automation.</item>
+          <item>Added POM metadata (description, license, SCM information).</item>
+          <item>Split SGDataUtility into SGCSVParser and SGValueFormatter for better separation of concerns.</item>
+          <item>Removed joda-time dependency, migrated to java.time API.</item>
+          <item>Removed freehep-graphicsio-swf unused dependency.</item>
+          <item>Removed unused Maven repositories (imagej).</item>
+          <item>Resolved TODO/FIXME comments throughout the codebase.</item>
+          <item>Added maven-enforcer-plugin to enforce Java 21 and Maven 3.9+ requirements.</item>
+          <item>Removed empty platform package.</item>
+          <item>Fixed resource filtering to prevent binary file corruption during build.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
+      <releasedesc>Samurai Graph 2.1.0</releasedesc>
+      <releasedate>2025-01-15</releasedate>
+      <changelog>
+        <itemize>
+          <item>Migrated to Java 21 with updated language features.</item>
+          <item>Migrated from com.apple.eawt to java.awt.Desktop for macOS integration.</item>
+          <item>Replaced hand-written CSV tokenizer with Apache Commons CSV.</item>
+          <item>Migrated SGBrowserLauncher to use java.awt.Desktop.browse().</item>
+          <item>Updated all dependencies to their latest compatible versions.</item>
+          <item>Migrated changelog generation to Maven XML plugin.</item>
+          <item>Fixed deprecated netCDF-Java API calls.</item>
+          <item>Fixed compile warnings for casts, raw types, and hashCode implementations.</item>
+          <item>Added null safety checks and removed dead code.</item>
+          <item>Added transient fields to suppress serialization warnings.</item>
+          <item>Prevented this-escape warnings by making methods final.</item>
+          <item>Removed redundant casts and improved hashCode implementations.</item>
+          <item>Fixed typos in identifiers, Javadoc, comments, and resources.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
       <releasedesc>Samurai Graph 2.0.0</releasedesc>
       <releasedate>2010-11-23</releasedate>
       <changelog>
