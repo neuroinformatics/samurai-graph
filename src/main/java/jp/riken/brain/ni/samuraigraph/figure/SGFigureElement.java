@@ -11,6 +11,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -44,6 +47,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGISelectable;
 import jp.riken.brain.ni.samuraigraph.base.SGIUndoable;
 import jp.riken.brain.ni.samuraigraph.base.SGIVisible;
+import jp.riken.brain.ni.samuraigraph.base.SGPeriod;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
@@ -54,9 +58,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility.MouseDragInput;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility.MouseDragResult;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.Period;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -1362,7 +1363,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
       final double max = axis.getMaxDoubleValue();
       final double range = max - min;
       final long rangeMillis = SGDateUtility.toMillis(range);
-      Period p = new Period();
+      SGPeriod p = SGPeriod.ZERO;
       long temp = rangeMillis;
       p = p.withMillis((int) (temp % 1000L));
       temp /= 1000L;
@@ -1379,58 +1380,54 @@ public abstract class SGFigureElement implements SGIFigureElement {
       p = p.withYears((int) temp);
 
       SGDate minDate = new SGDate(min);
-      DateTime minDateTime = minDate.getUTCDateTime();
+      ZonedDateTime minDateTime = minDate.getUTCDateTime();
       final int year = minDateTime.getYear();
-      final int month = minDateTime.getMonthOfYear();
+      final int month = minDateTime.getMonthValue();
       final int day = minDateTime.getDayOfMonth();
-      final int hour = minDateTime.getHourOfDay();
-      final int minute = minDateTime.getMinuteOfHour();
-      final int second = minDateTime.getSecondOfMinute();
-      final int millis = minDateTime.getMillisOfSecond();
+      final int hour = minDateTime.getHour();
+      final int minute = minDateTime.getMinute();
+      final int second = minDateTime.getSecond();
+      final int millis = minDateTime.getNano() / 1_000_000;
 
-      DateTime baselineDateTime =
-          new DateTime(0L, DateTimeZone.forTimeZone(SGDateUtility.getUTCTimeZoneInstance()));
+      ZonedDateTime baselineDateTime =
+          ZonedDateTime.ofInstant(
+              Instant.EPOCH, ZoneId.of(SGDateUtility.getUTCTimeZoneInstance().getID()));
       if (p.getYears() != 0) {
         baselineDateTime = baselineDateTime.withYear(year);
       } else if (p.getMonths() != 0) {
-        baselineDateTime = baselineDateTime.withYear(year).withMonthOfYear(month);
+        baselineDateTime = baselineDateTime.withYear(year).withMonth(month);
       } else if (p.getDays() != 0) {
-        baselineDateTime =
-            baselineDateTime.withYear(year).withMonthOfYear(month).withDayOfMonth(day);
+        baselineDateTime = baselineDateTime.withYear(year).withMonth(month).withDayOfMonth(day);
       } else if (p.getHours() != 0) {
         baselineDateTime =
-            baselineDateTime
-                .withYear(year)
-                .withMonthOfYear(month)
-                .withDayOfMonth(day)
-                .withHourOfDay(hour);
+            baselineDateTime.withYear(year).withMonth(month).withDayOfMonth(day).withHour(hour);
       } else if (p.getMinutes() != 0) {
         baselineDateTime =
             baselineDateTime
                 .withYear(year)
-                .withMonthOfYear(month)
+                .withMonth(month)
                 .withDayOfMonth(day)
-                .withHourOfDay(hour)
-                .withMinuteOfHour(minute);
+                .withHour(hour)
+                .withMinute(minute);
       } else if (p.getSeconds() != 0) {
         baselineDateTime =
             baselineDateTime
                 .withYear(year)
-                .withMonthOfYear(month)
+                .withMonth(month)
                 .withDayOfMonth(day)
-                .withHourOfDay(hour)
-                .withMinuteOfHour(minute)
-                .withSecondOfMinute(second);
+                .withHour(hour)
+                .withMinute(minute)
+                .withSecond(second);
       } else if (p.getMillis() != 0) {
         baselineDateTime =
             baselineDateTime
                 .withYear(year)
-                .withMonthOfYear(month)
+                .withMonth(month)
                 .withDayOfMonth(day)
-                .withHourOfDay(hour)
-                .withMinuteOfHour(minute)
-                .withSecondOfMinute(second)
-                .withMillisOfSecond(millis);
+                .withHour(hour)
+                .withMinute(minute)
+                .withSecond(second)
+                .withNano(millis * 1_000_000);
       }
       ret = new SGAxisDateValue(baselineDateTime);
     } else {
@@ -1480,41 +1477,41 @@ public abstract class SGFigureElement implements SGIFigureElement {
         yearRatio = 0.0;
       }
 
-      final Period step;
+      final SGPeriod step;
       if (yearRatio > 6.0) {
-        step = Period.years(2 * yearPowersOfTen);
+        step = SGPeriod.years(2 * yearPowersOfTen);
       } else if (yearRatio > 2.0 && yearRatio <= 6.0) {
-        step = Period.years(yearPowersOfTen);
+        step = SGPeriod.years(yearPowersOfTen);
       } else if (yearRatio > 1.1 && yearRatio <= 2.0) {
         if (yearPowersOfTen > 1) {
-          step = Period.years(yearPowersOfTen / 2);
+          step = SGPeriod.years(yearPowersOfTen / 2);
         } else {
-          step = Period.years(1);
+          step = SGPeriod.years(1);
         }
       } else {
         if (years > 0) {
           if (yearPowersOfTen > 1) {
-            step = Period.years(yearPowersOfTen / 5);
+            step = SGPeriod.years(yearPowersOfTen / 5);
           } else {
-            step = Period.years(1);
+            step = SGPeriod.years(1);
           }
         } else {
           if (months > 0) {
-            step = Period.months(months);
+            step = SGPeriod.months(months);
           } else {
             if (days > 0) {
-              step = Period.days(days);
+              step = SGPeriod.days(days);
             } else {
               if (hours > 0) {
-                step = Period.hours(hours);
+                step = SGPeriod.hours(hours);
               } else {
                 if (minutes > 0) {
-                  step = Period.minutes(minutes);
+                  step = SGPeriod.minutes(minutes);
                 } else {
                   if (seconds > 0) {
-                    step = Period.seconds(seconds);
+                    step = SGPeriod.seconds(seconds);
                   } else {
-                    step = Period.millis((int) millis);
+                    step = SGPeriod.millis((int) millis);
                   }
                 }
               }

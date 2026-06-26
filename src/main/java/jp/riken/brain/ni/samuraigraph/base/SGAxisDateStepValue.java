@@ -1,22 +1,21 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 import java.text.ParseException;
-import org.joda.time.Period;
 
 public class SGAxisDateStepValue extends SGAxisStepValue {
 
-  private Period mPeriod;
+  private SGPeriod mPeriod;
 
   public SGAxisDateStepValue(String str) throws ParseException {
     super();
-    Period p = SGUtilityText.getPeriod(str);
+    SGPeriod p = SGUtilityText.getPeriod(str);
     if (p == null) {
       throw new ParseException("Failed to parse a given string: " + str, 0);
     }
     this.mPeriod = p;
   }
 
-  public SGAxisDateStepValue(Period p) {
+  public SGAxisDateStepValue(SGPeriod p) {
     super();
     if (p == null) {
       throw new IllegalArgumentException("p == null");
@@ -24,7 +23,7 @@ public class SGAxisDateStepValue extends SGAxisStepValue {
     this.mPeriod = p;
   }
 
-  public Period getPeriod() {
+  public SGPeriod getPeriod() {
     return this.mPeriod;
   }
 
@@ -49,7 +48,7 @@ public class SGAxisDateStepValue extends SGAxisStepValue {
    */
   @Override
   public boolean isZero() {
-    return Period.ZERO.equals(this.mPeriod);
+    return SGPeriod.ZERO.equals(this.mPeriod);
   }
 
   /**

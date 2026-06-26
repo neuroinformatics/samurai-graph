@@ -4,14 +4,13 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
-import org.joda.time.Period;
 
 /** A dialog to input the period. */
 public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
 
   private static final long serialVersionUID = 7556264187876856502L;
 
-  public static final String TITLE = "Input Period";
+  public static final String TITLE = "Input SGPeriod";
 
   public SGPeriodInputDialog(java.awt.Frame parent, boolean modal) {
     super(parent, modal);
@@ -307,7 +306,7 @@ public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
       return;
     }
     boolean valid = false;
-    Period p = SGUtilityText.getPeriod(text);
+    SGPeriod p = SGUtilityText.getPeriod(text);
     if (p != null) {
       int years = 0;
       int months = 0;
@@ -452,12 +451,12 @@ public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
     return num;
   }
 
-  public void setPeriod(Period p) {
+  public void setPeriod(SGPeriod p) {
     this.setPeriod(p.toString());
   }
 
   public void setPeriod(final double value) {
-    Period p = SGDateUtility.toPeriodOfDays(value);
+    SGPeriod p = SGDateUtility.toPeriodOfDays(value);
     this.setPeriod(p.toString());
   }
 
@@ -467,15 +466,15 @@ public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
     tf.setText(str);
   }
 
-  public Period getPeriod() {
+  public SGPeriod getPeriod() {
     String text = this.getTextField().getText();
-    Period p = SGUtilityText.getPeriod(text);
+    SGPeriod p = SGUtilityText.getPeriod(text);
     return p;
   }
 
   @Override
   protected void updateTextSub(String str) {
-    Period p = SGUtilityText.getPeriod(str);
+    SGPeriod p = SGUtilityText.getPeriod(str);
     this.getOKButton().setEnabled(p != null);
   }
 }

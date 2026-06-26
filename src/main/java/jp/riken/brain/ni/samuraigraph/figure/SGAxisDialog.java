@@ -29,13 +29,13 @@ import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGDateInputDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
+import jp.riken.brain.ni.samuraigraph.base.SGPeriod;
 import jp.riken.brain.ni.samuraigraph.base.SGPeriodInputDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import org.joda.time.Period;
 
 /** A dialog to set the properties of axes. */
 public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, SGIStringConstants {
@@ -1913,7 +1913,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     if (d != null) {
       dg.setPeriod(d.doubleValue());
     } else {
-      Period p = SGUtilityText.getPeriod(str);
+      SGPeriod p = SGUtilityText.getPeriod(str);
       if (p == null) {
         return;
       }
@@ -1924,7 +1924,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
 
     final int closeOption = dg.getCloseOption();
     if (closeOption == OK_OPTION) {
-      Period p = dg.getPeriod();
+      SGPeriod p = dg.getPeriod();
       if (this.isDateMode()) {
         field.setText(p.toString());
       } else {

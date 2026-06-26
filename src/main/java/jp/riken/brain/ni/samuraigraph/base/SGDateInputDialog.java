@@ -1,5 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
@@ -9,7 +10,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
-import org.joda.time.DateTime;
 
 /** A dialog to input date. */
 public class SGDateInputDialog extends SGAbstractDateInputDialog {
@@ -394,14 +394,14 @@ public class SGDateInputDialog extends SGAbstractDateInputDialog {
     SGDate date = SGUtilityText.getDate(text);
     if (date != null) {
       TimeZone timeZone = date.getTimeZone();
-      DateTime dateTime = date.getDateTime(timeZone);
+      ZonedDateTime dateTime = date.getDateTime(timeZone);
       this.mYearSpinner.setValue(dateTime.getYear());
-      this.mMonthComboBox.setSelectedItem(dateTime.getMonthOfYear());
+      this.mMonthComboBox.setSelectedItem(dateTime.getMonthValue());
       this.mDayComboBox.setSelectedItem(dateTime.getDayOfMonth());
-      this.mHourComboBox.setSelectedItem(dateTime.getHourOfDay());
-      this.mMinuteComboBox.setSelectedItem(dateTime.getMinuteOfHour());
-      this.mSecondComboBox.setSelectedItem(dateTime.getSecondOfMinute());
-      this.mMillisecondSpinner.setValue(dateTime.getMillisOfSecond());
+      this.mHourComboBox.setSelectedItem(dateTime.getHour());
+      this.mMinuteComboBox.setSelectedItem(dateTime.getMinute());
+      this.mSecondComboBox.setSelectedItem(dateTime.getSecond());
+      this.mMillisecondSpinner.setValue(dateTime.getNano() / 1_000_000);
       String timeZoneId = timeZone.getID();
       String timeZoneItem = "";
       if ("UTC".equals(timeZoneId)) {

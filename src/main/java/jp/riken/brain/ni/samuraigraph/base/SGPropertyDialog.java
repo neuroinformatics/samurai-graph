@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.text.JTextComponent;
-import org.joda.time.Period;
 
 /** The base class of the property dialogs. */
 public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingElementConstants {
@@ -496,7 +495,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
       check = true;
     }
     if (check) {
-      Period p = this.getPeriod(tf);
+      SGPeriod p = this.getPeriod(tf);
       if (p == null) {
         if (addDesc) {
           final String desc = tf.getDescription();
@@ -521,7 +520,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     return date;
   }
 
-  protected Period getPeriod(final JTextComponent com) {
+  protected SGPeriod getPeriod(final JTextComponent com) {
     if (com == null) {
       return null;
     }
@@ -643,7 +642,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     this.onPeriodButtonPressedCommon(dg, field);
     final int closeOption = dg.getCloseOption();
     if (closeOption == OK_OPTION) {
-      Period p = dg.getPeriod();
+      SGPeriod p = dg.getPeriod();
       field.setText(p.toString());
     }
   }
@@ -653,7 +652,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     this.onPeriodButtonPressedCommon(dg, field);
     final int closeOption = dg.getCloseOption();
     if (closeOption == OK_OPTION) {
-      Period p = dg.getPeriod();
+      SGPeriod p = dg.getPeriod();
       final double dateValue = SGDateUtility.toApproximateDateValue(p);
       field.setText(Double.toString(dateValue));
     }
