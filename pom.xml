@@ -219,11 +219,6 @@
             <url>https://artifacts.unidata.ucar.edu/repository/unidata-all/</url>
         </repository>
         <repository>
-            <id>imagej</id>
-            <name>ImageJ Public Repository</name>
-            <url>https://maven.imagej.net/content/repositories/public/</url>
-        </repository>
-        <repository>
             <id>ome</id>
             <name>OME Repository</name>
             <url>https://artifacts.openmicroscopy.org/artifactory/maven/</url>
