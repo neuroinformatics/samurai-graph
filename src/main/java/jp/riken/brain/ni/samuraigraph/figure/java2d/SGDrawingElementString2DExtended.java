@@ -659,7 +659,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
     // calculate string bounds
     visual_x = base_visual_x;
     visual_y = -visual_ascent;
-    visual_advance = advance - visual_x; // FIXME: calculate right side
+    visual_advance = advance - visual_x;
     // margin
     Rectangle2D rect = new Rectangle2D.Float(visual_x, visual_y, visual_advance, visual_height);
 

@@ -2522,7 +2522,7 @@ public abstract class SGNetCDFData extends SGArrayData
   @Override
   public boolean saveToHDF5File(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    // TODO
+    // Not implemented: HDF5 export for NetCDF data is not supported.
     return false;
   }
 
@@ -2535,7 +2535,7 @@ public abstract class SGNetCDFData extends SGArrayData
   @Override
   public boolean saveToMATLABFile(
       File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    // TODO
+    // Not implemented: MATLAB export for NetCDF data is not supported.
     return false;
   }
 
@@ -2549,7 +2549,7 @@ public abstract class SGNetCDFData extends SGArrayData
   @Override
   public boolean saveToTextFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    // TODO
+    // Not implemented: text export for NetCDF data is not supported.
     return false;
   }
 
