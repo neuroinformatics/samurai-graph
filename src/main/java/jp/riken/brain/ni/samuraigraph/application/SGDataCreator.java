@@ -25,6 +25,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIProgressControl;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.data.SGCSVParser;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDateVariable;
@@ -766,7 +767,7 @@ public class SGDataCreator
       }
 
       // get number convertible columns
-      List<Integer> firstIndexList = SGDataUtility.getColumnIndexListOfNumber(firstTokenList);
+      List<Integer> firstIndexList = SGCSVParser.getColumnIndexListOfNumber(firstTokenList);
 
       // skip titles if they exist
       if (SGApplicationUtility.evaluateTitleList(firstIndexList)) {
@@ -775,7 +776,7 @@ public class SGDataCreator
         if (firstTokenList == null || firstTokenList.size() == 0) {
           return false;
         }
-        firstIndexList = SGDataUtility.getColumnIndexListOfNumber(firstTokenList);
+        firstIndexList = SGCSVParser.getColumnIndexListOfNumber(firstTokenList);
       }
 
       // check all values
@@ -809,7 +810,7 @@ public class SGDataCreator
       }
 
       // get data type candidates
-      if (SGDataUtility.getDataTypeCandidateList(firstTokenList, indexList, cList) == false) {
+      if (SGCSVParser.getDataTypeCandidateList(firstTokenList, indexList, cList) == false) {
         return false;
       }
 
@@ -890,7 +891,7 @@ public class SGDataCreator
       fileColumns = new FileColumn[colNum];
 
       // get number convertible columns
-      List<Integer> indexList = SGDataUtility.getColumnIndexListOfNumber(tokenList);
+      List<Integer> indexList = SGCSVParser.getColumnIndexListOfNumber(tokenList);
 
       // get titles
       String[] titles = new String[colNum];

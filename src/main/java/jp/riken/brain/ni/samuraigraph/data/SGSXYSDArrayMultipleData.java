@@ -2487,7 +2487,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         // save to an archive file
         if (xDateFlag != null && xDateFlag.booleanValue()) {
           for (int jj = 0; jj < xValues.length; jj++) {
-            array[ii][cnt] = SGDataUtility.getTextValue(dateArray[ii].toString());
+            array[ii][cnt] = SGValueFormatter.getTextValue(dateArray[ii].toString());
             cnt++;
           }
         } else {
@@ -2498,7 +2498,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         }
         if (xDateFlag != null && !xDateFlag.booleanValue()) {
           for (int jj = 0; jj < yValues.length; jj++) {
-            array[ii][cnt] = SGDataUtility.getTextValue(dateArray[ii].toString());
+            array[ii][cnt] = SGValueFormatter.getTextValue(dateArray[ii].toString());
             cnt++;
           }
         } else {
@@ -2537,7 +2537,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       if (tickLabels != null) {
         for (int jj = 0; jj < tickLabels.length; jj++) {
           if (tickLabels[jj] != null) {
-            row[cnt] = SGDataUtility.getTextValue(tickLabels[jj][ii]);
+            row[cnt] = SGValueFormatter.getTextValue(tickLabels[jj][ii]);
             cnt++;
           }
         }
@@ -2545,7 +2545,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         if (exportFlag) {
           if (xDateFlag != null) {
             SGDate date = dateArray[ii];
-            row[cnt] = SGDataUtility.getTextValue(date.toString());
+            row[cnt] = SGValueFormatter.getTextValue(date.toString());
             cnt++;
           }
         }

@@ -998,44 +998,12 @@ public class SGDataUtility
    * @param indexList the list of indices whether each token is of the number type or the text type
    * @param cList the list of candidates of data types
    * @return true if succeeded
+   * @deprecated Use {@link SGCSVParser#getDataTypeCandidateList(List, List, List)}
    */
+  @Deprecated
   public static boolean getDataTypeCandidateList(
       final List<Token> tokenList, final List<Integer> indexList, final List<String> cList) {
-
-    // count the number of number type columns
-    int cntNumber = 0;
-    for (int ii = 0; ii < indexList.size(); ii++) {
-      Integer obj = (Integer) indexList.get(ii);
-      int num = obj.intValue();
-      if (num == 1) {
-        cntNumber++;
-      }
-    }
-
-    String[] dataTypes = {
-      SGDataTypeConstants.SXY_DATA,
-      SGDataTypeConstants.SXY_MULTIPLE_DATA,
-      SGDataTypeConstants.SXY_SAMPLING_DATA,
-      SGDataTypeConstants.VXY_DATA,
-      SGDataTypeConstants.SXYZ_DATA
-    };
-    for (int ii = 0; ii < dataTypes.length; ii++) {
-      final int num = getMinimumNumberColumns(dataTypes[ii]);
-      if (cntNumber >= num) {
-        cList.add(dataTypes[ii]);
-      }
-    }
-    if (cntNumber >= getMinimumNumberColumns(SGDataTypeConstants.SXY_DATE_DATA)) {
-      for (int ii = 0; ii < tokenList.size(); ii++) {
-        Token token = (Token) tokenList.get(ii);
-        if (SGUtilityText.getDate(token.getString()) != null) {
-          cList.add(SGDataTypeConstants.SXY_DATE_DATA);
-          break;
-        }
-      }
-    }
-
-    return true;
+    return SGCSVParser.getDataTypeCandidateList(tokenList, indexList, cList);
   }
 
   /**
@@ -1043,41 +1011,21 @@ public class SGDataUtility
    *
    * @param dataType the data type
    * @return the minimum number of number type columns
+   * @deprecated Use {@link SGCSVParser#getMinimumNumberColumns(String)}
    */
+  @Deprecated
   public static int getMinimumNumberColumns(final String dataType) {
-    int num = -1;
-    if (SGDataTypeConstants.SXY_DATA.equals(dataType)) {
-      num = 1;
-    } else if (SGDataTypeConstants.SXY_MULTIPLE_DATA.equals(dataType)) {
-      num = 1;
-    } else if (SGDataTypeConstants.SXY_SAMPLING_DATA.equals(dataType)) {
-      num = 1;
-    } else if (SGDataTypeConstants.VXY_DATA.equals(dataType)) {
-      num = 4;
-    } else if (SGDataTypeConstants.SXYZ_DATA.equals(dataType)) {
-      num = 3;
-    }
-    return num;
+    return SGCSVParser.getMinimumNumberColumns(dataType);
   }
 
-  // returns a list of number convertible column index
+  /**
+   * Returns a list of number convertible column index.
+   *
+   * @deprecated Use {@link SGCSVParser#getColumnIndexListOfNumber(List)}
+   */
+  @Deprecated
   public static List<Integer> getColumnIndexListOfNumber(final List<Token> tokenList) {
-    List<Integer> list = new ArrayList<Integer>();
-    for (int ii = 0; ii < tokenList.size(); ii++) {
-      Token token = (Token) tokenList.get(ii);
-      final String str = token.getString();
-      if (token.isDoubleQuoted()) {
-        list.add(Integer.valueOf(0));
-      } else {
-        Double d = SGUtilityText.getDouble(str);
-        if (d != null) {
-          list.add(Integer.valueOf(1));
-        } else {
-          list.add(Integer.valueOf(0));
-        }
-      }
-    }
-    return list;
+    return SGCSVParser.getColumnIndexListOfNumber(tokenList);
   }
 
   private static List<String> getColumnNameList(
@@ -6286,62 +6234,38 @@ public class SGDataUtility
     return getDimensionString(dims);
   }
 
+  /**
+   * Wraps a string value with double quotes.
+   *
+   * @deprecated Use {@link SGValueFormatter#getTextValue(String)}
+   */
+  @Deprecated
   public static String getTextValue(String str) {
-    StringBuffer sb = new StringBuffer();
-    sb.append('"');
-    sb.append(str);
-    sb.append('"');
-    return sb.toString();
+    return SGValueFormatter.getTextValue(str);
   }
 
+  /**
+   * Extracts value table from SXYZ data.
+   *
+   * @deprecated Use {@link SGValueFormatter#getValueTable(SGISXYZTypeData, SGExportParameter,
+   *     SGDataBufferPolicy)}
+   */
+  @Deprecated
   public static Object[][] getValueTable(
       SGISXYZTypeData data, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    SGDataBuffer buf = data.getDataBuffer(policy);
-    if (buf == null) {
-      return null;
-    }
-    if (buf instanceof SGSXYZDataBuffer) {
-      SGSXYZDataBuffer buffer = (SGSXYZDataBuffer) buf;
-      final int len = buffer.getLength();
-      double[] xValues = buffer.getXValues();
-      double[] yValues = buffer.getYValues();
-      double[] zValues = buffer.getZValues();
-      Object[][] array = new Object[len][3];
-      for (int ii = 0; ii < len; ii++) {
-        array[ii][0] = xValues[ii];
-        array[ii][1] = yValues[ii];
-        array[ii][2] = zValues[ii];
-      }
-      return array;
-    } else {
-      return null;
-    }
+    return SGValueFormatter.getValueTable(data, mode, policy);
   }
 
+  /**
+   * Extracts value table from VXY data.
+   *
+   * @deprecated Use {@link SGValueFormatter#getValueTable(SGIVXYTypeData, SGExportParameter,
+   *     SGDataBufferPolicy)}
+   */
+  @Deprecated
   public static Object[][] getValueTable(
       SGIVXYTypeData data, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    SGDataBuffer buf = data.getDataBuffer(policy);
-    if (buf == null) {
-      return null;
-    }
-    if (buf instanceof SGVXYDataBuffer) {
-      SGVXYDataBuffer buffer = (SGVXYDataBuffer) buf;
-      final int len = buffer.getLength();
-      double[] xValues = buffer.getXValues();
-      double[] yValues = buffer.getYValues();
-      double[] fValues = buffer.getFirstComponentValues();
-      double[] sValues = buffer.getSecondComponentValues();
-      Object[][] array = new Object[len][4];
-      for (int ii = 0; ii < len; ii++) {
-        array[ii][0] = xValues[ii];
-        array[ii][1] = yValues[ii];
-        array[ii][2] = fValues[ii];
-        array[ii][3] = sValues[ii];
-      }
-      return array;
-    } else {
-      return null;
-    }
+    return SGValueFormatter.getValueTable(data, mode, policy);
   }
 
   /**
