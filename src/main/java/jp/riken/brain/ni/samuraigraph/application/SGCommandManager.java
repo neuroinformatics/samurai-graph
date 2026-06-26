@@ -1756,7 +1756,7 @@ class SGCommandManager
         }
       }
       final String[] imageTypes = {
-        "EMF", "EPS", "PS", "PDF", "SVG", "SWF", "JPG", "JPEG", "GIF", "PNG", "RAW", "PPM", "BMP"
+        "EMF", "EPS", "PS", "PDF", "SVG", "JPG", "JPEG", "GIF", "PNG", "RAW", "PPM", "BMP"
       };
       imgType = SGApplicationUtility.getExactTypeString(imageTypes, imgType);
       if (path == null || imgType == null) {

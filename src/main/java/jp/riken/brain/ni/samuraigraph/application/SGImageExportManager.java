@@ -42,7 +42,6 @@ import org.freehep.graphicsio.emf.EMFGraphics2D;
 import org.freehep.graphicsio.pdf.PDFGraphics2D;
 import org.freehep.graphicsio.ps.PSGraphics2D;
 import org.freehep.graphicsio.svg.SVGGraphics2D;
-import org.freehep.graphicsio.swf.SWFGraphics2D;
 
 /** A class used to preview, print and export an image. */
 public class SGImageExportManager implements SGIImageExportManager, SGIConstants {
@@ -65,7 +64,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
 
   private static final String[][] VECTOR_BG_KEY_ARRAY = {
     {PSGraphics2D.BACKGROUND, PSGraphics2D.BACKGROUND_COLOR},
-    {SWFGraphics2D.BACKGROUND, SWFGraphics2D.BACKGROUND_COLOR},
     {PDFGraphics2D.BACKGROUND, PDFGraphics2D.BACKGROUND_COLOR},
     {SVGGraphics2D.BACKGROUND, SVGGraphics2D.BACKGROUND_COLOR},
     {EMFGraphics2D.BACKGROUND, EMFGraphics2D.BACKGROUND_COLOR}
@@ -575,37 +573,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
 
         // "Title"
         this.setText(prop, InfoConstants.TITLE, p, SVGGraphics2D.TITLE, result);
-
-      } else if (ImageConstants.SWF.equalsIgnoreCase(type)) {
-        g = new SWFGraphics2D(f, target);
-        clipFlag = true;
-
-        // "Transparent"
-        this.setBoolean(prop, PageConstants.TRANSPARENT, p, SWFGraphics2D.TRANSPARENT, result);
-
-        // "Background"
-        final boolean bgFlag =
-            this.setBoolean(prop, PageConstants.BACKGROUND, p, SWFGraphics2D.BACKGROUND, result);
-
-        // "BackgroundColor"
-        this.setBackgroundColor(
-            prop,
-            PageConstants.BACKGROUND_COLOR,
-            p,
-            SWFGraphics2D.BACKGROUND_COLOR,
-            target,
-            bgFlag,
-            result);
-
-        // "WriteImagesAs"
-        // "Smallest Size", "ZLIB" or "JPG"
-        this.setString(
-            prop,
-            ImageConstants.WRITE_IMAGES_AS,
-            p,
-            SWFGraphics2D.WRITE_IMAGES_AS,
-            new String[] {ImageConstants.SMALLEST, ImageConstants.ZLIB, ImageConstants.JPG},
-            result);
 
       } else if (ImageConstants.JPG.equalsIgnoreCase(type)
           || ImageConstants.JPEG.equalsIgnoreCase(type)
