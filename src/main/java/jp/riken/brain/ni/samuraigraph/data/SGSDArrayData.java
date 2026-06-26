@@ -833,7 +833,7 @@ public abstract class SGSDArrayData extends SGArrayData
   @Override
   public boolean saveToMATLABFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    // TODO
+    // Not implemented: MATLAB export for SD array data is not supported.
     return false;
   }
 
