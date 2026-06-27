@@ -41,7 +41,7 @@
 | 実施中タスク | TASK-030 |
 | 完了タスク数 | 34 / 43 (3 DEFERRED) |
 | ブロック中タスク | なし |
-| 次の実施タスク | TASK-016 |
+| 次の実施タスク | TASK-017-3（親インターフェース変換） |
 
 ### セッション #6
 
@@ -97,6 +97,17 @@
 | 中断理由 | 残り2件（SGIErrorBarConstants, SGIAxisBreakConstants）は実装クラスへの影響が50ファイル以上あり、1インターフェースの変換に時間を要する |
 | 中断ポイント | 4件変換完了。残り2件は次回以降 |
 | 次のセッションで再開するタスク | TASK-017-1 |
+
+### セッション #11
+
+| 項目 | 値 |
+|------|-----|
+| 日時 | 2026-06-27 |
+| 実施タスク | TASK-017-1（第1弾 継続） |
+| 完了内容 | SGIErrorBarConstants の変換を試行したが、親インターフェース SGIArrowConstants がまだインターフェースのため、定数参照でエラー発生。親インターフェースの変換（TASK-017-3）が先決 |
+| 中断理由 | SGIErrorBarConstants extends SGIArrowConstants により、親インターフェースがインターフェースの間、子インターフェースをfinal classにできない |
+| 中断ポイント | SGIErrorBarConstants, SGIAxisBreakConstants の変換は親インターフェース変換後に再試行 |
+| 次のセッションで再開するタスク | TASK-017-3 |
 
 ---
 
@@ -733,10 +744,10 @@
 | ブランチ | 複数（task/refactor-constants-figure-1, task/refactor-constants-figure-1-2, task/refactor-constants-figure-1-4） |
 
 **対象インターフェース（6件）:**
-- `SGIAxisBreakConstants` (impl: 3クラス, extends: SGIDrawingElementConstants) ⏸️ 中断（影響50+ファイル）
+- `SGIAxisBreakConstants` (impl: 3クラス, extends: SGIDrawingElementConstants) ⏸️ 親インターフェース変換後
 - `SGIColorBarConstants` (impl: 2クラス, extends: SGIConstants) ✅ 完了
 - `SGIColorMapConstants` (impl: 1クラス, extends: なし) ✅ 完了
-- `SGIErrorBarConstants` (impl: 2クラス, extends: SGIArrowConstants) ⏸️ 中断（影響50+ファイル）
+- `SGIErrorBarConstants` (impl: 2クラス, extends: SGIArrowConstants) ⏸️ 親インターフェース変換後
 - `SGIFigureGridConstants` (impl: 1クラス, extends: SGILineConstants) ✅ 完了
 - `SGIFigureTypeConstants` (impl: 2クラス, extends: なし) ✅ 完了
 
@@ -744,6 +755,8 @@
 - [ ] 6インターフェースがfinal classに変換（4/6完了）
 - [ ] `mvn compile` が成功
 - [ ] テストが全成功（357件）
+
+**備考:** `SGIErrorBarConstants` と `SGIAxisBreakConstants` は親インターフェース（`SGIArrowConstants`, `SGIDrawingElementConstants`）がまだインターフェースのため、親インターフェースの変換（TASK-017-3）後に再試行。
 
 ---
 
