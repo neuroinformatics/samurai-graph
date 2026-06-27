@@ -126,7 +126,7 @@ public class SGDataFileExporter extends SGFileHandler implements SGIApplicationC
       dg.setCenter(wnd);
       dg.setVisible(true);
       final int closeOption = dg.getCloseOption();
-      if (closeOption == SGWizardDialog.SGIConstants.CANCEL_OPTION) {
+      if (closeOption == SGIConstants.CANCEL_OPTION) {
         return SGIConstants.CANCEL_OPTION;
       }
     }

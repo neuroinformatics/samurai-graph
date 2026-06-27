@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -76,7 +77,7 @@ public abstract class SGElementGroupTickLabelInGraph extends SGElementGroupTickL
     if (super.writeProperty(el) == false) {
       return false;
     }
-    el.setAttribute(KEY_VISIBLE, Boolean.toString(this.mVisibleFlag));
+    el.setAttribute(SGIDrawingElementConstants.KEY_VISIBLE, Boolean.toString(this.mVisibleFlag));
     return true;
   }
 

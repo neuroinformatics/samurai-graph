@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
@@ -386,7 +387,7 @@ public abstract class SGDrawingElementSignificantDifference
     SGPropertyMap map = super.getPropertyFileMap(params);
     SGPropertyUtility.addProperty(map, KEY_SIGDIFF_TEXT, this.getText());
     SGPropertyUtility.addProperty(map, KEY_SIGDIFF_LINE_VISIBLE, this.isLineVisible());
-    SGPropertyUtility.addProperty(map, KEY_COLOR, this.getColor());
+    SGPropertyUtility.addProperty(map, SGIDrawingElementConstants.KEY_COLOR, this.getColor());
     return map;
   }
 
@@ -433,7 +434,7 @@ public abstract class SGDrawingElementSignificantDifference
     }
 
     // color
-    str = el.getAttribute(KEY_DRAWING_ELEMENT_COLORS);
+    str = el.getAttribute(SGIDrawingElementConstants.KEY_DRAWING_ELEMENT_COLORS);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColorIncludingList(str);
       if (cl == null) {

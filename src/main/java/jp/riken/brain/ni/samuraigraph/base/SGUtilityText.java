@@ -474,7 +474,7 @@ public class SGUtilityText implements SGIPropertyFileConstants {
 
         // skip byte-order mark
         if (line.length() != 0) {
-          if (line.startsWith(Character.toString(BOM_CHAR))) {
+          if (line.startsWith(Character.toString(SGIConstants.BOM_CHAR))) {
             line = line.substring(1, line.length());
           }
         }
@@ -1349,7 +1349,7 @@ public class SGUtilityText implements SGIPropertyFileConstants {
     }
 
     final String[] units = SGUtilityText.getUnitsArrayOfLength();
-    final float[] ratioArray = {1.0f, 0.10f, SGIConstants.CM_POINT_RATIO, CM_INCH_RATIO};
+    final float[] ratioArray = {1.0f, 0.10f, SGIConstants.CM_POINT_RATIO, SGIConstants.CM_INCH_RATIO};
     int indexOld = -1;
     for (int ii = 0; ii < units.length; ii++) {
       if (units[ii].equalsIgnoreCase(unitOld)) {

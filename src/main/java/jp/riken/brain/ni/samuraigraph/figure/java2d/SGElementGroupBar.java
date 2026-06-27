@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -281,7 +282,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // inner color
-    str = el.getAttribute(KEY_COLOR);
+    str = el.getAttribute(SGIDrawingElementConstants.KEY_COLOR);
     if (str.length() != 0) {
       // backward compatibility
       List<Color> list = SGUtilityText.getColorList(str);

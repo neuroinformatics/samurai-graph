@@ -51,7 +51,6 @@ import javax.swing.event.MouseInputListener;
 /** A panel put in the window. */
 public class SGClientPanel extends JLayeredPane
     implements SGIRootObjectConstants,
-        SGIDrawingElementConstants,
         SGIClientPanel,
         MouseWheelListener,
         KeyListener {

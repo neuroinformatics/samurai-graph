@@ -16,7 +16,7 @@ public final class SGIConstants {
   public static final float INCH_POINT_RATIO = 72.0f;
 
   /** The ratio of cm to point. */
-  public static final float CM_POINT_RATIO = CM_INCH_RATIO / INCH_POINT_RATIO;
+  public static final float CM_POINT_RATIO = SGIConstants.CM_INCH_RATIO / INCH_POINT_RATIO;
 
   /** The ratio of radian to degree. */
   public static final float RADIAN_DEGREE_RATIO = (float) (Math.PI / 180.0);

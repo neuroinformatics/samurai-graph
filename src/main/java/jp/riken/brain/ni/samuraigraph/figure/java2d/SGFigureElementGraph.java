@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -1107,7 +1108,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
     Boolean b;
 
     // visible
-    str = el.getAttribute(KEY_VISIBLE);
+    str = el.getAttribute(SGIDrawingElementConstants.KEY_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {

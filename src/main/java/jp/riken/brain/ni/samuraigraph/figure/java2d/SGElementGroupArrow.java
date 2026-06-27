@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -422,7 +423,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
         KEY_END_HEAD_TYPE, SGDrawingElementArrow.getArrowHeadTypeName(this.getEndHeadType()));
     el.setAttribute(KEY_HEAD_OPEN_ANGLE, Float.toString(openAngle));
     el.setAttribute(KEY_HEAD_CLOSE_ANGLE, Float.toString(closeAngle));
-    el.setAttribute(KEY_COLOR, SGUtilityText.getColorListString(cList));
+    el.setAttribute(SGIDrawingElementConstants.KEY_COLOR, SGUtilityText.getColorListString(cList));
 
     return true;
   }
@@ -529,7 +530,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     }
 
     // color
-    str = el.getAttribute(KEY_COLOR);
+    str = el.getAttribute(SGIDrawingElementConstants.KEY_COLOR);
     if (str.length() != 0) {
       list = SGUtilityText.getColorList(str);
       if (list == null) {

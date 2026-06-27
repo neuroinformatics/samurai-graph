@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class SGElementGroupErrorBarInGraph extends SGElementGroupErrorBarForData
     if (super.writeProperty(el) == false) {
       return false;
     }
-    el.setAttribute(KEY_VISIBLE, Boolean.toString(this.mVisibleFlag));
+    el.setAttribute(SGIDrawingElementConstants.KEY_VISIBLE, Boolean.toString(this.mVisibleFlag));
     return true;
   }
 

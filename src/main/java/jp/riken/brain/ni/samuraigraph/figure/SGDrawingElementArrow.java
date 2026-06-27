@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
@@ -607,7 +608,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
         KEY_LINE_WIDTH,
         KEY_LINE_TYPE,
         KEY_HEAD_SIZE,
-        KEY_COLOR,
+        SGIDrawingElementConstants.KEY_COLOR,
         KEY_START_HEAD_TYPE,
         KEY_END_HEAD_TYPE);
     return map;
@@ -720,7 +721,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     }
 
     // color
-    str = el.getAttribute(KEY_COLOR);
+    str = el.getAttribute(SGIDrawingElementConstants.KEY_COLOR);
     if (str.length() != 0) {
       Color cl = SGUtilityText.parseColorIncludingList(str);
       if (cl == null) {

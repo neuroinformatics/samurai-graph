@@ -3,7 +3,7 @@ package jp.riken.brain.ni.samuraigraph.figure;
 import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 /** Constants for the symbols. */
-public interface SGISymbolConstants extends SGIDrawingElementConstants {
+public interface SGISymbolConstants {
 
   /*
    * Constants for the symbol types.

@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -6873,7 +6874,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     Boolean b;
 
     // visible
-    str = el.getAttribute(KEY_VISIBLE);
+    str = el.getAttribute(SGIDrawingElementConstants.KEY_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {

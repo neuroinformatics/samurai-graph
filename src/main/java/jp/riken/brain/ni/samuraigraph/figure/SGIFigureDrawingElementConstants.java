@@ -4,12 +4,12 @@ import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 /** Constants for drawing elements in figure. */
-public interface SGIFigureDrawingElementConstants extends SGIDrawingElementConstants {
+public interface SGIFigureDrawingElementConstants {
 
   // line
-  public static final double LINE_WIDTH_MIN = LINE_WIDTH_MIN_VALUE;
+  public static final double LINE_WIDTH_MIN = SGIDrawingElementConstants.LINE_WIDTH_MIN_VALUE;
 
-  public static final double LINE_WIDTH_MAX = LINE_WIDTH_MAX_VALUE;
+  public static final double LINE_WIDTH_MAX = SGIDrawingElementConstants.LINE_WIDTH_MAX_VALUE;
 
   // symbol
   public static final String SYMBOL_SIZE_UNIT = SGIConstants.cm;
@@ -18,9 +18,9 @@ public interface SGIFigureDrawingElementConstants extends SGIDrawingElementConst
 
   public static final double SYMBOL_SIZE_MAX = 2.0;
 
-  public static final double SYMBOL_LINE_WIDTH_MIN = LINE_WIDTH_MIN_VALUE;
+  public static final double SYMBOL_LINE_WIDTH_MIN = SGIDrawingElementConstants.LINE_WIDTH_MIN_VALUE;
 
-  public static final double SYMBOL_LINE_WIDTH_MAX = LINE_WIDTH_MAX_VALUE;
+  public static final double SYMBOL_LINE_WIDTH_MAX = SGIDrawingElementConstants.LINE_WIDTH_MAX_VALUE;
 
   public static final double SYMBOL_SIZE_STEP = 0.050;
 
@@ -40,16 +40,16 @@ public interface SGIFigureDrawingElementConstants extends SGIDrawingElementConst
   // bar
   // public static final float BAR_WIDTH_MIN = 0.05f/SGIConstants.CM_POINT_RATIO;
   // public static final float BAR_WIDTH_MAX = 5.0f/SGIConstants.CM_POINT_RATIO;
-  public static final double BAR_EDGE_LINE_WIDTH_MIN = LINE_WIDTH_MIN_VALUE;
+  public static final double BAR_EDGE_LINE_WIDTH_MIN = SGIDrawingElementConstants.LINE_WIDTH_MIN_VALUE;
 
-  public static final double BAR_EDGE_LINE_WIDTH_MAX = LINE_WIDTH_MAX_VALUE;
+  public static final double BAR_EDGE_LINE_WIDTH_MAX = SGIDrawingElementConstants.LINE_WIDTH_MAX_VALUE;
 
   public static final int BAR_WIDTH_INITIAL_ORDER = -4;
 
   // error bar
-  public static final double ERROR_BAR_LINE_WIDTH_MIN = LINE_WIDTH_MIN_VALUE;
+  public static final double ERROR_BAR_LINE_WIDTH_MIN = SGIDrawingElementConstants.LINE_WIDTH_MIN_VALUE;
 
-  public static final double ERROR_BAR_LINE_WIDTH_MAX = LINE_WIDTH_MAX_VALUE;
+  public static final double ERROR_BAR_LINE_WIDTH_MAX = SGIDrawingElementConstants.LINE_WIDTH_MAX_VALUE;
 
   public static final String ERROR_BAR_HEAD_SIZE_UNIT = SYMBOL_SIZE_UNIT;
 
@@ -73,9 +73,9 @@ public interface SGIFigureDrawingElementConstants extends SGIDrawingElementConst
   public static final int LABEL_ANGLE_MINIMAL_ORDER = -LABEL_ANGLE_FRAC_DIFIT_MAX;
 
   // tick label
-  public static final double TICK_LABEL_FONT_SIZE_MIN = FONT_SIZE_MIN_VALUE;
+  public static final double TICK_LABEL_FONT_SIZE_MIN = SGIDrawingElementConstants.FONT_SIZE_MIN_VALUE;
 
-  public static final double TICK_LABEL_FONT_SIZE_MAX = FONT_SIZE_MAX_VALUE;
+  public static final double TICK_LABEL_FONT_SIZE_MAX = SGIDrawingElementConstants.FONT_SIZE_MAX_VALUE;
 
   public static final float TICK_LABEL_TEXT_ANGLE_MIN = -180.0f;
 

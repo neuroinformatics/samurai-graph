@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Graphics2D;
@@ -54,7 +55,7 @@ public class SGElementGroupLineInGraph extends SGElementGroupLineForData
     if (super.writeProperty(el) == false) {
       return false;
     }
-    el.setAttribute(KEY_VISIBLE, Boolean.toString(this.mVisibleFlag));
+    el.setAttribute(SGIDrawingElementConstants.KEY_VISIBLE, Boolean.toString(this.mVisibleFlag));
     el.setAttribute(
         KEY_LINE_CONNECT_ALL_EFFECTIVE_POINTS, Boolean.toString(this.mConnectingAllFlag));
     return true;

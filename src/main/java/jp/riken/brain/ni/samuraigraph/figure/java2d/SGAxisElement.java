@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -2053,7 +2054,7 @@ public abstract class SGAxisElement
   // Creates an instance of the exponent.
   private boolean createExponentDrawingElement() {
     // creates an instance
-    String str = multiply + "10";
+    String str = SGIConstants.multiply + "10";
     str = SGUtilityText.getSuperscriptString(str, Integer.toString(this.getExponentValue()));
 
     // set to the attribute
@@ -2437,7 +2438,7 @@ public abstract class SGAxisElement
     Color cl = null;
 
     // visible
-    str = element.getAttribute(KEY_VISIBLE);
+    str = element.getAttribute(SGIDrawingElementConstants.KEY_VISIBLE);
     if (str.length() == 0) {
       // for backward compatibility
       // version number <= 2.0.0
@@ -4696,7 +4697,7 @@ public abstract class SGAxisElement
     SGPropertyMap map = new SGPropertyMap();
 
     // visible
-    SGPropertyUtility.addProperty(map, KEY_VISIBLE, this.isVisible());
+    SGPropertyUtility.addProperty(map, SGIDrawingElementConstants.KEY_VISIBLE, this.isVisible());
 
     // axis line
     this.addAxisLineProperties(

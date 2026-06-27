@@ -3,7 +3,7 @@ package jp.riken.brain.ni.samuraigraph.figure;
 import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 /** Constants for the tick labels. */
-public interface SGITickLabelConstants extends SGIDrawingElementConstants {
+public interface SGITickLabelConstants {
 
   public static final float ANGLE_HORIZONTAL = 0.0f;
 

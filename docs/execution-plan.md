@@ -39,9 +39,9 @@
 | 最終更新日時 | 2026-06-27 |
 | 現在の実行フェーズ | フェーズ5 |
 | 実施中タスク | TASK-017-3a |
-| 完了タスク数 | 34 / 46 (5 DEFERRED) |
+| 完了タスク数 | 35 / 46 (5 DEFERRED) |
 | ブロック中タスク | なし |
-| 次の実施タスク | TASK-017-3a（baseパッケージ親インターフェース変換、規模大のため要計画） |
+| 次の実施タスク | TASK-017-3a（SGIDrawingElementConstantsをfinal classに変換） |
 
 ### セッション #6
 
@@ -115,10 +115,10 @@
 |------|-----|
 | 日時 | 2026-06-27 |
 | 実施タスク | TASK-017-3a（第1弾） |
-| 完了内容 | SGIDateConstantsをfinal classに変換。SGIConstantsをfinal classに変換し、implクラス15件からimplements SGIConstantsを削除。extends SGIConstantsのインターフェース9件からextends句を削除。定数参照の修正に取り掛かる |
-| 中断理由 | 定数参照の修正が99種類・400件超のエラーが発生。SGWindowDialog(72件)、SGFigure(72件)、SGDrawingWindow(48件)の修正が必要 |
-| 中断ポイント | SGFigure.java、SGWindowDialog.java、SGDrawingWindow.javaの定数参照修正が完了していない |
-| 次のセッションで再開するタスク | 残りの定数参照修正（SGFigure、SGWindowDialog、SGDrawingWindowなど） |
+| 完了内容 | SGIDateConstantsをfinal classに変換。SGIConstantsをfinal classに変換し、implクラス15件からimplements SGIConstantsを削除。extends SGIConstantsのインターフェース9件からextends句を削除。定数参照の修正（SGWindowDialog、SGFigure、SGDrawingWindowなど137ファイル）を完了。コンパイル・テスト全357件パス。masterにsquash merge完了 |
+| 中断理由 | なし（完了） |
+| 中断ポイント | N/A |
+| 次のセッションで再開するタスク | TASK-017-3a（SGIDrawingElementConstantsをfinal classに変換） |
 
 ---
 
@@ -819,14 +819,18 @@
 ---
 
 ### TASK-017-3a: baseパッケージの親インターフェース変換（第1段階）
+| 状態 | **完了** |
 
 | 項目 | 内容 |
 |------|------|
-| ステータス | [>] IN_PROGRESS |
+| ステータス | **[✓] COMPLETED** |
 | 優先度 | P0 |
 | 対応元 | H3 |
 | 推定工数 | 1-2日（再見積もり） |
 | 依存タスク | なし |
+| 完了日時 | 2026-06-27 |
+| 変更ファイル数 | 137ファイル |
+| 説明 | SGIConstantsとSGIDateConstantsをinterfaceからfinal classに変換。全implクラス・インターフェースのimplements/extends句を削除。全定数参照をSGIConstants.プレフィックス付きに更新。コンパイル・テスト全357件パス。masterにsquash merge完了。 |
 | 中断ポイント | 依存チェーン全体の変換が必要 |
 | ブランチ | `task/refactor-constants-base-parent` |
 

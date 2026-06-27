@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -371,7 +372,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     el.setAttribute(KEY_ANGLE, Float.toString(angle));
     el.setAttribute(KEY_DECIMAL_PLACES, Integer.toString(this.mDecimalPlaces));
     el.setAttribute(KEY_EXPONENT, Integer.toString(this.mExponent));
-    el.setAttribute(KEY_COLOR, SGUtilityText.getColorListString(cList));
+    el.setAttribute(SGIDrawingElementConstants.KEY_COLOR, SGUtilityText.getColorListString(cList));
     el.setAttribute(KEY_DATE_FORMAT, this.mDateFormat);
 
     return true;
@@ -422,7 +423,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     }
 
     // color
-    str = el.getAttribute(KEY_COLOR);
+    str = el.getAttribute(SGIDrawingElementConstants.KEY_COLOR);
     if (str.length() != 0) {
       list = SGUtilityText.getColorList(str);
       if (list == null) {

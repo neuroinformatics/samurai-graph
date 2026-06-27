@@ -6,7 +6,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 
 /** Constants for string objects. */
-public interface SGIStringConstants extends SGIDrawingElementConstants {
+public interface SGIStringConstants {
 
   //
   // Angle

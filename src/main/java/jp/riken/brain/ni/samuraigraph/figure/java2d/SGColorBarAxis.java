@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -1671,7 +1672,7 @@ class SGColorBarAxis extends SGAxisElement
   // final String yAxisLocation = this.mAxisElement.getLocationName(this.mYAxis);
   // el.setAttribute(KEY_X_AXIS_POSITION, xAxisLocation);
   // el.setAttribute(KEY_Y_AXIS_POSITION, yAxisLocation);
-  // el.setAttribute(KEY_VISIBLE, Boolean.toString(this.mVisible));
+  // el.setAttribute(SGIDrawingElementConstants.KEY_VISIBLE, Boolean.toString(this.mVisible));
   //
   // // Style
   // el.setAttribute(KEY_COLOR_BAR_STYLE, this.getColorBarStyle());
@@ -2196,7 +2197,7 @@ class SGColorBarAxis extends SGAxisElement
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
     SGPropertyMap map = super.getPropertyFileMap(params);
 
-    SGPropertyUtility.addProperty(map, KEY_VISIBLE, Boolean.toString(this.mVisible));
+    SGPropertyUtility.addProperty(map, SGIDrawingElementConstants.KEY_VISIBLE, Boolean.toString(this.mVisible));
 
     // axis
     SGPropertyUtility.addProperty(

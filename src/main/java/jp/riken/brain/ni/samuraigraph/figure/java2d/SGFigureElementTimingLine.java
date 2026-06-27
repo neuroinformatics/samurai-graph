@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.BasicStroke;
@@ -1784,7 +1785,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       }
 
       // color
-      str = el.getAttribute(KEY_COLOR);
+      str = el.getAttribute(SGIDrawingElementConstants.KEY_COLOR);
       if (str.length() != 0) {
         Color cl = SGUtilityText.parseColorIncludingList(str);
         if (cl == null) {
@@ -2090,7 +2091,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
           KEY_VALUE,
           KEY_LINE_WIDTH,
           KEY_LINE_TYPE,
-          KEY_COLOR,
+          SGIDrawingElementConstants.KEY_COLOR,
           KEY_ANCHORED);
       return map;
     }

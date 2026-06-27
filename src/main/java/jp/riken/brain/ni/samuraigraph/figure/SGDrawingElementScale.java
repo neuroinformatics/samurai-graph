@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
@@ -411,7 +412,7 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     SGPropertyMap map = super.getPropertyFileMap(params);
     this.addProperties(
         map,
-        KEY_VISIBLE,
+        SGIDrawingElementConstants.KEY_VISIBLE,
         KEY_SCALE_X_AXIS_VISIBLE,
         KEY_SCALE_X_AXIS_TITLE_DOWNSIDE,
         KEY_SCALE_Y_AXIS_VISIBLE,
@@ -581,7 +582,7 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     Color cl = null;
 
     // visible
-    str = el.getAttribute(KEY_VISIBLE);
+    str = el.getAttribute(SGIDrawingElementConstants.KEY_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {

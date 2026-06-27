@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -280,7 +281,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
   private static void writeProperty(final Element el, final Color lineColor) {
     List<Color> cList = new ArrayList<Color>();
     cList.add(lineColor);
-    el.setAttribute(KEY_COLOR, SGUtilityText.getColorListString(cList));
+    el.setAttribute(SGIDrawingElementConstants.KEY_COLOR, SGUtilityText.getColorListString(cList));
   }
 
   private static String getLineWidthString(final float lineWidth) {
@@ -387,7 +388,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     }
 
     // color
-    str = elStyleHolder.getAttribute(KEY_COLOR);
+    str = elStyleHolder.getAttribute(SGIDrawingElementConstants.KEY_COLOR);
     if (str.length() != 0) {
       color = SGUtilityText.parseColor(str);
       if (color == null) {

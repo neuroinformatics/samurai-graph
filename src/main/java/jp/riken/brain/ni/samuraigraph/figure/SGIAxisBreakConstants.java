@@ -6,7 +6,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 
 /** Constants for axis break symbols. */
-public interface SGIAxisBreakConstants extends SGIDrawingElementConstants {
+public interface SGIAxisBreakConstants {
 
   //
   // Axis Break Length

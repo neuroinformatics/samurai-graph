@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -328,7 +329,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     el.setAttribute(KEY_LINE_WIDTH, Float.toString(lineWidth) + SGIConstants.pt);
     el.setAttribute(
         KEY_ERROR_BAR_HEAD_TYPE, SGDrawingElementErrorBar.getHeadTypeName(this.getHeadType()));
-    el.setAttribute(KEY_COLOR, SGUtilityText.getColorListString(cList));
+    el.setAttribute(SGIDrawingElementConstants.KEY_COLOR, SGUtilityText.getColorListString(cList));
     el.setAttribute(KEY_ERROR_BAR_VERTICAL, Boolean.toString(this.mVerticalFlag));
     el.setAttribute(
         KEY_ERROR_BAR_POSITION,
@@ -369,7 +370,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     List<?> list = null;
 
     // color
-    str = el.getAttribute(KEY_COLOR);
+    str = el.getAttribute(SGIDrawingElementConstants.KEY_COLOR);
     if (str.length() != 0) {
       list = SGUtilityText.getColorList(str);
       if (list == null) {

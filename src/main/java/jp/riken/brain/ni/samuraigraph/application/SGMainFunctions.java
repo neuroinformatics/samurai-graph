@@ -1069,7 +1069,7 @@ class SGMainFunctions
 
         // after the dialog is closed
         SGData dCopy = null;
-        if (dg.getCloseOption() == SGDialog.OK_OPTION) {
+        if (dg.getCloseOption() == SGIConstants.OK_OPTION) {
           // if OK button is pressed
 
           // get the results

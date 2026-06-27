@@ -74,21 +74,21 @@ public class SGFigurePopupMenu extends SGPopupMenu {
     this.addSeparator();
 
     // cut
-    this.addItem(SGFigure.SGIConstants.MENUCMD_CUT);
+    this.addItem(SGIConstants.MENUCMD_CUT);
 
     // copy
-    this.addItem(SGFigure.SGIConstants.MENUCMD_COPY);
+    this.addItem(SGIConstants.MENUCMD_COPY);
 
     // paste
-    this.addItem(SGFigure.SGIConstants.MENUCMD_PASTE);
+    this.addItem(SGIConstants.MENUCMD_PASTE);
 
     this.addSeparator();
 
     // delete
-    this.addItem(SGFigure.SGIConstants.MENUCMD_DELETE);
+    this.addItem(SGIConstants.MENUCMD_DELETE);
 
     // duplicate
-    this.addItem(SGFigure.SGIConstants.MENUCMD_DUPLICATE);
+    this.addItem(SGIConstants.MENUCMD_DUPLICATE);
 
     this.addSeparator();
 
@@ -98,27 +98,27 @@ public class SGFigurePopupMenu extends SGPopupMenu {
     this.addCheckBoxItem(SGFigure.MENUCMD_SCALE_VISIBLE);
     this.addCheckBoxItem(SGFigure.MENUCMD_GRID_VISIBLE);
     this.addCheckBoxItem(SGFigure.MENUCMD_DATA_ANCHORED);
-    JMenu visibleAxesMenu = this.addMenu(SGFigure.SGIConstants.MENUCMD_AXES_VISIBLE);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.SGIConstants.MENUCMD_VISIBLE_BOTTOM_AXIS);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.SGIConstants.MENUCMD_VISIBLE_LEFT_AXIS);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.SGIConstants.MENUCMD_VISIBLE_TOP_AXIS);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.SGIConstants.MENUCMD_VISIBLE_RIGHT_AXIS);
+    JMenu visibleAxesMenu = this.addMenu(SGIConstants.MENUCMD_AXES_VISIBLE);
+    this.addCheckBoxItem(visibleAxesMenu, SGIConstants.MENUCMD_VISIBLE_BOTTOM_AXIS);
+    this.addCheckBoxItem(visibleAxesMenu, SGIConstants.MENUCMD_VISIBLE_LEFT_AXIS);
+    this.addCheckBoxItem(visibleAxesMenu, SGIConstants.MENUCMD_VISIBLE_TOP_AXIS);
+    this.addCheckBoxItem(visibleAxesMenu, SGIConstants.MENUCMD_VISIBLE_RIGHT_AXIS);
 
     this.addSeparator();
 
     // fit axes and align bars
-    JMenu fitAxesMenu = this.addMenu(SGFigure.SGIConstants.MENUCMD_FIT_AXES_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.SGIConstants.MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.SGIConstants.MENUCMD_FIT_VERTICAL_AXIS_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.SGIConstants.MENUCMD_FIT_COLOR_BAR_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES);
-    this.addItem(SGFigure.SGIConstants.MENUCMD_ALIGN_BARS);
+    JMenu fitAxesMenu = this.addMenu(SGIConstants.MENUCMD_FIT_AXES_TO_DATA);
+    this.addItem(fitAxesMenu, SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA);
+    this.addItem(fitAxesMenu, SGIConstants.MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA);
+    this.addItem(fitAxesMenu, SGIConstants.MENUCMD_FIT_VERTICAL_AXIS_TO_DATA);
+    this.addItem(fitAxesMenu, SGIConstants.MENUCMD_FIT_COLOR_BAR_TO_DATA);
+    this.addItem(fitAxesMenu, SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES);
+    this.addItem(SGIConstants.MENUCMD_ALIGN_BARS);
 
     this.addSeparator();
 
     // property
-    this.addItem(SGFigure.SGIConstants.MENUCMD_PROPERTY);
+    this.addItem(SGIConstants.MENUCMD_PROPERTY);
 
     this.addActionListener(this);
   }

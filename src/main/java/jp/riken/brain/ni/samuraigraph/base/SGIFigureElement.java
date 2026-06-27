@@ -18,7 +18,6 @@ public interface SGIFigureElement
         SGIPaintable,
         SGINode,
         SGIDisposable,
-        SGIDrawingElementConstants,
         SGIFigureElementConstants {
 
   /**

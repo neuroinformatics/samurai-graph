@@ -101,7 +101,7 @@ public class SGPropertyResults implements Cloneable {
       String status = "";
       if (SUCCEEDED == value) {
         status = "OK";
-      } else if (SGIConstants.INVALID_INPUT_VALUE == value) {
+      } else if (INVALID_INPUT_VALUE == value) {
         status = "NG";
       } else if (NOT_FOUND == value) {
         status = "NOT FOUND";

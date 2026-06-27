@@ -3,7 +3,7 @@ package jp.riken.brain.ni.samuraigraph.figure;
 import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 /** Constants for lines. */
-public interface SGILineConstants extends SGIDrawingElementConstants {
+public interface SGILineConstants {
 
   /*
    * Constants for the line types.
