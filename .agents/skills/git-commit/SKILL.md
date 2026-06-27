@@ -4,7 +4,7 @@ metadata:
     github-path: skills/git-commit
     github-ref: refs/heads/main
     github-repo: https://github.com/orrisroot/agent-skills
-    github-tree-sha: 332b6fc533ae9085eafbba6827ff7798c85e4b38
+    github-tree-sha: 8eb4352bd016ee72b46a86981d12dd433b22611d
 name: git-commit
 ---
 # Git Commit Operator
@@ -27,7 +27,13 @@ You must execute the following sequential workflow whenever a commit task is ini
 
 ### Step 2: Message Draft Formulation
 1. Construct the message draft strictly using the type classifications and syntax limits specified in `references/conventional_commits.md`.
-2. Present the drafted structure to the user for validation, highlighting the assigned commit type and scope.
+2. **Standardize Tone and Granularity**: To ensure consistent output across different LLMs, strictly adhere to the following:
+   * **Tone:** Objective, concise, and professional. Avoid overly verbose explanations, emotive language, or conversational filler.
+   * **Depth of Details:** Focus on the "Why" and the high-level "What". Mention structural changes at the component or function level (e.g., "extracted `validateInput` function"), but **DO NOT** describe line-by-line code modifications.
+3. **Body Structure Template**: Always structure the message body as follows:
+   * A 1-2 sentence paragraph explaining the **context/motivation** ("Why").
+   * A bulleted list of **specific changes** ("What" & "How").
+4. Present the drafted structure to the user for validation, highlighting the assigned commit type and scope.
 
 ### Step 3: Message Validation
 1. After drafting the message in Step 2, validate it against **every rule** listed in `references/conventional_commits.md` before proceeding. Check the following:
