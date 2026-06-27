@@ -18,11 +18,11 @@
 | 項目 | 値 |
 |------|-----|
 | 最終更新日時 | 2026-06-27 |
-| 現在の実行フェーズ | フェーズ4 |
+| 現在の実行フェーズ | フェーズ6 |
 | 実施中タスク | なし |
-| 完了タスク数 | 22 / 24 (2 DEFERRED) |
+| 完了タスク数 | 25 / 46 (2 DEFERRED) |
 | ブロック中タスク | なし |
-| 次の実施タスク | なし |
+| 次の実施タスク | TASK-025 |
 
 ---
 
@@ -64,16 +64,21 @@
 | 中断ポイント | TASK-016 着手前 |
 | 次のセッションで再開するタスク | TASK-016 |
 
-### セッション #4
+### セッション #5
 
 | 項目 | 値 |
 |------|-----|
 | 日時 | 2026-06-27 |
-| 実施タスク | TASK-013 |
-| 完了内容 | TASK-013 完了（HDF5代替調査、docs/hdf5-alternatives.md 作成） |
-| 中断理由 | なし |
-| 中断ポイント | TASK-012 着手前 |
-| 次のセッションで再開するタスク | TASK-012 |
+| 実施タスク | TASK-031, TASK-032, TASK-024 |
+| 完了内容 | TASK-031 (jacoco導入), TASK-032 (SGPeriodTest 52件), TASK-024 (SGDataTypeCheckTest 42件) 完了 |
+| 中断理由 | TASK-017-1実行中に`git checkout -- .`を誤実行し、execution-plan.mdの拡充分が失われたため復旧に切り替え |
+| 中断ポイント | TASK-025 着手前 |
+| 次のセッションで再開するタスク | TASK-025 |
+
+**備考:**
+- TASK-017-1 (定数インターフェース変換) の試行中に`git checkout -- .`を実行し、pom.xmlの変更とexecution-plan.mdの拡充分を破棄
+- 原因: `SGIAxisBreakConstants`が`SGIDrawingElementConstants`を`extends`しており、`implements`削除後に99個のコンパイルエラーが発生
+- 対策: TASK-017-1〜017-5はIDEのリファクタリング機能が必要であり、エージェントによる自動変換は不適合と判断
 
 ---
 
@@ -623,7 +628,7 @@
 
 ---
 
-### TASK-017: 定数インターフェースのenum/final classへ変換
+### TASK-017: 定数インターフェースのenum/final classへ変換（親タスク）
 
 | 項目 | 内容 |
 |------|------|
@@ -635,25 +640,201 @@
 | 中断ポイント | なし |
 | ブランチ | `task/refactor-constants` |
 
-**実施手順:**
+**備考:**
+- 50+ のインターフェースを一括変換はスコープが大きすぎるため、TASK-017-1〜017-5に分割
+- 各サブタスクは独立して実行可能（リーフインターフェースから順に実施）
+- 変換パターン: `public interface SGI*Constants` -> `public final class SGI*Constants` + `private SGI*Constants() {}`
+- 各クラスから `implements SGI*Constants` を削除し、定数参照を `SGI*Constants.CONSTANT_NAME` に変更
 
-1. `SGI*Constants` インターフェースを全件リストアップ（約50件）
-2. 値が固定/離散のものを `enum` に変換:
-   - `SGILineStyleConstants` -> `LineStyle`
-   - `SGIShapeConstants` -> `Shape`
-   - `SGIBarConstants` -> `BarType`
-3. 残りを `final class` + `private constructor` + `static final` に変換
-4. IDEの一括リファクタリング機能で実装箇所を更新
-5. `mvn clean compile` でビルド確認
+---
+
+### TASK-017-1: figureパッケージのリーフ定数インターフェース変換（第1弾）
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H3 |
+| 推定工数 | 2-3時間 |
+| 依存タスク | なし |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-constants-figure-1` |
+
+**対象インターフェース（6件）:**
+- `SGIAxisBreakConstants` (impl: 3クラス, extends: SGIDrawingElementConstants)
+- `SGIColorBarConstants` (impl: 2クラス, extends: SGIConstants)
+- `SGIColorMapConstants` (impl: 1クラス, extends: なし)
+- `SGIErrorBarConstants` (impl: 2クラス, extends: SGIArrowConstants)
+- `SGIFigureGridConstants` (impl: 1クラス, extends: SGILineConstants)
+- `SGIFigureTypeConstants` (impl: 2クラス, extends: なし)
+
+**変換手順（1インターフェースごと）:**
+
+1. **インターフェースの変換:**
+   - `public interface SGI*Constants` -> `public final class SGI*Constants`
+   - `private SGI*Constants() {}` コンストラクタを追加
+   - `extends 親インターフェース` を削除
+   - `extends` していた親インターフェースの定数への参照を `親インターフェース.CONSTANT_NAME` に修正
+
+2. **実装クラスの修正:**
+   - `grep -rn "implements.*SGI*Constants"` で実装クラスを特定
+   - 各クラスから `implements SGI*Constants` を削除
+   - 定数への参照が `SGI*Constants.CONSTANT_NAME` 形式で解決できることを確認（importがあれば不要）
+
+3. **検証:**
+   - `mvn compile -q` でコンパイルエラーがないことを確認
+   - `mvn test -q` でテストが全成功することを確認
+
+**重要:** 1インターフェース変換ごとに `mvn compile` を実行し、エラーが発生したらそのインターフェースの修正を完了してから次へ進む。
 
 **完了基準:**
-- [ ] 定数インターフェースがenumまたはfinal classに変換
+- [ ] 6インターフェースがfinal classに変換
 - [ ] `mvn compile` が成功
 - [ ] テストが全成功
 
 ---
 
-### TASK-018: SGDrawingWindowのイベントハンドラー分割
+### TASK-017-2: figureパッケージのリーフ定数インターフェース変換（第2弾）
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H3 |
+| 推定工数 | 2-3時間 |
+| 依存タスク | なし |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-constants-figure-2` |
+
+**対象インターフェース（6件）:**
+- `SGIShapeConstants` (impl: 1クラス, extends: なし)
+- `SGISXYDataConstants` (impl: 7クラス, extends: SGIConstants)
+- `SGISXYZDataConstants` (impl: 2クラス, extends: なし)
+- `SGITickLabelConstants` (impl: 1クラス, extends: SGIDrawingElementConstants)
+- `SGITimingLineConstants` (impl: 1クラス, extends: SGILineConstants)
+- `SGIVXYDataConstants` (impl: 4クラス, extends: SGIArrowConstants)
+
+**変換手順:** TASK-017-1と同様、1インターフェースごとに変換・検証
+
+**完了基準:**
+- [ ] 6インターフェースがfinal classに変換
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+---
+
+### TASK-017-3: figureパッケージの親定数インターフェース変換
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H3 |
+| 推定工数 | 3-4時間 |
+| 依存タスク | TASK-017-1, TASK-017-2 |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-constants-figure-parent` |
+
+**対象インターフェース（9件）:**
+- `SGIArrowConstants` (extends: SGILineConstants, SGISymbolConstants, SGIFigureDrawingElementConstants; impl: 4)
+- `SGIBarConstants` (extends: SGIRectangleConstants; impl: 2)
+- `SGILineConstants` (extends: SGIDrawingElementConstants; impl: 7)
+- `SGIRectangleConstants` (extends: SGIDrawingElementConstants; impl: 2)
+- `SGIScaleConstants` (extends: SGILineAndStringConstants; impl: 3)
+- `SGISignificantDifferenceConstants` (extends: SGILineAndStringConstants; impl: 2)
+- `SGIStringConstants` (extends: SGIDrawingElementConstants, SGIDateConstants; impl: 4)
+- `SGILineAndStringConstants` (extends: SGIStringConstants; impl: 1)
+- `SGILegendConstants` (extends: SGIConstants; impl: 2)
+
+**変換手順:** TASK-017-1と同様、1インターフェースごとに変換・検証
+
+**完了基準:**
+- [ ] 9インターフェースがfinal classに変換
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+---
+
+### TASK-017-4: base/data/applicationパッケージの定数インターフェース変換
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H3 |
+| 推定工数 | 4-6時間 |
+| 依存タスク | TASK-017-3 |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-constants-base-data-app` |
+
+**対象インターフェース（27件）:**
+
+| インターフェース | impl数 |
+|-----------------|--------|
+| `SGIConstants` | 16 |
+| `SGIAnimationConstants` | 2 |
+| `SGIDateConstants` | 0 |
+| `SGIDrawingElementConstants` | 5 |
+| `SGIFigureConstants` | 5 |
+| `SGIFigureElementConstants` | 1 |
+| `SGIFigureElementAxisConstants` | 2 |
+| `SGIPropertyFileConstants` | 3 |
+| `SGIRootObjectConstants` | 4 |
+| `SGITextDataConstants` | 3 |
+| `SGIDataColumnTypeConstants` | 10 |
+| `SGIDataCommandConstants` | 11 |
+| `SGIDataFileConstants` | 0 |
+| `SGIDataInformationKeyConstants` | 1 |
+| `SGIDataPropertyKeyConstants` | 8 |
+| `SGIMDArrayConstants` | 3 |
+| `SGINetCDFConstants` | 7 |
+| `SGIApplicationCommandConstants` | 3 |
+| `SGIApplicationConstants` | 7 |
+| `SGIApplicationTextConstants` | 4 |
+| `SGIArchiveFileConstants` | 3 |
+| `SGIDataPluginConstants` | 1 |
+| `SGIImageConstants` | 0 |
+| `SGIPreferencesConstants` | 2 |
+| `SGIUpgradeConstants` | 1 |
+| `SGIElementGroupConstants` | 1 |
+| `SGISymbolConstants` | 2 |
+
+**変換手順:** TASK-017-1と同様、1インターフェースごとに変換・検証。impl数0のインターフェースから開始（`SGIDateConstants`, `SGIDataFileConstants`, `SGIImageConstants`）
+
+**完了基準:**
+- [ ] 27インターフェースがfinal classに変換
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+---
+
+### TASK-017-5: 複合インターフェースの処理
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H3 |
+| 推定工数 | 1-2時間 |
+| 依存タスク | TASK-017-4 |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-constants-composite` |
+
+**対象インターフェース（3件）:**
+- `SGIRootObject` (extends: SGIZoomable, SGIRootObjectConstants)
+- `SGIFigureElementAxis` (extends: SGIFigureElement, SGIFigureElementAxisConstants)
+- `SGIData` (extends: SGIConstants, SGIDisposable)
+
+**変換手順:** TASK-017-1と同様、1インターフェースごとに変換・検証
+
+**完了基準:**
+- [ ] 3複合インターフェースがfinal classに変換
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+---
+
+### TASK-018: SGDrawingWindowのイベントハンドラー分割（親タスク）
 
 | 項目 | 内容 |
 |------|------|
@@ -665,21 +846,170 @@
 | 中断ポイント | なし |
 | ブランチ | `task/refactor-drawing-window` |
 
+**備考:**
+- 7,150行のSGDrawingWindowからイベントハンドラーを抽出
+- メニュー、クリップボード、UI更新、プロパティ変更の4つのハンドラーに分割予定
+- 各サブタスクは独立して実行可能
+
+---
+
+### TASK-018-1: SGDrawingWindowのメニューハンドラー抽出
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | C3 |
+| 推定工数 | 2-3日 |
+| 依存タスク | なし |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-drawing-window-menu` |
+
+**対象メソッド:**
+- `actionPerformed(final ActionEvent e)` (L2345)
+- `menuSelected(MenuEvent e)` (L1732)
+- `menuDeselected(MenuEvent e)` (L1752)
+- `menuCanceled(MenuEvent e)` (L1754)
+- `createPropertyMenuBarItem()` (L3266)
+- `createDataPluginMenuBarItem()` (L3309)
+- `updateDataPluginMenuBarItems()` (L3322)
+
 **実施手順:**
 
-1. `SGDrawingWindow`（7,150行）のイベントリスナーを分析
-2. メニュー関連イベントを `SGMenuHandler` に抽出
-3. ツールバー関連イベントを `SGToolBarHandler` に抽出
-4. コンポーネントリサイズ関連を `SGResizeHandler` に抽出
-5. プロパティ変更関連を `SGPropertyHandler` に抽出
-6. 各ハンドラーを `SGDrawingWindow` から委譲するよう修正
-7. テストで動作確認
+1. `SGMenuHandler` クラスを新規作成
+2. 上記メソッドを `SGMenuHandler` に移動
+3. `SGDrawingWindow` から `SGMenuHandler` のインスタンスを作成し、イベントリスナーとして登録
+4. `SGDrawingWindow` から `SGMenuHandler` に委譲するよう修正
+5. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
 
 **完了基準:**
-- [ ] 各ハンドラーが独立したクラスとして作成
+- [ ] `SGMenuHandler` が独立したクラスとして作成
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+- [ ] `SGDrawingWindow` の行数が5,000行以下に減少
+
+---
+
+### TASK-018-2: SGDrawingWindowのクリップボードハンドラー抽出
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | C3 |
+| 推定工数 | 2-3日 |
+| 依存タスク | TASK-018-1 |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-drawing-window-clipboard` |
+
+**対象メソッド:**
+- `doCopy()` (L2785)
+- `doCut()` (L2802)
+- `cutFocusedObjects()` (L2807)
+- `doPaste()` (L2867)
+- `pasteCopiedObjects()` (L2872)
+- `doDuplicate()` (L2880)
+- `doDelete()` (L2923)
+- `deleteFocusedObjects()` (L2928)
+- `cutAllObjectsInVisibleFigures()` (L2978)
+- `copyAllObjectsInVisibleFigures()` (L2983)
+- `cutOrCopyAllObjectsInVisibleFigures(final boolean isCopy)` (L2992)
+- `clearCopiedObjectsList()` (L3090)
+- `pasteToFigures(...)` (L2153)
+
+**実施手順:**
+
+1. `SGClipboardHandler` クラスを新規作成
+2. 上記メソッドを `SGClipboardHandler` に移動
+3. `SGDrawingWindow` から `SGClipboardHandler` のインスタンスを作成
+4. `SGDrawingWindow` から `SGClipboardHandler` に委譲するよう修正
+5. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] `SGClipboardHandler` が独立したクラスとして作成
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+- [ ] `SGDrawingWindow` の行数が4,500行以下に減少
+
+---
+
+### TASK-018-3: SGDrawingWindowのUI更新ハンドラー抽出
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | C3 |
+| 推定工数 | 2-3日 |
+| 依存タスク | TASK-018-2 |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-drawing-window-ui` |
+
+**対象メソッド:**
+- `updateItemsByFigureNumbers()` (L278)
+- `updateInsertItems()` (L302)
+- `updateInsertItems(final String command)` (L310)
+- `updateDataItem()` (L2187)
+- `updateFocusedObjectItem()` (L2194)
+- `setPasteMenuEnabled(final boolean b)` (L2237)
+- `updateGridItems()` (L2246)
+- `updateModeMenuItems()` (L2274)
+- `updateZoomItems()` (L2287)
+- `updateToolBarVisibleItems()` (L2319)
+- `updateToolBarVisibleMenuItems()` (L2329)
+- `updateBackgroundImageItems()` (L2339)
+- `updateLockItems()` (L3206)
+- `updateSavedListIndex()` (L3650)
+- `updateStatusBarSavedFlag()` (L3675)
+
+**実施手順:**
+
+1. `SGUIUpdateHandler` クラスを新規作成
+2. 上記メソッドを `SGUIUpdateHandler` に移動
+3. `SGDrawingWindow` から `SGUIUpdateHandler` のインスタンスを作成
+4. `SGDrawingWindow` から `SGUIUpdateHandler` に委譲するよう修正
+5. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] `SGUIUpdateHandler` が独立したクラスとして作成
 - [ ] `mvn compile` が成功
 - [ ] テストが全成功
 - [ ] `SGDrawingWindow` の行数が4,000行以下に減少
+
+---
+
+### TASK-018-4: SGDrawingWindowのプロパティ変更ハンドラー抽出
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | C3 |
+| 推定工数 | 2-3日 |
+| 依存タスク | TASK-018-3 |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-drawing-window-property` |
+
+**対象メソッド:**
+- `propertyChange(PropertyChangeEvent e)` (L1710)
+- `componentShown(final ComponentEvent e)` (L1756)
+- `componentHidden(final ComponentEvent e)` (L1758)
+- `componentMoved(final ComponentEvent e)` (L1760)
+- `componentResized(final ComponentEvent e)` (L1762)
+
+**実施手順:**
+
+1. `SGPropertyHandler` クラスを新規作成
+2. 上記メソッドを `SGPropertyHandler` に移動
+3. `SGDrawingWindow` から `SGPropertyHandler` のインスタンスを作成
+4. `SGDrawingWindow` から `SGPropertyHandler` に委譲するよう修正
+5. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] `SGPropertyHandler` が独立したクラスとして作成
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+- [ ] `SGDrawingWindow` の行数が3,500行以下に減少
 
 ---
 
@@ -896,6 +1226,621 @@
 
 ---
 
+## フェーズ6: テストカバレッジの拡充
+
+> **目標:** メジャーかつ重要な基軸を支えるメソッドからテスト対象を拡充し、リファクタリングの安全網を強化します。
+>
+> **依存関係:** フェーズ2完了後。TASK-006, TASK-007, TASK-008のテスト基盤を活用。
+
+### TASK-024: SGDataUtilityのデータ型判定メソッドのテスト
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [x] DONE |
+| 優先度 | P1 |
+| 対応元 | C1 |
+| 推定工数 | 2-3時間 |
+| 依存タスク | TASK-007 |
+| 中断ポイント | なし |
+| ブランチ | `task/test-data-utility-type-check` |
+
+**対象メソッド:**
+- `isSDArrayData(String)`, `isNetCDFData(String)`, `isHDF5Data(String)`, `isMATLABData(String)`
+- `isVirtualMDArrayData(String)`, `isMDArrayData(String)`, `isHDF5FileData(String)`
+- `isSXYTypeData(String)`, `isSXYTypeSingleData(String)`, `isSXYTypeMultipleData(String)`
+- `isVXYTypeData(String)`, `isSXYZTypeData(String)`, `isMultipleData(String)`
+- `isNetCDFDimensionData(String)`, `isValidData(String)`, `isArrayData(String)`
+
+**実施手順:**
+
+1. `SGDataTypeCheckTest.java` を新規作成
+2. 各データ型判定メソッドに対して正常系・異常系のテストケースを作成
+3. `SGDataTypeConstants` の定数を実際に使用
+4. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [x] `SGDataTypeCheckTest` が `src/test/java/` に配置
+- [x] `mvn test` が全テスト成功（42件）
+- [ ] 対象メソッドの行カバレッジが80%以上
+
+---
+
+### TASK-025: SGDataUtilityのバウンズ計算メソッドのテスト
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P1 |
+| 対応元 | C1 |
+| 推定工数 | 2-3時間 |
+| 依存タスク | TASK-007 |
+| 中断ポイント | なし |
+| ブランチ | `task/test-data-utility-bounds` |
+
+**対象メソッド:**
+- `getMaxValue(double[])`, `getMinValue(double[])`, `getBounds(double[])`
+- `getBoundsX(SGISXYTypeSingleData)`, `getBoundsY(SGISXYTypeSingleData)`
+- `getMinValue(List<SGValueRange>)`, `getMaxValue(List<SGValueRange>)`
+- `getBoundsX(SGISXYTypeMultipleData)`, `getBoundsY(SGISXYTypeMultipleData)`
+- `getBoundsX(SGIVXYTypeData)`, `getBoundsY(SGIVXYTypeData)`
+- `getBoundsX(SGISXYZTypeData)`, `getBoundsY(SGISXYZTypeData)`, `getBoundsZ(SGISXYZTypeData)`
+
+**実施手順:**
+
+1. `SGDataBoundsTest.java` を新規作成
+2. 各バウンズ計算メソッドに対して正常系・異常系のテストケースを作成
+3. 代表的なデータ形状（単一系列、複数系列、欠損値含む、NaN含む）のテストケースを作成
+4. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] `SGDataBoundsTest` が `src/test/java/` に配置
+- [ ] `mvn test` が全テスト成功
+- [ ] 対象メソッドの行カバレッジが80%以上
+
+---
+
+### TASK-026: SGDataUtilityの列操作メソッドのテスト
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P1 |
+| 対応元 | C1 |
+| 推定工数 | 2-3時間 |
+| 依存タスク | TASK-007 |
+| 中断ポイント | なし |
+| ブランチ | `task/test-data-utility-column` |
+
+**対象メソッド:**
+- `appendColumnNo(String, int)`, `appendColumnTitle(String, String)`, `appendColumnNoOrTitle(...)`
+- `removeHeaderTitle(String)`, `removeHeaderNo(String)`
+- `getAppendedColumnIndex(String)`, `getColumnIndexOfAppendedColumnTitle(...)`, `getColumnIndexOfAppendedColumnType(...)`
+- `getColumnTypeCandidates(...)`, `checkDataColumns(...)`, `getColumnIndexListOfNumber(...)`, `getMinimumNumberColumns(String)`
+
+**実施手順:**
+
+1. `SGDataColumnTest.java` を新規作成
+2. 各列操作メソッドに対して正常系・異常系のテストケースを作成
+3. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] `SGDataColumnTest` が `src/test/java/` に配置
+- [ ] `mvn test` が全テスト成功
+- [ ] 対象メソッドの行カバレッジが80%以上
+
+---
+
+### TASK-027: SGCSVParserのテスト
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P1 |
+| 対応元 | C1 |
+| 推定工数 | 2-3時間 |
+| 依存タスク | TASK-014 |
+| 中断ポイント | なし |
+| ブランチ | `task/test-csv-parser` |
+
+**対象メソッド:** `SGCSVParser` の公開メソッド全件
+
+**実施手順:**
+
+1. `SGCSVParserTest.java` を新規作成
+2. CSVパースの正常系・異常系のテストケースを作成
+3. 代表的なCSVデータ（単一列、複数列、ヘッダーあり/なし、エスケープ文字含む）のテストケースを作成
+4. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] `SGCSVParserTest` が `src/test/java/` に配置
+- [ ] `mvn test` が全テスト成功
+- [ ] 対象クラスの行カバレッジが80%以上
+
+---
+
+### TASK-028: SGValueFormatterのテスト
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P1 |
+| 対応元 | C1 |
+| 推定工数 | 2-3時間 |
+| 依存タスク | TASK-014 |
+| 中断ポイント | なし |
+| ブランチ | `task/test-value-formatter` |
+
+**対象メソッド:** `SGValueFormatter` の公開メソッド全件
+
+**実施手順:**
+
+1. `SGValueFormatterTest.java` を新規作成
+2. 値フォーマットの正常系・異常系のテストケースを作成
+3. 代表的なデータ形状（整数、小数、科学表記、NaN、Infinity）のテストケースを作成
+4. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] `SGValueFormatterTest` が `src/test/java/` に配置
+- [ ] `mvn test` が全テスト成功
+- [ ] 対象クラスの行カバレッジが80%以上
+
+---
+
+### TASK-029: SGAnimationUtilityのテスト
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P1 |
+| 対応元 | C1 |
+| 推定工数 | 2-3時間 |
+| 依存タスク | TASK-015 |
+| 中断ポイント | なし |
+| ブランチ | `task/test-animation-utility` |
+
+**対象メソッド:** `SGAnimationUtility` の公開メソッド全件
+
+**完了基準:**
+- [ ] `SGAnimationUtilityTest` が `src/test/java/` に配置
+- [ ] `mvn test` が全テスト成功
+- [ ] 対象クラスの行カバレッジが80%以上
+
+---
+
+### TASK-030: SGWizardManagerのテスト
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P1 |
+| 対応元 | C1 |
+| 推定工数 | 2-3時間 |
+| 依存タスク | TASK-016 |
+| 中断ポイント | なし |
+| ブランチ | `task/test-wizard-manager` |
+
+**対象メソッド:** `SGWizardManager` の公開メソッド全件
+
+**完了基準:**
+- [ ] `SGWizardManagerTest` が `src/test/java/` に配置
+- [ ] `mvn test` が全テスト成功
+- [ ] 対象クラスの行カバレッジが80%以上
+
+---
+
+### TASK-031: jacoco-maven-pluginの導入
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [x] DONE |
+| 優先度 | P2 |
+| 対応元 | C1 |
+| 推定工数 | 1時間 |
+| 依存タスク | TASK-006 |
+| 中断ポイント | なし |
+| ブランチ | `task/jacoco-plugin` |
+
+**実施手順:**
+
+1. `pom.xml` に `jacoco-maven-plugin` 0.8.13 を追加
+2. `prepare-agent`, `report`, `check` の3つのexecutionsを設定
+3. カバレッジ閾値を一時的に0.0に設定（後で調整）
+4. `mvn test` でカバレッジ計測が有効になっていることを確認
+
+**完了基準:**
+- [x] `jacoco-maven-plugin` が `pom.xml` に追加
+- [x] `mvn test` でカバレッジ計測が有効になっている
+- [ ] `mvn jacoco:report` でカバレッジレポートが生成される
+- [ ] 対象クラスのカバレッジが50%以上
+
+---
+
+### TASK-032: SGPeriodのテスト
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [x] DONE |
+| 優先度 | P1 |
+| 対応元 | C1 |
+| 推定工数 | 1-2時間 |
+| 依存タスク | TASK-010 |
+| 中断ポイント | なし |
+| ブランチ | `task/test-period` |
+
+**対象メソッド:** `SGPeriod` の公開メソッド全件
+
+**実施手順:**
+
+1. `SGPeriodTest.java` を新規作成
+2. コンストラクタ、static factory methods、with* methods、plus、negated、isZero、toString、equals/hashCode、parseのテストケースを作成
+3. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [x] `SGPeriodTest` が `src/test/java/` に配置
+- [x] `mvn test` が全テスト成功（52件）
+- [ ] 対象クラスの行カバレッジが80%以上
+
+---
+
+## フェーズ7: 残るGodクラスの分割
+
+> **目標:** 残る5つのGodクラスを分割計画に基づいて分割します。
+>
+> **依存関係:** docs/god-class-analysis.md の分割計画に基づき、リスクの低いクラスから順に実施。
+
+### TASK-033: SGPropertyDialogSXYDataの分割
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | C3 |
+| 推定工数 | 2-3日 |
+| 依存タスク | TASK-009 |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-property-dialog-sxy` |
+
+**対象クラス:** SGPropertyDialogSXYData (5,047行, ~352メソッド)
+
+**実施手順:**
+
+1. `SGSXYColumnMapper` を新規作成（カラムタイプ選択、X/Y割り当てUI、~60メソッド）
+2. `SGSXYPropertyBinder` を新規作成（UIコンポーネントとデータプロパティのバインディング、~50メソッド）
+3. `SGSXYInputValidator` を新規作成（ユーザー入力の検証、~30メソッド）
+4. `SGSXYDialogLayout` を新規作成（パネル構築、コンポーネント配置、~40メソッド）
+5. 各クラスを `SGPropertyDialogSXYData` から委譲するよう修正
+6. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] 各マネージャーが独立したクラスとして作成
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+- [ ] `SGPropertyDialogSXYData` の行数が2,500行以下に減少
+
+---
+
+### TASK-034: SGFigureElementShapeの分割
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | C3 |
+| 推定工数 | 2-3日 |
+| 依存タスク | TASK-009 |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-figure-element-shape` |
+
+**対象クラス:** SGFigureElementShape (4,991行, ~423メソッド)
+
+**実施手順:**
+
+1. `SGShapeRenderer` を新規作成（シェイプ描画、塗りつぶし、ストローク、変換、~60メソッド）
+2. `SGShapePropertyHandler` を新規作成（シェイプタイプ、サイズ、色、ボーダープロパティ、~80メソッド）
+3. `SGShapeLayout` を新規作成（シェイプ位置、アライメント、分布、~40メソッド）
+4. `SGShapeDataBinding` を新規作成（シェイプ位置/サイズとデータ値のバインディング、~30メソッド）
+5. 各クラスを `SGFigureElementShape` から委譲するよう修正
+6. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] 各マネージャーが独立したクラスとして作成
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+- [ ] `SGFigureElementShape` の行数が2,500行以下に減少
+
+---
+
+### TASK-035: SGAxisElementの分割
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | C3 |
+| 推定工数 | 2-3日 |
+| 依存タスク | TASK-009 |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-axis-element` |
+
+**対象クラス:** SGAxisElement (5,763行, ~319メソッド)
+
+**実施手順:**
+
+1. `SGTickCalculator` を新規作成（目盛り間隔計算、目盛りの生成、~40メソッド）
+2. `SGTickLabelFormatter` を新規作成（目盛りラベルのテキストフォーマット、日付/数値フォーマット、~30メソッド）
+3. `SGAxisRenderer` を新規作成（軸線、目盛り、ラベル、矢印の描画、~50メソッド）
+4. `SGAxisScaler` を新規作成（線形/対数スケール、軸範囲計算、~20メソッド）
+5. `SGAxisPropertyHandler` を新規作成（軸プロパティの取得/設定、シリアライズ、~60メソッド）
+6. 各クラスを `SGAxisElement` から委譲するよう修正
+7. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] 各マネージャーが独立したクラスとして作成
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+- [ ] `SGAxisElement` の行数が3,000行以下に減少
+
+---
+
+### TASK-036: SGFigureElementLegendの分割
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | C3 |
+| 推定工数 | 3-5日 |
+| 依存タスク | TASK-009 |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-figure-element-legend` |
+
+**対象クラス:** SGFigureElementLegend (7,966行, ~731メソッド)
+
+**実施手順:**
+
+1. `SGLegendLayout` を新規作成（位置計算、サイズ計算、配置アルゴリズム、~80メソッド）
+2. `SGLegendRenderer` を新規作成（描画メソッド、paintオーバーライド、ビジュアルコンポジション、~60メソッド）
+3. `SGLegendItemManager` を新規作成（レジェンドアイテムの追加/削除/更新、状態管理、~100メソッド）
+4. `SGLegendPropertyHandler` を新規作成（プロパティの取得/設定、プロパティ変更リスナー、シリアライズ、~150メソッド）
+5. `SGLegendDataBinding` を新規作成（レジェンドアイテムとデータ系列のリンク、データ変更時の更新、~80メソッド）
+6. 各クラスを `SGFigureElementLegend` から委譲するよう修正
+7. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] 各マネージャーが独立したクラスとして作成
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+- [ ] `SGFigureElementLegend` の行数が3,000行以下に減少
+
+---
+
+### TASK-037: SGMainFunctionsの追加マネージャー抽出
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | C3 |
+| 推定工数 | 3-5日 |
+| 依存タスク | TASK-016 |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-main-functions-2` |
+
+**対象クラス:** SGMainFunctions (6,818行, ~165メソッド)
+
+**実施手順:**
+
+1. `SGFileLoader` を新規作成（データファイル、プロパティファイル、図ファイルの読み込み、~20メソッド）
+2. `SGFileExporter` を新規作成（PNG、PDF、SVGなど各種フォーマットでの保存/エクスポート、~25メソッド）
+3. `SGClipboardManager` を新規作成（コピー/ペースト操作、~10メソッド）
+4. `SGApplicationInitializer` を新規作成（初期化、ライブラリ設定、一時ファイル管理、~15メソッド）
+5. `SGUndoManager` を新規作成（コマンドパターンによる元に戻す/やり直す、~10メソッド）
+6. 各クラスを `SGMainFunctions` から委譲するよう修正
+7. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] 各マネージャーが独立したクラスとして作成
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+- [ ] `SGMainFunctions` の行数が4,000行以下に減少
+
+---
+
+## フェーズ8: FreeHEPライブラリの移行
+
+> **目標:** FreeHEPライブラリを代替ライブラリに移行し、外部依存を削減します。
+>
+> **依存関係:** docs/freehep-alternatives.md の調査結果に基づき、リスクの低いフォーマットから順に実施。
+
+### TASK-038: PNG/JPEGエクスポートのjavax.imageioへ移行
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H1 |
+| 推定工数 | 1-2日 |
+| 依存タスク | TASK-012 |
+| 中断ポイント | なし |
+| ブランチ | `task/migrate-png-jpeg-export` |
+
+**実施手順:**
+
+1. `SGImageExportManager.java` のPNG/JPEGエクスポート箇所を調査
+2. `javax.imageio` を使用したPNG/JPEGエクスポートを実装
+3. `PNGExportFileType`, `JPEGExportFileType` を削除
+4. `ExportFileTypeRegistry` からPNG/JPEGエントリーを削除
+5. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] `javax.imageio` を使用したPNG/JPEGエクスポートが実装
+- [ ] `PNGExportFileType`, `JPEGExportFileType` が削除
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+---
+
+### TASK-039: SVGエクスポートのApache Batikへ移行
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H1 |
+| 推定工数 | 3-5日 |
+| 依存タスク | TASK-038 |
+| 中断ポイント | なし |
+| ブランチ | `task/migrate-svg-export` |
+
+**実施手順:**
+
+1. `pom.xml` に `org.apache.xmlgraphics:batik-transcoder` を追加
+2. `SGImageExportManager.java` のSVGエクスポート箇所を調査
+3. Apache Batik の `SVGGraphics2D` を使用したSVGエクスポートを実装
+4. FreeHEP の `SVGGraphics2D` 依存を削除
+5. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] Apache Batik を使用したSVGエクスポートが実装
+- [ ] FreeHEP の `SVGGraphics2D` 依存が削除
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+---
+
+### TASK-040: PDFエクスポートのApache PDFBoxへ移行
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H1 |
+| 推定工数 | 5-7日 |
+| 依存タスク | TASK-039 |
+| 中断ポイント | なし |
+| ブランチ | `task/migrate-pdf-export` |
+
+**実施手順:**
+
+1. `pom.xml` に `org.apache.pdfbox:pdfbox` を追加
+2. `SGImageExportManager.java` のPDFエクスポート箇所を調査
+3. Apache PDFBox の `PDFGraphics2D` を使用したPDFエクスポートを実装
+4. FreeHEP の `PDFGraphics2D` 依存を削除
+5. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] Apache PDFBox を使用したPDFエクスポートが実装
+- [ ] FreeHEP の `PDFGraphics2D` 依存が削除
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+---
+
+## フェーズ9: HDF5ライブラリの移行
+
+> **目標:** cisd:jhdf5ライブラリをOME HDF5に移行し、ネイティブライブラリの管理を簡素化します。
+>
+> **依存関係:** docs/hdf5-alternatives.md の調査結果に基づき、OME HDF5への移行を実施。
+
+### TASK-041: HDF5Manager抽象化レイヤーの作成
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H1 |
+| 推定工数 | 2-3日 |
+| 依存タスク | TASK-013 |
+| 中断ポイント | なし |
+| ブランチ | `task/hdf5-manager-abstract` |
+
+**実施手順:**
+
+1. `SGHDF5Manager` インターフェースを新規作成（読み込み/書き込み/列挙操作の抽象化）
+2. `SGHDF5Reader` インターフェースを新規作成（ファイル読み込みの抽象化）
+3. `SGHDF5Writer` インターフェースを新規作成（ファイル書き込みの抽象化）
+4. `SGHDF5File` を `SGHDF5Reader` に適合するよう修正
+5. `SGHDF5Variable` を `SGHDF5Writer` に適合するよう修正
+6. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] `SGHDF5Manager` インターフェースが作成
+- [ ] `SGHDF5Reader`, `SGHDF5Writer` インターフェースが作成
+- [ ] `SGHDF5File`, `SGHDF5Variable` がインターフェースに適合
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+---
+
+### TASK-042: OME HDF5の実装
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H1 |
+| 推定工数 | 3-5日 |
+| 依存タスク | TASK-041 |
+| 中断ポイント | なし |
+| ブランチ | `task/hdf5-ome-implementation` |
+
+**実施手順:**
+
+1. `pom.xml` から `cisd:jhdf5`, `cisd:base` を削除
+2. `pom.xml` に `ome:hdf5-hdf` を追加
+3. `OMEHDF5Reader` を新規作成（`SGHDF5Reader` のOME実装）
+4. `OMEHDF5Writer` を新規作成（`SGHDF5Writer` のOME実装）
+5. `SGHDF5File`, `SGHDF5Variable` を OME HDF5 に適合するよう修正
+6. `SGMainFunctions.Initializer.removeHDF5TemporaryFiles()` を削除
+7. `SGDataUtility.hasValidHDF5CharacterForWin()` を削除
+8. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] `OMEHDF5Reader`, `OMEHDF5Writer` が作成
+- [ ] `cisd:jhdf5`, `cisd:base` が削除
+- [ ] `ome:hdf5-hdf` が追加
+- [ ] `removeHDF5TemporaryFiles()` が削除
+- [ ] `hasValidHDF5CharacterForWin()` が削除
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+---
+
+### TASK-043: 対応するデータクラスの更新
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H1 |
+| 推定工数 | 2-3日 |
+| 依存タスク | TASK-042 |
+| 中断ポイント | なし |
+| ブランチ | `task/hdf5-data-classes-update` |
+
+**対象クラス（10+ファイル）:**
+- `SGMDArrayData`, `SGSDArrayData`, `SGSXYMDArrayData`, `SGSXYZMDArrayData`
+- `SGTwoDimensionalMDArrayData`, `SGVXYMDArrayData`, `SGSXYMDArrayMultipleData`
+- `SGVXYSDArrayData`, `SGSXYZSDArrayData`
+- `SGApplicationUtility`, `SGDataCreator`, `SGMainFunctions`
+- `SGPropertyDataFileChooserWizardDialog`, `SGDataUtility`
+
+**実施手順:**
+
+1. 各データクラスで `IHDF5Reader`, `IHDF5Writer` を使用している箇所を調査
+2. `SGHDF5Reader`, `SGHDF5Writer` インターフェースを使用するよう修正
+3. `HDF5DataClass`, `HDF5DataSetInformation`, `HDF5DataTypeInformation` の使用箇所を修正
+4. `hdf.hdf5lib.exceptions.HDF5Exception` の使用箇所を修正
+5. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] 全データクラスで `IHDF5Reader`, `IHDF5Writer` を使用していない
+- [ ] `SGHDF5Reader`, `SGHDF5Writer` インターフェースを使用している
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+---
+
 ## タスク一覧（管理用）
 
 > 本表は全タスクの進捗を一目で確認できるようにするためのサマリーです。
@@ -927,6 +1872,26 @@
 | TASK-021 | 空のplatformパッケージ処理 | [x] | P3 | フェーズ5 | M7 |
 | TASK-022 | maven-enforcer-plugin設定 | [x] | P3 | フェーズ5 | M4 |
 | TASK-023 | 配布環境刷新（jpackageネイティブパッケージング） | [x] | P1 | フェーズ5 | M5 |
+| TASK-024 | SGDataUtilityのデータ型判定テスト | [x] | P1 | フェーズ6 | C1 |
+| TASK-025 | SGDataUtilityのバウンズ計算テスト | [ ] | P1 | フェーズ6 | C1 |
+| TASK-026 | SGDataUtilityの列操作テスト | [ ] | P1 | フェーズ6 | C1 |
+| TASK-027 | SGCSVParserのテスト | [ ] | P1 | フェーズ6 | C1 |
+| TASK-028 | SGValueFormatterのテスト | [ ] | P1 | フェーズ6 | C1 |
+| TASK-029 | SGAnimationUtilityのテスト | [ ] | P1 | フェーズ6 | C1 |
+| TASK-030 | SGWizardManagerのテスト | [ ] | P1 | フェーズ6 | C1 |
+| TASK-031 | jacoco-maven-pluginの導入 | [x] | P2 | フェーズ6 | C1 |
+| TASK-032 | SGPeriodのテスト | [x] | P1 | フェーズ6 | C1 |
+| TASK-033 | SGPropertyDialogSXYDataの分割 | [ ] | P2 | フェーズ7 | C3 |
+| TASK-034 | SGFigureElementShapeの分割 | [ ] | P2 | フェーズ7 | C3 |
+| TASK-035 | SGAxisElementの分割 | [ ] | P2 | フェーズ7 | C3 |
+| TASK-036 | SGFigureElementLegendの分割 | [ ] | P2 | フェーズ7 | C3 |
+| TASK-037 | SGMainFunctionsの追加マネージャー抽出 | [ ] | P2 | フェーズ7 | C3 |
+| TASK-038 | PNG/JPEGエクスポートのjavax.imageioへ移行 | [ ] | P2 | フェーズ8 | H1 |
+| TASK-039 | SVGエクスポートのApache Batikへ移行 | [ ] | P2 | フェーズ8 | H1 |
+| TASK-040 | PDFエクスポートのApache PDFBoxへ移行 | [ ] | P2 | フェーズ8 | H1 |
+| TASK-041 | HDF5Manager抽象化レイヤーの作成 | [ ] | P2 | フェーズ9 | H1 |
+| TASK-042 | OME HDF5の実装 | [ ] | P2 | フェーズ9 | H1 |
+| TASK-043 | 対応するデータクラスの更新 | [ ] | P2 | フェーズ9 | H1 |
 
 ---
 
@@ -944,9 +1909,20 @@
 
 ### 並列実行ルール
 
+**重要: リファクタリングタスク（TASK-017, TASK-018, TASK-033〜037）は必ず順次実行する。**
+並列実行はテスト作成タスク（TASK-024〜032）やドキュメント更新タスクに限定する。
+
+**各タスク完了後のコミット手順:**
+1. タスクの実施が完了し、`mvn compile` と `mvn test` が成功したことを確認
+2. `skill git-commit` を使用して変更をコミット
+3. execution-plan.mdのステータスを `[x] DONE` に更新
+4. セッションログに完了内容を記録
+5. 次のタスクへ進む
+
 複数のタスクを並列（別セッションまたは別エージェント）で実行する場合:
 
 1. **並列実行可能なタスクの条件:**
+   - リファクタリングタスクではない（TASK-017, TASK-018, TASK-033〜037は除く）
    - 依存タスクが完了している または 依存タスクがない
    - 編集対象ファイルが重複していない（同じファイルの同時編集は禁止）
    - ブロック中タスクではない
@@ -958,6 +1934,7 @@
 
 3. **並列実行の完了:**
    - 完了したタスクのステータスを `[x] DONE` に変更
+   - `skill git-commit` で変更をコミット
    - セッションログに「並列実行完了」を記録
    - 依存タスクとしてこのタスクを参照している他のタスクの実行可否を確認
 
@@ -1050,4 +2027,7 @@
 | B | TASK-010, TASK-011 | joda-time削除とswf削除（統合可能） |
 | C | TASK-012, TASK-013 | 調査タスク（実装変更なし） |
 | D | TASK-019, TASK-020, TASK-021, TASK-022 | ドキュメント・クリーンアップ系 |
-| E | TASK-017, TASK-023 | アーキテクチャ変更と配布環境刷新（独立） |
+| F | TASK-024, TASK-025, TASK-026, TASK-031, TASK-032 | テスト拡充系（並列実行可能） |
+| H | TASK-038, TASK-041 | FreeHEP移行とHDF5移行（独立） |
+
+**注意:** TASK-017, TASK-018, TASK-033〜037 は必ず順次実行（並列禁止）。
