@@ -13,11 +13,19 @@
 > - 各タスク完了後、必ずこの plan ファイルのダッシュボードと該当タスクのステータスを更新すること
 > - 更新後、`skill git-commit` を実行して変更をコミットすること
 > - コミットはタスクごとに分割してアトミックにすること
+> - **コミットメッセージのルール:**
+>   - タスク番号（TASK-xxx）やタスク名をメッセージに入れない
+>   - 第三者がgit logを見ただけで「何を変更したか」が分かる内容にする
+>   - 例: `refactor(data): extract NetCDF methods to SGNetCDFDataUtility`
+>   - 例: `test(application): add tests for SGWizardManager`
+>   - 例: `docs: update execution plan and mark refactoring task done`
 >
 > **ブランチ運用ルール:**
 > - 各タスクの実行はタスク毎に git branch を切って進めること（例: `task/test-data-utility-bounds`）
 > - タスク完了の定義: `skill git-commit` によるコミットが終わり次第、master ブランチへマージし、作成したブランチを削除すること
 > - マージ後は master ブランチに戻って次のタスクを開始すること
+> - **重要:** タスクの途中（未完成）の状態を master にマージしてはならない。全完了（テスト全通・コンパイル成功・ドキュメント更新）してからマージすること。
+> - **重要:** remote origin への push は行わない。master への変更のみ push する。
 
 ---
 
