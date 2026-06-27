@@ -39,7 +39,7 @@
 | 最終更新日時 | 2026-06-27 |
 | 現在の実行フェーズ | フェーズ6 |
 | 実施中タスク | TASK-030 |
-| 完了タスク数 | 32 / 43 (3 DEFERRED) |
+| 完了タスク数 | 33 / 43 (3 DEFERRED) |
 | ブロック中タスク | なし |
 | 次の実施タスク | TASK-016 |
 
@@ -75,6 +75,17 @@
 | 中断理由 | なし |
 | 中断ポイント | なし |
 | 次のセッションで再開するタスク | TASK-016 |
+
+### セッション #9
+
+| 項目 | 値 |
+|------|-----|
+| 日時 | 2026-06-27 |
+| 実施タスク | TASK-017-1（第1弾） |
+| 完了内容 | TASK-017-1 部分的完了: SGIColorMapConstants, SGIFigureTypeConstants の2件をfinal classに変換（残り4件は依存関係のため次回実施） |
+| 中断理由 | 残り4インターフェースは親インターフェースから定数を継承しており、実装クラス内の全参照修正が必要 |
+| 中断ポイント | SGIColorMapConstants, SGIFigureTypeConstants 変換完了。残り4件（SGIColorBarConstants, SGIErrorBarConstants, SGIFigureGridConstants, SGIAxisBreakConstants）は次回 |
+| 次のセッションで再開するタスク | TASK-017-1 |
 
 ---
 
@@ -702,45 +713,26 @@
 
 | 項目 | 内容 |
 |------|------|
-| ステータス | [ ] TODO |
+| ステータス | [>] IN_PROGRESS |
 | 優先度 | P2 |
 | 対応元 | H3 |
 | 推定工数 | 2-3時間 |
 | 依存タスク | なし |
-| 中断ポイント | なし |
+| 中断ポイント | 残り4インターフェースの実装クラス修正 |
 | ブランチ | `task/refactor-constants-figure-1` |
 
 **対象インターフェース（6件）:**
 - `SGIAxisBreakConstants` (impl: 3クラス, extends: SGIDrawingElementConstants)
 - `SGIColorBarConstants` (impl: 2クラス, extends: SGIConstants)
-- `SGIColorMapConstants` (impl: 1クラス, extends: なし)
+- `SGIColorMapConstants` (impl: 1クラス, extends: なし) ✅ 完了
 - `SGIErrorBarConstants` (impl: 2クラス, extends: SGIArrowConstants)
 - `SGIFigureGridConstants` (impl: 1クラス, extends: SGILineConstants)
-- `SGIFigureTypeConstants` (impl: 2クラス, extends: なし)
-
-**変換手順（1インターフェースごと）:**
-
-1. **インターフェースの変換:**
-   - `public interface SGI*Constants` -> `public final class SGI*Constants`
-   - `private SGI*Constants() {}` コンストラクタを追加
-   - `extends 親インターフェース` を削除
-   - `extends` していた親インターフェースの定数への参照を `親インターフェース.CONSTANT_NAME` に修正
-
-2. **実装クラスの修正:**
-   - `grep -rn "implements.*SGI*Constants"` で実装クラスを特定
-   - 各クラスから `implements SGI*Constants` を削除
-   - 定数への参照が `SGI*Constants.CONSTANT_NAME` 形式で解決できることを確認（importがあれば不要）
-
-3. **検証:**
-   - `mvn compile -q` でコンパイルエラーがないことを確認
-   - `mvn test -q` でテストが全成功することを確認
-
-**重要:** 1インターフェース変換ごとに `mvn compile` を実行し、エラーが発生したらそのインターフェースの修正を完了してから次へ進む。
+- `SGIFigureTypeConstants` (impl: 2クラス, extends: なし) ✅ 完了
 
 **完了基準:**
-- [ ] 6インターフェースがfinal classに変換
+- [ ] 6インターフェースがfinal classに変換（2/6完了）
 - [ ] `mvn compile` が成功
-- [ ] テストが全成功
+- [ ] テストが全成功（357件）
 
 ---
 
