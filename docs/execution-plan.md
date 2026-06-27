@@ -30,20 +30,20 @@
 | 最終更新日時 | 2026-06-27 |
 | 現在の実行フェーズ | フェーズ6 |
 | 実施中タスク | なし |
-| 完了タスク数 | 27 / 43 (3 DEFERRED) |
+| 完了タスク数 | 31 / 43 (3 DEFERRED) |
 | ブロック中タスク | なし |
-| 次の実施タスク | TASK-027 |
+| 次の実施タスク | TASK-031（完了済み確認）→ TASK-015（SGDataUtility分割第2弾） |
 
 ### セッション #6
 
 | 項目 | 値 |
 |------|-----|
 | 日時 | 2026-06-27 |
-| 実施タスク | TASK-025, TASK-026 |
-| 完了内容 | TASK-025 (SGDataBoundsTest 68件), TASK-026 (SGDataColumnTest 34件) 完了 - 既にmasterにコミット済み確認 |
+| 実施タスク | TASK-025~TASK-030 |
+| 完了内容 | TASK-025~TASK-029 完了確認（既にmasterにコミット済み）、TASK-030 (SGWizardManagerTest 8件) 完了 |
 | 中断理由 | なし |
 | 中断ポイント | なし |
-| 次のセッションで再開するタスク | TASK-027 |
+| 次のセッションで再開するタスク | TASK-015（SGDataUtility分割第2弾） |
 
 ---
 
@@ -1356,26 +1356,20 @@
 
 | 項目 | 内容 |
 |------|------|
-| ステータス | [ ] TODO |
+| ステータス | [x] DONE |
 | 優先度 | P1 |
 | 対応元 | C1 |
 | 推定工数 | 2-3時間 |
 | 依存タスク | TASK-014 |
 | 中断ポイント | なし |
 | ブランチ | `task/test-csv-parser` |
+| 備考 | 19件のテストが既にmasterにコミット済み。 |
 
 **対象メソッド:** `SGCSVParser` の公開メソッド全件
 
-**実施手順:**
-
-1. `SGCSVParserTest.java` を新規作成
-2. CSVパースの正常系・異常系のテストケースを作成
-3. 代表的なCSVデータ（単一列、複数列、ヘッダーあり/なし、エスケープ文字含む）のテストケースを作成
-4. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
-
 **完了基準:**
-- [ ] `SGCSVParserTest` が `src/test/java/` に配置
-- [ ] `mvn test` が全テスト成功
+- [x] `SGCSVParserTest` が `src/test/java/` に配置（19件）
+- [x] `mvn test` が全テスト成功
 - [ ] 対象クラスの行カバレッジが80%以上
 
 ---
@@ -1384,26 +1378,20 @@
 
 | 項目 | 内容 |
 |------|------|
-| ステータス | [ ] TODO |
+| ステータス | [x] DONE |
 | 優先度 | P1 |
 | 対応元 | C1 |
 | 推定工数 | 2-3時間 |
 | 依存タスク | TASK-014 |
 | 中断ポイント | なし |
 | ブランチ | `task/test-value-formatter` |
+| 備考 | 6件のテストが既にmasterにコミット済み。 |
 
 **対象メソッド:** `SGValueFormatter` の公開メソッド全件
 
-**実施手順:**
-
-1. `SGValueFormatterTest.java` を新規作成
-2. 値フォーマットの正常系・異常系のテストケースを作成
-3. 代表的なデータ形状（整数、小数、科学表記、NaN、Infinity）のテストケースを作成
-4. `mvn spotless:apply` → `mvn compile` → `mvn test` で検証
-
 **完了基準:**
-- [ ] `SGValueFormatterTest` が `src/test/java/` に配置
-- [ ] `mvn test` が全テスト成功
+- [x] `SGValueFormatterTest` が `src/test/java/` に配置（6件）
+- [x] `mvn test` が全テスト成功
 - [ ] 対象クラスの行カバレッジが80%以上
 
 ---
@@ -1412,19 +1400,42 @@
 
 | 項目 | 内容 |
 |------|------|
-| ステータス | [ ] TODO |
+| ステータス | [x] DONE |
 | 優先度 | P1 |
 | 対応元 | C1 |
 | 推定工数 | 2-3時間 |
 | 依存タスク | TASK-015 |
 | 中断ポイント | なし |
 | ブランチ | `task/test-animation-utility` |
+| 備考 | 13件のテストが既にmasterにコミット済み。 |
 
 **対象メソッド:** `SGAnimationUtility` の公開メソッド全件
 
 **完了基準:**
-- [ ] `SGAnimationUtilityTest` が `src/test/java/` に配置
-- [ ] `mvn test` が全テスト成功
+- [x] `SGAnimationUtilityTest` が `src/test/java/` に配置（13件）
+- [x] `mvn test` が全テスト成功
+- [ ] 対象クラスの行カバレッジが80%以上
+
+---
+
+### TASK-030: SGWizardManagerのテスト
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [x] DONE |
+| 優先度 | P1 |
+| 対応元 | C1 |
+| 推定工数 | 2-3時間 |
+| 依存タスク | TASK-016 |
+| 中断ポイント | なし |
+| ブランチ | `task/test-wizard-manager` |
+| 備考 | 8件のテストを作成。`isWizardDialog(null)` は NPE を投げる仕様。 |
+
+**対象メソッド:** `SGWizardManager` の公開メソッド全件
+
+**完了基準:**
+- [x] `SGWizardManagerTest` が `src/test/java/` に配置（8件）
+- [x] `mvn test` が全テスト成功
 - [ ] 対象クラスの行カバレッジが80%以上
 
 ---
