@@ -1073,7 +1073,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| ステータス | [ ] TODO |
+| ステータス | [x] DONE |
 | 優先度 | P2 |
 | 対応元 | M1 |
 | 推定工数 | 1時間 |
@@ -1083,19 +1083,14 @@
 
 **実施手順:**
 
-1. `changelog/product.xml` を編集
-2. v2.1.0 と v2.2.0 のリリースエントリーを追加
-3. gitログを確認し、以下のカテゴリで変更を整理:
-   - Java 21への移行
-   - 依存関係の更新
-   - ビルドシステムの改善
-   - バグ修正
-4. `mvn compile` で `ChangeLog.html` の生成確認
+1. `changelog/product.xml` を確認
+2. v2.1.0 と v2.2.0 のリリースエントリーが既に存在することを確認
+3. gitログとエントリーの内容が整合していることを確認
 
 **完了基準:**
-- [ ] v2.1.0 と v2.2.0 のエントリーが追加
-- [ ] `mvn compile` が成功
-- [ ] `target/classes/ChangeLog.html` に反映
+- [x] v2.1.0 と v2.2.0 のエントリーが既に追加済み
+- [x] `mvn compile` が成功（ChangeLog.html 生成確認）
+- [x] `target/classes/ChangeLog.html` に反映済み
 
 ---
 
