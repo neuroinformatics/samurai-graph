@@ -4,7 +4,11 @@ import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 
 /** Constants for grid in a figure. */
-public interface SGIFigureGridConstants extends SGILineConstants {
+public final class SGIFigureGridConstants {
+
+  private SGIFigureGridConstants() {
+    // utility class
+  }
 
   //
   // Default values

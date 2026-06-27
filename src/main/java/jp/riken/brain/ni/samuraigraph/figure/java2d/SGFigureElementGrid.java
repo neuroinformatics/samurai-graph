@@ -36,6 +36,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementLegend;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementShape;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementSignificantDifference;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementString;
+import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementTimingLine;
 import jp.riken.brain.ni.samuraigraph.base.SGINode;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
@@ -55,7 +56,7 @@ import org.w3c.dom.Element;
 
 /** An object to draw grid lines. */
 public class SGFigureElementGrid extends SGFigureElement2D
-    implements SGIFigureElementGrid, SGIFigureGridConstants, SGIFigureConstants {
+    implements SGIFigureElementGrid, SGIFigureConstants {
 
   /** An SGIAxisElement object. */
   private SGIFigureElementAxis mAxisElement;
@@ -106,11 +107,11 @@ public class SGFigureElementGrid extends SGFigureElement2D
   }
 
   private void init() {
-    this.setGridVisible(DEFAULT_GRID_VISIBLE);
-    this.setAutoRangeFlag(DEFAULT_GRID_AUTO_CALC);
-    this.setLineWidth(DEFAULT_GRID_LINE_WIDTH, LINE_WIDTH_UNIT);
-    this.setLineType(DEFAULT_GRID_LINE_TYPE);
-    this.setColor(DEFAULT_GRID_COLOR);
+    this.setGridVisible(SGIFigureGridConstants.DEFAULT_GRID_VISIBLE);
+    this.setAutoRangeFlag(SGIFigureGridConstants.DEFAULT_GRID_AUTO_CALC);
+    this.setLineWidth(SGIFigureGridConstants.DEFAULT_GRID_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setLineType(SGIFigureGridConstants.DEFAULT_GRID_LINE_TYPE);
+    this.setColor(SGIFigureGridConstants.DEFAULT_GRID_COLOR);
   }
 
   public void dispose() {
@@ -141,10 +142,10 @@ public class SGFigureElementGrid extends SGFigureElement2D
   public void setAxisElement(SGIFigureElementAxis el) {
     this.mAxisElement = el;
     if (this.mXAxis == null) {
-      this.mXAxis = el.getAxis(DEFAULT_GRID_HORIZONTAL_AXIS);
+      this.mXAxis = el.getAxis(SGIFigureGridConstants.DEFAULT_GRID_HORIZONTAL_AXIS);
     }
     if (this.mYAxis == null) {
-      this.mYAxis = el.getAxis(DEFAULT_GRID_VERTICAL_AXIS);
+      this.mYAxis = el.getAxis(SGIFigureGridConstants.DEFAULT_GRID_VERTICAL_AXIS);
     }
   }
 
@@ -156,10 +157,10 @@ public class SGFigureElementGrid extends SGFigureElement2D
 
     SGIFigureElementAxis el = this.mAxisElement;
     if (this.mXAxis == null) {
-      this.mXAxis = el.getAxis(DEFAULT_GRID_HORIZONTAL_AXIS);
+      this.mXAxis = el.getAxis(SGIFigureGridConstants.DEFAULT_GRID_HORIZONTAL_AXIS);
     }
     if (this.mYAxis == null) {
-      this.mYAxis = el.getAxis(DEFAULT_GRID_VERTICAL_AXIS);
+      this.mYAxis = el.getAxis(SGIFigureGridConstants.DEFAULT_GRID_VERTICAL_AXIS);
     }
     this.createAll();
 
@@ -627,31 +628,31 @@ public class SGFigureElementGrid extends SGFigureElement2D
    */
   public boolean initCompatibleProperty() {
     // KEY_GRID_VISIBLE
-    this.setGridVisible(DEFAULT_GRID_VISIBLE);
+    this.setGridVisible(SGIFigureGridConstants.DEFAULT_GRID_VISIBLE);
     // KEY_AUTO_CALC
-    this.setAutoRangeFlag(DEFAULT_GRID_AUTO_CALC);
+    this.setAutoRangeFlag(SGIFigureGridConstants.DEFAULT_GRID_AUTO_CALC);
     // KEY_X_AXIS_POSITION
-    SGAxis xAxis = this.mAxisElement.getAxis(DEFAULT_GRID_HORIZONTAL_AXIS);
+    SGAxis xAxis = this.mAxisElement.getAxis(SGIFigureGridConstants.DEFAULT_GRID_HORIZONTAL_AXIS);
     if (xAxis == null) return false;
     if (this.setXAxis(xAxis) == false) return false;
     // KEY_X_AXIS_POSITION
-    SGAxis yAxis = this.mAxisElement.getAxis(DEFAULT_GRID_VERTICAL_AXIS);
+    SGAxis yAxis = this.mAxisElement.getAxis(SGIFigureGridConstants.DEFAULT_GRID_VERTICAL_AXIS);
     if (yAxis == null) return false;
     if (this.setYAxis(yAxis) == false) return false;
     // KEY_STEP_VALUE_X
-    this.mStepValueX = new SGAxisDoubleStepValue(DEFAULT_GRID_STEP_VALUE_X);
+    this.mStepValueX = new SGAxisDoubleStepValue(SGIFigureGridConstants.DEFAULT_GRID_STEP_VALUE_X);
     // KEY_BASELINE_VALUE_X
-    this.mBaselineValueX = new SGAxisDoubleValue(DEFAULT_GRID_BASELINE_VALUE_X);
+    this.mBaselineValueX = new SGAxisDoubleValue(SGIFigureGridConstants.DEFAULT_GRID_BASELINE_VALUE_X);
     // KEY_STEP_VALUE_Y
-    this.mStepValueY = new SGAxisDoubleStepValue(DEFAULT_GRID_STEP_VALUE_Y);
+    this.mStepValueY = new SGAxisDoubleStepValue(SGIFigureGridConstants.DEFAULT_GRID_STEP_VALUE_Y);
     // KEY_BASELINE_VALUE_Y
-    this.mBaselineValueY = new SGAxisDoubleValue(DEFAULT_GRID_BASELINE_VALUE_Y);
-    // KEY_LINE_WIDTH
-    this.setLineWidth(DEFAULT_GRID_LINE_WIDTH, LINE_WIDTH_UNIT);
-    // KEY_LINE_TYPE
-    this.setLineType(DEFAULT_GRID_LINE_TYPE);
+    this.mBaselineValueY = new SGAxisDoubleValue(SGIFigureGridConstants.DEFAULT_GRID_BASELINE_VALUE_Y);
+    // SGILineConstants.KEY_LINE_WIDTH
+    this.setLineWidth(SGIFigureGridConstants.DEFAULT_GRID_LINE_WIDTH, LINE_WIDTH_UNIT);
+    // SGILineConstants.KEY_LINE_TYPE
+    this.setLineType(SGIFigureGridConstants.DEFAULT_GRID_LINE_TYPE);
     // KEY_GRID_COLOR
-    this.setColor(DEFAULT_GRID_COLOR);
+    this.setColor(SGIFigureGridConstants.DEFAULT_GRID_COLOR);
     return true;
   }
 
@@ -718,7 +719,7 @@ public class SGFigureElementGrid extends SGFigureElement2D
     }
 
     // line width
-    str = element.getAttribute(KEY_LINE_WIDTH);
+    str = element.getAttribute(SGILineConstants.KEY_LINE_WIDTH);
     if (str != null) {
       StringBuffer uLineWidth = new StringBuffer();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -732,7 +733,7 @@ public class SGFigureElementGrid extends SGFigureElement2D
     }
 
     // line type
-    str = element.getAttribute(KEY_LINE_TYPE);
+    str = element.getAttribute(SGILineConstants.KEY_LINE_TYPE);
     if (str != null) {
       num = SGDrawingElementLine.getLineTypeFromName(str);
       if (num == null) {
@@ -1412,8 +1413,8 @@ public class SGFigureElementGrid extends SGFigureElement2D
         KEY_STEP_VALUE_Y,
         KEY_BASELINE_VALUE_X,
         KEY_BASELINE_VALUE_Y,
-        KEY_LINE_WIDTH,
-        KEY_LINE_TYPE,
+        SGILineConstants.KEY_LINE_WIDTH,
+        SGILineConstants.KEY_LINE_TYPE,
         KEY_GRID_COLOR);
     return map;
   }
