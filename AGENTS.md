@@ -66,6 +66,25 @@ mvn compile
   - `test(application): add tests for SGWizardManager`
   - `docs: update execution plan and mark refactoring task done`
 
+### Commit message validation checklist
+
+Before executing `git commit`, validate the message against **every** item below. If any check fails, fix the message before proceeding.
+
+| # | Check | Rule |
+|---|-------|------|
+| 1 | **Type valid** | The type must be one of: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`. |
+| 2 | **Language** | The message must be in English (unless the user explicitly requested another language). |
+| 3 | **Lowercase** | The description must be lowercase. |
+| 4 | **No period** | The description must NOT end with a period. |
+| 5 | **Imperative mood** | Use imperative mood (e.g., "add" not "added", "adds"). |
+| 6 | **Subject ≤ 72 chars** | The subject line must not exceed 72 characters. |
+| 7 | **Body lines ≤ 72 chars** | Every line in the body must be wrapped at 72 characters or less. |
+| 8 | **At most 3 `-m` flags** | Use at most one `-m` per structural part; do NOT split body lines across multiple `-m` flags. |
+| 9 | **Literal newlines** | Multi-line body/footer must use literal newlines inside double quotes, NOT `\n` escape sequences. |
+| 10 | **No Co-authored-by** | Do not include `Co-authored-by:` unless explicitly requested. |
+
+**Validation must pass before running `git commit`.** If `skill git-commit` is used, it performs these checks automatically. If writing a commit message manually, run this checklist yourself.
+
 ### Branch workflow
 
 - Create a new branch for each task (e.g., `task/test-data-utility-bounds`).
