@@ -268,8 +268,8 @@ public abstract class SGElementGroupArrow extends SGElementGroup
   /**
    * Sets the head open and close angle.
    *
-   * @param openAngle the head open angle to set in units of degree
-   * @param closeAngle the head close angle to set in units of degree
+   * @param openAngle the head open angle to set in units of SGIConstants.degree
+   * @param closeAngle the head close angle to set in units of SGIConstants.degree
    * @return true if succeeded
    */
   public abstract boolean setHeadAngle(final float openAngle, final float closeAngle);

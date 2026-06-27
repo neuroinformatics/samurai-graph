@@ -22,7 +22,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 
 /** The panel to set array indices. */
 public class SGIndexPanel extends javax.swing.JPanel
-    implements DocumentListener, FocusListener, SGIConstants {
+    implements DocumentListener, FocusListener {
 
   private static final long serialVersionUID = -2603135691486810038L;
 

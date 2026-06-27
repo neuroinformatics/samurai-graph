@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
@@ -368,8 +369,8 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
     SGPropertyUtility.addProperty(
         map,
         edgeLineWidthKey,
-        SGUtility.getExportLineWidth(this.getEdgeLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getEdgeLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(
         map, edgeLineTypeKey, SGDrawingElementLine.getLineTypeName(this.getEdgeLineType()));
     SGPropertyUtility.addProperty(map, edgeLineColorKey, this.getEdgeLineColor());

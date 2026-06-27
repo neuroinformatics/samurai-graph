@@ -513,8 +513,8 @@ public abstract class SGDrawingElementArrow2D extends SGDrawingElementArrow
    *
    * @param type the symbol type
    * @param headSize the head size
-   * @param open the open angle in units of degree
-   * @param close the close angle in units of degree
+   * @param open the open angle in units of SGIConstants.degree
+   * @param close the close angle in units of SGIConstants.degree
    * @return a shape object
    */
   protected static Shape createHeadShape(

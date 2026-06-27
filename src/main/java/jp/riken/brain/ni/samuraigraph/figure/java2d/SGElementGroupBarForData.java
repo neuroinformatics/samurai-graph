@@ -36,7 +36,7 @@ public abstract class SGElementGroupBarForData extends SGElementGroupBar
     paint.setMagnification(this.mMagnification);
     this.setInnerPaint(paint);
 
-    this.setEdgeLineWidth(DEFAULT_BAR_EDGE_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setEdgeLineWidth(DEFAULT_BAR_EDGE_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setEdgeLineColor(DEFAULT_BAR_EDGE_LINE_COLOR);
     this.setEdgeLineVisible(DEFAULT_BAR_EDGE_LINE_VISIBLE);
     this.mBaselineValue = DEFAULT_BAR_BASELINE_VALUE;
@@ -356,8 +356,8 @@ public abstract class SGElementGroupBarForData extends SGElementGroupBar
     SGPropertyUtility.addProperty(
         map,
         COM_DATA_BAR_LINE_WIDTH,
-        SGUtility.getExportLineWidth(this.getEdgeLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getEdgeLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(map, COM_DATA_BAR_LINE_COLOR, this.getEdgeLineColor());
     SGPropertyUtility.addProperty(map, COM_DATA_BAR_VERTICAL, this.isVertical());
     SGPropertyUtility.addProperty(map, COM_DATA_BAR_INTERVAL, this.getInterval());

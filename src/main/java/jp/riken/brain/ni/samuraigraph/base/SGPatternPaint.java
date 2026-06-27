@@ -29,21 +29,21 @@ public class SGPatternPaint extends SGTransparentPaint {
 
   public static final int INDEX_45_DEGREE_WIDE = 7;
 
-  public static final String NAME_0_DEGREE = "0 degree";
+  public static final String NAME_0_DEGREE = "0 SGIConstants.degree";
 
-  public static final String NAME_45_DEGREE = "45 degree";
+  public static final String NAME_45_DEGREE = "45 SGIConstants.degree";
 
-  public static final String NAME_90_DEGREE = "90 degree";
+  public static final String NAME_90_DEGREE = "90 SGIConstants.degree";
 
-  public static final String NAME_135_DEGREE = "135 degree";
+  public static final String NAME_135_DEGREE = "135 SGIConstants.degree";
 
-  public static final String NAME_STRIPES_0_DEGREE = "Stripes 0 degree";
+  public static final String NAME_STRIPES_0_DEGREE = "Stripes 0 SGIConstants.degree";
 
-  public static final String NAME_STRIPES_45_DEGREE = "Stripes 45 degree";
+  public static final String NAME_STRIPES_45_DEGREE = "Stripes 45 SGIConstants.degree";
 
-  public static final String NAME_3_STRIPES_90_DEGREE = "3 stripes 90 degree";
+  public static final String NAME_3_STRIPES_90_DEGREE = "3 stripes 90 SGIConstants.degree";
 
-  public static final String NAME_45_DEGREE_WIDE = "45 degree wide";
+  public static final String NAME_45_DEGREE_WIDE = "45 SGIConstants.degree wide";
 
   public static final String[] TYPE_PATTERN_NAMES = {
     NAME_0_DEGREE,

@@ -184,7 +184,7 @@ public class SGMDArrayDataDuplicationDialog extends SGDataDuplicationDialog {
     }
     if (!ok) {
       SGUtility.showMessageDialog(
-          this, INVALID_INPUT_VALUE, SGIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+          this, SGIConstants.INVALID_INPUT_VALUE, SGIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
       return false;
     }
     return super.onOK();

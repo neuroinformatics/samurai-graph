@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -36,7 +37,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementLegend;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementShape;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementSignificantDifference;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementString;
-import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementTimingLine;
 import jp.riken.brain.ni.samuraigraph.base.SGINode;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
@@ -51,6 +51,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGIFigureGridConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -109,7 +110,7 @@ public class SGFigureElementGrid extends SGFigureElement2D
   private void init() {
     this.setGridVisible(SGIFigureGridConstants.DEFAULT_GRID_VISIBLE);
     this.setAutoRangeFlag(SGIFigureGridConstants.DEFAULT_GRID_AUTO_CALC);
-    this.setLineWidth(SGIFigureGridConstants.DEFAULT_GRID_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setLineWidth(SGIFigureGridConstants.DEFAULT_GRID_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setLineType(SGIFigureGridConstants.DEFAULT_GRID_LINE_TYPE);
     this.setColor(SGIFigureGridConstants.DEFAULT_GRID_COLOR);
   }
@@ -642,13 +643,15 @@ public class SGFigureElementGrid extends SGFigureElement2D
     // KEY_STEP_VALUE_X
     this.mStepValueX = new SGAxisDoubleStepValue(SGIFigureGridConstants.DEFAULT_GRID_STEP_VALUE_X);
     // KEY_BASELINE_VALUE_X
-    this.mBaselineValueX = new SGAxisDoubleValue(SGIFigureGridConstants.DEFAULT_GRID_BASELINE_VALUE_X);
+    this.mBaselineValueX =
+        new SGAxisDoubleValue(SGIFigureGridConstants.DEFAULT_GRID_BASELINE_VALUE_X);
     // KEY_STEP_VALUE_Y
     this.mStepValueY = new SGAxisDoubleStepValue(SGIFigureGridConstants.DEFAULT_GRID_STEP_VALUE_Y);
     // KEY_BASELINE_VALUE_Y
-    this.mBaselineValueY = new SGAxisDoubleValue(SGIFigureGridConstants.DEFAULT_GRID_BASELINE_VALUE_Y);
+    this.mBaselineValueY =
+        new SGAxisDoubleValue(SGIFigureGridConstants.DEFAULT_GRID_BASELINE_VALUE_Y);
     // SGILineConstants.KEY_LINE_WIDTH
-    this.setLineWidth(SGIFigureGridConstants.DEFAULT_GRID_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setLineWidth(SGIFigureGridConstants.DEFAULT_GRID_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     // SGILineConstants.KEY_LINE_TYPE
     this.setLineType(SGIFigureGridConstants.DEFAULT_GRID_LINE_TYPE);
     // KEY_GRID_COLOR
@@ -1464,8 +1467,8 @@ public class SGFigureElementGrid extends SGFigureElement2D
     SGPropertyUtility.addProperty(
         map,
         gridLineWidthKey,
-        SGUtility.getExportLineWidth(this.getLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(
         map, gridLineTypeKey, SGDrawingElementLine.getLineTypeName(this.getLineType()));
     SGPropertyUtility.addProperty(map, gridColorKey, this.getColor());

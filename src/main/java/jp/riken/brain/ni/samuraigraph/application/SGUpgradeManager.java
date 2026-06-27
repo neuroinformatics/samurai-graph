@@ -36,7 +36,7 @@ import org.w3c.dom.Text;
 
 /** A class to manage upgrade of the application. */
 class SGUpgradeManager
-    implements ActionListener, SGIConstants, SGIUpgradeConstants, SGIPreferencesConstants {
+    implements ActionListener, SGIUpgradeConstants, SGIPreferencesConstants {
 
   private static final String MSG_LATEST_VERSION_INSTALLED =
       "The latest version is already installed.";
@@ -79,7 +79,7 @@ class SGUpgradeManager
     this.mProxyManager = p;
     this.mAppProp = ap;
     this.mUpgradeFileChooser = new SGFileChooser();
-    this.mUpgradeFileChooser.setCurrentDirectory(new File(USER_HOME));
+    this.mUpgradeFileChooser.setCurrentDirectory(new File(SGIConstants.USER_HOME));
   }
 
   /** */
@@ -369,9 +369,9 @@ class SGUpgradeManager
 
     // get OS name
     String name = null;
-    if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
+    if (SGUtility.identifyOS(SGIConstants.OS_NAME_WINDOWS)) {
       name = "win32";
-    } else if (SGUtility.identifyOS(OS_NAME_MACOSX)) {
+    } else if (SGUtility.identifyOS(SGIConstants.OS_NAME_MACOSX)) {
       name = "macosx";
     } else {
       name = "other";
@@ -462,7 +462,7 @@ class SGUpgradeManager
 
     // get the root directory
     String classpath = System.getProperty("java.class.path");
-    StringTokenizer stk = new StringTokenizer(classpath, PATH_SEPARATOR);
+    StringTokenizer stk = new StringTokenizer(classpath, SGIConstants.PATH_SEPARATOR);
     String root = null;
     while (stk.hasMoreTokens()) {
       String str = stk.nextToken();
@@ -479,9 +479,9 @@ class SGUpgradeManager
     // copy the helper application from ./lib to the temporary directory
     sb.setLength(0);
     sb.append(root);
-    sb.append(FILE_SEPARATOR);
+    sb.append(SGIConstants.FILE_SEPARATOR);
     sb.append("lib");
-    sb.append(FILE_SEPARATOR);
+    sb.append(SGIConstants.FILE_SEPARATOR);
     sb.append(UPGRADE_HELPER_FILE_NAME);
     File helper = new File(sb.toString());
     if (helper.exists() == false) {
@@ -490,7 +490,7 @@ class SGUpgradeManager
       return false;
     }
 
-    File helperTempDir = new File(SGApplicationUtility.getPathName(TMP_DIR, HELPER_TEMP_DIR_NAME));
+    File helperTempDir = new File(SGApplicationUtility.getPathName(SGIConstants.TMP_DIR, HELPER_TEMP_DIR_NAME));
     helperTempDir.deleteOnExit();
     if (helperTempDir.mkdir() == false) {
       // failed to create a temporary directory.
@@ -533,9 +533,9 @@ class SGUpgradeManager
     String[] cmdArray = new String[6];
     sb.setLength(0);
     sb.append(System.getProperty("java.home"));
-    sb.append(FILE_SEPARATOR);
+    sb.append(SGIConstants.FILE_SEPARATOR);
     sb.append("bin");
-    sb.append(FILE_SEPARATOR);
+    sb.append(SGIConstants.FILE_SEPARATOR);
     sb.append("javaw.exe");
     cmdArray[0] = sb.toString();
     cmdArray[1] = "-jar";

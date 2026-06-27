@@ -558,16 +558,16 @@ public class SGLegendDialog extends SGPropertyDialog
     // axis line width
     this.mFrameLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // font size
     this.mFontSizeSpinner.initProperties(
         getFontSizeSpinnerNumberModel(),
-        FONT_SIZE_UNIT,
-        FONT_SIZE_FRAC_DIGIT_MIN,
-        FONT_SIZE_FRAC_DIGIT_MAX);
+        SGIConstants.FONT_SIZE_UNIT,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MIN,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MAX);
 
     // data width
     this.mSpanSpinner.initProperties(
@@ -1103,16 +1103,16 @@ public class SGLegendDialog extends SGPropertyDialog
     final double xValue0 = legend0.getXValue();
     final double yValue0 = legend0.getYValue();
     final String fontName0 = legend0.getFontName();
-    final float fontSize0 = legend0.getFontSize(pt);
+    final float fontSize0 = legend0.getFontSize(SGIConstants.pt);
     final int fontStyle0 = legend0.getFontStyle();
     final Color stringColor0 = legend0.getFontColor();
-    final float frameLineWidth0 = legend0.getFrameLineWidth(pt);
+    final float frameLineWidth0 = legend0.getFrameLineWidth(SGIConstants.pt);
     final Color frameLineColor0 = legend0.getFrameColor();
     final Color bgColor0 = legend0.getBackgroundColor();
     final boolean legendVisible0 = legend0.isVisible();
     final boolean frameLineVisible0 = legend0.isFrameVisible();
     final int bgTransparent0 = legend0.getBackgroundTransparency();
-    final float dataWidth0 = legend0.getSymbolSpan(cm);
+    final float dataWidth0 = legend0.getSymbolSpan(SGIConstants.cm);
 
     Double xValue = Double.valueOf(xValue0);
     Double yValue = Double.valueOf(yValue0);
@@ -1162,7 +1162,7 @@ public class SGLegendDialog extends SGPropertyDialog
       for (int ii = 1; ii < list.size(); ii++) {
         SGILegendDialogObserver legend1 = (SGILegendDialogObserver) list.get(ii);
 
-        final float fontSize1 = legend1.getFontSize(pt);
+        final float fontSize1 = legend1.getFontSize(SGIConstants.pt);
         if (fontSize0 != fontSize1) {
           fontSize = null;
           break;
@@ -1192,7 +1192,7 @@ public class SGLegendDialog extends SGPropertyDialog
       for (int ii = 1; ii < list.size(); ii++) {
         SGILegendDialogObserver legend1 = (SGILegendDialogObserver) list.get(ii);
 
-        final float frameLineWidth1 = legend1.getFrameLineWidth(pt);
+        final float frameLineWidth1 = legend1.getFrameLineWidth(SGIConstants.pt);
         if (frameLineWidth0 != frameLineWidth1) {
           frameLineWidth = null;
           break;
@@ -1252,7 +1252,7 @@ public class SGLegendDialog extends SGPropertyDialog
       for (int ii = 1; ii < list.size(); ii++) {
         SGILegendDialogObserver legend1 = (SGILegendDialogObserver) list.get(ii);
 
-        final float dataWidth1 = legend1.getSymbolSpan(cm);
+        final float dataWidth1 = legend1.getSymbolSpan(SGIConstants.cm);
         if (dataWidth0 != dataWidth1) {
           dataWidth = null;
           break;
@@ -1364,7 +1364,7 @@ public class SGLegendDialog extends SGPropertyDialog
     }
 
     if (frameLineWidth != null) {
-      legend.setFrameLineWidth(frameLineWidth.floatValue(), pt);
+      legend.setFrameLineWidth(frameLineWidth.floatValue(), SGIConstants.pt);
     }
 
     if (frameLineColor != null) {
@@ -1385,7 +1385,7 @@ public class SGLegendDialog extends SGPropertyDialog
     }
 
     if (fontSize != null) {
-      legend.setFontSize(fontSize.floatValue(), pt);
+      legend.setFontSize(fontSize.floatValue(), SGIConstants.pt);
     }
 
     if (fontStyle != null) {
@@ -1398,7 +1398,7 @@ public class SGLegendDialog extends SGPropertyDialog
 
     // data
     if (dataWidth != null) {
-      legend.setSymbolSpan(dataWidth.floatValue(), cm);
+      legend.setSymbolSpan(dataWidth.floatValue(), SGIConstants.cm);
     }
 
     return true;

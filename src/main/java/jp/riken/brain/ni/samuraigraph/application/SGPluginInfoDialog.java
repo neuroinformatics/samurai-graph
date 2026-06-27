@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -81,7 +82,7 @@ public class SGPluginInfoDialog extends SGDialog {
   @Override
   protected void onEscKeyTyped() {
     this.setVisible(false);
-    this.setCloseOption(CANCEL_OPTION);
+    this.setCloseOption(SGIConstants.CANCEL_OPTION);
   }
 
   public void setPlugins(List<SGPluginFile> pluginList) {

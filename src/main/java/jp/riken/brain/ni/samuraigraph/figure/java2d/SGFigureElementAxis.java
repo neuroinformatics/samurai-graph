@@ -152,7 +152,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
 
     // initialize frame lines
     this.setFrameVisible(DEFAULT_FRAME_LINE_VISIBLE);
-    this.setFrameLineWidth(DEFAULT_FRAME_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setFrameLineWidth(DEFAULT_FRAME_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setFrameLineColor(DEFAULT_FRAME_LINE_COLOR);
 
     // creates the X and Y-axes
@@ -1076,7 +1076,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
         this.mZAxisElementsGroup.setDirection(SGIColorBarConstants.DIRECTION_HORIZONTAL_LOWER);
         this.mZAxisElementsGroup.setLocation(gx, gy + 1.20f * gh);
         this.mZAxisElementsGroup.setSize(
-            gw / this.mMagnification, DEFAULT_COLOR_BAR_WIDTH / CM_POINT_RATIO);
+            gw / this.mMagnification, DEFAULT_COLOR_BAR_WIDTH / SGIConstants.CM_POINT_RATIO);
 
         this.mZAxisElementsGroup.setVisible(true);
 

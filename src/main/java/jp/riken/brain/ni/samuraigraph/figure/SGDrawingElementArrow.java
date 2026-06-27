@@ -624,8 +624,8 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     SGPropertyUtility.addProperty(
         map,
         lineWidthKey,
-        SGUtility.getExportLineWidth(this.getLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(
         map, lineTypeKey, SGDrawingElementLine.getLineTypeName(this.getLineType()));
     SGPropertyUtility.addProperty(

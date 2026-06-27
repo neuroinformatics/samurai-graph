@@ -31,8 +31,7 @@ import org.w3c.dom.NodeList;
 
 /** SGMainFunctions :: DataSetManager class */
 class SGDataSetManager
-    implements SGIConstants,
-        SGIApplicationConstants,
+    implements SGIApplicationConstants,
         SGIPropertyFileConstants,
         SGIApplicationTextConstants,
         SGIArchiveFileConstants {
@@ -94,7 +93,7 @@ class SGDataSetManager
       this.mArchiveFileExtractor.deleteExtractedFiles();
       datasetTempDir.delete();
       return false;
-    } else if (errCode == CANCEL_OPTION) {
+    } else if (errCode == SGIConstants.CANCEL_OPTION) {
       this.mArchiveFileExtractor.deleteExtractedFiles();
       datasetTempDir.delete();
       return true;
@@ -197,7 +196,7 @@ class SGDataSetManager
       file = this.mArchiveFileExtractor.getArchiveFileFromFileChooser(wnd);
     }
     if (file == null) {
-      errCode = CANCEL_OPTION;
+      errCode = SGIConstants.CANCEL_OPTION;
       return true;
     } else {
       try {
@@ -215,7 +214,7 @@ class SGDataSetManager
             } catch (IOException e) {
               return false;
             }
-            if (errCode == OK_OPTION) {
+            if (errCode == SGIConstants.OK_OPTION) {
               File f = this.mArchiveFileExtractor.getCurrentFile();
               if (f != null) {
                 this.mMain.updateCurrentFile(f, FILE_TYPE.DATASET);
@@ -269,7 +268,7 @@ class SGDataSetManager
    * @return a temporary directory for data set file
    */
   private File getDataSetTempDir() {
-    String filename = SGApplicationUtility.getPathName(TMP_DIR, DATASET_TEMPDIR_NAME);
+    String filename = SGApplicationUtility.getPathName(SGIConstants.TMP_DIR, DATASET_TEMPDIR_NAME);
     StringBuffer sb = new StringBuffer();
     sb.append(filename);
     sb.append(System.currentTimeMillis());
@@ -300,7 +299,7 @@ class SGDataSetManager
 
     StringBuffer sb = new StringBuffer();
     sb.append(datasetTempDir.getAbsolutePath());
-    sb.append(FILE_SEPARATOR);
+    sb.append(SGIConstants.FILE_SEPARATOR);
     sb.append("id");
     String header = sb.toString();
 
@@ -428,7 +427,7 @@ class SGDataSetManager
 
     // set properties
     if (this.mMain.mPropertyFileManager.setPropertyFile(
-            wnd, doc, wDataArray, true, versionNumber, LOAD_PROPERTIES_FROM_DATA_SET)
+            wnd, doc, wDataArray, true, versionNumber, SGIConstants.LOAD_PROPERTIES_FROM_DATA_SET)
         == false) {
       return false;
     }
@@ -484,7 +483,7 @@ class SGDataSetManager
     File datasetTempDir = this.getDataSetTempDir();
     if (datasetTempDir.mkdir() == false) {
       JOptionPane.showMessageDialog(wnd, failed);
-      return ERROR_OPTION;
+      return SGIConstants.ERROR_OPTION;
     }
 
     // set the selected file name
@@ -495,11 +494,11 @@ class SGDataSetManager
     try {
       zFile = this.mArchiveFileCreator.getArchiveFileFromFileChooser(wnd);
     } catch (IOException e) {
-      SGUtility.showErrorMessageDialog(wnd, e.getMessage(), TITLE_ERROR);
-      return ERROR_OPTION;
+      SGUtility.showErrorMessageDialog(wnd, e.getMessage(), SGIConstants.TITLE_ERROR);
+      return SGIConstants.ERROR_OPTION;
     }
     if (zFile == null) {
-      return CANCEL_OPTION;
+      return SGIConstants.CANCEL_OPTION;
     }
     final String fileDesc = zFile.desc;
 
@@ -508,19 +507,19 @@ class SGDataSetManager
       if (fileDesc.startsWith(ARCHIVE_FILE_DESCRIPTION_SGA107)
           || fileDesc.startsWith(ARCHIVE_FILE_DESCRIPTION)) {
 
-        OPERATION mode;
+        SGIConstants.OPERATION mode;
         if (fileDesc.startsWith(ARCHIVE_FILE_DESCRIPTION_SGA107)) {
-          mode = OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107;
+          mode = SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107;
         } else {
-          mode = OPERATION.SAVE_TO_ARCHIVE_DATA_SET;
+          mode = SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET;
         }
 
         // checks the data type
-        if (OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107.equals(mode)) {
+        if (SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107.equals(mode)) {
           if (this.checkNetCDFDataExists(wnd) || this.checkMDArrayDataExists(wnd)) {
             SGUtility.showErrorMessageDialog(
                 wnd, ERRMSG_FAILED_TO_CREATE_DATASET, SGIConstants.TITLE_ERROR);
-            return ERROR_OPTION;
+            return SGIConstants.ERROR_OPTION;
           }
         }
 
@@ -529,7 +528,7 @@ class SGDataSetManager
         if (fList == null) {
           JOptionPane.showMessageDialog(wnd, failed);
           datasetTempDir.delete();
-          return ERROR_OPTION;
+          return SGIConstants.ERROR_OPTION;
         }
         int ret = this.mArchiveFileCreator.create(wnd, datasetTempDir.getPath(), zFile.file);
 
@@ -540,7 +539,7 @@ class SGDataSetManager
         }
         datasetTempDir.delete();
 
-        if (ret != OK_OPTION) {
+        if (ret != SGIConstants.OK_OPTION) {
           return ret;
         }
 
@@ -549,7 +548,7 @@ class SGDataSetManager
           this.mMain.updateCurrentFile(f, FILE_TYPE.DATASET);
         }
 
-        return OK_OPTION;
+        return SGIConstants.OK_OPTION;
         //            } else if (fileDesc.startsWith(ARCHIVE_FILE_DESCRIPTION_NETCDF)) {
         //                final String versionString = this.mMain.mAppProp.getVersionString();
         //                SGNetCDFDataSetManager netcdfDatasetManager = new
@@ -563,7 +562,7 @@ class SGDataSetManager
         //                    f.delete();
         //                }
         //                datasetTempDir.delete();
-        //                if (result != SUCCESSFUL_COMPLETION) {
+        //                if (result != SGIConstants.SUCCESSFUL_COMPLETION) {
         //                    JOptionPane.showMessageDialog(wnd, failed);
         //                    return result;
         //                }
@@ -573,12 +572,12 @@ class SGDataSetManager
         //                    this.mMain.updateCurrentFile(f, FILE_TYPE.DATASET);
         //                }
         //
-        //                return OK_OPTION;
+        //                return SGIConstants.OK_OPTION;
       } else {
-        return ERROR_OPTION;
+        return SGIConstants.ERROR_OPTION;
       }
     } else {
-      return ERROR_OPTION;
+      return SGIConstants.ERROR_OPTION;
     }
   }
 
@@ -596,7 +595,7 @@ class SGDataSetManager
     // create temporary directory
     File datasetTempDir = this.getDataSetTempDir();
     if (datasetTempDir.mkdir() == false) {
-      return ERROR_OPTION;
+      return SGIConstants.ERROR_OPTION;
     }
 
     File outFile = new File(filePath);
@@ -604,24 +603,24 @@ class SGDataSetManager
     if (ARCHIVE_FILE_TYPE_SGA.equalsIgnoreCase(archiveType)
         || ARCHIVE_FILE_TYPE_SGA107.equalsIgnoreCase(archiveType)) {
 
-      OPERATION mode;
+      SGIConstants.OPERATION mode;
       if (ARCHIVE_FILE_TYPE_SGA.equalsIgnoreCase(archiveType)) {
-        mode = OPERATION.SAVE_TO_ARCHIVE_DATA_SET;
+        mode = SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET;
       } else {
-        mode = OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107;
+        mode = SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107;
       }
 
       // checks the data type
-      if (OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107.equals(mode)) {
+      if (SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107.equals(mode)) {
         if (!this.checkNetCDFDataExists(wnd) || !this.checkMDArrayDataExists(wnd)) {
-          return ERROR_OPTION;
+          return SGIConstants.ERROR_OPTION;
         }
       }
 
       fList = _dumpDataSet(wnd, datasetTempDir, new SGExportParameter(mode));
       if (fList == null) {
         datasetTempDir.delete();
-        return ERROR_OPTION;
+        return SGIConstants.ERROR_OPTION;
       }
 
       int ret = this.mArchiveFileCreator.create(wnd, datasetTempDir.getPath(), outFile);
@@ -632,12 +631,12 @@ class SGDataSetManager
         f.delete();
       }
       datasetTempDir.delete();
-      if (ret != OK_OPTION) {
+      if (ret != SGIConstants.OK_OPTION) {
         return ret;
       }
 
       this.mMain.updateCurrentFile(outFile, FILE_TYPE.DATASET);
-      return OK_OPTION;
+      return SGIConstants.OK_OPTION;
 
     } else if (ARCHIVE_FILETYPE_NETCDF.equalsIgnoreCase(archiveType)) {
       final String versionString = this.mMain.mAppProp.getVersionString();
@@ -650,15 +649,15 @@ class SGDataSetManager
         f.delete();
       }
       datasetTempDir.delete();
-      if (result != SUCCESSFUL_COMPLETION) {
+      if (result != SGIConstants.SUCCESSFUL_COMPLETION) {
         return result;
       }
 
       this.mMain.updateCurrentFile(outFile, FILE_TYPE.DATASET);
-      return OK_OPTION;
+      return SGIConstants.OK_OPTION;
     }
 
-    return ERROR_OPTION;
+    return SGIConstants.ERROR_OPTION;
   }
 
   /**
@@ -675,7 +674,7 @@ class SGDataSetManager
     final String pFname =
         SGApplicationUtility.getPathName(datasetDir.getPath(), DATASET_PROPERTY_FILENAME);
     int ret = this.mMain.mPropertyFileManager.saveProperties(wnd, pFname, mode);
-    if (ret != OK_OPTION) {
+    if (ret != SGIConstants.OK_OPTION) {
       return null;
     }
     fList.add(new File(pFname));
@@ -692,7 +691,7 @@ class SGDataSetManager
         String ext = data.getDataSetFileExtension();
         StringBuffer sb = new StringBuffer();
         sb.append(datasetDir.getPath());
-        sb.append(FILE_SEPARATOR);
+        sb.append(SGIConstants.FILE_SEPARATOR);
         sb.append("id");
         sb.append(ii);
         sb.append('-');

@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -1268,7 +1269,7 @@ public class SGFigureElementString extends SGFigureElement2D
 
     /** */
     private boolean init() {
-      this.setFontSize(DEFAULT_LABEL_FONT_SIZE, FONT_SIZE_UNIT);
+      this.setFontSize(DEFAULT_LABEL_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
       this.setFontName(DEFAULT_LABEL_FONT_NAME);
       this.setFontStyle(DEFAULT_LABEL_FONT_STYLE);
       this.setAngle(DEFAULT_LABEL_ANGLE);
@@ -1572,17 +1573,17 @@ public class SGFigureElementString extends SGFigureElement2D
 
       p.addSeparator();
 
-      SGUtility.addItem(p, this, MENUCMD_CUT);
-      SGUtility.addItem(p, this, MENUCMD_COPY);
+      SGUtility.addItem(p, this, SGIConstants.MENUCMD_CUT);
+      SGUtility.addItem(p, this, SGIConstants.MENUCMD_COPY);
 
       p.addSeparator();
 
-      SGUtility.addItem(p, this, MENUCMD_DELETE);
-      SGUtility.addItem(p, this, MENUCMD_DUPLICATE);
+      SGUtility.addItem(p, this, SGIConstants.MENUCMD_DELETE);
+      SGUtility.addItem(p, this, SGIConstants.MENUCMD_DUPLICATE);
 
       p.addSeparator();
 
-      SGUtility.addItem(p, this, MENUCMD_PROPERTY);
+      SGUtility.addItem(p, this, SGIConstants.MENUCMD_PROPERTY);
 
       return p;
     }
@@ -1793,7 +1794,7 @@ public class SGFigureElementString extends SGFigureElement2D
       final String command = e.getActionCommand();
       // final Object source = e.getSource();
 
-      if (command.equals(MENUCMD_PROPERTY)) {
+      if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
         SGFigureElementString.this.setPropertiesOfSelectedObjects(this);
       } else {
         notifyToListener(command, e.getSource());

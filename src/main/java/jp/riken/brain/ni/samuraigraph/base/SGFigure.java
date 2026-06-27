@@ -430,10 +430,10 @@ public abstract class SGFigure
     sb.append(str);
     sb.append(" ( X=");
     sb.append(x);
-    sb.append("cm, Y=");
+    sb.append("SGIConstants.cm, Y=");
     sb.append(y);
-    sb.append("cm )");
-    // str += " ( X=" + x + "cm, Y=" + y + "cm )";
+    sb.append("SGIConstants.cm )");
+    // str += " ( X=" + x + "SGIConstants.cm, Y=" + y + "SGIConstants.cm )";
     // return str;
     return sb.toString();
   }
@@ -750,7 +750,7 @@ public abstract class SGFigure
     return SGUtility.calcPropertyValue(value, unit, outputUnit, min, max, LENGTH_MINIMAL_ORDER);
   }
 
-  // check whether two values in units of pt are equal in FIGURE_SIZE_UNIT
+  // check whether two values in units of SGIConstants.pt are equal in FIGURE_SIZE_UNIT
   private boolean equalLength(final float v1, final float v2) {
     final float diff = Math.abs(v1 - v2);
     final double value = SGUtilityText.convert(diff, SGIConstants.pt, FIGURE_SIZE_UNIT);
@@ -772,7 +772,7 @@ public abstract class SGFigure
   }
 
   // Set the location of graph rectangle.
-  // Arguments x and y are given in units of pt.
+  // Arguments x and y are given in units of SGIConstants.pt.
   private boolean setGraphRectLocationAttributes(final float x, final float y) {
     final Rectangle2D cRect = this.mWnd.getPaperRect();
     this.mGraphRectX = (x - (float) cRect.getX()) / this.mMagnification;
@@ -1514,7 +1514,7 @@ public abstract class SGFigure
 
       // moves figure
       this.setDraggingRect(rect);
-      this.snapToLines(OTHER);
+      this.snapToLines(SGIConstants.OTHER);
       this.setGraphRectOnDragging();
       if (this.isFigureMoved()) {
         this.setChanged(true);
@@ -1734,7 +1734,7 @@ public abstract class SGFigure
 
   // check whether the button is pressed on an effective point
   private boolean pressWithMouseLocation(MouseEvent e) {
-    if (this.mMouseLocation != OTHER) {
+    if (this.mMouseLocation != SGIConstants.OTHER) {
       return this.pressed(e);
     }
     return false;
@@ -1762,7 +1762,7 @@ public abstract class SGFigure
       if (this.mPressedElement == null) {
         if (this.mWnd.getCursor().equals(Cursor.getDefaultCursor())) {
           this.changeCursor();
-          if (this.mMouseLocation == OTHER) {
+          if (this.mMouseLocation == SGIConstants.OTHER) {
             this.mWnd.setCursor(new Cursor(Cursor.MOVE_CURSOR));
           }
         }
@@ -1806,7 +1806,7 @@ public abstract class SGFigure
         final int loc = this.mMouseLocation;
 
         // except the four corners
-        if (loc != NORTH_WEST && loc != NORTH_EAST && loc != SOUTH_EAST && loc != SOUTH_WEST) {
+        if (loc != SGIConstants.NORTH_WEST && loc != SGIConstants.NORTH_EAST && loc != SGIConstants.SOUTH_EAST && loc != SGIConstants.SOUTH_WEST) {
           // if no figure element is pressed, remove this figure
           // from the list of the selected figure
           if (this.mPressedElement == null) {
@@ -1882,7 +1882,7 @@ public abstract class SGFigure
     final int ml = this.mMouseLocation;
 
     // other points
-    if (ml == OTHER) {
+    if (ml == SGIConstants.OTHER) {
       Rectangle2D rect = this.getExtraRegionBounds();
       if (this.mWnd.mMousePressLocation != null && !rect.contains(this.mWnd.mMousePressLocation)) {
         return false;
@@ -1935,7 +1935,7 @@ public abstract class SGFigure
         (float) dRect.getWidth(),
         (float) dRect.getHeight());
 
-    this.snapToLines(OTHER);
+    this.snapToLines(SGIConstants.OTHER);
 
     // if the rectangle for dragging is invisible,
     // set the graph area rectangle immediately
@@ -2033,7 +2033,7 @@ public abstract class SGFigure
   // with minimal width
   private void snapToUnitCell(final int mouseLocation) {
     final float eps = (float) SGUtilityNumber.getPowersOfTen(LENGTH_MINIMAL_ORDER);
-    final float interval = this.mMagnification * eps / CM_POINT_RATIO;
+    final float interval = this.mMagnification * eps / SGIConstants.CM_POINT_RATIO;
     this.snap(interval, mouseLocation);
   }
 
@@ -2091,12 +2091,12 @@ public abstract class SGFigure
     float hNew;
 
     // x
-    if (mouseLocation == WEST || mouseLocation == SOUTH_WEST || mouseLocation == NORTH_WEST) {
+    if (mouseLocation == SGIConstants.WEST || mouseLocation == SGIConstants.SOUTH_WEST || mouseLocation == SGIConstants.NORTH_WEST) {
       xNew = oxNew;
       wNew = maxX - xNew;
-    } else if (mouseLocation == EAST
-        || mouseLocation == SOUTH_EAST
-        || mouseLocation == NORTH_EAST) {
+    } else if (mouseLocation == SGIConstants.EAST
+        || mouseLocation == SGIConstants.SOUTH_EAST
+        || mouseLocation == SGIConstants.NORTH_EAST) {
       xNew = minX;
 
       final int nMax = (int) ((maxX - px) / interval);
@@ -2109,7 +2109,7 @@ public abstract class SGFigure
 
       final float maxNew = px + nNew * interval;
       wNew = maxNew - minX;
-    } else if (mouseLocation == OTHER) {
+    } else if (mouseLocation == SGIConstants.OTHER) {
       xNew = oxNew;
       wNew = (float) dRect.getWidth();
     } else {
@@ -2118,12 +2118,12 @@ public abstract class SGFigure
     }
 
     // y
-    if (mouseLocation == SOUTH || mouseLocation == SOUTH_WEST || mouseLocation == SOUTH_EAST) {
+    if (mouseLocation == SGIConstants.SOUTH || mouseLocation == SGIConstants.SOUTH_WEST || mouseLocation == SGIConstants.SOUTH_EAST) {
       yNew = minY;
       hNew = oyNew - minY;
-    } else if (mouseLocation == NORTH
-        || mouseLocation == NORTH_EAST
-        || mouseLocation == NORTH_WEST) {
+    } else if (mouseLocation == SGIConstants.NORTH
+        || mouseLocation == SGIConstants.NORTH_EAST
+        || mouseLocation == SGIConstants.NORTH_WEST) {
       final int nMin = (int) ((minY - py) / interval);
       final float rMin = interval * nMin;
 
@@ -2136,7 +2136,7 @@ public abstract class SGFigure
       hNew = maxY - minNew;
 
       yNew = minNew;
-    } else if (mouseLocation == OTHER) {
+    } else if (mouseLocation == SGIConstants.OTHER) {
       hNew = (float) dRect.getHeight();
       yNew = oyNew - hNew;
     } else {
@@ -2244,7 +2244,7 @@ public abstract class SGFigure
     }
 
     // snap to the lines
-    this.snapToLines(OTHER);
+    this.snapToLines(SGIConstants.OTHER);
     this.setGraphRectOnDragging();
 
     return true;
@@ -2354,7 +2354,7 @@ public abstract class SGFigure
    */
   private Cursor setMouseCursor(final int x, final int y) {
     this.setMouseLocation(x, y);
-    if (this.mMouseLocation == OTHER) {
+    if (this.mMouseLocation == SGIConstants.OTHER) {
       if (this.setMouseCursorSub(x, y) == false) {
         return this.setMouseCursor();
       }
@@ -2386,42 +2386,42 @@ public abstract class SGFigure
 
     Cursor cur = null;
     switch (this.mMouseLocation) {
-      case WEST:
+      case SGIConstants.WEST:
         {
           cur = new Cursor(Cursor.W_RESIZE_CURSOR);
           break;
         }
-      case EAST:
+      case SGIConstants.EAST:
         {
           cur = new Cursor(Cursor.E_RESIZE_CURSOR);
           break;
         }
-      case NORTH:
+      case SGIConstants.NORTH:
         {
           cur = new Cursor(Cursor.N_RESIZE_CURSOR);
           break;
         }
-      case SOUTH:
+      case SGIConstants.SOUTH:
         {
           cur = new Cursor(Cursor.S_RESIZE_CURSOR);
           break;
         }
-      case NORTH_WEST:
+      case SGIConstants.NORTH_WEST:
         {
           cur = new Cursor(Cursor.NW_RESIZE_CURSOR);
           break;
         }
-      case SOUTH_EAST:
+      case SGIConstants.SOUTH_EAST:
         {
           cur = new Cursor(Cursor.SE_RESIZE_CURSOR);
           break;
         }
-      case NORTH_EAST:
+      case SGIConstants.NORTH_EAST:
         {
           cur = new Cursor(Cursor.NE_RESIZE_CURSOR);
           break;
         }
-      case SOUTH_WEST:
+      case SGIConstants.SOUTH_WEST:
         {
           cur = new Cursor(Cursor.SW_RESIZE_CURSOR);
           break;
@@ -2572,50 +2572,50 @@ public abstract class SGFigure
     } else {
       // from the item of pop-up menu of child objects
 
-      if (command.equals(MENUCMD_BRING_TO_FRONT)) {
+      if (command.equals(SGIConstants.MENUCMD_BRING_TO_FRONT)) {
         this.mWnd.bringFocusedObjectsToFront();
-      } else if (command.equals(MENUCMD_BRING_FORWARD)) {
+      } else if (command.equals(SGIConstants.MENUCMD_BRING_FORWARD)) {
         this.mWnd.bringFocusedObjectsForward();
-      } else if (command.equals(MENUCMD_SEND_BACKWARD)) {
+      } else if (command.equals(SGIConstants.MENUCMD_SEND_BACKWARD)) {
         this.mWnd.sendFocusedObjectsBackward();
-      } else if (command.equals(MENUCMD_SEND_TO_BACK)) {
+      } else if (command.equals(SGIConstants.MENUCMD_SEND_TO_BACK)) {
         this.mWnd.sendFocusedObjectsToBack();
-      } else if (command.equals(MENUCMD_CUT)) {
+      } else if (command.equals(SGIConstants.MENUCMD_CUT)) {
         this.mWnd.doCut();
-      } else if (command.equals(MENUCMD_COPY)) {
+      } else if (command.equals(SGIConstants.MENUCMD_COPY)) {
         this.mWnd.doCopy();
-      } else if (command.equals(MENUCMD_DUPLICATE)) {
+      } else if (command.equals(SGIConstants.MENUCMD_DUPLICATE)) {
         this.mWnd.doDuplicate();
-      } else if (command.equals(MENUCMD_DELETE)) {
+      } else if (command.equals(SGIConstants.MENUCMD_DELETE)) {
         this.mWnd.doDelete();
-      } else if (command.equals(MENUCMD_INSERT_NETCDF_LABEL)) {
+      } else if (command.equals(SGIConstants.MENUCMD_INSERT_NETCDF_LABEL)) {
         this.mWnd.doInsertNetCDFLabel();
         this.notifyToRoot();
-      } else if (command.equals(MENUCMD_ANIMATION)) {
+      } else if (command.equals(SGIConstants.MENUCMD_ANIMATION)) {
         this.mMouseInExtraRegionFlag = false;
         // this.clearFocusedObjects();
         this.mWnd.doAnimation();
-      } else if (MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
-          || MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)
-          || MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)
-          || MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)
-          || MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
+      } else if (SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
+          || SGIConstants.MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)
+          || SGIConstants.MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)
+          || SGIConstants.MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)
+          || SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
         this.mWnd.doFitAxisRangeToFocusedData(command);
-      } else if (command.equals(MENUCMD_TRANSFORM_DATA)) {
+      } else if (command.equals(SGIConstants.MENUCMD_TRANSFORM_DATA)) {
         this.mWnd.doTransformData();
-      } else if (command.equals(MENUCMD_SPLIT_DATA)) {
+      } else if (command.equals(SGIConstants.MENUCMD_SPLIT_DATA)) {
         this.mWnd.doSplitMultipleData();
-      } else if (command.equals(MENUCMD_MERGE_DATA)) {
+      } else if (command.equals(SGIConstants.MENUCMD_MERGE_DATA)) {
         this.mWnd.doMergeMultipleData();
-      } else if (command.equals(MENUCMD_ASSIGN_LINE_COLORS)) {
+      } else if (command.equals(SGIConstants.MENUCMD_ASSIGN_LINE_COLORS)) {
         this.mWnd.doAssignLineColors();
-      } else if (command.equals(MENUCMD_EXPORT_TO_FILE)
-          || command.equals(MENUCMD_EXPORT_TO_TEXT_FILE)
-          || command.equals(MENUCMD_EXPORT_TO_NETCDF_FILE)
-          || command.equals(MENUCMD_EXPORT_TO_HDF5_FILE)
-          || command.equals(MENUCMD_EXPORT_TO_MATLAB_FILE)) {
+      } else if (command.equals(SGIConstants.MENUCMD_EXPORT_TO_FILE)
+          || command.equals(SGIConstants.MENUCMD_EXPORT_TO_TEXT_FILE)
+          || command.equals(SGIConstants.MENUCMD_EXPORT_TO_NETCDF_FILE)
+          || command.equals(SGIConstants.MENUCMD_EXPORT_TO_HDF5_FILE)
+          || command.equals(SGIConstants.MENUCMD_EXPORT_TO_MATLAB_FILE)) {
         this.mWnd.doOutputDataToFile(command);
-      } else if (command.equals(MENUCMD_ANCHORED)) {
+      } else if (command.equals(SGIConstants.MENUCMD_ANCHORED)) {
         final boolean b = ((JCheckBoxMenuItem) e.getSource()).isSelected();
         this.mWnd.setAnchor(b);
       } else if (command.equals(SGIFigureElement.NOTIFY_UNKNOWN_DATA_ERROR)) {
@@ -3660,7 +3660,7 @@ public abstract class SGFigure
     this.mWnd = null;
   }
 
-  private int mMode = MODE_DISPLAY;
+  private int mMode = SGIConstants.MODE_DISPLAY;
 
   public void setMode(final int mode) {
     this.mMode = mode;
@@ -3862,7 +3862,7 @@ public abstract class SGFigure
    */
   Rectangle2D getExtraRegionBounds() {
     Rectangle2D bounds = this.getGraphRect();
-    final float margin = this.mMagnification * EXTRA_REGION_WIDTH_IN_CM_UNIT / CM_POINT_RATIO;
+    final float margin = this.mMagnification * EXTRA_REGION_WIDTH_IN_CM_UNIT / SGIConstants.CM_POINT_RATIO;
     final double x = bounds.getX() - margin;
     final double y = bounds.getY() - margin;
     final double w = bounds.getWidth() + 2.0 * margin;
@@ -3896,7 +3896,7 @@ public abstract class SGFigure
     if (this.isSelected()) {
       this.setSymbolsAroundAllObjectsVisible(true);
     }
-    this.setMode(MODE_DISPLAY);
+    this.setMode(SGIConstants.MODE_DISPLAY);
   }
 
   /**

@@ -26,7 +26,7 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
     this.setSize(DEFAULT_SYMBOL_SIZE, SYMBOL_SIZE_UNIT);
     this.setInnerColor(DEFAULT_SYMBOL_BODY_COLOR);
     this.setInnerTransparency(DEFAULT_SYMBOL_BODY_TRANSPARENCY);
-    this.setLineWidth(DEFAULT_SYMBOL_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setLineWidth(DEFAULT_SYMBOL_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setLineColor(DEFAULT_SYMBOL_LINE_COLOR);
     this.setLineVisible(DEFAULT_SYMBOL_LINE_VISIBLE);
   }
@@ -202,8 +202,8 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
     SGPropertyUtility.addProperty(
         map,
         COM_DATA_SYMBOL_LINE_WIDTH,
-        SGUtility.getExportLineWidth(this.getLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(map, COM_DATA_SYMBOL_LINE_COLOR, this.getLineColor());
     return true;
   }

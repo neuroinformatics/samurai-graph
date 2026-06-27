@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -62,9 +63,9 @@ public class SGElementGroupLineInGraph extends SGElementGroupLineForData
   /** */
   public boolean setLocation(final SGTuple2f[] pointArray) {
     final int mode = this.mGraph.getMode();
-    if (mode == MODE_EXPORT_AS_IMAGE) {
+    if (mode == SGIConstants.MODE_EXPORT_AS_IMAGE) {
       this.mMode = MODE_ALL;
-    } else if (mode == MODE_DISPLAY) {
+    } else if (mode == SGIConstants.MODE_DISPLAY) {
       this.mMode = MODE_OMIT;
     }
     return this.setLocationSub(pointArray);

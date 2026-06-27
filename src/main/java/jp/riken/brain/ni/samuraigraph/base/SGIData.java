@@ -3,7 +3,7 @@ package jp.riken.brain.ni.samuraigraph.base;
 import java.util.List;
 
 /** An interface for all data classes. */
-public interface SGIData extends SGIConstants, SGIDisposable {
+public interface SGIData extends SGIDisposable {
 
   /**
    * Returns the data type.

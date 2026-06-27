@@ -204,11 +204,11 @@ public class SGFigureElementLegend extends SGFigureElementForData
     // set default values
     this.setVisible(DEFAULT_LEGEND_VISIBLE);
     this.setFontName(DEFAULT_LEGEND_FONT_NAME);
-    this.setFontSize(DEFAULT_LEGEND_FONT_SIZE, FONT_SIZE_UNIT);
+    this.setFontSize(DEFAULT_LEGEND_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
     this.setFontStyle(DEFAULT_LEGEND_FONT_STYLE);
     this.setFontColor(DEFAULT_LEGEND_FONT_COLOR);
     this.setFrameVisible(DEFAULT_LEGEND_FRAME_VISIBLE);
-    this.setFrameLineWidth(DEFAULT_LEGEND_FRAME_WIDTH, LINE_WIDTH_UNIT);
+    this.setFrameLineWidth(DEFAULT_LEGEND_FRAME_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setFrameLineColor(DEFAULT_LEGEND_FRAME_COLOR);
     this.setBackgroundColor(DEFAULT_LEGEND_BACKGROUND_COLOR);
     this.setBackgroundTransparent(DEFAULT_LEGEND_BACKGROUND_TRANSPARENCY);
@@ -268,7 +268,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
     p.addSeparator();
 
-    SGUtility.addItem(p, this, MENUCMD_PROPERTY);
+    SGUtility.addItem(p, this, SGIConstants.MENUCMD_PROPERTY);
 
     return p;
   }
@@ -1993,7 +1993,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
   /**
    * Sets the font size.
    *
-   * @param size the font size in units of pt
+   * @param size the font size in units of SGIConstants.pt
    * @return true if succeeded
    */
   public boolean setFontSize(final float size) {
@@ -2060,7 +2060,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param name the font name
    * @param style the font style
-   * @param size the font size in units of pt
+   * @param size the font size in units of SGIConstants.pt
    * @return true if succeeded
    */
   private boolean setFont(final String name, final int style, final float size) {
@@ -2250,7 +2250,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
       this.setChanged(true);
       this.notifyToRoot();
       return;
-    } else if (command.equals(MENUCMD_PROPERTY)) {
+    } else if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
       // clear all focused legend
       this.clearAllFocusedData();
 
@@ -6362,7 +6362,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
       // set properties to the magnitude label
       this.mMagnitudeString.setFontName(DEFAULT_LEGEND_FONT_NAME);
       this.mMagnitudeString.setFontStyle(DEFAULT_LEGEND_FONT_STYLE);
-      this.mMagnitudeString.setFontSize(DEFAULT_LEGEND_FONT_SIZE, FONT_SIZE_UNIT);
+      this.mMagnitudeString.setFontSize(DEFAULT_LEGEND_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
       this.mMagnitudeString.setColor(DEFAULT_LEGEND_FONT_COLOR);
     }
 
@@ -6495,7 +6495,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
       if (Float.isNaN(perCm)) {
         this.mMagnitudeString.setString("NaN");
       } else {
-        final float span = SGFigureElementLegend.this.getSymbolSpan(cm);
+        final float span = SGFigureElementLegend.this.getSymbolSpan(SGIConstants.cm);
         final float value = perCm * span;
         final float valueReduced =
             (float)
@@ -7879,7 +7879,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     SGPropertyUtility.addProperty(
         map, COM_LEGEND_FONT_STYLE, SGUtilityText.getFontStyleName(this.getFontStyle()));
     SGPropertyUtility.addProperty(
-        map, COM_LEGEND_FONT_SIZE, SGUtility.getExportFontSize(this.getFontSize()), FONT_SIZE_UNIT);
+        map, COM_LEGEND_FONT_SIZE, SGUtility.getExportFontSize(this.getFontSize()), SGIConstants.FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, COM_LEGEND_FONT_COLOR, this.getFontColor());
 
     // frame
@@ -7887,13 +7887,13 @@ public class SGFigureElementLegend extends SGFigureElementForData
     SGPropertyUtility.addProperty(
         map,
         COM_LEGEND_FRAME_LINE_WIDTH,
-        SGUtility.getExportLineWidth(this.getFrameLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getFrameLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(map, COM_LEGEND_FRAME_COLOR, this.getFrameColor());
 
     // background
     SGPropertyUtility.addProperty(
-        map, COM_LEGEND_BACKGROUND_TRANSPARENCY, this.getBackgroundTransparency(), percent);
+        map, COM_LEGEND_BACKGROUND_TRANSPARENCY, this.getBackgroundTransparency(), SGIConstants.percent);
     SGPropertyUtility.addProperty(map, COM_LEGEND_BACKGROUND_COLOR, this.getBackgroundColor());
 
     // span
@@ -7932,7 +7932,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     SGPropertyUtility.addProperty(
         map, KEY_FONT_STYLE, SGUtilityText.getFontStyleName(this.getFontStyle()));
     SGPropertyUtility.addProperty(
-        map, KEY_FONT_SIZE, SGUtility.getExportFontSize(this.getFontSize()), FONT_SIZE_UNIT);
+        map, KEY_FONT_SIZE, SGUtility.getExportFontSize(this.getFontSize()), SGIConstants.FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, KEY_STRING_COLORS, this.getFontColor());
 
     // frame
@@ -7940,13 +7940,13 @@ public class SGFigureElementLegend extends SGFigureElementForData
     SGPropertyUtility.addProperty(
         map,
         KEY_FRAME_LINE_WIDTH,
-        SGUtility.getExportLineWidth(this.getFrameLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getFrameLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(map, KEY_FRAME_LINE_COLOR, this.getFrameColor());
 
     // background
     SGPropertyUtility.addProperty(
-        map, KEY_BACKGROUND_TRANSPARENT, this.getBackgroundTransparency(), percent);
+        map, KEY_BACKGROUND_TRANSPARENT, this.getBackgroundTransparency(), SGIConstants.percent);
     SGPropertyUtility.addProperty(map, KEY_BACKGROUND_COLOR, this.getBackgroundColor());
 
     // span

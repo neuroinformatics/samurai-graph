@@ -4,7 +4,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 
 /** Constants for the color bar. */
-public interface SGIColorBarConstants extends SGIConstants {
+public interface SGIColorBarConstants {
 
   /*
    * Constants for property files.
@@ -43,7 +43,7 @@ public interface SGIColorBarConstants extends SGIConstants {
   public static final double COLOR_BAR_LENGTH_STEP = 1.0;
 
   // common to bar width an bar length
-  public static final String COLOR_BAR_SIZE_UNIT = cm;
+  public static final String COLOR_BAR_SIZE_UNIT = SGIConstants.cm;
 
   public static final int COLOR_BAR_SIZE_FRAC_DIFIT_MIN = 1;
 

@@ -39,8 +39,7 @@ public abstract class SGDialog extends JDialog
         WindowListener,
         ComponentListener,
         FocusListener,
-        ChangeListener,
-        SGIConstants {
+        ChangeListener {
 
   // serialVersionUID
   private static final long serialVersionUID = 5190851306204747759L;
@@ -275,7 +274,7 @@ public abstract class SGDialog extends JDialog
 
   /** Overridden to set the canceled-option to the closed option. */
   public void windowClosing(final WindowEvent e) {
-    this.mCloseOption = CANCEL_OPTION;
+    this.mCloseOption = SGIConstants.CANCEL_OPTION;
   }
 
   /** Add an action listener. */

@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
@@ -11,7 +12,7 @@ public interface SGIAxisBreakConstants extends SGIDrawingElementConstants {
   // Axis Break Length
   //
 
-  public static final String AXIS_BREAK_LENGTH_UNIT = cm;
+  public static final String AXIS_BREAK_LENGTH_UNIT = SGIConstants.cm;
 
   public static final double AXIS_BREAK_LENGTH_MIN = 0.50;
 
@@ -29,7 +30,7 @@ public interface SGIAxisBreakConstants extends SGIDrawingElementConstants {
   // Axis Break Interval
   //
 
-  public static final String AXIS_BREAK_INTERVAL_UNIT = cm;
+  public static final String AXIS_BREAK_INTERVAL_UNIT = SGIConstants.cm;
 
   public static final double AXIS_BREAK_INTERVAL_MIN = 0.10;
 

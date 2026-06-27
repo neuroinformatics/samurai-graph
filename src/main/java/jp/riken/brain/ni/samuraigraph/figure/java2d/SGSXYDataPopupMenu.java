@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,9 +24,9 @@ public class SGSXYDataPopupMenu extends SGDataPopupMenu {
   @Override
   protected List<PopupMenuItem> getOperationCommandList(ActionListener l) {
     List<PopupMenuItem> list = super.getOperationCommandList(l);
-    list.add(new PopupMenuItem(MENUCMD_SPLIT_DATA, l));
-    list.add(new PopupMenuItem(MENUCMD_MERGE_DATA, l));
-    list.add(new PopupMenuItem(MENUCMD_ASSIGN_LINE_COLORS, l));
+    list.add(new PopupMenuItem(SGIConstants.MENUCMD_SPLIT_DATA, l));
+    list.add(new PopupMenuItem(SGIConstants.MENUCMD_MERGE_DATA, l));
+    list.add(new PopupMenuItem(SGIConstants.MENUCMD_ASSIGN_LINE_COLORS, l));
     return list;
   }
 
@@ -37,9 +38,9 @@ public class SGSXYDataPopupMenu extends SGDataPopupMenu {
   @Override
   protected List<PopupMenuItem> getFitAxisChildList(ActionListener l) {
     List<PopupMenuItem> list = new ArrayList<PopupMenuItem>();
-    list.add(new PopupMenuItem(MENUCMD_FIT_ALL_AXES_TO_DATA, l));
-    list.add(new PopupMenuItem(MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA, l));
-    list.add(new PopupMenuItem(MENUCMD_FIT_VERTICAL_AXIS_TO_DATA, l));
+    list.add(new PopupMenuItem(SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA, l));
+    list.add(new PopupMenuItem(SGIConstants.MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA, l));
+    list.add(new PopupMenuItem(SGIConstants.MENUCMD_FIT_VERTICAL_AXIS_TO_DATA, l));
     return list;
   }
 }

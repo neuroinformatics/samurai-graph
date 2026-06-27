@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -201,7 +202,7 @@ public abstract class SGWizardDialog extends SGDialog {
    * @return true if succeeded
    */
   protected boolean onOK() {
-    this.setCloseOption(OK_OPTION);
+    this.setCloseOption(SGIConstants.OK_OPTION);
     this.setVisible(false);
 
     // notify to the action listeners of this dialog
@@ -216,7 +217,7 @@ public abstract class SGWizardDialog extends SGDialog {
    * @return true if succeeded
    */
   protected boolean onCanceled() {
-    this.setCloseOption(CANCEL_OPTION);
+    this.setCloseOption(SGIConstants.CANCEL_OPTION);
     this.setVisible(false);
 
     // notify to the action listeners of this dialog

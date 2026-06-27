@@ -27,7 +27,7 @@ import org.w3c.dom.NodeList;
 
 /** SGMainFunctions :: ClipBoardManager class */
 class SGClipBoardManager
-    implements SGIDisposable, SGIConstants, SGIApplicationTextConstants, SGIPropertyFileConstants {
+    implements SGIDisposable, SGIApplicationTextConstants, SGIPropertyFileConstants {
 
   /** The list of copied objects. */
   private List<SGICopyable> mCopiedObjectsBuffer = new ArrayList<SGICopyable>();
@@ -124,7 +124,7 @@ class SGClipBoardManager
     WindowInfo info = new WindowInfo();
 
     if (isCopy) {
-      if (this.copyFigures(wnd, info, new SGExportParameter(OPERATION.COPY_OBJECT)) == false) {
+      if (this.copyFigures(wnd, info, new SGExportParameter(SGIConstants.OPERATION.COPY_OBJECT)) == false) {
         return false;
       }
     } else {
@@ -147,7 +147,7 @@ class SGClipBoardManager
 
   // Cuts the figure.
   private boolean cutFigures(SGDrawingWindow wnd, WindowInfo info) {
-    if (this.copyFigures(wnd, info, new SGExportParameter(OPERATION.CUT_OBJECT)) == false) {
+    if (this.copyFigures(wnd, info, new SGExportParameter(SGIConstants.OPERATION.CUT_OBJECT)) == false) {
       return false;
     }
 
@@ -260,7 +260,7 @@ class SGClipBoardManager
       // create figures from a DOM tree
       final int ret =
           this.mMain.createFiguresFromPropertyFile(
-              elWnd, wnd, wdArray, true, versionNumber, LOAD_PROPERTIES_IN_PASTING);
+              elWnd, wnd, wdArray, true, versionNumber, SGIConstants.LOAD_PROPERTIES_IN_PASTING);
       if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
         return false;
       }

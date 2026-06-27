@@ -56,8 +56,7 @@ public class SGNativePluginManager
         SGIApplicationConstants,
         SGIApplicationTextConstants,
         SGIDataColumnTypeConstants,
-        SGIDataPluginConstants,
-        SGIConstants {
+        SGIDataPluginConstants {
 
   SGMainFunctions mMain = null;
 
@@ -146,10 +145,10 @@ public class SGNativePluginManager
         }
         if (libElement == null) {
           // only for Windows
-          if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
+          if (SGUtility.identifyOS(SGIConstants.OS_NAME_WINDOWS)) {
             for (Element el : validArchElementList) {
               String osNameAttr = el.getAttribute(ATTR_NAME_LIB_OS);
-              if (osNameAttr.toLowerCase().startsWith(OS_NAME_WINDOWS)) {
+              if (osNameAttr.toLowerCase().startsWith(SGIConstants.OS_NAME_WINDOWS)) {
                 libElement = el;
                 break;
               }

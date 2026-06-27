@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -393,14 +394,14 @@ public class SGStringElementDialog extends SGPropertyDialog
     // font size
     this.mFontSizeSpinner.initProperties(
         getFontSizeSpinnerNumberModel(),
-        FONT_SIZE_UNIT,
-        FONT_SIZE_FRAC_DIGIT_MIN,
-        FONT_SIZE_FRAC_DIGIT_MAX);
+        SGIConstants.FONT_SIZE_UNIT,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MIN,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MAX);
 
     // angle
     this.mTextAngleSpinner.initProperties(
         new SpinnerNumberModel(0.0, STRING_ANGLE_MIN, STRING_ANGLE_MAX, STRING_ANGLE_STEP),
-        degree,
+        SGIConstants.degree,
         STRING_ANGLE_FRAC_DIFIT_MIN,
         STRING_ANGLE_FRAC_DIFIT_MAX);
 
@@ -667,7 +668,7 @@ public class SGStringElementDialog extends SGPropertyDialog
 
     // font size
     if (fontSize != null) {
-      label.setFontSize(fontSize.floatValue(), pt);
+      label.setFontSize(fontSize.floatValue(), SGIConstants.pt);
     }
 
     // font name
@@ -711,7 +712,7 @@ public class SGStringElementDialog extends SGPropertyDialog
     final double xValue0 = label0.getXValue();
     final double yValue0 = label0.getYValue();
     final String fontName0 = label0.getFontName();
-    final float fontSize0 = label0.getFontSize(pt);
+    final float fontSize0 = label0.getFontSize(SGIConstants.pt);
     final int fontStyle0 = label0.getFontStyle();
     final float angle0 = label0.getAngle();
     final Color color0 = label0.getStringColor();
@@ -764,7 +765,7 @@ public class SGStringElementDialog extends SGPropertyDialog
 
       for (int ii = 1; ii < list.size(); ii++) {
         SGILabelDialogObserver label1 = (SGILabelDialogObserver) list.get(ii);
-        final float fontSize1 = label1.getFontSize(pt);
+        final float fontSize1 = label1.getFontSize(SGIConstants.pt);
         if (fontSize0 != fontSize1) {
           fontSize = null;
           break;

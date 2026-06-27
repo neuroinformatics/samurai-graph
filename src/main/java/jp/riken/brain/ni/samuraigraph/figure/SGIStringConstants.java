@@ -2,12 +2,11 @@ package jp.riken.brain.ni.samuraigraph.figure;
 
 import java.awt.Color;
 import java.awt.Font;
-import jp.riken.brain.ni.samuraigraph.base.SGIDateConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 
 /** Constants for string objects. */
-public interface SGIStringConstants extends SGIDrawingElementConstants, SGIDateConstants {
+public interface SGIStringConstants extends SGIDrawingElementConstants {
 
   //
   // Angle

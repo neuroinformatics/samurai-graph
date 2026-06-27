@@ -178,7 +178,7 @@ public class SGStringPatterns {
     CHAR_MAP.put("emptyset", '\u2205');
     CHAR_MAP.put("hbar", '\u210F');
 
-    CHAR_MAP.put("degree", '\u00B0');
+    CHAR_MAP.put("SGIConstants.degree", '\u00B0');
 
     CHAR_MAP.put("sect", '\u00A7');
     CHAR_MAP.put("para", '\u00B6');

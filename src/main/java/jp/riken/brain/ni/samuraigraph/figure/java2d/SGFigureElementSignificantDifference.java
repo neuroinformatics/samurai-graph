@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -1259,23 +1260,23 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
 
       this.addSeparator();
 
-      SGUtility.addItem(this, sd, MENUCMD_CUT);
-      SGUtility.addItem(this, sd, MENUCMD_COPY);
+      SGUtility.addItem(this, sd, SGIConstants.MENUCMD_CUT);
+      SGUtility.addItem(this, sd, SGIConstants.MENUCMD_COPY);
 
       this.addSeparator();
 
-      SGUtility.addItem(this, sd, MENUCMD_DELETE);
-      SGUtility.addItem(this, sd, MENUCMD_DUPLICATE);
+      SGUtility.addItem(this, sd, SGIConstants.MENUCMD_DELETE);
+      SGUtility.addItem(this, sd, SGIConstants.MENUCMD_DUPLICATE);
 
       this.addSeparator();
 
-      this.anchoredCheckBox = new JCheckBoxMenuItem(MENUCMD_ANCHORED);
+      this.anchoredCheckBox = new JCheckBoxMenuItem(SGIConstants.MENUCMD_ANCHORED);
       add(this.anchoredCheckBox);
       this.anchoredCheckBox.addActionListener(sd);
 
       this.addSeparator();
 
-      SGUtility.addItem(this, sd, MENUCMD_PROPERTY);
+      SGUtility.addItem(this, sd, SGIConstants.MENUCMD_PROPERTY);
     }
 
     void setAnchored(final boolean anchored) {
@@ -1527,15 +1528,15 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
 
     /** */
     private boolean init() {
-      this.setWidth(DEFAULT_SIGDIFF_SYMBOL_WIDTH, cm);
-      this.setVerticalHeight1(DEFAULT_SIGDIFF_SYMBOL_LEFT_HEIGHT, cm);
-      this.setVerticalHeight2(DEFAULT_SIGDIFF_SYMBOL_RIGHT_HEIGHT, cm);
+      this.setWidth(DEFAULT_SIGDIFF_SYMBOL_WIDTH, SGIConstants.cm);
+      this.setVerticalHeight1(DEFAULT_SIGDIFF_SYMBOL_LEFT_HEIGHT, SGIConstants.cm);
+      this.setVerticalHeight2(DEFAULT_SIGDIFF_SYMBOL_RIGHT_HEIGHT, SGIConstants.cm);
 
-      this.setFontSize(DEFAULT_SIGDIFF_SYMBOL_FONT_SIZE, FONT_SIZE_UNIT);
+      this.setFontSize(DEFAULT_SIGDIFF_SYMBOL_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
       this.setFontName(DEFAULT_SIGDIFF_SYMBOL_FONT_NAME);
       this.setFontStyle(DEFAULT_SIGDIFF_SYMBOL_FONT_STYLE);
 
-      this.setLineWidth(DEFAULT_SIGDIFF_SYMBOL_LINE_WIDTH, LINE_WIDTH_UNIT);
+      this.setLineWidth(DEFAULT_SIGDIFF_SYMBOL_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
       this.setColor(DEFAULT_SIGDIFF_SYMBOL_COLOR);
       this.setSpace(DEFAULT_SIGDIFF_SYMBOL_SPACE, SIGDIFF_SPACE_UNIT);
 
@@ -1765,7 +1766,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
       final String command = e.getActionCommand();
       // final Object source = e.getSource();
 
-      if (command.equals(MENUCMD_PROPERTY)) {
+      if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
         SGFigureElementSignificantDifference.this.setPropertiesOfSelectedObjects(this);
       } else {
         notifyToListener(command, e.getSource());
@@ -2407,7 +2408,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
       final int loc = this.mMouseLocation;
       final boolean flag = this.mFlippingHorizontalFlag;
       if (loc == HORIZONTAL_MIDDLE) {
-        // System.out.println("NORTH");
+        // System.out.println("SGIConstants.NORTH");
         sizeNewY1 = sizeOldY1 - diffY;
         sizeNewY2 = sizeOldY2 - diffY;
 

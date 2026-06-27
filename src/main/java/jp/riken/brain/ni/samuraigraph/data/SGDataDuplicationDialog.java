@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.data;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
@@ -56,7 +57,7 @@ public abstract class SGDataDuplicationDialog extends SGDataDialog {
    * @return true if succeeded
    */
   protected boolean onOK() {
-    this.setCloseOption(OK_OPTION);
+    this.setCloseOption(SGIConstants.OK_OPTION);
     this.setVisible(false);
     return true;
   }
@@ -67,7 +68,7 @@ public abstract class SGDataDuplicationDialog extends SGDataDialog {
    * @return true if succeeded
    */
   protected boolean onCanceled() {
-    this.setCloseOption(CANCEL_OPTION);
+    this.setCloseOption(SGIConstants.CANCEL_OPTION);
     this.setVisible(false);
     return true;
   }

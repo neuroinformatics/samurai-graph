@@ -231,7 +231,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
   /**
    * Sets the angle of this string.
    *
-   * @param angle the angle to be set in units of degree
+   * @param angle the angle to be set in units of SGIConstants.degree
    * @return true if succeeded
    */
   public boolean setAngle(final float angle) {

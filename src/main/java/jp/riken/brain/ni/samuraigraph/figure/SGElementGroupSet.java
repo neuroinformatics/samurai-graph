@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
  * Base class for the set of the groups of drawing elements. This object has an array of drawing
  * element groups.
  */
-public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGIDisposable {
+public abstract class SGElementGroupSet implements SGIVisible, SGIDisposable {
 
   /** The list of groups of drawing elements. */
   protected List<SGElementGroup> mDrawingElementGroupList = new ArrayList<SGElementGroup>();

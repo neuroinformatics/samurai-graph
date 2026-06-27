@@ -74,21 +74,21 @@ public class SGFigurePopupMenu extends SGPopupMenu {
     this.addSeparator();
 
     // cut
-    this.addItem(SGFigure.MENUCMD_CUT);
+    this.addItem(SGFigure.SGIConstants.MENUCMD_CUT);
 
     // copy
-    this.addItem(SGFigure.MENUCMD_COPY);
+    this.addItem(SGFigure.SGIConstants.MENUCMD_COPY);
 
     // paste
-    this.addItem(SGFigure.MENUCMD_PASTE);
+    this.addItem(SGFigure.SGIConstants.MENUCMD_PASTE);
 
     this.addSeparator();
 
     // delete
-    this.addItem(SGFigure.MENUCMD_DELETE);
+    this.addItem(SGFigure.SGIConstants.MENUCMD_DELETE);
 
     // duplicate
-    this.addItem(SGFigure.MENUCMD_DUPLICATE);
+    this.addItem(SGFigure.SGIConstants.MENUCMD_DUPLICATE);
 
     this.addSeparator();
 
@@ -98,27 +98,27 @@ public class SGFigurePopupMenu extends SGPopupMenu {
     this.addCheckBoxItem(SGFigure.MENUCMD_SCALE_VISIBLE);
     this.addCheckBoxItem(SGFigure.MENUCMD_GRID_VISIBLE);
     this.addCheckBoxItem(SGFigure.MENUCMD_DATA_ANCHORED);
-    JMenu visibleAxesMenu = this.addMenu(SGFigure.MENUCMD_AXES_VISIBLE);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.MENUCMD_VISIBLE_BOTTOM_AXIS);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.MENUCMD_VISIBLE_LEFT_AXIS);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.MENUCMD_VISIBLE_TOP_AXIS);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.MENUCMD_VISIBLE_RIGHT_AXIS);
+    JMenu visibleAxesMenu = this.addMenu(SGFigure.SGIConstants.MENUCMD_AXES_VISIBLE);
+    this.addCheckBoxItem(visibleAxesMenu, SGFigure.SGIConstants.MENUCMD_VISIBLE_BOTTOM_AXIS);
+    this.addCheckBoxItem(visibleAxesMenu, SGFigure.SGIConstants.MENUCMD_VISIBLE_LEFT_AXIS);
+    this.addCheckBoxItem(visibleAxesMenu, SGFigure.SGIConstants.MENUCMD_VISIBLE_TOP_AXIS);
+    this.addCheckBoxItem(visibleAxesMenu, SGFigure.SGIConstants.MENUCMD_VISIBLE_RIGHT_AXIS);
 
     this.addSeparator();
 
     // fit axes and align bars
-    JMenu fitAxesMenu = this.addMenu(SGFigure.MENUCMD_FIT_AXES_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.MENUCMD_FIT_ALL_AXES_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.MENUCMD_FIT_VERTICAL_AXIS_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.MENUCMD_FIT_COLOR_BAR_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES);
-    this.addItem(SGFigure.MENUCMD_ALIGN_BARS);
+    JMenu fitAxesMenu = this.addMenu(SGFigure.SGIConstants.MENUCMD_FIT_AXES_TO_DATA);
+    this.addItem(fitAxesMenu, SGFigure.SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA);
+    this.addItem(fitAxesMenu, SGFigure.SGIConstants.MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA);
+    this.addItem(fitAxesMenu, SGFigure.SGIConstants.MENUCMD_FIT_VERTICAL_AXIS_TO_DATA);
+    this.addItem(fitAxesMenu, SGFigure.SGIConstants.MENUCMD_FIT_COLOR_BAR_TO_DATA);
+    this.addItem(fitAxesMenu, SGFigure.SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES);
+    this.addItem(SGFigure.SGIConstants.MENUCMD_ALIGN_BARS);
 
     this.addSeparator();
 
     // property
-    this.addItem(SGFigure.MENUCMD_PROPERTY);
+    this.addItem(SGFigure.SGIConstants.MENUCMD_PROPERTY);
 
     this.addActionListener(this);
   }
@@ -143,25 +143,25 @@ public class SGFigurePopupMenu extends SGPopupMenu {
       wnd.repaint();
     } else if (command.equals(SGFigure.MENUCMD_SAVE_PROPERTY)) {
       wnd.createPropertyFileFromFocusedFigures();
-    } else if (command.equals(MENUCMD_PROPERTY)) {
+    } else if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
       wnd.showPropertyDialogForSelectedFigures();
-    } else if (command.equals(MENUCMD_BRING_TO_FRONT)) {
+    } else if (command.equals(SGIConstants.MENUCMD_BRING_TO_FRONT)) {
       wnd.bringFocusedObjectsToFront();
-    } else if (command.equals(MENUCMD_BRING_FORWARD)) {
+    } else if (command.equals(SGIConstants.MENUCMD_BRING_FORWARD)) {
       wnd.bringFocusedObjectsForward();
-    } else if (command.equals(MENUCMD_SEND_BACKWARD)) {
+    } else if (command.equals(SGIConstants.MENUCMD_SEND_BACKWARD)) {
       wnd.sendFocusedObjectsBackward();
-    } else if (command.equals(MENUCMD_SEND_TO_BACK)) {
+    } else if (command.equals(SGIConstants.MENUCMD_SEND_TO_BACK)) {
       wnd.sendFocusedObjectsToBack();
-    } else if (command.equals(MENUCMD_CUT)) {
+    } else if (command.equals(SGIConstants.MENUCMD_CUT)) {
       wnd.doCut();
-    } else if (command.equals(MENUCMD_COPY)) {
+    } else if (command.equals(SGIConstants.MENUCMD_COPY)) {
       wnd.doCopy();
-    } else if (command.equals(MENUCMD_PASTE)) {
+    } else if (command.equals(SGIConstants.MENUCMD_PASTE)) {
       wnd.doPaste();
-    } else if (command.equals(MENUCMD_DELETE)) {
+    } else if (command.equals(SGIConstants.MENUCMD_DELETE)) {
       wnd.doDelete();
-    } else if (command.equals(MENUCMD_DUPLICATE)) {
+    } else if (command.equals(SGIConstants.MENUCMD_DUPLICATE)) {
       wnd.doDuplicate();
     } else if (command.equals(SGFigure.MENUCMD_LEGEND_VISIBLE)) {
       SGCheckBoxMenuItem item =
@@ -211,19 +211,19 @@ public class SGFigurePopupMenu extends SGPopupMenu {
         }
       }
       wnd.notifyToRoot();
-    } else if (MENUCMD_VISIBLE_BOTTOM_AXIS.equals(command)
-        || MENUCMD_VISIBLE_LEFT_AXIS.equals(command)
-        || MENUCMD_VISIBLE_TOP_AXIS.equals(command)
-        || MENUCMD_VISIBLE_RIGHT_AXIS.equals(command)) {
+    } else if (SGIConstants.MENUCMD_VISIBLE_BOTTOM_AXIS.equals(command)
+        || SGIConstants.MENUCMD_VISIBLE_LEFT_AXIS.equals(command)
+        || SGIConstants.MENUCMD_VISIBLE_TOP_AXIS.equals(command)
+        || SGIConstants.MENUCMD_VISIBLE_RIGHT_AXIS.equals(command)) {
 
       int location = -1;
-      if (MENUCMD_VISIBLE_BOTTOM_AXIS.equals(command)) {
+      if (SGIConstants.MENUCMD_VISIBLE_BOTTOM_AXIS.equals(command)) {
         location = SGIFigureElementAxis.AXIS_HORIZONTAL_1;
-      } else if (MENUCMD_VISIBLE_LEFT_AXIS.equals(command)) {
+      } else if (SGIConstants.MENUCMD_VISIBLE_LEFT_AXIS.equals(command)) {
         location = SGIFigureElementAxis.AXIS_VERTICAL_1;
-      } else if (MENUCMD_VISIBLE_TOP_AXIS.equals(command)) {
+      } else if (SGIConstants.MENUCMD_VISIBLE_TOP_AXIS.equals(command)) {
         location = SGIFigureElementAxis.AXIS_HORIZONTAL_2;
-      } else if (MENUCMD_VISIBLE_RIGHT_AXIS.equals(command)) {
+      } else if (SGIConstants.MENUCMD_VISIBLE_RIGHT_AXIS.equals(command)) {
         location = SGIFigureElementAxis.AXIS_VERTICAL_2;
       }
       if (location == -1) {
@@ -239,42 +239,42 @@ public class SGFigurePopupMenu extends SGPopupMenu {
       }
       wnd.notifyToRoot();
       wnd.repaint();
-    } else if (MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
-        || MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)
-        || MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)
-        || MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)
-        || MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
+    } else if (SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
+        || SGIConstants.MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)
+        || SGIConstants.MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)
+        || SGIConstants.MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)
+        || SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
       List<Integer> axisDirList = new ArrayList<Integer>();
       boolean forAnimationFrames = false;
-      if (MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
-          || MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
+      if (SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
+          || SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
         axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL);
         axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL);
         axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_NORMAL);
-        if (MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
+        if (SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
           forAnimationFrames = true;
         }
-      } else if (MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)) {
+      } else if (SGIConstants.MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)) {
         axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL);
-      } else if (MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)) {
+      } else if (SGIConstants.MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)) {
         axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL);
-      } else if (MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)) {
+      } else if (SGIConstants.MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)) {
         axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_NORMAL);
       }
       wnd.doFitAxisRangeToVisibleData(axisDirList, forAnimationFrames);
-      //        } else if (command.equals(MENUCMD_INSERT_NETCDF_LABEL)) {
+      //        } else if (command.equals(SGIConstants.MENUCMD_INSERT_NETCDF_LABEL)) {
       //        	wnd.doInserNetCDFLabel();
       //            wnd.notifyToRoot();
-      //        } else if (command.equals(MENUCMD_ANIMATION)) {
+      //        } else if (command.equals(SGIConstants.MENUCMD_ANIMATION)) {
       //        	for (SGFigure fig : this.mFigureList) {
       //                fig.mMouseInExtraRegionFlag = false;
       //                fig.clearFocusedObjects();
       //        	}
-    } else if (command.equals(MENUCMD_ALIGN_BARS)) {
+    } else if (command.equals(SGIConstants.MENUCMD_ALIGN_BARS)) {
       wnd.doAlignBars();
-      //        } else if (command.equals(MENUCMD_SPLIT_DATA)) {
+      //        } else if (command.equals(SGIConstants.MENUCMD_SPLIT_DATA)) {
       //            wnd.doSplitMultipleData();
-      //        } else if (command.equals(MENUCMD_TRANSFORM_DATA)) {
+      //        } else if (command.equals(SGIConstants.MENUCMD_TRANSFORM_DATA)) {
       //            wnd.doTransformData();
       //        } else if (command.equals(MENUCMD_ANCHOR)) {
       //            boolean isAnchored = ((JCheckBoxMenuItem)e.getSource()).isSelected();

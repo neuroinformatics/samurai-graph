@@ -38,7 +38,7 @@ public class SGZoomComboBox extends JComboBox<String> implements SGIRootObjectCo
 
     Dimension dim;
     String laf = SGUtility.getLookAndFeelID();
-    if (!LAF_AQUA.equals(laf) && !LAF_WINDOWS.equals(laf)) {
+    if (!SGIConstants.LAF_AQUA.equals(laf) && !SGIConstants.LAF_WINDOWS.equals(laf)) {
       dim = new Dimension(120, 25);
       this.setBackground(Color.WHITE);
       this.setBorder(BorderFactory.createLoweredBevelBorder());

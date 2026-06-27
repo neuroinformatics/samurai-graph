@@ -136,8 +136,8 @@ class SGFigureAxis extends SGAxisElement {
 
     p.addSeparator();
 
-    //        SGUtility.addItem(p, this, MENUCMD_PROPERTY);
-    JMenu menu = SGUtility.addMenu(p, this, MENUCMD_PROPERTY, true);
+    //        SGUtility.addItem(p, this, SGIConstants.MENUCMD_PROPERTY);
+    JMenu menu = SGUtility.addMenu(p, this, SGIConstants.MENUCMD_PROPERTY, true);
     SGUtility.addItem(menu, this, MENUCMD_SHOW_PROPERTIES_SELECTED_AXES);
     SGUtility.addItem(menu, this, MENUCMD_SHOW_PROPERTIES_ALL_VISIBLE_AXES);
     SGUtility.addItem(menu, this, MENUCMD_SHOW_PROPERTIES_ALL_AXES);
@@ -475,7 +475,7 @@ class SGFigureAxis extends SGAxisElement {
                 + this.getMagnifiedShift();
         break;
       case SGIFigureElementAxis.AXIS_VERTICAL_1:
-        this.mTitle.setAngle(90.0f); // rotation of 90 degree
+        this.mTitle.setAngle(90.0f); // rotation of 90 SGIConstants.degree
         rectTitle = this.mTitle.getElementBounds();
         x =
             gx
@@ -486,7 +486,7 @@ class SGFigureAxis extends SGAxisElement {
         y = gy + (gh + (float) rectTitle.getHeight()) / 2.0f + shiftFromCenter;
         break;
       case SGIFigureElementAxis.AXIS_VERTICAL_2:
-        this.mTitle.setAngle(90.0f); // rotation of 90 degree
+        this.mTitle.setAngle(90.0f); // rotation of 90 SGIConstants.degree
         rectTitle = this.mTitle.getElementBounds();
         x = gx + gw + maxWidth + (spaceLN + spaceNT) - this.getMagnifiedShift();
         y = gy + (gh + (float) rectTitle.getHeight()) / 2.0f + shiftFromCenter;
@@ -1115,7 +1115,7 @@ class SGFigureAxis extends SGAxisElement {
     final SGAxis axis = this.getAxis();
     final int location = this.mAxisElement.getLocationInPlane(axis);
 
-    // difference in units of pt
+    // difference in units of SGIConstants.pt
     float diff = 0.0f;
     switch (location) {
       case SGIFigureElementAxisConstants.AXIS_HORIZONTAL_1:
@@ -1135,7 +1135,7 @@ class SGFigureAxis extends SGAxisElement {
     }
     diff /= mag;
 
-    // transform into a value in units of cm
+    // transform into a value in units of SGIConstants.cm
     diff *= SGIConstants.CM_POINT_RATIO;
     float shift = this.getShift() + diff;
     this.setShift(shift);

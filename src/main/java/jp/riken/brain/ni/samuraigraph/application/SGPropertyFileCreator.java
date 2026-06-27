@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -89,7 +90,7 @@ public class SGPropertyFileCreator extends SGFileHandler implements SGIPropertyF
 
     transformer.transform(source, result);
 
-    return OK_OPTION;
+    return SGIConstants.OK_OPTION;
   }
 
   /** Create a property file. */
@@ -103,7 +104,7 @@ public class SGPropertyFileCreator extends SGFileHandler implements SGIPropertyF
             PROPERTY_FILE_DESCRIPTION,
             DEFAULT_PROPERTY_FILE_NAME_WITH_EXTENSION);
     if (file == null) {
-      return CANCEL_OPTION;
+      return SGIConstants.CANCEL_OPTION;
     }
     return this.create(wnd, file, params, versionString);
   }

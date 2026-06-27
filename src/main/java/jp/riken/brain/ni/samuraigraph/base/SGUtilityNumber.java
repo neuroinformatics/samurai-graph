@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 /** A class with utility methods for the calculation of numbers. */
-public class SGUtilityNumber implements SGIConstants {
+public class SGUtilityNumber  {
 
   /**
    * Returns the order of number. For example: 35.5 -> 1, -121.1 -> 2, 0.025 -> -2.

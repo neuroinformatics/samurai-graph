@@ -44,7 +44,7 @@ import org.freehep.graphicsio.ps.PSGraphics2D;
 import org.freehep.graphicsio.svg.SVGGraphics2D;
 
 /** A class used to preview, print and export an image. */
-public class SGImageExportManager implements SGIImageExportManager, SGIConstants {
+public class SGImageExportManager implements SGIImageExportManager {
 
   /** The default file name of an exported image. */
   private static final String DEFAULT_EXPORT_FILE_NAME = "export";

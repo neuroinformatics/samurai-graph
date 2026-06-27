@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
@@ -17,7 +18,7 @@ public abstract class SGElementGroupArrowForData extends SGElementGroupArrow
     super();
 
     // set default properties
-    this.setLineWidth(DEFAULT_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setLineWidth(DEFAULT_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setLineType(DEFAULT_LINE_TYPE);
     this.setColor(DEFAULT_COLOR);
     this.setStartHeadType(DEFAULT_START_HEAD_TYPE);
@@ -59,8 +60,8 @@ public abstract class SGElementGroupArrowForData extends SGElementGroupArrow
   /**
    * Sets the head open and close angle.
    *
-   * @param openAngle the head open angle to set in units of degree
-   * @param closeAngle the head close angle to set in units of degree
+   * @param openAngle the head open angle to set in units of SGIConstants.degree
+   * @param closeAngle the head close angle to set in units of SGIConstants.degree
    * @return true if succeeded
    */
   public boolean setHeadAngle(final Float openAngle, final Float closeAngle) {
@@ -74,8 +75,8 @@ public abstract class SGElementGroupArrowForData extends SGElementGroupArrow
   /**
    * Sets the head open and close angle.
    *
-   * @param openAngle the head open angle to set in units of degree
-   * @param closeAngle the head close angle to set in units of degree
+   * @param openAngle the head open angle to set in units of SGIConstants.degree
+   * @param closeAngle the head close angle to set in units of SGIConstants.degree
    * @return true if succeeded
    */
   public boolean setHeadAngle(final float openAngle, final float closeAngle) {
@@ -99,8 +100,8 @@ public abstract class SGElementGroupArrowForData extends SGElementGroupArrow
     SGPropertyUtility.addProperty(
         map,
         COM_DATA_ARROW_LINE_WIDTH,
-        SGUtility.getExportLineWidth(this.getLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(
         map, COM_DATA_ARROW_LINE_TYPE, SGDrawingElementLine.getLineTypeName(this.getLineType()));
     SGPropertyUtility.addProperty(

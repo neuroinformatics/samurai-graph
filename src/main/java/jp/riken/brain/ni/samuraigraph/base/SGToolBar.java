@@ -251,7 +251,7 @@ public class SGToolBar extends JToolBar
 
     //
     String laf = SGUtility.getLookAndFeelID();
-    if (LAF_WINDOWS.equals(laf)) {
+    if (SGIConstants.LAF_WINDOWS.equals(laf)) {
       this.setRollover(true);
     }
 
@@ -314,7 +314,7 @@ public class SGToolBar extends JToolBar
     barZoom.setMinimumSize(barZoom.getPreferredSize());
     this.mZoomToolBar = barZoom;
 
-    if (LAF_WINDOWS.equals(laf)) {
+    if (SGIConstants.LAF_WINDOWS.equals(laf)) {
       barFile.setRollover(true);
       barEdit.setRollover(true);
       barInsert.setRollover(true);

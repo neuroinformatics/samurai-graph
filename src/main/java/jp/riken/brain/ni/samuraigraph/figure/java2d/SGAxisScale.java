@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -94,11 +95,11 @@ class SGAxisScale extends SGDrawingElementScale2D
     this.setXAxisTitleDownSide(true);
     this.setYAxisTitleLeftSide(true);
 
-    this.setLineWidth(DEFAULT_SCALE_SYMBOL_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setLineWidth(DEFAULT_SCALE_SYMBOL_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setLineColor(DEFAULT_SCALE_SYMBOL_COLOR);
     this.setSpace(DEFAULT_SCALE_SYMBOL_SPACE, SCALE_SPACE_UNIT);
 
-    this.setFontSize(DEFAULT_SCALE_SYMBOL_FONT_SIZE, FONT_SIZE_UNIT);
+    this.setFontSize(DEFAULT_SCALE_SYMBOL_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
     this.setFontName(DEFAULT_SCALE_SYMBOL_FONT_NAME);
     this.setFontStyle(DEFAULT_SCALE_SYMBOL_FONT_STYLE);
     this.setFontColor(DEFAULT_SCALE_SYMBOL_COLOR);
@@ -1754,7 +1755,7 @@ class SGAxisScale extends SGDrawingElementScale2D
     p.addSeparator();
     SGUtility.addItem(p, this, MENUCMD_HIDE_SCALE);
     p.addSeparator();
-    SGUtility.addItem(p, this, MENUCMD_PROPERTY);
+    SGUtility.addItem(p, this, SGIConstants.MENUCMD_PROPERTY);
     return p;
   }
 
@@ -1766,7 +1767,7 @@ class SGAxisScale extends SGDrawingElementScale2D
       this.mAxisElement.repaint();
       this.setChanged(true);
       this.notifyToRoot();
-    } else if (MENUCMD_PROPERTY.equals(command)) {
+    } else if (SGIConstants.MENUCMD_PROPERTY.equals(command)) {
       // show the property dialog
       this.mAxisElement.setPropertiesOfSelectedObjects(this);
     }

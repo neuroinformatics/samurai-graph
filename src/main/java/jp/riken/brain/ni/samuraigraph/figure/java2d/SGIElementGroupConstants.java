@@ -3,7 +3,7 @@ package jp.riken.brain.ni.samuraigraph.figure.java2d;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** */
-public interface SGIElementGroupConstants extends SGIConstants {
+public interface SGIElementGroupConstants {
 
   /** A group of polyline. */
   public static final int POLYLINE_GROUP = 0;

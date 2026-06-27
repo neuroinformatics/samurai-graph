@@ -357,11 +357,11 @@ class SGWindowManager
         this.removeWindow(wnd);
       } else if (ret == JOptionPane.NO_OPTION || ret == JOptionPane.CLOSED_OPTION) {
         // canceled and there is nothing to do
-        return CANCEL_OPTION;
+        return SGIConstants.CANCEL_OPTION;
       } else if (ret == JOptionPane.CANCEL_OPTION) {
         // save the properties
         final int retSave = this.mMain.mPropertyFileManager.savePropertiesByDialog(wnd);
-        if (retSave == OK_OPTION) {
+        if (retSave == SGIConstants.OK_OPTION) {
           this.removeWindow(wnd);
         }
         return retSave;
@@ -369,7 +369,7 @@ class SGWindowManager
     } else {
       this.removeWindow(wnd);
     }
-    return OK_OPTION;
+    return SGIConstants.OK_OPTION;
   }
 
   /** Closes all windows. */
@@ -378,7 +378,7 @@ class SGWindowManager
     for (int ii = wndList.size() - 1; ii >= 0; ii--) {
       SGDrawingWindow wnd = wndList.get(ii);
       final int ret = this.closeWindow(wnd);
-      if (ret == CANCEL_OPTION) {
+      if (ret == SGIConstants.CANCEL_OPTION) {
         break;
       }
     }
@@ -483,11 +483,11 @@ class SGWindowManager
         this.mMain.reloadData(wnd, true);
       } else if (command.equals(MENUBARCMD_SAVE_PROPERTY)) {
         final int ret = this.mMain.mPropertyFileManager.savePropertiesByDialog(wnd);
-        wnd.setSaved(ret == OK_OPTION);
+        wnd.setSaved(ret == SGIConstants.OK_OPTION);
       } else if (command.equals(MENUBARCMD_LOAD_PROPERTY)) {
         if (wnd.needsConfirmationBeforeDiscard()) {
           final int ret = this.mMain.beforeDiscard(wnd);
-          if (ret == CANCEL_OPTION) {
+          if (ret == SGIConstants.CANCEL_OPTION) {
             return;
           }
         }
@@ -498,11 +498,11 @@ class SGWindowManager
         this.mMain.mPropertyFileManager.loadPropertyFromDialog(wnd);
       } else if (command.equals(MENUBARCMD_SAVE_DATASET)) {
         final int ret = this.mMain.mDataSetManager.saveDataSet(wnd);
-        wnd.setSaved(ret == OK_OPTION);
+        wnd.setSaved(ret == SGIConstants.OK_OPTION);
       } else if (command.equals(MENUBARCMD_LOAD_DATASET)) {
         if (wnd.needsConfirmationBeforeDiscard()) {
           final int ret = this.mMain.beforeDiscard(wnd);
-          if (ret == CANCEL_OPTION) {
+          if (ret == SGIConstants.CANCEL_OPTION) {
             return;
           }
         }
@@ -539,7 +539,7 @@ class SGWindowManager
         }
       } else if (command.equals(MENUBARCMD_SAVE_AS_SCRIPT)) {
         final int ret = this.mMain.mCommandScriptManager.create(wnd);
-        wnd.setSaved(ret == OK_OPTION);
+        wnd.setSaved(ret == SGIConstants.OK_OPTION);
 
       } else if (command.equals(MENUBARCMD_LOAD_BACKGROUND_IMAGE)) {
 
@@ -602,7 +602,7 @@ class SGWindowManager
         this.mMain.showAboutDialog(wnd);
       } else if (command.equals(MENUBARCMD_SPLIT)) {
         this.mMain.splitSXYData(wnd);
-      } else if (command.equals(MENUCMD_TRANSFORM_DATA)) {
+      } else if (command.equals(SGIConstants.MENUCMD_TRANSFORM_DATA)) {
         this.mMain.transformData(wnd);
       } else if (command.equals(MENUBARCMD_MERGE)) {
         this.mMain.mergeSXYData(wnd);
@@ -612,25 +612,25 @@ class SGWindowManager
               wnd, "Cannot open the dialog to setup line style.", SGIConstants.TITLE_ERROR);
           return;
         }
-      } else if (command.equals(MENUCMD_EXPORT_TO_FILE)
-          || command.equals(MENUCMD_EXPORT_TO_TEXT_FILE)
-          || command.equals(MENUCMD_EXPORT_TO_NETCDF_FILE)
-          || command.equals(MENUCMD_EXPORT_TO_HDF5_FILE)
-          || command.equals(MENUCMD_EXPORT_TO_MATLAB_FILE)) {
+      } else if (command.equals(SGIConstants.MENUCMD_EXPORT_TO_FILE)
+          || command.equals(SGIConstants.MENUCMD_EXPORT_TO_TEXT_FILE)
+          || command.equals(SGIConstants.MENUCMD_EXPORT_TO_NETCDF_FILE)
+          || command.equals(SGIConstants.MENUCMD_EXPORT_TO_HDF5_FILE)
+          || command.equals(SGIConstants.MENUCMD_EXPORT_TO_MATLAB_FILE)) {
         this.mMain.outputDataToFile(wnd, command);
-      } else if (command.equals(MENUCMD_ADD_PROPERTIES_TO_NETCDF)) {
+      } else if (command.equals(SGIConstants.MENUCMD_ADD_PROPERTIES_TO_NETCDF)) {
         this.mMain.saveIntoGlobalAttributes(wnd, SAVED_OBJECT_TYPE.PROPERTIES);
-      } else if (command.equals(MENUCMD_ADD_COMMANDS_TO_NETCDF)) {
+      } else if (command.equals(SGIConstants.MENUCMD_ADD_COMMANDS_TO_NETCDF)) {
         this.mMain.saveIntoGlobalAttributes(wnd, SAVED_OBJECT_TYPE.COMMAND_SCRIPT);
-      } else if (command.equals(MENUCMD_ANIMATION)) {
+      } else if (command.equals(SGIConstants.MENUCMD_ANIMATION)) {
         this.mMain.showAnimationDialog(wnd);
-      } else if (command.equals(MENUCMD_SHOW_DATA_VIEWER)) {
+      } else if (command.equals(SGIConstants.MENUCMD_SHOW_DATA_VIEWER)) {
         this.mMain.showDataViewerDialog(wnd);
-      } else if (MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
-          || MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)
-          || MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)
-          || MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)
-          || MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
+      } else if (SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
+          || SGIConstants.MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)
+          || SGIConstants.MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)
+          || SGIConstants.MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)
+          || SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
         this.mMain.fitAxisRangeToFocusedData(wnd, command);
       } else if (SGIFigureElement.NOTIFY_DATA_WILL_BE_HIDDEN.equals(command)) {
         this.mMain.closeDataViewerDialogsOfFocusedData(wnd);

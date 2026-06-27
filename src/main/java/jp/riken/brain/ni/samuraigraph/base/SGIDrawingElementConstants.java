@@ -1,7 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 /** Constants for drawing elements. */
-public interface SGIDrawingElementConstants extends SGIConstants {
+public interface SGIDrawingElementConstants {
 
   // symbol type of graph elements
   public static final int SYMBOL_ELEMENT_TYPE_STRING = 0;

@@ -23,28 +23,28 @@ import javax.swing.SwingUtilities;
 
 /** An original spinner class. */
 public class SGSpinner extends JSpinner
-    implements SGIConstants, FocusListener, KeyListener, MouseListener {
+    implements FocusListener, KeyListener, MouseListener {
 
   // serialVersionUID
   private static final long serialVersionUID = -107749809547053625L;
 
-  // The suffix for cm.
-  private static final String SUFFIX_CM = " " + cm;
+  // The suffix for SGIConstants.cm.
+  private static final String SUFFIX_CM = " " + SGIConstants.cm;
 
-  // The suffix for mm.
-  private static final String SUFFIX_MM = " " + mm;
+  // The suffix for SGIConstants.mm.
+  private static final String SUFFIX_MM = " " + SGIConstants.mm;
 
-  // The suffix for pt.
-  private static final String SUFFIX_PT = " " + pt;
+  // The suffix for SGIConstants.pt.
+  private static final String SUFFIX_PT = " " + SGIConstants.pt;
 
-  // The suffix for inch.
-  private static final String SUFFIX_INCH = " " + inch;
+  // The suffix for SGIConstants.inch.
+  private static final String SUFFIX_INCH = " " + SGIConstants.inch;
 
-  // The suffix for degree.
-  private static final String SUFFIX_DEGREE = degree;
+  // The suffix for SGIConstants.degree.
+  private static final String SUFFIX_DEGREE = SGIConstants.degree;
 
-  // The suffix for percent.
-  private static final String SUFFIX_PERCENT = " " + percent;
+  // The suffix for SGIConstants.percent.
+  private static final String SUFFIX_PERCENT = " " + SGIConstants.percent;
 
   // The mode of committing the value as it is.
   protected static final int MODE_DEFAULT = 0;
@@ -224,7 +224,7 @@ public class SGSpinner extends JSpinner
       suffix = SUFFIX_INCH;
     } else if (SGIConstants.degree.equals(unit)) {
       suffix = SUFFIX_DEGREE;
-    } else if (percent.equals(unit)) {
+    } else if (SGIConstants.percent.equals(unit)) {
       suffix = SUFFIX_PERCENT;
     }
     return suffix;
@@ -249,7 +249,7 @@ public class SGSpinner extends JSpinner
     } else if (SUFFIX_DEGREE.equals(suffix)) {
       unit = SGIConstants.degree;
     } else if (SUFFIX_PERCENT.equals(suffix)) {
-      unit = percent;
+      unit = SGIConstants.percent;
     }
     return unit;
   }

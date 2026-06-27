@@ -5,12 +5,12 @@ import java.awt.Font;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** Constants for axes. */
-public interface SGIAxisConstants extends SGIConstants {
+public interface SGIAxisConstants {
 
   /*
    * Constants for the tick marks.
    */
-  public static final String TICK_MARK_LENGTH_UNIT = cm;
+  public static final String TICK_MARK_LENGTH_UNIT = SGIConstants.cm;
 
   public static final double TICK_MARK_LENGTH_MIN = -5.0;
 
@@ -55,7 +55,7 @@ public interface SGIAxisConstants extends SGIConstants {
   /*
    * Constants for axis shift.
    */
-  public static final String AXIS_SHIFT_UNIT = cm;
+  public static final String AXIS_SHIFT_UNIT = SGIConstants.cm;
 
   public static final double AXIS_SHIFT_MIN = -50.0;
 
@@ -72,7 +72,7 @@ public interface SGIAxisConstants extends SGIConstants {
   /*
    * Constants for title shift.
    */
-  public static final String TITLE_SHIFT_UNIT = cm;
+  public static final String TITLE_SHIFT_UNIT = SGIConstants.cm;
 
   public static final double TITLE_SHIFT_MIN = -50.0;
 
@@ -89,7 +89,7 @@ public interface SGIAxisConstants extends SGIConstants {
   /*
    * Constants for spaces.
    */
-  public static final String SPACE_UNIT = cm;
+  public static final String SPACE_UNIT = SGIConstants.cm;
 
   public static final double SPACE_BETWEEN_LINE_AND_NUMBERS_MIN = -50.0;
 
@@ -110,7 +110,7 @@ public interface SGIAxisConstants extends SGIConstants {
   /*
    * Constants for the exponent.
    */
-  public static final String EXPONENT_LOCATION_UNIT = cm;
+  public static final String EXPONENT_LOCATION_UNIT = SGIConstants.cm;
 
   public static final double EXPONENT_LOCATION_MIN = -50.0;
 

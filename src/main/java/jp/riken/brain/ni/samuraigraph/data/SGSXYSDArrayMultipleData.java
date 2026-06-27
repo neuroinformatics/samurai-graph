@@ -2428,11 +2428,11 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   public Object[][] getValueTable(final SGExportParameter params, SGDataBufferPolicy policy) {
 
     // get values from data
-    OPERATION mode = params.getType();
+    SGIConstants.OPERATION mode = params.getType();
     final boolean archiveFlag = SGDataUtility.isArchiveDataSetOperation(mode);
     final boolean exportFlag =
-        (OPERATION.EXPORT_TO_FILE_AS_SAME_FORMAT.equals(mode)
-            || OPERATION.EXPORT_TO_TEXT.equals(mode));
+        (SGIConstants.OPERATION.EXPORT_TO_FILE_AS_SAME_FORMAT.equals(mode)
+            || SGIConstants.OPERATION.EXPORT_TO_TEXT.equals(mode));
     SGSXYMultipleDataBuffer buffer = (SGSXYMultipleDataBuffer) this.getDataBuffer(policy);
     final int len = buffer.getLength();
     final double[][] xValuesOri = buffer.getXValues();

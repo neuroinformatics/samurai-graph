@@ -39,7 +39,7 @@ public abstract class SGAbstractDateInputDialog extends SGDialog
   }
 
   private void onCanceled() {
-    this.setCloseOption(CANCEL_OPTION);
+    this.setCloseOption(SGIConstants.CANCEL_OPTION);
     this.setVisible(false);
   }
 
@@ -111,7 +111,7 @@ public abstract class SGAbstractDateInputDialog extends SGDialog
     super.actionPerformed(e);
     Object source = e.getSource();
     if (source.equals(this.getOKButton())) {
-      this.setCloseOption(OK_OPTION);
+      this.setCloseOption(SGIConstants.OK_OPTION);
       this.setVisible(false);
     } else if (source.equals(this.getCancelButton())) {
       this.onCanceled();

@@ -68,8 +68,8 @@ public class SGArrowUtility implements SGIVXYDataConstants, SGIDataCommandConsta
   /**
    * Sets the head open and close angle.
    *
-   * @param openAngle the head open angle to set in units of degree
-   * @param closeAngle the head close angle to set in units of degree
+   * @param openAngle the head open angle to set in units of SGIConstants.degree
+   * @param closeAngle the head close angle to set in units of SGIConstants.degree
    * @param arrows a group of arrows
    * @return true if succeeded
    */
@@ -112,8 +112,8 @@ public class SGArrowUtility implements SGIVXYDataConstants, SGIDataCommandConsta
   /**
    * Sets the head open and close angle.
    *
-   * @param openAngle the head open angle to set in units of degree
-   * @param closeAngle the head close angle to set in units of degree
+   * @param openAngle the head open angle to set in units of SGIConstants.degree
+   * @param closeAngle the head close angle to set in units of SGIConstants.degree
    * @param arrows a group of arrows
    * @return true if succeeded
    */

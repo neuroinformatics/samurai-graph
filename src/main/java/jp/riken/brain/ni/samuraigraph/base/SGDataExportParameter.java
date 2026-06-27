@@ -3,11 +3,11 @@ package jp.riken.brain.ni.samuraigraph.base;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SGDataExportParameter extends SGExportParameter implements SGIConstants {
+public class SGDataExportParameter extends SGExportParameter {
 
   private List<SGData> mExportedDataList = new ArrayList<SGData>();
 
-  public SGDataExportParameter(OPERATION type, List<SGData> dataList) {
+  public SGDataExportParameter(SGIConstants.OPERATION type, List<SGData> dataList) {
     super(type);
     if (dataList == null) {
       throw new IllegalArgumentException("dataList == null");

@@ -46,7 +46,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** A panel to set the line style. */
 public class SGLineStylePanel extends javax.swing.JPanel
-    implements SGIConstants, ActionListener, ItemListener, MouseInputListener, MouseWheelListener {
+    implements ActionListener, ItemListener, MouseInputListener, MouseWheelListener {
 
   private static final long serialVersionUID = 643669519397055582L;
 
@@ -634,9 +634,9 @@ public class SGLineStylePanel extends javax.swing.JPanel
       super();
       this.initProperties(
           SGUtility.getLineWidthSpinnerNumberModel(),
-          LINE_WIDTH_UNIT,
-          LINE_WIDTH_FRAC_DIGIT_MIN,
-          LINE_WIDTH_FRAC_DIGIT_MAX);
+          SGIConstants.LINE_WIDTH_UNIT,
+          SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+          SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
     }
 
     @Override
@@ -656,9 +656,9 @@ public class SGLineStylePanel extends javax.swing.JPanel
       super();
       this.initProperties(
           SGUtility.getLineWidthSpinnerNumberModel(),
-          LINE_WIDTH_UNIT,
-          LINE_WIDTH_FRAC_DIGIT_MIN,
-          LINE_WIDTH_FRAC_DIGIT_MAX);
+          SGIConstants.LINE_WIDTH_UNIT,
+          SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+          SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
       this.getFormattedTextField().addActionListener(this);
       this.getFormattedTextField().getDocument().addDocumentListener(this);
     }

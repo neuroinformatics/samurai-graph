@@ -3,10 +3,10 @@ package jp.riken.brain.ni.samuraigraph.base;
 import java.awt.Color;
 
 /** Constants for the figures. */
-public interface SGIFigureConstants extends SGIConstants {
+public interface SGIFigureConstants {
 
   // figure location
-  public static final String FIGURE_LOCATION_UNIT = cm;
+  public static final String FIGURE_LOCATION_UNIT = SGIConstants.cm;
 
   public static final double FIGURE_X_MIN = -50.0;
 
@@ -19,7 +19,7 @@ public interface SGIFigureConstants extends SGIConstants {
   public static final double FIGURE_LOCATION_STEP = 1.0;
 
   // figure size
-  public static final String FIGURE_SIZE_UNIT = cm;
+  public static final String FIGURE_SIZE_UNIT = SGIConstants.cm;
 
   public static final double FIGURE_WIDTH_MIN = 0.10;
 

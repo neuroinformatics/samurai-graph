@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,7 +11,7 @@ public interface SGILineAndStringConstants extends SGIStringConstants {
   // Space between the horizontal line and the symbol
   //
 
-  public static final String SPACE_UNIT = cm;
+  public static final String SPACE_UNIT = SGIConstants.cm;
 
   public static final double SPACE_MIN = -1.0;
 

@@ -561,9 +561,9 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
     // edge line width
     this.mEdgeLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // inner paint transparency
     this.mBackgroundTransparentSpinner.initProperties(
@@ -787,7 +787,7 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
     final double leftYValue0 = rect0.getTopYValue();
     final double rightXValue0 = rect0.getRightXValue();
     final double rightYValue0 = rect0.getBottomYValue();
-    final float lineWidth0 = rect0.getLineWidth(pt);
+    final float lineWidth0 = rect0.getLineWidth(SGIConstants.pt);
     final int lineType0 = rect0.getLineType();
     final SGIPaint innerPaint0 = rect0.getInnerPaint();
     final Color lineColor0 = rect0.getLineColor();
@@ -844,7 +844,7 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
 
       for (int ii = 1; ii < list.size(); ii++) {
         SGIRectangularShapeDialogObserver rect1 = (SGIRectangularShapeDialogObserver) list.get(ii);
-        final float lineWidth1 = rect1.getLineWidth(pt);
+        final float lineWidth1 = rect1.getLineWidth(SGIConstants.pt);
         if (lineWidth0 != lineWidth1) {
           lineWidth = null;
           break;
@@ -988,7 +988,7 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
     }
 
     if (lineWidth != null) {
-      rect.setLineWidth(lineWidth.floatValue(), pt);
+      rect.setLineWidth(lineWidth.floatValue(), SGIConstants.pt);
     }
 
     // line type

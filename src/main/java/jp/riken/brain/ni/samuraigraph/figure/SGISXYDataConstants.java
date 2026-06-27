@@ -6,7 +6,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 
 /** Constants for the two-dimensional scalar type data. */
-public interface SGISXYDataConstants extends SGIConstants {
+public interface SGISXYDataConstants {
 
   enum ELEMENT_TYPE {
     Line,

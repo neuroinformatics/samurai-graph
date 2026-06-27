@@ -8,7 +8,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIConstants.OPERATION;
 public class SGExportParameter {
 
   // The type of operation.
-  private OPERATION mType = null;
+  private SGIConstants.OPERATION mType = null;
 
   // The map of parameters.
   private Map<String, Object> mParamMap = new HashMap<String, Object>();
@@ -18,7 +18,7 @@ public class SGExportParameter {
    *
    * @param type the type of operation
    */
-  public SGExportParameter(OPERATION type) {
+  public SGExportParameter(SGIConstants.OPERATION type) {
     super();
     if (type == null) {
       throw new IllegalArgumentException("type == null");
@@ -31,7 +31,7 @@ public class SGExportParameter {
    *
    * @return the type
    */
-  public OPERATION getType() {
+  public SGIConstants.OPERATION getType() {
     return this.mType;
   }
 

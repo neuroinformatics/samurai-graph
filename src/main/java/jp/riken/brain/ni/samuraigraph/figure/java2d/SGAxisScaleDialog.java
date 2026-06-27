@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -889,21 +890,21 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     // line width
     this.mLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        FONT_SIZE_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.FONT_SIZE_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // font size
     this.mFontSizeSpinner.initProperties(
         getFontSizeSpinnerNumberModel(),
-        FONT_SIZE_UNIT,
-        FONT_SIZE_FRAC_DIGIT_MIN,
-        FONT_SIZE_FRAC_DIGIT_MAX);
+        SGIConstants.FONT_SIZE_UNIT,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MIN,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MAX);
 
     // angle
     this.mFontAngleSpinner.initProperties(
         new SpinnerNumberModel(0.0, STRING_ANGLE_MIN, STRING_ANGLE_MAX, STRING_ANGLE_STEP),
-        degree,
+        SGIConstants.degree,
         STRING_ANGLE_FRAC_DIFIT_MIN,
         STRING_ANGLE_FRAC_DIFIT_MAX);
 
@@ -1319,7 +1320,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog
 
     // line width
     if (lineWidth != null) {
-      scale.setLineWidth(lineWidth.floatValue(), LINE_WIDTH_UNIT);
+      scale.setLineWidth(lineWidth.floatValue(), SGIConstants.LINE_WIDTH_UNIT);
     }
 
     // line color
@@ -1344,7 +1345,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog
 
     // font size
     if (fontSize != null) {
-      scale.setFontSize(fontSize.floatValue(), FONT_SIZE_UNIT);
+      scale.setFontSize(fontSize.floatValue(), SGIConstants.FONT_SIZE_UNIT);
     }
 
     // font angle
@@ -1410,12 +1411,12 @@ public class SGAxisScaleDialog extends SGPropertyDialog
       yAxisLeftSideArray[ii] = l.isYAxisTitleLeftSide();
       yAxisTextArray[ii] = l.getYAxisText();
       yAxisUnitArray[ii] = l.getYAxisUnit();
-      lineWidthArray[ii] = l.getLineWidth(LINE_WIDTH_UNIT);
+      lineWidthArray[ii] = l.getLineWidth(SGIConstants.LINE_WIDTH_UNIT);
       lineColorArray[ii] = l.getLineColor();
       spaceArray[ii] = l.getSpace(SCALE_SPACE_UNIT);
       fontNameArray[ii] = l.getFontName();
       fontStyleArray[ii] = l.getFontStyle();
-      fontSizeArray[ii] = l.getFontSize(FONT_SIZE_UNIT);
+      fontSizeArray[ii] = l.getFontSize(SGIConstants.FONT_SIZE_UNIT);
       fontAngleArray[ii] = l.getTextAngle();
       fontColorArray[ii] = l.getFontColor();
     }

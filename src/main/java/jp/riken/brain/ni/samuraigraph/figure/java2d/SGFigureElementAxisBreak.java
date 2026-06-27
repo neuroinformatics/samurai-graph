@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -361,7 +362,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
             DEFAULT_AXIS_BREAK_FOR_HORIZONTAL);
     el.setInnerColor(DEFAULT_AXIS_BREAK_INNER_COLOR);
     el.setLineColor(DEFAULT_AXIS_BREAK_LINE_COLOR);
-    el.setLineWidth(DEFAULT_AXIS_BREAK_LINE_WIDTH, LINE_WIDTH_UNIT);
+    el.setLineWidth(DEFAULT_AXIS_BREAK_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     el.setMagnification(this.mMagnification);
     el.mXAxis = xAxis;
     el.mYAxis = yAxis;
@@ -952,23 +953,23 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
 
       this.addSeparator();
 
-      SGUtility.addItem(this, abs, MENUCMD_CUT);
-      SGUtility.addItem(this, abs, MENUCMD_COPY);
+      SGUtility.addItem(this, abs, SGIConstants.MENUCMD_CUT);
+      SGUtility.addItem(this, abs, SGIConstants.MENUCMD_COPY);
 
       this.addSeparator();
 
-      SGUtility.addItem(this, abs, MENUCMD_DELETE);
-      SGUtility.addItem(this, abs, MENUCMD_DUPLICATE);
+      SGUtility.addItem(this, abs, SGIConstants.MENUCMD_DELETE);
+      SGUtility.addItem(this, abs, SGIConstants.MENUCMD_DUPLICATE);
 
       this.addSeparator();
 
-      this.anchoredCheckBox = new JCheckBoxMenuItem(MENUCMD_ANCHORED);
+      this.anchoredCheckBox = new JCheckBoxMenuItem(SGIConstants.MENUCMD_ANCHORED);
       add(this.anchoredCheckBox);
       this.anchoredCheckBox.addActionListener(abs);
 
       this.addSeparator();
 
-      SGUtility.addItem(this, abs, MENUCMD_PROPERTY);
+      SGUtility.addItem(this, abs, SGIConstants.MENUCMD_PROPERTY);
     }
 
     void setAnchored(final boolean anchored) {
@@ -1306,25 +1307,25 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
     //            p.add(new JLabel(sb.toString()));
     //            p.addSeparator();
     //
-    //            SGUtility.addItem(p, this, MENUCMD_BRING_TO_FRONT);
-    //            SGUtility.addItem(p, this, MENUCMD_BRING_FORWARD);
-    //            SGUtility.addItem(p, this, MENUCMD_SEND_BACKWARD);
-    //            SGUtility.addItem(p, this, MENUCMD_SEND_TO_BACK);
+    //            SGUtility.addItem(p, this, SGIConstants.MENUCMD_BRING_TO_FRONT);
+    //            SGUtility.addItem(p, this, SGIConstants.MENUCMD_BRING_FORWARD);
+    //            SGUtility.addItem(p, this, SGIConstants.MENUCMD_SEND_BACKWARD);
+    //            SGUtility.addItem(p, this, SGIConstants.MENUCMD_SEND_TO_BACK);
     //
     //            p.addSeparator();
     //
-    //            SGUtility.addItem(p, this, MENUCMD_CUT);
-    //            SGUtility.addItem(p, this, MENUCMD_COPY);
-    //            SGUtility.addItem(p, this, MENUCMD_PASTE);
+    //            SGUtility.addItem(p, this, SGIConstants.MENUCMD_CUT);
+    //            SGUtility.addItem(p, this, SGIConstants.MENUCMD_COPY);
+    //            SGUtility.addItem(p, this, SGIConstants.MENUCMD_PASTE);
     //
     //            p.addSeparator();
     //
-    //            SGUtility.addItem(p, this, MENUCMD_DELETE);
-    //            SGUtility.addItem(p, this, MENUCMD_DUPLICATE);
+    //            SGUtility.addItem(p, this, SGIConstants.MENUCMD_DELETE);
+    //            SGUtility.addItem(p, this, SGIConstants.MENUCMD_DUPLICATE);
     //
     //            p.addSeparator();
     //
-    //            SGUtility.addItem(p, this, MENUCMD_PROPERTY);
+    //            SGUtility.addItem(p, this, SGIConstants.MENUCMD_PROPERTY);
     //
     //            return p;
     //        }
@@ -1426,7 +1427,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
     public void actionPerformed(final ActionEvent e) {
       final String command = e.getActionCommand();
 
-      if (command.equals(MENUCMD_PROPERTY)) {
+      if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
         SGFigureElementAxisBreak.this.setPropertiesOfSelectedObjects(this);
       } else {
         notifyToListener(command, e.getSource());

@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -97,7 +98,7 @@ public class SGLineStyleDialog extends SGDialog {
   @Override
   protected void onEscKeyTyped() {
     this.setVisible(false);
-    this.setCloseOption(CANCEL_OPTION);
+    this.setCloseOption(SGIConstants.CANCEL_OPTION);
   }
 
   public List<SGLineStyle> getLineStyleList() {

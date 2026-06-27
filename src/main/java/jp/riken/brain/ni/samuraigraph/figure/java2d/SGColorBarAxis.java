@@ -205,7 +205,7 @@ class SGColorBarAxis extends SGAxisElement
 
     p.addSeparator();
 
-    SGUtility.addItem(p, this, MENUCMD_PROPERTY);
+    SGUtility.addItem(p, this, SGIConstants.MENUCMD_PROPERTY);
 
     return p;
   }
@@ -217,7 +217,7 @@ class SGColorBarAxis extends SGAxisElement
       this.mAxisElement.repaint();
       this.setChanged(true);
       this.notifyToRoot();
-    } else if (command.equals(MENUCMD_PROPERTY)) {
+    } else if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
       this.showPropertyDialog();
     } else if (command.equals(MENUCMD_DRAW_LATER)) {
       SGFigureElementAxis.mNotifyChangeOnDraggingFlag =
@@ -905,7 +905,7 @@ class SGColorBarAxis extends SGAxisElement
       this.mTitle.setLocation(x, y);
     } else if (DIRECTION_VERTICAL_LEFT.equals(this.mDirection)
         || DIRECTION_VERTICAL_RIGHT.equals(this.mDirection)) {
-      this.mTitle.setAngle(90.0f); // rotation of 90 degree
+      this.mTitle.setAngle(90.0f); // rotation of 90 SGIConstants.degree
       final float y =
           this.getY() + (this.getLength() + (float) rectTitle.getHeight()) / 2.0f + shiftFromCenter;
       final float x;
@@ -1689,7 +1689,7 @@ class SGColorBarAxis extends SGAxisElement
   //
   // // Frame Line
   // el.setAttribute(KEY_FRAME_LINE_WIDTH, Float.toString(frameLineWidth)
-  // + LINE_WIDTH_UNIT);
+  // + SGIConstants.LINE_WIDTH_UNIT);
   //
   // el.setAttribute(KEY_COLOR_BAR_SPACE_LINE_AND_NUMBERS,
   // Float.toString(spaceLineAndNumbers)
@@ -1700,12 +1700,12 @@ class SGColorBarAxis extends SGAxisElement
   // el.setAttribute(KEY_COLOR_BAR_LINE_COLOR,
   // SGUtilityText.getColorString(this.mAxisLineColor));
   // el.setAttribute(KEY_TICK_MARK_WIDTH, Float.toString(tickMarkWidth)
-  // + LINE_WIDTH_UNIT);
+  // + SGIConstants.LINE_WIDTH_UNIT);
   // el.setAttribute(KEY_TICK_MARK_LENGTH, Float.toString(tickMarkLength)
   // + TICK_MARK_LENGTH_UNIT);
   // el.setAttribute(KEY_FONT_NAME, this.mTitle.getFontName());
   // el.setAttribute(KEY_FONT_SIZE, Float.toString(fontSize)
-  // + FONT_SIZE_UNIT);
+  // + SGIConstants.FONT_SIZE_UNIT);
   // el.setAttribute(KEY_FONT_STYLE, SGUtilityText
   // .getFontStyleName(this.mTitle.getFontStyle()));
   // el.setAttribute(KEY_STRING_COLORS, SGUtilityText
@@ -2214,12 +2214,12 @@ class SGColorBarAxis extends SGAxisElement
     SGPropertyUtility.addProperty(
         map,
         KEY_COLOR_BAR_WIDTH,
-        SGUtility.getExportValue(this.mBarWidth * CM_POINT_RATIO, COLOR_BAR_SIZE_MINIMAL_ORDER),
+        SGUtility.getExportValue(this.mBarWidth * SGIConstants.CM_POINT_RATIO, COLOR_BAR_SIZE_MINIMAL_ORDER),
         COLOR_BAR_SIZE_UNIT);
     SGPropertyUtility.addProperty(
         map,
         KEY_COLOR_BAR_LENGTH,
-        SGUtility.getExportValue(this.mBarLength * CM_POINT_RATIO, COLOR_BAR_SIZE_MINIMAL_ORDER),
+        SGUtility.getExportValue(this.mBarLength * SGIConstants.CM_POINT_RATIO, COLOR_BAR_SIZE_MINIMAL_ORDER),
         COLOR_BAR_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, KEY_COLOR_BAR_DIRECTION, this.getDirection());
 

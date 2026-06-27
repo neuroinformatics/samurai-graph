@@ -368,7 +368,7 @@ class SGMainFunctions
       this.removeUpdaterTemporaryFiles();
 
       // removes temporary files for created by JHDF5 library
-      if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
+      if (SGUtility.identifyOS(SGIConstants.OS_NAME_WINDOWS)) {
         // only for Windows
         this.removeHDF5TemporaryFiles();
       }
@@ -602,7 +602,7 @@ class SGMainFunctions
 
     /** Remove temporary files used in upgrade. */
     private void removeUpdaterTemporaryFiles() {
-      String filename = SGApplicationUtility.getPathName(TMP_DIR, HELPER_TEMP_DIR_NAME);
+      String filename = SGApplicationUtility.getPathName(SGIConstants.TMP_DIR, HELPER_TEMP_DIR_NAME);
       File temp = new File(filename);
       try {
         temp = temp.getCanonicalFile();
@@ -950,10 +950,10 @@ class SGMainFunctions
 
     if (!curDirFlag) {
       StringBuffer sb = new StringBuffer();
-      sb.append(USER_HOME);
-      if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
-        sb.append(FILE_SEPARATOR);
-        sb.append(MY_DOCUMENTS);
+      sb.append(SGIConstants.USER_HOME);
+      if (SGUtility.identifyOS(SGIConstants.OS_NAME_WINDOWS)) {
+        sb.append(SGIConstants.FILE_SEPARATOR);
+        sb.append(SGIConstants.MY_DOCUMENTS);
       }
       String path = sb.toString();
       this.setCurrentFileDirectory(path);
@@ -1187,7 +1187,7 @@ class SGMainFunctions
     if (wnd.createDOMTree(
             document,
             SGIRootObjectConstants.FOCUSED_FIGURES_FOR_DUPLICATION,
-            new SGExportParameter(OPERATION.DUPLICATE_OBJECT))
+            new SGExportParameter(SGIConstants.OPERATION.DUPLICATE_OBJECT))
         == false) {
       return false;
     }
@@ -1225,7 +1225,7 @@ class SGMainFunctions
 
     final int ret =
         this.createFiguresFromPropertyFile(
-            elWnd, wnd, wDataArray, true, versionNumber, LOAD_PROPERTIES_IN_DUPLICATION);
+            elWnd, wnd, wDataArray, true, versionNumber, SGIConstants.LOAD_PROPERTIES_IN_DUPLICATION);
     if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
       return false;
     }
@@ -1244,14 +1244,14 @@ class SGMainFunctions
 
     } else if (ret == JOptionPane.NO_OPTION || ret == JOptionPane.CLOSED_OPTION) {
       // canceled and there is nothing to do
-      return CANCEL_OPTION;
+      return SGIConstants.CANCEL_OPTION;
     } else if (ret == JOptionPane.CANCEL_OPTION) {
       // save the properties
       final int retSave = this.mPropertyFileManager.savePropertiesByDialog(wnd);
       return retSave;
     }
 
-    return OK_OPTION;
+    return SGIConstants.OK_OPTION;
   }
 
   static final String MSG_SAVE = "Save";
@@ -1307,7 +1307,7 @@ class SGMainFunctions
 
     // get the file of change log
     Class<?> inClass = getClass();
-    URL url = inClass.getResource(RESOURCES_DIRNAME + "ChangeLog.html");
+    URL url = inClass.getResource(SGIConstants.RESOURCES_DIRNAME + "ChangeLog.html");
     if (url == null) {
       JOptionPane.showMessageDialog(owner, "Failed to get log information.");
       return false;
@@ -3896,7 +3896,7 @@ class SGMainFunctions
         // use an property file
         if (wnd.needsConfirmationBeforeDiscard()) {
           final int ret = this.beforeDiscard(wnd);
-          if (ret == CANCEL_OPTION) {
+          if (ret == SGIConstants.CANCEL_OPTION) {
             return true;
           }
         }
@@ -3911,7 +3911,7 @@ class SGMainFunctions
         // use an archive file
         if (wnd.needsConfirmationBeforeDiscard()) {
           final int ret = this.beforeDiscard(wnd);
-          if (ret == CANCEL_OPTION) {
+          if (ret == SGIConstants.CANCEL_OPTION) {
             return true;
           }
         }
@@ -3931,7 +3931,7 @@ class SGMainFunctions
         // use an netCDF archive file
         if (wnd.needsConfirmationBeforeDiscard()) {
           final int ret = this.beforeDiscard(wnd);
-          if (ret == CANCEL_OPTION) {
+          if (ret == SGIConstants.CANCEL_OPTION) {
             return true;
           }
         }
@@ -4630,7 +4630,7 @@ class SGMainFunctions
       }
 
       if (this.mPropertyFileManager.setPropertyFile(
-          wnd, doc, wDataArray, true, versionNumber, LOAD_PROPERTIES_IN_NETCDF_ATTRIBUTE)) {
+          wnd, doc, wDataArray, true, versionNumber, SGIConstants.LOAD_PROPERTIES_IN_NETCDF_ATTRIBUTE)) {
         return true;
       }
     }
@@ -5966,7 +5966,7 @@ class SGMainFunctions
 
       // creates parameters
       SGDataExportParameter params =
-          new SGDataExportParameter(OPERATION.SAVE_INTO_FILE_ATTRIBUTE, dataList);
+          new SGDataExportParameter(SGIConstants.OPERATION.SAVE_INTO_FILE_ATTRIBUTE, dataList);
 
       // creates a string to be saved
       String savedString = null;
@@ -6145,7 +6145,7 @@ class SGMainFunctions
       }
     }
     if (!validAll) {
-      SGUtility.showErrorMessageDialog(wnd, "Invalid data is selected for animation.", ERROR);
+      SGUtility.showErrorMessageDialog(wnd, "Invalid data is selected for animation.", SGIConstants.ERROR);
       return;
     }
 
@@ -6158,7 +6158,7 @@ class SGMainFunctions
     }
     Integer frameNumber = SGUtility.checkEquality(frameNumbers);
     if (frameNumber == null) {
-      SGUtility.showErrorMessageDialog(wnd, "Frame number is different.", ERROR);
+      SGUtility.showErrorMessageDialog(wnd, "Frame number is different.", SGIConstants.ERROR);
       return;
     }
 
@@ -6178,7 +6178,7 @@ class SGMainFunctions
     }
     if (found) {
       SGUtility.showErrorMessageDialog(
-          wnd, "Selected data is already assigned to an animation dialog.", ERROR);
+          wnd, "Selected data is already assigned to an animation dialog.", SGIConstants.ERROR);
       return;
     }
 
@@ -6517,19 +6517,19 @@ class SGMainFunctions
 
     List<Integer> axisDirList = new ArrayList<Integer>();
     boolean forAnimationFrames = false;
-    if (MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
-        || MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
+    if (SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
+        || SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
       axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL);
       axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL);
       axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_NORMAL);
-      if (MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
+      if (SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
         forAnimationFrames = true;
       }
-    } else if (MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)) {
+    } else if (SGIConstants.MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)) {
       axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL);
-    } else if (MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)) {
+    } else if (SGIConstants.MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)) {
       axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL);
-    } else if (MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)) {
+    } else if (SGIConstants.MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)) {
       axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_NORMAL);
     }
 

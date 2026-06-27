@@ -462,9 +462,9 @@ public class SGWindowDialog extends SGPropertyDialog
 
     this.mGridLinesWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     this.mImageXSpinner.initProperties(
         new SpinnerNumberModel(
@@ -836,17 +836,17 @@ public class SGWindowDialog extends SGPropertyDialog
 
     SGIWindowDialogObserver wnd0 = (SGIWindowDialogObserver) list.get(0);
 
-    final float width0 = wnd0.getPaperWidth(cm);
-    final float height0 = wnd0.getPaperHeight(cm);
-    final float gridInterval0 = wnd0.getGridLineInterval(cm);
-    final float gridLineWidth0 = wnd0.getGridLineWidth(pt);
+    final float width0 = wnd0.getPaperWidth(SGIConstants.cm);
+    final float height0 = wnd0.getPaperHeight(SGIConstants.cm);
+    final float gridInterval0 = wnd0.getGridLineInterval(SGIConstants.cm);
+    final float gridLineWidth0 = wnd0.getGridLineWidth(SGIConstants.pt);
     final boolean gridVisible0 = wnd0.isGridLineVisible();
     final Color paperColor0 = wnd0.getPaperColor();
     final Color gridLineColor0 = wnd0.getGridLineColor();
-    final float imageX0 = wnd0.getImageLocationX(cm);
-    final float imageY0 = wnd0.getImageLocationY(cm);
-    final float imageWidth0 = wnd0.getImageWidth(cm);
-    final float imageHeight0 = wnd0.getImageHeight(cm);
+    final float imageX0 = wnd0.getImageLocationX(SGIConstants.cm);
+    final float imageY0 = wnd0.getImageLocationY(SGIConstants.cm);
+    final float imageWidth0 = wnd0.getImageWidth(SGIConstants.cm);
+    final float imageHeight0 = wnd0.getImageHeight(SGIConstants.cm);
     final float imageScalingFactor0 = wnd0.getImageScalingFactor();
 
     Float width = Float.valueOf(width0);
@@ -863,7 +863,7 @@ public class SGWindowDialog extends SGPropertyDialog
     if (list.size() > 1) {
       for (int ii = 1; ii < list.size(); ii++) {
         SGIWindowDialogObserver wnd1 = (SGIWindowDialogObserver) list.get(ii);
-        final float width1 = wnd1.getPaperWidth(cm);
+        final float width1 = wnd1.getPaperWidth(SGIConstants.cm);
         if (width0 != width1) {
           width = null;
           break;
@@ -872,7 +872,7 @@ public class SGWindowDialog extends SGPropertyDialog
 
       for (int ii = 1; ii < list.size(); ii++) {
         SGIWindowDialogObserver wnd1 = (SGIWindowDialogObserver) list.get(ii);
-        final float height1 = wnd1.getPaperHeight(cm);
+        final float height1 = wnd1.getPaperHeight(SGIConstants.cm);
         if (height0 != height1) {
           height = null;
           break;
@@ -881,7 +881,7 @@ public class SGWindowDialog extends SGPropertyDialog
 
       for (int ii = 1; ii < list.size(); ii++) {
         SGIWindowDialogObserver wnd1 = (SGIWindowDialogObserver) list.get(ii);
-        final float gridInterval1 = wnd1.getGridLineInterval(cm);
+        final float gridInterval1 = wnd1.getGridLineInterval(SGIConstants.cm);
         if (gridInterval0 != gridInterval1) {
           gridInterval = null;
           break;
@@ -890,7 +890,7 @@ public class SGWindowDialog extends SGPropertyDialog
 
       for (int ii = 1; ii < list.size(); ii++) {
         SGIWindowDialogObserver wnd1 = (SGIWindowDialogObserver) list.get(ii);
-        final float gridLineWidth1 = wnd1.getGridLineWidth(pt);
+        final float gridLineWidth1 = wnd1.getGridLineWidth(SGIConstants.pt);
         if (gridLineWidth0 != gridLineWidth1) {
           gridLineWidth = null;
           break;
@@ -926,7 +926,7 @@ public class SGWindowDialog extends SGPropertyDialog
 
       for (int ii = 1; ii < list.size(); ii++) {
         SGIWindowDialogObserver wnd1 = (SGIWindowDialogObserver) list.get(ii);
-        final float imageX1 = wnd1.getImageLocationX(cm);
+        final float imageX1 = wnd1.getImageLocationX(SGIConstants.cm);
         if (imageX0 != imageX1) {
           imageX = null;
           break;
@@ -935,7 +935,7 @@ public class SGWindowDialog extends SGPropertyDialog
 
       for (int ii = 1; ii < list.size(); ii++) {
         SGIWindowDialogObserver wnd1 = (SGIWindowDialogObserver) list.get(ii);
-        final float imageY1 = wnd1.getImageLocationY(cm);
+        final float imageY1 = wnd1.getImageLocationY(SGIConstants.cm);
         if (imageY0 != imageY1) {
           imageY = null;
           break;
@@ -944,7 +944,7 @@ public class SGWindowDialog extends SGPropertyDialog
 
       for (int ii = 1; ii < list.size(); ii++) {
         SGIWindowDialogObserver wnd1 = (SGIWindowDialogObserver) list.get(ii);
-        final float imageWidth1 = wnd1.getImageWidth(cm);
+        final float imageWidth1 = wnd1.getImageWidth(SGIConstants.cm);
         if (imageWidth0 != imageWidth1) {
           // imageWidth = null;
           break;
@@ -953,7 +953,7 @@ public class SGWindowDialog extends SGPropertyDialog
 
       for (int ii = 1; ii < list.size(); ii++) {
         SGIWindowDialogObserver wnd1 = (SGIWindowDialogObserver) list.get(ii);
-        final float imageHeight1 = wnd1.getImageHeight(cm);
+        final float imageHeight1 = wnd1.getImageHeight(SGIConstants.cm);
         if (imageHeight0 != imageHeight1) {
           // imageHeight = null;
           break;
@@ -992,22 +992,22 @@ public class SGWindowDialog extends SGPropertyDialog
 
     Number width = this.getPaperWidth();
     if (width != null) {
-      wnd.setPaperWidth(width.floatValue(), cm);
+      wnd.setPaperWidth(width.floatValue(), SGIConstants.cm);
     }
 
     Number height = this.getPaperHeight();
     if (height != null) {
-      wnd.setPaperHeight(height.floatValue(), cm);
+      wnd.setPaperHeight(height.floatValue(), SGIConstants.cm);
     }
 
     Number interval = this.getGridLineInterval();
     if (interval != null) {
-      wnd.setGridLineInterval(interval.floatValue(), cm);
+      wnd.setGridLineInterval(interval.floatValue(), SGIConstants.cm);
     }
 
     Number lineWidth = this.getGridLineWidth();
     if (lineWidth != null) {
-      wnd.setGridLineWidth(lineWidth.floatValue(), pt);
+      wnd.setGridLineWidth(lineWidth.floatValue(), SGIConstants.pt);
     }
 
     Boolean gridVisible = this.isGridVisible();
@@ -1027,12 +1027,12 @@ public class SGWindowDialog extends SGPropertyDialog
 
     Number imageX = this.getImageLocationX();
     if (imageX != null) {
-      wnd.setImageLocationX(imageX.floatValue(), cm);
+      wnd.setImageLocationX(imageX.floatValue(), SGIConstants.cm);
     }
 
     Number imageY = this.getImageLocationY();
     if (imageY != null) {
-      wnd.setImageLocationY(imageY.floatValue(), cm);
+      wnd.setImageLocationY(imageY.floatValue(), SGIConstants.cm);
     }
 
     Number imageScalingFactor = this.getImageScalingFactor();

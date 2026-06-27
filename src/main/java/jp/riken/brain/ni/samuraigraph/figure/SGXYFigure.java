@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -597,8 +598,8 @@ public class SGXYFigure extends SGFigure
     SGPropertyUtility.addProperty(
         map,
         frameLineWidthKey,
-        SGUtility.getExportLineWidth(this.getFrameLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getFrameLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(map, frameColorKey, this.getFrameLineColor());
   }
 

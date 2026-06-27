@@ -6252,9 +6252,9 @@ public class SGDataUtility
     return sb.toString();
   }
 
-  public static boolean isArchiveDataSetOperation(OPERATION mode) {
-    return (OPERATION.SAVE_TO_ARCHIVE_DATA_SET.equals(mode)
-        || OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107.equals(mode));
+  public static boolean isArchiveDataSetOperation(SGIConstants.OPERATION mode) {
+    return (SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET.equals(mode)
+        || SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107.equals(mode));
   }
 
   public static void disposeSXYDataArray(SGISXYTypeSingleData[] sxyArray) {

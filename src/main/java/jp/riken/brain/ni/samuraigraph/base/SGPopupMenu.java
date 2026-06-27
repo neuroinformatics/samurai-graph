@@ -7,7 +7,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-public abstract class SGPopupMenu extends JPopupMenu implements ActionListener, SGIConstants {
+public abstract class SGPopupMenu extends JPopupMenu implements ActionListener {
 
   private static final long serialVersionUID = 4221949302356042792L;
 
@@ -141,11 +141,11 @@ public abstract class SGPopupMenu extends JPopupMenu implements ActionListener, 
   }
 
   protected void addArrangeItems() {
-    JMenu arrangeMenu = this.addMenu(MENUCMD_ARRANGE);
-    this.addItem(arrangeMenu, MENUCMD_BRING_TO_FRONT);
-    this.addItem(arrangeMenu, MENUCMD_BRING_FORWARD);
-    this.addItem(arrangeMenu, MENUCMD_SEND_BACKWARD);
-    this.addItem(arrangeMenu, MENUCMD_SEND_TO_BACK);
+    JMenu arrangeMenu = this.addMenu(SGIConstants.MENUCMD_ARRANGE);
+    this.addItem(arrangeMenu, SGIConstants.MENUCMD_BRING_TO_FRONT);
+    this.addItem(arrangeMenu, SGIConstants.MENUCMD_BRING_FORWARD);
+    this.addItem(arrangeMenu, SGIConstants.MENUCMD_SEND_BACKWARD);
+    this.addItem(arrangeMenu, SGIConstants.MENUCMD_SEND_TO_BACK);
   }
 
   protected void addActionListener(ActionListener l) {

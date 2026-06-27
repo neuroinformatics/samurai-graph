@@ -64,7 +64,7 @@ import org.w3c.dom.Element;
 /** An object in the figure. */
 public abstract class SGFigureElement implements SGIFigureElement {
 
-  private int mMode = MODE_DISPLAY;
+  private int mMode = SGIConstants.MODE_DISPLAY;
 
   public void setMode(final int mode) {
     this.mMode = mode;

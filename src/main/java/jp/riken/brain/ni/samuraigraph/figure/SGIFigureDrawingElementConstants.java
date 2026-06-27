@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
@@ -11,7 +12,7 @@ public interface SGIFigureDrawingElementConstants extends SGIDrawingElementConst
   public static final double LINE_WIDTH_MAX = LINE_WIDTH_MAX_VALUE;
 
   // symbol
-  public static final String SYMBOL_SIZE_UNIT = cm;
+  public static final String SYMBOL_SIZE_UNIT = SGIConstants.cm;
 
   public static final double SYMBOL_SIZE_MIN = 0.05;
 
@@ -37,8 +38,8 @@ public interface SGIFigureDrawingElementConstants extends SGIDrawingElementConst
   public static final int RECT_SIZE_MINIMAL_ORDER = -RECT_SIZE_FRAC_DIFIT_MAX;
 
   // bar
-  // public static final float BAR_WIDTH_MIN = 0.05f/CM_POINT_RATIO;
-  // public static final float BAR_WIDTH_MAX = 5.0f/CM_POINT_RATIO;
+  // public static final float BAR_WIDTH_MIN = 0.05f/SGIConstants.CM_POINT_RATIO;
+  // public static final float BAR_WIDTH_MAX = 5.0f/SGIConstants.CM_POINT_RATIO;
   public static final double BAR_EDGE_LINE_WIDTH_MIN = LINE_WIDTH_MIN_VALUE;
 
   public static final double BAR_EDGE_LINE_WIDTH_MAX = LINE_WIDTH_MAX_VALUE;

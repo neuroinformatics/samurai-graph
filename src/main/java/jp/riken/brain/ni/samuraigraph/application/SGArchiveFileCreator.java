@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
@@ -146,7 +147,7 @@ public class SGArchiveFileCreator extends SGFileHandler
       } catch (Exception e) {
       }
     }
-    return OK_OPTION;
+    return SGIConstants.OK_OPTION;
   }
 
   // get file bytes

@@ -39,7 +39,7 @@ import org.xml.sax.SAXException;
  * A class with utility methods which are used to transform a text string into a value such as
  * number or color, and vice versa.
  */
-public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFileConstants {
+public class SGUtilityText implements SGIPropertyFileConstants {
 
   /**
    * Create a string with superscript.
@@ -926,16 +926,16 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     String name = null;
     switch (style) {
       case Font.PLAIN:
-        name = FONT_PLAIN;
+        name = SGIDrawingElementConstants.FONT_PLAIN;
         break;
       case (Font.BOLD | Font.ITALIC):
-        name = FONT_BOLD_ITALIC;
+        name = SGIDrawingElementConstants.FONT_BOLD_ITALIC;
         break;
       case Font.BOLD:
-        name = FONT_BOLD;
+        name = SGIDrawingElementConstants.FONT_BOLD;
         break;
       case Font.ITALIC:
-        name = FONT_ITALIC;
+        name = SGIDrawingElementConstants.FONT_ITALIC;
       default:
     }
     return name;
@@ -952,13 +952,13 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
       return null;
     }
     Integer style = null;
-    if (SGUtilityText.isEqualString(FONT_PLAIN, name)) {
+    if (SGUtilityText.isEqualString(SGIDrawingElementConstants.FONT_PLAIN, name)) {
       style = Font.PLAIN;
-    } else if (SGUtilityText.isEqualString(FONT_BOLD, name)) {
+    } else if (SGUtilityText.isEqualString(SGIDrawingElementConstants.FONT_BOLD, name)) {
       style = Font.BOLD;
-    } else if (SGUtilityText.isEqualString(FONT_ITALIC, name)) {
+    } else if (SGUtilityText.isEqualString(SGIDrawingElementConstants.FONT_ITALIC, name)) {
       style = Font.ITALIC;
-    } else if (SGUtilityText.isEqualString(FONT_BOLD_ITALIC, name)) {
+    } else if (SGUtilityText.isEqualString(SGIDrawingElementConstants.FONT_BOLD_ITALIC, name)) {
       style = Font.BOLD | Font.ITALIC;
     }
     return style;
@@ -995,9 +995,9 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
       return -1;
     }
     int type = -1;
-    if (SCALE_TYPE_LINEAR.equalsIgnoreCase(name)) {
+    if (SGIConstants.SCALE_TYPE_LINEAR.equalsIgnoreCase(name)) {
       type = SGAxis.LINEAR_SCALE;
-    } else if (SCALE_TYPE_LOG.equalsIgnoreCase(name)) {
+    } else if (SGIConstants.SCALE_TYPE_LOG.equalsIgnoreCase(name)) {
       type = SGAxis.LOG_SCALE;
     }
     return type;
@@ -1151,7 +1151,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * @return
    */
   public static Number getLengthInPoint(final String str) {
-    return getLength(str, pt);
+    return getLength(str, SGIConstants.pt);
   }
 
   /**
@@ -1242,7 +1242,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     boolean flag = false;
     for (int ii = 0; ii < len; ii++) {
       final char c = str.charAt(ii);
-      if (c != ' ' && c != twoByteSpaceChar && c != '\t' && c != '\n' && c != '\r' && c != '\f') {
+      if (c != ' ' && c != SGIConstants.twoByteSpaceChar && c != '\t' && c != '\n' && c != '\r' && c != '\f') {
         flag = true;
         break;
       }
@@ -1349,7 +1349,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     }
 
     final String[] units = SGUtilityText.getUnitsArrayOfLength();
-    final float[] ratioArray = {1.0f, 0.10f, CM_POINT_RATIO, CM_INCH_RATIO};
+    final float[] ratioArray = {1.0f, 0.10f, SGIConstants.CM_POINT_RATIO, CM_INCH_RATIO};
     int indexOld = -1;
     for (int ii = 0; ii < units.length; ii++) {
       if (units[ii].equalsIgnoreCase(unitOld)) {
@@ -1382,7 +1382,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * @return
    */
   public static double convertToPoint(final double value, final String unit) {
-    return convert(value, unit, pt);
+    return convert(value, unit, SGIConstants.pt);
   }
 
   /**
@@ -1391,11 +1391,11 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * @return
    */
   public static double convertFromPoint(final double value, final String unit) {
-    return convert(value, pt, unit);
+    return convert(value, SGIConstants.pt, unit);
   }
 
   /**
-   * Parse and convert to the given unit. ex. str - 1 inch , unit - cm is converted to "2.54"
+   * Parse and convert to the given unit. ex. str - 1 SGIConstants.inch , unit - SGIConstants.cm is converted to "2.54"
    *
    * @param str - a string to be parsed
    * @return parsed string
@@ -1625,16 +1625,16 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
       return null;
     }
     MediaSize size = null;
-    if (SGUtilityText.isEqualString(PAPER_SIZE_A4, str)) {
+    if (SGUtilityText.isEqualString(SGIConstants.PAPER_SIZE_A4, str)) {
       size = MediaSize.ISO.A4;
-    } else if (SGUtilityText.isEqualString(PAPER_SIZE_A3, str)) {
+    } else if (SGUtilityText.isEqualString(SGIConstants.PAPER_SIZE_A3, str)) {
       size = MediaSize.ISO.A3;
-    } else if (SGUtilityText.isEqualString(PAPER_SIZE_B5, str)) {
+    } else if (SGUtilityText.isEqualString(SGIConstants.PAPER_SIZE_B5, str)) {
       size = MediaSize.ISO.B5;
-    } else if (SGUtilityText.isEqualString(PAPER_SIZE_B4, str)) {
+    } else if (SGUtilityText.isEqualString(SGIConstants.PAPER_SIZE_B4, str)) {
       size = MediaSize.ISO.B4;
-    } else if (SGUtilityText.isEqualString(PAPER_SIZE_US_LETTER, str)
-        || SGUtilityText.isEqualString(PAPER_SIZE_US_LETTER_SIMPLE, str)) {
+    } else if (SGUtilityText.isEqualString(SGIConstants.PAPER_SIZE_US_LETTER, str)
+        || SGUtilityText.isEqualString(SGIConstants.PAPER_SIZE_US_LETTER_SIMPLE, str)) {
       size = MediaSize.NA.LETTER;
     }
     return size;
@@ -1651,9 +1651,9 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     if (str == null) {
       return null;
     }
-    if (SGUtilityText.isEqualString(PORTRAIT, str)) {
+    if (SGUtilityText.isEqualString(SGIConstants.PORTRAIT, str)) {
       return Boolean.TRUE;
-    } else if (SGUtilityText.isEqualString(LANDSCAPE, str)) {
+    } else if (SGUtilityText.isEqualString(SGIConstants.LANDSCAPE, str)) {
       return Boolean.FALSE;
     } else {
       return null;

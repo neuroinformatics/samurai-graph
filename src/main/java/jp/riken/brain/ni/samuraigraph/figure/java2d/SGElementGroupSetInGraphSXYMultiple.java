@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -4077,8 +4078,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     Float lineWidthCommon = this.getCommonLineWidth();
     if (lineWidthCommon != null) {
       final float lineWidthCommonUnit =
-          (float) SGUtilityText.convertFromPoint(lineWidthCommon, LINE_WIDTH_UNIT);
-      SGPropertyUtility.addProperty(map, COM_DATA_LINE_WIDTH, lineWidthCommonUnit, LINE_WIDTH_UNIT);
+          (float) SGUtilityText.convertFromPoint(lineWidthCommon, SGIConstants.LINE_WIDTH_UNIT);
+      SGPropertyUtility.addProperty(map, COM_DATA_LINE_WIDTH, lineWidthCommonUnit, SGIConstants.LINE_WIDTH_UNIT);
     }
     Integer lineTypeCommon = this.getCommonLineType();
     if (lineTypeCommon != null) {
@@ -4164,8 +4165,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           SGPropertyUtility.addProperty(
               cMap,
               COM_DATA_LINE_WIDTH,
-              SGUtility.getExportLineWidth(lineStyle.getLineWidth(LINE_WIDTH_UNIT)),
-              LINE_WIDTH_UNIT);
+              SGUtility.getExportLineWidth(lineStyle.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+              SGIConstants.LINE_WIDTH_UNIT);
         }
         if (lineTypeCommon == null) {
           SGPropertyUtility.addProperty(

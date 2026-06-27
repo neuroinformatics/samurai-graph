@@ -40,7 +40,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /** */
-public class SGUtility implements SGIDrawingElementConstants {
+public class SGUtility  {
 
   /**
    * Returns an array of available font family names.
@@ -530,7 +530,7 @@ public class SGUtility implements SGIDrawingElementConstants {
       throw new IllegalArgumentException("prefix==null");
     }
 
-    return OS_NAME.toLowerCase().startsWith(prefix);
+    return SGIConstants.OS_NAME.toLowerCase().startsWith(prefix);
   }
 
   /**
@@ -746,37 +746,37 @@ public class SGUtility implements SGIDrawingElementConstants {
     final boolean bMidY = (Math.abs(y - rect.getCenterY()) < radius);
     final boolean bMaxY = (Math.abs(y - rect.getMaxY()) < radius);
 
-    int location = OTHER;
+    int location = SGIConstants.OTHER;
 
     if (bMinX) {
       if (bMinY) {
         // north west
-        location = NORTH_WEST;
+        location = SGIConstants.NORTH_WEST;
       } else if (bMidY) {
         // west
-        location = WEST;
+        location = SGIConstants.WEST;
       } else if (bMaxY) {
         // south west
-        location = SOUTH_WEST;
+        location = SGIConstants.SOUTH_WEST;
       }
     } else if (bMaxX) {
       if (bMinY) {
         // north east
-        location = NORTH_EAST;
+        location = SGIConstants.NORTH_EAST;
       } else if (bMidY) {
         // east
-        location = EAST;
+        location = SGIConstants.EAST;
       } else if (bMaxY) {
         // south east
-        location = SOUTH_EAST;
+        location = SGIConstants.SOUTH_EAST;
       }
     } else if (bMidX) {
       if (bMinY) {
         // north
-        location = NORTH;
+        location = SGIConstants.NORTH;
       } else if (bMaxY) {
         // south
-        location = SOUTH;
+        location = SGIConstants.SOUTH;
       }
     }
 
@@ -821,29 +821,29 @@ public class SGUtility implements SGIDrawingElementConstants {
     float w = wOld;
     float h = hOld;
 
-    if (ml == NORTH) {
-      // System.out.println("NORTH");
+    if (ml == SGIConstants.NORTH) {
+      // System.out.println("SGIConstants.NORTH");
       pos.setLocation(pos.getX(), pos.getY() + diffY);
       sizeNewY = sizeOldY - diffY;
       y = yOld + sizeOldY - sizeNewY;
       h = sizeNewY;
-    } else if (ml == SOUTH) {
-      // System.out.println("SOUTH");
+    } else if (ml == SGIConstants.SOUTH) {
+      // System.out.println("SGIConstants.SOUTH");
       pos.setLocation(pos.getX(), pos.getY() + diffY);
       sizeNewY = sizeOldY + diffY;
       h = sizeNewY;
-    } else if (ml == WEST) {
-      // System.out.println("WEST");
+    } else if (ml == SGIConstants.WEST) {
+      // System.out.println("SGIConstants.WEST");
       pos.setLocation(pos.getX() + diffX, pos.getY() + diffY);
       sizeNewX = sizeOldX - diffX;
       x = xOld + sizeOldX - sizeNewX;
       w = sizeNewX;
-    } else if (ml == EAST) {
-      // System.out.println("EAST");
+    } else if (ml == SGIConstants.EAST) {
+      // System.out.println("SGIConstants.EAST");
       pos.setLocation(pos.getX() + diffX, pos.getY());
       sizeNewX = sizeOldX + diffX;
       w = sizeNewX;
-    } else if (ml == NORTH_WEST) {
+    } else if (ml == SGIConstants.NORTH_WEST) {
       pos.setLocation(pos.getX() + diffX, pos.getY() + diffY);
       sizeNewX = sizeOldX - diffX;
 
@@ -857,7 +857,7 @@ public class SGUtility implements SGIDrawingElementConstants {
       w = sizeNewX;
       h = sizeNewY;
       // System.out.println(sizeOldY+" "+sizeNewY);
-    } else if (ml == NORTH_EAST) {
+    } else if (ml == SGIConstants.NORTH_EAST) {
       if (!onShift) {
         pos.setLocation(pos.getX() + diffX, pos.getY() + diffY);
 
@@ -878,7 +878,7 @@ public class SGUtility implements SGIDrawingElementConstants {
         w = sizeNewX;
         h = sizeNewY;
       }
-    } else if (ml == SOUTH_WEST) {
+    } else if (ml == SGIConstants.SOUTH_WEST) {
       if (!onShift) {
         pos.setLocation(pos.getX() + diffX, pos.getY() + diffY);
 
@@ -898,7 +898,7 @@ public class SGUtility implements SGIDrawingElementConstants {
         w = sizeNewX;
         h = sizeNewY;
       }
-    } else if (ml == SOUTH_EAST) {
+    } else if (ml == SGIConstants.SOUTH_EAST) {
       if (!onShift) {
         pos.setLocation(pos.getX() + diffX, pos.getY() + diffY);
 
@@ -1130,7 +1130,7 @@ public class SGUtility implements SGIDrawingElementConstants {
    */
   public static String getFileName(final String path) {
     String name = null;
-    final int separatorIndex = path.lastIndexOf(FILE_SEPARATOR);
+    final int separatorIndex = path.lastIndexOf(SGIConstants.FILE_SEPARATOR);
     if (separatorIndex == -1 || separatorIndex == path.length() - 1) {
       final int slashIndex = path.lastIndexOf('/');
       if (slashIndex == -1 || slashIndex == path.length() - 1) {
@@ -1422,10 +1422,10 @@ public class SGUtility implements SGIDrawingElementConstants {
     return calcPropertyValue(
         lw,
         unit,
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_MIN_VALUE,
-        LINE_WIDTH_MAX_VALUE,
-        LINE_WIDTH_MINIMAL_ORDER);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIDrawingElementConstants.LINE_WIDTH_MIN_VALUE,
+        SGIDrawingElementConstants.LINE_WIDTH_MAX_VALUE,
+        SGIConstants.LINE_WIDTH_MINIMAL_ORDER);
   }
 
   /**
@@ -1439,10 +1439,10 @@ public class SGUtility implements SGIDrawingElementConstants {
     return calcPropertyValue(
         size,
         unit,
-        FONT_SIZE_UNIT,
-        FONT_SIZE_MIN_VALUE,
-        FONT_SIZE_MAX_VALUE,
-        FONT_SIZE_MINIMAL_ORDER);
+        SGIConstants.FONT_SIZE_UNIT,
+        SGIDrawingElementConstants.FONT_SIZE_MIN_VALUE,
+        SGIDrawingElementConstants.FONT_SIZE_MAX_VALUE,
+        SGIConstants.FONT_SIZE_MINIMAL_ORDER);
   }
 
   // returns an integer value for axis location from a string
@@ -2090,7 +2090,7 @@ public class SGUtility implements SGIDrawingElementConstants {
    */
   public static SpinnerNumberModel getLineWidthSpinnerNumberModel() {
     return new SpinnerNumberModel(
-        LINE_WIDTH_MIN_VALUE, LINE_WIDTH_MIN_VALUE, LINE_WIDTH_MAX_VALUE, LINE_WIDTH_STEP_SIZE);
+        SGIDrawingElementConstants.LINE_WIDTH_MIN_VALUE, SGIDrawingElementConstants.LINE_WIDTH_MIN_VALUE, SGIDrawingElementConstants.LINE_WIDTH_MAX_VALUE, SGIDrawingElementConstants.LINE_WIDTH_STEP_SIZE);
   }
 
   /**
@@ -2100,7 +2100,7 @@ public class SGUtility implements SGIDrawingElementConstants {
    */
   public static SpinnerNumberModel getFontSizeSpinnerNumberModel() {
     return new SpinnerNumberModel(
-        FONT_SIZE_MIN_VALUE, FONT_SIZE_MIN_VALUE, FONT_SIZE_MAX_VALUE, FONT_SIZE_STEP_VALUE);
+        SGIDrawingElementConstants.FONT_SIZE_MIN_VALUE, SGIDrawingElementConstants.FONT_SIZE_MIN_VALUE, SGIDrawingElementConstants.FONT_SIZE_MAX_VALUE, SGIDrawingElementConstants.FONT_SIZE_STEP_VALUE);
   }
 
   public static Double checkEquality(final double[] values) {
@@ -2385,11 +2385,11 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @param l the action listener
    */
   public static void addArrangeItems(JPopupMenu p, ActionListener l) {
-    JMenu arrangeMenu = SGUtility.addMenu(p, l, MENUCMD_ARRANGE);
-    SGUtility.addItem(arrangeMenu, l, MENUCMD_BRING_TO_FRONT);
-    SGUtility.addItem(arrangeMenu, l, MENUCMD_BRING_FORWARD);
-    SGUtility.addItem(arrangeMenu, l, MENUCMD_SEND_BACKWARD);
-    SGUtility.addItem(arrangeMenu, l, MENUCMD_SEND_TO_BACK);
+    JMenu arrangeMenu = SGUtility.addMenu(p, l, SGIConstants.MENUCMD_ARRANGE);
+    SGUtility.addItem(arrangeMenu, l, SGIConstants.MENUCMD_BRING_TO_FRONT);
+    SGUtility.addItem(arrangeMenu, l, SGIConstants.MENUCMD_BRING_FORWARD);
+    SGUtility.addItem(arrangeMenu, l, SGIConstants.MENUCMD_SEND_BACKWARD);
+    SGUtility.addItem(arrangeMenu, l, SGIConstants.MENUCMD_SEND_TO_BACK);
   }
 
   /**
@@ -2424,7 +2424,7 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @throws UnsupportedEncodingException
    */
   public static String createString(byte[] byteArray) throws UnsupportedEncodingException {
-    return new String(byteArray, CHAR_SET_NAME_UTF8).trim();
+    return new String(byteArray, SGIConstants.CHAR_SET_NAME_UTF8).trim();
   }
 
   /**
@@ -2710,7 +2710,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * Calculates and returns line width to export from given line width.
    *
-   * @param lw line width in units of LINE_WIDTH_UNIT
+   * @param lw line width in units of SGIConstants.LINE_WIDTH_UNIT
    * @return line width to export
    */
   public static float getExportLineWidth(final float lw) {
@@ -2721,7 +2721,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * Calculates and returns font size to export from given font size.
    *
-   * @param size font size in units of FONT_SIZE_UNIT
+   * @param size font size in units of SGIConstants.FONT_SIZE_UNIT
    * @return font size to export
    */
   public static float getExportFontSize(final float size) {

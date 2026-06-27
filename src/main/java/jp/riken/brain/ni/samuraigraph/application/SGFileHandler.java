@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
-public class SGFileHandler implements SGIConstants {
+public class SGFileHandler {
 
   /** Current directory. */
   protected String mCurrentDirectory = null;
@@ -21,8 +21,8 @@ public class SGFileHandler implements SGIConstants {
 
   // Sets default directory name and file name.
   private String initDirectory() {
-    String dir = USER_HOME;
-    String md = MY_DOCUMENTS; // for windows
+    String dir = SGIConstants.USER_HOME;
+    String md = SGIConstants.MY_DOCUMENTS; // for windows
     File home = new File(dir);
     String[] fList = home.list();
     if (fList == null) {
@@ -33,7 +33,7 @@ public class SGFileHandler implements SGIConstants {
     sb.append(dir);
     for (int ii = 0; ii < fList.length; ii++) {
       if (fList[ii].endsWith(md)) {
-        sb.append(FILE_SEPARATOR);
+        sb.append(SGIConstants.FILE_SEPARATOR);
         sb.append(md);
         break;
       }

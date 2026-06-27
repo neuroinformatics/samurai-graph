@@ -35,7 +35,7 @@ import org.w3c.dom.NodeList;
 
 class SGPropertyFileManager
     implements ActionListener,
-        SGIConstants,
+
         SGIApplicationConstants,
         SGIApplicationTextConstants,
         SGIPropertyFileConstants {
@@ -108,12 +108,12 @@ class SGPropertyFileManager
     try {
       ret =
           this.mPropertyFileCreator.create(
-              wnd, new SGExportParameter(OPERATION.SAVE_TO_PROPERTY_FILE), versionString);
+              wnd, new SGExportParameter(SGIConstants.OPERATION.SAVE_TO_PROPERTY_FILE), versionString);
     } catch (IOException e) {
-      SGUtility.showErrorMessageDialog(wnd, e.getMessage(), TITLE_ERROR);
-      ret = ERROR_OPTION;
+      SGUtility.showErrorMessageDialog(wnd, e.getMessage(), SGIConstants.TITLE_ERROR);
+      ret = SGIConstants.ERROR_OPTION;
     }
-    if (ret != OK_OPTION) {
+    if (ret != SGIConstants.OK_OPTION) {
       return ret;
     }
 
@@ -122,7 +122,7 @@ class SGPropertyFileManager
       this.mMain.updateCurrentFile(f, FILE_TYPE.PROPERTY);
     }
 
-    return OK_OPTION;
+    return SGIConstants.OK_OPTION;
   }
 
   boolean loadPropertyFromDialog(final SGDrawingWindow wnd) {
@@ -294,7 +294,7 @@ class SGPropertyFileManager
 
     if (!SGMainFunctions.USE_FOXTROT) {
       if (setPropertyFile(
-          wnd, doc, wDataArray, false, versionNumber, LOAD_PROPERTIES_FROM_PROPERTY_FILE)) {
+          wnd, doc, wDataArray, false, versionNumber, SGIConstants.LOAD_PROPERTIES_FROM_PROPERTY_FILE)) {
         result = Boolean.TRUE;
       }
     } else {
@@ -308,7 +308,7 @@ class SGPropertyFileManager
                       wDataArray,
                       false,
                       versionNumber,
-                      LOAD_PROPERTIES_FROM_PROPERTY_FILE)) {
+                      SGIConstants.LOAD_PROPERTIES_FROM_PROPERTY_FILE)) {
                     return Boolean.FALSE;
                   }
                   return Boolean.TRUE;

@@ -1099,10 +1099,10 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
 
     if (b) {
       StringBuffer sb = new StringBuffer();
-      sb.append(USER_HOME);
-      if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
-        sb.append(FILE_SEPARATOR);
-        sb.append(MY_DOCUMENTS);
+      sb.append(SGIConstants.USER_HOME);
+      if (SGUtility.identifyOS(SGIConstants.OS_NAME_WINDOWS)) {
+        sb.append(SGIConstants.FILE_SEPARATOR);
+        sb.append(SGIConstants.MY_DOCUMENTS);
       }
       String path = sb.toString();
       currentDir = path;

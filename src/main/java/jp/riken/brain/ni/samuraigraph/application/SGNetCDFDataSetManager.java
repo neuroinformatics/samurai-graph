@@ -200,7 +200,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         String fname = sb.toString();
         File file = new File(fname);
 
-        if (!gs.saveData(file, new SGExportParameter(OPERATION.SAVE_TO_DATA_SET_NETCDF), null)) {
+        if (!gs.saveData(file, new SGExportParameter(SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF), null)) {
           file.delete();
           file = null;
         }
@@ -328,7 +328,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
   private String getPropertyString(final SGDrawingWindow wnd, final String versionString)
       throws IOException {
     return SGApplicationUtility.getPropertyString(
-        wnd, new SGExportParameter(OPERATION.SAVE_TO_DATA_SET_NETCDF), versionString);
+        wnd, new SGExportParameter(SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF), versionString);
   }
 
   /**
@@ -338,7 +338,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
    * @param versionString
    * @param datasetTempDir temporary directory that contains files which dataset file takes on.
    * @param outFile output file
-   * @return SUCCESSFUL_COMPLETION if succeeds. other if failed.
+   * @return SGIConstants.SUCCESSFUL_COMPLETION if succeeds. other if failed.
    */
   public int save(
       final SGDrawingWindow wnd,

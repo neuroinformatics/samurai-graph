@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.util.Iterator;
@@ -21,10 +22,10 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
 
     // set default properties
     this.setVisible(DEFAULT_ERROR_BAR_VISIBLE);
-    this.setLineWidth(DEFAULT_ERROR_BAR_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setLineWidth(DEFAULT_ERROR_BAR_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setHeadSize(DEFAULT_ERROR_BAR_SYMBOL_SIZE, ERROR_BAR_HEAD_SIZE_UNIT);
     this.setHeadType(DEFAULT_ERROR_BAR_SYMBOL_TYPE);
-    this.setLineWidth(DEFAULT_ERROR_BAR_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setLineWidth(DEFAULT_ERROR_BAR_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setErrorBarStyle(DEFAULT_ERROR_BAR_STYLE);
     this.setColor(DEFAULT_ERROR_BAR_COLOR);
     this.setVertical(true);
@@ -193,8 +194,8 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
     SGPropertyUtility.addProperty(
         map,
         COM_DATA_ERROR_BAR_LINE_WIDTH,
-        SGUtility.getExportLineWidth(this.getLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(
         map,
         COM_DATA_ERROR_BAR_STYLE,

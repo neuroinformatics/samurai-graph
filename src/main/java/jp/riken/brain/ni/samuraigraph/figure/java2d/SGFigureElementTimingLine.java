@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -1074,23 +1075,23 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
 
       this.addSeparator();
 
-      SGUtility.addItem(this, tm, MENUCMD_CUT);
-      SGUtility.addItem(this, tm, MENUCMD_COPY);
+      SGUtility.addItem(this, tm, SGIConstants.MENUCMD_CUT);
+      SGUtility.addItem(this, tm, SGIConstants.MENUCMD_COPY);
 
       this.addSeparator();
 
-      SGUtility.addItem(this, tm, MENUCMD_DELETE);
-      SGUtility.addItem(this, tm, MENUCMD_DUPLICATE);
+      SGUtility.addItem(this, tm, SGIConstants.MENUCMD_DELETE);
+      SGUtility.addItem(this, tm, SGIConstants.MENUCMD_DUPLICATE);
 
       addSeparator();
 
-      this.anchoredCheckBox = new JCheckBoxMenuItem(MENUCMD_ANCHORED);
+      this.anchoredCheckBox = new JCheckBoxMenuItem(SGIConstants.MENUCMD_ANCHORED);
       add(this.anchoredCheckBox);
       this.anchoredCheckBox.addActionListener(tm);
 
       this.addSeparator();
 
-      SGUtility.addItem(this, tm, MENUCMD_PROPERTY);
+      SGUtility.addItem(this, tm, SGIConstants.MENUCMD_PROPERTY);
     }
 
     void setAnchored(final boolean anchored) {
@@ -1306,7 +1307,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     }
 
     private void init() {
-      this.setLineWidth(DEFAULT_LINE_WIDTH, LINE_WIDTH_UNIT);
+      this.setLineWidth(DEFAULT_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
       this.setLineType(DEFAULT_LINE_TYPE);
       this.setColor(DEFAULT_LINE_COLOR);
       this.setAnchored(DEFAULT_LINE_ANCHORED);
@@ -1557,7 +1558,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       // final Object source = e.getSource();
       final String command = e.getActionCommand();
 
-      if (command.equals(MENUCMD_PROPERTY)) {
+      if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
         SGFigureElementTimingLine.this.setPropertiesOfSelectedObjects(this);
       } else {
         notifyToListener(command, e.getSource());
@@ -2107,8 +2108,8 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       SGPropertyUtility.addProperty(
           map,
           lineWidthKey,
-          SGUtility.getExportLineWidth(this.getLineWidth(LINE_WIDTH_UNIT)),
-          LINE_WIDTH_UNIT);
+          SGUtility.getExportLineWidth(this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+          SGIConstants.LINE_WIDTH_UNIT);
       SGPropertyUtility.addProperty(
           map, lineTypeKey, SGDrawingElementLine.getLineTypeName(this.getLineType()));
       SGPropertyUtility.addProperty(map, colorKey, this.getColor());

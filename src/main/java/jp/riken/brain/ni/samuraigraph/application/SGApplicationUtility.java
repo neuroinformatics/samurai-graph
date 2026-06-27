@@ -85,8 +85,7 @@ public class SGApplicationUtility
     implements SGIApplicationConstants,
         SGIApplicationTextConstants,
         SGIDataColumnTypeConstants,
-        SGIImageConstants,
-        SGIConstants {
+        SGIImageConstants {
 
   /**
    * Delete all files recursively.
@@ -600,7 +599,7 @@ public class SGApplicationUtility
           return null;
         }
 
-        if (versionNumber != null && mode == LOAD_PROPERTIES_FROM_DATA_SET) {
+        if (versionNumber != null && mode == SGIConstants.LOAD_PROPERTIES_FROM_DATA_SET) {
           // if version of the property file is older than 2.0.0
           if ("".equals(versionNumber)) {
             // if columns contains that of error bars, swap them
@@ -712,7 +711,7 @@ public class SGApplicationUtility
    * @return true if given file name is valid
    */
   public static boolean checkOutputFileName(String name) {
-    if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
+    if (SGUtility.identifyOS(SGIConstants.OS_NAME_WINDOWS)) {
       // checks forbidden characters
       char[] cArray = name.toCharArray();
       if (SGUtility.contains(cArray, WIN_FORBIDDEN_CHARS)) {
@@ -724,7 +723,7 @@ public class SGApplicationUtility
         return false;
       }
 
-    } else if (SGUtility.identifyOS(OS_NAME_MACOSX)) {
+    } else if (SGUtility.identifyOS(SGIConstants.OS_NAME_MACOSX)) {
       // checks a period at the beginning of the string
       if (name.startsWith(".")) {
         return false;
@@ -753,7 +752,7 @@ public class SGApplicationUtility
    */
   public static String getOutputFileName(final String name) {
     String ret = name;
-    if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
+    if (SGUtility.identifyOS(SGIConstants.OS_NAME_WINDOWS)) {
       // removes forbidden characters
       ret = ret.replaceAll(WIN_FORBIDDEN_PATTERN, "");
 
@@ -762,7 +761,7 @@ public class SGApplicationUtility
         return null;
       }
 
-    } else if (SGUtility.identifyOS(OS_NAME_MACOSX)) {
+    } else if (SGUtility.identifyOS(SGIConstants.OS_NAME_MACOSX)) {
       // removes forbidden characters
       ret = ret.replaceAll(":", "");
 
@@ -1538,7 +1537,7 @@ public class SGApplicationUtility
         }
         // when given version number in a data set is smaller than or equal to 2.0.0,
         // sets the modifier to data column
-        if (mode == LOAD_PROPERTIES_FROM_DATA_SET
+        if (mode == SGIConstants.LOAD_PROPERTIES_FROM_DATA_SET
             && SGUtility.isVersionNumberEqualOrSmallerThanPermittingEmptyString(
                 versionNumber, "2.0.0")) {
           columns[ii] = new SGTextDataColumn(title, sArray, new SGStringBraceModifier());
@@ -1622,7 +1621,7 @@ public class SGApplicationUtility
     }
     if (!hdf5) {
       // only for Windows
-      if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
+      if (SGUtility.identifyOS(SGIConstants.OS_NAME_WINDOWS)) {
         if (!SGDataUtility.hasValidHDF5CharacterForWin(path)) {
           if (hasExtension(path, HDF5_FILE_EXTENSION_ARRAY)
               || hasExtension(path, MATLAB_FILE_EXTENSION)) {

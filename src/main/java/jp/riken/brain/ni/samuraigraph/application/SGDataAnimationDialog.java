@@ -712,7 +712,7 @@ public class SGDataAnimationDialog extends SGDialog
       if (ret == JFileChooser.APPROVE_OPTION) {
         File file = chooser.getSelectedFile();
         String path = file.getAbsolutePath();
-        if (SGUtility.identifyOS(OS_NAME_MACOSX)) {
+        if (SGUtility.identifyOS(SGIConstants.OS_NAME_MACOSX)) {
           // a measure for the file chooser of Mac OS X
           String name = file.getName();
           File parentFile = file.getParentFile();

@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.util.Iterator;
@@ -21,7 +22,7 @@ public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickL
 
     // set default properties
     this.setVisible(DEFAULT_TICK_LABEL_VISIBLE);
-    this.setFontSize(DEFAULT_TICK_LABEL_FONT_SIZE, FONT_SIZE_UNIT);
+    this.setFontSize(DEFAULT_TICK_LABEL_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
     this.setFontName(DEFAULT_TICK_LABEL_FONT_NAME);
     this.setFontStyle(DEFAULT_TICK_LABEL_FONT_STYLE);
     this.setAngle(DEFAULT_TICK_LABEL_ANGLE);
@@ -183,8 +184,8 @@ public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickL
     SGPropertyUtility.addProperty(
         map,
         COM_DATA_TICK_LABEL_FONT_SIZE,
-        SGUtility.getExportFontSize(this.getFontSize(FONT_SIZE_UNIT)),
-        FONT_SIZE_UNIT);
+        SGUtility.getExportFontSize(this.getFontSize(SGIConstants.FONT_SIZE_UNIT)),
+        SGIConstants.FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, COM_DATA_TICK_LABEL_FONT_COLOR, this.getColor());
     SGPropertyUtility.addProperty(
         map,

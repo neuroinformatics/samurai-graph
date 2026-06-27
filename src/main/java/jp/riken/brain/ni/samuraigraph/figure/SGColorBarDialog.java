@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -805,7 +806,7 @@ public class SGColorBarDialog extends SGAxisDialog
 
     // tick mark width
     if (tickMarkWidth != null) {
-      l.setTickMarkWidth(tickMarkWidth.floatValue(), LINE_WIDTH_UNIT);
+      l.setTickMarkWidth(tickMarkWidth.floatValue(), SGIConstants.LINE_WIDTH_UNIT);
     }
 
     // tick mark length

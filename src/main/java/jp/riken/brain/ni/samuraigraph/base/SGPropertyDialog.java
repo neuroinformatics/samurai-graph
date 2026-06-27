@@ -20,7 +20,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.JTextComponent;
 
 /** The base class of the property dialogs. */
-public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingElementConstants {
+public abstract class SGPropertyDialog extends SGDialog {
 
   /** Serial Version UID */
   private static final long serialVersionUID = 214371996196142459L;
@@ -167,7 +167,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     } catch (Exception ex) {
       ex.printStackTrace();
       SGUtility.showErrorMessageDialog(
-          this, "Unknown error occurred.\b This dialog will be closed.", "ERROR");
+          this, "Unknown error occurred.\b This dialog will be closed.", "SGIConstants.ERROR");
       this.setVisible(false);
       this.clearAllSpinners();
     }
@@ -243,7 +243,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     if (this.commit() == false) {
       return false;
     }
-    this.setCloseOption(OK_OPTION);
+    this.setCloseOption(SGIConstants.OK_OPTION);
     this.setVisible(false);
     this.clearAllSpinners();
 
@@ -255,7 +255,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     if (this.cancel() == false) {
       return false;
     }
-    this.setCloseOption(CANCEL_OPTION);
+    this.setCloseOption(SGIConstants.CANCEL_OPTION);
     this.setVisible(false);
     this.clearAllSpinners();
 
@@ -631,7 +631,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     dg.setVisible(true);
 
     final int closeOption = dg.getCloseOption();
-    if (closeOption == OK_OPTION) {
+    if (closeOption == SGIConstants.OK_OPTION) {
       SGDate date = dg.getDate();
       field.setText(Double.toString(date.getDateValue()));
     }
@@ -641,7 +641,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     SGPeriodInputDialog dg = new SGPeriodInputDialog(this, true);
     this.onPeriodButtonPressedCommon(dg, field);
     final int closeOption = dg.getCloseOption();
-    if (closeOption == OK_OPTION) {
+    if (closeOption == SGIConstants.OK_OPTION) {
       SGPeriod p = dg.getPeriod();
       field.setText(p.toString());
     }
@@ -651,7 +651,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     SGPeriodInputDialog dg = new SGPeriodInputDialog(this, true);
     this.onPeriodButtonPressedCommon(dg, field);
     final int closeOption = dg.getCloseOption();
-    if (closeOption == OK_OPTION) {
+    if (closeOption == SGIConstants.OK_OPTION) {
       SGPeriod p = dg.getPeriod();
       final double dateValue = SGDateUtility.toApproximateDateValue(p);
       field.setText(Double.toString(dateValue));
@@ -798,7 +798,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
   }
 
   protected void initFontStyleComboBox(final JComboBox<String> cb) {
-    final String[] styleNameArray = {FONT_PLAIN, FONT_ITALIC, FONT_BOLD, FONT_BOLD_ITALIC};
+    final String[] styleNameArray = {SGIDrawingElementConstants.FONT_PLAIN, SGIDrawingElementConstants.FONT_ITALIC, SGIDrawingElementConstants.FONT_BOLD, SGIDrawingElementConstants.FONT_BOLD_ITALIC};
     for (String fontStyleName : styleNameArray) {
       cb.addItem(fontStyleName);
     }

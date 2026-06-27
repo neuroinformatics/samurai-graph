@@ -37,11 +37,11 @@
 | 項目 | 値 |
 |------|-----|
 | 最終更新日時 | 2026-06-27 |
-| 現在の実行フェーズ | フェーズ6 |
-| 実施中タスク | TASK-030 |
-| 完了タスク数 | 34 / 43 (3 DEFERRED) |
+| 現在の実行フェーズ | フェーズ5 |
+| 実施中タスク | TASK-017-3a |
+| 完了タスク数 | 34 / 46 (5 DEFERRED) |
 | ブロック中タスク | なし |
-| 次の実施タスク | TASK-017-3（親インターフェース変換） |
+| 次の実施タスク | TASK-017-3a（baseパッケージ親インターフェース変換、規模大のため要計画） |
 
 ### セッション #6
 
@@ -108,6 +108,17 @@
 | 中断理由 | SGIErrorBarConstants extends SGIArrowConstants により、親インターフェースがインターフェースの間、子インターフェースをfinal classにできない |
 | 中断ポイント | SGIErrorBarConstants, SGIAxisBreakConstants の変換は親インターフェース変換後に再試行 |
 | 次のセッションで再開するタスク | TASK-017-3 |
+
+### セッション #12
+
+| 項目 | 値 |
+|------|-----|
+| 日時 | 2026-06-27 |
+| 実施タスク | TASK-017-3a（第1弾） |
+| 完了内容 | SGIDateConstantsをfinal classに変換。SGIConstantsをfinal classに変換し、implクラス15件からimplements SGIConstantsを削除。extends SGIConstantsのインターフェース9件からextends句を削除。定数参照の修正に取り掛かる |
+| 中断理由 | 定数参照の修正が99種類・400件超のエラーが発生。SGWindowDialog(72件)、SGFigure(72件)、SGDrawingWindow(48件)の修正が必要 |
+| 中断ポイント | SGFigure.java、SGWindowDialog.java、SGDrawingWindow.javaの定数参照修正が完了していない |
+| 次のセッションで再開するタスク | 残りの定数参照修正（SGFigure、SGWindowDialog、SGDrawingWindowなど） |
 
 ---
 
@@ -789,33 +800,107 @@
 
 ---
 
-### TASK-017-3: figureパッケージの親定数インターフェース変換
+### TASK-017-3: figureパッケージの親定数インターフェース変換（親タスク）
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [~] DEFERRED |
+| 優先度 | P2 |
+| 対応元 | H3 |
+| 推定工数 | 3-5日（再見積もり） |
+| 依存タスク | TASK-017-1, TASK-017-2 |
+| 中断ポイント | 依存チェーン全体の変換が必要であり、規模大のため中断 |
+| ブランチ | 分割済み |
+
+**備考:**
+- `SGIConstants`や`SGIDrawingElementConstants`をfinal classに変換すると、それをextendsするすべてのインターフェース（27件以上）を変換する必要があり、implクラス55件以上の修正が必要
+- TASK-017-3a, TASK-017-3b, TASK-017-3cに分割
+
+---
+
+### TASK-017-3a: baseパッケージの親インターフェース変換（第1段階）
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [>] IN_PROGRESS |
+| 優先度 | P0 |
+| 対応元 | H3 |
+| 推定工数 | 1-2日（再見積もり） |
+| 依存タスク | なし |
+| 中断ポイント | 依存チェーン全体の変換が必要 |
+| ブランチ | `task/refactor-constants-base-parent` |
+
+**対象インターフェース（3件）:**
+- `SGIConstants` (base, impl: 16, extends: なし)
+- `SGIDateConstants` (base, impl: 0, extends: なし)
+- `SGIDrawingElementConstants` (base, impl: 5, extends: SGIConstants)
+
+**変換手順:**
+1. `SGIDateConstants` から変換（impl 0件）
+2. `SGIConstants` を変換（impl 16件、extends なしのため基底）
+3. `SGIDrawingElementConstants` を変換（impl 5件、extends SGIConstants）
+4. 各インターフェース変換後、`implements <Interface>` を削除する実装クラスを修正
+5. `mvn spotless:apply` → `mvn clean` → `mvn compile` → `mvn test` で検証
+
+**完了基準:**
+- [ ] 3インターフェースがfinal classに変換
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+**備考:** `SGIConstants`をfinal classに変換すると、それをextendsするfigureパッケージのインターフェース（SGIFigureConstants, SGIRootObjectConstants, SGIElementGroupConstants, SGIAxisConstants, SGISXYDataConstants, SGIColorBarConstantsなど10件以上）も同時に変換する必要があり、implクラスの修正も合わせて100件以上のファイル修正が必要。
+
+---
+
+### TASK-017-3b: figureパッケージ Level 2-3 の親インターフェース変換（第2段階）
 
 | 項目 | 内容 |
 |------|------|
 | ステータス | [ ] TODO |
 | 優先度 | P2 |
 | 対応元 | H3 |
-| 推定工数 | 3-4時間 |
-| 依存タスク | TASK-017-1, TASK-017-2 |
+| 推定工数 | 4-5時間 |
+| 依存タスク | TASK-017-3a |
 | 中断ポイント | なし |
-| ブランチ | `task/refactor-constants-figure-parent` |
+| ブランチ | `task/refactor-constants-figure-parent-l23` |
 
-**対象インターフェース（9件）:**
-- `SGIArrowConstants` (extends: SGILineConstants, SGISymbolConstants, SGIFigureDrawingElementConstants; impl: 4)
-- `SGIBarConstants` (extends: SGIRectangleConstants; impl: 2)
+**対象インターフェース（7件）:**
+- `SGISymbolConstants` (extends: SGIDrawingElementConstants; impl: 2)
+- `SGIFigureDrawingElementConstants` (extends: SGIDrawingElementConstants; impl: 0)
 - `SGILineConstants` (extends: SGIDrawingElementConstants; impl: 7)
 - `SGIRectangleConstants` (extends: SGIDrawingElementConstants; impl: 2)
-- `SGIScaleConstants` (extends: SGILineAndStringConstants; impl: 3)
-- `SGISignificantDifferenceConstants` (extends: SGILineAndStringConstants; impl: 2)
 - `SGIStringConstants` (extends: SGIDrawingElementConstants, SGIDateConstants; impl: 4)
 - `SGILineAndStringConstants` (extends: SGIStringConstants; impl: 1)
 - `SGILegendConstants` (extends: SGIConstants; impl: 2)
 
-**変換手順:** TASK-017-1と同様、1インターフェースごとに変換・検証
+**変換順序:** SGIFigureDrawingElementConstants(0 impl) → SGISymbolConstants(2) → SGIRectangleConstants(2) → SGIStringConstants(4) → SGILineConstants(7) → SGILineAndStringConstants(1) → SGILegendConstants(2)
 
 **完了基準:**
-- [ ] 9インターフェースがfinal classに変換
+- [ ] 7インターフェースがfinal classに変換
+- [ ] `mvn compile` が成功
+- [ ] テストが全成功
+
+---
+
+### TASK-017-3c: figureパッケージ Level 4 の親インターフェース変換（第3段階）
+
+| 項目 | 内容 |
+|------|------|
+| ステータス | [ ] TODO |
+| 優先度 | P2 |
+| 対応元 | H3 |
+| 推定工数 | 2-3時間 |
+| 依存タスク | TASK-017-3b |
+| 中断ポイント | なし |
+| ブランチ | `task/refactor-constants-figure-parent-l4` |
+
+**対象インターフェース（4件）:**
+- `SGIBarConstants` (extends: SGIRectangleConstants; impl: 2)
+- `SGIArrowConstants` (extends: SGILineConstants, SGISymbolConstants, SGIFigureDrawingElementConstants; impl: 4)
+- `SGIScaleConstants` (extends: SGILineAndStringConstants; impl: 3)
+- `SGISignificantDifferenceConstants` (extends: SGILineAndStringConstants; impl: 2)
+
+**完了基準:**
+- [ ] 4インターフェースがfinal classに変換
 - [ ] `mvn compile` が成功
 - [ ] テストが全成功
 

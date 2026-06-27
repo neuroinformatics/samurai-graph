@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -586,16 +587,16 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
     // font size
     this.mFontSizeSpinner.initProperties(
         getFontSizeSpinnerNumberModel(),
-        FONT_SIZE_UNIT,
-        FONT_SIZE_FRAC_DIGIT_MIN,
-        FONT_SIZE_FRAC_DIGIT_MAX);
+        SGIConstants.FONT_SIZE_UNIT,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MIN,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MAX);
 
     // line width
     this.mLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        FONT_SIZE_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.FONT_SIZE_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // set the name
     this.mHorizontalYValueTextField.setDescription("Location-> HorizontalY");
@@ -945,10 +946,10 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
     final double rightXValue0 = sigdiff0.getRightXValue();
     final double rightYValue0 = sigdiff0.getRightYValue();
     final boolean lineVisible0 = sigdiff0.isLineVisible();
-    final float space0 = sigdiff0.getSpace(cm);
-    final float lineWidth0 = sigdiff0.getLineWidth(pt);
+    final float space0 = sigdiff0.getSpace(SGIConstants.cm);
+    final float lineWidth0 = sigdiff0.getLineWidth(SGIConstants.pt);
     final String fontName0 = sigdiff0.getFontName();
-    final float fontSize0 = sigdiff0.getFontSize(pt);
+    final float fontSize0 = sigdiff0.getFontSize(SGIConstants.pt);
     final int fontStyle0 = sigdiff0.getFontStyle();
     final Color color0 = sigdiff0.getColor();
     final boolean anchored0 = sigdiff0.isAnchored();
@@ -1042,7 +1043,7 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
       for (int ii = 1; ii < list.size(); ii++) {
         SGISignificantDifferenceDialogObserver sigdiff1 =
             (SGISignificantDifferenceDialogObserver) list.get(ii);
-        final float space1 = sigdiff1.getSpace(cm);
+        final float space1 = sigdiff1.getSpace(SGIConstants.cm);
         if (space0 != space1) {
           space = null;
           break;
@@ -1052,7 +1053,7 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
       for (int ii = 1; ii < list.size(); ii++) {
         SGISignificantDifferenceDialogObserver sigdiff1 =
             (SGISignificantDifferenceDialogObserver) list.get(ii);
-        final float lineWidth1 = sigdiff1.getLineWidth(pt);
+        final float lineWidth1 = sigdiff1.getLineWidth(SGIConstants.pt);
         if (lineWidth0 != lineWidth1) {
           lineWidth = null;
           break;
@@ -1072,7 +1073,7 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
       for (int ii = 1; ii < list.size(); ii++) {
         SGISignificantDifferenceDialogObserver sigdiff1 =
             (SGISignificantDifferenceDialogObserver) list.get(ii);
-        final float fontSize1 = sigdiff1.getFontSize(pt);
+        final float fontSize1 = sigdiff1.getFontSize(SGIConstants.pt);
         if (fontSize0 != fontSize1) {
           fontSize = null;
           break;
@@ -1227,17 +1228,17 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
 
     if (space != null) {
       //			sd.setSpace( space.floatValue()/SGIConstants.CM_POINT_RATIO );
-      sd.setSpace(space.floatValue(), cm);
+      sd.setSpace(space.floatValue(), SGIConstants.cm);
     }
 
     if (lineWidth != null) {
       //			sd.setLineWidth( lineWidth.floatValue() );
-      sd.setLineWidth(lineWidth.floatValue(), pt);
+      sd.setLineWidth(lineWidth.floatValue(), SGIConstants.pt);
     }
 
     if (fontSize != null) {
       //			sd.setFontSize( fontSize.floatValue() );
-      sd.setFontSize(fontSize.floatValue(), pt);
+      sd.setFontSize(fontSize.floatValue(), SGIConstants.pt);
     }
 
     if (fontName != null) {

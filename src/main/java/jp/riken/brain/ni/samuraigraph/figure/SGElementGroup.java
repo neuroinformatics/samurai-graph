@@ -15,7 +15,7 @@ import org.w3c.dom.Element;
  * Base class for the group of the drawing elements. This object has an array of drawing elements.
  */
 public abstract class SGElementGroup
-    implements SGIElementGroupConstants, SGIDrawingElementConstants, SGIVisible, SGIDisposable {
+    implements SGIElementGroupConstants, SGIVisible, SGIDisposable {
 
   /** The array of drawing elements. */
   protected SGDrawingElement[] mDrawingElementArray = null;

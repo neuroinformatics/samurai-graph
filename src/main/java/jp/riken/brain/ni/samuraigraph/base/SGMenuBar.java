@@ -648,16 +648,16 @@ public class SGMenuBar extends JMenuBar
        * JMenu(MENUBAR_LOOK_AND_FEEL); menuLaf.setMnemonic( KeyEvent.VK_L );
        * menuHelp.add(menuLaf);
        *  // metal this.createMenuItem( menuLaf, MENUBARCMD_LAF_METAL,
-       * LAF_METAL, this, KeyEvent.VK_T, null, true );
+       * SGIConstants.LAF_METAL, this, KeyEvent.VK_T, null, true );
        *  // motif this.createMenuItem( menuLaf, MENUBARCMD_LAF_MOTIF,
-       * LAF_MOTIF, this, KeyEvent.VK_M, null, true );
+       * SGIConstants.LAF_MOTIF, this, KeyEvent.VK_M, null, true );
        *  // windows this.createMenuItem( menuLaf, MENUBARCMD_LAF_WINDOWS,
-       * LAF_WINDOWS, this, KeyEvent.VK_W, null, true );
+       * SGIConstants.LAF_WINDOWS, this, KeyEvent.VK_W, null, true );
        *  // windows classic this.createMenuItem( menuLaf,
-       * MENUBARCMD_LAF_WINDOWS_CLASSIC, LAF_WINDOWS_CLASSIC, this,
+       * MENUBARCMD_LAF_WINDOWS_CLASSIC, SGIConstants.LAF_WINDOWS_CLASSIC, this,
        * KeyEvent.VK_C, null, true );
        *  // aqua this.createMenuItem( menuLaf, MENUBARCMD_LAF_AQUA,
-       * LAF_AQUA, this, KeyEvent.VK_A, null, true ); }
+       * SGIConstants.LAF_AQUA, this, KeyEvent.VK_A, null, true ); }
        */
 
       // upgrade

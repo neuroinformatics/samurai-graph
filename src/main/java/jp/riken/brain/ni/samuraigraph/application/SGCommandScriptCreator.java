@@ -27,7 +27,7 @@ public class SGCommandScriptCreator extends SGFileHandler
             SCRIPT_FILE_DESCRIPTION,
             DEFAULT_SCRIPT_FILE_NAME_WITH_EXTENSION);
     if (file == null) {
-      return CANCEL_OPTION;
+      return SGIConstants.CANCEL_OPTION;
     }
 
     SGBufferedFileWriter bw = null;
@@ -35,12 +35,12 @@ public class SGCommandScriptCreator extends SGFileHandler
       bw = new SGBufferedFileWriter(file.getPath(), SGIConstants.CHAR_SET_NAME_UTF8);
       bw.getBufferedWriter().write(commandString);
     } catch (IOException e1) {
-      return ERROR_OPTION;
+      return SGIConstants.ERROR_OPTION;
     } finally {
       if (bw != null) {
         bw.close();
       }
     }
-    return OK_OPTION;
+    return SGIConstants.OK_OPTION;
   }
 }

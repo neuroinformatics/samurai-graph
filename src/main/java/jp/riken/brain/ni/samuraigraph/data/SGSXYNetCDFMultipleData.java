@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.data;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -3910,7 +3911,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   private int getMaxLength(String[] strArray) throws UnsupportedEncodingException {
     int maxLength = 0;
     for (String str : strArray) {
-      final int len = str.getBytes(CHAR_SET_NAME_UTF8).length;
+      final int len = str.getBytes(SGIConstants.CHAR_SET_NAME_UTF8).length;
       if (len > maxLength) {
         maxLength = len;
       }
@@ -3927,7 +3928,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     int[] shape = index.getShape();
     for (int ii = 0; ii < shape[0]; ii++) {
       String str = strArray[ii];
-      byte[] byteArray = str.getBytes(CHAR_SET_NAME_UTF8);
+      byte[] byteArray = str.getBytes(SGIConstants.CHAR_SET_NAME_UTF8);
       for (int jj = 0; jj < byteArray.length; jj++) {
         array.setByte(index.set(ii, jj), byteArray[jj]);
       }
@@ -3947,7 +3948,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     for (int ii = 0; ii < shape[0]; ii++) {
       for (int jj = 0; jj < shape[1]; jj++) {
         String str = strArray[ii][jj];
-        byte[] byteArray = str.getBytes(CHAR_SET_NAME_UTF8);
+        byte[] byteArray = str.getBytes(SGIConstants.CHAR_SET_NAME_UTF8);
         for (int kk = 0; kk < byteArray.length; kk++) {
           array.setByte(index.set(ii, jj, kk), byteArray[kk]);
         }

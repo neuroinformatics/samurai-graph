@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -1272,9 +1273,9 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     // axis line width
     this.mAxisLineWidthSpinner.initProperties(
         SGUtility.getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // space between axis line and numbers
     this.mSpaceAxisLineAndNumbersSpinner.initProperties(
@@ -1308,14 +1309,14 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     // title font size
     this.mTitleFontSizeSpinner.initProperties(
         SGUtility.getFontSizeSpinnerNumberModel(),
-        FONT_SIZE_UNIT,
-        FONT_SIZE_FRAC_DIGIT_MIN,
-        FONT_SIZE_FRAC_DIGIT_MAX);
+        SGIConstants.FONT_SIZE_UNIT,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MIN,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MAX);
 
     // angle
     this.mNumberAngleSpinner.initProperties(
         new SpinnerNumberModel(0.0, STRING_ANGLE_MIN, STRING_ANGLE_MAX, STRING_ANGLE_STEP),
-        degree,
+        SGIConstants.degree,
         STRING_ANGLE_FRAC_DIFIT_MIN,
         STRING_ANGLE_FRAC_DIFIT_MAX);
 
@@ -1343,16 +1344,16 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     // number font size
     this.mNumberFontSizeSpinner.initProperties(
         SGUtility.getFontSizeSpinnerNumberModel(),
-        FONT_SIZE_UNIT,
-        FONT_SIZE_FRAC_DIGIT_MIN,
-        FONT_SIZE_FRAC_DIGIT_MAX);
+        SGIConstants.FONT_SIZE_UNIT,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MIN,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MAX);
 
     // tick mark width
     this.mTickMarkWidthSpinner.initProperties(
         SGUtility.getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // tick mark length
     this.mTickMarkLengthSpinner.initProperties(
@@ -1896,7 +1897,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     dg.setVisible(true);
 
     final int closeOption = dg.getCloseOption();
-    if (closeOption == OK_OPTION) {
+    if (closeOption == SGIConstants.OK_OPTION) {
       SGDate date = dg.getDate();
       if (this.isDateMode()) {
         field.setText(date.toString());
@@ -1923,7 +1924,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     dg.setVisible(true);
 
     final int closeOption = dg.getCloseOption();
-    if (closeOption == OK_OPTION) {
+    if (closeOption == SGIConstants.OK_OPTION) {
       SGPeriod p = dg.getPeriod();
       if (this.isDateMode()) {
         field.setText(p.toString());
@@ -2346,7 +2347,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
 
       // axis line
       axisLineVisibleArray[ii] = l.isAxisLineVisible();
-      axisLineWidthArray[ii] = l.getAxisLineWidth(LINE_WIDTH_UNIT);
+      axisLineWidthArray[ii] = l.getAxisLineWidth(SGIConstants.LINE_WIDTH_UNIT);
       axisLineColorArray[ii] = l.getAxisLineColor();
       spaceLineAndNumbersArray[ii] = l.getSpaceAxisLineAndNumbers(SPACE_UNIT);
 
@@ -2357,7 +2358,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
       titleShiftFromCenterArray[ii] = l.getTitleShiftFromCenter(TITLE_SHIFT_UNIT);
       titleFontNameArray[ii] = l.getTitleFontName();
       titleFontStyleArray[ii] = l.getTitleFontStyle();
-      titleFontSizeArray[ii] = l.getTitleFontSize(FONT_SIZE_UNIT);
+      titleFontSizeArray[ii] = l.getTitleFontSize(SGIConstants.FONT_SIZE_UNIT);
       titleFontColorArray[ii] = l.getTitleFontColor();
 
       numberVisibleArray[ii] = l.isNumbersVisible();
@@ -2366,13 +2367,13 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
       exponentYArray[ii] = l.getExponentLocationY(EXPONENT_LOCATION_UNIT);
       numberFontNameArray[ii] = l.getNumberFontName();
       numberFontStyleArray[ii] = l.getNumberFontStyle();
-      numberFontSizeArray[ii] = l.getNumberFontSize(FONT_SIZE_UNIT);
+      numberFontSizeArray[ii] = l.getNumberFontSize(SGIConstants.FONT_SIZE_UNIT);
       numberFontColorArray[ii] = l.getNumberFontColor();
       dateFormatArray[ii] = l.getNumberDateFormat();
 
       tickMarkVisibleArray[ii] = l.isTickMarkVisible();
       tickMarkBothsidesArray[ii] = l.isTickMarkBothsides();
-      tickMarkWidthArray[ii] = l.getTickMarkWidth(LINE_WIDTH_UNIT);
+      tickMarkWidthArray[ii] = l.getTickMarkWidth(SGIConstants.LINE_WIDTH_UNIT);
       tickMarkLengthArray[ii] = l.getMajorTickMarkLength(TICK_MARK_LENGTH_UNIT);
       minorTickMarkNumberArray[ii] = l.getMinorTickMarkNumber();
       minorTickMarkLengthArray[ii] = l.getMinorTickMarkLength(TICK_MARK_LENGTH_UNIT);
@@ -2878,7 +2879,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     }
 
     if (axisLineWidth != null) {
-      axis.setAxisLineWidth(axisLineWidth.floatValue(), LINE_WIDTH_UNIT);
+      axis.setAxisLineWidth(axisLineWidth.floatValue(), SGIConstants.LINE_WIDTH_UNIT);
     }
 
     if (axisLineColor != null) {
@@ -2910,7 +2911,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     }
 
     if (titleFontSize != null) {
-      axis.setTitleFontSize(titleFontSize.floatValue(), FONT_SIZE_UNIT);
+      axis.setTitleFontSize(titleFontSize.floatValue(), SGIConstants.FONT_SIZE_UNIT);
     }
 
     if (titleFontStyle != null) {
@@ -2974,7 +2975,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     }
 
     if (numberFontSize != null) {
-      axis.setNumberFontSize(numberFontSize.floatValue(), FONT_SIZE_UNIT);
+      axis.setNumberFontSize(numberFontSize.floatValue(), SGIConstants.FONT_SIZE_UNIT);
     }
 
     if (numberFontStyle != null) {
@@ -2998,7 +2999,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     }
 
     if (tickMarkWidth != null) {
-      axis.setTickMarkWidth(tickMarkWidth.floatValue(), LINE_WIDTH_UNIT);
+      axis.setTickMarkWidth(tickMarkWidth.floatValue(), SGIConstants.LINE_WIDTH_UNIT);
     }
 
     if (tickMarkLength != null) {

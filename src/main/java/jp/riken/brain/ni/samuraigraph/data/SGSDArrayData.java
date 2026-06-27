@@ -362,7 +362,7 @@ public abstract class SGSDArrayData extends SGArrayData
 
     final String keyStride;
 
-    OPERATION type = params.getType();
+    SGIConstants.OPERATION type = params.getType();
     switch (type) {
       case DUPLICATE_OBJECT:
       case COPY_OBJECT:
@@ -628,7 +628,7 @@ public abstract class SGSDArrayData extends SGArrayData
     StringBuffer sb = new StringBuffer();
     for (int ii = 0; ii < array.length; ii++) {
       final int colNum = array[ii].length;
-      if (OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107.equals(mode.getType())) {
+      if (SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107.equals(mode.getType())) {
         // check whether NaN values exist
         boolean isNaN = false;
         for (int jj = 0; jj < colNum; jj++) {

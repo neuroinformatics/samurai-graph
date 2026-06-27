@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -105,7 +106,7 @@ public final class SGPreviewDialog extends SGDialog implements AdjustmentListene
   /** Called when the escape key is typed. */
   protected void onEscKeyTyped() {
     this.setVisible(false);
-    this.setCloseOption(CANCEL_OPTION);
+    this.setCloseOption(SGIConstants.CANCEL_OPTION);
   }
 
   /** Paint scroll bars and the corner after painted subcomponents. */
@@ -198,10 +199,10 @@ public final class SGPreviewDialog extends SGDialog implements AdjustmentListene
     super.actionPerformed(e);
     String command = e.getActionCommand();
     if (command.equals(this.mOKButton.getText())) {
-      this.setCloseOption(OK_OPTION);
+      this.setCloseOption(SGIConstants.OK_OPTION);
       this.setVisible(false);
     } else if (command.equals(this.mCancelButton.getText())) {
-      this.setCloseOption(CANCEL_OPTION);
+      this.setCloseOption(SGIConstants.CANCEL_OPTION);
       this.setVisible(false);
     }
   }

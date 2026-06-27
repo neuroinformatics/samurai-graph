@@ -241,7 +241,7 @@ public abstract class SGDrawingElementString extends SGDrawingElement
   /**
    * Sets the angle of this string.
    *
-   * @param angle the angle to be set in units of degree
+   * @param angle the angle to be set in units of SGIConstants.degree
    * @return true if succeeded
    */
   public boolean setAngle(final float angle) {
@@ -444,8 +444,8 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     SGPropertyUtility.addProperty(
         map,
         fontSizeKey,
-        SGUtility.getExportFontSize(this.getFontSize(FONT_SIZE_UNIT)),
-        FONT_SIZE_UNIT);
+        SGUtility.getExportFontSize(this.getFontSize(SGIConstants.FONT_SIZE_UNIT)),
+        SGIConstants.FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(
         map, fontStyleKey, SGUtilityText.getFontStyleName(this.getFontStyle()));
     SGPropertyUtility.addProperty(map, colorKey, this.getColor());

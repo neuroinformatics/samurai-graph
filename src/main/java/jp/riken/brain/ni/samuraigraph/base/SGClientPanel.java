@@ -1317,12 +1317,12 @@ public class SGClientPanel extends JLayeredPane
       p.add(new JLabel(sb.toString()));
       p.addSeparator();
 
-      item = SGUtility.addItem(p, this, MENUCMD_PASTE);
+      item = SGUtility.addItem(p, this, SGIConstants.MENUCMD_PASTE);
       item.setEnabled(false);
 
       p.addSeparator();
 
-      SGUtility.addItem(p, this, MENUCMD_PROPERTY);
+      SGUtility.addItem(p, this, SGIConstants.MENUCMD_PROPERTY);
 
       Component[] array = p.getComponents();
       for (int ii = 0; ii < array.length; ii++) {
@@ -1364,9 +1364,9 @@ public class SGClientPanel extends JLayeredPane
       final String command = e.getActionCommand();
       // final Object source = e.getSource();
 
-      if (command.equals(MENUCMD_PASTE)) {
+      if (command.equals(SGIConstants.MENUCMD_PASTE)) {
         this.mWnd.doPaste();
-      } else if (command.equals(MENUCMD_PROPERTY)) {
+      } else if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
         this.mWnd.showPropertyDialog();
       }
     }
@@ -2433,7 +2433,7 @@ public class SGClientPanel extends JLayeredPane
         subNum = 4;
       }
 
-      final float factor = mag / CM_POINT_RATIO;
+      final float factor = mag / SGIConstants.CM_POINT_RATIO;
 
       // horizontal
       {

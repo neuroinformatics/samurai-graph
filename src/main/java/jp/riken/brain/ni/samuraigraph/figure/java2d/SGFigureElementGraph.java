@@ -136,7 +136,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
       if (SGDataUtility.isNetCDFData(data)) {
         if (SGDataUtility.canOpenNetCDF((SGNetCDFData) data) == false) {
           SGUtility.showErrorMessageDialog(
-              null, "NetCDF file connection refused. Delete this data.", "ERROR");
+              null, "NetCDF file connection refused. Delete this data.", "SGIConstants.ERROR");
           this.notifyToListener(NOTIFY_UNKNOWN_DATA_ERROR, Integer.valueOf(groupSet.getID()));
         }
       }
@@ -760,7 +760,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
       // if (SGDataUtility.isNetCDFData(groupSet.getData())) {
       // if (SGDataUtility.canOpenNetCDF((SGNetCDFData)groupSet.getData())==false) {
       // SGUtility.showErrorMessageDialog(null, "NetCDF file connection refused.
-      // Delete this data.", "ERROR");
+      // Delete this data.", "SGIConstants.ERROR");
       // this.notifyToListener(NOTIFY_UNKNOWN_DATA_ERROR,
       // Integer.valueOf(groupSet.getID()));
       // }

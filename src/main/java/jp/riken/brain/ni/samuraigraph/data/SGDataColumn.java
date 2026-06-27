@@ -7,7 +7,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 
 /** The base class of data column. */
-public abstract class SGDataColumn implements Cloneable, SGIDisposable, SGIConstants {
+public abstract class SGDataColumn implements Cloneable, SGIDisposable {
 
   /** The title of this column. */
   protected String mTitle = null;

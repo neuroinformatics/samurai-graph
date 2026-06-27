@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +25,7 @@ class SGCommandScriptManager implements SGIApplicationCommandConstants {
 
     // creates commands
     String commandString =
-        wnd.getCommandString(new SGExportParameter(OPERATION.SAVE_TO_SCRIPT_FILE));
+        wnd.getCommandString(new SGExportParameter(SGIConstants.OPERATION.SAVE_TO_SCRIPT_FILE));
 
     String fileName = SGApplicationUtility.getOutputFileName(wnd);
     if (fileName == null) {
@@ -42,10 +43,10 @@ class SGCommandScriptManager implements SGIApplicationCommandConstants {
     try {
       ret = this.mCommandScriptCreator.create(wnd, commandString);
     } catch (IOException e) {
-      SGUtility.showErrorMessageDialog(wnd, e.getMessage(), TITLE_ERROR);
-      ret = ERROR_OPTION;
+      SGUtility.showErrorMessageDialog(wnd, e.getMessage(), SGIConstants.TITLE_ERROR);
+      ret = SGIConstants.ERROR_OPTION;
     }
-    if (ret != OK_OPTION) {
+    if (ret != SGIConstants.OK_OPTION) {
       return ret;
     }
 
@@ -54,6 +55,6 @@ class SGCommandScriptManager implements SGIApplicationCommandConstants {
       this.mMain.updateCurrentFile(f, FILE_TYPE.SCRIPT);
     }
 
-    return OK_OPTION;
+    return SGIConstants.OK_OPTION;
   }
 }

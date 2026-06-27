@@ -62,8 +62,7 @@ import ucar.nc2.NetcdfFile;
 
 /** A class to create data objects. */
 public class SGDataCreator
-    implements SGIConstants,
-        SGIDataColumnTypeConstants,
+    implements SGIDataColumnTypeConstants,
         SGINetCDFConstants,
         SGIMDArrayConstants,
         SGIApplicationConstants {

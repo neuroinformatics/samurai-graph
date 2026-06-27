@@ -7,10 +7,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 
 /** Constants for the legend. */
-public interface SGILegendConstants extends SGIConstants {
+public interface SGILegendConstants {
 
   /** Constants for the symbol span. */
-  public static final String SYMBOL_SPAN_UNIT = cm;
+  public static final String SYMBOL_SPAN_UNIT = SGIConstants.cm;
 
   public static final double SYMBOL_SPAN_MIN = 0.50;
 

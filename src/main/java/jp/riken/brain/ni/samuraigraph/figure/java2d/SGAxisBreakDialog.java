@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -507,16 +508,16 @@ public class SGAxisBreakDialog extends SGPropertyDialog
     this.mAngleSpinner.initProperties(
         new SpinnerNumberModel(
             0.0, AXIS_BREAK_ANGLE_MIN, AXIS_BREAK_ANGLE_MAX, AXIS_BREAK_ANGLE_STEP),
-        degree,
+        SGIConstants.degree,
         AXIS_BREAK_ANGLE_FRAC_DIFIT_MIN,
         AXIS_BREAK_ANGLE_FRAC_DIFIT_MAX);
 
     // line width
     this.mLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     //
     // create a radio-button-group
@@ -800,11 +801,11 @@ public class SGAxisBreakDialog extends SGPropertyDialog
 
     final double xValue0 = abs0.getXValue();
     final double yValue0 = abs0.getYValue();
-    final float length0 = abs0.getLength(cm);
-    final float interval0 = abs0.getInterval(cm);
+    final float length0 = abs0.getLength(SGIConstants.cm);
+    final float interval0 = abs0.getInterval(SGIConstants.cm);
     final float distortion0 = abs0.getDistortion();
     final float angle0 = abs0.getAngle();
-    final float lineWidth0 = abs0.getLineWidth(pt);
+    final float lineWidth0 = abs0.getLineWidth(SGIConstants.pt);
     final boolean horizontal0 = abs0.isForHorizontalAxis();
     final Color lineColor0 = abs0.getLineColor();
     final Color innerColor0 = abs0.getInnerColor();
@@ -846,7 +847,7 @@ public class SGAxisBreakDialog extends SGPropertyDialog
       for (int ii = 1; ii < list.size(); ii++) {
         SGIAxisBreakDialogObserver abs1 = (SGIAxisBreakDialogObserver) list.get(ii);
 
-        final float length1 = abs1.getLength(cm);
+        final float length1 = abs1.getLength(SGIConstants.cm);
         if (length0 != length1) {
           length = null;
           break;
@@ -856,7 +857,7 @@ public class SGAxisBreakDialog extends SGPropertyDialog
       for (int ii = 1; ii < list.size(); ii++) {
         SGIAxisBreakDialogObserver abs1 = (SGIAxisBreakDialogObserver) list.get(ii);
 
-        final float interval1 = abs1.getInterval(cm);
+        final float interval1 = abs1.getInterval(SGIConstants.cm);
         if (interval0 != interval1) {
           interval = null;
           break;
@@ -886,7 +887,7 @@ public class SGAxisBreakDialog extends SGPropertyDialog
       for (int ii = 1; ii < list.size(); ii++) {
         SGIAxisBreakDialogObserver abs1 = (SGIAxisBreakDialogObserver) list.get(ii);
 
-        final float lineWidth1 = abs1.getLineWidth(pt);
+        final float lineWidth1 = abs1.getLineWidth(SGIConstants.pt);
         if (lineWidth0 != lineWidth1) {
           lineWidth = null;
           break;
@@ -940,13 +941,13 @@ public class SGAxisBreakDialog extends SGPropertyDialog
 
     // if( length!=null )
     // {
-    // length = Float.valueOf( length.floatValue()*CM_POINT_RATIO );
+    // length = Float.valueOf( length.floatValue()*SGIConstants.CM_POINT_RATIO );
     // }
     this.setLength(length);
 
     // if( interval!=null )
     // {
-    // interval = Float.valueOf( interval.floatValue()*CM_POINT_RATIO );
+    // interval = Float.valueOf( interval.floatValue()*SGIConstants.CM_POINT_RATIO );
     // }
     this.setInterval(interval);
 
@@ -1039,13 +1040,13 @@ public class SGAxisBreakDialog extends SGPropertyDialog
     // length
     if (len != null) {
       //			abs.setLength( len.floatValue()/SGIConstants.CM_POINT_RATIO );
-      abs.setLength(len.floatValue(), cm);
+      abs.setLength(len.floatValue(), SGIConstants.cm);
     }
 
     // interval
     if (interval != null) {
       //			abs.setInterval( interval.floatValue()/SGIConstants.CM_POINT_RATIO );
-      abs.setInterval(interval.floatValue(), cm);
+      abs.setInterval(interval.floatValue(), SGIConstants.cm);
     }
 
     // distortion
@@ -1061,7 +1062,7 @@ public class SGAxisBreakDialog extends SGPropertyDialog
     // line width
     if (lineWidth != null) {
       //			abs.setLineWidth( lineWidth.floatValue() );
-      abs.setLineWidth(lineWidth.floatValue(), pt);
+      abs.setLineWidth(lineWidth.floatValue(), SGIConstants.pt);
     }
 
     // horizontal

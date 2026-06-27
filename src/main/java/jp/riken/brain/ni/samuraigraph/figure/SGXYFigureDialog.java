@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -780,9 +781,9 @@ public class SGXYFigureDialog extends SGPropertyDialog
     // frame line width
     this.mFrameLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // set the combo box
     for (int ii = 0; ii < LINE_NAME_ARRAY.length; ii++) {
@@ -794,14 +795,14 @@ public class SGXYFigureDialog extends SGPropertyDialog
     // set spinner model
     this.mFrameLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
     this.mGridLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // set the name
     this.mXSpinner.setDescription("Figure-> Location-> X");
@@ -946,7 +947,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
     dg.setVisible(true);
 
     final int closeOption = dg.getCloseOption();
-    if (closeOption == OK_OPTION) {
+    if (closeOption == SGIConstants.OK_OPTION) {
       SGDate date = dg.getDate();
       if (this.isDateMode(horizontal)) {
         field.setText(date.toString());
@@ -973,7 +974,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
     dg.setVisible(true);
 
     final int closeOption = dg.getCloseOption();
-    if (closeOption == OK_OPTION) {
+    if (closeOption == SGIConstants.OK_OPTION) {
       SGPeriod p = dg.getPeriod();
       if (this.isDateMode(horizontal)) {
         field.setText(p.toString());
@@ -1343,7 +1344,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
       heightArray[ii] = l.getFigureHeight(FIGURE_SIZE_UNIT);
       bgColorArray[ii] = l.getBackgroundColor();
       transparentArray[ii] = l.isTransparent();
-      frameLineWidthArray[ii] = l.getFrameLineWidth(LINE_WIDTH_UNIT);
+      frameLineWidthArray[ii] = l.getFrameLineWidth(SGIConstants.LINE_WIDTH_UNIT);
       frameLineColorArray[ii] = l.getFrameLineColor();
       frameLineVisibleArray[ii] = l.isFrameLineVisible();
       legendVisibleArray[ii] = l.isLegendVisible();
@@ -1461,7 +1462,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
       stepValueXArray[ii] = l.getGridStepValueX();
       baselineValueYArray[ii] = l.getGridBaselineValueY();
       stepValueYArray[ii] = l.getGridStepValueY();
-      lineWidthArray[ii] = l.getGridLineWidth(LINE_WIDTH_UNIT);
+      lineWidthArray[ii] = l.getGridLineWidth(SGIConstants.LINE_WIDTH_UNIT);
       lineTypeArray[ii] = l.getGridLineType();
       lineColorArray[ii] = l.getGridLineColor();
     }
@@ -1501,25 +1502,25 @@ public class SGXYFigureDialog extends SGPropertyDialog
     // x
     final Number x = this.getFigureX();
     if (x != null) {
-      figure.setFigureX(x.floatValue(), cm);
+      figure.setFigureX(x.floatValue(), SGIConstants.cm);
     }
 
     // y
     final Number y = this.getFigureY();
     if (y != null) {
-      figure.setFigureY(y.floatValue(), cm);
+      figure.setFigureY(y.floatValue(), SGIConstants.cm);
     }
 
     // width
     final Number width = this.getFigureWidth();
     if (width != null) {
-      figure.setFigureWidth(width.floatValue(), cm);
+      figure.setFigureWidth(width.floatValue(), SGIConstants.cm);
     }
 
     // height
     final Number height = this.getFigureHeight();
     if (height != null) {
-      figure.setFigureHeight(height.floatValue(), cm);
+      figure.setFigureHeight(height.floatValue(), SGIConstants.cm);
     }
 
     final Boolean frameVisible = this.isFrameLinesVisible();
@@ -1529,7 +1530,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
 
     final Number frameLineWidth = this.getFrameLineWidth();
     if (frameLineWidth != null) {
-      figure.setFrameLineWidth(frameLineWidth.floatValue(), pt);
+      figure.setFrameLineWidth(frameLineWidth.floatValue(), SGIConstants.pt);
     }
 
     final Color frameLineColor = this.getFrameLineColor();
@@ -1707,7 +1708,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
     }
 
     if (lineWidth != null) {
-      if (grid.setGridLineWidth(lineWidth.floatValue(), pt) == false) {
+      if (grid.setGridLineWidth(lineWidth.floatValue(), SGIConstants.pt) == false) {
         return false;
       }
     }

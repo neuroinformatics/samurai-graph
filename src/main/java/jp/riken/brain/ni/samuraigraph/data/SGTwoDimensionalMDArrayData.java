@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.data;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import ch.systemsx.cisd.base.mdarray.MDDoubleArray;
 import ch.systemsx.cisd.hdf5.IHDF5Writer;
@@ -312,8 +313,8 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
       return false;
     }
 
-    OPERATION type = params.getType();
-    if (OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)
+    SGIConstants.OPERATION type = params.getType();
+    if (SGIConstants.OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)
         || SGDataUtility.isArchiveDataSetOperation(type)) {
 
       StringBuffer sb = new StringBuffer();
@@ -334,7 +335,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
         el.setAttribute(this.getYValueKey(), sb.toString());
       }
 
-    } else if (OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
+    } else if (SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
 
       if (this.isIndexAvailable()) {
         // scatter plot

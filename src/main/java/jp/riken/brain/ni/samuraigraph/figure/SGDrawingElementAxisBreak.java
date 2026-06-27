@@ -549,8 +549,8 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     SGPropertyUtility.addProperty(
         map,
         lineWidthKey,
-        SGUtility.getExportLineWidth(this.getLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(map, horizontalKey, this.isForHorizontalAxis());
     SGPropertyUtility.addProperty(map, lineColorKey, this.getLineColor());
     SGPropertyUtility.addProperty(map, innerColorKey, this.getInnerColor());

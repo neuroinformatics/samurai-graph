@@ -14,7 +14,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 
 public interface SGIElementGroupSetForData
-    extends SGIConstants, SGIChildObject, SGIDataCommandConstants, SGIDataObject {
+    extends SGIChildObject, SGIDataCommandConstants, SGIDataObject {
 
   /**
    * Sets the name.

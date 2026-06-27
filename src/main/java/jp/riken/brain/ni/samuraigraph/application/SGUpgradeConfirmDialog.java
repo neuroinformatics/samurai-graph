@@ -72,7 +72,7 @@ public class SGUpgradeConfirmDialog extends SGScrollPaneDialog {
    * @return
    */
   public boolean setPage(String t) {
-    String filename = SGApplicationUtility.getPathName(TMP_DIR, "upgrade.html");
+    String filename = SGApplicationUtility.getPathName(SGIConstants.TMP_DIR, "upgrade.html");
     File f = new File(filename);
     f.deleteOnExit();
 

@@ -233,7 +233,7 @@ public abstract class SGAxisElement
     this.mTitle = new ElementStringTitle(this);
 
     // axis line
-    this.setAxisLineWidth(DEFAULT_AXIS_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setAxisLineWidth(DEFAULT_AXIS_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setAxisLineColor(DEFAULT_LINE_COLOR);
     this.setSpaceAxisLineAndNumbers(DEFAULT_SPACE_AXIS_LINE_AND_NUMBER, SPACE_UNIT);
 
@@ -243,7 +243,7 @@ public abstract class SGAxisElement
     this.setTitleShiftFromCenter(DEFAULT_TITLE_SHIFT_FROM_CENTER, TITLE_SHIFT_UNIT);
     this.setTitleFontName(DEFAULT_FONT_NAME);
     this.setTitleFontStyle(DEFAULT_FONT_STYLE);
-    this.setTitleFontSize(DEFAULT_FONT_SIZE, FONT_SIZE_UNIT);
+    this.setTitleFontSize(DEFAULT_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
     this.setTitleFontColor(DEFAULT_FONT_COLOR);
 
     // scale
@@ -256,14 +256,14 @@ public abstract class SGAxisElement
     this.setExponentVisible(DEFAULT_EXPONENT_VISIBLE);
     this.setExponent(DEFAULT_EXPONENT);
     this.setNumberFontName(DEFAULT_FONT_NAME);
-    this.setNumberFontSize(DEFAULT_FONT_SIZE, FONT_SIZE_UNIT);
+    this.setNumberFontSize(DEFAULT_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
     this.setNumberFontStyle(DEFAULT_FONT_STYLE);
     this.setNumberFontColor(DEFAULT_FONT_COLOR);
 
     // tick mark
     this.setTickMarkVisible(DEFAULT_TICK_MARK_VISIBLE);
     this.setTickMarkBothsides(DEFAULT_TICK_MARK_BOTHSIDES);
-    this.setTickMarkWidth(DEFAULT_TICK_MARK_WIDTH, LINE_WIDTH_UNIT);
+    this.setTickMarkWidth(DEFAULT_TICK_MARK_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setMajorTickMarkLength(DEFAULT_TICK_MARK_LENGTH, TICK_MARK_LENGTH_UNIT);
     this.setMinorTickMarkNumber(DEFAULT_MINOR_TICK_MARK_NUMBER);
     this.setMinorTickMarkLength(DEFAULT_MINOR_TICK_MARK_LENGTH, TICK_MARK_LENGTH_UNIT);
@@ -4765,8 +4765,8 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(
         map,
         lineWidthKey,
-        SGUtility.getExportLineWidth(this.getAxisLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getAxisLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(
         map,
         spaceKey,
@@ -4800,8 +4800,8 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(
         map,
         fontSizeKey,
-        SGUtility.getExportFontSize(this.getTitleFontSize(FONT_SIZE_UNIT)),
-        FONT_SIZE_UNIT);
+        SGUtility.getExportFontSize(this.getTitleFontSize(SGIConstants.FONT_SIZE_UNIT)),
+        SGIConstants.FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(
         map, fontStyleKey, SGUtilityText.getFontStyleName(this.getTitleFontStyle()));
     SGPropertyUtility.addProperty(map, fontColorKey, this.getTitleFontColor());
@@ -4841,8 +4841,8 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(
         map,
         fontSizeKey,
-        SGUtility.getExportFontSize(this.getNumberFontSize(FONT_SIZE_UNIT)),
-        FONT_SIZE_UNIT);
+        SGUtility.getExportFontSize(this.getNumberFontSize(SGIConstants.FONT_SIZE_UNIT)),
+        SGIConstants.FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(
         map, fontStyleKey, SGUtilityText.getFontStyleName(this.getNumberFontStyle()));
     SGPropertyUtility.addProperty(map, fontColorKey, this.getNumberFontColor());
@@ -4870,8 +4870,8 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(
         map,
         widthKey,
-        SGUtility.getExportLineWidth(this.getTickMarkWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
+        SGUtility.getExportLineWidth(this.getTickMarkWidth(SGIConstants.LINE_WIDTH_UNIT)),
+        SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(
         map,
         majorLengthKey,

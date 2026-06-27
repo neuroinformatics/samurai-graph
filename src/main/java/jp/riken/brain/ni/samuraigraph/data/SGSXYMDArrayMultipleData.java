@@ -1799,9 +1799,9 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     if (super.writeProperty(el, params) == false) {
       return false;
     }
-    OPERATION type = params.getType();
+    SGIConstants.OPERATION type = params.getType();
     if (SGDataUtility.isArchiveDataSetOperation(type)
-        || OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)) {
+        || SGIConstants.OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)) {
 
       String value = null;
       if (this.isDimensionPicked()) {
@@ -1883,7 +1883,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         el.setAttribute(KEY_TICK_LABEL_ARRAY_SECTION, this.mTickLabelStride.toString());
       }
 
-    } else if (OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
+    } else if (SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
 
       // get variable names
       List<String> xNameList = new ArrayList<String>();

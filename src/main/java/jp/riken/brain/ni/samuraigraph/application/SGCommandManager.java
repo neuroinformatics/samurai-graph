@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.EventQueue;
 import java.awt.Point;
@@ -484,7 +485,7 @@ class SGCommandManager
                         public void run() {
                             final int ret;
                             if (mPropertyFileManager
-                                    .saveProperties(aWnd, str1, SAVE_PROPERTIES_TO_PROPERTY_FILE) == OK_OPTION) {
+                                    .saveProperties(aWnd, str1, SAVE_PROPERTIES_TO_PROPERTY_FILE) == SGIConstants.OK_OPTION) {
                                 ret = STATUS_SUCCEEDED;
                                 aWnd.setSaved(true);
                             } else {
@@ -572,7 +573,7 @@ class SGCommandManager
         return STATUS_FAILED;
       }
       if (SGCommandManager.this.mMain.mDataSetManager.saveDataSet(wnd, filePath, fileType)
-          == OK_OPTION) {
+          == SGIConstants.OK_OPTION) {
         wnd.setSaved(true);
         return STATUS_SUCCEEDED;
       } else {
@@ -906,7 +907,7 @@ class SGCommandManager
           fileChooserDialog.setVisible(true);
 
           final int option = fileChooserDialog.getCloseOption();
-          if (option == CANCEL_OPTION) {
+          if (option == SGIConstants.CANCEL_OPTION) {
             return STATUS_FAILED;
           }
 

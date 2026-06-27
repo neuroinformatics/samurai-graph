@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -117,7 +118,7 @@ public abstract class SGElementGroupLineForData extends SGElementGroupLine
   protected boolean getProperties(SGPropertyMap map) {
     SGPropertyUtility.addProperty(map, COM_DATA_LINE_VISIBLE, this.isVisible());
     //    	SGCommandUtility.addProperty(map, COM_DATA_LINE_WIDTH,
-    //    			this.getLineWidth(LINE_WIDTH_UNIT), LINE_WIDTH_UNIT);
+    //    			this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT), SGIConstants.LINE_WIDTH_UNIT);
     //    	SGCommandUtility.addProperty(map, COM_DATA_LINE_TYPE,
     //    			SGDrawingElementLine.getLineTypeName(this.getLineType()));
     //    	SGCommandUtility.addProperty(map, COM_DATA_LINE_COLOR,

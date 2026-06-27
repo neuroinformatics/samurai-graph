@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -82,7 +83,7 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
 
     // arrange
     List<String> moveCommandList = this.getMoveCommandList();
-    PopupMenuItem arrangeItem = new PopupMenuItem(MENUCMD_ARRANGE, this.mGroupSet);
+    PopupMenuItem arrangeItem = new PopupMenuItem(SGIConstants.MENUCMD_ARRANGE, this.mGroupSet);
     for (int ii = 0; ii < moveCommandList.size(); ii++) {
       String command = moveCommandList.get(ii);
       arrangeItem.addChild(new PopupMenuItem(command, this.mGroupSet));
@@ -126,7 +127,7 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
       PopupMenuItem item = new PopupMenuItem(cmd, cmd, l, false);
       pluginItemList.add(item);
     }
-    PopupMenuItem pluginTopItem = new PopupMenuItem(MENUCMD_PLUGIN, this.mGroupSet);
+    PopupMenuItem pluginTopItem = new PopupMenuItem(SGIConstants.MENUCMD_PLUGIN, this.mGroupSet);
     for (int ii = 0; ii < pluginItemList.size(); ii++) {
       PopupMenuItem item = pluginItemList.get(ii);
       pluginTopItem.addChild(item);
@@ -145,7 +146,7 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
         File dataFile = new File(path);
         if (dataFile.exists()) {
           List<PopupMenuItem> list = new ArrayList<PopupMenuItem>();
-          list.add(convertCommandToPopupMenuItem(MENUCMD_ADD_COMMANDS_TO_NETCDF));
+          list.add(convertCommandToPopupMenuItem(SGIConstants.MENUCMD_ADD_COMMANDS_TO_NETCDF));
           rootList.add(list);
         }
       }
@@ -153,7 +154,7 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
 
     // data viewer
     List<PopupMenuItem> dataViewerList = new ArrayList<PopupMenuItem>();
-    dataViewerList.add(convertCommandToPopupMenuItem(MENUCMD_SHOW_DATA_VIEWER));
+    dataViewerList.add(convertCommandToPopupMenuItem(SGIConstants.MENUCMD_SHOW_DATA_VIEWER));
     rootList.add(dataViewerList);
 
     // property
@@ -213,10 +214,10 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
   protected List<String> getMoveCommandList() {
     List<String> list = new ArrayList<String>();
     if (this.mInGraph) {
-      list.add(MENUCMD_BRING_TO_FRONT);
-      list.add(MENUCMD_BRING_FORWARD);
-      list.add(MENUCMD_SEND_BACKWARD);
-      list.add(MENUCMD_SEND_TO_BACK);
+      list.add(SGIConstants.MENUCMD_BRING_TO_FRONT);
+      list.add(SGIConstants.MENUCMD_BRING_FORWARD);
+      list.add(SGIConstants.MENUCMD_SEND_BACKWARD);
+      list.add(SGIConstants.MENUCMD_SEND_TO_BACK);
     } else {
       list.add(MENUCMD_MOVE_TO_TOP);
       list.add(MENUCMD_MOVE_TO_UPPER);
@@ -233,10 +234,10 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
    */
   protected List<String> getEditCommandList() {
     List<String> list = new ArrayList<String>();
-    list.add(MENUCMD_CUT);
-    list.add(MENUCMD_COPY);
-    list.add(MENUCMD_DUPLICATE);
-    list.add(MENUCMD_DELETE);
+    list.add(SGIConstants.MENUCMD_CUT);
+    list.add(SGIConstants.MENUCMD_COPY);
+    list.add(SGIConstants.MENUCMD_DUPLICATE);
+    list.add(SGIConstants.MENUCMD_DELETE);
     return list;
   }
 
@@ -247,16 +248,16 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
    */
   protected List<String> getExportCommandList() {
     List<String> list = new ArrayList<String>();
-    list.add(MENUCMD_EXPORT_TO_FILE);
+    list.add(SGIConstants.MENUCMD_EXPORT_TO_FILE);
 
     SGUserProperties prop = SGUserProperties.getInstance();
     String devMode = prop.getProperty("dev");
     Boolean bDevMode = Boolean.valueOf(devMode);
     if (bDevMode) {
-      list.add(MENUCMD_EXPORT_TO_TEXT_FILE);
-      list.add(MENUCMD_EXPORT_TO_NETCDF_FILE);
-      list.add(MENUCMD_EXPORT_TO_HDF5_FILE);
-      list.add(MENUCMD_EXPORT_TO_MATLAB_FILE);
+      list.add(SGIConstants.MENUCMD_EXPORT_TO_TEXT_FILE);
+      list.add(SGIConstants.MENUCMD_EXPORT_TO_NETCDF_FILE);
+      list.add(SGIConstants.MENUCMD_EXPORT_TO_HDF5_FILE);
+      list.add(SGIConstants.MENUCMD_EXPORT_TO_MATLAB_FILE);
     }
     return list;
   }
@@ -268,8 +269,8 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
    */
   protected List<String> getNetCDFCommandList() {
     List<String> list = new ArrayList<String>();
-    list.add(MENUCMD_INSERT_NETCDF_LABEL);
-    list.add(MENUCMD_ANIMATION);
+    list.add(SGIConstants.MENUCMD_INSERT_NETCDF_LABEL);
+    list.add(SGIConstants.MENUCMD_ANIMATION);
     return list;
   }
 
@@ -280,7 +281,7 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
    */
   protected List<String> getMDArrayCommandList() {
     List<String> list = new ArrayList<String>();
-    list.add(MENUCMD_ANIMATION);
+    list.add(SGIConstants.MENUCMD_ANIMATION);
     return list;
   }
 
@@ -293,20 +294,20 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
     List<PopupMenuItem> list = new ArrayList<PopupMenuItem>();
     SGData data = this.mGroupSet.getData();
 
-    PopupMenuItem fitAxisItem = new PopupMenuItem(MENUCMD_FIT_AXES_TO_DATA, this.mGroupSet);
+    PopupMenuItem fitAxisItem = new PopupMenuItem(SGIConstants.MENUCMD_FIT_AXES_TO_DATA, this.mGroupSet);
     List<PopupMenuItem> childList = this.getFitAxisChildList(this.mGroupSet);
     for (PopupMenuItem item : childList) {
       fitAxisItem.addChild(item);
     }
     if (data.isAnimationSupported()) {
       PopupMenuItem item =
-          new PopupMenuItem(MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES, l);
+          new PopupMenuItem(SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES, l);
       item.setEnabled(data.isAnimationAvailable());
       fitAxisItem.addChild(item);
     }
     list.add(fitAxisItem);
 
-    list.add(new PopupMenuItem(MENUCMD_TRANSFORM_DATA, this.mGroupSet));
+    list.add(new PopupMenuItem(SGIConstants.MENUCMD_TRANSFORM_DATA, this.mGroupSet));
 
     return list;
   }
@@ -348,7 +349,7 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
    */
   protected List<String> getPropertyCommandList() {
     List<String> list = new ArrayList<String>();
-    list.add(MENUCMD_PROPERTY);
+    list.add(SGIConstants.MENUCMD_PROPERTY);
     return list;
   }
 

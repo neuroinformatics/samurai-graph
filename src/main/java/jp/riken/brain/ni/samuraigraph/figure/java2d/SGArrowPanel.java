@@ -5,6 +5,7 @@
  */
 
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -241,9 +242,9 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
     // line width
     this.mLineWidthSpinner.initProperties(
         SGPropertyDialog.getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // head size
     this.mHeadSizeSpinner.initProperties(
@@ -256,14 +257,14 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
     this.mOpenAngleSpinner.initProperties(
         new SpinnerNumberModel(
             10.0, ARROW_HEAD_OPEN_ANGLE_MIN, ARROW_HEAD_OPEN_ANGLE_MAX, ARROW_HEAD_ANGLE_STEP),
-        degree,
+        SGIConstants.degree,
         ARROW_HEAD_ANGLE_FRAC_DIFIT_MIN,
         ARROW_HEAD_ANGLE_FRAC_DIFIT_MAX);
 
     this.mCloseAngleSpinner.initProperties(
         new SpinnerNumberModel(
             10.0, ARROW_HEAD_CLOSE_ANGLE_MIN, ARROW_HEAD_CLOSE_ANGLE_MAX, ARROW_HEAD_ANGLE_STEP),
-        degree,
+        SGIConstants.degree,
         ARROW_HEAD_ANGLE_FRAC_DIFIT_MIN,
         ARROW_HEAD_ANGLE_FRAC_DIFIT_MAX);
 
@@ -487,10 +488,10 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
 
     SGIArrowPanelObserver arrow0 = (SGIArrowPanelObserver) list.get(0);
 
-    final float lineWidth0 = arrow0.getLineWidth(pt);
+    final float lineWidth0 = arrow0.getLineWidth(SGIConstants.pt);
     final int lineType0 = arrow0.getLineType();
     final Color color0 = arrow0.getColor();
-    final float headSize0 = arrow0.getHeadSize(cm);
+    final float headSize0 = arrow0.getHeadSize(SGIConstants.cm);
     final int startType0 = arrow0.getStartHeadType();
     final int endType0 = arrow0.getEndHeadType();
     final float openAngle0 = arrow0.getHeadOpenAngle();
@@ -508,7 +509,7 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
     if (list.size() > 1) {
       for (int ii = 1; ii < list.size(); ii++) {
         SGIArrowPanelObserver arrow1 = (SGIArrowPanelObserver) list.get(ii);
-        final float lineWidth1 = arrow1.getLineWidth(pt);
+        final float lineWidth1 = arrow1.getLineWidth(SGIConstants.pt);
         if (lineWidth0 != lineWidth1) {
           lineWidth = null;
           break;
@@ -535,7 +536,7 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
 
       for (int ii = 1; ii < list.size(); ii++) {
         SGIArrowPanelObserver arrow1 = (SGIArrowPanelObserver) list.get(ii);
-        final float headSize1 = arrow1.getHeadSize(cm);
+        final float headSize1 = arrow1.getHeadSize(SGIConstants.cm);
         if (headSize0 != headSize1) {
           headSize = null;
           break;
@@ -616,7 +617,7 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
     // set values
 
     if (lineWidth != null) {
-      l.setLineWidth(lineWidth.floatValue(), pt);
+      l.setLineWidth(lineWidth.floatValue(), SGIConstants.pt);
     }
 
     if (lineType != null) {
@@ -624,7 +625,7 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
     }
 
     if (headSize != null) {
-      l.setHeadSize(headSize.floatValue(), cm);
+      l.setHeadSize(headSize.floatValue(), SGIConstants.cm);
     }
 
     if (color != null) {

@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.data;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import ch.systemsx.cisd.base.mdarray.MDArray;
 import ch.systemsx.cisd.base.mdarray.MDDoubleArray;
@@ -746,7 +747,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     }
 
     if (SGDataUtility.isArchiveDataSetOperation(type.getType())
-        || OPERATION.SAVE_TO_PROPERTY_FILE.equals(type.getType())) {
+        || SGIConstants.OPERATION.SAVE_TO_PROPERTY_FILE.equals(type.getType())) {
       // origins
       StringBuffer sb = new StringBuffer();
       SGMDArrayVariable[] vars = this.getVariables();
@@ -795,7 +796,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       }
       el.setAttribute(SGIDataPropertyKeyConstants.KEY_ANIMATION_DIMENSION, sb.toString());
 
-    } else if (OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
+    } else if (SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
 
       // origins
       SGMDArrayVariable[] vars = this.getAssignedVariables();

@@ -1925,9 +1925,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     // line
     this.mLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // symbol
     this.mSymbolSizeSpinner.initProperties(
@@ -1938,9 +1938,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
     this.mSymbolLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     this.mSymbolBodyTransparencySpinner.initProperties(
         new SpinnerNumberModel(
@@ -1955,16 +1955,16 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     // bar
     this.mBarLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // error bar
     this.mErrorBarLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // bar inner paint transparency
     this.mBarBodyTransparencySpinner.initProperties(
@@ -1987,9 +1987,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     // tick label
     this.mTickLabelFontSizeSpinner.initProperties(
         getFontSizeSpinnerNumberModel(),
-        FONT_SIZE_UNIT,
-        FONT_SIZE_FRAC_DIGIT_MIN,
-        FONT_SIZE_FRAC_DIGIT_MAX);
+        SGIConstants.FONT_SIZE_UNIT,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MIN,
+        SGIConstants.FONT_SIZE_FRAC_DIGIT_MAX);
     this.mTickLabelDecimalPlacesSpinner.initProperties(
         new SpinnerNumberModel(
             0.0,
@@ -2014,7 +2014,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
             (float) TICK_LABEL_TEXT_ANGLE_MIN,
             (float) TICK_LABEL_TEXT_ANGLE_MAX,
             (float) TICK_LABEL_TEXT_ANGLE_STEP),
-        degree,
+        SGIConstants.degree,
         TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MIN,
         TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MAX);
 
@@ -4205,8 +4205,8 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   private boolean setSymbolTabProperties(final List<SGIPropertyDialogObserver> list) {
     SGISXYDataDialogObserver g0 = (SGISXYDataDialogObserver) list.get(0);
     final boolean visible0 = g0.isSymbolVisible();
-    final float size0 = g0.getSymbolSize(cm);
-    final float lineWidth0 = g0.getSymbolLineWidth(pt);
+    final float size0 = g0.getSymbolSize(SGIConstants.cm);
+    final float lineWidth0 = g0.getSymbolLineWidth(SGIConstants.pt);
     final int type0 = g0.getSymbolType();
     final SGIPaint innerPaint0 = g0.getSymbolInnerPaint();
     final Color lineColor0 = g0.getSymbolLineColor();
@@ -4231,7 +4231,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       }
       for (int ii = 1; ii < list.size(); ii++) {
         SGISXYDataDialogObserver g1 = (SGISXYDataDialogObserver) list.get(ii);
-        final float size1 = g1.getSymbolSize(cm);
+        final float size1 = g1.getSymbolSize(SGIConstants.cm);
         if (size0 != size1) {
           size = null;
           break;
@@ -4239,7 +4239,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       }
       for (int ii = 1; ii < list.size(); ii++) {
         SGISXYDataDialogObserver g1 = (SGISXYDataDialogObserver) list.get(ii);
-        final float lineWidth1 = g1.getSymbolLineWidth(pt);
+        final float lineWidth1 = g1.getSymbolLineWidth(SGIConstants.pt);
         if (lineWidth0 != lineWidth1) {
           lineWidth = null;
           break;
@@ -4321,7 +4321,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       baselineArray[ii] = l.getBarBaselineValue();
       widthArray[ii] = l.getBarWidthValue();
       edgeLineVisibleArray[ii] = l.isBarEdgeLineVisible();
-      edgeLineWidthArray[ii] = l.getBarEdgeLineWidth(LINE_WIDTH_UNIT);
+      edgeLineWidthArray[ii] = l.getBarEdgeLineWidth(SGIConstants.LINE_WIDTH_UNIT);
       edgeLineColorArray[ii] = l.getBarEdgeLineColor();
       innerPaintArray[ii] = l.getBarInnerPaint();
       offsetXArray[ii] = l.getBarOffsetX();
@@ -4474,8 +4474,8 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
     SGISXYDataDialogObserver g0 = (SGISXYDataDialogObserver) list.get(0);
     final boolean visible0 = g0.isErrorBarVisible();
-    final float lineWidth0 = g0.getErrorBarLineWidth(pt);
-    final float headSize0 = g0.getErrorBarHeadSize(cm);
+    final float lineWidth0 = g0.getErrorBarLineWidth(SGIConstants.pt);
+    final float headSize0 = g0.getErrorBarHeadSize(SGIConstants.cm);
     final int style0 = g0.getErrorBarStyle();
     final int type0 = g0.getErrorBarHeadType();
     final Color color0 = g0.getErrorBarColor();
@@ -4500,7 +4500,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       }
       for (int ii = 1; ii < list.size(); ii++) {
         SGISXYDataDialogObserver g1 = (SGISXYDataDialogObserver) list.get(ii);
-        final float lineWidth1 = g1.getErrorBarLineWidth(pt);
+        final float lineWidth1 = g1.getErrorBarLineWidth(SGIConstants.pt);
         if (lineWidth0 != lineWidth1) {
           lineWidth = null;
           break;
@@ -4508,7 +4508,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       }
       for (int ii = 1; ii < list.size(); ii++) {
         SGISXYDataDialogObserver g1 = (SGISXYDataDialogObserver) list.get(ii);
-        final float headSize1 = g1.getErrorBarHeadSize(cm);
+        final float headSize1 = g1.getErrorBarHeadSize(SGIConstants.cm);
         if (headSize0 != headSize1) {
           headSize = null;
           break;
@@ -4594,7 +4594,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       visibleArray[ii] = l.isTickLabelVisible();
       fontNameArray[ii] = l.getTickLabelFontName();
       fontStyleArray[ii] = l.getTickLabelFontStyle();
-      fontSizeArray[ii] = l.getTickLabelFontSize(FONT_SIZE_UNIT);
+      fontSizeArray[ii] = l.getTickLabelFontSize(SGIConstants.FONT_SIZE_UNIT);
       angleArray[ii] = l.getTickLabelAngle();
       colorArray[ii] = l.getTickLabelColor();
       decimalPlacesArray[ii] = l.getTickLabelDecimalPlaces();
@@ -4685,7 +4685,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     }
     final Number size = this.getSymbolSize();
     if (size != null) {
-      l.setSymbolSize(size.floatValue(), cm);
+      l.setSymbolSize(size.floatValue(), SGIConstants.cm);
     }
     final Integer type = this.getSymbolType();
     if (type != null) {
@@ -4697,7 +4697,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     }
     final Number lineWidth = this.getSymbolLineWidth();
     if (lineWidth != null) {
-      l.setSymbolLineWidth(lineWidth.floatValue(), pt);
+      l.setSymbolLineWidth(lineWidth.floatValue(), SGIConstants.pt);
     }
     final Color lineColor = this.getSymbolLineColor();
     if (lineColor != null) {
@@ -4725,7 +4725,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     }
     Number edgeLineWidth = this.getBarEdgeLineWidth();
     if (edgeLineWidth != null) {
-      l.setBarEdgeLineWidth(edgeLineWidth.floatValue(), pt);
+      l.setBarEdgeLineWidth(edgeLineWidth.floatValue(), SGIConstants.pt);
     }
     Color lineColor = this.getBarEdgeLineColor();
     if (lineColor != null) {
@@ -4769,11 +4769,11 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     }
     final Number lineWidth = this.getErrorBarLineWidth();
     if (lineWidth != null) {
-      l.setErrorBarLineWidth(lineWidth.floatValue(), LINE_WIDTH_UNIT);
+      l.setErrorBarLineWidth(lineWidth.floatValue(), SGIConstants.LINE_WIDTH_UNIT);
     }
     final Number headSize = this.getErrorBarSymbolSize();
     if (headSize != null) {
-      l.setErrorBarHeadSize(headSize.floatValue(), cm);
+      l.setErrorBarHeadSize(headSize.floatValue(), SGIConstants.cm);
     }
     final Integer style = this.getErrorBarStyle();
     if (style != null) {
@@ -4806,7 +4806,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     }
     final Number fontSize = this.getTickLabelFontSize();
     if (fontSize != null) {
-      l.setTickLabelFontSize(fontSize.floatValue(), pt);
+      l.setTickLabelFontSize(fontSize.floatValue(), SGIConstants.pt);
     }
     final Integer fontStyle = this.getTickLabelFontStyle();
     if (fontStyle != null) {

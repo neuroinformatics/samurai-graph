@@ -43,8 +43,8 @@ public class SGDataFileExporter extends SGFileHandler implements SGIApplicationC
 
     // initialize the file name
     final String extension;
-    final OPERATION mode;
-    if (MENUCMD_EXPORT_TO_FILE.equals(command)) {
+    final SGIConstants.OPERATION mode;
+    if (SGIConstants.MENUCMD_EXPORT_TO_FILE.equals(command)) {
       final SGData data = gs.getData();
       final String dataType = data.getDataType();
       if (SGDataUtility.isSDArrayData(dataType)) {
@@ -58,19 +58,19 @@ public class SGDataFileExporter extends SGFileHandler implements SGIApplicationC
       } else {
         throw new Error("Unsupported data type: " + dataType);
       }
-      mode = OPERATION.EXPORT_TO_FILE_AS_SAME_FORMAT;
-    } else if (MENUCMD_EXPORT_TO_TEXT_FILE.equals(command)) {
+      mode = SGIConstants.OPERATION.EXPORT_TO_FILE_AS_SAME_FORMAT;
+    } else if (SGIConstants.MENUCMD_EXPORT_TO_TEXT_FILE.equals(command)) {
       extension = CSV_FILE_EXTENSION;
-      mode = OPERATION.EXPORT_TO_TEXT;
-    } else if (MENUCMD_EXPORT_TO_NETCDF_FILE.equals(command)) {
+      mode = SGIConstants.OPERATION.EXPORT_TO_TEXT;
+    } else if (SGIConstants.MENUCMD_EXPORT_TO_NETCDF_FILE.equals(command)) {
       extension = NETCDF_FILE_EXTENSION;
-      mode = OPERATION.EXPORT_TO_NETCDF;
-    } else if (MENUCMD_EXPORT_TO_HDF5_FILE.equals(command)) {
+      mode = SGIConstants.OPERATION.EXPORT_TO_NETCDF;
+    } else if (SGIConstants.MENUCMD_EXPORT_TO_HDF5_FILE.equals(command)) {
       extension = HDF5_FILE_EXTENSION;
-      mode = OPERATION.EXPORT_TO_HDF5;
-    } else if (MENUCMD_EXPORT_TO_MATLAB_FILE.equals(command)) {
+      mode = SGIConstants.OPERATION.EXPORT_TO_HDF5;
+    } else if (SGIConstants.MENUCMD_EXPORT_TO_MATLAB_FILE.equals(command)) {
       extension = MATLAB_FILE_EXTENSION;
-      mode = OPERATION.EXPORT_TO_MATLAB;
+      mode = SGIConstants.OPERATION.EXPORT_TO_MATLAB;
     } else {
       throw new Error("Unsupported command: " + command);
     }
@@ -126,8 +126,8 @@ public class SGDataFileExporter extends SGFileHandler implements SGIApplicationC
       dg.setCenter(wnd);
       dg.setVisible(true);
       final int closeOption = dg.getCloseOption();
-      if (closeOption == SGWizardDialog.CANCEL_OPTION) {
-        return CANCEL_OPTION;
+      if (closeOption == SGWizardDialog.SGIConstants.CANCEL_OPTION) {
+        return SGIConstants.CANCEL_OPTION;
       }
     }
 
@@ -147,21 +147,21 @@ public class SGDataFileExporter extends SGFileHandler implements SGIApplicationC
     try {
       file = this.selectOutputFile(wnd, extension, desc, name);
     } catch (IOException e) {
-      SGUtility.showErrorMessageDialog(wnd, e.getMessage(), TITLE_ERROR);
-      return ERROR_OPTION;
+      SGUtility.showErrorMessageDialog(wnd, e.getMessage(), SGIConstants.TITLE_ERROR);
+      return SGIConstants.ERROR_OPTION;
     }
     if (file == null) {
-      return CANCEL_OPTION;
+      return SGIConstants.CANCEL_OPTION;
     }
 
     // checks the file path
-    if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
+    if (SGUtility.identifyOS(SGIConstants.OS_NAME_WINDOWS)) {
       // only for Windows
       if (HDF5_FILE_EXTENSION.equals(extension)) {
         String path = file.getAbsolutePath();
         if (!SGDataUtility.hasValidHDF5CharacterForWin(path)) {
           SGApplicationUtility.showHDF5WriteErrorMessageDialog(wnd, path);
-          return ERROR_OPTION;
+          return SGIConstants.ERROR_OPTION;
         }
       }
     }
@@ -204,10 +204,10 @@ public class SGDataFileExporter extends SGFileHandler implements SGIApplicationC
     // export to the file
     if (!gs.saveData(file, new SGExportParameter(mode), policy)) {
       SGUtility.showErrorMessageDialog(wnd, "Failed to save the data.", SGIConstants.TITLE_ERROR);
-      return ERROR_OPTION;
+      return SGIConstants.ERROR_OPTION;
     }
 
-    return OK_OPTION;
+    return SGIConstants.OK_OPTION;
   }
 
   public FILE_TYPE getCurrentFileType() {

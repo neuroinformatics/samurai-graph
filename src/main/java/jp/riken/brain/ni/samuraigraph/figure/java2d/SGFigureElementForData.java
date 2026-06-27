@@ -700,7 +700,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
       return null;
     }
 
-    // set the magnitude per cm
+    // set the magnitude per SGIConstants.cm
     final float perCmReduced = this.getInitialMagnitudePerCM(data);
     groupSet.setMagnitudePerCM(perCmReduced);
     groupSet.setDirectionInvariant(data.isPolar());
@@ -1196,7 +1196,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
      * // lines, symbols or bars cannot hide at the same time
      * if (!lineGroup.isVisible() && !symbolGroup.isVisible() &&
      * !barGroup.isVisible()) {
-     * return PROPERTY_FILE_INCORRECT;
+     * return SGIConstants.PROPERTY_FILE_INCORRECT;
      * }
      */
 

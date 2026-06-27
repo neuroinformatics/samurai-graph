@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -272,9 +273,9 @@ public class SGTimingLineDialog extends SGPropertyDialog
     // line
     this.mLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGIConstants.LINE_WIDTH_UNIT,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // set the name
     this.mValueTextField.setDescription("Value");
@@ -466,7 +467,7 @@ public class SGTimingLineDialog extends SGPropertyDialog
 
     // line width
     if (lineWidth != null) {
-      line.setLineWidth(lineWidth.floatValue(), pt);
+      line.setLineWidth(lineWidth.floatValue(), SGIConstants.pt);
     }
 
     // color
@@ -497,7 +498,7 @@ public class SGTimingLineDialog extends SGPropertyDialog
     SGITimingLineDialogObserver line0 = (SGITimingLineDialogObserver) list.get(0);
 
     final double value0 = line0.getValue();
-    final float lineWidth0 = line0.getLineWidth(pt);
+    final float lineWidth0 = line0.getLineWidth(SGIConstants.pt);
     final int lineType0 = line0.getLineType();
     final Color color0 = line0.getColor();
     final boolean anchored0 = line0.isAnchored();
@@ -522,7 +523,7 @@ public class SGTimingLineDialog extends SGPropertyDialog
       for (int ii = 1; ii < list.size(); ii++) {
         SGITimingLineDialogObserver line1 = (SGITimingLineDialogObserver) list.get(ii);
 
-        final float fontSize1 = line1.getLineWidth(pt);
+        final float fontSize1 = line1.getLineWidth(SGIConstants.pt);
         if (lineWidth0 != fontSize1) {
           lineWidth = null;
           break;

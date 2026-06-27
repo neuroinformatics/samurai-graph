@@ -3,12 +3,16 @@ package jp.riken.brain.ni.samuraigraph.base;
 import java.io.File;
 
 /** The basic constants. */
-public interface SGIConstants {
+public final class SGIConstants {
 
-  /** The ratio of cm to inch. */
+  private SGIConstants() {
+    // uninstantiable utility class
+  }
+
+  /** The ratio of SGIConstants.cm to SGIConstants.inch. */
   public static final float CM_INCH_RATIO = 2.54f;
 
-  /** The ratio of inch to point. */
+  /** The ratio of SGIConstants.inch to point. */
   public static final float INCH_POINT_RATIO = 72.0f;
 
   /** The ratio of cm to point. */
@@ -267,17 +271,17 @@ public interface SGIConstants {
 
   public static final int LINE_WIDTH_FRAC_DIGIT_MAX = 2;
 
-  public static final int LINE_WIDTH_MINIMAL_ORDER = -LINE_WIDTH_FRAC_DIGIT_MAX;
+  public static final int LINE_WIDTH_MINIMAL_ORDER = -SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX;
 
   /** Font size. */
   public static final int FONT_SIZE_FRAC_DIGIT_MIN = 1;
 
   public static final int FONT_SIZE_FRAC_DIGIT_MAX = 2;
 
-  public static final int FONT_SIZE_MINIMAL_ORDER = -FONT_SIZE_FRAC_DIGIT_MAX;
+  public static final int FONT_SIZE_MINIMAL_ORDER = -SGIConstants.FONT_SIZE_FRAC_DIGIT_MAX;
 
   /** Enumeration of operations. */
-  enum OPERATION {
+  public enum OPERATION {
     SAVE_TO_PROPERTY_FILE,
     SAVE_TO_ARCHIVE_DATA_SET,
     SAVE_TO_ARCHIVE_DATA_SET_107,

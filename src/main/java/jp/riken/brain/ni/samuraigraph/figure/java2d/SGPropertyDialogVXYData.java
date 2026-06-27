@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class SGPropertyDialogVXYData extends SGDataDialog
     mCommonPanel.add(mNameField, gridBagConstraints);
 
     mMagnitudePerCMLabel.setFont(new java.awt.Font("Dialog", 0, 12));
-    mMagnitudePerCMLabel.setText("Magnitude per cm");
+    mMagnitudePerCMLabel.setText("Magnitude per SGIConstants.cm");
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 3;
@@ -229,7 +230,7 @@ public class SGPropertyDialogVXYData extends SGDataDialog
 
     // set the name
     this.mNameField.setDescription("Name");
-    this.mMagnitudePerCMTextField.setDescription("Magnitude per cm");
+    this.mMagnitudePerCMTextField.setDescription("Magnitude per SGIConstants.cm");
 
     return true;
   }
@@ -687,7 +688,7 @@ public class SGPropertyDialogVXYData extends SGDataDialog
       valid = false;
     }
 
-    // check the magnitude per cm
+    // check the magnitude per SGIConstants.cm
     if (this.hasValidNumber(this.mMagnitudePerCMTextField, Float.MIN_VALUE, null) == false) {
       valid = false;
     }

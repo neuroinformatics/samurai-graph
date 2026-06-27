@@ -1307,23 +1307,23 @@ public class SGFigureElementShape extends SGFigureElement2D
 
       addSeparator();
 
-      SGUtility.addItem(this, so, MENUCMD_CUT);
-      SGUtility.addItem(this, so, MENUCMD_COPY);
+      SGUtility.addItem(this, so, SGIConstants.MENUCMD_CUT);
+      SGUtility.addItem(this, so, SGIConstants.MENUCMD_COPY);
 
       addSeparator();
 
-      SGUtility.addItem(this, so, MENUCMD_DELETE);
-      SGUtility.addItem(this, so, MENUCMD_DUPLICATE);
+      SGUtility.addItem(this, so, SGIConstants.MENUCMD_DELETE);
+      SGUtility.addItem(this, so, SGIConstants.MENUCMD_DUPLICATE);
 
       addSeparator();
 
-      this.anchoredCheckBox = new JCheckBoxMenuItem(MENUCMD_ANCHORED);
+      this.anchoredCheckBox = new JCheckBoxMenuItem(SGIConstants.MENUCMD_ANCHORED);
       add(this.anchoredCheckBox);
       this.anchoredCheckBox.addActionListener(so);
 
       addSeparator();
 
-      SGUtility.addItem(this, so, MENUCMD_PROPERTY);
+      SGUtility.addItem(this, so, SGIConstants.MENUCMD_PROPERTY);
     }
 
     void setAnchored(final boolean anchored) {
@@ -1463,7 +1463,7 @@ public class SGFigureElementShape extends SGFigureElement2D
       final String command = e.getActionCommand();
       // final Object source = e.getSource();
 
-      if (command.equals(MENUCMD_PROPERTY)) {
+      if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
         // clear all focused objects other type object clicked
         SGFigureElementShape.this.clearFocusedObjectOtherThan(this);
 
@@ -1581,42 +1581,42 @@ public class SGFigureElementShape extends SGFigureElement2D
       Cursor cur = null;
 
       switch (location) {
-        case NORTH:
+        case SGIConstants.NORTH:
           {
             cur = new Cursor(Cursor.N_RESIZE_CURSOR);
             break;
           }
-        case SOUTH:
+        case SGIConstants.SOUTH:
           {
             cur = new Cursor(Cursor.S_RESIZE_CURSOR);
             break;
           }
-        case WEST:
+        case SGIConstants.WEST:
           {
             cur = new Cursor(Cursor.W_RESIZE_CURSOR);
             break;
           }
-        case EAST:
+        case SGIConstants.EAST:
           {
             cur = new Cursor(Cursor.E_RESIZE_CURSOR);
             break;
           }
-        case NORTH_WEST:
+        case SGIConstants.NORTH_WEST:
           {
             cur = new Cursor(Cursor.NW_RESIZE_CURSOR);
             break;
           }
-        case SOUTH_WEST:
+        case SGIConstants.SOUTH_WEST:
           {
             cur = new Cursor(Cursor.SW_RESIZE_CURSOR);
             break;
           }
-        case NORTH_EAST:
+        case SGIConstants.NORTH_EAST:
           {
             cur = new Cursor(Cursor.NE_RESIZE_CURSOR);
             break;
           }
-        case SOUTH_EAST:
+        case SGIConstants.SOUTH_EAST:
           {
             cur = new Cursor(Cursor.SE_RESIZE_CURSOR);
             break;
@@ -1652,7 +1652,7 @@ public class SGFigureElementShape extends SGFigureElement2D
 
         this.mMouseLocation = this.getMouseLocation(x, y);
         Cursor cur = null;
-        if (this.mMouseLocation == OTHER) {
+        if (this.mMouseLocation == SGIConstants.OTHER) {
           cur = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);
         } else {
           this.getCursor(this.mMouseLocation);
@@ -1672,7 +1672,7 @@ public class SGFigureElementShape extends SGFigureElement2D
       }
 
       // translation
-      if (this.mMouseLocation == OTHER) {
+      if (this.mMouseLocation == SGIConstants.OTHER) {
         return this.dragOtherPoint(e);
       }
       // create a temporary object
@@ -2193,15 +2193,15 @@ public class SGFigureElementShape extends SGFigureElement2D
 
     /** */
     private boolean init() {
-      this.setWidth(DEFAULT_SHAPE_RECTANGLE_WIDTH, cm);
-      this.setHeight(DEFAULT_SHAPE_RECTANGLE_HEIGHT, cm);
+      this.setWidth(DEFAULT_SHAPE_RECTANGLE_WIDTH, SGIConstants.cm);
+      this.setHeight(DEFAULT_SHAPE_RECTANGLE_HEIGHT, SGIConstants.cm);
 
       SGSelectablePaint paint = new SGSelectablePaint();
       paint.setFillColor(DEFAULT_SHAPE_RECTANGLE_INNER_COLOR);
       paint.setSelectedPaintStyle(SGSelectablePaint.STYLE_INDEX_FILL);
       this.setInnerPaint(paint);
 
-      this.setEdgeLineWidth(DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_WIDTH, LINE_WIDTH_UNIT);
+      this.setEdgeLineWidth(DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
       this.setEdgeLineType(DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_TYPE);
       this.setEdgeLineColor(DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_COLOR);
       this.setEdgeLineVisible(DEFAULT_SHAPE_RECTANGLE_EDGE_LINE_VISIBLE);
@@ -2496,23 +2496,23 @@ public class SGFigureElementShape extends SGFigureElement2D
 
       int location = -1;
       if (isInside(left, top, x, y)) {
-        location = NORTH_WEST;
+        location = SGIConstants.NORTH_WEST;
       } else if (isInside(left, centerY, x, y)) {
-        location = WEST;
+        location = SGIConstants.WEST;
       } else if (isInside(left, bottom, x, y)) {
-        location = SOUTH_WEST;
+        location = SGIConstants.SOUTH_WEST;
       } else if (isInside(right, top, x, y)) {
-        location = NORTH_EAST;
+        location = SGIConstants.NORTH_EAST;
       } else if (isInside(right, centerY, x, y)) {
-        location = EAST;
+        location = SGIConstants.EAST;
       } else if (isInside(right, bottom, x, y)) {
-        location = SOUTH_EAST;
+        location = SGIConstants.SOUTH_EAST;
       } else if (isInside(centerX, top, x, y)) {
-        location = NORTH;
+        location = SGIConstants.NORTH;
       } else if (isInside(centerX, bottom, x, y)) {
-        location = SOUTH;
+        location = SGIConstants.SOUTH;
       } else if (this.getElementBounds().contains(x, y)) {
-        location = OTHER;
+        location = SGIConstants.OTHER;
       }
 
       return location;
@@ -3677,7 +3677,7 @@ public class SGFigureElementShape extends SGFigureElement2D
       super();
 
       // set default properties
-      this.setLineWidth(DEFAULT_SHAPE_ARROW_LINE_WIDTH, LINE_WIDTH_UNIT);
+      this.setLineWidth(DEFAULT_SHAPE_ARROW_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
       this.setLineType(DEFAULT_SHAPE_ARROW_LINE_TYPE);
       this.setColor(DEFAULT_SHAPE_ARROW_COLOR);
       this.setHeadSize(DEFAULT_SHAPE_ARROW_HEAD_SIZE, SGIArrowConstants.ARROW_HEAD_SIZE_UNIT);
@@ -3715,11 +3715,11 @@ public class SGFigureElementShape extends SGFigureElement2D
       return this.mShape.getYAxis();
     }
 
-    private static final int START = NORTH_EAST;
+    private static final int START = SGIConstants.NORTH_EAST;
 
-    private static final int END = SOUTH_EAST;
+    private static final int END = SGIConstants.SOUTH_EAST;
 
-    private static final int BODY = OTHER;
+    private static final int BODY = SGIConstants.OTHER;
 
     public int getMouseLocation(final int x, final int y) {
       // final int radius = (int)( 1.25f*ANCHOR_SIZE_FOR_FOCUSED_OBJECTS

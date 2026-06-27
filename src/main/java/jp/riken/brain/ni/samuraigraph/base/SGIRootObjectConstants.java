@@ -5,7 +5,7 @@ import javax.print.attribute.Size2DSyntax;
 import javax.print.attribute.standard.MediaSize;
 
 /** Constants for the root objects. */
-public interface SGIRootObjectConstants extends SGIConstants {
+public interface SGIRootObjectConstants {
 
   //
   // Text for the menu command of the menu bar
@@ -85,11 +85,11 @@ public interface SGIRootObjectConstants extends SGIConstants {
 
   public static final String MENUBAR_PAPER_SIZE = "Paper Size";
 
-  //    public static final String MENUBARCMD_PAPER_A4_SIZE = PAPER_SIZE_A4;
+  //    public static final String MENUBARCMD_PAPER_A4_SIZE = SGIConstants.PAPER_SIZE_A4;
   //
-  //    public static final String MENUBARCMD_PAPER_B5_SIZE = PAPER_SIZE_B5;
+  //    public static final String MENUBARCMD_PAPER_B5_SIZE = SGIConstants.PAPER_SIZE_B5;
   //
-  //    public static final String MENUBARCMD_PAPER_USLETTER_SIZE = PAPER_SIZE_US_LETTER;
+  //    public static final String MENUBARCMD_PAPER_USLETTER_SIZE = SGIConstants.PAPER_SIZE_US_LETTER;
   //
   //    public static final String MENUBARCMD_PAPER_PORTRAIT = "Portrait";
   //
@@ -195,15 +195,15 @@ public interface SGIRootObjectConstants extends SGIConstants {
 
   public static final String MENUBAR_LOOK_AND_FEEL = "Look & Feel";
 
-  public static final String MENUBARCMD_LAF_METAL = LAF_METAL;
+  public static final String MENUBARCMD_LAF_METAL = SGIConstants.LAF_METAL;
 
-  public static final String MENUBARCMD_LAF_MOTIF = LAF_MOTIF;
+  public static final String MENUBARCMD_LAF_MOTIF = SGIConstants.LAF_MOTIF;
 
-  public static final String MENUBARCMD_LAF_WINDOWS = LAF_WINDOWS;
+  public static final String MENUBARCMD_LAF_WINDOWS = SGIConstants.LAF_WINDOWS;
 
-  public static final String MENUBARCMD_LAF_WINDOWS_CLASSIC = LAF_WINDOWS_CLASSIC;
+  public static final String MENUBARCMD_LAF_WINDOWS_CLASSIC = SGIConstants.LAF_WINDOWS_CLASSIC;
 
-  public static final String MENUBARCMD_LAF_AQUA = LAF_AQUA;
+  public static final String MENUBARCMD_LAF_AQUA = SGIConstants.LAF_AQUA;
 
   public static final String LAF_CLASS_NAME_BASIC = "javax.swing.plaf.basic.BasicLookAndFeel";
 
@@ -320,7 +320,7 @@ public interface SGIRootObjectConstants extends SGIConstants {
   // Constant Values
   //
 
-  public static final String PAPER_SIZE_UNIT = cm;
+  public static final String PAPER_SIZE_UNIT = SGIConstants.cm;
 
   public static final double PAPER_WIDTH_MIN_VALUE = 0.10;
 
@@ -330,13 +330,13 @@ public interface SGIRootObjectConstants extends SGIConstants {
 
   public static final double PAPER_HEIGHT_MAX_VALUE = 99.0;
 
-  public static final String GRID_INTERVAL_UNIT = cm;
+  public static final String GRID_INTERVAL_UNIT = SGIConstants.cm;
 
   public static final double GRID_INTERVAL_MIN_VALUE = 0.10;
 
   public static final double GRID_INTERVAL_MAX_VALUE = 10.0;
 
-  public static final String IMAGE_LOCATION_UNIT = cm;
+  public static final String IMAGE_LOCATION_UNIT = SGIConstants.cm;
 
   public static final double IMAGE_LOCATION_X_MIN_VALUE = -50.0;
 
@@ -346,7 +346,7 @@ public interface SGIRootObjectConstants extends SGIConstants {
 
   public static final double IMAGE_LOCATION_Y_MAX_VALUE = 150.0;
 
-  public static final String IMAGE_SIZE_UNIT = cm;
+  public static final String IMAGE_SIZE_UNIT = SGIConstants.cm;
 
   //    public static final double IMAGE_WIDTH_MIN_VALUE = 0.0;
   //

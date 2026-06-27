@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 /** The status bar. */
-public class SGStatusBar extends JPanel implements SGIConstants, SGIProgressControl {
+public class SGStatusBar extends JPanel implements SGIProgressControl {
 
   /** */
   private static final long serialVersionUID = -6426045627363525268L;
@@ -49,10 +49,10 @@ public class SGStatusBar extends JPanel implements SGIConstants, SGIProgressCont
     boolean isMacOSX = false;
     // boolean isWin32 = false;
     String laf = SGUtility.getLookAndFeelID();
-    if (LAF_AQUA.equals(laf)) {
+    if (SGIConstants.LAF_AQUA.equals(laf)) {
       isMacOSX = true;
     }
-    // else if( LAF_WINDOWS.equals(laf)){
+    // else if( SGIConstants.LAF_WINDOWS.equals(laf)){
     // isWin32 = true;
     // }
 

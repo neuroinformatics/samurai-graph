@@ -16,6 +16,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import jp.riken.brain.ni.samuraigraph.base.SGBrowserLauncher;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
@@ -251,6 +252,6 @@ public class SGAboutDialog extends SGDialog implements SGIApplicationConstants {
   /** Called when the escape key is typed. */
   protected void onEscKeyTyped() {
     this.setVisible(false);
-    this.setCloseOption(CANCEL_OPTION);
+    this.setCloseOption(SGIConstants.CANCEL_OPTION);
   }
 }

@@ -1,4 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -323,7 +324,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * @return true if succeeded
    */
   public boolean writeProperty(final Element el, final SGExportParameter params) {
-    OPERATION type = params.getType();
+    SGIConstants.OPERATION type = params.getType();
     SGArrayData data = (SGArrayData) this.getData();
 
     el.setAttribute(SGIFigureElement.KEY_DATA_NAME, this.mName);
@@ -342,7 +343,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     }
 
     final String dataType;
-    if (OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
+    if (SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
       dataType = data.getNetCDFDataSetDataType();
     } else {
       dataType = data.getDataType();
@@ -2086,20 +2087,20 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   public boolean saveData(
       final File file, final SGExportParameter params, SGDataBufferPolicy policy) {
     SGArrayData data = (SGArrayData) this.getData();
-    OPERATION mode = params.getType();
-    if (OPERATION.EXPORT_TO_FILE_AS_SAME_FORMAT.equals(mode)) {
+    SGIConstants.OPERATION mode = params.getType();
+    if (SGIConstants.OPERATION.EXPORT_TO_FILE_AS_SAME_FORMAT.equals(mode)) {
       return data.saveToSameFormatFile(file, params, policy);
-    } else if (OPERATION.EXPORT_TO_TEXT.equals(mode)) {
+    } else if (SGIConstants.OPERATION.EXPORT_TO_TEXT.equals(mode)) {
       return data.saveToTextFile(file, params, policy);
-    } else if (OPERATION.EXPORT_TO_NETCDF.equals(mode)) {
+    } else if (SGIConstants.OPERATION.EXPORT_TO_NETCDF.equals(mode)) {
       return data.saveToNetCDFFile(file, params, policy);
-    } else if (OPERATION.EXPORT_TO_HDF5.equals(mode)) {
+    } else if (SGIConstants.OPERATION.EXPORT_TO_HDF5.equals(mode)) {
       return data.saveToHDF5File(file, params, policy);
-    } else if (OPERATION.EXPORT_TO_MATLAB.equals(mode)) {
+    } else if (SGIConstants.OPERATION.EXPORT_TO_MATLAB.equals(mode)) {
       return data.saveToMATLABFile(file, params, policy);
     } else if (SGDataUtility.isArchiveDataSetOperation(mode)) {
       return data.saveToArchiveDataSetFile(file, params);
-    } else if (OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(mode)) {
+    } else if (SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(mode)) {
       return data.saveToDataSetNetCDFFile(file);
     }
     return false;
@@ -2400,8 +2401,8 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     SGPropertyMap map = new SGPropertyMap();
     SGArrayData data = (SGArrayData) this.getData();
 
-    OPERATION type = params.getType();
-    if (OPERATION.SAVE_INTO_FILE_ATTRIBUTE.equals(type)) {
+    SGIConstants.OPERATION type = params.getType();
+    if (SGIConstants.OPERATION.SAVE_INTO_FILE_ATTRIBUTE.equals(type)) {
       SGPropertyUtility.addQuotedStringProperty(map, COM_DATA_FILE_PATH, FILE_PATH_NETCDF_ITSELF);
     }
     SGPropertyUtility.addProperty(map, COM_DATA_TYPE, data.getDataType());

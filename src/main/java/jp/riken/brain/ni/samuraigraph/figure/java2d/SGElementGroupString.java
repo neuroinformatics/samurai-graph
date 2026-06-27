@@ -358,7 +358,7 @@ public abstract class SGElementGroupString extends SGElementGroup
 
   /** */
   public boolean writeProperty(final Element el) {
-    final int digitFontSize = FONT_SIZE_MINIMAL_ORDER - 1;
+    final int digitFontSize = SGIConstants.FONT_SIZE_MINIMAL_ORDER - 1;
     final int digitLabelAngle = LABEL_ANGLE_MINIMAL_ORDER - 1;
     final float fontSize = (float) SGUtilityNumber.roundOffNumber(this.mFontSize, digitFontSize);
     final float angle = (float) SGUtilityNumber.roundOffNumber(-this.mAngle, digitLabelAngle);
