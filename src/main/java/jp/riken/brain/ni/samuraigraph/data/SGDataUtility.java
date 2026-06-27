@@ -49,10 +49,8 @@ import jp.riken.brain.ni.samuraigraph.data.SGDataValue.VXYDataValue;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.Value;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData.DoubleValueSetResult;
 import org.w3c.dom.NamedNodeMap;
-import ucar.ma2.DataType;
 import ucar.nc2.Attribute;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFiles;
 import ucar.nc2.Variable;
 
 /** An utility class for data. */
@@ -3296,34 +3294,31 @@ public class SGDataUtility
    * @param colInfo
    * @return true if colInfo has PICKUP column type.
    */
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#isPickupColumnContained(SGDataColumnInfo[])}
+   *     instead.
+   */
+  @Deprecated
   public static boolean isPickupColumnContained(final SGDataColumnInfo[] colInfo) {
-    for (int ii = 0; ii < colInfo.length; ii++) {
-      if (colInfo[ii] instanceof SGNetCDFDataColumnInfo) {
-        if (PICKUP.equals(colInfo[ii].getColumnType())) {
-          return true;
-        }
-      } else if (colInfo[ii] instanceof SGMDArrayDataColumnInfo) {
-        SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) colInfo[ii];
-        Integer pickUpDimension = mdInfo.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
-        if (pickUpDimension != null && pickUpDimension != -1) {
-          return true;
-        }
-      }
-    }
-    return false;
+    return SGNetCDFDataUtility.isPickupColumnContained(colInfo);
   }
 
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#findHolderInfo(SGDataColumnInfo[],
+   *     SGNetCDFDataColumnInfo)} instead.
+   */
+  @Deprecated
   public static SGNetCDFDataColumnInfo findHolderInfo(
-      SGDataColumnInfo[] cols, SGNetCDFDataColumnInfo info) {
-    String holderName = getHolderName(info);
-    return (SGNetCDFDataColumnInfo) SGDataUtility.findColumnWithName(cols, holderName);
+      final SGDataColumnInfo[] cols, final SGNetCDFDataColumnInfo info) {
+    return SGNetCDFDataUtility.findHolderInfo(cols, info);
   }
 
-  public static String getHolderName(SGDataColumnInfo info) {
-    String columnType = info.getColumnType();
-    final int lastIndex = columnType.lastIndexOf(MID_COLUMN);
-    String lastStr = columnType.substring(lastIndex + MID_COLUMN.length(), columnType.length());
-    return lastStr;
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getHolderName(SGDataColumnInfo)} instead.
+   */
+  @Deprecated
+  public static String getHolderName(final SGDataColumnInfo info) {
+    return SGNetCDFDataUtility.getHolderName(info);
   }
 
   /**
@@ -3400,24 +3395,11 @@ public class SGDataUtility
   }
 
   /**
-   * Return true if name1 and name2 belongs to a same netCDF group.
-   *
-   * @param name1
-   * @param name2
-   * @return
+   * @deprecated Use {@link SGNetCDFDataUtility#isSameNetCDFGroup(String, String)} instead.
    */
+  @Deprecated
   public static boolean isSameNetCDFGroup(final String name1, final String name2) {
-    String[] str1 = name1.split("/");
-    String[] str2 = name2.split("/");
-    if (str1.length == str2.length) {
-      for (int i = 0; i < str1.length - 1; i++) {
-        if (str1[i].equals(str2[i]) == false) {
-          return false;
-        }
-      }
-      return true;
-    }
-    return false;
+    return SGNetCDFDataUtility.isSameNetCDFGroup(name1, name2);
   }
 
   private static SGNetCDFDataColumnInfo getDimensionDataColumnInfo(
@@ -3524,73 +3506,36 @@ public class SGDataUtility
    * @param var
    * @return true if a given variable is SGDateVariable.
    */
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#isSGDateVariable(Variable)} instead.
+   */
+  @Deprecated
   public static boolean isSGDateVariable(final Variable var) {
-    if (DataType.CHAR.equals(var.getDataType())) {
-      for (Attribute attr : var.attributes()) {
-        if (attr.isString()) {
-          String name = attr.getShortName();
-          String value = attr.getStringValue();
-          if (ATTRIBUTE_VALUE_TYPE.equals(name.trim())
-              && SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(value.trim())) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
+    return SGNetCDFDataUtility.isSGDateVariable(var);
   }
 
   /**
-   * Return whether given netCDF variable is SGTextVariable.
-   *
-   * <p>True if data type of the variable is CHAR and it has an attribute "value_type=Text".
-   *
-   * @param var
-   * @return true if var is SGTextVariable.
+   * @deprecated Use {@link SGNetCDFDataUtility#isSGTextVariable(Variable)} instead.
    */
+  @Deprecated
   public static boolean isSGTextVariable(final Variable var) {
-    if (DataType.CHAR.equals(var.getDataType())) {
-      for (Attribute attr : var.attributes()) {
-        if (attr.isString()) {
-          String name = attr.getShortName();
-          String value = attr.getStringValue();
-          if (name != null
-              && value != null
-              && ATTRIBUTE_VALUE_TYPE.equals(name.trim())
-              && SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(value.trim())) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
+    return SGNetCDFDataUtility.isSGTextVariable(var);
   }
 
   /**
-   * Return netCDF attribute for given valueType.
-   *
-   * @param valueType
-   * @return
+   * @deprecated Use {@link SGNetCDFDataUtility#getValueTypeAttribute(String)} instead.
    */
+  @Deprecated
   public static Attribute getValueTypeAttribute(final String valueType) {
-    Attribute attr = new Attribute(ATTRIBUTE_VALUE_TYPE, valueType);
-    return attr;
+    return SGNetCDFDataUtility.getValueTypeAttribute(valueType);
   }
 
   /**
-   * Return whether given netCDF data can connect with its file.
-   *
-   * @param data
-   * @return
+   * @deprecated Use {@link SGNetCDFDataUtility#canOpenNetCDF(SGNetCDFData)} instead.
    */
-  public static boolean canOpenNetCDF(SGNetCDFData data) {
-    try {
-      boolean isNetCDFFile =
-          NetcdfFiles.canOpen(data.getNetcdfFile().getNetcdfFile().getLocation());
-      return isNetCDFFile;
-    } catch (Exception e) {
-      return false;
-    }
+  @Deprecated
+  public static boolean canOpenNetCDF(final SGNetCDFData data) {
+    return SGNetCDFDataUtility.canOpenNetCDF(data);
   }
 
   /**
@@ -3681,12 +3626,12 @@ public class SGDataUtility
     return colArray;
   }
 
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#appendGroupName(String, String)} instead.
+   */
+  @Deprecated
   static String appendGroupName(final String name, final String groupName) {
-    StringBuffer sb = new StringBuffer();
-    sb.append(groupName);
-    sb.append('/');
-    sb.append(name);
-    return sb.toString();
+    return SGNetCDFDataUtility.appendGroupName(name, groupName);
   }
 
   public static SGMDArrayDataColumnInfo[] getMDArrayDataColumnInfo(
@@ -4855,15 +4800,12 @@ public class SGDataUtility
     return map;
   }
 
-  public static boolean hasIndexColumnType(SGDataColumnInfo[] cols) {
-    List<SGDataColumnInfo> indexColumnList = findColumnsWithColumnType(cols, INDEX);
-    if (indexColumnList.size() == 1) {
-      return true;
-    } else {
-      List<SGDataColumnInfo> serialNumberColumnList =
-          findColumnsWithColumnType(cols, SERIAL_NUMBERS);
-      return (serialNumberColumnList.size() == 1);
-    }
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#hasIndexColumnType(SGDataColumnInfo[])} instead.
+   */
+  @Deprecated
+  public static boolean hasIndexColumnType(final SGDataColumnInfo[] cols) {
+    return SGNetCDFDataUtility.hasIndexColumnType(cols);
   }
 
   public static List<SGDataColumnInfo> findColumnsWithColumnType(
@@ -4932,142 +4874,122 @@ public class SGDataUtility
     return isArrayData(data.getDataType());
   }
 
-  public static int getSXYNetCDFDataLength(SGDataColumnInfo[] cols) {
-    final int len;
-    List<SGDataColumnInfo> indexColList = findColumnsWithColumnType(cols, INDEX);
-    if (indexColList.size() == 0) {
-      List<SGDataColumnInfo> xColList = findColumnsWithColumnType(cols, X_VALUE);
-      List<SGDataColumnInfo> yColList = findColumnsWithColumnType(cols, Y_VALUE);
-      SGNetCDFDataColumnInfo xCol = (SGNetCDFDataColumnInfo) xColList.get(0);
-      SGNetCDFDataColumnInfo yCol = (SGNetCDFDataColumnInfo) yColList.get(0);
-      if (xCol.isCoordinateVariable()) {
-        len = xCol.getDimension(0).getLength();
-      } else {
-        len = yCol.getDimension(0).getLength();
-      }
-    } else {
-      SGNetCDFDataColumnInfo indexCol = (SGNetCDFDataColumnInfo) indexColList.get(0);
-      len = indexCol.getDimension(0).getLength();
-    }
-    return len;
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getSXYNetCDFDataLength(SGDataColumnInfo[])} instead.
+   */
+  @Deprecated
+  public static int getSXYNetCDFDataLength(final SGDataColumnInfo[] cols) {
+    return SGNetCDFDataUtility.getSXYNetCDFDataLength(cols);
   }
 
-  public static int getSXYMDArrayDataLength(SGDataColumnInfo[] cols) {
-    List<SGDataColumnInfo> xColList = findColumnsWithColumnType(cols, X_VALUE);
-    List<SGDataColumnInfo> yColList = findColumnsWithColumnType(cols, Y_VALUE);
-    SGMDArrayDataColumnInfo col;
-    if (xColList.size() > 0) {
-      col = (SGMDArrayDataColumnInfo) xColList.get(0);
-    } else if (yColList.size() > 0) {
-      col = (SGMDArrayDataColumnInfo) yColList.get(0);
-    } else {
-      return -1;
-    }
-    return col.getGenericDimensionLength();
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getSXYMDArrayDataLength(SGDataColumnInfo[])}
+   *     instead.
+   */
+  @Deprecated
+  public static int getSXYMDArrayDataLength(final SGDataColumnInfo[] cols) {
+    return SGNetCDFDataUtility.getSXYMDArrayDataLength(cols);
   }
 
-  public static int getSXYZNetCDFDataXLength(SGDataColumnInfo[] cols) {
-    return getTwoDimensionNetCDFDataLength(cols, X_VALUE);
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getSXYZNetCDFDataXLength(SGDataColumnInfo[])}
+   *     instead.
+   */
+  @Deprecated
+  public static int getSXYZNetCDFDataXLength(final SGDataColumnInfo[] cols) {
+    return SGNetCDFDataUtility.getSXYZNetCDFDataXLength(cols);
   }
 
-  public static int getSXYZNetCDFDataYLength(SGDataColumnInfo[] cols) {
-    return getTwoDimensionNetCDFDataLength(cols, Y_VALUE);
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getSXYZNetCDFDataYLength(SGDataColumnInfo[])}
+   *     instead.
+   */
+  @Deprecated
+  public static int getSXYZNetCDFDataYLength(final SGDataColumnInfo[] cols) {
+    return SGNetCDFDataUtility.getSXYZNetCDFDataYLength(cols);
   }
 
-  public static int getSXYZMDArrayDataXLength(SGDataColumnInfo[] cols) {
-    return getSXYZMDArrayDataXYLength(cols, X_VALUE, KEY_SXYZ_X_DIMENSION);
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getSXYZMDArrayDataXLength(SGDataColumnInfo[])}
+   *     instead.
+   */
+  @Deprecated
+  public static int getSXYZMDArrayDataXLength(final SGDataColumnInfo[] cols) {
+    return SGNetCDFDataUtility.getSXYZMDArrayDataXLength(cols);
   }
 
-  public static int getSXYZMDArrayDataYLength(SGDataColumnInfo[] cols) {
-    return getSXYZMDArrayDataXYLength(cols, Y_VALUE, KEY_SXYZ_Y_DIMENSION);
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getSXYZMDArrayDataYLength(SGDataColumnInfo[])}
+   *     instead.
+   */
+  @Deprecated
+  public static int getSXYZMDArrayDataYLength(final SGDataColumnInfo[] cols) {
+    return SGNetCDFDataUtility.getSXYZMDArrayDataYLength(cols);
   }
 
-  public static int getSXYZMDArrayDataZGenericDimensionLength(SGDataColumnInfo[] cols) {
-    List<SGDataColumnInfo> zColList = findColumnsWithColumnType(cols, Z_VALUE);
-    if (zColList.size() != 1) {
-      return -1;
-    }
-    SGMDArrayDataColumnInfo zCol = (SGMDArrayDataColumnInfo) zColList.get(0);
-    return zCol.getGenericDimensionLength();
+  /**
+   * @deprecated Use {@link
+   *     SGNetCDFDataUtility#getSXYZMDArrayDataZGenericDimensionLength(SGDataColumnInfo[])} instead.
+   */
+  @Deprecated
+  public static int getSXYZMDArrayDataZGenericDimensionLength(final SGDataColumnInfo[] cols) {
+    return SGNetCDFDataUtility.getSXYZMDArrayDataZGenericDimensionLength(cols);
   }
 
-  private static int getSXYZMDArrayDataXYLength(
-      SGDataColumnInfo[] cols, String columnType, String key) {
-    int len = -1;
-    List<SGDataColumnInfo> colList = findColumnsWithColumnType(cols, columnType);
-    if (colList.size() == 1) {
-      SGMDArrayDataColumnInfo col = (SGMDArrayDataColumnInfo) colList.get(0);
-      len = col.getGenericDimensionLength();
-    } else {
-      List<SGDataColumnInfo> zColList = findColumnsWithColumnType(cols, Z_VALUE);
-      SGMDArrayDataColumnInfo zCol = (SGMDArrayDataColumnInfo) zColList.get(0);
-      int[] zDims = zCol.getDimensions();
-      Integer dim = zCol.getDimensionIndex(key);
-      if (dim != null) {
-        len = zDims[dim];
-      }
-    }
-    return len;
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getVXYNetCDFDataXLength(SGDataColumnInfo[])}
+   *     instead.
+   */
+  @Deprecated
+  public static int getVXYNetCDFDataXLength(final SGDataColumnInfo[] cols) {
+    return SGNetCDFDataUtility.getVXYNetCDFDataXLength(cols);
   }
 
-  public static int getVXYNetCDFDataXLength(SGDataColumnInfo[] cols) {
-    return getTwoDimensionNetCDFDataLength(cols, X_COORDINATE);
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getVXYNetCDFDataYLength(SGDataColumnInfo[])}
+   *     instead.
+   */
+  @Deprecated
+  public static int getVXYNetCDFDataYLength(final SGDataColumnInfo[] cols) {
+    return SGNetCDFDataUtility.getVXYNetCDFDataYLength(cols);
   }
 
-  public static int getVXYNetCDFDataYLength(SGDataColumnInfo[] cols) {
-    return getTwoDimensionNetCDFDataLength(cols, Y_COORDINATE);
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getVXYMDArrayDataXLength(SGDataColumnInfo[],
+   *     boolean)} instead.
+   */
+  @Deprecated
+  public static int getVXYMDArrayDataXLength(final SGDataColumnInfo[] cols, final boolean polar) {
+    return SGNetCDFDataUtility.getVXYMDArrayDataXLength(cols, polar);
   }
 
-  public static int getVXYMDArrayDataXLength(SGDataColumnInfo[] cols, final boolean polar) {
-    return getVXYMDArrayDataXYLength(cols, X_COORDINATE, KEY_VXY_X_DIMENSION, polar);
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getVXYMDArrayDataYLength(SGDataColumnInfo[],
+   *     boolean)} instead.
+   */
+  @Deprecated
+  public static int getVXYMDArrayDataYLength(final SGDataColumnInfo[] cols, final boolean polar) {
+    return SGNetCDFDataUtility.getVXYMDArrayDataYLength(cols, polar);
   }
 
-  public static int getVXYMDArrayDataYLength(SGDataColumnInfo[] cols, final boolean polar) {
-    return getVXYMDArrayDataXYLength(cols, Y_COORDINATE, KEY_VXY_Y_DIMENSION, polar);
-  }
-
+  /**
+   * @deprecated Use {@link
+   *     SGNetCDFDataUtility#getVXYMDArrayDataComponentGenericDimensionLength(SGDataColumnInfo[],
+   *     boolean)} instead.
+   */
+  @Deprecated
   public static int getVXYMDArrayDataComponentGenericDimensionLength(
-      SGDataColumnInfo[] cols, final boolean polar) {
-    String fName = polar ? MAGNITUDE : X_COMPONENT;
-    List<SGDataColumnInfo> fColList = findColumnsWithColumnType(cols, fName);
-    if (fColList.size() != 1) {
-      return -1;
-    }
-    SGMDArrayDataColumnInfo fCol = (SGMDArrayDataColumnInfo) fColList.get(0);
-    return fCol.getGenericDimensionLength();
+      final SGDataColumnInfo[] cols, final boolean polar) {
+    return SGNetCDFDataUtility.getVXYMDArrayDataComponentGenericDimensionLength(cols, polar);
   }
 
-  private static int getVXYMDArrayDataXYLength(
-      SGDataColumnInfo[] cols, String columnType, String key, final boolean polar) {
-    int len = -1;
-    List<SGDataColumnInfo> colList = findColumnsWithColumnType(cols, columnType);
-    String fName = polar ? MAGNITUDE : X_COMPONENT;
-    List<SGDataColumnInfo> fColList = findColumnsWithColumnType(cols, fName);
-    if (colList.size() == 1) {
-      SGMDArrayDataColumnInfo col = (SGMDArrayDataColumnInfo) colList.get(0);
-      len = col.getGenericDimensionLength();
-    } else {
-      SGMDArrayDataColumnInfo fCol = (SGMDArrayDataColumnInfo) fColList.get(0);
-      int[] fDims = fCol.getDimensions();
-      Integer dim = fCol.getDimensionIndex(key);
-      if (dim != null) {
-        len = fDims[dim];
-      }
-    }
-    return len;
-  }
-
-  private static int getTwoDimensionNetCDFDataLength(SGDataColumnInfo[] cols, String key) {
-    List<SGDataColumnInfo> colList = findColumnsWithColumnType(cols, key);
-    SGNetCDFDataColumnInfo col = (SGNetCDFDataColumnInfo) colList.get(0);
-    return col.getDimension(0).getLength();
-  }
-
-  public static int getNetCDFDataIndexLength(SGDataColumnInfo[] cols) {
-    List<SGDataColumnInfo> colList = findColumnsWithColumnType(cols, INDEX);
-    SGNetCDFDataColumnInfo col = (SGNetCDFDataColumnInfo) colList.get(0);
-    final int len = col.getDimension(0).getLength();
-    return len;
+  /**
+   * @deprecated Use {@link SGNetCDFDataUtility#getNetCDFDataIndexLength(SGDataColumnInfo[])}
+   *     instead.
+   */
+  @Deprecated
+  public static int getNetCDFDataIndexLength(final SGDataColumnInfo[] cols) {
+    return SGNetCDFDataUtility.getNetCDFDataIndexLength(cols);
   }
 
   public static boolean hasEqualInput(SGDataColumnInfo[] a1, SGDataColumnInfo[] a2) {
