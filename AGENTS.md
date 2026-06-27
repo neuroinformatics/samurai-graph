@@ -49,7 +49,33 @@ mvn compile
 
 ---
 
-## 3. General Architecture & Guidelines
+## 3. Git Commit Rules
+
+### CRITICAL: Always use `skill git-commit`
+
+- **You MUST run `skill git-commit` for every commit.** Never write commit messages manually.
+- This rule is non-negotiable. Ignoring it is a violation of project workflow.
+- The skill enforces Conventional Commits format, line length limits, and proper structure.
+
+### Commit message rules
+
+- **Never include task numbers (TASK-xxx) or task names in commit messages.**
+- The message must clearly describe what was changed so that anyone reading `git log` understands the change.
+- Examples:
+  - `refactor(data): extract NetCDF methods to SGNetCDFDataUtility`
+  - `test(application): add tests for SGWizardManager`
+  - `docs: update execution plan and mark refactoring task done`
+
+### Branch workflow
+
+- Create a new branch for each task (e.g., `task/test-data-utility-bounds`).
+- Merge to `master` only after full completion (all tests pass, compilation succeeds, documentation updated).
+- Delete the task branch after merging.
+- **Never push to `origin`.** Only push changes to `master`.
+
+---
+
+## 4. General Architecture & Guidelines
 
 - **Java Version:** The project is configured for **Java 21**. Do not use language features or APIs that are incompatible with Java 21.
 - **Existing Code:** Respect the existing architecture and patterns. If you need to make changes to GUI components or backend data parsing, search the codebase for similar implementations first to ensure consistency.
