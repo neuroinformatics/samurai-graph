@@ -19,7 +19,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
 import jp.riken.brain.ni.samuraigraph.base.SGIProgressControl;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;

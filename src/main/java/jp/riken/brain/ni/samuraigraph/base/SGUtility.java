@@ -40,7 +40,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /** */
-public class SGUtility  {
+public class SGUtility {
 
   /**
    * Returns an array of available font family names.
@@ -2090,7 +2090,10 @@ public class SGUtility  {
    */
   public static SpinnerNumberModel getLineWidthSpinnerNumberModel() {
     return new SpinnerNumberModel(
-        SGIDrawingElementConstants.LINE_WIDTH_MIN_VALUE, SGIDrawingElementConstants.LINE_WIDTH_MIN_VALUE, SGIDrawingElementConstants.LINE_WIDTH_MAX_VALUE, SGIDrawingElementConstants.LINE_WIDTH_STEP_SIZE);
+        SGIDrawingElementConstants.LINE_WIDTH_MIN_VALUE,
+        SGIDrawingElementConstants.LINE_WIDTH_MIN_VALUE,
+        SGIDrawingElementConstants.LINE_WIDTH_MAX_VALUE,
+        SGIDrawingElementConstants.LINE_WIDTH_STEP_SIZE);
   }
 
   /**
@@ -2100,7 +2103,10 @@ public class SGUtility  {
    */
   public static SpinnerNumberModel getFontSizeSpinnerNumberModel() {
     return new SpinnerNumberModel(
-        SGIDrawingElementConstants.FONT_SIZE_MIN_VALUE, SGIDrawingElementConstants.FONT_SIZE_MIN_VALUE, SGIDrawingElementConstants.FONT_SIZE_MAX_VALUE, SGIDrawingElementConstants.FONT_SIZE_STEP_VALUE);
+        SGIDrawingElementConstants.FONT_SIZE_MIN_VALUE,
+        SGIDrawingElementConstants.FONT_SIZE_MIN_VALUE,
+        SGIDrawingElementConstants.FONT_SIZE_MAX_VALUE,
+        SGIDrawingElementConstants.FONT_SIZE_STEP_VALUE);
   }
 
   public static Double checkEquality(final double[] values) {

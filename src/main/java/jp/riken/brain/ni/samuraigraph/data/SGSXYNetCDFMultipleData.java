@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.data;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -18,6 +17,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
 import jp.riken.brain.ni.samuraigraph.base.SGIStringModifier;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;

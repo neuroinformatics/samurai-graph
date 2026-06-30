@@ -35,8 +35,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /** A class to manage upgrade of the application. */
-class SGUpgradeManager
-    implements ActionListener, SGIUpgradeConstants, SGIPreferencesConstants {
+class SGUpgradeManager implements ActionListener, SGIUpgradeConstants, SGIPreferencesConstants {
 
   private static final String MSG_LATEST_VERSION_INSTALLED =
       "The latest version is already installed.";
@@ -490,7 +489,8 @@ class SGUpgradeManager
       return false;
     }
 
-    File helperTempDir = new File(SGApplicationUtility.getPathName(SGIConstants.TMP_DIR, HELPER_TEMP_DIR_NAME));
+    File helperTempDir =
+        new File(SGApplicationUtility.getPathName(SGIConstants.TMP_DIR, HELPER_TEMP_DIR_NAME));
     helperTempDir.deleteOnExit();
     if (helperTempDir.mkdir() == false) {
       // failed to create a temporary directory.

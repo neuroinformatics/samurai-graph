@@ -1,8 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.figure;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
 
 /** Symbol of the significant difference. */
 public abstract class SGDrawingElementSignificantDifference
-    extends SGDrawingElementLineAndStringSymbol implements SGISignificantDifferenceConstants {
+    extends SGDrawingElementLineAndStringSymbol {
 
   private float mWidth;
 
@@ -385,8 +385,10 @@ public abstract class SGDrawingElementSignificantDifference
   @Override
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
     SGPropertyMap map = super.getPropertyFileMap(params);
-    SGPropertyUtility.addProperty(map, KEY_SIGDIFF_TEXT, this.getText());
-    SGPropertyUtility.addProperty(map, KEY_SIGDIFF_LINE_VISIBLE, this.isLineVisible());
+    SGPropertyUtility.addProperty(
+        map, SGISignificantDifferenceConstants.KEY_SIGDIFF_TEXT, this.getText());
+    SGPropertyUtility.addProperty(
+        map, SGISignificantDifferenceConstants.KEY_SIGDIFF_LINE_VISIBLE, this.isLineVisible());
     SGPropertyUtility.addProperty(map, SGIDrawingElementConstants.KEY_COLOR, this.getColor());
     return map;
   }
@@ -394,9 +396,12 @@ public abstract class SGDrawingElementSignificantDifference
   @Override
   public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
     SGPropertyMap map = super.getCommandPropertyMap(params);
-    SGPropertyUtility.addQuotedStringProperty(map, COM_SIGDIFF_TEXT, this.getText());
-    SGPropertyUtility.addProperty(map, COM_SIGDIFF_LINE_VISIBLE, this.isLineVisible());
-    SGPropertyUtility.addProperty(map, COM_SIGDIFF_COLOR, this.getColor());
+    SGPropertyUtility.addQuotedStringProperty(
+        map, SGISignificantDifferenceConstants.COM_SIGDIFF_TEXT, this.getText());
+    SGPropertyUtility.addProperty(
+        map, SGISignificantDifferenceConstants.COM_SIGDIFF_LINE_VISIBLE, this.isLineVisible());
+    SGPropertyUtility.addProperty(
+        map, SGISignificantDifferenceConstants.COM_SIGDIFF_COLOR, this.getColor());
     return map;
   }
 
@@ -412,7 +417,7 @@ public abstract class SGDrawingElementSignificantDifference
     }
 
     // text
-    str = el.getAttribute(KEY_SIGDIFF_TEXT);
+    str = el.getAttribute(SGISignificantDifferenceConstants.KEY_SIGDIFF_TEXT);
     if (str.length() != 0) {
       final String text = str;
       if (this.setText(text) == false) {
@@ -421,7 +426,7 @@ public abstract class SGDrawingElementSignificantDifference
     }
 
     // line visible
-    str = el.getAttribute(KEY_SIGDIFF_LINE_VISIBLE);
+    str = el.getAttribute(SGISignificantDifferenceConstants.KEY_SIGDIFF_LINE_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {

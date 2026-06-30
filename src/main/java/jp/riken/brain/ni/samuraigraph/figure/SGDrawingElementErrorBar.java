@@ -117,7 +117,9 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
    * @return true if the given head type is valid
    */
   public static boolean isValidHeadType(final int type) {
-    final int[] array = {SYMBOL_TYPE_CIRCLE, SYMBOL_TYPE_TRANSVERSELINE, SYMBOL_TYPE_VOID};
+    final int[] array = {
+      SGISymbolConstants.SYMBOL_TYPE_CIRCLE, SYMBOL_TYPE_TRANSVERSELINE, SYMBOL_TYPE_VOID
+    };
     for (int ii = 0; ii < array.length; ii++) {
       if (type == array[ii]) {
         return true;
@@ -137,8 +139,8 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
       return null;
     }
     int type;
-    if (SGUtilityText.isEqualString(SYMBOL_NAME_CIRCLE, name)) {
-      type = SYMBOL_TYPE_CIRCLE;
+    if (SGUtilityText.isEqualString(SGISymbolConstants.SYMBOL_NAME_CIRCLE, name)) {
+      type = SGISymbolConstants.SYMBOL_TYPE_CIRCLE;
     } else if (SGUtilityText.isEqualString(SYMBOL_NAME_TRANSVERSE_LINE, name)) {
       type = SYMBOL_TYPE_TRANSVERSELINE;
     } else if (SGUtilityText.isEqualString(SYMBOL_NAME_VOID, name)) {
@@ -158,8 +160,8 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
   public static String getHeadTypeName(final int type) {
     String name = null;
     switch (type) {
-      case SYMBOL_TYPE_CIRCLE:
-        name = SYMBOL_NAME_CIRCLE;
+      case SGISymbolConstants.SYMBOL_TYPE_CIRCLE:
+        name = SGISymbolConstants.SYMBOL_NAME_CIRCLE;
         break;
       case SYMBOL_TYPE_TRANSVERSELINE:
         name = SYMBOL_NAME_TRANSVERSE_LINE;

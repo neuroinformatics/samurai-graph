@@ -23,8 +23,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGPaintUtility;
 import org.w3c.dom.Element;
 
 /** A group of symbols. */
-public abstract class SGElementGroupSymbol extends SGElementGroup
-    implements SGISymbolConstants, SGIFigureDrawingElementConstants {
+public abstract class SGElementGroupSymbol extends SGElementGroup {
 
   /** The size of each symbol. */
   protected float mSymbolSize;
@@ -330,13 +329,13 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * @return
    */
   public String getTagName() {
-    return TAG_NAME_SYMBOL;
+    return SGISymbolConstants.TAG_NAME_SYMBOL;
   }
 
   /** */
   public boolean writeProperty(final Element el) {
 
-    final int digitSymbolSize = SYMBOL_SIZE_MINIMAL_ORDER - 1;
+    final int digitSymbolSize = SGIFigureDrawingElementConstants.SYMBOL_SIZE_MINIMAL_ORDER - 1;
     final int digitLineWidth = SGIConstants.LINE_WIDTH_MINIMAL_ORDER - 1;
 
     final float symbolSize =
@@ -350,16 +349,23 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     List<Color> cList = new ArrayList<Color>();
     cList.add(paint.getColor());
 
-    el.setAttribute(KEY_SYMBOL_SIZE, Float.toString(symbolSize) + SGIConstants.cm);
-    el.setAttribute(KEY_SYMBOL_TYPE, SGDrawingElementSymbol.getSymbolTypeName(this.mSymbolType));
-    //        el.setAttribute(KEY_SYMBOL_INNER_COLOR_LIST,
-    //        	SGUtilityText.getColorListString(this.mColorList));
-    el.setAttribute(KEY_SYMBOL_LINE_WIDTH, Float.toString(lineWidth) + SGIConstants.pt);
-    el.setAttribute(KEY_SYMBOL_LINE_COLOR, SGUtilityText.getColorString(this.mLineColor));
-    el.setAttribute(KEY_SYMBOL_LINE_VISIBLE, Boolean.toString(this.mLineVisible));
-    el.setAttribute(KEY_SYMBOL_INNER_COLOR_LIST, SGUtilityText.getColorListString(cList));
     el.setAttribute(
-        KEY_SYMBOL_INNER_TRANSPARENT,
+        SGISymbolConstants.KEY_SYMBOL_SIZE, Float.toString(symbolSize) + SGIConstants.cm);
+    el.setAttribute(
+        SGISymbolConstants.KEY_SYMBOL_TYPE,
+        SGDrawingElementSymbol.getSymbolTypeName(this.mSymbolType));
+    //        el.setAttribute(SGISymbolConstants.KEY_SYMBOL_INNER_COLOR_LIST,
+    //        	SGUtilityText.getColorListString(this.mColorList));
+    el.setAttribute(
+        SGISymbolConstants.KEY_SYMBOL_LINE_WIDTH, Float.toString(lineWidth) + SGIConstants.pt);
+    el.setAttribute(
+        SGISymbolConstants.KEY_SYMBOL_LINE_COLOR, SGUtilityText.getColorString(this.mLineColor));
+    el.setAttribute(
+        SGISymbolConstants.KEY_SYMBOL_LINE_VISIBLE, Boolean.toString(this.mLineVisible));
+    el.setAttribute(
+        SGISymbolConstants.KEY_SYMBOL_INNER_COLOR_LIST, SGUtilityText.getColorListString(cList));
+    el.setAttribute(
+        SGISymbolConstants.KEY_SYMBOL_INNER_TRANSPARENT,
         Integer.toString(paint.getTransparencyPercent()) + SGPaintUtility.TRANSPARENCY_UNIT);
 
     return true;
@@ -376,7 +382,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     Boolean b = null;
 
     // symbol size
-    str = el.getAttribute(KEY_SYMBOL_SIZE);
+    str = el.getAttribute(SGISymbolConstants.KEY_SYMBOL_SIZE);
     if (str.length() != 0) {
       StringBuffer uSize = new StringBuffer();
       num = SGUtilityText.getNumber(str, uSize);
@@ -390,7 +396,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     }
 
     // symbol type
-    str = el.getAttribute(KEY_SYMBOL_TYPE);
+    str = el.getAttribute(SGISymbolConstants.KEY_SYMBOL_TYPE);
     if (str.length() != 0) {
       num = SGDrawingElementSymbol.getSymbolTypeFromName(str);
       if (num == null) {
@@ -403,7 +409,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     }
 
     // inner color
-    str = el.getAttribute(KEY_SYMBOL_INNER_COLOR_LIST);
+    str = el.getAttribute(SGISymbolConstants.KEY_SYMBOL_INNER_COLOR_LIST);
     if (str.length() != 0) {
       List<Color> list = SGUtilityText.getColorList(str);
       if (list == null) {
@@ -419,7 +425,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     }
 
     // inner transparency
-    str = el.getAttribute(KEY_SYMBOL_INNER_TRANSPARENT);
+    str = el.getAttribute(SGISymbolConstants.KEY_SYMBOL_INNER_TRANSPARENT);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b != null) {
@@ -444,7 +450,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     }
 
     // line width
-    str = el.getAttribute(KEY_SYMBOL_LINE_WIDTH);
+    str = el.getAttribute(SGISymbolConstants.KEY_SYMBOL_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuffer uLineWidth = new StringBuffer();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -458,7 +464,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     }
 
     // line color
-    str = el.getAttribute(KEY_SYMBOL_LINE_COLOR);
+    str = el.getAttribute(SGISymbolConstants.KEY_SYMBOL_LINE_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColor(str);
       if (cl == null) {
@@ -471,7 +477,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     }
 
     // line visible
-    str = el.getAttribute(KEY_SYMBOL_LINE_VISIBLE);
+    str = el.getAttribute(SGISymbolConstants.KEY_SYMBOL_LINE_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {

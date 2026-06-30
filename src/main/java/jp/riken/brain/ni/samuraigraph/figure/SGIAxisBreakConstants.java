@@ -1,8 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.figure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 
 /** Constants for axis break symbols. */

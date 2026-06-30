@@ -34,7 +34,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayData;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementString;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroup;
-import jp.riken.brain.ni.samuraigraph.figure.SGIFigureDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYDataConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
 import jp.riken.brain.ni.samuraigraph.figure.SGUtilityForFigureElement;
@@ -45,7 +44,6 @@ import org.w3c.dom.Element;
 public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     implements SGIElementGroupSetInGraphSXY,
         SGIElementGroupSetSXY,
-        SGIFigureDrawingElementConstants,
         SGIStrokeEditDialogObserver,
         SGISXYAxisShiftEnabled,
         SGISXYDataConstants {

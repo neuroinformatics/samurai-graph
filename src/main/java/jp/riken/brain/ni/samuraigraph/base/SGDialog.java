@@ -35,11 +35,7 @@ import javax.swing.text.JTextComponent;
 
 /** The base class of dialog. */
 public abstract class SGDialog extends JDialog
-    implements ActionListener,
-        WindowListener,
-        ComponentListener,
-        FocusListener,
-        ChangeListener {
+    implements ActionListener, WindowListener, ComponentListener, FocusListener, ChangeListener {
 
   // serialVersionUID
   private static final long serialVersionUID = 5190851306204747759L;

@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.application;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.EventQueue;
 import java.awt.Point;
@@ -18,6 +17,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
@@ -64,10 +64,7 @@ import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetMultipleSX
 class SGCommandManager
     implements SGIApplicationCommandConstants,
         SGIDataColumnTypeConstants,
-        SGILegendConstants,
-        SGISignificantDifferenceConstants,
         SGIAxisBreakConstants,
-        SGITimingLineConstants,
         SGIShapeConstants {
 
   private SGMainFunctions mMain = null;

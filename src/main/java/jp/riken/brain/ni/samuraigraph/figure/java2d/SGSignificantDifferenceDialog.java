@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -10,6 +9,7 @@ import javax.swing.SpinnerNumberModel;
 import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
@@ -20,8 +20,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGISignificantDifferenceConstants;
 
 /** A dialog to set the properties of significant difference symbols. */
-public class SGSignificantDifferenceDialog extends SGPropertyDialog
-    implements SGISignificantDifferenceConstants, SGITwoAxesDialog {
+public class SGSignificantDifferenceDialog extends SGPropertyDialog implements SGITwoAxesDialog {
 
   // serialVersionUID
   private static final long serialVersionUID = -248688033390165086L;
@@ -579,10 +578,14 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
 
     // space
     this.mSpaceSpinner.initProperties(
-        new SpinnerNumberModel(0.1, SIGDIFF_SPACE_MIN, SIGDIFF_SPACE_MAX, SIGDIFF_SPACE_STEP),
-        SIGDIFF_SPACE_UNIT,
-        SIGDIFF_SPACE_FRAC_DIFIT_MIN,
-        SIGDIFF_SPACE_FRAC_DIFIT_MAX);
+        new SpinnerNumberModel(
+            0.1,
+            SGISignificantDifferenceConstants.SIGDIFF_SPACE_MIN,
+            SGISignificantDifferenceConstants.SIGDIFF_SPACE_MAX,
+            SGISignificantDifferenceConstants.SIGDIFF_SPACE_STEP),
+        SGISignificantDifferenceConstants.SIGDIFF_SPACE_UNIT,
+        SGISignificantDifferenceConstants.SIGDIFF_SPACE_FRAC_DIFIT_MIN,
+        SGISignificantDifferenceConstants.SIGDIFF_SPACE_FRAC_DIFIT_MAX);
 
     // font size
     this.mFontSizeSpinner.initProperties(
@@ -1319,17 +1322,14 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
     return this.mPreviewButton;
   }
 
-  @Override
   public void onXAxisDateSelected(boolean selected) {
     this.mDateXComponentGroup.setEnabled(selected);
   }
 
-  @Override
   public void onYAxisDateSelected(boolean selected) {
     this.mDateYComponentGroup.setEnabled(selected);
   }
 
-  @Override
   public void onAxisSelectionStateChanged(SGAxisSelectionPanel axisPanel) {
     // set properties to the date components
     setDateComponentProperties(this, this.mAxisPanel, this.mPropertyDialogObserverList);

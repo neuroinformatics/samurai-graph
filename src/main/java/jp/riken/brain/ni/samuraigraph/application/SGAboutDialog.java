@@ -16,8 +16,8 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import jp.riken.brain.ni.samuraigraph.base.SGBrowserLauncher;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** About dialog. */

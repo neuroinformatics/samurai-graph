@@ -4,6 +4,7 @@ import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
@@ -511,13 +512,13 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     this.addProperties(
         map,
         KEY_LENGTH,
-        KEY_INTERVAL,
+        SGIBarConstants.KEY_INTERVAL,
         KEY_DISTORTION,
-        KEY_ANGLE,
-        KEY_LINE_WIDTH,
+        SGIStringConstants.KEY_ANGLE,
+        SGILineConstants.KEY_LINE_WIDTH,
         KEY_HORIZONTAL,
-        KEY_LINE_COLOR,
-        KEY_INNER_COLOR);
+        SGIDrawingElementConstants.KEY_COLOR,
+        SGIRectangleConstants.KEY_INNER_COLOR);
     return map;
   }
 
@@ -578,7 +579,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // interval
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_INTERVAL);
+    str = el.getAttribute(SGIBarConstants.KEY_INTERVAL);
     if (str.length() != 0) {
       StringBuffer uInterval = new StringBuffer();
       num = SGUtilityText.getNumber(str, uInterval);
@@ -605,7 +606,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // angle
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_ANGLE);
+    str = el.getAttribute(SGIStringConstants.KEY_ANGLE);
     if (str.length() != 0) {
       num = SGUtilityText.getFloat(str, SGIConstants.degree);
       if (num == null) {
@@ -618,7 +619,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // line width
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_LINE_WIDTH);
+    str = el.getAttribute(SGILineConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuffer uLineWidth = new StringBuffer();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -645,7 +646,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // line color
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_LINE_COLOR);
+    str = el.getAttribute(SGIDrawingElementConstants.KEY_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColor(str);
       if (cl == null) {
@@ -658,7 +659,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // inner color
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_INNER_COLOR);
+    str = el.getAttribute(SGIRectangleConstants.KEY_INNER_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColorIncludingList(str);
       if (cl == null) {

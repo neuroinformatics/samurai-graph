@@ -6,8 +6,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGProperties;
  * Drawing element of bar. This element is the extension of the rectangle: it has axis values for
  * the baseline and width.
  */
-public abstract class SGDrawingElementBar extends SGDrawingElementRectangle
-    implements SGIBarConstants {
+public abstract class SGDrawingElementBar extends SGDrawingElementRectangle {
 
   /** The default constructor. */
   public SGDrawingElementBar() {

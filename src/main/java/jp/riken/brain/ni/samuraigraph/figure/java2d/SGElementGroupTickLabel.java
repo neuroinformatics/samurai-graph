@@ -3,6 +3,7 @@ package jp.riken.brain.ni.samuraigraph.figure.java2d;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.figure.SGIStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGITickLabelConstants;
 import org.w3c.dom.Element;
 
@@ -23,7 +24,7 @@ public abstract class SGElementGroupTickLabel extends SGElementGroupString
     if (super.writeProperty(el) == false) {
       return false;
     }
-    el.setAttribute(KEY_ANGLE, Float.toString(this.mAngle));
+    el.setAttribute(SGIStringConstants.KEY_ANGLE, Float.toString(this.mAngle));
     el.setAttribute(KEY_TICK_LABEL_ALIGN_HORIZONTALLY, Boolean.toString(this.mAlignHorizontalFlag));
     return true;
   }
@@ -44,7 +45,7 @@ public abstract class SGElementGroupTickLabel extends SGElementGroupString
     }
 
     // angle
-    str = el.getAttribute(KEY_ANGLE);
+    str = el.getAttribute(SGIStringConstants.KEY_ANGLE);
     if (str.length() != 0) {
       num = SGUtilityText.getFloat(str, SGIConstants.degree);
       if (num == null) {

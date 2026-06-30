@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -37,6 +36,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
@@ -73,7 +73,6 @@ import org.w3c.dom.NodeList;
 /** A class managing labels. */
 public class SGFigureElementString extends SGFigureElement2D
     implements SGIFigureElementString,
-        SGIStringConstants,
         CaretListener,
         DocumentListener,
         ActionListener,
@@ -169,8 +168,12 @@ public class SGFigureElementString extends SGFigureElement2D
     JTextField tf = this.mEditField;
 
     // set the font
-    final float fontSize = DEFAULT_LABEL_FONT_SIZE * this.mMagnification;
-    Font font = new Font(DEFAULT_LABEL_FONT_NAME, DEFAULT_LABEL_FONT_STYLE, (int) fontSize);
+    final float fontSize = SGIStringConstants.DEFAULT_LABEL_FONT_SIZE * this.mMagnification;
+    Font font =
+        new Font(
+            SGIStringConstants.DEFAULT_LABEL_FONT_NAME,
+            SGIStringConstants.DEFAULT_LABEL_FONT_STYLE,
+            (int) fontSize);
     tf.setFont(font);
 
     // set the location and the size
@@ -205,8 +208,8 @@ public class SGFigureElementString extends SGFigureElement2D
    */
   @Override
   public int addNewString(final String str, final int x, final int y) {
-    SGAxis xAxis = this.mAxisElement.getAxis(DEFAULT_LABEL_HORIZONTAL_AXIS);
-    SGAxis yAxis = this.mAxisElement.getAxis(DEFAULT_LABEL_VERTICAL_AXIS);
+    SGAxis xAxis = this.mAxisElement.getAxis(SGIStringConstants.DEFAULT_LABEL_HORIZONTAL_AXIS);
+    SGAxis yAxis = this.mAxisElement.getAxis(SGIStringConstants.DEFAULT_LABEL_VERTICAL_AXIS);
     int id = this.assignChildId();
     if (this.addString(id, str, x, y, xAxis, yAxis) == false) {
       return -1;
@@ -264,7 +267,12 @@ public class SGFigureElementString extends SGFigureElement2D
    */
   public boolean addString(final int id, final String str, final double x, final double y) {
     return this.addString(
-        id, str, x, y, DEFAULT_LABEL_HORIZONTAL_AXIS, DEFAULT_LABEL_VERTICAL_AXIS);
+        id,
+        str,
+        x,
+        y,
+        SGIStringConstants.DEFAULT_LABEL_HORIZONTAL_AXIS,
+        SGIStringConstants.DEFAULT_LABEL_VERTICAL_AXIS);
   }
 
   /**
@@ -292,8 +300,10 @@ public class SGFigureElementString extends SGFigureElement2D
     }
 
     // get axes
-    String xAxisName = (xAxisLocation != null) ? xAxisLocation : DEFAULT_LABEL_HORIZONTAL_AXIS;
-    String yAxisName = (yAxisLocation != null) ? yAxisLocation : DEFAULT_LABEL_VERTICAL_AXIS;
+    String xAxisName =
+        (xAxisLocation != null) ? xAxisLocation : SGIStringConstants.DEFAULT_LABEL_HORIZONTAL_AXIS;
+    String yAxisName =
+        (yAxisLocation != null) ? yAxisLocation : SGIStringConstants.DEFAULT_LABEL_VERTICAL_AXIS;
     SGAxis xAxis = this.mAxisElement.getAxis(xAxisName);
     SGAxis yAxis = this.mAxisElement.getAxis(yAxisName);
     if (xAxis == null || yAxis == null) {
@@ -1269,11 +1279,11 @@ public class SGFigureElementString extends SGFigureElement2D
 
     /** */
     private boolean init() {
-      this.setFontSize(DEFAULT_LABEL_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
-      this.setFontName(DEFAULT_LABEL_FONT_NAME);
-      this.setFontStyle(DEFAULT_LABEL_FONT_STYLE);
-      this.setAngle(DEFAULT_LABEL_ANGLE);
-      this.setColor(DEFAULT_LABEL_FONT_COLOR);
+      this.setFontSize(SGIStringConstants.DEFAULT_LABEL_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
+      this.setFontName(SGIStringConstants.DEFAULT_LABEL_FONT_NAME);
+      this.setFontStyle(SGIStringConstants.DEFAULT_LABEL_FONT_STYLE);
+      this.setAngle(SGIStringConstants.DEFAULT_LABEL_ANGLE);
+      this.setColor(SGIStringConstants.DEFAULT_LABEL_FONT_COLOR);
       return true;
     }
 
@@ -1636,7 +1646,7 @@ public class SGFigureElementString extends SGFigureElement2D
       }
 
       // x value
-      str = el.getAttribute(KEY_X_VALUE);
+      str = el.getAttribute(SGIStringConstants.KEY_X_VALUE);
       if (str.length() != 0) {
         num = SGUtilityText.getDouble(str);
         if (num == null) {
@@ -1652,7 +1662,7 @@ public class SGFigureElementString extends SGFigureElement2D
       }
 
       // y value
-      str = el.getAttribute(KEY_Y_VALUE);
+      str = el.getAttribute(SGIStringConstants.KEY_Y_VALUE);
       if (str.length() != 0) {
         num = SGUtilityText.getDouble(str);
         if (num == null) {
@@ -1959,132 +1969,155 @@ public class SGFigureElementString extends SGFigureElement2D
         String key = itr.next();
         String value = map.getValueString(key);
 
-        if (COM_LABEL_AXIS_X.equalsIgnoreCase(key)) {
+        if (SGIStringConstants.COM_LABEL_AXIS_X.equalsIgnoreCase(key)) {
           final int loc = SGUtility.getAxisLocation(value);
           if (loc == -1) {
-            result.putResult(COM_LABEL_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setXAxisLocation(loc) == false) {
-            result.putResult(COM_LABEL_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_LABEL_AXIS_X, SGPropertyResults.SUCCEEDED);
-        } else if (COM_LABEL_AXIS_Y.equalsIgnoreCase(key)) {
+          result.putResult(SGIStringConstants.COM_LABEL_AXIS_X, SGPropertyResults.SUCCEEDED);
+        } else if (SGIStringConstants.COM_LABEL_AXIS_Y.equalsIgnoreCase(key)) {
           final int loc = SGUtility.getAxisLocation(value);
           if (loc == -1) {
-            result.putResult(COM_LABEL_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setYAxisLocation(loc) == false) {
-            result.putResult(COM_LABEL_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_LABEL_AXIS_Y, SGPropertyResults.SUCCEEDED);
-        } else if (COM_LABEL_TEXT.equalsIgnoreCase(key)) {
+          result.putResult(SGIStringConstants.COM_LABEL_AXIS_Y, SGPropertyResults.SUCCEEDED);
+        } else if (SGIStringConstants.COM_LABEL_TEXT.equalsIgnoreCase(key)) {
           if (map.isDoubleQuoted(key) == false) {
-            result.putResult(COM_LABEL_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setString(value) == false) {
-            result.putResult(COM_LABEL_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_LABEL_TEXT, SGPropertyResults.SUCCEEDED);
-        } else if (COM_LABEL_LOCATION_X.equalsIgnoreCase(key)) {
+          result.putResult(SGIStringConstants.COM_LABEL_TEXT, SGPropertyResults.SUCCEEDED);
+        } else if (SGIStringConstants.COM_LABEL_LOCATION_X.equalsIgnoreCase(key)) {
           Double num = SGUtilityText.getDouble(value);
           if (num == null) {
-            result.putResult(COM_LABEL_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-            result.putResult(COM_LABEL_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setXValue(num.doubleValue()) == false) {
-            result.putResult(COM_LABEL_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_LABEL_LOCATION_X, SGPropertyResults.SUCCEEDED);
-        } else if (COM_LABEL_LOCATION_Y.equalsIgnoreCase(key)) {
+          result.putResult(SGIStringConstants.COM_LABEL_LOCATION_X, SGPropertyResults.SUCCEEDED);
+        } else if (SGIStringConstants.COM_LABEL_LOCATION_Y.equalsIgnoreCase(key)) {
           Double num = SGUtilityText.getDouble(value);
           if (num == null) {
-            result.putResult(COM_LABEL_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-            result.putResult(COM_LABEL_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setYValue(num.doubleValue()) == false) {
-            result.putResult(COM_LABEL_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_LABEL_LOCATION_Y, SGPropertyResults.SUCCEEDED);
-        } else if (COM_LABEL_FONT_NAME.equalsIgnoreCase(key)) {
+          result.putResult(SGIStringConstants.COM_LABEL_LOCATION_Y, SGPropertyResults.SUCCEEDED);
+        } else if (SGIStringConstants.COM_LABEL_FONT_NAME.equalsIgnoreCase(key)) {
           final String name = SGUtility.findFontFamilyName(value);
           if (name == null) {
-            result.putResult(COM_LABEL_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setFontName(name) == false) {
-            result.putResult(COM_LABEL_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_LABEL_FONT_NAME, SGPropertyResults.SUCCEEDED);
-        } else if (COM_LABEL_FONT_STYLE.equalsIgnoreCase(key)) {
+          result.putResult(SGIStringConstants.COM_LABEL_FONT_NAME, SGPropertyResults.SUCCEEDED);
+        } else if (SGIStringConstants.COM_LABEL_FONT_STYLE.equalsIgnoreCase(key)) {
           Integer style = SGUtilityText.getFontStyle(value);
           if (style == null) {
-            result.putResult(COM_LABEL_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setFontStyle(style.intValue()) == false) {
-            result.putResult(COM_LABEL_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_LABEL_FONT_STYLE, SGPropertyResults.SUCCEEDED);
-        } else if (COM_LABEL_FONT_SIZE.equalsIgnoreCase(key)) {
+          result.putResult(SGIStringConstants.COM_LABEL_FONT_STYLE, SGPropertyResults.SUCCEEDED);
+        } else if (SGIStringConstants.COM_LABEL_FONT_SIZE.equalsIgnoreCase(key)) {
           StringBuffer unit = new StringBuffer();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
-            result.putResult(COM_LABEL_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setFontSize(num.floatValue(), unit.toString()) == false) {
-            result.putResult(COM_LABEL_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_LABEL_FONT_SIZE, SGPropertyResults.SUCCEEDED);
-        } else if (COM_LABEL_FONT_COLOR.equalsIgnoreCase(key)) {
+          result.putResult(SGIStringConstants.COM_LABEL_FONT_SIZE, SGPropertyResults.SUCCEEDED);
+        } else if (SGIStringConstants.COM_LABEL_FONT_COLOR.equalsIgnoreCase(key)) {
           Color cl = SGUtilityText.getColor(value);
           if (cl != null) {
             if (this.setColor(cl) == false) {
-              result.putResult(COM_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+              result.putResult(
+                  SGIStringConstants.COM_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
               continue;
             }
           } else {
             cl = SGUtilityText.parseColor(value);
             if (cl == null) {
-              result.putResult(COM_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+              result.putResult(
+                  SGIStringConstants.COM_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
               continue;
             }
             if (this.setColor(cl) == false) {
-              result.putResult(COM_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+              result.putResult(
+                  SGIStringConstants.COM_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
               continue;
             }
           }
-          result.putResult(COM_LABEL_FONT_COLOR, SGPropertyResults.SUCCEEDED);
-        } else if (COM_LABEL_ANGLE.equalsIgnoreCase(key)) {
+          result.putResult(SGIStringConstants.COM_LABEL_FONT_COLOR, SGPropertyResults.SUCCEEDED);
+        } else if (SGIStringConstants.COM_LABEL_ANGLE.equalsIgnoreCase(key)) {
           Number num = SGUtilityText.getFloat(value);
           if (num == null) {
-            result.putResult(COM_LABEL_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setAngle(num.floatValue()) == false) {
-            result.putResult(COM_LABEL_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIStringConstants.COM_LABEL_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_LABEL_ANGLE, SGPropertyResults.SUCCEEDED);
+          result.putResult(SGIStringConstants.COM_LABEL_ANGLE, SGPropertyResults.SUCCEEDED);
         }
       }
 
@@ -2123,7 +2156,9 @@ public class SGFigureElementString extends SGFigureElement2D
     @Override
     public String createCommandString(SGExportParameter params) {
       return SGCommandUtility.createCommandString(
-          COM_LABEL, Integer.toString(this.mID), this.getCommandPropertyMap(params));
+          SGIStringConstants.COM_LABEL,
+          Integer.toString(this.mID),
+          this.getCommandPropertyMap(params));
     }
 
     /**
@@ -2135,14 +2170,23 @@ public class SGFigureElementString extends SGFigureElement2D
     public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
       SGPropertyMap map = super.getCommandPropertyMap(params);
       this.addProperties(
-          map, COM_LABEL_LOCATION_X, COM_LABEL_LOCATION_Y, COM_LABEL_AXIS_X, COM_LABEL_AXIS_Y);
+          map,
+          SGIStringConstants.COM_LABEL_LOCATION_X,
+          SGIStringConstants.COM_LABEL_LOCATION_Y,
+          SGIStringConstants.COM_LABEL_AXIS_X,
+          SGIStringConstants.COM_LABEL_AXIS_Y);
       return map;
     }
 
     @Override
     public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
       SGPropertyMap map = super.getPropertyFileMap(params);
-      this.addProperties(map, KEY_X_VALUE, KEY_Y_VALUE, KEY_X_AXIS_POSITION, KEY_Y_AXIS_POSITION);
+      this.addProperties(
+          map,
+          SGIStringConstants.KEY_X_VALUE,
+          SGIStringConstants.KEY_Y_VALUE,
+          KEY_X_AXIS_POSITION,
+          KEY_Y_AXIS_POSITION);
       return map;
     }
 
@@ -2431,15 +2475,15 @@ public class SGFigureElementString extends SGFigureElement2D
       Iterator<String> itr = map.getKeyIterator();
       while (itr.hasNext()) {
         String key = itr.next();
-        if (COM_LABEL_TEXT.equalsIgnoreCase(key)) {
+        if (SGIStringConstants.COM_LABEL_TEXT.equalsIgnoreCase(key)) {
           sText = map.getValueString(key);
-        } else if (COM_LABEL_LOCATION_X.equalsIgnoreCase(key)) {
+        } else if (SGIStringConstants.COM_LABEL_LOCATION_X.equalsIgnoreCase(key)) {
           sValueX = map.getValueString(key);
-        } else if (COM_LABEL_LOCATION_Y.equalsIgnoreCase(key)) {
+        } else if (SGIStringConstants.COM_LABEL_LOCATION_Y.equalsIgnoreCase(key)) {
           sValueY = map.getValueString(key);
-        } else if (COM_LABEL_AXIS_X.equalsIgnoreCase(key)) {
+        } else if (SGIStringConstants.COM_LABEL_AXIS_X.equalsIgnoreCase(key)) {
           sAxisX = map.getValueString(key);
-        } else if (COM_LABEL_AXIS_Y.equalsIgnoreCase(key)) {
+        } else if (SGIStringConstants.COM_LABEL_AXIS_Y.equalsIgnoreCase(key)) {
           sAxisY = map.getValueString(key);
         }
       }
@@ -2466,7 +2510,7 @@ public class SGFigureElementString extends SGFigureElement2D
       if (SGUtility.isValidPropertyValue(valueY.doubleValue()) == false) {
         return null;
       }
-      if (map.isDoubleQuoted(COM_LABEL_TEXT) == false) {
+      if (map.isDoubleQuoted(SGIStringConstants.COM_LABEL_TEXT) == false) {
         return null;
       }
       if (this.addString(id, sText, valueX.doubleValue(), valueY.doubleValue(), sAxisX, sAxisY)

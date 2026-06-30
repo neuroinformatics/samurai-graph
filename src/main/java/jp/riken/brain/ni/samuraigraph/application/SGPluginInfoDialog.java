@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.application;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -7,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.SwingUtilities;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** The dialog to display the attributes of a plug-in file. */
 public class SGPluginInfoDialog extends SGDialog {

@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -8,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 
 /** A dialog to set the line style. */

@@ -14,8 +14,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
 /** Drawing element of the text string. */
-public abstract class SGDrawingElementString extends SGDrawingElement
-    implements SGIStringConstants {
+public abstract class SGDrawingElementString extends SGDrawingElement {
 
   /** The magnification. */
   protected float mMagnification = 1.0f;
@@ -33,16 +32,16 @@ public abstract class SGDrawingElementString extends SGDrawingElement
   private Font mFont = null;
 
   /** Font name. */
-  private String mFontName = DEFAULT_STRING_FONT_NAME;
+  private String mFontName = SGIStringConstants.DEFAULT_STRING_FONT_NAME;
 
   /** Font style. */
-  private int mFontStyle = DEFAULT_STRING_FONT_STYLE;
+  private int mFontStyle = SGIStringConstants.DEFAULT_STRING_FONT_STYLE;
 
   /** Font size in the default zoom. */
-  private float mFontSize = DEFAULT_STRING_FONT_SIZE;
+  private float mFontSize = SGIStringConstants.DEFAULT_STRING_FONT_SIZE;
 
   /** Angled of this string. */
-  private float mAngle = DEFAULT_STRING_ANGLE;
+  private float mAngle = SGIStringConstants.DEFAULT_STRING_ANGLE;
 
   /** The location of this symbol. */
   private SGTuple2f mLocation = new SGTuple2f();
@@ -51,7 +50,7 @@ public abstract class SGDrawingElementString extends SGDrawingElement
   public SGDrawingElementString() {
     super();
     this.mString = "";
-    this.mColor = DEFAULT_STRING_FONT_COLOR;
+    this.mColor = SGIStringConstants.DEFAULT_STRING_FONT_COLOR;
     this.updateFont();
   }
 
@@ -59,7 +58,7 @@ public abstract class SGDrawingElementString extends SGDrawingElement
   public SGDrawingElementString(final String str) {
     super();
     this.mString = str;
-    this.mColor = DEFAULT_STRING_FONT_COLOR;
+    this.mColor = SGIStringConstants.DEFAULT_STRING_FONT_COLOR;
     this.updateFont();
   }
 
@@ -247,7 +246,12 @@ public abstract class SGDrawingElementString extends SGDrawingElement
   public boolean setAngle(final float angle) {
     final Float aNew =
         SGUtility.calcPropertyValue(
-            angle, null, null, STRING_ANGLE_MIN, STRING_ANGLE_MAX, STRING_ANGLE_MINIMAL_ORDER);
+            angle,
+            null,
+            null,
+            SGIStringConstants.STRING_ANGLE_MIN,
+            SGIStringConstants.STRING_ANGLE_MAX,
+            SGIStringConstants.STRING_ANGLE_MINIMAL_ORDER);
     if (aNew == null) {
       return false;
     }
@@ -414,22 +418,28 @@ public abstract class SGDrawingElementString extends SGDrawingElement
    */
   public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
     SGPropertyMap map = new SGPropertyMap();
-    SGPropertyUtility.addQuotedStringProperty(map, COM_LABEL_TEXT, this.getString());
+    SGPropertyUtility.addQuotedStringProperty(
+        map, SGIStringConstants.COM_LABEL_TEXT, this.getString());
     this.addProperties(
         map,
-        COM_LABEL_FONT_NAME,
-        COM_LABEL_FONT_SIZE,
-        COM_LABEL_FONT_STYLE,
-        COM_LABEL_FONT_COLOR,
-        COM_LABEL_ANGLE);
+        SGIStringConstants.COM_LABEL_FONT_NAME,
+        SGIStringConstants.COM_LABEL_FONT_SIZE,
+        SGIStringConstants.COM_LABEL_FONT_STYLE,
+        SGIStringConstants.COM_LABEL_FONT_COLOR,
+        SGIStringConstants.COM_LABEL_ANGLE);
     return map;
   }
 
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
     SGPropertyMap map = new SGPropertyMap();
-    SGPropertyUtility.addProperty(map, KEY_TEXT, this.getString());
+    SGPropertyUtility.addProperty(map, SGIStringConstants.KEY_TEXT, this.getString());
     this.addProperties(
-        map, KEY_FONT_NAME, KEY_FONT_SIZE, KEY_FONT_STYLE, KEY_STRING_COLORS, KEY_ANGLE);
+        map,
+        SGIStringConstants.KEY_FONT_NAME,
+        SGIStringConstants.KEY_FONT_SIZE,
+        SGIStringConstants.KEY_FONT_STYLE,
+        SGIStringConstants.KEY_STRING_COLORS,
+        SGIStringConstants.KEY_ANGLE);
     return map;
   }
 
@@ -450,7 +460,9 @@ public abstract class SGDrawingElementString extends SGDrawingElement
         map, fontStyleKey, SGUtilityText.getFontStyleName(this.getFontStyle()));
     SGPropertyUtility.addProperty(map, colorKey, this.getColor());
     SGPropertyUtility.addProperty(
-        map, angleKey, SGUtility.getExportValue(this.getAngle(), STRING_ANGLE_MINIMAL_ORDER));
+        map,
+        angleKey,
+        SGUtility.getExportValue(this.getAngle(), SGIStringConstants.STRING_ANGLE_MINIMAL_ORDER));
   }
 
   /** */
@@ -459,7 +471,7 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     Number num = null;
 
     // set the text
-    str = el.getAttribute(KEY_TEXT);
+    str = el.getAttribute(SGIStringConstants.KEY_TEXT);
     if (str.length() != 0) {
       final String text = str;
       if (this.setString(text) == false) {
@@ -468,7 +480,7 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     }
 
     // set font name
-    str = el.getAttribute(KEY_FONT_NAME);
+    str = el.getAttribute(SGIStringConstants.KEY_FONT_NAME);
     if (str.length() != 0) {
       final String fontName = str;
       if (this.setFontName(fontName) == false) {
@@ -477,7 +489,7 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     }
 
     // set font size
-    str = el.getAttribute(KEY_FONT_SIZE);
+    str = el.getAttribute(SGIStringConstants.KEY_FONT_SIZE);
     if (str.length() != 0) {
       StringBuffer uFontSize = new StringBuffer();
       num = SGUtilityText.getNumber(str, uFontSize);
@@ -491,7 +503,7 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     }
 
     // set font style
-    str = el.getAttribute(KEY_FONT_STYLE);
+    str = el.getAttribute(SGIStringConstants.KEY_FONT_STYLE);
     if (str.length() != 0) {
       final Integer fontStyle = SGUtilityText.getFontStyle(str);
       if (fontStyle == null) {
@@ -503,7 +515,7 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     }
 
     // set color
-    str = el.getAttribute(KEY_STRING_COLORS);
+    str = el.getAttribute(SGIStringConstants.KEY_STRING_COLORS);
     if (str.length() != 0) {
       final Color color = SGUtilityText.parseColorIncludingList(str);
       if (color == null) {
@@ -515,7 +527,7 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     }
 
     // set angle
-    str = el.getAttribute(KEY_ANGLE);
+    str = el.getAttribute(SGIStringConstants.KEY_ANGLE);
     if (str.length() != 0) {
       num = SGUtilityText.getFloat(str, SGIConstants.degree);
       if (num == null) {

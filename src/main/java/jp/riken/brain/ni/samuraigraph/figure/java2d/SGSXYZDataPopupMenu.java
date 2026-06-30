@@ -1,10 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 
 public class SGSXYZDataPopupMenu extends SGDataPopupMenu {

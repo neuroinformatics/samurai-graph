@@ -1242,7 +1242,12 @@ public class SGUtilityText implements SGIPropertyFileConstants {
     boolean flag = false;
     for (int ii = 0; ii < len; ii++) {
       final char c = str.charAt(ii);
-      if (c != ' ' && c != SGIConstants.twoByteSpaceChar && c != '\t' && c != '\n' && c != '\r' && c != '\f') {
+      if (c != ' '
+          && c != SGIConstants.twoByteSpaceChar
+          && c != '\t'
+          && c != '\n'
+          && c != '\r'
+          && c != '\f') {
         flag = true;
         break;
       }
@@ -1349,7 +1354,9 @@ public class SGUtilityText implements SGIPropertyFileConstants {
     }
 
     final String[] units = SGUtilityText.getUnitsArrayOfLength();
-    final float[] ratioArray = {1.0f, 0.10f, SGIConstants.CM_POINT_RATIO, SGIConstants.CM_INCH_RATIO};
+    final float[] ratioArray = {
+      1.0f, 0.10f, SGIConstants.CM_POINT_RATIO, SGIConstants.CM_INCH_RATIO
+    };
     int indexOld = -1;
     for (int ii = 0; ii < units.length; ii++) {
       if (units[ii].equalsIgnoreCase(unitOld)) {
@@ -1395,7 +1402,8 @@ public class SGUtilityText implements SGIPropertyFileConstants {
   }
 
   /**
-   * Parse and convert to the given unit. ex. str - 1 SGIConstants.inch , unit - SGIConstants.cm is converted to "2.54"
+   * Parse and convert to the given unit. ex. str - 1 SGIConstants.inch , unit - SGIConstants.cm is
+   * converted to "2.54"
    *
    * @param str - a string to be parsed
    * @return parsed string

@@ -1,7 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
 /** Constants for bars. */
-public interface SGIBarConstants extends SGIRectangleConstants {
+public final class SGIBarConstants {
   public static final String TAG_NAME_BAR = "Bar";
 
   public static final String KEY_BASELINE_VALUE = "BaselineValue";

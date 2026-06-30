@@ -31,7 +31,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.figure.SGIAxisConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGILineAndStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGAxisElement.*;
 import org.w3c.dom.Element;
 
@@ -552,12 +552,16 @@ class SGFigureAxis extends SGAxisElement {
     final float spaceLN =
         (float)
                 SGUtilityText.convert(
-                    this.getSpaceAxisLineAndNumbers(), SGIAxisConstants.SPACE_UNIT, SGIConstants.pt)
+                    this.getSpaceAxisLineAndNumbers(),
+                    SGILineAndStringConstants.SPACE_UNIT,
+                    SGIConstants.pt)
             * mag;
     final float spaceNT =
         (float)
                 SGUtilityText.convert(
-                    this.getSpaceTitleAndNumbers(), SGIAxisConstants.SPACE_UNIT, SGIConstants.pt)
+                    this.getSpaceTitleAndNumbers(),
+                    SGILineAndStringConstants.SPACE_UNIT,
+                    SGIConstants.pt)
             * mag;
     float x = 0.0f;
     float y = 0.0f;
@@ -589,8 +593,8 @@ class SGFigureAxis extends SGAxisElement {
     }
     x /= mag;
     y /= mag;
-    x = (float) SGUtilityText.convert(x, SGIConstants.pt, SGIAxisConstants.SPACE_UNIT);
-    y = (float) SGUtilityText.convert(y, SGIConstants.pt, SGIAxisConstants.SPACE_UNIT);
+    x = (float) SGUtilityText.convert(x, SGIConstants.pt, SGILineAndStringConstants.SPACE_UNIT);
+    y = (float) SGUtilityText.convert(y, SGIConstants.pt, SGILineAndStringConstants.SPACE_UNIT);
     x = this.roundOffExponentShift(x);
     y = this.roundOffExponentShift(y);
 

@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -9,6 +8,7 @@ import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
@@ -20,8 +20,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGIFigureDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIStringConstants;
 import org.w3c.dom.Element;
 
-public abstract class SGElementGroupString extends SGElementGroup
-    implements SGIStringConstants, SGIFigureDrawingElementConstants {
+public abstract class SGElementGroupString extends SGElementGroup {
 
   /** The font name. */
   protected String mFontName;
@@ -183,7 +182,12 @@ public abstract class SGElementGroupString extends SGElementGroup
   public boolean setAngle(final float angle) {
     final Float aNew =
         SGUtility.calcPropertyValue(
-            angle, null, null, STRING_ANGLE_MIN, STRING_ANGLE_MAX, STRING_ANGLE_MINIMAL_ORDER);
+            angle,
+            null,
+            null,
+            SGIStringConstants.STRING_ANGLE_MIN,
+            SGIStringConstants.STRING_ANGLE_MAX,
+            SGIStringConstants.STRING_ANGLE_MINIMAL_ORDER);
     if (aNew == null) {
       return false;
     }
@@ -266,9 +270,9 @@ public abstract class SGElementGroupString extends SGElementGroup
    */
   public boolean setDecimalPlaces(final int value) {
     final int vNew;
-    if (value < TICK_LABEL_DECIMAL_PLACES_MIN) {
+    if (value < SGIFigureDrawingElementConstants.TICK_LABEL_DECIMAL_PLACES_MIN) {
       return false;
-    } else if (value > TICK_LABEL_DECIMAL_PLACES_MAX) {
+    } else if (value > SGIFigureDrawingElementConstants.TICK_LABEL_DECIMAL_PLACES_MAX) {
       return false;
     } else {
       vNew = value;
@@ -285,9 +289,9 @@ public abstract class SGElementGroupString extends SGElementGroup
    */
   public boolean setExponent(final int value) {
     final int vNew;
-    if (value < TICK_LABEL_EXPONENT_MIN) {
+    if (value < SGIFigureDrawingElementConstants.TICK_LABEL_EXPONENT_MIN) {
       return false;
-    } else if (value > TICK_LABEL_EXPONENT_MAX) {
+    } else if (value > SGIFigureDrawingElementConstants.TICK_LABEL_EXPONENT_MAX) {
       return false;
     } else {
       vNew = value;
@@ -354,26 +358,27 @@ public abstract class SGElementGroupString extends SGElementGroup
    * @return
    */
   public String getTagName() {
-    return TAG_NAME_LABEL;
+    return SGIStringConstants.TAG_NAME_LABEL;
   }
 
   /** */
   public boolean writeProperty(final Element el) {
     final int digitFontSize = SGIConstants.FONT_SIZE_MINIMAL_ORDER - 1;
-    final int digitLabelAngle = LABEL_ANGLE_MINIMAL_ORDER - 1;
+    final int digitLabelAngle = SGIFigureDrawingElementConstants.LABEL_ANGLE_MINIMAL_ORDER - 1;
     final float fontSize = (float) SGUtilityNumber.roundOffNumber(this.mFontSize, digitFontSize);
     final float angle = (float) SGUtilityNumber.roundOffNumber(-this.mAngle, digitLabelAngle);
     List<Color> cList = new ArrayList<Color>();
     cList.add(this.getColor());
 
-    el.setAttribute(KEY_FONT_SIZE, Float.toString(fontSize) + SGIConstants.pt);
-    el.setAttribute(KEY_FONT_NAME, this.mFontName);
-    el.setAttribute(KEY_FONT_STYLE, SGUtilityText.getFontStyleName(this.mFontStyle));
-    el.setAttribute(KEY_ANGLE, Float.toString(angle));
-    el.setAttribute(KEY_DECIMAL_PLACES, Integer.toString(this.mDecimalPlaces));
-    el.setAttribute(KEY_EXPONENT, Integer.toString(this.mExponent));
+    el.setAttribute(SGIStringConstants.KEY_FONT_SIZE, Float.toString(fontSize) + SGIConstants.pt);
+    el.setAttribute(SGIStringConstants.KEY_FONT_NAME, this.mFontName);
+    el.setAttribute(
+        SGIStringConstants.KEY_FONT_STYLE, SGUtilityText.getFontStyleName(this.mFontStyle));
+    el.setAttribute(SGIStringConstants.KEY_ANGLE, Float.toString(angle));
+    el.setAttribute(SGIStringConstants.KEY_DECIMAL_PLACES, Integer.toString(this.mDecimalPlaces));
+    el.setAttribute(SGIStringConstants.KEY_EXPONENT, Integer.toString(this.mExponent));
     el.setAttribute(SGIDrawingElementConstants.KEY_COLOR, SGUtilityText.getColorListString(cList));
-    el.setAttribute(KEY_DATE_FORMAT, this.mDateFormat);
+    el.setAttribute(SGIStringConstants.KEY_DATE_FORMAT, this.mDateFormat);
 
     return true;
   }
@@ -390,7 +395,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     List<Color> list = null;
 
     // set font size
-    str = el.getAttribute(KEY_FONT_SIZE);
+    str = el.getAttribute(SGIStringConstants.KEY_FONT_SIZE);
     if (str.length() != 0) {
       StringBuffer uFontSize = new StringBuffer();
       num = SGUtilityText.getNumber(str, uFontSize);
@@ -403,7 +408,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     }
 
     // set font name
-    str = el.getAttribute(KEY_FONT_NAME);
+    str = el.getAttribute(SGIStringConstants.KEY_FONT_NAME);
     if (str.length() != 0) {
       if (this.setFontName(str) == false) {
         return false;
@@ -411,7 +416,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     }
 
     // set font style
-    str = el.getAttribute(KEY_FONT_STYLE);
+    str = el.getAttribute(SGIStringConstants.KEY_FONT_STYLE);
     if (str.length() != 0) {
       final Integer fontStyle = SGUtilityText.getFontStyle(str);
       if (fontStyle == null) {
@@ -439,7 +444,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     }
 
     // decimal places
-    str = el.getAttribute(KEY_DECIMAL_PLACES);
+    str = el.getAttribute(SGIStringConstants.KEY_DECIMAL_PLACES);
     if (str.length() != 0) {
       num = SGUtilityText.getInteger(str);
       if (num == null) {
@@ -452,7 +457,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     }
 
     // exponent
-    str = el.getAttribute(KEY_EXPONENT);
+    str = el.getAttribute(SGIStringConstants.KEY_EXPONENT);
     if (str.length() != 0) {
       num = SGUtilityText.getInteger(str);
       if (num == null) {
@@ -463,7 +468,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     }
 
     // date format
-    str = el.getAttribute(KEY_DATE_FORMAT);
+    str = el.getAttribute(SGIStringConstants.KEY_DATE_FORMAT);
     if (str.length() != 0) {
       if (SGDateUtility.isValidDateFormat(str) == false) {
         return false;

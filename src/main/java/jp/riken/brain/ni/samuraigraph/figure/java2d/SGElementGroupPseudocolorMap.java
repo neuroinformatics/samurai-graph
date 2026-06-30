@@ -14,6 +14,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGXYSimpleDoubleValueIndexBlock;
+import jp.riken.brain.ni.samuraigraph.figure.SGIBarConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIColorMapConstants;
 import org.w3c.dom.Element;
 
@@ -420,7 +421,7 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
       Number num = null;
 
       // width of the rectangle
-      str = el.getAttribute(KEY_RECTANGLE_WIDTH_VALUE);
+      str = el.getAttribute(SGIBarConstants.KEY_RECTANGLE_WIDTH_VALUE);
       if (str.length() != 0) {
         num = SGUtilityText.getDouble(str);
         if (num == null) {
@@ -452,7 +453,7 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
     if (this.mGridMode) {
       // do nothing
     } else {
-      el.setAttribute(KEY_RECTANGLE_WIDTH_VALUE, Double.toString(this.mWidthValue));
+      el.setAttribute(SGIBarConstants.KEY_RECTANGLE_WIDTH_VALUE, Double.toString(this.mWidthValue));
       el.setAttribute(KEY_RECTANGLE_HEIGHT_VALUE, Double.toString(this.mHeightValue));
     }
     return true;

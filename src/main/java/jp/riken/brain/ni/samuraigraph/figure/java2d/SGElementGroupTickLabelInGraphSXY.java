@@ -11,7 +11,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementString;
-import jp.riken.brain.ni.samuraigraph.figure.SGIAxisConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGILineAndStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGITickLabelConstants;
 
 /** Tick labels for SXY type graph. */
@@ -260,7 +260,8 @@ public class SGElementGroupTickLabelInGraphSXY extends SGElementGroupTickLabelIn
   private float calcSpace(final int location) {
     final SGIFigureElementAxis aElement = this.mGraph.getAxisElement();
     float space = aElement.getSpaceAxisLineAndNumber(location) * this.mMagnification;
-    space = (float) SGUtilityText.convert(space, SGIAxisConstants.SPACE_UNIT, SGIConstants.pt);
+    space =
+        (float) SGUtilityText.convert(space, SGILineAndStringConstants.SPACE_UNIT, SGIConstants.pt);
     return space;
   }
 

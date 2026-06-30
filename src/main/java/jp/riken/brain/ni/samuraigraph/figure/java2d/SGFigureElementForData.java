@@ -52,6 +52,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGIArrowConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIBarConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIColorMapConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIErrorBarConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGIFigureDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYDataConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISymbolConstants;
@@ -779,7 +780,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
     final int numberOfBars = barGroups.size() - 1;
     double barWidth = this.getAutoArrangementOfBarWidth(groupBar, numberOfBars, data, axisX, axisY);
     if (barWidth != 0.0) {
-      int digit = BAR_WIDTH_INITIAL_ORDER - 1;
+      int digit = SGIFigureDrawingElementConstants.BAR_WIDTH_INITIAL_ORDER - 1;
       double widthValue = SGUtilityNumber.roundOffNumber(barWidth, digit);
       int count = 20;
       while (widthValue == 0.0 && count-- > 0) {
@@ -1390,7 +1391,8 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
       }
 
       // sets the line style
-      NodeList lineStylesNodeList = lineElement.getElementsByTagName(TAG_NAME_STYLES);
+      NodeList lineStylesNodeList =
+          lineElement.getElementsByTagName(SGILineConstants.TAG_NAME_STYLES);
       Element lineStylesElement = null;
       if (lineStylesNodeList.getLength() > 0) {
         lineStylesElement = (Element) lineStylesNodeList.item(0);

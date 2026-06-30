@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -26,6 +25,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;

@@ -43,6 +43,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
+import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementForData;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGrid;
@@ -88,7 +89,6 @@ import org.w3c.dom.NodeList;
 /** A class managing axes. */
 public class SGFigureElementAxis extends SGFigureElement2D
     implements SGIFigureElementAxis,
-        SGIStringConstants,
         CaretListener,
         DocumentListener,
         ActionListener,
@@ -2031,7 +2031,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
       final float tickMarkLength = num.floatValue();
 
       // line color
-      str = element.getAttribute(SGIFigureElementAxis.KEY_LINE_COLOR);
+      str = element.getAttribute(SGIFigureElementAxisConstants.KEY_LINE_COLOR);
       if (str.length() == 0) {
         return false;
       }
@@ -2041,7 +2041,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
       // font name
       //
 
-      str = element.getAttribute(KEY_FONT_NAME);
+      str = element.getAttribute(SGIStringConstants.KEY_FONT_NAME);
       final String fontName = str;
 
       // title font name
@@ -2066,7 +2066,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
       // font style
       //
 
-      str = element.getAttribute(KEY_FONT_STYLE);
+      str = element.getAttribute(SGIStringConstants.KEY_FONT_STYLE);
       String fontStyleStr = str;
 
       // title font style
@@ -2110,7 +2110,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
       // font size
       //
 
-      str = element.getAttribute(KEY_FONT_SIZE);
+      str = element.getAttribute(SGIStringConstants.KEY_FONT_SIZE);
       String fontSizeStr = str;
 
       // title font size

@@ -50,10 +50,7 @@ import javax.swing.event.MouseInputListener;
 
 /** A panel put in the window. */
 public class SGClientPanel extends JLayeredPane
-    implements SGIRootObjectConstants,
-        SGIClientPanel,
-        MouseWheelListener,
-        KeyListener {
+    implements SGIRootObjectConstants, SGIClientPanel, MouseWheelListener, KeyListener {
 
   private static final long serialVersionUID = 4663255737594310680L;
 

@@ -1,9 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
-
 /** Constants for rectangles. */
-public interface SGIRectangleConstants {
+public final class SGIRectangleConstants {
   public static final String TAG_NAME_RECTANGLE = "Rectangle";
 
   public static final String KEY_RECTANGLE_WIDTH = "Width";

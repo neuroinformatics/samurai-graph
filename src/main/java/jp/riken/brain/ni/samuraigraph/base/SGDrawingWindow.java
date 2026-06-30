@@ -292,8 +292,10 @@ public class SGDrawingWindow extends JFrame
     mBar.setMenuItemEnabled(MENUBAR_FILE, MENUBARCMD_SAVE_PROPERTY, b);
     mBar.setMenuItemEnabled(MENUBAR_FILE, MENUBARCMD_SAVE_DATASET, b);
     mBar.setMenuItemEnabled(MENUBAR_FILE, MENUBARCMD_PRINT, b);
-    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_BOUNDING_BOX, b);
-    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_SNAP_TO_GRID, b);
+    mBar.setMenuItemEnabled(
+        SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_BOUNDING_BOX, b);
+    mBar.setMenuItemEnabled(
+        SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_SNAP_TO_GRID, b);
     mBar.setMenuItemEnabled(MENUBAR_ARRANGE, MENUBARCMD_AUTO_ARRANGEMENT, b);
     mBar.setInsertToggleButtonsEnabled(b);
   }
@@ -1360,7 +1362,8 @@ public class SGDrawingWindow extends JFrame
     this.mAutoZoomFlag = b;
 
     // set to the menu item
-    this.mMenuBar.setMenuItemSelected(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_AUTO_ZOOM, b);
+    this.mMenuBar.setMenuItemSelected(
+        SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_AUTO_ZOOM, b);
 
     // do auto zoom
     this.doAutoZoom();
@@ -2266,7 +2269,8 @@ public class SGDrawingWindow extends JFrame
 
     // set to the menu bar
     SGMenuBar bar = this.mMenuBar;
-    bar.setMenuItemSelected(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_GRID_VISIBLE, gridVisible);
+    bar.setMenuItemSelected(
+        SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_GRID_VISIBLE, gridVisible);
     bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_PLUS_GRID, plusFlag);
     bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_MINUS_GRID, minusFlag);
   }
@@ -2280,7 +2284,9 @@ public class SGDrawingWindow extends JFrame
   // update the menu item "Snap to Grid"
   void updateSnapToGridItems() {
     this.mMenuBar.setMenuItemSelected(
-        SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_SNAP_TO_GRID, SGFigure.isSnappingToGrid());
+        SGIRootObjectConstants.MENUBAR_LAYOUT,
+        SGIRootObjectConstants.MENUBARCMD_SNAP_TO_GRID,
+        SGFigure.isSnappingToGrid());
   }
 
   // update the items for zooming
@@ -2312,7 +2318,8 @@ public class SGDrawingWindow extends JFrame
     bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_ZOOM_IN, zoomIn);
     bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_ZOOM_OUT, zoomOut);
     bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_DEFAULT_ZOOM, def);
-    bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_ZOOM_WAY_OUT, zoomWayOut);
+    bar.setMenuItemEnabled(
+        SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_ZOOM_WAY_OUT, zoomWayOut);
   }
 
   //
@@ -2392,7 +2399,9 @@ public class SGDrawingWindow extends JFrame
       this.showPropertyDialog();
     } else if (command.equals(MENUBARCMD_MODE)) {
       final int mode =
-          (this.getMode() == SGIConstants.MODE_EXPORT_AS_IMAGE) ? SGIConstants.MODE_DISPLAY : SGIConstants.MODE_EXPORT_AS_IMAGE;
+          (this.getMode() == SGIConstants.MODE_EXPORT_AS_IMAGE)
+              ? SGIConstants.MODE_DISPLAY
+              : SGIConstants.MODE_EXPORT_AS_IMAGE;
       this.setMode(mode);
       this.updateModeMenuItems();
     } else if (command.equals(MENUBARCMD_AUTO_ARRANGEMENT)) {
@@ -6155,7 +6164,8 @@ public class SGDrawingWindow extends JFrame
               if (SGIConstants.MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(text)) {
                 final boolean b = (colorBarAvailable != null) ? colorBarAvailable : false;
                 cItem.setEnabled(b);
-              } else if (SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(text)) {
+              } else if (SGIConstants.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(
+                  text)) {
                 final boolean b = (animationAvailable != null) ? animationAvailable : false;
                 cItem.setEnabled(b);
               }
@@ -6191,13 +6201,21 @@ public class SGDrawingWindow extends JFrame
         JMenu menu = (JMenu) components[ii];
         if (SGIConstants.MENUCMD_AXES_VISIBLE.equals(menu.getActionCommand())) {
           SGCheckBoxMenuItem item;
-          item = (SGCheckBoxMenuItem) SGUtility.findMenuItem(menu, SGIConstants.MENUCMD_VISIBLE_BOTTOM_AXIS);
+          item =
+              (SGCheckBoxMenuItem)
+                  SGUtility.findMenuItem(menu, SGIConstants.MENUCMD_VISIBLE_BOTTOM_AXIS);
           item.setSelected(horizontalAxis1Visible);
-          item = (SGCheckBoxMenuItem) SGUtility.findMenuItem(menu, SGIConstants.MENUCMD_VISIBLE_LEFT_AXIS);
+          item =
+              (SGCheckBoxMenuItem)
+                  SGUtility.findMenuItem(menu, SGIConstants.MENUCMD_VISIBLE_LEFT_AXIS);
           item.setSelected(verticalAxis1Visible);
-          item = (SGCheckBoxMenuItem) SGUtility.findMenuItem(menu, SGIConstants.MENUCMD_VISIBLE_TOP_AXIS);
+          item =
+              (SGCheckBoxMenuItem)
+                  SGUtility.findMenuItem(menu, SGIConstants.MENUCMD_VISIBLE_TOP_AXIS);
           item.setSelected(horizontalAxis2Visible);
-          item = (SGCheckBoxMenuItem) SGUtility.findMenuItem(menu, SGIConstants.MENUCMD_VISIBLE_RIGHT_AXIS);
+          item =
+              (SGCheckBoxMenuItem)
+                  SGUtility.findMenuItem(menu, SGIConstants.MENUCMD_VISIBLE_RIGHT_AXIS);
           item.setSelected(verticalAxis2Visible);
         }
       }

@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.util.HashMap;
 
 /** The class of the line stroke. */
-public class SGStroke implements Cloneable, SGILineConstants {
+public class SGStroke implements Cloneable {
 
   // magnification
   private float mMagnification = 1.0f;

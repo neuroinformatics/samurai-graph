@@ -33,8 +33,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGPaintConstants;
 
 /** A dialog to set the properties of rectangular shapes. */
-public class SGRectangularShapeDialog extends SGPropertyDialog
-    implements SGILineConstants, SGITwoAxesDialog {
+public class SGRectangularShapeDialog extends SGPropertyDialog implements SGITwoAxesDialog {
 
   // serialVersionUID
   private static final long serialVersionUID = 1791114777174503450L;
@@ -539,8 +538,8 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
     this.setTitle(TITLE);
 
     // set up the combo box for the line type
-    for (int ii = 0; ii < LINE_NAME_ARRAY.length; ii++) {
-      this.mEdgeLineTypeComboBox.addItem(LINE_NAME_ARRAY[ii]);
+    for (int ii = 0; ii < SGILineConstants.LINE_NAME_ARRAY.length; ii++) {
+      this.mEdgeLineTypeComboBox.addItem(SGILineConstants.LINE_NAME_ARRAY[ii]);
     }
 
     {
@@ -1357,17 +1356,14 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
     return valid;
   }
 
-  @Override
   public void onXAxisDateSelected(boolean selected) {
     this.mDateXComponentGroup.setEnabled(selected);
   }
 
-  @Override
   public void onYAxisDateSelected(boolean selected) {
     this.mDateYComponentGroup.setEnabled(selected);
   }
 
-  @Override
   public void onAxisSelectionStateChanged(SGAxisSelectionPanel axisPanel) {
     // set properties to the date components
     setDateComponentProperties(this, this.mAxisPanel, this.mPropertyDialogObserverList);

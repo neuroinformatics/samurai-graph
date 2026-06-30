@@ -11,6 +11,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementSymbol;
+import jp.riken.brain.ni.samuraigraph.figure.SGIFigureDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYDataConstants;
 
 public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
@@ -23,7 +24,7 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
     // set default properties
     this.setVisible(DEFAULT_SYMBOL_VISIBLE);
     this.setType(DEFAULT_SYMBOL_TYPE);
-    this.setSize(DEFAULT_SYMBOL_SIZE, SYMBOL_SIZE_UNIT);
+    this.setSize(DEFAULT_SYMBOL_SIZE, SGIFigureDrawingElementConstants.SYMBOL_SIZE_UNIT);
     this.setInnerColor(DEFAULT_SYMBOL_BODY_COLOR);
     this.setInnerTransparency(DEFAULT_SYMBOL_BODY_TRANSPARENCY);
     this.setLineWidth(DEFAULT_SYMBOL_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
@@ -43,10 +44,10 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
         SGUtility.calcPropertyValue(
             size,
             unit,
-            SYMBOL_SIZE_UNIT,
-            SYMBOL_SIZE_MIN,
-            SYMBOL_SIZE_MAX,
-            SYMBOL_SIZE_MINIMAL_ORDER);
+            SGIFigureDrawingElementConstants.SYMBOL_SIZE_UNIT,
+            SGIFigureDrawingElementConstants.SYMBOL_SIZE_MIN,
+            SGIFigureDrawingElementConstants.SYMBOL_SIZE_MAX,
+            SGIFigureDrawingElementConstants.SYMBOL_SIZE_MINIMAL_ORDER);
     if (sNew == null) {
       return false;
     }
@@ -193,8 +194,10 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
     SGPropertyUtility.addProperty(
         map,
         COM_DATA_SYMBOL_SIZE,
-        SGUtility.getExportValue(this.getSize(SYMBOL_SIZE_UNIT), SYMBOL_SIZE_MINIMAL_ORDER),
-        SYMBOL_SIZE_UNIT);
+        SGUtility.getExportValue(
+            this.getSize(SGIFigureDrawingElementConstants.SYMBOL_SIZE_UNIT),
+            SGIFigureDrawingElementConstants.SYMBOL_SIZE_MINIMAL_ORDER),
+        SGIFigureDrawingElementConstants.SYMBOL_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, COM_DATA_SYMBOL_BODY_COLOR, this.getInnerColor());
     SGPropertyUtility.addProperty(
         map, COM_DATA_SYMBOL_BODY_TRANSPARENCY, this.getInnerTransparency());

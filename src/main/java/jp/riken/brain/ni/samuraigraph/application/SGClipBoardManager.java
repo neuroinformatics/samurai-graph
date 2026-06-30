@@ -124,7 +124,8 @@ class SGClipBoardManager
     WindowInfo info = new WindowInfo();
 
     if (isCopy) {
-      if (this.copyFigures(wnd, info, new SGExportParameter(SGIConstants.OPERATION.COPY_OBJECT)) == false) {
+      if (this.copyFigures(wnd, info, new SGExportParameter(SGIConstants.OPERATION.COPY_OBJECT))
+          == false) {
         return false;
       }
     } else {
@@ -147,7 +148,8 @@ class SGClipBoardManager
 
   // Cuts the figure.
   private boolean cutFigures(SGDrawingWindow wnd, WindowInfo info) {
-    if (this.copyFigures(wnd, info, new SGExportParameter(SGIConstants.OPERATION.CUT_OBJECT)) == false) {
+    if (this.copyFigures(wnd, info, new SGExportParameter(SGIConstants.OPERATION.CUT_OBJECT))
+        == false) {
       return false;
     }
 

@@ -3,7 +3,7 @@ package jp.riken.brain.ni.samuraigraph.figure;
 import java.awt.Color;
 
 /** Constants for timing lines. */
-public interface SGITimingLineConstants extends SGILineConstants {
+public final class SGITimingLineConstants {
 
   //
   // Keys
@@ -20,7 +20,7 @@ public interface SGITimingLineConstants extends SGILineConstants {
   //
 
   // Type
-  public static final int DEFAULT_LINE_TYPE = LINE_TYPE_SOLID;
+  public static final int DEFAULT_LINE_TYPE = SGILineConstants.LINE_TYPE_SOLID;
 
   // Width
   public static final float DEFAULT_LINE_WIDTH = 1.0f;

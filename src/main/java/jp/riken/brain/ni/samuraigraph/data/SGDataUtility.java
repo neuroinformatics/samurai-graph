@@ -30,7 +30,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory.ISingleDimension;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants.OPERATION;
 import jp.riken.brain.ni.samuraigraph.base.SGIData;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGInteger;

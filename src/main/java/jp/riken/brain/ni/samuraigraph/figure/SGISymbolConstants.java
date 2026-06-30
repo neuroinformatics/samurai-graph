@@ -1,9 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
-
 /** Constants for the symbols. */
-public interface SGISymbolConstants {
+public final class SGISymbolConstants {
 
   /*
    * Constants for the symbol types.
@@ -23,13 +21,13 @@ public interface SGISymbolConstants {
   public static final int SYMBOL_TYPE_PLUS = 7;
 
   public static final int[] SYMBOL_TYPE_ARRAY = {
-    SYMBOL_TYPE_CIRCLE,
-    SYMBOL_TYPE_SQUARE,
-    SYMBOL_TYPE_DIAMOND,
-    SYMBOL_TYPE_TRIANGLE,
-    SYMBOL_TYPE_INVERTED_TRIANGLE,
-    SYMBOL_TYPE_CROSS,
-    SYMBOL_TYPE_PLUS
+    SGISymbolConstants.SYMBOL_TYPE_CIRCLE,
+    SGISymbolConstants.SYMBOL_TYPE_SQUARE,
+    SGISymbolConstants.SYMBOL_TYPE_DIAMOND,
+    SGISymbolConstants.SYMBOL_TYPE_TRIANGLE,
+    SGISymbolConstants.SYMBOL_TYPE_INVERTED_TRIANGLE,
+    SGISymbolConstants.SYMBOL_TYPE_CROSS,
+    SGISymbolConstants.SYMBOL_TYPE_PLUS
   };
 
   /*
@@ -54,13 +52,13 @@ public interface SGISymbolConstants {
   public static final String SYMBOL_NAME_PLUS = "Plus";
 
   public static final String[] SYMBOL_NAME_ARRAY = {
-    SYMBOL_NAME_CIRCLE,
-    SYMBOL_NAME_SQUARE,
-    SYMBOL_NAME_DIAMOND,
-    SYMBOL_NAME_TRIANGLE,
-    SYMBOL_NAME_INVERTED_TRIANGLE,
-    SYMBOL_NAME_CROSS,
-    SYMBOL_NAME_PLUS
+    SGISymbolConstants.SYMBOL_NAME_CIRCLE,
+    SGISymbolConstants.SYMBOL_NAME_SQUARE,
+    SGISymbolConstants.SYMBOL_NAME_DIAMOND,
+    SGISymbolConstants.SYMBOL_NAME_TRIANGLE,
+    SGISymbolConstants.SYMBOL_NAME_INVERTED_TRIANGLE,
+    SGISymbolConstants.SYMBOL_NAME_CROSS,
+    SGISymbolConstants.SYMBOL_NAME_PLUS
   };
 
   /*

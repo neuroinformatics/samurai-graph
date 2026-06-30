@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -10,6 +9,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;

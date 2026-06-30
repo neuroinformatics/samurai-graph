@@ -89,7 +89,8 @@ public interface SGIRootObjectConstants {
   //
   //    public static final String MENUBARCMD_PAPER_B5_SIZE = SGIConstants.PAPER_SIZE_B5;
   //
-  //    public static final String MENUBARCMD_PAPER_USLETTER_SIZE = SGIConstants.PAPER_SIZE_US_LETTER;
+  //    public static final String MENUBARCMD_PAPER_USLETTER_SIZE =
+  // SGIConstants.PAPER_SIZE_US_LETTER;
   //
   //    public static final String MENUBARCMD_PAPER_PORTRAIT = "Portrait";
   //

@@ -22,8 +22,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 /** An original spinner class. */
-public class SGSpinner extends JSpinner
-    implements FocusListener, KeyListener, MouseListener {
+public class SGSpinner extends JSpinner implements FocusListener, KeyListener, MouseListener {
 
   // serialVersionUID
   private static final long serialVersionUID = -107749809547053625L;

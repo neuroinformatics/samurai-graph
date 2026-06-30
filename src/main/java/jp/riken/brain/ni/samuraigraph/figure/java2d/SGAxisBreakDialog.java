@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -14,6 +13,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;

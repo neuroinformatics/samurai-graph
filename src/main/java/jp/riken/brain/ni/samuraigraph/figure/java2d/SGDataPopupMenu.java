@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPlugin;
 import jp.riken.brain.ni.samuraigraph.base.SGIPluginManager;
 import jp.riken.brain.ni.samuraigraph.base.SGPopupMenu;
@@ -19,7 +19,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.figure.SGILegendConstants;
 
-public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendConstants {
+public abstract class SGDataPopupMenu extends SGPopupMenu {
 
   private static final long serialVersionUID = 7831256502597635653L;
 
@@ -219,10 +219,10 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
       list.add(SGIConstants.MENUCMD_SEND_BACKWARD);
       list.add(SGIConstants.MENUCMD_SEND_TO_BACK);
     } else {
-      list.add(MENUCMD_MOVE_TO_TOP);
-      list.add(MENUCMD_MOVE_TO_UPPER);
-      list.add(MENUCMD_MOVE_TO_LOWER);
-      list.add(MENUCMD_MOVE_TO_BOTTOM);
+      list.add(SGILegendConstants.MENUCMD_MOVE_TO_TOP);
+      list.add(SGILegendConstants.MENUCMD_MOVE_TO_UPPER);
+      list.add(SGILegendConstants.MENUCMD_MOVE_TO_LOWER);
+      list.add(SGILegendConstants.MENUCMD_MOVE_TO_BOTTOM);
     }
     return list;
   }
@@ -294,7 +294,8 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
     List<PopupMenuItem> list = new ArrayList<PopupMenuItem>();
     SGData data = this.mGroupSet.getData();
 
-    PopupMenuItem fitAxisItem = new PopupMenuItem(SGIConstants.MENUCMD_FIT_AXES_TO_DATA, this.mGroupSet);
+    PopupMenuItem fitAxisItem =
+        new PopupMenuItem(SGIConstants.MENUCMD_FIT_AXES_TO_DATA, this.mGroupSet);
     List<PopupMenuItem> childList = this.getFitAxisChildList(this.mGroupSet);
     for (PopupMenuItem item : childList) {
       fitAxisItem.addChild(item);

@@ -12,7 +12,7 @@ public interface SGIVXYDataConstants extends SGIArrowConstants {
   public static final float DEFAULT_LINE_WIDTH = 1.5f;
 
   // Line Type
-  public static final int DEFAULT_LINE_TYPE = LINE_TYPE_SOLID;
+  public static final int DEFAULT_LINE_TYPE = SGILineConstants.LINE_TYPE_SOLID;
 
   // Color
   public static final Color DEFAULT_COLOR = Color.BLACK;

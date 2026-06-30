@@ -5,8 +5,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesHolder;
 import jp.riken.brain.ni.samuraigraph.figure.SGIScaleConstants;
 
-public interface SGIAxisScaleDialogObserver
-    extends SGIPropertyDialogObserver, SGITwoAxesHolder, SGIScaleConstants {
+public interface SGIAxisScaleDialogObserver extends SGIPropertyDialogObserver, SGITwoAxesHolder {
 
   public boolean hasValidXValue(final int location, final Number value);
 
@@ -14,7 +13,7 @@ public interface SGIAxisScaleDialogObserver
 
   public boolean isAxisScaleVisible();
 
-  public AXIS_LENGTH_MODE getAxisLengthMode();
+  public SGIScaleConstants.AXIS_LENGTH_MODE getAxisLengthMode();
 
   public double getXValue();
 
@@ -62,7 +61,7 @@ public interface SGIAxisScaleDialogObserver
 
   public boolean setAxisScaleVisible(final boolean b);
 
-  public boolean setAxisLengthMode(final AXIS_LENGTH_MODE mode);
+  public boolean setAxisLengthMode(final SGIScaleConstants.AXIS_LENGTH_MODE mode);
 
   public boolean setXValue(final double value);
 

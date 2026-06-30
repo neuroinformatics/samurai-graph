@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,6 +24,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIData;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;

@@ -1,10 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;

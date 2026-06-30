@@ -31,7 +31,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 
 /** This class has utility methods for the subclasses of SGFigureElement in this package. */
 public class SGUtilityForFigureElementJava2D
-    implements SGIFigureElementConstants, SGIDataCommandConstants, SGILineConstants {
+    implements SGIFigureElementConstants, SGIDataCommandConstants {
 
   /**
    * Draw an anchor around a focused object.
@@ -553,14 +553,14 @@ public class SGUtilityForFigureElementJava2D
     BasicStroke bs = null;
     switch (type) {
       // solid line
-      case LINE_TYPE_SOLID:
+      case SGILineConstants.LINE_TYPE_SOLID:
         {
           bs = new BasicStroke(width, cap, join);
           break;
         }
 
       // broken line
-      case LINE_TYPE_BROKEN:
+      case SGILineConstants.LINE_TYPE_BROKEN:
         {
           final float[] dash = {2.0f * width, width};
           bs = new BasicStroke(width, cap, join, miterLimit, dash, dashPhase);
@@ -568,7 +568,7 @@ public class SGUtilityForFigureElementJava2D
         }
 
       // dotted line
-      case LINE_TYPE_DOTTED:
+      case SGILineConstants.LINE_TYPE_DOTTED:
         {
           final float[] dash = {width};
           bs = new BasicStroke(width, cap, join, miterLimit, dash, dashPhase);
@@ -576,7 +576,7 @@ public class SGUtilityForFigureElementJava2D
         }
 
       // dashed line
-      case LINE_TYPE_DASHED:
+      case SGILineConstants.LINE_TYPE_DASHED:
         {
           final float[] dash = {4.0f * width, width, width, width};
           bs = new BasicStroke(width, cap, join, miterLimit, dash, dashPhase);
@@ -584,7 +584,7 @@ public class SGUtilityForFigureElementJava2D
         }
 
       // dashed line
-      case LINE_TYPE_DOUBLE_DASHED:
+      case SGILineConstants.LINE_TYPE_DOUBLE_DASHED:
         {
           final float[] dash = {4.0f * width, width, width, width, width, width};
           bs = new BasicStroke(width, cap, join, miterLimit, dash, dashPhase);

@@ -35,7 +35,6 @@ import org.w3c.dom.NodeList;
 
 class SGPropertyFileManager
     implements ActionListener,
-
         SGIApplicationConstants,
         SGIApplicationTextConstants,
         SGIPropertyFileConstants {
@@ -108,7 +107,9 @@ class SGPropertyFileManager
     try {
       ret =
           this.mPropertyFileCreator.create(
-              wnd, new SGExportParameter(SGIConstants.OPERATION.SAVE_TO_PROPERTY_FILE), versionString);
+              wnd,
+              new SGExportParameter(SGIConstants.OPERATION.SAVE_TO_PROPERTY_FILE),
+              versionString);
     } catch (IOException e) {
       SGUtility.showErrorMessageDialog(wnd, e.getMessage(), SGIConstants.TITLE_ERROR);
       ret = SGIConstants.ERROR_OPTION;
@@ -294,7 +295,12 @@ class SGPropertyFileManager
 
     if (!SGMainFunctions.USE_FOXTROT) {
       if (setPropertyFile(
-          wnd, doc, wDataArray, false, versionNumber, SGIConstants.LOAD_PROPERTIES_FROM_PROPERTY_FILE)) {
+          wnd,
+          doc,
+          wDataArray,
+          false,
+          versionNumber,
+          SGIConstants.LOAD_PROPERTIES_FROM_PROPERTY_FILE)) {
         result = Boolean.TRUE;
       }
     } else {

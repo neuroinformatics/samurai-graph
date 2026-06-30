@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -19,6 +18,7 @@ import javax.swing.SwingUtilities;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIMovable;
@@ -38,6 +38,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementScale.ScaleProperties;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementString;
+import jp.riken.brain.ni.samuraigraph.figure.SGILineAndStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIScaleConstants;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGAxisElement.AxisScaleChangeListener;
 import org.w3c.dom.Document;
@@ -68,7 +69,8 @@ class SGAxisScale extends SGDrawingElementScale2D
 
   private boolean mYInvertedFlag = false;
 
-  private AXIS_LENGTH_MODE mAxisLengthMode = AXIS_LENGTH_MODE.LENGTH_FIXED;
+  private SGIScaleConstants.AXIS_LENGTH_MODE mAxisLengthMode =
+      SGIScaleConstants.AXIS_LENGTH_MODE.LENGTH_FIXED;
 
   /** Flag whether this object is focused. */
   private boolean mSelectedFlag = false;
@@ -87,25 +89,26 @@ class SGAxisScale extends SGDrawingElementScale2D
 
     this.mAxisElement = aElement;
 
-    SGAxis xAxis = this.mAxisElement.getAxis(DEFAULT_SCALE_HORIZONTAL_AXIS);
-    SGAxis yAxis = this.mAxisElement.getAxis(DEFAULT_SCALE_VERTICAL_AXIS);
+    SGAxis xAxis = this.mAxisElement.getAxis(SGIScaleConstants.DEFAULT_SCALE_HORIZONTAL_AXIS);
+    SGAxis yAxis = this.mAxisElement.getAxis(SGIScaleConstants.DEFAULT_SCALE_VERTICAL_AXIS);
     this.mXAxis = xAxis;
     this.mYAxis = yAxis;
 
     this.setXAxisTitleDownSide(true);
     this.setYAxisTitleLeftSide(true);
 
-    this.setLineWidth(DEFAULT_SCALE_SYMBOL_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
-    this.setLineColor(DEFAULT_SCALE_SYMBOL_COLOR);
-    this.setSpace(DEFAULT_SCALE_SYMBOL_SPACE, SCALE_SPACE_UNIT);
+    this.setLineWidth(
+        SGIScaleConstants.DEFAULT_SCALE_SYMBOL_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
+    this.setLineColor(SGIScaleConstants.DEFAULT_SCALE_SYMBOL_COLOR);
+    this.setSpace(SGIScaleConstants.DEFAULT_SCALE_SYMBOL_SPACE, SGIScaleConstants.SCALE_SPACE_UNIT);
 
-    this.setFontSize(DEFAULT_SCALE_SYMBOL_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
-    this.setFontName(DEFAULT_SCALE_SYMBOL_FONT_NAME);
-    this.setFontStyle(DEFAULT_SCALE_SYMBOL_FONT_STYLE);
-    this.setFontColor(DEFAULT_SCALE_SYMBOL_COLOR);
+    this.setFontSize(SGIScaleConstants.DEFAULT_SCALE_SYMBOL_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
+    this.setFontName(SGIScaleConstants.DEFAULT_SCALE_SYMBOL_FONT_NAME);
+    this.setFontStyle(SGIScaleConstants.DEFAULT_SCALE_SYMBOL_FONT_STYLE);
+    this.setFontColor(SGIScaleConstants.DEFAULT_SCALE_SYMBOL_COLOR);
     this.setTextAngle(0.0f);
 
-    this.mAxisLengthMode = DEFAULT_AXIS_CHANGE_MODE;
+    this.mAxisLengthMode = SGIScaleConstants.DEFAULT_AXIS_CHANGE_MODE;
   }
 
   public SGAxis getXAxis() {
@@ -259,7 +262,7 @@ class SGAxisScale extends SGDrawingElementScale2D
     }
 
     // x value
-    str = el.getAttribute(KEY_SCALE_X_VALUE);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_X_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -270,7 +273,7 @@ class SGAxisScale extends SGDrawingElementScale2D
     }
 
     // y value
-    str = el.getAttribute(KEY_SCALE_Y_VALUE);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_Y_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -281,7 +284,7 @@ class SGAxisScale extends SGDrawingElementScale2D
     }
 
     // x length value
-    str = el.getAttribute(KEY_SCALE_X_AXIS_LENGTH_VALUE);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_X_AXIS_LENGTH_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -292,7 +295,7 @@ class SGAxisScale extends SGDrawingElementScale2D
     }
 
     // y length value
-    str = el.getAttribute(KEY_SCALE_Y_AXIS_LENGTH_VALUE);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_Y_AXIS_LENGTH_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -303,9 +306,9 @@ class SGAxisScale extends SGDrawingElementScale2D
     }
 
     // axis length mode
-    str = el.getAttribute(KEY_SCALE_AXIS_LENGTH_MODE);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_AXIS_LENGTH_MODE);
     if (str.length() != 0) {
-      AXIS_LENGTH_MODE mode = this.toMode(str);
+      SGIScaleConstants.AXIS_LENGTH_MODE mode = this.toMode(str);
       if (mode == null) {
         return false;
       }
@@ -390,9 +393,9 @@ class SGAxisScale extends SGDrawingElementScale2D
    */
   @Override
   public void translate(final float dx, final float dy) {
-    if (this.mMouseLocation == BODY
-        || this.mMouseLocation == ON_HORIZONTAL_STRING
-        || this.mMouseLocation == ON_VERTICAL_STRING
+    if (this.mMouseLocation == SGIScaleConstants.BODY
+        || this.mMouseLocation == SGIScaleConstants.ON_HORIZONTAL_STRING
+        || this.mMouseLocation == SGIScaleConstants.ON_VERTICAL_STRING
         || this.mMouseLocation == -1) {
       this.setLocation(this.getX() + dx, this.getY() + dy);
       this.updateAxisValuesWithShape();
@@ -416,9 +419,9 @@ class SGAxisScale extends SGDrawingElementScale2D
 
       this.mMouseLocation = this.getMouseLocation(x, y);
       Cursor cur = null;
-      if (this.mMouseLocation == BODY
-          || this.mMouseLocation == ON_HORIZONTAL_STRING
-          || this.mMouseLocation == ON_VERTICAL_STRING) {
+      if (this.mMouseLocation == SGIScaleConstants.BODY
+          || this.mMouseLocation == SGIScaleConstants.ON_HORIZONTAL_STRING
+          || this.mMouseLocation == SGIScaleConstants.ON_VERTICAL_STRING) {
         cur = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);
       } else {
         this.getCursor(this.mMouseLocation);
@@ -467,23 +470,23 @@ class SGAxisScale extends SGDrawingElementScale2D
 
     int location = -1;
     if (this.isInside(posHorizontalMiddle, radius, x, y)) {
-      location = HORIZONTAL_MIDDLE;
+      location = SGIScaleConstants.HORIZONTAL_MIDDLE;
     } else if (this.isInside(posVerticalMiddle, radius, x, y)) {
-      location = VERTICAL_MIDDLE;
+      location = SGIScaleConstants.VERTICAL_MIDDLE;
     } else if (this.isInside(posJoint, radius, x, y)) {
-      location = JOINT;
+      location = SGIScaleConstants.JOINT;
     } else if (this.isInside(posHorizontalEnd, radius, x, y)) {
-      location = HORIZONTAL_END;
+      location = SGIScaleConstants.HORIZONTAL_END;
     } else if (this.isInside(posVerticalEnd, radius, x, y)) {
-      location = VERTICAL_END;
+      location = SGIScaleConstants.VERTICAL_END;
     } else {
-      location = BODY;
+      location = SGIScaleConstants.BODY;
     }
     if (this.getHorizontalStringElement().contains(x, y)) {
-      location = ON_HORIZONTAL_STRING;
+      location = SGIScaleConstants.ON_HORIZONTAL_STRING;
     }
     if (this.getVerticalStringElement().contains(x, y)) {
-      location = ON_VERTICAL_STRING;
+      location = SGIScaleConstants.ON_VERTICAL_STRING;
     }
 
     return location;
@@ -492,35 +495,35 @@ class SGAxisScale extends SGDrawingElementScale2D
   private Cursor getCursor(final int location) {
     Cursor cur = null;
     switch (location) {
-      case HORIZONTAL_MIDDLE:
+      case SGIScaleConstants.HORIZONTAL_MIDDLE:
         if (!this.isFlippingVertical()) {
           cur = new Cursor(Cursor.N_RESIZE_CURSOR);
         } else {
           cur = new Cursor(Cursor.S_RESIZE_CURSOR);
         }
         break;
-      case VERTICAL_MIDDLE:
+      case SGIScaleConstants.VERTICAL_MIDDLE:
         if (!this.isFlippingHorizontal()) {
           cur = new Cursor(Cursor.W_RESIZE_CURSOR);
         } else {
           cur = new Cursor(Cursor.E_RESIZE_CURSOR);
         }
         break;
-      case JOINT:
+      case SGIScaleConstants.JOINT:
         if (this.isFlippingVertical() == this.isFlippingHorizontal()) {
           cur = new Cursor(Cursor.SW_RESIZE_CURSOR);
         } else {
           cur = new Cursor(Cursor.NW_RESIZE_CURSOR);
         }
         break;
-      case HORIZONTAL_END:
+      case SGIScaleConstants.HORIZONTAL_END:
         if (this.isFlippingVertical() == this.isFlippingHorizontal()) {
           cur = new Cursor(Cursor.SE_RESIZE_CURSOR);
         } else {
           cur = new Cursor(Cursor.NE_RESIZE_CURSOR);
         }
         break;
-      case VERTICAL_END:
+      case SGIScaleConstants.VERTICAL_END:
         {
           if (this.isFlippingVertical() == this.isFlippingHorizontal()) {
             cur = new Cursor(Cursor.NW_RESIZE_CURSOR);
@@ -529,8 +532,8 @@ class SGAxisScale extends SGDrawingElementScale2D
           }
           break;
         }
-      case ON_HORIZONTAL_STRING:
-      case ON_VERTICAL_STRING:
+      case SGIScaleConstants.ON_HORIZONTAL_STRING:
+      case SGIScaleConstants.ON_VERTICAL_STRING:
       default:
         cur = new Cursor(Cursor.HAND_CURSOR);
     }
@@ -554,9 +557,9 @@ class SGAxisScale extends SGDrawingElementScale2D
       return false;
     }
 
-    if (this.mMouseLocation == BODY
-        || this.mMouseLocation == ON_HORIZONTAL_STRING
-        || this.mMouseLocation == ON_VERTICAL_STRING) {
+    if (this.mMouseLocation == SGIScaleConstants.BODY
+        || this.mMouseLocation == SGIScaleConstants.ON_HORIZONTAL_STRING
+        || this.mMouseLocation == SGIScaleConstants.ON_VERTICAL_STRING) {
       if (this.isSelected()) {
         // do nothing
         return true;
@@ -592,17 +595,17 @@ class SGAxisScale extends SGDrawingElementScale2D
     // switch operation by different dragging point
 
     final int loc = this.mMouseLocation;
-    if (loc == HORIZONTAL_MIDDLE) {
+    if (loc == SGIScaleConstants.HORIZONTAL_MIDDLE) {
       sizeNewY = sizeOldY - diffY;
 
       y = yOld + sizeOldY - sizeNewY;
       h = sizeNewY;
-    } else if (loc == VERTICAL_MIDDLE) {
+    } else if (loc == SGIScaleConstants.VERTICAL_MIDDLE) {
       sizeNewX = sizeOldX - diffX;
 
       x = xOld + sizeOldX - sizeNewX;
       w = sizeNewX;
-    } else if (loc == JOINT) {
+    } else if (loc == SGIScaleConstants.JOINT) {
       sizeNewX = sizeOldX - diffX;
       sizeNewY = sizeOldY - diffY;
 
@@ -610,14 +613,14 @@ class SGAxisScale extends SGDrawingElementScale2D
       y = yOld + sizeOldY - sizeNewY;
       w = sizeNewX;
       h = sizeNewY;
-    } else if (loc == HORIZONTAL_END) {
+    } else if (loc == SGIScaleConstants.HORIZONTAL_END) {
       sizeNewX = sizeOldX + diffX;
       sizeNewY = sizeOldY - diffY;
 
       y = yOld + sizeOldY - sizeNewY;
       w = sizeNewX;
       h = sizeNewY;
-    } else if (loc == VERTICAL_END) {
+    } else if (loc == SGIScaleConstants.VERTICAL_END) {
       sizeNewX = sizeOldX - diffX;
       sizeNewY = sizeOldY + diffY;
 
@@ -641,7 +644,9 @@ class SGAxisScale extends SGDrawingElementScale2D
     temp.updateAxisValuesWithShape();
     temp.updateSizeWithAxisValues();
 
-    if (loc == JOINT || loc == HORIZONTAL_END || loc == VERTICAL_END) {
+    if (loc == SGIScaleConstants.JOINT
+        || loc == SGIScaleConstants.HORIZONTAL_END
+        || loc == SGIScaleConstants.VERTICAL_END) {
       final int location = this.getMouseLocation(e.getX(), e.getY());
       mAxisElement.setMouseCursor(this.getCursor(location));
     }
@@ -667,7 +672,8 @@ class SGAxisScale extends SGDrawingElementScale2D
   public String getCommandString() {
     StringBuffer sb = new StringBuffer();
     String scaleCommands =
-        SGCommandUtility.createCommandString(COM_SCALE, null, this.getCommandPropertyMap(null));
+        SGCommandUtility.createCommandString(
+            SGIScaleConstants.COM_SCALE, null, this.getCommandPropertyMap(null));
     sb.append(scaleCommands);
     return sb.toString();
   }
@@ -691,281 +697,334 @@ class SGAxisScale extends SGDrawingElementScale2D
       String key = itr.next();
       String value = map.getValueString(key);
 
-      if (COM_SCALE_VISIBLE.equalsIgnoreCase(key)) {
+      if (SGIScaleConstants.COM_SCALE_VISIBLE.equalsIgnoreCase(key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_SCALE_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setVisible(b);
-        result.putResult(COM_SCALE_VISIBLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_X_AXIS.equalsIgnoreCase(key)) {
+        result.putResult(SGIScaleConstants.COM_SCALE_VISIBLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_X_AXIS.equalsIgnoreCase(key)) {
         final int loc = SGUtility.getAxisLocation(value);
         if (loc == -1) {
-          result.putResult(COM_SCALE_X_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_X_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setXAxisLocation(loc) == false) {
-          result.putResult(COM_SCALE_X_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_X_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SCALE_X_AXIS, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_Y_AXIS.equalsIgnoreCase(key)) {
+        result.putResult(SGIScaleConstants.COM_SCALE_X_AXIS, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_Y_AXIS.equalsIgnoreCase(key)) {
         final int loc = SGUtility.getAxisLocation(value);
         if (loc == -1) {
-          result.putResult(COM_SCALE_Y_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_Y_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setYAxisLocation(loc) == false) {
-          result.putResult(COM_SCALE_Y_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_Y_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SCALE_Y_AXIS, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_LOCATION_X.equalsIgnoreCase(key)) {
+        result.putResult(SGIScaleConstants.COM_SCALE_Y_AXIS, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_LOCATION_X.equalsIgnoreCase(key)) {
         Double num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_SCALE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-          result.putResult(COM_SCALE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setXValue(num.doubleValue()) == false) {
-          result.putResult(COM_SCALE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SCALE_LOCATION_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_LOCATION_Y.equalsIgnoreCase(key)) {
+        result.putResult(SGIScaleConstants.COM_SCALE_LOCATION_X, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_LOCATION_Y.equalsIgnoreCase(key)) {
         Double num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_SCALE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-          result.putResult(COM_SCALE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setYValue(num.doubleValue()) == false) {
-          result.putResult(COM_SCALE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SCALE_LOCATION_Y, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_X_AXIS_VISIBLE.equalsIgnoreCase(key)) {
+        result.putResult(SGIScaleConstants.COM_SCALE_LOCATION_Y, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_X_AXIS_VISIBLE.equalsIgnoreCase(key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_SCALE_X_AXIS_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_X_AXIS_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setHorizontalVisible(b);
-        result.putResult(COM_SCALE_X_AXIS_VISIBLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_X_AXIS_LENGTH.equalsIgnoreCase(key)) {
+        result.putResult(SGIScaleConstants.COM_SCALE_X_AXIS_VISIBLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_X_AXIS_LENGTH.equalsIgnoreCase(key)) {
         Double num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_SCALE_X_AXIS_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_X_AXIS_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setXLengthValue(num.doubleValue()) == false) {
-          result.putResult(COM_SCALE_X_AXIS_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_X_AXIS_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SCALE_X_AXIS_LENGTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_X_AXIS_TITLE_DOWNSIDE.equalsIgnoreCase(key)) {
+        result.putResult(SGIScaleConstants.COM_SCALE_X_AXIS_LENGTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_DOWNSIDE.equalsIgnoreCase(key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_SCALE_X_AXIS_TITLE_DOWNSIDE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_DOWNSIDE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setHorizontalTextDownside(b);
-        result.putResult(COM_SCALE_X_AXIS_TITLE_DOWNSIDE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_X_AXIS_TITLE_TEXT.equalsIgnoreCase(key)) {
+        result.putResult(
+            SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_DOWNSIDE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_TEXT.equalsIgnoreCase(key)) {
         if (map.isDoubleQuoted(key) == false) {
-          result.putResult(COM_SCALE_X_AXIS_TITLE_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setHorizontalText(value) == false) {
-          result.putResult(COM_SCALE_X_AXIS_TITLE_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SCALE_X_AXIS_TITLE_TEXT, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_X_AXIS_TITLE_UNIT.equalsIgnoreCase(key)) {
+        result.putResult(
+            SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_TEXT, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_UNIT.equalsIgnoreCase(key)) {
         if (map.isDoubleQuoted(key) == false) {
-          result.putResult(COM_SCALE_X_AXIS_TITLE_UNIT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_UNIT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setHorizontalUnit(value) == false) {
-          result.putResult(COM_SCALE_X_AXIS_TITLE_UNIT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_UNIT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SCALE_X_AXIS_TITLE_UNIT, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_Y_AXIS_VISIBLE.equalsIgnoreCase(key)) {
+        result.putResult(
+            SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_UNIT, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_Y_AXIS_VISIBLE.equalsIgnoreCase(key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_SCALE_Y_AXIS_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_Y_AXIS_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setVerticalVisible(b);
-        result.putResult(COM_SCALE_Y_AXIS_VISIBLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_Y_AXIS_LENGTH.equalsIgnoreCase(key)) {
+        result.putResult(SGIScaleConstants.COM_SCALE_Y_AXIS_VISIBLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_Y_AXIS_LENGTH.equalsIgnoreCase(key)) {
         Double num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_SCALE_Y_AXIS_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_Y_AXIS_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setYLengthValue(num.doubleValue()) == false) {
-          result.putResult(COM_SCALE_Y_AXIS_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_Y_AXIS_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SCALE_Y_AXIS_LENGTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE.equalsIgnoreCase(key)) {
+        result.putResult(SGIScaleConstants.COM_SCALE_Y_AXIS_LENGTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE.equalsIgnoreCase(key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setVerticalTextLeftside(b);
-        result.putResult(COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_Y_AXIS_TITLE_TEXT.equalsIgnoreCase(key)) {
+        result.putResult(
+            SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_TEXT.equalsIgnoreCase(key)) {
         if (map.isDoubleQuoted(key) == false) {
-          result.putResult(COM_SCALE_Y_AXIS_TITLE_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setVerticalText(value) == false) {
-          result.putResult(COM_SCALE_Y_AXIS_TITLE_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_TEXT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SCALE_Y_AXIS_TITLE_TEXT, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_Y_AXIS_TITLE_UNIT.equalsIgnoreCase(key)) {
+        result.putResult(
+            SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_TEXT, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_UNIT.equalsIgnoreCase(key)) {
         if (map.isDoubleQuoted(key) == false) {
-          result.putResult(COM_SCALE_Y_AXIS_TITLE_UNIT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_UNIT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setVerticalUnit(value) == false) {
-          result.putResult(COM_SCALE_Y_AXIS_TITLE_UNIT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_UNIT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SCALE_Y_AXIS_TITLE_UNIT, SGPropertyResults.SUCCEEDED);
-        // } else if (COM_SCALE_AXIS_LENGTH_MODE.equalsIgnoreCase(key)) {
-        // AXIS_LENGTH_MODE mode = this.toMode(value);
+        result.putResult(
+            SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_UNIT, SGPropertyResults.SUCCEEDED);
+        // } else if (SGIScaleConstants.COM_SCALE_AXIS_LENGTH_MODE.equalsIgnoreCase(key)) {
+        // SGIScaleConstants.AXIS_LENGTH_MODE mode = this.toMode(value);
         // if (mode == null) {
-        // result.putResult(COM_SCALE_AXIS_LENGTH_MODE,
+        // result.putResult(SGIScaleConstants.COM_SCALE_AXIS_LENGTH_MODE,
         // SGPropertyResults.INVALID_INPUT_VALUE);
         // continue;
         // }
         // if (this.setAxisLengthMode(mode) == false) {
-        // result.putResult(COM_SCALE_AXIS_LENGTH_MODE,
+        // result.putResult(SGIScaleConstants.COM_SCALE_AXIS_LENGTH_MODE,
         // SGPropertyResults.INVALID_INPUT_VALUE);
         // continue;
         // }
-        // result.putResult(COM_SCALE_AXIS_LENGTH_MODE,
+        // result.putResult(SGIScaleConstants.COM_SCALE_AXIS_LENGTH_MODE,
         // SGPropertyResults.SUCCEEDED);
-      } else if (COM_SPACE.equalsIgnoreCase(key)) {
+      } else if (SGILineAndStringConstants.COM_SPACE.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_SPACE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILineAndStringConstants.COM_SPACE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setSpace(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_SPACE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILineAndStringConstants.COM_SPACE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SPACE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LINE_WIDTH.equalsIgnoreCase(key)) {
+        result.putResult(SGILineAndStringConstants.COM_SPACE, SGPropertyResults.SUCCEEDED);
+      } else if (SGILineAndStringConstants.COM_LINE_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILineAndStringConstants.COM_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILineAndStringConstants.COM_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_LINE_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGILineAndStringConstants.COM_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_LINE_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setLineColor(cl) == false) {
-            result.putResult(COM_SCALE_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIScaleConstants.COM_SCALE_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_SCALE_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIScaleConstants.COM_SCALE_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setLineColor(cl) == false) {
-            result.putResult(COM_SCALE_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIScaleConstants.COM_SCALE_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_SCALE_LINE_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FONT_NAME.equalsIgnoreCase(key)) {
+        result.putResult(SGIScaleConstants.COM_SCALE_LINE_COLOR, SGPropertyResults.SUCCEEDED);
+      } else if (SGILineAndStringConstants.COM_FONT_NAME.equalsIgnoreCase(key)) {
         final String name = SGUtility.findFontFamilyName(value);
         if (name == null) {
-          result.putResult(COM_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILineAndStringConstants.COM_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFontName(name) == false) {
-          result.putResult(COM_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILineAndStringConstants.COM_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FONT_NAME, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FONT_STYLE.equalsIgnoreCase(key)) {
+        result.putResult(SGILineAndStringConstants.COM_FONT_NAME, SGPropertyResults.SUCCEEDED);
+      } else if (SGILineAndStringConstants.COM_FONT_STYLE.equalsIgnoreCase(key)) {
         Integer style = SGUtilityText.getFontStyle(value);
         if (style == null) {
-          result.putResult(COM_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILineAndStringConstants.COM_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFontStyle(style.intValue()) == false) {
-          result.putResult(COM_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILineAndStringConstants.COM_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FONT_STYLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FONT_SIZE.equalsIgnoreCase(key)) {
+        result.putResult(SGILineAndStringConstants.COM_FONT_STYLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGILineAndStringConstants.COM_FONT_SIZE.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILineAndStringConstants.COM_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFontSize(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILineAndStringConstants.COM_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FONT_SIZE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_FONT_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGILineAndStringConstants.COM_FONT_SIZE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_FONT_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setStringColor(cl) == false) {
-            result.putResult(COM_SCALE_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIScaleConstants.COM_SCALE_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_SCALE_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIScaleConstants.COM_SCALE_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setStringColor(cl) == false) {
-            result.putResult(COM_SCALE_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIScaleConstants.COM_SCALE_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_SCALE_FONT_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_SCALE_FONT_ANGLE.equalsIgnoreCase(key)) {
+        result.putResult(SGIScaleConstants.COM_SCALE_FONT_COLOR, SGPropertyResults.SUCCEEDED);
+      } else if (SGIScaleConstants.COM_SCALE_FONT_ANGLE.equalsIgnoreCase(key)) {
         Float num = SGUtilityText.getFloat(value);
         if (num == null) {
-          result.putResult(COM_SCALE_FONT_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_FONT_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setTextAngle(num.floatValue()) == false) {
-          result.putResult(COM_SCALE_FONT_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIScaleConstants.COM_SCALE_FONT_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_SCALE_FONT_ANGLE, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIScaleConstants.COM_SCALE_FONT_ANGLE, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -985,13 +1044,13 @@ class SGAxisScale extends SGDrawingElementScale2D
     SGPropertyMap map = super.getPropertyFileMap(params);
     this.addProperties(
         map,
-        KEY_SCALE_X_VALUE,
-        KEY_SCALE_Y_VALUE,
+        SGIScaleConstants.KEY_SCALE_X_VALUE,
+        SGIScaleConstants.KEY_SCALE_Y_VALUE,
         KEY_X_AXIS_POSITION,
         KEY_Y_AXIS_POSITION,
-        KEY_SCALE_X_AXIS_LENGTH_VALUE,
-        KEY_SCALE_Y_AXIS_LENGTH_VALUE,
-        KEY_SCALE_AXIS_LENGTH_MODE);
+        SGIScaleConstants.KEY_SCALE_X_AXIS_LENGTH_VALUE,
+        SGIScaleConstants.KEY_SCALE_Y_AXIS_LENGTH_VALUE,
+        SGIScaleConstants.KEY_SCALE_AXIS_LENGTH_MODE);
     return map;
   }
 
@@ -1000,13 +1059,13 @@ class SGAxisScale extends SGDrawingElementScale2D
     SGPropertyMap map = super.getCommandPropertyMap(params);
     this.addProperties(
         map,
-        COM_SCALE_LOCATION_X,
-        COM_SCALE_LOCATION_Y,
-        COM_SCALE_X_AXIS,
-        COM_SCALE_Y_AXIS,
-        COM_SCALE_X_AXIS_LENGTH,
-        COM_SCALE_Y_AXIS_LENGTH,
-        COM_SCALE_AXIS_LENGTH_MODE);
+        SGIScaleConstants.COM_SCALE_LOCATION_X,
+        SGIScaleConstants.COM_SCALE_LOCATION_Y,
+        SGIScaleConstants.COM_SCALE_X_AXIS,
+        SGIScaleConstants.COM_SCALE_Y_AXIS,
+        SGIScaleConstants.COM_SCALE_X_AXIS_LENGTH,
+        SGIScaleConstants.COM_SCALE_Y_AXIS_LENGTH,
+        SGIScaleConstants.COM_SCALE_AXIS_LENGTH_MODE);
     return map;
   }
 
@@ -1035,26 +1094,26 @@ class SGAxisScale extends SGDrawingElementScale2D
 
   public static final String MODE_TEXT_VALUE_FIXED = "ValueFixed";
 
-  protected String toString(final AXIS_LENGTH_MODE mode) {
+  protected String toString(final SGIScaleConstants.AXIS_LENGTH_MODE mode) {
     String ret = null;
-    if (AXIS_LENGTH_MODE.ADAPTIVE.equals(mode)) {
+    if (SGIScaleConstants.AXIS_LENGTH_MODE.ADAPTIVE.equals(mode)) {
       ret = MODE_TEXT_ADAPTIVE;
-    } else if (AXIS_LENGTH_MODE.LENGTH_FIXED.equals(mode)) {
+    } else if (SGIScaleConstants.AXIS_LENGTH_MODE.LENGTH_FIXED.equals(mode)) {
       ret = MODE_TEXT_LENGTH_FIXED;
-    } else if (AXIS_LENGTH_MODE.VALUE_FIXED.equals(mode)) {
+    } else if (SGIScaleConstants.AXIS_LENGTH_MODE.VALUE_FIXED.equals(mode)) {
       ret = MODE_TEXT_VALUE_FIXED;
     }
     return ret;
   }
 
-  protected AXIS_LENGTH_MODE toMode(final String str) {
-    AXIS_LENGTH_MODE ret = null;
+  protected SGIScaleConstants.AXIS_LENGTH_MODE toMode(final String str) {
+    SGIScaleConstants.AXIS_LENGTH_MODE ret = null;
     if (MODE_TEXT_ADAPTIVE.equals(str)) {
-      ret = AXIS_LENGTH_MODE.ADAPTIVE;
+      ret = SGIScaleConstants.AXIS_LENGTH_MODE.ADAPTIVE;
     } else if (MODE_TEXT_LENGTH_FIXED.equals(str)) {
-      ret = AXIS_LENGTH_MODE.LENGTH_FIXED;
+      ret = SGIScaleConstants.AXIS_LENGTH_MODE.LENGTH_FIXED;
     } else if (MODE_TEXT_VALUE_FIXED.equals(str)) {
-      ret = AXIS_LENGTH_MODE.VALUE_FIXED;
+      ret = SGIScaleConstants.AXIS_LENGTH_MODE.VALUE_FIXED;
     }
     return ret;
   }
@@ -1157,7 +1216,7 @@ class SGAxisScale extends SGDrawingElementScale2D
 
   public boolean onMouseDragged(final MouseEvent e) {
     if (!this.isSelected()) {
-      this.mMouseLocation = BODY;
+      this.mMouseLocation = SGIScaleConstants.BODY;
       return false;
     }
     Point point = this.mAxisElement.getPressedPoint();
@@ -1355,10 +1414,10 @@ class SGAxisScale extends SGDrawingElementScale2D
   public void axisScaleChanged(SGAxis axis) {
     SGProperties prev = this.getProperties();
 
-    if (AXIS_LENGTH_MODE.VALUE_FIXED.equals(this.mAxisLengthMode)) {
+    if (SGIScaleConstants.AXIS_LENGTH_MODE.VALUE_FIXED.equals(this.mAxisLengthMode)) {
       this.updateSizeWithAxisValues();
 
-    } else if (AXIS_LENGTH_MODE.LENGTH_FIXED.equals(this.mAxisLengthMode)) {
+    } else if (SGIScaleConstants.AXIS_LENGTH_MODE.LENGTH_FIXED.equals(this.mAxisLengthMode)) {
       if (this.mXAxis.equals(axis)) {
         if (this.mHorizontalText == null) {
           final double diffValue = this.getDiffValue(true);
@@ -1374,7 +1433,7 @@ class SGAxisScale extends SGDrawingElementScale2D
       }
       this.updateNumberLabelsWithLocation();
 
-    } else if (AXIS_LENGTH_MODE.ADAPTIVE.equals(this.mAxisLengthMode)) {
+    } else if (SGIScaleConstants.AXIS_LENGTH_MODE.ADAPTIVE.equals(this.mAxisLengthMode)) {
       SGAxisElement el = this.mAxisElement.getAxisGroup(axis);
       final double stepValue = el.getStepValue();
       if (this.mXAxis.equals(axis)) {
@@ -1688,7 +1747,7 @@ class SGAxisScale extends SGDrawingElementScale2D
   }
 
   public Element createElement(final Document document, SGExportParameter params) {
-    Element element = document.createElement(TAG_NAME_SCALE);
+    Element element = document.createElement(SGIScaleConstants.TAG_NAME_SCALE);
     if (this.writeProperty(element, params) == false) {
       return null;
     }
@@ -1791,12 +1850,12 @@ class SGAxisScale extends SGDrawingElementScale2D
   }
 
   @Override
-  public AXIS_LENGTH_MODE getAxisLengthMode() {
+  public SGIScaleConstants.AXIS_LENGTH_MODE getAxisLengthMode() {
     return this.mAxisLengthMode;
   }
 
   @Override
-  public boolean setAxisLengthMode(AXIS_LENGTH_MODE mode) {
+  public boolean setAxisLengthMode(SGIScaleConstants.AXIS_LENGTH_MODE mode) {
     this.mAxisLengthMode = mode;
     return true;
   }
@@ -1938,7 +1997,7 @@ class SGAxisScale extends SGDrawingElementScale2D
   }
 }
 
-class AxisScaleProperties extends ScaleProperties implements SGIScaleConstants {
+class AxisScaleProperties extends ScaleProperties {
 
   double mXValue;
 
@@ -1952,7 +2011,7 @@ class AxisScaleProperties extends ScaleProperties implements SGIScaleConstants {
 
   double mYLengthValue;
 
-  AXIS_LENGTH_MODE mAxisLengthMode;
+  SGIScaleConstants.AXIS_LENGTH_MODE mAxisLengthMode;
 
   public AxisScaleProperties() {
     super();

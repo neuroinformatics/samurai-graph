@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.base.SGIVisible;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;

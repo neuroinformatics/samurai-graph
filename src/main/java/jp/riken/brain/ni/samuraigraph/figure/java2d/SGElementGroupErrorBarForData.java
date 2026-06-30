@@ -1,8 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.util.Iterator;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
@@ -11,6 +11,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementErrorBar;
+import jp.riken.brain.ni.samuraigraph.figure.SGIFigureDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYDataConstants;
 
 public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorBar
@@ -23,7 +24,9 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
     // set default properties
     this.setVisible(DEFAULT_ERROR_BAR_VISIBLE);
     this.setLineWidth(DEFAULT_ERROR_BAR_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
-    this.setHeadSize(DEFAULT_ERROR_BAR_SYMBOL_SIZE, ERROR_BAR_HEAD_SIZE_UNIT);
+    this.setHeadSize(
+        SGISXYDataConstants.DEFAULT_ERROR_BAR_SYMBOL_SIZE,
+        SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_UNIT);
     this.setHeadType(DEFAULT_ERROR_BAR_SYMBOL_TYPE);
     this.setLineWidth(DEFAULT_ERROR_BAR_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
     this.setErrorBarStyle(DEFAULT_ERROR_BAR_STYLE);
@@ -62,10 +65,10 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
         SGUtility.calcPropertyValue(
             size,
             unit,
-            ERROR_BAR_HEAD_SIZE_UNIT,
-            ERROR_BAR_HEAD_SIZE_MIN,
-            ERROR_BAR_HEAD_SIZE_MAX,
-            ERROR_BAR_HEAD_SIZE_MINIMAL_ORDER);
+            SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_UNIT,
+            SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_MIN,
+            SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_MAX,
+            SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_MINIMAL_ORDER);
     if (sNew == null) {
       return false;
     }
@@ -188,8 +191,9 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
         map,
         COM_DATA_ERROR_BAR_SYMBOL_SIZE,
         SGUtility.getExportValue(
-            this.getHeadSize(ERROR_BAR_HEAD_SIZE_UNIT), ERROR_BAR_HEAD_SIZE_MINIMAL_ORDER),
-        ERROR_BAR_HEAD_SIZE_UNIT);
+            this.getHeadSize(SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_UNIT),
+            SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_MINIMAL_ORDER),
+        SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, COM_DATA_ERROR_BAR_COLOR, this.getColor());
     SGPropertyUtility.addProperty(
         map,

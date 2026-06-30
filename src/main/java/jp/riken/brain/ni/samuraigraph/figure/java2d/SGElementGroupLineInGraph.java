@@ -1,6 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -11,10 +9,13 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
+import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 import org.w3c.dom.Element;
 
 /** A group of lines in the graph object. */
@@ -57,7 +58,8 @@ public class SGElementGroupLineInGraph extends SGElementGroupLineForData
     }
     el.setAttribute(SGIDrawingElementConstants.KEY_VISIBLE, Boolean.toString(this.mVisibleFlag));
     el.setAttribute(
-        KEY_LINE_CONNECT_ALL_EFFECTIVE_POINTS, Boolean.toString(this.mConnectingAllFlag));
+        SGILineConstants.KEY_LINE_CONNECT_ALL_EFFECTIVE_POINTS,
+        Boolean.toString(this.mConnectingAllFlag));
     return true;
   }
 

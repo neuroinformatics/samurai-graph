@@ -1,8 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.figure;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
@@ -10,8 +10,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
-public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStringSymbol
-    implements SGIScaleConstants {
+public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStringSymbol {
 
   protected float mWidth;
 
@@ -340,7 +339,12 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
   public boolean setTextAngle(float angle) {
     final Float aNew =
         SGUtility.calcPropertyValue(
-            angle, null, null, STRING_ANGLE_MIN, STRING_ANGLE_MAX, STRING_ANGLE_MINIMAL_ORDER);
+            angle,
+            null,
+            null,
+            SGIStringConstants.STRING_ANGLE_MIN,
+            SGIStringConstants.STRING_ANGLE_MAX,
+            SGIStringConstants.STRING_ANGLE_MINIMAL_ORDER);
     if (aNew == null) {
       return false;
     }
@@ -413,17 +417,21 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     this.addProperties(
         map,
         SGIDrawingElementConstants.KEY_VISIBLE,
-        KEY_SCALE_X_AXIS_VISIBLE,
-        KEY_SCALE_X_AXIS_TITLE_DOWNSIDE,
-        KEY_SCALE_Y_AXIS_VISIBLE,
-        KEY_SCALE_Y_AXIS_TITLE_LEFTSIDE,
-        KEY_SCALE_LINE_COLOR,
-        KEY_SCALE_FONT_COLOR,
-        KEY_SCALE_TEXT_ANGLE);
-    SGPropertyUtility.addProperty(map, KEY_SCALE_X_AXIS_TEXT, this.getHorizontalText());
-    SGPropertyUtility.addProperty(map, KEY_SCALE_Y_AXIS_TEXT, this.getVerticalText());
-    SGPropertyUtility.addProperty(map, KEY_SCALE_X_AXIS_UNIT, this.getHorizontalUnit());
-    SGPropertyUtility.addProperty(map, KEY_SCALE_Y_AXIS_UNIT, this.getVerticalUnit());
+        SGIScaleConstants.KEY_SCALE_X_AXIS_VISIBLE,
+        SGIScaleConstants.KEY_SCALE_X_AXIS_TITLE_DOWNSIDE,
+        SGIScaleConstants.KEY_SCALE_Y_AXIS_VISIBLE,
+        SGIScaleConstants.KEY_SCALE_Y_AXIS_TITLE_LEFTSIDE,
+        SGIScaleConstants.KEY_SCALE_LINE_COLOR,
+        SGIScaleConstants.KEY_SCALE_FONT_COLOR,
+        SGIScaleConstants.KEY_SCALE_TEXT_ANGLE);
+    SGPropertyUtility.addProperty(
+        map, SGIScaleConstants.KEY_SCALE_X_AXIS_TEXT, this.getHorizontalText());
+    SGPropertyUtility.addProperty(
+        map, SGIScaleConstants.KEY_SCALE_Y_AXIS_TEXT, this.getVerticalText());
+    SGPropertyUtility.addProperty(
+        map, SGIScaleConstants.KEY_SCALE_X_AXIS_UNIT, this.getHorizontalUnit());
+    SGPropertyUtility.addProperty(
+        map, SGIScaleConstants.KEY_SCALE_Y_AXIS_UNIT, this.getVerticalUnit());
     return map;
   }
 
@@ -432,22 +440,22 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     SGPropertyMap map = super.getCommandPropertyMap(params);
     this.addProperties(
         map,
-        COM_SCALE_VISIBLE,
-        COM_SCALE_X_AXIS_VISIBLE,
-        COM_SCALE_X_AXIS_TITLE_DOWNSIDE,
-        COM_SCALE_Y_AXIS_VISIBLE,
-        COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE,
-        COM_SCALE_LINE_COLOR,
-        COM_SCALE_FONT_COLOR,
-        COM_SCALE_FONT_ANGLE);
+        SGIScaleConstants.COM_SCALE_VISIBLE,
+        SGIScaleConstants.COM_SCALE_X_AXIS_VISIBLE,
+        SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_DOWNSIDE,
+        SGIScaleConstants.COM_SCALE_Y_AXIS_VISIBLE,
+        SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_LEFT_SIDE,
+        SGIScaleConstants.COM_SCALE_LINE_COLOR,
+        SGIScaleConstants.COM_SCALE_FONT_COLOR,
+        SGIScaleConstants.COM_SCALE_FONT_ANGLE);
     SGPropertyUtility.addQuotedStringProperty(
-        map, COM_SCALE_X_AXIS_TITLE_TEXT, this.getHorizontalText());
+        map, SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_TEXT, this.getHorizontalText());
     SGPropertyUtility.addQuotedStringProperty(
-        map, COM_SCALE_Y_AXIS_TITLE_TEXT, this.getVerticalText());
+        map, SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_TEXT, this.getVerticalText());
     SGPropertyUtility.addQuotedStringProperty(
-        map, COM_SCALE_X_AXIS_TITLE_UNIT, this.getHorizontalUnit());
+        map, SGIScaleConstants.COM_SCALE_X_AXIS_TITLE_UNIT, this.getHorizontalUnit());
     SGPropertyUtility.addQuotedStringProperty(
-        map, COM_SCALE_Y_AXIS_TITLE_UNIT, this.getVerticalUnit());
+        map, SGIScaleConstants.COM_SCALE_Y_AXIS_TITLE_UNIT, this.getVerticalUnit());
     return map;
   }
 
@@ -469,7 +477,10 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     SGPropertyUtility.addProperty(map, lineColorKey, this.getLineColor());
     SGPropertyUtility.addProperty(map, fontColorKey, this.getStringColor());
     SGPropertyUtility.addProperty(
-        map, angleKey, SGUtility.getExportValue(this.getTextAngle(), STRING_ANGLE_MINIMAL_ORDER));
+        map,
+        angleKey,
+        SGUtility.getExportValue(
+            this.getTextAngle(), SGIStringConstants.STRING_ANGLE_MINIMAL_ORDER));
   }
 
   public static class ScaleProperties extends LineAndStringProperties {
@@ -592,7 +603,7 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     }
 
     // x axis visible
-    str = el.getAttribute(KEY_SCALE_X_AXIS_VISIBLE);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_X_AXIS_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -602,7 +613,7 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     }
 
     // x axis title downside
-    str = el.getAttribute(KEY_SCALE_X_AXIS_TITLE_DOWNSIDE);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_X_AXIS_TITLE_DOWNSIDE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -612,19 +623,19 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     }
 
     // x axis text
-    str = el.getAttribute(KEY_SCALE_X_AXIS_TEXT);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_X_AXIS_TEXT);
     if (str.length() != 0) {
       this.setHorizontalText(str);
     }
 
     // x axis unit
-    str = el.getAttribute(KEY_SCALE_X_AXIS_UNIT);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_X_AXIS_UNIT);
     if (str.length() != 0) {
       this.setHorizontalUnit(str);
     }
 
     // y axis visible
-    str = el.getAttribute(KEY_SCALE_Y_AXIS_VISIBLE);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_Y_AXIS_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -634,7 +645,7 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     }
 
     // y axis title leftside
-    str = el.getAttribute(KEY_SCALE_Y_AXIS_TITLE_LEFTSIDE);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_Y_AXIS_TITLE_LEFTSIDE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -644,19 +655,19 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     }
 
     // y axis text
-    str = el.getAttribute(KEY_SCALE_Y_AXIS_TEXT);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_Y_AXIS_TEXT);
     if (str.length() != 0) {
       this.setVerticalText(str);
     }
 
     // y axis unit
-    str = el.getAttribute(KEY_SCALE_Y_AXIS_UNIT);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_Y_AXIS_UNIT);
     if (str.length() != 0) {
       this.setVerticalUnit(str);
     }
 
     // line color
-    str = el.getAttribute(KEY_SCALE_LINE_COLOR);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_LINE_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColorIncludingList(str);
       if (cl == null) {
@@ -668,7 +679,7 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     }
 
     // font color
-    str = el.getAttribute(KEY_SCALE_FONT_COLOR);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_FONT_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColorIncludingList(str);
       if (cl == null) {
@@ -680,7 +691,7 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     }
 
     // angle
-    str = el.getAttribute(KEY_SCALE_TEXT_ANGLE);
+    str = el.getAttribute(SGIScaleConstants.KEY_SCALE_TEXT_ANGLE);
     if (str.length() != 0) {
       num = SGUtilityText.getFloat(str);
       if (num == null) {

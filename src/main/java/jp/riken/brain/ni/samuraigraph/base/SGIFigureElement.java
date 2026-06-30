@@ -14,11 +14,7 @@ import org.w3c.dom.Element;
 
 /** An interface for objects on a figure. */
 public interface SGIFigureElement
-    extends SGIUndoable,
-        SGIPaintable,
-        SGINode,
-        SGIDisposable,
-        SGIFigureElementConstants {
+    extends SGIUndoable, SGIPaintable, SGINode, SGIDisposable, SGIFigureElementConstants {
 
   /**
    * @return

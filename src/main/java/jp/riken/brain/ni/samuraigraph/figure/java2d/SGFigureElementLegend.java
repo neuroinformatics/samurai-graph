@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -54,9 +53,11 @@ import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
+import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGrid;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementLegend;
@@ -97,9 +98,13 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementArrow;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroup;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSet;
 import jp.riken.brain.ni.samuraigraph.figure.SGIArrowConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGIAxisConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGILegendConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGILineAndStringConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGIRectangleConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYDataConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYZDataConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGIScaleConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIVXYDataConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
@@ -117,12 +122,10 @@ import org.w3c.dom.Element;
 /** The legend which displays symbols of data objects. */
 public class SGFigureElementLegend extends SGFigureElementForData
     implements SGIFigureElementLegend,
-        SGIStringConstants,
         CaretListener,
         DocumentListener,
         KeyListener,
         ActionListener,
-        SGILegendConstants,
         SGIMovable,
         SGILegendDialogObserver {
 
@@ -203,17 +206,19 @@ public class SGFigureElementLegend extends SGFigureElementForData
   private void init() {
 
     // set default values
-    this.setVisible(DEFAULT_LEGEND_VISIBLE);
-    this.setFontName(DEFAULT_LEGEND_FONT_NAME);
-    this.setFontSize(DEFAULT_LEGEND_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
-    this.setFontStyle(DEFAULT_LEGEND_FONT_STYLE);
-    this.setFontColor(DEFAULT_LEGEND_FONT_COLOR);
-    this.setFrameVisible(DEFAULT_LEGEND_FRAME_VISIBLE);
-    this.setFrameLineWidth(DEFAULT_LEGEND_FRAME_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
-    this.setFrameLineColor(DEFAULT_LEGEND_FRAME_COLOR);
-    this.setBackgroundColor(DEFAULT_LEGEND_BACKGROUND_COLOR);
-    this.setBackgroundTransparent(DEFAULT_LEGEND_BACKGROUND_TRANSPARENCY);
-    this.setSymbolSpan(DEFAULT_LEGEND_SYMBOL_SPAN, SYMBOL_SPAN_UNIT);
+    this.setVisible(SGILegendConstants.DEFAULT_LEGEND_VISIBLE);
+    this.setFontName(SGILegendConstants.DEFAULT_LEGEND_FONT_NAME);
+    this.setFontSize(SGILegendConstants.DEFAULT_LEGEND_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
+    this.setFontStyle(SGILegendConstants.DEFAULT_LEGEND_FONT_STYLE);
+    this.setFontColor(SGILegendConstants.DEFAULT_LEGEND_FONT_COLOR);
+    this.setFrameVisible(SGILegendConstants.DEFAULT_LEGEND_FRAME_VISIBLE);
+    this.setFrameLineWidth(
+        SGILegendConstants.DEFAULT_LEGEND_FRAME_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
+    this.setFrameLineColor(SGILegendConstants.DEFAULT_LEGEND_FRAME_COLOR);
+    this.setBackgroundColor(SGILegendConstants.DEFAULT_LEGEND_BACKGROUND_COLOR);
+    this.setBackgroundTransparent(SGILegendConstants.DEFAULT_LEGEND_BACKGROUND_TRANSPARENCY);
+    this.setSymbolSpan(
+        SGILegendConstants.DEFAULT_LEGEND_SYMBOL_SPAN, SGILegendConstants.SYMBOL_SPAN_UNIT);
   }
 
   /** Dispose this object. */
@@ -303,7 +308,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param data a data object
    * @param name the name of the data object
-   * @param id the ID to set
+   * @param id the SGIFigureElement.ID to set
    * @param infoMap the information map of data object
    * @return true if succeeded
    */
@@ -1625,10 +1630,10 @@ public class SGFigureElementLegend extends SGFigureElementForData
         SGUtility.calcPropertyValue(
             span,
             unit,
-            SYMBOL_SPAN_UNIT,
-            SYMBOL_SPAN_MIN,
-            SYMBOL_SPAN_MAX,
-            SYMBOL_SPAN_MINIMAL_ORDER);
+            SGILegendConstants.SYMBOL_SPAN_UNIT,
+            SGILegendConstants.SYMBOL_SPAN_MIN,
+            SGILegendConstants.SYMBOL_SPAN_MAX,
+            SGILegendConstants.SYMBOL_SPAN_MINIMAL_ORDER);
     if (sNew == null) {
       return false;
     }
@@ -1836,8 +1841,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
     this.mAxisElement = element;
 
     // set axes
-    SGAxis xAxis = this.mAxisElement.getAxis(DEFAULT_LEGEND_HORIZONTAL_AXIS);
-    SGAxis yAxis = this.mAxisElement.getAxis(DEFAULT_LEGEND_VERTICAL_AXIS);
+    SGAxis xAxis = this.mAxisElement.getAxis(SGILegendConstants.DEFAULT_LEGEND_HORIZONTAL_AXIS);
+    SGAxis yAxis = this.mAxisElement.getAxis(SGILegendConstants.DEFAULT_LEGEND_VERTICAL_AXIS);
     this.mXAxis = xAxis;
     this.mYAxis = yAxis;
 
@@ -2245,7 +2250,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
 
     // from the pop-up menu
-    if (command.equals(MENUCMD_HIDE)) {
+    if (command.equals(SGILegendConstants.MENUCMD_MOVE_TO_TOP)) {
       this.setVisible(false);
       repaint();
       this.setChanged(true);
@@ -2555,7 +2560,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return
    */
   public String getTagName() {
-    return TAG_NAME_LEGEND;
+    return SGIFigureElementLegend.TAG_NAME_LEGEND;
   }
 
   /** */
@@ -2597,19 +2602,19 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
 
     // set axes
-    str = element.getAttribute(KEY_X_AXIS_POSITION);
+    str = element.getAttribute(SGIFigureElementConstants.KEY_X_AXIS_POSITION);
     if (str.length() != 0) {
       SGAxis xAxis = this.mAxisElement.getAxis(str);
       this.mXAxis = xAxis;
     }
 
-    str = element.getAttribute(KEY_Y_AXIS_POSITION);
+    str = element.getAttribute(SGIFigureElementConstants.KEY_Y_AXIS_POSITION);
     if (str.length() != 0) {
       SGAxis yAxis = this.mAxisElement.getAxis(str);
       this.mYAxis = yAxis;
     }
 
-    str = element.getAttribute(KEY_X_VALUE);
+    str = element.getAttribute(SGIScaleConstants.KEY_SCALE_X_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -2624,7 +2629,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
       }
     }
 
-    str = element.getAttribute(KEY_Y_VALUE);
+    str = element.getAttribute(SGIScaleConstants.KEY_SCALE_Y_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -2714,7 +2719,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
 
     // set font name
-    str = element.getAttribute(KEY_FONT_NAME);
+    str = element.getAttribute(SGIStringConstants.KEY_FONT_NAME);
     if (str.length() != 0) {
       final String fontName = str;
       if (this.setFontName(fontName) == false) {
@@ -2723,7 +2728,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
 
     // set font size
-    str = element.getAttribute(KEY_FONT_SIZE);
+    str = element.getAttribute(SGIStringConstants.KEY_FONT_SIZE);
     if (str.length() != 0) {
       StringBuffer uFontSize = new StringBuffer();
       num = SGUtilityText.getNumber(str, uFontSize);
@@ -2736,7 +2741,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
 
     // set font style
-    str = element.getAttribute(KEY_FONT_STYLE);
+    str = element.getAttribute(SGIStringConstants.KEY_FONT_STYLE);
     if (str.length() != 0) {
       final Integer fontStyle = SGUtilityText.getFontStyle(str);
       if (fontStyle == null) {
@@ -2748,7 +2753,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
 
     // set the font color
-    str = element.getAttribute(KEY_STRING_COLORS);
+    str = element.getAttribute(SGIStringConstants.KEY_STRING_COLORS);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColor(str);
       if (cl == null) {
@@ -2761,7 +2766,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
     // set symbol span
     // SymbolSpan is appeared since ver. 0.9.1
-    str = element.getAttribute(KEY_SYMBOL_SPAN);
+    str = element.getAttribute(SGIFigureElementLegend.KEY_SYMBOL_SPAN);
     float symbolSpan;
     if (str.length() != 0) {
       num = SGUtilityText.getLengthInPoint(str);
@@ -2773,7 +2778,10 @@ public class SGFigureElementLegend extends SGFigureElementForData
       // for previous version before 0.9.1
       num =
           Float.valueOf(
-              (float) SGUtilityText.convertToPoint(DEFAULT_LEGEND_SYMBOL_SPAN, SYMBOL_SPAN_UNIT));
+              (float)
+                  SGUtilityText.convertToPoint(
+                      SGILegendConstants.DEFAULT_LEGEND_SYMBOL_SPAN,
+                      SGILegendConstants.SYMBOL_SPAN_UNIT));
       symbolSpan = num.floatValue();
     }
     if (this.setSymbolSpan(symbolSpan) == false) {
@@ -2866,10 +2874,10 @@ public class SGFigureElementLegend extends SGFigureElementForData
      */
     protected List<String> getMoveCommandList() {
       List<String> list = new ArrayList<String>();
-      list.add(MENUCMD_MOVE_TO_TOP);
-      list.add(MENUCMD_MOVE_TO_UPPER);
-      list.add(MENUCMD_MOVE_TO_LOWER);
-      list.add(MENUCMD_MOVE_TO_BOTTOM);
+      list.add(SGILegendConstants.MENUCMD_MOVE_TO_TOP);
+      list.add(SGILegendConstants.MENUCMD_MOVE_TO_UPPER);
+      list.add(SGILegendConstants.MENUCMD_MOVE_TO_LOWER);
+      list.add(SGILegendConstants.MENUCMD_MOVE_TO_BOTTOM);
       return list;
     }
 
@@ -3157,8 +3165,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
       // change
       this.notifyDataProperties(
           this.mTemporaryPropertiesInner,
-          SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT,
-          SGIFigureElement.NOTIFY_DATA_PROPERTIES_CHANGE_ON_COMMIT);
+          SGIFigureElementConstants.NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT,
+          SGIFigureElementConstants.NOTIFY_DATA_PROPERTIES_CHANGE_ON_COMMIT);
 
       // compare two properties
       SGProperties pTemp = this.mTemporaryPropertiesInner;
@@ -3191,8 +3199,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
       // change
       this.notifyDataProperties(
           this.mTemporaryPropertiesInner,
-          SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_CANCEL,
-          SGIFigureElement.NOTIFY_DATA_PROPERTIES_CHANGE_ON_CANCEL);
+          SGIFigureElementConstants.NOTIFY_DATA_STRUCTURE_CHANGE_ON_CANCEL,
+          SGIFigureElementConstants.NOTIFY_DATA_PROPERTIES_CHANGE_ON_CANCEL);
 
       // set temporary properties to drawing elements to cancel the change
       if (this.setProperties(this.mTemporaryPropertiesInner) == false) {
@@ -3223,8 +3231,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
       // change
       this.notifyDataProperties(
           this.mTemporaryPropertiesInner,
-          SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW,
-          SGIFigureElement.NOTIFY_DATA_PROPERTIES_CHANGE_ON_PREVIEW);
+          SGIFigureElementConstants.NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW,
+          SGIFigureElementConstants.NOTIFY_DATA_PROPERTIES_CHANGE_ON_PREVIEW);
 
       // update drawing elements
       if (this.updateWithData() == false) {
@@ -3269,15 +3277,15 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
         // show the property dialog of a legend
         SGFigureElementLegend.this.setPropertiesOfSelectedObjects(this);
-      } else if (command.equals(MENUCMD_MOVE_TO_TOP)) {
+      } else if (command.equals(SGILegendConstants.MENUCMD_MOVE_TO_TOP)) {
         moveChildToEnd(this.getID(), false);
-      } else if (command.equals(MENUCMD_MOVE_TO_UPPER)) {
+      } else if (command.equals(SGILegendConstants.MENUCMD_MOVE_TO_UPPER)) {
         moveChild(this.getID(), false);
-      } else if (command.equals(MENUCMD_MOVE_TO_LOWER)) {
+      } else if (command.equals(SGILegendConstants.MENUCMD_MOVE_TO_LOWER)) {
         moveChild(this.getID(), true);
-      } else if (command.equals(MENUCMD_MOVE_TO_BOTTOM)) {
+      } else if (command.equals(SGILegendConstants.MENUCMD_MOVE_TO_BOTTOM)) {
         moveChildToEnd(this.getID(), true);
-        // } else if (command.equals(SGIConstants.MENUCMD_ANIMATION)) {
+        // } else if (command.equals(SGIMovable.MENUCMD_ANIMATION)) {
         // this.mTempDataProperties = this.mData.getProperties();
         // notifyToListener(command);
         // doAnimation(this);
@@ -3414,11 +3422,12 @@ public class SGFigureElementLegend extends SGFigureElementForData
       return SGFigureElementLegend.this;
     }
 
-    public ELEMENT_TYPE getSelectedGroupType() {
+    public SGISXYDataConstants.ELEMENT_TYPE getSelectedGroupType() {
       return this.mSelectedGroupType;
     }
 
-    private ELEMENT_TYPE mSelectedGroupType = ELEMENT_TYPE.Void;
+    private SGISXYDataConstants.ELEMENT_TYPE mSelectedGroupType =
+        SGISXYDataConstants.ELEMENT_TYPE.Void;
 
     /**
      * The series index in multiple graph when this group set is created from the group set of
@@ -4129,17 +4138,17 @@ public class SGFigureElementLegend extends SGFigureElementForData
     boolean onMouseClicked(final MouseEvent e) {
       SGElementGroup group = this.getElementGroupAt(e.getX(), e.getY());
 
-      ELEMENT_TYPE type = ELEMENT_TYPE.Void;
+      SGISXYDataConstants.ELEMENT_TYPE type = SGISXYDataConstants.ELEMENT_TYPE.Void;
       if (group instanceof ElementGroupLine) {
-        type = ELEMENT_TYPE.Line;
+        type = SGISXYDataConstants.ELEMENT_TYPE.Line;
       } else if (group instanceof ElementGroupSymbol) {
-        type = ELEMENT_TYPE.Symbol;
+        type = SGISXYDataConstants.ELEMENT_TYPE.Symbol;
       } else if (group instanceof ElementGroupBar) {
-        type = ELEMENT_TYPE.Bar;
+        type = SGISXYDataConstants.ELEMENT_TYPE.Bar;
       } else if (group instanceof ElementGroupErrorBar) {
-        type = ELEMENT_TYPE.ErrorBar;
+        type = SGISXYDataConstants.ELEMENT_TYPE.ErrorBar;
       } else if (group instanceof ElementGroupTickLabels) {
-        type = ELEMENT_TYPE.TickLabel;
+        type = SGISXYDataConstants.ELEMENT_TYPE.TickLabel;
       }
       this.mSelectedGroupType = type;
 
@@ -5168,7 +5177,11 @@ public class SGFigureElementLegend extends SGFigureElementForData
           ElementGroupSetInLegendSXY gs =
               (ElementGroupSetInLegendSXY) this.mElementGroupSetList.get(ii);
           Color cl = model.eval((double) ii / (dataNum - 1));
-          SGLineStyle s = new SGLineStyle(DEFAULT_LINE_TYPE, cl, DEFAULT_LINE_WIDTH);
+          SGLineStyle s =
+              new SGLineStyle(
+                  SGISXYDataConstants.DEFAULT_LINE_TYPE,
+                  cl,
+                  SGILineAndStringConstants.DEFAULT_LINE_WIDTH);
           gs.setLineStyle(s);
           lineStyleList.add(s);
         }
@@ -5180,7 +5193,10 @@ public class SGFigureElementLegend extends SGFigureElementForData
           ElementGroupSetInLegendSXY gs =
               (ElementGroupSetInLegendSXY) this.mElementGroupSetList.get(ii);
           SGLineStyle s =
-              new SGLineStyle(DEFAULT_LINE_TYPE, DEFAULT_LINE_COLOR, DEFAULT_LINE_WIDTH);
+              new SGLineStyle(
+                  SGISXYDataConstants.DEFAULT_LINE_TYPE,
+                  SGIAxisConstants.DEFAULT_LINE_COLOR,
+                  SGILineAndStringConstants.DEFAULT_LINE_WIDTH);
           gs.setLineStyle(s);
 
           // set to line group of this group set
@@ -5366,7 +5382,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
      * Sets the properties of a child data object.
      *
      * @param map a map of properties
-     * @param childId ID of a child data object
+     * @param childId SGIFigureElement.ID of a child data object
      * @return the result of setting properties
      */
     @Override
@@ -6361,10 +6377,11 @@ public class SGFigureElementLegend extends SGFigureElementForData
       super();
 
       // set properties to the magnitude label
-      this.mMagnitudeString.setFontName(DEFAULT_LEGEND_FONT_NAME);
-      this.mMagnitudeString.setFontStyle(DEFAULT_LEGEND_FONT_STYLE);
-      this.mMagnitudeString.setFontSize(DEFAULT_LEGEND_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
-      this.mMagnitudeString.setColor(DEFAULT_LEGEND_FONT_COLOR);
+      this.mMagnitudeString.setFontName(SGILegendConstants.DEFAULT_LEGEND_FONT_NAME);
+      this.mMagnitudeString.setFontStyle(SGILegendConstants.DEFAULT_LEGEND_FONT_STYLE);
+      this.mMagnitudeString.setFontSize(
+          SGILegendConstants.DEFAULT_LEGEND_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
+      this.mMagnitudeString.setColor(SGILegendConstants.DEFAULT_LEGEND_FONT_COLOR);
     }
 
     /**
@@ -7546,9 +7563,9 @@ public class SGFigureElementLegend extends SGFigureElementForData
   // }
 
   /**
-   * Moves the data of given ID to the top or the bottom in legend.
+   * Moves the data of given SGIFigureElement.ID to the top or the bottom in legend.
    *
-   * @param id the ID of an object
+   * @param id the SGIFigureElement.ID of an object
    * @param toTop true to move to the top
    * @return true if succeeded
    */
@@ -7564,9 +7581,9 @@ public class SGFigureElementLegend extends SGFigureElementForData
   }
 
   /**
-   * Moves the data of given ID to upper or lower in legend.
+   * Moves the data of given SGIFigureElement.ID to upper or lower in legend.
    *
-   * @param id the ID of an object
+   * @param id the SGIFigureElement.ID of an object
    * @param toUpper true to move to upper
    * @return true if succeeded
    */
@@ -7600,205 +7617,247 @@ public class SGFigureElementLegend extends SGFigureElementForData
       String key = itr.next();
       String value = map.getValueString(key);
 
-      if (COM_LEGEND_AXIS_X.equalsIgnoreCase(key)) {
+      if (SGILegendConstants.COM_LEGEND_AXIS_X.equalsIgnoreCase(key)) {
         final int loc = SGUtility.getAxisLocation(value);
         if (loc == -1) {
-          result.putResult(COM_LEGEND_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setXAxisLocation(loc) == false) {
-          result.putResult(COM_LEGEND_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LEGEND_AXIS_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_AXIS_Y.equalsIgnoreCase(key)) {
+        result.putResult(SGILegendConstants.COM_LEGEND_AXIS_X, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_AXIS_Y.equalsIgnoreCase(key)) {
         final int loc = SGUtility.getAxisLocation(value);
         if (loc == -1) {
-          result.putResult(COM_LEGEND_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setYAxisLocation(loc) == false) {
-          result.putResult(COM_LEGEND_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LEGEND_AXIS_Y, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_LOCATION_X.equalsIgnoreCase(key)) {
+        result.putResult(SGILegendConstants.COM_LEGEND_AXIS_Y, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_LOCATION_X.equalsIgnoreCase(key)) {
         Double num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_LEGEND_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-          result.putResult(COM_LEGEND_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setXValue(num.doubleValue()) == false) {
-          result.putResult(COM_LEGEND_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LEGEND_LOCATION_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_LOCATION_Y.equalsIgnoreCase(key)) {
+        result.putResult(SGILegendConstants.COM_LEGEND_LOCATION_X, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_LOCATION_Y.equalsIgnoreCase(key)) {
         Double num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_LEGEND_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-          result.putResult(COM_LEGEND_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setYValue(num.doubleValue()) == false) {
-          result.putResult(COM_LEGEND_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LEGEND_LOCATION_Y, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_VISIBLE.equalsIgnoreCase(key)) {
+        result.putResult(SGILegendConstants.COM_LEGEND_LOCATION_Y, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_VISIBLE.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_LEGEND_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setVisible(b.booleanValue());
-        result.putResult(COM_LEGEND_VISIBLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_FONT_NAME.equalsIgnoreCase(key)) {
+        result.putResult(SGILegendConstants.COM_LEGEND_VISIBLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_FONT_NAME.equalsIgnoreCase(key)) {
         final String name = SGUtility.findFontFamilyName(value);
         if (name == null) {
-          result.putResult(COM_LEGEND_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFontName(name) == false) {
-          result.putResult(COM_LEGEND_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LEGEND_FONT_NAME, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_FONT_STYLE.equalsIgnoreCase(key)) {
+        result.putResult(SGILegendConstants.COM_LEGEND_FONT_NAME, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_FONT_STYLE.equalsIgnoreCase(key)) {
         Integer style = SGUtilityText.getFontStyle(value);
         if (style == null) {
-          result.putResult(COM_LEGEND_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFontStyle(style.intValue()) == false) {
-          result.putResult(COM_LEGEND_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LEGEND_FONT_STYLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_FONT_SIZE.equalsIgnoreCase(key)) {
+        result.putResult(SGILegendConstants.COM_LEGEND_FONT_STYLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_FONT_SIZE.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_LEGEND_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFontSize(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_LEGEND_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LEGEND_FONT_SIZE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_FONT_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGILegendConstants.COM_LEGEND_FONT_SIZE, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_FONT_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setFontColor(cl) == false) {
-            result.putResult(COM_LEGEND_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGILegendConstants.COM_LEGEND_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_LEGEND_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGILegendConstants.COM_LEGEND_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setFontColor(cl) == false) {
-            result.putResult(COM_LEGEND_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGILegendConstants.COM_LEGEND_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_LEGEND_FONT_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_FRAME_VISIBLE.equalsIgnoreCase(key)) {
+        result.putResult(SGILegendConstants.COM_LEGEND_FONT_COLOR, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_FRAME_VISIBLE.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_LEGEND_FRAME_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_FRAME_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFrameVisible(b.booleanValue()) == false) {
-          result.putResult(COM_LEGEND_FRAME_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_FRAME_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LEGEND_FRAME_VISIBLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_FRAME_LINE_WIDTH.equalsIgnoreCase(key)) {
+        result.putResult(SGILegendConstants.COM_LEGEND_FRAME_VISIBLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_FRAME_LINE_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_LEGEND_FRAME_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_FRAME_LINE_WIDTH,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFrameLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_LEGEND_FRAME_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_FRAME_LINE_WIDTH,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LEGEND_FRAME_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_FRAME_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(
+            SGILegendConstants.COM_LEGEND_FRAME_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_FRAME_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setFrameLineColor(cl) == false) {
-            result.putResult(COM_LEGEND_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGILegendConstants.COM_LEGEND_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_LEGEND_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGILegendConstants.COM_LEGEND_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setFrameLineColor(cl) == false) {
-            result.putResult(COM_LEGEND_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGILegendConstants.COM_LEGEND_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_LEGEND_FRAME_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_BACKGROUND_TRANSPARENCY.equalsIgnoreCase(key)) {
+        result.putResult(SGILegendConstants.COM_LEGEND_FRAME_COLOR, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_BACKGROUND_TRANSPARENCY.equalsIgnoreCase(key)) {
         final Integer num = SGUtilityText.getInteger(value, SGIConstants.percent);
         if (num == null) {
           result.putResult(
-              COM_LEGEND_BACKGROUND_TRANSPARENCY, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGILegendConstants.COM_LEGEND_BACKGROUND_TRANSPARENCY,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setBackgroundTransparent(num.intValue()) == false) {
           result.putResult(
-              COM_LEGEND_BACKGROUND_TRANSPARENCY, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGILegendConstants.COM_LEGEND_BACKGROUND_TRANSPARENCY,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LEGEND_BACKGROUND_TRANSPARENCY, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_BACKGROUND_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(
+            SGILegendConstants.COM_LEGEND_BACKGROUND_TRANSPARENCY, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_BACKGROUND_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setBackgroundColor(cl) == false) {
-            result.putResult(COM_LEGEND_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGILegendConstants.COM_LEGEND_BACKGROUND_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_LEGEND_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGILegendConstants.COM_LEGEND_BACKGROUND_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setBackgroundColor(cl) == false) {
-            result.putResult(COM_LEGEND_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGILegendConstants.COM_LEGEND_BACKGROUND_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_LEGEND_BACKGROUND_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_LEGEND_SYMBOL_SPAN.equalsIgnoreCase(key)) {
+        result.putResult(
+            SGILegendConstants.COM_LEGEND_BACKGROUND_COLOR, SGPropertyResults.SUCCEEDED);
+      } else if (SGILegendConstants.COM_LEGEND_SYMBOL_SPAN.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_LEGEND_SYMBOL_SPAN, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_SYMBOL_SPAN, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setSymbolSpan(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_LEGEND_SYMBOL_SPAN, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGILegendConstants.COM_LEGEND_SYMBOL_SPAN, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_LEGEND_SYMBOL_SPAN, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGILegendConstants.COM_LEGEND_SYMBOL_SPAN, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -7847,7 +7906,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
   public String getCommandString(SGExportParameter params) {
     StringBuffer sb = new StringBuffer();
     SGPropertyMap map = this.getPropertyMap();
-    sb.append(COM_LEGEND);
+    sb.append(SGILegendConstants.COM_LEGEND);
     sb.append('(');
     sb.append(map.toString());
     sb.append(")\n");
@@ -7863,46 +7922,60 @@ public class SGFigureElementLegend extends SGFigureElementForData
     SGPropertyMap map = new SGPropertyMap();
 
     // visible
-    SGPropertyUtility.addProperty(map, COM_LEGEND_VISIBLE, this.isVisible());
+    SGPropertyUtility.addProperty(map, SGILegendConstants.COM_LEGEND_VISIBLE, this.isVisible());
 
     // axis
     SGPropertyUtility.addProperty(
-        map, COM_LEGEND_AXIS_X, this.mAxisElement.getLocationName(this.mXAxis));
+        map, SGILegendConstants.COM_LEGEND_AXIS_X, this.mAxisElement.getLocationName(this.mXAxis));
     SGPropertyUtility.addProperty(
-        map, COM_LEGEND_AXIS_Y, this.mAxisElement.getLocationName(this.mYAxis));
+        map, SGILegendConstants.COM_LEGEND_AXIS_Y, this.mAxisElement.getLocationName(this.mYAxis));
 
     // location
-    SGPropertyUtility.addProperty(map, COM_LEGEND_LOCATION_X, this.getXValue());
-    SGPropertyUtility.addProperty(map, COM_LEGEND_LOCATION_Y, this.getYValue());
+    SGPropertyUtility.addProperty(map, SGILegendConstants.COM_LEGEND_LOCATION_X, this.getXValue());
+    SGPropertyUtility.addProperty(map, SGILegendConstants.COM_LEGEND_LOCATION_Y, this.getYValue());
 
     // font
-    SGPropertyUtility.addProperty(map, COM_LEGEND_FONT_NAME, this.getFontName());
-    SGPropertyUtility.addProperty(
-        map, COM_LEGEND_FONT_STYLE, SGUtilityText.getFontStyleName(this.getFontStyle()));
-    SGPropertyUtility.addProperty(
-        map, COM_LEGEND_FONT_SIZE, SGUtility.getExportFontSize(this.getFontSize()), SGIConstants.FONT_SIZE_UNIT);
-    SGPropertyUtility.addProperty(map, COM_LEGEND_FONT_COLOR, this.getFontColor());
-
-    // frame
-    SGPropertyUtility.addProperty(map, COM_LEGEND_FRAME_VISIBLE, this.isFrameVisible());
+    SGPropertyUtility.addProperty(map, SGILegendConstants.COM_LEGEND_FONT_NAME, this.getFontName());
     SGPropertyUtility.addProperty(
         map,
-        COM_LEGEND_FRAME_LINE_WIDTH,
+        SGILegendConstants.COM_LEGEND_FONT_STYLE,
+        SGUtilityText.getFontStyleName(this.getFontStyle()));
+    SGPropertyUtility.addProperty(
+        map,
+        SGILegendConstants.COM_LEGEND_FONT_SIZE,
+        SGUtility.getExportFontSize(this.getFontSize()),
+        SGIConstants.FONT_SIZE_UNIT);
+    SGPropertyUtility.addProperty(
+        map, SGILegendConstants.COM_LEGEND_FONT_COLOR, this.getFontColor());
+
+    // frame
+    SGPropertyUtility.addProperty(
+        map, SGILegendConstants.COM_LEGEND_FRAME_VISIBLE, this.isFrameVisible());
+    SGPropertyUtility.addProperty(
+        map,
+        SGILegendConstants.COM_LEGEND_FRAME_LINE_WIDTH,
         SGUtility.getExportLineWidth(this.getFrameLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
         SGIConstants.LINE_WIDTH_UNIT);
-    SGPropertyUtility.addProperty(map, COM_LEGEND_FRAME_COLOR, this.getFrameColor());
+    SGPropertyUtility.addProperty(
+        map, SGILegendConstants.COM_LEGEND_FRAME_COLOR, this.getFrameColor());
 
     // background
     SGPropertyUtility.addProperty(
-        map, COM_LEGEND_BACKGROUND_TRANSPARENCY, this.getBackgroundTransparency(), SGIConstants.percent);
-    SGPropertyUtility.addProperty(map, COM_LEGEND_BACKGROUND_COLOR, this.getBackgroundColor());
+        map,
+        SGILegendConstants.COM_LEGEND_BACKGROUND_TRANSPARENCY,
+        this.getBackgroundTransparency(),
+        SGIConstants.percent);
+    SGPropertyUtility.addProperty(
+        map, SGILegendConstants.COM_LEGEND_BACKGROUND_COLOR, this.getBackgroundColor());
 
     // span
     SGPropertyUtility.addProperty(
         map,
-        COM_LEGEND_SYMBOL_SPAN,
-        SGUtility.getExportValue(this.getSymbolSpan(SYMBOL_SPAN_UNIT), SYMBOL_SPAN_MINIMAL_ORDER),
-        SYMBOL_SPAN_UNIT);
+        SGILegendConstants.COM_LEGEND_SYMBOL_SPAN,
+        SGUtility.getExportValue(
+            this.getSymbolSpan(SGILegendConstants.SYMBOL_SPAN_UNIT),
+            SGILegendConstants.SYMBOL_SPAN_MINIMAL_ORDER),
+        SGILegendConstants.SYMBOL_SPAN_UNIT);
 
     return map;
   }
@@ -7916,46 +7989,63 @@ public class SGFigureElementLegend extends SGFigureElementForData
     SGPropertyMap map = new SGPropertyMap();
 
     // visible
-    SGPropertyUtility.addProperty(map, KEY_LEGEND_VISIBLE, this.isVisible());
+    SGPropertyUtility.addProperty(map, SGIFigureElementLegend.KEY_LEGEND_VISIBLE, this.isVisible());
 
     // axis
     SGPropertyUtility.addProperty(
-        map, KEY_X_AXIS_POSITION, this.mAxisElement.getLocationName(this.mXAxis));
-    SGPropertyUtility.addProperty(
-        map, KEY_Y_AXIS_POSITION, this.mAxisElement.getLocationName(this.mYAxis));
-
-    // location
-    SGPropertyUtility.addProperty(map, KEY_X_VALUE, this.getXValue());
-    SGPropertyUtility.addProperty(map, KEY_Y_VALUE, this.getYValue());
-
-    // font
-    SGPropertyUtility.addProperty(map, KEY_FONT_NAME, this.getFontName());
-    SGPropertyUtility.addProperty(
-        map, KEY_FONT_STYLE, SGUtilityText.getFontStyleName(this.getFontStyle()));
-    SGPropertyUtility.addProperty(
-        map, KEY_FONT_SIZE, SGUtility.getExportFontSize(this.getFontSize()), SGIConstants.FONT_SIZE_UNIT);
-    SGPropertyUtility.addProperty(map, KEY_STRING_COLORS, this.getFontColor());
-
-    // frame
-    SGPropertyUtility.addProperty(map, KEY_FRAME_VISIBLE, this.isFrameVisible());
+        map,
+        SGIFigureElementConstants.KEY_X_AXIS_POSITION,
+        this.mAxisElement.getLocationName(this.mXAxis));
     SGPropertyUtility.addProperty(
         map,
-        KEY_FRAME_LINE_WIDTH,
+        SGIFigureElementConstants.KEY_Y_AXIS_POSITION,
+        this.mAxisElement.getLocationName(this.mYAxis));
+
+    // location
+    SGPropertyUtility.addProperty(map, SGIScaleConstants.KEY_SCALE_X_VALUE, this.getXValue());
+    SGPropertyUtility.addProperty(map, SGIScaleConstants.KEY_SCALE_Y_VALUE, this.getYValue());
+
+    // font
+    SGPropertyUtility.addProperty(map, SGIStringConstants.KEY_FONT_NAME, this.getFontName());
+    SGPropertyUtility.addProperty(
+        map,
+        SGIStringConstants.KEY_FONT_STYLE,
+        SGUtilityText.getFontStyleName(this.getFontStyle()));
+    SGPropertyUtility.addProperty(
+        map,
+        SGIStringConstants.KEY_FONT_SIZE,
+        SGUtility.getExportFontSize(this.getFontSize()),
+        SGIConstants.FONT_SIZE_UNIT);
+    SGPropertyUtility.addProperty(map, SGIStringConstants.KEY_STRING_COLORS, this.getFontColor());
+
+    // frame
+    SGPropertyUtility.addProperty(
+        map, SGIFigureElementLegend.KEY_FRAME_VISIBLE, this.isFrameVisible());
+    SGPropertyUtility.addProperty(
+        map,
+        SGIFigureElementLegend.KEY_FRAME_LINE_WIDTH,
         SGUtility.getExportLineWidth(this.getFrameLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
         SGIConstants.LINE_WIDTH_UNIT);
-    SGPropertyUtility.addProperty(map, KEY_FRAME_LINE_COLOR, this.getFrameColor());
+    SGPropertyUtility.addProperty(
+        map, SGIFigureElementLegend.KEY_FRAME_LINE_COLOR, this.getFrameColor());
 
     // background
     SGPropertyUtility.addProperty(
-        map, KEY_BACKGROUND_TRANSPARENT, this.getBackgroundTransparency(), SGIConstants.percent);
-    SGPropertyUtility.addProperty(map, KEY_BACKGROUND_COLOR, this.getBackgroundColor());
+        map,
+        SGIRectangleConstants.KEY_BACKGROUND_TRANSPARENT,
+        this.getBackgroundTransparency(),
+        SGIConstants.percent);
+    SGPropertyUtility.addProperty(
+        map, SGIFigureElementLegend.KEY_BACKGROUND_COLOR, this.getBackgroundColor());
 
     // span
     SGPropertyUtility.addProperty(
         map,
-        KEY_SYMBOL_SPAN,
-        SGUtility.getExportValue(this.getSymbolSpan(SYMBOL_SPAN_UNIT), SYMBOL_SPAN_MINIMAL_ORDER),
-        SYMBOL_SPAN_UNIT);
+        SGIFigureElementLegend.KEY_SYMBOL_SPAN,
+        SGUtility.getExportValue(
+            this.getSymbolSpan(SGILegendConstants.SYMBOL_SPAN_UNIT),
+            SGILegendConstants.SYMBOL_SPAN_MINIMAL_ORDER),
+        SGILegendConstants.SYMBOL_SPAN_UNIT);
 
     return map;
   }

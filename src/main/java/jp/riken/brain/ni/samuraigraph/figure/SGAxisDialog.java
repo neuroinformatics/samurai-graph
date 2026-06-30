@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -29,6 +28,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGDateInputDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGPeriod;
 import jp.riken.brain.ni.samuraigraph.base.SGPeriodInputDialog;
@@ -39,7 +39,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** A dialog to set the properties of axes. */
-public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, SGIStringConstants {
+public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants {
 
   // serialVersionUID
   private static final long serialVersionUID = 7038049338687502580L;
@@ -1283,8 +1283,8 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
             0.0,
             SPACE_BETWEEN_LINE_AND_NUMBERS_MIN,
             SPACE_BETWEEN_LINE_AND_NUMBERS_MAX,
-            SPACE_STEP),
-        SPACE_UNIT,
+            SGILineAndStringConstants.SPACE_STEP),
+        SGILineAndStringConstants.SPACE_UNIT,
         SPACE_FRAC_DIGIT_MIN,
         SPACE_FRAC_DIGIT_MAX);
 
@@ -1294,8 +1294,8 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
             0.0,
             SPACE_BETWEEN_TITLE_AND_NUMBERS_MIN,
             SPACE_BETWEEN_TITLE_AND_NUMBERS_MAX,
-            SPACE_STEP),
-        SPACE_UNIT,
+            SGILineAndStringConstants.SPACE_STEP),
+        SGILineAndStringConstants.SPACE_UNIT,
         SPACE_FRAC_DIGIT_MIN,
         SPACE_FRAC_DIGIT_MAX);
 
@@ -1315,10 +1315,14 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
 
     // angle
     this.mNumberAngleSpinner.initProperties(
-        new SpinnerNumberModel(0.0, STRING_ANGLE_MIN, STRING_ANGLE_MAX, STRING_ANGLE_STEP),
+        new SpinnerNumberModel(
+            0.0,
+            SGIStringConstants.STRING_ANGLE_MIN,
+            SGIStringConstants.STRING_ANGLE_MAX,
+            SGIStringConstants.STRING_ANGLE_STEP),
         SGIConstants.degree,
-        STRING_ANGLE_FRAC_DIFIT_MIN,
-        STRING_ANGLE_FRAC_DIFIT_MAX);
+        SGIStringConstants.STRING_ANGLE_FRAC_DIFIT_MIN,
+        SGIStringConstants.STRING_ANGLE_FRAC_DIFIT_MAX);
 
     // exponent
     this.mExponentSpinner.initProperties(
@@ -2349,12 +2353,14 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
       axisLineVisibleArray[ii] = l.isAxisLineVisible();
       axisLineWidthArray[ii] = l.getAxisLineWidth(SGIConstants.LINE_WIDTH_UNIT);
       axisLineColorArray[ii] = l.getAxisLineColor();
-      spaceLineAndNumbersArray[ii] = l.getSpaceAxisLineAndNumbers(SPACE_UNIT);
+      spaceLineAndNumbersArray[ii] =
+          l.getSpaceAxisLineAndNumbers(SGILineAndStringConstants.SPACE_UNIT);
 
       // title
       titleVisibleArray[ii] = l.isTitleVisible();
       titleTextArray[ii] = l.getTitleString();
-      spaceTitleAndNumbersArray[ii] = l.getSpaceTitleAndNumbers(SPACE_UNIT);
+      spaceTitleAndNumbersArray[ii] =
+          l.getSpaceTitleAndNumbers(SGILineAndStringConstants.SPACE_UNIT);
       titleShiftFromCenterArray[ii] = l.getTitleShiftFromCenter(TITLE_SHIFT_UNIT);
       titleFontNameArray[ii] = l.getTitleFontName();
       titleFontStyleArray[ii] = l.getTitleFontStyle();
@@ -2887,7 +2893,8 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     }
 
     if (spaceLineAndNumbers != null) {
-      axis.setSpaceAxisLineAndNumbers(spaceLineAndNumbers.floatValue(), SPACE_UNIT);
+      axis.setSpaceAxisLineAndNumbers(
+          spaceLineAndNumbers.floatValue(), SGILineAndStringConstants.SPACE_UNIT);
     }
 
     if (titleVisible != null) {
@@ -2899,7 +2906,8 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     }
 
     if (spaceTitleAndNumbers != null) {
-      axis.setSpaceTitleAndNumbers(spaceTitleAndNumbers.floatValue(), SPACE_UNIT);
+      axis.setSpaceTitleAndNumbers(
+          spaceTitleAndNumbers.floatValue(), SGILineAndStringConstants.SPACE_UNIT);
     }
 
     if (titleShiftFromCenter != null) {

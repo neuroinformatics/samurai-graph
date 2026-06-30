@@ -1,8 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
 /** Constants for arrows. */
-public interface SGIArrowConstants
-    extends SGILineConstants, SGISymbolConstants, SGIFigureDrawingElementConstants {
+public interface SGIArrowConstants {
 
   /*
    * Constants for the types of the head.
@@ -18,14 +17,14 @@ public interface SGIArrowConstants
   public static final int[] ARROW_SYMBOL_TYPE_ARRAY = {
     SYMBOL_TYPE_ARROW_HEAD,
     SYMBOL_TYPE_ARROW,
-    SYMBOL_TYPE_CIRCLE,
-    SYMBOL_TYPE_TRIANGLE,
-    SYMBOL_TYPE_INVERTED_TRIANGLE,
-    SYMBOL_TYPE_SQUARE,
-    SYMBOL_TYPE_DIAMOND,
+    SGISymbolConstants.SYMBOL_TYPE_CIRCLE,
+    SGISymbolConstants.SYMBOL_TYPE_TRIANGLE,
+    SGISymbolConstants.SYMBOL_TYPE_INVERTED_TRIANGLE,
+    SGISymbolConstants.SYMBOL_TYPE_SQUARE,
+    SGISymbolConstants.SYMBOL_TYPE_DIAMOND,
     SYMBOL_TYPE_TRANSVERSELINE,
-    SYMBOL_TYPE_CROSS,
-    SYMBOL_TYPE_PLUS
+    SGISymbolConstants.SYMBOL_TYPE_CROSS,
+    SGISymbolConstants.SYMBOL_TYPE_PLUS
   };
 
   /*
@@ -42,13 +41,13 @@ public interface SGIArrowConstants
   final String ARROW_SYMBOL_NAME_ARRAY[] = {
     SYMBOL_NAME_ARROW_HEAD,
     SYMBOL_NAME_ARROW,
-    SYMBOL_NAME_CIRCLE,
-    SYMBOL_NAME_TRIANGLE,
-    SYMBOL_NAME_INVERTED_TRIANGLE,
-    SYMBOL_NAME_SQUARE,
-    SYMBOL_NAME_DIAMOND,
+    SGISymbolConstants.SYMBOL_NAME_CIRCLE,
+    SGISymbolConstants.SYMBOL_NAME_TRIANGLE,
+    SGISymbolConstants.SYMBOL_NAME_INVERTED_TRIANGLE,
+    SGISymbolConstants.SYMBOL_NAME_SQUARE,
+    SGISymbolConstants.SYMBOL_NAME_DIAMOND,
     SYMBOL_NAME_TRANSVERSE_LINE,
-    SYMBOL_NAME_CROSS,
+    SGISymbolConstants.SYMBOL_NAME_CROSS,
     SYMBOL_NAME_VOID
   };
 
@@ -56,11 +55,12 @@ public interface SGIArrowConstants
   // Arrow head size
   //
 
-  public static final String ARROW_HEAD_SIZE_UNIT = SYMBOL_SIZE_UNIT;
+  public static final String ARROW_HEAD_SIZE_UNIT =
+      SGIFigureDrawingElementConstants.SYMBOL_SIZE_UNIT;
 
-  public static final double ARROW_HEAD_SIZE_MIN = SYMBOL_SIZE_MIN;
+  public static final double ARROW_HEAD_SIZE_MIN = SGIFigureDrawingElementConstants.SYMBOL_SIZE_MIN;
 
-  public static final double ARROW_HEAD_SIZE_MAX = SYMBOL_SIZE_MAX;
+  public static final double ARROW_HEAD_SIZE_MAX = SGIFigureDrawingElementConstants.SYMBOL_SIZE_MAX;
 
   public static final double ARROW_HEAD_SIZE_STEP = 0.05;
 
@@ -96,8 +96,8 @@ public interface SGIArrowConstants
 
   public static final String TAG_NAME_ARROW = "Arrow";
 
-  // public static final String KEY_LINE_WIDTH = "LineWidth";
-  // public static final String KEY_LINE_TYPE = "LineType";
+  // public static final String SGILineConstants.KEY_LINE_WIDTH = "LineWidth";
+  // public static final String SGILineConstants.KEY_LINE_TYPE = "LineType";
   public static final String KEY_HEAD_SIZE = "HeadSize";
 
   public static final String KEY_START_HEAD_TYPE = "StartHeadType";

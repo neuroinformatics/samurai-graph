@@ -1,11 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.figure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Font;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 
-public interface SGILineAndStringConstants extends SGIStringConstants {
+public final class SGILineAndStringConstants {
 
   //
   // Space between the horizontal line and the symbol

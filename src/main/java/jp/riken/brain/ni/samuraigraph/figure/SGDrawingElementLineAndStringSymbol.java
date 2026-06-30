@@ -1,9 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
@@ -12,8 +12,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
-public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingElement
-    implements SGILineAndStringConstants {
+public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingElement {
 
   /** The location. */
   protected SGTuple2f mLocation = new SGTuple2f();
@@ -186,7 +185,12 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
   public boolean setSpace(final float space, final String unit) {
     final Float sNew =
         SGUtility.calcPropertyValue(
-            space, unit, SPACE_UNIT, SPACE_MIN, SPACE_MAX, SPACE_MINIMAL_ORDER);
+            space,
+            unit,
+            SGILineAndStringConstants.SPACE_UNIT,
+            SGILineAndStringConstants.SPACE_MIN,
+            SGILineAndStringConstants.SPACE_MAX,
+            SGILineAndStringConstants.SPACE_MINIMAL_ORDER);
     if (sNew == null) {
       return false;
     }
@@ -383,14 +387,24 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
     SGPropertyMap map = new SGPropertyMap();
     this.addProperties(
-        map, KEY_FONT_NAME, KEY_FONT_SIZE, KEY_FONT_STYLE, KEY_LINE_WIDTH, KEY_SPACE);
+        map,
+        SGIStringConstants.KEY_FONT_NAME,
+        SGIStringConstants.KEY_FONT_SIZE,
+        SGIStringConstants.KEY_FONT_STYLE,
+        SGILineConstants.KEY_LINE_WIDTH,
+        SGILineAndStringConstants.KEY_SPACE);
     return map;
   }
 
   public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
     SGPropertyMap map = new SGPropertyMap();
     this.addProperties(
-        map, COM_FONT_NAME, COM_FONT_SIZE, COM_FONT_STYLE, COM_LINE_WIDTH, COM_SPACE);
+        map,
+        SGILineAndStringConstants.COM_FONT_NAME,
+        SGILineAndStringConstants.COM_FONT_SIZE,
+        SGILineAndStringConstants.COM_FONT_STYLE,
+        SGILineAndStringConstants.COM_LINE_WIDTH,
+        SGILineAndStringConstants.COM_SPACE);
     return map;
   }
 
@@ -417,8 +431,10 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     SGPropertyUtility.addProperty(
         map,
         spaceKey,
-        SGUtility.getExportValue(this.getSpace(SPACE_UNIT), SPACE_MINIMAL_ORDER),
-        SPACE_UNIT);
+        SGUtility.getExportValue(
+            this.getSpace(SGILineAndStringConstants.SPACE_UNIT),
+            SGILineAndStringConstants.SPACE_MINIMAL_ORDER),
+        SGILineAndStringConstants.SPACE_UNIT);
   }
 
   public boolean readProperty(final Element el) {
@@ -426,7 +442,7 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     Number num = null;
 
     // font name
-    str = el.getAttribute(KEY_FONT_NAME);
+    str = el.getAttribute(SGIStringConstants.KEY_FONT_NAME);
     if (str.length() != 0) {
       final String fontName = str;
       if (this.setFontName(fontName) == false) {
@@ -435,7 +451,7 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     }
 
     // font size
-    str = el.getAttribute(KEY_FONT_SIZE);
+    str = el.getAttribute(SGIStringConstants.KEY_FONT_SIZE);
     if (str.length() != 0) {
       StringBuffer uFontSize = new StringBuffer();
       num = SGUtilityText.getNumber(str, uFontSize);
@@ -449,7 +465,7 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     }
 
     // font style
-    str = el.getAttribute(KEY_FONT_STYLE);
+    str = el.getAttribute(SGIStringConstants.KEY_FONT_STYLE);
     if (str.length() != 0) {
       final Integer fontStyle = SGUtilityText.getFontStyle(str);
       if (fontStyle == null) {
@@ -461,7 +477,7 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     }
 
     // line width
-    str = el.getAttribute(KEY_LINE_WIDTH);
+    str = el.getAttribute(SGILineConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuffer uLineWidth = new StringBuffer();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -475,7 +491,7 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     }
 
     // space
-    str = el.getAttribute(KEY_SPACE);
+    str = el.getAttribute(SGILineAndStringConstants.KEY_SPACE);
     if (str.length() != 0) {
       StringBuffer uSpace = new StringBuffer();
       num = SGUtilityText.getNumber(str, uSpace);

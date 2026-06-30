@@ -12,6 +12,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementSymbol;
+import jp.riken.brain.ni.samuraigraph.figure.SGISymbolConstants;
 
 /** */
 public abstract class SGDrawingElementSymbol2D extends SGDrawingElementSymbol
@@ -108,17 +109,17 @@ public abstract class SGDrawingElementSymbol2D extends SGDrawingElementSymbol
 
     Shape sh = null;
     switch (type) {
-      case SYMBOL_TYPE_CIRCLE:
+      case SGISymbolConstants.SYMBOL_TYPE_CIRCLE:
         {
           sh = new Ellipse2D.Float(negHalf, negHalf, size, size);
           break;
         }
-      case SYMBOL_TYPE_SQUARE:
+      case SGISymbolConstants.SYMBOL_TYPE_SQUARE:
         {
           sh = new Rectangle2D.Float(negHalf, negHalf, size, size);
           break;
         }
-      case SYMBOL_TYPE_DIAMOND:
+      case SGISymbolConstants.SYMBOL_TYPE_DIAMOND:
         {
           final float diff = size / SQRT_2;
           final float nDiff = -diff;
@@ -140,7 +141,7 @@ public abstract class SGDrawingElementSymbol2D extends SGDrawingElementSymbol
 
           break;
         }
-      case SYMBOL_TYPE_TRIANGLE:
+      case SGISymbolConstants.SYMBOL_TYPE_TRIANGLE:
         {
           final float div = size / SQRT_3;
           final float p1x = 0;
@@ -163,7 +164,7 @@ public abstract class SGDrawingElementSymbol2D extends SGDrawingElementSymbol
 
           break;
         }
-      case SYMBOL_TYPE_INVERTED_TRIANGLE:
+      case SGISymbolConstants.SYMBOL_TYPE_INVERTED_TRIANGLE:
         {
           final float div = -size / SQRT_3;
           final float p1x = 0;
@@ -186,7 +187,7 @@ public abstract class SGDrawingElementSymbol2D extends SGDrawingElementSymbol
 
           break;
         }
-      case SYMBOL_TYPE_CROSS:
+      case SGISymbolConstants.SYMBOL_TYPE_CROSS:
         {
           final float xm = negHalf;
           final float xp = half;
@@ -203,7 +204,7 @@ public abstract class SGDrawingElementSymbol2D extends SGDrawingElementSymbol
 
           break;
         }
-      case SYMBOL_TYPE_PLUS:
+      case SGISymbolConstants.SYMBOL_TYPE_PLUS:
         {
           Line2D line1 = new Line2D.Float(negHalf, 0, half, 0);
           Line2D line2 = new Line2D.Float(0, negHalf, 0, half);

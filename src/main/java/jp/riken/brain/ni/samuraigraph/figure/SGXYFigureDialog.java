@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -22,6 +21,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGDateInputDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
@@ -38,7 +38,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** A property dialog for figures with two-dimensional data. */
 public class SGXYFigureDialog extends SGPropertyDialog
-    implements SGIFigureConstants, SGIFigureTypeConstants, SGILineConstants, SGITwoAxesDialog {
+    implements SGIFigureConstants, SGIFigureTypeConstants, SGITwoAxesDialog {
 
   private static final long serialVersionUID = -5394120960119844819L;
 
@@ -786,8 +786,8 @@ public class SGXYFigureDialog extends SGPropertyDialog
         SGIConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // set the combo box
-    for (int ii = 0; ii < LINE_NAME_ARRAY.length; ii++) {
-      this.mGridLineTypeComboBox.addItem(LINE_NAME_ARRAY[ii]);
+    for (int ii = 0; ii < SGILineConstants.LINE_NAME_ARRAY.length; ii++) {
+      this.mGridLineTypeComboBox.addItem(SGILineConstants.LINE_NAME_ARRAY[ii]);
     }
 
     this.pack();

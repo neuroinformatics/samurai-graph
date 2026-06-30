@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -11,6 +10,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGISingleAxisDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
@@ -22,8 +22,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 
 /** A dialog to set the properties of timing lines. */
-public class SGTimingLineDialog extends SGPropertyDialog
-    implements SGILineConstants, SGISingleAxisDialog {
+public class SGTimingLineDialog extends SGPropertyDialog implements SGISingleAxisDialog {
 
   // serialVersionUID
   private static final long serialVersionUID = 4323568731217858586L;
@@ -262,8 +261,8 @@ public class SGTimingLineDialog extends SGPropertyDialog
     this.setTitle(SGTimingLineDialog.TITLE);
 
     // set up the combo box for the  line type
-    for (int ii = 0; ii < LINE_NAME_ARRAY.length; ii++) {
-      this.mLineTypeComboBox.addItem(LINE_NAME_ARRAY[ii]);
+    for (int ii = 0; ii < SGILineConstants.LINE_NAME_ARRAY.length; ii++) {
+      this.mLineTypeComboBox.addItem(SGILineConstants.LINE_NAME_ARRAY[ii]);
     }
 
     //

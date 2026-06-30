@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -26,6 +25,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGColorMap.ColorMapProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGINode;
@@ -42,6 +42,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGColorBarColorMapManager;
 import jp.riken.brain.ni.samuraigraph.figure.SGColorMapManager;
 import jp.riken.brain.ni.samuraigraph.figure.SGIColorBarConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIColorBarDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGIStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGStroke;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGAxisElement.*;
 import org.w3c.dom.Document;
@@ -1680,8 +1681,8 @@ class SGColorBarAxis extends SGAxisElement
   // .toString(this.mColorMapManager.isReversedOrder()));
   //
   // // Layout
-  // el.setAttribute(KEY_X_VALUE, Double.toString(this.getXValue()));
-  // el.setAttribute(KEY_Y_VALUE, Double.toString(this.getYValue()));
+  // el.setAttribute(SGIStringConstants.KEY_X_VALUE, Double.toString(this.getXValue()));
+  // el.setAttribute(SGIStringConstants.KEY_Y_VALUE, Double.toString(this.getYValue()));
   // el.setAttribute(KEY_COLOR_BAR_WIDTH, Float.toString(barWidth)
   // + COLOR_BAR_SIZE_UNIT);
   // el.setAttribute(KEY_COLOR_BAR_LENGTH, Float.toString(barLength)
@@ -1694,22 +1695,22 @@ class SGColorBarAxis extends SGAxisElement
   //
   // el.setAttribute(KEY_COLOR_BAR_SPACE_LINE_AND_NUMBERS,
   // Float.toString(spaceLineAndNumbers)
-  // + SPACE_UNIT);
+  // + SGILineAndStringConstants.SPACE_UNIT);
   // el.setAttribute(KEY_COLOR_BAR_SPACE_TITLE_AND_NUMBERS,
   // Float.toString(spaceTitleAndNumbers)
-  // + SPACE_UNIT);
+  // + SGILineAndStringConstants.SPACE_UNIT);
   // el.setAttribute(KEY_COLOR_BAR_LINE_COLOR,
   // SGUtilityText.getColorString(this.mAxisLineColor));
   // el.setAttribute(KEY_TICK_MARK_WIDTH, Float.toString(tickMarkWidth)
   // + SGIConstants.LINE_WIDTH_UNIT);
   // el.setAttribute(KEY_TICK_MARK_LENGTH, Float.toString(tickMarkLength)
   // + TICK_MARK_LENGTH_UNIT);
-  // el.setAttribute(KEY_FONT_NAME, this.mTitle.getFontName());
-  // el.setAttribute(KEY_FONT_SIZE, Float.toString(fontSize)
+  // el.setAttribute(SGIStringConstants.KEY_FONT_NAME, this.mTitle.getFontName());
+  // el.setAttribute(SGIStringConstants.KEY_FONT_SIZE, Float.toString(fontSize)
   // + SGIConstants.FONT_SIZE_UNIT);
-  // el.setAttribute(KEY_FONT_STYLE, SGUtilityText
+  // el.setAttribute(SGIStringConstants.KEY_FONT_STYLE, SGUtilityText
   // .getFontStyleName(this.mTitle.getFontStyle()));
-  // el.setAttribute(KEY_STRING_COLORS, SGUtilityText
+  // el.setAttribute(SGIStringConstants.KEY_STRING_COLORS, SGUtilityText
   // .getColorString(this.mTitle.getColor()));
   //
   // return true;
@@ -1750,7 +1751,7 @@ class SGColorBarAxis extends SGAxisElement
     }
 
     // x value
-    str = element.getAttribute(KEY_X_VALUE);
+    str = element.getAttribute(SGIStringConstants.KEY_X_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -1762,7 +1763,7 @@ class SGColorBarAxis extends SGAxisElement
     }
 
     // y value
-    str = element.getAttribute(KEY_Y_VALUE);
+    str = element.getAttribute(SGIStringConstants.KEY_Y_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -2197,7 +2198,8 @@ class SGColorBarAxis extends SGAxisElement
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
     SGPropertyMap map = super.getPropertyFileMap(params);
 
-    SGPropertyUtility.addProperty(map, SGIDrawingElementConstants.KEY_VISIBLE, Boolean.toString(this.mVisible));
+    SGPropertyUtility.addProperty(
+        map, SGIDrawingElementConstants.KEY_VISIBLE, Boolean.toString(this.mVisible));
 
     // axis
     SGPropertyUtility.addProperty(
@@ -2206,21 +2208,25 @@ class SGColorBarAxis extends SGAxisElement
         map, KEY_Y_AXIS_POSITION, this.mAxisElement.getLocationName(this.mYAxis));
 
     // location
-    SGPropertyUtility.addProperty(map, KEY_X_VALUE, this.getXValue());
-    SGPropertyUtility.addProperty(map, KEY_Y_VALUE, this.getYValue());
+    SGPropertyUtility.addProperty(map, SGIStringConstants.KEY_X_VALUE, this.getXValue());
+    SGPropertyUtility.addProperty(map, SGIStringConstants.KEY_Y_VALUE, this.getYValue());
 
     // layout
-    SGPropertyUtility.addProperty(map, KEY_X_VALUE, Double.toString(this.getXValue()));
-    SGPropertyUtility.addProperty(map, KEY_Y_VALUE, Double.toString(this.getYValue()));
+    SGPropertyUtility.addProperty(
+        map, SGIStringConstants.KEY_X_VALUE, Double.toString(this.getXValue()));
+    SGPropertyUtility.addProperty(
+        map, SGIStringConstants.KEY_Y_VALUE, Double.toString(this.getYValue()));
     SGPropertyUtility.addProperty(
         map,
         KEY_COLOR_BAR_WIDTH,
-        SGUtility.getExportValue(this.mBarWidth * SGIConstants.CM_POINT_RATIO, COLOR_BAR_SIZE_MINIMAL_ORDER),
+        SGUtility.getExportValue(
+            this.mBarWidth * SGIConstants.CM_POINT_RATIO, COLOR_BAR_SIZE_MINIMAL_ORDER),
         COLOR_BAR_SIZE_UNIT);
     SGPropertyUtility.addProperty(
         map,
         KEY_COLOR_BAR_LENGTH,
-        SGUtility.getExportValue(this.mBarLength * SGIConstants.CM_POINT_RATIO, COLOR_BAR_SIZE_MINIMAL_ORDER),
+        SGUtility.getExportValue(
+            this.mBarLength * SGIConstants.CM_POINT_RATIO, COLOR_BAR_SIZE_MINIMAL_ORDER),
         COLOR_BAR_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, KEY_COLOR_BAR_DIRECTION, this.getDirection());
 

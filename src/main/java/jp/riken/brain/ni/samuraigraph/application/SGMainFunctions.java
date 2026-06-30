@@ -602,7 +602,8 @@ class SGMainFunctions
 
     /** Remove temporary files used in upgrade. */
     private void removeUpdaterTemporaryFiles() {
-      String filename = SGApplicationUtility.getPathName(SGIConstants.TMP_DIR, HELPER_TEMP_DIR_NAME);
+      String filename =
+          SGApplicationUtility.getPathName(SGIConstants.TMP_DIR, HELPER_TEMP_DIR_NAME);
       File temp = new File(filename);
       try {
         temp = temp.getCanonicalFile();
@@ -1225,7 +1226,12 @@ class SGMainFunctions
 
     final int ret =
         this.createFiguresFromPropertyFile(
-            elWnd, wnd, wDataArray, true, versionNumber, SGIConstants.LOAD_PROPERTIES_IN_DUPLICATION);
+            elWnd,
+            wnd,
+            wDataArray,
+            true,
+            versionNumber,
+            SGIConstants.LOAD_PROPERTIES_IN_DUPLICATION);
     if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
       return false;
     }
@@ -4630,7 +4636,12 @@ class SGMainFunctions
       }
 
       if (this.mPropertyFileManager.setPropertyFile(
-          wnd, doc, wDataArray, true, versionNumber, SGIConstants.LOAD_PROPERTIES_IN_NETCDF_ATTRIBUTE)) {
+          wnd,
+          doc,
+          wDataArray,
+          true,
+          versionNumber,
+          SGIConstants.LOAD_PROPERTIES_IN_NETCDF_ATTRIBUTE)) {
         return true;
       }
     }
@@ -6145,7 +6156,8 @@ class SGMainFunctions
       }
     }
     if (!validAll) {
-      SGUtility.showErrorMessageDialog(wnd, "Invalid data is selected for animation.", SGIConstants.ERROR);
+      SGUtility.showErrorMessageDialog(
+          wnd, "Invalid data is selected for animation.", SGIConstants.ERROR);
       return;
     }
 

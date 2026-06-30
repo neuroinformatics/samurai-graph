@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
@@ -29,7 +29,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /** */
-public abstract class SGElementGroupLine extends SGElementGroup implements SGILineConstants {
+public abstract class SGElementGroupLine extends SGElementGroup {
 
   public static final int MODE_ALL = 0;
 
@@ -257,7 +257,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
    * @return
    */
   public String getTagName() {
-    return TAG_NAME_LINE;
+    return SGILineConstants.TAG_NAME_LINE;
   }
 
   @Override
@@ -275,7 +275,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
   }
 
   private static void writeProperty(final Element el, final int lineType) {
-    el.setAttribute(KEY_LINE_TYPE, SGDrawingElementLine.getLineTypeName(lineType));
+    el.setAttribute(SGILineConstants.KEY_LINE_TYPE, SGDrawingElementLine.getLineTypeName(lineType));
   }
 
   private static void writeProperty(final Element el, final Color lineColor) {
@@ -292,7 +292,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
   }
 
   private static void writeProperty(final Element el, final float lineWidth) {
-    el.setAttribute(KEY_LINE_WIDTH, getLineWidthString(lineWidth));
+    el.setAttribute(SGILineConstants.KEY_LINE_WIDTH, getLineWidthString(lineWidth));
   }
 
   /**
@@ -322,7 +322,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     }
 
     // connecting all effective points
-    str = el.getAttribute(KEY_LINE_CONNECT_ALL_EFFECTIVE_POINTS);
+    str = el.getAttribute(SGILineConstants.KEY_LINE_CONNECT_ALL_EFFECTIVE_POINTS);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -361,7 +361,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     Element elStyleHolder = (elStyle != null) ? elStyle : el;
 
     // line width
-    str = elStyleHolder.getAttribute(KEY_LINE_WIDTH);
+    str = elStyleHolder.getAttribute(SGILineConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuffer uLineWidth = new StringBuffer();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -375,7 +375,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     }
 
     // line type
-    str = elStyleHolder.getAttribute(KEY_LINE_TYPE);
+    str = elStyleHolder.getAttribute(SGILineConstants.KEY_LINE_TYPE);
     if (str.length() != 0) {
       num = SGDrawingElementLine.getLineTypeFromName(str);
       if (num == null) {

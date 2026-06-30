@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.application;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -23,6 +22,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 import jp.riken.brain.ni.samuraigraph.base.SGButton;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** Preview dialog on exporting to the files. */
 public final class SGPreviewDialog extends SGDialog implements AdjustmentListener {

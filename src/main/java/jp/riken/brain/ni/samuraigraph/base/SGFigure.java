@@ -1806,7 +1806,10 @@ public abstract class SGFigure
         final int loc = this.mMouseLocation;
 
         // except the four corners
-        if (loc != SGIConstants.NORTH_WEST && loc != SGIConstants.NORTH_EAST && loc != SGIConstants.SOUTH_EAST && loc != SGIConstants.SOUTH_WEST) {
+        if (loc != SGIConstants.NORTH_WEST
+            && loc != SGIConstants.NORTH_EAST
+            && loc != SGIConstants.SOUTH_EAST
+            && loc != SGIConstants.SOUTH_WEST) {
           // if no figure element is pressed, remove this figure
           // from the list of the selected figure
           if (this.mPressedElement == null) {
@@ -2091,7 +2094,9 @@ public abstract class SGFigure
     float hNew;
 
     // x
-    if (mouseLocation == SGIConstants.WEST || mouseLocation == SGIConstants.SOUTH_WEST || mouseLocation == SGIConstants.NORTH_WEST) {
+    if (mouseLocation == SGIConstants.WEST
+        || mouseLocation == SGIConstants.SOUTH_WEST
+        || mouseLocation == SGIConstants.NORTH_WEST) {
       xNew = oxNew;
       wNew = maxX - xNew;
     } else if (mouseLocation == SGIConstants.EAST
@@ -2118,7 +2123,9 @@ public abstract class SGFigure
     }
 
     // y
-    if (mouseLocation == SGIConstants.SOUTH || mouseLocation == SGIConstants.SOUTH_WEST || mouseLocation == SGIConstants.SOUTH_EAST) {
+    if (mouseLocation == SGIConstants.SOUTH
+        || mouseLocation == SGIConstants.SOUTH_WEST
+        || mouseLocation == SGIConstants.SOUTH_EAST) {
       yNew = minY;
       hNew = oyNew - minY;
     } else if (mouseLocation == SGIConstants.NORTH
@@ -3862,7 +3869,8 @@ public abstract class SGFigure
    */
   Rectangle2D getExtraRegionBounds() {
     Rectangle2D bounds = this.getGraphRect();
-    final float margin = this.mMagnification * EXTRA_REGION_WIDTH_IN_CM_UNIT / SGIConstants.CM_POINT_RATIO;
+    final float margin =
+        this.mMagnification * EXTRA_REGION_WIDTH_IN_CM_UNIT / SGIConstants.CM_POINT_RATIO;
     final double x = bounds.getX() - margin;
     final double y = bounds.getY() - margin;
     final double w = bounds.getWidth() + 2.0 * margin;

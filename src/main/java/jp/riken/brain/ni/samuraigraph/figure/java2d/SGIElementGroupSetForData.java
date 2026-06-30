@@ -7,7 +7,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataObject;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementForData.DataLabel;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;

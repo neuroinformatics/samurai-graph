@@ -1,10 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.figure;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
@@ -605,8 +605,8 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     SGPropertyMap map = new SGPropertyMap();
     this.addProperties(
         map,
-        KEY_LINE_WIDTH,
-        KEY_LINE_TYPE,
+        SGILineConstants.KEY_LINE_WIDTH,
+        SGILineConstants.KEY_LINE_TYPE,
         KEY_HEAD_SIZE,
         SGIDrawingElementConstants.KEY_COLOR,
         KEY_START_HEAD_TYPE,
@@ -654,7 +654,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     Number num = null;
 
     // line width
-    str = el.getAttribute(KEY_LINE_WIDTH);
+    str = el.getAttribute(SGILineConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuffer uLineWidth = new StringBuffer();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -668,7 +668,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     }
 
     // line type
-    str = el.getAttribute(KEY_LINE_TYPE);
+    str = el.getAttribute(SGILineConstants.KEY_LINE_TYPE);
     if (str.length() != 0) {
       num = SGDrawingElementLine.getLineTypeFromName(str);
       if (num == null) {

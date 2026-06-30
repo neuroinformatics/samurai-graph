@@ -2,7 +2,6 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 

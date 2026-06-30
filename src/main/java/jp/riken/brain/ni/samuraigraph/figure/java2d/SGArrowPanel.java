@@ -5,7 +5,6 @@
  */
 
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -14,6 +13,7 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import javax.swing.SpinnerNumberModel;
 import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
@@ -22,6 +22,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementArrow;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGIArrowConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 
 /** A panel to set the properties of arrows. */
 public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, ItemListener {
@@ -225,8 +226,8 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
   private void initProperty() {
 
     // the combo box for line type
-    for (int ii = 0; ii < LINE_NAME_ARRAY.length; ii++) {
-      this.mLineTypeComboBox.addItem(LINE_NAME_ARRAY[ii]);
+    for (int ii = 0; ii < SGILineConstants.LINE_NAME_ARRAY.length; ii++) {
+      this.mLineTypeComboBox.addItem(SGILineConstants.LINE_NAME_ARRAY[ii]);
     }
 
     // the combo box for head type
@@ -453,12 +454,12 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
     Object startHeadType = this.mStartHeadTypeComboBox.getSelectedItem();
     Object endHeadType = this.mEndHeadTypeComboBox.getSelectedItem();
     final boolean closeEnabled =
-        (SYMBOL_NAME_ARROW_HEAD.equals(startHeadType)
-            || SYMBOL_NAME_ARROW_HEAD.equals(endHeadType));
+        (SGIArrowConstants.SYMBOL_NAME_ARROW_HEAD.equals(startHeadType)
+            || SGIArrowConstants.SYMBOL_NAME_ARROW_HEAD.equals(endHeadType));
     final boolean openEnabled =
         closeEnabled
-            || SYMBOL_NAME_ARROW.equals(startHeadType)
-            || SYMBOL_NAME_ARROW.equals(endHeadType);
+            || SGIArrowConstants.SYMBOL_NAME_ARROW.equals(startHeadType)
+            || SGIArrowConstants.SYMBOL_NAME_ARROW.equals(endHeadType);
     this.mOpenAngleLabel.setEnabled(openEnabled);
     this.mOpenAngleSpinner.setEnabled(openEnabled);
     this.mCloseAngleLabel.setEnabled(closeEnabled);

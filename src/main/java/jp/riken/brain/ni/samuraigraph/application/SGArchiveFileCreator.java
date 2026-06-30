@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.application;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
@@ -25,6 +24,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow.BackgroundImage;
 import jp.riken.brain.ni.samuraigraph.base.SGExtensionFileFilter;
 import jp.riken.brain.ni.samuraigraph.base.SGFileChooser;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** Create an archive file. */
 public class SGArchiveFileCreator extends SGFileHandler

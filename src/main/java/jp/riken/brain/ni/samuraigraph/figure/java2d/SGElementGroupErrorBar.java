@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -9,16 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementArrow;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementErrorBar;
-import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementSymbol;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroup;
 import jp.riken.brain.ni.samuraigraph.figure.SGIErrorBarConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGIFigureDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGStroke;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGDrawingElementArrow2D.ArrowHead;
@@ -311,7 +311,8 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
   /** */
   public boolean writeProperty(final Element el) {
 
-    final int digitSymbolSize = ERROR_BAR_HEAD_SIZE_MINIMAL_ORDER - 1;
+    final int digitSymbolSize =
+        SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_MINIMAL_ORDER - 1;
     final int digitLineWidth = SGIConstants.LINE_WIDTH_MINIMAL_ORDER - 1;
 
     final float headSize =
@@ -326,7 +327,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     el.setAttribute(
         KEY_ERROR_BAR_STYLE, SGDrawingElementErrorBar.getErrorBarStyleName(this.mErrorBarStyle));
     el.setAttribute(KEY_HEAD_SIZE, Float.toString(headSize) + SGIConstants.cm);
-    el.setAttribute(KEY_LINE_WIDTH, Float.toString(lineWidth) + SGIConstants.pt);
+    el.setAttribute(SGILineConstants.KEY_LINE_WIDTH, Float.toString(lineWidth) + SGIConstants.pt);
     el.setAttribute(
         KEY_ERROR_BAR_HEAD_TYPE, SGDrawingElementErrorBar.getHeadTypeName(this.getHeadType()));
     el.setAttribute(SGIDrawingElementConstants.KEY_COLOR, SGUtilityText.getColorListString(cList));
@@ -386,7 +387,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     }
 
     // line width
-    str = el.getAttribute(KEY_LINE_WIDTH);
+    str = el.getAttribute(SGILineConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuffer uLineWidth = new StringBuffer();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -997,7 +998,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
      */
     public int getLineType() {
       // returns a constant
-      return SGDrawingElementLine.LINE_TYPE_SOLID;
+      return SGILineConstants.LINE_TYPE_SOLID;
     }
 
     /**

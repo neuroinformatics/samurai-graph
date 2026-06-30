@@ -10,8 +10,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** Drawing element of the symbol. */
-public abstract class SGDrawingElementSymbol extends SGDrawingElement
-    implements SGISymbolConstants {
+public abstract class SGDrawingElementSymbol extends SGDrawingElement {
 
   /** */
   public SGDrawingElementSymbol() {
@@ -189,13 +188,13 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    */
   public static boolean isValidSymbolType(final int type) {
     final int[] array = {
-      SYMBOL_TYPE_CIRCLE,
-      SYMBOL_TYPE_SQUARE,
-      SYMBOL_TYPE_DIAMOND,
-      SYMBOL_TYPE_TRIANGLE,
-      SYMBOL_TYPE_INVERTED_TRIANGLE,
-      SYMBOL_TYPE_CROSS,
-      SYMBOL_TYPE_PLUS
+      SGISymbolConstants.SYMBOL_TYPE_CIRCLE,
+      SGISymbolConstants.SYMBOL_TYPE_SQUARE,
+      SGISymbolConstants.SYMBOL_TYPE_DIAMOND,
+      SGISymbolConstants.SYMBOL_TYPE_TRIANGLE,
+      SGISymbolConstants.SYMBOL_TYPE_INVERTED_TRIANGLE,
+      SGISymbolConstants.SYMBOL_TYPE_CROSS,
+      SGISymbolConstants.SYMBOL_TYPE_PLUS
     };
     for (int ii = 0; ii < array.length; ii++) {
       if (type == array[ii]) {
@@ -216,22 +215,23 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
       return null;
     }
     int type;
-    if (SGUtilityText.isEqualString(SYMBOL_NAME_CIRCLE, name)) {
-      type = SYMBOL_TYPE_CIRCLE;
-    } else if (SGUtilityText.isEqualString(SYMBOL_NAME_SQUARE, name)) {
-      type = SYMBOL_TYPE_SQUARE;
-    } else if (SGUtilityText.isEqualString(SYMBOL_NAME_DIAMOND, name)) {
-      type = SYMBOL_TYPE_DIAMOND;
-    } else if (SGUtilityText.isEqualString(SYMBOL_NAME_TRIANGLE, name)) {
-      type = SYMBOL_TYPE_TRIANGLE;
-    } else if (SGUtilityText.isEqualString(SYMBOL_NAME_INVERTED_TRIANGLE, name)
-        || SGUtilityText.isEqualString(SYMBOL_NAME_INVERTED_TRIANGLE_OLD, name)) {
+    if (SGUtilityText.isEqualString(SGISymbolConstants.SYMBOL_NAME_CIRCLE, name)) {
+      type = SGISymbolConstants.SYMBOL_TYPE_CIRCLE;
+    } else if (SGUtilityText.isEqualString(SGISymbolConstants.SYMBOL_NAME_SQUARE, name)) {
+      type = SGISymbolConstants.SYMBOL_TYPE_SQUARE;
+    } else if (SGUtilityText.isEqualString(SGISymbolConstants.SYMBOL_NAME_DIAMOND, name)) {
+      type = SGISymbolConstants.SYMBOL_TYPE_DIAMOND;
+    } else if (SGUtilityText.isEqualString(SGISymbolConstants.SYMBOL_NAME_TRIANGLE, name)) {
+      type = SGISymbolConstants.SYMBOL_TYPE_TRIANGLE;
+    } else if (SGUtilityText.isEqualString(SGISymbolConstants.SYMBOL_NAME_INVERTED_TRIANGLE, name)
+        || SGUtilityText.isEqualString(
+            SGISymbolConstants.SYMBOL_NAME_INVERTED_TRIANGLE_OLD, name)) {
       // to maintain downward compatibility with the old releases
-      type = SYMBOL_TYPE_INVERTED_TRIANGLE;
-    } else if (SGUtilityText.isEqualString(SYMBOL_NAME_CROSS, name)) {
-      type = SYMBOL_TYPE_CROSS;
-    } else if (SGUtilityText.isEqualString(SYMBOL_NAME_PLUS, name)) {
-      type = SYMBOL_TYPE_PLUS;
+      type = SGISymbolConstants.SYMBOL_TYPE_INVERTED_TRIANGLE;
+    } else if (SGUtilityText.isEqualString(SGISymbolConstants.SYMBOL_NAME_CROSS, name)) {
+      type = SGISymbolConstants.SYMBOL_TYPE_CROSS;
+    } else if (SGUtilityText.isEqualString(SGISymbolConstants.SYMBOL_NAME_PLUS, name)) {
+      type = SGISymbolConstants.SYMBOL_TYPE_PLUS;
     } else {
       return null;
     }
@@ -280,7 +280,8 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * @return true if the given symbol type is of the line type
    */
   public static boolean isLineTypeSymbol(final int type) {
-    return ((type == SYMBOL_TYPE_CROSS) || (type == SYMBOL_TYPE_PLUS));
+    return ((type == SGISymbolConstants.SYMBOL_TYPE_CROSS)
+        || (type == SGISymbolConstants.SYMBOL_TYPE_PLUS));
   }
 
   /** */

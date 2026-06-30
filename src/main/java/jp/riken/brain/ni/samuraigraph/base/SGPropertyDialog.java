@@ -798,7 +798,12 @@ public abstract class SGPropertyDialog extends SGDialog {
   }
 
   protected void initFontStyleComboBox(final JComboBox<String> cb) {
-    final String[] styleNameArray = {SGIDrawingElementConstants.FONT_PLAIN, SGIDrawingElementConstants.FONT_ITALIC, SGIDrawingElementConstants.FONT_BOLD, SGIDrawingElementConstants.FONT_BOLD_ITALIC};
+    final String[] styleNameArray = {
+      SGIDrawingElementConstants.FONT_PLAIN,
+      SGIDrawingElementConstants.FONT_ITALIC,
+      SGIDrawingElementConstants.FONT_BOLD,
+      SGIDrawingElementConstants.FONT_BOLD_ITALIC
+    };
     for (String fontStyleName : styleNameArray) {
       cb.addItem(fontStyleName);
     }

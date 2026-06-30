@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.data;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import ch.systemsx.cisd.base.mdarray.MDArray;
 import ch.systemsx.cisd.base.mdarray.MDDoubleArray;
@@ -27,6 +26,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;

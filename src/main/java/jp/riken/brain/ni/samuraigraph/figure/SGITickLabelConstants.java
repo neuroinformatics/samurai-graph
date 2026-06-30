@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
-
 /** Constants for the tick labels. */
 public interface SGITickLabelConstants {
 

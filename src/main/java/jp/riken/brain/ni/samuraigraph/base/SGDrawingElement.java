@@ -1,8 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 /** The base class of drawing elements. */
-public abstract class SGDrawingElement
-    implements SGIVisible, SGIDisposable {
+public abstract class SGDrawingElement implements SGIVisible, SGIDisposable {
 
   /** The visibility flag. */
   private boolean mVisibleFlag = true;

@@ -2,11 +2,10 @@ package jp.riken.brain.ni.samuraigraph.figure;
 
 import java.awt.Color;
 import java.awt.Font;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 
 /** Constants for string objects. */
-public interface SGIStringConstants {
+public final class SGIStringConstants {
 
   //
   // Angle
@@ -22,7 +21,8 @@ public interface SGIStringConstants {
 
   public static final int STRING_ANGLE_FRAC_DIFIT_MAX = 2;
 
-  public static final int STRING_ANGLE_MINIMAL_ORDER = -STRING_ANGLE_FRAC_DIFIT_MAX;
+  public static final int STRING_ANGLE_MINIMAL_ORDER =
+      -SGIStringConstants.STRING_ANGLE_FRAC_DIFIT_MAX;
 
   //
   // Keys
@@ -85,7 +85,7 @@ public interface SGIStringConstants {
 
   public static final Color DEFAULT_LABEL_FONT_COLOR = DEFAULT_STRING_FONT_COLOR;
 
-  public static final float DEFAULT_LABEL_ANGLE = DEFAULT_STRING_ANGLE;
+  public static final float DEFAULT_LABEL_ANGLE = SGIStringConstants.DEFAULT_STRING_ANGLE;
 
   // Horizontal Axis
   public static final String DEFAULT_LABEL_HORIZONTAL_AXIS = SGIFigureElementAxis.AXIS_BOTTOM;

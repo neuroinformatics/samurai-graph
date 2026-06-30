@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -35,6 +34,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIMovable;
@@ -54,6 +54,8 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementString;
 import jp.riken.brain.ni.samuraigraph.figure.SGIAxisConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIAxisDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGIBarConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGILineAndStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGStroke;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementAxis.AxisScaleElement;
@@ -66,7 +68,6 @@ public abstract class SGAxisElement
         SGIAxisDialogObserver,
         SGIDisposable,
         SGIAxisConstants,
-        SGIStringConstants,
         SGIUndoable,
         SGIMovable {
 
@@ -234,16 +235,19 @@ public abstract class SGAxisElement
     this.mTitle = new ElementStringTitle(this);
 
     // axis line
-    this.setAxisLineWidth(DEFAULT_AXIS_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
-    this.setAxisLineColor(DEFAULT_LINE_COLOR);
-    this.setSpaceAxisLineAndNumbers(DEFAULT_SPACE_AXIS_LINE_AND_NUMBER, SPACE_UNIT);
+    this.setAxisLineWidth(SGIAxisConstants.DEFAULT_AXIS_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
+    this.setAxisLineColor(SGIAxisConstants.DEFAULT_LINE_COLOR);
+    this.setSpaceAxisLineAndNumbers(
+        SGIAxisConstants.DEFAULT_SPACE_AXIS_LINE_AND_NUMBER, SGILineAndStringConstants.SPACE_UNIT);
 
     // title
-    this.setTitleVisible(DEFAULT_TITLE_VISIBLE);
-    this.setSpaceTitleAndNumbers(DEFAULT_SPACE_NUMBER_AND_TITLE, SPACE_UNIT);
-    this.setTitleShiftFromCenter(DEFAULT_TITLE_SHIFT_FROM_CENTER, TITLE_SHIFT_UNIT);
-    this.setTitleFontName(DEFAULT_FONT_NAME);
-    this.setTitleFontStyle(DEFAULT_FONT_STYLE);
+    this.setTitleVisible(SGIAxisConstants.DEFAULT_TITLE_VISIBLE);
+    this.setSpaceTitleAndNumbers(
+        SGIAxisConstants.DEFAULT_SPACE_NUMBER_AND_TITLE, SGILineAndStringConstants.SPACE_UNIT);
+    this.setTitleShiftFromCenter(
+        SGIAxisConstants.DEFAULT_TITLE_SHIFT_FROM_CENTER, SGIAxisConstants.TITLE_SHIFT_UNIT);
+    this.setTitleFontName(SGIAxisConstants.DEFAULT_FONT_NAME);
+    this.setTitleFontStyle(SGIAxisConstants.DEFAULT_FONT_STYLE);
     this.setTitleFontSize(DEFAULT_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
     this.setTitleFontColor(DEFAULT_FONT_COLOR);
 
@@ -256,9 +260,9 @@ public abstract class SGAxisElement
     this.setNumbersAngle(DEFAULT_NUMBER_ANGLE);
     this.setExponentVisible(DEFAULT_EXPONENT_VISIBLE);
     this.setExponent(DEFAULT_EXPONENT);
-    this.setNumberFontName(DEFAULT_FONT_NAME);
+    this.setNumberFontName(SGIAxisConstants.DEFAULT_FONT_NAME);
     this.setNumberFontSize(DEFAULT_FONT_SIZE, SGIConstants.FONT_SIZE_UNIT);
-    this.setNumberFontStyle(DEFAULT_FONT_STYLE);
+    this.setNumberFontStyle(SGIAxisConstants.DEFAULT_FONT_STYLE);
     this.setNumberFontColor(DEFAULT_FONT_COLOR);
 
     // tick mark
@@ -268,7 +272,7 @@ public abstract class SGAxisElement
     this.setMajorTickMarkLength(DEFAULT_TICK_MARK_LENGTH, TICK_MARK_LENGTH_UNIT);
     this.setMinorTickMarkNumber(DEFAULT_MINOR_TICK_MARK_NUMBER);
     this.setMinorTickMarkLength(DEFAULT_MINOR_TICK_MARK_LENGTH, TICK_MARK_LENGTH_UNIT);
-    this.setTickMarkColor(DEFAULT_LINE_COLOR);
+    this.setTickMarkColor(SGIAxisConstants.DEFAULT_LINE_COLOR);
   }
 
   public abstract void init();
@@ -738,7 +742,12 @@ public abstract class SGAxisElement
   public boolean setNumbersAngle(final float angle) {
     final Float aNew =
         SGUtility.calcPropertyValue(
-            angle, null, null, STRING_ANGLE_MIN, STRING_ANGLE_MAX, STRING_ANGLE_MINIMAL_ORDER);
+            angle,
+            null,
+            null,
+            SGIStringConstants.STRING_ANGLE_MIN,
+            SGIStringConstants.STRING_ANGLE_MAX,
+            SGIStringConstants.STRING_ANGLE_MINIMAL_ORDER);
     if (aNew == null) {
       return false;
     }
@@ -1421,13 +1430,13 @@ public abstract class SGAxisElement
   }
 
   protected float roundOffSpace(final float value) {
-    final int digitShift = SPACE_MINIMAL_ORDER - 1;
+    final int digitShift = SGILineAndStringConstants.SPACE_MINIMAL_ORDER - 1;
     final float shift = (float) SGUtilityNumber.roundOffNumber(value, digitShift);
     return shift;
   }
 
   protected float roundOffTitleShift(final float value) {
-    final int digitShift = TITLE_SHIFT_MINIMAL_ORDER - 1;
+    final int digitShift = SGIAxisConstants.TITLE_SHIFT_MINIMAL_ORDER - 1;
     final float shift = (float) SGUtilityNumber.roundOffNumber(value, digitShift);
     return shift;
   }
@@ -2928,7 +2937,7 @@ public abstract class SGAxisElement
     }
 
     // baseline value
-    str = element.getAttribute(SGIFigureElementAxis.KEY_BASELINE_VALUE);
+    str = element.getAttribute(SGIBarConstants.KEY_BASELINE_VALUE);
     if (str.length() != 0) {
       SGAxisValue baseline = null;
       if (dateMode) {
@@ -3853,10 +3862,10 @@ public abstract class SGAxisElement
         SGUtility.calcPropertyValue(
             space,
             unit,
-            SPACE_UNIT,
-            SPACE_BETWEEN_LINE_AND_NUMBERS_MIN,
-            SPACE_BETWEEN_LINE_AND_NUMBERS_MAX,
-            SPACE_MINIMAL_ORDER);
+            SGILineAndStringConstants.SPACE_UNIT,
+            SGIAxisConstants.SPACE_BETWEEN_LINE_AND_NUMBERS_MIN,
+            SGIAxisConstants.SPACE_BETWEEN_LINE_AND_NUMBERS_MAX,
+            SGILineAndStringConstants.SPACE_MINIMAL_ORDER);
     if (sNew == null) {
       return false;
     }
@@ -3886,10 +3895,10 @@ public abstract class SGAxisElement
         SGUtility.calcPropertyValue(
             space,
             unit,
-            SPACE_UNIT,
-            SPACE_BETWEEN_TITLE_AND_NUMBERS_MIN,
-            SPACE_BETWEEN_TITLE_AND_NUMBERS_MAX,
-            SPACE_MINIMAL_ORDER);
+            SGILineAndStringConstants.SPACE_UNIT,
+            SGIAxisConstants.SPACE_BETWEEN_TITLE_AND_NUMBERS_MIN,
+            SGIAxisConstants.SPACE_BETWEEN_TITLE_AND_NUMBERS_MAX,
+            SGILineAndStringConstants.SPACE_MINIMAL_ORDER);
     if (sNew == null) {
       return false;
     }
@@ -4216,7 +4225,9 @@ public abstract class SGAxisElement
    * @return the space between axis line and numbers in given unit
    */
   public float getSpaceAxisLineAndNumbers(final String unit) {
-    return (float) SGUtilityText.convert(this.getSpaceAxisLineAndNumbers(), SPACE_UNIT, unit);
+    return (float)
+        SGUtilityText.convert(
+            this.getSpaceAxisLineAndNumbers(), SGILineAndStringConstants.SPACE_UNIT, unit);
   }
 
   /**
@@ -4238,11 +4249,11 @@ public abstract class SGAxisElement
    * @return true if succeeded
    */
   public boolean setSpaceAxisLineAndNumbers(final float space, final String unit) {
-    final double value = SGUtilityText.convert(space, unit, SPACE_UNIT);
-    if (value < SPACE_BETWEEN_LINE_AND_NUMBERS_MIN) {
+    final double value = SGUtilityText.convert(space, unit, SGILineAndStringConstants.SPACE_UNIT);
+    if (value < SGIAxisConstants.SPACE_BETWEEN_LINE_AND_NUMBERS_MIN) {
       return false;
     }
-    if (value > SPACE_BETWEEN_LINE_AND_NUMBERS_MAX) {
+    if (value > SGIAxisConstants.SPACE_BETWEEN_LINE_AND_NUMBERS_MAX) {
       return false;
     }
     return this.setSpaceAxisLineAndNumbers(this.roundOffSpace((float) value));
@@ -4264,7 +4275,9 @@ public abstract class SGAxisElement
    * @return the space between numbers and title in given unit
    */
   public float getSpaceTitleAndNumbers(final String unit) {
-    return (float) SGUtilityText.convert(this.getSpaceTitleAndNumbers(), SPACE_UNIT, unit);
+    return (float)
+        SGUtilityText.convert(
+            this.getSpaceTitleAndNumbers(), SGILineAndStringConstants.SPACE_UNIT, unit);
   }
 
   /**
@@ -4286,11 +4299,11 @@ public abstract class SGAxisElement
    * @return true if succeeded
    */
   public boolean setSpaceTitleAndNumbers(final float space, final String unit) {
-    final double value = SGUtilityText.convert(space, unit, SPACE_UNIT);
-    if (value < SPACE_BETWEEN_TITLE_AND_NUMBERS_MIN) {
+    final double value = SGUtilityText.convert(space, unit, SGILineAndStringConstants.SPACE_UNIT);
+    if (value < SGIAxisConstants.SPACE_BETWEEN_TITLE_AND_NUMBERS_MIN) {
       return false;
     }
-    if (value > SPACE_BETWEEN_TITLE_AND_NUMBERS_MAX) {
+    if (value > SGIAxisConstants.SPACE_BETWEEN_TITLE_AND_NUMBERS_MAX) {
       return false;
     }
     return this.setSpaceTitleAndNumbers(this.roundOffSpace((float) value));
@@ -4312,7 +4325,9 @@ public abstract class SGAxisElement
    * @return the space between numbers and title in given unit
    */
   public float getTitleShiftFromCenter(final String unit) {
-    return (float) SGUtilityText.convert(this.getTitleShiftFromCenter(), TITLE_SHIFT_UNIT, unit);
+    return (float)
+        SGUtilityText.convert(
+            this.getTitleShiftFromCenter(), SGIAxisConstants.TITLE_SHIFT_UNIT, unit);
   }
 
   /**
@@ -4334,11 +4349,11 @@ public abstract class SGAxisElement
    * @return true if succeeded
    */
   public boolean setTitleShiftFromCenter(final float shift, final String unit) {
-    final double value = SGUtilityText.convert(shift, unit, SPACE_UNIT);
-    if (value < TITLE_SHIFT_MIN) {
+    final double value = SGUtilityText.convert(shift, unit, SGILineAndStringConstants.SPACE_UNIT);
+    if (value < SGIAxisConstants.TITLE_SHIFT_MIN) {
       return false;
     }
-    if (value > TITLE_SHIFT_MAX) {
+    if (value > SGIAxisConstants.TITLE_SHIFT_MAX) {
       return false;
     }
     return this.setTitleShiftFromCenter(this.roundOffSpace((float) value));
@@ -4740,7 +4755,11 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(
         map, KEY_AXIS_SCALE_TYPE, SGUtilityText.getScaleTypeName(this.getScaleType()));
     this.addScaleProperties(
-        map, KEY_AXIS_INVERT_COORDINATES, KEY_AUTO_CALC_NUMBER, KEY_STEP_VALUE, KEY_BASELINE_VALUE);
+        map,
+        KEY_AXIS_INVERT_COORDINATES,
+        KEY_AUTO_CALC_NUMBER,
+        KEY_STEP_VALUE,
+        SGIBarConstants.KEY_BASELINE_VALUE);
 
     // Tick Mark
     this.addTickMarkProperties(
@@ -4771,8 +4790,10 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(
         map,
         spaceKey,
-        SGUtility.getExportValue(this.getSpaceAxisLineAndNumbers(SPACE_UNIT), SPACE_MINIMAL_ORDER),
-        SPACE_UNIT);
+        SGUtility.getExportValue(
+            this.getSpaceAxisLineAndNumbers(SGILineAndStringConstants.SPACE_UNIT),
+            SGILineAndStringConstants.SPACE_MINIMAL_ORDER),
+        SGILineAndStringConstants.SPACE_UNIT);
     SGPropertyUtility.addProperty(map, colorKey, this.mAxisLineColor);
   }
 
@@ -4789,14 +4810,17 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(
         map,
         spaceKey,
-        SGUtility.getExportValue(this.getSpaceTitleAndNumbers(SPACE_UNIT), SPACE_MINIMAL_ORDER),
-        SPACE_UNIT);
+        SGUtility.getExportValue(
+            this.getSpaceTitleAndNumbers(SGILineAndStringConstants.SPACE_UNIT),
+            SGILineAndStringConstants.SPACE_MINIMAL_ORDER),
+        SGILineAndStringConstants.SPACE_UNIT);
     SGPropertyUtility.addProperty(
         map,
         centerShiftKey,
         SGUtility.getExportValue(
-            this.getTitleShiftFromCenter(TITLE_SHIFT_UNIT), TITLE_SHIFT_MINIMAL_ORDER),
-        TITLE_SHIFT_UNIT);
+            this.getTitleShiftFromCenter(SGIAxisConstants.TITLE_SHIFT_UNIT),
+            SGIAxisConstants.TITLE_SHIFT_MINIMAL_ORDER),
+        SGIAxisConstants.TITLE_SHIFT_UNIT);
     SGPropertyUtility.addProperty(map, fontNameKey, this.getTitleFontName());
     SGPropertyUtility.addProperty(
         map,

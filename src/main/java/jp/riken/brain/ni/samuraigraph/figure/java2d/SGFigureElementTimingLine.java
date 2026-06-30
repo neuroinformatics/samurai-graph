@@ -1,6 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -26,7 +24,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
@@ -64,7 +64,7 @@ import org.w3c.dom.NodeList;
 
 /** A class of timing lines. */
 public class SGFigureElementTimingLine extends SGFigureElement2D
-    implements SGIFigureElementTimingLine, SGITimingLineConstants {
+    implements SGIFigureElementTimingLine {
 
   /** */
   private SGIFigureElementAxis mAxisElement = null;
@@ -406,7 +406,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
    * @return true if succeeded
    */
   public boolean readProperty(final Element element, final String versionNumber) {
-    NodeList nList = element.getElementsByTagName(TimingLine.TAG_NAME_TIMING_LINE);
+    NodeList nList = element.getElementsByTagName(SGITimingLineConstants.TAG_NAME_TIMING_LINE);
     for (int ii = 0; ii < nList.getLength(); ii++) {
       Node node = nList.item(ii);
       if (node instanceof Element) {
@@ -1102,12 +1102,11 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
 
   protected class TimingLine extends SGDrawingElementLine2D
       implements ActionListener,
+          SGIPropertyDialogObserver,
           SGIUndoable,
           SGICopyable,
           SGIChildObject,
-          SGIMovable,
-          SGITimingLineDialogObserver,
-          SGITimingLineConstants {
+          SGIMovable {
 
     /** The line stroke. */
     protected SGStroke mStroke = new SGStroke();
@@ -1242,12 +1241,10 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       return true;
     }
 
-    @Override
     public boolean isAnchored() {
       return this.mIsAnchored;
     }
 
-    @Override
     public boolean setAnchored(boolean anchored) {
       this.mIsAnchored = anchored;
       return true;
@@ -1308,10 +1305,10 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     }
 
     private void init() {
-      this.setLineWidth(DEFAULT_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
-      this.setLineType(DEFAULT_LINE_TYPE);
-      this.setColor(DEFAULT_LINE_COLOR);
-      this.setAnchored(DEFAULT_LINE_ANCHORED);
+      this.setLineWidth(SGITimingLineConstants.DEFAULT_LINE_WIDTH, SGIConstants.LINE_WIDTH_UNIT);
+      this.setLineType(SGITimingLineConstants.DEFAULT_LINE_TYPE);
+      this.setColor(SGITimingLineConstants.DEFAULT_LINE_COLOR);
+      this.setAnchored(SGITimingLineConstants.DEFAULT_LINE_ANCHORED);
 
       // setup the stroke object
       this.mStroke.setEndCap(BasicStroke.CAP_BUTT);
@@ -1744,7 +1741,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     }
 
     public String getTagName() {
-      return TAG_NAME_TIMING_LINE;
+      return SGITimingLineConstants.TAG_NAME_TIMING_LINE;
     }
 
     /**
@@ -1758,7 +1755,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       Number num = null;
 
       // line width
-      str = el.getAttribute(KEY_LINE_WIDTH);
+      str = el.getAttribute(SGILineConstants.KEY_LINE_WIDTH);
       if (str.length() != 0) {
         StringBuffer uLineWidth = new StringBuffer();
         num = SGUtilityText.getNumber(str, uLineWidth);
@@ -1772,7 +1769,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       }
 
       // line type
-      str = el.getAttribute(KEY_LINE_TYPE);
+      str = el.getAttribute(SGILineConstants.KEY_LINE_TYPE);
       if (str.length() != 0) {
         num = SGDrawingElementLine.getLineTypeFromName(str);
         if (num == null) {
@@ -1807,7 +1804,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       }
 
       // value
-      str = el.getAttribute(KEY_VALUE);
+      str = el.getAttribute(SGITimingLineConstants.KEY_VALUE);
       if (str.length() != 0) {
         num = SGUtilityText.getDouble(str);
         if (num == null) {
@@ -1821,7 +1818,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       }
 
       // anchored
-      str = el.getAttribute(KEY_ANCHORED);
+      str = el.getAttribute(SGITimingLineConstants.KEY_ANCHORED);
       if (str.length() != 0) {
         Boolean b = SGUtilityText.getBoolean(str);
         if (b == null) {
@@ -1938,85 +1935,115 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
         String key = itr.next();
         String value = map.getValueString(key);
 
-        if (COM_TIMING_LINE_AXIS.equalsIgnoreCase(key)) {
+        if (SGITimingLineConstants.COM_TIMING_LINE_AXIS.equalsIgnoreCase(key)) {
           final int loc = SGUtility.getAxisLocation(value);
           if (loc == -1) {
-            result.putResult(COM_TIMING_LINE_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGITimingLineConstants.COM_TIMING_LINE_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setAxisLocation(loc) == false) {
-            result.putResult(COM_TIMING_LINE_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGITimingLineConstants.COM_TIMING_LINE_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_TIMING_LINE_AXIS, SGPropertyResults.SUCCEEDED);
-        } else if (COM_TIMING_LINE_VALUE.equalsIgnoreCase(key)) {
+          result.putResult(
+              SGITimingLineConstants.COM_TIMING_LINE_AXIS, SGPropertyResults.SUCCEEDED);
+        } else if (SGITimingLineConstants.COM_TIMING_LINE_VALUE.equalsIgnoreCase(key)) {
           Double num = SGUtilityText.getDouble(value);
           if (num == null) {
-            result.putResult(COM_TIMING_LINE_VALUE, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGITimingLineConstants.COM_TIMING_LINE_VALUE,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-            result.putResult(COM_TIMING_LINE_VALUE, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGITimingLineConstants.COM_TIMING_LINE_VALUE,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setValue(num.doubleValue()) == false) {
-            result.putResult(COM_TIMING_LINE_VALUE, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGITimingLineConstants.COM_TIMING_LINE_VALUE,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_TIMING_LINE_VALUE, SGPropertyResults.SUCCEEDED);
-        } else if (COM_TIMING_LINE_WIDTH.equalsIgnoreCase(key)) {
+          result.putResult(
+              SGITimingLineConstants.COM_TIMING_LINE_VALUE, SGPropertyResults.SUCCEEDED);
+        } else if (SGITimingLineConstants.COM_TIMING_LINE_WIDTH.equalsIgnoreCase(key)) {
           StringBuffer unit = new StringBuffer();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
-            result.putResult(COM_TIMING_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGITimingLineConstants.COM_TIMING_LINE_WIDTH,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setLineWidth(num.floatValue(), unit.toString()) == false) {
-            result.putResult(COM_TIMING_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGITimingLineConstants.COM_TIMING_LINE_WIDTH,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_TIMING_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
-        } else if (COM_TIMING_LINE_TYPE.equalsIgnoreCase(key)) {
+          result.putResult(
+              SGITimingLineConstants.COM_TIMING_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+        } else if (SGITimingLineConstants.COM_TIMING_LINE_TYPE.equalsIgnoreCase(key)) {
           final Integer type = SGDrawingElementLine.getLineTypeFromName(value);
           if (type == null) {
-            result.putResult(COM_TIMING_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGITimingLineConstants.COM_TIMING_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setLineType(type.intValue()) == false) {
-            result.putResult(COM_TIMING_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGITimingLineConstants.COM_TIMING_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_TIMING_LINE_TYPE, SGPropertyResults.SUCCEEDED);
-        } else if (COM_TIMING_LINE_COLOR.equalsIgnoreCase(key)) {
+          result.putResult(
+              SGITimingLineConstants.COM_TIMING_LINE_TYPE, SGPropertyResults.SUCCEEDED);
+        } else if (SGITimingLineConstants.COM_TIMING_LINE_COLOR.equalsIgnoreCase(key)) {
           Color cl = SGUtilityText.getColor(value);
           if (cl != null) {
             if (this.setColor(cl) == false) {
-              result.putResult(COM_TIMING_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+              result.putResult(
+                  SGITimingLineConstants.COM_TIMING_LINE_COLOR,
+                  SGPropertyResults.INVALID_INPUT_VALUE);
               continue;
             }
           } else {
             cl = SGUtilityText.parseColor(value);
             if (cl == null) {
-              result.putResult(COM_TIMING_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+              result.putResult(
+                  SGITimingLineConstants.COM_TIMING_LINE_COLOR,
+                  SGPropertyResults.INVALID_INPUT_VALUE);
               continue;
             }
             if (this.setColor(cl) == false) {
-              result.putResult(COM_TIMING_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+              result.putResult(
+                  SGITimingLineConstants.COM_TIMING_LINE_COLOR,
+                  SGPropertyResults.INVALID_INPUT_VALUE);
               continue;
             }
           }
-          result.putResult(COM_TIMING_LINE_COLOR, SGPropertyResults.SUCCEEDED);
-        } else if (COM_TIMING_LINE_ANCHORED.equalsIgnoreCase(key)) {
+          result.putResult(
+              SGITimingLineConstants.COM_TIMING_LINE_COLOR, SGPropertyResults.SUCCEEDED);
+        } else if (SGITimingLineConstants.COM_TIMING_LINE_ANCHORED.equalsIgnoreCase(key)) {
           Boolean b = SGUtilityText.getBoolean(value);
           if (b == null) {
-            result.putResult(COM_TIMING_LINE_ANCHORED, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGITimingLineConstants.COM_TIMING_LINE_ANCHORED,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setAnchored(b.booleanValue()) == false) {
-            result.putResult(COM_TIMING_LINE_ANCHORED, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGITimingLineConstants.COM_TIMING_LINE_ANCHORED,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_TIMING_LINE_ANCHORED, SGPropertyResults.SUCCEEDED);
+          result.putResult(
+              SGITimingLineConstants.COM_TIMING_LINE_ANCHORED, SGPropertyResults.SUCCEEDED);
         }
       }
 
@@ -2055,7 +2082,9 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     @Override
     public String createCommandString(SGExportParameter params) {
       return SGCommandUtility.createCommandString(
-          COM_TIMING_LINE, Integer.toString(this.mID), this.getCommandPropertyMap(params));
+          SGITimingLineConstants.COM_TIMING_LINE,
+          Integer.toString(this.mID),
+          this.getCommandPropertyMap(params));
     }
 
     public boolean writeProperty(final Element el, SGExportParameter params) {
@@ -2074,12 +2103,12 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       SGPropertyMap map = new SGPropertyMap();
       this.addProperties(
           map,
-          COM_TIMING_LINE_AXIS,
-          COM_TIMING_LINE_VALUE,
-          COM_TIMING_LINE_WIDTH,
-          COM_TIMING_LINE_TYPE,
-          COM_TIMING_LINE_COLOR,
-          COM_TIMING_LINE_ANCHORED);
+          SGITimingLineConstants.COM_TIMING_LINE_AXIS,
+          SGITimingLineConstants.COM_TIMING_LINE_VALUE,
+          SGITimingLineConstants.COM_TIMING_LINE_WIDTH,
+          SGITimingLineConstants.COM_TIMING_LINE_TYPE,
+          SGITimingLineConstants.COM_TIMING_LINE_COLOR,
+          SGITimingLineConstants.COM_TIMING_LINE_ANCHORED);
       return map;
     }
 
@@ -2088,11 +2117,11 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       this.addProperties(
           map,
           KEY_AXIS_POSITION,
-          KEY_VALUE,
-          KEY_LINE_WIDTH,
-          KEY_LINE_TYPE,
+          SGITimingLineConstants.KEY_VALUE,
+          SGILineConstants.KEY_LINE_WIDTH,
+          SGILineConstants.KEY_LINE_TYPE,
           SGIDrawingElementConstants.KEY_COLOR,
-          KEY_ANCHORED);
+          SGITimingLineConstants.KEY_ANCHORED);
       return map;
     }
 
@@ -2117,7 +2146,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       SGPropertyUtility.addProperty(map, anchorKey, this.isAnchored());
     }
 
-    @Override
     public boolean getAxisDateMode(final int location) {
       return mAxisElement.getAxisDateMode(location);
     }
@@ -2255,9 +2283,9 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       Iterator<String> itr = map.getKeyIterator();
       while (itr.hasNext()) {
         String key = itr.next();
-        if (COM_TIMING_LINE_AXIS.equalsIgnoreCase(key)) {
+        if (SGITimingLineConstants.COM_TIMING_LINE_AXIS.equalsIgnoreCase(key)) {
           sAxis = map.getValueString(key);
-        } else if (COM_TIMING_LINE_VALUE.equalsIgnoreCase(key)) {
+        } else if (SGITimingLineConstants.COM_TIMING_LINE_VALUE.equalsIgnoreCase(key)) {
           sValue = map.getValueString(key);
         }
       }

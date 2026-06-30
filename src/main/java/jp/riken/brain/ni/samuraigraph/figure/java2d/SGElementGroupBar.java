@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,6 +6,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGSelectablePaint;
@@ -15,12 +15,13 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementBar;
 import jp.riken.brain.ni.samuraigraph.figure.SGIBarConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGIRectangleConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGPaintUtility;
 import jp.riken.brain.ni.samuraigraph.figure.SGStroke;
 import org.w3c.dom.Element;
 
 /** */
-public abstract class SGElementGroupBar extends SGElementGroupRectangle implements SGIBarConstants {
+public abstract class SGElementGroupBar extends SGElementGroupRectangle {
 
   /** The axis value of baseline. */
   protected double mBaselineValue;
@@ -174,7 +175,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
    * @return
    */
   public String getTagName() {
-    return TAG_NAME_BAR;
+    return SGIBarConstants.TAG_NAME_BAR;
   }
 
   /** */
@@ -184,22 +185,26 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     final float edgeLineWidth =
         (float) SGUtilityNumber.roundOffNumber(this.getEdgeLineWidth(), digitLineWidth);
 
-    el.setAttribute(KEY_RECTANGLE_WIDTH_VALUE, Double.toString(this.mWidthValue));
-    el.setAttribute(KEY_EDGE_LINE_WIDTH, Float.toString(edgeLineWidth) + SGIConstants.pt);
-    el.setAttribute(KEY_BASELINE_VALUE, Double.toString(this.mBaselineValue));
+    el.setAttribute(SGIBarConstants.KEY_RECTANGLE_WIDTH_VALUE, Double.toString(this.mWidthValue));
+    el.setAttribute(
+        SGIRectangleConstants.KEY_EDGE_LINE_WIDTH, Float.toString(edgeLineWidth) + SGIConstants.pt);
+    el.setAttribute(SGIBarConstants.KEY_BASELINE_VALUE, Double.toString(this.mBaselineValue));
     //        el.setAttribute(KEY_COLOR_LIST, SGUtilityText.getColorListString(this.mColorList));
-    el.setAttribute(KEY_EDGE_LINE_COLOR, SGUtilityText.getColorString(this.mEdgeLineColor));
-    el.setAttribute(KEY_EDGE_LINE_VISIBLE, Boolean.toString(this.isEdgeLineVisible()));
+    el.setAttribute(
+        SGIRectangleConstants.KEY_EDGE_LINE_COLOR,
+        SGUtilityText.getColorString(this.mEdgeLineColor));
+    el.setAttribute(
+        SGIRectangleConstants.KEY_EDGE_LINE_VISIBLE, Boolean.toString(this.isEdgeLineVisible()));
     //        if (! SGPaintUtility.writeProperty(el, this.mInnerPaint)) {
     //            return false;
     //        }
     if (!this.mInnerPaint.writeProperty(el)) {
       return false;
     }
-    el.setAttribute(KEY_VERTICAL, Boolean.toString(this.mVerticalFlag));
-    el.setAttribute(KEY_INTERVAL, Double.toString(this.mInterval));
-    el.setAttribute(KEY_OFFSET_X, Double.toString(this.mOffsetX));
-    el.setAttribute(KEY_OFFSET_Y, Double.toString(this.mOffsetY));
+    el.setAttribute(SGIBarConstants.KEY_VERTICAL, Boolean.toString(this.mVerticalFlag));
+    el.setAttribute(SGIBarConstants.KEY_INTERVAL, Double.toString(this.mInterval));
+    el.setAttribute(SGIBarConstants.KEY_OFFSET_X, Double.toString(this.mOffsetX));
+    el.setAttribute(SGIBarConstants.KEY_OFFSET_Y, Double.toString(this.mOffsetY));
 
     return true;
   }
@@ -217,7 +222,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     Boolean b = null;
 
     // width of the bar
-    str = el.getAttribute(KEY_RECTANGLE_WIDTH_VALUE);
+    str = el.getAttribute(SGIBarConstants.KEY_RECTANGLE_WIDTH_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -230,7 +235,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // edge line width
-    str = el.getAttribute(KEY_EDGE_LINE_WIDTH);
+    str = el.getAttribute(SGIRectangleConstants.KEY_EDGE_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuffer uEdgeLineWidth = new StringBuffer();
       num = SGUtilityText.getNumber(str, uEdgeLineWidth);
@@ -244,7 +249,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // baseline value
-    str = el.getAttribute(KEY_BASELINE_VALUE);
+    str = el.getAttribute(SGIBarConstants.KEY_BASELINE_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -257,7 +262,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // edge line color
-    str = el.getAttribute(KEY_EDGE_LINE_COLOR);
+    str = el.getAttribute(SGIRectangleConstants.KEY_EDGE_LINE_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColor(str);
       if (cl == null) {
@@ -270,7 +275,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // edge line visible
-    str = el.getAttribute(KEY_EDGE_LINE_VISIBLE);
+    str = el.getAttribute(SGIRectangleConstants.KEY_EDGE_LINE_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -300,7 +305,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
         return false;
       }
 
-      str = el.getAttribute(KEY_BACKGROUND_TRANSPARENT);
+      str = el.getAttribute(SGIRectangleConstants.KEY_BACKGROUND_TRANSPARENT);
       if (str.length() != 0) {
         b = SGUtilityText.getBoolean(str);
         if (b != null) {
@@ -326,7 +331,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // bar vertical
-    str = el.getAttribute(KEY_VERTICAL);
+    str = el.getAttribute(SGIBarConstants.KEY_VERTICAL);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -339,7 +344,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // bar interval
-    str = el.getAttribute(KEY_INTERVAL);
+    str = el.getAttribute(SGIBarConstants.KEY_INTERVAL);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -352,7 +357,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // bar offset x
-    str = el.getAttribute(KEY_OFFSET_X);
+    str = el.getAttribute(SGIBarConstants.KEY_OFFSET_X);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -365,7 +370,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // bar offset y
-    str = el.getAttribute(KEY_OFFSET_Y);
+    str = el.getAttribute(SGIBarConstants.KEY_OFFSET_Y);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {

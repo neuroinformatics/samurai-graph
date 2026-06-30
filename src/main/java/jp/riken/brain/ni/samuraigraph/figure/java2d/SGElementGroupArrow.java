@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -9,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
@@ -18,6 +18,8 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementSymbol;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroup;
 import jp.riken.brain.ni.samuraigraph.figure.SGIArrowConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGISymbolConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGStroke;
 import org.w3c.dom.Element;
 
@@ -357,25 +359,25 @@ public abstract class SGElementGroupArrow extends SGElementGroup
 
     String typeName = null;
     switch (type) {
-      case SGIArrowConstants.SYMBOL_TYPE_CIRCLE:
-        typeName = SYMBOL_NAME_CIRCLE;
+      case SGISymbolConstants.SYMBOL_TYPE_CIRCLE:
+        typeName = SGISymbolConstants.SYMBOL_NAME_CIRCLE;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_SQUARE:
-        typeName = SYMBOL_NAME_SQUARE;
+      case SGISymbolConstants.SYMBOL_TYPE_SQUARE:
+        typeName = SGISymbolConstants.SYMBOL_NAME_SQUARE;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_TRIANGLE:
-        typeName = SYMBOL_NAME_TRIANGLE;
+      case SGISymbolConstants.SYMBOL_TYPE_TRIANGLE:
+        typeName = SGISymbolConstants.SYMBOL_NAME_TRIANGLE;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_CROSS:
-        typeName = SYMBOL_NAME_CROSS;
+      case SGISymbolConstants.SYMBOL_TYPE_CROSS:
+        typeName = SGISymbolConstants.SYMBOL_NAME_CROSS;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_TRANSVERSELINE:
+      case SYMBOL_TYPE_TRANSVERSELINE:
         typeName = SYMBOL_NAME_TRANSVERSE_LINE;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_ARROW_HEAD:
+      case SYMBOL_TYPE_ARROW_HEAD:
         typeName = SYMBOL_NAME_ARROW_HEAD;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_ARROW:
+      case SYMBOL_TYPE_ARROW:
         typeName = SYMBOL_NAME_ARROW;
         break;
       case SGIArrowConstants.SYMBOL_TYPE_VOID:
@@ -414,8 +416,9 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     List<Color> cList = new ArrayList<Color>();
     cList.add(this.getColor());
 
-    el.setAttribute(KEY_LINE_WIDTH, Float.toString(lineWidth) + SGIConstants.pt);
-    el.setAttribute(KEY_LINE_TYPE, SGDrawingElementLine.getLineTypeName(this.getLineType()));
+    el.setAttribute(SGILineConstants.KEY_LINE_WIDTH, Float.toString(lineWidth) + SGIConstants.pt);
+    el.setAttribute(
+        SGILineConstants.KEY_LINE_TYPE, SGDrawingElementLine.getLineTypeName(this.getLineType()));
     el.setAttribute(KEY_HEAD_SIZE, Float.toString(headSize) + SGIConstants.cm);
     el.setAttribute(
         KEY_START_HEAD_TYPE, SGDrawingElementArrow.getArrowHeadTypeName(this.getStartHeadType()));
@@ -440,7 +443,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     List<Color> list = null;
 
     // line width
-    str = el.getAttribute(KEY_LINE_WIDTH);
+    str = el.getAttribute(SGILineConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuffer uLineWidth = new StringBuffer();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -454,7 +457,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     }
 
     // line type
-    str = el.getAttribute(KEY_LINE_TYPE);
+    str = el.getAttribute(SGILineConstants.KEY_LINE_TYPE);
     if (str.length() != 0) {
       num = SGDrawingElementLine.getLineTypeFromName(str);
       if (num == null) {

@@ -16,7 +16,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow.BackgroundImage;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants.OPERATION;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementLegend;
@@ -200,7 +199,8 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         String fname = sb.toString();
         File file = new File(fname);
 
-        if (!gs.saveData(file, new SGExportParameter(SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF), null)) {
+        if (!gs.saveData(
+            file, new SGExportParameter(SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF), null)) {
           file.delete();
           file = null;
         }

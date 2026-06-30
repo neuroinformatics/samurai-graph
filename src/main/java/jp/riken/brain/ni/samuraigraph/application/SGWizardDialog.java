@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.application;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -11,6 +10,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** The base class of wizard dialogs. */
 public abstract class SGWizardDialog extends SGDialog {

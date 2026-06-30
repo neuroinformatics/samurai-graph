@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -17,6 +16,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
@@ -26,10 +26,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGIScaleConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGIStringConstants;
 
 /** The dialog for axis scale symbol. */
-public class SGAxisScaleDialog extends SGPropertyDialog
-    implements SGIScaleConstants, SGITwoAxesDialog {
+public class SGAxisScaleDialog extends SGPropertyDialog implements SGITwoAxesDialog {
 
   private static final long serialVersionUID = 7559721912628401885L;
 
@@ -859,7 +859,9 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     this.initFontFamilyNameComboBox(this.mFontNameComboBox);
     this.initFontStyleComboBox(this.mFontStyleComboBox);
     final String[] axisChangeModeArray = {
-      AXIS_LENGTH_MODE_FIXED, AXIS_LENGTH_MODE_VALUE_FIXED, AXIS_LENGTH_MODE_ADAPTIVE
+      SGIScaleConstants.AXIS_LENGTH_MODE_FIXED,
+      SGIScaleConstants.AXIS_LENGTH_MODE_VALUE_FIXED,
+      SGIScaleConstants.AXIS_LENGTH_MODE_ADAPTIVE
     };
     for (String mode : axisChangeModeArray) {
       this.mAxisLengthModeComboBox.addItem(mode);
@@ -882,10 +884,14 @@ public class SGAxisScaleDialog extends SGPropertyDialog
 
     // space
     this.mSpaceSpinner.initProperties(
-        new SpinnerNumberModel(0.1, SCALE_SPACE_MIN, SCALE_SPACE_MAX, SCALE_SPACE_STEP),
-        SCALE_SPACE_UNIT,
-        SCALE_SPACE_FRAC_DIFIT_MIN,
-        SCALE_SPACE_FRAC_DIFIT_MAX);
+        new SpinnerNumberModel(
+            0.1,
+            SGIScaleConstants.SCALE_SPACE_MIN,
+            SGIScaleConstants.SCALE_SPACE_MAX,
+            SGIScaleConstants.SCALE_SPACE_STEP),
+        SGIScaleConstants.SCALE_SPACE_UNIT,
+        SGIScaleConstants.SCALE_SPACE_FRAC_DIFIT_MIN,
+        SGIScaleConstants.SCALE_SPACE_FRAC_DIFIT_MAX);
 
     // line width
     this.mLineWidthSpinner.initProperties(
@@ -903,10 +909,14 @@ public class SGAxisScaleDialog extends SGPropertyDialog
 
     // angle
     this.mFontAngleSpinner.initProperties(
-        new SpinnerNumberModel(0.0, STRING_ANGLE_MIN, STRING_ANGLE_MAX, STRING_ANGLE_STEP),
+        new SpinnerNumberModel(
+            0.0,
+            SGIStringConstants.STRING_ANGLE_MIN,
+            SGIStringConstants.STRING_ANGLE_MAX,
+            SGIStringConstants.STRING_ANGLE_STEP),
         SGIConstants.degree,
-        STRING_ANGLE_FRAC_DIFIT_MIN,
-        STRING_ANGLE_FRAC_DIFIT_MAX);
+        SGIStringConstants.STRING_ANGLE_FRAC_DIFIT_MIN,
+        SGIStringConstants.STRING_ANGLE_FRAC_DIFIT_MAX);
 
     // set the name
     this.mXValueTextField.setDescription("Location-> X");
@@ -1195,7 +1205,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     final int xLocation = this.mAxisPanel.getXAxisLocation();
     final int yLocation = this.mAxisPanel.getYAxisLocation();
     final Boolean visible = this.getScaleVisible();
-    final AXIS_LENGTH_MODE axisChangeMode = this.getAxisLengthMode();
+    final SGIScaleConstants.AXIS_LENGTH_MODE axisChangeMode = this.getAxisLengthMode();
     final Number xValue = this.getXValue();
     final Number yValue = this.getYValue();
     final Boolean xAxisVisible = this.getXAxisVisible();
@@ -1330,7 +1340,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog
 
     // space
     if (space != null) {
-      scale.setSpace(space.floatValue(), SCALE_SPACE_UNIT);
+      scale.setSpace(space.floatValue(), SGIScaleConstants.SCALE_SPACE_UNIT);
     }
 
     // font name
@@ -1373,7 +1383,8 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     setDateComponentProperties(this, this.mAxisPanel, list);
 
     final boolean[] visibleArray = new boolean[num];
-    final AXIS_LENGTH_MODE[] axisLengthModeArray = new AXIS_LENGTH_MODE[num];
+    final SGIScaleConstants.AXIS_LENGTH_MODE[] axisLengthModeArray =
+        new SGIScaleConstants.AXIS_LENGTH_MODE[num];
     final double[] xValueArray = new double[num];
     final double[] yValueArray = new double[num];
     final boolean[] xAxisVisibleArray = new boolean[num];
@@ -1413,7 +1424,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog
       yAxisUnitArray[ii] = l.getYAxisUnit();
       lineWidthArray[ii] = l.getLineWidth(SGIConstants.LINE_WIDTH_UNIT);
       lineColorArray[ii] = l.getLineColor();
-      spaceArray[ii] = l.getSpace(SCALE_SPACE_UNIT);
+      spaceArray[ii] = l.getSpace(SGIScaleConstants.SCALE_SPACE_UNIT);
       fontNameArray[ii] = l.getFontName();
       fontStyleArray[ii] = l.getFontStyle();
       fontSizeArray[ii] = l.getFontSize(SGIConstants.FONT_SIZE_UNIT);
@@ -1422,8 +1433,8 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     }
 
     Boolean visible = SGUtility.checkEquality(visibleArray);
-    AXIS_LENGTH_MODE axisLengthMode =
-        (AXIS_LENGTH_MODE) SGUtility.checkEquality(axisLengthModeArray);
+    SGIScaleConstants.AXIS_LENGTH_MODE axisLengthMode =
+        (SGIScaleConstants.AXIS_LENGTH_MODE) SGUtility.checkEquality(axisLengthModeArray);
     Double xValue = SGUtility.checkEquality(xValueArray);
     Double yValue = SGUtility.checkEquality(yValueArray);
     Boolean xAxisVisible = SGUtility.checkEquality(xAxisVisibleArray);
@@ -1479,18 +1490,15 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     return true;
   }
 
-  @Override
   public void onAxisSelectionStateChanged(SGAxisSelectionPanel axisPanel) {
     // set properties to the date components
     setDateComponentProperties(this, this.mAxisPanel, this.mPropertyDialogObserverList);
   }
 
-  @Override
   public void onXAxisDateSelected(boolean selected) {
     this.mDateXComponentGroup.setEnabled(selected);
   }
 
-  @Override
   public void onYAxisDateSelected(boolean selected) {
     this.mDateYComponentGroup.setEnabled(selected);
   }
@@ -1499,17 +1507,17 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     return this.mVisibleCheckBox.getSelected();
   }
 
-  public AXIS_LENGTH_MODE getAxisLengthMode() {
-    AXIS_LENGTH_MODE ret = null;
+  public SGIScaleConstants.AXIS_LENGTH_MODE getAxisLengthMode() {
+    SGIScaleConstants.AXIS_LENGTH_MODE ret = null;
     Object item = this.mAxisLengthModeComboBox.getSelectedItem();
     if (item != null) {
       String modeName = item.toString();
-      if (AXIS_LENGTH_MODE_FIXED.equals(modeName)) {
-        ret = AXIS_LENGTH_MODE.LENGTH_FIXED;
-      } else if (AXIS_LENGTH_MODE_VALUE_FIXED.equals(modeName)) {
-        ret = AXIS_LENGTH_MODE.VALUE_FIXED;
-      } else if (AXIS_LENGTH_MODE_ADAPTIVE.equals(modeName)) {
-        ret = AXIS_LENGTH_MODE.ADAPTIVE;
+      if (SGIScaleConstants.AXIS_LENGTH_MODE_FIXED.equals(modeName)) {
+        ret = SGIScaleConstants.AXIS_LENGTH_MODE.LENGTH_FIXED;
+      } else if (SGIScaleConstants.AXIS_LENGTH_MODE_VALUE_FIXED.equals(modeName)) {
+        ret = SGIScaleConstants.AXIS_LENGTH_MODE.VALUE_FIXED;
+      } else if (SGIScaleConstants.AXIS_LENGTH_MODE_ADAPTIVE.equals(modeName)) {
+        ret = SGIScaleConstants.AXIS_LENGTH_MODE.ADAPTIVE;
       }
     }
     return ret;
@@ -1598,15 +1606,15 @@ public class SGAxisScaleDialog extends SGPropertyDialog
     return true;
   }
 
-  public boolean setAxisLengthMode(final AXIS_LENGTH_MODE mode) {
+  public boolean setAxisLengthMode(final SGIScaleConstants.AXIS_LENGTH_MODE mode) {
     String modeName = null;
     if (mode != null) {
-      if (AXIS_LENGTH_MODE.LENGTH_FIXED.equals(mode)) {
-        modeName = AXIS_LENGTH_MODE_FIXED;
-      } else if (AXIS_LENGTH_MODE.VALUE_FIXED.equals(mode)) {
-        modeName = AXIS_LENGTH_MODE_VALUE_FIXED;
-      } else if (AXIS_LENGTH_MODE.ADAPTIVE.equals(mode)) {
-        modeName = AXIS_LENGTH_MODE_ADAPTIVE;
+      if (SGIScaleConstants.AXIS_LENGTH_MODE.LENGTH_FIXED.equals(mode)) {
+        modeName = SGIScaleConstants.AXIS_LENGTH_MODE_FIXED;
+      } else if (SGIScaleConstants.AXIS_LENGTH_MODE.VALUE_FIXED.equals(mode)) {
+        modeName = SGIScaleConstants.AXIS_LENGTH_MODE_VALUE_FIXED;
+      } else if (SGIScaleConstants.AXIS_LENGTH_MODE.ADAPTIVE.equals(mode)) {
+        modeName = SGIScaleConstants.AXIS_LENGTH_MODE_ADAPTIVE;
       }
     }
     this.mAxisLengthModeComboBox.setSelectedItem(modeName);

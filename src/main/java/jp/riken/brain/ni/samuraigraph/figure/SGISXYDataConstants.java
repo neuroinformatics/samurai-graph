@@ -2,7 +2,6 @@ package jp.riken.brain.ni.samuraigraph.figure;
 
 import java.awt.Color;
 import java.awt.Font;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 
 /** Constants for the two-dimensional scalar type data. */

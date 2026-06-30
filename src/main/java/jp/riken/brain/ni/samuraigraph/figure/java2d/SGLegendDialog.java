@@ -26,8 +26,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGILegendConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGPaintConstants;
 
 /** A dialog to set the properties of legend. */
-public class SGLegendDialog extends SGPropertyDialog
-    implements SGILegendConstants, SGITwoAxesDialog {
+public class SGLegendDialog extends SGPropertyDialog implements SGITwoAxesDialog {
 
   // serialVersionUID
   private static final long serialVersionUID = -54582360939741917L;
@@ -571,10 +570,14 @@ public class SGLegendDialog extends SGPropertyDialog
 
     // data width
     this.mSpanSpinner.initProperties(
-        new SpinnerNumberModel(1.0, SYMBOL_SPAN_MIN, SYMBOL_SPAN_MAX, SYMBOL_SPAN_STEP),
-        SYMBOL_SPAN_UNIT,
-        SYMBOL_SPAN_FRAC_DIFIT_MIN,
-        SYMBOL_SPAN_FRAC_DIFIT_MAX);
+        new SpinnerNumberModel(
+            1.0,
+            SGILegendConstants.SYMBOL_SPAN_MIN,
+            SGILegendConstants.SYMBOL_SPAN_MAX,
+            SGILegendConstants.SYMBOL_SPAN_STEP),
+        SGILegendConstants.SYMBOL_SPAN_UNIT,
+        SGILegendConstants.SYMBOL_SPAN_FRAC_DIFIT_MIN,
+        SGILegendConstants.SYMBOL_SPAN_FRAC_DIFIT_MAX);
 
     // background transparency
     this.mBackgroundTransparencySpinner.initProperties(
@@ -1450,17 +1453,14 @@ public class SGLegendDialog extends SGPropertyDialog
     return valid;
   }
 
-  @Override
   public void onXAxisDateSelected(boolean selected) {
     this.mDateXComponentGroup.setEnabled(selected);
   }
 
-  @Override
   public void onYAxisDateSelected(boolean selected) {
     this.mDateYComponentGroup.setEnabled(selected);
   }
 
-  @Override
   public void onAxisSelectionStateChanged(SGAxisSelectionPanel axisPanel) {
     // set properties to the date components
     setDateComponentProperties(this, this.mAxisPanel, this.mPropertyDialogObserverList);

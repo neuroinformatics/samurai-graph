@@ -1,9 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.data;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** The base class of the dialog to duplicate a data. */
 public abstract class SGDataDuplicationDialog extends SGDataDialog {

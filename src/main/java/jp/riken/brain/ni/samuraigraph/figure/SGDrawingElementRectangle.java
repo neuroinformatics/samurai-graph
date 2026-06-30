@@ -1,10 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.figure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
@@ -16,8 +16,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
 /** Drawing element of the rectangle. */
-public abstract class SGDrawingElementRectangle extends SGDrawingElement
-    implements SGIRectangleConstants {
+public abstract class SGDrawingElementRectangle extends SGDrawingElement {
 
   /** Construct a rectangle object. */
   public SGDrawingElementRectangle() {
@@ -352,7 +351,11 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
     SGPropertyMap map = new SGPropertyMap();
     this.addProperties(
-        map, KEY_EDGE_LINE_WIDTH, KEY_EDGE_LINE_TYPE, KEY_EDGE_LINE_COLOR, KEY_EDGE_LINE_VISIBLE);
+        map,
+        SGIRectangleConstants.KEY_EDGE_LINE_WIDTH,
+        SGIRectangleConstants.KEY_EDGE_LINE_TYPE,
+        SGIRectangleConstants.KEY_EDGE_LINE_COLOR,
+        SGIRectangleConstants.KEY_EDGE_LINE_VISIBLE);
 
     // properties of the inner paint
     SGIPaint paint = this.getInnerPaint();
@@ -387,7 +390,7 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
     Boolean b = null;
 
     // edge line width
-    str = el.getAttribute(KEY_EDGE_LINE_WIDTH);
+    str = el.getAttribute(SGIRectangleConstants.KEY_EDGE_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuffer uEdgeLineWidth = new StringBuffer();
       num = SGUtilityText.getNumber(str, uEdgeLineWidth);
@@ -401,7 +404,7 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
     }
 
     // edge line type
-    str = el.getAttribute(KEY_EDGE_LINE_TYPE);
+    str = el.getAttribute(SGIRectangleConstants.KEY_EDGE_LINE_TYPE);
     if (str.length() != 0) {
       num = SGDrawingElementLine.getLineTypeFromName(str);
       if (num == null) {
@@ -414,7 +417,7 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
     }
 
     // inner paint
-    str = el.getAttribute(KEY_INNER_COLOR);
+    str = el.getAttribute(SGIRectangleConstants.KEY_INNER_COLOR);
     if (str.length() != 0) {
       //            List<Color> list = SGUtilityText.getColorList(str);
       //            if (list == null) {
@@ -435,7 +438,7 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
         return false;
       }
 
-      str = el.getAttribute(KEY_BACKGROUND_TRANSPARENT);
+      str = el.getAttribute(SGIRectangleConstants.KEY_BACKGROUND_TRANSPARENT);
       if (str.length() != 0) {
         b = SGUtilityText.getBoolean(str);
         if (b != null) {
@@ -461,7 +464,7 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
     }
 
     // edge line color
-    str = el.getAttribute(KEY_EDGE_LINE_COLOR);
+    str = el.getAttribute(SGIRectangleConstants.KEY_EDGE_LINE_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColor(str);
       if (cl == null) {
@@ -473,7 +476,7 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
     }
 
     // edge line visible
-    str = el.getAttribute(KEY_EDGE_LINE_VISIBLE);
+    str = el.getAttribute(SGIRectangleConstants.KEY_EDGE_LINE_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {

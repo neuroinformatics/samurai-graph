@@ -8,7 +8,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** Drawing element of the line. */
-public abstract class SGDrawingElementLine extends SGDrawingElement implements SGILineConstants {
+public abstract class SGDrawingElementLine extends SGDrawingElement {
 
   /**
    * Returns a stroke.
@@ -169,7 +169,11 @@ public abstract class SGDrawingElementLine extends SGDrawingElement implements S
    */
   public static boolean isValidLineType(final int type) {
     final int[] array = {
-      LINE_TYPE_SOLID, LINE_TYPE_BROKEN, LINE_TYPE_DOTTED, LINE_TYPE_DASHED, LINE_TYPE_DOUBLE_DASHED
+      SGILineConstants.LINE_TYPE_SOLID,
+      SGILineConstants.LINE_TYPE_BROKEN,
+      SGILineConstants.LINE_TYPE_DOTTED,
+      SGILineConstants.LINE_TYPE_DASHED,
+      SGILineConstants.LINE_TYPE_DOUBLE_DASHED
     };
     for (int ii = 0; ii < array.length; ii++) {
       if (type == array[ii]) {
@@ -190,16 +194,16 @@ public abstract class SGDrawingElementLine extends SGDrawingElement implements S
       return null;
     }
     int type;
-    if (SGUtilityText.isEqualString(LINE_NAME_SOLID, name)) {
-      type = LINE_TYPE_SOLID;
-    } else if (SGUtilityText.isEqualString(LINE_NAME_BROKEN, name)) {
-      type = LINE_TYPE_BROKEN;
-    } else if (SGUtilityText.isEqualString(LINE_NAME_DOTTED, name)) {
-      type = LINE_TYPE_DOTTED;
-    } else if (SGUtilityText.isEqualString(LINE_NAME_DASHED, name)) {
-      type = LINE_TYPE_DASHED;
-    } else if (SGUtilityText.isEqualString(LINE_NAME_DOUBLE_DASHED, name)) {
-      type = LINE_TYPE_DOUBLE_DASHED;
+    if (SGUtilityText.isEqualString(SGILineConstants.LINE_NAME_SOLID, name)) {
+      type = SGILineConstants.LINE_TYPE_SOLID;
+    } else if (SGUtilityText.isEqualString(SGILineConstants.LINE_NAME_BROKEN, name)) {
+      type = SGILineConstants.LINE_TYPE_BROKEN;
+    } else if (SGUtilityText.isEqualString(SGILineConstants.LINE_NAME_DOTTED, name)) {
+      type = SGILineConstants.LINE_TYPE_DOTTED;
+    } else if (SGUtilityText.isEqualString(SGILineConstants.LINE_NAME_DASHED, name)) {
+      type = SGILineConstants.LINE_TYPE_DASHED;
+    } else if (SGUtilityText.isEqualString(SGILineConstants.LINE_NAME_DOUBLE_DASHED, name)) {
+      type = SGILineConstants.LINE_TYPE_DOUBLE_DASHED;
     } else {
       return null;
     }
@@ -216,20 +220,20 @@ public abstract class SGDrawingElementLine extends SGDrawingElement implements S
 
     String name = null;
     switch (type) {
-      case LINE_TYPE_SOLID:
-        name = LINE_NAME_SOLID;
+      case SGILineConstants.LINE_TYPE_SOLID:
+        name = SGILineConstants.LINE_NAME_SOLID;
         break;
-      case LINE_TYPE_BROKEN:
-        name = LINE_NAME_BROKEN;
+      case SGILineConstants.LINE_TYPE_BROKEN:
+        name = SGILineConstants.LINE_NAME_BROKEN;
         break;
-      case LINE_TYPE_DOTTED:
-        name = LINE_NAME_DOTTED;
+      case SGILineConstants.LINE_TYPE_DOTTED:
+        name = SGILineConstants.LINE_NAME_DOTTED;
         break;
-      case LINE_TYPE_DASHED:
-        name = LINE_NAME_DASHED;
+      case SGILineConstants.LINE_TYPE_DASHED:
+        name = SGILineConstants.LINE_NAME_DASHED;
         break;
-      case LINE_TYPE_DOUBLE_DASHED:
-        name = LINE_NAME_DOUBLE_DASHED;
+      case SGILineConstants.LINE_TYPE_DOUBLE_DASHED:
+        name = SGILineConstants.LINE_NAME_DOUBLE_DASHED;
         break;
       default:
     }

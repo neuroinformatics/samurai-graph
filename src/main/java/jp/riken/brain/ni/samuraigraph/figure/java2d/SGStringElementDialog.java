@@ -1,5 +1,4 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -14,6 +13,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
@@ -25,8 +25,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGIStringConstants;
 
 /** A dialog to set the properties of labels. */
-public class SGStringElementDialog extends SGPropertyDialog
-    implements SGIStringConstants, SGITwoAxesDialog {
+public class SGStringElementDialog extends SGPropertyDialog implements SGITwoAxesDialog {
 
   // serialVersionUID
   private static final long serialVersionUID = -4468422972213746464L;
@@ -42,6 +41,8 @@ public class SGStringElementDialog extends SGPropertyDialog
     this.initialize();
     this.pack();
   }
+
+  public void setAxisDateComponentsEnabled(boolean enabled) {}
 
   private void initComponents() {
     java.awt.GridBagConstraints gridBagConstraints;
@@ -400,10 +401,14 @@ public class SGStringElementDialog extends SGPropertyDialog
 
     // angle
     this.mTextAngleSpinner.initProperties(
-        new SpinnerNumberModel(0.0, STRING_ANGLE_MIN, STRING_ANGLE_MAX, STRING_ANGLE_STEP),
+        new SpinnerNumberModel(
+            0.0,
+            SGIStringConstants.STRING_ANGLE_MIN,
+            SGIStringConstants.STRING_ANGLE_MAX,
+            SGIStringConstants.STRING_ANGLE_STEP),
         SGIConstants.degree,
-        STRING_ANGLE_FRAC_DIFIT_MIN,
-        STRING_ANGLE_FRAC_DIFIT_MAX);
+        SGIStringConstants.STRING_ANGLE_FRAC_DIFIT_MIN,
+        SGIStringConstants.STRING_ANGLE_FRAC_DIFIT_MAX);
 
     // add an action event listener
     this.mFontNameComboBox.addActionListener(this);
@@ -869,17 +874,14 @@ public class SGStringElementDialog extends SGPropertyDialog
     return this.mPreviewButton;
   }
 
-  @Override
   public void onXAxisDateSelected(boolean selected) {
     this.mDateXComponentGroup.setEnabled(selected);
   }
 
-  @Override
   public void onYAxisDateSelected(boolean selected) {
     this.mDateYComponentGroup.setEnabled(selected);
   }
 
-  @Override
   public void onAxisSelectionStateChanged(SGAxisSelectionPanel axisPanel) {
     // set properties to the date components
     setDateComponentProperties(this, this.mAxisPanel, this.mPropertyDialogObserverList);

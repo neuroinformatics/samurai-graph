@@ -1,9 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
-
 /** Constants for lines. */
-public interface SGILineConstants {
+public final class SGILineConstants {
 
   /*
    * Constants for the line types.
@@ -19,7 +17,11 @@ public interface SGILineConstants {
   public static final int LINE_TYPE_DOUBLE_DASHED = 5;
 
   public static final int[] LINE_TYPE_ARRAY = {
-    LINE_TYPE_SOLID, LINE_TYPE_BROKEN, LINE_TYPE_DOTTED, LINE_TYPE_DASHED, LINE_TYPE_DOUBLE_DASHED
+    SGILineConstants.LINE_TYPE_SOLID,
+    SGILineConstants.LINE_TYPE_BROKEN,
+    SGILineConstants.LINE_TYPE_DOTTED,
+    SGILineConstants.LINE_TYPE_DASHED,
+    SGILineConstants.LINE_TYPE_DOUBLE_DASHED
   };
 
   /*
@@ -36,7 +38,11 @@ public interface SGILineConstants {
   public static final String LINE_NAME_DOUBLE_DASHED = "Double Dashed";
 
   public static final String[] LINE_NAME_ARRAY = {
-    LINE_NAME_SOLID, LINE_NAME_BROKEN, LINE_NAME_DOTTED, LINE_NAME_DASHED, LINE_NAME_DOUBLE_DASHED
+    SGILineConstants.LINE_NAME_SOLID,
+    SGILineConstants.LINE_NAME_BROKEN,
+    SGILineConstants.LINE_NAME_DOTTED,
+    SGILineConstants.LINE_NAME_DASHED,
+    SGILineConstants.LINE_NAME_DOUBLE_DASHED
   };
 
   /*

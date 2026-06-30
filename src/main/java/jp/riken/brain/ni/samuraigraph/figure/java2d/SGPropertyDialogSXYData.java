@@ -47,7 +47,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
 import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupDialog;
@@ -66,8 +65,10 @@ import jp.riken.brain.ni.samuraigraph.data.SGSXYSDArrayMultipleData;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementErrorBar;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementSymbol;
+import jp.riken.brain.ni.samuraigraph.figure.SGIAxisConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIErrorBarConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIFigureDrawingElementConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGILineAndStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYDataConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISymbolConstants;
@@ -77,15 +78,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGPaintConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGUtilityForFigureElement;
 
 /** A dialog to set the properties of two-dimensional scalar type data. */
-public class SGPropertyDialogSXYData extends SGDataDialog
-    implements SGIFigureDrawingElementConstants,
-        SGIDataColumnTypeConstants,
-        SGISXYDataConstants,
-        SGINetCDFConstants,
-        SGILineConstants,
-        SGISymbolConstants,
-        SGITwoAxesDialog {
-
+public class SGPropertyDialogSXYData extends SGDataDialog implements SGITwoAxesDialog {
   // serialVersionID
   private static final long serialVersionUID = -8504726423602738949L;
 
@@ -1871,18 +1864,18 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.setTitle(SGPropertyDialogSXYData.TITLE);
 
     // add items to the line type combo box
-    for (int ii = 0; ii < LINE_NAME_ARRAY.length; ii++) {
-      this.mLineTypeComboBox.addItem(LINE_NAME_ARRAY[ii]);
+    for (int ii = 0; ii < SGILineConstants.LINE_NAME_ARRAY.length; ii++) {
+      this.mLineTypeComboBox.addItem(SGILineConstants.LINE_NAME_ARRAY[ii]);
     }
 
     // add items to the symbol type combo box
-    for (int ii = 0; ii < SYMBOL_NAME_ARRAY.length; ii++) {
-      this.mSymbolTypeComboBox.addItem(SYMBOL_NAME_ARRAY[ii]);
+    for (int ii = 0; ii < SGISymbolConstants.SYMBOL_NAME_ARRAY.length; ii++) {
+      this.mSymbolTypeComboBox.addItem(SGISymbolConstants.SYMBOL_NAME_ARRAY[ii]);
     }
 
     // add items to the error bar type combo box
     final String typeArray[] = {
-      SGIErrorBarConstants.SYMBOL_NAME_CIRCLE,
+      SGISymbolConstants.SYMBOL_NAME_CIRCLE,
       SGIErrorBarConstants.SYMBOL_NAME_TRANSVERSE_LINE,
       SGIErrorBarConstants.SYMBOL_NAME_VOID
     };
@@ -1931,10 +1924,14 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
     // symbol
     this.mSymbolSizeSpinner.initProperties(
-        new SpinnerNumberModel(0.1, SYMBOL_SIZE_MIN, SYMBOL_SIZE_MAX, SYMBOL_SIZE_STEP),
-        SYMBOL_SIZE_UNIT,
-        SYMBOL_SIZE_FRAC_DIFIT_MIN,
-        SYMBOL_SIZE_FRAC_DIFIT_MAX);
+        new SpinnerNumberModel(
+            0.1,
+            SGIFigureDrawingElementConstants.SYMBOL_SIZE_MIN,
+            SGIFigureDrawingElementConstants.SYMBOL_SIZE_MAX,
+            SGIFigureDrawingElementConstants.SYMBOL_SIZE_STEP),
+        SGIFigureDrawingElementConstants.SYMBOL_SIZE_UNIT,
+        SGIFigureDrawingElementConstants.SYMBOL_SIZE_FRAC_DIFIT_MIN,
+        SGIFigureDrawingElementConstants.SYMBOL_SIZE_FRAC_DIFIT_MAX);
 
     this.mSymbolLineWidthSpinner.initProperties(
         getLineWidthSpinnerNumberModel(),
@@ -1979,10 +1976,13 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
     this.mErrorBarSymbolSizeSpinner.initProperties(
         new SpinnerNumberModel(
-            0.1, ERROR_BAR_HEAD_SIZE_MIN, ERROR_BAR_HEAD_SIZE_MAX, ERROR_BAR_HEAD_SIZE_STEP),
-        ERROR_BAR_HEAD_SIZE_UNIT,
-        ERROR_BAR_HEAD_SIZE_FRAC_DIFIT_MIN,
-        ERROR_BAR_HEAD_SIZE_FRAC_DIFIT_MAX);
+            0.1,
+            SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_MIN,
+            SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_MAX,
+            SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_STEP),
+        SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_UNIT,
+        SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_FRAC_DIFIT_MIN,
+        SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_FRAC_DIFIT_MAX);
 
     // tick label
     this.mTickLabelFontSizeSpinner.initProperties(
@@ -1993,30 +1993,30 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.mTickLabelDecimalPlacesSpinner.initProperties(
         new SpinnerNumberModel(
             0.0,
-            (float) TICK_LABEL_DECIMAL_PLACES_MIN,
-            (float) TICK_LABEL_DECIMAL_PLACES_MAX,
-            (float) TICK_LABEL_DECIMAL_PLACES_STEP),
+            (float) SGIFigureDrawingElementConstants.TICK_LABEL_DECIMAL_PLACES_MIN,
+            (float) SGIFigureDrawingElementConstants.TICK_LABEL_DECIMAL_PLACES_MAX,
+            (float) SGIFigureDrawingElementConstants.TICK_LABEL_DECIMAL_PLACES_STEP),
         null,
         0,
         0);
     this.mTickLabelExponentSpinner.initProperties(
         new SpinnerNumberModel(
             0.0,
-            (float) TICK_LABEL_EXPONENT_MIN,
-            (float) TICK_LABEL_EXPONENT_MAX,
-            (float) TICK_LABEL_EXPONENT_STEP),
+            (float) SGIFigureDrawingElementConstants.TICK_LABEL_EXPONENT_MIN,
+            (float) SGIFigureDrawingElementConstants.TICK_LABEL_EXPONENT_MAX,
+            (float) SGIFigureDrawingElementConstants.TICK_LABEL_EXPONENT_STEP),
         null,
         0,
         0);
     this.mTickLabelAngleSpinner.initProperties(
         new SpinnerNumberModel(
             0.0,
-            (float) TICK_LABEL_TEXT_ANGLE_MIN,
-            (float) TICK_LABEL_TEXT_ANGLE_MAX,
-            (float) TICK_LABEL_TEXT_ANGLE_STEP),
+            (float) SGIFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_MIN,
+            (float) SGIFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_MAX,
+            (float) SGIFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_STEP),
         SGIConstants.degree,
-        TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MIN,
-        TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MAX);
+        SGIFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MIN,
+        SGIFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MAX);
 
     // add an action listener to each items
     this.mLegendVisibleCheckBox.addActionListener(this);
@@ -3157,14 +3157,15 @@ public class SGPropertyDialogSXYData extends SGDataDialog
           if (colType == null) {
             continue;
           }
-          if (colType.startsWith(LOWER_ERROR_VALUE)
-              || colType.startsWith(UPPER_ERROR_VALUE)
-              || colType.startsWith(LOWER_UPPER_ERROR_VALUE)) {
+          if (colType.startsWith(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)
+              || colType.startsWith(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)
+              || colType.startsWith(SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
             ebFlag = true;
-          } else if (colType.startsWith(TICK_LABEL)) {
+          } else if (colType.startsWith(SGIDataColumnTypeConstants.TICK_LABEL)) {
             tlFlag = true;
-          } else if (VALUE_TYPE_DATE.equals(valueType)) {
-            if (X_VALUE.equals(colType) || Y_VALUE.equals(colType)) {
+          } else if (SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
+            if (SGIDataColumnTypeConstants.X_VALUE.equals(colType)
+                || SGIDataColumnTypeConstants.Y_VALUE.equals(colType)) {
               tlFlag = true;
             }
           }
@@ -3325,9 +3326,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     } else {
       for (int ii = 0; ii < cols.length; ii++) {
         String columnType = cols[ii].getColumnType();
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           xNum++;
-        } else if (Y_VALUE.equals(columnType)) {
+        } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
           yNum++;
         }
       }
@@ -3346,7 +3347,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       lineStyleList = new ArrayList<SGLineStyle>();
       for (int ii = 0; ii < childNum; ii++) {
         SGLineStyle style =
-            new SGLineStyle(DEFAULT_LINE_TYPE, DEFAULT_LINE_COLOR, DEFAULT_LINE_WIDTH);
+            new SGLineStyle(
+                SGISXYDataConstants.DEFAULT_LINE_TYPE,
+                SGIAxisConstants.DEFAULT_LINE_COLOR,
+                SGILineAndStringConstants.DEFAULT_LINE_WIDTH);
         lineStyleList.add(style);
       }
     }
@@ -3526,7 +3530,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       } else {
         boolean b = false;
         for (int ii = 0; ii < colInfo.length; ii++) {
-          if (VALUE_TYPE_DATE.equals(colInfo[ii].getValueType())) {
+          if (SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(colInfo[ii].getValueType())) {
             b = xIndexList.contains(Integer.valueOf(ii));
             break;
           }
@@ -4113,22 +4117,23 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       return false;
     }
 
-    ELEMENT_TYPE type = ELEMENT_TYPE.Void;
+    SGISXYDataConstants.ELEMENT_TYPE type = SGISXYDataConstants.ELEMENT_TYPE.Void;
     for (int ii = 0; ii < len; ii++) {
       SGISXYDataDialogObserver l = (SGISXYDataDialogObserver) list.get(ii);
       type = l.getSelectedGroupType();
-      if (type != ELEMENT_TYPE.Void) {
+      if (type != SGISXYDataConstants.ELEMENT_TYPE.Void) {
         break;
       }
     }
     Component c = null;
-    if (type == ELEMENT_TYPE.Line || type == ELEMENT_TYPE.Symbol) {
+    if (type == SGISXYDataConstants.ELEMENT_TYPE.Line
+        || type == SGISXYDataConstants.ELEMENT_TYPE.Symbol) {
       c = this.mLinePanel;
-    } else if (type == ELEMENT_TYPE.Bar) {
+    } else if (type == SGISXYDataConstants.ELEMENT_TYPE.Bar) {
       c = this.mBarPanel;
-    } else if (type == ELEMENT_TYPE.ErrorBar) {
+    } else if (type == SGISXYDataConstants.ELEMENT_TYPE.ErrorBar) {
       c = this.mErrorBarPanel;
-    } else if (type == ELEMENT_TYPE.TickLabel) {
+    } else if (type == SGISXYDataConstants.ELEMENT_TYPE.TickLabel) {
       c = this.mTickLabelPanel;
     } else {
       return false;

@@ -1,9 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure.java2d;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 import java.awt.Color;
 import java.util.Iterator;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
+import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
@@ -11,6 +11,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
+import jp.riken.brain.ni.samuraigraph.figure.SGIFigureDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYDataConstants;
 
 public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickLabel
@@ -190,7 +191,8 @@ public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickL
     SGPropertyUtility.addProperty(
         map,
         COM_DATA_TICK_LABEL_ANGLE,
-        SGUtility.getExportValue(this.getAngle(), TICK_LABEL_TEXT_ANGLE_MINIMAL_ORDER));
+        SGUtility.getExportValue(
+            this.getAngle(), SGIFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_MINIMAL_ORDER));
     SGPropertyUtility.addProperty(map, COM_DATA_TICK_LABEL_DECIMAL_PLACES, this.getDecimalPlaces());
     SGPropertyUtility.addProperty(map, COM_DATA_TICK_LABEL_EXPONENT, this.getExponent());
     SGPropertyUtility.addQuotedStringProperty(

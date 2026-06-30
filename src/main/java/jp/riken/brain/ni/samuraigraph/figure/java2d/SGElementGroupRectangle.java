@@ -22,8 +22,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGStroke;
 import org.w3c.dom.Element;
 
 /** */
-public abstract class SGElementGroupRectangle extends SGElementGroup
-    implements SGIRectangleConstants, SGIFigureDrawingElementConstants {
+public abstract class SGElementGroupRectangle extends SGElementGroup {
 
   /** The line stroke for edge lines. */
   protected SGStroke mStroke = new SGStroke();
@@ -545,7 +544,7 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
   @Override
   public boolean writeProperty(final Element el) {
 
-    final int digitRectSize = RECT_SIZE_MINIMAL_ORDER - 1;
+    final int digitRectSize = SGIFigureDrawingElementConstants.RECT_SIZE_MINIMAL_ORDER - 1;
     final int digitLineWidth = SGIConstants.LINE_WIDTH_MINIMAL_ORDER - 1;
 
     final float rectWidth =
@@ -559,12 +558,18 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     final float edgeLineWidth =
         (float) SGUtilityNumber.roundOffNumber(this.getEdgeLineWidth(), digitLineWidth);
 
-    el.setAttribute(KEY_RECTANGLE_WIDTH, Float.toString(rectWidth) + SGIConstants.cm);
-    el.setAttribute(KEY_RECTANGLE_HEIGHT, Float.toString(rectHeight) + SGIConstants.cm);
-    el.setAttribute(KEY_EDGE_LINE_WIDTH, Float.toString(edgeLineWidth) + SGIConstants.pt);
+    el.setAttribute(
+        SGIRectangleConstants.KEY_RECTANGLE_WIDTH, Float.toString(rectWidth) + SGIConstants.cm);
+    el.setAttribute(
+        SGIRectangleConstants.KEY_RECTANGLE_HEIGHT, Float.toString(rectHeight) + SGIConstants.cm);
+    el.setAttribute(
+        SGIRectangleConstants.KEY_EDGE_LINE_WIDTH, Float.toString(edgeLineWidth) + SGIConstants.pt);
     //        el.setAttribute(KEY_COLOR_LIST, SGUtilityText.getColorListString(this.mColorList));
-    el.setAttribute(KEY_EDGE_LINE_COLOR, SGUtilityText.getColorString(this.mEdgeLineColor));
-    el.setAttribute(KEY_EDGE_LINE_VISIBLE, Boolean.toString(this.mEdgeLineVisible));
+    el.setAttribute(
+        SGIRectangleConstants.KEY_EDGE_LINE_COLOR,
+        SGUtilityText.getColorString(this.mEdgeLineColor));
+    el.setAttribute(
+        SGIRectangleConstants.KEY_EDGE_LINE_VISIBLE, Boolean.toString(this.mEdgeLineVisible));
     //        if (! SGPaintUtility.writeProperty(el, this.mInnerPaint)) {
     //            return false;
     //        }
@@ -590,12 +595,12 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     // List list = null;
 
     // width of the bar
-    str = el.getAttribute(KEY_RECTANGLE_WIDTH);
+    str = el.getAttribute(SGIRectangleConstants.KEY_RECTANGLE_WIDTH);
     if (str.length() != 0) {
       // The attribute of width-value is added from version 0.9.1
       // This code is for the old versions.
 
-      str = el.getAttribute(KEY_RECTANGLE_WIDTH);
+      str = el.getAttribute(SGIRectangleConstants.KEY_RECTANGLE_WIDTH);
       if (str.length() == 0) {
         return false;
       }
@@ -618,7 +623,7 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     }
 
     // edge line width
-    str = el.getAttribute(KEY_EDGE_LINE_WIDTH);
+    str = el.getAttribute(SGIRectangleConstants.KEY_EDGE_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuffer uEdgeLineWidth = new StringBuffer();
       num = SGUtilityText.getNumber(str, uEdgeLineWidth);
@@ -632,7 +637,7 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     }
 
     // edge line color
-    str = el.getAttribute(KEY_EDGE_LINE_COLOR);
+    str = el.getAttribute(SGIRectangleConstants.KEY_EDGE_LINE_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColor(str);
       if (cl == null) {
@@ -645,7 +650,7 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     }
 
     // edge line visibility
-    str = el.getAttribute(KEY_EDGE_LINE_VISIBLE);
+    str = el.getAttribute(SGIRectangleConstants.KEY_EDGE_LINE_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {

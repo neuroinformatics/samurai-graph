@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIVisible;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupConstants;

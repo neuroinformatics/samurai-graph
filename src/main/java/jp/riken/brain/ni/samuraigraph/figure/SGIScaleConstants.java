@@ -2,7 +2,7 @@ package jp.riken.brain.ni.samuraigraph.figure;
 
 import java.awt.Color;
 
-public interface SGIScaleConstants extends SGILineAndStringConstants {
+public final class SGIScaleConstants {
 
   //
   // Code of locations
@@ -28,7 +28,7 @@ public interface SGIScaleConstants extends SGILineAndStringConstants {
   // Mode for the change of axis scale
   //
 
-  enum AXIS_LENGTH_MODE {
+  public enum AXIS_LENGTH_MODE {
     LENGTH_FIXED,
     VALUE_FIXED,
     ADAPTIVE
@@ -44,19 +44,21 @@ public interface SGIScaleConstants extends SGILineAndStringConstants {
   // Space between the line and the symbol
   //
 
-  public static final String SCALE_SPACE_UNIT = SPACE_UNIT;
+  public static final String SCALE_SPACE_UNIT = SGILineAndStringConstants.SPACE_UNIT;
 
-  public static final double SCALE_SPACE_MIN = SPACE_MIN;
+  public static final double SCALE_SPACE_MIN = SGILineAndStringConstants.SPACE_MIN;
 
-  public static final double SCALE_SPACE_MAX = SPACE_MAX;
+  public static final double SCALE_SPACE_MAX = SGILineAndStringConstants.SPACE_MAX;
 
-  public static final double SCALE_SPACE_STEP = SPACE_STEP;
+  public static final double SCALE_SPACE_STEP = SGILineAndStringConstants.SPACE_STEP;
 
-  public static final int SCALE_SPACE_FRAC_DIFIT_MIN = SPACE_FRAC_DIFIT_MIN;
+  public static final int SCALE_SPACE_FRAC_DIFIT_MIN =
+      SGILineAndStringConstants.SPACE_FRAC_DIFIT_MIN;
 
-  public static final int SCALE_SPACE_FRAC_DIFIT_MAX = SPACE_FRAC_DIFIT_MAX;
+  public static final int SCALE_SPACE_FRAC_DIFIT_MAX =
+      SGILineAndStringConstants.SPACE_FRAC_DIFIT_MAX;
 
-  public static final int SCALE_SPACE_MINIMAL_ORDER = SPACE_MINIMAL_ORDER;
+  public static final int SCALE_SPACE_MINIMAL_ORDER = SGILineAndStringConstants.SPACE_MINIMAL_ORDER;
 
   //
   // Keys
@@ -107,29 +109,35 @@ public interface SGIScaleConstants extends SGILineAndStringConstants {
   public static final float DEFAULT_SCALE_SYMBOL_HEIGHT = 2.0f;
 
   // Line Width
-  public static final float DEFAULT_SCALE_SYMBOL_LINE_WIDTH = DEFAULT_LINE_WIDTH;
+  public static final float DEFAULT_SCALE_SYMBOL_LINE_WIDTH =
+      SGILineAndStringConstants.DEFAULT_LINE_WIDTH;
 
   // Space
-  public static final float DEFAULT_SCALE_SYMBOL_SPACE = DEFAULT_SPACE;
+  public static final float DEFAULT_SCALE_SYMBOL_SPACE = SGILineAndStringConstants.DEFAULT_SPACE;
 
   // Horizontal Axis
-  public static final String DEFAULT_SCALE_HORIZONTAL_AXIS = DEFAULT_HORIZONTAL_AXIS;
+  public static final String DEFAULT_SCALE_HORIZONTAL_AXIS =
+      SGILineAndStringConstants.DEFAULT_HORIZONTAL_AXIS;
 
   // Vertical Axis
-  public static final String DEFAULT_SCALE_VERTICAL_AXIS = DEFAULT_VERTICAL_AXIS;
+  public static final String DEFAULT_SCALE_VERTICAL_AXIS =
+      SGILineAndStringConstants.DEFAULT_VERTICAL_AXIS;
 
   // Font
-  public static final String DEFAULT_SCALE_SYMBOL_FONT_NAME = DEFAULT_FONT_NAME;
+  public static final String DEFAULT_SCALE_SYMBOL_FONT_NAME =
+      SGILineAndStringConstants.DEFAULT_FONT_NAME;
 
-  public static final int DEFAULT_SCALE_SYMBOL_FONT_STYLE = DEFAULT_FONT_STYLE;
+  public static final int DEFAULT_SCALE_SYMBOL_FONT_STYLE =
+      SGILineAndStringConstants.DEFAULT_FONT_STYLE;
 
   public static final float DEFAULT_SCALE_SYMBOL_FONT_SIZE = 16.0f;
 
   // Color
-  public static final Color DEFAULT_SCALE_SYMBOL_COLOR = DEFAULT_COLOR;
+  public static final Color DEFAULT_SCALE_SYMBOL_COLOR = SGILineAndStringConstants.DEFAULT_COLOR;
 
   // axis mode
-  public static final AXIS_LENGTH_MODE DEFAULT_AXIS_CHANGE_MODE = AXIS_LENGTH_MODE.ADAPTIVE;
+  public static final SGIScaleConstants.AXIS_LENGTH_MODE DEFAULT_AXIS_CHANGE_MODE =
+      SGIScaleConstants.AXIS_LENGTH_MODE.ADAPTIVE;
 
   public static final String COM_SCALE = "Scale";
 
