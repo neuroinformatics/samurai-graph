@@ -8,7 +8,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
-class SGCommandScriptManager implements SGIApplicationCommandConstants {
+class SGCommandScriptManager {
 
   private SGCommandScriptCreator mCommandScriptCreator = null;
 

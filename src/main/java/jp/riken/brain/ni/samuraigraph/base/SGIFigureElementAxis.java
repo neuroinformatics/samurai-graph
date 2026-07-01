@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 /** An object to manage axes. */
-public interface SGIFigureElementAxis extends SGIFigureElement, SGIFigureElementAxisConstants {
+public interface SGIFigureElementAxis extends SGIFigureElement {
 
   /**
    * Returns the list of all axes.

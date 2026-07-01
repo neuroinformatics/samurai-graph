@@ -59,7 +59,7 @@ import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFile;
 
 /** A class to create data objects. */
-public class SGDataCreator implements SGIMDArrayConstants, SGIApplicationConstants {
+public class SGDataCreator implements SGIApplicationConstants {
 
   /** A data source observer. */
   private SGDataSourceObserver mDataSourceObserver = new SGDataSourceObserver();

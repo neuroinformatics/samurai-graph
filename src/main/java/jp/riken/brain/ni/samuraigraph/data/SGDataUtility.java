@@ -53,7 +53,7 @@ import ucar.nc2.Dimension;
 import ucar.nc2.Variable;
 
 /** An utility class for data. */
-public class SGDataUtility implements SGIMDArrayConstants {
+public class SGDataUtility {
 
   private static final String[] ARRAY_EMPTY = {""};
 

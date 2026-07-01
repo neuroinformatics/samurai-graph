@@ -1,6 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-public interface SGIFigureElementAxisConstants extends SGIFigureElementConstants {
+public final class SGIFigureElementAxisConstants {
+
+    /** Private constructor to prevent instantiation. */
+    private SGIFigureElementAxisConstants() {}
 
   /** Constants for axis location. */
   public static final int AXIS_HORIZONTAL_1 = 0;

@@ -6,8 +6,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGBufferedFileWriter;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
-public class SGCommandScriptCreator extends SGFileHandler
-    implements SGIApplicationCommandConstants {
+public class SGCommandScriptCreator extends SGFileHandler {
 
   /** Default name of the property file with the extension. */
   public static final String DEFAULT_SCRIPT_FILE_NAME_WITH_EXTENSION =
