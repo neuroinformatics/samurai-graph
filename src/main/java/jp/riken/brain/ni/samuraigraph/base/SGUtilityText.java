@@ -1027,7 +1027,8 @@ public class SGUtilityText {
         throws SAXException, IOException {
       if (publicId.startsWith(SGIPropertyFileConstants.PROPERTY_FILE_PUBLIC_ID)
           && systemId.startsWith(SGIPropertyFileConstants.PROPERTY_FILE_SYSTEM_ID)) {
-        String name = SGIConstants.RESOURCES_DIRNAME + SGIPropertyFileConstants.PROPERTY_DTD_FILE_NAME;
+        String name =
+            SGIConstants.RESOURCES_DIRNAME + SGIPropertyFileConstants.PROPERTY_DTD_FILE_NAME;
         InputStream in = this.getClass().getResourceAsStream(name);
         return new InputSource(in);
       }

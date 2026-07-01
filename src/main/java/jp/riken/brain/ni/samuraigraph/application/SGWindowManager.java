@@ -47,7 +47,6 @@ class SGWindowManager
         WindowListener,
         ComponentListener,
         SGIPreferencesConstants,
-
         SGIApplicationConstants,
         SGIImageConstants,
         SGIApplicationCommandConstants {
@@ -564,7 +563,10 @@ class SGWindowManager
             return;
           }
           if (!wnd.setImage(imageByteArray, ext, true)) {
-            SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE);
+            SGUtility.showErrorMessageDialog(
+                wnd,
+                SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE,
+                SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE);
             return;
           }
           wnd.setImageFilePath(file.getAbsolutePath());

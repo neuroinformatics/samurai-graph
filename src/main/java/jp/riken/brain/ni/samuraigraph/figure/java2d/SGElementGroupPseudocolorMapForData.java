@@ -32,33 +32,47 @@ public abstract class SGElementGroupPseudocolorMapForData extends SGElementGroup
       if (SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH.equalsIgnoreCase(key)) {
         Number num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setWidthValue(num.doubleValue()) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT.equalsIgnoreCase(key)) {
         Number num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setHeightValue(num.doubleValue()) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -67,8 +81,10 @@ public abstract class SGElementGroupPseudocolorMapForData extends SGElementGroup
 
   protected boolean getProperties(SGPropertyMap map) {
     if (!this.isGridMode()) {
-      SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, this.getWidthValue());
-      SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, this.getHeightValue());
+      SGPropertyUtility.addProperty(
+          map, SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, this.getWidthValue());
+      SGPropertyUtility.addProperty(
+          map, SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, this.getHeightValue());
     }
     return true;
   }

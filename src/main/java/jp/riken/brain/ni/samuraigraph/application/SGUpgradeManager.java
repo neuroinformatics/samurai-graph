@@ -127,7 +127,8 @@ class SGUpgradeManager implements ActionListener {
     this.mUpgradeDialog.setCenter(owner);
 
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
-    final int cycleType = pref.getInt(SGIPreferencesConstants.PREF_KEY_UPGRADE_CYCLE, SGIUpgradeConstants.NO_UPGRADE);
+    final int cycleType =
+        pref.getInt(SGIPreferencesConstants.PREF_KEY_UPGRADE_CYCLE, SGIUpgradeConstants.NO_UPGRADE);
 
     String cycle = null;
     switch (cycleType) {
@@ -490,7 +491,9 @@ class SGUpgradeManager implements ActionListener {
     }
 
     File helperTempDir =
-        new File(SGApplicationUtility.getPathName(SGIConstants.TMP_DIR, SGIUpgradeConstants.HELPER_TEMP_DIR_NAME));
+        new File(
+            SGApplicationUtility.getPathName(
+                SGIConstants.TMP_DIR, SGIUpgradeConstants.HELPER_TEMP_DIR_NAME));
     helperTempDir.deleteOnExit();
     if (helperTempDir.mkdir() == false) {
       // failed to create a temporary directory.
@@ -922,7 +925,9 @@ class SGUpgradeManager implements ActionListener {
     final long day = 1000 * 3600 * 24;
     final long week = 7 * day;
     final long month = 30 * day;
-    final int cycle = pref.getInt(SGIPreferencesConstants.PREF_KEY_UPGRADE_CYCLE, SGIUpgradeConstants.UPGRADE_EVERY_TIME);
+    final int cycle =
+        pref.getInt(
+            SGIPreferencesConstants.PREF_KEY_UPGRADE_CYCLE, SGIUpgradeConstants.UPGRADE_EVERY_TIME);
 
     boolean b;
     switch (cycle) {

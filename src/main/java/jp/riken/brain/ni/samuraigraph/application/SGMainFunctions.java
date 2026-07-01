@@ -480,7 +480,9 @@ class SGMainFunctions
                             wnd, f)
                         == false) {
                       SGUtility.showErrorMessageDialog(
-                          wnd, SGIApplicationTextConstants.MSG_DATA_SET_FILE_INVALID, SGIConstants.TITLE_ERROR);
+                          wnd,
+                          SGIApplicationTextConstants.MSG_DATA_SET_FILE_INVALID,
+                          SGIConstants.TITLE_ERROR);
                     }
                   }
                 });
@@ -489,7 +491,10 @@ class SGMainFunctions
           }
         } else {
           // file not found
-          SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE);
+          SGUtility.showErrorMessageDialog(
+              wnd,
+              SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE,
+              SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE);
         }
 
         // enable window
@@ -1173,7 +1178,8 @@ class SGMainFunctions
     }
 
     // create a Document object
-    Document document = domImpl.createDocument("", SGIApplicationTextConstants.TAG_NAME_FOCUSED_FIGURES, null);
+    Document document =
+        domImpl.createDocument("", SGIApplicationTextConstants.TAG_NAME_FOCUSED_FIGURES, null);
 
     // get the root element
     Element property = document.getDocumentElement();
@@ -1259,7 +1265,9 @@ class SGMainFunctions
 
   // show the confirmation dialog for saving properties of the window
   int confirmBeforeClosing(final SGDrawingWindow wnd) {
-    final Object[] options = {SGIApplicationTextConstants.MSG_CLOSE_WITHOUT_SAVING, SGDialog.CANCEL_BUTTON_TEXT, MSG_SAVE};
+    final Object[] options = {
+      SGIApplicationTextConstants.MSG_CLOSE_WITHOUT_SAVING, SGDialog.CANCEL_BUTTON_TEXT, MSG_SAVE
+    };
     return this.showConfirmationDialog(wnd, options, new SGCloseWindowConfirmPanel());
   }
 
@@ -1715,7 +1723,8 @@ class SGMainFunctions
     if (dg.equals(this.mDataTypeWizardDialog)) {
       colInfoSet = this.getNetCDFDefaultDataColumnInfo(nc, dataType, infoMap);
       if (colInfoSet == null) {
-        SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+        SGUtility.showErrorMessageDialog(
+            wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
         return false;
       }
 
@@ -1756,7 +1765,8 @@ class SGMainFunctions
     infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
 
     if (colInfoSet == null) {
-      SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(
+          wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
       return false;
     }
 
@@ -1893,7 +1903,8 @@ class SGMainFunctions
         colInfoSet = this.getMDArrayDataDefaultDataColumnInfo(file, dataType, infoMap);
       }
       if (colInfoSet == null) {
-        SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+        SGUtility.showErrorMessageDialog(
+            wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
         return false;
       }
 
@@ -1934,7 +1945,8 @@ class SGMainFunctions
     infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
 
     if (colInfoSet == null) {
-      SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(
+          wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
       return false;
     }
 
@@ -3822,7 +3834,8 @@ class SGMainFunctions
         }
 
         // archive file?
-        final boolean archiveFlag = SGApplicationUtility.hasExtension(path, SGIArchiveFileConstants.ARCHIVE_FILE_EXTENSION);
+        final boolean archiveFlag =
+            SGApplicationUtility.hasExtension(path, SGIArchiveFileConstants.ARCHIVE_FILE_EXTENSION);
         if (archiveFlag) {
           archiveFile = file;
           continue;
@@ -4711,7 +4724,8 @@ class SGMainFunctions
 
     // set the data
     if (dg.setData(ncFile, dataType, colInfoSet, infoMap, true) == false) {
-      SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(
+          wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
       return false;
     }
 
@@ -4756,7 +4770,8 @@ class SGMainFunctions
 
     // set the data
     if (dg.setData(mdFile, dataType, colInfoSetNew, infoMap, showDefault) == false) {
-      SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(
+          wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
       return false;
     }
 

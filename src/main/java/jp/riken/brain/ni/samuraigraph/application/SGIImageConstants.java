@@ -3,12 +3,12 @@ package jp.riken.brain.ni.samuraigraph.application;
 /** */
 public final class SGIImageConstants {
 
-    /** Private constructor to prevent instantiation. */
-    private SGIImageConstants() {}
+  /** Private constructor to prevent instantiation. */
+  private SGIImageConstants() {}
 
-    /** Extensions of drawable formats */
-    public static final String[] DRAWABLE_IMAGE_EXTENSIONS = {"jpg", "jpeg", "gif", "png"};
+  /** Extensions of drawable formats */
+  public static final String[] DRAWABLE_IMAGE_EXTENSIONS = {"jpg", "jpeg", "gif", "png"};
 
-    /** Description of the image file */
-    public static final String IMAGE_FILE_DESCRIPTION = "Image File";
+  /** Description of the image file */
+  public static final String IMAGE_FILE_DESCRIPTION = "Image File";
 }

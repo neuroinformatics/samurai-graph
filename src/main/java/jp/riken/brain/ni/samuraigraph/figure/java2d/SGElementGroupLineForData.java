@@ -58,22 +58,26 @@ public abstract class SGElementGroupLineForData extends SGElementGroupLine
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_LINE_TYPE.equalsIgnoreCase(key)) {
         final Integer type = SGDrawingElementLine.getLineTypeFromName(value);
         if (type == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineType(type) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.SUCCEEDED);
@@ -81,17 +85,20 @@ public abstract class SGElementGroupLineForData extends SGElementGroupLine
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setColor(cl) == false) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setColor(cl) == false) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
@@ -100,14 +107,19 @@ public abstract class SGElementGroupLineForData extends SGElementGroupLine
       if (SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineConnectingAll(b.booleanValue()) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -115,14 +127,16 @@ public abstract class SGElementGroupLineForData extends SGElementGroupLine
   }
 
   protected boolean getProperties(SGPropertyMap map) {
-    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_LINE_VISIBLE, this.isVisible());
+    SGPropertyUtility.addProperty(
+        map, SGIDataCommandConstants.COM_DATA_LINE_VISIBLE, this.isVisible());
     //    	SGCommandUtility.addProperty(map, COM_DATA_LINE_WIDTH,
     //    			this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT), SGIConstants.LINE_WIDTH_UNIT);
     //    	SGCommandUtility.addProperty(map, COM_DATA_LINE_TYPE,
     //    			SGDrawingElementLine.getLineTypeName(this.getLineType()));
     //    	SGCommandUtility.addProperty(map, COM_DATA_LINE_COLOR,
     //    			this.getColor());
-    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL, this.isLineConnectingAll());
+    SGPropertyUtility.addProperty(
+        map, SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL, this.isLineConnectingAll());
     return true;
   }
 }

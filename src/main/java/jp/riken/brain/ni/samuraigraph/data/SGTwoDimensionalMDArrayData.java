@@ -30,10 +30,7 @@ import ucar.nc2.Variable;
 
 /** The base class of two dimensional MDArray data. */
 public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
-    implements SGITwoDimensionalData,
-        SGIIndexData,
-
-        SGIMDArrayConstants {
+    implements SGITwoDimensionalData, SGIIndexData, SGIMDArrayConstants {
 
   /** The variable for x-values. */
   protected SGMDArrayVariable mXVariable = null;
@@ -360,7 +357,8 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
 
     // stride
     if (this.isIndexAvailable()) {
-      el.setAttribute(SGIDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION, this.mIndexStride.toString());
+      el.setAttribute(
+          SGIDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION, this.mIndexStride.toString());
     } else {
       el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_ARRAY_SECTION, this.mXStride.toString());
       el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_ARRAY_SECTION, this.mYStride.toString());

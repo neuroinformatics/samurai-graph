@@ -2613,14 +2613,10 @@ public class SGClientPanel extends JLayeredPane
         // final float hOld = (float)paper.getHeight();
 
         final float ratio = SGIConstants.CM_POINT_RATIO;
-        final float minWidth =
-            (float) SGIRootObjectConstants.PAPER_WIDTH_MIN_VALUE / ratio;
-        final float minHeight =
-            (float) SGIRootObjectConstants.PAPER_HEIGHT_MIN_VALUE / ratio;
-        final float maxWidth =
-            (float) SGIRootObjectConstants.PAPER_WIDTH_MAX_VALUE / ratio;
-        final float maxHeight =
-            (float) SGIRootObjectConstants.PAPER_HEIGHT_MAX_VALUE / ratio;
+        final float minWidth = (float) SGIRootObjectConstants.PAPER_WIDTH_MIN_VALUE / ratio;
+        final float minHeight = (float) SGIRootObjectConstants.PAPER_HEIGHT_MIN_VALUE / ratio;
+        final float maxWidth = (float) SGIRootObjectConstants.PAPER_WIDTH_MAX_VALUE / ratio;
+        final float maxHeight = (float) SGIRootObjectConstants.PAPER_HEIGHT_MAX_VALUE / ratio;
 
         if (this.mDrawHorizontalLineFlag) {
           float w = (x - startX) / this.mMagnification;

@@ -34,9 +34,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 class SGPropertyFileManager
-    implements ActionListener,
-        SGIApplicationConstants,
-        SGIPropertyFileConstants {
+    implements ActionListener, SGIApplicationConstants, SGIPropertyFileConstants {
 
   /** */
   private Document mPropertyFileDocument = null;
@@ -355,7 +353,10 @@ class SGPropertyFileManager
     if (path == null) {
       if (!silent) {
         SGUtility.showMessageDialog(
-            parent, SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE, JOptionPane.ERROR_MESSAGE);
+            parent,
+            SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE,
+            SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE,
+            JOptionPane.ERROR_MESSAGE);
       }
       return false;
     }
@@ -373,7 +374,10 @@ class SGPropertyFileManager
     if (doc == null) {
       if (!silent) {
         SGUtility.showMessageDialog(
-            parent, SGIApplicationTextConstants.MSG_PROPERTY_FILE_INVALID, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE, JOptionPane.ERROR_MESSAGE);
+            parent,
+            SGIApplicationTextConstants.MSG_PROPERTY_FILE_INVALID,
+            SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE,
+            JOptionPane.ERROR_MESSAGE);
       }
       return false;
     }
@@ -408,7 +412,10 @@ class SGPropertyFileManager
       // if figure does not exist, return false
       if (!silent) {
         SGUtility.showMessageDialog(
-            parent, SGIApplicationTextConstants.MSG_PROPERTY_FILE_INVALID, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE, JOptionPane.ERROR_MESSAGE);
+            parent,
+            SGIApplicationTextConstants.MSG_PROPERTY_FILE_INVALID,
+            SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE,
+            JOptionPane.ERROR_MESSAGE);
       }
       return false;
     }
@@ -681,7 +688,10 @@ class SGPropertyFileManager
   boolean showMultiDataFileChooserDialog(final File propertyFile, final Frame owner) {
 
     if (propertyFile.exists() == false) {
-      SGUtility.showErrorMessageDialog(owner, SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE);
+      SGUtility.showErrorMessageDialog(
+          owner,
+          SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE,
+          SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE);
       return false;
     }
 

@@ -769,32 +769,38 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
     for (int ii = 0; ii < columns.length; ii++) {
       String valueType = cols[ii].getValueType();
       if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_VALUE, columns[ii])) {
-        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType) && !SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)
+            && !SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
           return false;
         }
         x = Integer.valueOf(ii);
       } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, columns[ii])) {
-        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType) && !SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)
+            && !SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
           return false;
         }
         y = Integer.valueOf(ii);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         le = Integer.valueOf(ii);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         ue = Integer.valueOf(ii);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         le = Integer.valueOf(ii);
         ue = Integer.valueOf(ii);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.TICK_LABEL)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.TICK_LABEL)) {
         tl = Integer.valueOf(ii);
       } else if ("".equals(columns[ii])) {
         continue;

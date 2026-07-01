@@ -506,7 +506,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
           return false;
         }
         xVar = var;
-      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_COORDINATE, columns[ii])) {
+      } else if (SGDataUtility.isEqualColumnType(
+          SGIDataColumnTypeConstants.Y_COORDINATE, columns[ii])) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           return false;
         }
@@ -701,11 +702,16 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
         sb.append(':');
         sb.append(yIndex);
       }
-      el.setAttribute(SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, sb.toString());
+      el.setAttribute(
+          SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, sb.toString());
 
     } else if (SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
-      el.setAttribute(SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, this.mFirstComponentVariable.getName());
-      el.setAttribute(SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, this.mSecondComponentVariable.getName());
+      el.setAttribute(
+          SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME,
+          this.mFirstComponentVariable.getName());
+      el.setAttribute(
+          SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME,
+          this.mSecondComponentVariable.getName());
     }
 
     return true;
@@ -1808,7 +1814,12 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
     String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
     return this.setEditedValues(
-        writer, var, array, SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, new String[] {first, second});
+        writer,
+        var,
+        array,
+        SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME,
+        SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME,
+        new String[] {first, second});
   }
 
   @Override
@@ -1817,7 +1828,11 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
     String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
     return this.setEditedValues(
-        var, array, SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, new String[] {first, second});
+        var,
+        array,
+        SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME,
+        SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME,
+        new String[] {first, second});
   }
 
   @Override

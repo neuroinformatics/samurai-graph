@@ -199,21 +199,26 @@ public class SGUtilityForFigureElementJava2D {
       if (SGUtilityText.isEqualString(SGIDataCommandConstants.COM_DATA_LINE_VISIBLE, key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_LINE_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         lineVisible = b;
-      } else if (SGUtilityText.isEqualString(SGIDataCommandConstants.COM_DATA_SYMBOL_VISIBLE, key)) {
+      } else if (SGUtilityText.isEqualString(
+          SGIDataCommandConstants.COM_DATA_SYMBOL_VISIBLE, key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_SYMBOL_VISIBLE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         symbolVisible = b;
       } else if (SGUtilityText.isEqualString(SGIDataCommandConstants.COM_DATA_BAR_VISIBLE, key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_BAR_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_BAR_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         barVisible = b;
@@ -265,7 +270,8 @@ public class SGUtilityForFigureElementJava2D {
       obs.setLineVisible(lineVisibleNew);
     }
     if (symbolVisible != null) {
-      result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_VISIBLE, SGPropertyResults.SUCCEEDED);
+      result.putResult(
+          SGIDataCommandConstants.COM_DATA_SYMBOL_VISIBLE, SGPropertyResults.SUCCEEDED);
       obs.setSymbolVisible(symbolVisibleNew);
     }
     if (barVisible != null) {

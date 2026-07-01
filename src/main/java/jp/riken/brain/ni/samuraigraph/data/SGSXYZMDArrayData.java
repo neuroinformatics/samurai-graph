@@ -1455,12 +1455,23 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   @Override
   protected MDDoubleArray setEditedValues(
       IHDF5Writer writer, SGMDArrayVariable var, MDDoubleArray array) {
-    return this.setEditedValues(writer, var, array, SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE, new String[] {SGIDataColumnTypeConstants.Z_VALUE});
+    return this.setEditedValues(
+        writer,
+        var,
+        array,
+        SGIDataColumnTypeConstants.X_VALUE,
+        SGIDataColumnTypeConstants.Y_VALUE,
+        new String[] {SGIDataColumnTypeConstants.Z_VALUE});
   }
 
   @Override
   protected MLDouble setEditedValues(SGMDArrayVariable var, MLDouble array) {
-    return this.setEditedValues(var, array, SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE, new String[] {SGIDataColumnTypeConstants.Z_VALUE});
+    return this.setEditedValues(
+        var,
+        array,
+        SGIDataColumnTypeConstants.X_VALUE,
+        SGIDataColumnTypeConstants.Y_VALUE,
+        new String[] {SGIDataColumnTypeConstants.Z_VALUE});
   }
 
   @Override

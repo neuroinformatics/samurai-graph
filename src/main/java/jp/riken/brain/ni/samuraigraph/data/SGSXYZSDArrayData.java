@@ -437,7 +437,8 @@ public class SGSXYZSDArrayData extends SGSDArrayData implements SGISXYZTypeData 
         SGIDataPropertyKeyConstants.KEY_Z_VALUE_COLUMN_INDEX, this.getSequentialColumnName(2));
 
     // serial numbers
-    el.setAttribute(SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, SGIDataColumnTypeConstants.INDEX);
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, SGIDataColumnTypeConstants.INDEX);
 
     return true;
   }

@@ -427,7 +427,11 @@ public class SGDataUtility {
         infoMap,
         dataType,
         valueType,
-        new String[] {SGIDataColumnTypeConstants.ANIMATION_FRAME, SGIDataColumnTypeConstants.PICKUP, SGIDataColumnTypeConstants.SERIAL_NUMBERS},
+        new String[] {
+          SGIDataColumnTypeConstants.ANIMATION_FRAME,
+          SGIDataColumnTypeConstants.PICKUP,
+          SGIDataColumnTypeConstants.SERIAL_NUMBERS
+        },
         new String[] {});
 
     // a flag whether to show options for error bars and tick labels
@@ -484,10 +488,18 @@ public class SGDataUtility {
             if (numberRowNum >= min1) {
               itemList.add(
                   appendColumnType(
-                      SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, num, isNetCDFOrMDData, colInfo, isRepeatedTitle[num]));
+                      SGIDataColumnTypeConstants.LOWER_ERROR_VALUE,
+                      num,
+                      isNetCDFOrMDData,
+                      colInfo,
+                      isRepeatedTitle[num]));
               itemList.add(
                   appendColumnType(
-                      SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, num, isNetCDFOrMDData, colInfo, isRepeatedTitle[num]));
+                      SGIDataColumnTypeConstants.UPPER_ERROR_VALUE,
+                      num,
+                      isNetCDFOrMDData,
+                      colInfo,
+                      isRepeatedTitle[num]));
               itemList.add(
                   appendColumnType(
                       SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE,
@@ -514,7 +526,12 @@ public class SGDataUtility {
             Integer index = indexList.get(ii);
             final int num = index.intValue();
             itemList.add(
-                appendColumnType(SGIDataColumnTypeConstants.TICK_LABEL, num, isNetCDFOrMDData, colInfo, isRepeatedTitle[num]));
+                appendColumnType(
+                    SGIDataColumnTypeConstants.TICK_LABEL,
+                    num,
+                    isNetCDFOrMDData,
+                    colInfo,
+                    isRepeatedTitle[num]));
           }
         }
       }
@@ -556,7 +573,11 @@ public class SGDataUtility {
                   infoMap,
                   dataType,
                   valueType,
-                  new String[] {SGIDataColumnTypeConstants.ANIMATION_FRAME, SGIDataColumnTypeConstants.PICKUP, SGIDataColumnTypeConstants.SERIAL_NUMBERS},
+                  new String[] {
+                    SGIDataColumnTypeConstants.ANIMATION_FRAME,
+                    SGIDataColumnTypeConstants.PICKUP,
+                    SGIDataColumnTypeConstants.SERIAL_NUMBERS
+                  },
                   new String[] {SGIDataColumnTypeConstants.Z_VALUE});
         } else if (SGDataUtility.isMDArrayData(dataType)) {
           items = ARRAY_NUMBER_MDARRAY_SXYZ;
@@ -585,7 +606,11 @@ public class SGDataUtility {
                     infoMap,
                     dataType,
                     valueType,
-                    new String[] {SGIDataColumnTypeConstants.ANIMATION_FRAME, SGIDataColumnTypeConstants.PICKUP, SGIDataColumnTypeConstants.SERIAL_NUMBERS},
+                    new String[] {
+                      SGIDataColumnTypeConstants.ANIMATION_FRAME,
+                      SGIDataColumnTypeConstants.PICKUP,
+                      SGIDataColumnTypeConstants.SERIAL_NUMBERS
+                    },
                     new String[] {
                       SGIDataColumnTypeConstants.MAGNITUDE, SGIDataColumnTypeConstants.ANGLE
                     });
@@ -604,7 +629,11 @@ public class SGDataUtility {
                     infoMap,
                     dataType,
                     valueType,
-                    new String[] {SGIDataColumnTypeConstants.ANIMATION_FRAME, SGIDataColumnTypeConstants.PICKUP, SGIDataColumnTypeConstants.SERIAL_NUMBERS},
+                    new String[] {
+                      SGIDataColumnTypeConstants.ANIMATION_FRAME,
+                      SGIDataColumnTypeConstants.PICKUP,
+                      SGIDataColumnTypeConstants.SERIAL_NUMBERS
+                    },
                     new String[] {
                       SGIDataColumnTypeConstants.X_COMPONENT, SGIDataColumnTypeConstants.Y_COMPONENT
                     });
@@ -1249,8 +1278,10 @@ public class SGDataUtility {
       if (!multipleVariable) {
         // multiple dimension
 
-        final List<String> lNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
-        final List<String> uNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE);
+        final List<String> lNameList =
+            getColumnNameList(cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
+        final List<String> uNameList =
+            getColumnNameList(cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE);
         if (!(lNameList.size() == 0 && uNameList.size() == 0)
             && !(lNameList.size() == 1 && uNameList.size() == 1)) {
           return false;
@@ -1258,7 +1289,8 @@ public class SGDataUtility {
 
         // if lower and upper errors are selected, lower-upper must not
         // be selected
-        final List<String> luNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE);
+        final List<String> luNameList =
+            getColumnNameList(cols, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE);
         if (lNameList.size() == 1 && uNameList.size() == 1) {
           if (luNameList.size() != 0) {
             return false;
@@ -1325,11 +1357,13 @@ public class SGDataUtility {
         final List<Integer> lIndexList = new ArrayList<Integer>();
         final List<String> uNameList = new ArrayList<String>();
         final List<Integer> uIndexList = new ArrayList<Integer>();
-        if (getColumnNameAndAppendedNumberList(cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, lNameList, lIndexList)
+        if (getColumnNameAndAppendedNumberList(
+                cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, lNameList, lIndexList)
             == false) {
           return false;
         }
-        if (getColumnNameAndAppendedNumberList(cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, uNameList, uIndexList)
+        if (getColumnNameAndAppendedNumberList(
+                cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, uNameList, uIndexList)
             == false) {
           return false;
         }
@@ -1423,7 +1457,8 @@ public class SGDataUtility {
       if (!multipleVariable.booleanValue()) {
         // multiple dimension
 
-        final List<String> pickUpDimNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.PICKUP);
+        final List<String> pickUpDimNameList =
+            getColumnNameList(cols, SGIDataColumnTypeConstants.PICKUP);
         if (pickUpDimNameList.size() != 1) {
           return false;
         }
@@ -1479,14 +1514,16 @@ public class SGDataUtility {
         return false;
       }
 
-      final List<String> xIndexNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.X_INDEX);
+      final List<String> xIndexNameList =
+          getColumnNameList(cols, SGIDataColumnTypeConstants.X_INDEX);
       if (xIndexNameList.size() > 1) {
         return false;
       }
       SGNetCDFVariable xIndexVar =
           (xIndexNameList.size() == 1) ? ncfile.findVariable(xIndexNameList.get(0)) : null;
 
-      final List<String> yIndexNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.Y_INDEX);
+      final List<String> yIndexNameList =
+          getColumnNameList(cols, SGIDataColumnTypeConstants.Y_INDEX);
       if (yIndexNameList.size() > 1) {
         return false;
       }
@@ -1779,12 +1816,14 @@ public class SGDataUtility {
       final List<Integer> lIndexList = new ArrayList<Integer>();
       final List<String> uNameList = new ArrayList<String>();
       final List<Integer> uIndexList = new ArrayList<Integer>();
-      if (getColumnNameAndAppendedNumberList(cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, lNameList, lIndexList)
+      if (getColumnNameAndAppendedNumberList(
+              cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, lNameList, lIndexList)
           == false) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
       }
-      if (getColumnNameAndAppendedNumberList(cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, uNameList, uIndexList)
+      if (getColumnNameAndAppendedNumberList(
+              cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, uNameList, uIndexList)
           == false) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
@@ -1795,7 +1834,8 @@ public class SGDataUtility {
       }
       final List<String> luNameList = new ArrayList<String>();
       final List<Integer> luIndexList = new ArrayList<Integer>();
-      if (getColumnNameAndAppendedNumberList(cols, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE, luNameList, luIndexList)
+      if (getColumnNameAndAppendedNumberList(
+              cols, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE, luNameList, luIndexList)
           == false) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
@@ -1813,8 +1853,10 @@ public class SGDataUtility {
           return false;
         }
       }
-      final List<SGDataColumnInfo> lColList = getColumnListStartsWith(cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
-      final List<SGDataColumnInfo> uColList = getColumnListStartsWith(cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE);
+      final List<SGDataColumnInfo> lColList =
+          getColumnListStartsWith(cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
+      final List<SGDataColumnInfo> uColList =
+          getColumnListStartsWith(cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE);
       final List<SGDataColumnInfo> luColList =
           getColumnListStartsWith(cols, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE);
       if (pickUpAssigned) {
@@ -1863,7 +1905,8 @@ public class SGDataUtility {
       }
 
       // tick labels
-      final List<SGDataColumnInfo> tColList = getColumnListStartsWith(cols, SGIDataColumnTypeConstants.TICK_LABEL);
+      final List<SGDataColumnInfo> tColList =
+          getColumnListStartsWith(cols, SGIDataColumnTypeConstants.TICK_LABEL);
       if (pickUpAssigned) {
         if (tColList.size() > 1) {
           errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
@@ -2989,13 +3032,16 @@ public class SGDataUtility {
         xIndexList.add(Integer.valueOf(ii));
       } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, cType)) {
         yIndexList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          cType, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getAppendedColumnIndex(cType, colInfo);
         lIndexMap.put(num, Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          cType, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getAppendedColumnIndex(cType, colInfo);
         uIndexMap.put(num, Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          cType, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getAppendedColumnIndex(cType, colInfo);
         lIndexMap.put(num, Integer.valueOf(ii));
         uIndexMap.put(num, Integer.valueOf(ii));
@@ -3046,15 +3092,18 @@ public class SGDataUtility {
         xInfoList.add(col);
       } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, cType)) {
         yInfoList.add(col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          cType, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getColumnIndexOfAppendedColumnTitle(cType, colInfo);
         SGDataColumnInfo colAppend = colInfo[num.intValue()];
         leInfoMap.put(colAppend, col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          cType, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getColumnIndexOfAppendedColumnTitle(cType, colInfo);
         SGDataColumnInfo colAppend = colInfo[num.intValue()];
         ueInfoMap.put(colAppend, col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          cType, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getColumnIndexOfAppendedColumnTitle(cType, colInfo);
         SGDataColumnInfo colAppend = colInfo[num.intValue()];
         leInfoMap.put(colAppend, col);
@@ -3114,11 +3163,14 @@ public class SGDataUtility {
         xInfoList.add(col);
       } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, cType)) {
         yInfoList.add(col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          cType, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
         leInfoList.add(col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          cType, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
         ueInfoList.add(col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          cType, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
         leInfoList.add(col);
         ueInfoList.add(col);
       } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.TICK_LABEL)) {
@@ -3396,13 +3448,11 @@ public class SGDataUtility {
       final String[] thValueNames) {
     for (int i = 0; i < xValueNames.length; i++) {
       int xVarIndex = nc.getVariableIndex(xValueNames[i]);
-      columns[xVarIndex].setColumnType(
-          SGIDataColumnTypeConstants.X_VALUE);
+      columns[xVarIndex].setColumnType(SGIDataColumnTypeConstants.X_VALUE);
     }
     for (int i = 0; i < yValueNames.length; i++) {
       int yVarIndex = nc.getVariableIndex(yValueNames[i]);
-      columns[yVarIndex].setColumnType(
-          SGIDataColumnTypeConstants.Y_VALUE);
+      columns[yVarIndex].setColumnType(SGIDataColumnTypeConstants.Y_VALUE);
     }
 
     boolean errorbarFlag = false;
@@ -6105,8 +6155,7 @@ public class SGDataUtility {
     }
     if (SGDataUtility.isSXYZTypeData(dataType)) {
       List<SGDataColumnInfo> zList =
-          SGDataUtility.findColumnsWithColumnType(
-              colInfoArray, SGIDataColumnTypeConstants.Z_VALUE);
+          SGDataUtility.findColumnsWithColumnType(colInfoArray, SGIDataColumnTypeConstants.Z_VALUE);
       if (zList.size() != 1) {
         return false;
       }
@@ -6122,9 +6171,7 @@ public class SGDataUtility {
         return false;
       }
       String colName =
-          polar
-              ? SGIDataColumnTypeConstants.MAGNITUDE
-              : SGIDataColumnTypeConstants.X_COMPONENT;
+          polar ? SGIDataColumnTypeConstants.MAGNITUDE : SGIDataColumnTypeConstants.X_COMPONENT;
       List<SGDataColumnInfo> fList = SGDataUtility.findColumnsWithColumnType(colInfoArray, colName);
       if (fList.size() != 1) {
         return false;

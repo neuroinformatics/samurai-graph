@@ -367,7 +367,8 @@ public abstract class SGArrayData extends SGData {
    * @return true if succeeded
    */
   public boolean setArraySectionProperty(SGPropertyMap map) {
-    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ARRAY_SECTION_AVAILABLE, this.isStrideAvailable());
+    SGPropertyUtility.addProperty(
+        map, SGIDataCommandConstants.COM_DATA_ARRAY_SECTION_AVAILABLE, this.isStrideAvailable());
     this.setArraySectionPropertySub(map);
     return true;
   }

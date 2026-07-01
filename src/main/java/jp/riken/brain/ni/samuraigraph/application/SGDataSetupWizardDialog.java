@@ -20,13 +20,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupPanel;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 
 /** The base class of the wizard dialog to set up the data. */
 public abstract class SGDataSetupWizardDialog extends SGWizardDialog
-    implements PropertyChangeListener,
-        DocumentListener,
-        ItemListener {
+    implements PropertyChangeListener, DocumentListener, ItemListener {
 
   private static final long serialVersionUID = -225586291971946590L;
 
@@ -195,7 +192,10 @@ public abstract class SGDataSetupWizardDialog extends SGWizardDialog
     }
     if (!ok) {
       SGUtility.showMessageDialog(
-          this, SGIApplicationTextConstants.MSG_INVALID_INPUT_VALUE, SGIConstants.TITLE_ERROR, JOptionPane.ERROR_MESSAGE);
+          this,
+          SGIApplicationTextConstants.MSG_INVALID_INPUT_VALUE,
+          SGIConstants.TITLE_ERROR,
+          JOptionPane.ERROR_MESSAGE);
       return false;
     }
     return super.onOK();

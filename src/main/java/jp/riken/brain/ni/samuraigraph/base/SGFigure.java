@@ -625,7 +625,12 @@ public abstract class SGFigure
   public boolean setFigureX(final float value, final String unit) {
 
     final Float xPt =
-        calcFigureScale(value, unit, SGIFigureConstants.FIGURE_LOCATION_UNIT, SGIFigureConstants.FIGURE_X_MIN, SGIFigureConstants.FIGURE_X_MAX);
+        calcFigureScale(
+            value,
+            unit,
+            SGIFigureConstants.FIGURE_LOCATION_UNIT,
+            SGIFigureConstants.FIGURE_X_MIN,
+            SGIFigureConstants.FIGURE_X_MAX);
     if (xPt == null) {
       return false;
     }
@@ -649,7 +654,12 @@ public abstract class SGFigure
   public boolean setFigureY(final float value, final String unit) {
 
     final Float yPt =
-        calcFigureScale(value, unit, SGIFigureConstants.FIGURE_LOCATION_UNIT, SGIFigureConstants.FIGURE_Y_MIN, SGIFigureConstants.FIGURE_Y_MAX);
+        calcFigureScale(
+            value,
+            unit,
+            SGIFigureConstants.FIGURE_LOCATION_UNIT,
+            SGIFigureConstants.FIGURE_Y_MIN,
+            SGIFigureConstants.FIGURE_Y_MAX);
     if (yPt == null) {
       return false;
     }
@@ -673,7 +683,12 @@ public abstract class SGFigure
   public boolean setFigureWidth(final float value, final String unit) {
 
     final Float wPt =
-        calcFigureScale(value, unit, SGIFigureConstants.FIGURE_SIZE_UNIT, SGIFigureConstants.FIGURE_WIDTH_MIN, SGIFigureConstants.FIGURE_WIDTH_MAX);
+        calcFigureScale(
+            value,
+            unit,
+            SGIFigureConstants.FIGURE_SIZE_UNIT,
+            SGIFigureConstants.FIGURE_WIDTH_MIN,
+            SGIFigureConstants.FIGURE_WIDTH_MAX);
     if (wPt == null) {
       return false;
     }
@@ -697,7 +712,12 @@ public abstract class SGFigure
   public boolean setFigureHeight(final float value, final String unit) {
 
     final Float hPt =
-        calcFigureScale(value, unit, SGIFigureConstants.FIGURE_SIZE_UNIT, SGIFigureConstants.FIGURE_HEIGHT_MIN, SGIFigureConstants.FIGURE_HEIGHT_MAX);
+        calcFigureScale(
+            value,
+            unit,
+            SGIFigureConstants.FIGURE_SIZE_UNIT,
+            SGIFigureConstants.FIGURE_HEIGHT_MIN,
+            SGIFigureConstants.FIGURE_HEIGHT_MAX);
     if (hPt == null) {
       return false;
     }
@@ -714,12 +734,22 @@ public abstract class SGFigure
 
   public boolean setFigureSize(final float width, final float height, final String unit) {
     final Float wPt =
-        calcFigureScale(width, unit, SGIFigureConstants.FIGURE_SIZE_UNIT, SGIFigureConstants.FIGURE_WIDTH_MIN, SGIFigureConstants.FIGURE_WIDTH_MAX);
+        calcFigureScale(
+            width,
+            unit,
+            SGIFigureConstants.FIGURE_SIZE_UNIT,
+            SGIFigureConstants.FIGURE_WIDTH_MIN,
+            SGIFigureConstants.FIGURE_WIDTH_MAX);
     if (wPt == null) {
       return false;
     }
     final Float hPt =
-        calcFigureScale(height, unit, SGIFigureConstants.FIGURE_SIZE_UNIT, SGIFigureConstants.FIGURE_HEIGHT_MIN, SGIFigureConstants.FIGURE_HEIGHT_MAX);
+        calcFigureScale(
+            height,
+            unit,
+            SGIFigureConstants.FIGURE_SIZE_UNIT,
+            SGIFigureConstants.FIGURE_HEIGHT_MIN,
+            SGIFigureConstants.FIGURE_HEIGHT_MAX);
     if (hPt == null) {
       return false;
     }
@@ -745,13 +775,16 @@ public abstract class SGFigure
       final String outputUnit,
       final double min,
       final double max) {
-    return SGUtility.calcPropertyValue(value, unit, outputUnit, min, max, SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
+    return SGUtility.calcPropertyValue(
+        value, unit, outputUnit, min, max, SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
   }
 
-  // check whether two values in units of SGIConstants.pt are equal in SGIFigureConstants.FIGURE_SIZE_UNIT
+  // check whether two values in units of SGIConstants.pt are equal in
+  // SGIFigureConstants.FIGURE_SIZE_UNIT
   private boolean equalLength(final float v1, final float v2) {
     final float diff = Math.abs(v1 - v2);
-    final double value = SGUtilityText.convert(diff, SGIConstants.pt, SGIFigureConstants.FIGURE_SIZE_UNIT);
+    final double value =
+        SGUtilityText.convert(diff, SGIConstants.pt, SGIFigureConstants.FIGURE_SIZE_UNIT);
     final double ten =
         SGUtilityNumber.getPowersOfTen(SGIRootObjectConstants.LENGTH_MINIMAL_ORDER - 1);
     return (value < ten);
@@ -2033,7 +2066,8 @@ public abstract class SGFigure
   // set the rubber band rectangle snapped to the grid lines
   // with minimal width
   private void snapToUnitCell(final int mouseLocation) {
-    final float eps = (float) SGUtilityNumber.getPowersOfTen(SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
+    final float eps =
+        (float) SGUtilityNumber.getPowersOfTen(SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
     final float interval = this.mMagnification * eps / SGIConstants.CM_POINT_RATIO;
     this.snap(interval, mouseLocation);
   }
@@ -3212,9 +3246,15 @@ public abstract class SGFigure
     final float x = this.mGraphRectX - (float) (bb.getX() - paper.getX()) / this.mMagnification;
     final float y = this.mGraphRectY - (float) (bb.getY() - paper.getY()) / this.mMagnification;
     SGPropertyUtility.addProperty(
-        map, SGIFigureConstants.KEY_FIGURE_X_IN_CLIENT, this.getExportLengthValue(x), SGIFigureConstants.FIGURE_LOCATION_UNIT);
+        map,
+        SGIFigureConstants.KEY_FIGURE_X_IN_CLIENT,
+        this.getExportLengthValue(x),
+        SGIFigureConstants.FIGURE_LOCATION_UNIT);
     SGPropertyUtility.addProperty(
-        map, SGIFigureConstants.KEY_FIGURE_Y_IN_CLIENT, this.getExportLengthValue(y), SGIFigureConstants.FIGURE_LOCATION_UNIT);
+        map,
+        SGIFigureConstants.KEY_FIGURE_Y_IN_CLIENT,
+        this.getExportLengthValue(y),
+        SGIFigureConstants.FIGURE_LOCATION_UNIT);
     map.setToElement(el);
 
     return true;
@@ -3228,9 +3268,15 @@ public abstract class SGFigure
     final float x = this.mGraphRectX + offset;
     final float y = this.mGraphRectY + offset;
     SGPropertyUtility.addProperty(
-        map, SGIFigureConstants.KEY_FIGURE_X_IN_CLIENT, this.getExportLengthValue(x), SGIFigureConstants.FIGURE_LOCATION_UNIT);
+        map,
+        SGIFigureConstants.KEY_FIGURE_X_IN_CLIENT,
+        this.getExportLengthValue(x),
+        SGIFigureConstants.FIGURE_LOCATION_UNIT);
     SGPropertyUtility.addProperty(
-        map, SGIFigureConstants.KEY_FIGURE_Y_IN_CLIENT, this.getExportLengthValue(y), SGIFigureConstants.FIGURE_LOCATION_UNIT);
+        map,
+        SGIFigureConstants.KEY_FIGURE_Y_IN_CLIENT,
+        this.getExportLengthValue(y),
+        SGIFigureConstants.FIGURE_LOCATION_UNIT);
     map.setToElement(el);
 
     return true;
@@ -4179,11 +4225,13 @@ public abstract class SGFigure
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFigureX(num.floatValue(), unit.toString()) == false) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         result.putResult(SGIFigureConstants.COM_FIGURE_LOCATION_X, SGPropertyResults.SUCCEEDED);
@@ -4191,11 +4239,13 @@ public abstract class SGFigure
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFigureY(num.floatValue(), unit.toString()) == false) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         result.putResult(SGIFigureConstants.COM_FIGURE_LOCATION_Y, SGPropertyResults.SUCCEEDED);
@@ -4203,11 +4253,13 @@ public abstract class SGFigure
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFigureWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         result.putResult(SGIFigureConstants.COM_FIGURE_WIDTH, SGPropertyResults.SUCCEEDED);
@@ -4215,22 +4267,26 @@ public abstract class SGFigure
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFigureHeight(num.floatValue(), unit.toString()) == false) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         result.putResult(SGIFigureConstants.COM_FIGURE_HEIGHT, SGPropertyResults.SUCCEEDED);
       } else if (SGIFigureConstants.COM_FIGURE_FRAME_VISIBLE.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_FRAME_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_FRAME_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFrameVisible(b.booleanValue()) == false) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_FRAME_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_FRAME_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         result.putResult(SGIFigureConstants.COM_FIGURE_FRAME_VISIBLE, SGPropertyResults.SUCCEEDED);
@@ -4238,29 +4294,37 @@ public abstract class SGFigure
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_FRAME_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_FRAME_LINE_WIDTH,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFrameLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_FRAME_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_FRAME_LINE_WIDTH,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIFigureConstants.COM_FIGURE_FRAME_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIFigureConstants.COM_FIGURE_FRAME_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
       } else if (SGIFigureConstants.COM_FIGURE_FRAME_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setFrameLineColor(cl) == false) {
-            result.putResult(SGIFigureConstants.COM_FIGURE_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIFigureConstants.COM_FIGURE_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(SGIFigureConstants.COM_FIGURE_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIFigureConstants.COM_FIGURE_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setFrameLineColor(cl) == false) {
-            result.putResult(SGIFigureConstants.COM_FIGURE_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIFigureConstants.COM_FIGURE_FRAME_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
@@ -4269,40 +4333,51 @@ public abstract class SGFigure
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setBackgroundColor(cl) == false) {
-            result.putResult(SGIFigureConstants.COM_FIGURE_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIFigureConstants.COM_FIGURE_BACKGROUND_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(SGIFigureConstants.COM_FIGURE_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIFigureConstants.COM_FIGURE_BACKGROUND_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setBackgroundColor(cl) == false) {
-            result.putResult(SGIFigureConstants.COM_FIGURE_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIFigureConstants.COM_FIGURE_BACKGROUND_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(SGIFigureConstants.COM_FIGURE_BACKGROUND_COLOR, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIFigureConstants.COM_FIGURE_BACKGROUND_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (SGIFigureConstants.COM_FIGURE_TRANSPARENT.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_TRANSPARENT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_TRANSPARENT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setTransparent(b.booleanValue()) == false) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_TRANSPARENT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_TRANSPARENT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         result.putResult(SGIFigureConstants.COM_FIGURE_TRANSPARENT, SGPropertyResults.SUCCEEDED);
       } else if (SGIFigureConstants.COM_FIGURE_DATA_ANCHOR.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_DATA_ANCHOR, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_DATA_ANCHOR, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setDataAnchored(b.booleanValue()) == false) {
-          result.putResult(SGIFigureConstants.COM_FIGURE_DATA_ANCHOR, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIFigureConstants.COM_FIGURE_DATA_ANCHOR, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         result.putResult(SGIFigureConstants.COM_FIGURE_DATA_ANCHOR, SGPropertyResults.SUCCEEDED);
@@ -4442,13 +4517,25 @@ public abstract class SGFigure
       String dataAnchorKey) {
     // location and size
     SGPropertyUtility.addProperty(
-        map, xKey, this.getExportLengthValue(this.mGraphRectX), SGIFigureConstants.FIGURE_LOCATION_UNIT);
+        map,
+        xKey,
+        this.getExportLengthValue(this.mGraphRectX),
+        SGIFigureConstants.FIGURE_LOCATION_UNIT);
     SGPropertyUtility.addProperty(
-        map, yKey, this.getExportLengthValue(this.mGraphRectY), SGIFigureConstants.FIGURE_LOCATION_UNIT);
+        map,
+        yKey,
+        this.getExportLengthValue(this.mGraphRectY),
+        SGIFigureConstants.FIGURE_LOCATION_UNIT);
     SGPropertyUtility.addProperty(
-        map, widthKey, this.getExportLengthValue(this.mGraphRectWidth), SGIFigureConstants.FIGURE_SIZE_UNIT);
+        map,
+        widthKey,
+        this.getExportLengthValue(this.mGraphRectWidth),
+        SGIFigureConstants.FIGURE_SIZE_UNIT);
     SGPropertyUtility.addProperty(
-        map, heightKey, this.getExportLengthValue(this.mGraphRectHeight), SGIFigureConstants.FIGURE_SIZE_UNIT);
+        map,
+        heightKey,
+        this.getExportLengthValue(this.mGraphRectHeight),
+        SGIFigureConstants.FIGURE_SIZE_UNIT);
 
     // background
     SGPropertyUtility.addProperty(map, bgColorKey, this.getBackgroundColor());
@@ -4474,7 +4561,9 @@ public abstract class SGFigure
     // creates the command for this figure
     String figureCommands =
         SGCommandUtility.createCommandString(
-            SGIFigureConstants.COM_FIGURE, Integer.toString(this.mID), this.getCommandPropertyMap(params));
+            SGIFigureConstants.COM_FIGURE,
+            Integer.toString(this.mID),
+            this.getCommandPropertyMap(params));
     sb.append(figureCommands);
 
     SGIFigureElement[] elArray = this.getIFigureElementArray();

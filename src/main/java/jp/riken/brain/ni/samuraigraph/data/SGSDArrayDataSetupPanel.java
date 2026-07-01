@@ -214,7 +214,8 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
     if (tickLabelColumnList.size() > 0) {
       return true;
     }
-    List<SGDataColumnInfo> dateColumnList = this.findColumnsWithValueType(cols, SGIDataColumnTypeConstants.VALUE_TYPE_DATE);
+    List<SGDataColumnInfo> dateColumnList =
+        this.findColumnsWithValueType(cols, SGIDataColumnTypeConstants.VALUE_TYPE_DATE);
     if (dateColumnList.size() > 0) {
       return true;
     }

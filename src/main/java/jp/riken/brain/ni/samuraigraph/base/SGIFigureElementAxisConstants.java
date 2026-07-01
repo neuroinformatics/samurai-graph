@@ -2,8 +2,8 @@ package jp.riken.brain.ni.samuraigraph.base;
 
 public final class SGIFigureElementAxisConstants {
 
-    /** Private constructor to prevent instantiation. */
-    private SGIFigureElementAxisConstants() {}
+  /** Private constructor to prevent instantiation. */
+  private SGIFigureElementAxisConstants() {}
 
   /** Constants for axis location. */
   public static final int AXIS_HORIZONTAL_1 = 0;

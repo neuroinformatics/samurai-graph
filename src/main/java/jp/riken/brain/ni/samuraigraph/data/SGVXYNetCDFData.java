@@ -289,7 +289,8 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
           return false;
         }
         xVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_COORDINATE, columns[ii])) {
+      } else if (SGDataUtility.isEqualColumnType(
+          SGIDataColumnTypeConstants.Y_COORDINATE, columns[ii])) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
@@ -304,24 +305,28 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
           return false;
         }
         sVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.ANIMATION_FRAME, columns[ii])
+      } else if (SGDataUtility.isEqualColumnType(
+              SGIDataColumnTypeConstants.ANIMATION_FRAME, columns[ii])
           || SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.TIME, columns[ii])) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         timeVarList.add(var);
       } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.INDEX, columns[ii])
-          || SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.SERIAL_NUMBERS, columns[ii])) {
+          || SGDataUtility.isEqualColumnType(
+              SGIDataColumnTypeConstants.SERIAL_NUMBERS, columns[ii])) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         indexVarList.add(var);
-        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.X_INDEX, columns[ii])) {
+        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.X_INDEX,
+        // columns[ii])) {
         //            	if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         //            		return false;
         //            	}
         //                xIndexVarList.add(var);
-        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.Y_INDEX, columns[ii])) {
+        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.Y_INDEX,
+        // columns[ii])) {
         //            	if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         //            		return false;
         //            	}
@@ -451,11 +456,16 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     if (super.writeProperty(el, type) == false) {
       return false;
     }
-    el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, this.mXVariable.getValidName());
-    el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, this.mYVariable.getValidName());
-    el.setAttribute(SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, this.mFirstComponentVariable.getValidName());
     el.setAttribute(
-        SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, this.mSecondComponentVariable.getValidName());
+        SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, this.mXVariable.getValidName());
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, this.mYVariable.getValidName());
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME,
+        this.mFirstComponentVariable.getValidName());
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME,
+        this.mSecondComponentVariable.getValidName());
     return true;
   }
 
@@ -1447,7 +1457,13 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
     String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
     return this.setEditedValues(
-        ncWrite, varName, array, SGIDataColumnTypeConstants.X_COORDINATE, SGIDataColumnTypeConstants.Y_COORDINATE, new String[] {first, second}, all);
+        ncWrite,
+        varName,
+        array,
+        SGIDataColumnTypeConstants.X_COORDINATE,
+        SGIDataColumnTypeConstants.Y_COORDINATE,
+        new String[] {first, second},
+        all);
   }
 
   @Override

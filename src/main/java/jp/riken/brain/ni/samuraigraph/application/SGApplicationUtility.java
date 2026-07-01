@@ -81,9 +81,7 @@ import ucar.nc2.NetcdfFile;
 import ucar.nc2.NetcdfFiles;
 
 /** This class provides static methods for the application. */
-public class SGApplicationUtility
-    implements SGIApplicationConstants,
-        SGIImageConstants {
+public class SGApplicationUtility implements SGIApplicationConstants, SGIImageConstants {
 
   /**
    * Delete all files recursively.
@@ -254,11 +252,13 @@ public class SGApplicationUtility
   }
 
   public static final void showDataFileInvalidMessageDialog(final Window owner) {
-    SGUtility.showErrorMessageDialog(owner, SGIApplicationTextConstants.MSG_DATA_FILE_OPEN_FAILURE, SGIConstants.TITLE_ERROR);
+    SGUtility.showErrorMessageDialog(
+        owner, SGIApplicationTextConstants.MSG_DATA_FILE_OPEN_FAILURE, SGIConstants.TITLE_ERROR);
   }
 
   public static final void showDataTypeInvalidMessageDialog(final Window owner) {
-    SGUtility.showErrorMessageDialog(owner, SGIApplicationTextConstants.MSG_INVALID_DATA_TYPE, SGIConstants.TITLE_ERROR);
+    SGUtility.showErrorMessageDialog(
+        owner, SGIApplicationTextConstants.MSG_INVALID_DATA_TYPE, SGIConstants.TITLE_ERROR);
   }
 
   /**
@@ -990,7 +990,8 @@ public class SGApplicationUtility
         for (int jj = 0; jj < columns.length; jj++) {
           SGNetCDFDataColumnInfo ncInfo = (SGNetCDFDataColumnInfo) columns[jj];
           String columnType = ncInfo.getColumnType();
-          if (SGIDataColumnTypeConstants.X_VALUE.equalsIgnoreCase(columnType) || SGIDataColumnTypeConstants.Y_VALUE.equalsIgnoreCase(columnType)) {
+          if (SGIDataColumnTypeConstants.X_VALUE.equalsIgnoreCase(columnType)
+              || SGIDataColumnTypeConstants.Y_VALUE.equalsIgnoreCase(columnType)) {
             if (ncInfo.isCoordinateVariable()) {
               arrayLength = ncInfo.getDimension(0).getLength();
             }
@@ -1044,7 +1045,8 @@ public class SGApplicationUtility
         for (int ii = 0; ii < columns.length; ii++) {
           SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) columns[ii];
           String columnType = mdInfo.getColumnType();
-          if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType) || SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
+          if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)
+              || SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
             String name = mdInfo.getName();
             Integer dimensionIndex =
                 mdInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
@@ -1089,7 +1091,8 @@ public class SGApplicationUtility
         for (int jj = 0; jj < columns.length; jj++) {
           SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) columns[jj];
           String columnType = mdInfo.getColumnType();
-          if (SGIDataColumnTypeConstants.X_VALUE.equalsIgnoreCase(columnType) || SGIDataColumnTypeConstants.Y_VALUE.equalsIgnoreCase(columnType)) {
+          if (SGIDataColumnTypeConstants.X_VALUE.equalsIgnoreCase(columnType)
+              || SGIDataColumnTypeConstants.Y_VALUE.equalsIgnoreCase(columnType)) {
             arrayLength = mdInfo.getGenericDimensionLength();
             break;
           }
@@ -1123,11 +1126,13 @@ public class SGApplicationUtility
         for (int jj = 0; jj < columns.length; jj++) {
           SGNetCDFDataColumnInfo ncInfo = (SGNetCDFDataColumnInfo) columns[jj];
           String columnType = ncInfo.getColumnType();
-          if (SGIDataColumnTypeConstants.X_VALUE.equalsIgnoreCase(columnType) || SGIDataColumnTypeConstants.X_INDEX.equalsIgnoreCase(columnType)) {
+          if (SGIDataColumnTypeConstants.X_VALUE.equalsIgnoreCase(columnType)
+              || SGIDataColumnTypeConstants.X_INDEX.equalsIgnoreCase(columnType)) {
             if (ncInfo.isCoordinateVariable()) {
               xLength = ncInfo.getDimension(0).getLength();
             }
-          } else if (SGIDataColumnTypeConstants.Y_VALUE.equalsIgnoreCase(columnType) || SGIDataColumnTypeConstants.Y_INDEX.equalsIgnoreCase(columnType)) {
+          } else if (SGIDataColumnTypeConstants.Y_VALUE.equalsIgnoreCase(columnType)
+              || SGIDataColumnTypeConstants.Y_INDEX.equalsIgnoreCase(columnType)) {
             if (ncInfo.isCoordinateVariable()) {
               yLength = ncInfo.getDimension(0).getLength();
             }
@@ -1220,7 +1225,8 @@ public class SGApplicationUtility
         for (int jj = 0; jj < columns.length; jj++) {
           SGNetCDFDataColumnInfo ncInfo = (SGNetCDFDataColumnInfo) columns[jj];
           String columnType = ncInfo.getColumnType();
-          if (SGIDataColumnTypeConstants.X_COORDINATE.equalsIgnoreCase(columnType) || SGIDataColumnTypeConstants.X_INDEX.equalsIgnoreCase(columnType)) {
+          if (SGIDataColumnTypeConstants.X_COORDINATE.equalsIgnoreCase(columnType)
+              || SGIDataColumnTypeConstants.X_INDEX.equalsIgnoreCase(columnType)) {
             if (ncInfo.isCoordinateVariable()) {
               xLength = ncInfo.getDimension(0).getLength();
             }

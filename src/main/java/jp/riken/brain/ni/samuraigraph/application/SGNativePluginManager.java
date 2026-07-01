@@ -52,10 +52,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class SGNativePluginManager
-    implements SGIPluginManager,
-        SGIApplicationConstants,
-
-        SGIDataPluginConstants {
+    implements SGIPluginManager, SGIApplicationConstants, SGIDataPluginConstants {
 
   SGMainFunctions mMain = null;
 
@@ -539,12 +536,15 @@ public class SGNativePluginManager
       if (buffer instanceof SGSXYDataBuffer) {
         SGSXYDataBuffer sxyBuffer = (SGSXYDataBuffer) buffer;
         SGVirtualMDArrayVariable xVar =
-            new SGVirtualMDArrayVariable.D1(sxyBuffer.getXValues(), SGIDataColumnTypeConstants.X_VALUE);
+            new SGVirtualMDArrayVariable.D1(
+                sxyBuffer.getXValues(), SGIDataColumnTypeConstants.X_VALUE);
         SGVirtualMDArrayVariable yVar =
-            new SGVirtualMDArrayVariable.D1(sxyBuffer.getYValues(), SGIDataColumnTypeConstants.Y_VALUE);
+            new SGVirtualMDArrayVariable.D1(
+                sxyBuffer.getYValues(), SGIDataColumnTypeConstants.Y_VALUE);
         vars = new SGVirtualMDArrayVariable[] {xVar, yVar};
         dataType = SGDataTypeConstants.SXY_VIRTUAL_MDARRAY_DATA;
-        columnTypes = new String[] {SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE};
+        columnTypes =
+            new String[] {SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE};
         cols = this.createColumns(vars);
         for (int jj = 0; jj < cols.length; jj++) {
           cols[jj].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
@@ -556,8 +556,10 @@ public class SGNativePluginManager
         final int multiplicity = sxyBuffer.getMultiplicity();
         dataType = SGDataTypeConstants.SXY_MULTIPLE_VIRTUAL_MDARRAY_DATA;
         if (multiplicity == 1) {
-          SGVirtualMDArrayVariable xVar = new SGVirtualMDArrayVariable.D1(xValues[0], SGIDataColumnTypeConstants.X_VALUE);
-          SGVirtualMDArrayVariable yVar = new SGVirtualMDArrayVariable.D1(yValues[0], SGIDataColumnTypeConstants.Y_VALUE);
+          SGVirtualMDArrayVariable xVar =
+              new SGVirtualMDArrayVariable.D1(xValues[0], SGIDataColumnTypeConstants.X_VALUE);
+          SGVirtualMDArrayVariable yVar =
+              new SGVirtualMDArrayVariable.D1(yValues[0], SGIDataColumnTypeConstants.Y_VALUE);
           vars = new SGVirtualMDArrayVariable[] {xVar, yVar};
           columnTypes = new String[vars.length];
           columnTypes[0] = SGIDataColumnTypeConstants.X_VALUE;
@@ -567,8 +569,10 @@ public class SGNativePluginManager
             cols[jj].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
           }
         } else {
-          SGVirtualMDArrayVariable xVar = new SGVirtualMDArrayVariable.D2(xValues, SGIDataColumnTypeConstants.X_VALUE);
-          SGVirtualMDArrayVariable yVar = new SGVirtualMDArrayVariable.D2(yValues, SGIDataColumnTypeConstants.Y_VALUE);
+          SGVirtualMDArrayVariable xVar =
+              new SGVirtualMDArrayVariable.D2(xValues, SGIDataColumnTypeConstants.X_VALUE);
+          SGVirtualMDArrayVariable yVar =
+              new SGVirtualMDArrayVariable.D2(yValues, SGIDataColumnTypeConstants.Y_VALUE);
           vars = new SGVirtualMDArrayVariable[] {xVar, yVar};
           columnTypes = new String[vars.length];
           columnTypes[0] = SGIDataColumnTypeConstants.X_VALUE;
@@ -594,33 +598,55 @@ public class SGNativePluginManager
       } else if (buffer instanceof SGSXYZDataBuffer) {
         SGSXYZDataBuffer sxyzBuffer = (SGSXYZDataBuffer) buffer;
         SGVirtualMDArrayVariable xVar =
-            new SGVirtualMDArrayVariable.D1(sxyzBuffer.getXValues(), SGIDataColumnTypeConstants.X_VALUE);
+            new SGVirtualMDArrayVariable.D1(
+                sxyzBuffer.getXValues(), SGIDataColumnTypeConstants.X_VALUE);
         SGVirtualMDArrayVariable yVar =
-            new SGVirtualMDArrayVariable.D1(sxyzBuffer.getYValues(), SGIDataColumnTypeConstants.Y_VALUE);
+            new SGVirtualMDArrayVariable.D1(
+                sxyzBuffer.getYValues(), SGIDataColumnTypeConstants.Y_VALUE);
         SGVirtualMDArrayVariable zVar =
-            new SGVirtualMDArrayVariable.D1(sxyzBuffer.getZValues(), SGIDataColumnTypeConstants.Z_VALUE);
+            new SGVirtualMDArrayVariable.D1(
+                sxyzBuffer.getZValues(), SGIDataColumnTypeConstants.Z_VALUE);
         vars = new SGVirtualMDArrayVariable[] {xVar, yVar, zVar};
         dataType = SGDataTypeConstants.SXYZ_VIRTUAL_MDARRAY_DATA;
-        columnTypes = new String[] {SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE, SGIDataColumnTypeConstants.Z_VALUE};
+        columnTypes =
+            new String[] {
+              SGIDataColumnTypeConstants.X_VALUE,
+              SGIDataColumnTypeConstants.Y_VALUE,
+              SGIDataColumnTypeConstants.Z_VALUE
+            };
         cols = this.createColumns(vars);
         for (int jj = 0; jj < cols.length; jj++) {
           cols[jj].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
         }
       } else if (buffer instanceof SGVXYDataBuffer) {
         SGVXYDataBuffer vxyBuffer = (SGVXYDataBuffer) buffer;
-        final String first = vxyBuffer.isPolar() ? SGIDataColumnTypeConstants.MAGNITUDE : SGIDataColumnTypeConstants.X_COMPONENT;
-        final String second = vxyBuffer.isPolar() ? SGIDataColumnTypeConstants.ANGLE : SGIDataColumnTypeConstants.Y_COMPONENT;
+        final String first =
+            vxyBuffer.isPolar()
+                ? SGIDataColumnTypeConstants.MAGNITUDE
+                : SGIDataColumnTypeConstants.X_COMPONENT;
+        final String second =
+            vxyBuffer.isPolar()
+                ? SGIDataColumnTypeConstants.ANGLE
+                : SGIDataColumnTypeConstants.Y_COMPONENT;
         SGVirtualMDArrayVariable xVar =
-            new SGVirtualMDArrayVariable.D1(vxyBuffer.getXValues(), SGIDataColumnTypeConstants.X_COORDINATE);
+            new SGVirtualMDArrayVariable.D1(
+                vxyBuffer.getXValues(), SGIDataColumnTypeConstants.X_COORDINATE);
         SGVirtualMDArrayVariable yVar =
-            new SGVirtualMDArrayVariable.D1(vxyBuffer.getYValues(), SGIDataColumnTypeConstants.Y_COORDINATE);
+            new SGVirtualMDArrayVariable.D1(
+                vxyBuffer.getYValues(), SGIDataColumnTypeConstants.Y_COORDINATE);
         SGVirtualMDArrayVariable fVar =
             new SGVirtualMDArrayVariable.D1(vxyBuffer.getFirstComponentValues(), first);
         SGVirtualMDArrayVariable sVar =
             new SGVirtualMDArrayVariable.D1(vxyBuffer.getSecondComponentValues(), second);
         vars = new SGVirtualMDArrayVariable[] {xVar, yVar, fVar, sVar};
         dataType = SGDataTypeConstants.VXY_VIRTUAL_MDARRAY_DATA;
-        columnTypes = new String[] {SGIDataColumnTypeConstants.X_COORDINATE, SGIDataColumnTypeConstants.Y_COORDINATE, first, second};
+        columnTypes =
+            new String[] {
+              SGIDataColumnTypeConstants.X_COORDINATE,
+              SGIDataColumnTypeConstants.Y_COORDINATE,
+              first,
+              second
+            };
         cols = this.createColumns(vars);
         for (int jj = 0; jj < cols.length; jj++) {
           cols[jj].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
@@ -628,14 +654,22 @@ public class SGNativePluginManager
       } else if (buffer instanceof SGSXYZGridDataBuffer) {
         SGSXYZGridDataBuffer sxyzBuffer = (SGSXYZGridDataBuffer) buffer;
         SGVirtualMDArrayVariable xVar =
-            new SGVirtualMDArrayVariable.D1(sxyzBuffer.getXValues(), SGIDataColumnTypeConstants.X_VALUE);
+            new SGVirtualMDArrayVariable.D1(
+                sxyzBuffer.getXValues(), SGIDataColumnTypeConstants.X_VALUE);
         SGVirtualMDArrayVariable yVar =
-            new SGVirtualMDArrayVariable.D1(sxyzBuffer.getYValues(), SGIDataColumnTypeConstants.Y_VALUE);
+            new SGVirtualMDArrayVariable.D1(
+                sxyzBuffer.getYValues(), SGIDataColumnTypeConstants.Y_VALUE);
         SGVirtualMDArrayVariable zVar =
-            new SGVirtualMDArrayVariable.D2(sxyzBuffer.getZValues(), SGIDataColumnTypeConstants.Z_VALUE);
+            new SGVirtualMDArrayVariable.D2(
+                sxyzBuffer.getZValues(), SGIDataColumnTypeConstants.Z_VALUE);
         vars = new SGVirtualMDArrayVariable[] {xVar, yVar, zVar};
         dataType = SGDataTypeConstants.SXYZ_VIRTUAL_MDARRAY_DATA;
-        columnTypes = new String[] {SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE, SGIDataColumnTypeConstants.Z_VALUE};
+        columnTypes =
+            new String[] {
+              SGIDataColumnTypeConstants.X_VALUE,
+              SGIDataColumnTypeConstants.Y_VALUE,
+              SGIDataColumnTypeConstants.Z_VALUE
+            };
         cols = this.createColumns(vars);
         cols[0].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
         cols[1].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
@@ -643,19 +677,33 @@ public class SGNativePluginManager
         cols[2].setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 0);
       } else if (buffer instanceof SGVXYGridDataBuffer) {
         SGVXYGridDataBuffer vxyBuffer = (SGVXYGridDataBuffer) buffer;
-        final String first = vxyBuffer.isPolar() ? SGIDataColumnTypeConstants.MAGNITUDE : SGIDataColumnTypeConstants.X_COMPONENT;
-        final String second = vxyBuffer.isPolar() ? SGIDataColumnTypeConstants.ANGLE : SGIDataColumnTypeConstants.Y_COMPONENT;
+        final String first =
+            vxyBuffer.isPolar()
+                ? SGIDataColumnTypeConstants.MAGNITUDE
+                : SGIDataColumnTypeConstants.X_COMPONENT;
+        final String second =
+            vxyBuffer.isPolar()
+                ? SGIDataColumnTypeConstants.ANGLE
+                : SGIDataColumnTypeConstants.Y_COMPONENT;
         SGVirtualMDArrayVariable xVar =
-            new SGVirtualMDArrayVariable.D1(vxyBuffer.getXValues(), SGIDataColumnTypeConstants.X_COORDINATE);
+            new SGVirtualMDArrayVariable.D1(
+                vxyBuffer.getXValues(), SGIDataColumnTypeConstants.X_COORDINATE);
         SGVirtualMDArrayVariable yVar =
-            new SGVirtualMDArrayVariable.D1(vxyBuffer.getYValues(), SGIDataColumnTypeConstants.Y_COORDINATE);
+            new SGVirtualMDArrayVariable.D1(
+                vxyBuffer.getYValues(), SGIDataColumnTypeConstants.Y_COORDINATE);
         SGVirtualMDArrayVariable fVar =
             new SGVirtualMDArrayVariable.D2(vxyBuffer.getFirstComponentValues(), first);
         SGVirtualMDArrayVariable sVar =
             new SGVirtualMDArrayVariable.D2(vxyBuffer.getSecondComponentValues(), second);
         vars = new SGVirtualMDArrayVariable[] {xVar, yVar, fVar, sVar};
         dataType = SGDataTypeConstants.VXY_VIRTUAL_MDARRAY_DATA;
-        columnTypes = new String[] {SGIDataColumnTypeConstants.X_COORDINATE, SGIDataColumnTypeConstants.Y_COORDINATE, first, second};
+        columnTypes =
+            new String[] {
+              SGIDataColumnTypeConstants.X_COORDINATE,
+              SGIDataColumnTypeConstants.Y_COORDINATE,
+              first,
+              second
+            };
         cols = this.createColumns(vars);
         cols[0].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
         cols[1].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);

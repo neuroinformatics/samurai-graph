@@ -87,11 +87,13 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
       if (SGIDataCommandConstants.COM_DATA_SYMBOL_TYPE.equalsIgnoreCase(key)) {
         final Integer type = SGDrawingElementSymbol.getSymbolTypeFromName(value);
         if (type == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_SYMBOL_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setType(type) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_SYMBOL_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_TYPE, SGPropertyResults.SUCCEEDED);
@@ -99,11 +101,13 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setSize(num.floatValue(), unit.toString()) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_SIZE, SGPropertyResults.SUCCEEDED);
@@ -111,76 +115,103 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setInnerColor(cl) == false) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setInnerColor(cl) == false) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_COLOR, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_TRANSPARENCY.equalsIgnoreCase(key)) {
         final Integer num = SGUtilityText.getInteger(value, SGIConstants.percent);
         if (num == null) {
           result.putResult(
-              SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_TRANSPARENCY, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_TRANSPARENCY,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setInnerTransparency(num.intValue()) == false) {
           result.putResult(
-              SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_TRANSPARENCY, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_TRANSPARENCY,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_TRANSPARENCY, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_TRANSPARENCY, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_WIDTH,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_WIDTH,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setLineColor(cl) == false) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setLineColor(cl) == false) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_COLOR, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_VISIBLE.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_VISIBLE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineVisible(b.booleanValue()) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_VISIBLE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_VISIBLE, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_VISIBLE, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -188,9 +219,12 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
   }
 
   protected boolean getProperties(SGPropertyMap map) {
-    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_SYMBOL_VISIBLE, this.isVisible());
     SGPropertyUtility.addProperty(
-        map, SGIDataCommandConstants.COM_DATA_SYMBOL_TYPE, SGDrawingElementSymbol.getSymbolTypeName(this.getType()));
+        map, SGIDataCommandConstants.COM_DATA_SYMBOL_VISIBLE, this.isVisible());
+    SGPropertyUtility.addProperty(
+        map,
+        SGIDataCommandConstants.COM_DATA_SYMBOL_TYPE,
+        SGDrawingElementSymbol.getSymbolTypeName(this.getType()));
     SGPropertyUtility.addProperty(
         map,
         SGIDataCommandConstants.COM_DATA_SYMBOL_SIZE,
@@ -198,16 +232,21 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
             this.getSize(SGIFigureDrawingElementConstants.SYMBOL_SIZE_UNIT),
             SGIFigureDrawingElementConstants.SYMBOL_SIZE_MINIMAL_ORDER),
         SGIFigureDrawingElementConstants.SYMBOL_SIZE_UNIT);
-    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_COLOR, this.getInnerColor());
     SGPropertyUtility.addProperty(
-        map, SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_TRANSPARENCY, this.getInnerTransparency());
-    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_VISIBLE, this.isLineVisible());
+        map, SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_COLOR, this.getInnerColor());
+    SGPropertyUtility.addProperty(
+        map,
+        SGIDataCommandConstants.COM_DATA_SYMBOL_BODY_TRANSPARENCY,
+        this.getInnerTransparency());
+    SGPropertyUtility.addProperty(
+        map, SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_VISIBLE, this.isLineVisible());
     SGPropertyUtility.addProperty(
         map,
         SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_WIDTH,
         SGUtility.getExportLineWidth(this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
         SGIConstants.LINE_WIDTH_UNIT);
-    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_COLOR, this.getLineColor());
+    SGPropertyUtility.addProperty(
+        map, SGIDataCommandConstants.COM_DATA_SYMBOL_LINE_COLOR, this.getLineColor());
     return true;
   }
 }

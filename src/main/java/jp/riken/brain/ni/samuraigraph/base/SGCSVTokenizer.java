@@ -132,7 +132,8 @@ public class SGCSVTokenizer implements Iterator<SGCSVTokenizer.Token> {
       }
 
       String trimmed = line.trim();
-      this.isCommentLine = isDataFile && trimmed.startsWith(SGITextDataConstants.DATA_COMMENT_PREFIX);
+      this.isCommentLine =
+          isDataFile && trimmed.startsWith(SGITextDataConstants.DATA_COMMENT_PREFIX);
 
       if (this.isCommentLine) {
         this.recordIterator = null;

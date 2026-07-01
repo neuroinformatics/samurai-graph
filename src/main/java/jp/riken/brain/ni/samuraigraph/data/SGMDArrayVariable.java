@@ -242,7 +242,8 @@ public abstract class SGMDArrayVariable extends SGVariable implements Cloneable 
    * @return the number array of the generic dimension
    */
   public double[] getGenericNumberArray(final SGIntegerSeriesSet stride) {
-    return this.getDoubleArray(this.mDimensionIndices.get(SGIMDArrayConstants.KEY_GENERIC_DIMENSION), stride);
+    return this.getDoubleArray(
+        this.mDimensionIndices.get(SGIMDArrayConstants.KEY_GENERIC_DIMENSION), stride);
   }
 
   /**
@@ -260,7 +261,8 @@ public abstract class SGMDArrayVariable extends SGVariable implements Cloneable 
    * @return the string array of the generic dimension
    */
   public String[] getAllGenericStringArray() {
-    return this.getStringArray(this.mDimensionIndices.get(SGIMDArrayConstants.KEY_GENERIC_DIMENSION));
+    return this.getStringArray(
+        this.mDimensionIndices.get(SGIMDArrayConstants.KEY_GENERIC_DIMENSION));
   }
 
   /**
@@ -270,7 +272,8 @@ public abstract class SGMDArrayVariable extends SGVariable implements Cloneable 
    * @return the string array of the generic dimension
    */
   public String[] getGenericStringArray(SGIntegerSeriesSet stride) {
-    return this.getStringArray(this.mDimensionIndices.get(SGIMDArrayConstants.KEY_GENERIC_DIMENSION), stride);
+    return this.getStringArray(
+        this.mDimensionIndices.get(SGIMDArrayConstants.KEY_GENERIC_DIMENSION), stride);
   }
 
   /**

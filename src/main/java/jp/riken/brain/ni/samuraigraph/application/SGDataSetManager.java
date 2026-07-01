@@ -31,9 +31,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /** SGMainFunctions :: DataSetManager class */
-class SGDataSetManager
-    implements SGIApplicationConstants,
-        SGIPropertyFileConstants {
+class SGDataSetManager implements SGIApplicationConstants, SGIPropertyFileConstants {
 
   private static final String DATASET_TEMPDIR_NAME = "SamuraiGraphArchive";
 
@@ -474,7 +472,9 @@ class SGDataSetManager
     if (fileName == null) {
       fileName = SGIArchiveFileConstants.DEFAULT_ARCHIVE_FILE_NAME;
     }
-    String name = SGApplicationUtility.appendExtension(fileName, SGIArchiveFileConstants.ARCHIVE_FILE_TYPE_SGA);
+    String name =
+        SGApplicationUtility.appendExtension(
+            fileName, SGIArchiveFileConstants.ARCHIVE_FILE_TYPE_SGA);
 
     ArrayList<File> fList;
 

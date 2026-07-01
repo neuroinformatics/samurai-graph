@@ -755,25 +755,41 @@ public class SGXYFigureDialog extends SGPropertyDialog
     final int digits = -SGIRootObjectConstants.LENGTH_MINIMAL_ORDER;
 
     this.mXSpinner.initProperties(
-        new SpinnerNumberModel(0.0, SGIFigureConstants.FIGURE_X_MIN, SGIFigureConstants.FIGURE_X_MAX, SGIFigureConstants.FIGURE_LOCATION_STEP),
+        new SpinnerNumberModel(
+            0.0,
+            SGIFigureConstants.FIGURE_X_MIN,
+            SGIFigureConstants.FIGURE_X_MAX,
+            SGIFigureConstants.FIGURE_LOCATION_STEP),
         SGIFigureConstants.FIGURE_LOCATION_UNIT,
         digits,
         digits);
 
     this.mYSpinner.initProperties(
-        new SpinnerNumberModel(0.0, SGIFigureConstants.FIGURE_Y_MIN, SGIFigureConstants.FIGURE_Y_MAX, SGIFigureConstants.FIGURE_LOCATION_STEP),
+        new SpinnerNumberModel(
+            0.0,
+            SGIFigureConstants.FIGURE_Y_MIN,
+            SGIFigureConstants.FIGURE_Y_MAX,
+            SGIFigureConstants.FIGURE_LOCATION_STEP),
         SGIFigureConstants.FIGURE_LOCATION_UNIT,
         digits,
         digits);
 
     this.mWidthSpinner.initProperties(
-        new SpinnerNumberModel(10.0, SGIFigureConstants.FIGURE_WIDTH_MIN, SGIFigureConstants.FIGURE_WIDTH_MAX, SGIFigureConstants.FIGURE_SIZE_STEP),
+        new SpinnerNumberModel(
+            10.0,
+            SGIFigureConstants.FIGURE_WIDTH_MIN,
+            SGIFigureConstants.FIGURE_WIDTH_MAX,
+            SGIFigureConstants.FIGURE_SIZE_STEP),
         SGIFigureConstants.FIGURE_SIZE_UNIT,
         digits,
         digits);
 
     this.mHeightSpinner.initProperties(
-        new SpinnerNumberModel(10.0, SGIFigureConstants.FIGURE_HEIGHT_MIN, SGIFigureConstants.FIGURE_HEIGHT_MAX, SGIFigureConstants.FIGURE_SIZE_STEP),
+        new SpinnerNumberModel(
+            10.0,
+            SGIFigureConstants.FIGURE_HEIGHT_MIN,
+            SGIFigureConstants.FIGURE_HEIGHT_MAX,
+            SGIFigureConstants.FIGURE_SIZE_STEP),
         SGIFigureConstants.FIGURE_SIZE_UNIT,
         digits,
         digits);

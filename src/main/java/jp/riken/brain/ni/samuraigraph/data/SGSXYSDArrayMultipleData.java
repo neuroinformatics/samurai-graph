@@ -956,7 +956,8 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     }
 
     // serial numbers
-    el.setAttribute(SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, SGIDataColumnTypeConstants.INDEX);
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, SGIDataColumnTypeConstants.INDEX);
 
     return true;
   }
@@ -1253,23 +1254,27 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
           return false;
         }
         yList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         lList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         uList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         lList.add(Integer.valueOf(ii));
         uList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.TICK_LABEL)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.TICK_LABEL)) {
         tList.add(Integer.valueOf(ii));
       } else if ("".equals(columns[ii])) {
         continue;
@@ -2883,17 +2888,21 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
         if (equalFlag) {
           String str = Integer.toString(leNo);
           varList.add(str);
-          String columnTypeStr = SGDataUtility.appendColumnNo(SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE, ehIndex);
+          String columnTypeStr =
+              SGDataUtility.appendColumnNo(
+                  SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE, ehIndex);
           columnTypeList.add(columnTypeStr);
         } else {
           String leStr = Integer.toString(leNo);
           varList.add(leStr);
-          String leColumnTypeStr = SGDataUtility.appendColumnNo(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, ehIndex);
+          String leColumnTypeStr =
+              SGDataUtility.appendColumnNo(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, ehIndex);
           columnTypeList.add(leColumnTypeStr);
 
           String ueStr = Integer.toString(ueNo);
           varList.add(ueStr);
-          String ueColumnTypeStr = SGDataUtility.appendColumnNo(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, ehIndex);
+          String ueColumnTypeStr =
+              SGDataUtility.appendColumnNo(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, ehIndex);
           columnTypeList.add(ueColumnTypeStr);
         }
       }
@@ -2904,7 +2913,8 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
         final int thIndex = this.mTickLabelHolderIndices[ii];
         String str = Integer.toString(tlNo);
         varList.add(str);
-        String columnTypeStr = SGDataUtility.appendColumnNo(SGIDataColumnTypeConstants.TICK_LABEL, thIndex);
+        String columnTypeStr =
+            SGDataUtility.appendColumnNo(SGIDataColumnTypeConstants.TICK_LABEL, thIndex);
         columnTypeList.add(columnTypeStr);
       }
     }
@@ -2923,7 +2933,9 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
         SGIntegerSeriesSet tickLabelArraySection = this.getTickLabelStride();
         if (!tickLabelArraySection.isComplete()) {
           SGPropertyUtility.addQuotedStringProperty(
-              map, SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION, tickLabelArraySection.toString());
+              map,
+              SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION,
+              tickLabelArraySection.toString());
         }
       }
     }

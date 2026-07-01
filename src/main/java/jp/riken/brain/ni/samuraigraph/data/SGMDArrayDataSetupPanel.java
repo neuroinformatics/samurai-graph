@@ -1232,20 +1232,23 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
           return false;
         }
       }
-      List<SGDataColumnInfo> zColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Z_VALUE);
+      List<SGDataColumnInfo> zColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Z_VALUE);
       SGMDArrayDataColumnInfo zCol = (SGMDArrayDataColumnInfo) zColList.get(0);
       if (zCol != null) {
         int[] zDims = zCol.getDimensions();
         Object dimX = this.mSXYZDataXVariableDimensionComboBox.getSelectedItem();
         if (dimZX != null && dimX != null) {
-          if (!this.compareDimensionLength(dimZX, zDims, dimX, SGIDataColumnTypeConstants.X_VALUE, colsMD)) {
+          if (!this.compareDimensionLength(
+              dimZX, zDims, dimX, SGIDataColumnTypeConstants.X_VALUE, colsMD)) {
             selectionPanel.setMessage(SGDataUtility.MSG_DIMENSIONS_SAME_LENGTH);
             return false;
           }
         }
         Object dimY = this.mSXYZDataYVariableDimensionComboBox.getSelectedItem();
         if (dimZY != null && dimY != null) {
-          if (!this.compareDimensionLength(dimZY, zDims, dimY, SGIDataColumnTypeConstants.Y_VALUE, colsMD)) {
+          if (!this.compareDimensionLength(
+              dimZY, zDims, dimY, SGIDataColumnTypeConstants.Y_VALUE, colsMD)) {
             selectionPanel.setMessage(SGDataUtility.MSG_DIMENSIONS_SAME_LENGTH);
             return false;
           }
@@ -1305,14 +1308,16 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
         int[] fDims = fCol.getDimensions();
         Object dimX = this.mVXYDataXVariableDimensionComboBox.getSelectedItem();
         if (dimFX != null && dimX != null) {
-          if (!this.compareDimensionLength(dimFX, fDims, dimX, SGIDataColumnTypeConstants.X_COORDINATE, colsMD)) {
+          if (!this.compareDimensionLength(
+              dimFX, fDims, dimX, SGIDataColumnTypeConstants.X_COORDINATE, colsMD)) {
             selectionPanel.setMessage(SGDataUtility.MSG_DIMENSIONS_SAME_LENGTH);
             return false;
           }
         }
         Object dimY = this.mVXYDataYVariableDimensionComboBox.getSelectedItem();
         if (dimFY != null && dimY != null) {
-          if (!this.compareDimensionLength(dimFY, fDims, dimY, SGIDataColumnTypeConstants.Y_COORDINATE, colsMD)) {
+          if (!this.compareDimensionLength(
+              dimFY, fDims, dimY, SGIDataColumnTypeConstants.Y_COORDINATE, colsMD)) {
             selectionPanel.setMessage(SGDataUtility.MSG_DIMENSIONS_SAME_LENGTH);
             return false;
           }
@@ -1324,14 +1329,16 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
         int[] sDims = sCol.getDimensions();
         Object dimX = this.mVXYDataXVariableDimensionComboBox.getSelectedItem();
         if (dimSX != null && dimX != null) {
-          if (!this.compareDimensionLength(dimSX, sDims, dimX, SGIDataColumnTypeConstants.X_COORDINATE, colsMD)) {
+          if (!this.compareDimensionLength(
+              dimSX, sDims, dimX, SGIDataColumnTypeConstants.X_COORDINATE, colsMD)) {
             selectionPanel.setMessage(SGDataUtility.MSG_DIMENSIONS_SAME_LENGTH);
             return false;
           }
         }
         Object dimY = this.mVXYDataYVariableDimensionComboBox.getSelectedItem();
         if (dimSY != null && dimY != null) {
-          if (!this.compareDimensionLength(dimSY, sDims, dimY, SGIDataColumnTypeConstants.Y_COORDINATE, colsMD)) {
+          if (!this.compareDimensionLength(
+              dimSY, sDims, dimY, SGIDataColumnTypeConstants.Y_COORDINATE, colsMD)) {
             selectionPanel.setMessage(SGDataUtility.MSG_DIMENSIONS_SAME_LENGTH);
             return false;
           }
@@ -1431,8 +1438,10 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
       // refresh the columns that error bars and tick labels are appended
       this.clearUselessColumnType(cols);
 
-      List<SGDataColumnInfo> xColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_VALUE);
-      List<SGDataColumnInfo> yColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_VALUE);
+      List<SGDataColumnInfo> xColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_VALUE);
+      List<SGDataColumnInfo> yColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_VALUE);
 
       // updates the components for pick up
       List<SGMDArrayDataColumnInfo> pickUpColList = this.findValidPickUpXYColumns();
@@ -1565,9 +1574,12 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
 
       // finds columns
-      List<SGDataColumnInfo> xColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_VALUE);
-      List<SGDataColumnInfo> yColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_VALUE);
-      List<SGDataColumnInfo> zColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Z_VALUE);
+      List<SGDataColumnInfo> xColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_VALUE);
+      List<SGDataColumnInfo> yColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_VALUE);
+      List<SGDataColumnInfo> zColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Z_VALUE);
       SGMDArrayDataColumnInfo xInfo = null;
       SGMDArrayDataColumnInfo yInfo = null;
       SGMDArrayDataColumnInfo zInfo = null;
@@ -1779,8 +1791,10 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
       // finds columns
       final String first = SGDataUtility.getVXYFirstComponentColumnType(this.mInfoMap);
       final String second = SGDataUtility.getVXYSecondComponentColumnType(this.mInfoMap);
-      List<SGDataColumnInfo> xColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_COORDINATE);
-      List<SGDataColumnInfo> yColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_COORDINATE);
+      List<SGDataColumnInfo> xColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_COORDINATE);
+      List<SGDataColumnInfo> yColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_COORDINATE);
       List<SGDataColumnInfo> fColList = this.findColumnsWithColumnType(cols, first);
       List<SGDataColumnInfo> sColList = this.findColumnsWithColumnType(cols, second);
       SGMDArrayDataColumnInfo xInfo = null;
@@ -2460,7 +2474,8 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
           SGMDArrayDataColumnInfo mdCol =
               (SGMDArrayDataColumnInfo) SGDataUtility.findColumnWithName(cols, name);
           String columnType = mdCol.getColumnType();
-          if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType) || SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
+          if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)
+              || SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
             pickUpDimensionList.add(name);
           }
         }
@@ -2683,9 +2698,12 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
 
       // updates index panel
       SGDataColumnInfo[] cols = this.getDataColumnInfoArray();
-      List<SGDataColumnInfo> xColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_VALUE);
-      List<SGDataColumnInfo> yColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_VALUE);
-      List<SGDataColumnInfo> zColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Z_VALUE);
+      List<SGDataColumnInfo> xColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_VALUE);
+      List<SGDataColumnInfo> yColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_VALUE);
+      List<SGDataColumnInfo> zColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Z_VALUE);
       SGMDArrayDataColumnInfo xInfo = null;
       SGMDArrayDataColumnInfo yInfo = null;
       SGMDArrayDataColumnInfo zInfo = null;
@@ -2810,8 +2828,10 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
       this.itemStateChangedSub(columnType, item, key, true);
 
       SGDataColumnInfo[] cols = this.getDataColumnInfoArray();
-      List<SGDataColumnInfo> xColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_COORDINATE);
-      List<SGDataColumnInfo> yColList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_COORDINATE);
+      List<SGDataColumnInfo> xColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_COORDINATE);
+      List<SGDataColumnInfo> yColList =
+          this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_COORDINATE);
       List<SGDataColumnInfo> fColList = this.findColumnsWithColumnType(cols, first);
       List<SGDataColumnInfo> sColList = this.findColumnsWithColumnType(cols, second);
       SGMDArrayDataColumnInfo xInfo = null;

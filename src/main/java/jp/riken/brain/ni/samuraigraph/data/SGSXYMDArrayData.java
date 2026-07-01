@@ -299,19 +299,22 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
           return false;
         }
         yVar = var;
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         lVar = var;
         lCol = columns[ii];
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         uVar = var;
         uCol = columns[ii];
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
@@ -319,7 +322,8 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
         uVar = var;
         lCol = columns[ii];
         uCol = columns[ii];
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.TICK_LABEL)) {
+      } else if (SGDataUtility.columnTypeStartsWith(
+          columns[ii], SGIDataColumnTypeConstants.TICK_LABEL)) {
         tVar = var;
         tCol = columns[ii];
       } else if ("".equals(columns[ii])) {
@@ -765,7 +769,8 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
   protected SGMDArrayDataColumnInfo createTickLabelInfo(SGMDArrayVariable var) {
     if (this.isTickLabelAvailable()) {
       String thName = this.mTickLabelHolderVariable.getName();
-      return SGDataUtility.createDataColumnInfo(this.mTickLabelVariable, SGIDataColumnTypeConstants.TICK_LABEL, thName);
+      return SGDataUtility.createDataColumnInfo(
+          this.mTickLabelVariable, SGIDataColumnTypeConstants.TICK_LABEL, thName);
     } else {
       return null;
     }
@@ -797,18 +802,24 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
   public SGISXYTypeMultipleData toMultiple() {
     final boolean be = this.isErrorBarAvailable();
     final boolean bt = this.isTickLabelAvailable();
-    SGMDArrayDataColumnInfo[] x = SGDataUtility.createDataColumnInfoArray(this.mXVariable, SGIDataColumnTypeConstants.X_VALUE);
-    SGMDArrayDataColumnInfo[] y = SGDataUtility.createDataColumnInfoArray(this.mYVariable, SGIDataColumnTypeConstants.Y_VALUE);
+    SGMDArrayDataColumnInfo[] x =
+        SGDataUtility.createDataColumnInfoArray(
+            this.mXVariable, SGIDataColumnTypeConstants.X_VALUE);
+    SGMDArrayDataColumnInfo[] y =
+        SGDataUtility.createDataColumnInfoArray(
+            this.mYVariable, SGIDataColumnTypeConstants.Y_VALUE);
     SGMDArrayDataColumnInfo[] le =
         be
             ? new SGMDArrayDataColumnInfo[] {
-              this.createErrorBarInfo(this.mLowerErrorVariable, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)
+              this.createErrorBarInfo(
+                  this.mLowerErrorVariable, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)
             }
             : null;
     SGMDArrayDataColumnInfo[] ue =
         be
             ? new SGMDArrayDataColumnInfo[] {
-              this.createErrorBarInfo(this.mUpperErrorVariable, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)
+              this.createErrorBarInfo(
+                  this.mUpperErrorVariable, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)
             }
             : null;
     SGMDArrayDataColumnInfo[] eh = be ? this.getErrorBarHolderInfo(x, y) : null;
@@ -816,7 +827,9 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
         bt
             ? new SGMDArrayDataColumnInfo[] {
               SGDataUtility.createDataColumnInfo(
-                  this.mTickLabelVariable, SGIDataColumnTypeConstants.TICK_LABEL, this.mTickLabelHolderVariable.getName())
+                  this.mTickLabelVariable,
+                  SGIDataColumnTypeConstants.TICK_LABEL,
+                  this.mTickLabelHolderVariable.getName())
             }
             : null;
     SGMDArrayDataColumnInfo[] th = bt ? this.getTickLabelHolderInfo(x, y) : null;
@@ -854,18 +867,30 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
    */
   public SGISXYTypeMultipleData toMultiple(
       final boolean pickupYVariable, final int pickUpDimensionIndex, final int len) {
-    SGMDArrayDataColumnInfo x = SGDataUtility.createDataColumnInfo(this.mXVariable, SGIDataColumnTypeConstants.X_VALUE);
-    SGMDArrayDataColumnInfo y = SGDataUtility.createDataColumnInfo(this.mYVariable, SGIDataColumnTypeConstants.Y_VALUE);
+    SGMDArrayDataColumnInfo x =
+        SGDataUtility.createDataColumnInfo(this.mXVariable, SGIDataColumnTypeConstants.X_VALUE);
+    SGMDArrayDataColumnInfo y =
+        SGDataUtility.createDataColumnInfo(this.mYVariable, SGIDataColumnTypeConstants.Y_VALUE);
     final boolean be = this.isErrorBarAvailable();
     final boolean bt = this.isTickLabelAvailable();
     SGMDArrayDataColumnInfo le =
-        be ? SGDataUtility.createDataColumnInfo(this.mLowerErrorVariable, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE) : null;
+        be
+            ? SGDataUtility.createDataColumnInfo(
+                this.mLowerErrorVariable, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)
+            : null;
     SGMDArrayDataColumnInfo ue =
-        be ? SGDataUtility.createDataColumnInfo(this.mUpperErrorVariable, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE) : null;
+        be
+            ? SGDataUtility.createDataColumnInfo(
+                this.mUpperErrorVariable, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)
+            : null;
     SGMDArrayDataColumnInfo t =
-        bt ? SGDataUtility.createDataColumnInfo(this.mTickLabelVariable, SGIDataColumnTypeConstants.TICK_LABEL) : null;
+        bt
+            ? SGDataUtility.createDataColumnInfo(
+                this.mTickLabelVariable, SGIDataColumnTypeConstants.TICK_LABEL)
+            : null;
     SGMDArrayDataColumnInfo pickUpInfo = pickupYVariable ? y : x;
-    pickUpInfo.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, pickUpDimensionIndex);
+    pickUpInfo.setDimensionIndex(
+        SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, pickUpDimensionIndex);
     final int origin = pickUpInfo.getOrigins()[pickUpDimensionIndex];
     SGIntegerSeriesSet pickUpIndices;
     if (origin == len - 1) {
@@ -931,7 +956,8 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
           return null;
         }
         array[ii] =
-            SGDataUtility.appendColumnTitle(SGIDataColumnTypeConstants.TICK_LABEL, this.mTickLabelHolderVariable.getName());
+            SGDataUtility.appendColumnTitle(
+                SGIDataColumnTypeConstants.TICK_LABEL, this.mTickLabelHolderVariable.getName());
       } else {
         array[ii] = "";
       }

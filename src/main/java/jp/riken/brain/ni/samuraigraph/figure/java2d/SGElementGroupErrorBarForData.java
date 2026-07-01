@@ -90,91 +90,128 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
       if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_VISIBLE.equalsIgnoreCase(key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_VISIBLE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setVisible(b.booleanValue());
-        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_VISIBLE, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_ERROR_BAR_VISIBLE, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE.equalsIgnoreCase(key)) {
         final Integer type = SGDrawingElementErrorBar.getHeadTypeFromName(value);
         if (type == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setHeadType(type) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setHeadSize(num.floatValue(), unit.toString()) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setColor(cl) == false) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setColor(cl) == false) {
-            result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE.equalsIgnoreCase(key)) {
         final Integer style = SGDrawingElementErrorBar.getErrorBarStyleFromName(value);
         if (style == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setErrorBarStyle(style) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE, SGPropertyResults.SUCCEEDED);
       } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION.equalsIgnoreCase(key)) {
         final Integer position = getErrorBarPositionFromName(value);
         if (position == null) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (isValidErrorBarPosition(position) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setPositionOnLine(position == ERROR_BAR_ON_LINE) == false) {
-          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -182,7 +219,8 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
   }
 
   protected boolean getProperties(SGPropertyMap map) {
-    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ERROR_BAR_VISIBLE, this.isVisible());
+    SGPropertyUtility.addProperty(
+        map, SGIDataCommandConstants.COM_DATA_ERROR_BAR_VISIBLE, this.isVisible());
     SGPropertyUtility.addProperty(
         map,
         SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE,
@@ -194,7 +232,8 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
             this.getHeadSize(SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_UNIT),
             SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_MINIMAL_ORDER),
         SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_UNIT);
-    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, this.getColor());
+    SGPropertyUtility.addProperty(
+        map, SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, this.getColor());
     SGPropertyUtility.addProperty(
         map,
         SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH,

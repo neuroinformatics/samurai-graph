@@ -103,14 +103,17 @@ public abstract class SGElementGroupArrowForData extends SGElementGroupArrow
         SGUtility.getExportLineWidth(this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
         SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(
-        map, SGIDataCommandConstants.COM_DATA_ARROW_LINE_TYPE, SGDrawingElementLine.getLineTypeName(this.getLineType()));
+        map,
+        SGIDataCommandConstants.COM_DATA_ARROW_LINE_TYPE,
+        SGDrawingElementLine.getLineTypeName(this.getLineType()));
     SGPropertyUtility.addProperty(
         map,
         SGIDataCommandConstants.COM_DATA_ARROW_HEAD_SIZE,
         SGUtility.getExportValue(
             this.getHeadSize(ARROW_HEAD_SIZE_UNIT), ARROW_HEAD_SIZE_MINIMAL_ORDER),
         ARROW_HEAD_SIZE_UNIT);
-    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ARROW_COLOR, this.getColor());
+    SGPropertyUtility.addProperty(
+        map, SGIDataCommandConstants.COM_DATA_ARROW_COLOR, this.getColor());
     SGPropertyUtility.addProperty(
         map,
         SGIDataCommandConstants.COM_DATA_ARROW_START_TYPE,
@@ -127,7 +130,8 @@ public abstract class SGElementGroupArrowForData extends SGElementGroupArrow
     sbAngle.append(
         SGUtility.getExportValue(this.getHeadCloseAngle(), ARROW_HEAD_ANGLE_MINIMAL_ORDER));
     sbAngle.append(')');
-    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ARROW_HEAD_ANGLE, sbAngle.toString());
+    SGPropertyUtility.addProperty(
+        map, SGIDataCommandConstants.COM_DATA_ARROW_HEAD_ANGLE, sbAngle.toString());
     return true;
   }
 }

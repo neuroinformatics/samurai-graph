@@ -13,7 +13,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
-
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
@@ -24,12 +23,16 @@ public class SGPropertyFileCreator extends SGFileHandler {
 
   /** Default name of the property file with the extension. */
   public static final String DEFAULT_PROPERTY_FILE_NAME_WITH_EXTENSION =
-      SGApplicationUtility.appendExtension(SGIPropertyFileConstants.DEFAULT_PROPERTY_FILE_NAME, SGIPropertyFileConstants.PROPERTY_FILE_EXTENSION);
+      SGApplicationUtility.appendExtension(
+          SGIPropertyFileConstants.DEFAULT_PROPERTY_FILE_NAME,
+          SGIPropertyFileConstants.PROPERTY_FILE_EXTENSION);
 
   /** Constructs an object. */
   public SGPropertyFileCreator() {
     super();
-    this.initFilePath(SGIPropertyFileConstants.DEFAULT_PROPERTY_FILE_NAME, SGIPropertyFileConstants.PROPERTY_FILE_EXTENSION);
+    this.initFilePath(
+        SGIPropertyFileConstants.DEFAULT_PROPERTY_FILE_NAME,
+        SGIPropertyFileConstants.PROPERTY_FILE_EXTENSION);
   }
 
   /** Create a property file. */
@@ -63,7 +66,10 @@ public class SGPropertyFileCreator extends SGFileHandler {
 
     // create a DocumentType object
     DocumentType docType =
-        domImpl.createDocumentType(SGIPropertyFileConstants.ROOT_TAG_NAME, SGIPropertyFileConstants.PROPERTY_FILE_PUBLIC_ID, SGIPropertyFileConstants.PROPERTY_FILE_SYSTEM_ID);
+        domImpl.createDocumentType(
+            SGIPropertyFileConstants.ROOT_TAG_NAME,
+            SGIPropertyFileConstants.PROPERTY_FILE_PUBLIC_ID,
+            SGIPropertyFileConstants.PROPERTY_FILE_SYSTEM_ID);
 
     // create a Document object
     Document document = domImpl.createDocument("", SGIPropertyFileConstants.ROOT_TAG_NAME, docType);
@@ -86,8 +92,10 @@ public class SGPropertyFileCreator extends SGFileHandler {
     // set the output properties
     transformer.setOutputProperty(OutputKeys.INDENT, "yes");
     transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-    transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, SGIPropertyFileConstants.PROPERTY_FILE_SYSTEM_ID);
-    transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, SGIPropertyFileConstants.PROPERTY_FILE_PUBLIC_ID);
+    transformer.setOutputProperty(
+        OutputKeys.DOCTYPE_SYSTEM, SGIPropertyFileConstants.PROPERTY_FILE_SYSTEM_ID);
+    transformer.setOutputProperty(
+        OutputKeys.DOCTYPE_PUBLIC, SGIPropertyFileConstants.PROPERTY_FILE_PUBLIC_ID);
 
     transformer.transform(source, result);
 

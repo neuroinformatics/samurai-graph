@@ -206,24 +206,28 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
           return false;
         }
         zVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.ANIMATION_FRAME, columns[ii])
+      } else if (SGDataUtility.isEqualColumnType(
+              SGIDataColumnTypeConstants.ANIMATION_FRAME, columns[ii])
           || SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.TIME, columns[ii])) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         timeVarList.add(var);
       } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.INDEX, columns[ii])
-          || SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.SERIAL_NUMBERS, columns[ii])) {
+          || SGDataUtility.isEqualColumnType(
+              SGIDataColumnTypeConstants.SERIAL_NUMBERS, columns[ii])) {
         if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         indexVarList.add(var);
-        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.X_INDEX, columns[ii])) {
+        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.X_INDEX,
+        // columns[ii])) {
         //            	if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         //            		return false;
         //            	}
         //                xIndexVarList.add(var);
-        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.Y_INDEX, columns[ii])) {
+        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.Y_INDEX,
+        // columns[ii])) {
         //            	if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         //            		return false;
         //            	}
@@ -1190,7 +1194,13 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
   protected Array setEditedValues(
       NetcdfFileWriter ncWrite, String varName, Array array, final boolean all) {
     return this.setEditedValues(
-        ncWrite, varName, array, SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE, new String[] {SGIDataColumnTypeConstants.Z_VALUE}, all);
+        ncWrite,
+        varName,
+        array,
+        SGIDataColumnTypeConstants.X_VALUE,
+        SGIDataColumnTypeConstants.Y_VALUE,
+        new String[] {SGIDataColumnTypeConstants.Z_VALUE},
+        all);
   }
 
   @Override

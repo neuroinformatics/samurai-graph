@@ -39,7 +39,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
@@ -61,9 +60,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGUtilityForFigureElement;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetMultipleSXY;
 
 /** The property manager. */
-class SGCommandManager
-    implements SGIAxisBreakConstants,
-        SGIShapeConstants {
+class SGCommandManager implements SGIAxisBreakConstants, SGIShapeConstants {
 
   private SGMainFunctions mMain = null;
 

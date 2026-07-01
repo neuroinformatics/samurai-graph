@@ -373,7 +373,9 @@ public class SGVXYSDArrayData extends SGSDArrayData implements SGIVXYTypeData {
         this.getSequentialColumnName(3));
 
     // serial numbers
-    el.setAttribute(SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, SGIDataColumnTypeConstants.SERIAL_NUMBERS);
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME,
+        SGIDataColumnTypeConstants.SERIAL_NUMBERS);
 
     return true;
   }
@@ -580,7 +582,8 @@ public class SGVXYSDArrayData extends SGSDArrayData implements SGIVXYTypeData {
     for (int ii = 0; ii < columns.length; ii++) {
       if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_COORDINATE, columns[ii])) {
         xIndex = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_COORDINATE, columns[ii])) {
+      } else if (SGDataUtility.isEqualColumnType(
+          SGIDataColumnTypeConstants.Y_COORDINATE, columns[ii])) {
         yIndex = Integer.valueOf(ii);
       } else if (SGDataUtility.isEqualColumnType(first, columns[ii])) {
         fIndex = Integer.valueOf(ii);
