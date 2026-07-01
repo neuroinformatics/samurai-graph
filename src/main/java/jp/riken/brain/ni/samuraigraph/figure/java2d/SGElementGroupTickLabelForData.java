@@ -15,7 +15,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGIFigureDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYDataConstants;
 
 public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickLabel
-    implements SGISXYDataConstants, SGIDataCommandConstants {
+    implements SGISXYDataConstants {
 
   /** The default constructor. */
   public SGElementGroupTickLabelForData(SGISXYTypeData data) {
@@ -58,119 +58,119 @@ public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickL
       String key = itr.next();
       String value = map.getValueString(key);
 
-      if (COM_DATA_TICK_LABEL_VISIBLE.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_TICK_LABEL_VISIBLE.equalsIgnoreCase(key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_DATA_TICK_LABEL_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setVisible(b.booleanValue());
-        result.putResult(COM_DATA_TICK_LABEL_VISIBLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_TICK_LABEL_FONT_NAME.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_VISIBLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_NAME.equalsIgnoreCase(key)) {
         final String name = SGUtility.findFontFamilyName(value);
         if (name == null) {
-          result.putResult(COM_DATA_TICK_LABEL_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFontName(name) == false) {
-          result.putResult(COM_DATA_TICK_LABEL_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_TICK_LABEL_FONT_NAME, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_TICK_LABEL_FONT_STYLE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_NAME, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_STYLE.equalsIgnoreCase(key)) {
         Integer style = SGUtilityText.getFontStyle(value);
         if (style == null) {
-          result.putResult(COM_DATA_TICK_LABEL_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFontStyle(style.intValue()) == false) {
-          result.putResult(COM_DATA_TICK_LABEL_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_TICK_LABEL_FONT_STYLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_TICK_LABEL_FONT_SIZE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_STYLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_SIZE.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_DATA_TICK_LABEL_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setFontSize(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_DATA_TICK_LABEL_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_TICK_LABEL_FONT_SIZE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_TICK_LABEL_FONT_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_SIZE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setColor(cl) == false) {
-            result.putResult(COM_DATA_TICK_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_DATA_TICK_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setColor(cl) == false) {
-            result.putResult(COM_DATA_TICK_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_DATA_TICK_LABEL_FONT_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_TICK_LABEL_ANGLE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_COLOR, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_TICK_LABEL_ANGLE.equalsIgnoreCase(key)) {
         Float num = SGUtilityText.getFloat(value);
         if (num == null) {
-          result.putResult(COM_DATA_TICK_LABEL_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setAngle(num.floatValue()) == false) {
-          result.putResult(COM_DATA_TICK_LABEL_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_TICK_LABEL_ANGLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_TICK_LABEL_DECIMAL_PLACES.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_ANGLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_TICK_LABEL_DECIMAL_PLACES.equalsIgnoreCase(key)) {
         Integer num = SGUtilityText.getInteger(value);
         if (num == null) {
           result.putResult(
-              COM_DATA_TICK_LABEL_DECIMAL_PLACES, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGIDataCommandConstants.COM_DATA_TICK_LABEL_DECIMAL_PLACES, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setDecimalPlaces(num.intValue()) == false) {
           result.putResult(
-              COM_DATA_TICK_LABEL_DECIMAL_PLACES, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGIDataCommandConstants.COM_DATA_TICK_LABEL_DECIMAL_PLACES, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_TICK_LABEL_DECIMAL_PLACES, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_TICK_LABEL_EXPONENT.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_DECIMAL_PLACES, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_TICK_LABEL_EXPONENT.equalsIgnoreCase(key)) {
         Integer num = SGUtilityText.getInteger(value);
         if (num == null) {
-          result.putResult(COM_DATA_TICK_LABEL_EXPONENT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_EXPONENT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setExponent(num.intValue()) == false) {
-          result.putResult(COM_DATA_TICK_LABEL_EXPONENT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_EXPONENT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_TICK_LABEL_EXPONENT, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_TICK_LABEL_DATE_FORMAT.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_EXPONENT, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_TICK_LABEL_DATE_FORMAT.equalsIgnoreCase(key)) {
         if (map.isDoubleQuoted(key) == false) {
-          result.putResult(COM_DATA_TICK_LABEL_DATE_FORMAT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_DATE_FORMAT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (!"".equals(value)) {
           if (SGDateUtility.isValidDateFormat(value) == false) {
             result.putResult(
-                COM_DATA_TICK_LABEL_DATE_FORMAT, SGPropertyResults.INVALID_INPUT_VALUE);
+                SGIDataCommandConstants.COM_DATA_TICK_LABEL_DATE_FORMAT, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
         if (this.setDateFormat(value) == false) {
-          result.putResult(COM_DATA_TICK_LABEL_DATE_FORMAT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_DATE_FORMAT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_TICK_LABEL_DATE_FORMAT, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_DATE_FORMAT, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -178,25 +178,25 @@ public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickL
   }
 
   protected boolean getProperties(SGPropertyMap map) {
-    SGPropertyUtility.addProperty(map, COM_DATA_TICK_LABEL_VISIBLE, this.isVisible());
-    SGPropertyUtility.addProperty(map, COM_DATA_TICK_LABEL_FONT_NAME, this.getFontName());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_TICK_LABEL_VISIBLE, this.isVisible());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_NAME, this.getFontName());
     SGPropertyUtility.addProperty(
-        map, COM_DATA_TICK_LABEL_FONT_STYLE, SGUtilityText.getFontStyleName(this.getFontStyle()));
+        map, SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_STYLE, SGUtilityText.getFontStyleName(this.getFontStyle()));
     SGPropertyUtility.addProperty(
         map,
-        COM_DATA_TICK_LABEL_FONT_SIZE,
+        SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_SIZE,
         SGUtility.getExportFontSize(this.getFontSize(SGIConstants.FONT_SIZE_UNIT)),
         SGIConstants.FONT_SIZE_UNIT);
-    SGPropertyUtility.addProperty(map, COM_DATA_TICK_LABEL_FONT_COLOR, this.getColor());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_TICK_LABEL_FONT_COLOR, this.getColor());
     SGPropertyUtility.addProperty(
         map,
-        COM_DATA_TICK_LABEL_ANGLE,
+        SGIDataCommandConstants.COM_DATA_TICK_LABEL_ANGLE,
         SGUtility.getExportValue(
             this.getAngle(), SGIFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_MINIMAL_ORDER));
-    SGPropertyUtility.addProperty(map, COM_DATA_TICK_LABEL_DECIMAL_PLACES, this.getDecimalPlaces());
-    SGPropertyUtility.addProperty(map, COM_DATA_TICK_LABEL_EXPONENT, this.getExponent());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_TICK_LABEL_DECIMAL_PLACES, this.getDecimalPlaces());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_TICK_LABEL_EXPONENT, this.getExponent());
     SGPropertyUtility.addQuotedStringProperty(
-        map, COM_DATA_TICK_LABEL_DATE_FORMAT, this.getDateFormat());
+        map, SGIDataCommandConstants.COM_DATA_TICK_LABEL_DATE_FORMAT, this.getDateFormat());
     return true;
   }
 }

@@ -10,7 +10,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYZDataConstants;
 
 public abstract class SGElementGroupPseudocolorMapForData extends SGElementGroupPseudocolorMap
-    implements SGISXYZDataConstants, SGIDataCommandConstants {
+    implements SGISXYZDataConstants {
 
   /** The default constructor. */
   public SGElementGroupPseudocolorMapForData() {
@@ -29,36 +29,36 @@ public abstract class SGElementGroupPseudocolorMapForData extends SGElementGroup
       String key = itr.next();
       String value = map.getValueString(key);
 
-      if (COM_DATA_RECTANGLE_WIDTH.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH.equalsIgnoreCase(key)) {
         Number num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-          result.putResult(COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setWidthValue(num.doubleValue()) == false) {
-          result.putResult(COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_RECTANGLE_HEIGHT.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT.equalsIgnoreCase(key)) {
         Number num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-          result.putResult(COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setHeightValue(num.doubleValue()) == false) {
-          result.putResult(COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -67,8 +67,8 @@ public abstract class SGElementGroupPseudocolorMapForData extends SGElementGroup
 
   protected boolean getProperties(SGPropertyMap map) {
     if (!this.isGridMode()) {
-      SGPropertyUtility.addProperty(map, COM_DATA_RECTANGLE_WIDTH, this.getWidthValue());
-      SGPropertyUtility.addProperty(map, COM_DATA_RECTANGLE_HEIGHT, this.getHeightValue());
+      SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_RECTANGLE_WIDTH, this.getWidthValue());
+      SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_RECTANGLE_HEIGHT, this.getHeightValue());
     }
     return true;
   }

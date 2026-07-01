@@ -17,8 +17,7 @@ import javax.swing.event.MenuListener;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow.NodeMenuItem;
 
 /** A menu bar. */
-public class SGMenuBar extends JMenuBar
-    implements ActionListener, MenuListener, SGIRootObjectConstants {
+public class SGMenuBar extends JMenuBar implements ActionListener, MenuListener {
 
   /** */
   private static final long serialVersionUID = 7504775458155768651L;
@@ -41,7 +40,7 @@ public class SGMenuBar extends JMenuBar
 
     // File
     {
-      final JMenu menuFile = new JMenu(MENUBAR_FILE);
+      final JMenu menuFile = new JMenu(SGIRootObjectConstants.MENUBAR_FILE);
       menuFile.setMnemonic(KeyEvent.VK_F);
       menuBar.add(menuFile);
 
@@ -50,7 +49,7 @@ public class SGMenuBar extends JMenuBar
       // open window
       this.createMenuItem(
           menuFile,
-          MENUBARCMD_CREATE_NEW_WINDOW,
+          SGIRootObjectConstants.MENUBARCMD_CREATE_NEW_WINDOW,
           this,
           KeyEvent.VK_N,
           KeyStroke.getKeyStroke(KeyEvent.VK_N, shortcutMask),
@@ -59,7 +58,7 @@ public class SGMenuBar extends JMenuBar
       // close window
       this.createMenuItem(
           menuFile,
-          MENUBARCMD_CLOSE_WINDOW,
+          SGIRootObjectConstants.MENUBARCMD_CLOSE_WINDOW,
           this,
           KeyEvent.VK_W,
           KeyStroke.getKeyStroke(KeyEvent.VK_W, shortcutMask),
@@ -70,7 +69,7 @@ public class SGMenuBar extends JMenuBar
       // draw graph
       this.createMenuItem(
           menuFile,
-          MENUBARCMD_DRAW_GRAPH,
+          SGIRootObjectConstants.MENUBARCMD_DRAW_GRAPH,
           this,
           KeyEvent.VK_D,
           KeyStroke.getKeyStroke(KeyEvent.VK_O, shortcutMask),
@@ -81,7 +80,7 @@ public class SGMenuBar extends JMenuBar
       // reload
       this.createMenuItem(
           menuFile,
-          MENUBARCMD_RELOAD,
+          SGIRootObjectConstants.MENUBARCMD_RELOAD,
           this,
           KeyEvent.VK_R,
           KeyStroke.getKeyStroke(KeyEvent.VK_R, shortcutMask),
@@ -90,39 +89,39 @@ public class SGMenuBar extends JMenuBar
       menuFile.addSeparator();
 
       // load property
-      this.createMenuItem(menuFile, MENUBARCMD_LOAD_PROPERTY, this, KeyEvent.VK_L, null, true);
+      this.createMenuItem(menuFile, SGIRootObjectConstants.MENUBARCMD_LOAD_PROPERTY, this, KeyEvent.VK_L, null, true);
 
       // save property
-      this.createMenuItem(menuFile, MENUBARCMD_SAVE_PROPERTY, this, KeyEvent.VK_S, null, true);
+      this.createMenuItem(menuFile, SGIRootObjectConstants.MENUBARCMD_SAVE_PROPERTY, this, KeyEvent.VK_S, null, true);
 
       menuFile.addSeparator();
 
       // load dataset
-      this.createMenuItem(menuFile, MENUBARCMD_LOAD_DATASET, this, -1, null, true);
+      this.createMenuItem(menuFile, SGIRootObjectConstants.MENUBARCMD_LOAD_DATASET, this, -1, null, true);
 
       // save dataset
-      this.createMenuItem(menuFile, MENUBARCMD_SAVE_DATASET, this, -1, null, true);
+      this.createMenuItem(menuFile, SGIRootObjectConstants.MENUBARCMD_SAVE_DATASET, this, -1, null, true);
 
       menuFile.addSeparator();
 
       // load script
-      this.createMenuItem(menuFile, MENUBARCMD_LOAD_SCRIPT, this, -1, null, true);
+      this.createMenuItem(menuFile, SGIRootObjectConstants.MENUBARCMD_LOAD_SCRIPT, this, -1, null, true);
 
       // save as script
-      this.createMenuItem(menuFile, MENUBARCMD_SAVE_AS_SCRIPT, this, -1, null, true);
+      this.createMenuItem(menuFile, SGIRootObjectConstants.MENUBARCMD_SAVE_AS_SCRIPT, this, -1, null, true);
 
       menuFile.addSeparator();
 
       // load background image
       this.createMenuItem(
-          menuFile, MENUBARCMD_LOAD_BACKGROUND_IMAGE, this, KeyEvent.VK_I, null, true);
+          menuFile, SGIRootObjectConstants.MENUBARCMD_LOAD_BACKGROUND_IMAGE, this, KeyEvent.VK_I, null, true);
 
       menuFile.addSeparator();
 
       // export as image
       this.createMenuItem(
           menuFile,
-          MENUBARCMD_EXPORT_AS_IMAGE,
+          SGIRootObjectConstants.MENUBARCMD_EXPORT_AS_IMAGE,
           this,
           KeyEvent.VK_E,
           KeyStroke.getKeyStroke(KeyEvent.VK_E, shortcutMask),
@@ -131,7 +130,7 @@ public class SGMenuBar extends JMenuBar
       // print
       this.createMenuItem(
           menuFile,
-          MENUBARCMD_PRINT,
+          SGIRootObjectConstants.MENUBARCMD_PRINT,
           this,
           KeyEvent.VK_P,
           KeyStroke.getKeyStroke(KeyEvent.VK_P, shortcutMask),
@@ -142,7 +141,7 @@ public class SGMenuBar extends JMenuBar
       // exit
       this.createMenuItem(
           menuFile,
-          MENUBARCMD_EXIT,
+          SGIRootObjectConstants.MENUBARCMD_EXIT,
           this,
           KeyEvent.VK_X,
           KeyStroke.getKeyStroke(KeyEvent.VK_Q, shortcutMask),
@@ -151,7 +150,7 @@ public class SGMenuBar extends JMenuBar
 
     // Edit
     {
-      final JMenu menuEdit = new JMenu(MENUBAR_EDIT);
+      final JMenu menuEdit = new JMenu(SGIRootObjectConstants.MENUBAR_EDIT);
       menuEdit.setMnemonic(KeyEvent.VK_E);
       menuBar.add(menuEdit);
 
@@ -160,7 +159,7 @@ public class SGMenuBar extends JMenuBar
       // undo
       this.createMenuItem(
           menuEdit,
-          MENUBARCMD_UNDO,
+          SGIRootObjectConstants.MENUBARCMD_UNDO,
           this,
           KeyEvent.VK_U,
           KeyStroke.getKeyStroke(KeyEvent.VK_Z, shortcutMask),
@@ -169,7 +168,7 @@ public class SGMenuBar extends JMenuBar
       // redo
       this.createMenuItem(
           menuEdit,
-          MENUBARCMD_REDO,
+          SGIRootObjectConstants.MENUBARCMD_REDO,
           this,
           KeyEvent.VK_R,
           KeyStroke.getKeyStroke(KeyEvent.VK_Y, shortcutMask),
@@ -178,14 +177,14 @@ public class SGMenuBar extends JMenuBar
       menuEdit.addSeparator();
 
       // clear undo buffer
-      this.createMenuItem(menuEdit, MENUBARCMD_CLEAR_UNDO_BUFFER, this, KeyEvent.VK_B, null, true);
+      this.createMenuItem(menuEdit, SGIRootObjectConstants.MENUBARCMD_CLEAR_UNDO_BUFFER, this, KeyEvent.VK_B, null, true);
 
       menuEdit.addSeparator();
 
       // cut
       this.createMenuItem(
           menuEdit,
-          MENUBARCMD_CUT,
+          SGIRootObjectConstants.MENUBARCMD_CUT,
           this,
           KeyEvent.VK_T,
           KeyStroke.getKeyStroke(KeyEvent.VK_X, shortcutMask),
@@ -194,7 +193,7 @@ public class SGMenuBar extends JMenuBar
       // copy
       this.createMenuItem(
           menuEdit,
-          MENUBARCMD_COPY,
+          SGIRootObjectConstants.MENUBARCMD_COPY,
           this,
           KeyEvent.VK_C,
           KeyStroke.getKeyStroke(KeyEvent.VK_C, shortcutMask),
@@ -203,7 +202,7 @@ public class SGMenuBar extends JMenuBar
       // paste
       this.createMenuItem(
           menuEdit,
-          MENUBARCMD_PASTE,
+          SGIRootObjectConstants.MENUBARCMD_PASTE,
           this,
           KeyEvent.VK_P,
           KeyStroke.getKeyStroke(KeyEvent.VK_V, shortcutMask),
@@ -214,7 +213,7 @@ public class SGMenuBar extends JMenuBar
       // delete
       this.createMenuItem(
           menuEdit,
-          MENUBARCMD_DELETE,
+          SGIRootObjectConstants.MENUBARCMD_DELETE,
           this,
           KeyEvent.VK_D,
           KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0),
@@ -232,7 +231,7 @@ public class SGMenuBar extends JMenuBar
       // duplicate
       this.createMenuItem(
           menuEdit,
-          MENUBARCMD_DUPLICATE,
+          SGIRootObjectConstants.MENUBARCMD_DUPLICATE,
           this,
           KeyEvent.VK_I,
           KeyStroke.getKeyStroke(KeyEvent.VK_D, shortcutMask),
@@ -242,12 +241,12 @@ public class SGMenuBar extends JMenuBar
 
       // delete background image
       this.createMenuItem(
-          menuEdit, MENUBARCMD_DELETE_BACKGROUND_IMAGE, this, KeyEvent.VK_M, null, false);
+          menuEdit, SGIRootObjectConstants.MENUBARCMD_DELETE_BACKGROUND_IMAGE, this, KeyEvent.VK_M, null, false);
     }
 
     // Insert
     {
-      final JMenu menuInsert = new JMenu(MENUBAR_INSERT);
+      final JMenu menuInsert = new JMenu(SGIRootObjectConstants.MENUBAR_INSERT);
       menuInsert.setMnemonic(KeyEvent.VK_I);
       menuBar.add(menuInsert);
 
@@ -256,42 +255,42 @@ public class SGMenuBar extends JMenuBar
       // label
       JMenuItem label =
           this.createToggleMenuItem(
-              menuInsert, MENUBARCMD_INSERT_LABEL, this, KeyEvent.VK_L, null, false);
+              menuInsert, SGIRootObjectConstants.MENUBARCMD_INSERT_LABEL, this, KeyEvent.VK_L, null, false);
 
       // significant difference
       JMenuItem sigDiff =
           this.createToggleMenuItem(
-              menuInsert, MENUBARCMD_INSERT_SIG_DIFF_SYMBOL, this, KeyEvent.VK_D, null, false);
+              menuInsert, SGIRootObjectConstants.MENUBARCMD_INSERT_SIG_DIFF_SYMBOL, this, KeyEvent.VK_D, null, false);
 
       // axis break
       JMenuItem axisBreak =
           this.createToggleMenuItem(
-              menuInsert, MENUBARCMD_INSERT_AXIS_BREAK_SYMBOL, this, KeyEvent.VK_B, null, false);
+              menuInsert, SGIRootObjectConstants.MENUBARCMD_INSERT_AXIS_BREAK_SYMBOL, this, KeyEvent.VK_B, null, false);
 
       // timing line
       JMenuItem timingLine =
           this.createToggleMenuItem(
-              menuInsert, MENUBARCMD_INSERT_TIMING_LINE, this, KeyEvent.VK_T, null, false);
+              menuInsert, SGIRootObjectConstants.MENUBARCMD_INSERT_TIMING_LINE, this, KeyEvent.VK_T, null, false);
 
       // rectangle
       JMenuItem rectangle =
           this.createToggleMenuItem(
-              menuInsert, MENUBARCMD_INSERT_RECTANGLE, this, KeyEvent.VK_R, null, false);
+              menuInsert, SGIRootObjectConstants.MENUBARCMD_INSERT_RECTANGLE, this, KeyEvent.VK_R, null, false);
 
       // ellipse
       JMenuItem ellipse =
           this.createToggleMenuItem(
-              menuInsert, MENUBARCMD_INSERT_ELLIPSE, this, KeyEvent.VK_E, null, false);
+              menuInsert, SGIRootObjectConstants.MENUBARCMD_INSERT_ELLIPSE, this, KeyEvent.VK_E, null, false);
 
       // arrow
       JMenuItem arrow =
           this.createToggleMenuItem(
-              menuInsert, MENUBARCMD_INSERT_ARROW, this, KeyEvent.VK_A, null, false);
+              menuInsert, SGIRootObjectConstants.MENUBARCMD_INSERT_ARROW, this, KeyEvent.VK_A, null, false);
 
       // line
       JMenuItem line =
           this.createToggleMenuItem(
-              menuInsert, MENUBARCMD_INSERT_LINE, this, KeyEvent.VK_I, null, false);
+              menuInsert, SGIRootObjectConstants.MENUBARCMD_INSERT_LINE, this, KeyEvent.VK_I, null, false);
 
       //
       SGButtonGroup bg = new SGButtonGroup();
@@ -307,7 +306,7 @@ public class SGMenuBar extends JMenuBar
 
     // Layout
     {
-      final JMenu menuLayout = new JMenu(MENUBAR_LAYOUT);
+      final JMenu menuLayout = new JMenu(SGIRootObjectConstants.MENUBAR_LAYOUT);
       menuLayout.setMnemonic(KeyEvent.VK_L);
       menuBar.add(menuLayout);
 
@@ -315,84 +314,52 @@ public class SGMenuBar extends JMenuBar
 
       // Paper Size
       {
-        final JMenu menuPaperSize = new JMenu(MENUBAR_PAPER_SIZE);
+        final JMenu menuPaperSize = new JMenu(SGIRootObjectConstants.MENUBAR_PAPER_SIZE);
         menuPaperSize.setMnemonic(KeyEvent.VK_P);
         menuLayout.add(menuPaperSize);
 
-        //                // A4
-        //                this.createMenuItem(menuPaperSize, MENUBARCMD_PAPER_A4_SIZE,
-        //                        this, KeyEvent.VK_4, null, true);
-        //
-        //                // B5
-        //                this.createMenuItem(menuPaperSize, MENUBARCMD_PAPER_B5_SIZE,
-        //                        this, KeyEvent.VK_5, null, true);
-        //
-        //                // US Letter
-        //                this.createMenuItem(menuPaperSize,
-        //                        MENUBARCMD_PAPER_USLETTER_SIZE, this, KeyEvent.VK_U,
-        //                        null, true);
-        //
-        //                menuPaperSize.addSeparator();
-        //
-        //                // portrait
-        //                JRadioButtonMenuItem portrait = (JRadioButtonMenuItem) this
-        //                        .createRadioButtonMenuItem(menuPaperSize,
-        //                                MENUBARCMD_PAPER_PORTRAIT, this, KeyEvent.VK_P,
-        //                                null, true);
-        //
-        //                // landscape
-        //                JRadioButtonMenuItem landscape = (JRadioButtonMenuItem) this
-        //                        .createRadioButtonMenuItem(menuPaperSize,
-        //                                MENUBARCMD_PAPER_LANDSCAPE, this,
-        //                                KeyEvent.VK_L, null, true);
-
         // A4 Portrait
         this.createMenuItem(
-            menuPaperSize, MENUBARCMD_PAPER_A4_PORTRAIT, this, KeyEvent.VK_A, null, true);
+            menuPaperSize, SGIRootObjectConstants.MENUBARCMD_PAPER_A4_PORTRAIT, this, KeyEvent.VK_A, null, true);
 
         // B5 Portrait
         this.createMenuItem(
-            menuPaperSize, MENUBARCMD_PAPER_B5_PORTRAIT, this, KeyEvent.VK_B, null, true);
+            menuPaperSize, SGIRootObjectConstants.MENUBARCMD_PAPER_B5_PORTRAIT, this, KeyEvent.VK_B, null, true);
 
         // US Letter Portrait
         this.createMenuItem(
-            menuPaperSize, MENUBARCMD_PAPER_USLETTER_PORTRAIT, this, KeyEvent.VK_U, null, true);
+            menuPaperSize, SGIRootObjectConstants.MENUBARCMD_PAPER_USLETTER_PORTRAIT, this, KeyEvent.VK_U, null, true);
 
         menuPaperSize.addSeparator();
 
         // A4 Landscape
         this.createMenuItem(
-            menuPaperSize, MENUBARCMD_PAPER_A4_LANDSCAPE, this, KeyEvent.VK_4, null, true);
+            menuPaperSize, SGIRootObjectConstants.MENUBARCMD_PAPER_A4_LANDSCAPE, this, KeyEvent.VK_4, null, true);
 
         // B5 Landscape
         this.createMenuItem(
-            menuPaperSize, MENUBARCMD_PAPER_B5_LANDSCAPE, this, KeyEvent.VK_5, null, true);
+            menuPaperSize, SGIRootObjectConstants.MENUBARCMD_PAPER_B5_LANDSCAPE, this, KeyEvent.VK_5, null, true);
 
         // US Letter Landscape
         this.createMenuItem(
-            menuPaperSize, MENUBARCMD_PAPER_USLETTER_LANDSCAPE, this, KeyEvent.VK_S, null, true);
-
-        //                // create a button-group
-        //                ButtonGroup bGroup = new ButtonGroup();
-        //                bGroup.add(portrait);
-        //                bGroup.add(landscape);
+            menuPaperSize, SGIRootObjectConstants.MENUBARCMD_PAPER_USLETTER_LANDSCAPE, this, KeyEvent.VK_S, null, true);
 
         menuPaperSize.addSeparator();
 
         // bounding box
         this.createMenuItem(
-            menuPaperSize, MENUBARCMD_BOUNDING_BOX, this, KeyEvent.VK_O, null, true);
+            menuPaperSize, SGIRootObjectConstants.MENUBARCMD_BOUNDING_BOX, this, KeyEvent.VK_O, null, true);
 
         // user customize
         this.createMenuItem(
-            menuPaperSize, MENUBARCMD_PAPER_USER_CUSTOMIZE, this, KeyEvent.VK_C, null, true);
+            menuPaperSize, SGIRootObjectConstants.MENUBARCMD_PAPER_USER_CUSTOMIZE, this, KeyEvent.VK_C, null, true);
       }
 
       menuLayout.addSeparator();
 
       // Tool Bar
       {
-        final JMenu menuToolBar = new JMenu(MENUBAR_TOOL_BAR);
+        final JMenu menuToolBar = new JMenu(SGIRootObjectConstants.MENUBAR_TOOL_BAR);
         menuToolBar.setMnemonic(KeyEvent.VK_T);
         menuLayout.add(menuToolBar);
 
@@ -400,34 +367,29 @@ public class SGMenuBar extends JMenuBar
 
         // File
         item =
-            this.createCheckBoxMenuItem(menuToolBar, MENUBARCMD_VISIBLE_FILE, this, -1, null, true);
+            this.createCheckBoxMenuItem(menuToolBar, SGIRootObjectConstants.MENUBARCMD_VISIBLE_FILE, this, -1, null, true);
         item.setSelected(true);
 
         // Edit
         item =
-            this.createCheckBoxMenuItem(menuToolBar, MENUBARCMD_VISIBLE_EDIT, this, -1, null, true);
+            this.createCheckBoxMenuItem(menuToolBar, SGIRootObjectConstants.MENUBARCMD_VISIBLE_EDIT, this, -1, null, true);
         item.setSelected(true);
 
         // Insert
         item =
             this.createCheckBoxMenuItem(
-                menuToolBar, MENUBARCMD_VISIBLE_INSERT, this, -1, null, true);
+                menuToolBar, SGIRootObjectConstants.MENUBARCMD_VISIBLE_INSERT, this, -1, null, true);
         item.setSelected(true);
 
         // Layout
         item =
             this.createCheckBoxMenuItem(
-                menuToolBar, MENUBARCMD_VISIBLE_LAYOUT, this, -1, null, true);
+                menuToolBar, SGIRootObjectConstants.MENUBARCMD_VISIBLE_LAYOUT, this, -1, null, true);
         item.setSelected(true);
-
-        // // Help
-        // item = this.createCheckBoxMenuItem(
-        // menuToolBar, MENUBARCMD_VISIBLE_HELP, this, -1, null, true );
-        // item.setSelected(true);
 
         // Zoom
         item =
-            this.createCheckBoxMenuItem(menuToolBar, MENUBARCMD_VISIBLE_ZOOM, this, -1, null, true);
+            this.createCheckBoxMenuItem(menuToolBar, SGIRootObjectConstants.MENUBARCMD_VISIBLE_ZOOM, this, -1, null, true);
         item.setSelected(true);
       }
 
@@ -435,14 +397,14 @@ public class SGMenuBar extends JMenuBar
 
       // Grid
       {
-        final JMenu menuGrid = new JMenu(MENUBAR_GRID);
+        final JMenu menuGrid = new JMenu(SGIRootObjectConstants.MENUBAR_GRID);
         menuGrid.setMnemonic(KeyEvent.VK_G);
         menuLayout.add(menuGrid);
 
         // plus grid
         this.createMenuItem(
             menuGrid,
-            MENUBARCMD_PLUS_GRID,
+            SGIRootObjectConstants.MENUBARCMD_PLUS_GRID,
             this,
             KeyEvent.VK_P,
             KeyStroke.getKeyStroke(KeyEvent.VK_I, shift + alt),
@@ -451,7 +413,7 @@ public class SGMenuBar extends JMenuBar
         // minus grid
         this.createMenuItem(
             menuGrid,
-            MENUBARCMD_MINUS_GRID,
+            SGIRootObjectConstants.MENUBARCMD_MINUS_GRID,
             this,
             KeyEvent.VK_M,
             KeyStroke.getKeyStroke(KeyEvent.VK_D, shift + alt),
@@ -460,7 +422,7 @@ public class SGMenuBar extends JMenuBar
         // grid visible
         this.createCheckBoxMenuItem(
             menuGrid,
-            MENUBARCMD_GRID_VISIBLE,
+            SGIRootObjectConstants.MENUBARCMD_GRID_VISIBLE,
             this,
             KeyEvent.VK_V,
             KeyStroke.getKeyStroke(KeyEvent.VK_G, shift + alt),
@@ -469,7 +431,7 @@ public class SGMenuBar extends JMenuBar
         // snap to grid
         this.createCheckBoxMenuItem(
             menuGrid,
-            MENUBARCMD_SNAP_TO_GRID,
+            SGIRootObjectConstants.MENUBARCMD_SNAP_TO_GRID,
             this,
             KeyEvent.VK_S,
             KeyStroke.getKeyStroke(KeyEvent.VK_S, shift + alt),
@@ -480,14 +442,14 @@ public class SGMenuBar extends JMenuBar
 
       // Zoom
       {
-        final JMenu menuZoom = new JMenu(MENUBAR_ZOOM);
+        final JMenu menuZoom = new JMenu(SGIRootObjectConstants.MENUBAR_ZOOM);
         menuZoom.setMnemonic(KeyEvent.VK_Z);
         menuLayout.add(menuZoom);
 
         // zoom in
         this.createMenuItem(
             menuZoom,
-            MENUBARCMD_ZOOM_IN,
+            SGIRootObjectConstants.MENUBARCMD_ZOOM_IN,
             this,
             KeyEvent.VK_I,
             KeyStroke.getKeyStroke(KeyEvent.VK_Z, shift + alt),
@@ -497,7 +459,7 @@ public class SGMenuBar extends JMenuBar
         JMenuItem zoomOut =
             this.createMenuItem(
                 menuZoom,
-                MENUBARCMD_ZOOM_OUT,
+                SGIRootObjectConstants.MENUBARCMD_ZOOM_OUT,
                 this,
                 KeyEvent.VK_O,
                 KeyStroke.getKeyStroke(KeyEvent.VK_O, shift + alt),
@@ -505,25 +467,25 @@ public class SGMenuBar extends JMenuBar
         zoomOut.setDisplayedMnemonicIndex(5);
 
         // default zoom
-        this.createMenuItem(menuZoom, MENUBARCMD_DEFAULT_ZOOM, this, KeyEvent.VK_D, null, true);
+        this.createMenuItem(menuZoom, SGIRootObjectConstants.MENUBARCMD_DEFAULT_ZOOM, this, KeyEvent.VK_D, null, true);
 
         // zoom way out
-        this.createMenuItem(menuZoom, MENUBARCMD_ZOOM_WAY_OUT, this, KeyEvent.VK_W, null, true);
+        this.createMenuItem(menuZoom, SGIRootObjectConstants.MENUBARCMD_ZOOM_WAY_OUT, this, KeyEvent.VK_W, null, true);
 
         // auto zoom
         this.createCheckBoxMenuItem(
-            menuZoom, MENUBARCMD_AUTO_ZOOM, this, KeyEvent.VK_A, null, true);
+            menuZoom, SGIRootObjectConstants.MENUBARCMD_AUTO_ZOOM, this, KeyEvent.VK_A, null, true);
       }
 
       menuLayout.addSeparator();
 
       // lock
-      this.createCheckBoxMenuItem(menuLayout, MENUBARCMD_LOCK, this, KeyEvent.VK_O, null, true);
+      this.createCheckBoxMenuItem(menuLayout, SGIRootObjectConstants.MENUBARCMD_LOCK, this, KeyEvent.VK_O, null, true);
     }
 
     // Arrange
     {
-      final JMenu menuArrange = new JMenu(MENUBAR_ARRANGE);
+      final JMenu menuArrange = new JMenu(SGIRootObjectConstants.MENUBAR_ARRANGE);
       menuArrange.setMnemonic(KeyEvent.VK_A);
       menuBar.add(menuArrange);
 
@@ -532,7 +494,7 @@ public class SGMenuBar extends JMenuBar
       // bring to front
       this.createMenuItem(
           menuArrange,
-          MENUBARCMD_BRING_TO_FRONT,
+          SGIRootObjectConstants.MENUBARCMD_BRING_TO_FRONT,
           this,
           KeyEvent.VK_F,
           KeyStroke.getKeyStroke(KeyEvent.VK_F, shortcutMask),
@@ -541,7 +503,7 @@ public class SGMenuBar extends JMenuBar
       // bring forward
       this.createMenuItem(
           menuArrange,
-          MENUBARCMD_BRING_FORWARD,
+          SGIRootObjectConstants.MENUBARCMD_BRING_FORWARD,
           this,
           KeyEvent.VK_B,
           KeyStroke.getKeyStroke(KeyEvent.VK_B, shortcutMask),
@@ -550,7 +512,7 @@ public class SGMenuBar extends JMenuBar
       // send backward
       this.createMenuItem(
           menuArrange,
-          MENUBARCMD_SEND_BACKWARD,
+          SGIRootObjectConstants.MENUBARCMD_SEND_BACKWARD,
           this,
           KeyEvent.VK_S,
           KeyStroke.getKeyStroke(KeyEvent.VK_S, shortcutMask),
@@ -559,7 +521,7 @@ public class SGMenuBar extends JMenuBar
       // send to back
       this.createMenuItem(
           menuArrange,
-          MENUBARCMD_SEND_TO_BACK,
+          SGIRootObjectConstants.MENUBARCMD_SEND_TO_BACK,
           this,
           KeyEvent.VK_K,
           KeyStroke.getKeyStroke(KeyEvent.VK_K, shortcutMask),
@@ -569,57 +531,19 @@ public class SGMenuBar extends JMenuBar
 
       // // mode
       // this.createCheckBoxMenuItem(
-      // menuArrange, MENUBARCMD_MODE, this, KeyEvent.VK_M,
+      // menuArrange, SGIRootObjectConstants.MENUBARCMD_MODE, this, KeyEvent.VK_M,
       // null, true );
       //
       // menuArrange.addSeparator();
 
       // align figures
       this.createMenuItem(
-          menuArrange, MENUBARCMD_AUTO_ARRANGEMENT, this, KeyEvent.VK_R, null, true);
-
-      /*
-       * final JMenu menuAlignObjects = new JMenu(MENUBAR_ALIGN_OBJECTS);
-       * menuAlignObjects.addMenuListener(this);
-       * menuAlignObjects.setMnemonic( KeyEvent.VK_O ); menuArrange.add(
-       * menuAlignObjects ); { final JMenuItem left = new
-       * JMenuItem(MENUBARCMD_ALIGN_LEFT);
-       * left.setActionCommand(MENUBARCMD_ALIGN_LEFT);
-       * left.addActionListener(this); left.setMnemonic( KeyEvent.VK_L );
-       * menuAlignObjects.add(left);
-       *
-       * final JMenuItem center = new JMenuItem(MENUBARCMD_ALIGN_CENTER);
-       * center.setActionCommand(MENUBARCMD_ALIGN_CENTER);
-       * center.addActionListener(this); center.setMnemonic( KeyEvent.VK_C );
-       * menuAlignObjects.add(center);
-       *
-       * final JMenuItem right = new JMenuItem(MENUBARCMD_ALIGN_RIGHT);
-       * right.setActionCommand(MENUBARCMD_ALIGN_RIGHT);
-       * right.addActionListener(this); right.setMnemonic( KeyEvent.VK_R );
-       * menuAlignObjects.add(right);
-       *
-       * final JMenuItem top = new JMenuItem(MENUBARCMD_ALIGN_TOP);
-       * top.setActionCommand(MENUBARCMD_ALIGN_TOP);
-       * top.addActionListener(this); top.setMnemonic( KeyEvent.VK_T );
-       * menuAlignObjects.add(top);
-       *
-       * final JMenuItem middle = new JMenuItem(MENUBARCMD_ALIGN_MIDDLE);
-       * middle.setActionCommand(MENUBARCMD_ALIGN_MIDDLE);
-       * middle.addActionListener(this); middle.setMnemonic( KeyEvent.VK_M );
-       * menuAlignObjects.add(middle);
-       *
-       * final JMenuItem bottom = new JMenuItem(MENUBARCMD_ALIGN_BOTTOM);
-       * bottom.setActionCommand(MENUBARCMD_ALIGN_BOTTOM);
-       * bottom.addActionListener(this); bottom.setMnemonic( KeyEvent.VK_B );
-       * menuAlignObjects.add(bottom);
-       *  }
-       */
-
+          menuArrange, SGIRootObjectConstants.MENUBARCMD_AUTO_ARRANGEMENT, this, KeyEvent.VK_R, null, true);
     }
 
     // Properties
     {
-      final JMenu menuProperties = new JMenu(MENUBAR_PROPERTIES);
+      final JMenu menuProperties = new JMenu(SGIRootObjectConstants.MENUBAR_PROPERTIES);
       menuProperties.setMnemonic(KeyEvent.VK_P);
       menuBar.add(menuProperties);
 
@@ -628,7 +552,7 @@ public class SGMenuBar extends JMenuBar
 
     // Plug-in
     {
-      final JMenu menuPlugin = new JMenu(MENUBAR_PLUGIN);
+      final JMenu menuPlugin = new JMenu(SGIRootObjectConstants.MENUBAR_PLUGIN);
       menuPlugin.setMnemonic(KeyEvent.VK_L);
       menuBar.add(menuPlugin);
 
@@ -637,41 +561,24 @@ public class SGMenuBar extends JMenuBar
 
     // Help
     {
-      final JMenu menuHelp = new JMenu(MENUBAR_HELP);
+      final JMenu menuHelp = new JMenu(SGIRootObjectConstants.MENUBAR_HELP);
       menuHelp.setMnemonic(KeyEvent.VK_H);
       menuBar.add(menuHelp);
 
       menuHelp.addMenuListener(this);
 
-      /*
-       * // Look and Feel { final JMenu menuLaf = new
-       * JMenu(MENUBAR_LOOK_AND_FEEL); menuLaf.setMnemonic( KeyEvent.VK_L );
-       * menuHelp.add(menuLaf);
-       *  // metal this.createMenuItem( menuLaf, MENUBARCMD_LAF_METAL,
-       * SGIConstants.LAF_METAL, this, KeyEvent.VK_T, null, true );
-       *  // motif this.createMenuItem( menuLaf, MENUBARCMD_LAF_MOTIF,
-       * SGIConstants.LAF_MOTIF, this, KeyEvent.VK_M, null, true );
-       *  // windows this.createMenuItem( menuLaf, MENUBARCMD_LAF_WINDOWS,
-       * SGIConstants.LAF_WINDOWS, this, KeyEvent.VK_W, null, true );
-       *  // windows classic this.createMenuItem( menuLaf,
-       * MENUBARCMD_LAF_WINDOWS_CLASSIC, SGIConstants.LAF_WINDOWS_CLASSIC, this,
-       * KeyEvent.VK_C, null, true );
-       *  // aqua this.createMenuItem( menuLaf, MENUBARCMD_LAF_AQUA,
-       * SGIConstants.LAF_AQUA, this, KeyEvent.VK_A, null, true ); }
-       */
-
       // upgrade
-      this.createMenuItem(menuHelp, MENUBARCMD_UPGRADE, this, KeyEvent.VK_U, null, true);
+      this.createMenuItem(menuHelp, SGIRootObjectConstants.MENUBARCMD_UPGRADE, this, KeyEvent.VK_U, null, true);
 
       menuHelp.addSeparator();
 
       // change log
-      this.createMenuItem(menuHelp, MENUBARCMD_CHANGE_LOG, this, KeyEvent.VK_C, null, true);
+      this.createMenuItem(menuHelp, SGIRootObjectConstants.MENUBARCMD_CHANGE_LOG, this, KeyEvent.VK_C, null, true);
 
       menuHelp.addSeparator();
 
       // proxy
-      this.createMenuItem(menuHelp, MENUBARCMD_PROXY, this, KeyEvent.VK_P, null, true);
+      this.createMenuItem(menuHelp, SGIRootObjectConstants.MENUBARCMD_PROXY, this, KeyEvent.VK_P, null, true);
 
       menuHelp.addSeparator();
 
@@ -680,7 +587,7 @@ public class SGMenuBar extends JMenuBar
       if (Boolean.valueOf(dev)) {
         this.createMenuItem(
             menuHelp,
-            MENUBARCMD_MEMORY,
+            SGIRootObjectConstants.MENUBARCMD_MEMORY,
             this,
             KeyEvent.VK_M,
             KeyStroke.getKeyStroke(KeyEvent.VK_M, shift + alt),
@@ -689,12 +596,12 @@ public class SGMenuBar extends JMenuBar
       }
 
       // detail of plug-in
-      this.createMenuItem(menuHelp, MENUBARCMD_PLUGIN_DETAIL, this, KeyEvent.VK_D, null, true);
+      this.createMenuItem(menuHelp, SGIRootObjectConstants.MENUBARCMD_PLUGIN_DETAIL, this, KeyEvent.VK_D, null, true);
 
       menuHelp.addSeparator();
 
       // about
-      this.createMenuItem(menuHelp, MENUBARCMD_ABOUT, this, KeyEvent.VK_A, null, true);
+      this.createMenuItem(menuHelp, SGIRootObjectConstants.MENUBARCMD_ABOUT, this, KeyEvent.VK_A, null, true);
     }
 
     return true;
@@ -978,7 +885,7 @@ public class SGMenuBar extends JMenuBar
 
   /** */
   public void setInsertToggleButtonsEnabled(final boolean flag) {
-    List<Component> itemList = this.getMenuItemList(MENUBAR_INSERT);
+    List<Component> itemList = this.getMenuItemList(SGIRootObjectConstants.MENUBAR_INSERT);
     for (int ii = 0; ii < itemList.size(); ii++) {
       SGToggleMenuItem item = (SGToggleMenuItem) itemList.get(ii);
       item.setEnabled(flag);
@@ -987,7 +894,7 @@ public class SGMenuBar extends JMenuBar
 
   /** */
   public void setInsertToggleItemsUnSelected() {
-    List<Component> itemList = this.getMenuItemList(MENUBAR_INSERT);
+    List<Component> itemList = this.getMenuItemList(SGIRootObjectConstants.MENUBAR_INSERT);
     for (int ii = 0; ii < itemList.size(); ii++) {
       SGToggleMenuItem item = (SGToggleMenuItem) itemList.get(ii);
       item.setSelected(false);
@@ -999,7 +906,7 @@ public class SGMenuBar extends JMenuBar
    * @return
    */
   public boolean hasMenuItem(final String itemName) {
-    return (findMenuItem(this, MENUBAR_INSERT, itemName) != null);
+    return (findMenuItem(this, SGIRootObjectConstants.MENUBAR_INSERT, itemName) != null);
   }
 
   /**
@@ -1009,7 +916,7 @@ public class SGMenuBar extends JMenuBar
     if (this.hasMenuItem(itemName) == false) {
       throw new IllegalArgumentException();
     }
-    findMenuItem(this, MENUBAR_INSERT, itemName).setSelected(b);
+    findMenuItem(this, SGIRootObjectConstants.MENUBAR_INSERT, itemName).setSelected(b);
   }
 
   /**
@@ -1019,11 +926,11 @@ public class SGMenuBar extends JMenuBar
     if (this.hasMenuItem(itemName) == false) {
       throw new IllegalArgumentException();
     }
-    return findMenuItem(this, MENUBAR_INSERT, itemName).isSelected();
+    return findMenuItem(this, SGIRootObjectConstants.MENUBAR_INSERT, itemName).isSelected();
   }
 
   void createPropertyMenuBarItem(SGINode node, ActionListener l) {
-    JMenu root = findMenu(this, MENUBAR_PROPERTIES);
+    JMenu root = findMenu(this, SGIRootObjectConstants.MENUBAR_PROPERTIES);
     root.removeAll();
     this.createMenuItem(node, root, l);
   }
@@ -1069,7 +976,7 @@ public class SGMenuBar extends JMenuBar
    * @param l an action listener
    */
   public void createDataPluginMenuBarItem(List<SGIPlugin> libList, ActionListener l) {
-    JMenu root = findMenu(this, MENUBAR_PLUGIN);
+    JMenu root = findMenu(this, SGIRootObjectConstants.MENUBAR_PLUGIN);
     root.removeAll();
     if (libList != null && libList.size() != 0) {
       for (SGIPlugin lib : libList) {
@@ -1091,8 +998,8 @@ public class SGMenuBar extends JMenuBar
    * @return
    */
   public boolean isToolBarMenuSelected(final String itemName) {
-    final JMenu layout = findMenu(this, MENUBAR_LAYOUT);
-    final JMenu tb = SGUtility.findSubMenu(layout, MENUBAR_TOOL_BAR);
+    final JMenu layout = findMenu(this, SGIRootObjectConstants.MENUBAR_LAYOUT);
+    final JMenu tb = SGUtility.findSubMenu(layout, SGIRootObjectConstants.MENUBAR_TOOL_BAR);
     final JMenuItem item = SGUtility.findMenuItem(tb, itemName);
     if (item != null) {
       return item.isSelected();
@@ -1105,8 +1012,8 @@ public class SGMenuBar extends JMenuBar
    * @param b
    */
   public void setToolBarMenuItemSelected(final String itemName, final boolean b) {
-    final JMenu layout = findMenu(this, MENUBAR_LAYOUT);
-    final JMenu tb = SGUtility.findSubMenu(layout, MENUBAR_TOOL_BAR);
+    final JMenu layout = findMenu(this, SGIRootObjectConstants.MENUBAR_LAYOUT);
+    final JMenu tb = SGUtility.findSubMenu(layout, SGIRootObjectConstants.MENUBAR_TOOL_BAR);
     final JMenuItem item = SGUtility.findMenuItem(tb, itemName);
     if (item != null) {
       item.setSelected(b);

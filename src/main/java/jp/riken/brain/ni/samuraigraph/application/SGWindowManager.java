@@ -47,7 +47,7 @@ class SGWindowManager
         WindowListener,
         ComponentListener,
         SGIPreferencesConstants,
-        SGIApplicationTextConstants,
+
         SGIApplicationConstants,
         SGIImageConstants,
         SGIApplicationCommandConstants {
@@ -513,7 +513,7 @@ class SGWindowManager
         final boolean result = this.mMain.mDataSetManager.loadDataSetFromDialog(wnd);
         if (!result) {
           SGUtility.showErrorMessageDialog(
-              wnd, MSG_DATA_SET_FILE_INVALID, SGIConstants.TITLE_ERROR);
+              wnd, SGIApplicationTextConstants.MSG_DATA_SET_FILE_INVALID, SGIConstants.TITLE_ERROR);
         }
         wnd.setSaved(result);
       } else if (command.equals(MENUBARCMD_LOAD_SCRIPT)) {
@@ -564,7 +564,7 @@ class SGWindowManager
             return;
           }
           if (!wnd.setImage(imageByteArray, ext, true)) {
-            SGUtility.showErrorMessageDialog(wnd, MSG_FILE_OPEN_FAILURE, TITLE_FILE_OPEN_FAILURE);
+            SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE);
             return;
           }
           wnd.setImageFilePath(file.getAbsolutePath());

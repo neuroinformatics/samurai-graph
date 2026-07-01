@@ -33,8 +33,7 @@ import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 /** The class of scalar XY type data with netCDF data. */
-public class SGSXYNetCDFData extends SGNetCDFData
-    implements SGISXYTypeSingleData, SGIDataPropertyKeyConstants {
+public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleData {
 
   /** The variable for x-values. */
   protected SGNetCDFVariable mXVariable = null;
@@ -936,18 +935,18 @@ public class SGSXYNetCDFData extends SGNetCDFData
     for (int ii = 0; ii < varNum; ii++) {
       SGNetCDFVariable var = varList.get(ii);
       if (var.equals(this.mXVariable)) {
-        array[ii] = X_VALUE;
+        array[ii] = SGIDataColumnTypeConstants.X_VALUE;
       } else if (var.equals(this.mYVariable)) {
-        array[ii] = Y_VALUE;
+        array[ii] = SGIDataColumnTypeConstants.Y_VALUE;
       } else if (var.equals(this.mLowerErrorVariable) || var.equals(this.mUpperErrorVariable)) {
         String name = null;
         if (this.mLowerErrorVariable.equals(this.mUpperErrorVariable)) {
-          name = LOWER_UPPER_ERROR_VALUE;
+          name = SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE;
         } else {
           if (var.equals(this.mLowerErrorVariable)) {
-            name = LOWER_ERROR_VALUE;
+            name = SGIDataColumnTypeConstants.LOWER_ERROR_VALUE;
           } else if (var.equals(this.mUpperErrorVariable)) {
-            name = UPPER_ERROR_VALUE;
+            name = SGIDataColumnTypeConstants.UPPER_ERROR_VALUE;
           }
         }
         if (name == null) {
@@ -964,11 +963,11 @@ public class SGSXYNetCDFData extends SGNetCDFData
           return null;
         }
         array[ii] =
-            SGDataUtility.appendColumnTitle(TICK_LABEL, this.mTickLabelHolderVariable.getName());
+            SGDataUtility.appendColumnTitle(SGIDataColumnTypeConstants.TICK_LABEL, this.mTickLabelHolderVariable.getName());
       } else if (var.equals(this.mTimeVariable)) {
-        array[ii] = ANIMATION_FRAME;
+        array[ii] = SGIDataColumnTypeConstants.ANIMATION_FRAME;
       } else if (var.equals(this.mIndexVariable)) {
-        array[ii] = INDEX;
+        array[ii] = SGIDataColumnTypeConstants.INDEX;
       } else {
         array[ii] = "";
       }
@@ -1000,47 +999,47 @@ public class SGSXYNetCDFData extends SGNetCDFData
     for (int ii = 0; ii < columns.length; ii++) {
       SGNetCDFVariable var = varList.get(ii);
       String valueType = var.getValueType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType) && !VALUE_TYPE_DATE.equals(valueType)) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType) && !SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
           return false;
         }
         xVar = var;
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType) && !VALUE_TYPE_DATE.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType) && !SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
           return false;
         }
         yVar = var;
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], LOWER_ERROR_VALUE)) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         lVar = var;
         lCol = columns[ii];
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], UPPER_ERROR_VALUE)) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         uVar = var;
         uCol = columns[ii];
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], LOWER_UPPER_ERROR_VALUE)) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         lVar = var;
         uVar = var;
         lCol = columns[ii];
         uCol = columns[ii];
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], TICK_LABEL)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.TICK_LABEL)) {
         tVar = var;
         tCol = columns[ii];
-      } else if (SGDataUtility.isEqualColumnType(columns[ii], ANIMATION_FRAME)
-          || SGDataUtility.isEqualColumnType(TIME, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(columns[ii], SGIDataColumnTypeConstants.ANIMATION_FRAME)
+          || SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.TIME, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         timeVar = var;
-      } else if (SGDataUtility.isEqualColumnType(columns[ii], INDEX)) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(columns[ii], SGIDataColumnTypeConstants.INDEX)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         indexVar = var;
@@ -1283,7 +1282,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
   protected SGNetCDFDataColumnInfo createTickLabelInfo(SGNetCDFVariable var) {
     if (this.isTickLabelAvailable()) {
       String thName = this.mTickLabelHolderVariable.getName();
-      return SGDataUtility.createDataColumnInfo(this.mTickLabelVariable, TICK_LABEL, thName);
+      return SGDataUtility.createDataColumnInfo(this.mTickLabelVariable, SGIDataColumnTypeConstants.TICK_LABEL, thName);
     } else {
       return null;
     }
@@ -1317,18 +1316,18 @@ public class SGSXYNetCDFData extends SGNetCDFData
     // (SGSXYMultipleVariableNetCDFData).
     final boolean be = this.isErrorBarAvailable();
     final boolean bt = this.isTickLabelAvailable();
-    SGNetCDFDataColumnInfo[] x = SGDataUtility.createDataColumnInfoArray(this.mXVariable, X_VALUE);
-    SGNetCDFDataColumnInfo[] y = SGDataUtility.createDataColumnInfoArray(this.mYVariable, Y_VALUE);
+    SGNetCDFDataColumnInfo[] x = SGDataUtility.createDataColumnInfoArray(this.mXVariable, SGIDataColumnTypeConstants.X_VALUE);
+    SGNetCDFDataColumnInfo[] y = SGDataUtility.createDataColumnInfoArray(this.mYVariable, SGIDataColumnTypeConstants.Y_VALUE);
     SGNetCDFDataColumnInfo[] le =
         be
             ? new SGNetCDFDataColumnInfo[] {
-              this.createErrorBarInfo(this.mLowerErrorVariable, LOWER_ERROR_VALUE)
+              this.createErrorBarInfo(this.mLowerErrorVariable, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)
             }
             : null;
     SGNetCDFDataColumnInfo[] ue =
         be
             ? new SGNetCDFDataColumnInfo[] {
-              this.createErrorBarInfo(this.mUpperErrorVariable, UPPER_ERROR_VALUE)
+              this.createErrorBarInfo(this.mUpperErrorVariable, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)
             }
             : null;
     SGNetCDFDataColumnInfo[] eh = be ? this.getErrorBarHolderInfo(x, y) : null;
@@ -1336,17 +1335,17 @@ public class SGSXYNetCDFData extends SGNetCDFData
         bt
             ? new SGNetCDFDataColumnInfo[] {
               SGDataUtility.createDataColumnInfo(
-                  this.mTickLabelVariable, TICK_LABEL, this.mTickLabelHolderVariable.getName())
+                  this.mTickLabelVariable, SGIDataColumnTypeConstants.TICK_LABEL, this.mTickLabelHolderVariable.getName())
             }
             : null;
     SGNetCDFDataColumnInfo[] th = bt ? this.getTickLabelHolderInfo(x, y) : null;
     SGNetCDFDataColumnInfo time =
         (this.mTimeVariable != null)
-            ? SGDataUtility.createDataColumnInfo(this.mTimeVariable, ANIMATION_FRAME)
+            ? SGDataUtility.createDataColumnInfo(this.mTimeVariable, SGIDataColumnTypeConstants.ANIMATION_FRAME)
             : null;
     SGNetCDFDataColumnInfo index =
         this.isIndexAvailable()
-            ? SGDataUtility.createDataColumnInfo(this.mIndexVariable, INDEX)
+            ? SGDataUtility.createDataColumnInfo(this.mIndexVariable, SGIDataColumnTypeConstants.INDEX)
             : null;
     SGSXYNetCDFMultipleData data =
         new SGSXYNetCDFMultipleData(
@@ -1392,30 +1391,30 @@ public class SGSXYNetCDFData extends SGNetCDFData
    */
   public SGISXYTypeMultipleData toMultiple(
       final Dimension dim, final int pickUpIndex, final int len) {
-    SGNetCDFDataColumnInfo x = SGDataUtility.createDataColumnInfo(this.mXVariable, X_VALUE);
-    SGNetCDFDataColumnInfo y = SGDataUtility.createDataColumnInfo(this.mYVariable, Y_VALUE);
+    SGNetCDFDataColumnInfo x = SGDataUtility.createDataColumnInfo(this.mXVariable, SGIDataColumnTypeConstants.X_VALUE);
+    SGNetCDFDataColumnInfo y = SGDataUtility.createDataColumnInfo(this.mYVariable, SGIDataColumnTypeConstants.Y_VALUE);
     SGNetCDFDataColumnInfo le = null;
     SGNetCDFDataColumnInfo ue = null;
     SGNetCDFDataColumnInfo eh = null;
     if (this.isErrorBarAvailable()) {
-      le = this.createErrorBarInfo(this.mLowerErrorVariable, LOWER_ERROR_VALUE);
-      ue = this.createErrorBarInfo(this.mUpperErrorVariable, UPPER_ERROR_VALUE);
+      le = this.createErrorBarInfo(this.mLowerErrorVariable, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
+      ue = this.createErrorBarInfo(this.mUpperErrorVariable, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE);
       eh = this.getErrorBarHolderInfo(x, y);
     }
     SGNetCDFDataColumnInfo tl = null;
     SGNetCDFDataColumnInfo th = null;
     if (this.isTickLabelAvailable()) {
       String thName = this.mTickLabelHolderVariable.getName();
-      tl = SGDataUtility.createDataColumnInfo(this.mTickLabelVariable, TICK_LABEL, thName);
+      tl = SGDataUtility.createDataColumnInfo(this.mTickLabelVariable, SGIDataColumnTypeConstants.TICK_LABEL, thName);
       th = this.getTickLabelHolderInfo(x, y);
     }
     SGNetCDFDataColumnInfo time =
         (this.mTimeVariable != null)
-            ? SGDataUtility.createDataColumnInfo(this.mTimeVariable, ANIMATION_FRAME)
+            ? SGDataUtility.createDataColumnInfo(this.mTimeVariable, SGIDataColumnTypeConstants.ANIMATION_FRAME)
             : null;
     SGNetCDFDataColumnInfo index =
         this.isIndexAvailable()
-            ? SGDataUtility.createDataColumnInfo(this.mIndexVariable, INDEX)
+            ? SGDataUtility.createDataColumnInfo(this.mIndexVariable, SGIDataColumnTypeConstants.INDEX)
             : null;
     SGIntegerSeriesSet pickUpIndices;
     if (pickUpIndex == len - 1) {
@@ -1884,7 +1883,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
       ret.status = false;
       return ret;
     }
-    if (X_VALUE.equals(columnType)) {
+    if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
       if (cache.mXValues.length <= index) {
         ret.status = false;
         return ret;
@@ -1894,7 +1893,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
         cache.mXValues[index] = value;
         ret.status = true;
       }
-    } else if (Y_VALUE.equals(columnType)) {
+    } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
       if (cache.mYValues.length <= index) {
         ret.status = false;
         return ret;

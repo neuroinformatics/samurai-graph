@@ -52,7 +52,7 @@ import org.apache.commons.csv.QuoteMode;
  *
  * @see SGITextDataConstants
  */
-public class SGCSVTokenizer implements Iterator<SGCSVTokenizer.Token>, SGITextDataConstants {
+public class SGCSVTokenizer implements Iterator<SGCSVTokenizer.Token> {
 
   private final boolean isCommentLine;
   private final Iterator<CSVRecord> recordIterator;
@@ -94,7 +94,7 @@ public class SGCSVTokenizer implements Iterator<SGCSVTokenizer.Token>, SGITextDa
     String trimmed = aString.trim();
 
     // Check for comment line
-    this.isCommentLine = isDataFile && trimmed.startsWith(DATA_COMMENT_PREFIX);
+    this.isCommentLine = isDataFile && trimmed.startsWith(SGITextDataConstants.DATA_COMMENT_PREFIX);
 
     if (this.isCommentLine) {
       this.recordIterator = null;
@@ -132,7 +132,7 @@ public class SGCSVTokenizer implements Iterator<SGCSVTokenizer.Token>, SGITextDa
       }
 
       String trimmed = line.trim();
-      this.isCommentLine = isDataFile && trimmed.startsWith(DATA_COMMENT_PREFIX);
+      this.isCommentLine = isDataFile && trimmed.startsWith(SGITextDataConstants.DATA_COMMENT_PREFIX);
 
       if (this.isCommentLine) {
         this.recordIterator = null;

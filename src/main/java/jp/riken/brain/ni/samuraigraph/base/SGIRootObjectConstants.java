@@ -4,8 +4,9 @@ import java.awt.Color;
 import javax.print.attribute.Size2DSyntax;
 import javax.print.attribute.standard.MediaSize;
 
-/** Constants for the root objects. */
+/** A interface for constants for the root objects. */
 public interface SGIRootObjectConstants {
+
 
   //
   // Text for the menu command of the menu bar

@@ -15,7 +15,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGIFigureDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYDataConstants;
 
 public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorBar
-    implements SGISXYDataConstants, SGIDataCommandConstants {
+    implements SGISXYDataConstants {
 
   /** The default constructor. */
   public SGElementGroupErrorBarForData(SGISXYTypeData data) {
@@ -87,94 +87,94 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
       String key = itr.next();
       String value = map.getValueString(key);
 
-      if (COM_DATA_ERROR_BAR_VISIBLE.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_VISIBLE.equalsIgnoreCase(key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_DATA_ERROR_BAR_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setVisible(b.booleanValue());
-        result.putResult(COM_DATA_ERROR_BAR_VISIBLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ERROR_BAR_SYMBOL_TYPE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_VISIBLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE.equalsIgnoreCase(key)) {
         final Integer type = SGDrawingElementErrorBar.getHeadTypeFromName(value);
         if (type == null) {
-          result.putResult(COM_DATA_ERROR_BAR_SYMBOL_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setHeadType(type) == false) {
-          result.putResult(COM_DATA_ERROR_BAR_SYMBOL_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ERROR_BAR_SYMBOL_TYPE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ERROR_BAR_SYMBOL_SIZE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_DATA_ERROR_BAR_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setHeadSize(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_DATA_ERROR_BAR_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ERROR_BAR_SYMBOL_SIZE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ERROR_BAR_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setColor(cl) == false) {
-            result.putResult(COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setColor(cl) == false) {
-            result.putResult(COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ERROR_BAR_LINE_WIDTH.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_DATA_ERROR_BAR_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_DATA_ERROR_BAR_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ERROR_BAR_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ERROR_BAR_STYLE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE.equalsIgnoreCase(key)) {
         final Integer style = SGDrawingElementErrorBar.getErrorBarStyleFromName(value);
         if (style == null) {
-          result.putResult(COM_DATA_ERROR_BAR_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setErrorBarStyle(style) == false) {
-          result.putResult(COM_DATA_ERROR_BAR_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ERROR_BAR_STYLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ERROR_BAR_POSITION.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION.equalsIgnoreCase(key)) {
         final Integer position = getErrorBarPositionFromName(value);
         if (position == null) {
-          result.putResult(COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (isValidErrorBarPosition(position) == false) {
-          result.putResult(COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setPositionOnLine(position == ERROR_BAR_ON_LINE) == false) {
-          result.putResult(COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -182,31 +182,31 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
   }
 
   protected boolean getProperties(SGPropertyMap map) {
-    SGPropertyUtility.addProperty(map, COM_DATA_ERROR_BAR_VISIBLE, this.isVisible());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ERROR_BAR_VISIBLE, this.isVisible());
     SGPropertyUtility.addProperty(
         map,
-        COM_DATA_ERROR_BAR_SYMBOL_TYPE,
+        SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_TYPE,
         SGDrawingElementErrorBar.getHeadTypeName(this.getHeadType()));
     SGPropertyUtility.addProperty(
         map,
-        COM_DATA_ERROR_BAR_SYMBOL_SIZE,
+        SGIDataCommandConstants.COM_DATA_ERROR_BAR_SYMBOL_SIZE,
         SGUtility.getExportValue(
             this.getHeadSize(SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_UNIT),
             SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_MINIMAL_ORDER),
         SGIFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_UNIT);
-    SGPropertyUtility.addProperty(map, COM_DATA_ERROR_BAR_COLOR, this.getColor());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ERROR_BAR_COLOR, this.getColor());
     SGPropertyUtility.addProperty(
         map,
-        COM_DATA_ERROR_BAR_LINE_WIDTH,
+        SGIDataCommandConstants.COM_DATA_ERROR_BAR_LINE_WIDTH,
         SGUtility.getExportLineWidth(this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
         SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(
         map,
-        COM_DATA_ERROR_BAR_STYLE,
+        SGIDataCommandConstants.COM_DATA_ERROR_BAR_STYLE,
         SGDrawingElementErrorBar.getErrorBarStyleName(this.getErrorBarStyle()));
     SGPropertyUtility.addProperty(
         map,
-        COM_DATA_ERROR_BAR_POSITION,
+        SGIDataCommandConstants.COM_DATA_ERROR_BAR_POSITION,
         getErrorBarPositionName(this.mPositionOnLine ? ERROR_BAR_ON_LINE : ERROR_BAR_ON_BAR));
     return true;
   }

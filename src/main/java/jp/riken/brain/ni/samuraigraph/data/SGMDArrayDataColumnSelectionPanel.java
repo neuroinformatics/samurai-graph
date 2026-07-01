@@ -319,17 +319,17 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
         keyList.add(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
         keyList.add(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
       } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
-        if (Z_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
           keyList.add(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION);
           keyList.add(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
         } else {
           keyList.add(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
         }
       } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
-        if (X_COMPONENT.equals(columnType)
-            || Y_COMPONENT.equals(columnType)
-            || MAGNITUDE.equals(columnType)
-            || ANGLE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_COMPONENT.equals(columnType)
+            || SGIDataColumnTypeConstants.Y_COMPONENT.equals(columnType)
+            || SGIDataColumnTypeConstants.MAGNITUDE.equals(columnType)
+            || SGIDataColumnTypeConstants.ANGLE.equals(columnType)) {
           keyList.add(SGIMDArrayConstants.KEY_VXY_X_DIMENSION);
           keyList.add(SGIMDArrayConstants.KEY_VXY_Y_DIMENSION);
         } else {
@@ -384,9 +384,9 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
       for (int ii = 0; ii < colInfoList.size(); ii++) {
         SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) colInfoList.get(ii);
         String columnType = mdInfo.getColumnType();
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           xList.add(mdInfo);
-        } else if (Y_VALUE.equals(columnType)) {
+        } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
           yList.add(mdInfo);
         }
       }
@@ -604,15 +604,15 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     if (SGDataUtility.isSXYTypeData(dataType)) {
       nameList.add(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
     } else if (SGDataUtility.isSXYZTypeData(dataType)) {
-      if (Z_VALUE.equals(columnType)) {
+      if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
         nameList.add(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION);
         nameList.add(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
       }
     } else if (SGDataUtility.isVXYTypeData(dataType)) {
-      if (X_COMPONENT.equals(columnType)
-          || Y_COMPONENT.equals(columnType)
-          || MAGNITUDE.equals(columnType)
-          || ANGLE.equals(columnType)) {
+      if (SGIDataColumnTypeConstants.X_COMPONENT.equals(columnType)
+          || SGIDataColumnTypeConstants.Y_COMPONENT.equals(columnType)
+          || SGIDataColumnTypeConstants.MAGNITUDE.equals(columnType)
+          || SGIDataColumnTypeConstants.ANGLE.equals(columnType)) {
         nameList.add(SGIMDArrayConstants.KEY_VXY_X_DIMENSION);
         nameList.add(SGIMDArrayConstants.KEY_VXY_Y_DIMENSION);
       }

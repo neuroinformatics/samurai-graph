@@ -2,8 +2,9 @@ package jp.riken.brain.ni.samuraigraph.base;
 
 import java.awt.Color;
 
-/** Constants for the figures. */
+/** A interface for constants for the figures. */
 public interface SGIFigureConstants {
+
 
   // figure location
   public static final String FIGURE_LOCATION_UNIT = SGIConstants.cm;

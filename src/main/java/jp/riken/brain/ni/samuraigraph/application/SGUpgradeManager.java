@@ -35,7 +35,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 /** A class to manage upgrade of the application. */
-class SGUpgradeManager implements ActionListener, SGIUpgradeConstants, SGIPreferencesConstants {
+class SGUpgradeManager implements ActionListener {
 
   private static final String MSG_LATEST_VERSION_INSTALLED =
       "The latest version is already installed.";
@@ -91,22 +91,22 @@ class SGUpgradeManager implements ActionListener, SGIUpgradeConstants, SGIPrefer
       String cycle = this.mUpgradeDialog.getUpgradeCycle();
 
       if (cycle.equals(SGUpgradeDialog.NO_UPGRADE)) {
-        type = NO_UPGRADE;
+        type = SGIUpgradeConstants.NO_UPGRADE;
       } else if (cycle.equals(SGUpgradeDialog.EVERY_TIME)) {
-        type = UPGRADE_EVERY_TIME;
+        type = SGIUpgradeConstants.UPGRADE_EVERY_TIME;
       } else if (cycle.equals(SGUpgradeDialog.EVERY_DAY)) {
-        type = UPGRADE_EVERY_DAY;
+        type = SGIUpgradeConstants.UPGRADE_EVERY_DAY;
       } else if (cycle.equals(SGUpgradeDialog.EVERY_WEEK)) {
-        type = UPGRADE_EVERY_WEEK;
+        type = SGIUpgradeConstants.UPGRADE_EVERY_WEEK;
       } else if (cycle.equals(SGUpgradeDialog.EVERY_MONTH)) {
-        type = UPGRADE_EVERY_MONTH;
+        type = SGIUpgradeConstants.UPGRADE_EVERY_MONTH;
       } else {
         throw new Error();
       }
 
       // update the upgrade cycle
       Preferences pref = Preferences.userNodeForPackage(this.getClass());
-      pref.putInt(PREF_KEY_UPGRADE_CYCLE, type);
+      pref.putInt(SGIPreferencesConstants.PREF_KEY_UPGRADE_CYCLE, type);
 
     } else if (command.equals(SGUpgradeDialog.UPGRADE_NOW)) {
       SGUpgradeDialog dg = (SGUpgradeDialog) source;
@@ -127,35 +127,35 @@ class SGUpgradeManager implements ActionListener, SGIUpgradeConstants, SGIPrefer
     this.mUpgradeDialog.setCenter(owner);
 
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
-    final int cycleType = pref.getInt(PREF_KEY_UPGRADE_CYCLE, NO_UPGRADE);
+    final int cycleType = pref.getInt(SGIPreferencesConstants.PREF_KEY_UPGRADE_CYCLE, SGIUpgradeConstants.NO_UPGRADE);
 
     String cycle = null;
     switch (cycleType) {
-      case NO_UPGRADE:
+      case SGIUpgradeConstants.NO_UPGRADE:
         {
           cycle = SGUpgradeDialog.NO_UPGRADE;
           break;
         }
 
-      case UPGRADE_EVERY_TIME:
+      case SGIUpgradeConstants.UPGRADE_EVERY_TIME:
         {
           cycle = SGUpgradeDialog.EVERY_TIME;
           break;
         }
 
-      case UPGRADE_EVERY_DAY:
+      case SGIUpgradeConstants.UPGRADE_EVERY_DAY:
         {
           cycle = SGUpgradeDialog.EVERY_DAY;
           break;
         }
 
-      case UPGRADE_EVERY_WEEK:
+      case SGIUpgradeConstants.UPGRADE_EVERY_WEEK:
         {
           cycle = SGUpgradeDialog.EVERY_WEEK;
           break;
         }
 
-      case UPGRADE_EVERY_MONTH:
+      case SGIUpgradeConstants.UPGRADE_EVERY_MONTH:
         {
           cycle = SGUpgradeDialog.EVERY_MONTH;
           break;
@@ -201,9 +201,9 @@ class SGUpgradeManager implements ActionListener, SGIUpgradeConstants, SGIPrefer
     Boolean bDevMode = Boolean.valueOf(devMode);
     final String fileName;
     if (bDevMode) {
-      fileName = DEV_PRODUCT_XML_FILE_NAME;
+      fileName = SGIUpgradeConstants.DEV_PRODUCT_XML_FILE_NAME;
     } else {
-      fileName = PRODUCT_XML_FILE_NAME;
+      fileName = SGIUpgradeConstants.PRODUCT_XML_FILE_NAME;
     }
 
     // get URL
@@ -226,7 +226,7 @@ class SGUpgradeManager implements ActionListener, SGIUpgradeConstants, SGIPrefer
 
     // update the date
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
-    pref.putLong(PREF_KEY_DATE, System.currentTimeMillis());
+    pref.putLong(SGIPreferencesConstants.PREF_KEY_DATE, System.currentTimeMillis());
 
     // get root element - product
     Element root = doc.getDocumentElement();
@@ -481,7 +481,7 @@ class SGUpgradeManager implements ActionListener, SGIUpgradeConstants, SGIPrefer
     sb.append(SGIConstants.FILE_SEPARATOR);
     sb.append("lib");
     sb.append(SGIConstants.FILE_SEPARATOR);
-    sb.append(UPGRADE_HELPER_FILE_NAME);
+    sb.append(SGIUpgradeConstants.UPGRADE_HELPER_FILE_NAME);
     File helper = new File(sb.toString());
     if (helper.exists() == false) {
       // helper application is not found.
@@ -490,7 +490,7 @@ class SGUpgradeManager implements ActionListener, SGIUpgradeConstants, SGIPrefer
     }
 
     File helperTempDir =
-        new File(SGApplicationUtility.getPathName(SGIConstants.TMP_DIR, HELPER_TEMP_DIR_NAME));
+        new File(SGApplicationUtility.getPathName(SGIConstants.TMP_DIR, SGIUpgradeConstants.HELPER_TEMP_DIR_NAME));
     helperTempDir.deleteOnExit();
     if (helperTempDir.mkdir() == false) {
       // failed to create a temporary directory.
@@ -500,7 +500,7 @@ class SGUpgradeManager implements ActionListener, SGIUpgradeConstants, SGIPrefer
     File helperTemp =
         new File(
             SGApplicationUtility.getPathName(
-                helperTempDir.getAbsolutePath(), UPGRADE_HELPER_FILE_NAME));
+                helperTempDir.getAbsolutePath(), SGIUpgradeConstants.UPGRADE_HELPER_FILE_NAME));
     helperTemp.deleteOnExit();
     try {
       SGApplicationUtility.copyBinaryFile(helper, helperTemp);
@@ -915,30 +915,30 @@ class SGUpgradeManager implements ActionListener, SGIUpgradeConstants, SGIPrefer
    */
   private boolean checkDate() {
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
-    final long time = pref.getLong(PREF_KEY_DATE, 0);
+    final long time = pref.getLong(SGIPreferencesConstants.PREF_KEY_DATE, 0);
     final long current = System.currentTimeMillis();
     final long diff = current - time;
 
     final long day = 1000 * 3600 * 24;
     final long week = 7 * day;
     final long month = 30 * day;
-    final int cycle = pref.getInt(PREF_KEY_UPGRADE_CYCLE, UPGRADE_EVERY_TIME);
+    final int cycle = pref.getInt(SGIPreferencesConstants.PREF_KEY_UPGRADE_CYCLE, SGIUpgradeConstants.UPGRADE_EVERY_TIME);
 
     boolean b;
     switch (cycle) {
-      case NO_UPGRADE:
+      case SGIUpgradeConstants.NO_UPGRADE:
         b = false;
         break;
-      case UPGRADE_EVERY_TIME:
+      case SGIUpgradeConstants.UPGRADE_EVERY_TIME:
         b = true;
         break;
-      case UPGRADE_EVERY_DAY:
+      case SGIUpgradeConstants.UPGRADE_EVERY_DAY:
         b = (diff > day);
         break;
-      case UPGRADE_EVERY_WEEK:
+      case SGIUpgradeConstants.UPGRADE_EVERY_WEEK:
         b = (diff > week);
         break;
-      case UPGRADE_EVERY_MONTH:
+      case SGIUpgradeConstants.UPGRADE_EVERY_MONTH:
         b = (diff > month);
         break;
       default:

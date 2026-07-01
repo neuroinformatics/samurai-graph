@@ -17,7 +17,7 @@ import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
 
 /** The wrapper class for netCDF file. */
-public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
+public class SGNetCDFFile extends SGDataSource {
 
   /** The netCDF file. */
   private NetcdfFile mNetcdfFile = null;

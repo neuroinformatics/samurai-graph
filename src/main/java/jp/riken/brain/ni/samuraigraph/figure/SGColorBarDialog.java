@@ -17,7 +17,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
@@ -27,7 +26,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** Property dialog for the color bar. */
 public class SGColorBarDialog extends SGAxisDialog
-    implements SGIColorBarConstants, SGIFigureConstants, ItemListener, SGITwoAxesDialog {
+    implements SGIColorBarConstants, ItemListener, SGITwoAxesDialog {
 
   /** Serial version UID. */
   private static final long serialVersionUID = -5966935892328455296L;

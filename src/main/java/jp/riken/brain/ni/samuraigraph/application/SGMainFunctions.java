@@ -102,7 +102,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataPropertyKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
@@ -167,12 +166,8 @@ class SGMainFunctions
         SGIApplicationConstants,
         SGIPropertyFileConstants,
         SGIPreferencesConstants,
-        SGIApplicationTextConstants,
         SGIImageConstants,
-        SGIArchiveFileConstants,
-        SGIDataColumnTypeConstants,
-        WindowListener,
-        SGINetCDFConstants {
+        WindowListener {
 
   // only used for debug
   static boolean USE_FOXTROT = true;
@@ -485,7 +480,7 @@ class SGMainFunctions
                             wnd, f)
                         == false) {
                       SGUtility.showErrorMessageDialog(
-                          wnd, MSG_DATA_SET_FILE_INVALID, SGIConstants.TITLE_ERROR);
+                          wnd, SGIApplicationTextConstants.MSG_DATA_SET_FILE_INVALID, SGIConstants.TITLE_ERROR);
                     }
                   }
                 });
@@ -494,7 +489,7 @@ class SGMainFunctions
           }
         } else {
           // file not found
-          SGUtility.showErrorMessageDialog(wnd, MSG_FILE_OPEN_FAILURE, TITLE_FILE_OPEN_FAILURE);
+          SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE);
         }
 
         // enable window
@@ -876,9 +871,9 @@ class SGMainFunctions
       int yCnt = 0;
       for (SGDataColumnInfo col : cols) {
         String columnType = col.getColumnType();
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           xCnt++;
-        } else if (Y_VALUE.equals(columnType)) {
+        } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
           yCnt++;
         }
       }
@@ -1178,7 +1173,7 @@ class SGMainFunctions
     }
 
     // create a Document object
-    Document document = domImpl.createDocument("", TAG_NAME_FOCUSED_FIGURES, null);
+    Document document = domImpl.createDocument("", SGIApplicationTextConstants.TAG_NAME_FOCUSED_FIGURES, null);
 
     // get the root element
     Element property = document.getDocumentElement();
@@ -1264,15 +1259,14 @@ class SGMainFunctions
 
   // show the confirmation dialog for saving properties of the window
   int confirmBeforeClosing(final SGDrawingWindow wnd) {
-    final Object[] options = {MSG_CLOSE_WITHOUT_SAVING, SGDialog.CANCEL_BUTTON_TEXT, MSG_SAVE};
+    final Object[] options = {SGIApplicationTextConstants.MSG_CLOSE_WITHOUT_SAVING, SGDialog.CANCEL_BUTTON_TEXT, MSG_SAVE};
     return this.showConfirmationDialog(wnd, options, new SGCloseWindowConfirmPanel());
   }
 
   // show the confirmation dialog for saving properties of the window
   int confirmBeforeDiscard(final SGDrawingWindow wnd) {
     final Object[] options = {
-      // MSG_DISCARD_WITHOUT_SAVING,
-      MSG_CLOSE_WITHOUT_SAVING, SGDialog.CANCEL_BUTTON_TEXT, MSG_SAVE
+      SGIApplicationTextConstants.MSG_CLOSE_WITHOUT_SAVING, SGDialog.CANCEL_BUTTON_TEXT, MSG_SAVE
     };
     return this.showConfirmationDialog(wnd, options, new SGCloseWindowConfirmPanel());
   }
@@ -1721,7 +1715,7 @@ class SGMainFunctions
     if (dg.equals(this.mDataTypeWizardDialog)) {
       colInfoSet = this.getNetCDFDefaultDataColumnInfo(nc, dataType, infoMap);
       if (colInfoSet == null) {
-        SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+        SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
         return false;
       }
 
@@ -1762,7 +1756,7 @@ class SGMainFunctions
     infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
 
     if (colInfoSet == null) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
       return false;
     }
 
@@ -1899,7 +1893,7 @@ class SGMainFunctions
         colInfoSet = this.getMDArrayDataDefaultDataColumnInfo(file, dataType, infoMap);
       }
       if (colInfoSet == null) {
-        SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+        SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
         return false;
       }
 
@@ -1940,7 +1934,7 @@ class SGMainFunctions
     infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
 
     if (colInfoSet == null) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
       return false;
     }
 
@@ -3330,7 +3324,7 @@ class SGMainFunctions
       if (e.getClass().getName().endsWith("HDF5DatatypeInterfaceException")) {
         // Failed to read the HDF5 data.
         wnd.endProgress();
-        return new SGStatus(false, MSG_HDF5_VALUES_OUT_OF_RANGE);
+        return new SGStatus(false, SGIApplicationTextConstants.MSG_HDF5_VALUES_OUT_OF_RANGE);
       }
       if (e instanceof RuntimeException) {
         throw (RuntimeException) e;
@@ -3722,7 +3716,7 @@ class SGMainFunctions
                     var, varName, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
             col.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION, 0);
             col.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 1);
-            col.setColumnType(Z_VALUE);
+            col.setColumnType(SGIDataColumnTypeConstants.Z_VALUE);
             SGDataColumnInfoSet colInfoSet = new SGDataColumnInfoSet(new SGDataColumnInfo[] {col});
 
             // create a data object
@@ -3828,7 +3822,7 @@ class SGMainFunctions
         }
 
         // archive file?
-        final boolean archiveFlag = SGApplicationUtility.hasExtension(path, ARCHIVE_FILE_EXTENSION);
+        final boolean archiveFlag = SGApplicationUtility.hasExtension(path, SGIArchiveFileConstants.ARCHIVE_FILE_EXTENSION);
         if (archiveFlag) {
           archiveFile = file;
           continue;
@@ -4052,7 +4046,7 @@ class SGMainFunctions
 
     String str = null;
 
-    str = elFigure.getAttribute(SGFigure.KEY_FIGURE_TYPE);
+    str = elFigure.getAttribute(SGIApplicationCommandConstants.KEY_FIGURE_TYPE);
     if (str.length() == 0) {
       return ic;
     }
@@ -4377,7 +4371,7 @@ class SGMainFunctions
       final String versionNumber,
       final int mode) {
 
-    NodeList nList = elWnd.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+    NodeList nList = elWnd.getElementsByTagName(TAG_NAME_FIGURE);
     final int len = nList.getLength();
 
     for (int ii = 0; ii < len; ii++) {
@@ -4717,7 +4711,7 @@ class SGMainFunctions
 
     // set the data
     if (dg.setData(ncFile, dataType, colInfoSet, infoMap, true) == false) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
       return false;
     }
 
@@ -4762,7 +4756,7 @@ class SGMainFunctions
 
     // set the data
     if (dg.setData(mdFile, dataType, colInfoSetNew, infoMap, showDefault) == false) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
       return false;
     }
 

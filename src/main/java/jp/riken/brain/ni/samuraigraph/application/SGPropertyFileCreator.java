@@ -13,22 +13,23 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
+
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 
 /** Create a property file. */
-public class SGPropertyFileCreator extends SGFileHandler implements SGIPropertyFileConstants {
+public class SGPropertyFileCreator extends SGFileHandler {
 
   /** Default name of the property file with the extension. */
   public static final String DEFAULT_PROPERTY_FILE_NAME_WITH_EXTENSION =
-      SGApplicationUtility.appendExtension(DEFAULT_PROPERTY_FILE_NAME, PROPERTY_FILE_EXTENSION);
+      SGApplicationUtility.appendExtension(SGIPropertyFileConstants.DEFAULT_PROPERTY_FILE_NAME, SGIPropertyFileConstants.PROPERTY_FILE_EXTENSION);
 
   /** Constructs an object. */
   public SGPropertyFileCreator() {
     super();
-    this.initFilePath(DEFAULT_PROPERTY_FILE_NAME, PROPERTY_FILE_EXTENSION);
+    this.initFilePath(SGIPropertyFileConstants.DEFAULT_PROPERTY_FILE_NAME, SGIPropertyFileConstants.PROPERTY_FILE_EXTENSION);
   }
 
   /** Create a property file. */
@@ -62,14 +63,14 @@ public class SGPropertyFileCreator extends SGFileHandler implements SGIPropertyF
 
     // create a DocumentType object
     DocumentType docType =
-        domImpl.createDocumentType(ROOT_TAG_NAME, PROPERTY_FILE_PUBLIC_ID, PROPERTY_FILE_SYSTEM_ID);
+        domImpl.createDocumentType(SGIPropertyFileConstants.ROOT_TAG_NAME, SGIPropertyFileConstants.PROPERTY_FILE_PUBLIC_ID, SGIPropertyFileConstants.PROPERTY_FILE_SYSTEM_ID);
 
     // create a Document object
-    Document document = domImpl.createDocument("", ROOT_TAG_NAME, docType);
+    Document document = domImpl.createDocument("", SGIPropertyFileConstants.ROOT_TAG_NAME, docType);
 
     // get the root element
     Element property = document.getDocumentElement();
-    property.setAttribute(KEY_VERSION_NUMBER, versionString);
+    property.setAttribute(SGIPropertyFileConstants.KEY_VERSION_NUMBER, versionString);
 
     // create a DOM tree
     if (wnd.createDOMTree(document, params) == false) {
@@ -85,8 +86,8 @@ public class SGPropertyFileCreator extends SGFileHandler implements SGIPropertyF
     // set the output properties
     transformer.setOutputProperty(OutputKeys.INDENT, "yes");
     transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-    transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, PROPERTY_FILE_SYSTEM_ID);
-    transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, PROPERTY_FILE_PUBLIC_ID);
+    transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, SGIPropertyFileConstants.PROPERTY_FILE_SYSTEM_ID);
+    transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, SGIPropertyFileConstants.PROPERTY_FILE_PUBLIC_ID);
 
     transformer.transform(source, result);
 
@@ -100,8 +101,8 @@ public class SGPropertyFileCreator extends SGFileHandler implements SGIPropertyF
     File file =
         this.selectOutputFile(
             wnd,
-            PROPERTY_FILE_EXTENSION,
-            PROPERTY_FILE_DESCRIPTION,
+            SGIPropertyFileConstants.PROPERTY_FILE_EXTENSION,
+            SGIPropertyFileConstants.PROPERTY_FILE_DESCRIPTION,
             DEFAULT_PROPERTY_FILE_NAME_WITH_EXTENSION);
     if (file == null) {
       return SGIConstants.CANCEL_OPTION;

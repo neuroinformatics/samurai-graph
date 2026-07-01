@@ -25,8 +25,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 public abstract class SGDataSetupPanel extends JPanel
-    implements SGIDataColumnTypeConstants,
-        PropertyChangeListener,
+    implements PropertyChangeListener,
         ActionListener,
         ListSelectionListener,
         SGIDataSetupTableHolder {
@@ -276,14 +275,14 @@ public abstract class SGDataSetupPanel extends JPanel
     for (int ii = 0; ii < cols.length; ii++) {
       String columnType = cols[ii].getColumnType();
       String header = null;
-      if (columnType.startsWith(LOWER_ERROR_VALUE)) {
-        header = LOWER_ERROR_VALUE;
-      } else if (columnType.startsWith(UPPER_ERROR_VALUE)) {
-        header = UPPER_ERROR_VALUE;
-      } else if (columnType.startsWith(LOWER_UPPER_ERROR_VALUE)) {
-        header = LOWER_UPPER_ERROR_VALUE;
-      } else if (columnType.startsWith(TICK_LABEL)) {
-        header = TICK_LABEL;
+      if (columnType.startsWith(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
+        header = SGIDataColumnTypeConstants.LOWER_ERROR_VALUE;
+      } else if (columnType.startsWith(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
+        header = SGIDataColumnTypeConstants.UPPER_ERROR_VALUE;
+      } else if (columnType.startsWith(SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
+        header = SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE;
+      } else if (columnType.startsWith(SGIDataColumnTypeConstants.TICK_LABEL)) {
+        header = SGIDataColumnTypeConstants.TICK_LABEL;
       }
       if (header != null) {
         boolean bClear = true;
@@ -305,7 +304,8 @@ public abstract class SGDataSetupPanel extends JPanel
           }
           if (check) {
             String colType = cols[jj].getColumnType();
-            if (X_VALUE.equals(colType) || Y_VALUE.equals(colType)) {
+            if (SGIDataColumnTypeConstants.X_VALUE.equals(colType)
+                || SGIDataColumnTypeConstants.Y_VALUE.equals(colType)) {
               bClear = false;
               break;
             }

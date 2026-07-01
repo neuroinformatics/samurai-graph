@@ -572,7 +572,7 @@ class SGMainFunctionsTransform {
 
     if (colInfoSet == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+          wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
       return false;
     }
 
@@ -664,7 +664,7 @@ class SGMainFunctionsTransform {
 
     if (colInfoSet == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+          wnd, SGIApplicationTextConstants.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
       return false;
     }
 

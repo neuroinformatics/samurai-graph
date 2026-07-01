@@ -2,8 +2,12 @@ package jp.riken.brain.ni.samuraigraph.application;
 
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
-/** Messages used in application. */
-public interface SGIApplicationTextConstants {
+/** A final class for messages used in application. */
+public final class SGIApplicationTextConstants {
+
+  private SGIApplicationTextConstants() {
+    /* uninstantiable */
+  }
 
   public static final String MSG_SUCCESSFUL_COMPLETION = "Successful completion.";
 

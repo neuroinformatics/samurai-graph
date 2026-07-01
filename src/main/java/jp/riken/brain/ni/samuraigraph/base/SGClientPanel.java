@@ -50,7 +50,7 @@ import javax.swing.event.MouseInputListener;
 
 /** A panel put in the window. */
 public class SGClientPanel extends JLayeredPane
-    implements SGIRootObjectConstants, SGIClientPanel, MouseWheelListener, KeyListener {
+    implements SGIClientPanel, MouseWheelListener, KeyListener {
 
   private static final long serialVersionUID = 4663255737594310680L;
 
@@ -364,10 +364,10 @@ public class SGClientPanel extends JLayeredPane
         SGUtility.calcPropertyValue(
             w,
             unit,
-            PAPER_SIZE_UNIT,
-            PAPER_WIDTH_MIN_VALUE,
-            PAPER_WIDTH_MAX_VALUE,
-            LENGTH_MINIMAL_ORDER);
+            SGIRootObjectConstants.PAPER_SIZE_UNIT,
+            SGIRootObjectConstants.PAPER_WIDTH_MIN_VALUE,
+            SGIRootObjectConstants.PAPER_WIDTH_MAX_VALUE,
+            SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
     if (wNew == null) {
       return false;
     }
@@ -396,10 +396,10 @@ public class SGClientPanel extends JLayeredPane
         SGUtility.calcPropertyValue(
             h,
             unit,
-            PAPER_SIZE_UNIT,
-            PAPER_HEIGHT_MIN_VALUE,
-            PAPER_HEIGHT_MAX_VALUE,
-            LENGTH_MINIMAL_ORDER);
+            SGIRootObjectConstants.PAPER_SIZE_UNIT,
+            SGIRootObjectConstants.PAPER_HEIGHT_MIN_VALUE,
+            SGIRootObjectConstants.PAPER_HEIGHT_MAX_VALUE,
+            SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
     if (hNew == null) {
       return false;
     }
@@ -449,13 +449,19 @@ public class SGClientPanel extends JLayeredPane
 
   private boolean setPaperSizeRoundingOffInCMUnit(final float widthCM, final float heightCM) {
     // round out the size
-    float dWidthCM = (float) SGUtilityNumber.roundOffNumber(widthCM, LENGTH_MINIMAL_ORDER - 1);
-    float dHeightCM = (float) SGUtilityNumber.roundOffNumber(heightCM, LENGTH_MINIMAL_ORDER - 1);
+    float dWidthCM =
+        (float)
+            SGUtilityNumber.roundOffNumber(
+                widthCM, SGIRootObjectConstants.LENGTH_MINIMAL_ORDER - 1);
+    float dHeightCM =
+        (float)
+            SGUtilityNumber.roundOffNumber(
+                heightCM, SGIRootObjectConstants.LENGTH_MINIMAL_ORDER - 1);
 
-    if (dWidthCM < PAPER_WIDTH_MIN_VALUE) return false;
-    if (dWidthCM > PAPER_WIDTH_MAX_VALUE) return false;
-    if (dHeightCM < PAPER_HEIGHT_MIN_VALUE) return false;
-    if (dHeightCM > PAPER_HEIGHT_MAX_VALUE) return false;
+    if (dWidthCM < SGIRootObjectConstants.PAPER_WIDTH_MIN_VALUE) return false;
+    if (dWidthCM > SGIRootObjectConstants.PAPER_WIDTH_MAX_VALUE) return false;
+    if (dHeightCM < SGIRootObjectConstants.PAPER_HEIGHT_MIN_VALUE) return false;
+    if (dHeightCM > SGIRootObjectConstants.PAPER_HEIGHT_MAX_VALUE) return false;
 
     // length in units of pixel
     final float ratio = SGIConstants.CM_POINT_RATIO;
@@ -471,14 +477,18 @@ public class SGClientPanel extends JLayeredPane
   private boolean setPaperSizeRoundingOutInCMUnit(final float widthCM, final float heightCM) {
     // round out the size
     final float dWidthCM =
-        (float) SGUtilityNumber.roundOutNumber(widthCM, LENGTH_MINIMAL_ORDER - 1);
+        (float)
+            SGUtilityNumber.roundOutNumber(
+                widthCM, SGIRootObjectConstants.LENGTH_MINIMAL_ORDER - 1);
     final float dHeightCM =
-        (float) SGUtilityNumber.roundOutNumber(heightCM, LENGTH_MINIMAL_ORDER - 1);
+        (float)
+            SGUtilityNumber.roundOutNumber(
+                heightCM, SGIRootObjectConstants.LENGTH_MINIMAL_ORDER - 1);
 
-    if (dWidthCM < PAPER_WIDTH_MIN_VALUE) return false;
-    if (dWidthCM > PAPER_WIDTH_MAX_VALUE) return false;
-    if (dHeightCM < PAPER_HEIGHT_MIN_VALUE) return false;
-    if (dHeightCM > PAPER_HEIGHT_MAX_VALUE) return false;
+    if (dWidthCM < SGIRootObjectConstants.PAPER_WIDTH_MIN_VALUE) return false;
+    if (dWidthCM > SGIRootObjectConstants.PAPER_WIDTH_MAX_VALUE) return false;
+    if (dHeightCM < SGIRootObjectConstants.PAPER_HEIGHT_MIN_VALUE) return false;
+    if (dHeightCM > SGIRootObjectConstants.PAPER_HEIGHT_MAX_VALUE) return false;
 
     // length in units of pixel
     final float ratio = SGIConstants.CM_POINT_RATIO;
@@ -664,10 +674,10 @@ public class SGClientPanel extends JLayeredPane
         SGUtility.calcPropertyValue(
             interval,
             unit,
-            GRID_INTERVAL_UNIT,
-            GRID_INTERVAL_MIN_VALUE,
-            GRID_INTERVAL_MAX_VALUE,
-            LENGTH_MINIMAL_ORDER);
+            SGIRootObjectConstants.GRID_INTERVAL_UNIT,
+            SGIRootObjectConstants.GRID_INTERVAL_MIN_VALUE,
+            SGIRootObjectConstants.GRID_INTERVAL_MAX_VALUE,
+            SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
     if (iNew == null) {
       return false;
     }
@@ -683,10 +693,10 @@ public class SGClientPanel extends JLayeredPane
         SGUtility.calcPropertyValue(
             x,
             unit,
-            IMAGE_LOCATION_UNIT,
-            IMAGE_LOCATION_X_MIN_VALUE,
-            IMAGE_LOCATION_X_MAX_VALUE,
-            LENGTH_MINIMAL_ORDER);
+            SGIRootObjectConstants.IMAGE_LOCATION_UNIT,
+            SGIRootObjectConstants.IMAGE_LOCATION_X_MIN_VALUE,
+            SGIRootObjectConstants.IMAGE_LOCATION_X_MAX_VALUE,
+            SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
     if (xNew == null) {
       return false;
     }
@@ -702,10 +712,10 @@ public class SGClientPanel extends JLayeredPane
         SGUtility.calcPropertyValue(
             y,
             unit,
-            IMAGE_LOCATION_UNIT,
-            IMAGE_LOCATION_Y_MIN_VALUE,
-            IMAGE_LOCATION_Y_MAX_VALUE,
-            LENGTH_MINIMAL_ORDER);
+            SGIRootObjectConstants.IMAGE_LOCATION_UNIT,
+            SGIRootObjectConstants.IMAGE_LOCATION_Y_MIN_VALUE,
+            SGIRootObjectConstants.IMAGE_LOCATION_Y_MAX_VALUE,
+            SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
     if (yNew == null) {
       return false;
     }
@@ -719,7 +729,12 @@ public class SGClientPanel extends JLayeredPane
   public boolean setImageScalingFactor(final float f) {
     final Float fNew =
         SGUtility.calcPropertyValue(
-            f, null, null, IMAGE_SCALE_MIN_VALUE, IMAGE_SCALE_MAX_VALUE, IMAGE_SCALING_ORDER);
+            f,
+            null,
+            null,
+            SGIRootObjectConstants.IMAGE_SCALE_MIN_VALUE,
+            SGIRootObjectConstants.IMAGE_SCALE_MAX_VALUE,
+            SGIRootObjectConstants.IMAGE_SCALING_ORDER);
     if (fNew == null) {
       return false;
     }
@@ -861,10 +876,10 @@ public class SGClientPanel extends JLayeredPane
 
       // new magnification
       float magNew = mag + magDiff;
-      if (magNew < MIN_MAGNIFICATION_VALUE) {
-        magNew = MIN_MAGNIFICATION_VALUE;
-      } else if (magNew > MAX_MAGNIFICATION_VALUE) {
-        magNew = MAX_MAGNIFICATION_VALUE;
+      if (magNew < SGIRootObjectConstants.MIN_MAGNIFICATION_VALUE) {
+        magNew = SGIRootObjectConstants.MIN_MAGNIFICATION_VALUE;
+      } else if (magNew > SGIRootObjectConstants.MAX_MAGNIFICATION_VALUE) {
+        magNew = SGIRootObjectConstants.MAX_MAGNIFICATION_VALUE;
       }
       final int magInt = (int) magNew;
 
@@ -2598,10 +2613,14 @@ public class SGClientPanel extends JLayeredPane
         // final float hOld = (float)paper.getHeight();
 
         final float ratio = SGIConstants.CM_POINT_RATIO;
-        final float minWidth = (float) SGIRootObjectConstants.PAPER_WIDTH_MIN_VALUE / ratio;
-        final float minHeight = (float) SGIRootObjectConstants.PAPER_HEIGHT_MIN_VALUE / ratio;
-        final float maxWidth = (float) SGIRootObjectConstants.PAPER_WIDTH_MAX_VALUE / ratio;
-        final float maxHeight = (float) SGIRootObjectConstants.PAPER_HEIGHT_MAX_VALUE / ratio;
+        final float minWidth =
+            (float) SGIRootObjectConstants.PAPER_WIDTH_MIN_VALUE / ratio;
+        final float minHeight =
+            (float) SGIRootObjectConstants.PAPER_HEIGHT_MIN_VALUE / ratio;
+        final float maxWidth =
+            (float) SGIRootObjectConstants.PAPER_WIDTH_MAX_VALUE / ratio;
+        final float maxHeight =
+            (float) SGIRootObjectConstants.PAPER_HEIGHT_MAX_VALUE / ratio;
 
         if (this.mDrawHorizontalLineFlag) {
           float w = (x - startX) / this.mMagnification;

@@ -16,7 +16,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementArrow;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGIVXYDataConstants;
 
-public class SGArrowUtility implements SGIVXYDataConstants, SGIDataCommandConstants {
+public class SGArrowUtility implements SGIVXYDataConstants {
 
   /**
    * Sets the line width with a given unit.
@@ -159,119 +159,119 @@ public class SGArrowUtility implements SGIVXYDataConstants, SGIDataCommandConsta
       String key = itr.next();
       String value = map.getValueString(key);
 
-      if (COM_DATA_ARROW_LINE_WIDTH.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_ARROW_LINE_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_DATA_ARROW_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (arrows.setLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_DATA_ARROW_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ARROW_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ARROW_LINE_TYPE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ARROW_LINE_TYPE.equalsIgnoreCase(key)) {
         final Integer type = SGDrawingElementLine.getLineTypeFromName(value);
         if (type == null) {
-          result.putResult(COM_DATA_ARROW_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (arrows.setLineType(type) == false) {
-          result.putResult(COM_DATA_ARROW_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ARROW_LINE_TYPE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ARROW_HEAD_SIZE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_LINE_TYPE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ARROW_HEAD_SIZE.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_DATA_ARROW_HEAD_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (arrows.setHeadSize(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_DATA_ARROW_HEAD_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ARROW_HEAD_SIZE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ARROW_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_SIZE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ARROW_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (arrows.setColor(cl) == false) {
-            result.putResult(COM_DATA_ARROW_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_DATA_ARROW_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (arrows.setColor(cl) == false) {
-            result.putResult(COM_DATA_ARROW_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_DATA_ARROW_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ARROW_START_TYPE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_COLOR, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ARROW_START_TYPE.equalsIgnoreCase(key)) {
         final Integer type = SGDrawingElementArrow.getArrowHeadTypeFromName(value);
         if (type == null) {
-          result.putResult(COM_DATA_ARROW_START_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_START_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (arrows.setStartHeadType(type) == false) {
-          result.putResult(COM_DATA_ARROW_START_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_START_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ARROW_START_TYPE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ARROW_END_TYPE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_START_TYPE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ARROW_END_TYPE.equalsIgnoreCase(key)) {
         final Integer type = SGDrawingElementArrow.getArrowHeadTypeFromName(value);
         if (type == null) {
-          result.putResult(COM_DATA_ARROW_END_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_END_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (arrows.setEndHeadType(type) == false) {
-          result.putResult(COM_DATA_ARROW_END_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_END_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ARROW_END_TYPE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ARROW_HEAD_OPEN_ANGLE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_END_TYPE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ARROW_HEAD_OPEN_ANGLE.equalsIgnoreCase(key)) {
         Float openAngle = SGUtilityText.getFloat(value);
         if (openAngle == null) {
-          result.putResult(COM_DATA_ARROW_HEAD_OPEN_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_OPEN_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (setHeadAngle(openAngle, null, arrows) == false) {
-          result.putResult(COM_DATA_ARROW_HEAD_OPEN_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_OPEN_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ARROW_HEAD_OPEN_ANGLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ARROW_HEAD_CLOSE_ANGLE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_OPEN_ANGLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ARROW_HEAD_CLOSE_ANGLE.equalsIgnoreCase(key)) {
         Float closeAngle = SGUtilityText.getFloat(value);
         if (closeAngle == null) {
-          result.putResult(COM_DATA_ARROW_HEAD_CLOSE_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_CLOSE_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (setHeadAngle(null, closeAngle, arrows) == false) {
-          result.putResult(COM_DATA_ARROW_HEAD_CLOSE_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_CLOSE_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ARROW_HEAD_CLOSE_ANGLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ARROW_HEAD_ANGLE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_CLOSE_ANGLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ARROW_HEAD_ANGLE.equalsIgnoreCase(key)) {
         float[] angles = SGUtilityText.getFloatArray(value);
         if (angles == null) {
-          result.putResult(COM_DATA_ARROW_HEAD_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (angles.length != 2) {
-          result.putResult(COM_DATA_ARROW_HEAD_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (arrows.setHeadAngle(angles[0], angles[1]) == false) {
-          result.putResult(COM_DATA_ARROW_HEAD_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_ANGLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ARROW_HEAD_ANGLE, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARROW_HEAD_ANGLE, SGPropertyResults.SUCCEEDED);
       }
     }
 

@@ -210,11 +210,11 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
 
   private boolean isTickLabelAvailable(SGDataColumnInfo[] cols) {
     List<SGDataColumnInfo> tickLabelColumnList =
-        this.findColumnsWithColumnTypeStartsWith(cols, TICK_LABEL);
+        this.findColumnsWithColumnTypeStartsWith(cols, SGIDataColumnTypeConstants.TICK_LABEL);
     if (tickLabelColumnList.size() > 0) {
       return true;
     }
-    List<SGDataColumnInfo> dateColumnList = this.findColumnsWithValueType(cols, VALUE_TYPE_DATE);
+    List<SGDataColumnInfo> dateColumnList = this.findColumnsWithValueType(cols, SGIDataColumnTypeConstants.VALUE_TYPE_DATE);
     if (dateColumnList.size() > 0) {
       return true;
     }

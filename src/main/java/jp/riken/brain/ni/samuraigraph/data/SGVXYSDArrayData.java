@@ -33,8 +33,7 @@ import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 /** Two dimensional vector data. */
-public class SGVXYSDArrayData extends SGSDArrayData
-    implements SGIVXYTypeData, SGIDataPropertyKeyConstants {
+public class SGVXYSDArrayData extends SGSDArrayData implements SGIVXYTypeData {
 
   /** The column index for x-coordinate values. */
   protected Integer mXCoordinateIndex = null;
@@ -329,10 +328,18 @@ public class SGVXYSDArrayData extends SGSDArrayData
    * @return true if succeeded
    */
   protected boolean writeAttributeColumnIndices(Element el) {
-    el.setAttribute(KEY_X_COORDINATE_COLUMN_INDEX, this.mXCoordinateIndex.toString());
-    el.setAttribute(KEY_Y_COORDINATE_COLUMN_INDEX, this.mYCoordinateIndex.toString());
-    el.setAttribute(KEY_FIRST_COMPONENT_COLUMN_INDEX, this.mFirstComponentIndex.toString());
-    el.setAttribute(KEY_SECOND_COMPONENT_COLUMN_INDEX, this.mSecondComponentIndex.toString());
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_X_COORDINATE_COLUMN_INDEX,
+        this.mXCoordinateIndex.toString());
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_COLUMN_INDEX,
+        this.mYCoordinateIndex.toString());
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_COLUMN_INDEX,
+        this.mFirstComponentIndex.toString());
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_COLUMN_INDEX,
+        this.mSecondComponentIndex.toString());
     return true;
   }
 
@@ -343,22 +350,30 @@ public class SGVXYSDArrayData extends SGSDArrayData
    * @return true if succeeded
    */
   protected boolean writeSequentialColumnIndices(Element el) {
-    el.setAttribute(KEY_X_COORDINATE_COLUMN_INDEX, Integer.toString(0));
-    el.setAttribute(KEY_Y_COORDINATE_COLUMN_INDEX, Integer.toString(1));
-    el.setAttribute(KEY_FIRST_COMPONENT_COLUMN_INDEX, Integer.toString(2));
-    el.setAttribute(KEY_SECOND_COMPONENT_COLUMN_INDEX, Integer.toString(3));
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_COORDINATE_COLUMN_INDEX, Integer.toString(0));
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_COLUMN_INDEX, Integer.toString(1));
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_COLUMN_INDEX, Integer.toString(2));
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_COLUMN_INDEX, Integer.toString(3));
     return true;
   }
 
   @Override
   protected boolean writeSequentialColumnName(Element el) {
-    el.setAttribute(KEY_X_COORDINATE_COLUMN_INDEX, this.getSequentialColumnName(0));
-    el.setAttribute(KEY_Y_COORDINATE_COLUMN_INDEX, this.getSequentialColumnName(1));
-    el.setAttribute(KEY_FIRST_COMPONENT_COLUMN_INDEX, this.getSequentialColumnName(2));
-    el.setAttribute(KEY_SECOND_COMPONENT_COLUMN_INDEX, this.getSequentialColumnName(3));
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_X_COORDINATE_COLUMN_INDEX, this.getSequentialColumnName(0));
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_COLUMN_INDEX, this.getSequentialColumnName(1));
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_COLUMN_INDEX,
+        this.getSequentialColumnName(2));
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_COLUMN_INDEX,
+        this.getSequentialColumnName(3));
 
     // serial numbers
-    el.setAttribute(KEY_INDEX_VARIABLE_NAME, INDEX);
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, SGIDataColumnTypeConstants.SERIAL_NUMBERS);
 
     return true;
   }
@@ -372,7 +387,8 @@ public class SGVXYSDArrayData extends SGSDArrayData
   //     */
   //    public boolean readProperty(Element el) {
   //        Integer index = null;
-  //        if ((index = this.readIndex(el, KEY_X_COORDINATE_COLUMN_INDEX)) != null) {
+  //        if ((index = this.readIndex(el,
+  // SGIDataPropertyKeyConstants.KEY_X_COORDINATE_COLUMN_INDEX)) != null) {
   //            if (this.checkColumnIndexRange(index) == false) {
   //                return false;
   //            }
@@ -380,7 +396,8 @@ public class SGVXYSDArrayData extends SGSDArrayData
   //        } else {
   //            return false;
   //        }
-  //        if ((index = this.readIndex(el, KEY_Y_COORDINATE_COLUMN_INDEX)) != null) {
+  //        if ((index = this.readIndex(el,
+  // SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_COLUMN_INDEX)) != null) {
   //            if (this.checkColumnIndexRange(index) == false) {
   //                return false;
   //            }
@@ -388,7 +405,8 @@ public class SGVXYSDArrayData extends SGSDArrayData
   //        } else {
   //            return false;
   //        }
-  //        if ((index = this.readIndex(el, KEY_FIRST_COMPONENT_COLUMN_INDEX)) != null) {
+  //        if ((index = this.readIndex(el,
+  // SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_COLUMN_INDEX)) != null) {
   //            if (this.checkColumnIndexRange(index) == false) {
   //                return false;
   //            }
@@ -396,7 +414,8 @@ public class SGVXYSDArrayData extends SGSDArrayData
   //        } else {
   //            return false;
   //        }
-  //        if ((index = this.readIndex(el, KEY_SECOND_COMPONENT_COLUMN_INDEX)) != null) {
+  //        if ((index = this.readIndex(el,
+  // SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_COLUMN_INDEX)) != null) {
   //            if (this.checkColumnIndexRange(index) == false) {
   //                return false;
   //            }
@@ -559,9 +578,9 @@ public class SGVXYSDArrayData extends SGSDArrayData
     Integer fIndex = null;
     Integer sIndex = null;
     for (int ii = 0; ii < columns.length; ii++) {
-      if (SGDataUtility.isEqualColumnType(X_COORDINATE, columns[ii])) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_COORDINATE, columns[ii])) {
         xIndex = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(Y_COORDINATE, columns[ii])) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_COORDINATE, columns[ii])) {
         yIndex = Integer.valueOf(ii);
       } else if (SGDataUtility.isEqualColumnType(first, columns[ii])) {
         fIndex = Integer.valueOf(ii);
@@ -748,10 +767,10 @@ public class SGVXYSDArrayData extends SGSDArrayData
       array[ii] = "";
     }
     if (this.mXCoordinateIndex != null) {
-      array[this.mXCoordinateIndex.intValue()] = X_COORDINATE;
+      array[this.mXCoordinateIndex.intValue()] = SGIDataColumnTypeConstants.X_COORDINATE;
     }
     if (this.mYCoordinateIndex != null) {
-      array[this.mYCoordinateIndex.intValue()] = Y_COORDINATE;
+      array[this.mYCoordinateIndex.intValue()] = SGIDataColumnTypeConstants.Y_COORDINATE;
     }
     if (this.mFirstComponentIndex != null) {
       array[this.mFirstComponentIndex.intValue()] = first;
@@ -778,8 +797,8 @@ public class SGVXYSDArrayData extends SGSDArrayData
     final boolean polar = this.isPolar();
     final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
     final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
-    colArray[0].setColumnType(X_COORDINATE);
-    colArray[1].setColumnType(Y_COORDINATE);
+    colArray[0].setColumnType(SGIDataColumnTypeConstants.X_COORDINATE);
+    colArray[1].setColumnType(SGIDataColumnTypeConstants.Y_COORDINATE);
     colArray[2].setColumnType(first);
     colArray[3].setColumnType(second);
     return colArray;
@@ -1278,9 +1297,9 @@ public class SGVXYSDArrayData extends SGSDArrayData
         final int arrayIndex = all ? index : Arrays.binarySearch(indices, index);
         final double value = dataValue.getValue();
         double[] values;
-        if (X_COORDINATE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
           values = xValues;
-        } else if (Y_COORDINATE.equals(columnType)) {
+        } else if (SGIDataColumnTypeConstants.Y_COORDINATE.equals(columnType)) {
           values = yValues;
         } else if (first.equals(columnType)) {
           values = fValues;
@@ -1431,11 +1450,11 @@ public class SGVXYSDArrayData extends SGSDArrayData
 
     String strX = Integer.toString(this.mXCoordinateIndex + 1);
     varList.add(strX);
-    columnTypeList.add(X_COORDINATE);
+    columnTypeList.add(SGIDataColumnTypeConstants.X_COORDINATE);
 
     String strY = Integer.toString(this.mYCoordinateIndex + 1);
     varList.add(strY);
-    columnTypeList.add(Y_COORDINATE);
+    columnTypeList.add(SGIDataColumnTypeConstants.Y_COORDINATE);
 
     String strF = Integer.toString(this.mFirstComponentIndex + 1);
     varList.add(strF);
@@ -1454,7 +1473,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
       SGIntegerSeriesSet arraySection = this.getStride();
       if (!arraySection.isComplete()) {
         SGPropertyUtility.addQuotedStringProperty(
-            map, COM_DATA_ARRAY_SECTION, arraySection.toString());
+            map, SGIDataCommandConstants.COM_DATA_ARRAY_SECTION, arraySection.toString());
       }
     }
     return true;

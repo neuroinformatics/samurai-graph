@@ -25,8 +25,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** A panel to setup the properties of netCDF data. */
-public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
-    implements DocumentListener, SGINetCDFConstants {
+public class SGNetCDFDataSetupPanel extends SGDataSetupPanel implements DocumentListener {
 
   private static final long serialVersionUID = -7931773969660601629L;
 
@@ -597,7 +596,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
   }
 
   private boolean isIndexAvailable(SGDataColumnInfo[] cols) {
-    List<SGDataColumnInfo> indexColumnList = this.findColumnsWithColumnType(cols, INDEX);
+    List<SGDataColumnInfo> indexColumnList = this.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.INDEX);
     return (indexColumnList.size() == 1);
   }
 
@@ -607,11 +606,11 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
 
   private boolean isTickLabelAvailable(SGDataColumnInfo[] cols) {
     List<SGDataColumnInfo> tickLabelColumnList =
-        this.findColumnsWithColumnTypeStartsWith(cols, TICK_LABEL);
+        this.findColumnsWithColumnTypeStartsWith(cols, SGIDataColumnTypeConstants.TICK_LABEL);
     if (tickLabelColumnList.size() > 0) {
       return true;
     }
-    List<SGDataColumnInfo> dateColumnList = this.findColumnsWithValueType(cols, VALUE_TYPE_DATE);
+    List<SGDataColumnInfo> dateColumnList = this.findColumnsWithValueType(cols, SGIDataColumnTypeConstants.VALUE_TYPE_DATE);
     if (dateColumnList.size() > 0) {
       return true;
     }
@@ -886,7 +885,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       for (int ii = 0; ii < cols.length; ii++) {
         SGNetCDFDataColumnInfo info = (SGNetCDFDataColumnInfo) cols[ii];
         String type = info.getColumnType();
-        if (PICKUP.equals(type)) {
+        if (SGIDataColumnTypeConstants.PICKUP.equals(type)) {
           pickUpColumn = info;
           pickUpCnt++;
           if (pickUpCnt > 1) {
@@ -937,7 +936,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     if (SGDataUtility.isSXYTypeData(this.mDataType)) {
       int dimLen = -1;
       if (indexAvailable) {
-        cTypeList.add(INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.INDEX);
         this.updateIndexPanel(
             strideMap,
             SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
@@ -945,7 +944,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
             cols,
             cTypeList);
         this.mSXYDataStrideMainPanel.clearAll();
-        List<SGDataColumnInfo> indexColList = SGDataUtility.findColumnsWithColumnType(cols, INDEX);
+        List<SGDataColumnInfo> indexColList = SGDataUtility.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.INDEX);
         if (indexColList.size() != 0) {
           SGNetCDFDataColumnInfo indexCol = (SGNetCDFDataColumnInfo) indexColList.get(0);
           if (indexCol != null && indexCol.isCoordinateVariable()) {
@@ -953,8 +952,8 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
           }
         }
       } else {
-        cTypeList.add(X_VALUE);
-        cTypeList.add(Y_VALUE);
+        cTypeList.add(SGIDataColumnTypeConstants.X_VALUE);
+        cTypeList.add(SGIDataColumnTypeConstants.Y_VALUE);
         this.updateIndexPanel(
             strideMap,
             SGIDataInformationKeyConstants.KEY_SXY_STRIDE,
@@ -962,8 +961,8 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
             cols,
             cTypeList);
         this.mSXYDataIndexStridePanel.clearAll();
-        List<SGDataColumnInfo> xColList = SGDataUtility.findColumnsWithColumnType(cols, X_VALUE);
-        List<SGDataColumnInfo> yColList = SGDataUtility.findColumnsWithColumnType(cols, Y_VALUE);
+        List<SGDataColumnInfo> xColList = SGDataUtility.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_VALUE);
+        List<SGDataColumnInfo> yColList = SGDataUtility.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_VALUE);
         if (xColList.size() != 0) {
           SGNetCDFDataColumnInfo xCol = (SGNetCDFDataColumnInfo) xColList.get(0);
           if (xCol != null && xCol.isCoordinateVariable()) {
@@ -995,7 +994,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       }
     } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
       if (indexAvailable) {
-        cTypeList.add(INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.INDEX);
         this.updateIndexPanel(
             strideMap,
             SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
@@ -1005,8 +1004,8 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         this.mSXYZDataXStridePanel.clearAll();
         this.mSXYZDataYStridePanel.clearAll();
       } else {
-        cTypeList.add(X_VALUE);
-        cTypeList.add(X_INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.X_VALUE);
+        cTypeList.add(SGIDataColumnTypeConstants.X_INDEX);
         this.updateIndexPanel(
             strideMap,
             SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
@@ -1014,8 +1013,8 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
             cols,
             cTypeList);
         cTypeList.clear();
-        cTypeList.add(Y_VALUE);
-        cTypeList.add(Y_INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.Y_VALUE);
+        cTypeList.add(SGIDataColumnTypeConstants.Y_INDEX);
         this.updateIndexPanel(
             strideMap,
             SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
@@ -1026,7 +1025,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       }
     } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
       if (indexAvailable) {
-        cTypeList.add(INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.INDEX);
         this.updateIndexPanel(
             strideMap,
             SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
@@ -1036,8 +1035,8 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         this.mVXYDataXStridePanel.clearAll();
         this.mVXYDataYStridePanel.clearAll();
       } else {
-        cTypeList.add(X_COORDINATE);
-        cTypeList.add(X_INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.X_COORDINATE);
+        cTypeList.add(SGIDataColumnTypeConstants.X_INDEX);
         this.updateIndexPanel(
             strideMap,
             SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X,
@@ -1045,8 +1044,8 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
             cols,
             cTypeList);
         cTypeList.clear();
-        cTypeList.add(Y_COORDINATE);
-        cTypeList.add(Y_INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.Y_COORDINATE);
+        cTypeList.add(SGIDataColumnTypeConstants.Y_INDEX);
         this.updateIndexPanel(
             strideMap,
             SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y,
@@ -1066,7 +1065,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     for (int ii = 0; ii < cols.length; ii++) {
       SGNetCDFDataColumnInfo info = (SGNetCDFDataColumnInfo) cols[ii];
       String type = info.getColumnType();
-      if (!"".equals(type) && !ANIMATION_FRAME.equals(type)) {
+      if (!"".equals(type) && !SGIDataColumnTypeConstants.ANIMATION_FRAME.equals(type)) {
         vNameList.add(info.getName());
       }
     }
@@ -1251,7 +1250,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
 
     // checks pick up indices
     if (SGDataUtility.isSXYTypeData(this.mDataType)) {
-      List<SGDataColumnInfo> pickUpCols = SGDataUtility.findColumnsWithColumnType(cols, PICKUP);
+      List<SGDataColumnInfo> pickUpCols = SGDataUtility.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.PICKUP);
       if (pickUpCols.size() == 1) {
         SGNetCDFDataColumnInfo pickUpCol = (SGNetCDFDataColumnInfo) pickUpCols.get(0);
         SGDimensionInfo pickUpDim = pickUpCol.getDimension(0);
@@ -1323,7 +1322,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
   @Override
   public Boolean isVariableDataType() {
     for (int ii = 0; ii < this.mDataColumns.length; ii++) {
-      if (PICKUP.equals(this.mDataColumns[ii].getColumnType())) {
+      if (SGIDataColumnTypeConstants.PICKUP.equals(this.mDataColumns[ii].getColumnType())) {
         return Boolean.FALSE;
       }
     }

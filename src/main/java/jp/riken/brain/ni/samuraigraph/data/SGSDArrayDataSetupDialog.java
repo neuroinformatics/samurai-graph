@@ -8,8 +8,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 
 /** A dialog to set up the single-dimensional array data. */
-public class SGSDArrayDataSetupDialog extends SGDataSetupDialog
-    implements SGIDataColumnTypeConstants {
+public class SGSDArrayDataSetupDialog extends SGDataSetupDialog {
 
   /** Serial Version UID */
   private static final long serialVersionUID = -6874865640705737852L;

@@ -48,7 +48,7 @@ import ucar.nc2.Variable;
 /** The class of multiple scalar XY type data for multidimensional data. */
 public class SGSXYMDArrayMultipleData extends SGMDArrayData
     implements SGISXYTypeMultipleData,
-        SGIDataPropertyKeyConstants,
+
         SGISXYMultipleDimensionData,
         SGIMDArrayConstants {
 
@@ -1406,20 +1406,20 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       final SGMDArrayVariable ehVar = this.getErrorBarHolderVariable();
       final SGMDArrayVariable tlVar = this.getTickLabelVariable();
       final SGMDArrayVariable thVar = this.getTickLabelHolderVariable();
-      SGMDArrayDataColumnInfo xInfo = SGDataUtility.createDataColumnInfo(xVar, X_VALUE);
-      SGMDArrayDataColumnInfo yInfo = SGDataUtility.createDataColumnInfo(yVar, Y_VALUE);
+      SGMDArrayDataColumnInfo xInfo = SGDataUtility.createDataColumnInfo(xVar, SGIDataColumnTypeConstants.X_VALUE);
+      SGMDArrayDataColumnInfo yInfo = SGDataUtility.createDataColumnInfo(yVar, SGIDataColumnTypeConstants.Y_VALUE);
       SGMDArrayDataColumnInfo leInfo = null;
       SGMDArrayDataColumnInfo ueInfo = null;
       SGMDArrayDataColumnInfo ehInfo = null;
       if (leVar != null && ueVar != null && ehVar != null) {
-        leInfo = SGDataUtility.createDataColumnInfo(leVar, LOWER_ERROR_VALUE);
-        ueInfo = SGDataUtility.createDataColumnInfo(ueVar, UPPER_ERROR_VALUE);
+        leInfo = SGDataUtility.createDataColumnInfo(leVar, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
+        ueInfo = SGDataUtility.createDataColumnInfo(ueVar, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE);
         ehInfo = (SGMDArrayDataColumnInfo) (ehVar.equals(xVar) ? xInfo : yInfo).clone();
       }
       SGMDArrayDataColumnInfo tlInfo = null;
       SGMDArrayDataColumnInfo thInfo = null;
       if (tlVar != null) {
-        tlInfo = SGDataUtility.createDataColumnInfo(tlVar, TICK_LABEL);
+        tlInfo = SGDataUtility.createDataColumnInfo(tlVar, SGIDataColumnTypeConstants.TICK_LABEL);
         thInfo = (SGMDArrayDataColumnInfo) (thVar.equals(xVar) ? xInfo : yInfo).clone();
       }
       SGMDArrayVariable[] vars = this.getVariables();
@@ -1525,20 +1525,20 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
             }
           }
         }
-        SGMDArrayDataColumnInfo xInfo = SGDataUtility.createDataColumnInfo(xVar, X_VALUE);
-        SGMDArrayDataColumnInfo yInfo = SGDataUtility.createDataColumnInfo(yVar, Y_VALUE);
+        SGMDArrayDataColumnInfo xInfo = SGDataUtility.createDataColumnInfo(xVar, SGIDataColumnTypeConstants.X_VALUE);
+        SGMDArrayDataColumnInfo yInfo = SGDataUtility.createDataColumnInfo(yVar, SGIDataColumnTypeConstants.Y_VALUE);
         SGMDArrayDataColumnInfo leInfo = null;
         SGMDArrayDataColumnInfo ueInfo = null;
         SGMDArrayDataColumnInfo ehInfo = null;
         if (leVar != null && ueVar != null && ehVar != null) {
-          leInfo = SGDataUtility.createErrorBarInfo(leVar, LOWER_ERROR_VALUE, leVar, ueVar, ehVar);
-          ueInfo = SGDataUtility.createErrorBarInfo(ueVar, UPPER_ERROR_VALUE, leVar, ueVar, ehVar);
+          leInfo = SGDataUtility.createErrorBarInfo(leVar, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, leVar, ueVar, ehVar);
+          ueInfo = SGDataUtility.createErrorBarInfo(ueVar, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, leVar, ueVar, ehVar);
           ehInfo = (SGMDArrayDataColumnInfo) (ehVar.equals(xVar) ? xInfo : yInfo).clone();
         }
         SGMDArrayDataColumnInfo tlInfo = null;
         SGMDArrayDataColumnInfo thInfo = null;
         if (tlVar != null && thVar != null) {
-          tlInfo = SGDataUtility.createDataColumnInfo(tlVar, TICK_LABEL, thVar.getName());
+          tlInfo = SGDataUtility.createDataColumnInfo(tlVar, SGIDataColumnTypeConstants.TICK_LABEL, thVar.getName());
           thInfo = (SGMDArrayDataColumnInfo) (thVar.equals(xVar) ? xInfo : yInfo).clone();
         }
         SGSXYMDArrayData data =
@@ -1661,20 +1661,20 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       final int uIndex = this.find(var, this.mUpperErrorVariables);
       final int tIndex = this.find(var, this.mTickLabelVariables);
       if (this.find(var, this.mXVariables) != -1) {
-        array[ii] = X_VALUE;
+        array[ii] = SGIDataColumnTypeConstants.X_VALUE;
       } else if (this.find(var, this.mYVariables) != -1) {
-        array[ii] = Y_VALUE;
+        array[ii] = SGIDataColumnTypeConstants.Y_VALUE;
       } else if ((lIndex != -1) || (uIndex != -1)) {
         String name = null;
         int index = -1;
         if (lIndex == uIndex) {
-          name = LOWER_UPPER_ERROR_VALUE;
+          name = SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE;
           index = lIndex;
         } else if (lIndex != -1) {
-          name = LOWER_ERROR_VALUE;
+          name = SGIDataColumnTypeConstants.LOWER_ERROR_VALUE;
           index = lIndex;
         } else if (uIndex != -1) {
-          name = UPPER_ERROR_VALUE;
+          name = SGIDataColumnTypeConstants.UPPER_ERROR_VALUE;
           index = uIndex;
         }
         if (name == null) {
@@ -1692,7 +1692,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         if (hIndex == -1) {
           return null;
         }
-        array[ii] = SGDataUtility.appendColumnTitle(TICK_LABEL, varName);
+        array[ii] = SGDataUtility.appendColumnTitle(SGIDataColumnTypeConstants.TICK_LABEL, varName);
       } else {
         array[ii] = "";
       }
@@ -1809,34 +1809,34 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         SGMDArrayVariable yVar = this.getYVariable();
         if (xVar != null) {
           value = this.bindVariableNames(xVar, true);
-          el.setAttribute(KEY_X_VALUE_NAME, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, value);
         }
         if (yVar != null) {
           value = this.bindVariableNames(yVar, true);
-          el.setAttribute(KEY_Y_VALUE_NAME, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, value);
         }
         if (this.isErrorBarAvailable()) {
           SGMDArrayVariable lVar = this.getLowerErrorVariable();
           value = this.bindVariableNames(lVar, true);
-          el.setAttribute(KEY_LOWER_ERROR_VALUE_NAME, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME, value);
           SGMDArrayVariable uVar = this.getUpperErrorVariable();
           value = this.bindVariableNames(uVar, true);
-          el.setAttribute(KEY_UPPER_ERROR_VALUE_NAME, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME, value);
           SGMDArrayVariable hVar = this.getErrorBarHolderVariable();
           value = this.bindVariableNames(hVar, false);
-          el.setAttribute(KEY_ERROR_BAR_HOLDER_NAME, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME, value);
         }
         if (this.isTickLabelAvailable()) {
           SGMDArrayVariable tVar = this.getTickLabelVariable();
           value = this.bindVariableNames(tVar, true);
-          el.setAttribute(KEY_TICK_LABEL_NAME, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_TICK_LABEL_NAME, value);
           SGMDArrayVariable hVar = this.getTickLabelHolderVariable();
           value = this.bindVariableNames(hVar, false);
-          el.setAttribute(KEY_TICK_LABEL_HOLDER_NAME, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME, value);
         }
 
         String pickUpIndicesStr = this.mPickUpDimensionInfo.getIndices().toString();
-        el.setAttribute(KEY_PICK_UP_DIMENSION_INDICES, pickUpIndicesStr);
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION_INDICES, pickUpIndicesStr);
 
         StringBuffer sb = new StringBuffer();
         SGMDArrayVariable[] vars = this.getVariables();
@@ -1854,33 +1854,33 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
           sb.append(index);
           cnt++;
         }
-        el.setAttribute(KEY_PICK_UP_DIMENSION, sb.toString());
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION, sb.toString());
 
       } else {
         value = this.bindVariableNamesInBracket(this.mXVariables, true);
-        el.setAttribute(KEY_X_VALUE_NAMES, value);
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAMES, value);
         value = this.bindVariableNamesInBracket(this.mYVariables, true);
-        el.setAttribute(KEY_Y_VALUE_NAMES, value);
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, value);
         if (this.isErrorBarAvailable()) {
           value = this.bindVariableNamesInBracket(this.mLowerErrorVariables, true);
-          el.setAttribute(KEY_LOWER_ERROR_VALUE_NAMES, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES, value);
           value = this.bindVariableNamesInBracket(this.mUpperErrorVariables, true);
-          el.setAttribute(KEY_UPPER_ERROR_VALUE_NAMES, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAMES, value);
           value = this.bindVariableNamesInBracket(this.mErrorBarHolderVariables, false);
-          el.setAttribute(KEY_ERROR_BAR_HOLDER_NAMES, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAMES, value);
         }
         if (this.isTickLabelAvailable()) {
           value = this.bindVariableNamesInBracket(this.mTickLabelVariables, true);
-          el.setAttribute(KEY_TICK_LABEL_NAMES, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES, value);
           value = this.bindVariableNamesInBracket(this.mTickLabelHolderVariables, false);
-          el.setAttribute(KEY_TICK_LABEL_HOLDER_NAMES, value);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAMES, value);
         }
       }
 
       // stride
-      el.setAttribute(KEY_ARRAY_SECTION, this.mStride.toString());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_ARRAY_SECTION, this.mStride.toString());
       if (this.isTickLabelAvailable()) {
-        el.setAttribute(KEY_TICK_LABEL_ARRAY_SECTION, this.mTickLabelStride.toString());
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION, this.mTickLabelStride.toString());
       }
 
     } else if (SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
@@ -1911,35 +1911,35 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       } else {
         value = SGDataUtility.bindVariableNamesInBracket(xNameList);
       }
-      el.setAttribute(KEY_X_VALUE_NAMES, value);
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAMES, value);
 
       if (yNameList.size() == 0) {
         value = this.bindVariableNameInBracket(Y_VALUE_VAR_NAME);
       } else {
         value = SGDataUtility.bindVariableNamesInBracket(yNameList);
       }
-      el.setAttribute(KEY_Y_VALUE_NAMES, value);
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, value);
 
       if (this.isErrorBarAvailable()) {
         value = SGDataUtility.bindVariableNamesInBracket(leNameList);
-        el.setAttribute(KEY_LOWER_ERROR_VALUE_NAMES, value);
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES, value);
         value = SGDataUtility.bindVariableNamesInBracket(ueNameList);
-        el.setAttribute(KEY_UPPER_ERROR_VALUE_NAMES, value);
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAMES, value);
         value = SGDataUtility.bindVariableNamesInBracket(this.mErrorBarHolderVariables);
-        el.setAttribute(KEY_ERROR_BAR_HOLDER_NAMES, value);
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAMES, value);
       }
 
       if (this.isTickLabelAvailable()) {
         value = SGDataUtility.bindVariableNamesInBracket(tlNameList);
-        el.setAttribute(KEY_TICK_LABEL_NAMES, value);
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES, value);
         value = SGDataUtility.bindVariableNamesInBracket(this.mTickLabelHolderVariables);
-        el.setAttribute(KEY_TICK_LABEL_HOLDER_NAMES, value);
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAMES, value);
       }
 
       if (this.isDimensionPicked()) {
         el.setAttribute(SGIDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME, PICKUP_DIM_NAME);
         el.setAttribute(
-            KEY_PICK_UP_DIMENSION_INDICES, this.mPickUpDimensionInfo.getIndices().toString());
+            SGIDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION_INDICES, this.mPickUpDimensionInfo.getIndices().toString());
       }
     }
 
@@ -2027,22 +2027,22 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
     if (dimensionPicked) {
       SGMDArrayDataColumnInfo xInfo =
-          SGDataUtility.createDataColumnInfo(dataLast.getXVariable(), X_VALUE);
+          SGDataUtility.createDataColumnInfo(dataLast.getXVariable(), SGIDataColumnTypeConstants.X_VALUE);
       SGMDArrayDataColumnInfo yInfo =
-          SGDataUtility.createDataColumnInfo(dataLast.getYVariable(), Y_VALUE);
+          SGDataUtility.createDataColumnInfo(dataLast.getYVariable(), SGIDataColumnTypeConstants.Y_VALUE);
       SGMDArrayDataColumnInfo leInfo =
           (null != dataLast.getLowerErrorVariable())
               ? SGDataUtility.createDataColumnInfo(
-                  dataLast.getLowerErrorVariable(), LOWER_ERROR_VALUE)
+                  dataLast.getLowerErrorVariable(), SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)
               : null;
       SGMDArrayDataColumnInfo ueInfo =
           (null != dataLast.getUpperErrorVariable())
               ? SGDataUtility.createDataColumnInfo(
-                  dataLast.getUpperErrorVariable(), UPPER_ERROR_VALUE)
+                  dataLast.getUpperErrorVariable(), SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)
               : null;
       SGMDArrayDataColumnInfo tlInfo =
           (null != dataLast.getTickLabelVariable())
-              ? SGDataUtility.createDataColumnInfo(dataLast.getTickLabelVariable(), TICK_LABEL)
+              ? SGDataUtility.createDataColumnInfo(dataLast.getTickLabelVariable(), SGIDataColumnTypeConstants.TICK_LABEL)
               : null;
 
       // get dimension indices
@@ -2148,10 +2148,10 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       }
 
       SGMDArrayVariable[] x = xListNew.toArray(new SGMDArrayVariable[xListNew.size()]);
-      SGMDArrayDataColumnInfo[] xInfo = SGDataUtility.createDataColumnInfoArray(x, X_VALUE);
+      SGMDArrayDataColumnInfo[] xInfo = SGDataUtility.createDataColumnInfoArray(x, SGIDataColumnTypeConstants.X_VALUE);
 
       SGMDArrayVariable[] y = yListNew.toArray(new SGMDArrayVariable[yListNew.size()]);
-      SGMDArrayDataColumnInfo[] yInfo = SGDataUtility.createDataColumnInfoArray(y, Y_VALUE);
+      SGMDArrayDataColumnInfo[] yInfo = SGDataUtility.createDataColumnInfoArray(y, SGIDataColumnTypeConstants.Y_VALUE);
 
       SGMDArrayDataColumnInfo[] leInfo = new SGMDArrayDataColumnInfo[leList.size()];
       SGMDArrayDataColumnInfo[] ueInfo = new SGMDArrayDataColumnInfo[ueList.size()];
@@ -2167,9 +2167,9 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
         // lower error
         if (common) {
-          sb.append(LOWER_UPPER_ERROR_VALUE);
+          sb.append(SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE);
         } else {
-          sb.append(LOWER_ERROR_VALUE);
+          sb.append(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
         }
         sb.append(SGDataUtility.MID_COLUMN);
         sb.append(ehName);
@@ -2180,7 +2180,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
           ueColumnType = leColumnType;
         } else {
           sb.setLength(0);
-          sb.append(UPPER_ERROR_VALUE);
+          sb.append(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE);
           sb.append(SGDataUtility.MID_COLUMN);
           sb.append(ehName);
           ueColumnType = sb.toString();
@@ -2188,7 +2188,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
         // error bar holder
         SGDataColumnInfo ehInfoX = SGDataUtility.findColumnWithName(xInfo, ehName);
-        ehColumnType = (ehInfoX != null) ? X_VALUE : Y_VALUE;
+        ehColumnType = (ehInfoX != null) ? SGIDataColumnTypeConstants.X_VALUE : SGIDataColumnTypeConstants. Y_VALUE;
 
         leInfo[ii] = new SGMDArrayDataColumnInfo(leVar, null, leVar.getValueType());
         leInfo[ii].setColumnType(leColumnType);
@@ -2208,14 +2208,14 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         String thName = thVar.getName();
 
         // tick label
-        sb.append(TICK_LABEL);
+        sb.append(SGIDataColumnTypeConstants.TICK_LABEL);
         sb.append(SGDataUtility.MID_COLUMN);
         sb.append(thName);
         tlColumnType = sb.toString();
 
         // error bar holder
         SGDataColumnInfo thInfoX = SGDataUtility.findColumnWithName(xInfo, thName);
-        thColumnType = (thInfoX != null) ? X_VALUE : Y_VALUE;
+        thColumnType = (thInfoX != null) ? SGIDataColumnTypeConstants.X_VALUE : SGIDataColumnTypeConstants.Y_VALUE;
 
         tlInfo[ii] = new SGMDArrayDataColumnInfo(tlVar, null, tlVar.getValueType());
         tlInfo[ii].setColumnType(tlColumnType);
@@ -2634,37 +2634,37 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     for (int ii = 0; ii < columns.length; ii++) {
       SGMDArrayVariable var = vars[ii];
       String valueType = var.getValueType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         xVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         yVarList.add(var);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], LOWER_ERROR_VALUE)) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         lVarList.add(var);
         lColList.add(columns[ii]);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], UPPER_ERROR_VALUE)) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         uVarList.add(var);
         uColList.add(columns[ii]);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], LOWER_UPPER_ERROR_VALUE)) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         lVarList.add(var);
         uVarList.add(var);
         lColList.add(columns[ii]);
         uColList.add(columns[ii]);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], TICK_LABEL)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.TICK_LABEL)) {
         tVarList.add(var);
         tColList.add(columns[ii]);
       } else if ("".equals(columns[ii])) {
@@ -2714,18 +2714,18 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       String uColumnType = columnType.toUpperCase();
       String cType;
       final boolean ebFlag;
-      if (uColumnType.startsWith(LOWER_ERROR_VALUE.toUpperCase())) {
+      if (uColumnType.startsWith(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE.toUpperCase())) {
         ebFlag = true;
-        cType = LOWER_ERROR_VALUE;
-      } else if (uColumnType.startsWith(UPPER_ERROR_VALUE.toUpperCase())) {
+        cType = SGIDataColumnTypeConstants.LOWER_ERROR_VALUE;
+      } else if (uColumnType.startsWith(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE.toUpperCase())) {
         ebFlag = true;
-        cType = UPPER_ERROR_VALUE;
-      } else if (uColumnType.startsWith(LOWER_UPPER_ERROR_VALUE.toUpperCase())) {
+        cType = SGIDataColumnTypeConstants.UPPER_ERROR_VALUE;
+      } else if (uColumnType.startsWith(SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE.toUpperCase())) {
         ebFlag = true;
-        cType = LOWER_UPPER_ERROR_VALUE;
-      } else if (columnType.startsWith(TICK_LABEL)) {
+        cType = SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE;
+      } else if (columnType.startsWith(SGIDataColumnTypeConstants.TICK_LABEL)) {
         ebFlag = false;
-        cType = TICK_LABEL;
+        cType = SGIDataColumnTypeConstants.TICK_LABEL;
       } else {
         continue;
       }
@@ -3455,9 +3455,9 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     int yNum = 0;
     for (int ii = 0; ii < cols.length; ii++) {
       String columnType = cols[ii].getColumnType();
-      if (X_VALUE.equals(columnType)) {
+      if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
         xNum++;
-      } else if (Y_VALUE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
         yNum++;
       }
     }
@@ -3467,11 +3467,11 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       String columnType = cols[ii].getColumnType();
       String colName = cols[ii].getName();
       if (xNum > 1) {
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           name = colName;
         }
       } else {
-        if (Y_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
           name = colName;
         }
       }
@@ -3990,14 +3990,14 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       for (int ii = 0; ii < this.mXVariables.length; ii++) {
         String strX = this.getOneDimensionalVarCommandString(this.mXVariables[ii]);
         varList.add(strX);
-        columnTypeList.add(X_VALUE);
+        columnTypeList.add(SGIDataColumnTypeConstants.X_VALUE);
       }
     }
     if (this.mYVariables != null) {
       for (int ii = 0; ii < this.mYVariables.length; ii++) {
         String strY = this.getOneDimensionalVarCommandString(this.mYVariables[ii]);
         varList.add(strY);
-        columnTypeList.add(Y_VALUE);
+        columnTypeList.add(SGIDataColumnTypeConstants.Y_VALUE);
       }
     }
     if (this.isErrorBarAvailable()) {
@@ -4014,15 +4014,15 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         boolean equalFlag = leVar.equals(ueVar);
         if (equalFlag) {
           varList.add(leStr);
-          String columnTypeStr = SGDataUtility.appendColumnTitle(LOWER_UPPER_ERROR_VALUE, ehName);
+          String columnTypeStr = SGDataUtility.appendColumnTitle(SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE, ehName);
           columnTypeList.add(columnTypeStr);
         } else {
           varList.add(leStr);
-          String leColumnTypeStr = SGDataUtility.appendColumnTitle(LOWER_ERROR_VALUE, ehName);
+          String leColumnTypeStr = SGDataUtility.appendColumnTitle(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, ehName);
           columnTypeList.add(leColumnTypeStr);
 
           varList.add(ueStr);
-          String ueColumnTypeStr = SGDataUtility.appendColumnTitle(UPPER_ERROR_VALUE, ehName);
+          String ueColumnTypeStr = SGDataUtility.appendColumnTitle(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, ehName);
           columnTypeList.add(ueColumnTypeStr);
         }
       }
@@ -4033,7 +4033,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         String tlStr = this.getOneDimensionalVarCommandString(tlVar);
         String thName = this.mTickLabelHolderVariables[ii].getName();
         varList.add(tlStr);
-        String columnTypeStr = SGDataUtility.appendColumnTitle(TICK_LABEL, thName);
+        String columnTypeStr = SGDataUtility.appendColumnTitle(SGIDataColumnTypeConstants.TICK_LABEL, thName);
         columnTypeList.add(columnTypeStr);
       }
     }
@@ -4057,13 +4057,13 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       SGIntegerSeriesSet arraySection = this.getStride();
       if (!arraySection.isComplete()) {
         SGPropertyUtility.addQuotedStringProperty(
-            map, COM_DATA_ARRAY_SECTION, arraySection.toString());
+            map, SGIDataCommandConstants.COM_DATA_ARRAY_SECTION, arraySection.toString());
       }
       if (this.isTickLabelAvailable()) {
         SGIntegerSeriesSet tickLabelArraySection = this.getTickLabelStride();
         if (!tickLabelArraySection.isComplete()) {
           SGPropertyUtility.addQuotedStringProperty(
-              map, COM_DATA_TICK_LABEL_ARRAY_SECTION, tickLabelArraySection.toString());
+              map, SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION, tickLabelArraySection.toString());
         }
       }
     }
@@ -4186,7 +4186,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   @Override
   public int getDataViewerColumnNumber(final String columnType, final boolean all) {
     final int num;
-    if (Y_VALUE.equals(columnType)) {
+    if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
       if (this.hasMultipleYValues()) {
         num = this.getChildNumber();
       } else {
@@ -4491,7 +4491,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     // }
     // }
     if (this.hasMultipleYValues()) {
-      if (Y_VALUE.equals(columnType)) {
+      if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
         ret = super.getDataViewerCell(cell, columnType, bStride);
       } else {
         SGMDArrayVariable xVar = this.getXVariable();
@@ -4506,7 +4506,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         }
       }
     } else {
-      if (X_VALUE.equals(columnType)) {
+      if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
         ret = super.getDataViewerCell(cell, columnType, bStride);
       } else {
         SGMDArrayVariable yVar = this.getYVariable();

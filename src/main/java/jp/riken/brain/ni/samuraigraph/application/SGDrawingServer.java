@@ -10,7 +10,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** The main class of this application. */
-public class SGDrawingServer implements SGIApplicationConstants, SGIApplicationTextConstants {
+public class SGDrawingServer implements SGIApplicationConstants {
 
   // the name of look and feel
   private static String mLookAndFeel = null;

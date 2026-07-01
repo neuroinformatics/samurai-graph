@@ -26,7 +26,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGINode;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
@@ -51,7 +50,7 @@ import org.w3c.dom.NodeList;
 
 /** The axis for the color bar. */
 class SGColorBarAxis extends SGAxisElement
-    implements SGINode, SGIColorBarDialogObserver, SGIColorBarConstants, SGIFigureConstants {
+    implements SGINode, SGIColorBarDialogObserver, SGIColorBarConstants {
 
   /** Relative x-coordinate from the origin of the graph rectangle at the default magnification. */
   private float mX = 0.0f;

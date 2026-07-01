@@ -14,7 +14,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYDataConstants;
 
 public abstract class SGElementGroupLineForData extends SGElementGroupLine
-    implements SGISXYDataConstants, SGIDataCommandConstants {
+    implements SGISXYDataConstants {
 
   /** Create a group of lines. */
   public SGElementGroupLineForData(SGISXYTypeData data) {
@@ -54,60 +54,60 @@ public abstract class SGElementGroupLineForData extends SGElementGroupLine
     while (itr.hasNext()) {
       String key = itr.next();
       String value = map.getValueString(key);
-      if (COM_DATA_LINE_WIDTH.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_LINE_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_LINE_TYPE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_LINE_TYPE.equalsIgnoreCase(key)) {
         final Integer type = SGDrawingElementLine.getLineTypeFromName(value);
         if (type == null) {
-          result.putResult(COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineType(type) == false) {
-          result.putResult(COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_LINE_TYPE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_LINE_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_LINE_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setColor(cl) == false) {
-            result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setColor(cl) == false) {
-            result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.SUCCEEDED);
       }
-      if (COM_DATA_LINE_CONNECT_ALL.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_DATA_LINE_CONNECT_ALL, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineConnectingAll(b.booleanValue()) == false) {
-          result.putResult(COM_DATA_LINE_CONNECT_ALL, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_LINE_CONNECT_ALL, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -115,14 +115,14 @@ public abstract class SGElementGroupLineForData extends SGElementGroupLine
   }
 
   protected boolean getProperties(SGPropertyMap map) {
-    SGPropertyUtility.addProperty(map, COM_DATA_LINE_VISIBLE, this.isVisible());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_LINE_VISIBLE, this.isVisible());
     //    	SGCommandUtility.addProperty(map, COM_DATA_LINE_WIDTH,
     //    			this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT), SGIConstants.LINE_WIDTH_UNIT);
     //    	SGCommandUtility.addProperty(map, COM_DATA_LINE_TYPE,
     //    			SGDrawingElementLine.getLineTypeName(this.getLineType()));
     //    	SGCommandUtility.addProperty(map, COM_DATA_LINE_COLOR,
     //    			this.getColor());
-    SGPropertyUtility.addProperty(map, COM_DATA_LINE_CONNECT_ALL, this.isLineConnectingAll());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_LINE_CONNECT_ALL, this.isLineConnectingAll());
     return true;
   }
 }

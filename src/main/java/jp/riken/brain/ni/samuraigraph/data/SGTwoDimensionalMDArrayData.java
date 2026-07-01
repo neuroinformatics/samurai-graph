@@ -32,7 +32,7 @@ import ucar.nc2.Variable;
 public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     implements SGITwoDimensionalData,
         SGIIndexData,
-        SGIDataPropertyKeyConstants,
+
         SGIMDArrayConstants {
 
   /** The variable for x-values. */
@@ -339,19 +339,19 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
 
       if (this.isIndexAvailable()) {
         // scatter plot
-        el.setAttribute(KEY_X_VALUE_NAME, this.mXVariable.getName());
-        el.setAttribute(KEY_Y_VALUE_NAME, this.mYVariable.getName());
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, this.mXVariable.getName());
+        el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, this.mYVariable.getName());
       } else {
         // grid plot
         if (this.mXVariable != null) {
           el.setAttribute(this.getXValueKey(), this.mXVariable.getName());
-          el.setAttribute(KEY_X_INDEX_VARIABLE_NAME, X_INDEX_DIM_NAME);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_INDEX_VARIABLE_NAME, X_INDEX_DIM_NAME);
         } else {
           el.setAttribute(this.getXValueKey(), X_VALUE_VAR_NAME);
         }
         if (this.mYVariable != null) {
           el.setAttribute(this.getYValueKey(), this.mYVariable.getName());
-          el.setAttribute(KEY_Y_INDEX_VARIABLE_NAME, Y_INDEX_DIM_NAME);
+          el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_INDEX_VARIABLE_NAME, Y_INDEX_DIM_NAME);
         } else {
           el.setAttribute(this.getYValueKey(), Y_VALUE_VAR_NAME);
         }
@@ -360,10 +360,10 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
 
     // stride
     if (this.isIndexAvailable()) {
-      el.setAttribute(KEY_INDEX_ARRAY_SECTION, this.mIndexStride.toString());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION, this.mIndexStride.toString());
     } else {
-      el.setAttribute(KEY_X_ARRAY_SECTION, this.mXStride.toString());
-      el.setAttribute(KEY_Y_ARRAY_SECTION, this.mYStride.toString());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_ARRAY_SECTION, this.mXStride.toString());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_ARRAY_SECTION, this.mYStride.toString());
     }
 
     return true;
@@ -1028,18 +1028,18 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
         SGIntegerSeriesSet idxStride = this.getIndexStride();
         if (!idxStride.isComplete()) {
           SGPropertyUtility.addQuotedStringProperty(
-              map, COM_DATA_INDEX_ARRAY_SECTION, idxStride.toString());
+              map, SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION, idxStride.toString());
         }
       } else {
         SGIntegerSeriesSet xStride = this.getXStride();
         if (!xStride.isComplete()) {
           SGPropertyUtility.addQuotedStringProperty(
-              map, COM_DATA_X_ARRAY_SECTION, xStride.toString());
+              map, SGIDataCommandConstants.COM_DATA_X_ARRAY_SECTION, xStride.toString());
         }
         SGIntegerSeriesSet yStride = this.getYStride();
         if (!yStride.isComplete()) {
           SGPropertyUtility.addQuotedStringProperty(
-              map, COM_DATA_Y_ARRAY_SECTION, yStride.toString());
+              map, SGIDataCommandConstants.COM_DATA_Y_ARRAY_SECTION, yStride.toString());
         }
       }
     }

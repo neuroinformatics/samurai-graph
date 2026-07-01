@@ -53,42 +53,66 @@ import ucar.nc2.Dimension;
 import ucar.nc2.Variable;
 
 /** An utility class for data. */
-public class SGDataUtility
-    implements SGIDataColumnTypeConstants,
-        SGIDataPropertyKeyConstants,
-        SGINetCDFConstants,
-        SGIMDArrayConstants {
+public class SGDataUtility implements SGIMDArrayConstants {
 
   private static final String[] ARRAY_EMPTY = {""};
 
-  private static final String[] ARRAY_NUMBER_SDARRAY_SXYZ = {"", X_VALUE, Y_VALUE, Z_VALUE};
+  private static final String[] ARRAY_NUMBER_SDARRAY_SXYZ = {
+    "",
+    SGIDataColumnTypeConstants.X_VALUE,
+    SGIDataColumnTypeConstants.Y_VALUE,
+    SGIDataColumnTypeConstants.Z_VALUE
+  };
 
-  private static final String[] ARRAY_NUMBER_NETCDF_SXYZ_ALL = {"", X_VALUE, Y_VALUE};
+  private static final String[] ARRAY_NUMBER_NETCDF_SXYZ_ALL = {
+    "", SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE
+  };
 
-  private static final String[] ARRAY_NUMBER_MDARRAY_SXYZ = {"", X_VALUE, Y_VALUE, Z_VALUE};
+  private static final String[] ARRAY_NUMBER_MDARRAY_SXYZ = {
+    "",
+    SGIDataColumnTypeConstants.X_VALUE,
+    SGIDataColumnTypeConstants.Y_VALUE,
+    SGIDataColumnTypeConstants.Z_VALUE
+  };
 
   private static final String[] ARRAY_NUMBER_SDARRAY_VXY_POLAR = {
-    "", X_COORDINATE, Y_COORDINATE, MAGNITUDE, ANGLE
+    "",
+    SGIDataColumnTypeConstants.X_COORDINATE,
+    SGIDataColumnTypeConstants.Y_COORDINATE,
+    SGIDataColumnTypeConstants.MAGNITUDE,
+    SGIDataColumnTypeConstants.ANGLE
   };
 
   private static final String[] ARRAY_NUMBER_SDARRAY_VXY_ORTHOGONAL = {
-    "", X_COORDINATE, Y_COORDINATE, X_COMPONENT, Y_COMPONENT
+    "",
+    SGIDataColumnTypeConstants.X_COORDINATE,
+    SGIDataColumnTypeConstants.Y_COORDINATE,
+    SGIDataColumnTypeConstants.X_COMPONENT,
+    SGIDataColumnTypeConstants.Y_COMPONENT
   };
 
   private static final String[] ARRAY_NUMBER_NETCDF_VXY_POLAR_ALL = {
-    "", X_COORDINATE, Y_COORDINATE
+    "", SGIDataColumnTypeConstants.X_COORDINATE, SGIDataColumnTypeConstants.Y_COORDINATE
   };
 
   private static final String[] ARRAY_NUMBER_NETCDF_VXY_ORTHOGONAL_ALL = {
-    "", X_COORDINATE, Y_COORDINATE
+    "", SGIDataColumnTypeConstants.X_COORDINATE, SGIDataColumnTypeConstants.Y_COORDINATE
   };
 
   private static final String[] ARRAY_NUMBER_MDARRAY_VXY_POLAR = {
-    "", X_COORDINATE, Y_COORDINATE, MAGNITUDE, ANGLE
+    "",
+    SGIDataColumnTypeConstants.X_COORDINATE,
+    SGIDataColumnTypeConstants.Y_COORDINATE,
+    SGIDataColumnTypeConstants.MAGNITUDE,
+    SGIDataColumnTypeConstants.ANGLE
   };
 
   private static final String[] ARRAY_NUMBER_MDARRAY_VXY_ORTHOGONAL = {
-    "", X_COORDINATE, Y_COORDINATE, X_COMPONENT, Y_COMPONENT
+    "",
+    SGIDataColumnTypeConstants.X_COORDINATE,
+    SGIDataColumnTypeConstants.Y_COORDINATE,
+    SGIDataColumnTypeConstants.X_COMPONENT,
+    SGIDataColumnTypeConstants.Y_COMPONENT
   };
 
   static final String MID_COLUMN_NO = " for No.";
@@ -348,10 +372,10 @@ public class SGDataUtility
 
     List<String> itemList = new ArrayList<String>();
     itemList.add("");
-    if (!VALUE_TYPE_TEXT.equals(valueType)) {
+    if (!SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(valueType)) {
       // other than text column
-      itemList.add(X_VALUE);
-      itemList.add(Y_VALUE);
+      itemList.add(SGIDataColumnTypeConstants.X_VALUE);
+      itemList.add(SGIDataColumnTypeConstants.Y_VALUE);
     }
 
     // current row index
@@ -368,9 +392,9 @@ public class SGDataUtility
     for (int ii = 0; ii < colInfo.length; ii++) {
       String colType = colInfo[ii].getColumnType();
       final Integer index = Integer.valueOf(ii);
-      if (X_VALUE.equals(colType)) {
+      if (SGIDataColumnTypeConstants.X_VALUE.equals(colType)) {
         xIndexList.add(index);
-      } else if (Y_VALUE.equals(colType)) {
+      } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(colType)) {
         yIndexList.add(index);
       }
     }
@@ -379,21 +403,21 @@ public class SGDataUtility
     int numberRowNum = 0;
     for (int ii = 0; ii < colInfo.length; ii++) {
       String vType = colInfo[ii].getValueType();
-      if (VALUE_TYPE_NUMBER.equals(vType)) {
+      if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(vType)) {
         numberRowNum++;
-      } else if (VALUE_TYPE_DATE.equals(vType)) {
-        if (X_VALUE.equals(colInfo[ii].getColumnType())
-            || Y_VALUE.equals(colInfo[ii].getColumnType())) {
+      } else if (SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(vType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(colInfo[ii].getColumnType())
+            || SGIDataColumnTypeConstants.Y_VALUE.equals(colInfo[ii].getColumnType())) {
           numberRowNum++;
         }
       }
     }
 
     // add time, pickup and serial number columns
-    // if (isNetCDFData && VALUE_TYPE_NUMBER.equals(valueType)) {
+    // if (isNetCDFData && SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
     // SGNetCDFDataColumnInfo ncInfo = (SGNetCDFDataColumnInfo) colInfo[rowIndex];
     // if (ncInfo.isCoordinateVariable()) {
-    // itemList.add(ANIMATION_FRAME);
+    // itemList.add(SGIDataColumnTypeConstants.ANIMATION_FRAME);
     // itemList.add(PICKUP);
     // itemList.add(INDEX);
     // }
@@ -403,7 +427,7 @@ public class SGDataUtility
         infoMap,
         dataType,
         valueType,
-        new String[] {ANIMATION_FRAME, PICKUP, INDEX},
+        new String[] {SGIDataColumnTypeConstants.ANIMATION_FRAME, SGIDataColumnTypeConstants.PICKUP, SGIDataColumnTypeConstants.SERIAL_NUMBERS},
         new String[] {});
 
     // a flag whether to show options for error bars and tick labels
@@ -444,14 +468,14 @@ public class SGDataUtility
           }
         }
 
-        if (VALUE_TYPE_NUMBER.equals(valueType)) {
+        if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           // only for the number type column
 
           // add items of error bars to the list
           for (int ii = 0; ii < indexList.size(); ii++) {
             Integer index = indexList.get(ii);
             String vType = colInfo[index.intValue()].getValueType();
-            if (VALUE_TYPE_SAMPLING_RATE.equals(vType)) {
+            if (SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(vType)) {
               continue;
             }
             final int num = index.intValue();
@@ -460,13 +484,13 @@ public class SGDataUtility
             if (numberRowNum >= min1) {
               itemList.add(
                   appendColumnType(
-                      LOWER_ERROR_VALUE, num, isNetCDFOrMDData, colInfo, isRepeatedTitle[num]));
+                      SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, num, isNetCDFOrMDData, colInfo, isRepeatedTitle[num]));
               itemList.add(
                   appendColumnType(
-                      UPPER_ERROR_VALUE, num, isNetCDFOrMDData, colInfo, isRepeatedTitle[num]));
+                      SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, num, isNetCDFOrMDData, colInfo, isRepeatedTitle[num]));
               itemList.add(
                   appendColumnType(
-                      LOWER_UPPER_ERROR_VALUE,
+                      SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE,
                       num,
                       isNetCDFOrMDData,
                       colInfo,
@@ -474,7 +498,7 @@ public class SGDataUtility
             } else if (numberRowNum >= min2) {
               itemList.add(
                   appendColumnType(
-                      LOWER_UPPER_ERROR_VALUE,
+                      SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE,
                       num,
                       isNetCDFOrMDData,
                       colInfo,
@@ -484,13 +508,13 @@ public class SGDataUtility
         }
 
         // add items of tick labels to the list
-        if (!VALUE_TYPE_SAMPLING_RATE.equals(valueType)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(valueType)) {
           // add items of tick labels to the list
           for (int ii = 0; ii < indexList.size(); ii++) {
             Integer index = indexList.get(ii);
             final int num = index.intValue();
             itemList.add(
-                appendColumnType(TICK_LABEL, num, isNetCDFOrMDData, colInfo, isRepeatedTitle[num]));
+                appendColumnType(SGIDataColumnTypeConstants.TICK_LABEL, num, isNetCDFOrMDData, colInfo, isRepeatedTitle[num]));
           }
         }
       }
@@ -515,14 +539,14 @@ public class SGDataUtility
     String[] items = null;
     if (isSXYTypeData(dataType)) {
       // SXY
-      if (VALUE_TYPE_BYTE_DATA.equals(valueType)) {
+      if (SGIDataColumnTypeConstants.VALUE_TYPE_BYTE_DATA.equals(valueType)) {
         items = ARRAY_EMPTY;
       } else {
         items = getSXYColumnTypeCandidates(dataType, infoMap, valueType);
       }
     } else if (SGDataUtility.isSXYZTypeData(dataType)) {
       // SXYZ
-      if (VALUE_TYPE_NUMBER.equals(valueType)) {
+      if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         if (SGDataUtility.isSDArrayData(dataType)) {
           items = ARRAY_NUMBER_SDARRAY_SXYZ;
         } else if (SGDataUtility.isNetCDFData(dataType)) {
@@ -532,25 +556,25 @@ public class SGDataUtility
                   infoMap,
                   dataType,
                   valueType,
-                  new String[] {ANIMATION_FRAME, INDEX},
-                  new String[] {Z_VALUE});
+                  new String[] {SGIDataColumnTypeConstants.ANIMATION_FRAME, SGIDataColumnTypeConstants.PICKUP, SGIDataColumnTypeConstants.SERIAL_NUMBERS},
+                  new String[] {SGIDataColumnTypeConstants.Z_VALUE});
         } else if (SGDataUtility.isMDArrayData(dataType)) {
           items = ARRAY_NUMBER_MDARRAY_SXYZ;
         } else {
           throw new IllegalArgumentException("Invalid data type: " + dataType);
         }
-      } else if (VALUE_TYPE_TEXT.equals(valueType)) {
+      } else if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(valueType)) {
         items = ARRAY_EMPTY;
-      } else if (VALUE_TYPE_DATE.equals(valueType)) {
+      } else if (SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
         items = ARRAY_EMPTY;
-      } else if (VALUE_TYPE_BYTE_DATA.equals(valueType)) {
+      } else if (SGIDataColumnTypeConstants.VALUE_TYPE_BYTE_DATA.equals(valueType)) {
         items = ARRAY_EMPTY;
       } else {
         throw new IllegalArgumentException("Invalid value type: " + valueType);
       }
     } else if (SGDataUtility.isVXYTypeData(dataType)) {
       // VXY
-      if (VALUE_TYPE_NUMBER.equals(valueType)) {
+      if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         if (isPolar(infoMap)) {
           if (SGDataUtility.isSDArrayData(dataType)) {
             items = ARRAY_NUMBER_SDARRAY_VXY_POLAR;
@@ -561,8 +585,10 @@ public class SGDataUtility
                     infoMap,
                     dataType,
                     valueType,
-                    new String[] {ANIMATION_FRAME, INDEX},
-                    new String[] {MAGNITUDE, ANGLE});
+                    new String[] {SGIDataColumnTypeConstants.ANIMATION_FRAME, SGIDataColumnTypeConstants.PICKUP, SGIDataColumnTypeConstants.SERIAL_NUMBERS},
+                    new String[] {
+                      SGIDataColumnTypeConstants.MAGNITUDE, SGIDataColumnTypeConstants.ANGLE
+                    });
           } else if (SGDataUtility.isMDArrayData(dataType)) {
             items = ARRAY_NUMBER_MDARRAY_VXY_POLAR;
           } else {
@@ -578,19 +604,21 @@ public class SGDataUtility
                     infoMap,
                     dataType,
                     valueType,
-                    new String[] {ANIMATION_FRAME, INDEX},
-                    new String[] {X_COMPONENT, Y_COMPONENT});
+                    new String[] {SGIDataColumnTypeConstants.ANIMATION_FRAME, SGIDataColumnTypeConstants.PICKUP, SGIDataColumnTypeConstants.SERIAL_NUMBERS},
+                    new String[] {
+                      SGIDataColumnTypeConstants.X_COMPONENT, SGIDataColumnTypeConstants.Y_COMPONENT
+                    });
           } else if (SGDataUtility.isMDArrayData(dataType)) {
             items = ARRAY_NUMBER_MDARRAY_VXY_ORTHOGONAL;
           } else {
             throw new IllegalArgumentException("Invalid data type: " + dataType);
           }
         }
-      } else if (VALUE_TYPE_TEXT.equals(valueType)) {
+      } else if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(valueType)) {
         items = ARRAY_EMPTY;
-      } else if (VALUE_TYPE_DATE.equals(valueType)) {
+      } else if (SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
         items = ARRAY_EMPTY;
-      } else if (VALUE_TYPE_BYTE_DATA.equals(valueType)) {
+      } else if (SGIDataColumnTypeConstants.VALUE_TYPE_BYTE_DATA.equals(valueType)) {
         items = ARRAY_EMPTY;
       } else {
         throw new IllegalArgumentException("Invalid value type: " + valueType);
@@ -640,8 +668,8 @@ public class SGDataUtility
       // one array for x values and multiple arrays for y values
       // or one array for y values and multiple arrays for x values
       // are permitted
-      final int xCnt = count(columnTypes, X_VALUE);
-      final int yCnt = count(columnTypes, Y_VALUE);
+      final int xCnt = count(columnTypes, SGIDataColumnTypeConstants.X_VALUE);
+      final int yCnt = count(columnTypes, SGIDataColumnTypeConstants.Y_VALUE);
       if (xCnt == 0 && yCnt == 0) {
         return false;
       }
@@ -665,11 +693,11 @@ public class SGDataUtility
       String multipleColumnType = null;
       String singleColumnType = null;
       if (byMultiple) {
-        multipleColumnType = Y_VALUE;
-        singleColumnType = X_VALUE;
+        multipleColumnType = SGIDataColumnTypeConstants.Y_VALUE;
+        singleColumnType = SGIDataColumnTypeConstants.X_VALUE;
       } else if (bxMultiple) {
-        multipleColumnType = X_VALUE;
-        singleColumnType = Y_VALUE;
+        multipleColumnType = SGIDataColumnTypeConstants.X_VALUE;
+        singleColumnType = SGIDataColumnTypeConstants.Y_VALUE;
       }
 
       if (!bothSingle) {
@@ -683,12 +711,12 @@ public class SGDataUtility
         }
 
         // checks whether sampling rate is used for multiple values
-        if (multipleValueTypeSet.contains(VALUE_TYPE_SAMPLING_RATE)) {
+        if (multipleValueTypeSet.contains(SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE)) {
           return false;
         }
 
         // checks whether the data column exists in multiple values
-        if (multipleValueTypeSet.contains(VALUE_TYPE_DATE)) {
+        if (multipleValueTypeSet.contains(SGIDataColumnTypeConstants.VALUE_TYPE_DATE)) {
           return false;
         }
       }
@@ -716,19 +744,19 @@ public class SGDataUtility
         List<Integer> luList = new ArrayList<Integer>();
         for (int ii = 0; ii < columnTypes.length; ii++) {
           String colType = columnTypes[ii];
-          if (colType.startsWith(LOWER_ERROR_VALUE)) {
+          if (colType.startsWith(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
             Integer num = getColumnIndexOfAppendedColumnType(colType, dataType, columnInfoArray);
             if (num == null) {
               return false;
             }
             lList.add(num);
-          } else if (colType.startsWith(UPPER_ERROR_VALUE)) {
+          } else if (colType.startsWith(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
             Integer num = getColumnIndexOfAppendedColumnType(colType, dataType, columnInfoArray);
             if (num == null) {
               return false;
             }
             uList.add(num);
-          } else if (colType.startsWith(LOWER_UPPER_ERROR_VALUE)) {
+          } else if (colType.startsWith(SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
             Integer num = getColumnIndexOfAppendedColumnType(colType, dataType, columnInfoArray);
             if (num == null) {
               return false;
@@ -740,7 +768,7 @@ public class SGDataUtility
         List<Integer> tList = new ArrayList<Integer>();
         for (int ii = 0; ii < columnTypes.length; ii++) {
           String colType = columnTypes[ii];
-          if (colType.startsWith(TICK_LABEL)) {
+          if (colType.startsWith(SGIDataColumnTypeConstants.TICK_LABEL)) {
             Integer num = getColumnIndexOfAppendedColumnType(colType, dataType, columnInfoArray);
             if (num == null) {
               return false;
@@ -792,9 +820,9 @@ public class SGDataUtility
         while (itr.hasNext()) {
           Integer index = itr.next();
           String colType = columnTypes[index.intValue()];
-          if (X_VALUE.equals(colType)) {
+          if (SGIDataColumnTypeConstants.X_VALUE.equals(colType)) {
             xList.add(index);
-          } else if (Y_VALUE.equals(colType)) {
+          } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(colType)) {
             yList.add(index);
           }
         }
@@ -835,7 +863,7 @@ public class SGDataUtility
       // duplication was already checked
 
       // only one x values must be selected
-      final int xCnt = count(columnTypes, X_VALUE);
+      final int xCnt = count(columnTypes, SGIDataColumnTypeConstants.X_VALUE);
       if (isMDArrayData(dataType)) {
         if (xCnt > 1) {
           return false;
@@ -847,7 +875,7 @@ public class SGDataUtility
       }
 
       // only one y values must be selected
-      final int yCnt = count(columnTypes, Y_VALUE);
+      final int yCnt = count(columnTypes, SGIDataColumnTypeConstants.Y_VALUE);
       if (isMDArrayData(dataType)) {
         if (yCnt > 1) {
           return false;
@@ -859,16 +887,16 @@ public class SGDataUtility
       }
 
       // only one z values must be selected
-      final int zCnt = count(columnTypes, Z_VALUE);
+      final int zCnt = count(columnTypes, SGIDataColumnTypeConstants.Z_VALUE);
       if (zCnt != 1) {
         return false;
       }
 
       // x and y index
       if (isNetCDFData(dataType)) {
-        final int indexCnt = count(columnTypes, INDEX);
-        final int xIndexCnt = count(columnTypes, X_INDEX);
-        final int yIndexCnt = count(columnTypes, Y_INDEX);
+        final int indexCnt = count(columnTypes, SGIDataColumnTypeConstants.INDEX);
+        final int xIndexCnt = count(columnTypes, SGIDataColumnTypeConstants.X_INDEX);
+        final int yIndexCnt = count(columnTypes, SGIDataColumnTypeConstants.Y_INDEX);
         if (indexCnt == 1) {
           if (xIndexCnt == 1 || yIndexCnt == 1) {
             return false;
@@ -879,8 +907,8 @@ public class SGDataUtility
     } else if (isVXYTypeData(dataType)) {
       // duplication was already checked
 
-      final int xCnt = count(columnTypes, X_COORDINATE);
-      final int yCnt = count(columnTypes, Y_COORDINATE);
+      final int xCnt = count(columnTypes, SGIDataColumnTypeConstants.X_COORDINATE);
+      final int yCnt = count(columnTypes, SGIDataColumnTypeConstants.Y_COORDINATE);
       if (xCnt > 1) {
         return false;
       }
@@ -905,7 +933,7 @@ public class SGDataUtility
 
     if (isNetCDFData(dataType)) {
       // animation
-      final int tCnt = count(columnTypes, ANIMATION_FRAME);
+      final int tCnt = count(columnTypes, SGIDataColumnTypeConstants.ANIMATION_FRAME);
       if (tCnt > 1) {
         return false;
       }
@@ -1097,7 +1125,8 @@ public class SGDataUtility
       final Map<String, Object> infoMap) {
 
     // animation
-    final List<String> timeNameList = getColumnNameList(cols, ANIMATION_FRAME);
+    final List<String> timeNameList =
+        getColumnNameList(cols, SGIDataColumnTypeConstants.ANIMATION_FRAME);
     if (timeNameList.size() > 1) {
       return false;
     }
@@ -1116,7 +1145,7 @@ public class SGDataUtility
     }
 
     // index
-    final List<String> indexNameList = getColumnNameList(cols, INDEX);
+    final List<String> indexNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.INDEX);
     if (indexNameList.size() > 1) {
       return false;
     }
@@ -1142,8 +1171,8 @@ public class SGDataUtility
       }
 
       // x and y values
-      final List<String> xNameList = getColumnNameList(cols, X_VALUE);
-      final List<String> yNameList = getColumnNameList(cols, Y_VALUE);
+      final List<String> xNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.X_VALUE);
+      final List<String> yNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.Y_VALUE);
       if (xNameList.size() == 0 || yNameList.size() == 0) {
         return false;
       }
@@ -1220,8 +1249,8 @@ public class SGDataUtility
       if (!multipleVariable) {
         // multiple dimension
 
-        final List<String> lNameList = getColumnNameList(cols, LOWER_ERROR_VALUE);
-        final List<String> uNameList = getColumnNameList(cols, UPPER_ERROR_VALUE);
+        final List<String> lNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
+        final List<String> uNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE);
         if (!(lNameList.size() == 0 && uNameList.size() == 0)
             && !(lNameList.size() == 1 && uNameList.size() == 1)) {
           return false;
@@ -1229,7 +1258,7 @@ public class SGDataUtility
 
         // if lower and upper errors are selected, lower-upper must not
         // be selected
-        final List<String> luNameList = getColumnNameList(cols, LOWER_UPPER_ERROR_VALUE);
+        final List<String> luNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE);
         if (lNameList.size() == 1 && uNameList.size() == 1) {
           if (luNameList.size() != 0) {
             return false;
@@ -1296,11 +1325,11 @@ public class SGDataUtility
         final List<Integer> lIndexList = new ArrayList<Integer>();
         final List<String> uNameList = new ArrayList<String>();
         final List<Integer> uIndexList = new ArrayList<Integer>();
-        if (getColumnNameAndAppendedNumberList(cols, LOWER_ERROR_VALUE, lNameList, lIndexList)
+        if (getColumnNameAndAppendedNumberList(cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, lNameList, lIndexList)
             == false) {
           return false;
         }
-        if (getColumnNameAndAppendedNumberList(cols, UPPER_ERROR_VALUE, uNameList, uIndexList)
+        if (getColumnNameAndAppendedNumberList(cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, uNameList, uIndexList)
             == false) {
           return false;
         }
@@ -1343,7 +1372,7 @@ public class SGDataUtility
         final List<String> luNameList = new ArrayList<String>();
         final List<Integer> luIndexList = new ArrayList<Integer>();
         if (getColumnNameAndAppendedNumberList(
-                cols, LOWER_UPPER_ERROR_VALUE, luNameList, luIndexList)
+                cols, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE, luNameList, luIndexList)
             == false) {
           return false;
         }
@@ -1394,7 +1423,7 @@ public class SGDataUtility
       if (!multipleVariable.booleanValue()) {
         // multiple dimension
 
-        final List<String> pickUpDimNameList = getColumnNameList(cols, PICKUP);
+        final List<String> pickUpDimNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.PICKUP);
         if (pickUpDimNameList.size() != 1) {
           return false;
         }
@@ -1423,9 +1452,13 @@ public class SGDataUtility
         || SGDataTypeConstants.VXY_NETCDF_DATA.equals(dataType)) {
 
       String xColumnType =
-          SGDataTypeConstants.SXYZ_NETCDF_DATA.equals(dataType) ? X_VALUE : X_COORDINATE;
+          SGDataTypeConstants.SXYZ_NETCDF_DATA.equals(dataType)
+              ? SGIDataColumnTypeConstants.X_VALUE
+              : SGIDataColumnTypeConstants.X_COORDINATE;
       String yColumnType =
-          SGDataTypeConstants.SXYZ_NETCDF_DATA.equals(dataType) ? Y_VALUE : Y_COORDINATE;
+          SGDataTypeConstants.SXYZ_NETCDF_DATA.equals(dataType)
+              ? SGIDataColumnTypeConstants.Y_VALUE
+              : SGIDataColumnTypeConstants.Y_COORDINATE;
 
       final List<String> xNameList = getColumnNameList(cols, xColumnType);
       if (xNameList.size() != 1) {
@@ -1446,14 +1479,14 @@ public class SGDataUtility
         return false;
       }
 
-      final List<String> xIndexNameList = getColumnNameList(cols, X_INDEX);
+      final List<String> xIndexNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.X_INDEX);
       if (xIndexNameList.size() > 1) {
         return false;
       }
       SGNetCDFVariable xIndexVar =
           (xIndexNameList.size() == 1) ? ncfile.findVariable(xIndexNameList.get(0)) : null;
 
-      final List<String> yIndexNameList = getColumnNameList(cols, Y_INDEX);
+      final List<String> yIndexNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.Y_INDEX);
       if (yIndexNameList.size() > 1) {
         return false;
       }
@@ -1526,7 +1559,7 @@ public class SGDataUtility
 
       if (SGDataTypeConstants.SXYZ_NETCDF_DATA.equals(dataType)) {
 
-        final List<String> zNameList = getColumnNameList(cols, Z_VALUE);
+        final List<String> zNameList = getColumnNameList(cols, SGIDataColumnTypeConstants.Z_VALUE);
         if (zNameList.size() != 1) {
           return false;
         }
@@ -1668,7 +1701,8 @@ public class SGDataUtility
       for (int ii = 0; ii < cols.length; ii++) {
         SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) cols[ii];
         String columnType = mdCol.getColumnType();
-        if (X_VALUE.equals(columnType) || Y_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)
+            || SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
           Integer dim = mdCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
           if (SGDataUtility.isValidDimensionIndex(dim)) {
             pickUpColumn = mdCol;
@@ -1715,8 +1749,10 @@ public class SGDataUtility
       }
 
       // x and y values
-      final List<SGDataColumnInfo> xColList = getColumnList(cols, X_VALUE);
-      final List<SGDataColumnInfo> yColList = getColumnList(cols, Y_VALUE);
+      final List<SGDataColumnInfo> xColList =
+          getColumnList(cols, SGIDataColumnTypeConstants.X_VALUE);
+      final List<SGDataColumnInfo> yColList =
+          getColumnList(cols, SGIDataColumnTypeConstants.Y_VALUE);
       if (xColList.size() == 0 && yColList.size() == 0) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
@@ -1743,12 +1779,12 @@ public class SGDataUtility
       final List<Integer> lIndexList = new ArrayList<Integer>();
       final List<String> uNameList = new ArrayList<String>();
       final List<Integer> uIndexList = new ArrayList<Integer>();
-      if (getColumnNameAndAppendedNumberList(cols, LOWER_ERROR_VALUE, lNameList, lIndexList)
+      if (getColumnNameAndAppendedNumberList(cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, lNameList, lIndexList)
           == false) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
       }
-      if (getColumnNameAndAppendedNumberList(cols, UPPER_ERROR_VALUE, uNameList, uIndexList)
+      if (getColumnNameAndAppendedNumberList(cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, uNameList, uIndexList)
           == false) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
@@ -1759,7 +1795,7 @@ public class SGDataUtility
       }
       final List<String> luNameList = new ArrayList<String>();
       final List<Integer> luIndexList = new ArrayList<Integer>();
-      if (getColumnNameAndAppendedNumberList(cols, LOWER_UPPER_ERROR_VALUE, luNameList, luIndexList)
+      if (getColumnNameAndAppendedNumberList(cols, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE, luNameList, luIndexList)
           == false) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
@@ -1777,10 +1813,10 @@ public class SGDataUtility
           return false;
         }
       }
-      final List<SGDataColumnInfo> lColList = getColumnListStartsWith(cols, LOWER_ERROR_VALUE);
-      final List<SGDataColumnInfo> uColList = getColumnListStartsWith(cols, UPPER_ERROR_VALUE);
+      final List<SGDataColumnInfo> lColList = getColumnListStartsWith(cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
+      final List<SGDataColumnInfo> uColList = getColumnListStartsWith(cols, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE);
       final List<SGDataColumnInfo> luColList =
-          getColumnListStartsWith(cols, LOWER_UPPER_ERROR_VALUE);
+          getColumnListStartsWith(cols, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE);
       if (pickUpAssigned) {
         if (lColList.size() > 1 || uColList.size() > 1 || luColList.size() > 1) {
           errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
@@ -1827,7 +1863,7 @@ public class SGDataUtility
       }
 
       // tick labels
-      final List<SGDataColumnInfo> tColList = getColumnListStartsWith(cols, TICK_LABEL);
+      final List<SGDataColumnInfo> tColList = getColumnListStartsWith(cols, SGIDataColumnTypeConstants.TICK_LABEL);
       if (pickUpAssigned) {
         if (tColList.size() > 1) {
           errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
@@ -1876,7 +1912,8 @@ public class SGDataUtility
 
     } else if (isSXYZTypeData(dataType)) {
 
-      final List<SGDataColumnInfo> zColList = getColumnList(cols, Z_VALUE);
+      final List<SGDataColumnInfo> zColList =
+          getColumnList(cols, SGIDataColumnTypeConstants.Z_VALUE);
       if (zColList.size() != 1) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
@@ -1884,12 +1921,14 @@ public class SGDataUtility
       SGMDArrayDataColumnInfo zCol = (SGMDArrayDataColumnInfo) zColList.get(0);
       final int[] zDims = zCol.getDimensions();
 
-      final List<SGDataColumnInfo> xColList = getColumnList(cols, X_VALUE);
+      final List<SGDataColumnInfo> xColList =
+          getColumnList(cols, SGIDataColumnTypeConstants.X_VALUE);
       if (xColList.size() > 1) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
       }
-      final List<SGDataColumnInfo> yColList = getColumnList(cols, Y_VALUE);
+      final List<SGDataColumnInfo> yColList =
+          getColumnList(cols, SGIDataColumnTypeConstants.Y_VALUE);
       if (yColList.size() > 1) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
@@ -1983,12 +2022,14 @@ public class SGDataUtility
       final int[] fDims = fCol.getDimensions();
       SGMDArrayDataColumnInfo sCol = (SGMDArrayDataColumnInfo) sColList.get(0);
       final int[] sDims = sCol.getDimensions();
-      final List<SGDataColumnInfo> xColList = getColumnList(cols, X_COORDINATE);
+      final List<SGDataColumnInfo> xColList =
+          getColumnList(cols, SGIDataColumnTypeConstants.X_COORDINATE);
       if (xColList.size() > 1) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
       }
-      final List<SGDataColumnInfo> yColList = getColumnList(cols, Y_COORDINATE);
+      final List<SGDataColumnInfo> yColList =
+          getColumnList(cols, SGIDataColumnTypeConstants.Y_COORDINATE);
       if (yColList.size() > 1) {
         errmsgBuffer.append(MSG_PROPER_COLUMN_TYPE);
         return false;
@@ -2819,9 +2860,9 @@ public class SGDataUtility
       List<Integer> yIndexList = new ArrayList<Integer>();
       for (int ii = 0; ii < columnTypes.length; ii++) {
         final Integer index = Integer.valueOf(ii);
-        if (X_VALUE.equals(columnTypes[ii])) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnTypes[ii])) {
           xIndexList.add(index);
-        } else if (Y_VALUE.equals(columnTypes[ii])) {
+        } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnTypes[ii])) {
           yIndexList.add(index);
         }
       }
@@ -2836,10 +2877,10 @@ public class SGDataUtility
       // clear the column type for error bars for non-existing X or Y
       for (int ii = 0; ii < columnTypes.length; ii++) {
         String colType = columnTypes[ii];
-        if (colType.startsWith(LOWER_ERROR_VALUE)
-            || colType.startsWith(UPPER_ERROR_VALUE)
-            || colType.startsWith(LOWER_UPPER_ERROR_VALUE)
-            || colType.startsWith(TICK_LABEL)) {
+        if (colType.startsWith(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)
+            || colType.startsWith(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)
+            || colType.startsWith(SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)
+            || colType.startsWith(SGIDataColumnTypeConstants.TICK_LABEL)) {
           // get the column number
           Integer num = getColumnIndexOfAppendedColumnType(colType, dataType, colInfo);
           if (num == null) {
@@ -2871,13 +2912,13 @@ public class SGDataUtility
     Set<Integer> indexSet = new TreeSet<Integer>();
     for (Integer index : xIndexList) {
       String valueType = colInfo[index].getValueType();
-      if (VALUE_TYPE_NUMBER.equals(valueType)) {
+      if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         indexSet.add(index);
       }
     }
     for (Integer index : yIndexList) {
       String valueType = colInfo[index].getValueType();
-      if (VALUE_TYPE_NUMBER.equals(valueType)) {
+      if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         indexSet.add(index);
       }
     }
@@ -2944,21 +2985,21 @@ public class SGDataUtility
       Map<Integer, Integer> tIndexMap) {
     for (int ii = 0; ii < colInfo.length; ii++) {
       String cType = colInfo[ii].getColumnType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, cType)) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_VALUE, cType)) {
         xIndexList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, cType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, cType)) {
         yIndexList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(cType, LOWER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getAppendedColumnIndex(cType, colInfo);
         lIndexMap.put(num, Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(cType, UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getAppendedColumnIndex(cType, colInfo);
         uIndexMap.put(num, Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(cType, LOWER_UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getAppendedColumnIndex(cType, colInfo);
         lIndexMap.put(num, Integer.valueOf(ii));
         uIndexMap.put(num, Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(cType, TICK_LABEL)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.TICK_LABEL)) {
         Integer num = SGDataUtility.getAppendedColumnIndex(cType, colInfo);
         tIndexMap.put(num, Integer.valueOf(ii));
       } else if ("".equals(cType)) {
@@ -3001,32 +3042,33 @@ public class SGDataUtility
     for (int ii = 0; ii < colInfo.length; ii++) {
       SGDataColumnInfo col = colInfo[ii];
       String cType = col.getColumnType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, cType)) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_VALUE, cType)) {
         xInfoList.add(col);
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, cType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, cType)) {
         yInfoList.add(col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, LOWER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getColumnIndexOfAppendedColumnTitle(cType, colInfo);
         SGDataColumnInfo colAppend = colInfo[num.intValue()];
         leInfoMap.put(colAppend, col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getColumnIndexOfAppendedColumnTitle(cType, colInfo);
         SGDataColumnInfo colAppend = colInfo[num.intValue()];
         ueInfoMap.put(colAppend, col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, LOWER_UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
         Integer num = SGDataUtility.getColumnIndexOfAppendedColumnTitle(cType, colInfo);
         SGDataColumnInfo colAppend = colInfo[num.intValue()];
         leInfoMap.put(colAppend, col);
         ueInfoMap.put(colAppend, col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, TICK_LABEL)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.TICK_LABEL)) {
         Integer num = SGDataUtility.getColumnIndexOfAppendedColumnTitle(cType, colInfo);
         SGDataColumnInfo colAppend = colInfo[num.intValue()];
         tlInfoMap.put(colAppend, col);
-      } else if (SGDataUtility.isEqualColumnType(ANIMATION_FRAME, cType)) {
+      } else if (SGDataUtility.isEqualColumnType(
+          SGIDataColumnTypeConstants.ANIMATION_FRAME, cType)) {
         timeInfoList.add(col);
-      } else if (SGDataUtility.isEqualColumnType(INDEX, cType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.INDEX, cType)) {
         indexInfoList.add(col);
-      } else if (SGDataUtility.isEqualColumnType(PICKUP, cType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.PICKUP, cType)) {
         pickUpInfoList.add(col);
       } else if ("".equals(cType)) {
         continue;
@@ -3068,24 +3110,25 @@ public class SGDataUtility
     for (int ii = 0; ii < colInfo.length; ii++) {
       SGDataColumnInfo col = colInfo[ii];
       String cType = col.getColumnType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, cType)) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_VALUE, cType)) {
         xInfoList.add(col);
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, cType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, cType)) {
         yInfoList.add(col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, LOWER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
         leInfoList.add(col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
         ueInfoList.add(col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, LOWER_UPPER_ERROR_VALUE)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
         leInfoList.add(col);
         ueInfoList.add(col);
-      } else if (SGDataUtility.columnTypeStartsWith(cType, TICK_LABEL)) {
+      } else if (SGDataUtility.columnTypeStartsWith(cType, SGIDataColumnTypeConstants.TICK_LABEL)) {
         tlInfoList.add(col);
-      } else if (SGDataUtility.isEqualColumnType(PICKUP, cType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.PICKUP, cType)) {
         pickupInfoList.add(col);
-      } else if (SGDataUtility.isEqualColumnType(ANIMATION_FRAME, cType)) {
+      } else if (SGDataUtility.isEqualColumnType(
+          SGIDataColumnTypeConstants.ANIMATION_FRAME, cType)) {
         timeInfoList.add(col);
-      } else if (SGDataUtility.isEqualColumnType(INDEX, cType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.INDEX, cType)) {
         indexInfoList.add(col);
       } else if ("".equals(cType)) {
         continue;
@@ -3148,9 +3191,9 @@ public class SGDataUtility
       List<Integer> xIndexList = new ArrayList<Integer>();
       List<Integer> yIndexList = new ArrayList<Integer>();
       for (int ii = 0; ii < curColType.length; ii++) {
-        if (X_VALUE.equals(curColType[ii])) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(curColType[ii])) {
           xIndexList.add(Integer.valueOf(ii));
-        } else if (Y_VALUE.equals(curColType[ii])) {
+        } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(curColType[ii])) {
           yIndexList.add(Integer.valueOf(ii));
         }
       }
@@ -3215,20 +3258,30 @@ public class SGDataUtility
       List<Integer> xIndexList = new ArrayList<Integer>();
       List<Integer> yIndexList = new ArrayList<Integer>();
       for (int ii = 0; ii < curColType.length; ii++) {
-        if (X_VALUE.equals(curColType[ii])) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(curColType[ii])) {
           xIndexList.add(Integer.valueOf(ii));
-        } else if (Y_VALUE.equals(curColType[ii])) {
+        } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(curColType[ii])) {
           yIndexList.add(Integer.valueOf(ii));
         }
       }
       if (xIndexList.size() == 1 && yIndexList.size() == 0) {
         compColType =
             getComplementedColumnType(
-                infoMap, curColType, colInfoList, xIndexList.get(0), X_VALUE, Y_VALUE);
+                infoMap,
+                curColType,
+                colInfoList,
+                xIndexList.get(0),
+                SGIDataColumnTypeConstants.X_VALUE,
+                SGIDataColumnTypeConstants.Y_VALUE);
       } else if (xIndexList.size() == 0 && yIndexList.size() == 1) {
         compColType =
             getComplementedColumnType(
-                infoMap, curColType, colInfoList, yIndexList.get(0), Y_VALUE, X_VALUE);
+                infoMap,
+                curColType,
+                colInfoList,
+                yIndexList.get(0),
+                SGIDataColumnTypeConstants.Y_VALUE,
+                SGIDataColumnTypeConstants.X_VALUE);
       } else {
         compColType = curColType.clone();
       }
@@ -3256,7 +3309,7 @@ public class SGDataUtility
         }
         SGDataColumnInfo colInfo = colInfoList.get(ii);
         String valueType = colInfo.getValueType();
-        if (VALUE_TYPE_NUMBER.equals(valueType)) {
+        if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           compColType[ii] = multiColumnType;
         } else {
           compColType[ii] = curColType[ii];
@@ -3343,11 +3396,13 @@ public class SGDataUtility
       final String[] thValueNames) {
     for (int i = 0; i < xValueNames.length; i++) {
       int xVarIndex = nc.getVariableIndex(xValueNames[i]);
-      columns[xVarIndex].setColumnType(SGIDataColumnTypeConstants.X_VALUE);
+      columns[xVarIndex].setColumnType(
+          SGIDataColumnTypeConstants.X_VALUE);
     }
     for (int i = 0; i < yValueNames.length; i++) {
       int yVarIndex = nc.getVariableIndex(yValueNames[i]);
-      columns[yVarIndex].setColumnType(SGIDataColumnTypeConstants.Y_VALUE);
+      columns[yVarIndex].setColumnType(
+          SGIDataColumnTypeConstants.Y_VALUE);
     }
 
     boolean errorbarFlag = false;
@@ -3406,7 +3461,7 @@ public class SGDataUtility
     SGNetCDFDataColumnInfo info = null;
     for (int i = 0; i < nCols.length; i++) {
       String colType = nCols[i].getColumnType();
-      if (PICKUP.equalsIgnoreCase(colType)) {
+      if (SGIDataColumnTypeConstants.PICKUP.equalsIgnoreCase(colType)) {
         info = nCols[i];
         break;
       }
@@ -3951,7 +4006,7 @@ public class SGDataUtility
    * @return the column type for the first component
    */
   public static String getVXYFirstComponentColumnType(final boolean polar) {
-    return polar ? MAGNITUDE : X_COMPONENT;
+    return polar ? SGIDataColumnTypeConstants.MAGNITUDE : SGIDataColumnTypeConstants.X_COMPONENT;
   }
 
   /**
@@ -3975,7 +4030,7 @@ public class SGDataUtility
    * @return the column type for the second component
    */
   public static String getVXYSecondComponentColumnType(final boolean polar) {
-    return polar ? ANGLE : Y_COMPONENT;
+    return polar ? SGIDataColumnTypeConstants.ANGLE : SGIDataColumnTypeConstants.Y_COMPONENT;
   }
 
   public static Map<String, SGIntegerSeriesSet> calcNetCDFDefaultStride(
@@ -4009,7 +4064,7 @@ public class SGDataUtility
 
     if (SGDataUtility.isSXYTypeData(dataType)) {
       if (hasIndex) {
-        cTypeList.add(INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.INDEX);
         map =
             calcNetCDFStride(
                 colArray,
@@ -4020,7 +4075,7 @@ public class SGDataUtility
                 bx,
                 dimNameMap);
       } else {
-        cTypeList.add(X_VALUE);
+        cTypeList.add(SGIDataColumnTypeConstants.X_VALUE);
         Map<String, SGIntegerSeriesSet> xMap =
             calcNetCDFStride(
                 colArray,
@@ -4031,7 +4086,7 @@ public class SGDataUtility
                 true,
                 dimNameMap);
         cTypeList.clear();
-        cTypeList.add(Y_VALUE);
+        cTypeList.add(SGIDataColumnTypeConstants.Y_VALUE);
         Map<String, SGIntegerSeriesSet> yMap =
             calcNetCDFStride(
                 colArray,
@@ -4057,7 +4112,7 @@ public class SGDataUtility
 
     } else if (SGDataUtility.isSXYZTypeData(dataType)) {
       if (hasIndex) {
-        cTypeList.add(INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.INDEX);
         map =
             calcNetCDFStride(
                 colArray,
@@ -4068,8 +4123,8 @@ public class SGDataUtility
                 bx,
                 dimNameMap);
       } else {
-        cTypeList.add(X_VALUE);
-        cTypeList.add(X_INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.X_VALUE);
+        cTypeList.add(SGIDataColumnTypeConstants.X_INDEX);
         map = new HashMap<String, SGIntegerSeriesSet>();
         Map<String, SGIntegerSeriesSet> xMap =
             calcNetCDFStride(
@@ -4084,8 +4139,8 @@ public class SGDataUtility
           map.putAll(xMap);
         }
         cTypeList.clear();
-        cTypeList.add(Y_VALUE);
-        cTypeList.add(Y_INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.Y_VALUE);
+        cTypeList.add(SGIDataColumnTypeConstants.Y_INDEX);
         Map<String, SGIntegerSeriesSet> yMap =
             calcNetCDFStride(
                 colArray,
@@ -4102,7 +4157,7 @@ public class SGDataUtility
 
     } else if (SGDataUtility.isVXYTypeData(dataType)) {
       if (hasIndex) {
-        cTypeList.add(INDEX);
+        cTypeList.add(SGIDataColumnTypeConstants.INDEX);
         map =
             calcNetCDFStride(
                 colArray,
@@ -4114,11 +4169,11 @@ public class SGDataUtility
                 dimNameMap);
       } else {
         List<String> cTypeXList = new ArrayList<String>();
-        cTypeXList.add(X_COORDINATE);
-        cTypeXList.add(X_INDEX);
+        cTypeXList.add(SGIDataColumnTypeConstants.X_COORDINATE);
+        cTypeXList.add(SGIDataColumnTypeConstants.X_INDEX);
         List<String> cTypeYList = new ArrayList<String>();
-        cTypeYList.add(Y_COORDINATE);
-        cTypeYList.add(Y_INDEX);
+        cTypeYList.add(SGIDataColumnTypeConstants.Y_COORDINATE);
+        cTypeYList.add(SGIDataColumnTypeConstants.Y_INDEX);
         map =
             calcVectorStride(
                 colArray,
@@ -4183,8 +4238,8 @@ public class SGDataUtility
       String colType = nCol.getColumnType();
 
       // Only for backward compatibility <= 2.0.0
-      if (SERIAL_NUMBERS.equalsIgnoreCase(colType)) {
-        colType = INDEX;
+      if (SGIDataColumnTypeConstants.SERIAL_NUMBERS.equalsIgnoreCase(colType)) {
+        colType = SGIDataColumnTypeConstants.INDEX;
       }
 
       if (cTypeList.contains(colType)) {
@@ -4375,7 +4430,7 @@ public class SGDataUtility
               colArray,
               dataType,
               figureSize,
-              X_VALUE,
+              SGIDataColumnTypeConstants.X_VALUE,
               SGIDataInformationKeyConstants.KEY_SXY_STRIDE,
               true,
               dimNameMap);
@@ -4384,7 +4439,7 @@ public class SGDataUtility
               colArray,
               dataType,
               figureSize,
-              Y_VALUE,
+              SGIDataColumnTypeConstants.Y_VALUE,
               SGIDataInformationKeyConstants.KEY_SXY_STRIDE,
               false,
               dimNameMap);
@@ -4413,7 +4468,7 @@ public class SGDataUtility
                 colArray,
                 dataType,
                 figureSize,
-                X_VALUE,
+                SGIDataColumnTypeConstants.X_VALUE,
                 SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
                 true,
                 dimNameMap);
@@ -4425,7 +4480,7 @@ public class SGDataUtility
                   colArray,
                   dataType,
                   figureSize,
-                  Z_VALUE,
+                  SGIDataColumnTypeConstants.Z_VALUE,
                   SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION,
                   SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
                   true,
@@ -4439,7 +4494,7 @@ public class SGDataUtility
                 colArray,
                 dataType,
                 figureSize,
-                Y_VALUE,
+                SGIDataColumnTypeConstants.Y_VALUE,
                 SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
                 false,
                 dimNameMap);
@@ -4451,7 +4506,7 @@ public class SGDataUtility
                   colArray,
                   dataType,
                   figureSize,
-                  Z_VALUE,
+                  SGIDataColumnTypeConstants.Z_VALUE,
                   SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION,
                   SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
                   false,
@@ -4463,20 +4518,23 @@ public class SGDataUtility
 
       } else {
         String cType = null;
-        List<SGDataColumnInfo> zColList = findColumnsWithColumnType(colArray, Z_VALUE);
+        List<SGDataColumnInfo> zColList =
+            findColumnsWithColumnType(colArray, SGIDataColumnTypeConstants.Z_VALUE);
         if (zColList.size() == 1) {
-          cType = Z_VALUE;
+          cType = SGIDataColumnTypeConstants.Z_VALUE;
         }
         if (cType == null) {
-          List<SGDataColumnInfo> xColList = findColumnsWithColumnType(colArray, X_VALUE);
+          List<SGDataColumnInfo> xColList =
+              findColumnsWithColumnType(colArray, SGIDataColumnTypeConstants.X_VALUE);
           if (xColList.size() == 1) {
-            cType = X_VALUE;
+            cType = SGIDataColumnTypeConstants.X_VALUE;
           }
         }
         if (cType == null) {
-          List<SGDataColumnInfo> yColList = findColumnsWithColumnType(colArray, Y_VALUE);
+          List<SGDataColumnInfo> yColList =
+              findColumnsWithColumnType(colArray, SGIDataColumnTypeConstants.Y_VALUE);
           if (yColList.size() == 1) {
-            cType = Y_VALUE;
+            cType = SGIDataColumnTypeConstants.Y_VALUE;
           }
         }
         if (cType == null) {
@@ -4497,11 +4555,11 @@ public class SGDataUtility
     } else if (SGDataUtility.isVXYTypeData(dataType)) {
       final String fType, sType;
       if (SGDataUtility.isPolar(infoMap)) {
-        fType = MAGNITUDE;
-        sType = ANGLE;
+        fType = SGIDataColumnTypeConstants.MAGNITUDE;
+        sType = SGIDataColumnTypeConstants.ANGLE;
       } else {
-        fType = X_COMPONENT;
-        sType = Y_COMPONENT;
+        fType = SGIDataColumnTypeConstants.X_COMPONENT;
+        sType = SGIDataColumnTypeConstants.Y_COMPONENT;
       }
       map = new HashMap<String, SGIntegerSeriesSet>();
       Boolean grid = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG);
@@ -4513,8 +4571,8 @@ public class SGDataUtility
                 dimNameMap,
                 dataType,
                 figureSize,
-                X_COORDINATE,
-                Y_COORDINATE,
+                SGIDataColumnTypeConstants.X_COORDINATE,
+                SGIDataColumnTypeConstants.Y_COORDINATE,
                 fType,
                 sType,
                 SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X,
@@ -4532,15 +4590,17 @@ public class SGDataUtility
           }
         }
         if (cType == null) {
-          List<SGDataColumnInfo> xColList = findColumnsWithColumnType(colArray, X_COORDINATE);
+          List<SGDataColumnInfo> xColList =
+              findColumnsWithColumnType(colArray, SGIDataColumnTypeConstants.X_COORDINATE);
           if (xColList.size() == 1) {
-            cType = X_COORDINATE;
+            cType = SGIDataColumnTypeConstants.X_COORDINATE;
           }
         }
         if (cType == null) {
-          List<SGDataColumnInfo> yColList = findColumnsWithColumnType(colArray, Y_COORDINATE);
+          List<SGDataColumnInfo> yColList =
+              findColumnsWithColumnType(colArray, SGIDataColumnTypeConstants.Y_COORDINATE);
           if (yColList.size() == 1) {
-            cType = Y_COORDINATE;
+            cType = SGIDataColumnTypeConstants.Y_COORDINATE;
           }
         }
         if (cType == null) {
@@ -5028,8 +5088,10 @@ public class SGDataUtility
 
   static List<SGMDArrayDataColumnInfo> findValidPickUpXYColumns(SGDataColumnInfo[] cols) {
     List<SGMDArrayDataColumnInfo> pickUpColList = new ArrayList<SGMDArrayDataColumnInfo>();
-    List<SGDataColumnInfo> xColList = SGDataUtility.findColumnsWithColumnType(cols, X_VALUE);
-    List<SGDataColumnInfo> yColList = SGDataUtility.findColumnsWithColumnType(cols, Y_VALUE);
+    List<SGDataColumnInfo> xColList =
+        SGDataUtility.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.X_VALUE);
+    List<SGDataColumnInfo> yColList =
+        SGDataUtility.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_VALUE);
     if (xColList.size() == 0 && yColList.size() == 0) {
       return null;
     } else if (xColList.size() > 1 || yColList.size() > 1) {
@@ -5330,7 +5392,7 @@ public class SGDataUtility
       SGNetCDFVariable ehVar) {
     String name;
     if (leVar.equals(ueVar)) {
-      name = LOWER_UPPER_ERROR_VALUE;
+      name = SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE;
     } else {
       name = nameStr;
     }
@@ -5388,7 +5450,7 @@ public class SGDataUtility
       SGMDArrayVariable ehVar) {
     String name;
     if (leVar.equals(ueVar)) {
-      name = LOWER_UPPER_ERROR_VALUE;
+      name = SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE;
     } else {
       name = nameStr;
     }
@@ -5563,9 +5625,9 @@ public class SGDataUtility
         final int index = multiple.getIndex();
         final int arrayIndex = all ? index : Arrays.binarySearch(indexArray, index);
         final double value = dataValue.getValue();
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           xArray[childIndex][arrayIndex] = value + shiftValue.x;
-        } else if (Y_VALUE.equals(columnType)) {
+        } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
           yArray[childIndex][arrayIndex] = value + shiftValue.y;
         }
       }
@@ -6043,7 +6105,8 @@ public class SGDataUtility
     }
     if (SGDataUtility.isSXYZTypeData(dataType)) {
       List<SGDataColumnInfo> zList =
-          SGDataUtility.findColumnsWithColumnType(colInfoArray, SGIDataColumnTypeConstants.Z_VALUE);
+          SGDataUtility.findColumnsWithColumnType(
+              colInfoArray, SGIDataColumnTypeConstants.Z_VALUE);
       if (zList.size() != 1) {
         return false;
       }
@@ -6059,7 +6122,9 @@ public class SGDataUtility
         return false;
       }
       String colName =
-          polar ? SGIDataColumnTypeConstants.MAGNITUDE : SGIDataColumnTypeConstants.X_COMPONENT;
+          polar
+              ? SGIDataColumnTypeConstants.MAGNITUDE
+              : SGIDataColumnTypeConstants.X_COMPONENT;
       List<SGDataColumnInfo> fList = SGDataUtility.findColumnsWithColumnType(colInfoArray, colName);
       if (fList.size() != 1) {
         return false;
@@ -6085,26 +6150,25 @@ public class SGDataUtility
    */
   public static String[] getCanonicalColumnTypes(String[] columnTypes) {
     String[] allColumnTypes = {
-      X_VALUE,
-      Y_VALUE,
-      Z_VALUE,
-      LOWER_ERROR_VALUE,
-      UPPER_ERROR_VALUE,
-      LOWER_UPPER_ERROR_VALUE,
-      TICK_LABEL,
-      X_COORDINATE,
-      Y_COORDINATE,
-      X_COMPONENT,
-      Y_COMPONENT,
-      MAGNITUDE,
-      ANGLE,
-      ANIMATION_FRAME,
-      TIME,
-      PICKUP,
-      INDEX,
-      SERIAL_NUMBERS,
-      X_INDEX,
-      Y_INDEX
+      SGIDataColumnTypeConstants.X_VALUE,
+      SGIDataColumnTypeConstants.Y_VALUE,
+      SGIDataColumnTypeConstants.Z_VALUE,
+      SGIDataColumnTypeConstants.LOWER_ERROR_VALUE,
+      SGIDataColumnTypeConstants.UPPER_ERROR_VALUE,
+      SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE,
+      SGIDataColumnTypeConstants.TICK_LABEL,
+      SGIDataColumnTypeConstants.X_COORDINATE,
+      SGIDataColumnTypeConstants.Y_COORDINATE,
+      SGIDataColumnTypeConstants.X_COMPONENT,
+      SGIDataColumnTypeConstants.Y_COMPONENT,
+      SGIDataColumnTypeConstants.MAGNITUDE,
+      SGIDataColumnTypeConstants.ANGLE,
+      SGIDataColumnTypeConstants.ANIMATION_FRAME,
+      SGIDataColumnTypeConstants.PICKUP,
+      SGIDataColumnTypeConstants.INDEX,
+      SGIDataColumnTypeConstants.SERIAL_NUMBERS,
+      SGIDataColumnTypeConstants.X_INDEX,
+      SGIDataColumnTypeConstants.Y_INDEX
     };
     String[] retColumnTypes = new String[columnTypes.length];
     for (int ii = 0; ii < retColumnTypes.length; ii++) {
@@ -6430,7 +6494,7 @@ public class SGDataUtility
 
     // add time, pickup and serial number columns
     final boolean isNetCDFData = isNetCDFData(dataType);
-    if (isNetCDFData && VALUE_TYPE_NUMBER.equals(valueType)) {
+    if (isNetCDFData && SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
       SGNetCDFDataColumnInfo ncInfo = (SGNetCDFDataColumnInfo) colInfo[rowIndex];
       if (ncInfo.isCoordinateVariable()) {
         for (String op : cOptions) {
@@ -6767,9 +6831,9 @@ public class SGDataUtility
     }
 
     // subtract the shift value
-    if (X_VALUE.equals(columnType)) {
+    if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
       d -= data.getShift().x;
-    } else if (Y_VALUE.equals(columnType)) {
+    } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
       d -= data.getShift().y;
     }
 
@@ -6805,7 +6869,7 @@ public class SGDataUtility
         String dimName = cVar.getName();
 
         final SGNetCDFVariable var;
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           SGNetCDFVariable[] vars = ncData.getXVariables();
           if (ncData.hasMultipleYValues()) {
             var = vars[0];
@@ -6816,7 +6880,7 @@ public class SGDataUtility
               var = vars[col];
             }
           }
-        } else if (Y_VALUE.equals(columnType)) {
+        } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
           SGNetCDFVariable[] vars = ncData.getYVariables();
           if (ncData.hasMultipleYValues()) {
             if (ncData.isDimensionPicked()) {
@@ -6856,9 +6920,9 @@ public class SGDataUtility
         SGMDArrayVariable xVar = mdData.getXVariable();
         SGMDArrayVariable yVar = mdData.getYVariable();
         SGMDArrayVariable var = null;
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           var = xVar;
-        } else if (Y_VALUE.equals(columnType)) {
+        } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
           var = yVar;
         } else {
           throw new Error("Invalid column type: " + columnType);
@@ -7016,7 +7080,7 @@ public class SGDataUtility
       }
       boolean diff = false;
       double prev = 0.0;
-      if (X_VALUE.equals(columnType)) {
+      if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
         if (index < cache.mXValues.length) {
           if (cache.mXValues[index] != d) {
             prev = cache.mXValues[index];
@@ -7024,7 +7088,7 @@ public class SGDataUtility
             diff = true;
           }
         }
-      } else if (Y_VALUE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
         if (index < cache.mYValues.length) {
           if (cache.mYValues[index] != d) {
             prev = cache.mYValues[index];
@@ -7032,7 +7096,7 @@ public class SGDataUtility
             diff = true;
           }
         }
-      } else if (Z_VALUE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
         if (index < cache.mZValues.length) {
           if (cache.mZValues[index] != d) {
             prev = cache.mZValues[index];
@@ -7050,11 +7114,11 @@ public class SGDataUtility
           SGNetCDFVariable yVar = ncData.getYVariable();
           SGNetCDFVariable zVar = ncData.getZVariable();
           SGNetCDFVariable var = null;
-          if (X_VALUE.equals(columnType)) {
+          if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
             var = xVar;
-          } else if (Y_VALUE.equals(columnType)) {
+          } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
             var = yVar;
-          } else if (Z_VALUE.equals(columnType)) {
+          } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
             var = zVar;
           }
           ret = createIndexDataValueHistory(ncData, d, columnType, col, row, var, prev);
@@ -7064,11 +7128,11 @@ public class SGDataUtility
           SGMDArrayVariable yVar = mdData.getYVariable();
           SGMDArrayVariable zVar = mdData.getZVariable();
           SGMDArrayVariable var = null;
-          if (X_VALUE.equals(columnType)) {
+          if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
             var = xVar;
-          } else if (Y_VALUE.equals(columnType)) {
+          } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
             var = yVar;
-          } else if (Z_VALUE.equals(columnType)) {
+          } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
             var = zVar;
           }
           ret = createOneDimensionalDataValueHistory(mdData, d, columnType, col, row, var, prev);
@@ -7079,7 +7143,7 @@ public class SGDataUtility
 
     } else {
 
-      if (X_VALUE.equals(columnType)) {
+      if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
         final int index;
         if (data.isStrideAvailable()) {
           int[] indices = data.getXStride().getNumbers();
@@ -7105,7 +7169,7 @@ public class SGDataUtility
           }
         }
 
-      } else if (Y_VALUE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
         final int index;
         if (data.isStrideAvailable()) {
           int[] indices = data.getYStride().getNumbers();
@@ -7131,7 +7195,7 @@ public class SGDataUtility
           }
         }
 
-      } else if (Z_VALUE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
         for (SGXYSimpleDoubleValueIndexBlock block : cache.mZValueBlockList) {
           final Double prev = block.getValue(col, row);
           if (block.setValue(d, col, row)) {
@@ -7189,7 +7253,7 @@ public class SGDataUtility
       }
       boolean diff = false;
       double prev = 0.0;
-      if (X_COORDINATE.equals(columnType)) {
+      if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
         if (index < cache.mXValues.length) {
           if (cache.mXValues[index] != d) {
             prev = cache.mXValues[index];
@@ -7197,7 +7261,7 @@ public class SGDataUtility
             diff = true;
           }
         }
-      } else if (Y_COORDINATE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.Y_COORDINATE.equals(columnType)) {
         if (index < cache.mYValues.length) {
           if (cache.mYValues[index] != d) {
             prev = cache.mYValues[index];
@@ -7232,9 +7296,9 @@ public class SGDataUtility
           SGNetCDFVariable fVar = ncData.getFirstComponentVariable();
           SGNetCDFVariable sVar = ncData.getSecondComponentVariable();
           SGNetCDFVariable var = null;
-          if (X_COORDINATE.equals(columnType)) {
+          if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
             var = xVar;
-          } else if (Y_COORDINATE.equals(columnType)) {
+          } else if (SGIDataColumnTypeConstants.Y_COORDINATE.equals(columnType)) {
             var = yVar;
           } else if (first.equals(columnType)) {
             var = fVar;
@@ -7249,9 +7313,9 @@ public class SGDataUtility
           SGMDArrayVariable fVar = mdData.getFirstComponentVariable();
           SGMDArrayVariable sVar = mdData.getSecondComponentVariable();
           SGMDArrayVariable var = null;
-          if (X_COORDINATE.equals(columnType)) {
+          if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
             var = xVar;
-          } else if (Y_COORDINATE.equals(columnType)) {
+          } else if (SGIDataColumnTypeConstants.Y_COORDINATE.equals(columnType)) {
             var = yVar;
           } else if (first.equals(columnType)) {
             var = fVar;
@@ -7265,7 +7329,7 @@ public class SGDataUtility
       }
 
     } else {
-      if (X_COORDINATE.equals(columnType)) {
+      if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
         final int index;
         if (data.isStrideAvailable()) {
           int[] indices = data.getXStride().getNumbers();
@@ -7291,7 +7355,7 @@ public class SGDataUtility
           }
         }
 
-      } else if (Y_COORDINATE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.Y_COORDINATE.equals(columnType)) {
         final int index;
         if (data.isStrideAvailable()) {
           int[] indices = data.getYStride().getNumbers();
@@ -7892,7 +7956,7 @@ public class SGDataUtility
   public static int getDataViewerColumnNumber(
       final SGISXYTypeMultipleData data, final String columnType) {
     final int num;
-    if (Y_VALUE.equals(columnType)) {
+    if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
       if (data.hasMultipleYValues()) {
         num = data.getChildNumber();
       } else {
@@ -7976,11 +8040,11 @@ public class SGDataUtility
     ISingleDimension dataValueD1 = (ISingleDimension) dataValue;
     final int index = dataValueD1.getIndex();
     double[] values;
-    if (X_VALUE.equals(columnType)) {
+    if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
       values = xValues;
-    } else if (Y_VALUE.equals(columnType)) {
+    } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
       values = yValues;
-    } else if (Z_VALUE.equals(columnType)) {
+    } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
       values = zValues;
     } else {
       throw new Error("Invalid column type: " + columnType);
@@ -7998,17 +8062,17 @@ public class SGDataUtility
       SGDataValueHistory dataValue) {
     final double value = dataValue.getValue();
     String columnType = dataValue.getColumnType();
-    if (X_VALUE.equals(columnType)) {
+    if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
       ISingleDimension dataValueD1 = (ISingleDimension) dataValue;
       final int index = dataValueD1.getIndex();
       final int arrayIndex = getArrayIndex(data, all, data.getXStride(), index);
       xValues[arrayIndex] = value;
-    } else if (Y_VALUE.equals(columnType)) {
+    } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
       ISingleDimension dataValueD1 = (ISingleDimension) dataValue;
       final int index = dataValueD1.getIndex();
       final int arrayIndex = getArrayIndex(data, all, data.getYStride(), index);
       yValues[arrayIndex] = value;
-    } else if (Z_VALUE.equals(columnType)) {
+    } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
       final int col = dataValue.getColumnIndex();
       final int row = dataValue.getRowIndex();
       final int colIndex = getArrayIndex(data, all, data.getXStride(), col);
@@ -8033,9 +8097,9 @@ public class SGDataUtility
     final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
     final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
     double[] values;
-    if (X_COORDINATE.equals(columnType)) {
+    if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
       values = xValues;
-    } else if (Y_COORDINATE.equals(columnType)) {
+    } else if (SGIDataColumnTypeConstants.Y_COORDINATE.equals(columnType)) {
       values = yValues;
     } else if (first.equals(columnType)) {
       values = fValues;
@@ -8061,12 +8125,12 @@ public class SGDataUtility
     final boolean polar = data.isPolar();
     final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
     final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
-    if (X_COORDINATE.equals(columnType)) {
+    if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
       ISingleDimension dataValueD1 = (ISingleDimension) dataValue;
       final int index = dataValueD1.getIndex();
       final int arrayIndex = getArrayIndex(data, all, data.getXStride(), index);
       xValues[arrayIndex] = value;
-    } else if (Y_COORDINATE.equals(columnType)) {
+    } else if (SGIDataColumnTypeConstants.Y_COORDINATE.equals(columnType)) {
       ISingleDimension dataValueD1 = (ISingleDimension) dataValue;
       final int index = dataValueD1.getIndex();
       final int arrayIndex = getArrayIndex(data, all, data.getYStride(), index);

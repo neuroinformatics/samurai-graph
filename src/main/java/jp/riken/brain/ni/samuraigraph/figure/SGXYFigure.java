@@ -17,6 +17,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
@@ -296,196 +297,196 @@ public class SGXYFigure extends SGFigure
     while (itr.hasNext()) {
       String key = itr.next();
       String value = map.getValueString(key);
-      if (COM_FIGURE_GRID_VISIBLE.equalsIgnoreCase(key)) {
+      if (SGIFigureConstants.COM_FIGURE_GRID_VISIBLE.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_FIGURE_GRID_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setGridVisible(b.booleanValue()) == false) {
-          result.putResult(COM_FIGURE_GRID_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FIGURE_GRID_VISIBLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FIGURE_GRID_AXIS_X.equalsIgnoreCase(key)) {
+        result.putResult(SGIFigureConstants.COM_FIGURE_GRID_VISIBLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIFigureConstants.COM_FIGURE_GRID_AXIS_X.equalsIgnoreCase(key)) {
         final int loc = SGUtility.getAxisLocation(value);
         if (loc == -1) {
-          result.putResult(COM_FIGURE_GRID_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setXAxisLocation(loc) == false) {
-          result.putResult(COM_FIGURE_GRID_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FIGURE_GRID_AXIS_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FIGURE_GRID_AXIS_Y.equalsIgnoreCase(key)) {
+        result.putResult(SGIFigureConstants.COM_FIGURE_GRID_AXIS_X, SGPropertyResults.SUCCEEDED);
+      } else if (SGIFigureConstants.COM_FIGURE_GRID_AXIS_Y.equalsIgnoreCase(key)) {
         final int loc = SGUtility.getAxisLocation(value);
         if (loc == -1) {
-          result.putResult(COM_FIGURE_GRID_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setYAxisLocation(loc) == false) {
-          result.putResult(COM_FIGURE_GRID_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FIGURE_GRID_AXIS_Y, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FIGURE_GRID_AUTO.equalsIgnoreCase(key)) {
+        result.putResult(SGIFigureConstants.COM_FIGURE_GRID_AXIS_Y, SGPropertyResults.SUCCEEDED);
+      } else if (SGIFigureConstants.COM_FIGURE_GRID_AUTO.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_FIGURE_GRID_AUTO, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_AUTO, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setAutoCalculateRange(b.booleanValue()) == false) {
-          result.putResult(COM_FIGURE_GRID_AUTO, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_AUTO, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FIGURE_GRID_AUTO, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FIGURE_GRID_BASE_X.equalsIgnoreCase(key)) {
+        result.putResult(SGIFigureConstants.COM_FIGURE_GRID_AUTO, SGPropertyResults.SUCCEEDED);
+      } else if (SGIFigureConstants.COM_FIGURE_GRID_BASE_X.equalsIgnoreCase(key)) {
         final SGAxisValue axisValue;
         if (dateModeX) {
           SGDate date = SGUtilityText.getDate(value);
           if (date == null) {
-            result.putResult(COM_FIGURE_GRID_BASE_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_BASE_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           axisValue = new SGAxisDateValue(date);
         } else {
           Number num = SGUtilityText.getDouble(value);
           if (num == null) {
-            result.putResult(COM_FIGURE_GRID_BASE_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_BASE_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-            result.putResult(COM_FIGURE_GRID_BASE_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_BASE_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           axisValue = new SGAxisDoubleValue(num.doubleValue());
         }
         if (this.setGridBaselineValueX(axisValue) == false) {
-          result.putResult(COM_FIGURE_GRID_BASE_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_BASE_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FIGURE_GRID_BASE_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FIGURE_GRID_STEP_X.equalsIgnoreCase(key)) {
+        result.putResult(SGIFigureConstants.COM_FIGURE_GRID_BASE_X, SGPropertyResults.SUCCEEDED);
+      } else if (SGIFigureConstants.COM_FIGURE_GRID_STEP_X.equalsIgnoreCase(key)) {
         final SGAxisStepValue step;
         if (dateModeX) {
           SGPeriod p = SGUtilityText.getPeriod(value);
           if (p == null) {
-            result.putResult(COM_FIGURE_GRID_STEP_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_STEP_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           step = new SGAxisDateStepValue(p);
         } else {
           Number num = SGUtilityText.getDouble(value);
           if (num == null) {
-            result.putResult(COM_FIGURE_GRID_STEP_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_STEP_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-            result.putResult(COM_FIGURE_GRID_STEP_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_STEP_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           step = new SGAxisDoubleStepValue(num.doubleValue());
         }
         if (this.setGridStepValueX(step) == false) {
-          result.putResult(COM_FIGURE_GRID_STEP_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_STEP_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FIGURE_GRID_STEP_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FIGURE_GRID_BASE_Y.equalsIgnoreCase(key)) {
+        result.putResult(SGIFigureConstants.COM_FIGURE_GRID_STEP_X, SGPropertyResults.SUCCEEDED);
+      } else if (SGIFigureConstants.COM_FIGURE_GRID_BASE_Y.equalsIgnoreCase(key)) {
         final SGAxisValue axisValue;
         if (dateModeY) {
           SGDate date = SGUtilityText.getDate(value);
           if (date == null) {
-            result.putResult(COM_FIGURE_GRID_BASE_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_BASE_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           axisValue = new SGAxisDateValue(date);
         } else {
           Number num = SGUtilityText.getDouble(value);
           if (num == null) {
-            result.putResult(COM_FIGURE_GRID_BASE_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_BASE_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-            result.putResult(COM_FIGURE_GRID_BASE_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_BASE_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           axisValue = new SGAxisDoubleValue(num.doubleValue());
         }
         if (this.setGridBaselineValueY(axisValue) == false) {
-          result.putResult(COM_FIGURE_GRID_BASE_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_BASE_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FIGURE_GRID_BASE_Y, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FIGURE_GRID_STEP_Y.equalsIgnoreCase(key)) {
+        result.putResult(SGIFigureConstants.COM_FIGURE_GRID_BASE_Y, SGPropertyResults.SUCCEEDED);
+      } else if (SGIFigureConstants.COM_FIGURE_GRID_STEP_Y.equalsIgnoreCase(key)) {
         final SGAxisStepValue step;
         if (dateModeY) {
           SGPeriod p = SGUtilityText.getPeriod(value);
           if (p == null) {
-            result.putResult(COM_FIGURE_GRID_STEP_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_STEP_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           step = new SGAxisDateStepValue(p);
         } else {
           Number num = SGUtilityText.getDouble(value);
           if (num == null) {
-            result.putResult(COM_FIGURE_GRID_STEP_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_STEP_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (SGUtility.isValidPropertyValue(num.doubleValue()) == false) {
-            result.putResult(COM_FIGURE_GRID_STEP_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_STEP_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           step = new SGAxisDoubleStepValue(num.doubleValue());
         }
         if (this.setGridStepValueY(step) == false) {
-          result.putResult(COM_FIGURE_GRID_STEP_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_STEP_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FIGURE_GRID_STEP_Y, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FIGURE_GRID_LINE_WIDTH.equalsIgnoreCase(key)) {
+        result.putResult(SGIFigureConstants.COM_FIGURE_GRID_STEP_Y, SGPropertyResults.SUCCEEDED);
+      } else if (SGIFigureConstants.COM_FIGURE_GRID_LINE_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_FIGURE_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setGridLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_FIGURE_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FIGURE_GRID_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FIGURE_GRID_LINE_TYPE.equalsIgnoreCase(key)) {
+        result.putResult(SGIFigureConstants.COM_FIGURE_GRID_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIFigureConstants.COM_FIGURE_GRID_LINE_TYPE.equalsIgnoreCase(key)) {
         final Integer type = SGDrawingElementLine.getLineTypeFromName(value);
         if (type == null) {
-          result.putResult(COM_FIGURE_GRID_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setGridLineType(type) == false) {
-          result.putResult(COM_FIGURE_GRID_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIFigureConstants.COM_FIGURE_GRID_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_FIGURE_GRID_LINE_TYPE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_FIGURE_GRID_LINE_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGIFigureConstants.COM_FIGURE_GRID_LINE_TYPE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIFigureConstants.COM_FIGURE_GRID_LINE_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setGridLineColor(cl) == false) {
-            result.putResult(COM_FIGURE_GRID_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_FIGURE_GRID_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.setGridLineColor(cl) == false) {
-            result.putResult(COM_FIGURE_GRID_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIFigureConstants.COM_FIGURE_GRID_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_FIGURE_GRID_LINE_COLOR, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIFigureConstants.COM_FIGURE_GRID_LINE_COLOR, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -549,7 +550,7 @@ public class SGXYFigure extends SGFigure
 
     // frame
     this.addFrameProperties(
-        map, COM_FIGURE_FRAME_VISIBLE, COM_FIGURE_FRAME_LINE_WIDTH, COM_FIGURE_FRAME_COLOR);
+        map, SGIFigureConstants.COM_FIGURE_FRAME_VISIBLE, SGIFigureConstants.COM_FIGURE_FRAME_LINE_WIDTH, SGIFigureConstants.COM_FIGURE_FRAME_COLOR);
 
     // NOTE: Grid properties are not added to this map.
     return map;
@@ -566,7 +567,7 @@ public class SGXYFigure extends SGFigure
 
     // frame
     this.addFrameProperties(
-        map, COM_FIGURE_FRAME_VISIBLE, COM_FIGURE_FRAME_LINE_WIDTH, COM_FIGURE_FRAME_COLOR);
+        map, SGIFigureConstants.COM_FIGURE_FRAME_VISIBLE, SGIFigureConstants.COM_FIGURE_FRAME_LINE_WIDTH, SGIFigureConstants.COM_FIGURE_FRAME_COLOR);
 
     return map;
   }
@@ -580,7 +581,7 @@ public class SGXYFigure extends SGFigure
     sb.append(figureCommandString);
     String gridCommands =
         SGCommandUtility.createCommandString(
-            COM_FIGURE, Integer.toString(this.getID()), this.getGridCommandPropertyMap(params));
+            SGIFigureConstants.COM_FIGURE, Integer.toString(this.getID()), this.getGridCommandPropertyMap(params));
     sb.append(gridCommands);
     return sb.toString();
   }

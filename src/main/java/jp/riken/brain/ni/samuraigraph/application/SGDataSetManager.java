@@ -16,6 +16,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
@@ -32,9 +33,7 @@ import org.w3c.dom.NodeList;
 /** SGMainFunctions :: DataSetManager class */
 class SGDataSetManager
     implements SGIApplicationConstants,
-        SGIPropertyFileConstants,
-        SGIApplicationTextConstants,
-        SGIArchiveFileConstants {
+        SGIPropertyFileConstants {
 
   private static final String DATASET_TEMPDIR_NAME = "SamuraiGraphArchive";
 
@@ -203,7 +202,7 @@ class SGDataSetManager
         wnd.setWaitCursor(true);
         wnd.startIndeterminateProgress();
 
-        if (file.getName().endsWith(ARCHIVE_FILE_EXTENSION)) {
+        if (file.getName().endsWith(SGIArchiveFileConstants.ARCHIVE_FILE_EXTENSION)) {
           return this.loadArchiveDataSet(wnd, file);
         } else {
           FILE_TYPE type = SGApplicationUtility.identifyDataFileType(file.getPath());
@@ -373,7 +372,7 @@ class SGDataSetManager
 
     // get window element
     Element elWnd = this.mMain.mPropertyFileManager.getWindowElement(doc);
-    NodeList nListFigure = elWnd.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+    NodeList nListFigure = elWnd.getElementsByTagName(SGIFigureConstants.TAG_NAME_FIGURE);
     final int figureNum = nListFigure.getLength();
     int cnt = 0;
     final int[] dataNumArray = new int[figureNum];
@@ -473,9 +472,9 @@ class SGDataSetManager
     final String dir = this.mMain.getCurrentFileDirectory();
     String fileName = SGApplicationUtility.getOutputFileName(wnd);
     if (fileName == null) {
-      fileName = DEFAULT_ARCHIVE_FILE_NAME;
+      fileName = SGIArchiveFileConstants.DEFAULT_ARCHIVE_FILE_NAME;
     }
-    String name = SGApplicationUtility.appendExtension(fileName, ARCHIVE_FILE_TYPE_SGA);
+    String name = SGApplicationUtility.appendExtension(fileName, SGIArchiveFileConstants.ARCHIVE_FILE_TYPE_SGA);
 
     ArrayList<File> fList;
 
@@ -504,11 +503,11 @@ class SGDataSetManager
 
     // create an archive file
     if (fileDesc != null) {
-      if (fileDesc.startsWith(ARCHIVE_FILE_DESCRIPTION_SGA107)
-          || fileDesc.startsWith(ARCHIVE_FILE_DESCRIPTION)) {
+      if (fileDesc.startsWith(SGIArchiveFileConstants.ARCHIVE_FILE_DESCRIPTION_SGA107)
+          || fileDesc.startsWith(SGIArchiveFileConstants.ARCHIVE_FILE_DESCRIPTION)) {
 
         SGIConstants.OPERATION mode;
-        if (fileDesc.startsWith(ARCHIVE_FILE_DESCRIPTION_SGA107)) {
+        if (fileDesc.startsWith(SGIArchiveFileConstants.ARCHIVE_FILE_DESCRIPTION_SGA107)) {
           mode = SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107;
         } else {
           mode = SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET;
@@ -600,11 +599,11 @@ class SGDataSetManager
 
     File outFile = new File(filePath);
 
-    if (ARCHIVE_FILE_TYPE_SGA.equalsIgnoreCase(archiveType)
-        || ARCHIVE_FILE_TYPE_SGA107.equalsIgnoreCase(archiveType)) {
+    if (SGIArchiveFileConstants.ARCHIVE_FILE_TYPE_SGA.equalsIgnoreCase(archiveType)
+        || SGIArchiveFileConstants.ARCHIVE_FILE_TYPE_SGA107.equalsIgnoreCase(archiveType)) {
 
       SGIConstants.OPERATION mode;
-      if (ARCHIVE_FILE_TYPE_SGA.equalsIgnoreCase(archiveType)) {
+      if (SGIArchiveFileConstants.ARCHIVE_FILE_TYPE_SGA.equalsIgnoreCase(archiveType)) {
         mode = SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET;
       } else {
         mode = SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107;
@@ -638,7 +637,7 @@ class SGDataSetManager
       this.mMain.updateCurrentFile(outFile, FILE_TYPE.DATASET);
       return SGIConstants.OK_OPTION;
 
-    } else if (ARCHIVE_FILETYPE_NETCDF.equalsIgnoreCase(archiveType)) {
+    } else if (SGIArchiveFileConstants.ARCHIVE_FILETYPE_NETCDF.equalsIgnoreCase(archiveType)) {
       final String versionString = this.mMain.mAppProp.getVersionString();
       SGNetCDFDataSetManager netcdfDatasetManager = new SGNetCDFDataSetManager(this.mMain);
       int result = netcdfDatasetManager.save(wnd, versionString, datasetTempDir, outFile);

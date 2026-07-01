@@ -18,7 +18,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
 
 /** A wizard dialog to select the data type. */
-public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplicationTextConstants {
+public class SGDataTypeWizardDialog extends SGWizardDialog {
 
   private static final long serialVersionUID = 816214461842908836L;
 
@@ -710,7 +710,10 @@ public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplica
       }
       if (!ok) {
         SGUtility.showMessageDialog(
-            this, MSG_INVALID_INPUT_VALUE, SGIConstants.TITLE_ERROR, JOptionPane.ERROR_MESSAGE);
+            this,
+            SGIApplicationTextConstants.MSG_INVALID_INPUT_VALUE,
+            SGIConstants.TITLE_ERROR,
+            JOptionPane.ERROR_MESSAGE);
         return false;
       }
     }

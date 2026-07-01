@@ -33,8 +33,7 @@ import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 /** Scalar type XYZ data. This object has of x, y and z values. */
-public class SGSXYZSDArrayData extends SGSDArrayData
-    implements SGISXYZTypeData, SGIDataPropertyKeyConstants {
+public class SGSXYZSDArrayData extends SGSDArrayData implements SGISXYZTypeData {
 
   /** The column index for x-values. */
   protected Integer mXIndex = null;
@@ -275,13 +274,13 @@ public class SGSXYZSDArrayData extends SGSDArrayData
       array[ii] = "";
     }
     if (this.mXIndex != null) {
-      array[this.mXIndex.intValue()] = X_VALUE;
+      array[this.mXIndex.intValue()] = SGIDataColumnTypeConstants.X_VALUE;
     }
     if (this.mYIndex != null) {
-      array[this.mYIndex.intValue()] = Y_VALUE;
+      array[this.mYIndex.intValue()] = SGIDataColumnTypeConstants.Y_VALUE;
     }
     if (this.mZIndex != null) {
-      array[this.mZIndex.intValue()] = Z_VALUE;
+      array[this.mZIndex.intValue()] = SGIDataColumnTypeConstants.Z_VALUE;
     }
     return array;
   }
@@ -298,9 +297,9 @@ public class SGSXYZSDArrayData extends SGSDArrayData
     colArray[1] = columns[this.mYIndex.intValue()];
     colArray[2] = columns[this.mZIndex.intValue()];
 
-    colArray[0].setColumnType(X_VALUE);
-    colArray[1].setColumnType(Y_VALUE);
-    colArray[2].setColumnType(Z_VALUE);
+    colArray[0].setColumnType(SGIDataColumnTypeConstants.X_VALUE);
+    colArray[1].setColumnType(SGIDataColumnTypeConstants.Y_VALUE);
+    colArray[2].setColumnType(SGIDataColumnTypeConstants.Z_VALUE);
     return colArray;
   }
 
@@ -323,11 +322,11 @@ public class SGSXYZSDArrayData extends SGSDArrayData
     Integer y = null;
     Integer z = null;
     for (int ii = 0; ii < columns.length; ii++) {
-      if (SGDataUtility.isEqualColumnType(X_VALUE, columns[ii])) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_VALUE, columns[ii])) {
         x = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, columns[ii])) {
         y = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(Z_VALUE, columns[ii])) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Z_VALUE, columns[ii])) {
         z = Integer.valueOf(ii);
       } else if ("".equals(columns[ii])) {
         continue;
@@ -409,9 +408,9 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    * @return true if succeeded
    */
   protected boolean writeAttributeColumnIndices(Element el) {
-    el.setAttribute(KEY_X_VALUE_COLUMN_INDEX, this.mXIndex.toString());
-    el.setAttribute(KEY_Y_VALUE_COLUMN_INDEX, this.mYIndex.toString());
-    el.setAttribute(KEY_Z_VALUE_COLUMN_INDEX, this.mZIndex.toString());
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_COLUMN_INDEX, this.mXIndex.toString());
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_COLUMN_INDEX, this.mYIndex.toString());
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_Z_VALUE_COLUMN_INDEX, this.mZIndex.toString());
     return true;
   }
 
@@ -422,68 +421,26 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    * @return true if succeeded
    */
   protected boolean writeSequentialColumnIndices(Element el) {
-    el.setAttribute(KEY_X_VALUE_COLUMN_INDEX, Integer.toString(0));
-    el.setAttribute(KEY_Y_VALUE_COLUMN_INDEX, Integer.toString(1));
-    el.setAttribute(KEY_Z_VALUE_COLUMN_INDEX, Integer.toString(2));
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_COLUMN_INDEX, Integer.toString(0));
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_COLUMN_INDEX, Integer.toString(1));
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_Z_VALUE_COLUMN_INDEX, Integer.toString(2));
     return true;
   }
 
   @Override
   protected boolean writeSequentialColumnName(Element el) {
-    el.setAttribute(KEY_X_VALUE_COLUMN_INDEX, this.getSequentialColumnName(0));
-    el.setAttribute(KEY_Y_VALUE_COLUMN_INDEX, this.getSequentialColumnName(1));
-    el.setAttribute(KEY_Z_VALUE_COLUMN_INDEX, this.getSequentialColumnName(2));
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_X_VALUE_COLUMN_INDEX, this.getSequentialColumnName(0));
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_Y_VALUE_COLUMN_INDEX, this.getSequentialColumnName(1));
+    el.setAttribute(
+        SGIDataPropertyKeyConstants.KEY_Z_VALUE_COLUMN_INDEX, this.getSequentialColumnName(2));
 
     // serial numbers
-    el.setAttribute(KEY_INDEX_VARIABLE_NAME, INDEX);
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, SGIDataColumnTypeConstants.INDEX);
 
     return true;
   }
-
-  // /**
-  // * Read properties from a given Element and set to this data.
-  // * @param el
-  // * an Element
-  // * @return
-  // * true if succeeded
-  // */
-  // public boolean readProperty(Element el) {
-  // Integer index = null;
-  // Integer xIndex = null;
-  // Integer yIndex = null;
-  // Integer zIndex = null;
-  // if ((index = this.readIndex(el, KEY_X_VALUE_COLUMN_INDEX)) != null) {
-  // if (this.checkColumnIndexRange(index) == false) {
-  // return false;
-  // }
-  // xIndex = index;
-  // } else {
-  // return false;
-  // }
-  // if ((index = this.readIndex(el, KEY_Y_VALUE_COLUMN_INDEX)) != null) {
-  // if (this.checkColumnIndexRange(index) == false) {
-  // return false;
-  // }
-  // yIndex = index;
-  // } else {
-  // return false;
-  // }
-  // if ((index = this.readIndex(el, KEY_Z_VALUE_COLUMN_INDEX)) != null) {
-  // if (this.checkColumnIndexRange(index) == false) {
-  // return false;
-  // }
-  // zIndex = index;
-  // } else {
-  // return false;
-  // }
-  //
-  // // set to attributes
-  // this.mXIndex = xIndex;
-  // this.mYIndex = yIndex;
-  // this.mZIndex = zIndex;
-  //
-  // return true;
-  // }
 
   /** A class for scalar xyz-type data properties. */
   public static class SXYZSDArrayDataProperties extends SDArrayDataProperties {
@@ -1018,11 +975,11 @@ public class SGSXYZSDArrayData extends SGSDArrayData
         final int arrayIndex = all ? index : Arrays.binarySearch(indices, index);
         final double value = dataValue.getValue();
         double[] values;
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           values = xValues;
-        } else if (Y_VALUE.equals(columnType)) {
+        } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
           values = yValues;
-        } else if (Z_VALUE.equals(columnType)) {
+        } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
           values = zValues;
         } else {
           throw new Error("Invalid column type: " + columnType);
@@ -1161,15 +1118,15 @@ public class SGSXYZSDArrayData extends SGSDArrayData
 
     String strX = Integer.toString(this.mXIndex + 1);
     varList.add(strX);
-    columnTypeList.add(X_VALUE);
+    columnTypeList.add(SGIDataColumnTypeConstants.X_VALUE);
 
     String strY = Integer.toString(this.mYIndex + 1);
     varList.add(strY);
-    columnTypeList.add(Y_VALUE);
+    columnTypeList.add(SGIDataColumnTypeConstants.Y_VALUE);
 
     String strZ = Integer.toString(this.mZIndex + 1);
     varList.add(strZ);
-    columnTypeList.add(Z_VALUE);
+    columnTypeList.add(SGIDataColumnTypeConstants.Z_VALUE);
 
     return SGDataUtility.getDataColumnTypeCommand(varList, columnTypeList);
   }
@@ -1180,7 +1137,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
       SGIntegerSeriesSet arraySection = this.getStride();
       if (!arraySection.isComplete()) {
         SGPropertyUtility.addQuotedStringProperty(
-            map, COM_DATA_ARRAY_SECTION, arraySection.toString());
+            map, SGIDataCommandConstants.COM_DATA_ARRAY_SECTION, arraySection.toString());
       }
     }
     return true;

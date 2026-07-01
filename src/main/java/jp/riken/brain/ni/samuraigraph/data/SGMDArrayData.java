@@ -48,7 +48,7 @@ import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 /** The base class for multidimensional data. */
-public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumnTypeConstants {
+public abstract class SGMDArrayData extends SGArrayData {
 
   /** The list of variables. */
   protected SGMDArrayVariable[] mVariables = null;

@@ -52,11 +52,7 @@ import org.freehep.graphicsio.PageConstants;
 
 /** A dialog to set configuration of animation of data object. */
 public class SGDataAnimationDialog extends SGDialog
-    implements SGIAnimationConstants,
-        DocumentListener,
-        AnimationThreadObserver,
-        MouseListener,
-        ItemListener {
+    implements DocumentListener, AnimationThreadObserver, MouseListener, ItemListener {
 
   /** Serial Version UID */
   private static final long serialVersionUID = -422924558519688171L;
@@ -586,10 +582,14 @@ public class SGDataAnimationDialog extends SGDialog
 
     // set the spinner model
     this.mFrameRateSpinner.initProperties(
-        new SpinnerNumberModel(FRAME_RATE_INIT, FRAME_RATE_MIN, FRAME_RATE_MAX, FRAME_RATE_STEP),
+        new SpinnerNumberModel(
+            SGIAnimationConstants.FRAME_RATE_INIT,
+            SGIAnimationConstants.FRAME_RATE_MIN,
+            SGIAnimationConstants.FRAME_RATE_MAX,
+            SGIAnimationConstants.FRAME_RATE_STEP),
         null,
-        FRAME_RATE_FRAC_DIFIT_MIN,
-        FRAME_RATE_FRAC_DIFIT_MAX);
+        SGIAnimationConstants.FRAME_RATE_FRAC_DIFIT_MIN,
+        SGIAnimationConstants.FRAME_RATE_FRAC_DIFIT_MAX);
 
     // setup the slider
     JSlider slider = this.getSlider();
@@ -970,9 +970,9 @@ public class SGDataAnimationDialog extends SGDialog
     Double num = SGUtilityText.getDouble(value.toString());
     boolean valid;
     if (num != null) {
-      if (num < FRAME_RATE_MIN) {
+      if (num < SGIAnimationConstants.FRAME_RATE_MIN) {
         valid = false;
-      } else if (num > FRAME_RATE_MAX) {
+      } else if (num > SGIAnimationConstants.FRAME_RATE_MAX) {
         valid = false;
       } else {
         valid = true;
@@ -1060,7 +1060,7 @@ public class SGDataAnimationDialog extends SGDialog
   private SGDataAnimationThread mAnimationThread = null;
 
   /** Frame rate. */
-  private double mFrameRate = FRAME_RATE_INIT;
+  private double mFrameRate = SGIAnimationConstants.FRAME_RATE_INIT;
 
   /** A flag for loop playback . */
   private boolean mLoopPlaybackFlag = false;

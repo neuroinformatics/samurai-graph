@@ -28,8 +28,7 @@ import ucar.nc2.NetcdfFileWriter;
  * Scalar type XY data. This object has of x and y values. If given, this object can keep error bar
  * values and text strings.
  */
-public class SGSXYSDArrayData extends SGSDArrayData
-    implements SGISXYTypeSingleData, SGIDataPropertyKeyConstants {
+public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleData {
 
   /** The column index for x-values. */
   protected Integer mXIndex = null;
@@ -769,33 +768,33 @@ public class SGSXYSDArrayData extends SGSDArrayData
     Integer tl = null;
     for (int ii = 0; ii < columns.length; ii++) {
       String valueType = cols[ii].getValueType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType) && !VALUE_TYPE_DATE.equals(valueType)) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType) && !SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
           return false;
         }
         x = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType) && !VALUE_TYPE_DATE.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType) && !SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
           return false;
         }
         y = Integer.valueOf(ii);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], LOWER_ERROR_VALUE)) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_ERROR_VALUE)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         le = Integer.valueOf(ii);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], UPPER_ERROR_VALUE)) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.UPPER_ERROR_VALUE)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         ue = Integer.valueOf(ii);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], LOWER_UPPER_ERROR_VALUE)) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         le = Integer.valueOf(ii);
         ue = Integer.valueOf(ii);
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], TICK_LABEL)) {
+      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], SGIDataColumnTypeConstants.TICK_LABEL)) {
         tl = Integer.valueOf(ii);
       } else if ("".equals(columns[ii])) {
         continue;
@@ -981,10 +980,10 @@ public class SGSXYSDArrayData extends SGSDArrayData
       array[ii] = "";
     }
     if (this.mXIndex != null) {
-      array[this.mXIndex.intValue()] = X_VALUE;
+      array[this.mXIndex.intValue()] = SGIDataColumnTypeConstants.X_VALUE;
     }
     if (this.mYIndex != null) {
-      array[this.mYIndex.intValue()] = Y_VALUE;
+      array[this.mYIndex.intValue()] = SGIDataColumnTypeConstants.Y_VALUE;
     }
     if (this.mLowerErrorIndex != null
         && this.mUpperErrorIndex != null
@@ -993,20 +992,20 @@ public class SGSXYSDArrayData extends SGSDArrayData
       if (this.mLowerErrorIndex.equals(this.mUpperErrorIndex)) {
         array[this.mLowerErrorIndex.intValue()] =
             SGDataUtility.appendColumnNoOrTitle(
-                LOWER_UPPER_ERROR_VALUE,
+                SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE,
                 index,
                 this.getDataFile().isEmptyTitle(index) || this.getDataFile().isRepeatedTitle(index),
                 this.getTitle(index));
       } else {
         array[this.mLowerErrorIndex.intValue()] =
             SGDataUtility.appendColumnNoOrTitle(
-                LOWER_ERROR_VALUE,
+                SGIDataColumnTypeConstants.LOWER_ERROR_VALUE,
                 index,
                 this.getDataFile().isEmptyTitle(index) || this.getDataFile().isRepeatedTitle(index),
                 this.getTitle(index));
         array[this.mUpperErrorIndex.intValue()] =
             SGDataUtility.appendColumnNoOrTitle(
-                UPPER_ERROR_VALUE,
+                SGIDataColumnTypeConstants.UPPER_ERROR_VALUE,
                 index,
                 this.getDataFile().isEmptyTitle(index) || this.getDataFile().isRepeatedTitle(index),
                 this.getTitle(index));
@@ -1018,7 +1017,7 @@ public class SGSXYSDArrayData extends SGSDArrayData
       int index = this.mTickLabelHolderIndex.intValue();
       array[this.mTickLabelIndex.intValue()] =
           SGDataUtility.appendColumnNoOrTitle(
-              TICK_LABEL,
+              SGIDataColumnTypeConstants.TICK_LABEL,
               index,
               this.getDataFile().isEmptyTitle(index) || this.getDataFile().isRepeatedTitle(index),
               this.getTitle(index));
@@ -1600,7 +1599,7 @@ public class SGSXYSDArrayData extends SGSDArrayData
       ret.status = false;
       return ret;
     }
-    if (X_VALUE.equals(columnType)) {
+    if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
       if (cache.mXValues.length <= index) {
         ret.status = false;
         return ret;
@@ -1610,7 +1609,7 @@ public class SGSXYSDArrayData extends SGSDArrayData
         cache.mXValues[index] = value;
         ret.status = true;
       }
-    } else if (Y_VALUE.equals(columnType)) {
+    } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
       if (cache.mYValues.length <= index) {
         ret.status = false;
         return ret;

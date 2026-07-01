@@ -17,8 +17,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import ucar.nc2.Dimension;
 
-public class SGDefaultColumnTypeUtility
-    implements SGIDataColumnTypeConstants, SGIDataPropertyKeyConstants {
+public class SGDefaultColumnTypeUtility {
 
   /** A class for the result of default column types. */
   public static class DefaultColumnTypeResult {
@@ -130,13 +129,13 @@ public class SGDefaultColumnTypeUtility
       for (int ii = 0; ii < len; ii++) {
         SGDataColumnInfo cInfo = columnInfoList.get(ii);
         String valueType = cInfo.getValueType();
-        if (VALUE_TYPE_NUMBER.equals(valueType)) {
+        if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           numberIndexList.add(Integer.valueOf(ii));
-        } else if (VALUE_TYPE_TEXT.equals(valueType)) {
+        } else if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(valueType)) {
           textIndexList.add(Integer.valueOf(ii));
-        } else if (VALUE_TYPE_DATE.equals(valueType)) {
+        } else if (SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
           dateIndexList.add(Integer.valueOf(ii));
-        } else if (VALUE_TYPE_SAMPLING_RATE.equals(valueType)) {
+        } else if (SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(valueType)) {
           samplingIndexList.add(Integer.valueOf(ii));
         }
       }
@@ -371,7 +370,7 @@ public class SGDefaultColumnTypeUtility
     //		for (int ii = 0; ii < len; ii++) {
     //			SGDataColumnInfo cInfo = (SGDataColumnInfo) columnInfoList.get(ii);
     //			String valueType = cInfo.getValueType();
-    //			if (VALUE_TYPE_DATE.equals(valueType)) {
+    //			if (SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
     //				dateColumnFound = true;
     //				break;
     //			}
@@ -382,33 +381,33 @@ public class SGDefaultColumnTypeUtility
         if (numberIndexList.size() >= 1) {
           for (int ii = 0; ii < numberIndexList.size(); ii++) {
             Integer num = numberIndexList.get(ii);
-            columnTypes[num.intValue()] = Y_VALUE;
+            columnTypes[num.intValue()] = SGIDataColumnTypeConstants.Y_VALUE;
           }
         } else {
           return false;
         }
         if (samplingIndexList.size() == 1) {
           Integer num = samplingIndexList.get(0);
-          columnTypes[num.intValue()] = X_VALUE;
+          columnTypes[num.intValue()] = SGIDataColumnTypeConstants.X_VALUE;
         }
       } else if (dateColumnUsed) {
         if (numberIndexList.size() >= 1) {
           for (int ii = 0; ii < numberIndexList.size(); ii++) {
             Integer num = numberIndexList.get(ii);
-            columnTypes[num.intValue()] = Y_VALUE;
+            columnTypes[num.intValue()] = SGIDataColumnTypeConstants.Y_VALUE;
           }
           Integer date0 = dateIndexList.get(0);
-          columnTypes[date0.intValue()] = X_VALUE;
+          columnTypes[date0.intValue()] = SGIDataColumnTypeConstants.X_VALUE;
         } else {
           return false;
         }
       } else {
         if (numberIndexList.size() >= 2) {
           Integer num1 = numberIndexList.get(0);
-          columnTypes[num1.intValue()] = X_VALUE;
+          columnTypes[num1.intValue()] = SGIDataColumnTypeConstants.X_VALUE;
           for (int ii = 1; ii < numberIndexList.size(); ii++) {
             Integer num = numberIndexList.get(ii);
-            columnTypes[num.intValue()] = Y_VALUE;
+            columnTypes[num.intValue()] = SGIDataColumnTypeConstants.Y_VALUE;
           }
         } else {
           return false;
@@ -435,7 +434,7 @@ public class SGDefaultColumnTypeUtility
       for (int ii = 0; ii < len; ii++) {
         SGDataColumnInfo cInfo = columnInfoList.get(ii);
         String valueType = cInfo.getValueType();
-        if (VALUE_TYPE_NUMBER.equals(valueType)) {
+        if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           if (cnt == yNumberArrayIndex) {
             yNumberColumnIndex = ii;
             break;
@@ -452,23 +451,23 @@ public class SGDefaultColumnTypeUtility
         if (samplingRate != null) {
           if (samplingIndexList.size() == 1) {
             Integer num = samplingIndexList.get(0);
-            columnTypes[num.intValue()] = X_VALUE;
+            columnTypes[num.intValue()] = SGIDataColumnTypeConstants.X_VALUE;
           }
         } else {
           // x values
           if (dateIndexList.size() != 0 && dateColumnUsed) {
             Integer num1 = dateIndexList.get(0);
-            columnTypes[num1.intValue()] = X_VALUE;
+            columnTypes[num1.intValue()] = SGIDataColumnTypeConstants.X_VALUE;
             dateAssigned = true;
           } else {
             Integer num1 = numberIndexList.get(0);
-            columnTypes[num1.intValue()] = X_VALUE;
+            columnTypes[num1.intValue()] = SGIDataColumnTypeConstants.X_VALUE;
           }
         }
 
         // y values
         Integer num2 = numberIndexList.get(yNumberArrayIndex);
-        columnTypes[num2.intValue()] = Y_VALUE;
+        columnTypes[num2.intValue()] = SGIDataColumnTypeConstants.Y_VALUE;
 
         boolean[] isRepeatedTitle =
             SGDataUtility.isEmptyOrRepeatedColumnTitle(
@@ -480,13 +479,13 @@ public class SGDefaultColumnTypeUtility
           Integer num4 = numberIndexList.get(yNumberArrayIndex + 2);
           columnTypes[num3.intValue()] =
               SGDataUtility.appendColumnNoOrTitle(
-                  LOWER_ERROR_VALUE,
+                  SGIDataColumnTypeConstants.LOWER_ERROR_VALUE,
                   yNumberColumnIndex,
                   isRepeatedTitle[yNumberColumnIndex],
                   columnInfoList.get(yNumberColumnIndex).getTitle());
           columnTypes[num4.intValue()] =
               SGDataUtility.appendColumnNoOrTitle(
-                  UPPER_ERROR_VALUE,
+                  SGIDataColumnTypeConstants.UPPER_ERROR_VALUE,
                   yNumberColumnIndex,
                   isRepeatedTitle[yNumberColumnIndex],
                   columnInfoList.get(yNumberColumnIndex).getTitle());
@@ -497,7 +496,7 @@ public class SGDefaultColumnTypeUtility
           Integer tick = textIndexList.get(0);
           columnTypes[tick.intValue()] =
               SGDataUtility.appendColumnNoOrTitle(
-                  TICK_LABEL,
+                  SGIDataColumnTypeConstants.TICK_LABEL,
                   yNumberColumnIndex,
                   isRepeatedTitle[yNumberColumnIndex],
                   columnInfoList.get(yNumberColumnIndex).getTitle());
@@ -505,7 +504,7 @@ public class SGDefaultColumnTypeUtility
           Integer date = dateIndexList.get(0);
           columnTypes[date.intValue()] =
               SGDataUtility.appendColumnNoOrTitle(
-                  TICK_LABEL,
+                  SGIDataColumnTypeConstants.TICK_LABEL,
                   yNumberColumnIndex,
                   isRepeatedTitle[yNumberColumnIndex],
                   columnInfoList.get(yNumberColumnIndex).getTitle());
@@ -524,9 +523,9 @@ public class SGDefaultColumnTypeUtility
   }
 
   private static boolean isSXYSDArrayNumberValueType(String valueType) {
-    return (VALUE_TYPE_NUMBER.equals(valueType)
-        || VALUE_TYPE_DATE.equals(valueType)
-        || VALUE_TYPE_SAMPLING_RATE.equals(valueType));
+    return (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)
+        || SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)
+        || SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(valueType));
   }
 
   private static boolean getForSXYSDArrayData(
@@ -542,7 +541,7 @@ public class SGDefaultColumnTypeUtility
     }
 
     // x and y values
-    Integer[] xIndices = getIndices(nodeMap, KEY_X_VALUE_COLUMN_INDICES);
+    Integer[] xIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_X_VALUE_COLUMN_INDICES);
     if (xIndices == null) {
       return false;
     }
@@ -552,7 +551,7 @@ public class SGDefaultColumnTypeUtility
     if (!checkIndices(xIndices, columnTypes)) {
       return false;
     }
-    Integer[] yIndices = getIndices(nodeMap, KEY_Y_VALUE_COLUMN_INDICES);
+    Integer[] yIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_Y_VALUE_COLUMN_INDICES);
     if (yIndices == null) {
       return false;
     }
@@ -570,7 +569,7 @@ public class SGDefaultColumnTypeUtility
       final int index = xIndices[ii].intValue();
       final String valueType = columns[index].getValueType();
       if (isSXYSDArrayNumberValueType(valueType)) {
-        columnTypes[index] = X_VALUE;
+        columnTypes[index] = SGIDataColumnTypeConstants.X_VALUE;
         xCnt++;
       }
     }
@@ -582,7 +581,7 @@ public class SGDefaultColumnTypeUtility
       final int index = yIndices[ii].intValue();
       final String valueType = columns[index].getValueType();
       if (isSXYSDArrayNumberValueType(valueType)) {
-        columnTypes[index] = Y_VALUE;
+        columnTypes[index] = SGIDataColumnTypeConstants.Y_VALUE;
         yCnt++;
       }
     }
@@ -615,9 +614,9 @@ public class SGDefaultColumnTypeUtility
       final String[] columnTypes,
       final SGDataColumnInfo[] columns) {
 
-    Integer[] leIndices = getIndices(nodeMap, KEY_LOWER_ERROR_BAR_COLUMN_INDICES);
-    Integer[] ueIndices = getIndices(nodeMap, KEY_UPPER_ERROR_BAR_COLUMN_INDICES);
-    Integer[] ehIndices = getIndices(nodeMap, KEY_ERROR_BAR_HOLDER_COLUMN_INDICES);
+    Integer[] leIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_BAR_COLUMN_INDICES);
+    Integer[] ueIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_BAR_COLUMN_INDICES);
+    Integer[] ehIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_COLUMN_INDICES);
     if (leIndices != null && ueIndices != null && ehIndices != null) {
       if (!checkIndices(leIndices, columnTypes)) {
         return false;
@@ -639,20 +638,23 @@ public class SGDefaultColumnTypeUtility
         final String title = ehColInfo.getTitle();
         final int leIndex = leIndices[ii].intValue();
         final int ueIndex = ueIndices[ii].intValue();
-        if (!VALUE_TYPE_NUMBER.equals(columns[leIndex].getValueType())) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(columns[leIndex].getValueType())) {
           continue;
         }
-        if (!VALUE_TYPE_NUMBER.equals(columns[ueIndex].getValueType())) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(columns[ueIndex].getValueType())) {
           continue;
         }
         if (leIndex == ueIndex) {
           columnTypes[leIndex] =
-              SGDataUtility.appendColumnNoOrTitle(LOWER_UPPER_ERROR_VALUE, ehIndex, b, title);
+              SGDataUtility.appendColumnNoOrTitle(
+                  SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE, ehIndex, b, title);
         } else {
           columnTypes[leIndex] =
-              SGDataUtility.appendColumnNoOrTitle(LOWER_ERROR_VALUE, ehIndex, b, title);
+              SGDataUtility.appendColumnNoOrTitle(
+                  SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, ehIndex, b, title);
           columnTypes[ueIndex] =
-              SGDataUtility.appendColumnNoOrTitle(UPPER_ERROR_VALUE, ehIndex, b, title);
+              SGDataUtility.appendColumnNoOrTitle(
+                  SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, ehIndex, b, title);
         }
       }
     }
@@ -666,8 +668,8 @@ public class SGDefaultColumnTypeUtility
       final String groupName,
       final String[] columnTypes,
       final SGDataColumnInfo[] columns) {
-    Integer[] tlIndices = getIndices(nodeMap, KEY_TICK_LABEL_COLUMN_INDICES);
-    Integer[] thIndices = getIndices(nodeMap, KEY_TICK_LABEL_HOLDER_COLUMN_INDICES);
+    Integer[] tlIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_TICK_LABEL_COLUMN_INDICES);
+    Integer[] thIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_COLUMN_INDICES);
     if (tlIndices != null && thIndices != null) {
       if (!checkIndices(tlIndices, columnTypes)) {
         return false;
@@ -685,7 +687,8 @@ public class SGDefaultColumnTypeUtility
             isEmptyTitle(columnInfoList, thIndex) || isRepeatedTitle(columnInfoList, thIndex);
         final String title = thColInfo.getTitle();
         columnTypes[tlIndices[ii]] =
-            SGDataUtility.appendColumnNoOrTitle(TICK_LABEL, thIndex, b, title);
+            SGDataUtility.appendColumnNoOrTitle(
+                SGIDataColumnTypeConstants.TICK_LABEL, thIndex, b, title);
       }
     }
     return true;
@@ -711,8 +714,8 @@ public class SGDefaultColumnTypeUtility
       Integer num2 = numberIndexList.get(1);
       Integer num3 = numberIndexList.get(2);
       Integer num4 = numberIndexList.get(3);
-      columnTypes[num1.intValue()] = X_COORDINATE;
-      columnTypes[num2.intValue()] = Y_COORDINATE;
+      columnTypes[num1.intValue()] = SGIDataColumnTypeConstants.X_COORDINATE;
+      columnTypes[num2.intValue()] = SGIDataColumnTypeConstants.Y_COORDINATE;
       columnTypes[num3.intValue()] = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
       columnTypes[num4.intValue()] = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
     } else {
@@ -738,7 +741,7 @@ public class SGDefaultColumnTypeUtility
       columnTypes[ii] = "";
     }
 
-    Integer[] xIndices = getIndices(nodeMap, KEY_X_COORDINATE_COLUMN_INDEX);
+    Integer[] xIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_X_COORDINATE_COLUMN_INDEX);
     if (xIndices == null) {
       return false;
     }
@@ -748,7 +751,7 @@ public class SGDefaultColumnTypeUtility
     if (!checkIndices(xIndices, columnTypes)) {
       return false;
     }
-    Integer[] yIndices = getIndices(nodeMap, KEY_Y_COORDINATE_COLUMN_INDEX);
+    Integer[] yIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_COLUMN_INDEX);
     if (yIndices == null) {
       return false;
     }
@@ -758,7 +761,7 @@ public class SGDefaultColumnTypeUtility
     if (!checkIndices(yIndices, columnTypes)) {
       return false;
     }
-    Integer[] fIndices = getIndices(nodeMap, KEY_FIRST_COMPONENT_COLUMN_INDEX);
+    Integer[] fIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_COLUMN_INDEX);
     if (fIndices == null) {
       return false;
     }
@@ -768,7 +771,7 @@ public class SGDefaultColumnTypeUtility
     if (!checkIndices(fIndices, columnTypes)) {
       return false;
     }
-    Integer[] sIndices = getIndices(nodeMap, KEY_SECOND_COMPONENT_COLUMN_INDEX);
+    Integer[] sIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_COLUMN_INDEX);
     if (sIndices == null) {
       return false;
     }
@@ -780,25 +783,25 @@ public class SGDefaultColumnTypeUtility
     }
 
     final int xIndex = xIndices[0].intValue();
-    if (!VALUE_TYPE_NUMBER.equals(columns[xIndex].getValueType())) {
+    if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(columns[xIndex].getValueType())) {
       return false;
     }
-    columnTypes[xIndex] = X_COORDINATE;
+    columnTypes[xIndex] = SGIDataColumnTypeConstants.X_COORDINATE;
 
     final int yIndex = yIndices[0].intValue();
-    if (!VALUE_TYPE_NUMBER.equals(columns[yIndex].getValueType())) {
+    if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(columns[yIndex].getValueType())) {
       return false;
     }
-    columnTypes[yIndex] = Y_COORDINATE;
+    columnTypes[yIndex] = SGIDataColumnTypeConstants.Y_COORDINATE;
 
     final int fIndex = fIndices[0].intValue();
-    if (!VALUE_TYPE_NUMBER.equals(columns[fIndex].getValueType())) {
+    if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(columns[fIndex].getValueType())) {
       return false;
     }
     columnTypes[fIndex] = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
 
     final int sIndex = sIndices[0].intValue();
-    if (!VALUE_TYPE_NUMBER.equals(columns[sIndex].getValueType())) {
+    if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(columns[sIndex].getValueType())) {
       return false;
     }
     columnTypes[sIndex] = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
@@ -830,9 +833,9 @@ public class SGDefaultColumnTypeUtility
       Integer num1 = numberIndexList.get(0);
       Integer num2 = numberIndexList.get(1);
       Integer num3 = numberIndexList.get(2);
-      columnTypes[num1.intValue()] = X_VALUE;
-      columnTypes[num2.intValue()] = Y_VALUE;
-      columnTypes[num3.intValue()] = Z_VALUE;
+      columnTypes[num1.intValue()] = SGIDataColumnTypeConstants.X_VALUE;
+      columnTypes[num2.intValue()] = SGIDataColumnTypeConstants.Y_VALUE;
+      columnTypes[num3.intValue()] = SGIDataColumnTypeConstants.Z_VALUE;
     } else {
       return false;
     }
@@ -857,7 +860,7 @@ public class SGDefaultColumnTypeUtility
     }
 
     // x, y and z values
-    Integer[] xIndices = getIndices(nodeMap, KEY_X_VALUE_COLUMN_INDEX);
+    Integer[] xIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_X_VALUE_COLUMN_INDEX);
     if (xIndices == null) {
       return false;
     }
@@ -867,7 +870,7 @@ public class SGDefaultColumnTypeUtility
     if (!checkIndices(xIndices, columnTypes)) {
       return false;
     }
-    Integer[] yIndices = getIndices(nodeMap, KEY_Y_VALUE_COLUMN_INDEX);
+    Integer[] yIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_Y_VALUE_COLUMN_INDEX);
     if (yIndices == null) {
       return false;
     }
@@ -877,7 +880,7 @@ public class SGDefaultColumnTypeUtility
     if (!checkIndices(yIndices, columnTypes)) {
       return false;
     }
-    Integer[] zIndices = getIndices(nodeMap, KEY_Z_VALUE_COLUMN_INDEX);
+    Integer[] zIndices = getIndices(nodeMap, SGIDataPropertyKeyConstants.KEY_Z_VALUE_COLUMN_INDEX);
     if (zIndices == null) {
       return false;
     }
@@ -889,22 +892,22 @@ public class SGDefaultColumnTypeUtility
     }
 
     final int xIndex = xIndices[0].intValue();
-    if (!VALUE_TYPE_NUMBER.equals(columns[xIndex].getValueType())) {
+    if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(columns[xIndex].getValueType())) {
       return false;
     }
-    columnTypes[xIndex] = X_VALUE;
+    columnTypes[xIndex] = SGIDataColumnTypeConstants.X_VALUE;
 
     final int yIndex = yIndices[0].intValue();
-    if (!VALUE_TYPE_NUMBER.equals(columns[yIndex].getValueType())) {
+    if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(columns[yIndex].getValueType())) {
       return false;
     }
-    columnTypes[yIndex] = Y_VALUE;
+    columnTypes[yIndex] = SGIDataColumnTypeConstants.Y_VALUE;
 
     final int zIndex = zIndices[0].intValue();
-    if (!VALUE_TYPE_NUMBER.equals(columns[zIndex].getValueType())) {
+    if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(columns[zIndex].getValueType())) {
       return false;
     }
-    columnTypes[zIndex] = Z_VALUE;
+    columnTypes[zIndex] = SGIDataColumnTypeConstants.Z_VALUE;
 
     for (int ii = 0; ii < columns.length; ii++) {
       columns[ii].setColumnType(columnTypes[ii]);
@@ -1068,7 +1071,8 @@ public class SGDefaultColumnTypeUtility
     List<Integer> yList = new ArrayList<Integer>();
     for (int ii = 0; ii < size; ii++) {
       SGNetCDFVariable var = varList.get(ii);
-      if (!var.isCoordinateVariable() && VALUE_TYPE_NUMBER.equals(var.getValueType())) {
+      if (!var.isCoordinateVariable()
+          && SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(var.getValueType())) {
         List<Dimension> dimList = var.getDimensions();
         if (dimList.contains(xDim)) {
           yList.add(ii);
@@ -1086,20 +1090,20 @@ public class SGDefaultColumnTypeUtility
 
     // for multiple variables
     if (variable.booleanValue()) {
-      columnTypes[xIndex] = X_VALUE;
+      columnTypes[xIndex] = SGIDataColumnTypeConstants.X_VALUE;
 
       if (multiple.booleanValue()) {
         // multiple y-indices
         for (int yIndex : yIndices) {
-          columnTypes[yIndex] = Y_VALUE;
+          columnTypes[yIndex] = SGIDataColumnTypeConstants.Y_VALUE;
         }
       } else {
         // finds the y-index
         for (int ii = 0; ii < yIndices.length; ii++) {
           final int yIndex = yIndices[ii];
           SGNetCDFVariable var = varList.get(yIndex);
-          if (VALUE_TYPE_NUMBER.equals(var.getValueType())) {
-            columnTypes[yIndex] = Y_VALUE;
+          if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(var.getValueType())) {
+            columnTypes[yIndex] = SGIDataColumnTypeConstants.Y_VALUE;
             break;
           }
         }
@@ -1107,8 +1111,8 @@ public class SGDefaultColumnTypeUtility
     } else {
       // for multiple dimension indices
       final int yIndex = yIndices[0];
-      columnTypes[xIndex] = X_VALUE;
-      columnTypes[yIndex] = Y_VALUE;
+      columnTypes[xIndex] = SGIDataColumnTypeConstants.X_VALUE;
+      columnTypes[yIndex] = SGIDataColumnTypeConstants.Y_VALUE;
 
       int dIndex = -1;
       final SGNetCDFVariable yVar = varList.get(yIndex);
@@ -1124,7 +1128,7 @@ public class SGDefaultColumnTypeUtility
         }
       }
       if (dIndex != -1) {
-        columnTypes[dIndex] = PICKUP;
+        columnTypes[dIndex] = SGIDataColumnTypeConstants.PICKUP;
       } else {
         return false;
       }
@@ -1179,7 +1183,7 @@ public class SGDefaultColumnTypeUtility
             continue;
           }
           SGNetCDFVariable v = varListSorted.get(jj);
-          if (!VALUE_TYPE_NUMBER.equals(v.getValueType())) {
+          if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(v.getValueType())) {
             continue;
           }
           List<Dimension> dimList = v.getDimensions();
@@ -1208,9 +1212,9 @@ public class SGDefaultColumnTypeUtility
       return false;
     }
 
-    columnTypes[iIndex] = INDEX;
-    columnTypes[xIndex] = X_VALUE;
-    columnTypes[yIndex] = Y_VALUE;
+    columnTypes[iIndex] = SGIDataColumnTypeConstants.INDEX;
+    columnTypes[xIndex] = SGIDataColumnTypeConstants.X_VALUE;
+    columnTypes[yIndex] = SGIDataColumnTypeConstants.Y_VALUE;
 
     for (int ii = 0; ii < columns.length; ii++) {
       columns[ii].setColumnType(columnTypes[ii]);
@@ -1296,12 +1300,12 @@ public class SGDefaultColumnTypeUtility
     if (multiple.booleanValue()) {
       // multiple y-indices
       for (MDArrayDimension yDim : yDimList) {
-        columnTypes[yDim.variableIndex] = Y_VALUE;
+        columnTypes[yDim.variableIndex] = SGIDataColumnTypeConstants.Y_VALUE;
         indices[yDim.variableIndex] = yDim.dimensionIndex;
       }
     } else {
       MDArrayDimension yDim = yDimList.get(0);
-      columnTypes[yDim.variableIndex] = Y_VALUE;
+      columnTypes[yDim.variableIndex] = SGIDataColumnTypeConstants.Y_VALUE;
       indices[yDim.variableIndex] = yDim.dimensionIndex;
     }
 
@@ -1350,10 +1354,10 @@ public class SGDefaultColumnTypeUtility
 
     // x and y values
     String[] xNames =
-        getNames(nodeMap, new String[] {KEY_X_VALUE_NAMES, KEY_X_VALUE_COLUMN_INDICES}, groupName);
+        getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_X_VALUE_NAMES, SGIDataPropertyKeyConstants.KEY_X_VALUE_COLUMN_INDICES}, groupName);
     if (xNames == null) {
       xNames =
-          getNames(nodeMap, new String[] {KEY_X_VALUE_NAME, KEY_X_VALUE_COLUMN_INDEX}, groupName);
+          getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_X_VALUE_COLUMN_INDEX}, groupName);
     }
     if (xNames != null) {
       if (xNames.length == 0) {
@@ -1361,10 +1365,10 @@ public class SGDefaultColumnTypeUtility
       }
     }
     String[] yNames =
-        getNames(nodeMap, new String[] {KEY_Y_VALUE_NAMES, KEY_Y_VALUE_COLUMN_INDICES}, groupName);
+        getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, SGIDataPropertyKeyConstants.KEY_Y_VALUE_COLUMN_INDICES}, groupName);
     if (yNames == null) {
       yNames =
-          getNames(nodeMap, new String[] {KEY_Y_VALUE_NAME, KEY_Y_VALUE_COLUMN_INDEX}, groupName);
+          getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_Y_VALUE_COLUMN_INDEX}, groupName);
     }
     if (yNames != null) {
       if (yNames.length == 0) {
@@ -1383,7 +1387,12 @@ public class SGDefaultColumnTypeUtility
     if (xNames != null && !"".equals(xNames[0])) {
       for (int ii = 0; ii < xNames.length; ii++) {
         final int index =
-            setupMDArrayColumn(columnInfoList, columnTypes, dimensionIndex, xNames[ii], X_VALUE);
+            setupMDArrayColumn(
+                columnInfoList,
+                columnTypes,
+                dimensionIndex,
+                xNames[ii],
+                SGIDataColumnTypeConstants.X_VALUE);
         if (index == -1) {
           return false;
         }
@@ -1397,7 +1406,12 @@ public class SGDefaultColumnTypeUtility
     if (yNames != null && !"".equals(yNames[0])) {
       for (int ii = 0; ii < yNames.length; ii++) {
         final int index =
-            setupMDArrayColumn(columnInfoList, columnTypes, dimensionIndex, yNames[ii], Y_VALUE);
+            setupMDArrayColumn(
+                columnInfoList,
+                columnTypes,
+                dimensionIndex,
+                yNames[ii],
+                SGIDataColumnTypeConstants.Y_VALUE);
         if (index == -1) {
           return false;
         }
@@ -1413,17 +1427,17 @@ public class SGDefaultColumnTypeUtility
       String[] leNames =
           getNames(
               nodeMap,
-              new String[] {KEY_LOWER_ERROR_VALUE_NAME, KEY_LOWER_ERROR_BAR_COLUMN_INDICES},
+              new String[] {SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_BAR_COLUMN_INDICES},
               groupName);
       String[] ueNames =
           getNames(
               nodeMap,
-              new String[] {KEY_UPPER_ERROR_VALUE_NAME, KEY_UPPER_ERROR_BAR_COLUMN_INDICES},
+              new String[] {SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_BAR_COLUMN_INDICES},
               groupName);
       String[] ehNames =
           getNames(
               nodeMap,
-              new String[] {KEY_ERROR_BAR_HOLDER_NAME, KEY_ERROR_BAR_HOLDER_COLUMN_INDICES},
+              new String[] {SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME, SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_COLUMN_INDICES},
               groupName);
       if (leNames != null && ueNames != null && ehNames != null) {
         if (leNames.length != 1 || ueNames.length != 1 || ehNames.length != 1) {
@@ -1449,17 +1463,17 @@ public class SGDefaultColumnTypeUtility
       String[] leNames =
           getNames(
               nodeMap,
-              new String[] {KEY_LOWER_ERROR_VALUE_NAMES, KEY_LOWER_ERROR_BAR_COLUMN_INDICES},
+              new String[] {SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES, SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_BAR_COLUMN_INDICES},
               groupName);
       String[] ueNames =
           getNames(
               nodeMap,
-              new String[] {KEY_UPPER_ERROR_VALUE_NAMES, KEY_UPPER_ERROR_BAR_COLUMN_INDICES},
+              new String[] {SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAMES, SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_BAR_COLUMN_INDICES},
               groupName);
       String[] ehNames =
           getNames(
               nodeMap,
-              new String[] {KEY_ERROR_BAR_HOLDER_NAMES, KEY_ERROR_BAR_HOLDER_COLUMN_INDICES},
+              new String[] {SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAMES, SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_COLUMN_INDICES},
               groupName);
       if (leNames != null && ueNames != null && ehNames != null) {
         if (ehNames.length != leNames.length || ehNames.length != ueNames.length) {
@@ -1497,12 +1511,12 @@ public class SGDefaultColumnTypeUtility
       String[] tlNames =
           getNames(
               nodeMap,
-              new String[] {KEY_TICK_LABEL_NAME, KEY_TICK_LABEL_COLUMN_INDICES},
+              new String[] {SGIDataPropertyKeyConstants.KEY_TICK_LABEL_NAME, SGIDataPropertyKeyConstants.KEY_TICK_LABEL_COLUMN_INDICES},
               groupName);
       String[] thNames =
           getNames(
               nodeMap,
-              new String[] {KEY_TICK_LABEL_HOLDER_NAME, KEY_TICK_LABEL_HOLDER_COLUMN_INDICES},
+              new String[] {SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME, SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_COLUMN_INDICES},
               groupName);
       if (tlNames != null) {
         if (tlNames.length != 1 || thNames.length != 1) {
@@ -1527,12 +1541,12 @@ public class SGDefaultColumnTypeUtility
       String[] tlNames =
           getNames(
               nodeMap,
-              new String[] {KEY_TICK_LABEL_NAMES, KEY_TICK_LABEL_COLUMN_INDICES},
+              new String[] {SGIDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES, SGIDataPropertyKeyConstants.KEY_TICK_LABEL_COLUMN_INDICES},
               groupName);
       String[] thNames =
           getNames(
               nodeMap,
-              new String[] {KEY_TICK_LABEL_HOLDER_NAMES, KEY_TICK_LABEL_HOLDER_COLUMN_INDICES},
+              new String[] {SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAMES, SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_COLUMN_INDICES},
               groupName);
       if (tlNames != null && thNames != null) {
         if (tlNames.length != thNames.length) {
@@ -1584,7 +1598,12 @@ public class SGDefaultColumnTypeUtility
       String thName) {
     final int index =
         setMDArrayColumnType(
-            columnInfoList, columnTypes, dimensionIndex, tlName, thName, TICK_LABEL);
+            columnInfoList,
+            columnTypes,
+            dimensionIndex,
+            tlName,
+            thName,
+            SGIDataColumnTypeConstants.TICK_LABEL);
     if (index == -1) {
       return false;
     }
@@ -1601,7 +1620,12 @@ public class SGDefaultColumnTypeUtility
     if (leName.equals(ueName)) {
       final int index =
           setMDArrayColumnType(
-              columnInfoList, columnTypes, dimensionIndex, leName, ehName, LOWER_UPPER_ERROR_VALUE);
+              columnInfoList,
+              columnTypes,
+              dimensionIndex,
+              leName,
+              ehName,
+              SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE);
       if (index == -1) {
         return false;
       }
@@ -1612,13 +1636,23 @@ public class SGDefaultColumnTypeUtility
       int index;
       index =
           setMDArrayColumnType(
-              columnInfoList, columnTypes, dimensionIndex, leName, ehName, LOWER_ERROR_VALUE);
+              columnInfoList,
+              columnTypes,
+              dimensionIndex,
+              leName,
+              ehName,
+              SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
       if (index == -1) {
         return false;
       }
       index =
           setMDArrayColumnType(
-              columnInfoList, columnTypes, dimensionIndex, ueName, ehName, UPPER_ERROR_VALUE);
+              columnInfoList,
+              columnTypes,
+              dimensionIndex,
+              ueName,
+              ehName,
+              SGIDataColumnTypeConstants.UPPER_ERROR_VALUE);
       if (index == -1) {
         return false;
       }
@@ -1642,16 +1676,16 @@ public class SGDefaultColumnTypeUtility
     }
 
     // serial numbers
-    String[] indexNames = getNames(nodeMap, KEY_INDEX_VARIABLE_NAME, groupName);
+    String[] indexNames = getNames(nodeMap, SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, groupName);
     if (indexNames == null) {
-      indexNames = getNames(nodeMap, KEY_SERIAL_NUMBER_VARIABLE_NAME, groupName);
+      indexNames = getNames(nodeMap, SGIDataPropertyKeyConstants.KEY_SERIAL_NUMBER_VARIABLE_NAME, groupName);
     }
     int idxIndex = -1;
     if (indexNames != null) {
       if (indexNames.length != 1) {
         return false;
       }
-      if ((idxIndex = setNetCDFColumnType(columnInfoList, columnTypes, indexNames[0], INDEX))
+      if ((idxIndex = setNetCDFColumnType(columnInfoList, columnTypes, indexNames[0], SGIDataColumnTypeConstants.INDEX))
           == -1) {
         return false;
       }
@@ -1662,11 +1696,11 @@ public class SGDefaultColumnTypeUtility
 
     // x and y values
     String[] xNames =
-        getNames(nodeMap, new String[] {KEY_X_VALUE_NAME, KEY_X_VALUE_COLUMN_INDEX}, groupName);
+        getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_X_VALUE_COLUMN_INDEX}, groupName);
     if (xNames == null) {
       xNames =
           getNames(
-              nodeMap, new String[] {KEY_X_VALUE_NAMES, KEY_X_VALUE_COLUMN_INDICES}, groupName);
+              nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_X_VALUE_NAMES, SGIDataPropertyKeyConstants.KEY_X_VALUE_COLUMN_INDICES}, groupName);
       if (xNames == null) {
         return false;
       }
@@ -1675,11 +1709,11 @@ public class SGDefaultColumnTypeUtility
       return false;
     }
     String[] yNames =
-        getNames(nodeMap, new String[] {KEY_Y_VALUE_NAME, KEY_Y_VALUE_COLUMN_INDEX}, groupName);
+        getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_Y_VALUE_COLUMN_INDEX}, groupName);
     if (yNames == null) {
       yNames =
           getNames(
-              nodeMap, new String[] {KEY_Y_VALUE_NAMES, KEY_Y_VALUE_COLUMN_INDICES}, groupName);
+              nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, SGIDataPropertyKeyConstants.  KEY_Y_VALUE_COLUMN_INDICES}, groupName);
       if (yNames == null) {
         return false;
       }
@@ -1692,7 +1726,9 @@ public class SGDefaultColumnTypeUtility
     }
     List<Integer> xIndices = new ArrayList<Integer>();
     for (int ii = 0; ii < xNames.length; ii++) {
-      final int index = setNetCDFColumnType(columnInfoList, columnTypes, xNames[ii], X_VALUE);
+      final int index =
+          setNetCDFColumnType(
+              columnInfoList, columnTypes, xNames[ii], SGIDataColumnTypeConstants.X_VALUE);
       if (index == -1) {
         return false;
       }
@@ -1703,7 +1739,9 @@ public class SGDefaultColumnTypeUtility
     }
     List<Integer> yIndices = new ArrayList<Integer>();
     for (int ii = 0; ii < yNames.length; ii++) {
-      final int index = setNetCDFColumnType(columnInfoList, columnTypes, yNames[ii], Y_VALUE);
+      final int index =
+          setNetCDFColumnType(
+              columnInfoList, columnTypes, yNames[ii], SGIDataColumnTypeConstants.Y_VALUE);
       if (index == -1) {
         return false;
       }
@@ -1752,27 +1790,27 @@ public class SGDefaultColumnTypeUtility
         getNames(
             nodeMap,
             new String[] {
-              KEY_LOWER_ERROR_VALUE_NAME,
-              KEY_LOWER_ERROR_VALUE_NAMES,
-              KEY_LOWER_ERROR_BAR_COLUMN_INDICES
+              SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME,
+              SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES,
+              SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_BAR_COLUMN_INDICES
             },
             groupName);
     String[] ueNames =
         getNames(
             nodeMap,
             new String[] {
-              KEY_UPPER_ERROR_VALUE_NAME,
-              KEY_UPPER_ERROR_VALUE_NAMES,
-              KEY_UPPER_ERROR_BAR_COLUMN_INDICES
+              SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME,
+              SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAMES,
+              SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_BAR_COLUMN_INDICES
             },
             groupName);
     String[] ehNames =
         getNames(
             nodeMap,
             new String[] {
-              KEY_ERROR_BAR_HOLDER_NAME,
-              KEY_ERROR_BAR_HOLDER_NAMES,
-              KEY_ERROR_BAR_HOLDER_COLUMN_INDICES
+              SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME,
+              SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAMES,
+              SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_COLUMN_INDICES
             },
             groupName);
     if (leNames != null && ueNames != null && ehNames != null) {
@@ -1798,7 +1836,11 @@ public class SGDefaultColumnTypeUtility
         if (leNames[ii].equals(ueNames[ii])) {
           final int index =
               setupNetCDFColumn(
-                  columnInfoList, columnTypes, leNames[ii], ehNames[ii], LOWER_UPPER_ERROR_VALUE);
+                  columnInfoList,
+                  columnTypes,
+                  leNames[ii],
+                  ehNames[ii],
+                  SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE);
           if (index == -1) {
             return false;
           }
@@ -1812,13 +1854,21 @@ public class SGDefaultColumnTypeUtility
           int index;
           index =
               setupNetCDFColumn(
-                  columnInfoList, columnTypes, leNames[ii], ehNames[ii], LOWER_ERROR_VALUE);
+                  columnInfoList,
+                  columnTypes,
+                  leNames[ii],
+                  ehNames[ii],
+                  SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
           if (index == -1) {
             return false;
           }
           index =
               setupNetCDFColumn(
-                  columnInfoList, columnTypes, ueNames[ii], ehNames[ii], UPPER_ERROR_VALUE);
+                  columnInfoList,
+                  columnTypes,
+                  ueNames[ii],
+                  ehNames[ii],
+                  SGIDataColumnTypeConstants.UPPER_ERROR_VALUE);
           if (index == -1) {
             return false;
           }
@@ -1836,15 +1886,15 @@ public class SGDefaultColumnTypeUtility
     String[] tlNames =
         getNames(
             nodeMap,
-            new String[] {KEY_TICK_LABEL_NAME, KEY_TICK_LABEL_NAMES, KEY_TICK_LABEL_COLUMN_INDICES},
+            new String[] {SGIDataPropertyKeyConstants.KEY_TICK_LABEL_NAME, SGIDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES, SGIDataPropertyKeyConstants.KEY_TICK_LABEL_COLUMN_INDICES},
             groupName);
     String[] thNames =
         getNames(
             nodeMap,
             new String[] {
-              KEY_TICK_LABEL_HOLDER_NAME,
-              KEY_TICK_LABEL_HOLDER_NAMES,
-              KEY_TICK_LABEL_HOLDER_COLUMN_INDICES
+              SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME,
+              SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAMES,
+              SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_COLUMN_INDICES
             },
             groupName);
     if (tlNames != null && thNames != null) {
@@ -1865,7 +1915,12 @@ public class SGDefaultColumnTypeUtility
       }
       for (int ii = 0; ii < thNames.length; ii++) {
         final int index =
-            setupNetCDFColumn(columnInfoList, columnTypes, tlNames[ii], thNames[ii], TICK_LABEL);
+            setupNetCDFColumn(
+                columnInfoList,
+                columnTypes,
+                tlNames[ii],
+                thNames[ii],
+                SGIDataColumnTypeConstants.TICK_LABEL);
         if (index == -1) {
           return false;
         }
@@ -1876,13 +1931,13 @@ public class SGDefaultColumnTypeUtility
     }
 
     // time
-    String[] timeNames = getNames(nodeMap, KEY_TIME_VARIABLE_NAME, groupName);
+    String[] timeNames = getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_TIME_VARIABLE_NAME}  , groupName);
     if (timeNames != null) {
       if (timeNames.length != 1) {
         return false;
       }
       final int index =
-          setNetCDFColumnType(columnInfoList, columnTypes, timeNames[0], ANIMATION_FRAME);
+          setNetCDFColumnType(columnInfoList, columnTypes, timeNames[0], SGIDataColumnTypeConstants.ANIMATION_FRAME);
       if (index == -1) {
         return false;
       }
@@ -1899,13 +1954,13 @@ public class SGDefaultColumnTypeUtility
     if (variable != null) {
       if (!variable.booleanValue()) {
         // pick up
-        String[] pickupNames = getNames(nodeMap, KEY_PICKUP_DIMENSION_NAME, groupName);
+        String[] pickupNames = getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME}, groupName);
         if (pickupNames != null) {
           if (pickupNames.length != 1) {
             return false;
           }
           final int index =
-              setNetCDFColumnType(columnInfoList, columnTypes, pickupNames[0], PICKUP);
+              setNetCDFColumnType(columnInfoList, columnTypes, pickupNames[0], SGIDataColumnTypeConstants.PICKUP);
           if (index == -1) {
             return false;
           }
@@ -2096,8 +2151,8 @@ public class SGDefaultColumnTypeUtility
     MDArrayDimension sDim = dimList.get(3);
     final String first = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
     final String second = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
-    columnTypes[xDim.variableIndex] = X_COORDINATE;
-    columnTypes[yDim.variableIndex] = Y_COORDINATE;
+    columnTypes[xDim.variableIndex] = SGIDataColumnTypeConstants.X_COORDINATE;
+    columnTypes[yDim.variableIndex] = SGIDataColumnTypeConstants.Y_COORDINATE;
     columnTypes[fDim.variableIndex] = first;
     columnTypes[sDim.variableIndex] = second;
 
@@ -2146,14 +2201,14 @@ public class SGDefaultColumnTypeUtility
     String[] xNames =
         getNames(
             nodeMap,
-            new String[] {KEY_X_COORDINATE_VARIABLE_NAME, KEY_X_COORDINATE_COLUMN_INDEX},
+            new String[] {SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_X_COORDINATE_COLUMN_INDEX},
             groupName);
     if (xNames != null) {
       if (xNames.length != 1) {
         return false;
       }
       index =
-          setupMDArrayColumn(columnInfoList, columnTypes, dimensionIndex, xNames[0], X_COORDINATE);
+          setupMDArrayColumn(columnInfoList, columnTypes, dimensionIndex, xNames[0], SGIDataColumnTypeConstants.X_COORDINATE);
       if (index == -1) {
         return false;
       }
@@ -2170,14 +2225,14 @@ public class SGDefaultColumnTypeUtility
     String[] yNames =
         getNames(
             nodeMap,
-            new String[] {KEY_Y_COORDINATE_VARIABLE_NAME, KEY_Y_COORDINATE_COLUMN_INDEX},
+            new String[] {SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_COLUMN_INDEX},
             groupName);
     if (yNames != null) {
       if (yNames.length != 1) {
         return false;
       }
       index =
-          setupMDArrayColumn(columnInfoList, columnTypes, dimensionIndex, yNames[0], Y_COORDINATE);
+          setupMDArrayColumn(columnInfoList, columnTypes, dimensionIndex, yNames[0], SGIDataColumnTypeConstants.Y_COORDINATE);
       if (index == -1) {
         return false;
       }
@@ -2205,7 +2260,7 @@ public class SGDefaultColumnTypeUtility
     String[] fNames =
         getNames(
             nodeMap,
-            new String[] {KEY_FIRST_COMPONENT_VARIABLE_NAME, KEY_FIRST_COMPONENT_COLUMN_INDEX},
+            new String[] {SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_COLUMN_INDEX},
             groupName);
     if (fNames == null) {
       return false;
@@ -2264,7 +2319,7 @@ public class SGDefaultColumnTypeUtility
     String[] sNames =
         getNames(
             nodeMap,
-            new String[] {KEY_SECOND_COMPONENT_VARIABLE_NAME, KEY_SECOND_COMPONENT_COLUMN_INDEX},
+            new String[] {SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_COLUMN_INDEX},
             groupName);
     if (sNames == null) {
       return false;
@@ -2398,7 +2453,8 @@ public class SGDefaultColumnTypeUtility
       // those of x and y variables
       for (int jj = 0; jj < size; jj++) {
         SGNetCDFVariable var = varList.get(jj);
-        if (!var.isCoordinateVariable() && VALUE_TYPE_NUMBER.equals(var.getValueType())) {
+        if (!var.isCoordinateVariable()
+            && SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           List<Dimension> dimList = var.getDimensions();
           if (dimList.contains(xDim) && dimList.contains(yDim)) {
             comIndex1 = jj;
@@ -2414,7 +2470,8 @@ public class SGDefaultColumnTypeUtility
 
       for (int jj = comIndex1 + 1; jj < size; jj++) {
         SGNetCDFVariable var = varList.get(jj);
-        if (!var.isCoordinateVariable() && VALUE_TYPE_NUMBER.equals(var.getValueType())) {
+        if (!var.isCoordinateVariable()
+            && SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           List<Dimension> dimList = var.getDimensions();
           if (dimList.contains(xDim) && dimList.contains(yDim)) {
             comIndex2 = jj;
@@ -2453,12 +2510,12 @@ public class SGDefaultColumnTypeUtility
       }
     }
 
-    columnTypes[xIndex] = X_COORDINATE;
-    columnTypes[yIndex] = Y_COORDINATE;
+    columnTypes[xIndex] = SGIDataColumnTypeConstants.X_COORDINATE;
+    columnTypes[yIndex] = SGIDataColumnTypeConstants.Y_COORDINATE;
     columnTypes[comIndex1] = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
     columnTypes[comIndex2] = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
     if (tIndex != -1) {
-      columnTypes[tIndex] = ANIMATION_FRAME;
+      columnTypes[tIndex] = SGIDataColumnTypeConstants.ANIMATION_FRAME;
     }
 
     for (int ii = 0; ii < columns.length; ii++) {
@@ -2497,7 +2554,7 @@ public class SGDefaultColumnTypeUtility
             continue;
           }
           SGNetCDFVariable v = varListSorted.get(jj);
-          if (!VALUE_TYPE_NUMBER.equals(v.getValueType())) {
+          if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(v.getValueType())) {
             continue;
           }
           List<Dimension> dimList = v.getDimensions();
@@ -2538,9 +2595,9 @@ public class SGDefaultColumnTypeUtility
       return false;
     }
 
-    columnTypes[iIndex] = INDEX;
-    columnTypes[xIndex] = X_COORDINATE;
-    columnTypes[yIndex] = Y_COORDINATE;
+    columnTypes[iIndex] = SGIDataColumnTypeConstants.INDEX;
+    columnTypes[xIndex] = SGIDataColumnTypeConstants.X_COORDINATE;
+    columnTypes[yIndex] = SGIDataColumnTypeConstants.Y_COORDINATE;
     columnTypes[fIndex] = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
     ;
     columnTypes[sIndex] = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
@@ -2568,16 +2625,16 @@ public class SGDefaultColumnTypeUtility
     int idx;
 
     // serial numbers
-    String[] indexNames = getNames(nodeMap, KEY_INDEX_VARIABLE_NAME, groupName);
+    String[] indexNames = getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME}, groupName);
     if (indexNames == null) {
-      indexNames = getNames(nodeMap, KEY_SERIAL_NUMBER_VARIABLE_NAME, groupName);
+      indexNames = getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_SERIAL_NUMBER_VARIABLE_NAME}, groupName);
     }
     int indexIdx = -1;
     if (indexNames != null) {
       if (indexNames.length != 1) {
         return false;
       }
-      if ((indexIdx = setNetCDFColumnType(columnInfoList, columnTypes, indexNames[0], INDEX))
+      if ((indexIdx = setNetCDFColumnType(columnInfoList, columnTypes, indexNames[0], SGIDataColumnTypeConstants.INDEX))
           == -1) {
         return false;
       }
@@ -2590,7 +2647,7 @@ public class SGDefaultColumnTypeUtility
     String[] xNames =
         getNames(
             nodeMap,
-            new String[] {KEY_X_COORDINATE_VARIABLE_NAME, KEY_X_COORDINATE_COLUMN_INDEX},
+            new String[] {SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_X_COORDINATE_COLUMN_INDEX},
             groupName);
     if (xNames == null) {
       return false;
@@ -2598,7 +2655,7 @@ public class SGDefaultColumnTypeUtility
     if (xNames.length != 1) {
       return false;
     }
-    idx = setNetCDFColumnType(columnInfoList, columnTypes, xNames[0], X_COORDINATE);
+    idx = setNetCDFColumnType(columnInfoList, columnTypes, xNames[0], SGIDataColumnTypeConstants.X_COORDINATE);
     if (idx == -1) {
       return false;
     }
@@ -2610,12 +2667,12 @@ public class SGDefaultColumnTypeUtility
         return false;
       }
     } else {
-      String[] xIndexNames = getNames(nodeMap, new String[] {KEY_X_INDEX_VARIABLE_NAME}, groupName);
+      String[] xIndexNames = getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_X_INDEX_VARIABLE_NAME}, groupName);
       if (xIndexNames != null) {
         if (xIndexNames.length != 1) {
           return false;
         }
-        idx = setNetCDFColumnType(columnInfoList, columnTypes, xIndexNames[0], X_INDEX);
+        idx = setNetCDFColumnType(columnInfoList, columnTypes, xIndexNames[0], SGIDataColumnTypeConstants.X_INDEX);
         if (idx == -1) {
           return false;
         }
@@ -2636,7 +2693,7 @@ public class SGDefaultColumnTypeUtility
     String[] yNames =
         getNames(
             nodeMap,
-            new String[] {KEY_Y_COORDINATE_VARIABLE_NAME, KEY_Y_COORDINATE_COLUMN_INDEX},
+            new String[] {SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_COLUMN_INDEX},
             groupName);
     if (yNames == null) {
       return false;
@@ -2644,7 +2701,7 @@ public class SGDefaultColumnTypeUtility
     if (yNames.length != 1) {
       return false;
     }
-    idx = setNetCDFColumnType(columnInfoList, columnTypes, yNames[0], Y_COORDINATE);
+    idx = setNetCDFColumnType(columnInfoList, columnTypes, yNames[0], SGIDataColumnTypeConstants.Y_COORDINATE);
     if (idx == -1) {
       return false;
     }
@@ -2656,12 +2713,12 @@ public class SGDefaultColumnTypeUtility
         return false;
       }
     } else {
-      String[] yIndexNames = getNames(nodeMap, new String[] {KEY_Y_INDEX_VARIABLE_NAME}, groupName);
+      String[] yIndexNames = getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_Y_INDEX_VARIABLE_NAME}, groupName);
       if (yIndexNames != null) {
         if (yIndexNames.length != 1) {
           return false;
         }
-        idx = setNetCDFColumnType(columnInfoList, columnTypes, yIndexNames[0], Y_INDEX);
+        idx = setNetCDFColumnType(columnInfoList, columnTypes, yIndexNames[0], SGIDataColumnTypeConstants.Y_INDEX);
         if (idx == -1) {
           return false;
         }
@@ -2685,7 +2742,7 @@ public class SGDefaultColumnTypeUtility
     String[] fNames =
         getNames(
             nodeMap,
-            new String[] {KEY_FIRST_COMPONENT_VARIABLE_NAME, KEY_FIRST_COMPONENT_COLUMN_INDEX},
+            new String[] {SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_COLUMN_INDEX},
             groupName);
     if (fNames == null) {
       return false;
@@ -2707,7 +2764,7 @@ public class SGDefaultColumnTypeUtility
     String[] sNames =
         getNames(
             nodeMap,
-            new String[] {KEY_SECOND_COMPONENT_VARIABLE_NAME, KEY_SECOND_COMPONENT_COLUMN_INDEX},
+            new String[] {SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_COLUMN_INDEX},
             groupName);
     if (sNames == null) {
       return false;
@@ -2727,12 +2784,12 @@ public class SGDefaultColumnTypeUtility
     }
 
     // time
-    String[] timeNames = getNames(nodeMap, KEY_TIME_VARIABLE_NAME, groupName);
+    String[] timeNames = getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_TIME_VARIABLE_NAME}, groupName);
     if (timeNames != null) {
       if (timeNames.length != 1) {
         return false;
       }
-      idx = setNetCDFColumnType(columnInfoList, columnTypes, timeNames[0], ANIMATION_FRAME);
+      idx = setNetCDFColumnType(columnInfoList, columnTypes, timeNames[0], SGIDataColumnTypeConstants.ANIMATION_FRAME);
       if (idx == -1) {
         return false;
       }
@@ -2794,7 +2851,7 @@ public class SGDefaultColumnTypeUtility
     if (zVarIndex == -1 || xDim == -1 || yDim == -1) {
       return false;
     }
-    columnTypes[zVarIndex] = Z_VALUE;
+    columnTypes[zVarIndex] = SGIDataColumnTypeConstants.Z_VALUE;
 
     for (int ii = 0; ii < columns.length; ii++) {
       columns[ii].setColumnType(columnTypes[ii]);
@@ -2829,9 +2886,9 @@ public class SGDefaultColumnTypeUtility
     MDArrayDimension xDim = dimList.get(0);
     MDArrayDimension yDim = dimList.get(1);
     MDArrayDimension zDim = dimList.get(2);
-    columnTypes[xDim.variableIndex] = X_VALUE;
-    columnTypes[yDim.variableIndex] = Y_VALUE;
-    columnTypes[zDim.variableIndex] = Z_VALUE;
+    columnTypes[xDim.variableIndex] = SGIDataColumnTypeConstants.X_VALUE;
+    columnTypes[yDim.variableIndex] = SGIDataColumnTypeConstants.Y_VALUE;
+    columnTypes[zDim.variableIndex] = SGIDataColumnTypeConstants.Z_VALUE;
 
     for (int ii = 0; ii < columns.length; ii++) {
       columns[ii].setColumnType(columnTypes[ii]);
@@ -2909,7 +2966,8 @@ public class SGDefaultColumnTypeUtility
       Dimension yDim = yVar.getDimension(0);
       for (int jj = 0; jj < size; jj++) {
         SGNetCDFVariable var = varList.get(jj);
-        if (!var.isCoordinateVariable() && VALUE_TYPE_NUMBER.equals(var.getValueType())) {
+        if (!var.isCoordinateVariable()
+            && SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           List<Dimension> dimList = var.getDimensions();
           if (dimList.contains(xDim) && dimList.contains(yDim)) {
             zIndex = jj;
@@ -2945,11 +3003,11 @@ public class SGDefaultColumnTypeUtility
       }
     }
 
-    columnTypes[xIndex] = X_VALUE;
-    columnTypes[yIndex] = Y_VALUE;
-    columnTypes[zIndex] = Z_VALUE;
+    columnTypes[xIndex] = SGIDataColumnTypeConstants.X_VALUE;
+    columnTypes[yIndex] = SGIDataColumnTypeConstants.Y_VALUE;
+    columnTypes[zIndex] = SGIDataColumnTypeConstants.Z_VALUE;
     if (tIndex != -1) {
-      columnTypes[tIndex] = ANIMATION_FRAME;
+      columnTypes[tIndex] = SGIDataColumnTypeConstants.ANIMATION_FRAME;
     }
 
     for (int ii = 0; ii < columns.length; ii++) {
@@ -2987,7 +3045,7 @@ public class SGDefaultColumnTypeUtility
             continue;
           }
           SGNetCDFVariable v = varListSorted.get(jj);
-          if (!VALUE_TYPE_NUMBER.equals(v.getValueType())) {
+          if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(v.getValueType())) {
             continue;
           }
           List<Dimension> dimList = v.getDimensions();
@@ -3024,10 +3082,10 @@ public class SGDefaultColumnTypeUtility
       return false;
     }
 
-    columnTypes[iIndex] = INDEX;
-    columnTypes[xIndex] = X_VALUE;
-    columnTypes[yIndex] = Y_VALUE;
-    columnTypes[zIndex] = Z_VALUE;
+    columnTypes[iIndex] = SGIDataColumnTypeConstants.INDEX;
+    columnTypes[xIndex] = SGIDataColumnTypeConstants.X_VALUE;
+    columnTypes[yIndex] = SGIDataColumnTypeConstants.Y_VALUE;
+    columnTypes[zIndex] = SGIDataColumnTypeConstants.Z_VALUE;
 
     for (int ii = 0; ii < columns.length; ii++) {
       columns[ii].setColumnType(columnTypes[ii]);
@@ -3051,16 +3109,16 @@ public class SGDefaultColumnTypeUtility
     int idx;
 
     // index
-    String[] indexNames = getNames(nodeMap, KEY_INDEX_VARIABLE_NAME, groupName);
+    String[] indexNames = getNames(nodeMap, SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, groupName);
     if (indexNames == null) {
-      indexNames = getNames(nodeMap, KEY_SERIAL_NUMBER_VARIABLE_NAME, groupName);
+      indexNames = getNames(nodeMap, SGIDataPropertyKeyConstants.KEY_SERIAL_NUMBER_VARIABLE_NAME, groupName);
     }
     int indexIdx = -1;
     if (indexNames != null) {
       if (indexNames.length != 1) {
         return false;
       }
-      if ((indexIdx = setNetCDFColumnType(columnInfoList, columnTypes, indexNames[0], INDEX))
+      if ((indexIdx = setNetCDFColumnType(columnInfoList, columnTypes, indexNames[0], SGIDataColumnTypeConstants.INDEX))
           == -1) {
         return false;
       }
@@ -3071,14 +3129,16 @@ public class SGDefaultColumnTypeUtility
 
     // x, y and z values
     String[] xNames =
-        getNames(nodeMap, new String[] {KEY_X_VALUE_NAME, KEY_X_VALUE_COLUMN_INDEX}, groupName);
+        getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_X_VALUE_COLUMN_INDEX}, groupName);
     if (xNames == null) {
       return false;
     }
     if (xNames.length != 1) {
       return false;
     }
-    idx = setNetCDFColumnType(columnInfoList, columnTypes, xNames[0], X_VALUE);
+    idx =
+        setNetCDFColumnType(
+            columnInfoList, columnTypes, xNames[0], SGIDataColumnTypeConstants.X_VALUE);
     if (idx == -1) {
       return false;
     }
@@ -3090,12 +3150,12 @@ public class SGDefaultColumnTypeUtility
         return false;
       }
     } else {
-      String[] xIndexNames = getNames(nodeMap, new String[] {KEY_X_INDEX_VARIABLE_NAME}, groupName);
+      String[] xIndexNames = getNames(nodeMap, SGIDataPropertyKeyConstants.KEY_X_INDEX_VARIABLE_NAME, groupName);
       if (xIndexNames != null) {
         if (xIndexNames.length != 1) {
           return false;
         }
-        idx = setNetCDFColumnType(columnInfoList, columnTypes, xIndexNames[0], X_INDEX);
+        idx = setNetCDFColumnType(columnInfoList, columnTypes, xIndexNames[0], SGIDataColumnTypeConstants.X_INDEX);
         if (idx == -1) {
           return false;
         }
@@ -3113,14 +3173,16 @@ public class SGDefaultColumnTypeUtility
     }
 
     String[] yNames =
-        getNames(nodeMap, new String[] {KEY_Y_VALUE_NAME, KEY_Y_VALUE_COLUMN_INDEX}, groupName);
+        getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_Y_VALUE_COLUMN_INDEX}, groupName);
     if (yNames == null) {
       return false;
     }
     if (yNames.length != 1) {
       return false;
     }
-    idx = setNetCDFColumnType(columnInfoList, columnTypes, yNames[0], Y_VALUE);
+    idx =
+        setNetCDFColumnType(
+            columnInfoList, columnTypes, yNames[0], SGIDataColumnTypeConstants.Y_VALUE);
     if (idx == -1) {
       return false;
     }
@@ -3132,12 +3194,12 @@ public class SGDefaultColumnTypeUtility
         return false;
       }
     } else {
-      String[] yIndexNames = getNames(nodeMap, new String[] {KEY_Y_INDEX_VARIABLE_NAME}, groupName);
+      String[] yIndexNames = getNames(nodeMap, SGIDataPropertyKeyConstants.KEY_Y_INDEX_VARIABLE_NAME, groupName);
       if (yIndexNames != null) {
         if (yIndexNames.length != 1) {
           return false;
         }
-        idx = setNetCDFColumnType(columnInfoList, columnTypes, yIndexNames[0], Y_INDEX);
+        idx = setNetCDFColumnType(columnInfoList, columnTypes, yIndexNames[0], SGIDataColumnTypeConstants.Y_INDEX);
         if (idx == -1) {
           return false;
         }
@@ -3155,14 +3217,14 @@ public class SGDefaultColumnTypeUtility
     }
 
     String[] zNames =
-        getNames(nodeMap, new String[] {KEY_Z_VALUE_NAME, KEY_Z_VALUE_COLUMN_INDEX}, groupName);
+        getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_Z_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_Z_VALUE_COLUMN_INDEX}, groupName);
     if (zNames == null) {
       return false;
     }
     if (zNames.length != 1) {
       return false;
     }
-    idx = setNetCDFColumnType(columnInfoList, columnTypes, zNames[0], Z_VALUE);
+    idx = setNetCDFColumnType(columnInfoList, columnTypes, zNames[0], SGIDataColumnTypeConstants.Z_VALUE);
     if (idx == -1) {
       return false;
     }
@@ -3174,12 +3236,12 @@ public class SGDefaultColumnTypeUtility
     }
 
     // time
-    String[] timeNames = getNames(nodeMap, KEY_TIME_VARIABLE_NAME, groupName);
+    String[] timeNames = getNames(nodeMap, SGIDataPropertyKeyConstants.KEY_TIME_VARIABLE_NAME, groupName);
     if (timeNames != null) {
       if (timeNames.length != 1) {
         return false;
       }
-      idx = setNetCDFColumnType(columnInfoList, columnTypes, timeNames[0], ANIMATION_FRAME);
+      idx = setNetCDFColumnType(columnInfoList, columnTypes, timeNames[0], SGIDataColumnTypeConstants.ANIMATION_FRAME);
       if (idx == -1) {
         return false;
       }
@@ -3221,12 +3283,18 @@ public class SGDefaultColumnTypeUtility
     SGMDArrayDataColumnInfo xCol = null;
     int xIndex = -1;
     String[] xNames =
-        getNames(nodeMap, new String[] {KEY_X_VALUE_NAME, KEY_X_VALUE_COLUMN_INDEX}, groupName);
+        getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_X_VALUE_COLUMN_INDEX}, groupName);
     if (xNames != null) {
       if (xNames.length != 1) {
         return false;
       }
-      index = setupMDArrayColumn(columnInfoList, columnTypes, dimensionIndex, xNames[0], X_VALUE);
+      index =
+          setupMDArrayColumn(
+              columnInfoList,
+              columnTypes,
+              dimensionIndex,
+              xNames[0],
+              SGIDataColumnTypeConstants.X_VALUE);
       if (index == -1) {
         return false;
       }
@@ -3240,12 +3308,18 @@ public class SGDefaultColumnTypeUtility
     SGMDArrayDataColumnInfo yCol = null;
     int yIndex = -1;
     String[] yNames =
-        getNames(nodeMap, new String[] {KEY_Y_VALUE_NAME, KEY_Y_VALUE_COLUMN_INDEX}, groupName);
+        getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_Y_VALUE_COLUMN_INDEX}, groupName);
     if (yNames != null) {
       if (yNames.length != 1) {
         return false;
       }
-      index = setupMDArrayColumn(columnInfoList, columnTypes, dimensionIndex, yNames[0], Y_VALUE);
+      index =
+          setupMDArrayColumn(
+              columnInfoList,
+              columnTypes,
+              dimensionIndex,
+              yNames[0],
+              SGIDataColumnTypeConstants.Y_VALUE);
       if (index == -1) {
         return false;
       }
@@ -3266,7 +3340,7 @@ public class SGDefaultColumnTypeUtility
     }
 
     String[] zNames =
-        getNames(nodeMap, new String[] {KEY_Z_VALUE_NAME, KEY_Z_VALUE_COLUMN_INDEX}, groupName);
+        getNames(nodeMap, new String[] {SGIDataPropertyKeyConstants.KEY_Z_VALUE_NAME, SGIDataPropertyKeyConstants.KEY_Z_VALUE_COLUMN_INDEX}, groupName);
     if (zNames == null) {
       return false;
     }
@@ -3283,7 +3357,7 @@ public class SGDefaultColumnTypeUtility
               SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION,
               SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION,
               zNames[0],
-              Z_VALUE);
+              SGIDataColumnTypeConstants.Z_VALUE);
       if (index == -1) {
         return false;
       }
@@ -3312,7 +3386,7 @@ public class SGDefaultColumnTypeUtility
       }
       zCol.putAllDimensionIndices(dimensionMap);
     } else {
-      index = setupMDArrayColumn(columnInfoList, columnTypes, dimensionIndex, zNames[0], Z_VALUE);
+      index = setupMDArrayColumn(columnInfoList, columnTypes, dimensionIndex, zNames[0], SGIDataColumnTypeConstants.Z_VALUE);
       if (index == -1) {
         return false;
       }
@@ -3711,8 +3785,8 @@ public class SGDefaultColumnTypeUtility
   }
 
   private static List<Integer> getIndexVariableColumnIndices(SGDataColumnInfo[] columns) {
-    final String idx = INDEX.toUpperCase();
-    final String sn = SERIAL_NUMBERS.toUpperCase();
+    final String idx = SGIDataColumnTypeConstants.INDEX.toUpperCase();
+    final String sn = SGIDataColumnTypeConstants.SERIAL_NUMBERS.toUpperCase();
     List<Integer> indices = new ArrayList<Integer>();
     for (int ii = 0; ii < columns.length; ii++) {
       String name = columns[ii].getName();
@@ -3727,13 +3801,13 @@ public class SGDefaultColumnTypeUtility
   private static boolean isNumberColumn(
       final List<SGDataColumnInfo> columnInfoList, final int index) {
     SGDataColumnInfo col = columnInfoList.get(index);
-    return VALUE_TYPE_NUMBER.equals(col.getValueType());
+    return SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(col.getValueType());
   }
 
   private static boolean isDateColumn(
       final List<SGDataColumnInfo> columnInfoList, final int index) {
     SGDataColumnInfo col = columnInfoList.get(index);
-    return VALUE_TYPE_DATE.equals(col.getValueType());
+    return SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(col.getValueType());
   }
 
   private static boolean isCoordinateVariableColumn(
@@ -3750,7 +3824,8 @@ public class SGDefaultColumnTypeUtility
     for (int ii = 0; ii < columns.length; ii++) {
       SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) columns[ii];
       String valueType = mdInfo.getValueType();
-      if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
+      if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(
+          valueType)) {
         continue;
       }
       int[] dims = mdInfo.getDimensions();

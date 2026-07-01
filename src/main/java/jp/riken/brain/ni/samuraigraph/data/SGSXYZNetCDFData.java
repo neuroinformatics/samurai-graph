@@ -121,19 +121,19 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     for (int ii = 0; ii < varNum; ii++) {
       SGNetCDFVariable var = varList.get(ii);
       if (var.equals(this.mXVariable)) {
-        array[ii] = X_VALUE;
+        array[ii] = SGIDataColumnTypeConstants.X_VALUE;
       } else if (var.equals(this.mYVariable)) {
-        array[ii] = Y_VALUE;
+        array[ii] = SGIDataColumnTypeConstants.Y_VALUE;
       } else if (var.equals(this.mZVariable)) {
-        array[ii] = Z_VALUE;
+        array[ii] = SGIDataColumnTypeConstants.Z_VALUE;
       } else if (var.equals(this.mTimeVariable)) {
-        array[ii] = ANIMATION_FRAME;
+        array[ii] = SGIDataColumnTypeConstants.ANIMATION_FRAME;
       } else if (var.equals(this.mIndexVariable)) {
-        array[ii] = INDEX;
+        array[ii] = SGIDataColumnTypeConstants.INDEX;
       } else if (var.equals(this.mXIndexVariable)) {
-        array[ii] = X_INDEX;
+        array[ii] = SGIDataColumnTypeConstants.X_INDEX;
       } else if (var.equals(this.mYIndexVariable)) {
-        array[ii] = Y_INDEX;
+        array[ii] = SGIDataColumnTypeConstants.Y_INDEX;
       } else {
         array[ii] = "";
       }
@@ -191,40 +191,40 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     for (int ii = 0; ii < columns.length; ii++) {
       SGNetCDFVariable var = varList.get(ii);
       String valueType = var.getValueType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         xVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         yVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(Z_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Z_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         zVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(ANIMATION_FRAME, columns[ii])
-          || SGDataUtility.isEqualColumnType(TIME, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.ANIMATION_FRAME, columns[ii])
+          || SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.TIME, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         timeVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(INDEX, columns[ii])
-          || SGDataUtility.isEqualColumnType(SERIAL_NUMBERS, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.INDEX, columns[ii])
+          || SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.SERIAL_NUMBERS, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         indexVarList.add(var);
-        //            } else if (SGDataUtility.equals(X_INDEX, columns[ii])) {
-        //            	if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.X_INDEX, columns[ii])) {
+        //            	if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         //            		return false;
         //            	}
         //                xIndexVarList.add(var);
-        //            } else if (SGDataUtility.equals(Y_INDEX, columns[ii])) {
-        //            	if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.Y_INDEX, columns[ii])) {
+        //            	if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         //            		return false;
         //            	}
         //                yIndexVarList.add(var);
@@ -344,9 +344,9 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     if (super.writeProperty(el, type) == false) {
       return false;
     }
-    el.setAttribute(KEY_X_VALUE_NAME, this.mXVariable.getValidName());
-    el.setAttribute(KEY_Y_VALUE_NAME, this.mYVariable.getValidName());
-    el.setAttribute(KEY_Z_VALUE_NAME, this.mZVariable.getValidName());
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, this.mXVariable.getValidName());
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, this.mYVariable.getValidName());
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_Z_VALUE_NAME, this.mZVariable.getValidName());
     return true;
   }
 
@@ -846,15 +846,15 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
 
     String strX = this.mXVariable.getName();
     varList.add(strX);
-    columnTypeList.add(X_VALUE);
+    columnTypeList.add(SGIDataColumnTypeConstants.X_VALUE);
 
     String strY = this.mYVariable.getName();
     varList.add(strY);
-    columnTypeList.add(Y_VALUE);
+    columnTypeList.add(SGIDataColumnTypeConstants.Y_VALUE);
 
     String strZ = this.mZVariable.getName();
     varList.add(strZ);
-    columnTypeList.add(Z_VALUE);
+    columnTypeList.add(SGIDataColumnTypeConstants.Z_VALUE);
   }
 
   /**
@@ -1039,7 +1039,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
   @Override
   public SGIntegerSeriesSet getDataViewerColStride(String columnType) {
     SGIntegerSeriesSet ret = null;
-    if (!this.isIndexAvailable() && Z_VALUE.equals(columnType)) {
+    if (!this.isIndexAvailable() && SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
       if (this.isStrideAvailable()) {
         ret = this.mXStride;
       } else {
@@ -1059,7 +1059,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
       if (this.isIndexAvailable()) {
         ret = this.mIndexStride;
       } else {
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           ret = this.mXStride;
         } else {
           ret = this.mYStride;
@@ -1070,7 +1070,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
       if (this.isIndexAvailable()) {
         len = this.getIndexDimensionLength();
       } else {
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           len = this.getXDimensionLength();
         } else {
           len = this.getYDimensionLength();
@@ -1190,7 +1190,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
   protected Array setEditedValues(
       NetcdfFileWriter ncWrite, String varName, Array array, final boolean all) {
     return this.setEditedValues(
-        ncWrite, varName, array, X_VALUE, Y_VALUE, new String[] {Z_VALUE}, all);
+        ncWrite, varName, array, SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE, new String[] {SGIDataColumnTypeConstants.Z_VALUE}, all);
   }
 
   @Override
@@ -1200,11 +1200,11 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     if (this.isIndexAvailable()) {
       ret = super.getDataViewerCell(cell, columnType, bStride);
     } else {
-      if (Z_VALUE.equals(columnType)) {
+      if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
         ret = super.getDataViewerCell(cell, columnType, bStride);
-      } else if (X_VALUE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
         ret = this.getDataViewerCellX(cell, bStride);
-      } else if (Y_VALUE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
         ret = this.getDataViewerCellY(cell, bStride);
       }
     }

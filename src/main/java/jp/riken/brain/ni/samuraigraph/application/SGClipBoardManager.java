@@ -15,6 +15,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
+import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIRootObjectConstants;
@@ -26,8 +27,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /** SGMainFunctions :: ClipBoardManager class */
-class SGClipBoardManager
-    implements SGIDisposable, SGIApplicationTextConstants, SGIPropertyFileConstants {
+class SGClipBoardManager implements SGIDisposable {
 
   /** The list of copied objects. */
   private List<SGICopyable> mCopiedObjectsBuffer = new ArrayList<SGICopyable>();
@@ -169,7 +169,8 @@ class SGClipBoardManager
     }
 
     // create a Document object
-    Document document = domImpl.createDocument("", TAG_NAME_FOCUSED_FIGURES, null);
+    Document document =
+        domImpl.createDocument("", SGIApplicationTextConstants.TAG_NAME_FOCUSED_FIGURES, null);
 
     // create a DOM tree
     if (wnd.createDOMTree(
@@ -248,7 +249,7 @@ class SGClipBoardManager
 
       // get root element
       Element root = info.mDocument.getDocumentElement();
-      root.setAttribute(KEY_VERSION_NUMBER, versionNumber);
+      root.setAttribute(SGIPropertyFileConstants.KEY_VERSION_NUMBER, versionNumber);
 
       // get the node of window
       NodeList wList = root.getElementsByTagName(SGIRootObjectConstants.TAG_NAME_WINDOW);
@@ -282,7 +283,7 @@ class SGClipBoardManager
     boolean b3 = false;
     if (this.mWindowInfo != null) {
       Document doc = this.mWindowInfo.mDocument;
-      NodeList nodeList = doc.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+      NodeList nodeList = doc.getElementsByTagName(SGIFigureConstants.TAG_NAME_FIGURE);
       final int len = nodeList.getLength();
       b3 = (len != 0);
     }

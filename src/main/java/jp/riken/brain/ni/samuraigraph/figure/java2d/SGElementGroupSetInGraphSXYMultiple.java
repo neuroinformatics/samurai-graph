@@ -47,6 +47,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
+import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYMultipleDimensionData;
@@ -1336,104 +1337,104 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
     Map<String, SGInteger> pickUpMap = new HashMap<String, SGInteger>();
     List<String> keys = map.getKeys();
-    final boolean dataColumnContained = keys.contains(COM_DATA_COLUMN_TYPE.toUpperCase());
-    final boolean pickUpContained = keys.contains(COM_DATA_PICKUP_DIMENSION.toUpperCase());
-    final boolean timeContained = keys.contains(COM_DATA_ANIMATION_FRAME_DIMENSION.toUpperCase());
+    final boolean dataColumnContained = keys.contains(SGIDataCommandConstants.COM_DATA_COLUMN_TYPE.toUpperCase());
+    final boolean pickUpContained = keys.contains(SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION.toUpperCase());
+    final boolean timeContained = keys.contains(SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION.toUpperCase());
     Iterator<String> itr = map.getKeyIterator();
     while (itr.hasNext()) {
       String key = itr.next();
       String value = map.getValueString(key);
-      if (COM_DATA_LINE_WIDTH.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_LINE_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_LINE_TYPE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_LINE_TYPE.equalsIgnoreCase(key)) {
         Integer type = SGDrawingElementLine.getLineTypeFromName(value);
         if (type == null) {
-          result.putResult(COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setLineType(type) == false) {
-          result.putResult(COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_LINE_TYPE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_LINE_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_LINE_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.setLineColor(cl) == false) {
-            result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl != null) {
             if (this.setLineColor(cl) == false) {
-              result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+              result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
               continue;
             }
           } else {
-            result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.SUCCEEDED);
-        //			} else if (COM_DATA_COLOR_STYLE_REVERSED.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.SUCCEEDED);
+        //			} else if (SGIDataCommandConstants.COM_DATA_COLOR_STYLE_REVERSED.equalsIgnoreCase(key)) {
         //                Boolean b = SGUtilityText.getBoolean(value);
         //                if (b == null) {
-        //                    result.putResult(COM_DATA_COLOR_STYLE_REVERSED,
+        //                    result.putResult(SGIDataCommandConstants.COM_DATA_COLOR_STYLE_REVERSED,
         //                            SGPropertyResults.INVALID_INPUT_VALUE);
         //                    continue;
         //                }
         //                this.mLineColorMapManager.setReversedOrder(b.booleanValue());
-        //                result.putResult(COM_DATA_COLOR_STYLE_REVERSED,
+        //                result.putResult(SGIDataCommandConstants.COM_DATA_COLOR_STYLE_REVERSED,
         //                        SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_SHIFT_X.equalsIgnoreCase(key)) {
+      } else if (SGIDataCommandConstants.COM_DATA_SHIFT_X.equalsIgnoreCase(key)) {
         Number num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_DATA_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (!this.setShiftX(num.doubleValue())) {
-          result.putResult(COM_DATA_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_SHIFT_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_SHIFT_Y.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_SHIFT_X, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_SHIFT_Y.equalsIgnoreCase(key)) {
         Number num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_DATA_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (!this.setShiftY(num.doubleValue())) {
-          result.putResult(COM_DATA_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_SHIFT_Y, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_PICKUP_DIMENSION.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_SHIFT_Y, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
           // if ColumnType command exists, skip the command for pick up indices
           continue;
         }
         if (timeContained) {
-          String timeValue = map.getValueString(COM_DATA_ANIMATION_FRAME_DIMENSION);
+          String timeValue = map.getValueString(SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION);
           this.setPickUpAndTimeDimension(result, value, timeValue);
         } else {
           if (!this.setPickUpDimension(value)) {
-            result.putResult(COM_DATA_PICKUP_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-          result.putResult(COM_DATA_PICKUP_DIMENSION, SGPropertyResults.SUCCEEDED);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION, SGPropertyResults.SUCCEEDED);
         }
-      } else if (COM_DATA_ANIMATION_FRAME_DIMENSION.equalsIgnoreCase(key)) {
+      } else if (SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
           // if ColumnType command exists, skip the command for pick up indices
           continue;
@@ -1444,11 +1445,11 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         }
         if (!this.setTimeDimension(value)) {
           result.putResult(
-              COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_PICKUP_INDICES.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_PICKUP_INDICES.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
           // if ColumnType command exists, skip the command for pick up indices
           continue;
@@ -1456,7 +1457,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         if (!this.setPickUpIndices(map, result, key, value, pickUpMap)) {
           continue;
         }
-      } else if (COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
+      } else if (SGIDataCommandConstants.COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
         if (SGDataUtility.isNetCDFData(this.mData)) {
           if (dataColumnContained) {
             // if ColumnType command exists, skip the command for pick up indices
@@ -1467,10 +1468,10 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           }
         } else {
           // cannot apply
-          result.putResult(COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-      } else if (COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
+      } else if (SGIDataCommandConstants.COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
         if (SGDataUtility.isNetCDFData(this.mData)) {
           if (dataColumnContained) {
             // if ColumnType command exists, skip the command for pick up indices
@@ -1481,10 +1482,10 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           }
         } else {
           // cannot apply
-          result.putResult(COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-      } else if (COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
+      } else if (SGIDataCommandConstants.COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
         if (SGDataUtility.isNetCDFData(this.mData)) {
           if (dataColumnContained) {
             // if ColumnType command exists, skip the command for pick up indices
@@ -1495,75 +1496,75 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           }
         } else {
           // cannot apply
-          result.putResult(COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-      } else if (COM_DATA_ARRAY_SECTION.equalsIgnoreCase(key)) {
+      } else if (SGIDataCommandConstants.COM_DATA_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
           // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
-          result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setStride(value) == false) {
-          result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_TICK_LABEL_ARRAY_SECTION.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
           // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
           result.putResult(
-              COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setTickLabelStride(result, value) == false) {
           result.putResult(
-              COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_INDEX_ARRAY_SECTION.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
           // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
-          result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setIndexStride(value) == false) {
-          result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ANIMATION_ARRAY_SECTION.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
           // if ColumnType command exists, skip the command for the stride
           continue;
         }
         SGArrayData data = (SGArrayData) this.getData();
         if (!data.isAnimationAvailable()) {
-          result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         final int len = data.getAnimationLength();
         if (len == -1) {
-          result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         SGIntegerSeriesSet arraySection = SGIntegerSeriesSet.parse(value, len);
         if (arraySection == null) {
-          result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setFrameIndices(arraySection);
-        result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -1577,51 +1578,51 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     while (itr.hasNext()) {
       String key = itr.next();
       String value = map.getValueString(key);
-      if (COM_DATA_LINE_SHIFT_X.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_LINE_SHIFT_X.equalsIgnoreCase(key)) {
         Number num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_DATA_LINE_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         final double shiftOld = this.getShiftX();
         if (this.setShiftX(num.doubleValue()) == false) {
-          result.putResult(COM_DATA_LINE_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         List<SGElementGroupBar> barList = this.getBarGroups();
         for (SGElementGroupBar bar : barList) {
           final double barOffset = bar.getOffsetX() + shiftOld - num.doubleValue();
           if (bar.setOffsetX(barOffset) == false) {
-            result.putResult(COM_DATA_LINE_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_DATA_LINE_SHIFT_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_LINE_SHIFT_Y.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_SHIFT_X, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_LINE_SHIFT_Y.equalsIgnoreCase(key)) {
         Number num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_DATA_LINE_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         final double shiftOld = this.getShiftY();
         if (this.setShiftY(num.doubleValue()) == false) {
-          result.putResult(COM_DATA_LINE_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         List<SGElementGroupBar> barList = this.getBarGroups();
         for (SGElementGroupBar bar : barList) {
           final double barOffset = bar.getOffsetY() + shiftOld - num.doubleValue();
           if (bar.setOffsetY(barOffset) == false) {
-            result.putResult(COM_DATA_LINE_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_DATA_LINE_SHIFT_Y, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_BAR_SHIFT_X.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_SHIFT_Y, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_BAR_SHIFT_X.equalsIgnoreCase(key)) {
         // only for backward compatibility
         Number num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_DATA_BAR_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_BAR_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         final double shiftX = this.getShiftX();
@@ -1629,16 +1630,16 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         for (SGElementGroupBar bar : barList) {
           final double offset = num.doubleValue() - shiftX;
           if (bar.setOffsetX(offset) == false) {
-            result.putResult(COM_DATA_BAR_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_BAR_SHIFT_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_DATA_BAR_SHIFT_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_BAR_SHIFT_Y.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_BAR_SHIFT_X, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_BAR_SHIFT_Y.equalsIgnoreCase(key)) {
         // only for backward compatibility
         Number num = SGUtilityText.getDouble(value);
         if (num == null) {
-          result.putResult(COM_DATA_BAR_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_BAR_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         final double shiftY = this.getShiftY();
@@ -1646,11 +1647,11 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         for (SGElementGroupBar bar : barList) {
           final double offset = num.doubleValue() - shiftY;
           if (bar.setOffsetY(offset) == false) {
-            result.putResult(COM_DATA_BAR_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_BAR_SHIFT_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_DATA_BAR_SHIFT_Y, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIDataCommandConstants.COM_DATA_BAR_SHIFT_Y, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -1674,15 +1675,15 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     }
     SGIntegerSeriesSet indices = pickUpInfo.getIndices();
     SGIntegerSeries series = indices.testReduce();
-    SGInteger pickUpStart = pickUpMap.get(COM_DATA_PICKUP_START);
+    SGInteger pickUpStart = pickUpMap.get(SGIDataCommandConstants.COM_DATA_PICKUP_START);
     if (pickUpStart == null && series != null) {
       pickUpStart = new SGInteger(series.getStart().getNumber());
     }
-    SGInteger pickUpEnd = pickUpMap.get(COM_DATA_PICKUP_END);
+    SGInteger pickUpEnd = pickUpMap.get(SGIDataCommandConstants.COM_DATA_PICKUP_END);
     if (pickUpEnd == null && series != null) {
       pickUpEnd = new SGInteger(series.getEnd().getNumber());
     }
-    SGInteger pickUpStep = pickUpMap.get(COM_DATA_PICKUP_STEP);
+    SGInteger pickUpStep = pickUpMap.get(SGIDataCommandConstants.COM_DATA_PICKUP_STEP);
     if (pickUpStep == null && series != null) {
       pickUpStep = new SGInteger(series.getStep().getNumber());
     }
@@ -1740,11 +1741,11 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     // sets the status
     final int pickUpStatus =
         pickUpValid ? SGPropertyResults.SUCCEEDED : SGPropertyResults.INVALID_INPUT_VALUE;
-    result.putResult(COM_DATA_PICKUP_DIMENSION, pickUpStatus);
+    result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION, pickUpStatus);
 
     final int timeStatus =
         timeValid ? SGPropertyResults.SUCCEEDED : SGPropertyResults.INVALID_INPUT_VALUE;
-    result.putResult(COM_DATA_ANIMATION_FRAME_DIMENSION, timeStatus);
+    result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION, timeStatus);
   }
 
   private boolean setPickUpDimension(final String value) {
@@ -1980,9 +1981,9 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       final String value,
       Map<String, SGInteger> pickUpMap) {
 
-    if (COM_DATA_PICKUP_INDICES.equalsIgnoreCase(key)) {
-      if (map.isDoubleQuoted(COM_DATA_PICKUP_INDICES) == false) {
-        result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+    if (SGIDataCommandConstants.COM_DATA_PICKUP_INDICES.equalsIgnoreCase(key)) {
+      if (map.isDoubleQuoted(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES) == false) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
         return false;
       }
       if (SGDataUtility.isNetCDFData(this.mData)) {
@@ -2002,7 +2003,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         SGNetCDFPickUpDimensionInfo info =
             new SGNetCDFPickUpDimensionInfo(dim.getShortName(), indices);
         if (sxyData.setPickUpDimensionInfo(info) == false) {
-          result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
           return false;
         }
 
@@ -2024,58 +2025,58 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         }
         info.setIndices(indices);
         if (sxyData.setPickUpDimensionInfo(info) == false) {
-          result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
           return false;
         }
       } else {
         // cannot apply
-        result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
         return false;
       }
-      result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
-    } else if (COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
+      result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
+    } else if (SGIDataCommandConstants.COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
       if (SGDataUtility.isNetCDFData(this.mData)) {
         Integer num = this.getNetCDFPickUpNumber(map, key, value);
         if (num == null) {
-          result.putResult(COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
           return false;
         }
         if (num != null) {
-          pickUpMap.put(COM_DATA_PICKUP_START, new SGInteger(num));
+          pickUpMap.put(SGIDataCommandConstants.COM_DATA_PICKUP_START, new SGInteger(num));
         }
       } else {
         // cannot apply
-        result.putResult(COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
         return false;
       }
-    } else if (COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
+    } else if (SGIDataCommandConstants.COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
       if (SGDataUtility.isNetCDFData(this.mData)) {
         Integer num = this.getNetCDFPickUpNumber(map, key, value);
         if (num == null) {
-          result.putResult(COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
           return false;
         }
         if (num != null) {
-          pickUpMap.put(COM_DATA_PICKUP_END, new SGInteger(num));
+          pickUpMap.put(SGIDataCommandConstants.COM_DATA_PICKUP_END, new SGInteger(num));
         }
       } else {
         // cannot apply
-        result.putResult(COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
         return false;
       }
-    } else if (COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
+    } else if (SGIDataCommandConstants.COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
       if (SGDataUtility.isNetCDFData(this.mData)) {
         Integer num = this.getNetCDFPickUpNumber(map, key, value);
         if (num == null) {
-          result.putResult(COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
           return false;
         }
         if (num != null) {
-          pickUpMap.put(COM_DATA_PICKUP_STEP, new SGInteger(num));
+          pickUpMap.put(SGIDataCommandConstants.COM_DATA_PICKUP_STEP, new SGInteger(num));
         }
       } else {
         // cannot apply
-        result.putResult(COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
         return false;
       }
     }
@@ -3006,29 +3007,29 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     // sets picked up dimension and animation dimension
     if (SGDataUtility.isMDArrayData(this.mData)) {
       List<String> keys = map.getKeys();
-      String strPickUpDimension = map.getValueString(COM_DATA_PICKUP_DIMENSION);
-      String strTimeDimension = map.getValueString(COM_DATA_ANIMATION_FRAME_DIMENSION);
+      String strPickUpDimension = map.getValueString(SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION);
+      String strTimeDimension = map.getValueString(SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION);
       final boolean pickUpDimContained =
-          keys.contains(COM_DATA_PICKUP_DIMENSION.toUpperCase()) && !"".equals(strPickUpDimension);
+          keys.contains(SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION.toUpperCase()) && !"".equals(strPickUpDimension);
       final boolean timeDimContained =
-          keys.contains(COM_DATA_ANIMATION_FRAME_DIMENSION.toUpperCase())
+          keys.contains(SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION.toUpperCase())
               && !"".equals(strTimeDimension);
       if (timeDimContained && pickUpDimContained) {
         this.setPickUpAndTimeDimension(result, strPickUpDimension, strTimeDimension);
       } else {
         if (pickUpDimContained) {
           if (!this.setPickUpDimension(strPickUpDimension)) {
-            result.putResult(COM_DATA_PICKUP_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
           } else {
-            result.putResult(COM_DATA_PICKUP_DIMENSION, SGPropertyResults.SUCCEEDED);
+            result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION, SGPropertyResults.SUCCEEDED);
           }
         }
         if (timeDimContained) {
           if (!this.setTimeDimension(strTimeDimension)) {
             result.putResult(
-                COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
+                SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
           } else {
-            result.putResult(COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.SUCCEEDED);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.SUCCEEDED);
           }
         }
       }
@@ -3036,28 +3037,28 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
     // sets picked up indices
     Map<String, SGInteger> pickUpMap = new HashMap<String, SGInteger>();
-    String strPickUpIndices = map.getValueString(COM_DATA_PICKUP_INDICES);
+    String strPickUpIndices = map.getValueString(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES);
     if (!"".equals(strPickUpIndices)) {
       if (!this.setPickUpIndices(
-          map, result, COM_DATA_PICKUP_INDICES, strPickUpIndices, pickUpMap)) {
+          map, result, SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, strPickUpIndices, pickUpMap)) {
         return false;
       }
     }
-    String strPickUpStart = map.getValueString(COM_DATA_PICKUP_START);
+    String strPickUpStart = map.getValueString(SGIDataCommandConstants.COM_DATA_PICKUP_START);
     if (!"".equals(strPickUpStart)) {
-      if (!this.setPickUpIndices(map, result, COM_DATA_PICKUP_START, strPickUpStart, pickUpMap)) {
+      if (!this.setPickUpIndices(map, result, SGIDataCommandConstants.COM_DATA_PICKUP_START, strPickUpStart, pickUpMap)) {
         return false;
       }
     }
-    String strPickUpEnd = map.getValueString(COM_DATA_PICKUP_END);
+    String strPickUpEnd = map.getValueString(SGIDataCommandConstants.COM_DATA_PICKUP_END);
     if (!"".equals(strPickUpEnd)) {
-      if (!this.setPickUpIndices(map, result, COM_DATA_PICKUP_END, strPickUpEnd, pickUpMap)) {
+      if (!this.setPickUpIndices(map, result, SGIDataCommandConstants.COM_DATA_PICKUP_END, strPickUpEnd, pickUpMap)) {
         return false;
       }
     }
-    String strPickUpStep = map.getValueString(COM_DATA_PICKUP_STEP);
+    String strPickUpStep = map.getValueString(SGIDataCommandConstants.COM_DATA_PICKUP_STEP);
     if (!"".equals(strPickUpStep)) {
-      if (!this.setPickUpIndices(map, result, COM_DATA_PICKUP_STEP, strPickUpStep, pickUpMap)) {
+      if (!this.setPickUpIndices(map, result, SGIDataCommandConstants.COM_DATA_PICKUP_STEP, strPickUpStep, pickUpMap)) {
         return false;
       }
     }
@@ -3070,56 +3071,56 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       if ("".equals(value)) {
         continue;
       }
-      if (COM_DATA_ARRAY_SECTION.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (map.isDoubleQuoted(key) == false) {
-          result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setStride(value) == false) {
-          result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_TICK_LABEL_ARRAY_SECTION.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (map.isDoubleQuoted(key) == false) {
           result.putResult(
-              COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setTickLabelStride(result, value) == false) {
           result.putResult(
-              COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_INDEX_ARRAY_SECTION.equalsIgnoreCase(key)) {
-        if (map.isDoubleQuoted(COM_DATA_INDEX_ARRAY_SECTION) == false) {
-          result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION.equalsIgnoreCase(key)) {
+        if (map.isDoubleQuoted(SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION) == false) {
+          result.putResult(SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setIndexStride(value) == false) {
-          result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ANIMATION_ARRAY_SECTION.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION.equalsIgnoreCase(key)) {
         SGArrayData data = (SGArrayData) this.getData();
         if (!data.isAnimationAvailable()) {
-          result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         final int len = data.getAnimationLength();
         if (len == -1) {
-          result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         SGIntegerSeriesSet arraySection = SGIntegerSeriesSet.parse(value, len);
         if (arraySection == null) {
-          result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setFrameIndices(arraySection);
-        result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -3166,20 +3167,20 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         // try to get pick up information from the map
         Dimension dim = pickUpVar.getDimension(0);
         final int len = dim.getLength();
-        String strideValue = map.getValueString(COM_DATA_PICKUP_INDICES);
+        String strideValue = map.getValueString(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES);
         if (!"".equals(strideValue)) {
           SGIntegerSeriesSet indices = null;
-          if (map.isDoubleQuoted(COM_DATA_PICKUP_INDICES)) {
+          if (map.isDoubleQuoted(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES)) {
             indices = SGIntegerSeriesSet.parse(strideValue, len);
           } else {
-            result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
           }
           if (indices == null) {
-            result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
             indices = new SGIntegerSeriesSet(SGDataUtility.createDefaultStepSeries(len));
           }
           newInfo = new SGNetCDFPickUpDimensionInfo(pickUpVar.getName(), indices);
-          result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
         } else {
           newInfo = this.getNetCDFPickUpInfo(map, result, dim.getShortName(), len, null);
           if (newInfo == null) {
@@ -3230,7 +3231,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       }
     }
 
-    result.putResult(COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
+    result.putResult(SGIDataCommandConstants.COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
     return true;
   }
 
@@ -3247,24 +3248,24 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     List<String> keys = map.getKeys();
     for (String key : keys) {
       String value = map.getValueString(key);
-      if (COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
         Number num = this.getPickUpNumber(value, len);
         if (num == null) {
-          result.putResult(COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         start = new SGInteger(num.intValue());
-      } else if (COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
+      } else if (SGIDataCommandConstants.COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
         Number num = this.getPickUpNumber(value, len);
         if (num == null) {
-          result.putResult(COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         end = new SGInteger(num.intValue());
-      } else if (COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
+      } else if (SGIDataCommandConstants.COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
         Number num = this.getPickUpNumber(value, len);
         if (num == null) {
-          result.putResult(COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         step = new SGInteger(num.intValue());
@@ -3317,14 +3318,14 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       SGInteger step,
       final int status) {
     List<String> keys = map.getKeys();
-    if (start != null && keys.contains(COM_DATA_PICKUP_START.toUpperCase())) {
-      result.putResult(COM_DATA_PICKUP_START, status);
+    if (start != null && keys.contains(SGIDataCommandConstants.COM_DATA_PICKUP_START.toUpperCase())) {
+      result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_START, status);
     }
-    if (end != null && keys.contains(COM_DATA_PICKUP_END.toUpperCase())) {
-      result.putResult(COM_DATA_PICKUP_END, status);
+    if (end != null && keys.contains(SGIDataCommandConstants.COM_DATA_PICKUP_END.toUpperCase())) {
+      result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_END, status);
     }
-    if (step != null && keys.contains(COM_DATA_PICKUP_STEP.toUpperCase())) {
-      result.putResult(COM_DATA_PICKUP_STEP, status);
+    if (step != null && keys.contains(SGIDataCommandConstants.COM_DATA_PICKUP_STEP.toUpperCase())) {
+      result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_STEP, status);
     }
   }
 
@@ -3340,7 +3341,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     SGSXYMDArrayMultipleData sxyData = (SGSXYMDArrayMultipleData) this.mData;
     SGMDArrayPickUpDimensionInfo curInfo =
         (SGMDArrayPickUpDimensionInfo) sxyData.getPickUpDimensionInfo();
-    String strPickUpDimension = map.getValueString(COM_DATA_PICKUP_DIMENSION);
+    String strPickUpDimension = map.getValueString(SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION);
     Map<String, Integer> pickUpMap = this.createPickUpDimMap(sxyData, strPickUpDimension);
 
     if (pickUpMap != null && pickUpMap.size() != 0) {
@@ -3378,20 +3379,20 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       } else {
         // pick up variable is newly-assigned
         // try to get pick up information from the map
-        String strideValue = map.getValueString(COM_DATA_PICKUP_INDICES);
+        String strideValue = map.getValueString(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES);
         if (!"".equals(strideValue)) {
           SGIntegerSeriesSet indices = null;
-          if (map.isDoubleQuoted(COM_DATA_PICKUP_INDICES)) {
+          if (map.isDoubleQuoted(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES)) {
             indices = SGIntegerSeriesSet.parse(strideValue, newLen);
           } else {
-            result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
           }
           if (indices == null) {
-            result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
             indices = new SGIntegerSeriesSet(SGDataUtility.createDefaultStepSeries(newLen));
           }
           newInfo = new SGMDArrayPickUpDimensionInfo(pickUpMap, indices);
-          result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
+          result.putResult(SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
         } else {
           // get default pick up stride
           SGDataColumnInfo[] infoArray = this.getDataColumnInfoArray();
@@ -3434,7 +3435,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       }
     }
 
-    result.putResult(COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
+    result.putResult(SGIDataCommandConstants.COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
 
     return true;
   }
@@ -3874,50 +3875,50 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     while (itr.hasNext()) {
       String key = itr.next();
       String value = map.getValueString(key);
-      if (COM_DATA_LINE_WIDTH.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_LINE_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (SGMultipleSXYUtility.setLineWidth(this, num.floatValue(), unit.toString(), childIndex)
             == false) {
-          result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_LINE_TYPE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_LINE_TYPE.equalsIgnoreCase(key)) {
         Integer type = SGDrawingElementLine.getLineTypeFromName(value);
         if (type == null) {
-          result.putResult(COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (SGMultipleSXYUtility.setLineType(this, type, childIndex) == false) {
-          result.putResult(COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_LINE_TYPE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_LINE_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_LINE_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (SGMultipleSXYUtility.setLineColor(this, cl, childIndex) == false) {
-            result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl != null) {
             if (SGMultipleSXYUtility.setLineColor(this, cl, childIndex) == false) {
-              result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+              result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
               continue;
             }
           } else {
-            result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIDataCommandConstants.COM_DATA_LINE_COLOR, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -4037,17 +4038,17 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       SGSXYSDArrayMultipleData sxyData = (SGSXYSDArrayMultipleData) data;
       Double samplingRate = sxyData.getSamplingRate();
       if (samplingRate != null) {
-        SGPropertyUtility.addProperty(map, COM_DATA_SAMPLING_RATE, samplingRate);
+        SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_SAMPLING_RATE, samplingRate);
       }
     }
 
     // axes
-    SGPropertyUtility.addProperty(map, COM_DATA_AXIS_X, this.getXAxisString());
-    SGPropertyUtility.addProperty(map, COM_DATA_AXIS_Y, this.getYAxisString());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_AXIS_X, this.getXAxisString());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_AXIS_Y, this.getYAxisString());
 
     // shift
-    SGPropertyUtility.addProperty(map, COM_DATA_SHIFT_X, this.getShiftX());
-    SGPropertyUtility.addProperty(map, COM_DATA_SHIFT_Y, this.getShiftY());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_SHIFT_X, this.getShiftX());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_SHIFT_Y, this.getShiftY());
 
     if (SGDataUtility.isMDArrayData(data)) {
       SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) data;
@@ -4055,7 +4056,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       // pick up dimension
       String pickUpStr = mdData.getPickUpDimensionCommandString();
       if (pickUpStr != null) {
-        SGPropertyUtility.addProperty(map, COM_DATA_PICKUP_DIMENSION, pickUpStr);
+        SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION, pickUpStr);
       }
     }
 
@@ -4071,7 +4072,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     if (pickUpInfo != null) {
       SGIntegerSeriesSet pickUpIndices = pickUpInfo.getIndices();
       SGPropertyUtility.addQuotedStringProperty(
-          map, COM_DATA_PICKUP_INDICES, pickUpIndices.toString());
+          map, SGIDataCommandConstants.COM_DATA_PICKUP_INDICES, pickUpIndices.toString());
     }
 
     // drawing elements
@@ -4080,16 +4081,16 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       final float lineWidthCommonUnit =
           (float) SGUtilityText.convertFromPoint(lineWidthCommon, SGIConstants.LINE_WIDTH_UNIT);
       SGPropertyUtility.addProperty(
-          map, COM_DATA_LINE_WIDTH, lineWidthCommonUnit, SGIConstants.LINE_WIDTH_UNIT);
+          map, SGIDataCommandConstants.COM_DATA_LINE_WIDTH, lineWidthCommonUnit, SGIConstants.LINE_WIDTH_UNIT);
     }
     Integer lineTypeCommon = this.getCommonLineType();
     if (lineTypeCommon != null) {
       SGPropertyUtility.addProperty(
-          map, COM_DATA_LINE_TYPE, SGDrawingElementLine.getLineTypeName(lineTypeCommon));
+          map, SGIDataCommandConstants.COM_DATA_LINE_TYPE, SGDrawingElementLine.getLineTypeName(lineTypeCommon));
     }
     Color lineColorCommon = this.getCommonLineColor();
     if (lineColorCommon != null) {
-      SGPropertyUtility.addProperty(map, COM_DATA_LINE_COLOR, lineColorCommon);
+      SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_LINE_COLOR, lineColorCommon);
     }
     SGElementGroupLineForData lineGroup = (SGElementGroupLineForData) this.getLineGroup();
     lineGroup.getProperties(map);
@@ -4155,7 +4156,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         Entry<Integer, SGLineStyle> entry = cItr.next();
         Integer index = entry.getKey();
         SGLineStyle lineStyle = entry.getValue();
-        sb.append(COM_DATA);
+        sb.append(SGIDataCommandConstants.COM_DATA);
         sbTmp.append('(');
         sbTmp.append(this.getID());
         sbTmp.append(", ");
@@ -4165,18 +4166,18 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         if (lineWidthCommon == null) {
           SGPropertyUtility.addProperty(
               cMap,
-              COM_DATA_LINE_WIDTH,
+              SGIDataCommandConstants.COM_DATA_LINE_WIDTH,
               SGUtility.getExportLineWidth(lineStyle.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
               SGIConstants.LINE_WIDTH_UNIT);
         }
         if (lineTypeCommon == null) {
           SGPropertyUtility.addProperty(
               cMap,
-              COM_DATA_LINE_TYPE,
+              SGIDataCommandConstants.COM_DATA_LINE_TYPE,
               SGDrawingElementLine.getLineTypeName(lineStyle.getLineType()));
         }
         if (lineColorCommon == null) {
-          SGPropertyUtility.addProperty(cMap, COM_DATA_LINE_COLOR, lineStyle.getColor());
+          SGPropertyUtility.addProperty(cMap, SGIDataCommandConstants.COM_DATA_LINE_COLOR, lineStyle.getColor());
         }
         sbTmp.append(cMap.toString());
         sbTmp.append(")\n");

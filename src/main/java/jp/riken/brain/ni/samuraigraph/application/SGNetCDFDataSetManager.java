@@ -16,6 +16,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow.BackgroundImage;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementLegend;
@@ -53,7 +54,7 @@ import ucar.nc2.NetcdfFile;
 import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
-class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConstants {
+class SGNetCDFDataSetManager {
 
   /** The main functions. */
   private final SGMainFunctions mMain;
@@ -150,7 +151,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     StringBuffer sb = new StringBuffer();
     sb.append(datasetTempDir);
     sb.append(SGIConstants.FILE_SEPARATOR);
-    sb.append(ARCHIVE_IMAGE_NAME);
+    sb.append(SGIArchiveFileConstants.ARCHIVE_IMAGE_NAME);
     sb.append('.');
     sb.append(SGIApplicationConstants.NETCDF_FILE_EXTENSION);
     String fname = sb.toString();
@@ -235,7 +236,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         }
         for (Attribute gAttr : gAttrs) {
           // skips an attribute of the properties
-          if (ATTRIBUTE_PROPERTY.equals(gAttr.getShortName())) {
+          if (SGINetCDFConstants.ATTRIBUTE_PROPERTY.equals(gAttr.getShortName())) {
             continue;
           }
           group.attributes().addAttribute(gAttr);
@@ -302,7 +303,8 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     try {
       outNcfile =
           NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, outFile.getAbsolutePath());
-      outNcfile.addGroupAttribute(null, new Attribute(ATTRIBUTE_PROPERTY, propertyString));
+      outNcfile.addGroupAttribute(
+          null, new Attribute(SGINetCDFConstants.ATTRIBUTE_PROPERTY, propertyString));
 
       this.copyNetcdfTempFileHeaderToOutFile(files, outNcfile);
 
@@ -639,7 +641,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
     String str = null;
 
-    str = elFigure.getAttribute(SGFigure.KEY_FIGURE_TYPE);
+    str = elFigure.getAttribute(SGIFigureConstants.KEY_FIGURE_TYPE);
     if (str.length() == 0) {
       return ic;
     }
@@ -685,7 +687,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       final boolean readDataProperty,
       final String versionNumber) {
 
-    NodeList nList = elWnd.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+    NodeList nList = elWnd.getElementsByTagName(SGIFigureConstants.TAG_NAME_FIGURE);
     final int len = nList.getLength();
 
     for (int ii = 0; ii < len; ii++) {
@@ -788,7 +790,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
     // get window element
     Element elWnd = this.mMain.mPropertyFileManager.getWindowElement(doc);
-    NodeList nListFigure = elWnd.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+    NodeList nListFigure = elWnd.getElementsByTagName(SGIFigureConstants.TAG_NAME_FIGURE);
     final int figureNum = nListFigure.getLength();
     int cnt = 0;
     final int[] dataNumArray = new int[figureNum];
@@ -807,7 +809,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     Variable imgVar = null;
     for (Variable var : ncfile.getVariables()) {
       if (DataType.BYTE.equals(var.getDataType())) {
-        if (var.getShortName().startsWith(ARCHIVE_IMAGE_NAME)) {
+        if (var.getShortName().startsWith(SGIArchiveFileConstants.ARCHIVE_IMAGE_NAME)) {
           imgVar = var;
           break;
         }
@@ -930,7 +932,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     NetcdfFile ncfile = null;
     try {
       ncfile = SGApplicationUtility.openNetCDF(file.getAbsolutePath());
-      Attribute attr = ncfile.findGlobalAttribute(ATTRIBUTE_PROPERTY);
+      Attribute attr = ncfile.findGlobalAttribute(SGINetCDFConstants.ATTRIBUTE_PROPERTY);
       if (null == attr) {
         return -1;
       }
@@ -967,7 +969,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       ncfile = SGApplicationUtility.openNetCDF(location);
       List<Attribute> attrList = ncfile.getGlobalAttributes();
       for (Attribute attr : attrList) {
-        if (ATTRIBUTE_PROPERTY.equals(attr.getShortName())
+        if (SGINetCDFConstants.ATTRIBUTE_PROPERTY.equals(attr.getShortName())
             && attr.isString()
             && attr.getStringValue().length() > 0) {
           return true;

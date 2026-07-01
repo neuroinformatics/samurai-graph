@@ -9,7 +9,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** A class of data column for multidimensional data: HDF5 and MATLAB type. */
-public class SGMDArrayDataColumnInfo extends SGDataColumnInfo implements SGIMDArrayConstants {
+public class SGMDArrayDataColumnInfo extends SGDataColumnInfo {
 
   /** The name of variable. */
   private String mVariableName = null;
@@ -152,7 +152,7 @@ public class SGMDArrayDataColumnInfo extends SGDataColumnInfo implements SGIMDAr
    * @return the generic dimension index
    */
   public Integer getGenericDimensionIndex() {
-    return this.getDimensionIndex(KEY_GENERIC_DIMENSION);
+    return this.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
   }
 
   /**
@@ -161,7 +161,7 @@ public class SGMDArrayDataColumnInfo extends SGDataColumnInfo implements SGIMDAr
    * @return the dimension index of the time
    */
   public Integer getTimeDimensionIndex() {
-    return this.getDimensionIndex(KEY_TIME_DIMENSION);
+    return this.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
   }
 
   /**
@@ -225,7 +225,7 @@ public class SGMDArrayDataColumnInfo extends SGDataColumnInfo implements SGIMDAr
    * @param index the dimension index
    */
   public void setGenericDimensionIndex(final int index) {
-    this.setDimensionIndex(KEY_GENERIC_DIMENSION, index);
+    this.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, index);
   }
 
   /**

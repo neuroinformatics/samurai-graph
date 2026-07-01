@@ -468,9 +468,9 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     for (int ii = 0; ii < array.length; ii++) {
       SGMDArrayVariable var = vars[ii];
       if (var.equals(this.mXVariable)) {
-        array[ii] = X_COORDINATE;
+        array[ii] = SGIDataColumnTypeConstants.X_COORDINATE;
       } else if (var.equals(this.mYVariable)) {
-        array[ii] = Y_COORDINATE;
+        array[ii] = SGIDataColumnTypeConstants.Y_COORDINATE;
       } else if (var.equals(this.mFirstComponentVariable)) {
         array[ii] = com1;
       } else if (var.equals(this.mSecondComponentVariable)) {
@@ -501,23 +501,23 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     SGMDArrayVariable[] vars = this.getVariables();
     for (int ii = 0; ii < columns.length; ii++) {
       SGMDArrayVariable var = vars[ii];
-      if (SGDataUtility.isEqualColumnType(X_COORDINATE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(var.getValueType())) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_COORDINATE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           return false;
         }
         xVar = var;
-      } else if (SGDataUtility.isEqualColumnType(Y_COORDINATE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(var.getValueType())) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_COORDINATE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           return false;
         }
         yVar = var;
       } else if (SGDataUtility.isEqualColumnType(com1, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(var.getValueType())) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           return false;
         }
         fVar = var;
       } else if (SGDataUtility.isEqualColumnType(com2, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(var.getValueType())) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           return false;
         }
         sVar = var;
@@ -684,7 +684,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
         sb.append(':');
         sb.append(yIndex);
       }
-      el.setAttribute(KEY_FIRST_COMPONENT_VARIABLE_NAME, sb.toString());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, sb.toString());
 
       sb.setLength(0);
       sb.append(this.mSecondComponentVariable.getName());
@@ -701,11 +701,11 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
         sb.append(':');
         sb.append(yIndex);
       }
-      el.setAttribute(KEY_SECOND_COMPONENT_VARIABLE_NAME, sb.toString());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, sb.toString());
 
     } else if (SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
-      el.setAttribute(KEY_FIRST_COMPONENT_VARIABLE_NAME, this.mFirstComponentVariable.getName());
-      el.setAttribute(KEY_SECOND_COMPONENT_VARIABLE_NAME, this.mSecondComponentVariable.getName());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, this.mFirstComponentVariable.getName());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, this.mSecondComponentVariable.getName());
     }
 
     return true;
@@ -713,12 +713,12 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
 
   @Override
   protected String getXValueKey() {
-    return KEY_X_COORDINATE_VARIABLE_NAME;
+    return SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME;
   }
 
   @Override
   protected String getYValueKey() {
-    return KEY_Y_COORDINATE_VARIABLE_NAME;
+    return SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME;
   }
 
   /**
@@ -1309,13 +1309,13 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     if (this.mXVariable != null) {
       String strX = this.getOneDimensionalVarCommandString(this.mXVariable);
       varList.add(strX);
-      columnTypeList.add(X_COORDINATE);
+      columnTypeList.add(SGIDataColumnTypeConstants.X_COORDINATE);
     }
 
     if (this.mYVariable != null) {
       String strY = this.getOneDimensionalVarCommandString(this.mYVariable);
       varList.add(strY);
-      columnTypeList.add(Y_COORDINATE);
+      columnTypeList.add(SGIDataColumnTypeConstants.Y_COORDINATE);
     }
 
     final String strF;
@@ -1561,7 +1561,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
       if (this.isIndexAvailable()) {
         ret = this.mIndexStride;
       } else {
-        if (X_COORDINATE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
           ret = this.mXStride;
         } else {
           ret = this.mYStride;
@@ -1572,7 +1572,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
       if (this.isIndexAvailable()) {
         len = this.getFirstComponentVariable().getGenericDimensionLength();
       } else {
-        if (X_COORDINATE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
           len = this.getXDimensionLength();
         } else {
           len = this.getYDimensionLength();
@@ -1808,7 +1808,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
     String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
     return this.setEditedValues(
-        writer, var, array, X_COORDINATE, Y_COORDINATE, new String[] {first, second});
+        writer, var, array, SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, new String[] {first, second});
   }
 
   @Override
@@ -1817,7 +1817,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
     String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
     return this.setEditedValues(
-        var, array, X_COORDINATE, Y_COORDINATE, new String[] {first, second});
+        var, array, SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, new String[] {first, second});
   }
 
   @Override
@@ -1832,9 +1832,9 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
       String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
       if (first.equals(columnType) || second.equals(columnType)) {
         ret = super.getDataViewerCell(cell, columnType, bStride);
-      } else if (X_COORDINATE.equals(columnType)) {
+      } else if (SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME.equals(columnType)) {
         ret = this.getDataViewerCellX(cell, bStride);
-      } else if (Y_COORDINATE.equals(columnType)) {
+      } else if (SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME.equals(columnType)) {
         ret = this.getDataViewerCellY(cell, bStride);
       }
     }

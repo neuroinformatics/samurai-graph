@@ -11,8 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 /** A dialog to set the properties of windows. */
-public class SGWindowDialog extends SGPropertyDialog
-    implements SGIRootObjectConstants, PropertyChangeListener {
+public class SGWindowDialog extends SGPropertyDialog implements PropertyChangeListener {
 
   /** */
   private static final long serialVersionUID = -4062469276075732615L;
@@ -438,25 +437,31 @@ public class SGWindowDialog extends SGPropertyDialog
 
     this.mWidthSpinner.initProperties(
         new SpinnerNumberModel(
-            PAPER_WIDTH_MIN_VALUE, PAPER_WIDTH_MIN_VALUE,
-            PAPER_WIDTH_MAX_VALUE, PAPER_SIZE_STEP_SIZE),
-        PAPER_SIZE_UNIT,
+            SGIRootObjectConstants.PAPER_WIDTH_MIN_VALUE,
+                SGIRootObjectConstants.PAPER_WIDTH_MIN_VALUE,
+            SGIRootObjectConstants.PAPER_WIDTH_MAX_VALUE,
+                SGIRootObjectConstants.PAPER_SIZE_STEP_SIZE),
+        SGIRootObjectConstants.PAPER_SIZE_UNIT,
         digits,
         digits);
 
     this.mHeightSpinner.initProperties(
         new SpinnerNumberModel(
-            PAPER_HEIGHT_MIN_VALUE, PAPER_HEIGHT_MIN_VALUE,
-            PAPER_HEIGHT_MAX_VALUE, PAPER_SIZE_STEP_SIZE),
-        PAPER_SIZE_UNIT,
+            SGIRootObjectConstants.PAPER_HEIGHT_MIN_VALUE,
+                SGIRootObjectConstants.PAPER_HEIGHT_MIN_VALUE,
+            SGIRootObjectConstants.PAPER_HEIGHT_MAX_VALUE,
+                SGIRootObjectConstants.PAPER_SIZE_STEP_SIZE),
+        SGIRootObjectConstants.PAPER_SIZE_UNIT,
         digits,
         digits);
 
     this.mGridLinesIntervalSpinner.initProperties(
         new SpinnerNumberModel(
-            GRID_INTERVAL_MIN_VALUE, GRID_INTERVAL_MIN_VALUE,
-            GRID_INTERVAL_MAX_VALUE, GRID_INTERVAL_STEP_SIZE),
-        GRID_INTERVAL_UNIT,
+            SGIRootObjectConstants.GRID_INTERVAL_MIN_VALUE,
+                SGIRootObjectConstants.GRID_INTERVAL_MIN_VALUE,
+            SGIRootObjectConstants.GRID_INTERVAL_MAX_VALUE,
+                SGIRootObjectConstants.GRID_INTERVAL_STEP_SIZE),
+        SGIRootObjectConstants.GRID_INTERVAL_UNIT,
         digits,
         digits);
 
@@ -468,17 +473,21 @@ public class SGWindowDialog extends SGPropertyDialog
 
     this.mImageXSpinner.initProperties(
         new SpinnerNumberModel(
-            IMAGE_LOCATION_X_MIN_VALUE, IMAGE_LOCATION_X_MIN_VALUE,
-            IMAGE_LOCATION_X_MAX_VALUE, IMAGE_LOCATION_STEP_SIZE),
-        IMAGE_LOCATION_UNIT,
+            SGIRootObjectConstants.IMAGE_LOCATION_X_MIN_VALUE,
+                SGIRootObjectConstants.IMAGE_LOCATION_X_MIN_VALUE,
+            SGIRootObjectConstants.IMAGE_LOCATION_X_MAX_VALUE,
+                SGIRootObjectConstants.IMAGE_LOCATION_STEP_SIZE),
+        SGIRootObjectConstants.IMAGE_LOCATION_UNIT,
         digits,
         digits);
 
     this.mImageYSpinner.initProperties(
         new SpinnerNumberModel(
-            IMAGE_LOCATION_Y_MIN_VALUE, IMAGE_LOCATION_Y_MIN_VALUE,
-            IMAGE_LOCATION_Y_MAX_VALUE, IMAGE_LOCATION_STEP_SIZE),
-        IMAGE_LOCATION_UNIT,
+            SGIRootObjectConstants.IMAGE_LOCATION_Y_MIN_VALUE,
+                SGIRootObjectConstants.IMAGE_LOCATION_Y_MIN_VALUE,
+            SGIRootObjectConstants.IMAGE_LOCATION_Y_MAX_VALUE,
+                SGIRootObjectConstants.IMAGE_LOCATION_STEP_SIZE),
+        SGIRootObjectConstants.IMAGE_LOCATION_UNIT,
         digits,
         digits);
 
@@ -1055,7 +1064,10 @@ public class SGWindowDialog extends SGPropertyDialog
       valid = false;
     }
 
-    if (this.hasValidNumber(this.mImageScaleTextField, IMAGE_SCALE_MIN_VALUE, IMAGE_SCALE_MAX_VALUE)
+    if (this.hasValidNumber(
+            this.mImageScaleTextField,
+            SGIRootObjectConstants.IMAGE_SCALE_MIN_VALUE,
+            SGIRootObjectConstants.IMAGE_SCALE_MAX_VALUE)
         == false) {
       valid = false;
     }

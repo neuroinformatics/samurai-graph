@@ -208,7 +208,7 @@ public class SGDrawingWindow extends JFrame
     return "SGDrawingWindow:" + this.getID();
   }
 
-  private static final String[] IMAGE_FILENAMES_ARRAY = {SAMURAI_IMG_FILENAME};
+  private static final String[] IMAGE_FILENAMES_ARRAY = {SGIRootObjectConstants.SAMURAI_IMG_FILENAME};
 
   /**
    * Load image objects.
@@ -238,7 +238,7 @@ public class SGDrawingWindow extends JFrame
     SwingUtilities.updateComponentTreeUI(this);
 
     // icon image
-    final ImageIcon icon = map.get(SAMURAI_IMG_FILENAME);
+    final ImageIcon icon = map.get(SGIRootObjectConstants.SAMURAI_IMG_FILENAME);
     this.setIconImage(icon.getImage());
 
     // create the menu bar
@@ -280,29 +280,29 @@ public class SGDrawingWindow extends JFrame
 
     // tool bar
     SGToolBar tBar = this.mToolBar;
-    tBar.setButtonEnabled(MENUBARCMD_EXPORT_AS_IMAGE, b);
-    tBar.setButtonEnabled(MENUBARCMD_SAVE_PROPERTY, b);
-    tBar.setButtonEnabled(MENUBARCMD_PRINT, b);
+    tBar.setButtonEnabled(SGIRootObjectConstants.MENUBARCMD_EXPORT_AS_IMAGE, b);
+    tBar.setButtonEnabled(SGIRootObjectConstants.MENUBARCMD_SAVE_PROPERTY, b);
+    tBar.setButtonEnabled(SGIRootObjectConstants.MENUBARCMD_PRINT, b);
     tBar.setButtonEnabled(SGIRootObjectConstants.MENUBARCMD_BOUNDING_BOX, b);
     tBar.setInsertToggleButtonsEnabled(b);
 
     // menu bar
     SGMenuBar mBar = this.mMenuBar;
-    mBar.setMenuItemEnabled(MENUBAR_FILE, MENUBARCMD_EXPORT_AS_IMAGE, b);
-    mBar.setMenuItemEnabled(MENUBAR_FILE, MENUBARCMD_SAVE_PROPERTY, b);
-    mBar.setMenuItemEnabled(MENUBAR_FILE, MENUBARCMD_SAVE_DATASET, b);
-    mBar.setMenuItemEnabled(MENUBAR_FILE, MENUBARCMD_PRINT, b);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_FILE, SGIRootObjectConstants.MENUBARCMD_EXPORT_AS_IMAGE, b);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_FILE, SGIRootObjectConstants.MENUBARCMD_SAVE_PROPERTY, b);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_FILE, SGIRootObjectConstants.MENUBARCMD_SAVE_DATASET, b);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_FILE, SGIRootObjectConstants.MENUBARCMD_PRINT, b);
     mBar.setMenuItemEnabled(
         SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_BOUNDING_BOX, b);
     mBar.setMenuItemEnabled(
         SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_SNAP_TO_GRID, b);
-    mBar.setMenuItemEnabled(MENUBAR_ARRANGE, MENUBARCMD_AUTO_ARRANGEMENT, b);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_ARRANGE, SGIRootObjectConstants.MENUBARCMD_AUTO_ARRANGEMENT, b);
     mBar.setInsertToggleButtonsEnabled(b);
   }
 
   /** */
   private void updateInsertItems() {
-    String[] array = INSERT_MENUBARCMD_ARRAY;
+    String[] array = SGIRootObjectConstants.INSERT_MENUBARCMD_ARRAY;
     for (int ii = 0; ii < array.length; ii++) {
       this.updateInsertItems(array[ii]);
     }
@@ -1363,7 +1363,7 @@ public class SGDrawingWindow extends JFrame
 
     // set to the menu item
     this.mMenuBar.setMenuItemSelected(
-        SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_AUTO_ZOOM, b);
+        SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_AUTO_ZOOM, b);
 
     // do auto zoom
     this.doAutoZoom();
@@ -1418,7 +1418,7 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   private boolean setDefaultZoom() {
-    return this.setZoomValue(Integer.valueOf(DEFAULT_ZOOM));
+    return this.setZoomValue(Integer.valueOf(SGIRootObjectConstants.DEFAULT_ZOOM));
   }
 
   /** */
@@ -1447,13 +1447,13 @@ public class SGDrawingWindow extends JFrame
     // width
     if (mode == 0 || mode == 1) {
       width =
-          BOUNDING_BOX_MARGIN + (float) (-cRect.getX() + bbRect.getX() + bbRect.getWidth()) / mag;
+          SGDrawingWindow.BOUNDING_BOX_MARGIN + (float) (-cRect.getX() + bbRect.getX() + bbRect.getWidth()) / mag;
     }
 
     // height
     if (mode == 0 || mode == 2) {
       height =
-          BOUNDING_BOX_MARGIN + (float) (-cRect.getY() + bbRect.getY() + bbRect.getHeight()) / mag;
+          SGDrawingWindow.BOUNDING_BOX_MARGIN + (float) (-cRect.getY() + bbRect.getY() + bbRect.getHeight()) / mag;
     }
 
     // set to the paper
@@ -1534,169 +1534,169 @@ public class SGDrawingWindow extends JFrame
       String key = itr.next();
       String value = map.getValueString(key);
 
-      if (COM_PAPER_WIDTH.equalsIgnoreCase(key)) {
+      if (SGIRootObjectConstants.COM_PAPER_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_PAPER_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_PAPER_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.mClientPanel.setPaperWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_PAPER_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_PAPER_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_PAPER_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_PAPER_HEIGHT.equalsIgnoreCase(key)) {
+        result.putResult(SGIRootObjectConstants.COM_PAPER_WIDTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIRootObjectConstants.COM_PAPER_HEIGHT.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_PAPER_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_PAPER_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.mClientPanel.setPaperHeight(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_PAPER_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_PAPER_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_PAPER_HEIGHT, SGPropertyResults.SUCCEEDED);
-      } else if (COM_PAPER_SIZE.equalsIgnoreCase(key)) {
+        result.putResult(SGIRootObjectConstants.COM_PAPER_HEIGHT, SGPropertyResults.SUCCEEDED);
+      } else if (SGIRootObjectConstants.COM_PAPER_SIZE.equalsIgnoreCase(key)) {
         String[] strArray = SGUtilityText.getStringsInBracket(value);
         if (strArray == null) {
-          result.putResult(COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (strArray.length != 2) {
-          result.putResult(COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         String str1 = strArray[0];
         String str2 = strArray[1];
         MediaSize size = SGUtilityText.getMediaSize(str1);
         if (size == null) {
-          result.putResult(COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         Boolean portrait = SGUtilityText.isPortrait(str2);
         if (portrait == null) {
-          result.putResult(COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.mClientPanel.setPaperSize(size, portrait) == false) {
-          result.putResult(COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_PAPER_SIZE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_WINDOW_BACKGROUND_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGIRootObjectConstants.COM_PAPER_SIZE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIRootObjectConstants.COM_WINDOW_BACKGROUND_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.mClientPanel.setPaperColor(cl) == false) {
-            result.putResult(COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIRootObjectConstants.COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIRootObjectConstants.COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.mClientPanel.setPaperColor(cl) == false) {
-            result.putResult(COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIRootObjectConstants.COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_WINDOW_GRID_VISIBLE.equalsIgnoreCase(key)) {
+        result.putResult(SGIRootObjectConstants.COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.SUCCEEDED);
+      } else if (SGIRootObjectConstants.COM_WINDOW_GRID_VISIBLE.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_WINDOW_GRID_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.mClientPanel.setGridLineVisible(b.booleanValue()) == false) {
-          result.putResult(COM_WINDOW_GRID_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_WINDOW_GRID_VISIBLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_WINDOW_GRID_INTERVAL.equalsIgnoreCase(key)) {
+        result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_VISIBLE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIRootObjectConstants.COM_WINDOW_GRID_INTERVAL.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_WINDOW_GRID_INTERVAL, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_INTERVAL, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.mClientPanel.setGridLineInterval(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_WINDOW_GRID_INTERVAL, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_INTERVAL, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_WINDOW_GRID_INTERVAL, SGPropertyResults.SUCCEEDED);
-      } else if (COM_WINDOW_GRID_LINE_WIDTH.equalsIgnoreCase(key)) {
+        result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_INTERVAL, SGPropertyResults.SUCCEEDED);
+      } else if (SGIRootObjectConstants.COM_WINDOW_GRID_LINE_WIDTH.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_WINDOW_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.mClientPanel.setGridLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_WINDOW_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_WINDOW_GRID_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_WINDOW_GRID_COLOR.equalsIgnoreCase(key)) {
+        result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
+      } else if (SGIRootObjectConstants.COM_WINDOW_GRID_COLOR.equalsIgnoreCase(key)) {
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (this.mClientPanel.setGridLineColor(cl) == false) {
-            result.putResult(COM_WINDOW_GRID_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else {
           cl = SGUtilityText.parseColor(value);
           if (cl == null) {
-            result.putResult(COM_WINDOW_GRID_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (this.mClientPanel.setGridLineColor(cl) == false) {
-            result.putResult(COM_WINDOW_GRID_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         }
-        result.putResult(COM_WINDOW_GRID_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_IMAGE_LOCATION_X.equalsIgnoreCase(key)) {
+        result.putResult(SGIRootObjectConstants.COM_WINDOW_GRID_COLOR, SGPropertyResults.SUCCEEDED);
+      } else if (SGIRootObjectConstants.COM_IMAGE_LOCATION_X.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_IMAGE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_IMAGE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.mClientPanel.setImageLocationX(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_IMAGE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_IMAGE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_IMAGE_LOCATION_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_IMAGE_LOCATION_Y.equalsIgnoreCase(key)) {
+        result.putResult(SGIRootObjectConstants.COM_IMAGE_LOCATION_X, SGPropertyResults.SUCCEEDED);
+      } else if (SGIRootObjectConstants.COM_IMAGE_LOCATION_Y.equalsIgnoreCase(key)) {
         StringBuffer unit = new StringBuffer();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
-          result.putResult(COM_IMAGE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_IMAGE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.mClientPanel.setImageLocationY(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_IMAGE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_IMAGE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_IMAGE_LOCATION_Y, SGPropertyResults.SUCCEEDED);
-      } else if (COM_IMAGE_SCALING_FACTOR.equalsIgnoreCase(key)) {
+        result.putResult(SGIRootObjectConstants.COM_IMAGE_LOCATION_Y, SGPropertyResults.SUCCEEDED);
+      } else if (SGIRootObjectConstants.COM_IMAGE_SCALING_FACTOR.equalsIgnoreCase(key)) {
         Number num = SGUtilityText.getFloat(value);
         if (num == null) {
-          result.putResult(COM_IMAGE_SCALING_FACTOR, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_IMAGE_SCALING_FACTOR, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (SGUtility.isValidPropertyValue(num.floatValue()) == false) {
-          result.putResult(COM_IMAGE_SCALING_FACTOR, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_IMAGE_SCALING_FACTOR, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.mClientPanel.setImageScalingFactor(num.floatValue()) == false) {
-          result.putResult(COM_IMAGE_SCALING_FACTOR, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIRootObjectConstants.COM_IMAGE_SCALING_FACTOR, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_IMAGE_SCALING_FACTOR, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIRootObjectConstants.COM_IMAGE_SCALING_FACTOR, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -1723,7 +1723,7 @@ public class SGDrawingWindow extends JFrame
     if (source.equals(this.mToolBar)) {
       this.updateToolBarVisibleMenuItems();
 
-      this.firePropertyChange(PROPERTY_NAME_TOOL_BAR, null, null);
+      this.firePropertyChange(SGIRootObjectConstants.PROPERTY_NAME_TOOL_BAR, null, null);
     }
   }
 
@@ -1745,9 +1745,9 @@ public class SGDrawingWindow extends JFrame
     // create menu items for properties
     JMenu menu = (JMenu) source;
     String text = menu.getText();
-    if (MENUBAR_PROPERTIES.equals(text)) {
+    if (SGIRootObjectConstants.MENUBAR_PROPERTIES.equals(text)) {
       this.createPropertyMenuBarItem();
-    } else if (MENUBAR_PLUGIN.equals(text)) {
+    } else if (SGIRootObjectConstants.MENUBAR_PLUGIN.equals(text)) {
       this.updateDataPluginMenuBarItems();
     }
   }
@@ -2031,7 +2031,7 @@ public class SGDrawingWindow extends JFrame
     Map<String, Boolean> map = this.mInsertFlagMap;
     Boolean b = Boolean.FALSE;
 
-    String[] cmdArray = INSERT_MENUBARCMD_ARRAY;
+    String[] cmdArray = SGIRootObjectConstants.INSERT_MENUBARCMD_ARRAY;
     for (int ii = 0; ii < cmdArray.length; ii++) {
       map.put(cmdArray[ii], b);
     }
@@ -2043,7 +2043,7 @@ public class SGDrawingWindow extends JFrame
     Map<String, Boolean> map = new HashMap<String, Boolean>();
     Boolean b = Boolean.FALSE;
 
-    String[] cmdArray = INSERT_MENUBARCMD_ARRAY;
+    String[] cmdArray = SGIRootObjectConstants.INSERT_MENUBARCMD_ARRAY;
     for (int ii = 0; ii < cmdArray.length; ii++) {
       map.put(cmdArray[ii], b);
     }
@@ -2093,56 +2093,56 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   public boolean getLabelInsertionFlag() {
-    return this.getInsertFlag(MENUBARCMD_INSERT_LABEL);
+    return this.getInsertFlag(SGIRootObjectConstants.MENUBARCMD_INSERT_LABEL);
   }
 
   /**
    * @return
    */
   public boolean getTimingLineInsertionFlag() {
-    return this.getInsertFlag(MENUBARCMD_INSERT_TIMING_LINE);
+    return this.getInsertFlag(SGIRootObjectConstants.MENUBARCMD_INSERT_TIMING_LINE);
   }
 
   /**
    * @return
    */
   public boolean getAxisBreakSymbolInsertionFlag() {
-    return this.getInsertFlag(MENUBARCMD_INSERT_AXIS_BREAK_SYMBOL);
+    return this.getInsertFlag(SGIRootObjectConstants.MENUBARCMD_INSERT_AXIS_BREAK_SYMBOL);
   }
 
   /**
    * @return
    */
   public boolean getSignificantDifferenceSymbolInsertionFlag() {
-    return this.getInsertFlag(MENUBARCMD_INSERT_SIG_DIFF_SYMBOL);
+    return this.getInsertFlag(SGIRootObjectConstants.MENUBARCMD_INSERT_SIG_DIFF_SYMBOL);
   }
 
   /**
    * @return
    */
   public boolean getRectangleInsertionFlag() {
-    return this.getInsertFlag(MENUBARCMD_INSERT_RECTANGLE);
+    return this.getInsertFlag(SGIRootObjectConstants.MENUBARCMD_INSERT_RECTANGLE);
   }
 
   /**
    * @return
    */
   public boolean getEllipseInsertionFlag() {
-    return this.getInsertFlag(MENUBARCMD_INSERT_ELLIPSE);
+    return this.getInsertFlag(SGIRootObjectConstants.MENUBARCMD_INSERT_ELLIPSE);
   }
 
   /**
    * @return
    */
   public boolean getArrowInsertionFlag() {
-    return this.getInsertFlag(MENUBARCMD_INSERT_ARROW);
+    return this.getInsertFlag(SGIRootObjectConstants.MENUBARCMD_INSERT_ARROW);
   }
 
   /**
    * @return
    */
   public boolean getLineInsertionFlag() {
-    return this.getInsertFlag(MENUBARCMD_INSERT_LINE);
+    return this.getInsertFlag(SGIRootObjectConstants.MENUBARCMD_INSERT_LINE);
   }
 
   /**
@@ -2219,30 +2219,30 @@ public class SGDrawingWindow extends JFrame
 
     // set to the menu bar
     SGMenuBar mBar = this.mMenuBar;
-    mBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_CUT, eff);
-    mBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_COPY, eff);
-    mBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_DELETE, eff);
-    mBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_DUPLICATE, eff);
-    mBar.setMenuItemEnabled(MENUBAR_ARRANGE, MENUBARCMD_BRING_TO_FRONT, eff);
-    mBar.setMenuItemEnabled(MENUBAR_ARRANGE, MENUBARCMD_BRING_FORWARD, eff);
-    mBar.setMenuItemEnabled(MENUBAR_ARRANGE, MENUBARCMD_SEND_BACKWARD, eff);
-    mBar.setMenuItemEnabled(MENUBAR_ARRANGE, MENUBARCMD_SEND_TO_BACK, eff);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_EDIT, SGIRootObjectConstants.MENUBARCMD_CUT, eff);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_EDIT, SGIRootObjectConstants.MENUBARCMD_COPY, eff);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_EDIT, SGIRootObjectConstants.MENUBARCMD_DELETE, eff);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_EDIT, SGIRootObjectConstants.MENUBARCMD_DUPLICATE, eff);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_ARRANGE, SGIRootObjectConstants.MENUBARCMD_BRING_TO_FRONT, eff);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_ARRANGE, SGIRootObjectConstants.MENUBARCMD_BRING_FORWARD, eff);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_ARRANGE, SGIRootObjectConstants.MENUBARCMD_SEND_BACKWARD, eff);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_ARRANGE, SGIRootObjectConstants.MENUBARCMD_SEND_TO_BACK, eff);
 
     // set to the tool bar
     SGToolBar tBar = this.mToolBar;
-    tBar.setButtonEnabled(MENUBARCMD_CUT, eff);
-    tBar.setButtonEnabled(MENUBARCMD_COPY, eff);
+    tBar.setButtonEnabled(SGIRootObjectConstants.MENUBARCMD_CUT, eff);
+    tBar.setButtonEnabled(SGIRootObjectConstants.MENUBARCMD_COPY, eff);
   }
 
   /**
    * @param b
    */
   public void setPasteMenuEnabled(final boolean b) {
-    this.mMenuBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_PASTE, b);
+    this.mMenuBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_EDIT, SGIRootObjectConstants.MENUBARCMD_PASTE, b);
 
-    this.mToolBar.setButtonEnabled(MENUBARCMD_PASTE, b);
+    this.mToolBar.setButtonEnabled(SGIRootObjectConstants.MENUBARCMD_PASTE, b);
 
-    this.mClientPanel.setPopupMenuEnabled(MENUBARCMD_PASTE, b);
+    this.mClientPanel.setPopupMenuEnabled(SGIRootObjectConstants.MENUBARCMD_PASTE, b);
   }
 
   // update the menu items for grid lines on the window
@@ -2270,15 +2270,15 @@ public class SGDrawingWindow extends JFrame
     // set to the menu bar
     SGMenuBar bar = this.mMenuBar;
     bar.setMenuItemSelected(
-        SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_GRID_VISIBLE, gridVisible);
-    bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_PLUS_GRID, plusFlag);
-    bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_MINUS_GRID, minusFlag);
+        SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_GRID_VISIBLE, gridVisible);
+    bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_PLUS_GRID, plusFlag);
+    bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_MINUS_GRID, minusFlag);
   }
 
   private void updateModeMenuItems() {
     // final boolean b = ( this.getMode() == MODE_NORMAL );
     // this.mMenuBar.setMenuItemSelected(
-    // MENUBAR_ARRANGE, MENUBARCMD_MODE, b );
+    // SGIRootObjectConstants.MENUBAR_ARRANGE, SGIRootObjectConstants.MENUBARCMD_MODE, b );
   }
 
   // update the menu item "Snap to Grid"
@@ -2310,21 +2310,21 @@ public class SGDrawingWindow extends JFrame
     } else {
       zoomIn = (mag != max);
       zoomOut = (mag != min);
-      def = (mag != DEFAULT_ZOOM);
+      def = (mag != SGIRootObjectConstants.DEFAULT_ZOOM);
       zoomWayOut = true;
     }
 
     SGMenuBar bar = this.mMenuBar;
-    bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_ZOOM_IN, zoomIn);
-    bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_ZOOM_OUT, zoomOut);
-    bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_DEFAULT_ZOOM, def);
+    bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_ZOOM_IN, zoomIn);
+    bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_ZOOM_OUT, zoomOut);
+    bar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_DEFAULT_ZOOM, def);
     bar.setMenuItemEnabled(
-        SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_ZOOM_WAY_OUT, zoomWayOut);
+        SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_ZOOM_WAY_OUT, zoomWayOut);
   }
 
   //
   private void updateToolBarVisibleItems() {
-    String[] keys = TOOLBAR_MENUCMD_ARRAY;
+    String[] keys = SGIRootObjectConstants.TOOLBAR_MENUCMD_ARRAY;
     SGToolBar tBar = this.mToolBar;
     SGMenuBar mBar = this.mMenuBar;
     for (int ii = 0; ii < keys.length; ii++) {
@@ -2334,7 +2334,7 @@ public class SGDrawingWindow extends JFrame
 
   //
   private void updateToolBarVisibleMenuItems() {
-    String[] keys = TOOLBAR_MENUCMD_ARRAY;
+    String[] keys = SGIRootObjectConstants.TOOLBAR_MENUCMD_ARRAY;
     SGToolBar tBar = this.mToolBar;
     SGMenuBar mBar = this.mMenuBar;
     for (int ii = 0; ii < keys.length; ii++) {
@@ -2345,7 +2345,7 @@ public class SGDrawingWindow extends JFrame
   // update menu items for background image
   private void updateBackgroundImageItems() {
     boolean b = (this.getImage() != null);
-    this.mMenuBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_DELETE_BACKGROUND_IMAGE, b);
+    this.mMenuBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_EDIT, SGIRootObjectConstants.MENUBARCMD_DELETE_BACKGROUND_IMAGE, b);
   }
 
   /** Called when an action is performed. */
@@ -2353,67 +2353,67 @@ public class SGDrawingWindow extends JFrame
     final String command = e.getActionCommand();
     final Object source = e.getSource();
 
-    if (command.equals(MENUBARCMD_SAVE_PROPERTY)) {
-      this.mPropertyFileCreationModeOfFigures = ALL_FIGURES;
-      this.notifyToListener(MENUBARCMD_SAVE_PROPERTY);
-    } else if (command.equals(MENUBARCMD_SAVE_DATASET)) {
-      this.mPropertyFileCreationModeOfFigures = ALL_FIGURES;
-      this.notifyToListener(MENUBARCMD_SAVE_DATASET);
-    } else if (command.equals(MENUBARCMD_DELETE)) {
+    if (command.equals(SGIRootObjectConstants.MENUBARCMD_SAVE_PROPERTY)) {
+      this.mPropertyFileCreationModeOfFigures = SGIRootObjectConstants.ALL_FIGURES;
+      this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_SAVE_PROPERTY);
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_SAVE_DATASET)) {
+      this.mPropertyFileCreationModeOfFigures = SGIRootObjectConstants.ALL_FIGURES;
+      this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_SAVE_DATASET);
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_DELETE)) {
       this.deleteFocusedObjects();
-    } else if (command.equals(MENUBARCMD_CUT)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_CUT)) {
       this.cutFocusedObjects();
-    } else if (command.equals(MENUBARCMD_COPY)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_COPY)) {
       this.copyFocusedObjects();
-    } else if (command.equals(MENUBARCMD_PASTE)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_PASTE)) {
       this.pasteCopiedObjects();
-    } else if (command.equals(MENUBARCMD_DUPLICATE)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_DUPLICATE)) {
       this.duplicateFocusedObjects();
-    } else if (command.equals(MENUBARCMD_DELETE_BACKGROUND_IMAGE)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_DELETE_BACKGROUND_IMAGE)) {
       this.deleteImage();
-    } else if (command.equals(MENUBARCMD_BRING_TO_FRONT)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_BRING_TO_FRONT)) {
       this.bringFocusedObjectsToFront();
-    } else if (command.equals(MENUBARCMD_BRING_FORWARD)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_BRING_FORWARD)) {
       this.bringFocusedObjectsForward();
-    } else if (command.equals(MENUBARCMD_SEND_BACKWARD)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_SEND_BACKWARD)) {
       this.sendFocusedObjectsBackward();
-    } else if (command.equals(MENUBARCMD_SEND_TO_BACK)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_SEND_TO_BACK)) {
       this.sendFocusedObjectsToBack();
-    } else if (command.equals(MENUBARCMD_CLEAR_UNDO_BUFFER)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_CLEAR_UNDO_BUFFER)) {
       this.clearUndoBuffer();
-    } else if (command.equals(MENUBARCMD_PAPER_A4_PORTRAIT)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_PAPER_A4_PORTRAIT)) {
       this.setPaperSizeDirectly(MediaSize.ISO.A4, true);
-    } else if (command.equals(MENUBARCMD_PAPER_B5_PORTRAIT)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_PAPER_B5_PORTRAIT)) {
       this.setPaperSizeDirectly(MediaSize.ISO.B5, true);
-    } else if (command.equals(MENUBARCMD_PAPER_USLETTER_PORTRAIT)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_PAPER_USLETTER_PORTRAIT)) {
       this.setPaperSizeDirectly(MediaSize.NA.LETTER, true);
-    } else if (command.equals(MENUBARCMD_PAPER_A4_LANDSCAPE)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_PAPER_A4_LANDSCAPE)) {
       this.setPaperSizeDirectly(MediaSize.ISO.A4, false);
-    } else if (command.equals(MENUBARCMD_PAPER_B5_LANDSCAPE)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_PAPER_B5_LANDSCAPE)) {
       this.setPaperSizeDirectly(MediaSize.ISO.B5, false);
-    } else if (command.equals(MENUBARCMD_PAPER_USLETTER_LANDSCAPE)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_PAPER_USLETTER_LANDSCAPE)) {
       this.setPaperSizeDirectly(MediaSize.NA.LETTER, false);
     } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_BOUNDING_BOX)) {
       this.setBoundingBox();
-    } else if (command.equals(MENUBARCMD_PAPER_USER_CUSTOMIZE)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_PAPER_USER_CUSTOMIZE)) {
       this.showPropertyDialog();
-    } else if (command.equals(MENUBARCMD_MODE)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_MODE)) {
       final int mode =
           (this.getMode() == SGIConstants.MODE_EXPORT_AS_IMAGE)
               ? SGIConstants.MODE_DISPLAY
               : SGIConstants.MODE_EXPORT_AS_IMAGE;
       this.setMode(mode);
       this.updateModeMenuItems();
-    } else if (command.equals(MENUBARCMD_AUTO_ARRANGEMENT)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_AUTO_ARRANGEMENT)) {
       this.alignFigures();
-    } else if (command.equals(MENUBARCMD_GRID_VISIBLE)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_GRID_VISIBLE)) {
       this.mClientPanel.setGridLineVisible(!this.mClientPanel.isGridLineVisible());
       this.updateGridItems();
 
       this.setChanged(true);
       this.notifyToRoot();
       this.repaintContentPane();
-    } else if (command.equals(MENUBARCMD_PLUS_GRID)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_PLUS_GRID)) {
       final double value = this.mClientPanel.getGridLineInterval() * SGIConstants.CM_POINT_RATIO;
       final double min = SGIRootObjectConstants.GRID_INTERVAL_MIN_VALUE;
       final double max = SGIRootObjectConstants.GRID_INTERVAL_MAX_VALUE;
@@ -2432,7 +2432,7 @@ public class SGDrawingWindow extends JFrame
         this.setChanged(true);
         this.notifyToRoot();
       }
-    } else if (command.equals(MENUBARCMD_MINUS_GRID)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_MINUS_GRID)) {
       final double value = this.mClientPanel.getGridLineInterval() * SGIConstants.CM_POINT_RATIO;
       final double min = SGIRootObjectConstants.GRID_INTERVAL_MIN_VALUE;
       final double max = SGIRootObjectConstants.GRID_INTERVAL_MAX_VALUE;
@@ -2454,7 +2454,7 @@ public class SGDrawingWindow extends JFrame
     } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_SNAP_TO_GRID)) {
       SGFigure.setSnappingToGrid(!SGFigure.isSnappingToGrid());
       this.updateSnapToGridItems();
-    } else if (command.equals(MENUBARCMD_ZOOM_IN)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_ZOOM_IN)) {
       final int mag = (int) (this.getMagnificationPercent());
       final int[] array = SGIRootObjectConstants.MAGNIFICATION_ARRAY;
       for (int ii = array.length - 1; ii >= 0; ii--) {
@@ -2463,7 +2463,7 @@ public class SGDrawingWindow extends JFrame
           break;
         }
       }
-    } else if (command.equals(MENUBARCMD_ZOOM_OUT)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_ZOOM_OUT)) {
       final int mag = (int) (this.getMagnificationPercent());
       final int[] array = SGIRootObjectConstants.MAGNIFICATION_ARRAY;
       for (int ii = 0; ii < array.length; ii++) {
@@ -2472,15 +2472,15 @@ public class SGDrawingWindow extends JFrame
           break;
         }
       }
-    } else if (command.equals(MENUBARCMD_DEFAULT_ZOOM)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_DEFAULT_ZOOM)) {
       this.setDefaultZoom();
-    } else if (command.equals(MENUBARCMD_ZOOM_WAY_OUT)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_ZOOM_WAY_OUT)) {
       this.zoomWayOut();
-    } else if (command.equals(MENUBARCMD_AUTO_ZOOM)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_AUTO_ZOOM)) {
       this.setAutoZoom(!this.isAutoZoom());
-    } else if (command.equals(MENUBARCMD_LOCK)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_LOCK)) {
       this.setLocked(!this.isLocked());
-    } else if (Arrays.asList(INSERT_MENUBARCMD_ARRAY).contains(command)) {
+    } else if (Arrays.asList(SGIRootObjectConstants.INSERT_MENUBARCMD_ARRAY).contains(command)) {
       // menu to insert a symbol
 
       boolean selected;
@@ -2505,14 +2505,14 @@ public class SGDrawingWindow extends JFrame
       } else {
         this.setCursor(null);
       }
-    } else if (Arrays.asList(TOOLBAR_MENUCMD_ARRAY).contains(command)) {
+    } else if (Arrays.asList(SGIRootObjectConstants.TOOLBAR_MENUCMD_ARRAY).contains(command)) {
       // menu for the tool bar
       if (source.equals(this.mMenuBar)) {
         this.updateToolBarVisibleItems();
       } else if (source.equals(this.mToolBar)) {
         this.updateToolBarVisibleMenuItems();
       }
-      this.firePropertyChange(PROPERTY_NAME_TOOL_BAR, null, null);
+      this.firePropertyChange(SGIRootObjectConstants.PROPERTY_NAME_TOOL_BAR, null, null);
     } else {
       this.notifyToListener(command);
     }
@@ -2801,7 +2801,7 @@ public class SGDrawingWindow extends JFrame
     this.copyAllObjectsInVisibleFigures();
 
     // notify the copy command
-    this.notifyToListener(MENUBARCMD_COPY);
+    this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_COPY);
 
     // update the menu items
     this.updateFocusedObjectItem();
@@ -2818,7 +2818,7 @@ public class SGDrawingWindow extends JFrame
     this.cutAllObjectsInVisibleFigures();
 
     // notify the cut command
-    this.notifyToListener(MENUBARCMD_CUT);
+    this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_CUT);
 
     // notify the change to the root
     this.notifyToRoot();
@@ -2855,9 +2855,9 @@ public class SGDrawingWindow extends JFrame
 
     // notify the command
     if (isCopy) {
-      this.notifyToListener(MENUBARCMD_COPY);
+      this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_COPY);
     } else {
-      this.notifyToListener(MENUBARCMD_CUT);
+      this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_CUT);
     }
 
     // notify the change to the root
@@ -2879,7 +2879,7 @@ public class SGDrawingWindow extends JFrame
 
   // Paste the copied objects.
   private void pasteCopiedObjects() {
-    this.notifyToListener(MENUBARCMD_PASTE);
+    this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_PASTE);
 
     // notify the change to the root
     this.notifyToRoot();
@@ -2906,7 +2906,7 @@ public class SGDrawingWindow extends JFrame
     this.repaintContentPane();
 
     // notify the duplication command
-    this.notifyToListener(MENUBARCMD_DUPLICATE);
+    this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_DUPLICATE);
 
     // set unfocused the focused figures
     List<SGFigure> fList = this.getFocusedFigureList();
@@ -3123,7 +3123,7 @@ public class SGDrawingWindow extends JFrame
   void notifyPasteToFocusedFigures() {
     this.mPasteTargetList.clear();
     this.mPasteTargetList.addAll(this.getFocusedObjectsList());
-    this.notifyToListener(MENUBARCMD_PASTE);
+    this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_PASTE);
   }
 
   /** The target object to paste the copied objects. */
@@ -3216,9 +3216,9 @@ public class SGDrawingWindow extends JFrame
     final boolean flag = this.isLocked();
 
     // set the toggle button
-    this.mToolBar.setButtonSelected(MENUBARCMD_LOCK, flag);
+    this.mToolBar.setButtonSelected(SGIRootObjectConstants.MENUBARCMD_LOCK, flag);
 
-    this.mMenuBar.setMenuItemSelected(SGIRootObjectConstants.MENUBAR_LAYOUT, MENUBARCMD_LOCK, flag);
+    this.mMenuBar.setMenuItemSelected(SGIRootObjectConstants.MENUBAR_LAYOUT, SGIRootObjectConstants.MENUBARCMD_LOCK, flag);
   }
 
   /** Discard all objects in the undo buffer. */
@@ -3342,7 +3342,7 @@ public class SGDrawingWindow extends JFrame
      * }
      * }
      * List<JMenuItem> itemList = SGMenuBar.getAllMenuItems(this.mMenuBar,
-     * MENUBAR_PLUGIN);
+     * SGIRootObjectConstants.MENUBAR_PLUGIN);
      * for (JMenuItem item : itemList) {
      * item.setEnabled(eff);
      * }
@@ -3544,7 +3544,7 @@ public class SGDrawingWindow extends JFrame
 
   static {
     final float ratio = SGIConstants.CM_POINT_RATIO;
-    final float ten = (float) SGUtilityNumber.getPowersOfTen(LENGTH_MINIMAL_ORDER);
+    final float ten = (float) SGUtilityNumber.getPowersOfTen(SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
     BOUNDING_BOX_MARGIN = ten / ratio;
   }
 
@@ -3569,9 +3569,9 @@ public class SGDrawingWindow extends JFrame
       for (int ii = 0; ii < list.size(); ii++) {
         SGFigure figure = list.get(ii);
         float x =
-            BOUNDING_BOX_MARGIN + (float) (cRect.getX() + figure.getGraphRectX() - bbRect.getX());
+            SGDrawingWindow.BOUNDING_BOX_MARGIN + (float) (cRect.getX() + figure.getGraphRectX() - bbRect.getX());
         float y =
-            BOUNDING_BOX_MARGIN + (float) (cRect.getY() + figure.getGraphRectY() - bbRect.getY());
+            SGDrawingWindow.BOUNDING_BOX_MARGIN + (float) (cRect.getY() + figure.getGraphRectY() - bbRect.getY());
         figure.setGraphRectLocationRoundingOut(x, y);
         if (figure.isFigureMoved()) {
           figure.setChanged(true);
@@ -5194,14 +5194,14 @@ public class SGDrawingWindow extends JFrame
 
     // menu bar
     SGMenuBar mBar = this.mMenuBar;
-    mBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_UNDO, undoEnable);
-    mBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_REDO, redoEnable);
-    mBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_CLEAR_UNDO_BUFFER, (undoEnable || redoEnable));
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_EDIT, SGIRootObjectConstants.MENUBARCMD_UNDO, undoEnable);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_EDIT, SGIRootObjectConstants.MENUBARCMD_REDO, redoEnable);
+    mBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_EDIT, SGIRootObjectConstants.MENUBARCMD_CLEAR_UNDO_BUFFER, (undoEnable || redoEnable));
 
     // tool bar
     SGToolBar tBar = this.mToolBar;
-    tBar.setButtonEnabled(MENUBARCMD_UNDO, undoEnable);
-    tBar.setButtonEnabled(MENUBARCMD_REDO, redoEnable);
+    tBar.setButtonEnabled(SGIRootObjectConstants.MENUBARCMD_UNDO, undoEnable);
+    tBar.setButtonEnabled(SGIRootObjectConstants.MENUBARCMD_REDO, redoEnable);
   }
 
   /** */
@@ -5332,7 +5332,7 @@ public class SGDrawingWindow extends JFrame
    * @return true if succeeded
    */
   public boolean exportAsImage(final boolean silent) {
-    return this.toImage(EXPORT, silent);
+    return this.toImage(SGIRootObjectConstants.EXPORT, silent);
   }
 
   /** Information for exporting an image. */
@@ -5394,7 +5394,7 @@ public class SGDrawingWindow extends JFrame
    * @return true if succeeded
    */
   public boolean printImage(final boolean silent) {
-    return this.toImage(PRINT, silent);
+    return this.toImage(SGIRootObjectConstants.PRINT, silent);
   }
 
   private boolean toImage(final int mode, final boolean silent) {
@@ -5414,14 +5414,14 @@ public class SGDrawingWindow extends JFrame
 
     boolean ret;
     switch (mode) {
-      case EXPORT:
+      case SGIRootObjectConstants.EXPORT:
         {
           // export as image
           ret = man.export(target, this, width, height, silent);
           break;
         }
 
-      case PRINT:
+      case SGIRootObjectConstants.PRINT:
         {
           // print as image
           ret = man.print(target, this, width, height, silent);
@@ -5713,25 +5713,25 @@ public class SGDrawingWindow extends JFrame
   public boolean createDOMTree(Document document, final SGExportParameter params) {
     boolean flag;
     switch (this.mPropertyFileCreationModeOfFigures) {
-      case ALL_FIGURES:
+      case SGIRootObjectConstants.ALL_FIGURES:
         {
           flag = this.createDOMTreeForAllFigures(document, params);
           break;
         }
 
-      case FOCUSED_FIGURES_FOR_COPY:
+      case SGIRootObjectConstants.FOCUSED_FIGURES_FOR_COPY:
         {
           flag = this.createDOMTreeForFocusedFiguresForDuplication(document, params);
           break;
         }
 
-      case FOCUSED_FIGURES_IN_BOUNDING_BOX:
+      case SGIRootObjectConstants.FOCUSED_FIGURES_IN_BOUNDING_BOX:
         {
           flag = this.createDOMTreeForFocusedFiguresInBoundingBox(document, params);
           break;
         }
 
-      case FOCUSED_FIGURES_FOR_DUPLICATION:
+      case SGIRootObjectConstants.FOCUSED_FIGURES_FOR_DUPLICATION:
         {
           flag = this.createDOMTreeForFocusedFiguresForDuplication(document, params);
           break;
@@ -5792,8 +5792,8 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   boolean createPropertyFileFromFocusedFigures() {
-    this.mPropertyFileCreationModeOfFigures = FOCUSED_FIGURES_IN_BOUNDING_BOX;
-    this.notifyToListener(MENUBARCMD_SAVE_PROPERTY);
+    this.mPropertyFileCreationModeOfFigures = SGIRootObjectConstants.FOCUSED_FIGURES_IN_BOUNDING_BOX;
+    this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_SAVE_PROPERTY);
     return true;
   }
 
@@ -5867,8 +5867,8 @@ public class SGDrawingWindow extends JFrame
     final float width = (float) rect.getWidth() * SGIConstants.CM_POINT_RATIO / this.mMagnification;
     final float height =
         (float) rect.getHeight() * SGIConstants.CM_POINT_RATIO / this.mMagnification;
-    SGPropertyUtility.addProperty(map, KEY_PAPER_WIDTH, width, PAPER_SIZE_UNIT);
-    SGPropertyUtility.addProperty(map, KEY_PAPER_HEIGHT, height, PAPER_SIZE_UNIT);
+    SGPropertyUtility.addProperty(map, SGIRootObjectConstants.KEY_PAPER_WIDTH, width, SGIRootObjectConstants.PAPER_SIZE_UNIT);
+    SGPropertyUtility.addProperty(map, SGIRootObjectConstants.KEY_PAPER_HEIGHT, height, SGIRootObjectConstants.PAPER_SIZE_UNIT);
 
     map.setToElement(element);
 
@@ -6852,7 +6852,7 @@ public class SGDrawingWindow extends JFrame
   public void doSplitMultipleData() {
 
     // notify the command
-    this.notifyToListener(MENUBARCMD_SPLIT);
+    this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_SPLIT);
 
     // notify the change to the root
     this.notifyToRoot();
@@ -6884,7 +6884,7 @@ public class SGDrawingWindow extends JFrame
   public void doMergeMultipleData() {
 
     // notify the command
-    this.notifyToListener(MENUBARCMD_MERGE);
+    this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_MERGE);
 
     // notify the change to the root
     this.notifyToRoot();
@@ -6899,7 +6899,7 @@ public class SGDrawingWindow extends JFrame
   /** Assigns line colors. */
   public void doAssignLineColors() {
     // notify the command
-    this.notifyToListener(MENUBARCMD_ASSIGN_LINE_COLORS);
+    this.notifyToListener(SGIRootObjectConstants.MENUBARCMD_ASSIGN_LINE_COLORS);
 
     // notify the change to the root
     this.notifyToRoot();
@@ -7010,16 +7010,16 @@ public class SGDrawingWindow extends JFrame
     SGPropertyMap map = new SGPropertyMap();
     this.addProperties(
         map,
-        KEY_PAPER_WIDTH,
-        KEY_PAPER_HEIGHT,
-        KEY_BACKGROUND_COLOR,
-        KEY_GRID_VISIBLE,
-        KEY_GRID_INTERVAL,
-        KEY_GRID_LINE_WIDTH,
-        KEY_GRID_COLOR,
-        KEY_IMAGE_LOCATION_X,
-        KEY_IMAGE_LOCATION_Y,
-        KEY_IMAGE_SCALE);
+        SGIRootObjectConstants.KEY_PAPER_WIDTH,
+        SGIRootObjectConstants.KEY_PAPER_HEIGHT,
+        SGIRootObjectConstants.KEY_BACKGROUND_COLOR,
+        SGIRootObjectConstants.KEY_GRID_VISIBLE,
+        SGIRootObjectConstants.KEY_GRID_INTERVAL,
+        SGIRootObjectConstants.KEY_GRID_LINE_WIDTH,
+        SGIRootObjectConstants.KEY_GRID_COLOR,
+        SGIRootObjectConstants.KEY_IMAGE_LOCATION_X,
+        SGIRootObjectConstants.KEY_IMAGE_LOCATION_Y,
+        SGIRootObjectConstants.KEY_IMAGE_SCALE);
     return map;
   }
 
@@ -7032,19 +7032,19 @@ public class SGDrawingWindow extends JFrame
     SGPropertyMap map = new SGPropertyMap();
     this.addProperties(
         map,
-        COM_PAPER_WIDTH,
-        COM_PAPER_HEIGHT,
-        COM_WINDOW_BACKGROUND_COLOR,
-        COM_WINDOW_GRID_VISIBLE,
-        COM_WINDOW_GRID_INTERVAL,
-        COM_WINDOW_GRID_LINE_WIDTH,
-        COM_WINDOW_GRID_COLOR,
-        COM_IMAGE_LOCATION_X,
-        COM_IMAGE_LOCATION_Y,
-        COM_IMAGE_SCALING_FACTOR);
+        SGIRootObjectConstants.COM_PAPER_WIDTH,
+        SGIRootObjectConstants.COM_PAPER_HEIGHT,
+        SGIRootObjectConstants.COM_WINDOW_BACKGROUND_COLOR,
+        SGIRootObjectConstants.COM_WINDOW_GRID_VISIBLE,
+        SGIRootObjectConstants.COM_WINDOW_GRID_INTERVAL,
+        SGIRootObjectConstants.COM_WINDOW_GRID_LINE_WIDTH,
+        SGIRootObjectConstants.COM_WINDOW_GRID_COLOR,
+        SGIRootObjectConstants.COM_IMAGE_LOCATION_X,
+        SGIRootObjectConstants.COM_IMAGE_LOCATION_Y,
+        SGIRootObjectConstants.COM_IMAGE_SCALING_FACTOR);
     String path = this.getImageFilePath();
     if (path != null) {
-      SGPropertyUtility.addQuotedStringProperty(map, COM_IMAGE_FILE_PATH, path);
+      SGPropertyUtility.addQuotedStringProperty(map, SGIRootObjectConstants.COM_IMAGE_FILE_PATH, path);
     }
     return map;
   }
@@ -7066,13 +7066,13 @@ public class SGDrawingWindow extends JFrame
     SGPropertyUtility.addProperty(
         map,
         widthKey,
-        this.getExportLengthValue(this.getPaperWidth(PAPER_SIZE_UNIT)),
-        PAPER_SIZE_UNIT);
+        this.getExportLengthValue(this.getPaperWidth(SGIRootObjectConstants.PAPER_SIZE_UNIT)),
+        SGIRootObjectConstants.PAPER_SIZE_UNIT);
     SGPropertyUtility.addProperty(
         map,
         heightKey,
-        this.getExportLengthValue(this.getPaperHeight(PAPER_SIZE_UNIT)),
-        PAPER_SIZE_UNIT);
+        this.getExportLengthValue(this.getPaperHeight(SGIRootObjectConstants.PAPER_SIZE_UNIT)),
+        SGIRootObjectConstants.PAPER_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, bgColorKey, this.getPaperColor());
 
     // grid
@@ -7080,8 +7080,8 @@ public class SGDrawingWindow extends JFrame
     SGPropertyUtility.addProperty(
         map,
         gridIntervalKey,
-        this.getExportLengthValue(this.getGridLineInterval(GRID_INTERVAL_UNIT)),
-        GRID_INTERVAL_UNIT);
+        this.getExportLengthValue(this.getGridLineInterval(SGIRootObjectConstants.GRID_INTERVAL_UNIT)),
+        SGIRootObjectConstants.GRID_INTERVAL_UNIT);
     SGPropertyUtility.addProperty(
         map,
         gridLineWidthKey,
@@ -7093,13 +7093,13 @@ public class SGDrawingWindow extends JFrame
     SGPropertyUtility.addProperty(
         map,
         imageXKey,
-        this.getExportLengthValue(this.getImageLocationX(IMAGE_LOCATION_UNIT)),
-        IMAGE_LOCATION_UNIT);
+        this.getExportLengthValue(this.getImageLocationX(SGIRootObjectConstants.IMAGE_LOCATION_UNIT)),
+        SGIRootObjectConstants.IMAGE_LOCATION_UNIT);
     SGPropertyUtility.addProperty(
         map,
         imageYKey,
-        this.getExportLengthValue(this.getImageLocationY(IMAGE_LOCATION_UNIT)),
-        IMAGE_LOCATION_UNIT);
+        this.getExportLengthValue(this.getImageLocationY(SGIRootObjectConstants.IMAGE_LOCATION_UNIT)),
+        SGIRootObjectConstants.IMAGE_LOCATION_UNIT);
     SGPropertyUtility.addProperty(
         map,
         imageScaleKey,
@@ -7119,7 +7119,7 @@ public class SGDrawingWindow extends JFrame
 
     // creates the command for this window
     String wndCommands =
-        SGCommandUtility.createCommandString(COM_WINDOW, null, this.getCommandPropertyMap(params));
+        SGCommandUtility.createCommandString(SGIRootObjectConstants.COM_WINDOW, null, this.getCommandPropertyMap(params));
     sb.append(wndCommands);
 
     // creates the command of figures
@@ -7151,7 +7151,7 @@ public class SGDrawingWindow extends JFrame
    * @param commandEnabled true to set enabled
    */
   public void setCommandMenuEnabled(final boolean commandEnabled) {
-    this.mMenuBar.setMenuItemEnabled(MENUBAR_FILE, MENUBARCMD_LOAD_SCRIPT, commandEnabled);
+    this.mMenuBar.setMenuItemEnabled(SGIRootObjectConstants.MENUBAR_FILE, SGIRootObjectConstants.MENUBARCMD_LOAD_SCRIPT, commandEnabled);
   }
 
   private float getExportLengthValue(final float len) {

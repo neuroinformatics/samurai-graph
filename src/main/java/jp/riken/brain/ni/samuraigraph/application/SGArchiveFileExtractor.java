@@ -14,7 +14,7 @@ import javax.swing.JFileChooser;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 
 /** Extract an archive file. */
-public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveFileConstants {
+public class SGArchiveFileExtractor extends SGFileHandler {
 
   /** Constant value of End of File */
   protected static final int EOF = -1;
@@ -25,7 +25,9 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
   /** Constructs an object. */
   public SGArchiveFileExtractor() {
     super();
-    this.initFilePath(DEFAULT_ARCHIVE_FILE_NAME, ARCHIVE_FILE_EXTENSION);
+    this.initFilePath(
+        SGIArchiveFileConstants.DEFAULT_ARCHIVE_FILE_NAME,
+        SGIArchiveFileConstants.ARCHIVE_FILE_EXTENSION);
   }
 
   /** extract an archive file. */
@@ -112,8 +114,8 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
         SGApplicationUtility.createFileChooser(
             this.mCurrentDirectory,
             this.mCurrentFileName,
-            ARCHIVE_FILE_EXTENSION,
-            ARCHIVE_FILE_DESCRIPTION,
+            SGIArchiveFileConstants.ARCHIVE_FILE_EXTENSION,
+            SGIArchiveFileConstants.ARCHIVE_FILE_DESCRIPTION,
             "");
 
     // show save dialog

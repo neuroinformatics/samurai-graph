@@ -238,21 +238,21 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     for (int ii = 0; ii < varNum; ii++) {
       SGNetCDFVariable var = varList.get(ii);
       if (var.equals(this.mXVariable)) {
-        array[ii] = X_COORDINATE;
+        array[ii] = SGIDataColumnTypeConstants.X_COORDINATE;
       } else if (var.equals(this.mYVariable)) {
-        array[ii] = Y_COORDINATE;
+        array[ii] = SGIDataColumnTypeConstants.Y_COORDINATE;
       } else if (var.equals(this.mFirstComponentVariable)) {
         array[ii] = com1;
       } else if (var.equals(this.mSecondComponentVariable)) {
         array[ii] = com2;
       } else if (var.equals(this.mTimeVariable)) {
-        array[ii] = ANIMATION_FRAME;
+        array[ii] = SGIDataColumnTypeConstants.ANIMATION_FRAME;
       } else if (var.equals(this.mIndexVariable)) {
-        array[ii] = INDEX;
+        array[ii] = SGIDataColumnTypeConstants.INDEX;
       } else if (var.equals(this.mXIndexVariable)) {
-        array[ii] = X_INDEX;
+        array[ii] = SGIDataColumnTypeConstants.X_INDEX;
       } else if (var.equals(this.mYIndexVariable)) {
-        array[ii] = Y_INDEX;
+        array[ii] = SGIDataColumnTypeConstants.Y_INDEX;
       } else {
         array[ii] = "";
       }
@@ -284,45 +284,45 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     for (int ii = 0; ii < columns.length; ii++) {
       SGNetCDFVariable var = varList.get(ii);
       String valueType = var.getValueType();
-      if (SGDataUtility.isEqualColumnType(X_COORDINATE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_COORDINATE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         xVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(Y_COORDINATE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_COORDINATE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         yVarList.add(var);
       } else if (SGDataUtility.isEqualColumnType(com1, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         fVarList.add(var);
       } else if (SGDataUtility.isEqualColumnType(com2, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         sVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(ANIMATION_FRAME, columns[ii])
-          || SGDataUtility.isEqualColumnType(TIME, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.ANIMATION_FRAME, columns[ii])
+          || SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.TIME, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         timeVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(INDEX, columns[ii])
-          || SGDataUtility.isEqualColumnType(SERIAL_NUMBERS, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.INDEX, columns[ii])
+          || SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.SERIAL_NUMBERS, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         indexVarList.add(var);
-        //            } else if (SGDataUtility.equals(X_INDEX, columns[ii])) {
-        //            	if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.X_INDEX, columns[ii])) {
+        //            	if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         //            		return false;
         //            	}
         //                xIndexVarList.add(var);
-        //            } else if (SGDataUtility.equals(Y_INDEX, columns[ii])) {
-        //            	if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+        //            } else if (SGDataUtility.equals(SGIDataColumnTypeConstants.Y_INDEX, columns[ii])) {
+        //            	if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
         //            		return false;
         //            	}
         //                yIndexVarList.add(var);
@@ -451,11 +451,11 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     if (super.writeProperty(el, type) == false) {
       return false;
     }
-    el.setAttribute(KEY_X_COORDINATE_VARIABLE_NAME, this.mXVariable.getValidName());
-    el.setAttribute(KEY_Y_COORDINATE_VARIABLE_NAME, this.mYVariable.getValidName());
-    el.setAttribute(KEY_FIRST_COMPONENT_VARIABLE_NAME, this.mFirstComponentVariable.getValidName());
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, this.mXVariable.getValidName());
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, this.mYVariable.getValidName());
+    el.setAttribute(SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, this.mFirstComponentVariable.getValidName());
     el.setAttribute(
-        KEY_SECOND_COMPONENT_VARIABLE_NAME, this.mSecondComponentVariable.getValidName());
+        SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, this.mSecondComponentVariable.getValidName());
     return true;
   }
 
@@ -1074,11 +1074,11 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
 
     String strX = this.mXVariable.getName();
     varList.add(strX);
-    columnTypeList.add(X_COORDINATE);
+    columnTypeList.add(SGIDataColumnTypeConstants.X_COORDINATE);
 
     String strY = this.mYVariable.getName();
     varList.add(strY);
-    columnTypeList.add(Y_COORDINATE);
+    columnTypeList.add(SGIDataColumnTypeConstants.Y_COORDINATE);
 
     String strF = this.mFirstComponentVariable.getName();
     varList.add(strF);
@@ -1297,7 +1297,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
       if (this.isIndexAvailable()) {
         ret = this.mIndexStride;
       } else {
-        if (X_COORDINATE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
           ret = this.mXStride;
         } else {
           ret = this.mYStride;
@@ -1308,7 +1308,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
       if (this.isIndexAvailable()) {
         len = this.getIndexDimensionLength();
       } else {
-        if (X_COORDINATE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
           len = this.getXDimensionLength();
         } else {
           len = this.getYDimensionLength();
@@ -1447,7 +1447,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
     String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
     return this.setEditedValues(
-        ncWrite, varName, array, X_COORDINATE, Y_COORDINATE, new String[] {first, second}, all);
+        ncWrite, varName, array, SGIDataColumnTypeConstants.X_COORDINATE, SGIDataColumnTypeConstants.Y_COORDINATE, new String[] {first, second}, all);
   }
 
   @Override
@@ -1462,9 +1462,9 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
       String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
       if (first.equals(columnType) || second.equals(columnType)) {
         ret = super.getDataViewerCell(cell, columnType, bStride);
-      } else if (X_COORDINATE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
         ret = this.getDataViewerCellX(cell, bStride);
-      } else if (Y_COORDINATE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.Y_COORDINATE.equals(columnType)) {
         ret = this.getDataViewerCellY(cell, bStride);
       }
     }

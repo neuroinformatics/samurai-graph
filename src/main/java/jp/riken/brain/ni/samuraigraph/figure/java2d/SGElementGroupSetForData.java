@@ -41,6 +41,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGArrayData.ArrayDataProperties;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataAnimation;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
+import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
 import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
@@ -1135,20 +1136,20 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   }
 
   protected void setFailedColumnTypeResult(SGPropertyMap map, SGPropertyResults result) {
-    result.putResult(COM_DATA_COLUMN_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
+    result.putResult(SGIDataCommandConstants.COM_DATA_COLUMN_TYPE, SGPropertyResults.INVALID_INPUT_VALUE);
     List<String> keys = map.getKeys();
     String[] skippedKeys = {
-      COM_DATA_ARRAY_SECTION,
-      COM_DATA_X_ARRAY_SECTION,
-      COM_DATA_Y_ARRAY_SECTION,
-      COM_DATA_TICK_LABEL_ARRAY_SECTION,
-      COM_DATA_INDEX_ARRAY_SECTION,
-      COM_DATA_ANIMATION_FRAME_DIMENSION,
-      COM_DATA_PICKUP_DIMENSION,
-      COM_DATA_PICKUP_START,
-      COM_DATA_PICKUP_END,
-      COM_DATA_PICKUP_STEP,
-      COM_DATA_PICKUP_INDICES
+      SGIDataCommandConstants.COM_DATA_ARRAY_SECTION,
+      SGIDataCommandConstants.COM_DATA_X_ARRAY_SECTION,
+      SGIDataCommandConstants.COM_DATA_Y_ARRAY_SECTION,
+      SGIDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION,
+      SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION,
+      SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION,
+      SGIDataCommandConstants.COM_DATA_PICKUP_DIMENSION,
+      SGIDataCommandConstants.COM_DATA_PICKUP_START,
+      SGIDataCommandConstants.COM_DATA_PICKUP_END,
+      SGIDataCommandConstants.COM_DATA_PICKUP_STEP,
+      SGIDataCommandConstants.COM_DATA_PICKUP_INDICES
     };
     for (String sKey : skippedKeys) {
       if (keys.contains(sKey.toUpperCase())) {
@@ -1163,68 +1164,68 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     while (itr.hasNext()) {
       String key = itr.next();
       String value = map.getValueString(key);
-      if (COM_DATA_AXIS_X.equalsIgnoreCase(key)) {
+      if (SGIDataCommandConstants.COM_DATA_AXIS_X.equalsIgnoreCase(key)) {
         final int loc = SGUtility.getAxisLocation(value);
         if (loc == -1) {
-          result.putResult(COM_DATA_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setXAxisLocation(loc) == false) {
-          result.putResult(COM_DATA_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_AXIS_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_AXIS_Y.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_AXIS_X, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_AXIS_Y.equalsIgnoreCase(key)) {
         final int loc = SGUtility.getAxisLocation(value);
         if (loc == -1) {
-          result.putResult(COM_DATA_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setYAxisLocation(loc) == false) {
-          result.putResult(COM_DATA_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_AXIS_Y, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_VISIBLE_IN_LEGEND.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_AXIS_Y, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_VISIBLE_IN_LEGEND.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_DATA_VISIBLE_IN_LEGEND, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_VISIBLE_IN_LEGEND, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (this.setVisibleInLegend(b.booleanValue()) == false) {
-          result.putResult(COM_DATA_VISIBLE_IN_LEGEND, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_VISIBLE_IN_LEGEND, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_VISIBLE_IN_LEGEND, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ANIMATION_FRAME_RATE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_VISIBLE_IN_LEGEND, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_RATE.equalsIgnoreCase(key)) {
         Double rate = SGUtilityText.getDouble(value);
         if (rate == null || rate.doubleValue() <= 0.0) {
-          result.putResult(COM_DATA_ANIMATION_FRAME_RATE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_RATE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setFrameRate(rate.doubleValue());
-        result.putResult(COM_DATA_ANIMATION_FRAME_RATE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ANIMATION_LOOP_PLAYBACK.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_RATE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ANIMATION_LOOP_PLAYBACK.equalsIgnoreCase(key)) {
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_DATA_ANIMATION_LOOP_PLAYBACK, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_LOOP_PLAYBACK, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setLoopPlaybackAvailable(b.booleanValue());
-        result.putResult(COM_DATA_ANIMATION_LOOP_PLAYBACK, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_NAME.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ANIMATION_LOOP_PLAYBACK, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_NAME.equalsIgnoreCase(key)) {
         if (map.isDoubleQuoted(key) == false) {
-          result.putResult(COM_DATA_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         String name = value;
         if (this.setName(name) == false) {
-          result.putResult(COM_DATA_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_NAME, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ORIGIN.equalsIgnoreCase(key)
-          || COM_DATA_COORDINATE_VARIABLES_INDEX.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_NAME, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ORIGIN.equalsIgnoreCase(key)
+          || SGIDataCommandConstants.COM_DATA_COORDINATE_VARIABLES_INDEX.equalsIgnoreCase(key)) {
         if (SGDataUtility.isNetCDFData(this.mData)) {
           SGNetCDFData nData = (SGNetCDFData) this.mData;
           boolean succeeded = true;
@@ -1232,11 +1233,11 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
           // parse the input string
           String[] values = SGUtilityText.getStringsInBracket(value);
           if (values == null) {
-            result.putResult(COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           if (values.length == 0) {
-            result.putResult(COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           String[] dimArray = new String[values.length];
@@ -1263,7 +1264,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
             originArray[ii] = num.intValue();
           }
           if (!succeeded) {
-            result.putResult(COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
 
@@ -1275,7 +1276,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
             }
           }
           if (!succeeded) {
-            result.putResult(COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
         } else if (SGDataUtility.isMDArrayData(this.mData)) {
@@ -1315,7 +1316,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
           String[] values = new String[valueList.size()];
           values = valueList.toArray(values);
           if (values.length == 0) {
-            result.putResult(COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
           DimensionInfo[] dimInfoArray = new DimensionInfo[values.length];
@@ -1378,7 +1379,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
             dimInfoArray[ii] = dimInfo;
           }
           if (!succeeded) {
-            result.putResult(COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(SGIDataCommandConstants.COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
 
@@ -1392,23 +1393,23 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
           }
 
         } else {
-          result.putResult(COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(COM_DATA_ORIGIN, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_COLUMN_TYPE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_ORIGIN, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_COLUMN_TYPE.equalsIgnoreCase(key)) {
         if (!this.setDataColumnType(value, map, result)) {
           continue;
         }
-        result.putResult(COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ARRAY_SECTION_AVAILABLE.equalsIgnoreCase(key)) {
+        result.putResult(SGIDataCommandConstants.COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
+      } else if (SGIDataCommandConstants.COM_DATA_ARRAY_SECTION_AVAILABLE.equalsIgnoreCase(key)) {
         Boolean strideAvailable = SGUtilityText.getBoolean(value);
         if (strideAvailable == null) {
-          result.putResult(COM_DATA_ARRAY_SECTION_AVAILABLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_ARRAY_SECTION_AVAILABLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         this.setStrideAvailable(strideAvailable);
-        result.putResult(COM_DATA_ARRAY_SECTION_AVAILABLE, SGPropertyResults.SUCCEEDED);
+        result.putResult(SGIDataCommandConstants.COM_DATA_ARRAY_SECTION_AVAILABLE, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -2403,23 +2404,26 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
 
     SGIConstants.OPERATION type = params.getType();
     if (SGIConstants.OPERATION.SAVE_INTO_FILE_ATTRIBUTE.equals(type)) {
-      SGPropertyUtility.addQuotedStringProperty(map, COM_DATA_FILE_PATH, FILE_PATH_NETCDF_ITSELF);
+      SGPropertyUtility.addQuotedStringProperty(
+          map,
+          SGIDataCommandConstants.COM_DATA_FILE_PATH,
+          SGIDataCommandConstants.FILE_PATH_NETCDF_ITSELF);
     }
-    SGPropertyUtility.addProperty(map, COM_DATA_TYPE, data.getDataType());
-    SGPropertyUtility.addProperty(map, COM_DATA_VISIBLE_IN_LEGEND, this.isVisibleInLegend());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_TYPE, data.getDataType());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_VISIBLE_IN_LEGEND, this.isVisibleInLegend());
     if (data.isAnimationAvailable()) {
       SGIntegerSeriesSet animationArraySection = this.getAnimationArraySection();
       SGPropertyUtility.addQuotedStringProperty(
-          map, COM_DATA_ANIMATION_ARRAY_SECTION, animationArraySection.toString());
-      SGPropertyUtility.addProperty(map, COM_DATA_ANIMATION_FRAME_RATE, this.getFrameRate());
+          map, SGIDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION, animationArraySection.toString());
+      SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_RATE, this.getFrameRate());
       SGPropertyUtility.addProperty(
-          map, COM_DATA_ANIMATION_LOOP_PLAYBACK, this.isLoopPlaybackAvailable());
+          map, SGIDataCommandConstants.COM_DATA_ANIMATION_LOOP_PLAYBACK, this.isLoopPlaybackAvailable());
     }
-    SGPropertyUtility.addQuotedStringProperty(map, COM_DATA_NAME, this.getName());
-    SGPropertyUtility.addProperty(map, COM_DATA_COLUMN_TYPE, data.getColumnTypeCommandString());
+    SGPropertyUtility.addQuotedStringProperty(map, SGIDataCommandConstants.COM_DATA_NAME, this.getName());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_COLUMN_TYPE, data.getColumnTypeCommandString());
     String originStr = data.getOriginCommandString();
     if (originStr != null) {
-      SGPropertyUtility.addProperty(map, COM_DATA_ORIGIN, originStr);
+      SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ORIGIN, originStr);
     }
     if (SGDataUtility.isMDArrayData(data)) {
       SGMDArrayData mdData = (SGMDArrayData) data;
@@ -2427,7 +2431,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       // animation frame dimension
       String animationStr = mdData.getAnimationFrameDimensionCommandString();
       if (animationStr != null) {
-        SGPropertyUtility.addProperty(map, COM_DATA_ANIMATION_FRAME_DIMENSION, animationStr);
+        SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION, animationStr);
       }
     }
     data.setArraySectionProperty(map);
@@ -2465,7 +2469,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   @Override
   public String createCommandString(SGExportParameter params) {
     return SGCommandUtility.createCommandString(
-        COM_DATA, Integer.toString(this.mID), this.getCommandPropertyMap(params));
+        SGIDataCommandConstants.COM_DATA, Integer.toString(this.mID), this.getCommandPropertyMap(params));
   }
 
   /**

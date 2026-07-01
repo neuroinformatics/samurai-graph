@@ -30,7 +30,7 @@ import ucar.nc2.Variable;
 
 /** The base class of two dimensional NetCDF data. */
 public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
-    implements SGITwoDimensionalData, SGIDataPropertyKeyConstants {
+    implements SGITwoDimensionalData {
 
   /** The variable for x-values. */
   protected SGNetCDFVariable mXVariable = null;
@@ -553,8 +553,8 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
 
     // stride
     if (!this.isIndexAvailable()) {
-      el.setAttribute(KEY_X_ARRAY_SECTION, this.mXStride.toString());
-      el.setAttribute(KEY_Y_ARRAY_SECTION, this.mYStride.toString());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_X_ARRAY_SECTION, this.mXStride.toString());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_ARRAY_SECTION, this.mYStride.toString());
     }
 
     return true;
@@ -872,18 +872,18 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
         SGIntegerSeriesSet idxStride = this.getIndexStride();
         if (!idxStride.isComplete()) {
           SGPropertyUtility.addQuotedStringProperty(
-              map, COM_DATA_INDEX_ARRAY_SECTION, idxStride.toString());
+              map, SGIDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION, idxStride.toString());
         }
       } else {
         SGIntegerSeriesSet xStride = this.getXStride();
         if (!xStride.isComplete()) {
           SGPropertyUtility.addQuotedStringProperty(
-              map, COM_DATA_X_ARRAY_SECTION, xStride.toString());
+              map, SGIDataCommandConstants.COM_DATA_X_ARRAY_SECTION, xStride.toString());
         }
         SGIntegerSeriesSet yStride = this.getYStride();
         if (!yStride.isComplete()) {
           SGPropertyUtility.addQuotedStringProperty(
-              map, COM_DATA_Y_ARRAY_SECTION, yStride.toString());
+              map, SGIDataCommandConstants.COM_DATA_Y_ARRAY_SECTION, yStride.toString());
         }
       }
     }

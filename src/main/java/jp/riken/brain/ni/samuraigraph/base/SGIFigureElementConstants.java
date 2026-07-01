@@ -2,7 +2,9 @@ package jp.riken.brain.ni.samuraigraph.base;
 
 import java.awt.Color;
 
+/** A final class for constants for figure elements. */
 public interface SGIFigureElementConstants {
+
 
   public static final String KEY_DATA_TYPE = "Type";
 

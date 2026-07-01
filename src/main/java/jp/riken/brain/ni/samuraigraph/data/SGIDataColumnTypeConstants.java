@@ -1,7 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-/** String constants for the type of data columns. */
-public interface SGIDataColumnTypeConstants {
+/** A final class for string constants for the type of data columns. */
+public final class SGIDataColumnTypeConstants {
+
+  private SGIDataColumnTypeConstants() {
+    /* uninstantiable */
+  }
 
   /** A constant for the number type column. */
   public static final String VALUE_TYPE_NUMBER = "Number";

@@ -1,7 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-/** Constants for the archive file. */
-public interface SGIArchiveFileConstants {
+/** A final class for constants for the archive file. */
+public final class SGIArchiveFileConstants {
+
+  private SGIArchiveFileConstants() {
+    /* uninstantiable */
+  }
 
   /** File extension of the archive files. */
   public static final String ARCHIVE_FILE_EXTENSION = "sga";

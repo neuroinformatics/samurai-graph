@@ -81,8 +81,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         CellEditorListener,
         MouseListener,
         MouseMotionListener,
-        MouseWheelListener,
-        SGIDataColumnTypeConstants {
+        MouseWheelListener {
 
   /** Serial Version UID. */
   private static final long serialVersionUID = 1614748084851553730L;

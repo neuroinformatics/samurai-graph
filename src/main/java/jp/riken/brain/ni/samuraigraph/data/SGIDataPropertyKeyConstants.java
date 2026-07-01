@@ -1,7 +1,14 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-/** String constants for the keys of properties in the property file or data set file. */
-public interface SGIDataPropertyKeyConstants {
+/**
+ * A final class for string constants for the keys of properties in the property file or data set
+ * file.
+ */
+public final class SGIDataPropertyKeyConstants {
+
+  private SGIDataPropertyKeyConstants() {
+    /* uninstantiable */
+  }
 
   public static final String KEY_X_VALUE_COLUMN_INDEX = "XValueIndex";
 

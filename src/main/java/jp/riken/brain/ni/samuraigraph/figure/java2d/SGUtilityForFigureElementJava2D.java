@@ -30,8 +30,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGFigureElement;
 import jp.riken.brain.ni.samuraigraph.figure.SGILineConstants;
 
 /** This class has utility methods for the subclasses of SGFigureElement in this package. */
-public class SGUtilityForFigureElementJava2D
-    implements SGIFigureElementConstants, SGIDataCommandConstants {
+public class SGUtilityForFigureElementJava2D {
 
   /**
    * Draw an anchor around a focused object.
@@ -53,10 +52,10 @@ public class SGUtilityForFigureElementJava2D
     drawCircle(
         x,
         y,
-        ANCHOR_SIZE_FOR_FOCUSED_OBJECTS,
-        ANCHOR_EDGE_LINE_WIDTH,
-        ANCHOR_EDGE_LINE_COLOR,
-        ANCHOR_INNER_COLOR,
+        SGIFigureElementConstants.ANCHOR_SIZE_FOR_FOCUSED_OBJECTS,
+        SGIFigureElementConstants.ANCHOR_EDGE_LINE_WIDTH,
+        SGIFigureElementConstants.ANCHOR_EDGE_LINE_COLOR,
+        SGIFigureElementConstants.ANCHOR_INNER_COLOR,
         g2d);
   }
 
@@ -86,10 +85,10 @@ public class SGUtilityForFigureElementJava2D
       Point2D pos = (Point2D) pointList.get(ii);
       drawTriangle(
           pos,
-          ANCHOR_SIZE_FOR_FOCUSED_OBJECTS,
-          ANCHOR_EDGE_LINE_WIDTH,
-          ANCHOR_EDGE_LINE_COLOR,
-          ANCHOR_INNER_COLOR,
+          SGIFigureElementConstants.ANCHOR_SIZE_FOR_FOCUSED_OBJECTS,
+          SGIFigureElementConstants.ANCHOR_EDGE_LINE_WIDTH,
+          SGIFigureElementConstants.ANCHOR_EDGE_LINE_COLOR,
+          SGIFigureElementConstants.ANCHOR_INNER_COLOR,
           g2d);
     }
   }
@@ -103,10 +102,10 @@ public class SGUtilityForFigureElementJava2D
   public static void drawAnchorAsChildObject(final Point2D pos, final Graphics2D g2d) {
     drawSquare(
         pos,
-        ANCHOR_SIZE_FOR_CHILD_OBJECTS,
-        ANCHOR_EDGE_LINE_WIDTH,
-        ANCHOR_EDGE_LINE_COLOR,
-        ANCHOR_INNER_COLOR_FOR_CHILD_OBJECTS,
+        SGIFigureElementConstants.ANCHOR_SIZE_FOR_CHILD_OBJECTS,
+        SGIFigureElementConstants.ANCHOR_EDGE_LINE_WIDTH,
+        SGIFigureElementConstants.ANCHOR_EDGE_LINE_COLOR,
+        SGIFigureElementConstants.ANCHOR_INNER_COLOR_FOR_CHILD_OBJECTS,
         g2d);
   }
 
@@ -135,10 +134,10 @@ public class SGUtilityForFigureElementJava2D
       Point2D pos = (Point2D) pointList.get(ii);
       drawTriangle(
           pos,
-          ANCHOR_SIZE_FOR_FOCUSED_OBJECTS,
-          ANCHOR_EDGE_LINE_WIDTH,
-          ANCHOR_EDGE_LINE_COLOR,
-          ANCHOR_INNER_COLOR_FOR_CHILD_OBJECTS,
+          SGIFigureElementConstants.ANCHOR_SIZE_FOR_FOCUSED_OBJECTS,
+          SGIFigureElementConstants.ANCHOR_EDGE_LINE_WIDTH,
+          SGIFigureElementConstants.ANCHOR_EDGE_LINE_COLOR,
+          SGIFigureElementConstants.ANCHOR_INNER_COLOR_FOR_CHILD_OBJECTS,
           g2d);
     }
   }
@@ -197,24 +196,24 @@ public class SGUtilityForFigureElementJava2D
     while (itr.hasNext()) {
       String key = itr.next();
       String value = map.getValueString(key);
-      if (SGUtilityText.isEqualString(COM_DATA_LINE_VISIBLE, key)) {
+      if (SGUtilityText.isEqualString(SGIDataCommandConstants.COM_DATA_LINE_VISIBLE, key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_DATA_LINE_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_LINE_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         lineVisible = b;
-      } else if (SGUtilityText.isEqualString(COM_DATA_SYMBOL_VISIBLE, key)) {
+      } else if (SGUtilityText.isEqualString(SGIDataCommandConstants.COM_DATA_SYMBOL_VISIBLE, key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_DATA_SYMBOL_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         symbolVisible = b;
-      } else if (SGUtilityText.isEqualString(COM_DATA_BAR_VISIBLE, key)) {
+      } else if (SGUtilityText.isEqualString(SGIDataCommandConstants.COM_DATA_BAR_VISIBLE, key)) {
         final Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
-          result.putResult(COM_DATA_BAR_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(SGIDataCommandConstants.COM_DATA_BAR_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         barVisible = b;
@@ -262,15 +261,15 @@ public class SGUtilityForFigureElementJava2D
     */
 
     if (lineVisible != null) {
-      result.putResult(COM_DATA_LINE_VISIBLE, SGPropertyResults.SUCCEEDED);
+      result.putResult(SGIDataCommandConstants.COM_DATA_LINE_VISIBLE, SGPropertyResults.SUCCEEDED);
       obs.setLineVisible(lineVisibleNew);
     }
     if (symbolVisible != null) {
-      result.putResult(COM_DATA_SYMBOL_VISIBLE, SGPropertyResults.SUCCEEDED);
+      result.putResult(SGIDataCommandConstants.COM_DATA_SYMBOL_VISIBLE, SGPropertyResults.SUCCEEDED);
       obs.setSymbolVisible(symbolVisibleNew);
     }
     if (barVisible != null) {
-      result.putResult(COM_DATA_BAR_VISIBLE, SGPropertyResults.SUCCEEDED);
+      result.putResult(SGIDataCommandConstants.COM_DATA_BAR_VISIBLE, SGPropertyResults.SUCCEEDED);
       obs.setBarVisible(barVisibleNew);
     }
 

@@ -30,7 +30,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGSXYSDArrayMultipleData;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupSetInGraphSXYMultiple.MultipleSXYElementGroupSetPropertiesInFigureElement;
 
-class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
+class SGMainFunctionsSplitMerge {
 
   static boolean splitData(SGDrawingWindow wnd) {
     List<SGFigure> fList = wnd.getVisibleFigureList();

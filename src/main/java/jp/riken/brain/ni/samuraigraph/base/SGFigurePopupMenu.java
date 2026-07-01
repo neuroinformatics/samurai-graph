@@ -56,7 +56,7 @@ public class SGFigurePopupMenu extends SGPopupMenu {
     this.addCheckBoxItem(SGFigure.MENUCMD_RUBBER_BANDING);
 
     // snap to grid
-    this.addCheckBoxItem(SGFigure.MENUBARCMD_SNAP_TO_GRID);
+    this.addCheckBoxItem(SGIRootObjectConstants.MENUBARCMD_SNAP_TO_GRID);
 
     // show bounding box
     this.addCheckBoxItem(SGFigure.MENUCMD_SHOW_BOUNDING_BOX);
@@ -135,7 +135,7 @@ public class SGFigurePopupMenu extends SGPopupMenu {
     if (command.equals(SGFigure.MENUCMD_RUBBER_BANDING)) {
       SGFigure.mRubberBandFlag = !SGFigure.mRubberBandFlag;
       wnd.repaint();
-    } else if (command.equals(SGFigure.MENUBARCMD_SNAP_TO_GRID)) {
+    } else if (command.equals(SGIRootObjectConstants.MENUBARCMD_SNAP_TO_GRID)) {
       SGFigure.setSnappingToGrid(!SGFigure.isSnappingToGrid());
       wnd.updateSnapToGridItems();
     } else if (command.equals(SGFigure.MENUCMD_SHOW_BOUNDING_BOX)) {

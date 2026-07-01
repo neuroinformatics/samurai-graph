@@ -20,7 +20,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
 import jp.riken.brain.ni.samuraigraph.base.SGIStringModifier;
-import jp.riken.brain.ni.samuraigraph.base.SGITextDataConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGNamedStringBlock;
@@ -48,8 +47,7 @@ import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 /** The base class for netCDF data. */
-public abstract class SGNetCDFData extends SGArrayData
-    implements SGIIndexData, SGITextDataConstants, SGIDataColumnTypeConstants, SGINetCDFConstants {
+public abstract class SGNetCDFData extends SGArrayData implements SGIIndexData {
 
   /**
    * The map of origin of coordinate variables. Keys are the name of coordinate variables and values
@@ -2215,23 +2213,23 @@ public abstract class SGNetCDFData extends SGArrayData
 
     // value type
     if (valueType != null) {
-      this.addAttribute(var, ATTRIBUTE_VALUE_TYPE, valueType);
+      this.addAttribute(var, SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, valueType);
     }
 
     // long name and standard name
     String longName = curVar.getLongName();
     if (longName != null && !"".equals(longName)) {
-      this.addAttribute(var, ATTR_LONG_NAME, longName);
+      this.addAttribute(var, SGINetCDFConstants.ATTR_LONG_NAME, longName);
     }
     String standardName = curVar.getStandardName();
     if (standardName != null && !"".equals(standardName)) {
-      this.addAttribute(var, ATTR_STANDARD_NAME, standardName);
+      this.addAttribute(var, SGINetCDFConstants.ATTR_STANDARD_NAME, standardName);
     }
 
     // units string
     String unitsString = curVar.getUnitsString();
     if (unitsString != null && !"".equals(unitsString)) {
-      this.addAttribute(var, ATTR_UNITS, unitsString);
+      this.addAttribute(var, SGINetCDFConstants.ATTR_UNITS, unitsString);
     }
 
     // fill value and values for valid range
@@ -2245,26 +2243,26 @@ public abstract class SGNetCDFData extends SGArrayData
       SGNetCDFVariable curVar, Variable var, SGDataBufferPolicy policy) {
     Number fillValue = curVar.getFillValue();
     if (fillValue != null) {
-      this.addAttribute(var, ATTR_FILL_VALUE, fillValue);
+      this.addAttribute(var, SGINetCDFConstants.ATTR_FILL_VALUE, fillValue);
     }
     Number missingValue = curVar.getMissingValue();
     if (missingValue != null) {
-      this.addAttribute(var, ATTR_MISSING_VALUE, missingValue);
+      this.addAttribute(var, SGINetCDFConstants.ATTR_MISSING_VALUE, missingValue);
     }
     double[] validRange = curVar.getValidRange();
     if (validRange != null) {
       Array range = Array.factory(DataType.DOUBLE, new int[] {2});
       range.setDouble(0, validRange[0]);
       range.setDouble(1, validRange[1]);
-      this.addAttribute(var, ATTR_VALID_RANGE, range);
+      this.addAttribute(var, SGINetCDFConstants.ATTR_VALID_RANGE, range);
     }
     Number validMin = curVar.getValidMin();
     if (validMin != null) {
-      this.addAttribute(var, ATTR_VALID_MIN, validMin);
+      this.addAttribute(var, SGINetCDFConstants.ATTR_VALID_MIN, validMin);
     }
     Number validMax = curVar.getValidMax();
     if (validMax != null) {
-      this.addAttribute(var, ATTR_VALID_MAX, validMax);
+      this.addAttribute(var, SGINetCDFConstants.ATTR_VALID_MAX, validMax);
     }
   }
 
@@ -2804,12 +2802,12 @@ public abstract class SGNetCDFData extends SGArrayData
     if (this.isIndexAvailable()) {
       String str = this.mIndexVariable.getName();
       varList.add(str);
-      columnTypeList.add(INDEX);
+      columnTypeList.add(SGIDataColumnTypeConstants.INDEX);
     }
     if (this.isTimeVariableAvailable()) {
       String str = this.mTimeVariable.getName();
       varList.add(str);
-      columnTypeList.add(ANIMATION_FRAME);
+      columnTypeList.add(SGIDataColumnTypeConstants.ANIMATION_FRAME);
     }
   }
 

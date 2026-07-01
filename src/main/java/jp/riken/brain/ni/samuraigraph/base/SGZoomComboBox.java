@@ -9,7 +9,7 @@ import javax.swing.JComboBox;
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer.Token;
 
 /** A combo box to display the magnification. */
-public class SGZoomComboBox extends JComboBox<String> implements SGIRootObjectConstants {
+public class SGZoomComboBox extends JComboBox<String> {
 
   /** */
   private static final long serialVersionUID = 4844389430288943687L;
@@ -26,14 +26,14 @@ public class SGZoomComboBox extends JComboBox<String> implements SGIRootObjectCo
   private void init() {
 
     // add items
-    String[] array = MAGNIFICATION_STRING_ARRAY;
+    String[] array = SGIRootObjectConstants.MAGNIFICATION_STRING_ARRAY;
     for (int ii = 0; ii < array.length; ii++) {
       this.addItem(array[ii] + PERCENT);
     }
-    this.addItem(AUTO_ZOOM_IN_COMBO_BOX);
+    this.addItem(SGIRootObjectConstants.AUTO_ZOOM_IN_COMBO_BOX);
 
     this.setEditable(true);
-    this.setToolTipText(TIP_ZOOM);
+    this.setToolTipText(SGIRootObjectConstants.TIP_ZOOM);
     this.setFont(new java.awt.Font("Dialog", 1, 12));
 
     Dimension dim;
@@ -51,7 +51,7 @@ public class SGZoomComboBox extends JComboBox<String> implements SGIRootObjectCo
 
     this.addActionListener(this);
 
-    this.setText(Integer.valueOf(DEFAULT_ZOOM));
+    this.setText(Integer.valueOf(SGIRootObjectConstants.DEFAULT_ZOOM));
   }
 
   /**
@@ -65,7 +65,7 @@ public class SGZoomComboBox extends JComboBox<String> implements SGIRootObjectCo
     if (source.equals(this)) {
       if (!this.mExternalFlag) {
         String str = (String) this.getSelectedItem();
-        final boolean auto = (str.equals(AUTO_ZOOM_IN_COMBO_BOX));
+        final boolean auto = (str.equals(SGIRootObjectConstants.AUTO_ZOOM_IN_COMBO_BOX));
         this.setAutoZoom(auto);
         if (!auto) {
           this.onZoomed();
@@ -75,7 +75,7 @@ public class SGZoomComboBox extends JComboBox<String> implements SGIRootObjectCo
   }
 
   /** Current magnification value. */
-  private float mMagnification = DEFAULT_ZOOM;
+  private float mMagnification = SGIRootObjectConstants.DEFAULT_ZOOM;
 
   // set auto zoom flag to all zoomable objects
   private void setAutoZoom(final boolean b) {
@@ -135,10 +135,10 @@ public class SGZoomComboBox extends JComboBox<String> implements SGIRootObjectCo
     if (cl < 0.0) {
       numNew = present;
     } else {
-      if (cl < MIN_MAGNIFICATION_VALUE) {
-        numNew = Integer.valueOf(MIN_MAGNIFICATION_VALUE);
-      } else if (cl > MAX_MAGNIFICATION_VALUE) {
-        numNew = Integer.valueOf(MAX_MAGNIFICATION_VALUE);
+      if (cl < SGIRootObjectConstants.MIN_MAGNIFICATION_VALUE) {
+        numNew = Integer.valueOf(SGIRootObjectConstants.MIN_MAGNIFICATION_VALUE);
+      } else if (cl > SGIRootObjectConstants.MAX_MAGNIFICATION_VALUE) {
+        numNew = Integer.valueOf(SGIRootObjectConstants.MAX_MAGNIFICATION_VALUE);
       } else {
         numNew = Integer.valueOf((int) cl);
       }

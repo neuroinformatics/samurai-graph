@@ -27,8 +27,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGFileChooser;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** Create an archive file. */
-public class SGArchiveFileCreator extends SGFileHandler
-    implements SGIApplicationConstants, SGIArchiveFileConstants {
+public class SGArchiveFileCreator extends SGFileHandler implements SGIApplicationConstants {
 
   /** Constant value of End of File */
   protected static final int EOF = -1;
@@ -36,7 +35,9 @@ public class SGArchiveFileCreator extends SGFileHandler
   /** Constructs an object. */
   public SGArchiveFileCreator() {
     super();
-    this.initFilePath(DEFAULT_ARCHIVE_FILE_NAME, ARCHIVE_FILE_EXTENSION);
+    this.initFilePath(
+        SGIArchiveFileConstants.DEFAULT_ARCHIVE_FILE_NAME,
+        SGIArchiveFileConstants.ARCHIVE_FILE_EXTENSION);
   }
 
   /** Create a dataset archive file. */
@@ -88,7 +89,7 @@ public class SGArchiveFileCreator extends SGFileHandler
         imageByteArray = bgImg.getByteArray();
         String ext = bgImg.getExtension();
         StringBuffer sb = new StringBuffer();
-        sb.append(ARCHIVE_IMAGE_NAME);
+        sb.append(SGIArchiveFileConstants.ARCHIVE_IMAGE_NAME);
         sb.append('.');
         sb.append(ext);
         String entryname = sb.toString();
@@ -225,11 +226,11 @@ public class SGArchiveFileCreator extends SGFileHandler
   private JFileChooser createFileChooser() {
     // set the file extension filter
     SGExtensionFileFilter ffOlder = new SGExtensionFileFilter();
-    ffOlder.setExplanation(ARCHIVE_FILE_DESCRIPTION_SGA107);
-    ffOlder.addExtension(ARCHIVE_FILE_EXTENSION);
+    ffOlder.setExplanation(SGIArchiveFileConstants.ARCHIVE_FILE_DESCRIPTION_SGA107);
+    ffOlder.addExtension(SGIArchiveFileConstants.ARCHIVE_FILE_EXTENSION);
     SGExtensionFileFilter ff = new SGExtensionFileFilter();
-    ff.setExplanation(ARCHIVE_FILE_DESCRIPTION);
-    ff.addExtension(ARCHIVE_FILE_EXTENSION);
+    ff.setExplanation(SGIArchiveFileConstants.ARCHIVE_FILE_DESCRIPTION);
+    ff.addExtension(SGIArchiveFileConstants.ARCHIVE_FILE_EXTENSION);
     SGExtensionFileFilter[] ffArray = {ffOlder, ff};
     JFileChooser chooser =
         SGApplicationUtility.createFileChooser(
@@ -267,7 +268,7 @@ public class SGArchiveFileCreator extends SGFileHandler
         final String desc = fSelected.getExplanation();
         aFile.desc = desc;
       } else {
-        aFile.desc = ARCHIVE_FILE_DESCRIPTION;
+        aFile.desc = SGIArchiveFileConstants.ARCHIVE_FILE_DESCRIPTION;
       }
       aFile.file = file;
     }

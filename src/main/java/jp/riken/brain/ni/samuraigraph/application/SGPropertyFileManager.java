@@ -36,7 +36,6 @@ import org.w3c.dom.NodeList;
 class SGPropertyFileManager
     implements ActionListener,
         SGIApplicationConstants,
-        SGIApplicationTextConstants,
         SGIPropertyFileConstants {
 
   /** */
@@ -247,29 +246,29 @@ class SGPropertyFileManager
     String msg = null;
     switch (errCode) {
       case SGIConstants.SUCCESSFUL_COMPLETION:
-        msg = MSG_SUCCESSFUL_COMPLETION;
+        msg = SGIApplicationTextConstants.MSG_SUCCESSFUL_COMPLETION;
         break;
       case SGIConstants.DATA_NUMBER_SHORTAGE:
-        msg = MSG_DATA_NUMBER_SHORTAGE;
+        msg = SGIApplicationTextConstants.MSG_DATA_NUMBER_SHORTAGE;
         break;
       case SGIConstants.DATA_NUMBER_EXCESS:
-        msg = MSG_DATA_NUMBER_EXCESS;
+        msg = SGIApplicationTextConstants.MSG_DATA_NUMBER_EXCESS;
         break;
       case SGIConstants.FILE_OPEN_FAILURE:
-        msg = MSG_FILE_OPEN_FAILURE;
+        msg = SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE;
         break;
       case SGIConstants.PROPERTY_FILE_INCORRECT:
-        msg = MSG_PROPERTY_FILE_INVALID;
+        msg = SGIApplicationTextConstants.MSG_PROPERTY_FILE_INVALID;
         break;
       case SGIConstants.DATA_FILE_INVALID:
-        msg = MSG_DATA_FILE_OPEN_FAILURE;
+        msg = SGIApplicationTextConstants.MSG_DATA_FILE_OPEN_FAILURE;
         break;
       default:
-        msg = MSG_UNKNOWN_ERROR_OCCURRED;
+        msg = SGIApplicationTextConstants.MSG_UNKNOWN_ERROR_OCCURRED;
     }
 
     // show the message dialog
-    if (msg != MSG_SUCCESSFUL_COMPLETION) {
+    if (msg != SGIApplicationTextConstants.MSG_SUCCESSFUL_COMPLETION) {
       SGUtility.showMessageDialog(null, msg, "Property file", JOptionPane.ERROR_MESSAGE);
       return false;
     }
@@ -356,7 +355,7 @@ class SGPropertyFileManager
     if (path == null) {
       if (!silent) {
         SGUtility.showMessageDialog(
-            parent, MSG_FILE_OPEN_FAILURE, TITLE_FILE_OPEN_FAILURE, JOptionPane.ERROR_MESSAGE);
+            parent, SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE, JOptionPane.ERROR_MESSAGE);
       }
       return false;
     }
@@ -374,7 +373,7 @@ class SGPropertyFileManager
     if (doc == null) {
       if (!silent) {
         SGUtility.showMessageDialog(
-            parent, MSG_PROPERTY_FILE_INVALID, TITLE_FILE_OPEN_FAILURE, JOptionPane.ERROR_MESSAGE);
+            parent, SGIApplicationTextConstants.MSG_PROPERTY_FILE_INVALID, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE, JOptionPane.ERROR_MESSAGE);
       }
       return false;
     }
@@ -404,12 +403,12 @@ class SGPropertyFileManager
     }
 
     // figure ID
-    NodeList figureNodeList = doc.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+    NodeList figureNodeList = doc.getElementsByTagName(SGIFigureConstants.TAG_NAME_FIGURE);
     if (figureNodeList.getLength() == 0) {
       // if figure does not exist, return false
       if (!silent) {
         SGUtility.showMessageDialog(
-            parent, MSG_PROPERTY_FILE_INVALID, TITLE_FILE_OPEN_FAILURE, JOptionPane.ERROR_MESSAGE);
+            parent, SGIApplicationTextConstants.MSG_PROPERTY_FILE_INVALID, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE, JOptionPane.ERROR_MESSAGE);
       }
       return false;
     }
@@ -682,7 +681,7 @@ class SGPropertyFileManager
   boolean showMultiDataFileChooserDialog(final File propertyFile, final Frame owner) {
 
     if (propertyFile.exists() == false) {
-      SGUtility.showErrorMessageDialog(owner, MSG_FILE_OPEN_FAILURE, TITLE_FILE_OPEN_FAILURE);
+      SGUtility.showErrorMessageDialog(owner, SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE, SGIApplicationTextConstants.TITLE_FILE_OPEN_FAILURE);
       return false;
     }
 

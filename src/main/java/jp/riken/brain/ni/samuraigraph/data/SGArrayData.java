@@ -21,8 +21,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import org.w3c.dom.Element;
 
 /** The base class of array type data. */
-public abstract class SGArrayData extends SGData
-    implements SGIDataInformationKeyConstants, SGIDataCommandConstants {
+public abstract class SGArrayData extends SGData {
 
   /** The flag whether the stride of data arrays is available. */
   private boolean mStrideAvailable = false;
@@ -117,7 +116,7 @@ public abstract class SGArrayData extends SGData
   @Override
   public Map<String, Object> getInfoMap() {
     Map<String, Object> map = super.getInfoMap();
-    map.put(KEY_STRIDE_AVAILABLE, this.mStrideAvailable);
+    map.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, this.mStrideAvailable);
     map.putAll(this.getStrideMap());
     return map;
   }
@@ -368,7 +367,7 @@ public abstract class SGArrayData extends SGData
    * @return true if succeeded
    */
   public boolean setArraySectionProperty(SGPropertyMap map) {
-    SGPropertyUtility.addProperty(map, COM_DATA_ARRAY_SECTION_AVAILABLE, this.isStrideAvailable());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ARRAY_SECTION_AVAILABLE, this.isStrideAvailable());
     this.setArraySectionPropertySub(map);
     return true;
   }

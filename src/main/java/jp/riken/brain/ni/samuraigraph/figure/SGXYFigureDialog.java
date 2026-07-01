@@ -38,7 +38,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** A property dialog for figures with two-dimensional data. */
 public class SGXYFigureDialog extends SGPropertyDialog
-    implements SGIFigureConstants, SGIFigureTypeConstants, SGITwoAxesDialog {
+    implements SGIFigureTypeConstants, SGITwoAxesDialog {
 
   private static final long serialVersionUID = -5394120960119844819L;
 
@@ -755,26 +755,26 @@ public class SGXYFigureDialog extends SGPropertyDialog
     final int digits = -SGIRootObjectConstants.LENGTH_MINIMAL_ORDER;
 
     this.mXSpinner.initProperties(
-        new SpinnerNumberModel(0.0, FIGURE_X_MIN, FIGURE_X_MAX, FIGURE_LOCATION_STEP),
-        FIGURE_LOCATION_UNIT,
+        new SpinnerNumberModel(0.0, SGIFigureConstants.FIGURE_X_MIN, SGIFigureConstants.FIGURE_X_MAX, SGIFigureConstants.FIGURE_LOCATION_STEP),
+        SGIFigureConstants.FIGURE_LOCATION_UNIT,
         digits,
         digits);
 
     this.mYSpinner.initProperties(
-        new SpinnerNumberModel(0.0, FIGURE_Y_MIN, FIGURE_Y_MAX, FIGURE_LOCATION_STEP),
-        FIGURE_LOCATION_UNIT,
+        new SpinnerNumberModel(0.0, SGIFigureConstants.FIGURE_Y_MIN, SGIFigureConstants.FIGURE_Y_MAX, SGIFigureConstants.FIGURE_LOCATION_STEP),
+        SGIFigureConstants.FIGURE_LOCATION_UNIT,
         digits,
         digits);
 
     this.mWidthSpinner.initProperties(
-        new SpinnerNumberModel(10.0, FIGURE_WIDTH_MIN, FIGURE_WIDTH_MAX, FIGURE_SIZE_STEP),
-        FIGURE_SIZE_UNIT,
+        new SpinnerNumberModel(10.0, SGIFigureConstants.FIGURE_WIDTH_MIN, SGIFigureConstants.FIGURE_WIDTH_MAX, SGIFigureConstants.FIGURE_SIZE_STEP),
+        SGIFigureConstants.FIGURE_SIZE_UNIT,
         digits,
         digits);
 
     this.mHeightSpinner.initProperties(
-        new SpinnerNumberModel(10.0, FIGURE_HEIGHT_MIN, FIGURE_HEIGHT_MAX, FIGURE_SIZE_STEP),
-        FIGURE_SIZE_UNIT,
+        new SpinnerNumberModel(10.0, SGIFigureConstants.FIGURE_HEIGHT_MIN, SGIFigureConstants.FIGURE_HEIGHT_MAX, SGIFigureConstants.FIGURE_SIZE_STEP),
+        SGIFigureConstants.FIGURE_SIZE_UNIT,
         digits,
         digits);
 
@@ -1338,10 +1338,10 @@ public class SGXYFigureDialog extends SGPropertyDialog
 
     for (int ii = 0; ii < num; ii++) {
       SGIFigureDialogObserver l = (SGIFigureDialogObserver) list.get(ii);
-      xArray[ii] = l.getFigureX(FIGURE_LOCATION_UNIT);
-      yArray[ii] = l.getFigureY(FIGURE_LOCATION_UNIT);
-      widthArray[ii] = l.getFigureWidth(FIGURE_SIZE_UNIT);
-      heightArray[ii] = l.getFigureHeight(FIGURE_SIZE_UNIT);
+      xArray[ii] = l.getFigureX(SGIFigureConstants.FIGURE_LOCATION_UNIT);
+      yArray[ii] = l.getFigureY(SGIFigureConstants.FIGURE_LOCATION_UNIT);
+      widthArray[ii] = l.getFigureWidth(SGIFigureConstants.FIGURE_SIZE_UNIT);
+      heightArray[ii] = l.getFigureHeight(SGIFigureConstants.FIGURE_SIZE_UNIT);
       bgColorArray[ii] = l.getBackgroundColor();
       transparentArray[ii] = l.isTransparent();
       frameLineWidthArray[ii] = l.getFrameLineWidth(SGIConstants.LINE_WIDTH_UNIT);

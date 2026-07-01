@@ -29,8 +29,7 @@ import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 /** An abstract data class which has arrays of numbers and strings. */
-public abstract class SGSDArrayData extends SGArrayData
-    implements SGITextDataConstants, SGIDataColumnTypeConstants {
+public abstract class SGSDArrayData extends SGArrayData {
 
   /** The stride of an array. */
   protected SGIntegerSeriesSet mStride = null;
@@ -645,10 +644,10 @@ public abstract class SGSDArrayData extends SGArrayData
 
         // when NaN values exist
         if (isNaN) {
-          sb.append(DATA_COMMENT_PREFIX);
-          sb.append(DATA_COMMENT_HEADER_PREFIX);
-          sb.append(HEADER_NOT_A_COMMENT_LINE);
-          sb.append(DATA_COMMENT_HEADER_SUFFIX);
+          sb.append(SGITextDataConstants.DATA_COMMENT_PREFIX);
+          sb.append(SGITextDataConstants.DATA_COMMENT_HEADER_PREFIX);
+          sb.append(SGITextDataConstants.HEADER_NOT_A_COMMENT_LINE);
+          sb.append(SGITextDataConstants.DATA_COMMENT_HEADER_SUFFIX);
         }
       }
 

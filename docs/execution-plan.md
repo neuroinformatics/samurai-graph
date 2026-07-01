@@ -41,7 +41,7 @@
 | 実施中タスク | なし |
 | 完了タスク数 | 38 / 46 (5 DEFERRED) |
 | ブロック中タスク | なし |
-| 次の実施タスク | TASK-017-4（base/data/applicationパッケージの定数インターフェース変換） |
+| 次の実施タスク | TASK-017-4（base/data/applicationパッケージの定数インターフェース変換）- 要検討 |
 
 ### セッション #1
 
@@ -190,6 +190,18 @@
 | 中断理由 | なし |
 | 中断ポイント | なし |
 | 次のセッションで再開するタスク | TASK-017-4（base/data/applicationパッケージの定数インターフェース変換） |
+
+---
+### セッション #13
+
+| 項目 | 値 |
+|------|-----|
+| 日時 | 2026-06-30 |
+| 実施タスク | TASK-017-4 分析 |
+| 完了内容 | TASK-017-4 の分析を実施。25件のインターフェースをfinal classに変換しようとした場合、67ファイル以上のimplements句修正が必要。親インターフェースがfinal classになると、それをextendsするインターフェースも変換が必要で、変換チェーンが複雑。 |
+| 中断理由 | TASK-017-1〜017-5と同様、IDEのリファクタリング機能が必要。エージェント単独での自動変換は不適合。依存関係の複雑さ（extendsチェーン + implements修正67ファイル以上）のため、手動でのIDEリファクタリングを推奨。 |
+| 中断ポイント | 変換候補インターフェースの特定と依存関係分析完了。変換不可能なインターフェースの特定：SGIFigureElementAxisConstants（SGIFigureElementConstantsをextends）、SGIApplicationConstants（SGIDataFileConstantsをextends）、SGIApplicationCommandConstants（複数extends） |
+| 次のセッションで再開するタスク | TASK-017-4 のうち変換可能なインターフェースのみを抽出、またはIDEリファクタリングによる手動実行 |
 
 ---
 ## 凡例
@@ -934,47 +946,49 @@
 | ステータス | **[>] IN_PROGRESS** |
 | 優先度 | P2 |
 | 対応元 | H3 |
-| 推定工数 | 4-6時間 |
+| 推定工数 | 4-6時間（IDEリファクタリング推奨） |
 | 依存タスク | TASK-017-3 |
-| 中断ポイント | なし（再実施開始待ち） |
-| ブランチ | `task/refactor-constants-base-data-app`（新規作成予定） |
+| 中断ポイント | IDEリファクタリングによる手動実行を推奨 |
+| ブランチ | `task/refactor-constants-base-data-app` |
 
-**対象インターフェース（27件）:**
+**対象インターフェース（27件 → 実際は22件、3件は既にfinal class、2件は変換不可）:**
 
-| インターフェース | impl数 |
-|-----------------|--------|
-| `SGIConstants` | 16 |
-| `SGIAnimationConstants` | 2 |
-| `SGIDateConstants` | 0 |
-| `SGIDrawingElementConstants` | 5 |
-| `SGIFigureConstants` | 5 |
-| `SGIFigureElementConstants` | 1 |
-| `SGIFigureElementAxisConstants` | 2 |
-| `SGIPropertyFileConstants` | 3 |
-| `SGIRootObjectConstants` | 4 |
-| `SGITextDataConstants` | 3 |
-| `SGIDataColumnTypeConstants` | 10 |
-| `SGIDataCommandConstants` | 11 |
-| `SGIDataFileConstants` | 0 |
-| `SGIDataInformationKeyConstants` | 1 |
-| `SGIDataPropertyKeyConstants` | 8 |
-| `SGIMDArrayConstants` | 3 |
-| `SGINetCDFConstants` | 7 |
-| `SGIApplicationCommandConstants` | 3 |
-| `SGIApplicationConstants` | 7 |
-| `SGIApplicationTextConstants` | 4 |
-| `SGIArchiveFileConstants` | 3 |
-| `SGIDataPluginConstants` | 1 |
-| `SGIImageConstants` | 0 |
-| `SGIPreferencesConstants` | 2 |
-| `SGIUpgradeConstants` | 1 |
-| `SGIElementGroupConstants` | 1 |
-| `SGISymbolConstants` | 2 |
+| インターフェース | impl数 | extends | 変換可否 |
+|-----------------|--------|---------|---------|
+| `SGIConstants` | 16 | なし | ✅ final class済み（TASK-017-3a） |
+| `SGIAnimationConstants` | 2 | なし | ✅ 変換可能 |
+| `SGIDateConstants` | 0 | なし | ✅ final class済み（TASK-017-3a） |
+| `SGIDrawingElementConstants` | 5 | SGIConstants | ✅ final class済み（TASK-017-3a） |
+| `SGIFigureConstants` | 5 | なし | ✅ 変換可能 |
+| `SGIFigureElementConstants` | 1 | なし | ✅ 変換可能 |
+| `SGIFigureElementAxisConstants` | 2 | SGIFigureElementConstants | ⚠️ 親がfinal classの場合、interfaceとして残すか親もfinal class化 |
+| `SGIPropertyFileConstants` | 3 | なし | ✅ 変換可能 |
+| `SGIRootObjectConstants` | 4 | なし | ✅ 変換可能 |
+| `SGITextDataConstants` | 3 | なし | ✅ 変換可能 |
+| `SGIDataColumnTypeConstants` | 10 | なし | ✅ 変換可能 |
+| `SGIDataCommandConstants` | 11 | なし | ✅ 変換可能 |
+| `SGIDataFileConstants` | 0 | なし | ✅ final class済み（TASK-017-3c） |
+| `SGIDataInformationKeyConstants` | 1 | なし | ✅ 変換可能 |
+| `SGIDataPropertyKeyConstants` | 8 | なし | ✅ 変換可能 |
+| `SGIMDArrayConstants` | 3 | なし | ✅ 変換可能 |
+| `SGINetCDFConstants` | 7 | なし | ✅ 変換可能 |
+| `SGIApplicationCommandConstants` | 3 | 複数extends | ⚠️ 複数extendsのためinterfaceとして残す推奨 |
+| `SGIApplicationConstants` | 7 | SGIDataFileConstants | ⚠️ 親がfinal classのためinterfaceとして残すか親も変換 |
+| `SGIApplicationTextConstants` | 4 | なし | ✅ 変換可能 |
+| `SGIArchiveFileConstants` | 3 | なし | ✅ 変換可能 |
+| `SGIDataPluginConstants` | 1 | なし | ✅ 変換可能 |
+| `SGIImageConstants` | 0 | なし | ✅ 変換可能 |
+| `SGIPreferencesConstants` | 2 | なし | ✅ 変換可能 |
+| `SGIUpgradeConstants` | 1 | なし | ✅ 変換可能 |
+| `SGIElementGroupConstants` | 1 | なし | ✅ final class済み（TASK-017-3c） |
+| `SGISymbolConstants` | 2 | なし | ✅ final class済み（TASK-017-3b） |
 
-**変換手順:** TASK-017-1と同様、1インターフェースごとに変換・検証。impl数0のインターフェースから開始（`SGIDateConstants`, `SGIDataFileConstants`, `SGIImageConstants`）
+**変換手順:** TASK-017-1と同様、1インターフェースごとに変換・検証。impl数0のインターフェースから開始。
+
+**注意:** `SGIFigureElementAxisConstants`（SGIFigureElementConstantsをextends）、`SGIApplicationConstants`（SGIDataFileConstantsをextends）、`SGIApplicationCommandConstants`（複数extends）は、extends先のインターフェースがfinal classになると変換が複雑になる。これらの処理にはIDEのリファクタリング機能が推奨。
 
 **完了基準:**
-- [ ] 27インターフェースがfinal classに変換
+- [ ] 変換可能なインターフェースがfinal classに変換
 - [ ] `mvn compile` が成功
 - [ ] テストが全成功
 

@@ -11,7 +11,7 @@ import ucar.nc2.Dimension;
 import ucar.nc2.Variable;
 
 /** The wrapper class for the netCDF variable. */
-public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
+public class SGNetCDFVariable extends SGVariable {
 
   /** The variable of netCDF. */
   protected Variable mVariable = null;
@@ -87,7 +87,7 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
    * @return the long name
    */
   public String getLongName() {
-    return this.getAttrStringValue(ATTR_LONG_NAME);
+    return this.getAttrStringValue(SGINetCDFConstants.ATTR_LONG_NAME);
   }
 
   /**
@@ -96,7 +96,7 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
    * @return the standard name
    */
   public String getStandardName() {
-    return this.getAttrStringValue(ATTR_STANDARD_NAME);
+    return this.getAttrStringValue(SGINetCDFConstants.ATTR_STANDARD_NAME);
   }
 
   private String getAttrStringValue(String attr) {
@@ -118,7 +118,7 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
    * @return the fill value
    */
   public Number getFillValue() {
-    return this.getAttrNumericValue(ATTR_FILL_VALUE);
+    return this.getAttrNumericValue(SGINetCDFConstants.ATTR_FILL_VALUE);
   }
 
   /**
@@ -127,7 +127,7 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
    * @return the missing value
    */
   public Number getMissingValue() {
-    return this.getAttrNumericValue(ATTR_MISSING_VALUE);
+    return this.getAttrNumericValue(SGINetCDFConstants.ATTR_MISSING_VALUE);
   }
 
   private Number getAttrNumericValue(String attr) {
@@ -149,7 +149,7 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
    * @return the valid range
    */
   public double[] getValidRange() {
-    Attribute attrValidRange = this.findAttribute(ATTR_VALID_RANGE);
+    Attribute attrValidRange = this.findAttribute(SGINetCDFConstants.ATTR_VALID_RANGE);
     if (attrValidRange == null) {
       return null;
     }
@@ -175,7 +175,7 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
    * @return the minimum valid value
    */
   public Number getValidMin() {
-    return this.getAttrNumericValue(ATTR_VALID_MIN);
+    return this.getAttrNumericValue(SGINetCDFConstants.ATTR_VALID_MIN);
   }
 
   /**
@@ -184,7 +184,7 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
    * @return the maximum valid value
    */
   public Number getValidMax() {
-    return this.getAttrNumericValue(ATTR_VALID_MAX);
+    return this.getAttrNumericValue(SGINetCDFConstants.ATTR_VALID_MAX);
   }
 
   /**

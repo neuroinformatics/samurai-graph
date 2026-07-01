@@ -8,7 +8,7 @@ import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGIPlugin;
 
 /** Wrapper class for a plug-in file. */
-public class SGPluginFile implements SGIPlugin, SGIDataPluginConstants {
+public class SGPluginFile implements SGIPlugin {
 
   private SGDataCalcLibrary mLibrary;
 
@@ -55,7 +55,7 @@ public class SGPluginFile implements SGIPlugin, SGIDataPluginConstants {
    */
   @Override
   public String getName() {
-    return this.mAttributeMap.get(KEY_PLUGIN_NAME);
+    return this.mAttributeMap.get(SGIDataPluginConstants.KEY_PLUGIN_NAME);
   }
 
   /**
@@ -86,7 +86,7 @@ public class SGPluginFile implements SGIPlugin, SGIDataPluginConstants {
    */
   @Override
   public String getDesc() {
-    return this.mAttributeMap.get(KEY_PLUGIN_DESC);
+    return this.mAttributeMap.get(SGIDataPluginConstants.KEY_PLUGIN_DESC);
   }
 
   @Override
@@ -101,7 +101,7 @@ public class SGPluginFile implements SGIPlugin, SGIDataPluginConstants {
    */
   @Override
   public String getDeveloper() {
-    return this.mAttributeMap.get(KEY_PLUGIN_DEVELOPER);
+    return this.mAttributeMap.get(SGIDataPluginConstants.KEY_PLUGIN_DEVELOPER);
   }
 
   /**
@@ -111,7 +111,7 @@ public class SGPluginFile implements SGIPlugin, SGIDataPluginConstants {
    */
   @Override
   public String getVersion() {
-    return this.mAttributeMap.get(KEY_PLUGIN_VERSION);
+    return this.mAttributeMap.get(SGIDataPluginConstants.KEY_PLUGIN_VERSION);
   }
 
   static class Parameter {

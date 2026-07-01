@@ -63,7 +63,6 @@ import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetMultipleSX
 /** The property manager. */
 class SGCommandManager
     implements SGIApplicationCommandConstants,
-        SGIDataColumnTypeConstants,
         SGIAxisBreakConstants,
         SGIShapeConstants {
 

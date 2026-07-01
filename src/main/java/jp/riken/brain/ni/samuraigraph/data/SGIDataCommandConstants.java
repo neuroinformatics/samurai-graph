@@ -1,6 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+/** A interface for constants for data commands. */
 public interface SGIDataCommandConstants {
+
 
   /**
    * The symbol for the file path in command script in a global attribute of a NetCDF file. When the

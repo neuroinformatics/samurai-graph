@@ -11,8 +11,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** The base class for the multidimensional variable. */
-public abstract class SGMDArrayVariable extends SGVariable
-    implements Cloneable, SGIMDArrayConstants {
+public abstract class SGMDArrayVariable extends SGVariable implements Cloneable {
 
   /** The data file. */
   protected SGMDArrayFile mFile = null;
@@ -31,8 +30,8 @@ public abstract class SGMDArrayVariable extends SGVariable
     super();
 
     // initializes the dimension indices
-    this.mDimensionIndices.put(KEY_GENERIC_DIMENSION, -1);
-    this.mDimensionIndices.put(KEY_TIME_DIMENSION, -1);
+    this.mDimensionIndices.put(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, -1);
+    this.mDimensionIndices.put(SGIMDArrayConstants.KEY_TIME_DIMENSION, -1);
   }
 
   /**
@@ -82,7 +81,7 @@ public abstract class SGMDArrayVariable extends SGVariable
    * @return the generic dimension index
    */
   public Integer getGenericDimensionIndex() {
-    return this.getDimensionIndex(KEY_GENERIC_DIMENSION);
+    return this.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
   }
 
   /**
@@ -114,7 +113,7 @@ public abstract class SGMDArrayVariable extends SGVariable
    * @param index the dimension index
    */
   public void setGenericDimensionIndex(final int index) {
-    this.setDimensionIndex(KEY_GENERIC_DIMENSION, index);
+    this.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, index);
   }
 
   /**
@@ -123,7 +122,7 @@ public abstract class SGMDArrayVariable extends SGVariable
    * @param index the dimension index
    */
   public void setTimeDimensionIndex(final int index) {
-    this.setDimensionIndex(KEY_TIME_DIMENSION, index);
+    this.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, index);
   }
 
   /**
@@ -136,12 +135,12 @@ public abstract class SGMDArrayVariable extends SGVariable
       throw new IllegalArgumentException("map == null");
     }
     Set<String> keySet = map.keySet();
-    if (!keySet.contains(KEY_GENERIC_DIMENSION)) {
+    if (!keySet.contains(SGIMDArrayConstants.KEY_GENERIC_DIMENSION)) {
       throw new IllegalArgumentException("Generic dimension is not contained.");
     }
     this.mDimensionIndices = new HashMap<String, Integer>(map);
-    if (!keySet.contains(KEY_TIME_DIMENSION)) {
-      this.mDimensionIndices.put(KEY_TIME_DIMENSION, -1);
+    if (!keySet.contains(SGIMDArrayConstants.KEY_TIME_DIMENSION)) {
+      this.mDimensionIndices.put(SGIMDArrayConstants.KEY_TIME_DIMENSION, -1);
     }
   }
 
@@ -243,7 +242,7 @@ public abstract class SGMDArrayVariable extends SGVariable
    * @return the number array of the generic dimension
    */
   public double[] getGenericNumberArray(final SGIntegerSeriesSet stride) {
-    return this.getDoubleArray(this.mDimensionIndices.get(KEY_GENERIC_DIMENSION), stride);
+    return this.getDoubleArray(this.mDimensionIndices.get(SGIMDArrayConstants.KEY_GENERIC_DIMENSION), stride);
   }
 
   /**
@@ -261,7 +260,7 @@ public abstract class SGMDArrayVariable extends SGVariable
    * @return the string array of the generic dimension
    */
   public String[] getAllGenericStringArray() {
-    return this.getStringArray(this.mDimensionIndices.get(KEY_GENERIC_DIMENSION));
+    return this.getStringArray(this.mDimensionIndices.get(SGIMDArrayConstants.KEY_GENERIC_DIMENSION));
   }
 
   /**
@@ -271,7 +270,7 @@ public abstract class SGMDArrayVariable extends SGVariable
    * @return the string array of the generic dimension
    */
   public String[] getGenericStringArray(SGIntegerSeriesSet stride) {
-    return this.getStringArray(this.mDimensionIndices.get(KEY_GENERIC_DIMENSION), stride);
+    return this.getStringArray(this.mDimensionIndices.get(SGIMDArrayConstants.KEY_GENERIC_DIMENSION), stride);
   }
 
   /**
@@ -280,7 +279,7 @@ public abstract class SGMDArrayVariable extends SGVariable
    * @return the length of values of the generic dimension
    */
   public int getGenericDimensionLength() {
-    return this.getDimensionLength(KEY_GENERIC_DIMENSION);
+    return this.getDimensionLength(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
   }
 
   /**

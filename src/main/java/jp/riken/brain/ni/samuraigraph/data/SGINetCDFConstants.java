@@ -2,8 +2,12 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
-/** Constants for the netCDF data. */
-public interface SGINetCDFConstants {
+/** A final class for constants for the netCDF data. */
+public final class SGINetCDFConstants {
+
+  private SGINetCDFConstants() {
+    /* uninstantiable */
+  }
 
   public static final String ATTR_FILL_VALUE = "_FillValue";
 

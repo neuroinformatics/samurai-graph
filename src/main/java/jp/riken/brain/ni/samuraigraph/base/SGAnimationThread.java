@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 /** A class of the animation. */
-public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnimationConstants {
+public class SGAnimationThread extends Thread implements SGIDisposable {
 
   /** An object which has data sources of the animation. */
   protected SGIAnimation[] mAnimations = null;
@@ -30,7 +30,7 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
   private static final long MIN_SLEEP_TIME = 10L;
 
   /** Frame rate. */
-  private double mFrameRate = FRAME_RATE_INIT;
+  private double mFrameRate = SGIAnimationConstants.FRAME_RATE_INIT;
 
   /** A flag for loop playback . */
   private boolean mLoopPlaybackFlag = false;

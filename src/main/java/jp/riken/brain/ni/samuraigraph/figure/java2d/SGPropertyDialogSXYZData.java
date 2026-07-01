@@ -19,17 +19,14 @@ import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupDialog;
 
 /** */
-public class SGPropertyDialogSXYZData extends SGDataDialog
-    implements SGIDataColumnTypeConstants, SGINetCDFConstants, SGITwoAxesDialog {
+public class SGPropertyDialogSXYZData extends SGDataDialog implements SGITwoAxesDialog {
 
   /** Serial Version UID */
   private static final long serialVersionUID = 4413621536454191591L;

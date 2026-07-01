@@ -21,14 +21,12 @@ import jp.riken.brain.ni.samuraigraph.data.SGDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupDialog;
 
 /** A dialog to set the properties of two-dimensional vector type data. */
-public class SGPropertyDialogVXYData extends SGDataDialog
-    implements SGINetCDFConstants, SGITwoAxesDialog {
+public class SGPropertyDialogVXYData extends SGDataDialog implements SGITwoAxesDialog {
 
   // serialVersionUID
   private static final long serialVersionUID = -8568651377496230416L;

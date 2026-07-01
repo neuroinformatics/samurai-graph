@@ -39,7 +39,7 @@ import org.xml.sax.SAXException;
  * A class with utility methods which are used to transform a text string into a value such as
  * number or color, and vice versa.
  */
-public class SGUtilityText implements SGIPropertyFileConstants {
+public class SGUtilityText {
 
   /**
    * Create a string with superscript.
@@ -1025,9 +1025,9 @@ public class SGUtilityText implements SGIPropertyFileConstants {
   private static class PropertyEntityResolver implements EntityResolver {
     public InputSource resolveEntity(final String publicId, final String systemId)
         throws SAXException, IOException {
-      if (publicId.startsWith(PROPERTY_FILE_PUBLIC_ID)
-          && systemId.startsWith(PROPERTY_FILE_SYSTEM_ID)) {
-        String name = SGIConstants.RESOURCES_DIRNAME + PROPERTY_DTD_FILE_NAME;
+      if (publicId.startsWith(SGIPropertyFileConstants.PROPERTY_FILE_PUBLIC_ID)
+          && systemId.startsWith(SGIPropertyFileConstants.PROPERTY_FILE_SYSTEM_ID)) {
+        String name = SGIConstants.RESOURCES_DIRNAME + SGIPropertyFileConstants.PROPERTY_DTD_FILE_NAME;
         InputStream in = this.getClass().getResourceAsStream(name);
         return new InputSource(in);
       }

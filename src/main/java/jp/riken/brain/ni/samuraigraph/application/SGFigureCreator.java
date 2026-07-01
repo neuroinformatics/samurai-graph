@@ -37,7 +37,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /** */
-public class SGFigureCreator implements SGIFigureConstants {
+public class SGFigureCreator {
 
   // 2D class names
   private static final String CLASS_NAME_OF_AXIS_ELEMENT_2D =
@@ -798,8 +798,10 @@ public class SGFigureCreator implements SGIFigureConstants {
       figure.drawbackFigure();
     } else {
       // set the default location
-      figure.setFigureX(DEFAULT_FIGURE_X, FIGURE_LOCATION_UNIT);
-      figure.setFigureY(DEFAULT_FIGURE_Y, FIGURE_LOCATION_UNIT);
+      figure.setFigureX(
+          SGIFigureConstants.DEFAULT_FIGURE_X, SGIFigureConstants.FIGURE_LOCATION_UNIT);
+      figure.setFigureY(
+          SGIFigureConstants.DEFAULT_FIGURE_Y, SGIFigureConstants.FIGURE_LOCATION_UNIT);
     }
 
     // initialize the history of the properties

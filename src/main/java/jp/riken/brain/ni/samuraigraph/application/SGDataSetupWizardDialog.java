@@ -26,9 +26,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 public abstract class SGDataSetupWizardDialog extends SGWizardDialog
     implements PropertyChangeListener,
         DocumentListener,
-        ItemListener,
-        SGIDataColumnTypeConstants,
-        SGIApplicationTextConstants {
+        ItemListener {
 
   private static final long serialVersionUID = -225586291971946590L;
 
@@ -197,7 +195,7 @@ public abstract class SGDataSetupWizardDialog extends SGWizardDialog
     }
     if (!ok) {
       SGUtility.showMessageDialog(
-          this, MSG_INVALID_INPUT_VALUE, SGIConstants.TITLE_ERROR, JOptionPane.ERROR_MESSAGE);
+          this, SGIApplicationTextConstants.MSG_INVALID_INPUT_VALUE, SGIConstants.TITLE_ERROR, JOptionPane.ERROR_MESSAGE);
       return false;
     }
     return super.onOK();

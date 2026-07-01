@@ -11,7 +11,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGIVXYDataConstants;
 
 public abstract class SGElementGroupArrowForData extends SGElementGroupArrow
-    implements SGIVXYDataConstants, SGIDataCommandConstants {
+    implements SGIVXYDataConstants {
 
   /** The default constructor. */
   public SGElementGroupArrowForData() {
@@ -99,25 +99,25 @@ public abstract class SGElementGroupArrowForData extends SGElementGroupArrow
   protected boolean getProperties(SGPropertyMap map) {
     SGPropertyUtility.addProperty(
         map,
-        COM_DATA_ARROW_LINE_WIDTH,
+        SGIDataCommandConstants.COM_DATA_ARROW_LINE_WIDTH,
         SGUtility.getExportLineWidth(this.getLineWidth(SGIConstants.LINE_WIDTH_UNIT)),
         SGIConstants.LINE_WIDTH_UNIT);
     SGPropertyUtility.addProperty(
-        map, COM_DATA_ARROW_LINE_TYPE, SGDrawingElementLine.getLineTypeName(this.getLineType()));
+        map, SGIDataCommandConstants.COM_DATA_ARROW_LINE_TYPE, SGDrawingElementLine.getLineTypeName(this.getLineType()));
     SGPropertyUtility.addProperty(
         map,
-        COM_DATA_ARROW_HEAD_SIZE,
+        SGIDataCommandConstants.COM_DATA_ARROW_HEAD_SIZE,
         SGUtility.getExportValue(
             this.getHeadSize(ARROW_HEAD_SIZE_UNIT), ARROW_HEAD_SIZE_MINIMAL_ORDER),
         ARROW_HEAD_SIZE_UNIT);
-    SGPropertyUtility.addProperty(map, COM_DATA_ARROW_COLOR, this.getColor());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ARROW_COLOR, this.getColor());
     SGPropertyUtility.addProperty(
         map,
-        COM_DATA_ARROW_START_TYPE,
+        SGIDataCommandConstants.COM_DATA_ARROW_START_TYPE,
         SGDrawingElementArrow.getArrowHeadTypeName(this.getStartHeadType()));
     SGPropertyUtility.addProperty(
         map,
-        COM_DATA_ARROW_END_TYPE,
+        SGIDataCommandConstants.COM_DATA_ARROW_END_TYPE,
         SGDrawingElementArrow.getArrowHeadTypeName(this.getEndHeadType()));
     StringBuffer sbAngle = new StringBuffer();
     sbAngle.append('(');
@@ -127,7 +127,7 @@ public abstract class SGElementGroupArrowForData extends SGElementGroupArrow
     sbAngle.append(
         SGUtility.getExportValue(this.getHeadCloseAngle(), ARROW_HEAD_ANGLE_MINIMAL_ORDER));
     sbAngle.append(')');
-    SGPropertyUtility.addProperty(map, COM_DATA_ARROW_HEAD_ANGLE, sbAngle.toString());
+    SGPropertyUtility.addProperty(map, SGIDataCommandConstants.COM_DATA_ARROW_HEAD_ANGLE, sbAngle.toString());
     return true;
   }
 }

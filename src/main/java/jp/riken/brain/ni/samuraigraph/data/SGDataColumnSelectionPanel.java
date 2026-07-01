@@ -45,11 +45,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTable;
 
 /** A panel to select the data columns. */
 public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
-    implements SGIDataColumnTypeConstants,
-        MouseWheelListener,
-        ActionListener,
-        PropertyChangeListener,
-        SGIDataSetupTableHolder {
+    implements MouseWheelListener, ActionListener, PropertyChangeListener, SGIDataSetupTableHolder {
 
   /** Serial Version UID */
   private static final long serialVersionUID = 4393429488857680488L;

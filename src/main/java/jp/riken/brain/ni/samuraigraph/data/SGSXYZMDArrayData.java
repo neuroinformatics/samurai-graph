@@ -343,11 +343,11 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     for (int ii = 0; ii < array.length; ii++) {
       SGMDArrayVariable var = vars[ii];
       if (var.equals(this.mXVariable)) {
-        array[ii] = X_VALUE;
+        array[ii] = SGIDataColumnTypeConstants.X_VALUE;
       } else if (var.equals(this.mYVariable)) {
-        array[ii] = Y_VALUE;
+        array[ii] = SGIDataColumnTypeConstants.Y_VALUE;
       } else if (var.equals(this.mZVariable)) {
-        array[ii] = Z_VALUE;
+        array[ii] = SGIDataColumnTypeConstants.Z_VALUE;
       } else {
         array[ii] = "";
       }
@@ -372,18 +372,18 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     for (int ii = 0; ii < columns.length; ii++) {
       SGMDArrayVariable var = vars[ii];
       String valueType = var.getValueType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.X_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         xVar = var;
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Y_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         yVar = var;
-      } else if (SGDataUtility.isEqualColumnType(Z_VALUE, columns[ii])) {
-        if (!VALUE_TYPE_NUMBER.equals(valueType)) {
+      } else if (SGDataUtility.isEqualColumnType(SGIDataColumnTypeConstants.Z_VALUE, columns[ii])) {
+        if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         zVar = var;
@@ -538,10 +538,10 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
         sb.append(':');
         sb.append(yIndex);
       }
-      el.setAttribute(KEY_Z_VALUE_NAME, sb.toString());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_Z_VALUE_NAME, sb.toString());
 
     } else if (SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
-      el.setAttribute(KEY_Z_VALUE_NAME, this.mZVariable.getName());
+      el.setAttribute(SGIDataPropertyKeyConstants.KEY_Z_VALUE_NAME, this.mZVariable.getName());
     }
 
     return true;
@@ -815,12 +815,12 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
 
   @Override
   protected String getXValueKey() {
-    return KEY_X_VALUE_NAME;
+    return SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME;
   }
 
   @Override
   protected String getYValueKey() {
-    return KEY_Y_VALUE_NAME;
+    return SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME;
   }
 
   @Override
@@ -1055,13 +1055,13 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     if (this.mXVariable != null) {
       String strX = this.getOneDimensionalVarCommandString(this.mXVariable);
       varList.add(strX);
-      columnTypeList.add(X_VALUE);
+      columnTypeList.add(SGIDataColumnTypeConstants.X_VALUE);
     }
 
     if (this.mYVariable != null) {
       String strY = this.getOneDimensionalVarCommandString(this.mYVariable);
       varList.add(strY);
-      columnTypeList.add(Y_VALUE);
+      columnTypeList.add(SGIDataColumnTypeConstants.Y_VALUE);
     }
     final String strZ;
     if (this.isIndexAvailable()) {
@@ -1074,7 +1074,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
               SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
     }
     varList.add(strZ);
-    columnTypeList.add(Z_VALUE);
+    columnTypeList.add(SGIDataColumnTypeConstants.Z_VALUE);
   }
 
   /**
@@ -1254,7 +1254,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   @Override
   public SGIntegerSeriesSet getDataViewerColStride(String columnType) {
     SGIntegerSeriesSet ret = null;
-    if (!this.isIndexAvailable() && Z_VALUE.equals(columnType)) {
+    if (!this.isIndexAvailable() && SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
       if (this.isStrideAvailable()) {
         ret = this.mXStride;
       } else {
@@ -1274,7 +1274,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
       if (this.isIndexAvailable()) {
         ret = this.mIndexStride;
       } else {
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           ret = this.mXStride;
         } else {
           ret = this.mYStride;
@@ -1285,7 +1285,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
       if (this.isIndexAvailable()) {
         len = this.getZVariable().getGenericDimensionLength();
       } else {
-        if (X_VALUE.equals(columnType)) {
+        if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
           len = this.getXDimensionLength();
         } else {
           len = this.getYDimensionLength();
@@ -1455,12 +1455,12 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   @Override
   protected MDDoubleArray setEditedValues(
       IHDF5Writer writer, SGMDArrayVariable var, MDDoubleArray array) {
-    return this.setEditedValues(writer, var, array, X_VALUE, Y_VALUE, new String[] {Z_VALUE});
+    return this.setEditedValues(writer, var, array, SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE, new String[] {SGIDataColumnTypeConstants.Z_VALUE});
   }
 
   @Override
   protected MLDouble setEditedValues(SGMDArrayVariable var, MLDouble array) {
-    return this.setEditedValues(var, array, X_VALUE, Y_VALUE, new String[] {Z_VALUE});
+    return this.setEditedValues(var, array, SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE, new String[] {SGIDataColumnTypeConstants.Z_VALUE});
   }
 
   @Override
@@ -1470,11 +1470,11 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     if (this.isIndexAvailable()) {
       ret = super.getDataViewerCell(cell, columnType, bStride);
     } else {
-      if (Z_VALUE.equals(columnType)) {
+      if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
         ret = super.getDataViewerCell(cell, columnType, bStride);
-      } else if (X_VALUE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
         ret = this.getDataViewerCellX(cell, bStride);
-      } else if (Y_VALUE.equals(columnType)) {
+      } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
         ret = this.getDataViewerCellY(cell, bStride);
       }
     }

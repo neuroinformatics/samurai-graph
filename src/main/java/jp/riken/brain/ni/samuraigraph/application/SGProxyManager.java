@@ -7,7 +7,7 @@ import java.util.prefs.Preferences;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 
 /** A class to handle proxy connection. */
-class SGProxyManager implements ActionListener, SGIPreferencesConstants {
+class SGProxyManager implements ActionListener {
 
   /** A flag whether access to the internet is direct. */
   private boolean mDirectAccessFlag = true;
@@ -23,9 +23,9 @@ class SGProxyManager implements ActionListener, SGIPreferencesConstants {
     super();
 
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
-    final boolean direct = pref.getBoolean(PREF_KEY_DIRECT_ACCESS, true);
-    final String hostName = pref.get(PREF_KEY_PROXY_HOST_NAME, "");
-    final int portNumber = pref.getInt(PREF_KEY_PROXY_PORT_NUMBER, -1);
+    final boolean direct = pref.getBoolean(SGIPreferencesConstants.PREF_KEY_DIRECT_ACCESS, true);
+    final String hostName = pref.get(SGIPreferencesConstants.PREF_KEY_PROXY_HOST_NAME, "");
+    final int portNumber = pref.getInt(SGIPreferencesConstants.PREF_KEY_PROXY_PORT_NUMBER, -1);
 
     this.mDirectAccessFlag = direct;
     if ("".equals(hostName) == false) {
@@ -134,9 +134,9 @@ class SGProxyManager implements ActionListener, SGIPreferencesConstants {
 
       // set to the preferences
       Preferences pref = Preferences.userNodeForPackage(this.getClass());
-      pref.putBoolean(PREF_KEY_DIRECT_ACCESS, this.mDirectAccessFlag);
-      pref.put(PREF_KEY_PROXY_HOST_NAME, this.mProxyHostName);
-      pref.putInt(PREF_KEY_PROXY_PORT_NUMBER, this.mProxyPortNumber);
+      pref.putBoolean(SGIPreferencesConstants.PREF_KEY_DIRECT_ACCESS, this.mDirectAccessFlag);
+      pref.put(SGIPreferencesConstants.PREF_KEY_PROXY_HOST_NAME, this.mProxyHostName);
+      pref.putInt(SGIPreferencesConstants.PREF_KEY_PROXY_PORT_NUMBER, this.mProxyPortNumber);
     }
   }
 }

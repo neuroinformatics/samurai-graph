@@ -56,8 +56,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /** An object to draw grid lines. */
-public class SGFigureElementGrid extends SGFigureElement2D
-    implements SGIFigureElementGrid, SGIFigureConstants {
+public class SGFigureElementGrid extends SGFigureElement2D implements SGIFigureElementGrid {
 
   /** An SGIAxisElement object. */
   private SGIFigureElementAxis mAxisElement;
@@ -1427,17 +1426,17 @@ public class SGFigureElementGrid extends SGFigureElement2D
     SGPropertyMap map = new SGPropertyMap();
     this.addProperties(
         map,
-        COM_FIGURE_GRID_VISIBLE,
-        COM_FIGURE_GRID_AXIS_X,
-        COM_FIGURE_GRID_AXIS_Y,
-        COM_FIGURE_GRID_AUTO,
-        COM_FIGURE_GRID_STEP_X,
-        COM_FIGURE_GRID_STEP_Y,
-        COM_FIGURE_GRID_BASE_X,
-        COM_FIGURE_GRID_BASE_Y,
-        COM_FIGURE_GRID_LINE_WIDTH,
-        COM_FIGURE_GRID_LINE_TYPE,
-        COM_FIGURE_GRID_LINE_COLOR);
+        SGIFigureConstants.COM_FIGURE_GRID_VISIBLE,
+        SGIFigureConstants.COM_FIGURE_GRID_AXIS_X,
+        SGIFigureConstants.COM_FIGURE_GRID_AXIS_Y,
+        SGIFigureConstants.COM_FIGURE_GRID_AUTO,
+        SGIFigureConstants.COM_FIGURE_GRID_STEP_X,
+        SGIFigureConstants.COM_FIGURE_GRID_STEP_Y,
+        SGIFigureConstants.COM_FIGURE_GRID_BASE_X,
+        SGIFigureConstants.COM_FIGURE_GRID_BASE_Y,
+        SGIFigureConstants.COM_FIGURE_GRID_LINE_WIDTH,
+        SGIFigureConstants.COM_FIGURE_GRID_LINE_TYPE,
+        SGIFigureConstants.COM_FIGURE_GRID_LINE_COLOR);
     return map;
   }
 

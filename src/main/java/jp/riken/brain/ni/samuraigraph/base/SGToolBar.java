@@ -32,57 +32,55 @@ import javax.swing.SwingUtilities;
 public class SGToolBar extends JToolBar
     implements ActionListener,
         ComponentListener,
-        MouseListener,
-        // PropertyChangeListener,
-        SGIRootObjectConstants {
+        MouseListener {
 
   /** */
   private static final long serialVersionUID = -8958357281404104383L;
 
   // array of filename of icons
   private static final String[] ICON_FILENAME_ARRAY = {
-    NEW_WINDOW_ICON_FILENAME,
-    DRAW_GRAPH_ICON_FILENAME,
-    LOAD_PROPERTY_ICON_FILENAME,
-    SAVE_PROPERTY_ICON_FILENAME,
-    EXPORT_IMAGE_ICON_FILENAME,
-    PRINT_ICON_FILENAME,
-    UNDO_ICON_FILENAME,
-    REDO_ICON_FILENAME,
-    CUT_ICON_FILENAME,
-    COPY_ICON_FILENAME,
-    PASTE_ICON_FILENAME,
-    INSERT_LABEL_ICON_FILENAME,
-    INSERT_SIGDIFF_ICON_FILENAME,
-    INSERT_BREAK_ICON_FILENAME,
-    INSERT_TIMING_ICON_FILENAME,
-    BOUNDING_BOX_ICON_FILENAME,
-    LOCK_ICON_FILENAME,
-    UNLOCK_ICON_FILENAME,
-    HELP_ICON_FILENAME
+    SGIRootObjectConstants.NEW_WINDOW_ICON_FILENAME,
+    SGIRootObjectConstants.DRAW_GRAPH_ICON_FILENAME,
+    SGIRootObjectConstants.LOAD_PROPERTY_ICON_FILENAME,
+    SGIRootObjectConstants.SAVE_PROPERTY_ICON_FILENAME,
+    SGIRootObjectConstants.EXPORT_IMAGE_ICON_FILENAME,
+    SGIRootObjectConstants.PRINT_ICON_FILENAME,
+    SGIRootObjectConstants.UNDO_ICON_FILENAME,
+    SGIRootObjectConstants.REDO_ICON_FILENAME,
+    SGIRootObjectConstants.CUT_ICON_FILENAME,
+    SGIRootObjectConstants.COPY_ICON_FILENAME,
+    SGIRootObjectConstants.PASTE_ICON_FILENAME,
+    SGIRootObjectConstants.INSERT_LABEL_ICON_FILENAME,
+    SGIRootObjectConstants.INSERT_SIGDIFF_ICON_FILENAME,
+    SGIRootObjectConstants.INSERT_BREAK_ICON_FILENAME,
+    SGIRootObjectConstants.INSERT_TIMING_ICON_FILENAME,
+    SGIRootObjectConstants.BOUNDING_BOX_ICON_FILENAME,
+    SGIRootObjectConstants.LOCK_ICON_FILENAME,
+    SGIRootObjectConstants.UNLOCK_ICON_FILENAME,
+    SGIRootObjectConstants.HELP_ICON_FILENAME
   };
 
   // array of commands
   private static final String[] COMMANDS_ARRAY = {
-    MENUBARCMD_CREATE_NEW_WINDOW,
-    MENUBARCMD_DRAW_GRAPH,
-    MENUBARCMD_LOAD_PROPERTY,
-    MENUBARCMD_SAVE_PROPERTY,
-    MENUBARCMD_EXPORT_AS_IMAGE,
-    MENUBARCMD_PRINT,
-    MENUBARCMD_UNDO,
-    MENUBARCMD_REDO,
-    MENUBARCMD_CUT,
-    MENUBARCMD_COPY,
-    MENUBARCMD_PASTE,
-    MENUBARCMD_INSERT_LABEL,
-    MENUBARCMD_INSERT_SIG_DIFF_SYMBOL,
-    MENUBARCMD_INSERT_AXIS_BREAK_SYMBOL,
-    MENUBARCMD_INSERT_TIMING_LINE,
-    MENUBARCMD_BOUNDING_BOX,
-    MENUBARCMD_LOCK,
-    MENUBARCMD_LOCK,
-    MENUBARCMD_HELP
+    SGIRootObjectConstants.MENUBARCMD_CREATE_NEW_WINDOW,
+    SGIRootObjectConstants.MENUBARCMD_DRAW_GRAPH,
+    SGIRootObjectConstants.MENUBARCMD_LOAD_PROPERTY,
+    SGIRootObjectConstants.MENUBARCMD_SAVE_PROPERTY,
+    SGIRootObjectConstants.MENUBARCMD_EXPORT_AS_IMAGE,
+    SGIRootObjectConstants.MENUBARCMD_PRINT,
+    SGIRootObjectConstants.MENUBARCMD_UNDO,
+    SGIRootObjectConstants.MENUBARCMD_REDO,
+    SGIRootObjectConstants.MENUBARCMD_CUT,
+    SGIRootObjectConstants.MENUBARCMD_COPY,
+    SGIRootObjectConstants.MENUBARCMD_PASTE,
+    SGIRootObjectConstants.MENUBARCMD_INSERT_LABEL,
+    SGIRootObjectConstants.MENUBARCMD_INSERT_SIG_DIFF_SYMBOL,
+    SGIRootObjectConstants.MENUBARCMD_INSERT_AXIS_BREAK_SYMBOL,
+    SGIRootObjectConstants.MENUBARCMD_INSERT_TIMING_LINE,
+    SGIRootObjectConstants.MENUBARCMD_BOUNDING_BOX,
+    SGIRootObjectConstants.MENUBARCMD_LOCK,
+    SGIRootObjectConstants.MENUBARCMD_LOCK,
+    SGIRootObjectConstants.MENUBARCMD_HELP
   };
 
   /** Buttons. */
@@ -195,48 +193,48 @@ public class SGToolBar extends JToolBar
     //
 
     this.mCreateNewWindowButton =
-        this.createButton(map, NEW_WINDOW_ICON_FILENAME, TIP_CREATE_NEW_WINDOW);
+        this.createButton(map, SGIRootObjectConstants.NEW_WINDOW_ICON_FILENAME, SGIRootObjectConstants.TIP_CREATE_NEW_WINDOW);
 
-    this.mDrawGraphButton = this.createButton(map, DRAW_GRAPH_ICON_FILENAME, TIP_DRAW_GRAPH);
+    this.mDrawGraphButton = this.createButton(map, SGIRootObjectConstants.DRAW_GRAPH_ICON_FILENAME, SGIRootObjectConstants.TIP_DRAW_GRAPH);
 
     this.mLoadPropertyButton =
-        this.createButton(map, LOAD_PROPERTY_ICON_FILENAME, TIP_LOAD_PROPERTY);
+        this.createButton(map, SGIRootObjectConstants.LOAD_PROPERTY_ICON_FILENAME, SGIRootObjectConstants.TIP_LOAD_PROPERTY);
 
     this.mSavePropertyButton =
-        this.createButton(map, SAVE_PROPERTY_ICON_FILENAME, TIP_SAVE_PROPERTY);
+        this.createButton(map, SGIRootObjectConstants.SAVE_PROPERTY_ICON_FILENAME, SGIRootObjectConstants.TIP_SAVE_PROPERTY);
 
     this.mExportFormatButton =
-        this.createButton(map, EXPORT_IMAGE_ICON_FILENAME, TIP_EXPORT_FORMAT);
+        this.createButton(map, SGIRootObjectConstants.EXPORT_IMAGE_ICON_FILENAME, SGIRootObjectConstants.TIP_EXPORT_FORMAT);
 
-    this.mPrintButton = this.createButton(map, PRINT_ICON_FILENAME, TIP_PRINT);
+    this.mPrintButton = this.createButton(map, SGIRootObjectConstants.PRINT_ICON_FILENAME, SGIRootObjectConstants.TIP_PRINT);
 
-    this.mUndoButton = this.createButton(map, UNDO_ICON_FILENAME, TIP_UNDO);
+    this.mUndoButton = this.createButton(map, SGIRootObjectConstants.UNDO_ICON_FILENAME, SGIRootObjectConstants.TIP_UNDO);
 
-    this.mRedoButton = this.createButton(map, REDO_ICON_FILENAME, TIP_REDO);
+    this.mRedoButton = this.createButton(map, SGIRootObjectConstants.REDO_ICON_FILENAME, SGIRootObjectConstants.TIP_REDO);
 
-    this.mCutButton = this.createButton(map, CUT_ICON_FILENAME, TIP_CUT);
+    this.mCutButton = this.createButton(map, SGIRootObjectConstants.CUT_ICON_FILENAME, SGIRootObjectConstants.TIP_CUT);
 
-    this.mCopyButton = this.createButton(map, COPY_ICON_FILENAME, TIP_COPY);
+    this.mCopyButton = this.createButton(map, SGIRootObjectConstants.COPY_ICON_FILENAME, SGIRootObjectConstants.TIP_COPY);
 
-    this.mPasteButton = this.createButton(map, PASTE_ICON_FILENAME, TIP_PASTE);
+    this.mPasteButton = this.createButton(map, SGIRootObjectConstants.PASTE_ICON_FILENAME, SGIRootObjectConstants.TIP_PASTE);
 
     this.mInsertLabelButton =
-        this.createToggleButton(map, INSERT_LABEL_ICON_FILENAME, TIP_INSERT_LABEL);
+        this.createToggleButton(map, SGIRootObjectConstants.INSERT_LABEL_ICON_FILENAME, SGIRootObjectConstants.TIP_INSERT_LABEL);
 
     this.mInsertSignificantDifferenceSymbolButton =
-        this.createToggleButton(map, INSERT_SIGDIFF_ICON_FILENAME, TIP_INSERT_SIG_DIFF_SYMBOL);
+        this.createToggleButton(map, SGIRootObjectConstants.INSERT_SIGDIFF_ICON_FILENAME, SGIRootObjectConstants.TIP_INSERT_SIG_DIFF_SYMBOL);
 
     this.mInsertBreakButton =
-        this.createToggleButton(map, INSERT_BREAK_ICON_FILENAME, TIP_INSERT_AXIS_BREAK_SYMBOL);
+        this.createToggleButton(map, SGIRootObjectConstants.INSERT_BREAK_ICON_FILENAME, SGIRootObjectConstants.TIP_INSERT_AXIS_BREAK_SYMBOL);
 
     this.mInsertTimingLineButton =
-        this.createToggleButton(map, INSERT_TIMING_ICON_FILENAME, TIP_INSERT_TIMING_LINE);
+        this.createToggleButton(map, SGIRootObjectConstants.INSERT_TIMING_ICON_FILENAME, SGIRootObjectConstants.TIP_INSERT_TIMING_LINE);
 
-    this.mBoundingBoxButton = this.createButton(map, BOUNDING_BOX_ICON_FILENAME, TIP_BOUNDING_BOX);
+    this.mBoundingBoxButton = this.createButton(map, SGIRootObjectConstants.BOUNDING_BOX_ICON_FILENAME, SGIRootObjectConstants.TIP_BOUNDING_BOX);
 
-    this.mLockFigureButton = this.createToggleButton(map, UNLOCK_ICON_FILENAME, TIP_LOCK);
+    this.mLockFigureButton = this.createToggleButton(map, SGIRootObjectConstants.UNLOCK_ICON_FILENAME, SGIRootObjectConstants.TIP_LOCK);
 
-    this.mHelpButton = this.createButton(map, HELP_ICON_FILENAME, TIP_HELP);
+    this.mHelpButton = this.createButton(map, SGIRootObjectConstants.HELP_ICON_FILENAME, SGIRootObjectConstants.TIP_HELP);
 
     // add insert buttons to an original button group
     SGButtonGroup bg = new SGButtonGroup();
@@ -385,7 +383,7 @@ public class SGToolBar extends JToolBar
     p.addSeparator();
 
     // commands
-    String[] commands = TOOLBAR_MENUCMD_ARRAY;
+    String[] commands = SGIRootObjectConstants.TOOLBAR_MENUCMD_ARRAY;
     for (int ii = 0; ii < commands.length; ii++) {
       JCheckBoxMenuItem item = new JCheckBoxMenuItem(commands[ii]);
       item.addActionListener(this);
@@ -506,7 +504,7 @@ public class SGToolBar extends JToolBar
   private void createToolBarMap() {
 
     // commands
-    String[] commands = TOOLBAR_MENUCMD_ARRAY;
+    String[] commands = SGIRootObjectConstants.TOOLBAR_MENUCMD_ARRAY;
 
     JToolBar[] tArray = {
       this.mFileToolBar,
@@ -536,7 +534,7 @@ public class SGToolBar extends JToolBar
     String command = e.getActionCommand();
 
     // from the pop-up menu
-    if (Arrays.asList(TOOLBAR_MENUCMD_ARRAY).contains(command)) {
+    if (Arrays.asList(SGIRootObjectConstants.TOOLBAR_MENUCMD_ARRAY).contains(command)) {
       // set buttons visibility
       this.setToolBarVisible(command, !this.isToolBarVisible(command));
       //            this.mButton.setSelected(false);
@@ -545,7 +543,7 @@ public class SGToolBar extends JToolBar
 
     // from the lock button
     if (source.equals(this.mLockFigureButton)) {
-      this.setButtonSelected(MENUBARCMD_LOCK, this.mLockFigureButton.isSelected());
+      this.setButtonSelected(SGIRootObjectConstants.MENUBARCMD_LOCK, this.mLockFigureButton.isSelected());
     }
 
     // notify the command to listeners
@@ -622,7 +620,7 @@ public class SGToolBar extends JToolBar
     AbstractButton btn = (AbstractButton) obj;
     btn.setSelected(b);
 
-    if (command.equals(MENUBARCMD_LOCK)) {
+    if (command.equals(SGIRootObjectConstants.MENUBARCMD_LOCK)) {
       this.setLockButtonIcon(b);
     }
   }
@@ -720,9 +718,9 @@ public class SGToolBar extends JToolBar
 
     ImageIcon iconLock;
     if (flag) {
-      iconLock = SGUtility.createIcon(this, LOCK_ICON_FILENAME);
+      iconLock = SGUtility.createIcon(this, SGIRootObjectConstants.LOCK_ICON_FILENAME);
     } else {
-      iconLock = SGUtility.createIcon(this, UNLOCK_ICON_FILENAME);
+      iconLock = SGUtility.createIcon(this, SGIRootObjectConstants.UNLOCK_ICON_FILENAME);
     }
 
     this.mLockFigureButton.setIcon(iconLock);
@@ -784,7 +782,7 @@ public class SGToolBar extends JToolBar
    */
   public String[] getToolBarPattern() {
     Component[] com = this.getToolBarArray();
-    String[] keys = TOOLBAR_MENUCMD_ARRAY;
+    String[] keys = SGIRootObjectConstants.TOOLBAR_MENUCMD_ARRAY;
     Map<String, JToolBar> map = this.mToolBarMap;
 
     List<String> keyList = new ArrayList<String>();
@@ -827,7 +825,7 @@ public class SGToolBar extends JToolBar
     }
 
     Map<String, JToolBar> map = this.mToolBarMap;
-    String[] keys = TOOLBAR_MENUCMD_ARRAY;
+    String[] keys = SGIRootObjectConstants.TOOLBAR_MENUCMD_ARRAY;
     for (int ii = 0; ii < keys.length; ii++) {
       final boolean visible = (visibleList.contains(keys[ii]));
       JToolBar bar = map.get(keys[ii]);
