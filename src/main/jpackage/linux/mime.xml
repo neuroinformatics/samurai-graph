@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/x-samurai-graph-property">
+        <comment>Samurai Graph Property File</comment>
+        <glob pattern="*.sgp"/>
+        <icon name="samurai-graph-property"/>
+    </mime-type>
+    <mime-type type="application/x-samurai-graph-archive">
+        <comment>Samurai Graph Archive File</comment>
+        <glob pattern="*.sga"/>
+        <icon name="samurai-graph-archive"/>
+    </mime-type>
+    <mime-type type="application/x-samurai-graph-script">
+        <comment>Samurai Graph Script File</comment>
+        <glob pattern="*.sgs"/>
+        <icon name="samurai-graph-script"/>
+    </mime-type>
+</mime-info>

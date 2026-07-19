@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Samurai Graph
+Comment=Scientific graphing application for visualizing experimental data
+Exec=samurai-graph %f
+Icon=samurai-graph
+Type=Application
+Categories=Science;Education;
+MimeType=application/x-samurai-graph-property;application/x-samurai-graph-archive;application/x-samurai-graph-script;
+Terminal=false
+StartupWMClass=jp.riken.brain.ni.samuraigraph.application.SGDrawingServer

@@ -1,0 +1,39 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0 https://maven.apache.org/xsd/assembly-2.2.0.xsd">
+    <id>jpackage-input</id>
+    <formats>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <files>
+        <!-- Fat JAR as the main application JAR -->
+        <file>
+            <source>${project.build.directory}/${project.build.finalName}.jar</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        <!-- License files -->
+        <file>
+            <source>${project.basedir}/LICENSE.txt</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        <file>
+            <source>${project.basedir}/COPYING.txt</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+    </files>
+
+    <fileSets>
+        <!-- Example data files -->
+        <fileSet>
+            <directory>${project.basedir}/examples/data</directory>
+            <outputDirectory>/examples</outputDirectory>
+            <includes>
+                <include>*.txt</include>
+                <include>*.nc</include>
+                <include>*.sgp</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>

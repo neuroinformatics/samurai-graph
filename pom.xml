@@ -26,6 +26,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <app.name>Samurai Graph</app.name>
+        <app.vendor>RIKEN Japan</app.vendor>
+        <main.class>jp.riken.brain.ni.samuraigraph.application.SGDrawingServer</main.class>
     </properties>
 
     <build>
@@ -209,8 +212,206 @@
                 </executions>
             </plugin>
 
+            <!-- Create jpackage input directory with fat JAR, licenses, and examples -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.7.1</version>
+                <executions>
+                    <execution>
+                        <id>jpackage-input</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/jpackage-input.xml</descriptor>
+                            </descriptors>
+                            <tarLongFileMode>posix</tarLongFileMode>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Windows jpackage profile: generates .exe installer with file associations -->
+        <profile>
+            <id>jpackage-windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.akman</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <version>0.1.5</version>
+                        <executions>
+                            <execution>
+                                <id>jpackage-windows-exe</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jpackage</goal>
+                                </goals>
+                                <configuration>
+                                    <name>${app.name}</name>
+                                    <appversion>${project.version}</appversion>
+                                    <vendor>${app.vendor}</vendor>
+                                    <mainclass>${main.class}</mainclass>
+                                    <mainjar>${project.build.finalName}.jar</mainjar>
+                                    <input>${project.build.directory}/${project.build.finalName}-jpackage-input</input>
+                                    <dest>${project.build.directory}/dist</dest>
+                                    <type>EXE</type>
+                                    <icon>${project.basedir}/src/main/jpackage/windows/samurai-graph.ico</icon>
+                                    <winmenu>true</winmenu>
+                                    <winshortcut>true</winshortcut>
+                                    <windirchooser>true</windirchooser>
+                                    <winupgradeuuid>58163ba0-83fa-4225-acda-50f322bc2e2a</winupgradeuuid>
+                                    <winperuserinstall>true</winperuserinstall>
+                                    <fileassociations>
+                                        <fileAssociation>
+                                            <extension>sgp</extension>
+                                            <mimeType>application/x-samurai-graph-property</mimeType>
+                                            <description>Samurai Graph Property File</description>
+                                            <icon>${project.basedir}/src/main/jpackage/windows/samurai-graph-property.ico</icon>
+                                        </fileAssociation>
+                                        <fileAssociation>
+                                            <extension>sga</extension>
+                                            <mimeType>application/x-samurai-graph-archive</mimeType>
+                                            <description>Samurai Graph Archive File</description>
+                                            <icon>${project.basedir}/src/main/jpackage/windows/samurai-graph-archive.ico</icon>
+                                        </fileAssociation>
+                                        <fileAssociation>
+                                            <extension>sgs</extension>
+                                            <mimeType>application/x-samurai-graph-script</mimeType>
+                                            <description>Samurai Graph Script File</description>
+                                            <icon>${project.basedir}/src/main/jpackage/windows/samurai-graph-script.ico</icon>
+                                        </fileAssociation>
+                                    </fileassociations>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- macOS jpackage profile: generates .dmg installer -->
+        <profile>
+            <id>jpackage-mac</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.akman</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <version>0.1.5</version>
+                        <executions>
+                            <execution>
+                                <id>jpackage-mac-dmg</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jpackage</goal>
+                                </goals>
+                                <configuration>
+                                    <name>${app.name}</name>
+                                    <appversion>${project.version}</appversion>
+                                    <vendor>${app.vendor}</vendor>
+                                    <mainclass>${main.class}</mainclass>
+                                    <mainjar>${project.build.finalName}.jar</mainjar>
+                                    <input>${project.build.directory}/${project.build.finalName}-jpackage-input</input>
+                                    <dest>${project.build.directory}/dist</dest>
+                                    <type>DMG</type>
+                                    <icon>${project.basedir}/src/main/jpackage/mac/samurai-graph.icns</icon>
+                                    <macpackageidentifier>jp.riken.brain.ni.samuraigraph</macpackageidentifier>
+                                    <macpackagename>${app.name}</macpackagename>
+                                    <resourcedir>${project.basedir}/src/main/jpackage/mac</resourcedir>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Linux jpackage profile: generates both .deb and .rpm installers -->
+        <profile>
+            <id>jpackage-linux</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>Linux</name>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.akman</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <version>0.1.5</version>
+                        <executions>
+                            <!-- DEB package (Debian/Ubuntu) -->
+                            <execution>
+                                <id>jpackage-linux-deb</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jpackage</goal>
+                                </goals>
+                                <configuration>
+                                    <name>${app.name}</name>
+                                    <appversion>${project.version}</appversion>
+                                    <vendor>${app.vendor}</vendor>
+                                    <mainclass>${main.class}</mainclass>
+                                    <mainjar>${project.build.finalName}.jar</mainjar>
+                                    <input>${project.build.directory}/${project.build.finalName}-jpackage-input</input>
+                                    <dest>${project.build.directory}/dist</dest>
+                                    <type>DEB</type>
+                                    <icon>${project.basedir}/src/main/jpackage/linux/samurai-graph.png</icon>
+                                    <linuxpackagename>samurai-graph</linuxpackagename>
+                                    <linuxappcategory>Science</linuxappcategory>
+                                    <linuxshortcut>true</linuxshortcut>
+                                    <linuxmenugroup>Science</linuxmenugroup>
+                                </configuration>
+                            </execution>
+                            <!-- RPM package (RHEL/Fedora/CentOS) -->
+                            <execution>
+                                <id>jpackage-linux-rpm</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jpackage</goal>
+                                </goals>
+                                <configuration>
+                                    <name>${app.name}</name>
+                                    <appversion>${project.version}</appversion>
+                                    <vendor>${app.vendor}</vendor>
+                                    <mainclass>${main.class}</mainclass>
+                                    <mainjar>${project.build.finalName}.jar</mainjar>
+                                    <input>${project.build.directory}/${project.build.finalName}-jpackage-input</input>
+                                    <dest>${project.build.directory}/dist</dest>
+                                    <type>RPM</type>
+                                    <icon>${project.basedir}/src/main/jpackage/linux/samurai-graph.png</icon>
+                                    <linuxpackagename>samurai-graph</linuxpackagename>
+                                    <linuxappcategory>Science</linuxappcategory>
+                                    <linuxshortcut>true</linuxshortcut>
+                                    <linuxmenugroup>Science</linuxmenugroup>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <repositories>
         <repository>

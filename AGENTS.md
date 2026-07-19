@@ -49,7 +49,26 @@ mvn compile
 
 ---
 
-## 3. General Architecture & Guidelines
+## 3. Distribution Build (jpackage)
+
+The project uses [jpackage](https://docs.oracle.com/en/java/javase/21/jpackage/) to create native platform installers. Each platform's installer must be built on that platform.
+
+| Platform | Command | Output |
+|----------|---------|--------|
+| Windows | `mvn clean package -Pjpackage-windows` | `target/dist/Samurai Graph-<ver>.exe` |
+| macOS | `mvn clean package -Pjpackage-mac` | `target/dist/Samurai Graph-<ver>.dmg` |
+| Linux | `JAVA_HOME=/path/to/temurin-jdk mvn clean package -Pjpackage-linux` | `target/dist/samurai-graph-<ver>.deb` + `.rpm` |
+
+> [!IMPORTANT]
+> On Fedora/RHEL, the system OpenJDK package modifies `java.security`, which causes `jlink` (used internally by `jpackage`) to fail with `"Error: .../java.security has been modified"`. Use a non-distro JDK (e.g. Eclipse Temurin) via `JAVA_HOME` when building Linux packages:
+>
+> ```bash
+> JAVA_HOME=/usr/lib/jvm/temurin-21-jdk mvn clean package -Pjpackage-linux
+> ```
+
+---
+
+## 4. General Architecture & Guidelines
 
 - **Java Version:** The project is configured for **Java 21**. Do not use language features or APIs that are incompatible with Java 21.
 - **Existing Code:** Respect the existing architecture and patterns. If you need to make changes to GUI components or backend data parsing, search the codebase for similar implementations first to ensure consistency.

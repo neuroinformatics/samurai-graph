@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>ja</string>
+    <key>CFBundleDisplayName</key>
+    <string>SAMURAI GRAPH</string>
+    <key>CFBundleExecutable</key>
+    <string>Samurai Graph</string>
+    <key>CFBundleIconFile</key>
+    <string>samurai-graph.icns</string>
+    <key>CFBundleIdentifier</key>
+    <string>jp.riken.brain.ni.samuraigraph</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>SAMURAI GRAPH</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>@APP_VERSION@</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>@APP_VERSION@</string>
+    <key>CSResourcesFileMapped</key>
+    <true/>
+    <key>LSMinimumSystemVersion</key>
+    <string>10.13</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSHumanReadableCopyright</key>
+    <string>Copyright 2024 RIKEN Japan</string>
+    <key>NSSupportsAutomaticGraphicsSwitching</key>
+    <true/>
+    <key>CFBundleDocumentTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>SAMURAI GRAPH Property</string>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>sgp</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>samurai-graph-property.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>application/x-samurai-graph-property</string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>SAMURAI GRAPH Archive</string>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>sga</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>samurai-graph-archive.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>application/x-samurai-graph-archive</string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>SAMURAI GRAPH Script</string>
+            <key>CFBundleTypeExtensions</key>
+            <array>
+                <string>sgs</string>
+            </array>
+            <key>CFBundleTypeIconFile</key>
+            <string>samurai-graph-script.icns</string>
+            <key>CFBundleTypeMIMETypes</key>
+            <array>
+                <string>application/x-samurai-graph-script</string>
+            </array>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>LSHandlerRank</key>
+            <string>Alternate</string>
+        </dict>
+    </array>
+</dict>
+</plist>
