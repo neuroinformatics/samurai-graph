@@ -18,6 +18,12 @@ for visualizing experimental data from various file formats.
 ## System Requirements
 
 - Java 21 or later
+- **NetCDF4/HDF5 support (optional):** The NetCDF-C library must be installed
+  on the system for NetCDF4 files to be readable.
+  - **Linux:** `libnetcdf-dev` (Debian/Ubuntu), `netcdf` (Fedora/RHEL)
+  - **macOS:** `netcdf-c` via Homebrew (`brew install netcdf-c`)
+  - **Windows:** NetCDF-C redistributable must be installed and on `PATH`
+  - Without it, only NetCDF3 files are supported.
 
 ## Installation
 
