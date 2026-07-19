@@ -476,6 +476,12 @@
             <artifactId>cdm-core</artifactId>
             <version>5.10.0</version>
         </dependency>
+        <dependency>
+            <groupId>edu.ucar</groupId>
+            <artifactId>netcdf4</artifactId>
+            <version>5.10.0</version>
+            <scope>runtime</scope>
+        </dependency>
         <!-- Required at compile time for cdm-core ImmutableList API (cdm-core only declares it as runtime) -->
         <dependency>
             <groupId>com.google.guava</groupId>
