@@ -47,6 +47,16 @@ mvn compile
 
 *(Note: The `pom.xml` is configured to automatically pass `-Xlint:all` to the compiler. Carefully review the output of `mvn compile` and resolve any compiler warnings introduced by your changes.)*
 
+### Step 4: Run Tests
+
+Execute the test suite to verify no existing tests are broken:
+
+```bash
+mvn test
+```
+
+Review the test output for any failures or errors. Write new tests for new functionality and update existing tests when behavior changes.
+
 ---
 
 ## 3. Distribution Build (jpackage)
@@ -68,7 +78,16 @@ The project uses [jpackage](https://docs.oracle.com/en/java/javase/21/jpackage/)
 
 ---
 
-## 4. General Architecture & Guidelines
+## 4. Testing
+
+- **Test Framework:** JUnit 5 (Jupiter) with Maven Surefire plugin.
+- **Test Location:** Tests reside in `src/test/java/`, mirroring the `src/main/java/` package structure.
+- **New Code:** Write unit tests for new public methods and classes.
+- **Bug Fixes:** Add regression tests when fixing bugs.
+
+---
+
+## 5. General Architecture & Guidelines
 
 - **Java Version:** The project is configured for **Java 21**. Do not use language features or APIs that are incompatible with Java 21.
 - **Existing Code:** Respect the existing architecture and patterns. If you need to make changes to GUI components or backend data parsing, search the codebase for similar implementations first to ensure consistency.

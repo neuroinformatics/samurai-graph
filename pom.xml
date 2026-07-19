@@ -147,6 +147,13 @@
                 </configuration>
             </plugin>
 
+            <!-- Surefire: run JUnit 5 tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.3</version>
+            </plugin>
+
             <!-- Suppress unused declared dependencies warnings for runtime-only deps -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -533,6 +540,14 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j2-impl</artifactId>
             <version>2.26.0</version>
+        </dependency>
+
+        <!-- Testing: JUnit 5 (Jupiter) -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.12.2</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

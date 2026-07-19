@@ -77,6 +77,7 @@ samurai-graph/
 ├── src/main/java/       # Application source code
 ├── src/main/resources/  # Icons, properties, DTDs
 ├── src/main/jpackage/   # Platform-specific installer resources
+├── src/test/java/       # JUnit 5 test suite
 ├── plugins/jna/         # JNA native plugin (C source)
 ├── examples/data/       # Sample data and property files
 ├── changelog/           # Release notes (product.xml → ChangeLog.html)
@@ -110,6 +111,20 @@ mvn clean package -Pjpackage-mac
 # Linux (use non-distro JDK on Fedora/RHEL):
 JAVA_HOME=/usr/lib/jvm/temurin-21-jdk mvn clean package -Pjpackage-linux
 ```
+
+### Testing
+
+This project uses **JUnit 5** (Jupiter) with the Maven Surefire plugin.
+
+```bash
+# Run all tests
+mvn test
+
+# Run a single test class
+mvn -Dtest=SGPeriodTest test
+```
+
+The test suite covers utility and data classes in packages such as `lib.mdarray`, `base`, `data`, and `figure`.
 
 See [AGENTS.md](AGENTS.md) for detailed contribution guidelines.
 
