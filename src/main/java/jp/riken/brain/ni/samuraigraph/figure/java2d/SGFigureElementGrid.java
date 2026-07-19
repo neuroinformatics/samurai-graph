@@ -40,6 +40,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementTimingLine;
 import jp.riken.brain.ni.samuraigraph.base.SGINode;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGISelectable;
+import jp.riken.brain.ni.samuraigraph.base.SGPeriod;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
@@ -49,7 +50,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGIFigureGridConstants;
-import org.joda.time.Period;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -297,13 +297,13 @@ public class SGFigureElementGrid extends SGFigureElement2D
     if (toDateMode) {
       if (value instanceof SGAxisDoubleStepValue) {
         SGAxisDoubleStepValue dValue = (SGAxisDoubleStepValue) value;
-        Period p = SGDateUtility.toPeriodOfDays(dValue.getValue());
+        SGPeriod p = SGDateUtility.toPeriodOfDays(dValue.getValue());
         ret = new SGAxisDateStepValue(p);
       }
     } else {
       if (value instanceof SGAxisDateStepValue) {
         SGAxisDateStepValue dValue = (SGAxisDateStepValue) value;
-        Period p = dValue.getPeriod();
+        SGPeriod p = dValue.getPeriod();
         final double dateValue = SGDateUtility.toApproximateDateValue(p);
         ret = new SGAxisDoubleStepValue(dateValue);
       }
@@ -826,7 +826,7 @@ public class SGFigureElementGrid extends SGFigureElement2D
     if (num != null) {
       step = new SGAxisDoubleStepValue(num.doubleValue());
     } else {
-      Period p = SGUtilityText.getPeriod(str);
+      SGPeriod p = SGUtilityText.getPeriod(str);
       if (p != null) {
         step = new SGAxisDateStepValue(p);
       }

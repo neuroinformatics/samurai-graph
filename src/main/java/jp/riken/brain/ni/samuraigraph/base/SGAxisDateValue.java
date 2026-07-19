@@ -1,7 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 import java.text.ParseException;
-import org.joda.time.DateTime;
+import java.time.ZonedDateTime;
 
 public class SGAxisDateValue extends SGAxisValue {
 
@@ -26,7 +26,7 @@ public class SGAxisDateValue extends SGAxisValue {
     this(new SGDate(str));
   }
 
-  public SGAxisDateValue(DateTime dateTime) {
+  public SGAxisDateValue(ZonedDateTime dateTime) {
     this(new SGDate(dateTime));
   }
 
@@ -51,7 +51,7 @@ public class SGAxisDateValue extends SGAxisValue {
   public SGAxisValue plus(SGAxisStepValue step) {
     if (step instanceof SGAxisDateStepValue) {
       SGAxisDateStepValue p = (SGAxisDateStepValue) step;
-      DateTime dateTime = this.mDate.getUTCDateTime().plus(p.getPeriod());
+      ZonedDateTime dateTime = this.mDate.getUTCDateTime().plus(p.getPeriod().toJavaTimePeriod());
       return new SGAxisDateValue(dateTime);
     } else if (step instanceof SGAxisDoubleStepValue) {
       SGAxisDoubleStepValue d = (SGAxisDoubleStepValue) step;
@@ -65,7 +65,7 @@ public class SGAxisDateValue extends SGAxisValue {
   public SGAxisValue minus(SGAxisStepValue step) {
     if (step instanceof SGAxisDateStepValue) {
       SGAxisDateStepValue p = (SGAxisDateStepValue) step;
-      DateTime dateTime = this.mDate.getUTCDateTime().minus(p.getPeriod());
+      ZonedDateTime dateTime = this.mDate.getUTCDateTime().minus(p.getPeriod().toJavaTimePeriod());
       return new SGAxisDateValue(dateTime);
     } else if (step instanceof SGAxisDoubleStepValue) {
       SGAxisDoubleStepValue d = (SGAxisDoubleStepValue) step;

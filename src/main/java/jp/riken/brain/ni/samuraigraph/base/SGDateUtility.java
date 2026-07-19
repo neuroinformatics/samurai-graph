@@ -1,14 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 import java.text.ParseException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.Period;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 public class SGDateUtility {
 
@@ -35,20 +33,16 @@ public class SGDateUtility {
     return (long) (dateValue * DATE_FACTOR);
   }
 
-  public static String toStringByMillis(final long millis, TimeZone zone) {
+  public static String toStringByMillis(final long millis, ZoneId zone) {
     return toString(millis, zone);
   }
 
-  public static String toStringByDateValue(final double value, TimeZone zone) {
+  public static String toStringByDateValue(final double value, ZoneId zone) {
     return toString(value, zone);
   }
 
-  public static DateTime toDateTime(final long millis, TimeZone zone) {
-    final Calendar cal = Calendar.getInstance(zone);
-    cal.setTimeInMillis(millis);
-    Date date = cal.getTime();
-    DateTime dateTime = new DateTime(date.getTime(), DateTimeZone.forTimeZone(zone));
-    return dateTime;
+  public static ZonedDateTime toDateTime(final long millis, ZoneId zone) {
+    return Instant.ofEpochMilli(millis).atZone(zone);
   }
 
   /**
@@ -58,7 +52,7 @@ public class SGDateUtility {
    * @param zone time zone
    * @return a text string for date
    */
-  public static String toString(final double value, TimeZone zone) {
+  public static String toString(final double value, ZoneId zone) {
     return toString(SGDateUtility.toMillis(value), zone);
   }
 
@@ -69,12 +63,12 @@ public class SGDateUtility {
    * @param zone time zone
    * @return a text string for date
    */
-  public static String toString(final long millis, TimeZone zone) {
-    DateTime dateTime = toDateTime(millis, zone);
+  public static String toString(final long millis, ZoneId zone) {
+    ZonedDateTime dateTime = toDateTime(millis, zone);
     return dateTime.toString();
   }
 
-  public static Period toPeriodOfDays(final double dateValue) {
+  public static SGPeriod toPeriodOfDays(final double dateValue) {
     final long millisAll = SGDateUtility.toMillis(dateValue);
     final long secondsAll = millisAll / 1000L;
     final long minutesAll = secondsAll / 60L;
@@ -87,8 +81,8 @@ public class SGDateUtility {
     final int hours = (int) (hoursAll - 24L * daysAll);
     final int days = (int) (daysAll);
 
-    Period p =
-        Period.days(days)
+    SGPeriod p =
+        SGPeriod.days(days)
             .plusHours(hours)
             .plusMinutes(minutes)
             .plusSeconds(seconds)
@@ -96,7 +90,7 @@ public class SGDateUtility {
     return p;
   }
 
-  public static double toApproximateDateValue(Period p) {
+  public static double toApproximateDateValue(SGPeriod p) {
     double dMillis = 0.0;
     double factor = 1.0;
     dMillis += p.getMillis();
@@ -124,7 +118,7 @@ public class SGDateUtility {
    * @param zone time zone
    * @return true if succeeded
    */
-  public static boolean setDateValue(final SGTextField tf, final Object obj, TimeZone zone) {
+  public static boolean setDateValue(final SGTextField tf, final Object obj, ZoneId zone) {
     if (obj == null) {
       tf.setText(null);
     } else {
@@ -154,7 +148,7 @@ public class SGDateUtility {
       tf.setText(null);
     } else {
       String valueStr = obj.toString().trim();
-      Period p = SGUtilityText.getPeriod(valueStr);
+      SGPeriod p = SGUtilityText.getPeriod(valueStr);
       if (p == null) {
         return false;
       }
@@ -162,6 +156,15 @@ public class SGDateUtility {
       tf.setText(str);
     }
     return true;
+  }
+
+  /**
+   * Returns an instance of UTC ZoneId.
+   *
+   * @return an instance of UTC ZoneId
+   */
+  public static ZoneId getUTCZoneId() {
+    return ZoneId.of("UTC");
   }
 
   /**
@@ -197,11 +200,11 @@ public class SGDateUtility {
     if ("".equals(pattern)) {
       return str;
     }
-    DateTime dt = date.getDateTime();
+    ZonedDateTime dt = date.getDateTime();
     String ret = str;
     try {
-      DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
-      ret = fmt.print(dt);
+      DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
+      ret = dt.format(fmt);
     } catch (Exception e) {
     }
     return ret;
@@ -241,10 +244,10 @@ public class SGDateUtility {
       if (d == null) {
         return;
       }
-      Period p = SGDateUtility.toPeriodOfDays(d);
+      SGPeriod p = SGDateUtility.toPeriodOfDays(d);
       strNew = p.toString();
     } else {
-      Period p = SGUtilityText.getPeriod(str);
+      SGPeriod p = SGUtilityText.getPeriod(str);
       if (p == null) {
         return;
       }
@@ -255,7 +258,7 @@ public class SGDateUtility {
 
   public static boolean isValidDateFormat(final String pattern) {
     try {
-      DateTimeFormat.forPattern(pattern);
+      DateTimeFormatter.ofPattern(pattern);
     } catch (Exception e) {
       return false;
     }

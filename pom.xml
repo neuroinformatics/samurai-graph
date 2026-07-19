@@ -502,13 +502,6 @@
             <version>3.1.1</version>
         </dependency>
 
-        <!-- Date/time handling -->
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.14.2</version>
-        </dependency>
-
         <!-- Native library loading (for JNA-based plugins) -->
         <dependency>
             <groupId>net.java.dev.jna</groupId>

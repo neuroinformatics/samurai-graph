@@ -1,15 +1,15 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.TreeSet;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
-import org.joda.time.DateTime;
 
 /** A dialog to input date. */
 public class SGDateInputDialog extends SGAbstractDateInputDialog {
@@ -393,27 +393,27 @@ public class SGDateInputDialog extends SGAbstractDateInputDialog {
     }
     SGDate date = SGUtilityText.getDate(text);
     if (date != null) {
-      TimeZone timeZone = date.getTimeZone();
-      DateTime dateTime = date.getDateTime(timeZone);
+      ZoneId zone = date.getZoneId();
+      ZonedDateTime dateTime = date.getDateTime(zone);
       this.mYearSpinner.setValue(dateTime.getYear());
-      this.mMonthComboBox.setSelectedItem(dateTime.getMonthOfYear());
+      this.mMonthComboBox.setSelectedItem(dateTime.getMonthValue());
       this.mDayComboBox.setSelectedItem(dateTime.getDayOfMonth());
-      this.mHourComboBox.setSelectedItem(dateTime.getHourOfDay());
-      this.mMinuteComboBox.setSelectedItem(dateTime.getMinuteOfHour());
-      this.mSecondComboBox.setSelectedItem(dateTime.getSecondOfMinute());
-      this.mMillisecondSpinner.setValue(dateTime.getMillisOfSecond());
-      String timeZoneId = timeZone.getID();
+      this.mHourComboBox.setSelectedItem(dateTime.getHour());
+      this.mMinuteComboBox.setSelectedItem(dateTime.getMinute());
+      this.mSecondComboBox.setSelectedItem(dateTime.getSecond());
+      this.mMillisecondSpinner.setValue(dateTime.getNano() / 1_000_000);
+      String zoneId = zone.getId();
       String timeZoneItem = "";
-      if ("UTC".equals(timeZoneId)) {
+      if ("UTC".equals(zoneId)) {
         timeZoneItem = "+00:00";
       } else {
-        final int plusIndex = timeZoneId.indexOf('+');
+        final int plusIndex = zoneId.indexOf('+');
         if (plusIndex != -1) {
-          timeZoneItem = timeZoneId.substring(plusIndex);
+          timeZoneItem = zoneId.substring(plusIndex);
         } else {
-          final int minusIndex = timeZoneId.indexOf('-');
+          final int minusIndex = zoneId.indexOf('-');
           if (minusIndex != -1) {
-            timeZoneItem = timeZoneId.substring(minusIndex);
+            timeZoneItem = zoneId.substring(minusIndex);
           }
         }
       }
@@ -501,7 +501,7 @@ public class SGDateInputDialog extends SGAbstractDateInputDialog {
   }
 
   public void setDate(final double value) {
-    String str = SGDateUtility.toStringByDateValue(value, SGDateUtility.getUTCTimeZoneInstance());
+    String str = SGDateUtility.toStringByDateValue(value, SGDateUtility.getUTCZoneId());
     SGTextField tf = getTextField();
     tf.requestFocus();
     tf.setText(str);
