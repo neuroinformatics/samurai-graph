@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import jp.riken.brain.ni.samuraigraph.base.SGBufferedFileWriter;
-import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** A dialog to confirm upgrading of the application. */
@@ -14,7 +13,7 @@ public class SGUpgradeConfirmDialog extends SGScrollPaneDialog {
   /** */
   private static final long serialVersionUID = 5617296361195236539L;
 
-  public static final String TITLE = "Samurai Graph Auto Upgrade";
+  public static final String TITLE = "Confirm Update";
 
   /** Creates new form SGUpgradeConfirmDialog */
   public SGUpgradeConfirmDialog() {
@@ -34,9 +33,9 @@ public class SGUpgradeConfirmDialog extends SGScrollPaneDialog {
     this.initProperty();
   }
 
-  public static final String YES = SGDialog.YES_BUTTON_TEXT;
+  public static final String YES = "Download";
 
-  public static final String NO = SGDialog.NO_BUTTON_TEXT;
+  public static final String NO = "Cancel";
 
   private boolean initProperty() {
     // set the title

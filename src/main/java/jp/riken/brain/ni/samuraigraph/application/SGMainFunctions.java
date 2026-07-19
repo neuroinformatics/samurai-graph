@@ -364,9 +364,6 @@ class SGMainFunctions
       org.apache.logging.log4j.core.config.Configurator.setRootLevel(
           org.apache.logging.log4j.Level.OFF);
 
-      // remove temporary files used in upgrade
-      this.removeUpdaterTemporaryFiles();
-
       // removes temporary files for created by JHDF5 library
       if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
         // only for Windows
@@ -598,20 +595,6 @@ class SGMainFunctions
       pref.remove(PREF_KEY_MAJOR_VERSION_NUMBER);
       pref.remove(PREF_KEY_MINOR_VERSION_NUMBER);
       pref.remove(PREF_KEY_MICRO_VERSION_NUMBER);
-    }
-
-    /** Remove temporary files used in upgrade. */
-    private void removeUpdaterTemporaryFiles() {
-      String filename = SGApplicationUtility.getPathName(TMP_DIR, HELPER_TEMP_DIR_NAME);
-      File temp = new File(filename);
-      try {
-        temp = temp.getCanonicalFile();
-      } catch (IOException ex) {
-        return;
-      }
-      if (temp.exists()) {
-        SGApplicationUtility.deleteRecursively(temp);
-      }
     }
   }
 

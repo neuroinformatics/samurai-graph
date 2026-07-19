@@ -3,13 +3,17 @@ package jp.riken.brain.ni.samuraigraph.application;
 /** Constants for the upgrading of the application. */
 public interface SGIUpgradeConstants {
 
-  /** URL of the XML file for the product information. */
-  public static final String PRODUCT_XML_FILE_NAME =
-      "http://samurai-graph.sourceforge.jp/product.xml";
+  /** GitHub API URL for the latest release. */
+  public static final String GITHUB_API_LATEST_URL =
+      "https://api.github.com/repos/neuroinformatics/samurai-graph/releases/latest";
 
-  /** URL of the XML file for the product information for developer mode. */
-  public static final String DEV_PRODUCT_XML_FILE_NAME =
-      "http://samurai-graph.sourceforge.jp/product_debug.xml";
+  /** Base URL for raw GitHub content. */
+  public static final String GITHUB_RAW_BASE_URL =
+      "https://raw.githubusercontent.com/neuroinformatics/samurai-graph";
+
+  /** GitHub Releases page URL. */
+  public static final String GITHUB_RELEASES_URL =
+      "https://github.com/neuroinformatics/samurai-graph/releases";
 
   /** Not upgrading automatically. */
   public static final int NO_UPGRADE = 0;
@@ -21,10 +25,4 @@ public interface SGIUpgradeConstants {
   public static final int UPGRADE_EVERY_WEEK = 3;
 
   public static final int UPGRADE_EVERY_MONTH = 4;
-
-  /** Name of the upgrade helper application. */
-  public static final String UPGRADE_HELPER_FILE_NAME = "upgrade-helper.jar";
-
-  /** Temporary folder used by helper applications. */
-  public static final String HELPER_TEMP_DIR_NAME = "SamuraiGraphTemp";
 }

@@ -1,40 +1,42 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.prefs.Preferences;
-import javax.swing.JFileChooser;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
-import jp.riken.brain.ni.samuraigraph.base.SGExtensionFileFilter;
-import jp.riken.brain.ni.samuraigraph.base.SGFileChooser;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGUserProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 
-/** A class to manage upgrade of the application. */
+/**
+ * A class to manage upgrade of the application.
+ *
+ * <p>Queries the GitHub Releases API for the latest release. If a newer version is found, fetches
+ * the changelog from the tagged source tree and opens a confirmation dialog. On confirmation, opens
+ * the GitHub Releases page in the default browser.
+ */
 class SGUpgradeManager
     implements ActionListener, SGIConstants, SGIUpgradeConstants, SGIPreferencesConstants {
 
@@ -45,16 +47,11 @@ class SGUpgradeManager
 
   private static final String MSG_NEW_VERSION_FOUND_AFTER = " is found.\nDownload now?\n";
 
-  private static final String MSG_UPGRADE_FAILED = "Upgrade is failed for some reason.";
+  private static final String MSG_CHECK_FAILED =
+      "Failed to check for updates.\nPlease check your network connection.";
 
-  private static final String MSG_UPGRADE_WARNING =
-      "This application will be terminated.\nPresent work will be lost.";
-
-  private static final String TITLE_WARNING = "Warning";
-
-  private static final String MSG_LOCAL_FILE_NOT_FOUND = "Local file is not found.";
-
-  private static final String MSG_CONNECTION_FAILED = "Connection Failed.";
+  private static final String MSG_BROWSER_FAILED =
+      "Failed to open the browser.\nPlease visit the following URL manually:\n";
 
   private static final String MAJOR_VER = "majorver";
 
@@ -62,8 +59,11 @@ class SGUpgradeManager
 
   private static final String MICRO_VER = "microver";
 
-  /** A file chooser to download the new version. */
-  private JFileChooser mUpgradeFileChooser;
+  private static final String TAG_NAME_PATTERN = "v(\\d+)\\.(\\d+)\\.(\\d+)";
+
+  /** Pattern to extract "tag_name" value from GitHub API JSON response. */
+  private static final Pattern TAG_NAME_JSON_PATTERN =
+      Pattern.compile("\"tag_name\"\\s*:\\s*\"([^\"]+)\"");
 
   /** */
   private SGUpgradeDialog mUpgradeDialog;
@@ -78,8 +78,6 @@ class SGUpgradeManager
   public SGUpgradeManager(final SGProxyManager p, final SGApplicationProperties ap) {
     this.mProxyManager = p;
     this.mAppProp = ap;
-    this.mUpgradeFileChooser = new SGFileChooser();
-    this.mUpgradeFileChooser.setCurrentDirectory(new File(USER_HOME));
   }
 
   /** */
@@ -111,14 +109,12 @@ class SGUpgradeManager
 
     } else if (command.equals(SGUpgradeDialog.UPGRADE_NOW)) {
       SGUpgradeDialog dg = (SGUpgradeDialog) source;
-      if (this.upgradeByCommand(dg) == false) {
-        return;
-      }
+      this.upgradeByCommand(dg);
     }
   }
 
   /**
-   * @param wnd
+   * @param owner
    * @return
    */
   public boolean showUpgradeDialog(Frame owner) {
@@ -192,36 +188,12 @@ class SGUpgradeManager
    */
   private boolean upgrade(final Window owner, final boolean onStartUp) {
 
-    final boolean direct = this.mProxyManager.isDirectAccess();
-    String host = this.mProxyManager.getProxyHostName();
-    int port = this.mProxyManager.getProxyPortNumber();
-
-    // get file name
-    SGUserProperties prop = SGUserProperties.getInstance();
-    String devMode = prop.getProperty("dev");
-    Boolean bDevMode = Boolean.valueOf(devMode);
-    final String fileName;
-    if (bDevMode) {
-      fileName = DEV_PRODUCT_XML_FILE_NAME;
-    } else {
-      fileName = PRODUCT_XML_FILE_NAME;
-    }
-
-    // get URL
-    URL url = null;
-    try {
-      if (direct) {
-        url = java.net.URI.create(fileName).toURL();
-      } else {
-        url = java.net.URI.create("http://" + host + ":" + port + "/" + fileName).toURL();
+    // fetch the latest release from GitHub API
+    String tagName = fetchLatestReleaseTagName();
+    if (tagName == null) {
+      if (!onStartUp) {
+        JOptionPane.showMessageDialog(owner, MSG_CHECK_FAILED);
       }
-    } catch (MalformedURLException | IllegalArgumentException ex) {
-      return false;
-    }
-
-    // create a Document object
-    Document doc = SGUtilityText.getDocument(url);
-    if (doc == null) {
       return false;
     }
 
@@ -229,120 +201,60 @@ class SGUpgradeManager
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
     pref.putLong(PREF_KEY_DATE, System.currentTimeMillis());
 
-    // get root element - product
-    Element root = doc.getDocumentElement();
-
-    // compare the version number
-    if (this.compareVersion(root)) {
-      // start installation
-      if (this.installLatestVersion(root, owner, onStartUp) == false) {
-        return false;
-      }
-    } else {
+    // parse tag name to extract version
+    int[] remoteVersion = parseTagVersion(tagName);
+    if (remoteVersion == null) {
       if (!onStartUp) {
-        // show a message dialog
-        JOptionPane.showMessageDialog(owner, MSG_LATEST_VERSION_INSTALLED);
+        JOptionPane.showMessageDialog(owner, MSG_CHECK_FAILED);
       }
-    }
-
-    return true;
-  }
-
-  /**
-   * @return
-   */
-  private boolean compareVersion(Element root) {
-    final int major = this.mAppProp.getMajorVersion();
-    final int minor = this.mAppProp.getMinorVersion();
-    final int micro = this.mAppProp.getMicroVersion();
-    final int nMajor = this.getVersion(root, MAJOR_VER);
-    final int nMinor = this.getVersion(root, MINOR_VER);
-    final int nMicro = this.getVersion(root, MICRO_VER);
-    final boolean b = SGUtility.compareVersionNumber(major, minor, micro, nMajor, nMinor, nMicro);
-    return b;
-  }
-
-  /**
-   * @param root
-   * @param tagName
-   * @return
-   */
-  private int getVersion(Element root, String tagName) {
-    Element ver = (Element) root.getElementsByTagName(tagName).item(0);
-    String verString = ver.getFirstChild().getNodeValue();
-    final int verNumber = Integer.parseInt(verString);
-    return verNumber;
-  }
-
-  /**
-   * @param root
-   * @return
-   * @throws Exception
-   */
-  private boolean installLatestVersion(Element root, final Window owner, final boolean onStartUp) {
-    // current version numbers
-    final int mMajor = this.mAppProp.getMajorVersion();
-    final int mMinor = this.mAppProp.getMinorVersion();
-    final int mMicro = this.mAppProp.getMicroVersion();
-
-    // get later releases and the latest release
-    NodeList rList = root.getElementsByTagName("release");
-    Element latestRelease = null;
-    List<Element> laterReleaseList = new ArrayList<Element>();
-    for (int ii = 0; ii < rList.getLength(); ii++) {
-      Element el = (Element) rList.item(ii);
-      String value = el.getAttribute("latest");
-      if (Boolean.TRUE.toString().equals(value)) {
-        latestRelease = el;
-      }
-
-      final int nMajor = this.getVersion(el, MAJOR_VER);
-      final int nMinor = this.getVersion(el, MINOR_VER);
-      final int nMicro = this.getVersion(el, MICRO_VER);
-      if (SGUtility.compareVersionNumber(mMajor, mMinor, mMicro, nMajor, nMinor, nMicro)) {
-        laterReleaseList.add(el);
-      }
-    }
-
-    if (latestRelease == null) {
       return false;
     }
 
-    // get the latest version numbers
-    final int nMajor = this.getVersion(latestRelease, MAJOR_VER);
-    final int nMinor = this.getVersion(latestRelease, MINOR_VER);
-    final int nMicro = this.getVersion(latestRelease, MICRO_VER);
+    final int nMajor = remoteVersion[0];
+    final int nMinor = remoteVersion[1];
+    final int nMicro = remoteVersion[2];
 
-    final String major = Integer.valueOf(nMajor).toString();
-    final String minor = Integer.valueOf(nMinor).toString();
-    final String micro = Integer.valueOf(nMicro).toString();
+    // compare the version number
+    final int major = this.mAppProp.getMajorVersion();
+    final int minor = this.mAppProp.getMinorVersion();
+    final int micro = this.mAppProp.getMicroVersion();
+
+    boolean hasNewer = SGUtility.compareVersionNumber(major, minor, micro, nMajor, nMinor, nMicro);
+
+    if (!hasNewer) {
+      if (!onStartUp) {
+        JOptionPane.showMessageDialog(owner, MSG_LATEST_VERSION_INSTALLED);
+      }
+      return true;
+    }
+
+    // get the changelog from product.xml in the tagged source
+    String changelogHtml = fetchChangelog(tagName);
+
+    // create version string
+    final String majorStr = Integer.valueOf(nMajor).toString();
+    final String minorStr = Integer.valueOf(nMinor).toString();
+    final String microStr = Integer.valueOf(nMicro).toString();
 
     // create a message
     StringBuffer sb = new StringBuffer();
     sb.append(MSG_NEW_VERSION_FOUND_BEFORE);
-    sb.append(major);
+    sb.append(majorStr);
     sb.append('.');
-    sb.append(minor);
+    sb.append(minorStr);
     sb.append('.');
-    sb.append(micro);
+    sb.append(microStr);
     sb.append(MSG_NEW_VERSION_FOUND_AFTER);
     String msg = sb.toString();
 
-    // get the change log
+    // build changelog HTML
     sb.setLength(0);
     sb.append("<html><head></head><body>-- New Features --");
-    String fSize = "<font size=\"3\">";
-    sb.append(fSize);
-    for (int ii = 0; ii < laterReleaseList.size(); ii++) {
-      Element release = (Element) laterReleaseList.get(ii);
-      StringBuffer sb_ = new StringBuffer();
-      NodeList rInfoList = release.getElementsByTagName("releaseinfo");
-      Element rInfo = (Element) rInfoList.item(0);
-      NodeList cLogList = rInfo.getElementsByTagName("changelog");
-      Element cLog = (Element) cLogList.item(0);
-      this.printNode(cLog, sb_);
-      sb.append(sb_);
+    sb.append("<font size=\"3\">");
+    if (changelogHtml != null) {
+      sb.append(changelogHtml);
     }
+    sb.append("</font></body></html>");
 
     // create a message dialog
     SGUpgradeConfirmDialog cfDialog = null;
@@ -367,466 +279,227 @@ class SGUpgradeManager
       return true;
     }
 
-    // get OS name
-    String name = null;
-    if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
-      name = "win32";
-    } else if (SGUtility.identifyOS(OS_NAME_MACOSX)) {
-      name = "macosx";
-    } else {
-      name = "other";
-    }
-
-    // upgrade
-    NodeList pList = latestRelease.getElementsByTagName("package");
-    for (int ii = 0; ii < pList.getLength(); ii++) {
-      Element el = (Element) pList.item(ii);
-      String attr = el.getAttribute("category");
-
-      if (attr.equals("win32")) {
-        if (name.equals("win32")) {
-          if (this.forWin32(el, major, minor, micro, owner, onStartUp)) {
-            break;
-          }
-          return false;
-        }
-      } else if (attr.equals("macosx")) {
-        if (name.equals("macosx")) {
-          if (this.forMacOSX(el, major, minor, micro, owner, onStartUp)) {
-            break;
-          }
-          return false;
-        }
-      } else if (attr.equals("bin")) {
-        if (name.equals("other")) {
-          if (this.forOtherPlatform(el, major, minor, micro, owner, onStartUp)) {
-            break;
-          }
-          return false;
-        }
-      } else if (attr.equals("src")) {
-
-      }
-    }
+    // open GitHub Releases page in the default browser
+    openReleasesPage(owner);
 
     return true;
   }
 
   /**
-   * @param el
-   * @param major Major version number of the new version
-   * @param minor Minor version number of the new version
-   * @param micro Micro version number of the new version
-   * @param owner Dialog owner
-   * @param onStartUp whether this upgrade is on the start-up
-   * @return true:success, false:failure
+   * Fetch the tag_name from the latest GitHub release.
+   *
+   * @return tag name string (e.g. "v2.3.0"), or null on failure
    */
-  private boolean forWin32(
-      final Element el,
-      final String major,
-      final String minor,
-      final String micro,
-      final Window owner,
-      final boolean onStartUp) {
-
-    StringBuffer sb = new StringBuffer();
-
-    final String failed = MSG_UPGRADE_FAILED;
-    sb.setLength(0);
-    sb.append("samurai-graph-win32-");
-    sb.append(major);
-    sb.append('.');
-    sb.append(minor);
-    sb.append('.');
-    sb.append(micro);
-    sb.append(".exe ");
-    final String fnameInst = sb.toString();
-
-    // show a message dialog
-    if (!onStartUp) {
-      Object[] options = {"OK", "Cancel"};
-      final int ret =
-          JOptionPane.showOptionDialog(
-              owner,
-              MSG_UPGRADE_WARNING,
-              TITLE_WARNING,
-              JOptionPane.DEFAULT_OPTION,
-              JOptionPane.WARNING_MESSAGE,
-              null,
-              options,
-              options[0]);
-      if (ret == JOptionPane.NO_OPTION || ret == JOptionPane.CLOSED_OPTION) {
-        return true;
-      }
-    }
-
-    // get the root directory
-    String classpath = System.getProperty("java.class.path");
-    StringTokenizer stk = new StringTokenizer(classpath, PATH_SEPARATOR);
-    String root = null;
-    while (stk.hasMoreTokens()) {
-      String str = stk.nextToken();
-      if (str.endsWith("samurai-graph.jar")) {
-        root = new File(str).getParent();
-        break;
-      }
-    }
-    if (root == null) {
-      JOptionPane.showMessageDialog(owner, failed);
-      return false;
-    }
-
-    // copy the helper application from ./lib to the temporary directory
-    sb.setLength(0);
-    sb.append(root);
-    sb.append(FILE_SEPARATOR);
-    sb.append("lib");
-    sb.append(FILE_SEPARATOR);
-    sb.append(UPGRADE_HELPER_FILE_NAME);
-    File helper = new File(sb.toString());
-    if (helper.exists() == false) {
-      // helper application is not found.
-      JOptionPane.showMessageDialog(owner, failed);
-      return false;
-    }
-
-    File helperTempDir = new File(SGApplicationUtility.getPathName(TMP_DIR, HELPER_TEMP_DIR_NAME));
-    helperTempDir.deleteOnExit();
-    if (helperTempDir.mkdir() == false) {
-      // failed to create a temporary directory.
-      JOptionPane.showMessageDialog(owner, failed);
-      return false;
-    }
-    File helperTemp =
-        new File(
-            SGApplicationUtility.getPathName(
-                helperTempDir.getAbsolutePath(), UPGRADE_HELPER_FILE_NAME));
-    helperTemp.deleteOnExit();
+  private String fetchLatestReleaseTagName() {
+    Proxy proxy = buildProxy();
+    BufferedReader reader = null;
     try {
-      SGApplicationUtility.copyBinaryFile(helper, helperTemp);
-    } catch (IOException ex) {
-      // failed to copy the helper application.
-      JOptionPane.showMessageDialog(owner, failed);
-      return false;
-    }
+      URL url = URI.create(GITHUB_API_LATEST_URL).toURL();
+      URLConnection connection = url.openConnection(proxy);
+      connection.setRequestProperty("Accept", "application/vnd.github+json");
+      connection.setConnectTimeout(10000);
+      connection.setReadTimeout(15000);
 
-    //
-    // download the installer
-    //
-    File installer =
-        new File(SGApplicationUtility.getPathName(helperTempDir.getAbsolutePath(), fnameInst));
-    if (this.download(el, owner, installer) == false) {
-      // failed to download the latest version.
-      JOptionPane.showMessageDialog(owner, failed);
-      helperTemp.delete();
-      helperTempDir.delete();
-      return false;
-    }
-
-    //
-    // start the helper application
-    //
-
-    String upperDir = new File(root).getParent();
-    String instPath = installer.getAbsolutePath();
-    String pathNew = root;
-    String[] cmdArray = new String[6];
-    sb.setLength(0);
-    sb.append(System.getProperty("java.home"));
-    sb.append(FILE_SEPARATOR);
-    sb.append("bin");
-    sb.append(FILE_SEPARATOR);
-    sb.append("javaw.exe");
-    cmdArray[0] = sb.toString();
-    cmdArray[1] = "-jar";
-    cmdArray[2] = helperTemp.getAbsolutePath();
-    cmdArray[3] = root; // A pathname string of the old version
-    cmdArray[4] = instPath; // A pathname string of the installer
-    cmdArray[5] = pathNew; // A pathname string of the new version
-    if (helperTemp.exists() == false) {
-      // helper application not found.
-      JOptionPane.showMessageDialog(owner, failed);
-      return false;
-    }
-    try {
-      Runtime.getRuntime().exec(cmdArray, null, new File(upperDir));
-    } catch (IOException ex) {
-      // failed to start the helper application.
-      JOptionPane.showMessageDialog(owner, failed);
-      return false;
-    }
-
-    // try to quite application
-    if (SGDrawingServer.quitHandler() == false) {
-      JOptionPane.showMessageDialog(owner, "Failed to terminate Samurai Graph application.");
-      return false;
-    }
-
-    return true;
-  }
-
-  /**
-   * @param el
-   * @return
-   * @throws Exception
-   */
-  private boolean forOtherPlatform(
-      final Element el,
-      final String major,
-      final String minor,
-      final String micro,
-      final Window owner,
-      final boolean onStartUp) // throws Exception
-      {
-    return this.downloadWithFileChooser(
-        el, major, minor, micro, owner, onStartUp, "samurai-graph-bin", "zip", "Zip Archive");
-  }
-
-  /**
-   * @param el
-   * @return
-   * @throws Exception
-   */
-  private boolean forMacOSX(
-      final Element el,
-      final String major,
-      final String minor,
-      final String micro,
-      final Window owner,
-      final boolean onStartUp) // throws Exception
-      {
-    return this.downloadWithFileChooser(
-        el,
-        major,
-        minor,
-        micro,
-        owner,
-        onStartUp,
-        "samurai-graph-mac",
-        "dmg.gz",
-        "Compressed Disk Image");
-  }
-
-  /**
-   * @param el
-   * @param major
-   * @param minor
-   * @param micro
-   * @param owner
-   * @param onStartUp
-   * @param extension
-   * @param description
-   * @return
-   * @throws Exception
-   */
-  private boolean downloadWithFileChooser(
-      final Element el,
-      final String major,
-      final String minor,
-      final String micro,
-      final Window owner,
-      final boolean onStartUp,
-      final String name,
-      final String extension,
-      final String description) {
-    JFileChooser chooser = this.mUpgradeFileChooser;
-
-    // reset filters
-    chooser.resetChoosableFileFilters();
-
-    // create a file filter object
-    SGExtensionFileFilter ff = new SGExtensionFileFilter();
-    ff.setExplanation(description);
-    ff.addExtension(extension);
-    chooser.setFileFilter(ff);
-
-    // set file name
-    StringBuffer sb = new StringBuffer();
-    sb.append(name);
-    sb.append('-');
-    sb.append(major);
-    sb.append('.');
-    sb.append(minor);
-    sb.append('.');
-    sb.append(micro);
-    sb.append('.');
-    sb.append(extension);
-    //        String fileName = name + "-" + major + "." + minor + "." + micro + "."
-    //                + extension;
-    String fileName = sb.toString();
-    chooser.setSelectedFile(new File(fileName));
-
-    // show save dialog
-    final int ret = chooser.showSaveDialog(owner);
-
-    File fileSaved = null;
-    switch (ret) {
-      case JFileChooser.APPROVE_OPTION:
-        // selected
-        fileSaved = chooser.getSelectedFile();
-        break;
-      case JFileChooser.CANCEL_OPTION:
-        // canceled
-        return true;
-      case JFileChooser.ERROR_OPTION:
-        // error
-        throw new Error();
-      default:
-    }
-
-    if (fileSaved == null) {
-      return false;
-    }
-    String path = fileSaved.getAbsolutePath();
-    File file = new File(path);
-
-    // download
-    if (this.download(el, owner, file) == false) {
-      return false;
-    }
-
-    return true;
-  }
-
-  /**
-   * @param el
-   * @param owner
-   * @param suffix
-   * @return
-   * @throws Exception
-   */
-  private boolean download(final Element el, final Window owner, final File file) {
-    BufferedOutputStream bos = null;
-    BufferedInputStream bis = null;
-    SGDownloadMonitorDialog dg = null;
-
-    boolean ret = false;
-
-    try {
-      // create output stream
-      bos = new BufferedOutputStream(new FileOutputStream(file));
-
-      NodeList urlList = el.getElementsByTagName("url");
-      for (int ii = 0; ii < urlList.getLength(); ii++) {
-        Element urlElement = (Element) urlList.item(ii);
-        String urlStr = urlElement.getFirstChild().getNodeValue();
-
-        // create an URL instance
-        URL url = null;
-        try {
-          url = java.net.URI.create(urlStr).toURL();
-        } catch (MalformedURLException | IllegalArgumentException ex) {
-          continue;
-        }
-
-        // get input stream
-        URLConnection co = null;
-        try {
-          co = url.openConnection();
-          bis = new BufferedInputStream(co.getInputStream());
-        } catch (IOException ex) {
-          continue;
-        }
-
-        // get file name
-        String path = file.getAbsolutePath();
-        /*
-         * final int nameLen = 20; if( path.length() > nameLen ) { path =
-         * path.substring(0,nameLen); path += "..."; }
-         */
-
-        // get file size
-        final int fileSize = co.getContentLength();
-
-        // create a progress monitor dialog
-        boolean modal = true;
-        if (owner instanceof Dialog) {
-          dg = new SGDownloadMonitorDialog((Dialog) owner, modal);
-        } else if (owner instanceof Frame) {
-          dg = new SGDownloadMonitorDialog((Frame) owner, modal);
-        } else {
-          throw new Error("The owner window is not Dialog nor Frame.");
-        }
-
-        // set properties of the dialog
-        dg.setMaxValue(fileSize);
-        dg.setInputStream(bis);
-        dg.setOutputStream(bos);
-        dg.setStatusText(path);
-        dg.setCenter(owner);
-
-        // set the mouse cursor
-        owner.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
-        // start download
-        Thread th = new Thread(dg);
-        th.start();
-
-        dg.setVisible(true);
-
-        if (dg.isCanceled() == true) {
-          return false;
-        }
-
-        ret = true;
-        break;
+      reader =
+          new BufferedReader(
+              new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+      StringBuilder response = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        response.append(line);
       }
 
-    } catch (FileNotFoundException ex) {
-      JOptionPane.showMessageDialog(owner, MSG_LOCAL_FILE_NOT_FOUND);
-      return false;
+      // extract tag_name from JSON response
+      Matcher m = TAG_NAME_JSON_PATTERN.matcher(response.toString());
+      if (m.find()) {
+        return m.group(1);
+      }
+      return null;
+
+    } catch (Exception ex) {
+      return null;
     } finally {
-
-      // set default cursor
-      owner.setCursor(Cursor.getDefaultCursor());
-
-      // clear attributes
-      if (dg != null) {
-        dg.setInputStream(null);
-        dg.setOutputStream(null);
-      }
-
-      // close streams
-      if (bis != null) {
+      if (reader != null) {
         try {
-          bis.close();
-        } catch (IOException ex) {
-        }
-      }
-      if (bos != null) {
-        try {
-          bos.close();
+          reader.close();
         } catch (IOException ex) {
         }
       }
     }
+  }
 
-    // when connection failed, return false
-    if (!ret) {
-      JOptionPane.showMessageDialog(owner, MSG_CONNECTION_FAILED);
-      return false;
+  /**
+   * Parse the version number from a tag name like "v2.3.0".
+   *
+   * @param tagName the tag name
+   * @return version array [major, minor, micro], or null if parsing fails
+   */
+  private int[] parseTagVersion(String tagName) {
+    Pattern p = Pattern.compile(TAG_NAME_PATTERN);
+    Matcher m = p.matcher(tagName);
+    if (!m.matches()) {
+      return null;
     }
+    try {
+      int major = Integer.parseInt(m.group(1));
+      int minor = Integer.parseInt(m.group(2));
+      int micro = Integer.parseInt(m.group(3));
+      return new int[] {major, minor, micro};
+    } catch (NumberFormatException ex) {
+      return null;
+    }
+  }
 
-    return true;
+  /**
+   * Fetch the changelog from the product.xml file in the tagged source.
+   *
+   * @param tagName the Git tag name (e.g. "v2.3.0")
+   * @return HTML string of the changelog, or null on failure
+   */
+  private String fetchChangelog(String tagName) {
+    Proxy proxy = buildProxy();
+    BufferedReader reader = null;
+    try {
+      String xmlUrlStr = GITHUB_RAW_BASE_URL + "/" + tagName + "/changelog/product.xml";
+      URL url = URI.create(xmlUrlStr).toURL();
+      URLConnection connection = url.openConnection(proxy);
+      connection.setConnectTimeout(10000);
+      connection.setReadTimeout(15000);
+
+      reader =
+          new BufferedReader(
+              new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+      StringBuilder sb = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null) {
+        sb.append(line);
+      }
+
+      // parse the XML
+      Document doc = SGUtilityText.getDocumentFromString(sb.toString());
+      if (doc == null) {
+        return null;
+      }
+
+      // collect changelog entries from all release elements newer than current version
+      final int cMajor = this.mAppProp.getMajorVersion();
+      final int cMinor = this.mAppProp.getMinorVersion();
+      final int cMicro = this.mAppProp.getMicroVersion();
+
+      NodeList rList = doc.getElementsByTagName("release");
+      List<String> logEntries = new ArrayList<String>();
+      for (int ii = 0; ii < rList.getLength(); ii++) {
+        Element el = (Element) rList.item(ii);
+        final int rMajor = getVersion(el, MAJOR_VER);
+        final int rMinor = getVersion(el, MINOR_VER);
+        final int rMicro = getVersion(el, MICRO_VER);
+        if (SGUtility.compareVersionNumber(cMajor, cMinor, cMicro, rMajor, rMinor, rMicro)) {
+          // extract changelog content
+          NodeList rInfoList = el.getElementsByTagName("releaseinfo");
+          if (rInfoList.getLength() > 0) {
+            Element rInfo = (Element) rInfoList.item(0);
+            NodeList cLogList = rInfo.getElementsByTagName("changelog");
+            if (cLogList.getLength() > 0) {
+              Element cLog = (Element) cLogList.item(0);
+              StringBuffer logSb = new StringBuffer();
+              printNode(cLog, logSb);
+              logEntries.add(logSb.toString());
+            }
+          }
+        }
+      }
+
+      if (logEntries.isEmpty()) {
+        return null;
+      }
+
+      StringBuilder result = new StringBuilder();
+      for (String entry : logEntries) {
+        result.append(entry);
+      }
+      return result.toString();
+
+    } catch (Exception ex) {
+      return null;
+    } finally {
+      if (reader != null) {
+        try {
+          reader.close();
+        } catch (IOException ex) {
+        }
+      }
+    }
+  }
+
+  /**
+   * @param root
+   * @param tagName
+   * @return
+   */
+  private int getVersion(Element root, String tagName) {
+    NodeList nodeList = root.getElementsByTagName(tagName);
+    if (nodeList.getLength() == 0) {
+      return 0;
+    }
+    Element ver = (Element) nodeList.item(0);
+    if (ver.getFirstChild() == null) {
+      return 0;
+    }
+    String verString = ver.getFirstChild().getNodeValue();
+    try {
+      return Integer.parseInt(verString);
+    } catch (NumberFormatException ex) {
+      return 0;
+    }
+  }
+
+  /**
+   * Open the GitHub Releases page in the default browser.
+   *
+   * @param owner the owner window
+   */
+  private void openReleasesPage(Window owner) {
+    try {
+      Desktop.getDesktop().browse(URI.create(GITHUB_RELEASES_URL));
+    } catch (IOException ex) {
+      JOptionPane.showMessageDialog(owner, MSG_BROWSER_FAILED + GITHUB_RELEASES_URL);
+    }
+  }
+
+  /**
+   * Build a java.net.Proxy from the application's proxy settings.
+   *
+   * @return the proxy
+   */
+  private Proxy buildProxy() {
+    if (this.mProxyManager.isDirectAccess()) {
+      return Proxy.NO_PROXY;
+    }
+    String host = this.mProxyManager.getProxyHostName();
+    int port = this.mProxyManager.getProxyPortNumber();
+    if (host == null || host.isEmpty() || port <= 0) {
+      return Proxy.NO_PROXY;
+    }
+    return new Proxy(Proxy.Type.HTTP, new InetSocketAddress(host, port));
   }
 
   /**
    * @param element
-   * @param tagList
-   * @param out
+   * @param sb
    */
   private void printNode(Element element, StringBuffer sb) {
     printNodeRecursively(element, sb, -1);
   }
 
   /**
-   * @param node
-   * @return
+   * @param element
+   * @param sb
+   * @param depth
    */
   private void printNodeRecursively(Element element, StringBuffer sb, final int depth) {
     NodeList childList = element.getChildNodes();
     for (int ii = 0; ii < childList.getLength(); ii++) {
-      Node child = childList.item(ii);
+      org.w3c.dom.Node child = childList.item(ii);
       if (child instanceof Element) {
         Element el = (Element) child;
         String tagName = el.getTagName();
@@ -842,7 +515,7 @@ class SGUpgradeManager
             printFirstChild(el, sb, depth);
             sb.append("<ul>");
             for (int jj = 0; jj < num; jj++) {
-              Node node = nList.item(jj);
+              org.w3c.dom.Node node = nList.item(jj);
               if (node instanceof Element) {
                 Element el_ = (Element) node;
                 printNodeRecursively(el_, sb, depth + 1);
@@ -856,32 +529,29 @@ class SGUpgradeManager
           printNodeRecursively(el, sb, depth + 1);
           sb.append("</ul>");
         }
-      } else if (child instanceof Text) {
-
       }
     }
   }
 
   /**
    * @param node
-   * @param out
+   * @param sb
    * @param depth
    */
-  private void printFirstChild(Node node, StringBuffer sb, final int depth) {
-    Node child = node.getFirstChild();
+  private void printFirstChild(org.w3c.dom.Node node, StringBuffer sb, final int depth) {
+    org.w3c.dom.Node child = node.getFirstChild();
     printText(child, sb, depth);
   }
 
   /**
    * @param node
-   * @param out
+   * @param sb
    * @param depth
    */
-  private void printText(Node node, StringBuffer sb, final int depth) {
+  private void printText(org.w3c.dom.Node node, StringBuffer sb, final int depth) {
     String line = node.getNodeValue();
     String sub = tokenize(line);
     if (sub.length() != 0) {
-      // System.out.println(sub);
       sb.append(sub);
     }
   }
@@ -898,14 +568,13 @@ class SGUpgradeManager
     }
     StringBuffer sb = new StringBuffer();
     for (int ii = 0; ii < tokenList.size(); ii++) {
-      String str = (String) tokenList.get(ii);
+      String str = tokenList.get(ii);
       sb.append(str);
       if (ii != tokenList.size() - 1) {
         sb.append(' ');
       }
     }
-    String subStr = sb.toString();
-    return subStr;
+    return sb.toString();
   }
 
   /**
