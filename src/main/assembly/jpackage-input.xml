@@ -15,11 +15,11 @@
         </file>
         <!-- License files -->
         <file>
-            <source>${project.basedir}/LICENSE.txt</source>
+            <source>${project.basedir}/LICENSE</source>
             <outputDirectory>/</outputDirectory>
         </file>
         <file>
-            <source>${project.basedir}/COPYING.txt</source>
+            <source>${project.basedir}/COPYING</source>
             <outputDirectory>/</outputDirectory>
         </file>
     </files>
