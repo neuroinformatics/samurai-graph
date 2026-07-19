@@ -1,9 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-import ch.systemsx.cisd.hdf5.HDF5DataClass;
-import ch.systemsx.cisd.hdf5.HDF5DataSetInformation;
-import ch.systemsx.cisd.hdf5.HDF5DataTypeInformation;
-import ch.systemsx.cisd.hdf5.IHDF5Reader;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataClass;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataSetInformation;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataTypeInformation;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
 import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGAttribute;

@@ -1,10 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import ch.systemsx.cisd.hdf5.HDF5FactoryProvider;
-import ch.systemsx.cisd.hdf5.IHDF5Reader;
-import ch.systemsx.cisd.hdf5.IHDF5Writer;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5Exception;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
 import com.jmatio.io.MatFileReader;
-import hdf.hdf5lib.exceptions.HDF5Exception;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Frame;

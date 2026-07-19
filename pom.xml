@@ -96,13 +96,6 @@
                                         <exclude>org/freehep/graphicsbase/util/export/ExportFileTypeRegistry.class</exclude>
                                     </excludes>
                                 </filter>
-                                <!-- Exclude ncsa.hdf from jhdf5 (overlaps with cdm-core) -->
-                                <filter>
-                                    <artifact>cisd:jhdf5</artifact>
-                                    <excludes>
-                                        <exclude>ncsa/hdf/**</exclude>
-                                    </excludes>
-                                </filter>
                                 <!-- Exclude test-only dependencies -->
                                 <filter>
                                     <artifact>junit:junit</artifact>
@@ -419,11 +412,6 @@
             <name>Unidata All</name>
             <url>https://artifacts.unidata.ucar.edu/repository/unidata-all/</url>
         </repository>
-        <repository>
-            <id>ome</id>
-            <name>OME Repository</name>
-            <url>https://artifacts.openmicroscopy.org/artifactory/maven/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -491,14 +479,9 @@
 
         <!-- HDF5 file I/O -->
         <dependency>
-            <groupId>cisd</groupId>
-            <artifactId>jhdf5</artifactId>
-            <version>19.04.1</version>
-        </dependency>
-        <dependency>
-            <groupId>cisd</groupId>
-            <artifactId>base</artifactId>
-            <version>18.09.0</version>
+            <groupId>io.jhdf</groupId>
+            <artifactId>jhdf</artifactId>
+            <version>0.12.0</version>
         </dependency>
 
         <!-- MATLAB file I/O -->
@@ -528,7 +511,7 @@
             <artifactId>commons-csv</artifactId>
             <version>1.14.1</version>
         </dependency>
-        <!-- commons-io required by commons-csv 1.14.0 (jhdf5 pulls in 2.6 which is too old) -->
+        <!-- commons-io required by commons-csv 1.14.0 -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

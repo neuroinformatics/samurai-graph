@@ -1,7 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-import ch.systemsx.cisd.hdf5.HDF5FactoryProvider;
-import ch.systemsx.cisd.hdf5.IHDF5Writer;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;

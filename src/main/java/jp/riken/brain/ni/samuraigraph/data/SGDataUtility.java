@@ -1,11 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-import ch.systemsx.cisd.hdf5.HDF5DataClass;
-import ch.systemsx.cisd.hdf5.HDF5DataTypeInformation;
-import ch.systemsx.cisd.hdf5.HDF5EnumerationValue;
-import ch.systemsx.cisd.hdf5.HDF5FactoryProvider;
-import ch.systemsx.cisd.hdf5.IHDF5Reader;
-import ch.systemsx.cisd.hdf5.IHDF5Writer;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataClass;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataTypeInformation;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5EnumerationValue;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.RoundingMode;

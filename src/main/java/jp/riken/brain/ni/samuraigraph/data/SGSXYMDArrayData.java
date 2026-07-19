@@ -1,7 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-import ch.systemsx.cisd.base.mdarray.MDDoubleArray;
-import ch.systemsx.cisd.hdf5.IHDF5Writer;
+import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
+import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
 import com.jmatio.io.MatFileWriter;
 import com.jmatio.types.MLDouble;
 import java.io.File;
