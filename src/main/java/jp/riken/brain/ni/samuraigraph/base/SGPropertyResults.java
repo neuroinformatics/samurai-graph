@@ -109,7 +109,6 @@ public class SGPropertyResults implements Cloneable {
         status = "SKIPPED";
       }
       sb.append(status);
-      System.out.println(sb.toString());
     }
   }
 

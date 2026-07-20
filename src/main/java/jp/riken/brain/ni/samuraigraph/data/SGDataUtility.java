@@ -3655,17 +3655,7 @@ public class SGDataUtility
    * @param infoMap
    */
   public static void dumpInfoMap(final Map<String, Object> infoMap) {
-    for (String key : infoMap.keySet()) {
-      if (null == infoMap.get(key)) {
-        System.out.println("   key=" + key + " : null");
-      } else {
-        if (key.equals(SGIDataInformationKeyConstants.KEY_DATA_SOURCE)) {
-          System.out.println("   key=" + key + " : " + infoMap.get(key).getClass().getSimpleName());
-        } else {
-          System.out.println("   key=" + key + " : " + infoMap.get(key).toString());
-        }
-      }
-    }
+    // debug method
   }
 
   /**

@@ -3054,9 +3054,7 @@ public class SGFigureElementShape extends SGFigureElement2D
     }
 
     public void dump() {
-      System.out.println(this.mXValue1 + "  " + this.mXValue2);
-      System.out.println(this.mYValue1 + "  " + this.mYValue2);
-      System.out.println();
+      // debug method
     }
 
     @Override

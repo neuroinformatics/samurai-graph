@@ -339,13 +339,7 @@ public class SGUndoManager implements SGIDisposable {
   }
 
   void dump() {
-    System.out.println(this.mChangedObjectListList);
-    System.out.println("size=" + this.mChangedObjectListList.size());
-    System.out.println(this.mChangedObjectListCounter);
-    System.out.println(this.mMementoList);
-    System.out.println("size=" + this.mMementoList.size());
-    System.out.println(this.mMementoCounter);
-    System.out.println();
+    // debug method
   }
 
   /**
