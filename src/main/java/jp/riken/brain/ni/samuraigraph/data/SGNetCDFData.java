@@ -2522,8 +2522,7 @@ public abstract class SGNetCDFData extends SGArrayData
   @Override
   public boolean saveToHDF5File(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    // TODO
-    return false;
+    throw new UnsupportedOperationException("HDF5 export is not supported for NetCDF data");
   }
 
   /**
@@ -2535,8 +2534,7 @@ public abstract class SGNetCDFData extends SGArrayData
   @Override
   public boolean saveToMATLABFile(
       File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    // TODO
-    return false;
+    throw new UnsupportedOperationException("MATLAB export is not supported for NetCDF data");
   }
 
   /**
@@ -2549,8 +2547,7 @@ public abstract class SGNetCDFData extends SGArrayData
   @Override
   public boolean saveToTextFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    // TODO
-    return false;
+    throw new UnsupportedOperationException("Text export is not supported for NetCDF data");
   }
 
   /**

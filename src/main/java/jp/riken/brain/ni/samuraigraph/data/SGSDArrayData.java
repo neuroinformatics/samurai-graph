@@ -833,8 +833,7 @@ public abstract class SGSDArrayData extends SGArrayData
   @Override
   public boolean saveToMATLABFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    // TODO
-    return false;
+    throw new UnsupportedOperationException("MATLAB export is not supported for SDArray data");
   }
 
   public abstract Object[][] getValueTable(final SGExportParameter mode, SGDataBufferPolicy policy);

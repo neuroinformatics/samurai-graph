@@ -383,7 +383,7 @@ public class SGWindowDialog extends SGPropertyDialog
   }
 
   private void mOKButtonActionPerformed(java.awt.event.ActionEvent evt) {
-    // TODO add your handling code here:
+    // Placeholder for subclass customization
   }
 
   private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mBackgroundColorButton;

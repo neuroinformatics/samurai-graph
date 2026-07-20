@@ -221,7 +221,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
 
     if (this.mTickLabelVariable != null) {
-      // TODO set decimal place?
+      // Tick labels are already set, skip setup
     } else {
       // if tick labels are not set yet
       this.setupTickLabel(xVar, yVar);

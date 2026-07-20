@@ -1744,8 +1744,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   @Override
   public boolean saveToTextFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    // TODO
-    return false;
+    throw new UnsupportedOperationException("Text export is not supported for MDArray data");
   }
 
   protected boolean write(
