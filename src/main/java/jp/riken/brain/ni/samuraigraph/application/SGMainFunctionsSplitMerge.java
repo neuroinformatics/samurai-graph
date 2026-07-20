@@ -252,7 +252,7 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
     String[] nameArray = new String[dataArray.length];
 
     for (int ii = 0; ii < dataArray.length; ii++) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(dataNameMulti);
       String suffix = "";
       if (SGDataUtility.isSDArrayData(dataType)) {

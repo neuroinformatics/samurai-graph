@@ -160,7 +160,7 @@ public class SGArrowUtility implements SGIVXYDataConstants, SGIDataCommandConsta
       String value = map.getValueString(key);
 
       if (COM_DATA_ARROW_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_DATA_ARROW_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -183,7 +183,7 @@ public class SGArrowUtility implements SGIVXYDataConstants, SGIDataCommandConsta
         }
         result.putResult(COM_DATA_ARROW_LINE_TYPE, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_ARROW_HEAD_SIZE.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_DATA_ARROW_HEAD_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);

@@ -769,7 +769,7 @@ public class SGDataAnimationDialog extends SGDialog
       final int frameIndexMax = this.mAnimationThread.getFrameNumber() - 1;
       BigDecimal fMax = new BigDecimal(frameIndexMax);
       final int precision = fMax.precision();
-      StringBuffer sbFormat = new StringBuffer();
+      StringBuilder sbFormat = new StringBuilder();
       sbFormat.append("%0");
       sbFormat.append(precision);
       sbFormat.append('d');
@@ -792,7 +792,7 @@ public class SGDataAnimationDialog extends SGDialog
                 break;
               }
               String indexString = String.format(format, indices[ii]);
-              StringBuffer sb = new StringBuffer();
+              StringBuilder sb = new StringBuilder();
               sb.append(dir);
               sb.append(SGIConstants.FILE_SEPARATOR);
               sb.append(name);
@@ -1137,7 +1137,7 @@ public class SGDataAnimationDialog extends SGDialog
       final String unitText;
       final String unitToolTipText;
       if (unit != null && !"".equals(unit)) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append('[');
         sb.append(unit);
         sb.append(']');

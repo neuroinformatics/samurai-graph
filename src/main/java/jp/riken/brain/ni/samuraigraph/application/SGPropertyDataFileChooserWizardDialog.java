@@ -1098,7 +1098,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     }
 
     if (b) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(USER_HOME);
       if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
         sb.append(FILE_SEPARATOR);

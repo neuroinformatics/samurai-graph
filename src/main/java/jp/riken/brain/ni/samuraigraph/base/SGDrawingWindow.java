@@ -1532,7 +1532,7 @@ public class SGDrawingWindow extends JFrame
       String value = map.getValueString(key);
 
       if (COM_PAPER_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_PAPER_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1544,7 +1544,7 @@ public class SGDrawingWindow extends JFrame
         }
         result.putResult(COM_PAPER_WIDTH, SGPropertyResults.SUCCEEDED);
       } else if (COM_PAPER_HEIGHT.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_PAPER_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1613,7 +1613,7 @@ public class SGDrawingWindow extends JFrame
         }
         result.putResult(COM_WINDOW_GRID_VISIBLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_WINDOW_GRID_INTERVAL.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_WINDOW_GRID_INTERVAL, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1625,7 +1625,7 @@ public class SGDrawingWindow extends JFrame
         }
         result.putResult(COM_WINDOW_GRID_INTERVAL, SGPropertyResults.SUCCEEDED);
       } else if (COM_WINDOW_GRID_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_WINDOW_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1656,7 +1656,7 @@ public class SGDrawingWindow extends JFrame
         }
         result.putResult(COM_WINDOW_GRID_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (COM_IMAGE_LOCATION_X.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_IMAGE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1668,7 +1668,7 @@ public class SGDrawingWindow extends JFrame
         }
         result.putResult(COM_IMAGE_LOCATION_X, SGPropertyResults.SUCCEEDED);
       } else if (COM_IMAGE_LOCATION_Y.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_IMAGE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3344,12 +3344,12 @@ public class SGDrawingWindow extends JFrame
    * @param sb
    * @return
    */
-  public boolean createTree(StringBuffer sb) {
+  public boolean createTree(StringBuilder sb) {
     this.createTree(this, sb, 0);
     return true;
   }
 
-  private void createTree(final SGINode node, final StringBuffer sb, final int depth) {
+  private void createTree(final SGINode node, final StringBuilder sb, final int depth) {
     final ArrayList<SGINode> childList = node.getChildNodes();
     final String cText = node.getClassDescription();
     final String iText = node.getInstanceDescription();
@@ -3378,7 +3378,7 @@ public class SGDrawingWindow extends JFrame
     }
   }
 
-  private void append(final StringBuffer sb, final String str, final int depth) {
+  private void append(final StringBuilder sb, final String str, final int depth) {
     final String s = "  ";
     for (int ii = 0; ii < depth; ii++) {
       sb.append(s);
@@ -5883,7 +5883,7 @@ public class SGDrawingWindow extends JFrame
     progress.setProgressValue(min);
     str = el.getAttribute(SGIRootObjectConstants.KEY_PAPER_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uWidth = new StringBuffer();
+      StringBuilder uWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uWidth);
       if (num == null) {
         return false;
@@ -5898,7 +5898,7 @@ public class SGDrawingWindow extends JFrame
     progress.setProgressValue(min + ratio * 1);
     str = el.getAttribute(SGIRootObjectConstants.KEY_PAPER_HEIGHT);
     if (str.length() != 0) {
-      StringBuffer uHeight = new StringBuffer();
+      StringBuilder uHeight = new StringBuilder();
       num = SGUtilityText.getNumber(str, uHeight);
       if (num == null) {
         return false;
@@ -5927,7 +5927,7 @@ public class SGDrawingWindow extends JFrame
     progress.setProgressValue(min + ratio * 3);
     str = el.getAttribute(SGIRootObjectConstants.KEY_GRID_INTERVAL);
     if (str.length() != 0) {
-      StringBuffer uInterval = new StringBuffer();
+      StringBuilder uInterval = new StringBuilder();
       num = SGUtilityText.getNumber(str, uInterval);
       if (num == null) {
         return false;
@@ -5942,7 +5942,7 @@ public class SGDrawingWindow extends JFrame
     progress.setProgressValue(min + ratio * 4);
     str = el.getAttribute(SGIRootObjectConstants.KEY_GRID_LINE_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uGridLineWidth = new StringBuffer();
+      StringBuilder uGridLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uGridLineWidth);
       if (num == null) {
         return false;
@@ -5985,7 +5985,7 @@ public class SGDrawingWindow extends JFrame
     progress.setProgressValue(min + ratio * 7);
     str = el.getAttribute(SGIRootObjectConstants.KEY_IMAGE_LOCATION_X);
     if (str.length() != 0) {
-      StringBuffer uX = new StringBuffer();
+      StringBuilder uX = new StringBuilder();
       num = SGUtilityText.getNumber(str, uX);
       if (num == null) {
         return false;
@@ -6000,7 +6000,7 @@ public class SGDrawingWindow extends JFrame
     progress.setProgressValue(min + ratio * 8);
     str = el.getAttribute(SGIRootObjectConstants.KEY_IMAGE_LOCATION_Y);
     if (str.length() != 0) {
-      StringBuffer uY = new StringBuffer();
+      StringBuilder uY = new StringBuilder();
       num = SGUtilityText.getNumber(str, uY);
       if (num == null) {
         return false;
@@ -7097,7 +7097,7 @@ public class SGDrawingWindow extends JFrame
   public String getCommandString(SGExportParameter params) {
     OPERATION type = params.getType();
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     // creates the command for this window
     String wndCommands =

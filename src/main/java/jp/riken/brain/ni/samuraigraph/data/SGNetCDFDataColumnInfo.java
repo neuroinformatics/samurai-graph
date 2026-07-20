@@ -127,7 +127,7 @@ public class SGNetCDFDataColumnInfo extends SGDataColumnInfo {
    * @return a text string for this object
    */
   protected String paramString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(super.paramString());
     sb.append(", origin=");
     sb.append(this.getOrigin());

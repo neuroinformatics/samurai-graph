@@ -71,7 +71,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
   }
 
   private String createGroupName(final int figureIndex, final int dataIndex) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("id");
     sb.append(figureIndex);
     sb.append('-');
@@ -80,7 +80,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
   }
 
   private String getGroupVariableName(final String groupName, final String name) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(groupName);
     sb.append('/');
     sb.append(name);
@@ -148,7 +148,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
   // save background image
   private File saveImageToFile(final SGDrawingWindow wnd, final File datasetTempDir)
       throws IOException, InvalidRangeException {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(datasetTempDir);
     sb.append(SGIConstants.FILE_SEPARATOR);
     sb.append(ARCHIVE_IMAGE_NAME);
@@ -191,7 +191,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         SGIElementGroupSetForData gs = (SGIElementGroupSetForData) gElement.getChild(data);
         String groupName = this.createGroupName(ii, jj);
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(datasetTempDir.getPath());
         sb.append(SGIConstants.FILE_SEPARATOR);
         sb.append(groupName);
@@ -392,7 +392,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
   private int getNumberOfDataInNetcdfFile(final NetcdfFile ncfile, final int figureIndex) {
     Group root = ncfile.getRootGroup();
     List<Group> groups = root.getGroups();
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("id");
     sb.append(figureIndex);
     sb.append('-');

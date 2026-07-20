@@ -837,7 +837,7 @@ public class SGDataCreator
 
     /** Returns a string representation. */
     public String toString() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append('[');
       sb.append("index=");
       sb.append(this.index);
@@ -2724,7 +2724,7 @@ public class SGDataCreator
         }
 
         // the suffix for the data name
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (dimIndices.length > 1) {
           sb.append('(');
           sb.append(dimIndices[ii]);

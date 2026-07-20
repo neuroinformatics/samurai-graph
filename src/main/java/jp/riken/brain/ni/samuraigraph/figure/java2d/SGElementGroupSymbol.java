@@ -378,7 +378,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     // symbol size
     str = el.getAttribute(KEY_SYMBOL_SIZE);
     if (str.length() != 0) {
-      StringBuffer uSize = new StringBuffer();
+      StringBuilder uSize = new StringBuilder();
       num = SGUtilityText.getNumber(str, uSize);
       if (num == null) {
         return false;
@@ -446,7 +446,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     // line width
     str = el.getAttribute(KEY_SYMBOL_LINE_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uLineWidth = new StringBuffer();
+      StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
       if (num == null) {
         return false;

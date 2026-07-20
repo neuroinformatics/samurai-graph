@@ -2808,7 +2808,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         SGNetCDFVariable leVar = leList.get(ii);
         SGNetCDFVariable ueVar = ueList.get(ii);
         SGNetCDFVariable ehVar = ehList.get(ii);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         final boolean common = leVar.equals(ueVar);
         String ehName = ehVar.getName();
 
@@ -2851,7 +2851,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         String tlColumnType, thColumnType;
         SGNetCDFVariable tlVar = tlList.get(ii);
         SGNetCDFVariable thVar = thList.get(ii);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         String thName = thVar.getName();
 
         // tick label
@@ -3143,7 +3143,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     int[] indexArray = indices.getNumbers();
     for (int ii = 0; ii < indexArray.length; ii++) {
       Double dimValue = data.getDimensionValue(dimName, indexArray[ii]);
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(dimName);
       sb.append('[');
       sb.append(indexArray[ii]);

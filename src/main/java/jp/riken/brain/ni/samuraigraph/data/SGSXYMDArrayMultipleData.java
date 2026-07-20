@@ -1838,7 +1838,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         String pickUpIndicesStr = this.mPickUpDimensionInfo.getIndices().toString();
         el.setAttribute(KEY_PICK_UP_DIMENSION_INDICES, pickUpIndicesStr);
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         SGMDArrayVariable[] vars = this.getVariables();
         int cnt = 0;
         for (int ii = 0; ii < vars.length; ii++) {
@@ -1947,7 +1947,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   }
 
   private String bindVariableNameInBracket(String name) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('{');
     sb.append(name);
     sb.append('}');
@@ -1956,7 +1956,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
   private String bindVariableNamesInBracket(
       SGMDArrayVariable[] variables, final boolean withDimensionIndex) {
-    StringBuffer sb = new StringBuffer("{");
+    StringBuilder sb = new StringBuilder("{");
     for (int ii = 0; ii < variables.length; ii++) {
       if (ii > 0) {
         sb.append(",");
@@ -1973,7 +1973,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   }
 
   private String bindVariableNames(SGMDArrayVariable var, final boolean withDimensionIndex) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(var.getName());
     if (withDimensionIndex) {
       sb.append(":");
@@ -2161,7 +2161,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         SGMDArrayVariable leVar = leList.get(ii);
         SGMDArrayVariable ueVar = ueList.get(ii);
         SGMDArrayVariable ehVar = ehList.get(ii);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         final boolean common = leVar.equals(ueVar);
         String ehName = ehVar.getName();
 
@@ -2204,7 +2204,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         String tlColumnType, thColumnType;
         SGMDArrayVariable tlVar = tlList.get(ii);
         SGMDArrayVariable thVar = thList.get(ii);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         String thName = thVar.getName();
 
         // tick label
@@ -2729,7 +2729,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       } else {
         continue;
       }
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(cType);
       sb.append(SGDataUtility.MID_COLUMN);
       final int index = sb.toString().length();

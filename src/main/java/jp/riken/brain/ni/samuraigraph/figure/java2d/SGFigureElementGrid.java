@@ -720,7 +720,7 @@ public class SGFigureElementGrid extends SGFigureElement2D
     // line width
     str = element.getAttribute(KEY_LINE_WIDTH);
     if (str != null) {
-      StringBuffer uLineWidth = new StringBuffer();
+      StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
       if (num == null) {
         return false;

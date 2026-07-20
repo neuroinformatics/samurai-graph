@@ -29,7 +29,7 @@ public class SGFileHandler implements SGIConstants {
       throw new Error();
     }
     // for windows
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(dir);
     for (int ii = 0; ii < fList.length; ii++) {
       if (fList[ii].endsWith(md)) {

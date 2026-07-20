@@ -79,7 +79,7 @@ public class SGLineStyle extends SGStyle implements Cloneable {
 
   @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("[");
     sb.append("color=");
     sb.append(this.mColor);

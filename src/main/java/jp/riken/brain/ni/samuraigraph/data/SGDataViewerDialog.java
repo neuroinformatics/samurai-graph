@@ -531,7 +531,7 @@ public class SGDataViewerDialog extends SGDialog {
     this.mDataName = name;
 
     // set title
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(TITLE_PREFIX);
     sb.append(SGUtility.removeEscapeChar(name));
     this.setTitle(sb.toString());

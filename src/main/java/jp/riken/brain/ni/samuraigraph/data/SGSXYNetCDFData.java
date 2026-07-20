@@ -1937,7 +1937,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
 
     // append to the string buffer
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(name);
     sb.append('=');
     sb.append(index);
@@ -1966,7 +1966,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
 
     // append to the string buffer
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(name);
     sb.append('=');
     sb.append(index0);

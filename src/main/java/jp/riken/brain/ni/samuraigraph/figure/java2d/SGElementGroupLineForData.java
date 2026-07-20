@@ -55,7 +55,7 @@ public abstract class SGElementGroupLineForData extends SGElementGroupLine
       String key = itr.next();
       String value = map.getValueString(key);
       if (COM_DATA_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);

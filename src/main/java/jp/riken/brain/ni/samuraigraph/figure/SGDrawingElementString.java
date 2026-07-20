@@ -479,7 +479,7 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     // set font size
     str = el.getAttribute(KEY_FONT_SIZE);
     if (str.length() != 0) {
-      StringBuffer uFontSize = new StringBuffer();
+      StringBuilder uFontSize = new StringBuilder();
       num = SGUtilityText.getNumber(str, uFontSize);
       if (num == null) {
         return false;

@@ -50,7 +50,7 @@ public class SGExtensionFileFilter extends FileFilter {
    * @return the description of this filter
    */
   public String getDescription() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     if (this.mExtensionsList.size() != 0) {
       for (int ii = 0; ii < this.mExtensionsList.size(); ii++) {
         if (ii > 0) {
@@ -62,7 +62,7 @@ public class SGExtensionFileFilter extends FileFilter {
     } else {
       sb.append("*.*");
     }
-    StringBuffer ret = new StringBuffer();
+    StringBuilder ret = new StringBuilder();
     ret.append(this.mExplanation);
     ret.append(" (");
     ret.append(sb.toString());

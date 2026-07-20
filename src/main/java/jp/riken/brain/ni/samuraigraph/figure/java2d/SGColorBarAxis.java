@@ -1775,7 +1775,7 @@ class SGColorBarAxis extends SGAxisElement
     // bar width
     str = element.getAttribute(SGIColorBarConstants.KEY_COLOR_BAR_WIDTH);
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -1788,7 +1788,7 @@ class SGColorBarAxis extends SGAxisElement
     // bar length
     str = element.getAttribute(SGIColorBarConstants.KEY_COLOR_BAR_LENGTH);
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -1933,7 +1933,7 @@ class SGColorBarAxis extends SGAxisElement
         }
         result.putResult(COM_COLOR_BAR_LOCATION_Y, SGPropertyResults.SUCCEEDED);
       } else if (COM_COLOR_BAR_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_COLOR_BAR_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1945,7 +1945,7 @@ class SGColorBarAxis extends SGAxisElement
         }
         result.putResult(COM_COLOR_BAR_WIDTH, SGPropertyResults.SUCCEEDED);
       } else if (COM_COLOR_BAR_LENGTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_COLOR_BAR_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2013,7 +2013,7 @@ class SGColorBarAxis extends SGAxisElement
       } else if (COM_COLOR_BAR_SPACE_TO_SCALE.equalsIgnoreCase(key)) {
         // for backward compatibility
         String k = map.getOriginalKey(key);
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(k, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2148,7 +2148,7 @@ class SGColorBarAxis extends SGAxisElement
    * @return a text string of the commands
    */
   public String getCommandString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     // creates the command for this axis
     String axisCommands =
@@ -2159,7 +2159,7 @@ class SGColorBarAxis extends SGAxisElement
      * Iterator<Entry<String, SGColorMap>> colorMapItr =
      * this.mColorMapManager.getColorMaps().entrySet().iterator();
      * while (colorMapItr.hasNext()) {
-     * StringBuffer sbTmp = new StringBuffer();
+     * StringBuilder sbTmp = new StringBuilder();
      * Entry<String, SGColorMap> entry = colorMapItr.next();
      * String colorMapName = entry.getKey();
      * SGColorMap colorMap = entry.getValue();

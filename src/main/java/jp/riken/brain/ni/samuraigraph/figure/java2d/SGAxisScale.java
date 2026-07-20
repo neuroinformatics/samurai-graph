@@ -664,7 +664,7 @@ class SGAxisScale extends SGDrawingElementScale2D
   }
 
   public String getCommandString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     String scaleCommands =
         SGCommandUtility.createCommandString(COM_SCALE, null, this.getCommandPropertyMap(null));
     sb.append(scaleCommands);
@@ -859,7 +859,7 @@ class SGAxisScale extends SGDrawingElementScale2D
         // result.putResult(COM_SCALE_AXIS_LENGTH_MODE,
         // SGPropertyResults.SUCCEEDED);
       } else if (COM_SPACE.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_SPACE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -871,7 +871,7 @@ class SGAxisScale extends SGDrawingElementScale2D
         }
         result.putResult(COM_SPACE, SGPropertyResults.SUCCEEDED);
       } else if (COM_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -924,7 +924,7 @@ class SGAxisScale extends SGDrawingElementScale2D
         }
         result.putResult(COM_FONT_STYLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_FONT_SIZE.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1406,7 +1406,7 @@ class SGAxisScale extends SGDrawingElementScale2D
     SGDrawingElementString el =
         horizontal ? this.getHorizontalStringElement() : this.getVerticalStringElement();
     String unit = horizontal ? this.mHorizontalUnit : this.mVerticalUnit;
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(Math.abs(valueNew));
     if (this.isValidText(unit)) {
       sb.append(" [");

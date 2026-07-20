@@ -49,7 +49,7 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
   private void create() {
     this.setBounds(0, 0, 100, 100);
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("  -- Data: ");
     final int id = this.mGroupSet.getID();
     sb.append(id);

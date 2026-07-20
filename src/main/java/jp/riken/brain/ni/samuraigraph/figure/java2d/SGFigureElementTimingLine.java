@@ -1062,7 +1062,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     void init(TimingLine tm) {
       this.setBounds(0, 0, 100, 100);
 
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("  -- Timing Line: ");
       sb.append(tm.getID());
       sb.append(" --");
@@ -1337,7 +1337,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       } else {
         direction = "Y";
       }
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(this.mID);
       sb.append(": ");
       sb.append(" Axis=");
@@ -1758,7 +1758,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       // line width
       str = el.getAttribute(KEY_LINE_WIDTH);
       if (str.length() != 0) {
-        StringBuffer uLineWidth = new StringBuffer();
+        StringBuilder uLineWidth = new StringBuilder();
         num = SGUtilityText.getNumber(str, uLineWidth);
         if (num == null) {
           return false;
@@ -1963,7 +1963,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
           }
           result.putResult(COM_TIMING_LINE_VALUE, SGPropertyResults.SUCCEEDED);
         } else if (COM_TIMING_LINE_WIDTH.equalsIgnoreCase(key)) {
-          StringBuffer unit = new StringBuffer();
+          StringBuilder unit = new StringBuilder();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
             result.putResult(COM_TIMING_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2036,7 +2036,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
      */
     @Override
     public String getCommandString(SGExportParameter params) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
 
       // creates the command for this data
       String dataCommands = this.createCommandString(params);
@@ -2152,7 +2152,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
 
     /** */
     public String toString() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append('[');
       sb.append(this.visibleTimingElementList.toString());
       sb.append(']');

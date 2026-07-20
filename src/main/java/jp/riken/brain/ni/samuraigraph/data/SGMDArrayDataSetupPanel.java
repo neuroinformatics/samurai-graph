@@ -1183,7 +1183,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
       colsMD[ii] = (SGMDArrayDataColumnInfo) cols[ii];
     }
     Map<String, Object> infoMap = new HashMap<String, Object>(this.mInfoMap);
-    StringBuffer errmsgBuffer = new StringBuffer();
+    StringBuilder errmsgBuffer = new StringBuilder();
     if (SGDataUtility.isSXYTypeData(this.mDataType)) {
       // setup information map
       Map<String, Integer> dimensionIndexMap = this.getSXYDataPickUpDimensionIndexMap();

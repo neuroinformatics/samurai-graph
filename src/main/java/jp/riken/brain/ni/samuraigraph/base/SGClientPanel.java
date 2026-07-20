@@ -1309,7 +1309,7 @@ public class SGClientPanel extends JLayeredPane
       JPopupMenu p = new JPopupMenu();
       p.setBounds(0, 0, 100, 100);
 
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("  -- Window: ");
       sb.append(this.mWnd.getID());
       sb.append(" --");

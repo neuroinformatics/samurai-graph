@@ -74,7 +74,7 @@ public class SGNetCDFTextVariable extends SGNetCDFVariable {
    * @return the second dimension
    */
   public Dimension getLengthDimension() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(this.mVariable.getShortName());
     sb.append("_strlen");
     return this.mNetCDFFile.findDimension(sb.toString());

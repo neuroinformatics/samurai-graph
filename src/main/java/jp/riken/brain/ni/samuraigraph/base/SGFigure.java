@@ -426,7 +426,7 @@ public abstract class SGFigure
     final float x = (float) SGUtilityNumber.roundOffNumber(this.mGraphRectX * ratio, order - 1);
     final float y = (float) SGUtilityNumber.roundOffNumber(this.mGraphRectY * ratio, order - 1);
     String str = this.getClassDescription();
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(str);
     sb.append(" ( X=");
     sb.append(x);
@@ -3267,7 +3267,7 @@ public abstract class SGFigure
     // x
     str = el.getAttribute(SGFigure.KEY_FIGURE_X_IN_CLIENT);
     if (str.length() != 0) {
-      StringBuffer ux = new StringBuffer();
+      StringBuilder ux = new StringBuilder();
       num = SGUtilityText.getNumber(str, ux);
       if (num == null) {
         return false;
@@ -3281,7 +3281,7 @@ public abstract class SGFigure
     // y
     str = el.getAttribute(SGFigure.KEY_FIGURE_Y_IN_CLIENT);
     if (str.length() != 0) {
-      StringBuffer uy = new StringBuffer();
+      StringBuilder uy = new StringBuilder();
       num = SGUtilityText.getNumber(str, uy);
       if (num == null) {
         return false;
@@ -3295,7 +3295,7 @@ public abstract class SGFigure
     // width
     str = el.getAttribute(SGFigure.KEY_FIGURE_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uWidth = new StringBuffer();
+      StringBuilder uWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uWidth);
       if (num == null) {
         return false;
@@ -3309,7 +3309,7 @@ public abstract class SGFigure
     // height
     str = el.getAttribute(SGFigure.KEY_FIGURE_HEIGHT);
     if (str.length() != 0) {
-      StringBuffer uHeight = new StringBuffer();
+      StringBuilder uHeight = new StringBuilder();
       num = SGUtilityText.getNumber(str, uHeight);
       if (num == null) {
         return false;
@@ -4170,7 +4170,7 @@ public abstract class SGFigure
       String value = map.getValueString(key);
 
       if (COM_FIGURE_LOCATION_X.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_FIGURE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -4182,7 +4182,7 @@ public abstract class SGFigure
         }
         result.putResult(COM_FIGURE_LOCATION_X, SGPropertyResults.SUCCEEDED);
       } else if (COM_FIGURE_LOCATION_Y.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_FIGURE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -4194,7 +4194,7 @@ public abstract class SGFigure
         }
         result.putResult(COM_FIGURE_LOCATION_Y, SGPropertyResults.SUCCEEDED);
       } else if (COM_FIGURE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_FIGURE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -4206,7 +4206,7 @@ public abstract class SGFigure
         }
         result.putResult(COM_FIGURE_WIDTH, SGPropertyResults.SUCCEEDED);
       } else if (COM_FIGURE_HEIGHT.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_FIGURE_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -4229,7 +4229,7 @@ public abstract class SGFigure
         }
         result.putResult(COM_FIGURE_FRAME_VISIBLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_FIGURE_FRAME_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_FIGURE_FRAME_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -4463,7 +4463,7 @@ public abstract class SGFigure
    * @return a text string of the commands
    */
   public String getCommandString(SGExportParameter params) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     // creates the command for this figure
     String figureCommands =

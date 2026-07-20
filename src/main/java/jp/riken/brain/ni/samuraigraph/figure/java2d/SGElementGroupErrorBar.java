@@ -387,7 +387,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     // line width
     str = el.getAttribute(KEY_LINE_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uLineWidth = new StringBuffer();
+      StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
       if (num == null) {
         return false;
@@ -401,7 +401,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
       // to maintain downward compatibility with old versions before 0.6.1
       str = el.getAttribute("LineWidth");
       if (str.length() != 0) {
-        StringBuffer uLineWidth = new StringBuffer();
+        StringBuilder uLineWidth = new StringBuilder();
         num = SGUtilityText.getNumber(str, uLineWidth);
         if (num == null) {
           return false;
@@ -416,7 +416,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     // head size
     str = el.getAttribute(KEY_HEAD_SIZE);
     if (str.length() != 0) {
-      StringBuffer uHeadSize = new StringBuffer();
+      StringBuilder uHeadSize = new StringBuilder();
       num = SGUtilityText.getNumber(str, uHeadSize);
       if (num == null) {
         return false;

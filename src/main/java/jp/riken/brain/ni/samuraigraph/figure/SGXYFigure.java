@@ -444,7 +444,7 @@ public class SGXYFigure extends SGFigure
         }
         result.putResult(COM_FIGURE_GRID_STEP_Y, SGPropertyResults.SUCCEEDED);
       } else if (COM_FIGURE_GRID_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_FIGURE_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -575,7 +575,7 @@ public class SGXYFigure extends SGFigure
   @Override
   public String getCommandString(SGExportParameter params) {
     String figureCommandString = super.getCommandString(params);
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(figureCommandString);
     String gridCommands =
         SGCommandUtility.createCommandString(

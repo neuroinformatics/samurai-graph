@@ -120,7 +120,7 @@ class SGFigureAxis extends SGAxisElement {
 
     p.setBounds(0, 0, 100, 100);
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("  -- Axis: ");
     sb.append(this.mAxisElement.getLocationName(this.mAxis));
     sb.append(" --");
@@ -879,7 +879,7 @@ class SGFigureAxis extends SGAxisElement {
       String key = itr.next();
       String value = map.getValueString(key);
       if (COM_AXIS_SHIFT.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_SHIFT, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -932,7 +932,7 @@ class SGFigureAxis extends SGAxisElement {
       } else if (COM_AXIS_LINE_WIDTH.equalsIgnoreCase(key)) {
         // for backward compatibility
         String k = map.getOriginalKey(key);
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(k, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -967,7 +967,7 @@ class SGFigureAxis extends SGAxisElement {
       } else if (COM_AXIS_SPACE_TO_SCALE.equalsIgnoreCase(key)) {
         // for backward compatibility
         String k = map.getOriginalKey(key);
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(k, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1017,7 +1017,7 @@ class SGFigureAxis extends SGAxisElement {
 
     str = element.getAttribute(KEY_SHIFT);
     if (str.length() != 0) {
-      StringBuffer uShift = new StringBuffer();
+      StringBuilder uShift = new StringBuilder();
       Number num = SGUtilityText.getNumber(str, uShift);
       if (num != null) {
         if (this.setShift(num.floatValue(), uShift.toString()) == false) {

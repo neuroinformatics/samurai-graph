@@ -940,7 +940,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
     void init(AxisBreakSymbol abs) {
       this.setBounds(0, 0, 100, 100);
 
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("  -- AxisBreak: ");
       sb.append(abs.getID());
       sb.append(" --");
@@ -1061,7 +1061,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
     }
 
     public String toString() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(this.getClass().getSimpleName());
       sb.append(":");
       sb.append(this.mID);
@@ -1256,7 +1256,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
       SGIFigureElementAxis aElement = SGFigureElementAxisBreak.this.mAxisElement;
       String xAxis = aElement.getLocationName(this.mXAxis);
       String yAxis = aElement.getLocationName(this.mYAxis);
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(this.mID);
       sb.append(": ");
       sb.append(" AxisX=");
@@ -1298,7 +1298,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
     //
     //            p.setBounds(0, 0, 100, 100);
     //
-    //            StringBuffer sb = new StringBuffer();
+    //            StringBuilder sb = new StringBuilder();
     //            sb.append("  -- AxisBreak: ");
     //            sb.append(this.getID());
     //            sb.append(" --");
@@ -1906,7 +1906,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
           }
           result.putResult(COM_BREAK_LOCATION_Y, SGPropertyResults.SUCCEEDED);
         } else if (COM_BREAK_LENGTH.equalsIgnoreCase(key)) {
-          StringBuffer unit = new StringBuffer();
+          StringBuilder unit = new StringBuilder();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
             result.putResult(COM_BREAK_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1918,7 +1918,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
           }
           result.putResult(COM_BREAK_LENGTH, SGPropertyResults.SUCCEEDED);
         } else if (COM_BREAK_INTERVAL.equalsIgnoreCase(key)) {
-          StringBuffer unit = new StringBuffer();
+          StringBuilder unit = new StringBuilder();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
             result.putResult(COM_BREAK_INTERVAL, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1956,7 +1956,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
           }
           result.putResult(COM_BREAK_ANGLE, SGPropertyResults.SUCCEEDED);
         } else if (COM_BREAK_LINE_WIDTH.equalsIgnoreCase(key)) {
-          StringBuffer unit = new StringBuffer();
+          StringBuilder unit = new StringBuilder();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
             result.putResult(COM_BREAK_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2048,7 +2048,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
      */
     @Override
     public String getCommandString(SGExportParameter params) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
 
       // creates the command for this data
       String dataCommands = this.createCommandString(params);

@@ -187,7 +187,7 @@ public class SGLineStylePropertyDialog extends SGPropertyDialog {
       if (this.mPropertyDialogObserverList.size() > 1) {
         String obsName = obs.getName();
         for (String name : nList) {
-          StringBuffer sb = new StringBuffer();
+          StringBuilder sb = new StringBuilder();
           sb.append(obsName);
           sb.append(": ");
           sb.append(name);

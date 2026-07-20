@@ -2541,7 +2541,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
       locationSet.add(l.getLocationName());
     }
     List<String> locationList = new ArrayList<String>(locationSet);
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(SGAxisDialog.TITLE);
     sb.append(" (");
     for (int ii = 0; ii < locationList.size(); ii++) {

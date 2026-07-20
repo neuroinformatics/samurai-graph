@@ -436,7 +436,7 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     // font size
     str = el.getAttribute(KEY_FONT_SIZE);
     if (str.length() != 0) {
-      StringBuffer uFontSize = new StringBuffer();
+      StringBuilder uFontSize = new StringBuilder();
       num = SGUtilityText.getNumber(str, uFontSize);
       if (num == null) {
         return false;
@@ -462,7 +462,7 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     // line width
     str = el.getAttribute(KEY_LINE_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uLineWidth = new StringBuffer();
+      StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
       if (num == null) {
         return false;
@@ -476,7 +476,7 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     // space
     str = el.getAttribute(KEY_SPACE);
     if (str.length() != 0) {
-      StringBuffer uSpace = new StringBuffer();
+      StringBuilder uSpace = new StringBuilder();
       num = SGUtilityText.getNumber(str, uSpace);
       if (num == null) {
         return false;

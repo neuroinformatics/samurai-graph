@@ -396,7 +396,7 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("[");
     sb.append("visible=");
     sb.append(this.mVisibleFlag);
@@ -473,7 +473,7 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
      * @return string representation of this object
      */
     public String toString() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("[");
       sb.append("visible=");
       sb.append(this.visible);

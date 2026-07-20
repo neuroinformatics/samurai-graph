@@ -958,7 +958,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     }
 
     // append to the string buffer
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(dim.getShortName());
     sb.append('=');
     sb.append(index);
@@ -990,7 +990,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     }
 
     // append to the string buffer
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(xName);
     sb.append('=');
     sb.append(xIndex);

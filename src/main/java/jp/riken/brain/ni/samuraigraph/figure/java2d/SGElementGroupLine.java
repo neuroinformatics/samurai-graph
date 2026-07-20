@@ -362,7 +362,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     // line width
     str = elStyleHolder.getAttribute(KEY_LINE_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uLineWidth = new StringBuffer();
+      StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
       if (num == null) {
         return false;

@@ -296,7 +296,7 @@ public class SGDateInputDialog extends SGAbstractDateInputDialog {
               }
             });
     for (int ii = 1; ii <= 12; ii++) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append('-');
       sb.append(String.format("%02d", ii));
       sb.append(":00");
@@ -315,7 +315,7 @@ public class SGDateInputDialog extends SGAbstractDateInputDialog {
 
     Set<String> plusTimeZoneSet = new TreeSet<String>();
     for (int ii = 1; ii <= 14; ii++) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append('+');
       sb.append(String.format("%02d", ii));
       sb.append(":00");
@@ -424,7 +424,7 @@ public class SGDateInputDialog extends SGAbstractDateInputDialog {
 
   @Override
   protected String createString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     // year
     String year = this.mYearSpinner.getText();

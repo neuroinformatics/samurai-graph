@@ -231,7 +231,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     // edge line width
     str = el.getAttribute(KEY_EDGE_LINE_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uEdgeLineWidth = new StringBuffer();
+      StringBuilder uEdgeLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uEdgeLineWidth);
       if (num == null) {
         return false;

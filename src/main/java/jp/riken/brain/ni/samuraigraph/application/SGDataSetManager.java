@@ -270,7 +270,7 @@ class SGDataSetManager
    */
   private File getDataSetTempDir() {
     String filename = SGApplicationUtility.getPathName(TMP_DIR, DATASET_TEMPDIR_NAME);
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(filename);
     sb.append(System.currentTimeMillis());
     File datasetTempDir = new File(sb.toString());
@@ -298,7 +298,7 @@ class SGDataSetManager
       final int dataFileNum,
       ArrayList<String> dFnameList) {
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(datasetTempDir.getAbsolutePath());
     sb.append(FILE_SEPARATOR);
     sb.append("id");
@@ -307,7 +307,7 @@ class SGDataSetManager
     int fileCnt = 0;
     for (int ii = 0; ii < dataFileNum; ii++) {
       for (int jj = 0; jj < dataFileNum; jj++) {
-        StringBuffer sb2 = new StringBuffer();
+        StringBuilder sb2 = new StringBuilder();
         sb2.append(header);
         sb2.append(ii);
         sb2.append('-');
@@ -690,7 +690,7 @@ class SGDataSetManager
       for (int jj = 0; jj < dataList.size(); jj++) {
         SGData data = (SGData) dataList.get(jj);
         String ext = data.getDataSetFileExtension();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(datasetDir.getPath());
         sb.append(FILE_SEPARATOR);
         sb.append("id");

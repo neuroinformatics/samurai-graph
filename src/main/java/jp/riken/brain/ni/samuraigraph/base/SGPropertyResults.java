@@ -95,7 +95,7 @@ public class SGPropertyResults implements Cloneable {
       String uKey = key.toUpperCase();
       String name = this.mOriginalKeyMap.get(uKey);
       final int value = this.mMap.get(uKey);
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(name);
       sb.append("...");
       String status = "";

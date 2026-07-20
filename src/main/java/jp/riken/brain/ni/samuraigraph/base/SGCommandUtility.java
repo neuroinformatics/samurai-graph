@@ -4,7 +4,7 @@ public class SGCommandUtility {
 
   public static String createCommandString(
       final String cmd, final String id, final SGPropertyMap map) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(cmd);
     sb.append('(');
     if (id != null) {

@@ -399,7 +399,7 @@ public class SGIntegerSeries implements Cloneable {
 
   @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(this.mStart.toString());
     final Integer step = this.mStep.getNumber();
     if (step != null && step != 0) {

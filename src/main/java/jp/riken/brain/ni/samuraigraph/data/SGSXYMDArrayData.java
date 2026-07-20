@@ -1673,7 +1673,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
 
   @Override
   public String getToolTipSpatiallyVaried(final int index0, final int index1) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     SGMDArrayVariable[] vars = this.getAssignedVariables();
     for (int ii = 0; ii < vars.length; ii++) {
       if (ii > 0) {
@@ -1686,7 +1686,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
 
   private String getToolTipSpatiallyVaried(
       SGMDArrayVariable var, final int arrayIndex0, final int arrayIndex1) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     int[] origins = var.getOrigins();
     final int dim = var.getGenericDimensionIndex();
     sb.append(var.getName());

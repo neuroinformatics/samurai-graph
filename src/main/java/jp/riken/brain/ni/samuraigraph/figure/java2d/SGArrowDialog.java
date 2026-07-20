@@ -648,7 +648,7 @@ public class SGArrowDialog extends SGPropertyDialog implements SGITwoAxesDialog 
       //                String str = (String) list.get(ii);
       //                msg += "- " + str + "\n";
       //            }
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(ERRMSG_AXIS_VALUE_INVALID);
       sb.append(":\n");
       for (int ii = 0; ii < list.size(); ii++) {

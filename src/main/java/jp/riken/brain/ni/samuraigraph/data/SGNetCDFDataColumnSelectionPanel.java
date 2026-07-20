@@ -89,7 +89,7 @@ public class SGNetCDFDataColumnSelectionPanel extends SGDataColumnSelectionPanel
       }
 
       List<SGDimensionInfo> dimList = ncInfo.getDimensions();
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       final int len = dimList.size();
       for (int ii = 0; ii < len; ii++) {
         SGDimensionInfo dim = dimList.get(ii);

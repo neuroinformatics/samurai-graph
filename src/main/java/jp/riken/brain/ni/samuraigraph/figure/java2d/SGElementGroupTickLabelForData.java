@@ -87,7 +87,7 @@ public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickL
         }
         result.putResult(COM_DATA_TICK_LABEL_FONT_STYLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_TICK_LABEL_FONT_SIZE.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_DATA_TICK_LABEL_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);

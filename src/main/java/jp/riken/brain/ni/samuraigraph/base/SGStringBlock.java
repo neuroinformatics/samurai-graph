@@ -58,7 +58,7 @@ public abstract class SGStringBlock {
    */
   @Override
   public final String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('[');
     sb.append(this.paramString());
     sb.append(']');
@@ -71,7 +71,7 @@ public abstract class SGStringBlock {
    * @return a text string for this object
    */
   public String paramString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("value length=");
     sb.append(this.mValues.length);
     return sb.toString();

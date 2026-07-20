@@ -85,7 +85,7 @@ public class SGTuple2f implements Cloneable {
    * @return a text string that represents this object
    */
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('(');
     sb.append(this.x);
     sb.append(',');

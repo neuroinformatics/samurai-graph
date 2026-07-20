@@ -118,7 +118,7 @@ public abstract class SGElementGroupArrowForData extends SGElementGroupArrow
         map,
         COM_DATA_ARROW_END_TYPE,
         SGDrawingElementArrow.getArrowHeadTypeName(this.getEndHeadType()));
-    StringBuffer sbAngle = new StringBuffer();
+    StringBuilder sbAngle = new StringBuilder();
     sbAngle.append('(');
     sbAngle.append(
         SGUtility.getExportValue(this.getHeadOpenAngle(), ARROW_HEAD_ANGLE_MINIMAL_ORDER));

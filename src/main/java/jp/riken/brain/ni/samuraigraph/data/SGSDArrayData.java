@@ -625,7 +625,7 @@ public abstract class SGSDArrayData extends SGArrayData
   private boolean writeData(Writer w, final SGExportParameter mode, Object[][] array)
       throws IOException {
     SGDataColumn[] colArray = this.getExportedColumns();
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     for (int ii = 0; ii < array.length; ii++) {
       final int colNum = array[ii].length;
       if (OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107.equals(mode.getType())) {
@@ -955,7 +955,7 @@ public abstract class SGSDArrayData extends SGArrayData
   }
 
   protected String getIndexToolTipSpatiallyVaried(final int index0, final int index1) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(index0);
     sb.append("-");
     sb.append(index1);

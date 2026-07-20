@@ -544,7 +544,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
   protected String getInputErrorMessage() {
     if (this.mInputErrorComponentNameList.size() != 0) {
       List<String> list = this.mInputErrorComponentNameList;
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(ERR_MSG_HEADER);
       for (int ii = 0; ii < list.size(); ii++) {
         String name = list.get(ii);

@@ -103,7 +103,7 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
         }
         result.putResult(COM_DATA_ERROR_BAR_SYMBOL_TYPE, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_ERROR_BAR_SYMBOL_SIZE.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_DATA_ERROR_BAR_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -134,7 +134,7 @@ public abstract class SGElementGroupErrorBarForData extends SGElementGroupErrorB
         }
         result.putResult(COM_DATA_ERROR_BAR_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_ERROR_BAR_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_DATA_ERROR_BAR_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);

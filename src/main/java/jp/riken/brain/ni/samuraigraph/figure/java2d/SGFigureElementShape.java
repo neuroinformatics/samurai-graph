@@ -1211,7 +1211,7 @@ public class SGFigureElementShape extends SGFigureElement2D
 
     /** */
     public String toString() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append('[');
       sb.append(this.visibleShapeList.toString());
       sb.append(']');
@@ -1295,7 +1295,7 @@ public class SGFigureElementShape extends SGFigureElement2D
     void init(ShapeObject so) {
       setBounds(0, 0, 100, 100);
 
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("  -- Shape: ");
       sb.append(so.getID());
       sb.append(" --");
@@ -2099,7 +2099,7 @@ public class SGFigureElementShape extends SGFigureElement2D
      */
     @Override
     public String getCommandString(SGExportParameter params) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
 
       // creates the command for this data
       String dataCommands = this.createCommandString(params);
@@ -2655,7 +2655,7 @@ public class SGFigureElementShape extends SGFigureElement2D
       String xAxis = aElement.getLocationName(this.getXAxis());
       String yAxis = aElement.getLocationName(this.getYAxis());
 
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(this.getID());
       sb.append(": ");
       sb.append(this.getName());
@@ -3291,7 +3291,7 @@ public class SGFigureElementShape extends SGFigureElement2D
           }
           result.putResult(COM_RECTANGLE_BOTTOM_Y, SGPropertyResults.SUCCEEDED);
         } else if (COM_RECTANGLE_EDGE_LINE_WIDTH.equalsIgnoreCase(key)) {
-          StringBuffer unit = new StringBuffer();
+          StringBuilder unit = new StringBuilder();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
             result.putResult(COM_RECTANGLE_EDGE_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -4108,7 +4108,7 @@ public class SGFigureElementShape extends SGFigureElement2D
       String xAxis = aElement.getLocationName(this.getXAxis());
       String yAxis = aElement.getLocationName(this.getYAxis());
 
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(this.getID());
       sb.append(": ");
       sb.append(this.getName());
@@ -4422,7 +4422,7 @@ public class SGFigureElementShape extends SGFigureElement2D
           }
           result.putResult(COM_ARROW_END_Y, SGPropertyResults.SUCCEEDED);
         } else if (COM_ARROW_LINE_WIDTH.equalsIgnoreCase(key)) {
-          StringBuffer unit = new StringBuffer();
+          StringBuilder unit = new StringBuilder();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
             result.putResult(COM_ARROW_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -4445,7 +4445,7 @@ public class SGFigureElementShape extends SGFigureElement2D
           }
           result.putResult(COM_ARROW_LINE_TYPE, SGPropertyResults.SUCCEEDED);
         } else if (COM_ARROW_HEAD_SIZE.equalsIgnoreCase(key)) {
-          StringBuffer unit = new StringBuffer();
+          StringBuilder unit = new StringBuilder();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
             result.putResult(COM_ARROW_HEAD_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -4569,7 +4569,7 @@ public class SGFigureElementShape extends SGFigureElement2D
       SGPropertyMap map = new SGPropertyMap();
 
       // open angles
-      StringBuffer sbAngle = new StringBuffer();
+      StringBuilder sbAngle = new StringBuilder();
       sbAngle.append('(');
       sbAngle.append(this.getExportHeadOpenAngle());
       sbAngle.append(',');

@@ -800,7 +800,7 @@ public class SGUtilityNumber implements SGIConstants {
    */
   private static NumberFormat createNumberFormat(final int dp) {
     // create a pattern and a decimal format
-    StringBuffer sbPattern = new StringBuffer();
+    StringBuilder sbPattern = new StringBuilder();
     sbPattern.append('0');
     if (dp > 0) {
       sbPattern.append('.');
@@ -828,7 +828,7 @@ public class SGUtilityNumber implements SGIConstants {
     }
     BigDecimal bd = new BigDecimal(value);
     bd = bd.movePointLeft(exp);
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     String str = nf.format(bd.doubleValue());
     sb.append(str);
     if (exp != 0) {

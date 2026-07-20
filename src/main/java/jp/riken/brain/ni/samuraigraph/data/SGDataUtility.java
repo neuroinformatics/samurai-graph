@@ -108,7 +108,7 @@ public class SGDataUtility
    * @param index array index of the column
    */
   public static final String appendColumnNo(final String colType, final int index) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(colType);
     sb.append(MID_COLUMN_NO);
     sb.append(index + 1);
@@ -123,7 +123,7 @@ public class SGDataUtility
    * @return
    */
   public static final String appendColumnTitle(final String colType, final String variableName) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(colType);
     sb.append(MID_COLUMN);
     sb.append(variableName);
@@ -173,7 +173,7 @@ public class SGDataUtility
    */
   public static final String appendColumnTitle(
       final String colType, final int index, final SGDataColumnInfo[] colInfo) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(colType);
     sb.append(MID_COLUMN);
     sb.append(colInfo[index].getTitle());
@@ -1692,7 +1692,7 @@ public class SGDataUtility
       final String dataType,
       final SGMDArrayFile mdFile,
       final Map<String, Object> infoMap) {
-    return checkMDArrayDataColumns(cols, dataType, mdFile, infoMap, new StringBuffer());
+    return checkMDArrayDataColumns(cols, dataType, mdFile, infoMap, new StringBuilder());
   }
 
   /**
@@ -1710,7 +1710,7 @@ public class SGDataUtility
       final String dataType,
       final SGMDArrayFile mdFile,
       final Map<String, Object> infoMap,
-      StringBuffer errmsgBuffer) {
+      StringBuilder errmsgBuffer) {
 
     if (isSXYTypeData(dataType)) {
       // picked up dimension
@@ -2968,7 +2968,7 @@ public class SGDataUtility
    * @return the title for this sampling data
    */
   public static String createSamplingRateTitle(final double samplingRate) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("Sampling Rate ");
     sb.append(samplingRate);
     sb.append(" Hz");
@@ -3734,7 +3734,7 @@ public class SGDataUtility
   }
 
   static String appendGroupName(final String name, final String groupName) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(groupName);
     sb.append('/');
     sb.append(name);
@@ -5244,7 +5244,7 @@ public class SGDataUtility
   }
 
   static String bindVariableNamesInBracket(String[] names) {
-    StringBuffer sb = new StringBuffer("{");
+    StringBuilder sb = new StringBuilder("{");
     for (int ii = 0; ii < names.length; ii++) {
       if (ii > 0) {
         sb.append(",");
@@ -5347,7 +5347,7 @@ public class SGDataUtility
    * @return a text string for the title
    */
   public static String createTitleString(String prefix, String dataType) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(prefix);
     sb.append(" (");
     String suffix = "";
@@ -5415,7 +5415,7 @@ public class SGDataUtility
       return null;
     }
     SGNetCDFDataColumnInfo info = new SGNetCDFDataColumnInfo(var, null, var.getValueType());
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(columnTypeHeader);
     sb.append(MID_COLUMN);
     sb.append(holderName);
@@ -5533,7 +5533,7 @@ public class SGDataUtility
       return null;
     }
     SGMDArrayDataColumnInfo info = new SGMDArrayDataColumnInfo(var, null, var.getValueType());
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(columnTypeHeader);
     sb.append(MID_COLUMN);
     sb.append(holderName);
@@ -6263,7 +6263,7 @@ public class SGDataUtility
   }
 
   public static String getDimensionString(String[] dimNames) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     for (int ii = 0; ii < dimNames.length; ii++) {
       if (ii > 0) {
         sb.append(' ');
@@ -6287,7 +6287,7 @@ public class SGDataUtility
   }
 
   public static String getTextValue(String str) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('"');
     sb.append(str);
     sb.append('"');
@@ -6389,7 +6389,7 @@ public class SGDataUtility
     }
     final char[] cArray = str.toCharArray();
     final char c0 = cArray[0];
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     if (!SGUtility.isAlphabetic(c0)) {
       sb.append("sg_");
     }
@@ -6538,7 +6538,7 @@ public class SGDataUtility
     if (varList.size() != columnTypeList.size()) {
       throw new IllegalArgumentException("varList.size() != columnTypeList.size()");
     }
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('(');
     for (int ii = 0; ii < varList.size(); ii++) {
       if (ii > 0) {

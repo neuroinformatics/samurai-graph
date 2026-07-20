@@ -121,7 +121,7 @@ public class SGPluginInfoPanel extends SGTableSelectionPanel {
     String fileName = model.getValueAt(row, model.findColumn(COLUMN_NAME_FILE_PATH)).toString();
 
     // creates a text
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("<html>");
     sb.append("<head>");
     sb.append("<title>Plug-in Information</title>");
@@ -145,7 +145,7 @@ public class SGPluginInfoPanel extends SGTableSelectionPanel {
         });
   }
 
-  private void addValue(StringBuffer sb, String key, String value) {
+  private void addValue(StringBuilder sb, String key, String value) {
     sb.append("<p>");
     sb.append("<b>");
     sb.append(key);

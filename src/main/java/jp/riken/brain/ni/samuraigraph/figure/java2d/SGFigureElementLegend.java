@@ -2653,7 +2653,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     // set frame line width
     str = element.getAttribute(SGIFigureElementLegend.KEY_FRAME_LINE_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uFrameLineWidth = new StringBuffer();
+      StringBuilder uFrameLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uFrameLineWidth);
       if (num == null) {
         return false;
@@ -2724,7 +2724,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     // set font size
     str = element.getAttribute(KEY_FONT_SIZE);
     if (str.length() != 0) {
-      StringBuffer uFontSize = new StringBuffer();
+      StringBuilder uFontSize = new StringBuilder();
       num = SGUtilityText.getNumber(str, uFontSize);
       if (num == null) {
         return false;
@@ -6964,7 +6964,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
      * @return a string representation
      */
     public String toString() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("[x=");
       sb.append(this.x);
       sb.append(", y=");
@@ -7682,7 +7682,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
         }
         result.putResult(COM_LEGEND_FONT_STYLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_LEGEND_FONT_SIZE.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_LEGEND_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -7724,7 +7724,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
         }
         result.putResult(COM_LEGEND_FRAME_VISIBLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_LEGEND_FRAME_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_LEGEND_FRAME_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -7787,7 +7787,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
         }
         result.putResult(COM_LEGEND_BACKGROUND_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (COM_LEGEND_SYMBOL_SPAN.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_LEGEND_SYMBOL_SPAN, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -7844,7 +7844,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    */
   @Override
   public String getCommandString(SGExportParameter params) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     SGPropertyMap map = this.getPropertyMap();
     sb.append(COM_LEGEND);
     sb.append('(');

@@ -79,7 +79,7 @@ public abstract class SGDataValueHistory implements Cloneable {
 
   @Override
   public final String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("[");
     sb.append(this.paramString());
     sb.append("]");
@@ -87,7 +87,7 @@ public abstract class SGDataValueHistory implements Cloneable {
   }
 
   protected String paramString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("value=");
     sb.append(this.mValue);
     sb.append(", prevValue=");
@@ -231,7 +231,7 @@ public abstract class SGDataValueHistory implements Cloneable {
 
     @Override
     protected String paramString() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(super.paramString());
       sb.append(", var=");
       sb.append(this.mVarName);
@@ -316,7 +316,7 @@ public abstract class SGDataValueHistory implements Cloneable {
 
       @Override
       protected String paramString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(super.paramString());
         sb.append(", dim=");
         sb.append(this.mIndexDimName);
@@ -398,7 +398,7 @@ public abstract class SGDataValueHistory implements Cloneable {
 
       @Override
       protected String paramString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(super.paramString());
         sb.append(", dim=");
         sb.append("(");
@@ -496,7 +496,7 @@ public abstract class SGDataValueHistory implements Cloneable {
 
       @Override
       protected String paramString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(super.paramString());
         sb.append(", dim=");
         sb.append(this.mDimName);
@@ -577,7 +577,7 @@ public abstract class SGDataValueHistory implements Cloneable {
 
     @Override
     protected String paramString() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(super.paramString());
       sb.append(", var=");
       sb.append(this.mVarName);
@@ -662,7 +662,7 @@ public abstract class SGDataValueHistory implements Cloneable {
 
       @Override
       protected String paramString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(super.paramString());
         sb.append(", dim=");
         sb.append(this.mDimension);
@@ -744,7 +744,7 @@ public abstract class SGDataValueHistory implements Cloneable {
 
       @Override
       protected String paramString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(super.paramString());
         sb.append(", dim=");
         sb.append("(");
@@ -851,7 +851,7 @@ public abstract class SGDataValueHistory implements Cloneable {
 
       @Override
       protected String paramString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(super.paramString());
         sb.append(", dim=");
         sb.append(this.mDimension);

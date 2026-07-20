@@ -566,7 +566,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     // width
     str = el.getAttribute(SGIAxisBreakConstants.KEY_LENGTH);
     if (str.length() != 0) {
-      StringBuffer uLength = new StringBuffer();
+      StringBuilder uLength = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLength);
       if (num == null) {
         return false;
@@ -580,7 +580,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     // interval
     str = el.getAttribute(SGIAxisBreakConstants.KEY_INTERVAL);
     if (str.length() != 0) {
-      StringBuffer uInterval = new StringBuffer();
+      StringBuilder uInterval = new StringBuilder();
       num = SGUtilityText.getNumber(str, uInterval);
       if (num == null) {
         return false;
@@ -620,7 +620,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     // line width
     str = el.getAttribute(SGIAxisBreakConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uLineWidth = new StringBuffer();
+      StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
       if (num == null) {
         return false;

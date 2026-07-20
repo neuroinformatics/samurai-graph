@@ -341,7 +341,7 @@ public class SGPeriodInputDialog extends SGAbstractDateInputDialog {
 
   @Override
   protected String createString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     sb.append('P');
 

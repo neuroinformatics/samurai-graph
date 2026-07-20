@@ -48,7 +48,7 @@ public class SGHDF5File extends SGMDArrayFile {
     List<String> ret = new ArrayList<String>();
     List<String> members = reader.object().getAllGroupMembers(groupName);
     for (String member : members) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       if (depth > 0) {
         sb.append(groupName);
         sb.append('/');

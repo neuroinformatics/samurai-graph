@@ -316,7 +316,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     if (OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)
         || SGDataUtility.isArchiveDataSetOperation(type)) {
 
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       if (this.mXVariable != null) {
         sb.setLength(0);
         sb.append(this.mXVariable.getName());
@@ -1077,7 +1077,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
   }
 
   protected String getXYToolTipSpatiallyVaried(final int xIndex, final int yIndex) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     if (this.mXVariable != null) {
       sb.append(this.getToolTipSpatiallyVaried(this.mXVariable, xIndex));
     }
@@ -1096,7 +1096,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
       final String yKey,
       final int xIndex,
       final int yIndex) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     if (var != null) {
       int[] origins = var.getOrigins();
       final int xDim = var.getDimensionIndex(xKey);

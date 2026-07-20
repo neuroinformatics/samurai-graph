@@ -118,7 +118,7 @@ public class SGMDArrayDataColumnInfo extends SGDataColumnInfo implements SGIMDAr
    * @return a text string for this object
    */
   protected String paramString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(super.paramString());
     sb.append(", origins=");
     sb.append(Arrays.toString(this.mOrigins));

@@ -237,7 +237,7 @@ class SGUpgradeManager
     final String microStr = Integer.valueOf(nMicro).toString();
 
     // create a message
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(MSG_NEW_VERSION_FOUND_BEFORE);
     sb.append(majorStr);
     sb.append('.');
@@ -401,7 +401,7 @@ class SGUpgradeManager
             NodeList cLogList = rInfo.getElementsByTagName("changelog");
             if (cLogList.getLength() > 0) {
               Element cLog = (Element) cLogList.item(0);
-              StringBuffer logSb = new StringBuffer();
+              StringBuilder logSb = new StringBuilder();
               printNode(cLog, logSb);
               logEntries.add(logSb.toString());
             }
@@ -487,7 +487,7 @@ class SGUpgradeManager
    * @param element
    * @param sb
    */
-  private void printNode(Element element, StringBuffer sb) {
+  private void printNode(Element element, StringBuilder sb) {
     printNodeRecursively(element, sb, -1);
   }
 
@@ -496,7 +496,7 @@ class SGUpgradeManager
    * @param sb
    * @param depth
    */
-  private void printNodeRecursively(Element element, StringBuffer sb, final int depth) {
+  private void printNodeRecursively(Element element, StringBuilder sb, final int depth) {
     NodeList childList = element.getChildNodes();
     for (int ii = 0; ii < childList.getLength(); ii++) {
       org.w3c.dom.Node child = childList.item(ii);
@@ -538,7 +538,7 @@ class SGUpgradeManager
    * @param sb
    * @param depth
    */
-  private void printFirstChild(org.w3c.dom.Node node, StringBuffer sb, final int depth) {
+  private void printFirstChild(org.w3c.dom.Node node, StringBuilder sb, final int depth) {
     org.w3c.dom.Node child = node.getFirstChild();
     printText(child, sb, depth);
   }
@@ -548,7 +548,7 @@ class SGUpgradeManager
    * @param sb
    * @param depth
    */
-  private void printText(org.w3c.dom.Node node, StringBuffer sb, final int depth) {
+  private void printText(org.w3c.dom.Node node, StringBuilder sb, final int depth) {
     String line = node.getNodeValue();
     String sub = tokenize(line);
     if (sub.length() != 0) {
@@ -566,7 +566,7 @@ class SGUpgradeManager
     while (tkn.hasMoreTokens()) {
       tokenList.add(tkn.nextToken());
     }
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     for (int ii = 0; ii < tokenList.size(); ii++) {
       String str = tokenList.get(ii);
       sb.append(str);

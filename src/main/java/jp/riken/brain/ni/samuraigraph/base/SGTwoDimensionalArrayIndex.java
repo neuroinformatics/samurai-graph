@@ -71,7 +71,7 @@ public class SGTwoDimensionalArrayIndex implements SGIIndex {
    */
   @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('(');
     sb.append(this.mColumn);
     sb.append(',');

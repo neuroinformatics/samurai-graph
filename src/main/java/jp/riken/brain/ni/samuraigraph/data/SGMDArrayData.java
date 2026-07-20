@@ -748,7 +748,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     if (SGDataUtility.isArchiveDataSetOperation(type.getType())
         || OPERATION.SAVE_TO_PROPERTY_FILE.equals(type.getType())) {
       // origins
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       SGMDArrayVariable[] vars = this.getVariables();
       List<SGMDArrayVariable> numVarList = new ArrayList<SGMDArrayVariable>();
       for (int ii = 0; ii < vars.length; ii++) {
@@ -799,7 +799,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 
       // origins
       SGMDArrayVariable[] vars = this.getAssignedVariables();
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       for (int ii = 0; ii < vars.length; ii++) {
         if (ii > 0) {
           sb.append(',');
@@ -1182,7 +1182,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 
     @Override
     public String toString() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       if (this.name != null) {
         sb.append(this.name);
         sb.append(":");
@@ -1411,8 +1411,8 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     SGMDArrayVariable var = this.findVariable(name);
 
     // get the short name and the group name
-    StringBuffer sbShortName = new StringBuffer();
-    StringBuffer sbGroupName = new StringBuffer();
+    StringBuilder sbShortName = new StringBuilder();
+    StringBuilder sbGroupName = new StringBuilder();
     this.getNames(name, sbShortName, sbGroupName);
 
     String dimString = SGDataUtility.getDimensionString(dimList);
@@ -1439,8 +1439,8 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     SGMDArrayVariable var = this.findVariable(name);
 
     // get the short name and the group name
-    StringBuffer sbShortName = new StringBuffer();
-    StringBuffer sbGroupName = new StringBuffer();
+    StringBuilder sbShortName = new StringBuilder();
+    StringBuilder sbGroupName = new StringBuilder();
     this.getNames(name, sbShortName, sbGroupName);
 
     Group group = ncWrite.getNetcdfFile().findGroup(sbGroupName.toString());
@@ -1466,7 +1466,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     }
   }
 
-  private void getNames(String name, StringBuffer sbShortName, StringBuffer sbGroupName) {
+  private void getNames(String name, StringBuilder sbShortName, StringBuilder sbGroupName) {
     String shortName;
     String groupName;
     final int sIndex = name.lastIndexOf('/');
@@ -1642,7 +1642,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * @return a text string for the unique variable name
    */
   protected String getUniqueVarName(String def, SGVariable[] vars) {
-    StringBuffer sb = new StringBuffer(def);
+    StringBuilder sb = new StringBuilder(def);
     while (true) {
       boolean exists = false;
       for (SGVariable var : vars) {
@@ -1833,7 +1833,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   }
 
   protected String getOneDimensionalVarCommandString(SGMDArrayVariable var) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(var.getName());
     sb.append(':');
     sb.append(var.getGenericDimensionIndex());
@@ -1842,7 +1842,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 
   protected String getTwoDimensionalVarCommandString(
       SGMDArrayVariable var, String keyX, String keyY) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(var.getName());
     sb.append(':');
     sb.append(var.getDimensionIndex(keyX));
@@ -1859,7 +1859,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   @Override
   public String getOriginCommandString() {
     SGMDArrayVariable[] vars = this.getAssignedVariables();
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('(');
     int cnt = 0;
     for (int ii = 0; ii < vars.length; ii++) {
@@ -1867,7 +1867,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       if (cnt > 0) {
         sb.append(',');
       }
-      StringBuffer originSb = new StringBuffer();
+      StringBuilder originSb = new StringBuilder();
       int[] origins = var.getOrigins();
       for (int jj = 0; jj < origins.length; jj++) {
         if (jj > 0) {
@@ -1877,7 +1877,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
         originSb.append(':');
         originSb.append(origins[jj]);
       }
-      StringBuffer varSb = new StringBuffer();
+      StringBuilder varSb = new StringBuilder();
       varSb.append(var.getName());
       varSb.append('(');
       varSb.append(originSb.toString());
@@ -1903,7 +1903,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 
   protected String getDimensionCommandString(final String key) {
     SGMDArrayVariable[] vars = this.getAssignedVariables();
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('(');
     int cnt = 0;
     for (int ii = 0; ii < vars.length; ii++) {
@@ -1915,7 +1915,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       if (cnt > 0) {
         sb.append(", ");
       }
-      StringBuffer varSb = new StringBuffer();
+      StringBuilder varSb = new StringBuilder();
       varSb.append(var.getName());
       varSb.append(':');
       varSb.append(index);
@@ -1989,7 +1989,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   }
 
   protected String getToolTipSpatiallyVaried(final int index, SGIntegerSeriesSet stride) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     SGMDArrayVariable[] vars = this.getAssignedVariables();
     for (int ii = 0; ii < vars.length; ii++) {
       if (ii > 0) {
@@ -2001,7 +2001,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   }
 
   protected String getToolTipSpatiallyVaried(SGMDArrayVariable var, final int arrayIndex) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     if (var != null) {
       int[] origins = var.getOrigins();
       final int dim = var.getGenericDimensionIndex();
@@ -2013,7 +2013,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   }
 
   protected String getToolTip(SGMDArrayVariable var, final int[] origins) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(var.getName());
     sb.append("=[");
     for (int ii = 0; ii < origins.length; ii++) {

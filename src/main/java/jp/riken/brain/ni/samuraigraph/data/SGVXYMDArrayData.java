@@ -668,7 +668,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     if (OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)
         || SGDataUtility.isArchiveDataSetOperation(type)) {
 
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(this.mFirstComponentVariable.getName());
       sb.append(':');
       if (this.isIndexAvailable()) {
@@ -1693,7 +1693,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
 
   @Override
   public String getToolTipSpatiallyVaried(final int index0, final int index1) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     String xyStr = this.getXYToolTipSpatiallyVaried(index0, index1);
     if (!"".equals(xyStr)) {
       sb.append(xyStr);

@@ -504,7 +504,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   }
 
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("[name=");
     sb.append(this.mName);
     sb.append(", ");
@@ -705,7 +705,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
      * @return string representation of label list in this object
      */
     public String toStringLabelList() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       if (this.labelStringList.size() > 0) {
         sb.append(", labelList=");
         Iterator<Integer> it = this.labelStringList.keySet().iterator();
@@ -822,7 +822,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    */
   public DataLabel getDataLabel() {
     SGData data = this.getData();
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     int x = 0;
     int y = 0;
     boolean valid = false;
@@ -2447,7 +2447,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       }
     }
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     // creates the command for this data
     String dataCommands = this.createCommandString(params);

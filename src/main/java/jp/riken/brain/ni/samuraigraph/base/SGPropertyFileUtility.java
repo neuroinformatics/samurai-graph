@@ -23,7 +23,7 @@ public class SGPropertyFileUtility {
   }
 
   public static void setAttribute(Element el, String key, final Number len, String unit) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(len);
     if (unit != null) {
       sb.append(unit);

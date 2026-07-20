@@ -2344,7 +2344,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
    */
   @Override
   public String getCommandString(SGExportParameter params) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     List<SGIChildObject> cList = this.getVisibleChildList();
     for (SGIChildObject c : cList) {
       SGIChildObject el = (SGIChildObject) c;

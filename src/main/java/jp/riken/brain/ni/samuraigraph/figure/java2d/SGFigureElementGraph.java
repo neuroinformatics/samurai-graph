@@ -1508,7 +1508,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
         mapChanged.put(oldStr[i], values[0] + "=" + newValue);
       }
     }
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     // String addValue = "";
     for (Entry<String, String> e : newMap.entrySet()) {
       String key = e.getKey();
@@ -1567,7 +1567,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
              * Map<String, String> mapChanged = compareNetCDFLabelText(oldDataLabel,
              * newDataLabel);
              * String current = fes.getString(id);
-             * StringBuffer sb = new StringBuffer();
+             * StringBuilder sb = new StringBuilder();
              * // String newStr = "";
              * for (Entry<String, String> mce : mapChanged.entrySet()) {
              * String key = mce.getKey();

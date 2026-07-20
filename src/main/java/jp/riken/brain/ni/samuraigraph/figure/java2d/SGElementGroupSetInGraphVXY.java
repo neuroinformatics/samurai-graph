@@ -543,7 +543,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
      */
     public String toString() {
       String str = super.toString();
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("[");
       sb.append(str);
       sb.append(", Magnitude Scaling Factor=");
@@ -1326,7 +1326,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
         sValue = this.reduceSecondComponentValue(dataValue.sValue.number);
       }
 
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("(");
       sb.append(xValue);
       sb.append(", ");
@@ -1371,7 +1371,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
       }
     }
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('(');
     sb.append(xValue);
     sb.append(", ");

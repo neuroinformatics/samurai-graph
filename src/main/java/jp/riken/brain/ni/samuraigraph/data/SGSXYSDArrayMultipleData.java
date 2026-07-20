@@ -685,7 +685,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   }
 
   private boolean writeAttributeColumnIndicesSub(Element el, String key, int[] indices) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('{');
     for (int ii = 0; ii < indices.length; ii++) {
       sb.append(indices[ii]);
@@ -813,7 +813,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   }
 
   private boolean writeAttributeColumnNameSub(Element el, String key, int[] indices) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('{');
     for (int ii = 0; ii < indices.length; ii++) {
       sb.append(this.getSequentialColumnName(indices[ii]));

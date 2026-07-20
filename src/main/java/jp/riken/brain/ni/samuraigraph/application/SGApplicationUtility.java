@@ -96,7 +96,7 @@ public class SGApplicationUtility
     if (f.isDirectory()) {
       String fs = SGIConstants.FILE_SEPARATOR;
       String[] fList = f.list();
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(f.toString());
       sb.append(fs);
       final int len = sb.length();
@@ -119,7 +119,7 @@ public class SGApplicationUtility
     if (f.isDirectory()) {
       String fs = SGIConstants.FILE_SEPARATOR;
       String[] fList = f.list();
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(f.toString());
       sb.append(fs);
       final int len = sb.length();
@@ -271,7 +271,7 @@ public class SGApplicationUtility
    * @return The full path name string
    */
   public static String getPathName(final String parent, final String child) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(parent);
     sb.append(SGIConstants.FILE_SEPARATOR);
     sb.append(child);
@@ -287,7 +287,7 @@ public class SGApplicationUtility
    * @return file name with the extension
    */
   public static String appendExtension(final String filename, final String extension) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(filename);
     sb.append('.');
     sb.append(extension);

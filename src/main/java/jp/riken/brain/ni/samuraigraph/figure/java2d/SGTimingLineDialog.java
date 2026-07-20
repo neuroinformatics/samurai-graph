@@ -436,7 +436,7 @@ public class SGTimingLineDialog extends SGPropertyDialog
       list.add("Value");
     }
     if (list.size() != 0) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(ERRMSG_AXIS_VALUE_INVALID);
       sb.append(":\n");
       for (int ii = 0; ii < list.size(); ii++) {

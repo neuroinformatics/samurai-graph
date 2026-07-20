@@ -1291,7 +1291,7 @@ public class SGFigureElementString extends SGFigureElement2D
     public String getInstanceDescription() {
       String xAxis = SGFigureElementString.this.mAxisElement.getLocationName(this.mXAxis);
       String yAxis = SGFigureElementString.this.mAxisElement.getLocationName(this.mYAxis);
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(this.mID);
       sb.append(": ");
       // sb.append(this.getString());
@@ -1560,7 +1560,7 @@ public class SGFigureElementString extends SGFigureElement2D
       JPopupMenu p = new JPopupMenu();
       p.setBounds(0, 0, 100, 100);
 
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("  -- Label: ");
       sb.append(this.getID());
       sb.append(" --");
@@ -2043,7 +2043,7 @@ public class SGFigureElementString extends SGFigureElement2D
           }
           result.putResult(COM_LABEL_FONT_STYLE, SGPropertyResults.SUCCEEDED);
         } else if (COM_LABEL_FONT_SIZE.equalsIgnoreCase(key)) {
-          StringBuffer unit = new StringBuffer();
+          StringBuilder unit = new StringBuilder();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
             result.putResult(COM_LABEL_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2105,7 +2105,7 @@ public class SGFigureElementString extends SGFigureElement2D
      */
     @Override
     public String getCommandString(SGExportParameter params) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
 
       // creates the command for this data
       String dataCommands = this.createCommandString(params);
@@ -2489,7 +2489,7 @@ public class SGFigureElementString extends SGFigureElement2D
    */
   @Override
   public String getCommandString(SGExportParameter params) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     List<SGIChildObject> cList = this.getVisibleChildList();
     for (SGIChildObject c : cList) {
       LabelElement el = (LabelElement) c;

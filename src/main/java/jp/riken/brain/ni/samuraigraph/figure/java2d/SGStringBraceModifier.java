@@ -64,9 +64,9 @@ public class SGStringBraceModifier implements SGIStringModifier {
       boolean in_brace = false;
       boolean in_escape = false;
       int in_brace_stack = 0;
-      StringBuffer cache_base = new StringBuffer();
-      StringBuffer cache_super = new StringBuffer();
-      StringBuffer cache_sub = new StringBuffer();
+      StringBuilder cache_base = new StringBuilder();
+      StringBuilder cache_super = new StringBuilder();
+      StringBuilder cache_sub = new StringBuilder();
       for (int i = 0; i < line.length(); i++) {
         final char c = line.charAt(i);
         if (in_super || in_sub) {
@@ -196,7 +196,7 @@ public class SGStringBraceModifier implements SGIStringModifier {
      * @return generated text string
      */
     private String generateString() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       for (int ii = 0; ii < this.mBaseElementList.size(); ii++) {
         SGDrawingElementString2D base = this.mBaseElementList.get(ii);
         sb.append(this.insertEscapeCharacter(base.getString()));
@@ -225,7 +225,7 @@ public class SGStringBraceModifier implements SGIStringModifier {
      * @return modified text string
      */
     private String insertEscapeCharacter(final String str) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       final char[] cArray = str.toCharArray();
       for (int ii = 0; ii < cArray.length; ii++) {
         final char c = cArray[ii];

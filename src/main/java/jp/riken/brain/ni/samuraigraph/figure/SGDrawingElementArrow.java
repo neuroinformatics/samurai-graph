@@ -655,7 +655,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     // line width
     str = el.getAttribute(KEY_LINE_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uLineWidth = new StringBuffer();
+      StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
       if (num == null) {
         return false;
@@ -682,7 +682,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     // head size
     str = el.getAttribute(KEY_HEAD_SIZE);
     if (str.length() != 0) {
-      StringBuffer uHeadSize = new StringBuffer();
+      StringBuilder uHeadSize = new StringBuilder();
       num = SGUtilityText.getNumber(str, uHeadSize);
       if (num == null) {
         return false;

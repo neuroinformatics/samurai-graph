@@ -37,7 +37,7 @@ public class SGFigurePopupMenu extends SGPopupMenu {
   private void initProperty() {
     this.setBounds(0, 0, 100, 100);
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("  -- Figure: ");
     for (int ii = 0; ii < this.mFigureList.size(); ii++) {
       if (ii > 0) {

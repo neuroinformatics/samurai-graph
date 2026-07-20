@@ -932,7 +932,7 @@ class SGMainFunctions
     }
 
     if (!curDirFlag) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(USER_HOME);
       if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
         sb.append(FILE_SEPARATOR);
@@ -3354,7 +3354,7 @@ class SGMainFunctions
     for (int ii = 0; ii < len; ii++) {
       SGDataCreator.CreatedData cd = cdSet.getData(ii);
       dataArray[ii] = cd.getData();
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(dataNameBase);
       String title = cd.getTitle();
       if (title != null) {
@@ -3992,7 +3992,7 @@ class SGMainFunctions
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
 
     // update the tool bar pattern
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     for (int ii = 0; ii < array.length; ii++) {
       sb.append(array[ii]);
       if (ii != array.length - 1) {
@@ -4535,11 +4535,11 @@ class SGMainFunctions
     final String message = "This NetCDF data has commands. Execute them?";
     final int ret = SGUtility.showYesNoConfirmationDialog(wnd, message);
     if (ret == JOptionPane.OK_OPTION) {
-      StringBuffer sbFilePath = new StringBuffer();
+      StringBuilder sbFilePath = new StringBuilder();
       sbFilePath.append('"');
       sbFilePath.append(path);
       sbFilePath.append('"');
-      StringBuffer sbAlias = new StringBuffer();
+      StringBuilder sbAlias = new StringBuilder();
       sbAlias.append('"');
       sbAlias.append(SGIDataCommandConstants.FILE_PATH_NETCDF_ITSELF);
       sbAlias.append('"');
@@ -4951,7 +4951,7 @@ class SGMainFunctions
       final int ret = this.exec(tLine);
 
       // output the status
-      StringBuffer status = new StringBuffer();
+      StringBuilder status = new StringBuilder();
       if (ret == SGMainFunctions.STATUS_FAILED) {
         status.append("failed: ");
       } else if (ret == SGMainFunctions.STATUS_NOT_FOUND) {
@@ -5022,7 +5022,7 @@ class SGMainFunctions
   }
 
   private String getFileNotFoundString(File file) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("file not found: ");
     sb.append(file.getPath());
     sb.append('\n');
@@ -5186,7 +5186,7 @@ class SGMainFunctions
     final long max = Runtime.getRuntime().maxMemory() / 1024;
     final long used = total - free;
     final double ratio = (used * 100 / (double) total);
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("total=");
     sb.append(fByte.format(total));
     sb.append(", used=");

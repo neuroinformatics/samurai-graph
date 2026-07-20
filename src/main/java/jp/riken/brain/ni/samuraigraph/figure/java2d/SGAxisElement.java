@@ -2469,7 +2469,7 @@ public abstract class SGAxisElement
 
     str = element.getAttribute(this.getLineWidthPropertyFileKey());
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -2492,7 +2492,7 @@ public abstract class SGAxisElement
 
     str = element.getAttribute(this.getSpaceLineAndNumberPropertyFileKey());
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -2529,7 +2529,7 @@ public abstract class SGAxisElement
 
     str = element.getAttribute(KEY_SPACE_TITLE_AND_NUMBERS);
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -2541,7 +2541,7 @@ public abstract class SGAxisElement
 
     str = element.getAttribute(KEY_TITLE_SHIFT_FROM_CENTER);
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -2560,7 +2560,7 @@ public abstract class SGAxisElement
 
     str = element.getAttribute(KEY_TITLE_FONT_SIZE);
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -2655,7 +2655,7 @@ public abstract class SGAxisElement
     // exponent location
     str = element.getAttribute(SGIFigureElementAxis.KEY_EXPONENT_LOCATION_X);
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -2666,7 +2666,7 @@ public abstract class SGAxisElement
     }
     str = element.getAttribute(SGIFigureElementAxis.KEY_EXPONENT_LOCATION_Y);
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -2685,7 +2685,7 @@ public abstract class SGAxisElement
 
     str = element.getAttribute(KEY_NUMBER_FONT_SIZE);
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -2781,7 +2781,7 @@ public abstract class SGAxisElement
 
     str = element.getAttribute(KEY_TICK_MARK_WIDTH);
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -2793,7 +2793,7 @@ public abstract class SGAxisElement
 
     str = element.getAttribute(KEY_TICK_MARK_LENGTH);
     if (str.length() != 0) {
-      StringBuffer unit = new StringBuffer();
+      StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
       if (num == null) {
         return false;
@@ -2807,7 +2807,7 @@ public abstract class SGAxisElement
     } else {
       str = element.getAttribute(KEY_MAJOR_TICK_MARK_LENGTH);
       if (str.length() != 0) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         num = SGUtilityText.getNumber(str, unit);
         if (num == null) {
           return false;
@@ -2818,7 +2818,7 @@ public abstract class SGAxisElement
       }
       str = element.getAttribute(SGIFigureElementAxis.KEY_MINOR_TICK_MARK_LENGTH);
       if (str.length() != 0) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         num = SGUtilityText.getNumber(str, unit);
         if (num == null) {
           return false;
@@ -3159,7 +3159,7 @@ public abstract class SGAxisElement
         }
         result.putResult(this.getLineVisibleCommandKey(), SGPropertyResults.SUCCEEDED);
       } else if (this.getLineWidthCommandKey().equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(this.getLineWidthCommandKey(), SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3190,7 +3190,7 @@ public abstract class SGAxisElement
         }
         result.putResult(this.getLineColorCommandKey(), SGPropertyResults.SUCCEEDED);
       } else if (this.getSpaceLineAndNumberCommandKey().equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(
@@ -3227,7 +3227,7 @@ public abstract class SGAxisElement
       } else if (COM_AXIS_SPACE_TITLE_AND_NUMBER.equalsIgnoreCase(key)
           || COM_AXIS_SPACE_TO_TITLE.equalsIgnoreCase(key)) {
         String k = map.getOriginalKey(key);
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(k, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3239,7 +3239,7 @@ public abstract class SGAxisElement
         }
         result.putResult(k, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_TITLE_CENTER_SHIFT.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_TITLE_CENTER_SHIFT, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3273,7 +3273,7 @@ public abstract class SGAxisElement
         }
         result.putResult(COM_AXIS_TITLE_FONT_STYLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_TITLE_FONT_SIZE.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_TITLE_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3363,7 +3363,7 @@ public abstract class SGAxisElement
         }
         result.putResult(k, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_EXPONENT_LOCATION_X.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_EXPONENT_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3375,7 +3375,7 @@ public abstract class SGAxisElement
         }
         result.putResult(COM_AXIS_EXPONENT_LOCATION_X, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_EXPONENT_LOCATION_Y.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_EXPONENT_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3409,7 +3409,7 @@ public abstract class SGAxisElement
         }
         result.putResult(COM_AXIS_NUMBER_FONT_STYLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_NUMBER_FONT_SIZE.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_NUMBER_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3508,7 +3508,7 @@ public abstract class SGAxisElement
         }
         result.putResult(COM_AXIS_TICK_MARK_BOTHSIDES, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_TICK_MARK_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_TICK_MARK_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3520,7 +3520,7 @@ public abstract class SGAxisElement
         }
         result.putResult(COM_AXIS_TICK_MARK_WIDTH, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_MAJOR_TICK_MARK_LENGTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_MAJOR_TICK_MARK_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3543,7 +3543,7 @@ public abstract class SGAxisElement
         }
         result.putResult(COM_AXIS_MINOR_TICK_MARK_NUMBER, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_MINOR_TICK_MARK_LENGTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_MINOR_TICK_MARK_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3575,7 +3575,7 @@ public abstract class SGAxisElement
         result.putResult(COM_AXIS_TICK_MARK_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_TICK_MARK_LENGTH.equalsIgnoreCase(key)) {
         // for backward compatibility (<= 2.0.0)
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_TICK_MARK_LENGTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3652,7 +3652,7 @@ public abstract class SGAxisElement
         result.putResult(COM_AXIS_FONT_STYLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_FONT_SIZE.equalsIgnoreCase(key)) {
         // for backward compatibility (<= 2.0.0)
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -4598,7 +4598,7 @@ public abstract class SGAxisElement
    * @return a text string of the commands
    */
   public String getCommandString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     // creates the command for this axis
     String axisCommands =
@@ -4656,7 +4656,7 @@ public abstract class SGAxisElement
         COM_AXIS_NUMBER_FONT_COLOR);
 
     // scale
-    StringBuffer sbScale = new StringBuffer();
+    StringBuilder sbScale = new StringBuilder();
     sbScale.append('(');
     sbScale.append(this.getMinValue());
     sbScale.append(',');

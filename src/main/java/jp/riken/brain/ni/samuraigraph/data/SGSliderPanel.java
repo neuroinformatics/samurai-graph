@@ -275,7 +275,7 @@ public class SGSliderPanel extends javax.swing.JPanel
     // updates the tooltip text
     BoundedRangeModel model = this.mSlider.getModel();
     final int len = model.getMaximum() - model.getMinimum();
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(index);
     sb.append('/');
     sb.append(len);

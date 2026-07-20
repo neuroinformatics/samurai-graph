@@ -48,7 +48,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * @param sp a string for superscript
    */
   public static String getSuperscriptString(final String base, final String sp) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(base);
     sb.append("^{");
     sb.append(sp);
@@ -63,7 +63,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * @param sub a string for subscript
    */
   public static String getSubscriptString(final String base, final String sub) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(base);
     sb.append("_{");
     sb.append(sub);
@@ -100,9 +100,9 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     boolean in_escape = false;
     int in_base_brace_stack = 0;
     int in_brace_stack = 0;
-    StringBuffer cache_base = new StringBuffer();
-    StringBuffer cache_super = new StringBuffer();
-    StringBuffer cache_sub = new StringBuffer();
+    StringBuilder cache_base = new StringBuilder();
+    StringBuilder cache_super = new StringBuilder();
+    StringBuilder cache_sub = new StringBuilder();
     for (int ii = 0; ii < line.length(); ii++) {
       final char c = line.charAt(ii);
       if (in_super || in_sub) {
@@ -252,7 +252,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
   }
 
   private static MatchingResultSub matches(
-      final String line, final int index, final StringBuffer cache, final char c) {
+      final String line, final int index, final StringBuilder cache, final char c) {
     MatchingResult matchingResult = findPattern(line, index);
     MatchingResultSub result = new MatchingResultSub(matchingResult);
     if (matchingResult.result != null) {
@@ -268,9 +268,9 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
 
   // Initializes the caches.
   private static void initCaches(
-      StringBuffer cache_base,
-      StringBuffer cache_super,
-      StringBuffer cache_sub,
+      StringBuilder cache_base,
+      StringBuilder cache_super,
+      StringBuilder cache_sub,
       List<String> baseList,
       List<String> superList,
       List<String> subList) {
@@ -287,9 +287,9 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
 
   // Flushes the caches.
   private static void flushCaches(
-      StringBuffer cache_base,
-      StringBuffer cache_super,
-      StringBuffer cache_sub,
+      StringBuilder cache_base,
+      StringBuilder cache_super,
+      StringBuilder cache_sub,
       List<String> baseList,
       List<String> superList,
       List<String> subList) {
@@ -313,7 +313,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * @return compiled result
    */
   public static String compile(final String str) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     boolean in_escape = false;
     for (int ii = 0; ii < str.length(); ii++) {
       final char c = str.charAt(ii);
@@ -372,7 +372,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
 
   private static MatchingResult findPattern(final String str, final int start) {
     // searches the candidate
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     int end = str.length();
     if (start < str.length()) {
       for (int ii = start; ii < str.length(); ii++) {
@@ -498,7 +498,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * @return a string representation of a list of color objects
    */
   public static String getColorListString(final List<Color> colorList) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('{');
     for (int ii = 0; ii < colorList.size(); ii++) {
       final Color color = colorList.get(ii);
@@ -710,7 +710,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     if (color == null) {
       return null;
     }
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('(');
     sb.append(color.getRed());
     sb.append(',');
@@ -731,7 +731,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    */
   public static String getSimpleColorString(Color cl) {
     if (cl != null) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(cl.getRed());
       sb.append(", ");
       sb.append(cl.getGreen());
@@ -806,7 +806,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     final String space = " ";
     final String tab = "\t";
     boolean use_quote = false;
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     for (int ii = 0; ii < value.length(); ii++) {
       char c = value.charAt(ii);
       if (c == ',') {
@@ -1285,7 +1285,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     String nameNew;
     if (max != -1) {
       max++;
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(name);
       sb.append('(');
       sb.append(max);
@@ -1688,7 +1688,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * @param value
    * @return
    */
-  public static Number getNumber(final String value, final StringBuffer u) {
+  public static Number getNumber(final String value, final StringBuilder u) {
     if (value == null) {
       return null;
     }
@@ -2191,7 +2191,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
      * for (int jj = 0; jj < cArray.length; jj++) {
      * cArray[jj] = cList.get(jj).charValue();
      * }
-     * StringBuffer sb = new StringBuffer();
+     * StringBuilder sb = new StringBuilder();
      * sb.append(head);
      * sb.append('"');
      * sb.append(new String(cArray));

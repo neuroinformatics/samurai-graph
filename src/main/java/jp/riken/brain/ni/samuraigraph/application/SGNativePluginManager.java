@@ -332,7 +332,7 @@ public class SGNativePluginManager
     inputDialog.setPrevious(null);
     inputDialog.setNext(null);
     String pName = pFile.getName();
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(SGPluginInputWizardDialog.TITLE);
     sb.append(" (");
     sb.append(pName);
@@ -460,7 +460,7 @@ public class SGNativePluginManager
     }
     String[] errorMessages = output.getErrorMessages();
     if (errorMessages != null && errorMessages.length != 0) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       for (int ii = 0; ii < errorMessages.length; ii++) {
         if (ii > 0) {
           sb.append('\n');
@@ -477,7 +477,7 @@ public class SGNativePluginManager
     outputDialog.setPrevious(null);
     outputDialog.setNext(null);
     for (int ii = 0; ii < oBuffers.length; ii++) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("Output");
       sb.append(ii + 1);
       outputDialog.addDataBuffer(sb.toString(), oBuffers[ii]);
@@ -516,7 +516,7 @@ public class SGNativePluginManager
     try {
       lib.freeData(outputPointer);
     } catch (UnsatisfiedLinkError e1) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(ERRMSG_FUNCTION_NOT_FOUND);
       sb.append("freeData()");
       sb.append("\n");

@@ -42,7 +42,7 @@ public class SGSimpleStringBlock extends SGStringBlock {
    * @return a text string for this object
    */
   public String paramString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(", seriesArray=[");
     for (int ii = 0; ii < this.mSeriesArray.length; ii++) {
       if (ii > 0) {

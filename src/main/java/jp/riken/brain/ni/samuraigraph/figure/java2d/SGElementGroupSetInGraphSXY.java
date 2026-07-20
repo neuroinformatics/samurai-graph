@@ -2062,7 +2062,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     value = this.getShiftedValue(data, value);
     final double xValue = SGUtilityNumber.getNumberInRangeOrder(value.xValue, this.mXAxis);
     final double yValue = SGUtilityNumber.getNumberInRangeOrder(value.yValue, this.mYAxis);
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("(");
     sb.append(xValue);
     sb.append(", ");
@@ -2081,7 +2081,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     final double yValue0 = SGUtilityNumber.getNumberInRangeOrder(value0.yValue, this.mYAxis);
     final double xValue1 = SGUtilityNumber.getNumberInRangeOrder(value1.xValue, this.mXAxis);
     final double yValue1 = SGUtilityNumber.getNumberInRangeOrder(value1.yValue, this.mYAxis);
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("(");
     sb.append(xValue0);
     sb.append(", ");
@@ -2097,7 +2097,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
   private String getToolTipTextReturned(final String spatiallyVariedText, List<Integer> indices) {
     SGArrayData data = (SGArrayData) this.getData();
 
-    StringBuffer sbSpatiallyVaried = new StringBuffer();
+    StringBuilder sbSpatiallyVaried = new StringBuilder();
     if (data instanceof SGSDArrayData) {
       if (this.mNumberOfSeries > 1) {
         // append the index of child data only for SDArray data

@@ -95,7 +95,7 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
         }
         result.putResult(COM_DATA_SYMBOL_TYPE, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_SYMBOL_SIZE.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_DATA_SYMBOL_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -139,7 +139,7 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
         }
         result.putResult(COM_DATA_SYMBOL_BODY_TRANSPARENCY, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_SYMBOL_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_DATA_SYMBOL_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);

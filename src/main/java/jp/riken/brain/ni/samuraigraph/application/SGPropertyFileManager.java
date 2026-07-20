@@ -466,7 +466,7 @@ class SGPropertyFileManager
     if (strFigureWidth == null || strFigureWidth.length() == 0) {
       return null;
     }
-    StringBuffer sbFigureWidth = new StringBuffer();
+    StringBuilder sbFigureWidth = new StringBuilder();
     Number figureWidth = SGUtilityText.getNumber(strFigureWidth, sbFigureWidth);
     if (figureWidth == null) {
       return null;
@@ -485,7 +485,7 @@ class SGPropertyFileManager
     if (strFigureHeight == null || strFigureHeight.length() == 0) {
       return null;
     }
-    StringBuffer sbFigureHeight = new StringBuffer();
+    StringBuilder sbFigureHeight = new StringBuilder();
     Number figureHeight = SGUtilityText.getNumber(strFigureHeight, sbFigureHeight);
     if (figureHeight == null) {
       return null;

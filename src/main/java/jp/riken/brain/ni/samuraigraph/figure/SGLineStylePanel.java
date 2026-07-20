@@ -708,7 +708,7 @@ public class SGLineStylePanel extends javax.swing.JPanel
       // reconstructs the parsed results
       if (this.mParsedResult == null) {
         Object value = this.getValue();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(value);
         sb.append(this.getSuffix());
         this.mParsedResult = sb.toString();

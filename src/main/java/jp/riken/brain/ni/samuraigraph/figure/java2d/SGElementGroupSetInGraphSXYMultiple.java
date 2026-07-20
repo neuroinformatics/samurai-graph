@@ -1343,7 +1343,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       String key = itr.next();
       String value = map.getValueString(key);
       if (COM_DATA_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3874,7 +3874,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       String key = itr.next();
       String value = map.getValueString(key);
       if (COM_DATA_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_DATA_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -4138,7 +4138,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   public String createCommandString(SGExportParameter params) {
     String spResult = super.createCommandString(params);
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(spResult);
 
     // child properties
@@ -4149,7 +4149,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       Map<Integer, SGLineStyle> lineStyleMap = this.getLineStyleMap();
       Iterator<Entry<Integer, SGLineStyle>> cItr = lineStyleMap.entrySet().iterator();
       while (cItr.hasNext()) {
-        StringBuffer sbTmp = new StringBuffer();
+        StringBuilder sbTmp = new StringBuilder();
         Entry<Integer, SGLineStyle> entry = cItr.next();
         Integer index = entry.getKey();
         SGLineStyle lineStyle = entry.getValue();
@@ -4187,7 +4187,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     Iterator<Entry<String, SGColorMap>> colorMapItr = this.mLineColorMapManager
     		.getColorMaps().entrySet().iterator();
     while (colorMapItr.hasNext()) {
-    	StringBuffer sbTmp = new StringBuffer();
+    	StringBuilder sbTmp = new StringBuilder();
     	Entry<String, SGColorMap> entry = colorMapItr.next();
     	String colorMapName = entry.getKey();
     	SGColorMap colorMap = entry.getValue();
@@ -4398,7 +4398,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     xValue = SGUtilityNumber.getNumberInRangeOrder(xValue, this.mXAxis);
     double yValue = this.mGraph.calcValue(y, this.mYAxis, false);
     yValue = SGUtilityNumber.getNumberInRangeOrder(yValue, this.mYAxis);
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('(');
     sb.append(xValue);
     sb.append(", ");

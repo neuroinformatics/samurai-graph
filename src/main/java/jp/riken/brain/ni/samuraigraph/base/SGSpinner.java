@@ -529,7 +529,7 @@ public class SGSpinner extends JSpinner
     if (num == null) {
       return null;
     }
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(num);
     final String unit = this.getUnit();
     if (unit != null) {
@@ -682,7 +682,7 @@ public class SGSpinner extends JSpinner
               break;
             }
           }
-          StringBuffer sb = new StringBuffer();
+          StringBuilder sb = new StringBuilder();
           for (int jj = 0; jj < spaceCnt; jj++) {
             sb.append(' ');
           }

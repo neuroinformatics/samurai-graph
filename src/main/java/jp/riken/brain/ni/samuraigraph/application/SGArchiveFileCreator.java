@@ -86,7 +86,7 @@ public class SGArchiveFileCreator extends SGFileHandler
       if (bgImg != null) {
         imageByteArray = bgImg.getByteArray();
         String ext = bgImg.getExtension();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(ARCHIVE_IMAGE_NAME);
         sb.append('.');
         sb.append(ext);

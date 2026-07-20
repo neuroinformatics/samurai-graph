@@ -256,7 +256,7 @@ public class SGIntegerSeriesSet implements Cloneable {
 
   @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     for (int ii = 0; ii < this.mSeriesList.size(); ii++) {
       if (ii > 0) {
         sb.append(',');

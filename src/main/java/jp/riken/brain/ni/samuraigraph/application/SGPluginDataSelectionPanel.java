@@ -182,7 +182,7 @@ public class SGPluginDataSelectionPanel extends javax.swing.JPanel implements Mo
       childNum = multipleData.getChildNumber();
       if (childNum > 1) {
         for (int ii = 0; ii < childNum; ii++) {
-          StringBuffer sb = new StringBuffer();
+          StringBuilder sb = new StringBuilder();
           sb.append('[');
           sb.append(ii + 1);
           sb.append("] ");
@@ -246,7 +246,7 @@ public class SGPluginDataSelectionPanel extends javax.swing.JPanel implements Mo
       childNum = childBuffers.length;
       if (childNum > 1) {
         for (int ii = 0; ii < childNum; ii++) {
-          StringBuffer sb = new StringBuffer();
+          StringBuilder sb = new StringBuilder();
           sb.append('[');
           sb.append(ii + 1);
           sb.append("] ");

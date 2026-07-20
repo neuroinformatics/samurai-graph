@@ -278,7 +278,7 @@ public abstract class SGNetCDFData extends SGArrayData
     }
 
     // write the origins
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     Iterator<String> itr = this.mOriginMap.keySet().iterator();
     if (SGDataUtility.isArchiveDataSetOperation(type.getType())) {
       // archive
@@ -426,7 +426,7 @@ public abstract class SGNetCDFData extends SGArrayData
   protected String getNameWithUnit(SGNetCDFVariable var) {
     final String name = var.getNameInPriorityOrder();
     final String unit = var.getUnitsString();
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(name);
     if (unit != null) {
       sb.append(" [");
@@ -786,7 +786,7 @@ public abstract class SGNetCDFData extends SGArrayData
     }
 
     // creates a text string specifying the section
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     for (int ii = 0; ii < dimList.size(); ii++) {
       if (ii > 0) {
         sb.append(',');
@@ -1394,7 +1394,7 @@ public abstract class SGNetCDFData extends SGArrayData
       end = temp;
       step *= -1;
     }
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(start);
     if (start != end) {
       sb.append(':');
@@ -1464,7 +1464,7 @@ public abstract class SGNetCDFData extends SGArrayData
     List<SGNamedDoubleValueIndexBlock> blockList = new ArrayList<SGNamedDoubleValueIndexBlock>();
     for (Map<String, SGIntegerSeries> map : seriesMapList) {
       // creates a text string specifying the section
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       for (int ii = 0; ii < dimList.size(); ii++) {
         if (ii > 0) {
           sb.append(',');
@@ -1513,7 +1513,7 @@ public abstract class SGNetCDFData extends SGArrayData
     for (Map<String, SGIntegerSeries> map : seriesMapList) {
 
       // creates a text string specifying the section
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       for (int ii = 0; ii < dimList.size(); ii++) {
         Dimension dim = dimList.get(ii);
         String dimName = dim.getShortName();
@@ -1669,7 +1669,7 @@ public abstract class SGNetCDFData extends SGArrayData
       }
     } else {
       for (SGIntegerSeries series : seriesList) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         String str = getNetCDFStride(series);
         sb.append(str);
         Array array = null;
@@ -2072,7 +2072,7 @@ public abstract class SGNetCDFData extends SGArrayData
         Variable curVar = this.findVariable(curVarName).getVariable();
         List<Dimension> curVarDimList = curVar.getDimensions();
         List<Integer> reducedDimList = new ArrayList<Integer>();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int ii = 0; ii < curVarDimList.size(); ii++) {
           if (ii > 0) {
             sb.append(',');
@@ -2360,7 +2360,7 @@ public abstract class SGNetCDFData extends SGArrayData
             List<String> strList = new ArrayList<String>();
             int maxLength = 0;
             for (int ii = 0; ii < shape[0]; ii++) {
-              StringBuffer sb = new StringBuffer();
+              StringBuilder sb = new StringBuilder();
               for (int jj = 0; jj < shape[1]; jj++) {
                 final char c = ac.getChar(idx.set(ii, jj));
                 sb.append(c);
@@ -2430,7 +2430,7 @@ public abstract class SGNetCDFData extends SGArrayData
         if (varNameSet.contains(varName)) {
           List<Attribute> attrList = var.getAttributes();
           String[] groupNames = varName.split("/");
-          StringBuffer sb = new StringBuffer();
+          StringBuilder sb = new StringBuilder();
           for (int ii = 0; ii < groupNames.length - 1; ii++) {
             sb.append(groupNames[ii]);
             if (ii != groupNames.length - 2) {
@@ -2818,7 +2818,7 @@ public abstract class SGNetCDFData extends SGArrayData
   @Override
   public String getOriginCommandString() {
     List<SGNetCDFVariable> varList = this.getNetcdfFile().getVariables();
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('(');
     int cnt = 0;
     for (int ii = 0; ii < varList.size(); ii++) {
@@ -2830,7 +2830,7 @@ public abstract class SGNetCDFData extends SGArrayData
       if (cnt > 0) {
         sb.append(',');
       }
-      StringBuffer varSb = new StringBuffer();
+      StringBuilder varSb = new StringBuilder();
       varSb.append(var.getName());
       varSb.append('(');
       varSb.append(origin);
@@ -2881,7 +2881,7 @@ public abstract class SGNetCDFData extends SGArrayData
    */
   @Override
   public String getToolTipTextNotSpatiallyVaried() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     List<Dimension> dimList = this.getToolTipNotSpatiallyVariedDimensionList();
     for (int ii = 0; ii < dimList.size(); ii++) {
       if (ii > 0) {

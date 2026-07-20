@@ -50,7 +50,7 @@ public class SGDataColumnInfoSet implements Cloneable {
 
   @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer("[");
+    StringBuilder sb = new StringBuilder("[");
     sb.append(this.paramString());
     sb.append("]");
     return sb.toString();
@@ -60,7 +60,7 @@ public class SGDataColumnInfoSet implements Cloneable {
     if (this.mDataColumnInfoArray == null) {
       return "[SGDataColumnInfoSet]";
     }
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('\n');
     for (int ii = 0; ii < this.mDataColumnInfoArray.length; ii++) {
       if (ii > 0) {

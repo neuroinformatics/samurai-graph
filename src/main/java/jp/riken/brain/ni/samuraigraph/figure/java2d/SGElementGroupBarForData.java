@@ -234,7 +234,7 @@ public abstract class SGElementGroupBarForData extends SGElementGroupBar
         }
         result.putResult(COM_DATA_BAR_BODY_TRANSPARENCY, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_BAR_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_DATA_BAR_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);

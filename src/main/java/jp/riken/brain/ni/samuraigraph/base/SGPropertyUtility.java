@@ -21,7 +21,7 @@ public class SGPropertyUtility {
 
   public static void addQuotedStringProperty(
       final SGPropertyMap map, final String key, final String value) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('"');
     if (value != null) {
       sb.append(value);
@@ -36,7 +36,7 @@ public class SGPropertyUtility {
 
   public static void addProperty(
       final SGPropertyMap map, final String key, final Number len, final String unit) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(len);
     sb.append(unit);
     putValue(map, key, sb.toString());

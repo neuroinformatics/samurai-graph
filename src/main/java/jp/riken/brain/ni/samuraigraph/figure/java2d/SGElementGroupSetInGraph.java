@@ -366,7 +366,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
   public String getInstanceDescription() {
     String dataType = this.getDataType();
     String dataTypeLong = SGDataTypeConstants.getLongDataTypeConstant(dataType);
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(this.getID());
     sb.append(": ");
     sb.append(dataTypeLong);
@@ -519,7 +519,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     if (str == null || "".equals(str)) {
       return null;
     }
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("<html>");
     sb.append(str);
     sb.append("</html>");
@@ -672,7 +672,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
       final String spatiallyVariedText,
       final String notSpatiallyVariedText,
       final String dataValueText) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     boolean exists = false;
     if (SGDataUtility.isValidTooltipTextString(dataValueText)) {
       if (exists) {

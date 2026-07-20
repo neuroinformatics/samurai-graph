@@ -1276,7 +1276,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
       } else {
         zValue = dataValue.zValue.number;
       }
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("(");
       sb.append(xValue);
       sb.append(", ");
@@ -1316,7 +1316,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
       }
     }
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append('(');
     sb.append(xValue);
     sb.append(", ");

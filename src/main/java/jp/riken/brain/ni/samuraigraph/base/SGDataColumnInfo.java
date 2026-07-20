@@ -110,7 +110,7 @@ public abstract class SGDataColumnInfo implements Cloneable {
    * @return a text string for this object
    */
   public String toString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("{");
     sb.append(this.paramString());
     sb.append("}");
@@ -123,7 +123,7 @@ public abstract class SGDataColumnInfo implements Cloneable {
    * @return a text string for this object
    */
   protected String paramString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append("title=");
     sb.append(this.getTitle());
     sb.append(", valueType=");

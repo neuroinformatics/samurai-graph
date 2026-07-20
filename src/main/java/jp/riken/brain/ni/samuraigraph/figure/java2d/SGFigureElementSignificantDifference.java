@@ -1230,7 +1230,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
 
     /** */
     public String toString() {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append('[');
       sb.append(this.visibleSigDiffSymbolList.toString());
       sb.append(']');
@@ -1247,7 +1247,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
     public void init(SigDiffSymbol sd) {
       this.setBounds(0, 0, 100, 100);
 
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append("  -- Significant Difference: ");
       sb.append(sd.getID());
       sb.append(" --");
@@ -1405,7 +1405,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
           SGFigureElementSignificantDifference.this.mAxisElement.getLocationName(this.mXAxis);
       String yAxis =
           SGFigureElementSignificantDifference.this.mAxisElement.getLocationName(this.mYAxis);
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       sb.append(this.mID);
       sb.append(": ");
       // sb.append(this.getText());
@@ -2784,7 +2784,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
           }
           result.putResult(COM_SIGDIFF_LINE_VISIBLE, SGPropertyResults.SUCCEEDED);
         } else if (COM_SPACE.equalsIgnoreCase(key)) {
-          StringBuffer unit = new StringBuffer();
+          StringBuilder unit = new StringBuilder();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
             result.putResult(COM_SPACE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2796,7 +2796,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
           }
           result.putResult(COM_SPACE, SGPropertyResults.SUCCEEDED);
         } else if (COM_LINE_WIDTH.equalsIgnoreCase(key)) {
-          StringBuffer unit = new StringBuffer();
+          StringBuilder unit = new StringBuilder();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
             result.putResult(COM_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2840,7 +2840,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
           }
           result.putResult(COM_FONT_STYLE, SGPropertyResults.SUCCEEDED);
         } else if (COM_FONT_SIZE.equalsIgnoreCase(key)) {
-          StringBuffer unit = new StringBuffer();
+          StringBuilder unit = new StringBuilder();
           Number num = SGUtilityText.getNumber(value, unit);
           if (num == null) {
             result.putResult(COM_FONT_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2902,7 +2902,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
      */
     @Override
     public String getCommandString(SGExportParameter params) {
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
 
       // creates the command for this data
       String dataCommands = this.createCommandString(params);

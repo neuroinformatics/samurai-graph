@@ -152,7 +152,7 @@ public class SGAttributePanel extends SGTableSelectionPanel {
     TableColumnModel model = this.mTable.getColumnModel();
     final int colIndexValue = model.getColumnIndex(COLUMN_NAME_VALUE);
     Object value = this.mTable.getValueAt(row, colIndexValue);
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     if (value != null) {
       sb.append(value);
     }
@@ -198,7 +198,7 @@ public class SGAttributePanel extends SGTableSelectionPanel {
       if (size == 0) {
         value = null;
       } else {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int ii = 0; ii < size; ii++) {
           Object obj = attr.getValue(ii);
           if (obj == null) {

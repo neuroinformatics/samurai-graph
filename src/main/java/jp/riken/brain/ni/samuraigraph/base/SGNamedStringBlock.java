@@ -48,7 +48,7 @@ public class SGNamedStringBlock extends SGStringBlock {
    * @return a text string for this object
    */
   public String paramString() {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     sb.append(", map=");
     sb.append(this.mSeriesMap.toString());
     return sb.toString();

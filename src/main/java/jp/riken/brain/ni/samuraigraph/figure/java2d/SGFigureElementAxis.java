@@ -1893,7 +1893,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
     // frame line width
     str = element.getAttribute(SGIFigureElementAxis.KEY_FRAME_LINE_WIDTH);
     if (str.length() != 0) {
-      StringBuffer uFrameLineWidth = new StringBuffer();
+      StringBuilder uFrameLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uFrameLineWidth);
       if (num == null) {
         return false;
@@ -1999,7 +1999,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
       if (str.length() == 0) {
         return false;
       }
-      StringBuffer uAxisLineWidth = new StringBuffer();
+      StringBuilder uAxisLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uAxisLineWidth);
       if (num == null) {
         return false;
@@ -2011,7 +2011,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
       if (str.length() == 0) {
         return false;
       }
-      StringBuffer uTickMarkWidth = new StringBuffer();
+      StringBuilder uTickMarkWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uTickMarkWidth);
       if (num == null) {
         return false;
@@ -2023,7 +2023,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
       if (str.length() == 0) {
         return false;
       }
-      StringBuffer uTickMarkLength = new StringBuffer();
+      StringBuilder uTickMarkLength = new StringBuilder();
       num = SGUtilityText.getNumber(str, uTickMarkLength);
       if (num == null) {
         return false;
@@ -2134,9 +2134,9 @@ public class SGFigureElementAxis extends SGFigureElement2D
       float fontSize = 0.0f;
       float titleFontSize = 0.0f;
       float scaleFontSize = 0.0f;
-      StringBuffer uFontSize = new StringBuffer();
-      StringBuffer uTitleFontSize = new StringBuffer();
-      StringBuffer uScaleFontSize = new StringBuffer();
+      StringBuilder uFontSize = new StringBuilder();
+      StringBuilder uTitleFontSize = new StringBuilder();
+      StringBuilder uScaleFontSize = new StringBuilder();
       if (sameFontSizeFlag) {
         num = SGUtilityText.getNumber(fontSizeStr, uFontSize);
         if (num == null) {
@@ -3034,7 +3034,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
         }
         result.putResult(COM_AXIS_FRAME_VISIBLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_FRAME_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuffer unit = new StringBuffer();
+        StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
           result.putResult(COM_AXIS_FRAME_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -3289,7 +3289,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
    */
   @Override
   public String getCommandString(SGExportParameter params) {
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
     List<SGFigureAxis> axes = this.getAxisGroupList();
     for (SGAxisElement axis : axes) {
       String cmdString = axis.getCommandString();
