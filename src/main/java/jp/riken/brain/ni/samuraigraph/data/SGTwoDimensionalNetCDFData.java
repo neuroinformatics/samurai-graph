@@ -27,10 +27,14 @@ import ucar.ma2.Index;
 import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 /** The base class of two dimensional NetCDF data. */
 public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     implements SGITwoDimensionalData, SGIDataPropertyKeyConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGTwoDimensionalNetCDFData.class);
 
   /** The variable for x-values. */
   protected SGNetCDFVariable mXVariable = null;
@@ -955,6 +959,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     try {
       value = this.getCoordinateValue(name, index);
     } catch (IOException e) {
+      logger.warn("Failed to get coordinate value for " + name, e);
     }
 
     // append to the string buffer
@@ -980,6 +985,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     try {
       xValue = this.getCoordinateValue(xName, xIndex);
     } catch (IOException e) {
+      logger.warn("Failed to get coordinate value for " + xName, e);
     }
     Dimension yDim = this.mYVariable.getDimension(0);
     String yName = yDim.getShortName();
@@ -987,6 +993,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     try {
       yValue = this.getCoordinateValue(yName, yIndex);
     } catch (IOException e) {
+      logger.warn("Failed to get coordinate value for " + yName, e);
     }
 
     // append to the string buffer

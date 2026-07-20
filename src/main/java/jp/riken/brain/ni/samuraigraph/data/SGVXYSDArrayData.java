@@ -31,10 +31,14 @@ import ucar.nc2.Attribute;
 import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 /** Two dimensional vector data. */
 public class SGVXYSDArrayData extends SGSDArrayData
     implements SGIVXYTypeData, SGIDataPropertyKeyConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGVXYSDArrayData.class);
 
   /** The column index for x-coordinate values. */
   protected Integer mXCoordinateIndex = null;
@@ -1241,6 +1245,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
         try {
           ncfile.close();
         } catch (IOException e) {
+          logger.warn("Failed to close resource", e);
         }
       }
     }
