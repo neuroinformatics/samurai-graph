@@ -23,6 +23,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.DataType;
@@ -31,8 +33,6 @@ import ucar.nc2.Attribute;
 import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 /** Two dimensional vector data. */
 public class SGVXYSDArrayData extends SGSDArrayData

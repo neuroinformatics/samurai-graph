@@ -20,6 +20,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoDimensionalArrayIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.Value;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayChar;
@@ -27,8 +29,6 @@ import ucar.ma2.Index;
 import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 /** The base class of two dimensional NetCDF data. */
 public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData

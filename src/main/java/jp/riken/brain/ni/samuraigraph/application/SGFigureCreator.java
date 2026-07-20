@@ -245,28 +245,13 @@ public class SGFigureCreator implements SGIFigureConstants {
 
   // load classes from property file
   private boolean loadClassesFromFile(final String path) {
-    // open the file
-    FileInputStream fis = null;
-    try {
-      fis = new FileInputStream(new File(path));
-    } catch (FileNotFoundException ex) {
-      return false;
-    }
-
-    try {
-      // load properties
+    try (FileInputStream fis = new FileInputStream(new File(path))) {
       Properties p = new Properties();
       p.load(fis);
 
       String name;
       name = p.getProperty(PROPERTY_NAME_OF_AXIS_ELEMENT);
       this.mClassOfAxisElement = (name != null && !name.equals("")) ? Class.forName(name) : null;
-      // name = p.getProperty(PROPERTY_NAME_OF_SXY_GRAPH_ELEMENT);
-      // this.mClassOfSXYGraphElement = (name != null && !name.equals(""))
-      // ? Class.forName(name) : null;
-      // name = p.getProperty(PROPERTY_NAME_OF_VXY_GRAPH_ELEMENT);
-      // this.mClassOfVXYGraphElement = (name != null && !name.equals(""))
-      // ? Class.forName(name) : null;
       name = p.getProperty(PROPERTY_NAME_OF_GRAPH_ELEMENT);
       this.mClassOfGraphElement = (name != null && !name.equals("")) ? Class.forName(name) : null;
       name = p.getProperty(PROPERTY_NAME_OF_GRID_ELEMENT);
@@ -287,17 +272,12 @@ public class SGFigureCreator implements SGIFigureConstants {
       name = p.getProperty(PROPERTY_NAME_OF_SHAPE_ELEMENT);
       this.mClassOfShapeElement = (name != null && !name.equals("")) ? Class.forName(name) : null;
 
+    } catch (FileNotFoundException ex) {
+      return false;
     } catch (ClassNotFoundException ex) {
       return false;
     } catch (IOException ex) {
       return false;
-    } finally {
-      if (fis != null) {
-        try {
-          fis.close();
-        } catch (IOException ex) {
-        }
-      }
     }
 
     return true;

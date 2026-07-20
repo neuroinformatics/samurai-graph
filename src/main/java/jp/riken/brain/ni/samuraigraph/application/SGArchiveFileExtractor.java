@@ -73,23 +73,15 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
           if (!f.exists() && !f.mkdirs()) throw new IOException("Couldn't create dir " + f);
           this.mFileList.add(f);
         } else {
-          BufferedInputStream is = null;
-          BufferedOutputStream os = null;
-          try {
-            is = new BufferedInputStream(zFile.getInputStream(ze));
-            File dest = f.getParentFile();
-            if (!dest.exists() && !dest.mkdirs())
-              throw new IOException("Couldn't create dir " + dest);
-            os = new BufferedOutputStream(new FileOutputStream(f));
+          File dest = f.getParentFile();
+          if (!dest.exists() && !dest.mkdirs())
+            throw new IOException("Couldn't create dir " + dest);
+          try (BufferedInputStream is = new BufferedInputStream(zFile.getInputStream(ze));
+              BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(f))) {
             int b = EOF;
             while ((b = is.read()) != EOF) os.write(b);
-            is.close();
-            os.close();
-            this.mFileList.add(f);
-          } finally {
-            if (is != null) is.close();
-            if (os != null) os.close();
           }
+          this.mFileList.add(f);
         }
       }
     } finally {

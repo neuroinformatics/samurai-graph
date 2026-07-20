@@ -63,49 +63,32 @@ public class SGArchiveFileCreator extends SGFileHandler
 
     final String rootName = root.getAbsolutePath() + File.separator;
 
-    ByteArrayOutputStream baOs = null;
-    ZipOutputStream zos = null;
+    List<ZipEntry> entries = new ArrayList<ZipEntry>(); // array list of ZipEntry
+    for (int ii = 0; ii < fList.size(); ii++) {
+      File file = fList.get(ii);
+      String fname = file.getAbsolutePath();
+      String entryname = fname.substring(rootName.length());
+      ZipEntry entry = new ZipEntry(entryname);
+      entries.add(entry);
+    }
 
-    FileOutputStream fos = null;
-    BufferedOutputStream bos = null;
+    BackgroundImage bgImg = wnd.getBackgroundImage();
+    byte[] imageByteArray = null;
+    ZipEntry imageZipEntry = null;
+    if (bgImg != null) {
+      imageByteArray = bgImg.getByteArray();
+      String ext = bgImg.getExtension();
+      StringBuilder sb = new StringBuilder();
+      sb.append(ARCHIVE_IMAGE_NAME);
+      sb.append('.');
+      sb.append(ext);
+      String entryname = sb.toString();
+      imageZipEntry = new ZipEntry(entryname);
+    }
 
-    try {
-      // check file size
-      baOs = new ByteArrayOutputStream();
-      zos = new ZipOutputStream(baOs);
-
-      List<ZipEntry> entries = new ArrayList<ZipEntry>(); // array list of ZipEntry
-      for (int ii = 0; ii < fList.size(); ii++) {
-        File file = fList.get(ii);
-        String fname = file.getAbsolutePath();
-        String entryname = fname.substring(rootName.length());
-        ZipEntry entry = new ZipEntry(entryname);
-        entries.add(entry);
-        writeFileEntry(zos, file, entry);
-      }
-
-      BackgroundImage bgImg = wnd.getBackgroundImage();
-      byte[] imageByteArray = null;
-      ZipEntry imageZipEntry = null;
-      if (bgImg != null) {
-        imageByteArray = bgImg.getByteArray();
-        String ext = bgImg.getExtension();
-        StringBuilder sb = new StringBuilder();
-        sb.append(ARCHIVE_IMAGE_NAME);
-        sb.append('.');
-        sb.append(ext);
-        String entryname = sb.toString();
-        imageZipEntry = new ZipEntry(entryname);
-        writeFileEntry(zos, imageByteArray, imageZipEntry);
-      }
-
-      zos.close();
-      baOs.close();
-
-      // create zip file image
-      baOs = new ByteArrayOutputStream();
-      zos = new ZipOutputStream(baOs);
-
+    // create zip file image
+    try (ByteArrayOutputStream baOs = new ByteArrayOutputStream();
+        ZipOutputStream zos = new ZipOutputStream(baOs)) {
       for (int ii = 0; ii < fList.size(); ii++) {
         File file = fList.get(ii);
         ZipEntry entry = entries.get(ii);
@@ -120,9 +103,9 @@ public class SGArchiveFileCreator extends SGFileHandler
 
       // get compressed data and write zip file
       byte[] bufResult = baOs.toByteArray();
-      fos = new FileOutputStream(zFile);
-      bos = new BufferedOutputStream(fos);
-      bos.write(bufResult, 0, bufResult.length);
+      try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(zFile))) {
+        bos.write(bufResult, 0, bufResult.length);
+      }
     } catch (FileNotFoundException ex) {
       logger.warn("I/O error during archive creation", ex);
       return -1;
@@ -132,57 +115,22 @@ public class SGArchiveFileCreator extends SGFileHandler
     } catch (IOException ex) {
       logger.warn("I/O error during archive creation", ex);
       return -1;
-    } finally {
-      try {
-        if (zos != null) zos.close();
-      } catch (Exception e) {
-      }
-      try {
-        if (baOs != null) baOs.close();
-      } catch (Exception e) {
-      }
-      try {
-        if (bos != null) bos.close();
-      } catch (Exception e) {
-      }
-      try {
-        if (fos != null) fos.close();
-      } catch (Exception e) {
-      }
     }
     return OK_OPTION;
   }
 
   // get file bytes
   private static byte[] _getFileBytes(final File file) {
-    FileInputStream fis = null;
-    BufferedInputStream bis = null;
-    try {
-      int len = (int) file.length();
-      fis = new FileInputStream(file);
-      bis = new BufferedInputStream(fis, len);
-      byte buf[] = new byte[len];
+    int len = (int) file.length();
+    try (FileInputStream fis = new FileInputStream(file);
+        BufferedInputStream bis = new BufferedInputStream(fis, len)) {
+      byte[] buf = new byte[len];
       bis.read(buf, 0, len);
       return buf;
     } catch (IOException ex) {
       logger.warn("I/O error during archive creation", ex);
-    } finally {
-      try {
-        if (bis != null) {
-          bis.close();
-        }
-      } catch (Exception ex) {
-        logger.warn("I/O error during archive creation", ex);
-      }
-      try {
-        if (fis != null) {
-          fis.close();
-        }
-      } catch (Exception ex) {
-        logger.warn("I/O error during archive creation", ex);
-      }
+      return null;
     }
-    return null;
   }
 
   public static class ArchiveFile {

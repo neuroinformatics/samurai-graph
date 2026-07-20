@@ -2238,27 +2238,19 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * @return
    */
   public static String detectCharacterSet(String path) {
-    FileInputStream fis = null;
-    try {
-      fis = new FileInputStream(path);
-    } catch (FileNotFoundException e) {
-      return null;
-    }
-    UniversalDetector detector = new UniversalDetector(null);
     byte[] buf = new byte[4096];
-    int nRead = -1;
-    try {
+    UniversalDetector detector = new UniversalDetector(null);
+    try (FileInputStream fis = new FileInputStream(path)) {
+      int nRead;
       while ((nRead = fis.read(buf)) > 0 && !detector.isDone()) {
         detector.handleData(buf, 0, nRead);
       }
+    } catch (FileNotFoundException e) {
+      return null;
     } catch (IOException e) {
       return null;
     }
     detector.dataEnd();
-    try {
-      fis.close();
-    } catch (IOException e) {
-    }
     return detector.getDetectedCharset();
   }
 

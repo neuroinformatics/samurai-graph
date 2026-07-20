@@ -292,7 +292,6 @@ class SGUpgradeManager
    */
   private String fetchLatestReleaseTagName() {
     Proxy proxy = buildProxy();
-    BufferedReader reader = null;
     try {
       URL url = URI.create(GITHUB_API_LATEST_URL).toURL();
       URLConnection connection = url.openConnection(proxy);
@@ -300,31 +299,25 @@ class SGUpgradeManager
       connection.setConnectTimeout(10000);
       connection.setReadTimeout(15000);
 
-      reader =
+      try (BufferedReader reader =
           new BufferedReader(
-              new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-      StringBuilder response = new StringBuilder();
-      String line;
-      while ((line = reader.readLine()) != null) {
-        response.append(line);
-      }
+              new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+        StringBuilder response = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+          response.append(line);
+        }
 
-      // extract tag_name from JSON response
-      Matcher m = TAG_NAME_JSON_PATTERN.matcher(response.toString());
-      if (m.find()) {
-        return m.group(1);
+        // extract tag_name from JSON response
+        Matcher m = TAG_NAME_JSON_PATTERN.matcher(response.toString());
+        if (m.find()) {
+          return m.group(1);
+        }
+        return null;
       }
-      return null;
 
     } catch (Exception ex) {
       return null;
-    } finally {
-      if (reader != null) {
-        try {
-          reader.close();
-        } catch (IOException ex) {
-        }
-      }
     }
   }
 
@@ -358,7 +351,6 @@ class SGUpgradeManager
    */
   private String fetchChangelog(String tagName) {
     Proxy proxy = buildProxy();
-    BufferedReader reader = null;
     try {
       String xmlUrlStr = GITHUB_RAW_BASE_URL + "/" + tagName + "/changelog/product.xml";
       URL url = URI.create(xmlUrlStr).toURL();
@@ -366,17 +358,20 @@ class SGUpgradeManager
       connection.setConnectTimeout(10000);
       connection.setReadTimeout(15000);
 
-      reader =
+      String content;
+      try (BufferedReader reader =
           new BufferedReader(
-              new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-      StringBuilder sb = new StringBuilder();
-      String line;
-      while ((line = reader.readLine()) != null) {
-        sb.append(line);
+              new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+          sb.append(line);
+        }
+        content = sb.toString();
       }
 
       // parse the XML
-      Document doc = SGUtilityText.getDocumentFromString(sb.toString());
+      Document doc = SGUtilityText.getDocumentFromString(content);
       if (doc == null) {
         return null;
       }
@@ -421,13 +416,6 @@ class SGUpgradeManager
 
     } catch (Exception ex) {
       return null;
-    } finally {
-      if (reader != null) {
-        try {
-          reader.close();
-        } catch (IOException ex) {
-        }
-      }
     }
   }
 

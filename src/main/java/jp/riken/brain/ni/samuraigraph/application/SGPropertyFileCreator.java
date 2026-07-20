@@ -33,20 +33,10 @@ public class SGPropertyFileCreator extends SGFileHandler implements SGIPropertyF
   /** Create a property file. */
   public int create(
       SGDrawingWindow wnd, File file, SGExportParameter params, final String versionString) {
-    // export to the XML file
-    FileOutputStream os = null;
-    try {
-      os = new FileOutputStream(file);
+    try (FileOutputStream os = new FileOutputStream(file)) {
       return this._create(wnd, os, params, versionString);
     } catch (Exception ex) {
       return -1;
-    } finally {
-      if (os != null) {
-        try {
-          os.close();
-        } catch (IOException ex) {
-        }
-      }
     }
   }
 

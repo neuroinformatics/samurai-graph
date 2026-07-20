@@ -145,32 +145,17 @@ public class SGApplicationUtility
       return false;
     }
 
-    FileInputStream in = null;
-    FileOutputStream out = null;
-    try {
-      in = new FileInputStream(src);
-      out = new FileOutputStream(dest);
-    } catch (FileNotFoundException ex) {
-      if (in != null) {
-        in.close();
+    try (FileInputStream in = new FileInputStream(src);
+        FileOutputStream out = new FileOutputStream(dest);
+        BufferedInputStream bis = new BufferedInputStream(in);
+        BufferedOutputStream bos = new BufferedOutputStream(out)) {
+      final int bufferLength = 1024;
+      byte[] buffer = new byte[bufferLength];
+      int len;
+      while ((len = bis.read(buffer, 0, bufferLength)) != -1) {
+        bos.write(buffer, 0, len);
       }
-      return false;
     }
-
-    BufferedInputStream bis = new BufferedInputStream(in);
-    BufferedOutputStream bos = new BufferedOutputStream(out);
-
-    final int bufferLength = 1024;
-    byte[] buffer = new byte[bufferLength];
-    int len;
-    while ((len = bis.read(buffer, 0, bufferLength)) != -1) {
-      bos.write(buffer, 0, len);
-    }
-
-    // close I/O streams
-    bis.close();
-    bos.close();
-
     return true;
   }
 
@@ -455,51 +440,19 @@ public class SGApplicationUtility
    * @return a byte array
    */
   public static byte[] toByteArray(final File f) {
-    byte[] byteArray = null;
-    ByteArrayOutputStream bos = null;
-    BufferedInputStream bis = null;
-    FileInputStream fis = null;
-    try {
-      // read image byte data
-      try {
-        fis = new FileInputStream(f);
-      } catch (FileNotFoundException e) {
-        return null;
-      } finally {
-      }
-      bis = new BufferedInputStream(fis);
-      bos = new ByteArrayOutputStream();
+    try (FileInputStream fis = new FileInputStream(f);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
       byte[] buf = new byte[1024];
       while (bis.read(buf) != -1) {
         bos.write(buf);
       }
-
-      // get byte data
-      byteArray = bos.toByteArray();
-
+      return bos.toByteArray();
+    } catch (FileNotFoundException e) {
+      return null;
     } catch (IOException e) {
       return null;
-    } finally {
-      if (fis != null) {
-        try {
-          fis.close();
-        } catch (IOException e) {
-        }
-      }
-      if (bis != null) {
-        try {
-          bis.close();
-        } catch (IOException e) {
-        }
-      }
-      if (bos != null) {
-        try {
-          bos.close();
-        } catch (IOException e) {
-        }
-      }
     }
-    return byteArray;
   }
 
   /**
