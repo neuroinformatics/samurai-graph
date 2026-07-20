@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Replacement for the library's ExportFileTypeRegistry which uses javax.imageio.spi.ServiceRegistry
@@ -18,6 +20,7 @@ import java.util.List;
  * ExportFileType (e.g. ImageIOExportFileType only implements RegisterableService).
  */
 public class ExportFileTypeRegistry {
+  private static final Logger logger = LogManager.getLogger(ExportFileTypeRegistry.class);
   private static final String SERVICE_FILE = "META-INF/services/" + ExportFileType.class.getName();
 
   private static ExportFileTypeRegistry registry;
@@ -109,13 +112,13 @@ public class ExportFileTypeRegistry {
               }
               // Silently skip classes that do not implement ExportFileType
             } catch (Exception e) {
-              // Class not available or failed to instantiate, skip silently
+              logger.debug("Exception occurred", e);
             }
           }
         }
       }
     } catch (IOException e) {
-      // No service files found, return empty list
+      logger.debug("Exception occurred", e);
     }
     return types;
   }

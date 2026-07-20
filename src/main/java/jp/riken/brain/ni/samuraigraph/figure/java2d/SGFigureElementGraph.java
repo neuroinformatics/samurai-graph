@@ -354,8 +354,6 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
       final SGIFigureElementLegend lElement = (SGIFigureElementLegend) element;
       flag = this.synchronizeToLegendElement(lElement, msg);
     } else if (element instanceof SGIFigureElementAxis) {
-      // System.out.println("SGIAxisElement");
-
       final SGIFigureElementAxis aElement = (SGIFigureElementAxis) element;
       flag = this.synchronizeToAxisElement(aElement, msg);
     } else if (element instanceof SGIFigureElementString) {
@@ -752,21 +750,6 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
       if (groupSet.isVisible() == false) {
         continue;
       }
-      // try {
-      // if (groupSet.onMouseClicked(e)) {
-      // return true;
-      // }
-      // } catch (Exception ex) {
-      // if (SGDataUtility.isNetCDFData(groupSet.getData())) {
-      // if (SGDataUtility.canOpenNetCDF((SGNetCDFData)groupSet.getData())==false) {
-      // SGUtility.showErrorMessageDialog(null, "NetCDF file connection refused.
-      // Delete this data.", "ERROR");
-      // this.notifyToListener(NOTIFY_UNKNOWN_DATA_ERROR,
-      // Integer.valueOf(groupSet.getID()));
-      // }
-      // }
-      // return false;
-      // }
       if (groupSet.onMouseClicked(e)) {
         return true;
       }

@@ -1257,7 +1257,6 @@ public class SGDrawingWindow extends JFrame
 
   /** Called when the window is resized. */
   private boolean onResized() {
-    // System.out.println("onResized");
     if (this.getClientRect() == null) {
       return false;
     }
@@ -1708,8 +1707,6 @@ public class SGDrawingWindow extends JFrame
   }
 
   public void propertyChange(PropertyChangeEvent e) {
-    // System.out.println(e);
-
     Object source = e.getSource();
     // String pName = e.getPropertyName();
     // Object oldValue = e.getOldValue();
@@ -3120,22 +3117,6 @@ public class SGDrawingWindow extends JFrame
   /** The target object to paste the copied objects. */
   private final transient List<SGISelectable> mPasteTargetList = new ArrayList<>();
 
-  // /**
-  // *
-  // */
-  // private void setLookAndFeel( String laf )
-  // {
-  // try
-  // {
-  // UIManager.setLookAndFeel(laf);
-  // SwingUtilities.updateComponentTreeUI(this);
-  // }
-  // catch(Exception ex)
-  // {
-  // System.out.println("Error L&F Setting");
-  // }
-  // }
-
   /** Insert a label for netCDF data. */
   void doInsertNetCDFLabel() {
     List<SGFigure> fList = this.getVisibleFigureList();
@@ -3625,7 +3606,6 @@ public class SGDrawingWindow extends JFrame
 
   /** */
   public boolean updateHistory() {
-    // System.out.println(this.isChanged());
 
     // update the updated index
     // this method must be called before SGUndoManager::updateHistory is
@@ -3942,7 +3922,6 @@ public class SGDrawingWindow extends JFrame
 
   /** */
   public boolean setProperties(SGProperties p) {
-    // System.out.println("setProperties");
 
     if ((p instanceof WindowProperties) == false) return false;
 
@@ -4061,11 +4040,6 @@ public class SGDrawingWindow extends JFrame
   // final double w = rect.getWidth();
   // final double h = rect.getHeight();
   //
-  // System.out.println("x="+x*SGIConstants.CM_POINT_RATIO+"cm,
-  // y="+y*SGIConstants.CM_POINT_RATIO+"cm");
-  // System.out.println("w="+w*SGIConstants.CM_POINT_RATIO+"cm,
-  // h="+h*SGIConstants.CM_POINT_RATIO+"cm");
-  // System.out.println();
   // }
 
   // public void dumpRect()
@@ -4099,9 +4073,6 @@ public class SGDrawingWindow extends JFrame
   // (float)bbRect.getHeight()*SGIConstants.CM_POINT_RATIO
   // );
   //
-  // System.out.println("client:"+cRect_);
-  // System.out.println("viewport:"+vpRect_);
-  // System.out.println("bounding box:"+bbRect_);
   // }
 
   /**
@@ -4114,7 +4085,6 @@ public class SGDrawingWindow extends JFrame
   public boolean setClientRect(final float x, final float y, final float w, final float h) {
     // this.dumpClientRect();
     this.mClientRect.setRect(x, y, w, h);
-    // System.out.println(this.mClientRect);
     return true;
   }
 
@@ -4158,7 +4128,6 @@ public class SGDrawingWindow extends JFrame
     final float w = dim.x + rw;
     final float h = dim.y + rw;
     Rectangle2D rect = new Rectangle2D.Float(left, top, w, h);
-    // System.out.println(rect);
     return rect;
   }
 
@@ -4874,12 +4843,6 @@ public class SGDrawingWindow extends JFrame
       }
     }
 
-    /*
-     * for( int ny=0; ny<sy; ny++ ) { for( int nx=0; nx<sx; nx++ ) {
-     * System.out.println(ny+" "+nx+" "+array[ny][nx]); } }
-     * System.out.println();
-     */
-
     // get arrays of the width and the height
     final float[] widthArray = new float[sx];
     for (int nx = 0; nx < sx; nx++) {
@@ -4913,14 +4876,6 @@ public class SGDrawingWindow extends JFrame
       heightArray[ny] = hMax;
     }
 
-    /*
-     * for( int ii=0; ii<sx; ii++ ) { System.out.println(ii+"
-     * "+widthArray[ii]); } System.out.println();
-     *
-     * for( int ii=0; ii<sy; ii++ ) { System.out.println(ii+"
-     * "+heightArray[ii]); } System.out.println();
-     */
-
     // create arrays of the coordinate of the centers
     Rectangle2D cRect = this.getClientRect();
 
@@ -4937,14 +4892,6 @@ public class SGDrawingWindow extends JFrame
       centerYArray[ny] = cy + heightArray[ny] / 2.0f;
       cy += heightArray[ny];
     }
-
-    /*
-     * for( int ii=0; ii<sx; ii++ ) { System.out.println(ii+"
-     * "+centerXArray[ii]); } System.out.println();
-     *
-     * for( int ii=0; ii<sy; ii++ ) { System.out.println(ii+"
-     * "+centerYArray[ii]); } System.out.println();
-     */
 
     // set the location of figures
     flag = true;
@@ -4979,10 +4926,6 @@ public class SGDrawingWindow extends JFrame
     final boolean bw = (pRect.getWidth() < wTotal);
     final boolean bh = (pRect.getHeight() < hTotal);
 
-    // System.out.println("pRect:"+pRect);
-    // System.out.println("wTotal="+wTotal);
-    // System.out.println("hTotal="+hTotal);
-
     if (bw && bh) {
       mode = 0;
     } else if (bw) {
@@ -4990,9 +4933,6 @@ public class SGDrawingWindow extends JFrame
     } else if (bh) {
       mode = 2;
     }
-
-    // System.out.println("mode="+mode);
-    // System.out.println();
 
     if (mode != -1) {
       if (this.setFigureBoundingBox(mode) == false) {
@@ -5197,7 +5137,6 @@ public class SGDrawingWindow extends JFrame
 
   /** */
   public void notifyToRoot() {
-    // System.out.println("notifyToRoot");
     if (this.updateHistoryTree() == false) {
       throw new Error("Failed to update the history.");
     }
@@ -5231,7 +5170,6 @@ public class SGDrawingWindow extends JFrame
    * @return true if succeeded
    */
   public boolean deleteForwardHistory() {
-    // System.out.println("******");
 
     // delete forward history of figures
     for (int ii = 0; ii < this.mFigureList.size(); ii++) {
@@ -5251,8 +5189,6 @@ public class SGDrawingWindow extends JFrame
       return false;
     }
 
-    // System.out.println("******");
-    // System.out.println();
     return true;
   }
 

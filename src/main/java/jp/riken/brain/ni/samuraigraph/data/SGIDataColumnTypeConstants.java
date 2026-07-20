@@ -39,11 +39,6 @@ public interface SGIDataColumnTypeConstants {
   /** A constant for tick label. */
   public static final String TICK_LABEL = "Tick Label";
 
-  //    /**
-  //     * A constant for date.
-  //     */
-  //    public static final String DATE = "Date";
-
   /** A constant for the x coordinate. */
   public static final String X_COORDINATE = "X-Coordinate";
 

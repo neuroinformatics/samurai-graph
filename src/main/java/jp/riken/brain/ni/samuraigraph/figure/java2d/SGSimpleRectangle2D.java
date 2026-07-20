@@ -348,9 +348,6 @@ public class SGSimpleRectangle2D extends SGDrawingElementRectangle2D {
    * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
-    //        if (super.setMagnification(ratio) == false) {
-    //            return false;
-    //        }
     if (mag <= 0.0) {
       throw new IllegalArgumentException("mag <= 0.0");
     }
@@ -359,21 +356,6 @@ public class SGSimpleRectangle2D extends SGDrawingElementRectangle2D {
     this.mInnerPaint.setMagnification(mag);
     return true;
   }
-
-  //    /**
-  //     * Zoom this rectangle.
-  //     *
-  //     * @param ratio
-  //     *          the magnification
-  //     * @return true if succeeded
-  //     */
-  //    public boolean zoom(final float ratio) {
-  //        if (super.zoom(ratio) == false) {
-  //            return false;
-  //        }
-  //        this.mStroke.setMagnification(ratio);
-  //        return true;
-  //    }
 
   /**
    * Returns a stroke.

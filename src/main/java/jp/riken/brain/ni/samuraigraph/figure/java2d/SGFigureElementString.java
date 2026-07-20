@@ -636,13 +636,9 @@ public class SGFigureElementString extends SGFigureElement2D
           if (cnt == 1) {
             if (el.isSelected() && !ctrl && !shift) {
               this.mEditedLabelElement = el;
-              // this.mFocusedX = (int) el.getX();
-              // this.mFocusedY = (int) el.getY();
-              // this.showEditField(el);
               this.mTempPoint = new Point((int) el.getX(), (int) el.getY());
               final int tx = this.mPressedPoint.x - this.mTempPoint.x;
               final int ty = this.mPressedPoint.y - this.mTempPoint.y;
-              // System.out.println(tx + " " + ty);
               this.showEditField(this.mEditField, el, tx, ty);
             } else {
               this.updateFocusedObjectsList(el, e);
@@ -748,7 +744,6 @@ public class SGFigureElementString extends SGFigureElement2D
         if (this.mEditField.isVisible()) {
           this.closeTextField();
         } else {
-          // this.clearFocusedObjects();
         }
       }
     }
@@ -777,7 +772,6 @@ public class SGFigureElementString extends SGFigureElement2D
 
     List<SGISelectable> list = this.getFocusedObjectsList();
     boolean contained = false;
-    // boolean changed = false;
     for (int ii = 0; ii < list.size(); ii++) {
       LabelElement el = (LabelElement) list.get(ii);
       Rectangle2D rect = el.getElementBounds();
@@ -794,19 +788,6 @@ public class SGFigureElementString extends SGFigureElement2D
 
     return true;
   }
-
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean setTemporaryPropertiesOfFocusedObjects() {
-  // List<SGISelectable> list = this.getFocusedObjectsList();
-  // for (int ii = 0; ii < list.size(); ii++) {
-  // LabelElement el = (LabelElement) list.get(ii);
-  // el.mTemporaryProperties = el.getProperties();
-  // }
-  // return true;
-  // }
 
   /**
    * Updates changed flag of focused objects.
@@ -895,35 +876,6 @@ public class SGFigureElementString extends SGFigureElement2D
 
     return true;
   }
-
-  // /**
-  // *
-  // */
-  // private boolean removeString( final LabelElement string )
-  // {
-  // List list = this.mChildList;
-  // for( int ii=list.size()-1; ii>=0; ii-- )
-  // {
-  // final LabelElement el = (LabelElement)list.get(ii);
-  // if( el.equals(string) )
-  // {
-  // list.remove(string);
-  // return true;
-  // }
-  // }
-  //
-  // return false;
-  // }
-
-  // /**
-  // *
-  // * @param el
-  // * @return
-  // */
-  // private boolean hideLabel( final LabelElement el )
-  // {
-  // return this.hideObject(el);
-  // }
 
   /**
    * @return
@@ -1018,29 +970,6 @@ public class SGFigureElementString extends SGFigureElement2D
     return true;
   }
 
-  // /**
-  // *
-  // */
-  // private SGStringElementDialog mDialog = null;
-
-  // // create the property dialog
-  // private SGStringElementDialog createPropertyDialog() {
-  // final SGStringElementDialog dg = new SGStringElementDialog(
-  // this.mDialogOwner, true);
-  //// this.mDialog = dg;
-  // return dg;
-  // }
-
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean setDialogOwner(final Frame frame) {
-  // super.setDialogOwner(frame);
-  // this.createDialog();
-  // return true;
-  // }
-
   /**
    * Create copies of the focused objects.
    *
@@ -1071,8 +1000,6 @@ public class SGFigureElementString extends SGFigureElement2D
       this.setChanged(true);
     }
 
-    // this.repaint();
-
     return true;
   }
 
@@ -1102,10 +1029,6 @@ public class SGFigureElementString extends SGFigureElement2D
         el.setMagnification(mag);
         el.setProperties(p);
 
-        // el.mXAxis =
-        // this.mAxisElement.getAxisInCube(label.mTempXAxis);
-        // el.mYAxis =
-        // this.mAxisElement.getAxisInCube(label.mTempYAxis);
         el.mXAxis = this.mAxisElement.getAxisInPlane(label.mTempXAxis);
         el.mYAxis = this.mAxisElement.getAxisInPlane(label.mTempYAxis);
 
@@ -1294,7 +1217,6 @@ public class SGFigureElementString extends SGFigureElement2D
       StringBuilder sb = new StringBuilder();
       sb.append(this.mID);
       sb.append(": ");
-      // sb.append(this.getString());
       sb.append(SGUtility.removeEscapeChar(this.getString()));
       sb.append(", AxisX=");
       sb.append(xAxis.toString());
@@ -1313,10 +1235,6 @@ public class SGFigureElementString extends SGFigureElement2D
       el.setMagnification(this.getMagnification());
       el.setProperties(this.getProperties());
       el.setLocation(this.getX(), this.getY());
-      // el.mTempXAxis = SGFigureElementString.this.mAxisElement
-      // .getLocationInCube(this.mXAxis);
-      // el.mTempYAxis = SGFigureElementString.this.mAxisElement
-      // .getLocationInCube(this.mYAxis);
       el.mTempXAxis = mAxisElement.getLocationInPlane(this.mXAxis);
       el.mTempYAxis = mAxisElement.getLocationInPlane(this.mYAxis);
       return el;
@@ -1791,7 +1709,6 @@ public class SGFigureElementString extends SGFigureElement2D
     public void actionPerformed(final ActionEvent e) {
 
       final String command = e.getActionCommand();
-      // final Object source = e.getSource();
 
       if (command.equals(MENUCMD_PROPERTY)) {
         SGFigureElementString.this.setPropertiesOfSelectedObjects(this);

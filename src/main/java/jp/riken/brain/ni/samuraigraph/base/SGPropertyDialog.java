@@ -520,6 +520,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     try {
       date = new SGDate(str);
     } catch (ParseException e) {
+      logger.debug("Exception occurred", e);
     }
     return date;
   }

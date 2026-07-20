@@ -2021,7 +2021,6 @@ public abstract class SGFigure
 
   // set the rubber band rectangle snapped to the lines
   void snapToLines(final int mouseLocation) {
-    // System.out.println("snapToLines");
     if (isSnappingToGrid()) {
       this.snapToGrid(mouseLocation);
     } else {
@@ -2064,8 +2063,6 @@ public abstract class SGFigure
     final int nx = (int) (ox2 / interval);
     final int ny = (int) (oy2 / interval);
 
-    // System.out.println(nx+" "+ny);
-
     final float rx = interval * nx;
     final float ry = interval * ny;
 
@@ -2077,8 +2074,6 @@ public abstract class SGFigure
     if (oy2 - ry > interval / 2.0f) {
       nyNew++;
     }
-
-    // System.out.println(nxNew+" "+nyNew);
 
     // new origin
     final float oxNew = px + nxNew * interval;
@@ -2146,10 +2141,6 @@ public abstract class SGFigure
 
     // set new values to the rubber band rectangle
     this.setRubberBandRect(xNew, yNew, wNew, hNew);
-
-    // System.out.println("new:"+this.getRubberBandRect());
-    // System.out.println();
-
   }
 
   /**
@@ -2900,23 +2891,18 @@ public abstract class SGFigure
       if (!flag) {
         return false;
       }
-      // System.out.println(ii+" "+tbArray[ii]+" "+lrArray[ii]);
     }
-    // System.out.println();
 
     float topMax = 0.0f;
     float bottomMax = 0.0f;
     float leftMax = 0.0f;
     float rightMax = 0.0f;
     for (int ii = 0; ii < array.length; ii++) {
-      // System.out.println("ii="+ii);
 
       final float top = tbArray[ii].x;
       final float bottom = tbArray[ii].y;
       final float left = lrArray[ii].x;
       final float right = lrArray[ii].y;
-
-      // System.out.println(top+" "+bottom+" "+left+" "+right);
 
       if (top > topMax) {
         topMax = top;
@@ -2931,7 +2917,6 @@ public abstract class SGFigure
         rightMax = right;
       }
     }
-    // System.out.println();
 
     final float mag = this.mMagnification;
     topAndBottom.x = topMax + mag * MARGIN_TOP;

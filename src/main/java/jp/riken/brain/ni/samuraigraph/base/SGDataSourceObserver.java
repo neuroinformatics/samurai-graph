@@ -64,7 +64,6 @@ public class SGDataSourceObserver {
     } else {
       dataSet.add(data);
     }
-    //    	System.out.println("- " + this.mDataMap.size() + " " + this.getDataNum());
   }
 
   /**
@@ -85,7 +84,6 @@ public class SGDataSourceObserver {
       if (dataSet.size() == 0) {
         this.mDataMap.remove(source);
         source.dispose();
-        //            	System.out.println("- " + this.mDataMap.size() + " " + this.getDataNum());
       }
     }
   }

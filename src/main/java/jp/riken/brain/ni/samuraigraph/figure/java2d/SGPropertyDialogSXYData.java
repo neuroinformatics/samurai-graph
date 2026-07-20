@@ -2079,7 +2079,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.mSymbolBodyTransparencySpinner.addChangeListener(this);
 
     // create a dialog to edit line stroke
-    // this.mStrokeDialog = new SGStrokeDialog(this, true);
 
     // setup gradation paint dialog.
     this.mGradationPaintDialog = new SGGradationPaintDialog(this, "Gradation Paint Dialog", false);
@@ -2581,7 +2580,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
   /** */
   public boolean setBarWidth(final Object obj) {
-    // return this.setValue( this.mBarWidthSpinner, obj );
     return this.setValue(this.mBarWidthTextField, obj);
   }
 
@@ -3003,9 +3001,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
     this.mTabbedPane.setEnabledAt(index, flag);
 
-    // // set enabled all components on the panel
-    // this.setComponentsOnPanelEnabled(com,flag);
-
     return true;
   }
 
@@ -3023,48 +3018,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     }
     return this.mTabbedPane.isEnabledAt(index);
   }
-
-  // /**
-  // *
-  // * @param p
-  // * @return
-  // */
-  // protected boolean setComponentsOnPanelEnabled( final Component com, final
-  // boolean flag )
-  // {
-  // if( com==null )
-  // {
-  // return false;
-  // }
-  //
-  // if( com.equals( this.mLinePanel ) )
-  // {
-  // this.mLineVisibleCheckBox.setEnabled(flag);
-  // this.setLineComponentsEnabled(flag&&this.mLineVisibleCheckBox.isSelected());
-  // }
-  // else if( com.equals( this.mSymbolPanel ) )
-  // {
-  // this.mSymbolVisibleCheckBox.setEnabled(flag);
-  // this.setSymbolComponentsEnabled(flag&&this.mSymbolVisibleCheckBox.isSelected());
-  // }
-  // else if( com.equals( this.mBarPanel ) )
-  // {
-  // this.mBarVisibleCheckBox.setEnabled(flag);
-  // this.setBarComponentsEnabled(flag&&this.mBarVisibleCheckBox.isSelected());
-  // }
-  // else if( com.equals( this.mErrorBarPanel ) )
-  // {
-  // this.mErrorBarVisibleCheckBox.setEnabled(flag);
-  // this.setErrorBarComponentsEnabled(flag&&this.mErrorBarVisibleCheckBox.isSelected());
-  // }
-  // else if( com.equals( this.mTickLabelPanel ) )
-  // {
-  // this.mTickLabelVisibleCheckBox.setEnabled(flag);
-  // this.setTickLabelComponentsEnabled(flag&&this.mTickLabelVisibleCheckBox.isSelected());
-  // }
-  //
-  // return true;
-  // }
 
   /** */
   public void actionPerformed(ActionEvent e) {
@@ -3104,7 +3057,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       }
     } else if (source instanceof JButton) {
       if (source.equals(this.mLineEditButton)) {
-        // this.showLineEditDialog();
       } else if (source.equals(this.mDataColumnSelectionButton)) {
         this.showDataColumnSelectionDialog();
       } else if (source.equals(this.mLineStyleCustomizeButton)) {
@@ -3606,42 +3558,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     return false;
   }
 
-  //    protected void setDataToDialog(SGIDataPropertyDialogObserver obs) {
-  //    	super.setDataToDialog(obs);
-  //
-  //        SGData data = obs.getData();
-  //        if (SGDataUtility.isNetCDFData(data)) {
-  //            SGNetCDFDataSetupDialog dg = (SGNetCDFDataSetupDialog)
-  // this.mDataColumnSelectionDialog;
-  //            SGNetCDFData nData = (SGNetCDFData) data;
-  //
-  //            // show or hide the panel for multiple dimension
-  //            if (nData instanceof SGSXYMultipleDimensionNetCDFData) {
-  //            	SGISXYDataDialogObserver oxy = (SGISXYDataDialogObserver) obs;
-  //            	int origin;
-  //            	if (this.mMultipleDimensionOrigin != null) {
-  //            		origin = this.mMultipleDimensionOrigin.intValue();
-  //            	} else {
-  //            		origin = oxy.getMultipleDimensionOrigin();
-  //            	}
-  //            	int step;
-  //            	if (this.mMultipleDimensionStep != null) {
-  //            		step = this.mMultipleDimensionStep.intValue();
-  //            	} else {
-  //            		step = oxy.getMultipleDimensionStep();
-  //            	}
-  //
-  //            	// set to the dialog
-  //            	dg.setMultipleDimensionOrigin(origin);
-  //            	dg.setMultipleDimensionStep(step);
-  //                dg.setMultipleDimensionPanelVisible(true);
-  //
-  //            } else {
-  //                dg.setMultipleDimensionPanelVisible(false);
-  //            }
-  //        }
-  //    }
-
   /*
    * // a dialog to edit line stroke private SGStrokeDialog mStrokeDialog =
    * null;
@@ -3907,8 +3823,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.mLineWidthLabel.setEnabled(b);
     this.mLineWidthSpinner.setEnabled(b);
     this.mLineConnectCheckBox.setEnabled(b);
-
-    //        this.setLinePlacementComponentsEnabled(b);
   }
 
   //    private void setLinePlacementComponentsEnabled(Boolean flag) {
@@ -3954,8 +3868,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.mSymbolBodyTransparencySpinner.setEnabled(b);
     this.mSymbolLineLabel.setEnabled(b);
     this.mSymbolLineSeparator.setEnabled(b);
-
-    //        this.setLinePlacementComponentsEnabled(b);
   }
 
   private void setSymbolLineComponentsEnabled(Boolean flag) {
@@ -4084,9 +3996,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
     // select axis panel
     selectAxisPanel(this, this.mAxisPanel, list);
-
-    //        // set properties to the date components
-    //        setDateComponentProperties(this, this.mAxisPanel, list);
 
     // data name
     String name = this.getDataNameFromObservers();

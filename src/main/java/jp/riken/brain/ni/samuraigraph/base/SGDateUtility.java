@@ -7,8 +7,12 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.TimeZone;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class SGDateUtility {
+
+  private static final Logger logger = LogManager.getLogger(SGDateUtility.class);
 
   // The factor for translation of date and its value.
   private static final long DATE_FACTOR = 1000 * 3600 * 24;
@@ -127,6 +131,7 @@ public class SGDateUtility {
       try {
         date = new SGDate(valueStr);
       } catch (ParseException e) {
+        logger.debug("Exception occurred", e);
       }
       String str;
       if (date != null) {
@@ -206,6 +211,7 @@ public class SGDateUtility {
       DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
       ret = dt.format(fmt);
     } catch (Exception e) {
+      logger.debug("Exception occurred", e);
     }
     return ret;
   }

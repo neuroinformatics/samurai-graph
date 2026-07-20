@@ -691,42 +691,13 @@ public class SGLegendDialog extends SGPropertyDialog
   /** */
   private SGComponentGroup mBackgroundComponentGroup = new SGComponentGroup();
 
-  // /**
-  // *
-  // *
-  // */
-  // public void dispose()
-  // {
-  // if( this.mAxisPanel!=null )
-  // {
-  // this.mAxisPanel.dispose();
-  // this.mAxisPanel = null;
-  // }
-  //
-  // this.mVisibleComponentGroup.dispose();
-  // this.mVisibleComponentGroup = null;
-  //
-  // this.mFrameVisibleComponentGroup.dispose();
-  // this.mFrameVisibleComponentGroup = null;
-  //
-  // this.mBackgroundComponentGroup.dispose();
-  // this.mBackgroundComponentGroup = null;
-  //
-  // super.dispose();
-  // }
-
-  /** */
   @Override
   public void actionPerformed(final ActionEvent e) {
     super.actionPerformed(e);
     Object source = e.getSource();
     if (source.equals(this.mLegendVisibleCheckBox)) {
-      // this.mVisibleComponentGroup.setEnabled(
-      // this.mLegendVisibleCheckBox.isSelected() );
       this.setLegendVisible(this.mLegendVisibleCheckBox.getSelected());
     } else if (source.equals(this.mFrameVisibleCheckBox)) {
-      // this.mFrameVisibleComponentGroup.setEnabled(
-      // this.mFrameVisibleCheckBox.isSelected() );
       this.setFrameComponentsEnabled(this.mFrameVisibleCheckBox.getSelected());
     } else if (source.equals(this.mXDateButton)) {
       this.onDateButtonPressed(this.mXValueTextField);
@@ -757,84 +728,16 @@ public class SGLegendDialog extends SGPropertyDialog
       b = flag.booleanValue();
     }
 
-    // // Location
-    // this.mLocationLabel.setEnabled(b);
-    // this.mXValueLabel.setEnabled(b);
-    // this.mXValueTextField.setEnabled(b);
-    // this.mYValueLabel.setEnabled(b);
-    // this.mYValueTextField.setEnabled(b);
-    //
-    // // String
-    // this.mStringLabel.setEnabled(b);
-    // this.setStringComponentsEnabled(b);
-    //
-    // // Frame
-    // this.mFrameLabel.setEnabled(b);
-    // this.mFrameVisibleCheckBox.setEnabled(b);
-    // final Boolean frameVisible =
-    // this.mFrameVisibleCheckBox.getSelected();
-    // this.setFrameVisible( frameVisible );
-    //
-    //
-    // // Background
-    // this.mBackgroundLabel.setEnabled(b);
-    // this.mBackgroundTransparentCheckBox.setEnabled(b);
-    // final Boolean transparent =
-    // this.mBackgroundTransparentCheckBox.getSelected();
-    // this.setBackgroundComponentsEnabled( transparent );
-
     this.mVisibleComponentGroup.setEnabled(b);
 
     return true;
   }
-
-  // /**
-  // *
-  // * @param b
-  // * @return
-  // */
-  // private boolean setStringComponentsEnabled( final boolean b )
-  // {
-  // this.mFontFamilyLabel.setEnabled(b);
-  // this.mFontStyleLabel.setEnabled(b);
-  // this.mFontNameComboBox.setEnabled(b);
-  // this.mFontStyleComboBox.setEnabled(b);
-  // this.mFontSizeLabel.setEnabled(b);
-  // this.mFontSizeSpinner.setEnabled(b);
-  // this.mStringColorLabel.setEnabled(b);
-  // this.mStringColorButton.setEnabled(b);
-  //
-  // return true;
-  // }
 
   /**
    * @param b
    * @return
    */
   private boolean setFrameComponentsEnabled(final Boolean frameVisible) {
-    // boolean b;
-    // if( frameVisible==null )
-    // {
-    // b = false;
-    // }
-    // else
-    // {
-    // final boolean fVisible = frameVisible.booleanValue();
-    //
-    // Boolean legendVisible = this.getLegendVisible();
-    // boolean lVisible;
-    // if( legendVisible==null )
-    // {
-    // lVisible = false;
-    // }
-    // else
-    // {
-    // lVisible = legendVisible.booleanValue();
-    // }
-    //
-    // b = fVisible && lVisible;
-    // }
-
     boolean b = true;
     if (frameVisible != null) {
       b = frameVisible.booleanValue();
@@ -1284,8 +1187,6 @@ public class SGLegendDialog extends SGPropertyDialog
 
     //
     this.setSymbolSpan(dataWidth);
-
-    // this.setColorButtonBorder(true);
 
     return true;
   }

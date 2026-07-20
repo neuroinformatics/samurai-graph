@@ -760,7 +760,6 @@ public class SGWindowDialog extends SGPropertyDialog
     }
 
     this.mImageSizeRatio = width / height;
-    // System.out.println(this.mImageSizeRatio);
     return true;
   }
 
@@ -791,8 +790,6 @@ public class SGWindowDialog extends SGPropertyDialog
       this.setImageWidth(Double.valueOf(this.mImageWidth));
     }
 
-    // System.out.println(ratio+" "+this.mImageWidth+" "+this.mImageHeight+"
-    // "+this.mImageWidth/this.mImageHeight);
     return true;
   }
 

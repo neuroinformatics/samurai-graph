@@ -75,6 +75,8 @@ import jp.riken.brain.ni.samuraigraph.data.SGSDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGSamplingDataColumn;
 import jp.riken.brain.ni.samuraigraph.data.SGTextDataColumn;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGStringBraceModifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.DOMImplementation;
 import ucar.nc2.NetcdfFile;
 import ucar.nc2.NetcdfFiles;
@@ -86,6 +88,8 @@ public class SGApplicationUtility
         SGIDataColumnTypeConstants,
         SGIImageConstants,
         SGIConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGApplicationUtility.class);
 
   /**
    * Delete all files recursively.
@@ -1606,6 +1610,7 @@ public class SGApplicationUtility
             ncFile.close();
           }
         } catch (IOException e) {
+          logger.debug("Exception occurred", e);
         }
       }
     }

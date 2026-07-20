@@ -58,6 +58,8 @@ import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyleColorMapManager;
 import jp.riken.brain.ni.samuraigraph.figure.SGUtilityForFigureElement;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetMultipleSXY;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /** The property manager. */
 class SGCommandManager
@@ -68,6 +70,8 @@ class SGCommandManager
         SGIAxisBreakConstants,
         SGITimingLineConstants,
         SGIShapeConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGCommandManager.class);
 
   private SGMainFunctions mMain = null;
 
@@ -288,7 +292,9 @@ class SGCommandManager
             }
           });
     } catch (InterruptedException e1) {
+      logger.debug("Exception occurred", e1);
     } catch (InvocationTargetException e1) {
+      logger.debug("Exception occurred", e1);
     }
     if (mReturnedValue != STATUS_NOT_FOUND) {
       return mReturnedValue;
@@ -303,7 +309,9 @@ class SGCommandManager
             }
           });
     } catch (InterruptedException e1) {
+      logger.debug("Exception occurred", e1);
     } catch (InvocationTargetException e1) {
+      logger.debug("Exception occurred", e1);
     }
     if (mReturnedValue != STATUS_NOT_FOUND) {
       return mReturnedValue;
@@ -318,7 +326,9 @@ class SGCommandManager
             }
           });
     } catch (InterruptedException e1) {
+      logger.debug("Exception occurred", e1);
     } catch (InvocationTargetException e1) {
+      logger.debug("Exception occurred", e1);
     }
     if (mReturnedValue != STATUS_NOT_FOUND) {
       return mReturnedValue;
@@ -333,7 +343,9 @@ class SGCommandManager
             }
           });
     } catch (InterruptedException e1) {
+      logger.debug("Exception occurred", e1);
     } catch (InvocationTargetException e1) {
+      logger.debug("Exception occurred", e1);
     }
     if (mReturnedValue != STATUS_NOT_FOUND) {
       return mReturnedValue;
@@ -348,7 +360,9 @@ class SGCommandManager
             }
           });
     } catch (InterruptedException e1) {
+      logger.debug("Exception occurred", e1);
     } catch (InvocationTargetException e1) {
+      logger.debug("Exception occurred", e1);
     }
     if (mReturnedValue != STATUS_NOT_FOUND) {
       return mReturnedValue;
@@ -363,7 +377,9 @@ class SGCommandManager
             }
           });
     } catch (InterruptedException e) {
+      logger.debug("Exception occurred", e);
     } catch (InvocationTargetException e) {
+      logger.debug("Exception occurred", e);
     }
     if (mReturnedValue != STATUS_NOT_FOUND) {
       return mReturnedValue;
@@ -406,6 +422,7 @@ class SGCommandManager
     //                url = file.toURI().toURL();
     //            } catch (MalformedURLException ex) {
     //                return STATUS_FAILED;
+    logger.debug("Exception occurred", ex);
     //            }
     //
     //            // create a Document object

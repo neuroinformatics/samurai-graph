@@ -367,50 +367,6 @@ public class SGVXYSDArrayData extends SGSDArrayData
     return true;
   }
 
-  //    /**
-  //     * Read properties from a given Element and set to this data.
-  //     * @param el
-  //     *          an Element
-  //     * @return
-  //     *          true if succeeded
-  //     */
-  //    public boolean readProperty(Element el) {
-  //        Integer index = null;
-  //        if ((index = this.readIndex(el, KEY_X_COORDINATE_COLUMN_INDEX)) != null) {
-  //            if (this.checkColumnIndexRange(index) == false) {
-  //                return false;
-  //            }
-  //            this.mXCoordinateIndex = index;
-  //        } else {
-  //            return false;
-  //        }
-  //        if ((index = this.readIndex(el, KEY_Y_COORDINATE_COLUMN_INDEX)) != null) {
-  //            if (this.checkColumnIndexRange(index) == false) {
-  //                return false;
-  //            }
-  //            this.mYCoordinateIndex = index;
-  //        } else {
-  //            return false;
-  //        }
-  //        if ((index = this.readIndex(el, KEY_FIRST_COMPONENT_COLUMN_INDEX)) != null) {
-  //            if (this.checkColumnIndexRange(index) == false) {
-  //                return false;
-  //            }
-  //            this.mComponentIndex1 = index;
-  //        } else {
-  //            return false;
-  //        }
-  //        if ((index = this.readIndex(el, KEY_SECOND_COMPONENT_COLUMN_INDEX)) != null) {
-  //            if (this.checkColumnIndexRange(index) == false) {
-  //                return false;
-  //            }
-  //            this.mComponentIndex2 = index;
-  //        } else {
-  //            return false;
-  //        }
-  //        return true;
-  //    }
-
   public Map<String, Object> getInfoMap() {
     Map<String, Object> map = super.getInfoMap();
     map.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.valueOf(this.isPolar()));
@@ -589,78 +545,6 @@ public class SGVXYSDArrayData extends SGSDArrayData
 
   //    /**
   //     * Returns whether all given data columns are valid.
-  //     *
-  //     * @param columns
-  //     *           data columns
-  //     * @return true if all given data columns are valid
-  //     */
-  //    public boolean isValidColumn(String[] columns) {
-  //
-  //        Integer xOld = this.mXCoordinateIndex;
-  //        Integer yOld = this.mYCoordinateIndex;
-  //        Integer fOld = this.mComponentIndex1;
-  //        Integer sOld = this.mComponentIndex2;
-  //
-  //        Integer xIndex = null;
-  //        Integer yIndex = null;
-  //        Integer fIndex = null;
-  //        Integer sIndex = null;
-  //
-  //        for (int ii = 0; ii < columns.length; ii++) {
-  //            if (SGUtilityText.isEqualString(X_COORDINATE, columns[ii])) {
-  //                xIndex = Integer.valueOf(ii);
-  //            } else if (SGUtilityText.isEqualString(Y_COORDINATE, columns[ii])) {
-  //                yIndex = Integer.valueOf(ii);
-  //            } else if (SGUtilityText.isEqualString(MAGNITUDE, columns[ii])
-  //            		|| SGUtilityText.isEqualString(X_COMPONENT, columns[ii])) {
-  //                fIndex = Integer.valueOf(ii);
-  //            } else if (SGUtilityText.isEqualString(ANGLE, columns[ii])
-  //            		|| SGUtilityText.isEqualString(Y_COMPONENT, columns[ii])) {
-  //                sIndex = Integer.valueOf(ii);
-  //            } else if ("".equals(columns[ii])) {
-  //                continue;
-  //            } else {
-  //            	return false;
-  //            }
-  //        }
-  //
-  //        // check the necessary columns
-  //        if (xIndex == null || yIndex == null || fIndex == null || sIndex == null) {
-  //        	return false;
-  //        }
-  //
-  //        // set to attributes
-  //        this.mXCoordinateIndex = xIndex;
-  //        this.mYCoordinateIndex = yIndex;
-  //        this.mComponentIndex1 = fIndex;
-  //        this.mComponentIndex2 = sIndex;
-  //
-  ////        try {
-  ////            // check magnitude
-  ////            double[] magArray = this.getMagnitudeArray();
-  ////            for (int ii = 0; ii < magArray.length; ii++) {
-  ////            	if (magArray[ii] < 0.0) {
-  ////            		return false;
-  ////            	}
-  ////            }
-  ////
-  ////        } finally {
-  ////            // recover
-  ////    		this.mXCoordinateIndex = xOld;
-  ////    		this.mYCoordinateIndex = yOld;
-  ////    		this.mComponentIndex1 = fOld;
-  ////    		this.mComponentIndex2 = sOld;
-  ////        }
-  //
-  //        // recover
-  //		this.mXCoordinateIndex = xOld;
-  //		this.mYCoordinateIndex = yOld;
-  //		this.mComponentIndex1 = fOld;
-  //		this.mComponentIndex2 = sOld;
-  //
-  //    	return true;
-  //    }
-
   /** A class of properties of vector xy-type data. */
   public static class VXYSDArrayDataProperties extends SDArrayDataProperties {
 

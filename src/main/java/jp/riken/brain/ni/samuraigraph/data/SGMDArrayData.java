@@ -1072,6 +1072,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
         try {
           ncWrite.close();
         } catch (IOException e) {
+          logger.debug("Exception occurred", e);
         }
       }
     }
@@ -1136,6 +1137,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
         try {
           ncWrite.close();
         } catch (IOException e) {
+          logger.debug("Exception occurred", e);
         }
       }
     }

@@ -378,8 +378,6 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
 
   /** */
   public boolean readProperty(final Element el) {
-    // final float ratio = SGIConstants.CM_POINT_RATIO;
-
     String str = null;
     Number num = null;
     Color cl = null;
@@ -415,14 +413,6 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
     // inner paint
     str = el.getAttribute(KEY_INNER_COLOR);
     if (str.length() != 0) {
-      //            List<Color> list = SGUtilityText.getColorList(str);
-      //            if (list == null) {
-      //                return false;
-      //            }
-      //            if (list.size() < 1) {
-      //                return false;
-      //            }
-      //            cl = (Color) list.get(0);
       cl = SGUtilityText.parseColorIncludingList(str);
       if (cl == null) {
         return false;

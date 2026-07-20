@@ -20,6 +20,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.DataType;
@@ -31,6 +33,8 @@ import ucar.nc2.Variable;
 /** An abstract data class which has arrays of numbers and strings. */
 public abstract class SGSDArrayData extends SGArrayData
     implements SGITextDataConstants, SGIDataColumnTypeConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGSDArrayData.class);
 
   /** The stride of an array. */
   protected SGIntegerSeriesSet mStride = null;
@@ -752,6 +756,7 @@ public abstract class SGSDArrayData extends SGArrayData
         try {
           ncWrite.close();
         } catch (IOException e) {
+          logger.debug("Exception occurred", e);
         }
       }
     }

@@ -56,6 +56,8 @@ import jp.riken.brain.ni.samuraigraph.data.SGSXYZSDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYSDArrayData;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFile;
 
@@ -66,6 +68,8 @@ public class SGDataCreator
         SGINetCDFConstants,
         SGIMDArrayConstants,
         SGIApplicationConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGDataCreator.class);
 
   /** A data source observer. */
   private SGDataSourceObserver mDataSourceObserver = new SGDataSourceObserver();
@@ -2868,6 +2872,7 @@ public class SGDataCreator
       NetcdfFile ncFile = SGApplicationUtility.openNetCDF(path);
       ret = new SGNetCDFFile(ncFile);
     } catch (IOException e) {
+      logger.debug("Exception occurred", e);
     }
     return ret;
   }
@@ -2878,6 +2883,7 @@ public class SGDataCreator
       IHDF5Reader reader = SGApplicationUtility.openHDF5(path);
       ret = new SGHDF5File(reader);
     } catch (HDF5Exception e) {
+      logger.debug("Exception occurred", e);
     }
     return ret;
   }
@@ -2888,6 +2894,7 @@ public class SGDataCreator
       MatFileReader reader = SGApplicationUtility.openMAT(path);
       ret = new SGMATLABFile(path, reader);
     } catch (IOException e) {
+      logger.debug("Exception occurred", e);
     }
     return ret;
   }

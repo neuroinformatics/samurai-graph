@@ -154,7 +154,6 @@ public class SGDrawingServer implements SGIApplicationConstants, SGIApplicationT
       try {
         SGApplicationAdapter.registerApplication();
       } catch (Exception e) {
-        System.err.println("Failed to register macOS application handlers (" + e + ")");
         logger.warn("Error in drawing server", e);
       }
     }

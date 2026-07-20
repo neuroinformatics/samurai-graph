@@ -352,8 +352,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
 
   /** */
   public static String getSymbolTypeName(final int type) {
-    // System.out.println("type="+type);
-
     String typeName = null;
     switch (type) {
       case SGIArrowConstants.SYMBOL_TYPE_CIRCLE:

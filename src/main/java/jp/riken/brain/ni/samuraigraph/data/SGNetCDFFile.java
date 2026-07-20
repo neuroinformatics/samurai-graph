@@ -7,6 +7,8 @@ import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGAttribute;
 import jp.riken.brain.ni.samuraigraph.base.SGIStringModifier;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayChar;
 import ucar.ma2.DataType;
@@ -18,6 +20,8 @@ import ucar.nc2.Variable;
 
 /** The wrapper class for netCDF file. */
 public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGNetCDFFile.class);
 
   /** The netCDF file. */
   private NetcdfFile mNetcdfFile = null;
@@ -325,6 +329,7 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
       try {
         this.mNetcdfFile.close();
       } catch (IOException ioe) {
+        logger.debug("Exception occurred", ioe);
       }
       this.mNetcdfFile = null;
     }

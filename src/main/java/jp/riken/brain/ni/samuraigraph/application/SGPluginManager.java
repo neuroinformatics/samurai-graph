@@ -22,8 +22,12 @@ import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataFileConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class SGPluginManager implements SGIDisposable {
+
+  private static final Logger logger = LogManager.getLogger(SGPluginManager.class);
 
   private SGMainFunctions mMain = null;
 
@@ -203,6 +207,7 @@ public class SGPluginManager implements SGIDisposable {
           pluginMap.put(filter, plugin);
         }
       } catch (Exception e) {
+        logger.debug("Exception occurred", e);
       }
     }
 

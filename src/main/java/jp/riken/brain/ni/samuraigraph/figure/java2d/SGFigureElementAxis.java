@@ -1729,7 +1729,6 @@ public class SGFigureElementAxis extends SGFigureElement2D
       final SGDrawingElementString2D str = (SGDrawingElementString2D) numberList.get(ii);
       final Rectangle2D rect = str.getElementBounds();
       final double width = rect.getWidth();
-      // System.out.println(ii+" "+width);
       if (width > maxLength) {
         maxLength = width;
       }

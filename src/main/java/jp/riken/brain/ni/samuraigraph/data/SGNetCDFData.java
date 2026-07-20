@@ -413,7 +413,6 @@ public abstract class SGNetCDFData extends SGArrayData
       }
       final double value = SGDataUtility.getCoordinateVariableValue(doubleArray, index);
       return value;
-      //          return array.getDouble(index);
     }
   }
 
@@ -601,40 +600,8 @@ public abstract class SGNetCDFData extends SGArrayData
    */
   protected String[] readNames(Element el, String key) {
     String str = el.getAttribute(key);
-    //        String[] array = null;
-    //        if (str.length() != 0) {
-    //            final int start = str.indexOf('{');
-    //            if (start == -1) {
-    //                return null;
-    //            }
-    //            final int end = str.lastIndexOf('}');
-    //            if (end == -1) {
-    //                return null;
-    //            }
-    //            if (start > end) {
-    //                return null;
-    //            }
-    //            String sub = str.substring(start + 1, end);
-    //            array = sub.split(",");
-    //            for (int ii = 0; ii < array.length; ii++) {
-    //                array[ii] = array[ii].trim();
-    //            }
-    //        }
-    //        return array;
     return SGUtilityText.parseStrings(str);
   }
-
-  //    /**
-  //     * Returns an array of values of the coordinate variable.
-  //     *
-  //     * @param stride
-  //     *           the stride of an array
-  //     * @return an array of values of the coordinate variable
-  //     */
-  //    protected double[] getCoordinateValueArray(SGNetCDFVariable var, SGIntegerSeriesSet stride)
-  // {
-  //    	return this.getCoordinateValueArray(var, stride, false);
-  //    }
 
   protected double[] getCoordinateValueArray(
       SGNetCDFVariable var,
@@ -688,20 +655,6 @@ public abstract class SGNetCDFData extends SGArrayData
         removeInvalidValues ? this.removeFillValue(var, valueArray) : valueArray;
     return dArray;
   }
-
-  //    /**
-  //     * Returns an array of values of given variable.
-  //     *
-  //     * @param var
-  //     *           a variable
-  //     * @param cVars
-  //     *           an array of coordinate variables
-  //     * @return an array of values of given variable
-  //     */
-  //    protected double[] getValueArray(SGNetCDFVariable var, SGNetCDFVariable[] cVars,
-  //    		final boolean removeInvalidValues) {
-  //    	return this.getValueArray(var, cVars, this.mOriginMap, false, removeInvalidValues);
-  //    }
 
   protected double[] getValueArray(
       SGNetCDFVariable var,

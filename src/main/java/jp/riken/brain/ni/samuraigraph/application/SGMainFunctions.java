@@ -469,7 +469,9 @@ class SGMainFunctions
                 }
               });
         } catch (InterruptedException e) {
+          logger.debug("Exception occurred", e);
         } catch (InvocationTargetException e) {
+          logger.debug("Exception occurred", e);
         }
 
       } else if (FILE_TYPE.DATASET.equals(type)) {
@@ -491,7 +493,9 @@ class SGMainFunctions
                   }
                 });
           } catch (InterruptedException e) {
+            logger.debug("Exception occurred", e);
           } catch (InvocationTargetException e) {
+            logger.debug("Exception occurred", e);
           }
         } else {
           // file not found
@@ -527,7 +531,9 @@ class SGMainFunctions
                 }
               });
         } catch (InterruptedException e) {
+          logger.debug("Exception occurred", e);
         } catch (InvocationTargetException e) {
+          logger.debug("Exception occurred", e);
         }
 
       } else if (this.mStartupFileType == FILE_TYPE.SCRIPT) {
@@ -2295,6 +2301,7 @@ class SGMainFunctions
           ncFile.close();
         }
       } catch (IOException e1) {
+        logger.debug("Exception occurred", e1);
       }
     }
 
@@ -4470,6 +4477,7 @@ class SGMainFunctions
       try {
         ncFile.close();
       } catch (IOException e) {
+        logger.debug("Exception occurred", e);
       }
     }
 
@@ -4577,6 +4585,7 @@ class SGMainFunctions
                           mStdinReader = new BufferedReader(new InputStreamReader(System.in));
                           startReadingInput();
                         } catch (IOException e) {
+                          logger.debug("Exception occurred", e);
                         }
                       }
                     }
@@ -5008,6 +5017,7 @@ class SGMainFunctions
           mStdoutWriter.write(PROMPT);
           mStdoutWriter.flush();
         } catch (IOException ex) {
+          logger.debug("Exception occurred", ex);
         }
       } catch (FileNotFoundException e) {
         String errmsg = getFileNotFoundString(sf);
@@ -5017,6 +5027,7 @@ class SGMainFunctions
         } catch (IOException e1) {
         }
       } catch (IOException e) {
+        logger.debug("Exception occurred", e);
       } finally {
         if (reader != null) {
           reader.close();
@@ -5827,6 +5838,7 @@ class SGMainFunctions
     try {
       tempFile = File.createTempFile("SamuraiGraphTemporaryFile", null);
     } catch (IOException e) {
+      logger.debug("Exception occurred", e);
     }
     File tempDir = null;
     if (tempFile != null) {
@@ -6000,11 +6012,13 @@ class SGMainFunctions
         Attribute attr = new Attribute(attrName, savedString);
         ncWrite.updateAttribute(null, attr);
       } catch (IOException ioe) {
+        logger.debug("Exception occurred", ioe);
       } finally {
         if (ncWrite != null) {
           try {
             ncWrite.close();
           } catch (IOException e) {
+            logger.debug("Exception occurred", e);
           }
         }
       }

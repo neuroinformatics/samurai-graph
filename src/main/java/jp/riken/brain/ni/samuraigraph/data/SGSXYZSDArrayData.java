@@ -23,6 +23,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.DataType;
@@ -35,6 +37,8 @@ import ucar.nc2.Variable;
 /** Scalar type XYZ data. This object has of x, y and z values. */
 public class SGSXYZSDArrayData extends SGSDArrayData
     implements SGISXYZTypeData, SGIDataPropertyKeyConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGSXYZSDArrayData.class);
 
   /** The column index for x-values. */
   protected Integer mXIndex = null;
@@ -985,6 +989,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
         try {
           ncfile.close();
         } catch (IOException e) {
+          logger.debug("Exception occurred", e);
         }
       }
     }

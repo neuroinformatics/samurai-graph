@@ -5,9 +5,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.SwingUtilities;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /** A class of the animation. */
 public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnimationConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGAnimationThread.class);
 
   /** An object which has data sources of the animation. */
   protected SGIAnimation[] mAnimations = null;
@@ -182,7 +186,9 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
               }
             });
       } catch (InterruptedException e1) {
+        logger.debug("Exception occurred", e1);
       } catch (InvocationTargetException e1) {
+        logger.debug("Exception occurred", e1);
       }
 
       // notify to the observers
@@ -224,6 +230,7 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
         Thread.sleep(info.remainedTime);
 
       } catch (InterruptedException e) {
+        logger.debug("Exception occurred", e);
       }
     }
   }

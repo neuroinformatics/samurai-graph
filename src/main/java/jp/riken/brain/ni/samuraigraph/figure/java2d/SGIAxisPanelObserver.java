@@ -198,19 +198,6 @@ public interface SGIAxisPanelObserver {
    */
   public boolean setExponentValue(final int value);
 
-  // /**
-  // *
-  // * @param minValue
-  // * @param maxValue
-  // * @param scaleType
-  // * @param baseValue
-  // * @param stepValue
-  // * @return
-  // */
-  // public boolean hasValidAxisValues(
-  // final Number minValue, final Number maxValue, final Integer scaleType,
-  // final Number baseValue, final Number stepValue );
-
   /**
    * @param minValue
    * @param maxValue

@@ -129,32 +129,6 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
     return true;
   }
 
-  //	public boolean setWidth(final float value, final String unit) {
-  //		final Float sNew = SGUtility.calcPropertyValue(value, unit,
-  //				SCALE_SIZE_UNIT, SCALE_SIZE_MIN,
-  //				SCALE_SIZE_MAX, SCALE_SIZE_MINIMAL_ORDER);
-  //		if (sNew == null) {
-  //			return false;
-  //		}
-  //		if (this.setWidth(sNew) == false) {
-  //			return false;
-  //		}
-  //		return true;
-  //	}
-
-  //	public boolean setHeight(final float value, final String unit) {
-  //		final Float sNew = SGUtility.calcPropertyValue(value, unit,
-  //				SCALE_SIZE_UNIT, SCALE_SIZE_MIN,
-  //				SCALE_SIZE_MAX, SCALE_SIZE_MINIMAL_ORDER);
-  //		if (sNew == null) {
-  //			return false;
-  //		}
-  //		if (this.setHeight(sNew) == false) {
-  //			return false;
-  //		}
-  //		return true;
-  //	}
-
   public float getWidth() {
     return this.mWidth;
   }

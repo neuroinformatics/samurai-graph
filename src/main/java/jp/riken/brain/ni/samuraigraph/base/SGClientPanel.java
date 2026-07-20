@@ -1112,7 +1112,6 @@ public class SGClientPanel extends JLayeredPane
      * @return
      */
     private boolean setScrollBarValue(final Rectangle2D cRect, final Rectangle2D vpRect) {
-      // System.out.println("<< setScrollBarValue >>");
 
       if (this.mHScrollBar.isVisible()) {
         this.setScrollBarValue(true, cRect, vpRect);
@@ -2449,7 +2448,6 @@ public class SGClientPanel extends JLayeredPane
 
         int cnt = diff;
         while (true) {
-          // System.out.print(cnt+" ");
           final float location = factor * cnt;
           if (location > endLocation) {
             break;
@@ -2458,7 +2456,6 @@ public class SGClientPanel extends JLayeredPane
           numberList.add(Integer.valueOf(cnt));
           cnt += offset;
         }
-        // System.out.println();
 
         // draw
         for (int ii = 0; ii < numberList.size(); ii++) {
@@ -2498,7 +2495,6 @@ public class SGClientPanel extends JLayeredPane
 
         int cnt = diff;
         while (true) {
-          // System.out.print(cnt+" ");
           final float location = factor * cnt;
           if (location > endLocation) {
             break;
@@ -2507,7 +2503,6 @@ public class SGClientPanel extends JLayeredPane
           numberList.add(Integer.valueOf(cnt));
           cnt += offset;
         }
-        // System.out.println();
 
         // draw
         for (int ii = 0; ii < numberList.size(); ii++) {

@@ -951,7 +951,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
     for (int ii = 0; ii < num; ii++) {
       legendArray[ii] = (ElementGroupSetInLegend) visibleGroupSetList.get(ii);
     }
-    // System.out.println(visibleGroupSetList);
 
     // create string elements
     for (int ii = 0; ii < num; ii++) {
@@ -1330,10 +1329,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
     Rectangle2D uniRect = SGUtility.createUnion(list);
 
-    // System.out.println(graphRect);
-    // System.out.println(lRect);
-    // System.out.println(uniRect);
-
     final float top = (float) (graphRect.getY() - uniRect.getY());
     final float bottom =
         (float)
@@ -1346,10 +1341,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
     topAndBottom.y += bottom;
     leftAndRight.x += left;
     leftAndRight.y += right;
-
-    // System.out.println(topAndBottom+" "+leftAndRight);
-
-    // System.out.println();
 
     return true;
   }
@@ -1802,8 +1793,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
   public boolean isResizable(final double w, final double h) {
 
     Rectangle2D rect = this.getLegendRect();
-
-    // System.out.println(" "+w+" "+rect.getWidth());
 
     if (w < rect.getWidth() || h < rect.getHeight()) {
       return false;

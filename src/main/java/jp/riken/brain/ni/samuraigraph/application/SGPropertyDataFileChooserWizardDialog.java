@@ -72,6 +72,8 @@ import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFFile;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayFile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ucar.nc2.NetcdfFile;
 
 /** A dialog to choose multiple data files for the property file. */
@@ -83,6 +85,9 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         MouseMotionListener,
         MouseWheelListener,
         SGIDataColumnTypeConstants {
+
+  private static final Logger logger =
+      LogManager.getLogger(SGPropertyDataFileChooserWizardDialog.class);
 
   /** Serial Version UID. */
   private static final long serialVersionUID = 1614748084851553730L;
@@ -1367,6 +1372,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         try {
           ncFile.close();
         } catch (IOException e1) {
+          logger.debug("Exception occurred", e1);
         }
       }
       if (hdf5Reader != null) {

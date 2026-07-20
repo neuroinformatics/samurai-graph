@@ -50,8 +50,6 @@ public abstract class SGDrawingElementSignificantDifference2D
 
   /** */
   protected boolean createDrawingElement() {
-    // System.out.println("<< createDrawingElement >>");
-
     final float mag = this.getMagnification();
     final float width = mag * this.getWidth();
     final float h1 = mag * this.getVerticalHeight1();
@@ -71,8 +69,6 @@ public abstract class SGDrawingElementSignificantDifference2D
     final SGTuple2f leftBottom = new SGTuple2f(this.getX(), this.getY() + h1);
 
     final SGTuple2f rightBottom = new SGTuple2f(this.getX() + width, this.getY() + h2);
-
-    // System.out.println(this.getX()+" "+this.getY());
 
     hLine.setTermPoints(leftTop, rightTop);
     pLine1.setTermPoints(leftTop, leftBottom);

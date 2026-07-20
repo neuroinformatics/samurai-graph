@@ -327,16 +327,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     line.initPropertiesHistory();
   }
 
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean setDialogOwner(final Frame frame) {
-  // super.setDialogOwner(frame);
-  // this.createTimingLineDialog();
-  // return true;
-  // }
-
   /** Synchronize with other figure elements. */
   public boolean synchronize(final SGIFigureElement element, final String msg) {
 
@@ -484,16 +474,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     return true;
   }
 
-  // /**
-  // * Create the property dialog.
-  // */
-  // private SGTimingLineDialog createPropertyDialog() {
-  // final SGTimingLineDialog dg = new SGTimingLineDialog(this.mDialogOwner,
-  // true);
-  //// this.mDialog = dg;
-  // return dg;
-  // }
-
   /**
    * @return
    */
@@ -509,17 +489,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
 
     return list;
   }
-
-  // /**
-  // *
-  // * @param groupSet
-  // * @return
-  // */
-  // private boolean isInsideRange(SGElementGroupTimingLine line) {
-  // final SGAxis axis = line.mAxis;
-  // final double value = line.mValue;
-  // return axis.insideRange(value);
-  // }
 
   /*
    * public boolean onKeyPressed(final KeyEvent e) {
@@ -756,19 +725,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     return TimingLine.class;
   }
 
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean setTemporaryPropertiesOfFocusedObjects() {
-  // List<SGISelectable> list = this.getFocusedObjectsList();
-  // for (int ii = 0; ii < list.size(); ii++) {
-  // TimingLine el = (TimingLine) list.get(ii);
-  // el.mTemporaryProperties = el.getProperties();
-  // }
-  // return true;
-  // }
-
   /**
    * Updates changed flag of focused objects.
    *
@@ -817,9 +773,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       }
       if (clip) {
         tl.paint(g2d);
-        // tl.paintElement(g2d);
       } else {
-        // tl.paintElement(g2d, gRect);
         tl.paint(g2d, gRect);
       }
     }
@@ -862,15 +816,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       }
     }
   }
-
-  // /**
-  // *
-  // */
-  // protected boolean removeTimingElementGroupSet(
-  // final SGElementGroupTimingLine line) {
-  // this.mChildList.remove(line);
-  // return false;
-  // }
 
   /** */
   protected boolean synchronizeToAxisElement(
@@ -969,8 +914,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       // translate the duplicate
       el.translate(ox, oy);
 
-      // el.setDrawingElementsLocation();
-
       // set selected
       el.setSelected(true);
 
@@ -981,11 +924,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     if (cList.size() != 0) {
       this.setChanged(true);
     }
-
-    // // set the location of drawing elements
-    // this.setAllDrawingElementsLocation();
-
-    // this.repaint();
 
     return true;
   }
@@ -1019,8 +957,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
         // el.mAxis = this.mAxisElement.getAxisInCube(line.mTempAxis);
         el.mAxis = this.mAxisElement.getAxisInPlane(line.mTempAxis);
 
-        // el.setDrawingElementsLocation();
-
         // add to the list
         this.addToList(el);
 
@@ -1031,13 +967,9 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       }
     }
 
-    // this.setAllDrawingElementsLocation();
-
     if (cnt != 0) {
       this.setChanged(true);
     }
-
-    // this.repaint();
 
     return true;
   }
@@ -1440,9 +1372,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       this.mStart.setValues(array[0]);
       this.mEnd.setValues(array[1]);
 
-      // if (this.setLocation(array) == false) {
-      // return false;
-      // }
       if (this.setLocation(this.mStart.x, this.mStart.y) == false) {
         return false;
       }
@@ -1472,10 +1401,8 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       double value = SGFigureElementTimingLine.this.calcValue(location, axis, horizontal);
       value = SGUtilityNumber.getNumberInRangeOrder(value, axis);
       if (Double.isNaN(value) || Double.isInfinite(value)) {
-        // this.setValid(false);
         return false;
       }
-      // this.setValid(true);
       this.setValue(value);
       this.setDrawingElementsLocation();
       return true;
@@ -1554,7 +1481,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
 
     /** */
     public void actionPerformed(final ActionEvent e) {
-      // final Object source = e.getSource();
       final String command = e.getActionCommand();
 
       if (command.equals(MENUCMD_PROPERTY)) {
@@ -2180,8 +2106,6 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
       if (p.mValue != this.mValue) {
         return false;
       }
-      // if (p.axis != this.axis)
-      // return false;
       if (SGUtility.equals(p.mAxis, this.mAxis) == false) {
         return false;
       }

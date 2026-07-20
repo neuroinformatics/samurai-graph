@@ -584,7 +584,6 @@ public class SGLineStylePanel extends javax.swing.JPanel
   }
 
   private void updateColorMapRenderPanel() {
-    //		this.mColorMapRendererPanel.setColorMapProperties(this.mColorMap.getProperties());
     this.mColorMapRendererPanel.setColors(this.mColorMap.getColors());
     this.mColorMapRendererPanel.setReversedOrder(this.mColorMap.isReversedOrder());
   }

@@ -87,7 +87,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
   }
 
   public void repaint() {
-    // System.out.println("FigureElement");
     if (this.mComponent != null) {
       this.mComponent.repaint();
     }
@@ -336,17 +335,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
     this.mChildList.add(el);
     el.setID(id);
 
-    //        // update the ID counter
-    //        int maxId = id;
-    //        for (int ii = 0; ii < cList.size(); ii++) {
-    //            SGIChildObject c = cList.get(ii);
-    //            final int cid = c.getID();
-    //            if (cid > maxId) {
-    //                maxId = cid;
-    //            }
-    //        }
-    //        this.mIDCounter = maxId + 1;
-
     return true;
   }
 
@@ -570,27 +558,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
     this.notifyToListener(SGIFigureElement.NOTIFY_CHANGE_CURSOR);
   }
 
-  //    /**
-  //     * Zoom in/out this component.<BR>
-  //     */
-  //    public boolean zoom(final float ratio) {
-  //        this.setMagnification(ratio);
-  //        return true;
-  //    }
-
-  // /**
-  // * Synchronize this component to the other component. <BR>
-  // * @param element the SGFigureElement object whose property has changed.
-  // * @return true:succeeded, false:failed
-  // */
-  // public abstract boolean synchronize( SGIFigureElement element );
-  //
-  //
-  // /**
-  // *
-  // */
-  // public abstract boolean synchronizeArgument( SGIFigureElement element );
-
   /** */
   public boolean setViewBounds(final Rectangle2D rect) {
     this.mViewBounds = rect;
@@ -603,15 +570,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
   public Rectangle2D getViewBounds() {
     return this.mViewBounds;
   }
-
-  // /**
-  // *
-  // */
-  // public void paintComponent( final Graphics g )
-  // {
-  // // super.paintComponent(g);
-  // this.paintGraphics( g, true );
-  // }
 
   /**
    * @param el
@@ -1602,34 +1560,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
   //
 
   protected abstract void paintGraphics(Graphics g, boolean clip);
-
-  // protected Image mImg = null;
-
-  // protected void updateImage() {
-  // //System.out.println("updateImage");
-  // //final long before = System.currentTimeMillis();
-  //
-  // final int w = this.getComponent().getWidth();
-  // final int h = this.getComponent().getHeight();
-  //
-  // if( w<=0 || h<=0 )
-  // {
-  // return;
-  // }
-  //
-  // BufferedImage bImg = new BufferedImage( w, h, BufferedImage.TYPE_INT_ARGB
-  // );
-  //
-  // Graphics2D g2d = bImg.createGraphics();
-  // this.paintGraphics( g2d, true );
-  //
-  // this.mImg = bImg;
-  //
-  // //final long after = System.currentTimeMillis();
-  // //System.out.println(after-before);
-  //
-  // this.repaint();
-  // }
 
   public void paint(final Graphics g, final boolean clip) {
     this.paintGraphics(g, clip);

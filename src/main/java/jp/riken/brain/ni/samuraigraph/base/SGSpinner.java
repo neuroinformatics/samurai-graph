@@ -404,7 +404,6 @@ public class SGSpinner extends JSpinner
 
     // record the temporary string after committed
     this.mTempString = this.getText();
-    // System.out.println("c:" + mTempString);
 
     SwingUtilities.invokeLater(
         new Runnable() {
@@ -417,15 +416,11 @@ public class SGSpinner extends JSpinner
                 String strNew = SGUtilityText.removeSuffix(str, unit);
                 Double valueOld = Double.valueOf(strOld);
                 Double valueNew = Double.valueOf(strNew);
-                // System.out.println("d:" + strOld);
-                // System.out.println("e:" + strNew);
                 // get the step value between two values
                 Number num = getValueOnStepInside(valueOld.doubleValue(), valueNew.doubleValue());
                 if (num == null) {
                   num = valueNew;
                 }
-                // System.out.println("f:" + num);
-                // System.out.println();
                 // set new value to the spinner
                 setValue(num);
               }
@@ -493,11 +488,9 @@ public class SGSpinner extends JSpinner
    */
   private void commit(final int mode) throws ParseException {
     final JFormattedTextField ftf = this.getFormattedTextField();
-    // System.out.println("0:" + ftf.getText());
 
     // parse the input string
     String parsedStr = this.parseString(ftf.getText(), mode);
-    // System.out.println("a:" + parsedStr);
     if (parsedStr != null) {
 
       // set the parsed string to the formatted text field
@@ -506,9 +499,7 @@ public class SGSpinner extends JSpinner
       // commit the parsed text
       try {
         ftf.commitEdit();
-        // System.out.println("b:" + ftf.getText());
       } catch (ParseException e) {
-        // e.printStackTrace();
         throw e;
       }
     } else {

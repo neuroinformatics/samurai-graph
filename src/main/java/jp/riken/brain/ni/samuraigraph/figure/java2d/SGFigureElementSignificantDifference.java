@@ -474,7 +474,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
   /** */
   public void actionPerformed(ActionEvent e) {
     final Object source = e.getSource();
-    // final String command = e.getActionCommand();
 
     if (source.equals(this.mEditField)) {
       this.closeTextField();
@@ -710,7 +709,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
         if (SwingUtilities.isLeftMouseButton(e) && cnt == 1) {
           if (el.isSelected() && !ctrl && !shift) {
             this.mEditingSymbol = el;
-            // this.showEditField(el);
             Rectangle2D sRect = el.getStringBounds();
             final int tx = this.mPressedPoint.x - (int) sRect.getX();
             final int ty = this.mPressedPoint.y - (int) sRect.getY();
@@ -828,19 +826,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
     return true;
   }
 
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean setTemporaryPropertiesOfFocusedObjects() {
-  // List<SGISelectable> list = this.getFocusedObjectsList();
-  // for (int ii = 0; ii < list.size(); ii++) {
-  // SigDiffSymbol el = (SigDiffSymbol) list.get(ii);
-  // el.mTemporaryProperties = el.getProperties();
-  // }
-  // return true;
-  // }
-
   /**
    * Returns the list of selected property dialog observers of given class type.
    *
@@ -931,42 +916,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
     super.setComponent(com);
     com.add(this.mEditField);
   }
-
-  // /**
-  // *
-  // */
-  // private boolean showEditField(final SigDiffSymbol el) {
-  // SGDrawingElementString2DExtended sElement =
-  // (SGDrawingElementString2DExtended) el
-  // .getStringElement();
-  // final JTextField tf = this.mEditField;
-  //
-  // final Rectangle2D rect = sElement.getElementBounds();
-  // final Rectangle2D sRect = sElement.getStringRect();
-  //
-  // final float fontSize = el.getMagnification() * el.getFontSize();
-  //
-  // final int x = (int) (rect.getX() - tf.getInsets().left);
-  // final int y = (int) (rect.getY() - fontSize / 2.0f);
-  // final int w = (int) (sRect.getWidth() + fontSize);
-  // final int h = (int) (sRect.getHeight() + fontSize);
-  //
-  // tf.setLocation(x, y);
-  // tf.setSize(w, h);
-  // tf
-  // .setFont(new Font(el.getFontName(), el.getFontStyle(),
-  // (int) fontSize));
-  // tf.setForeground(el.getColor());
-  // tf.setText(sElement.getString());
-  //
-  // // show the text field
-  // tf.setVisible(true);
-  // tf.requestFocus();
-  // tf.setCaretPosition(0);
-  //
-  // return true;
-  //
-  // }
 
   /**
    * Overrode for the text field for the text of symbols.
@@ -1129,8 +1078,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
       this.setChanged(true);
     }
 
-    // this.repaint();
-
     return true;
   }
 
@@ -1161,8 +1108,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
         el.setMagnification(mag);
         el.setProperties(p);
 
-        // el.mXAxis = this.mAxisElement.getAxisInCube(sd.mTempXAxis);
-        // el.mYAxis = this.mAxisElement.getAxisInCube(sd.mTempYAxis);
         el.mXAxis = this.mAxisElement.getAxisInPlane(sd.mTempXAxis);
         el.mYAxis = this.mAxisElement.getAxisInPlane(sd.mTempYAxis);
 
@@ -1408,7 +1353,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
       StringBuilder sb = new StringBuilder();
       sb.append(this.mID);
       sb.append(": ");
-      // sb.append(this.getText());
       sb.append(SGUtility.removeEscapeChar(this.getText()));
       sb.append(", AxisX=");
       sb.append(xAxis.toString());
@@ -1499,13 +1443,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
     private int mTempXAxis = -1;
 
     private int mTempYAxis = -1;
-
-    /** */
-    // private SigDiffSymbol(final float x, final float y, final float w,
-    // final float hl, final float hr) {
-    // super(x, y, w, hl, hr);
-    // this.init();
-    // }
 
     /**
      * Returns a pop-up menu.
@@ -1763,7 +1700,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
     public void actionPerformed(final ActionEvent e) {
 
       final String command = e.getActionCommand();
-      // final Object source = e.getSource();
 
       if (command.equals(MENUCMD_PROPERTY)) {
         SGFigureElementSignificantDifference.this.setPropertiesOfSelectedObjects(this);
@@ -2343,8 +2279,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
           }
       }
 
-      // System.out.println(cur);
-
       return cur;
     }
 
@@ -2407,7 +2341,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
       final int loc = this.mMouseLocation;
       final boolean flag = this.mFlippingHorizontalFlag;
       if (loc == HORIZONTAL_MIDDLE) {
-        // System.out.println("NORTH");
         sizeNewY1 = sizeOldY1 - diffY;
         sizeNewY2 = sizeOldY2 - diffY;
 
@@ -3187,26 +3120,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
   }
 
   /** Called when the caret in the text field is update. */
-  public void caretUpdate(final CaretEvent e) {
-    // final String str = this.mEditField.getText();
-    //
-    // if (this.mEditingSymbol != null) {
-    // final Font font = new Font(this.mEditingSymbol.getFontName(),
-    // this.mEditingSymbol.getFontStyle(),
-    // (int) (this.mEditingSymbol.getFontSize() * this
-    // .getMagnification()));
-    // final Rectangle2D stringRect = font.getStringBounds(str,
-    // new FontRenderContext(null, false, false));
-    //
-    // final double width = stringRect.getWidth();
-    // if (width > this.mEditField.getWidth()) {
-    // this.mEditField.setSize((int) (stringRect.getWidth() + this
-    // .getMagnification()
-    // * this.mEditingSymbol.getFontSize()), this.mEditField
-    // .getHeight());
-    // }
-    // }
-  }
+  public void caretUpdate(final CaretEvent e) {}
 
   /** Called when menu items in the menu bar is selected. */
   public void onMenuSelected() {

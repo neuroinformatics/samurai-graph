@@ -616,7 +616,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
       // reduce the points
       SGTuple2f[] points = pointArray;
 
-      // System.out.println(this.mMode);
       if (this.mMode == MODE_OMIT) {
         // points = this.reducePointsInNoise( points );
         points = this.reduceClosePoints(points);

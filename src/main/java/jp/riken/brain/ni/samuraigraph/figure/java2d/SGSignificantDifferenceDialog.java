@@ -641,21 +641,6 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
     return true;
   }
 
-  // /**
-  // *
-  // *
-  // */
-  // public void dispose()
-  // {
-  // if( this.mAxisPanel!=null )
-  // {
-  // this.mAxisPanel.dispose();
-  // this.mAxisPanel = null;
-  // }
-  //
-  // super.dispose();
-  // }
-
   @Override
   public void actionPerformed(ActionEvent e) {
     super.actionPerformed(e);
@@ -1130,7 +1115,6 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
     this.setColor(color);
 
     this.setAnchored(anchored);
-    //        this.setColorButtonBorder(true);
 
     return true;
   }
@@ -1226,17 +1210,14 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
     }
 
     if (space != null) {
-      //			sd.setSpace( space.floatValue()/SGIConstants.CM_POINT_RATIO );
       sd.setSpace(space.floatValue(), cm);
     }
 
     if (lineWidth != null) {
-      //			sd.setLineWidth( lineWidth.floatValue() );
       sd.setLineWidth(lineWidth.floatValue(), pt);
     }
 
     if (fontSize != null) {
-      //			sd.setFontSize( fontSize.floatValue() );
       sd.setFontSize(fontSize.floatValue(), pt);
     }
 

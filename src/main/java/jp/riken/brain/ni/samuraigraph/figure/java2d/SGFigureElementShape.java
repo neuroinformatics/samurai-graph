@@ -1026,18 +1026,6 @@ public class SGFigureElementShape extends SGFigureElement2D
     return true;
   }
 
-  // /**
-  // *
-  // */
-  // public boolean setTemporaryPropertiesOfFocusedObjects() {
-  // List<SGISelectable> list = this.getFocusedObjectsList();
-  // for (int ii = 0; ii < list.size(); ii++) {
-  // ShapeObject el = (ShapeObject) list.get(ii);
-  // el.mTemporaryProperties = el.getMemento();
-  // }
-  // return true;
-  // }
-
   /**
    * Updates changed flag of focused objects.
    *
@@ -1147,41 +1135,6 @@ public class SGFigureElementShape extends SGFigureElement2D
 
     return set;
   }
-
-  // //
-  // private ShapeObject getShape(final int id) {
-  // ShapeObject el = (ShapeObject) this.getVisibleChild(id);
-  // if (el == null) {
-  // return null;
-  // }
-  // return el;
-  // }
-  //
-  // //
-  // private Rect getRectangularShape(final int id) {
-  // ShapeObject sh = this.getShape(id);
-  // if (sh == null) {
-  // return null;
-  // }
-  // IElement el = sh.mElement;
-  // if (el instanceof Rect) {
-  // return (Rect) el;
-  // }
-  // return null;
-  // }
-  //
-  // //
-  // private Arrow getArrow(final int id) {
-  // ShapeObject sh = this.getShape(id);
-  // if (sh == null) {
-  // return null;
-  // }
-  // IElement el = sh.mElement;
-  // if (el instanceof Arrow) {
-  // return (Arrow) el;
-  // }
-  // return null;
-  // }
 
   /** */
   private static class ShapeElementProperties extends SGProperties {
@@ -1369,11 +1322,6 @@ public class SGFigureElementShape extends SGFigureElement2D
 
     private int mTempYAxis = -1;
 
-    // /**
-    // *
-    // */
-    // private boolean mFrameFlag = false;
-
     /** */
     private SGProperties mTemporaryProperties = null;
 
@@ -1403,9 +1351,7 @@ public class SGFigureElementShape extends SGFigureElement2D
     }
 
     // initialize
-    private void init() {
-      // this.createPopupMenu();
-    }
+    private void init() {}
 
     /** Disposes of this object. */
     public void dispose() {
@@ -1461,7 +1407,6 @@ public class SGFigureElementShape extends SGFigureElement2D
     /** */
     public void actionPerformed(ActionEvent e) {
       final String command = e.getActionCommand();
-      // final Object source = e.getSource();
 
       if (command.equals(MENUCMD_PROPERTY)) {
         // clear all focused objects other type object clicked
@@ -1533,10 +1478,6 @@ public class SGFigureElementShape extends SGFigureElement2D
         this.getDrawingElement2D().paint(g2d);
       }
     }
-
-    // public boolean zoom(final float mag) {
-    // return this.getDrawingElement().zoom(mag);
-    // }
 
     private boolean mValidFlag = true;
 
@@ -1637,18 +1578,6 @@ public class SGFigureElementShape extends SGFigureElement2D
       final int y = e.getY();
 
       if (this.contains(x, y)) {
-
-        // final float mag = this.getMagnification();
-
-        // // set the temporary object
-        // this.mTempSymbol = new SigDiffSymbol();
-        // mTempSymbol.setMagnification( mag );
-        // mTempSymbol.setLocation( this.getX(), this.getY() );
-        // mTempSymbol.setSize(
-        // this.getWidth(),
-        // this.getVerticalHeight1(),
-        // this.getVerticalHeight2()
-        // );
 
         this.mMouseLocation = this.getMouseLocation(x, y);
         Cursor cur = null;
@@ -1834,8 +1763,6 @@ public class SGFigureElementShape extends SGFigureElement2D
         return false;
       }
 
-      // this.mUndoManager.dump();
-
       this.setShapeWithAxesValues();
 
       return true;
@@ -1846,8 +1773,6 @@ public class SGFigureElementShape extends SGFigureElement2D
       if (this.mUndoManager.setMementoForward() == false) {
         return false;
       }
-
-      // this.mUndoManager.dump();
 
       this.setShapeWithAxesValues();
 
@@ -2449,13 +2374,6 @@ public class SGFigureElementShape extends SGFigureElement2D
       }
       sh.setValid(true);
 
-      // final float ratio = SGIConstants.CM_POINT_RATIO;
-      // System.out.println(x1*ratio);
-      // System.out.println(x2*ratio);
-      // System.out.println(y1*ratio);
-      // System.out.println(y2*ratio);
-      // System.out.println();
-
       final float mag = this.getMagnification();
       final float w = (x2 - x1) / mag;
       final float h = (y2 - y1) / mag;
@@ -2556,11 +2474,9 @@ public class SGFigureElementShape extends SGFigureElement2D
     /** */
     public boolean drag(MouseEvent e, Point pos, final int ml) {
       Rectangle2D rect = this.getElementBounds();
-      // System.out.println(rect.getBounds());
 
       // update the rectangle
       SGUtility.resizeRectangle(rect, pos, e, ml);
-      // System.out.println(rect.getBounds());
 
       final float mag = this.getMagnification();
       final float x = (float) rect.getX();
@@ -2575,9 +2491,6 @@ public class SGFigureElementShape extends SGFigureElement2D
 
       // this.setRightX(x+w);
       // this.setBottomY(y+h);
-
-      // System.out.println(this.getElementBounds().getBounds());
-      // System.out.println();
 
       return true;
     }
@@ -2708,7 +2621,6 @@ public class SGFigureElementShape extends SGFigureElement2D
       rp.setYValue2(this.mYValue2);
       rp.setAnchored(this.mIsAnchored);
 
-      // System.out.println(this.mXValue1+" "+this.mXValue2);
       return true;
     }
 
@@ -3000,7 +2912,6 @@ public class SGFigureElementShape extends SGFigureElement2D
     /** */
     public boolean prepare() {
       this.mTemporaryProperties = this.getProperties();
-      // this.dump();
       return true;
     }
 
@@ -3981,8 +3892,6 @@ public class SGFigureElementShape extends SGFigureElement2D
 
       SGFigureElementShape sElement = this.getShapeElement();
 
-      // System.out.println(super.getStartX()+" "+this.getStartX());
-
       final double xValue1 = sElement.calcValue(this.getStartX(), xAxis, true);
       final double yValue1 = sElement.calcValue(this.getStartY(), yAxis, false);
       final double xValue2 = sElement.calcValue(this.getEndX(), xAxis, true);
@@ -3994,10 +3903,6 @@ public class SGFigureElementShape extends SGFigureElement2D
       this.mEndYValue = SGUtilityNumber.getNumberInRangeOrder(yValue2, yAxis);
 
       this.setShapeWithAxesValues();
-
-      // System.out.println(xValue1+" "+xValue2);
-      // System.out.println(this.mStartXValue+" "+this.mEndXValue);
-      // System.out.println();
 
       return true;
     }
@@ -4202,10 +4107,6 @@ public class SGFigureElementShape extends SGFigureElement2D
       final Boolean anchored = rp.getAnchored();
       this.mIsAnchored = anchored.booleanValue();
 
-      // System.out.println(x1+" "+x2);
-      // System.out.println(y1+" "+y2);
-      // System.out.println();
-
       return true;
     }
 
@@ -4215,7 +4116,6 @@ public class SGFigureElementShape extends SGFigureElement2D
     /** */
     public boolean prepare() {
       this.mTemporaryProperties = this.getProperties();
-      // this.dump();
       return true;
     }
 

@@ -29,6 +29,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer.Token;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mozilla.universalchardet.UniversalDetector;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
@@ -40,6 +42,8 @@ import org.xml.sax.SAXException;
  * number or color, and vice versa.
  */
 public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFileConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGUtilityText.class);
 
   /**
    * Create a string with superscript.
@@ -423,6 +427,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
         Token result = tokenizer.nextToken();
         tokenList.add(result);
       } catch (NoSuchElementException e) {
+        logger.debug("Exception occurred", e);
       }
     }
     return true;
@@ -1051,7 +1056,6 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     try {
       bis = new BufferedInputStream(url.openStream());
     } catch (IOException ex) {
-      // ex.printStackTrace();
       return null;
     }
     // parse input and create a Document object
@@ -1071,6 +1075,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
       try {
         if (bis != null) bis.close();
       } catch (IOException ex) {
+        logger.debug("Exception occurred", ex);
       }
     }
 
@@ -1106,6 +1111,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
       try {
         if (bis != null) bis.close();
       } catch (IOException ex) {
+        logger.debug("Exception occurred", ex);
       }
     }
 
@@ -1761,6 +1767,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
           Token result = tokenizer.nextToken();
           tokenList.add(result);
         } catch (NoSuchElementException e) {
+          logger.debug("Exception occurred", e);
         }
       }
       final int size = tokenList.size(); // the number of tokens
@@ -2259,6 +2266,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     try {
       p = SGPeriod.parse(str);
     } catch (IllegalArgumentException e) {
+      logger.debug("Exception occurred", e);
     }
     return p;
   }
@@ -2268,6 +2276,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     try {
       date = new SGDate(str);
     } catch (ParseException e) {
+      logger.debug("Exception occurred", e);
     }
     return date;
   }

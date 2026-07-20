@@ -36,11 +36,15 @@ import javax.swing.JPopupMenu;
 import javax.swing.LookAndFeel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /** */
 public class SGUtility implements SGIDrawingElementConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGUtility.class);
 
   /**
    * Returns an array of available font family names.
@@ -705,6 +709,7 @@ public class SGUtility implements SGIDrawingElementConstants {
     try {
       sp.commitEditByDefault();
     } catch (ParseException e) {
+      logger.debug("Exception occurred", e);
     }
 
     return true;
@@ -731,6 +736,7 @@ public class SGUtility implements SGIDrawingElementConstants {
     try {
       sp.commitEditByDefault();
     } catch (ParseException e) {
+      logger.debug("Exception occurred", e);
     }
 
     return true;
@@ -822,24 +828,20 @@ public class SGUtility implements SGIDrawingElementConstants {
     float h = hOld;
 
     if (ml == NORTH) {
-      // System.out.println("NORTH");
       pos.setLocation(pos.getX(), pos.getY() + diffY);
       sizeNewY = sizeOldY - diffY;
       y = yOld + sizeOldY - sizeNewY;
       h = sizeNewY;
     } else if (ml == SOUTH) {
-      // System.out.println("SOUTH");
       pos.setLocation(pos.getX(), pos.getY() + diffY);
       sizeNewY = sizeOldY + diffY;
       h = sizeNewY;
     } else if (ml == WEST) {
-      // System.out.println("WEST");
       pos.setLocation(pos.getX() + diffX, pos.getY() + diffY);
       sizeNewX = sizeOldX - diffX;
       x = xOld + sizeOldX - sizeNewX;
       w = sizeNewX;
     } else if (ml == EAST) {
-      // System.out.println("EAST");
       pos.setLocation(pos.getX() + diffX, pos.getY());
       sizeNewX = sizeOldX + diffX;
       w = sizeNewX;
@@ -856,7 +858,6 @@ public class SGUtility implements SGIDrawingElementConstants {
       y = yOld + sizeOldY - sizeNewY;
       w = sizeNewX;
       h = sizeNewY;
-      // System.out.println(sizeOldY+" "+sizeNewY);
     } else if (ml == NORTH_EAST) {
       if (!onShift) {
         pos.setLocation(pos.getX() + diffX, pos.getY() + diffY);
@@ -920,8 +921,6 @@ public class SGUtility implements SGIDrawingElementConstants {
 
     // update the rectangle
     rect.setRect(x, y, w, h);
-
-    // System.out.println(rect);
   }
 
   /**
@@ -2530,6 +2529,7 @@ public class SGUtility implements SGIDrawingElementConstants {
     try {
       mt.waitForAll();
     } catch (InterruptedException ex) {
+      logger.debug("Exception occurred", ex);
     }
   }
 
@@ -2760,6 +2760,7 @@ public class SGUtility implements SGIDrawingElementConstants {
       SGDate date = new SGDate(str);
       ret = date.getDateValue();
     } catch (ParseException e) {
+      logger.debug("Exception occurred", e);
     }
     return ret;
   }

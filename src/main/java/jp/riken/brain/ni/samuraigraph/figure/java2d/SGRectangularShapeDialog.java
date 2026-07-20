@@ -650,24 +650,6 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
   /** */
   private SGComponentGroup mTransparentComponentGroup = new SGComponentGroup();
 
-  // /**
-  // *
-  // *
-  // */
-  // public void dispose()
-  // {
-  // if( this.mAxisPanel!=null )
-  // {
-  // this.mAxisPanel.dispose();
-  // this.mAxisPanel = null;
-  // }
-  //
-  // this.mTransparentComponentGroup.dispose();
-  // this.mTransparentComponentGroup = null;
-  //
-  // super.dispose();
-  // }
-
   @Override
   public void stateChanged(final ChangeEvent e) {
     Object source = e.getSource();
@@ -910,8 +892,6 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
 
     this.setAnchored(anchored);
     this.setLineVisible(lineVisible);
-
-    //        this.setColorButtonBorder(true);
 
     return true;
   }

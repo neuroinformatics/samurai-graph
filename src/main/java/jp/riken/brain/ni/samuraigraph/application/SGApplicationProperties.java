@@ -5,8 +5,12 @@ import java.io.InputStream;
 import java.util.Properties;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class SGApplicationProperties implements SGIApplicationConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGApplicationProperties.class);
   // version string
   private String mVersion = "-1.-1.-1";
 
@@ -112,6 +116,7 @@ public class SGApplicationProperties implements SGIApplicationConstants {
         try {
           is.close();
         } catch (IOException e) {
+          logger.debug("Exception occurred", e);
         }
       }
     }

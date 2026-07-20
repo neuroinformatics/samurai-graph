@@ -12,9 +12,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import javax.swing.JFileChooser;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /** Extract an archive file. */
 public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveFileConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGArchiveFileExtractor.class);
 
   /** Constant value of End of File */
   protected static final int EOF = -1;
@@ -89,6 +93,7 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
         try {
           zFile.close();
         } catch (IOException e) {
+          logger.debug("Exception occurred", e);
         }
       }
     }

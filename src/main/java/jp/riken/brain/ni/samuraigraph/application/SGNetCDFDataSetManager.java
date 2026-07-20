@@ -38,6 +38,8 @@ import jp.riken.brain.ni.samuraigraph.figure.SGIFigureTypeConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGXYFigure;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetForData;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGStringBraceModifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -55,6 +57,8 @@ import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
 
 class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGNetCDFDataSetManager.class);
 
   /** The main functions. */
   private final SGMainFunctions mMain;
@@ -841,6 +845,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
           try {
             bos.close();
           } catch (IOException e) {
+            logger.debug("Exception occurred", e);
           }
         }
       }
@@ -981,6 +986,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         try {
           ncfile.close();
         } catch (IOException e) {
+          logger.debug("Exception occurred", e);
         }
       }
     }

@@ -7,6 +7,4 @@ public interface SGIElementGroupInGraph {
   public boolean isFocused();
 
   public boolean setElementGroupSet(SGElementGroupSetInGraph gs);
-
-  //    public List<SGTuple2d> getFocusedShapeList(SGTuple2f[] points, int[] pointIndexArray);
 }

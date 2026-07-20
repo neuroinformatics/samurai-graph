@@ -96,15 +96,12 @@ public interface SGIArrowConstants
 
   public static final String TAG_NAME_ARROW = "Arrow";
 
-  // public static final String KEY_LINE_WIDTH = "LineWidth";
-  // public static final String KEY_LINE_TYPE = "LineType";
   public static final String KEY_HEAD_SIZE = "HeadSize";
 
   public static final String KEY_START_HEAD_TYPE = "StartHeadType";
 
   public static final String KEY_END_HEAD_TYPE = "EndHeadType";
 
-  // public static final String KEY_HEAD_LINE_WIDTH = "HeadLineWidth";
   public static final String KEY_HEAD_LINE_COLOR = "HeadLineColor";
 
   public static final String KEY_HEAD_OPEN_ANGLE = "HeadOpenAngle";

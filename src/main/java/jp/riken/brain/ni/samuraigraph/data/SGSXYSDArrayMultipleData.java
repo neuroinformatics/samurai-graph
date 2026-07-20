@@ -28,6 +28,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGTwoDimensionalArrayIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayByte;
@@ -42,6 +44,8 @@ import ucar.nc2.Variable;
 /** Data with multiple scalar type XY data. */
 public class SGSXYSDArrayMultipleData extends SGSDArrayData
     implements SGISXYTypeMultipleData, SGIDataPropertyKeyConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGSXYSDArrayMultipleData.class);
 
   /** An array of column indices for x-values. */
   protected Integer[] mXIndices = null;
@@ -2385,6 +2389,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         try {
           ncfile.close();
         } catch (IOException e) {
+          logger.debug("Exception occurred", e);
         }
       }
     }

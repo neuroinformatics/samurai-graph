@@ -1850,19 +1850,16 @@ public abstract class SGAxisElement
     if (this.setLocationOfAxisLines() == false) {
       return false;
     }
-    // System.out.println("axis line");
 
     // numbers and scale lines
     if (this.createScaleDrawingElements() == false) {
       return false;
     }
-    // System.out.println("numbers and scale lines");
 
     // title
     if (this.setLocationOfTitle() == false) {
       return false;
     }
-    // System.out.println("title");
 
     return true;
   }
@@ -1906,26 +1903,21 @@ public abstract class SGAxisElement
     if (this.calcValueArrayInScale() == false) {
       return false;
     }
-    // System.out.println("calcValueArrayInScale");
 
     // create instances of numbers
     if (this.createScaleNumberInstances() == false) {
       return false;
     }
-    // System.out.println("createScaleNumberInstances");
 
     // determine the location of numbers
     if (this.setLocationOfScaleNumbers() == false) {
       return false;
     }
-    // System.out.println("createScaleLines");
-    // System.out.println(this.mNumberList);
 
     // create scale lines
     if (this.createTickMarks() == false) {
       return false;
     }
-    // System.out.println("createScaleLines");
 
     return true;
   }
