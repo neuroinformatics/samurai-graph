@@ -34,6 +34,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable.MDArrayDataType;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable.VALUE_TYPE;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayDouble;
@@ -48,6 +50,8 @@ import ucar.nc2.Variable;
 
 /** The base class for multidimensional data. */
 public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumnTypeConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGMDArrayData.class);
 
   /** The list of variables. */
   protected SGMDArrayVariable[] mVariables = null;
@@ -1062,7 +1066,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       }
 
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.warn("Error in MDArray data operation", e);
     } finally {
       if (ncWrite != null) {
         try {
@@ -1126,7 +1130,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       }
 
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.warn("Error in MDArray data operation", e);
     } finally {
       if (ncWrite != null) {
         try {
@@ -1383,7 +1387,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     } catch (IOException e) {
       return false;
     } catch (InvalidRangeException e) {
-      e.printStackTrace();
+      logger.warn("Error in MDArray data operation", e);
       return false;
     }
     return true;

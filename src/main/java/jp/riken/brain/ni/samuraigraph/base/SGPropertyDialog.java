@@ -18,12 +18,16 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.text.JTextComponent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /** The base class of the property dialogs. */
 public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingElementConstants {
 
   /** Serial Version UID */
   private static final long serialVersionUID = 214371996196142459L;
+
+  private static final Logger logger = LogManager.getLogger(SGPropertyDialog.class);
 
   /** List of the property setting listeners. */
   protected transient List<SGIPropertyDialogObserver> mPropertyDialogObserverList =
@@ -165,7 +169,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
         this.onPreviewed();
       }
     } catch (Exception ex) {
-      ex.printStackTrace();
+      logger.warn("Error in property dialog", ex);
       SGUtility.showErrorMessageDialog(
           this, "Unknown error occurred.\b This dialog will be closed.", "ERROR");
       this.setVisible(false);

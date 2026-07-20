@@ -48,6 +48,8 @@ import jp.riken.brain.ni.samuraigraph.data.SGDataValue.SXYZDataValue;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.VXYDataValue;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.Value;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData.DoubleValueSetResult;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.NamedNodeMap;
 import ucar.ma2.DataType;
 import ucar.nc2.Attribute;
@@ -61,6 +63,8 @@ public class SGDataUtility
         SGIDataPropertyKeyConstants,
         SGINetCDFConstants,
         SGIMDArrayConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGDataUtility.class);
 
   private static final String[] ARRAY_EMPTY = {""};
 
@@ -3903,13 +3907,13 @@ public class SGDataUtility
         try {
           obj = reader.bool().getAttr(path, name);
         } catch (Exception e) {
-          e.printStackTrace();
+          logger.warn("Error in data utility operation", e);
         }
       } else if (HDF5DataClass.ENUM.equals(dClass)) {
         try {
           obj = reader.enumeration().getAttr(path, name);
         } catch (Exception e) {
-          e.printStackTrace();
+          logger.warn("Error in data utility operation", e);
         }
       }
       SGAttribute attr = new SGAttribute(name, obj);
@@ -3965,7 +3969,7 @@ public class SGDataUtility
           final boolean value = reader.bool().getAttr(path, attrName);
           writer.bool().setAttr(path, attrName, value);
         } catch (Exception e) {
-          e.printStackTrace();
+          logger.warn("Error in data utility operation", e);
           return false;
         }
       } else if (HDF5DataClass.ENUM.equals(attrDataClass)) {
@@ -3973,7 +3977,7 @@ public class SGDataUtility
           HDF5EnumerationValue value = reader.enumeration().getAttr(path, attrName);
           writer.enumeration().setAttr(path, attrName, value);
         } catch (Exception e) {
-          e.printStackTrace();
+          logger.warn("Error in data utility operation", e);
           return false;
         }
       }

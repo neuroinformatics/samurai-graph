@@ -22,6 +22,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 /** About dialog. */
 public class SGAboutDialog extends SGDialog implements SGIApplicationConstants {
 
+  private static final org.apache.logging.log4j.Logger logger =
+      org.apache.logging.log4j.LogManager.getLogger(SGAboutDialog.class);
+
   private static final long serialVersionUID = 1528835468569338270L;
 
   public SGAboutDialog(Frame owner, boolean modal, final String version) {
@@ -90,13 +93,13 @@ public class SGAboutDialog extends SGDialog implements SGIApplicationConstants {
       try {
         SGBrowserLauncher.openURL(SAMURAI_GRAPH_URL);
       } catch (IOException ex) {
-        ex.printStackTrace();
+        logger.warn("Error in about dialog", ex);
       }
     } else if (lab_rect.contains(x, y)) {
       try {
         SGBrowserLauncher.openURL(NEUROINFORMATICS_LAB_URL);
       } catch (IOException ex) {
-        ex.printStackTrace();
+        logger.warn("Error in about dialog", ex);
       }
     }
   }

@@ -47,6 +47,8 @@ import jp.riken.brain.ni.samuraigraph.data.SGIDataAnimation;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGSliderPanel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.freehep.graphicsio.ImageConstants;
 import org.freehep.graphicsio.PageConstants;
 
@@ -60,6 +62,8 @@ public class SGDataAnimationDialog extends SGDialog
 
   /** Serial Version UID */
   private static final long serialVersionUID = -422924558519688171L;
+
+  private static final Logger logger = LogManager.getLogger(SGDataAnimationDialog.class);
 
   /** The title of this dialog. */
   public static final String TITLE = "Set up the Animation";
@@ -811,7 +815,7 @@ public class SGDataAnimationDialog extends SGDialog
           }
         }.execute();
       } catch (Exception e1) {
-        e1.printStackTrace();
+        logger.warn("Error in data animation", e1);
       }
 
       // restores frame index

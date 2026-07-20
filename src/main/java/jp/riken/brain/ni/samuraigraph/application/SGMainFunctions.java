@@ -148,6 +148,8 @@ import jp.riken.brain.ni.samuraigraph.figure.SGXYFigure;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupSetInGraph;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetForData;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetMultipleSXY;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -173,6 +175,8 @@ class SGMainFunctions
         SGIDataColumnTypeConstants,
         WindowListener,
         SGINetCDFConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGMainFunctions.class);
 
   // only used for debug
   static boolean USE_FOXTROT = true;
@@ -3508,7 +3512,7 @@ class SGMainFunctions
                         figureLocation));
       } catch (Exception ex) {
         result = new SGStatus(false);
-        ex.printStackTrace();
+        logger.warn("Error in main function operation", ex);
       }
     }
 
@@ -3739,7 +3743,7 @@ class SGMainFunctions
     try {
       Thread.sleep(2000);
     } catch (InterruptedException e) {
-      e.printStackTrace();
+      logger.warn("Error in main function operation", e);
     }
 
     // exit
@@ -3977,7 +3981,7 @@ class SGMainFunctions
       }
 
     } catch (Exception ex) {
-      ex.printStackTrace();
+      logger.warn("Error in main function operation", ex);
       return false;
     } finally {
       // set enabled the window
@@ -5045,7 +5049,7 @@ class SGMainFunctions
         result = SGAsyncWorker.post(() -> SGMainFunctionsSplitMerge.splitData(wnd));
       } catch (Exception ex) {
         result = Boolean.FALSE;
-        ex.printStackTrace();
+        logger.warn("Error in main function operation", ex);
       }
     }
     wnd.setWaitCursor(false);
@@ -5069,7 +5073,7 @@ class SGMainFunctions
         result = SGAsyncWorker.post(() -> SGMainFunctionsSplitMerge.mergeData(wnd));
       } catch (Exception ex) {
         result = Boolean.FALSE;
-        ex.printStackTrace();
+        logger.warn("Error in main function operation", ex);
       }
     }
     wnd.setWaitCursor(false);
@@ -5979,7 +5983,7 @@ class SGMainFunctions
       try {
         dataSrcCur.getNetcdfFile().close();
       } catch (IOException e1) {
-        e1.printStackTrace();
+        logger.warn("Error in main function operation", e1);
       }
 
       // adds global attributes
@@ -6012,7 +6016,7 @@ class SGMainFunctions
           hdfWriter.string().setAttr("/", attrName, savedString);
         } catch (Exception e) {
           if (e.getClass().getName().contains("HDF5Exception")) {
-            e.printStackTrace();
+            logger.warn("Error in main function operation", e);
           } else {
             if (e instanceof RuntimeException) {
               throw (RuntimeException) e;
@@ -6484,7 +6488,7 @@ class SGMainFunctions
                 });
       } catch (Exception ex) {
         result = new SGStatus(false);
-        ex.printStackTrace();
+        logger.warn("Error in main function operation", ex);
       }
     }
     return result;

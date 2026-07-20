@@ -12,6 +12,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 /** The main class of this application. */
 public class SGDrawingServer implements SGIApplicationConstants, SGIApplicationTextConstants {
 
+  private static final org.apache.logging.log4j.Logger logger =
+      org.apache.logging.log4j.LogManager.getLogger(SGDrawingServer.class);
+
   // the name of look and feel
   private static String mLookAndFeel = null;
 
@@ -152,7 +155,7 @@ public class SGDrawingServer implements SGIApplicationConstants, SGIApplicationT
         SGApplicationAdapter.registerApplication();
       } catch (Exception e) {
         System.err.println("Failed to register macOS application handlers (" + e + ")");
-        e.printStackTrace();
+        logger.warn("Error in drawing server", e);
       }
     }
   }

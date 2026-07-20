@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /** Adapter that wraps an io.jhdf.WritableHdfFile to provide IHDF5Writer interface. */
 class Hdf5WriterAdapter implements IHDF5Writer {
 
-  private static final Logger LOG = LoggerFactory.getLogger(Hdf5WriterAdapter.class);
+  private static final Logger logger = LoggerFactory.getLogger(Hdf5WriterAdapter.class);
 
   private final WritableHdfFile mHdfFile;
 
@@ -61,7 +61,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
     try {
       this.mHdfFile.close();
     } catch (Exception e) {
-      LOG.warn("Error closing HDF5 writer", e);
+      logger.warn("Error closing HDF5 writer", e);
     }
   }
 
@@ -70,7 +70,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
     try {
       this.mHdfFile.putDataset(name, values);
     } catch (Exception e) {
-      LOG.error("Failed to write int array: {}", name, e);
+      logger.error("Failed to write int array: {}", name, e);
       throw new RuntimeException(e);
     }
   }
@@ -80,7 +80,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
     try {
       this.mHdfFile.putDataset(name, values);
     } catch (Exception e) {
-      LOG.error("Failed to write double array: {}", name, e);
+      logger.error("Failed to write double array: {}", name, e);
       throw new RuntimeException(e);
     }
   }
@@ -90,7 +90,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
     try {
       this.mHdfFile.putDataset(name, values);
     } catch (Exception e) {
-      LOG.error("Failed to write int matrix: {}", name, e);
+      logger.error("Failed to write int matrix: {}", name, e);
       throw new RuntimeException(e);
     }
   }
@@ -100,7 +100,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
     try {
       this.mHdfFile.putDataset(name, values);
     } catch (Exception e) {
-      LOG.error("Failed to write double matrix: {}", name, e);
+      logger.error("Failed to write double matrix: {}", name, e);
       throw new RuntimeException(e);
     }
   }
@@ -110,7 +110,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
     try {
       this.mHdfFile.putDataset(name, values);
     } catch (Exception e) {
-      LOG.error("Failed to write string array: {}", name, e);
+      logger.error("Failed to write string array: {}", name, e);
       throw new RuntimeException(e);
     }
   }
@@ -172,7 +172,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
         WritableGroup group = Hdf5WriterAdapter.this.getOrCreateGroup(path);
         group.putAttribute(attributeName, value);
       } catch (Exception e) {
-        LOG.error("Failed to set int attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to set int attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -183,7 +183,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
         WritableGroup group = Hdf5WriterAdapter.this.getOrCreateGroup(path);
         group.putAttribute(attributeName, value);
       } catch (Exception e) {
-        LOG.error("Failed to set int array attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to set int array attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -207,7 +207,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
         WritableGroup group = Hdf5WriterAdapter.this.getOrCreateGroup(path);
         group.putAttribute(attributeName, value);
       } catch (Exception e) {
-        LOG.error("Failed to set string attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to set string attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -218,7 +218,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
         WritableGroup group = Hdf5WriterAdapter.this.getOrCreateGroup(path);
         group.putAttribute(attributeName, value);
       } catch (Exception e) {
-        LOG.error("Failed to set string array attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to set string array attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -230,7 +230,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
       try {
         Hdf5WriterAdapter.this.getOrCreateGroup(path);
       } catch (Exception e) {
-        LOG.error("Failed to create group: {}", path, e);
+        logger.error("Failed to create group: {}", path, e);
         throw new RuntimeException(e);
       }
     }
@@ -243,7 +243,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
         WritableGroup group = Hdf5WriterAdapter.this.getOrCreateGroup(path);
         group.putAttribute(attributeName, value);
       } catch (Exception e) {
-        LOG.error("Failed to set float32 attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to set float32 attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -254,7 +254,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
         WritableGroup group = Hdf5WriterAdapter.this.getOrCreateGroup(path);
         group.putAttribute(attributeName, value);
       } catch (Exception e) {
-        LOG.error("Failed to set float32 array attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to set float32 array attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -267,7 +267,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
         WritableGroup group = Hdf5WriterAdapter.this.getOrCreateGroup(path);
         group.putAttribute(attributeName, value);
       } catch (Exception e) {
-        LOG.error("Failed to set bool attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to set bool attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -281,7 +281,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
         WritableGroup group = Hdf5WriterAdapter.this.getOrCreateGroup(path);
         group.putAttribute(attributeName, (long) value.getValue());
       } catch (Exception e) {
-        LOG.error("Failed to set enum attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to set enum attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }

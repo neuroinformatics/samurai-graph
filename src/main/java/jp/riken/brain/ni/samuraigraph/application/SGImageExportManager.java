@@ -29,6 +29,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.freehep.graphics2d.VectorGraphics;
 import org.freehep.graphicsbase.util.UserProperties;
 import org.freehep.graphicsbase.util.export.ExportDialog;
@@ -46,6 +48,8 @@ import org.freehep.graphicsio.swf.SWFGraphics2D;
 
 /** A class used to preview, print and export an image. */
 public class SGImageExportManager implements SGIImageExportManager, SGIConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGImageExportManager.class);
 
   /** The default file name of an exported image. */
   private static final String DEFAULT_EXPORT_FILE_NAME = "export";
@@ -147,7 +151,7 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
       javax.swing.JComboBox<?> cb = (javax.swing.JComboBox<?>) typeField.get(this.mExportDialog);
       cb.addActionListener(bl);
     } catch (Exception ex) {
-      ex.printStackTrace();
+      logger.warn("Error in image export", ex);
     }
   }
 
@@ -720,10 +724,10 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
       g.setProperties(p);
 
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.warn("Error in image export", e);
       return null;
     } catch (OutOfMemoryError e) {
-      e.printStackTrace();
+      logger.warn("Error in image export", e);
       return null;
     }
 
@@ -1273,7 +1277,7 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
       }
       return p;
     } catch (Exception ex) {
-      ex.printStackTrace();
+      logger.warn("Error in image export", ex);
       return new Properties();
     }
   }
@@ -1284,7 +1288,7 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
       field.setAccessible(true);
       return (String) field.get(null);
     } catch (Exception ex) {
-      ex.printStackTrace();
+      logger.warn("Error in image export", ex);
       return "org.freehep.graphicsbase.util.export.ExportDialog.SaveAsFile";
     }
   }
@@ -1301,7 +1305,7 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
       baseDirField.setAccessible(true);
       baseDirField.set(ed, baseDir);
     } catch (Exception ex) {
-      ex.printStackTrace();
+      logger.warn("Error in image export", ex);
     }
   }
 }

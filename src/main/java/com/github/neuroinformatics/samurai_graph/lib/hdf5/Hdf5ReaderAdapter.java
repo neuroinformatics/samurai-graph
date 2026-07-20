@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /** Adapter that wraps an io.jhdf.HdfFile to provide IHDF5Reader interface. */
 class Hdf5ReaderAdapter implements IHDF5Reader {
 
-  private static final Logger LOG = LoggerFactory.getLogger(Hdf5ReaderAdapter.class);
+  private static final Logger logger = LoggerFactory.getLogger(Hdf5ReaderAdapter.class);
 
   private final HdfFile mHdfFile;
 
@@ -82,7 +82,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
       return new HDF5DataSetInformation(
           new HDF5DataTypeInformation(dataClass, 1), dataset.getDimensions().length, dims);
     } catch (Exception e) {
-      LOG.error("Failed to get dataset information for: {}", dataSetName, e);
+      logger.error("Failed to get dataset information for: {}", dataSetName, e);
       throw new RuntimeException(e);
     }
   }
@@ -92,7 +92,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
     try {
       this.mHdfFile.close();
     } catch (Exception e) {
-      LOG.warn("Error closing HDF5 file", e);
+      logger.warn("Error closing HDF5 file", e);
     }
   }
 
@@ -172,7 +172,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object data = dataset.getData();
         return convertToMDDoubleArray(data);
       } catch (Exception e) {
-        LOG.error("Failed to read float64 data: {}", dataSetName, e);
+        logger.error("Failed to read float64 data: {}", dataSetName, e);
         throw new RuntimeException(e);
       }
     }
@@ -186,7 +186,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object data = dataset.getData();
         return convertToMDIntArray(data);
       } catch (Exception e) {
-        LOG.error("Failed to read int32 data: {}", dataSetName, e);
+        logger.error("Failed to read int32 data: {}", dataSetName, e);
         throw new RuntimeException(e);
       }
     }
@@ -199,7 +199,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object value = attr.getData();
         return toInt(value);
       } catch (Exception e) {
-        LOG.error("Failed to read int attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to read int attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -212,7 +212,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object value = attr.getData();
         return toIntArray(value);
       } catch (Exception e) {
-        LOG.error("Failed to read int array attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to read int array attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -226,7 +226,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object data = dataset.getData();
         return convertToMDLongArray(data);
       } catch (Exception e) {
-        LOG.error("Failed to read int64 data: {}", dataSetName, e);
+        logger.error("Failed to read int64 data: {}", dataSetName, e);
         throw new RuntimeException(e);
       }
     }
@@ -241,7 +241,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object value = attr.getData();
         return toFloat(value);
       } catch (Exception e) {
-        LOG.error("Failed to read float32 attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to read float32 attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -254,7 +254,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object value = attr.getData();
         return toFloatArray(value);
       } catch (Exception e) {
-        LOG.error("Failed to read float32 array attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to read float32 array attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -269,7 +269,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object value = attr.getData();
         return toBoolean(value);
       } catch (Exception e) {
-        LOG.error("Failed to read bool attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to read bool attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -284,7 +284,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object value = attr.getData();
         return new HDF5EnumerationValue(toLong(value));
       } catch (Exception e) {
-        LOG.error("Failed to read enum attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to read enum attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -298,7 +298,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object data = dataset.getData();
         return convertToMDStringArray(data);
       } catch (Exception e) {
-        LOG.error("Failed to read string data: {}", dataSetName, e);
+        logger.error("Failed to read string data: {}", dataSetName, e);
         throw new RuntimeException(e);
       }
     }
@@ -311,7 +311,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object value = attr.getData();
         return toStringValue(value);
       } catch (Exception e) {
-        LOG.error("Failed to read string attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to read string attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -324,7 +324,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Object value = attr.getData();
         return toStringArray(value);
       } catch (Exception e) {
-        LOG.error("Failed to read string array attr: {}@{}", attributeName, path, e);
+        logger.error("Failed to read string array attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -337,7 +337,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Group group = Hdf5ReaderAdapter.this.getGroup(groupName);
         return new ArrayList<>(group.getChildren().keySet());
       } catch (Exception e) {
-        LOG.error("Failed to list group members: {}", groupName, e);
+        logger.error("Failed to list group members: {}", groupName, e);
         throw new RuntimeException(e);
       }
     }
@@ -374,7 +374,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         }
         return members;
       } catch (Exception e) {
-        LOG.error("Failed to get group member paths: {}", path, e);
+        logger.error("Failed to get group member paths: {}", path, e);
         throw new RuntimeException(e);
       }
     }
@@ -385,7 +385,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Node node = Hdf5ReaderAdapter.this.getNodeByPath(path);
         return new ArrayList<>(node.getAttributes().keySet());
       } catch (Exception e) {
-        LOG.error("Failed to get attribute names: {}", path, e);
+        logger.error("Failed to get attribute names: {}", path, e);
         throw new RuntimeException(e);
       }
     }
@@ -415,7 +415,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         return new HDF5DataTypeInformation(
             mapDataClass(attr.getDataType().getDataClass()), (int) numElements);
       } catch (Exception e) {
-        LOG.error("Failed to get attribute info: {}@{}", attributeName, path, e);
+        logger.error("Failed to get attribute info: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }

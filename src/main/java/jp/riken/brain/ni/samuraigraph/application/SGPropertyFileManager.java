@@ -28,6 +28,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGIRootObjectConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -39,6 +41,8 @@ class SGPropertyFileManager
         SGIApplicationConstants,
         SGIApplicationTextConstants,
         SGIPropertyFileConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGPropertyFileManager.class);
 
   /** */
   private Document mPropertyFileDocument = null;
@@ -316,7 +320,7 @@ class SGPropertyFileManager
 
       } catch (Exception ex) {
         result = Boolean.FALSE;
-        ex.printStackTrace();
+        logger.warn("Error loading property file", ex);
       }
     }
 

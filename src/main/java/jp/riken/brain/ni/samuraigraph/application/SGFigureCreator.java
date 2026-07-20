@@ -39,6 +39,9 @@ import org.w3c.dom.NodeList;
 /** */
 public class SGFigureCreator implements SGIFigureConstants {
 
+  private static final org.apache.logging.log4j.Logger logger =
+      org.apache.logging.log4j.LogManager.getLogger(SGFigureCreator.class);
+
   // 2D class names
   private static final String CLASS_NAME_OF_AXIS_ELEMENT_2D =
       "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementAxis";
@@ -454,7 +457,7 @@ public class SGFigureCreator implements SGIFigureConstants {
     try {
       obj = cl.getDeclaredConstructor().newInstance();
     } catch (Exception ex) {
-      ex.printStackTrace();
+      logger.warn("Error in figure creation", ex);
       return null;
     }
 

@@ -24,10 +24,14 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow.BackgroundImage;
 import jp.riken.brain.ni.samuraigraph.base.SGExtensionFileFilter;
 import jp.riken.brain.ni.samuraigraph.base.SGFileChooser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /** Create an archive file. */
 public class SGArchiveFileCreator extends SGFileHandler
     implements SGIApplicationConstants, SGIArchiveFileConstants {
+
+  private static final Logger logger = LogManager.getLogger(SGArchiveFileCreator.class);
 
   /** Constant value of End of File */
   protected static final int EOF = -1;
@@ -120,13 +124,13 @@ public class SGArchiveFileCreator extends SGFileHandler
       bos = new BufferedOutputStream(fos);
       bos.write(bufResult, 0, bufResult.length);
     } catch (FileNotFoundException ex) {
-      ex.printStackTrace();
+      logger.warn("I/O error during archive creation", ex);
       return -1;
     } catch (ZipException ex) {
-      ex.printStackTrace();
+      logger.warn("I/O error during archive creation", ex);
       return -1;
     } catch (IOException ex) {
-      ex.printStackTrace();
+      logger.warn("I/O error during archive creation", ex);
       return -1;
     } finally {
       try {
@@ -161,21 +165,21 @@ public class SGArchiveFileCreator extends SGFileHandler
       bis.read(buf, 0, len);
       return buf;
     } catch (IOException ex) {
-      ex.printStackTrace();
+      logger.warn("I/O error during archive creation", ex);
     } finally {
       try {
         if (bis != null) {
           bis.close();
         }
       } catch (Exception ex) {
-        ex.printStackTrace();
+        logger.warn("I/O error during archive creation", ex);
       }
       try {
         if (fis != null) {
           fis.close();
         }
       } catch (Exception ex) {
-        ex.printStackTrace();
+        logger.warn("I/O error during archive creation", ex);
       }
     }
     return null;
