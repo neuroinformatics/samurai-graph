@@ -2,6 +2,7 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import ucar.ma2.Array;
 import ucar.ma2.DataType;
@@ -266,6 +267,11 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
     }
     SGNetCDFVariable var = (SGNetCDFVariable) obj;
     return SGUtility.equals(var.mVariable, this.mVariable);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.mVariable);
   }
 
   /**

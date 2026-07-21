@@ -6,6 +6,7 @@ import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataTypeInformatio
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import jp.riken.brain.ni.samuraigraph.base.SGAttribute;
 
 /** The wrapper class for a HDF5 file. */
@@ -129,6 +130,11 @@ public class SGHDF5File extends SGMDArrayFile {
       return false;
     }
     return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), this.mReader.file().getFile());
   }
 
   /**

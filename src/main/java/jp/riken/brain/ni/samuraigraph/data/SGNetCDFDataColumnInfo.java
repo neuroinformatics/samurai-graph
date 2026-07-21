@@ -2,6 +2,7 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import jp.riken.brain.ni.samuraigraph.base.SGAttribute;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
@@ -196,5 +197,15 @@ public class SGNetCDFDataColumnInfo extends SGDataColumnInfo {
       return false;
     }
     return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        super.hashCode(),
+        this.mName,
+        this.mCoordinateVariableFlag,
+        this.mDimensionList,
+        this.mOrigin);
   }
 }

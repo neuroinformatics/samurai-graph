@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import jp.riken.brain.ni.samuraigraph.base.SGAttribute;
 
@@ -120,5 +121,10 @@ public class SGMATLABFile extends SGMDArrayFile {
       return false;
     }
     return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), this.mFilePath);
   }
 }

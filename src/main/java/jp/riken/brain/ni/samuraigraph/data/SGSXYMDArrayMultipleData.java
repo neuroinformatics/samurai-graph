@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
@@ -943,6 +944,11 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         return false;
       }
       return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(super.hashCode(), this.mDecimalPlaces, this.mExponent);
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
@@ -277,5 +278,15 @@ public class SGMDArrayDataColumnInfo extends SGDataColumnInfo implements SGIMDAr
       return false;
     }
     return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        super.hashCode(),
+        this.mVariableName,
+        java.util.Arrays.hashCode(this.mDimensions),
+        this.mDimensionIndices,
+        java.util.Arrays.hashCode(this.mOrigins));
   }
 }

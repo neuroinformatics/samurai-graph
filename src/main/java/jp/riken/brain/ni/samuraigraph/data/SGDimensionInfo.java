@@ -1,5 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import java.util.Objects;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import ucar.nc2.Dimension;
 
@@ -54,5 +55,10 @@ public class SGDimensionInfo {
       return false;
     }
     return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.mName, this.mLength);
   }
 }

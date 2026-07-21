@@ -1,5 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import java.util.Objects;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
@@ -33,5 +34,10 @@ public class SGNetCDFPickUpDimensionInfo extends SGPickUpDimensionInfo {
       return false;
     }
     return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), this.mDimensionName);
   }
 }
