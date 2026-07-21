@@ -113,7 +113,7 @@ public class SGMATLABFile extends SGMDArrayFile {
     if (!super.equals(obj)) {
       return false;
     }
-    if (!(obj instanceof SGMDArrayFile)) {
+    if (!(obj instanceof SGMATLABFile)) {
       return false;
     }
     SGMATLABFile matFile = (SGMATLABFile) obj;
