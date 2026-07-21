@@ -43,10 +43,14 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTable;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** A panel to set the line style. */
 public class SGLineStylePanel extends javax.swing.JPanel
     implements SGIConstants, ActionListener, ItemListener, MouseInputListener, MouseWheelListener {
+
+  private static final Logger logger = LoggerFactory.getLogger(SGLineStylePanel.class);
 
   private static final long serialVersionUID = 643669519397055582L;
 
@@ -807,6 +811,7 @@ public class SGLineStylePanel extends javax.swing.JPanel
         String parsedStr = this.parseString(text, MODE_DEFAULT);
         this.mParsedResult = parsedStr;
       } catch (BadLocationException e1) {
+        logger.debug("Failed to get document text", e1);
       }
     }
 

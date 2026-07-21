@@ -3192,6 +3192,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return nameList;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   protected boolean exportToFile(
       NetcdfFileWriter ncWrite, final SGExportParameter mode, SGDataBufferPolicy policy)
@@ -3709,6 +3710,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   private void writeValues(
       NetcdfFileWriter ncWrite, Variable var, DataType dataType, double[] values, int[] shape)
       throws IOException, InvalidRangeException {
@@ -3718,6 +3720,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     this.writeValues(ncWrite, var, array);
   }
 
+  @SuppressWarnings("deprecation")
   private void writeValues(
       NetcdfFileWriter ncWrite, Variable var, DataType dataType, double[][] values, int[] shape)
       throws IOException, InvalidRangeException {
@@ -3751,6 +3754,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return ret;
   }
 
+  @SuppressWarnings("deprecation")
   private void addErrorVariables(
       NetcdfFileWriter ncWrite,
       final int num,
@@ -3805,6 +3809,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
+  @SuppressWarnings("deprecation")
   private void addTickLabelVariables(
       NetcdfFileWriter ncWrite,
       final int num,
@@ -3844,6 +3849,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
+  @SuppressWarnings("deprecation")
   private void addTickLabelDimension(
       NetcdfFileWriter ncWrite,
       final int num,
@@ -3918,6 +3924,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return maxLength;
   }
 
+  @SuppressWarnings("deprecation")
   private void writeCharValue(
       NetcdfFileWriter ncWrite, String varName, String lenDimName, String[] strArray)
       throws IOException, InvalidRangeException {
@@ -3935,6 +3942,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     ncWrite.write(ncWrite.findVariable(varName), array);
   }
 
+  @SuppressWarnings("deprecation")
   private void writeCharValue(
       NetcdfFileWriter ncWrite, String varName, String lenDimName, String[][] strArray)
       throws IOException, InvalidRangeException {
@@ -4544,6 +4552,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   protected Array setEditedValues(
       NetcdfFileWriter ncWrite, String varName, Array array, final boolean all) {
 

@@ -81,7 +81,7 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
     }
 
     // add coordinate variables that do not exist in the file
-    List<Dimension> dimList = ncfile.getDimensions();
+    List<Dimension> dimList = ncfile.getRootGroup().getDimensions();
     for (Dimension dim : dimList) {
       boolean exists = false;
       for (Variable var : varList) {
@@ -264,7 +264,7 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
   }
 
   public List<Dimension> getDimensions() {
-    return this.mNetcdfFile.getDimensions();
+    return this.mNetcdfFile.getRootGroup().getDimensions();
   }
 
   public Dimension findDimension(String name) {

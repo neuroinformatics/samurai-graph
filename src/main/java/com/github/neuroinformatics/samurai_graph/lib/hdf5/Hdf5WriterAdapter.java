@@ -279,7 +279,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
         final String path, final String attributeName, final HDF5EnumerationValue value) {
       try {
         WritableGroup group = Hdf5WriterAdapter.this.getOrCreateGroup(path);
-        group.putAttribute(attributeName, (long) value.getValue());
+        group.putAttribute(attributeName, value.getValue());
       } catch (Exception e) {
         logger.error("Failed to set enum attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);

@@ -15,9 +15,13 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** A class for date. */
 public class SGDate implements Comparable<SGDate> {
+
+  private static final Logger logger = LoggerFactory.getLogger(SGDate.class);
 
   // An input text string.
   private String mString = null;
@@ -384,6 +388,7 @@ public class SGDate implements Comparable<SGDate> {
       }
       // Note: The ZonedDateTime object is always parsed in UTC time zone.
     } catch (Exception e) {
+      logger.debug("Failed to parse date string", e);
     }
     if (dateTime != null && zone != null) {
       ret = new DateParseResult(dateTime, zone);

@@ -709,6 +709,7 @@ public class SGDataCreator
                   try {
                       ncFile.close();
                   } catch (IOException e) {
+                      logger.debug("Failed to close NetCDF file", e);
                   }
               }
           }

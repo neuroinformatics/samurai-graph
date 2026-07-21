@@ -48,6 +48,8 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility.MouseDragInput;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility.MouseDragResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -63,6 +65,8 @@ public class SGDrawingWindow extends JFrame
         SGIRootObject,
         SGIWindowDialogObserver,
         SGIProgressControl {
+
+  private static final Logger logger = LoggerFactory.getLogger(SGDrawingWindow.class);
 
   // serialVersionUID
   private static final long serialVersionUID = -7587763518020468378L;
@@ -795,6 +799,8 @@ public class SGDrawingWindow extends JFrame
     try {
       mt.waitForAll();
     } catch (InterruptedException ex) {
+      Thread.currentThread().interrupt();
+      logger.debug("Image loading interrupted", ex);
     }
     if (img == null) {
       return false;

@@ -413,7 +413,7 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Attribute attr = node.getAttribute(attributeName);
         int numElements = (int) attr.getSize();
         return new HDF5DataTypeInformation(
-            mapDataClass(attr.getDataType().getDataClass()), (int) numElements);
+            mapDataClass(attr.getDataType().getDataClass()), numElements);
       } catch (Exception e) {
         logger.error("Failed to get attribute info: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);

@@ -1031,6 +1031,8 @@ public class SGDataAnimationDialog extends SGDialog
     try {
       this.mAnimationThread.join();
     } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      logger.debug("Animation thread join interrupted", e);
     }
   }
 

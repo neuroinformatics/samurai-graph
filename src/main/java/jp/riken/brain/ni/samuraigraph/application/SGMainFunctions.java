@@ -5025,6 +5025,7 @@ class SGMainFunctions
           mStdoutWriter.write(errmsg);
           mStdoutWriter.flush();
         } catch (IOException e1) {
+          logger.debug("Failed to write error message to stdout", e1);
         }
       } catch (IOException e) {
         logger.debug("Exception occurred", e);
@@ -5915,6 +5916,7 @@ class SGMainFunctions
   };
 
   /** Saves properties or script into global attributes of data source file of selected data. */
+  @SuppressWarnings("deprecation")
   void saveIntoGlobalAttributes(SGDrawingWindow wnd, SAVED_OBJECT_TYPE objType) {
 
     // get visible figures and focused NetCDF data objects in them

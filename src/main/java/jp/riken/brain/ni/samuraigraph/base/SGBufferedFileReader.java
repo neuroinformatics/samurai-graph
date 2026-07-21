@@ -5,9 +5,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** The wrapper class of file writer using buffered writer. */
 public class SGBufferedFileReader {
+
+  private static final Logger logger = LoggerFactory.getLogger(SGBufferedFileReader.class);
 
   private FileInputStream fis = null;
   private InputStreamReader isr = null;
@@ -52,18 +56,21 @@ public class SGBufferedFileReader {
       try {
         br.close();
       } catch (IOException e) {
+        logger.debug("Failed to close buffered reader", e);
       }
     }
     if (isr != null) {
       try {
         isr.close();
       } catch (IOException e) {
+        logger.debug("Failed to close input stream reader", e);
       }
     }
     if (fis != null) {
       try {
         fis.close();
       } catch (IOException e) {
+        logger.debug("Failed to close file input stream", e);
       }
     }
   }

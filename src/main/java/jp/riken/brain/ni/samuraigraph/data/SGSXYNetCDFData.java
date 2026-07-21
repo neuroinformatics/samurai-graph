@@ -24,6 +24,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayChar;
 import ucar.ma2.DataType;
@@ -35,6 +37,8 @@ import ucar.nc2.Variable;
 /** The class of scalar XY type data with netCDF data. */
 public class SGSXYNetCDFData extends SGNetCDFData
     implements SGISXYTypeSingleData, SGIDataPropertyKeyConstants {
+
+  private static final Logger logger = LoggerFactory.getLogger(SGSXYNetCDFData.class);
 
   /** The variable for x-values. */
   protected SGNetCDFVariable mXVariable = null;
@@ -1934,6 +1938,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     try {
       value = this.getCoordinateValue(name, index);
     } catch (IOException e) {
+      logger.debug("Failed to get coordinate value", e);
     }
 
     // append to the string buffer
@@ -1958,11 +1963,13 @@ public class SGSXYNetCDFData extends SGNetCDFData
     try {
       value0 = this.getCoordinateValue(name, index0);
     } catch (IOException e) {
+      logger.debug("Failed to get coordinate value for index0", e);
     }
     Double value1 = null;
     try {
       value1 = this.getCoordinateValue(name, index1);
     } catch (IOException e) {
+      logger.debug("Failed to get coordinate value for index1", e);
     }
 
     // append to the string buffer

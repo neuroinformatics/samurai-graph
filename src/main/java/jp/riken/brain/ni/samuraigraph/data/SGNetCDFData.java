@@ -28,6 +28,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayByte;
@@ -50,6 +52,8 @@ import ucar.nc2.Variable;
 /** The base class for netCDF data. */
 public abstract class SGNetCDFData extends SGArrayData
     implements SGIIndexData, SGITextDataConstants, SGIDataColumnTypeConstants, SGINetCDFConstants {
+
+  private static final Logger logger = LoggerFactory.getLogger(SGNetCDFData.class);
 
   /**
    * The map of origin of coordinate variables. Keys are the name of coordinate variables and values
@@ -1912,6 +1916,7 @@ public abstract class SGNetCDFData extends SGArrayData
    * @param mode the mode of saving data
    * @return true if succeeded
    */
+  @SuppressWarnings("deprecation")
   @Override
   public boolean saveToArchiveDataSetFile(final File file, final SGExportParameter mode) {
     if (!SGDataUtility.isArchiveDataSetOperation(mode.getType())) {
@@ -2079,15 +2084,18 @@ public abstract class SGNetCDFData extends SGArrayData
         try {
           ncWrite.close();
         } catch (IOException e) {
+          logger.debug("Failed to close NetCDF file writer", e);
         }
       }
     }
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   protected abstract Array setEditedValues(
       NetcdfFileWriter ncWrite, String varName, Array array, final boolean all);
 
+  @SuppressWarnings("deprecation")
   private Variable addVariable(
       NetcdfFileWriter ncWrite,
       String varName,
@@ -2114,34 +2122,40 @@ public abstract class SGNetCDFData extends SGArrayData
     return this.saveToNetCDFFile(file, mode, policy);
   }
 
+  @SuppressWarnings("deprecation")
   protected abstract boolean exportToFile(
       NetcdfFileWriter ncWrite, final SGExportParameter mode, SGDataBufferPolicy policy)
       throws IOException, InvalidRangeException;
 
+  @SuppressWarnings("deprecation")
   protected Dimension addDimension(NetcdfFileWriter ncWrite, String name, final int len) {
     Dimension dim = new Dimension(name, len);
     ncWrite.addDimension(null, dim.getShortName(), dim.getLength());
     return dim;
   }
 
+  @SuppressWarnings("deprecation")
   protected Attribute addAttribute(Variable var, String name, String value) {
     Attribute attr = new Attribute(name, value);
     var.addAttribute(attr);
     return attr;
   }
 
+  @SuppressWarnings("deprecation")
   protected Attribute addAttribute(Variable var, String name, Number value) {
     Attribute attr = new Attribute(name, value);
     var.addAttribute(attr);
     return attr;
   }
 
+  @SuppressWarnings("deprecation")
   protected Attribute addAttribute(Variable var, String name, Array array) {
-    Attribute attr = new Attribute(name, array);
+    Attribute attr = Attribute.builder().setName(name).setValues(array).build();
     var.addAttribute(attr);
     return attr;
   }
 
+  @SuppressWarnings("deprecation")
   protected Variable addVariable(
       NetcdfFileWriter ncWrite,
       SGExportParameter mode,
@@ -2153,6 +2167,7 @@ public abstract class SGNetCDFData extends SGArrayData
     return this.addVariable(ncWrite, mode, name, name, dataType, valueType, dimString, policy);
   }
 
+  @SuppressWarnings("deprecation")
   protected Variable addVariable(
       NetcdfFileWriter ncWrite,
       SGExportParameter mode,
@@ -2237,6 +2252,7 @@ public abstract class SGNetCDFData extends SGArrayData
    * @param file the file to save
    * @return true if succeeded
    */
+  @SuppressWarnings("deprecation")
   @Override
   public boolean saveToNetCDFFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
@@ -2257,12 +2273,14 @@ public abstract class SGNetCDFData extends SGArrayData
         try {
           ncWrite.close();
         } catch (IOException e) {
+          logger.debug("Failed to close NetCDF file writer", e);
         }
       }
     }
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   public boolean saveToDataSetNetCDFFile(final File file) {
 
     SGNetCDFVariable[] vArray = this.getAssignedVariables();
@@ -2516,6 +2534,7 @@ public abstract class SGNetCDFData extends SGArrayData
     }
   }
 
+  @SuppressWarnings("deprecation")
   protected void writeValues(NetcdfFileWriter ncWrite, Variable var, Array values)
       throws IOException, InvalidRangeException {
     String varName = var.getShortName();
@@ -2848,6 +2867,7 @@ public abstract class SGNetCDFData extends SGArrayData
       try {
         value = this.getCoordinateValue(name, index);
       } catch (IOException e) {
+        logger.debug("Failed to get coordinate value", e);
       }
 
       // append to the string buffer

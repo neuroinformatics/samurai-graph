@@ -1013,6 +1013,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * @param file the file to save
    * @return true if succeeded
    */
+  @SuppressWarnings("deprecation")
   @Override
   public boolean saveToNetCDFFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
@@ -1079,6 +1080,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public boolean saveToDataSetNetCDFFile(final File file) {
     SGMDArrayFile mdFile = this.getMDArrayFile();
@@ -1144,6 +1146,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   void addGroup(NetcdfFileWriter ncWrite, Group parent, MDArrayNode node) {
     Group g = null;
     if (node.name != null) {
@@ -1204,6 +1207,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * @param ncWrite a netCDF file
    * @return true if succeeded
    */
+  @SuppressWarnings("deprecation")
   protected abstract boolean addVariables(NetcdfFileWriter ncWrite);
 
   /**
@@ -1212,8 +1216,10 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * @param ncWrite a netCDF file
    * @return true if succeeded
    */
+  @SuppressWarnings("deprecation")
   protected abstract boolean writeData(NetcdfFileWriter ncWrite);
 
+  @SuppressWarnings("deprecation")
   protected void appendAttribute(
       NetcdfFileWriter ncWrite, SGMDArrayVariable var, String ncVarName) {
     List<SGAttribute> attrList = var.getAttributes();
@@ -1227,6 +1233,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   protected static final String TIME_DIM_NAME = "time";
 
   // add time dimensions
+  @SuppressWarnings("deprecation")
   protected Dimension addTimeVariable(NetcdfFileWriter ncWrite) {
     int timeLen = -1;
     SGMDArrayVariable[] vars = this.getAssignedVariables();
@@ -1245,16 +1252,19 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return timeDim;
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean addSequentialIntegerNumberVariable(
       NetcdfFileWriter ncWrite, Dimension dim, String name) {
     return this.addSequentialNumberVariable(ncWrite, dim, name, DataType.INT);
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean addSequentialDoubleNumberVariable(
       NetcdfFileWriter ncWrite, Dimension dim, String name) {
     return this.addSequentialNumberVariable(ncWrite, dim, name, DataType.DOUBLE);
   }
 
+  @SuppressWarnings("deprecation")
   private boolean addSequentialNumberVariable(
       NetcdfFileWriter ncWrite, Dimension dim, String name, DataType dataType) {
     List<Dimension> dimList = new ArrayList<Dimension>();
@@ -1265,16 +1275,19 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean writeSequentialIntegerNumbers(
       NetcdfFileWriter ncWrite, String varName, final int len) {
     return this.writeSequentialNumbers(ncWrite, varName, len, DataType.INT);
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean writeSequentialDoubleNumbers(
       NetcdfFileWriter ncWrite, String varName, final int len) {
     return this.writeSequentialNumbers(ncWrite, varName, len, DataType.DOUBLE);
   }
 
+  @SuppressWarnings("deprecation")
   private boolean writeSequentialNumbers(
       NetcdfFileWriter ncWrite, String varName, final int len, DataType dataType) {
     Array valueArray = Array.factory(dataType, new int[] {len});
@@ -1287,6 +1300,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean write1DDoubleArray(
       NetcdfFileWriter ncWrite,
       String varName,
@@ -1308,6 +1322,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean write2DDoubleArray(
       NetcdfFileWriter ncWrite,
       String varName,
@@ -1337,6 +1352,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean write3DDoubleArray(
       NetcdfFileWriter ncWrite,
       String varName,
@@ -1372,6 +1388,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean writeArray(NetcdfFileWriter ncWrite, String varName, Array array) {
     try {
       ncWrite.write(ncWrite.findVariable(varName), array);
@@ -1383,6 +1400,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean writeStringArray(NetcdfFileWriter ncWrite, String varName, Array array) {
     try {
       ncWrite.writeStringData(ncWrite.findVariable(varName), array);
@@ -1412,6 +1430,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return retList;
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean addDoubleVariable(
       NetcdfFileWriter ncWrite, List<Dimension> dimList, String name) {
     SGMDArrayVariable var = this.findVariable(name);
@@ -1437,6 +1456,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean addStringVariable(
       NetcdfFileWriter ncWrite, List<Dimension> indexDimList, String name, final int maxStrLen) {
     List<Dimension> dimList = new ArrayList<Dimension>();
@@ -1463,6 +1483,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
+  @SuppressWarnings("deprecation")
   private void addAttributes(SGMDArrayVariable mdVar, Variable ncVar) {
     List<SGAttribute> attrList = mdVar.getAttributes();
     for (SGAttribute attr : attrList) {
@@ -1489,6 +1510,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     sbGroupName.append(groupName);
   }
 
+  @SuppressWarnings("deprecation")
   protected boolean writeTimeData(NetcdfFileWriter ncWrite) {
     Dimension timeDim = ncWrite.getNetcdfFile().findDimension(TIME_DIM_NAME);
     if (timeDim != null) {
