@@ -65,6 +65,7 @@
                         <arg>-Xlint:all</arg>
                     </compilerArgs>
                     <fork>true</fork>
+                    <proc>none</proc>
                 </configuration>
             </plugin>
 
