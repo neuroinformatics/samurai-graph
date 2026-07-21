@@ -45,7 +45,7 @@ public class SGAxis implements Cloneable {
    */
   public SGAxis(final double minValue, final double maxValue, final int type) {
     super();
-    this.setScale(minValue, maxValue, type);
+    this.setScaleImpl(new SGAxisDoubleValue(minValue), new SGAxisDoubleValue(maxValue), type);
   }
 
   /**
@@ -65,7 +65,7 @@ public class SGAxis implements Cloneable {
    */
   public SGAxis(final SGTuple2d range, final int type) {
     super();
-    this.setScale(range.x, range.y, type);
+    this.setScaleImpl(new SGAxisDoubleValue(range.x), new SGAxisDoubleValue(range.y), type);
   }
 
   /**
@@ -124,6 +124,10 @@ public class SGAxis implements Cloneable {
   }
 
   public boolean setScale(final SGAxisValue min, final SGAxisValue max, final int scaleType) {
+    return setScaleImpl(min, max, scaleType);
+  }
+
+  private boolean setScaleImpl(final SGAxisValue min, final SGAxisValue max, final int scaleType) {
     // checks wrong scale type
     if (isValidScaleType(scaleType) == false) {
       throw new IllegalArgumentException("Invalid scale type: " + scaleType);

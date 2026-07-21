@@ -2478,6 +2478,10 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @param name the name of icon resource
    * @return created image icon
    */
+  public static ImageIcon createIcon(Class<?> cl, final String name) {
+    return createIcon(cl, null, name);
+  }
+
   public static ImageIcon createIcon(Class<?> cl, Component comp, final String name) {
     URL url = cl.getResource(SGIConstants.RESOURCES_DIRNAME + name);
     ImageIcon icon = null;

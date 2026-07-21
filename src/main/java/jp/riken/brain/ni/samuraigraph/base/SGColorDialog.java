@@ -30,11 +30,6 @@ public class SGColorDialog extends JDialog {
   public SGColorDialog(final Dialog parent) {
     super(parent, false);
 
-    // initialize
-    this.init();
-  }
-
-  private void init() {
     this.setTitle(TITLE);
 
     // hides the preview panel

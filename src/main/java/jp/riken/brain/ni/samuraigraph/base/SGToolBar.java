@@ -153,6 +153,7 @@ public class SGToolBar extends JToolBar
   private transient JPopupMenu mPopupMenu = null;
 
   /** Default constructor. */
+  @SuppressWarnings("this-escape")
   public SGToolBar() {
     super();
 
@@ -160,6 +161,7 @@ public class SGToolBar extends JToolBar
   }
 
   /** A constructor setting the root object. */
+  @SuppressWarnings("this-escape")
   public SGToolBar(SGIRootObject root) {
     super();
 
@@ -181,7 +183,7 @@ public class SGToolBar extends JToolBar
 
     ImageIcon[] icons = new ImageIcon[num];
     for (int ii = 0; ii < num; ii++) {
-      icons[ii] = SGUtility.createIcon(this, filenameArray[ii]);
+      icons[ii] = SGUtility.createIcon(getClass(), filenameArray[ii]);
     }
 
     // a map of file name and icon

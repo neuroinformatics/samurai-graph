@@ -29,7 +29,7 @@ public class SGColorSelectionButton extends SGButton {
     this.setBorder(new LineBorder(Color.BLACK, 1));
 
     // create background icon for the button
-    this.mColorSelectionButtonEmphasisIcon = SGUtility.createIcon(this, "Lines.gif");
+    this.mColorSelectionButtonEmphasisIcon = SGUtility.createIcon(getClass(), "Lines.gif");
   }
 
   /**

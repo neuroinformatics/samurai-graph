@@ -138,7 +138,9 @@ public abstract class SGFigure
     // this.setWindow(wnd);
     this.mWnd = wnd;
     this.mComponent = wnd.getFigurePanel();
-    this.create();
+    this.setBackgroundColor(DEFAULT_FIGURE_BACKGROUND_COLOR);
+    this.setVisible(true);
+    this.mUndoManager = new SGUndoManager(this);
   }
 
   /**
@@ -151,18 +153,6 @@ public abstract class SGFigure
   /**
    * @return
    */
-  private boolean create() {
-    // this.createDialog();
-    // this.createPopupMenu();
-
-    // initialize properties
-    this.setBackgroundColor(DEFAULT_FIGURE_BACKGROUND_COLOR);
-    this.setVisible(true);
-    // this.setOpaque(false);
-
-    return true;
-  }
-
   private boolean mVisibleFlag = true;
 
   public boolean isVisible() {
@@ -2630,7 +2620,7 @@ public abstract class SGFigure
   }
 
   // an undo manager
-  private SGUndoManager mUndoManager = new SGUndoManager(this);
+  private SGUndoManager mUndoManager;
 
   /**
    * Initialize the history of properties.

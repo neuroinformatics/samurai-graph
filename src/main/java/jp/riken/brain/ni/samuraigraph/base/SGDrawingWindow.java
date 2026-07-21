@@ -136,7 +136,47 @@ public class SGDrawingWindow extends JFrame
   /** constructor */
   public SGDrawingWindow() {
     super();
-    this.create();
+    this.mUndoManager = new SGUndoManager(this);
+    // load images
+    Map<String, ImageIcon> map = this.loadImages();
+
+    // update the UI
+    SwingUtilities.updateComponentTreeUI(this);
+
+    // icon image
+    final ImageIcon icon = map.get(SAMURAI_IMG_FILENAME);
+    this.setIconImage(icon.getImage());
+
+    // create the menu bar
+    this.createMenuBar();
+
+    // create a tool bar
+    this.createToolBar();
+
+    // create a status bar
+    this.createStatusBar();
+
+    // create a client panel
+    this.createClientPanel();
+
+    // pack
+    this.pack();
+
+    // initializes flag map
+    this.initInsertFlagMap();
+
+    // update items
+    this.updateItemsByFigureNumbers();
+    this.updateGridItems();
+    this.updateUndoItems();
+    this.updateFocusedObjectItem();
+    this.updateZoomItems();
+    this.updateSnapToGridItems();
+    this.updateModeMenuItems();
+
+    // set saved flag
+    this.setSaved(false);
+
     SwingUtilities.invokeLater(
         new Runnable() {
           public void run() {
@@ -224,58 +264,13 @@ public class SGDrawingWindow extends JFrame
     final int num = keys.length;
     ImageIcon[] icons = new ImageIcon[num];
     for (int ii = 0; ii < num; ii++) {
-      icons[ii] = SGUtility.createIcon(this, keys[ii]);
+      icons[ii] = SGUtility.createIcon(getClass(), keys[ii]);
     }
     Map<String, ImageIcon> m = new HashMap<String, ImageIcon>();
     for (int ii = 0; ii < num; ii++) {
       m.put(keys[ii], icons[ii]);
     }
     return m;
-  }
-
-  /** create window */
-  private boolean create() {
-    // load images
-    Map<String, ImageIcon> map = this.loadImages();
-
-    // update the UI
-    SwingUtilities.updateComponentTreeUI(this);
-
-    // icon image
-    final ImageIcon icon = map.get(SAMURAI_IMG_FILENAME);
-    this.setIconImage(icon.getImage());
-
-    // create the menu bar
-    this.createMenuBar();
-
-    // create a tool bar
-    this.createToolBar();
-
-    // create a status bar
-    this.createStatusBar();
-
-    // create a client panel
-    this.createClientPanel();
-
-    // pack
-    this.pack();
-
-    // initializes flag map
-    this.initInsertFlagMap();
-
-    // update items
-    this.updateItemsByFigureNumbers();
-    this.updateGridItems();
-    this.updateUndoItems();
-    this.updateFocusedObjectItem();
-    this.updateZoomItems();
-    this.updateSnapToGridItems();
-    this.updateModeMenuItems();
-
-    // set saved flag
-    this.setSaved(false);
-
-    return true;
   }
 
   /** Update items enabled for toolbar and menubar by whether any figures is visible or not. */
@@ -4949,7 +4944,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  private transient SGUndoManager mUndoManager = new SGUndoManager(this);
+  private transient SGUndoManager mUndoManager;
 
   public SGProperties getMemento() {
     return this.getProperties();
