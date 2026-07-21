@@ -51,7 +51,7 @@ public class SGSDArrayFile extends SGDataSource {
     }
 
     // set to attributes
-    this.mDataColumns = (SGDataColumn[]) columns.clone();
+    this.mDataColumns = columns.clone();
     this.mFilePath = filePath;
   }
 
@@ -70,7 +70,7 @@ public class SGSDArrayFile extends SGDataSource {
    * @return the array of data columns
    */
   public SGDataColumn[] getDataColumns() {
-    return (SGDataColumn[]) this.mDataColumns.clone();
+    return this.mDataColumns.clone();
   }
 
   /**
@@ -190,7 +190,7 @@ public class SGSDArrayFile extends SGDataSource {
     }
     int[] array = new int[indexList.size()];
     for (int ii = 0; ii < indexList.size(); ii++) {
-      Integer value = (Integer) indexList.get(ii);
+      Integer value = indexList.get(ii);
       array[ii] = value.intValue();
     }
     return array;

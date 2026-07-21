@@ -145,6 +145,11 @@ public abstract class SGColorMapManager {
       }
       return true;
     }
+
+    @Override
+    public int hashCode() {
+      return super.hashCode();
+    }
   }
 
   /** A color bar model that gives gradationally varying colors. */
@@ -205,6 +210,11 @@ public abstract class SGColorMapManager {
         return false;
       }
       return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return super.hashCode();
     }
 
     public static final String KEY_COLOR_1 = "Color1";
@@ -343,6 +353,11 @@ public abstract class SGColorMapManager {
       }
       return true;
     }
+
+    @Override
+    public int hashCode() {
+      return super.hashCode();
+    }
   }
 
   /** A color bar model that gives repeated varying colors. */
@@ -371,7 +386,7 @@ public abstract class SGColorMapManager {
       final int digit = (int) (value);
       final float valueNew = (float) (value - digit);
       final int digitNew = (int) (valueNew * mRepeatedNum);
-      final float valueNew2 = (float) (valueNew * mRepeatedNum - digitNew);
+      final float valueNew2 = valueNew * mRepeatedNum - digitNew;
       return this.mModel.eval(valueNew2);
     }
 
