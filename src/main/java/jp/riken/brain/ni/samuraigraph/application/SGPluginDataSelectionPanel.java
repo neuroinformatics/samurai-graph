@@ -399,7 +399,7 @@ public class SGPluginDataSelectionPanel extends javax.swing.JPanel implements Mo
 
     private static final long serialVersionUID = -3622575879072448810L;
 
-    private DataTreeCellRenderer renderer = new DataTreeCellRenderer();
+    private transient DataTreeCellRenderer renderer = new DataTreeCellRenderer();
 
     private int stateCounter = 0;
 
@@ -552,7 +552,7 @@ public class SGPluginDataSelectionPanel extends javax.swing.JPanel implements Mo
 
     private String text = null;
 
-    private WrappedData wData = null;
+    private transient WrappedData wData = null;
 
     public DataTreeNode(String text, WrappedData wData) {
       super();
@@ -695,7 +695,7 @@ public class SGPluginDataSelectionPanel extends javax.swing.JPanel implements Mo
   private int mDraggedRow = -1;
 
   // The list of tree nodes selected in the tree.
-  private List<DataTreeNode> mTableTreeNodeList = new ArrayList<DataTreeNode>();
+  private ArrayList<DataTreeNode> mTableTreeNodeList = new ArrayList<DataTreeNode>();
 
   @Override
   public void mouseClicked(MouseEvent e) {
