@@ -410,7 +410,7 @@ public class SGPluginDataSelectionPanel extends javax.swing.JPanel implements Mo
     @Override
     public Object getCellEditorValue() {
       JCheckBox checkbox = renderer.getCheckBoxRenderer();
-      TreeNode selectedNode = (TreeNode) getSelectedNode();
+      TreeNode selectedNode = getSelectedNode();
       if (selectedNode instanceof DataTreeNode) {
         ((DataTreeNode) selectedNode).setSelected(checkbox.isSelected());
       }

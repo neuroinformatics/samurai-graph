@@ -164,7 +164,7 @@ class SGCommandManager
     if (argsList.size() == 0) {
       return null;
     }
-    String str = (String) argsList.get(0);
+    String str = argsList.get(0);
     final Integer id = SGUtilityText.getInteger(str);
     if (id == null) {
       return null;
@@ -189,7 +189,7 @@ class SGCommandManager
       }
       return cur.getID();
     }
-    String first = (String) argsList.get(0);
+    String first = argsList.get(0);
     final Integer id = SGUtilityText.getInteger(first);
     if (id == null) {
       // ex. Window(BackgroundColor=RED, ...)
@@ -524,7 +524,7 @@ class SGCommandManager
       if (argc < 1) {
         return STATUS_FAILED;
       }
-      String str1 = (String) argsList.get(0); // path
+      String str1 = argsList.get(0); // path
       if (str1.startsWith("\"")) {
         str1 = str1.substring(1);
       }
@@ -1413,7 +1413,7 @@ class SGCommandManager
         return STATUS_FAILED;
       }
 
-      SGIFigureElement el = (SGIFigureElement) figure.getIFigureElement(cl);
+      SGIFigureElement el = figure.getIFigureElement(cl);
       if (el == null) {
         return STATUS_FAILED;
       }

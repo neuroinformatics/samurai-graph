@@ -1747,7 +1747,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         varList.add(this.mIndexVariable);
       }
       SGNetCDFVariable[] varArray = new SGNetCDFVariable[varList.size()];
-      return (SGNetCDFVariable[]) varList.toArray(varArray);
+      return varList.toArray(varArray);
     } else {
       List<SGNetCDFVariable> varList = new ArrayList<SGNetCDFVariable>();
       for (int ii = 0; ii < this.mXVariables.length; ii++) {
@@ -1778,7 +1778,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         varList.add(this.mIndexVariable);
       }
       SGNetCDFVariable[] varArray = new SGNetCDFVariable[varList.size()];
-      return (SGNetCDFVariable[]) varList.toArray(varArray);
+      return varList.toArray(varArray);
     }
   }
 
@@ -2549,7 +2549,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       return null;
     }
     if (dataList.size() == 1) {
-      SGData data = (SGData) dataList.get(0);
+      SGData data = dataList.get(0);
       if ((data instanceof SGSXYNetCDFMultipleData) == false) {
         return null;
       }

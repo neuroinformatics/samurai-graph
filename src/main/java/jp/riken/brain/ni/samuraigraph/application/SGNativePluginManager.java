@@ -183,7 +183,7 @@ public class SGNativePluginManager
         // finds the plug-in file
         SGIDataCalcLibrary lib = null;
         try {
-          lib = (SGIDataCalcLibrary) Native.loadLibrary(libFilePath, SGIDataCalcLibrary.class);
+          lib = Native.loadLibrary(libFilePath, SGIDataCalcLibrary.class);
         } catch (UnsatisfiedLinkError e) {
           continue;
         }

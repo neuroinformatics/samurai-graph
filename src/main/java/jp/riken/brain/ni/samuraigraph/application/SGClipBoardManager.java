@@ -74,7 +74,7 @@ class SGClipBoardManager
   // Clears all lists.
   private void clearAllLists() {
     for (int ii = 0; ii < this.mCopiedDataObjectBuffer.size(); ii++) {
-      SGData data = (SGData) this.mCopiedDataObjectBuffer.get(ii);
+      SGData data = this.mCopiedDataObjectBuffer.get(ii);
       data.dispose();
     }
     this.mCopiedObjectsBuffer.clear();
@@ -180,7 +180,7 @@ class SGClipBoardManager
     Map<Integer, List<SGData>> dListMap = new TreeMap<Integer, List<SGData>>();
     List<SGFigure> fList = wnd.getCopiedFiguresList();
     for (int ii = 0; ii < fList.size(); ii++) {
-      SGFigure figure = (SGFigure) fList.get(ii);
+      SGFigure figure = fList.get(ii);
       List<SGData> dList = new ArrayList<SGData>(figure.getVisibleDataList());
       List<SGData> dListCopy = new ArrayList<SGData>();
       for (int jj = 0; jj < dList.size(); jj++) {

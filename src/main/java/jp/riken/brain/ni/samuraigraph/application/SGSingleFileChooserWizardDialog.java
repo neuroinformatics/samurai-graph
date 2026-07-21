@@ -113,7 +113,7 @@ public abstract class SGSingleFileChooserWizardDialog extends SGFileChooserWizar
     }
 
     // get only the first file
-    File file = (File) fileList.get(0);
+    File file = fileList.get(0);
 
     // set to the text field
     this.setFileName(file);

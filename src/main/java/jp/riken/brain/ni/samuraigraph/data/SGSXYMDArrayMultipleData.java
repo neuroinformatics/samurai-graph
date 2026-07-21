@@ -2797,7 +2797,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       }
     }
     SGMDArrayVariable[] vars = new SGMDArrayVariable[varList.size()];
-    return (SGMDArrayVariable[]) varList.toArray(vars);
+    return varList.toArray(vars);
   }
 
   private void getVariableNames(

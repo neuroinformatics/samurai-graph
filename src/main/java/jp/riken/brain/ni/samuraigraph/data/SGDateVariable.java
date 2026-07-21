@@ -54,7 +54,7 @@ public class SGDateVariable extends SGCharVariable {
     if (this.mDate == null) {
       return null;
     }
-    return (SGDate[]) this.mDate.clone();
+    return this.mDate.clone();
   }
 
   /**

@@ -398,7 +398,7 @@ class SGDataSetManager
     for (int ii = 0; ii < figureNum; ii++) {
       final int dataNum = dataNumArray[ii];
       for (int jj = 0; jj < dataNum; jj++) {
-        String fileName = (String) dFnameList.get(cnt);
+        String fileName = dFnameList.get(cnt);
         final int figureID = ii + 1;
         SGPropertyFileData pfData = new SGPropertyFileData(figureID, null, null, null);
         pfData.setFileName(fileName);
@@ -535,7 +535,7 @@ class SGDataSetManager
 
         // delete temporary files
         for (int kk = 0; kk < fList.size(); kk++) {
-          File f = (File) fList.get(kk);
+          File f = fList.get(kk);
           f.delete();
         }
         datasetTempDir.delete();
@@ -628,7 +628,7 @@ class SGDataSetManager
 
       // delete temporary files
       for (int kk = 0; kk < fList.size(); kk++) {
-        File f = (File) fList.get(kk);
+        File f = fList.get(kk);
         f.delete();
       }
       datasetTempDir.delete();
@@ -683,12 +683,12 @@ class SGDataSetManager
     // output data files
     ArrayList<SGFigure> figures = wnd.getVisibleFigureList();
     for (int ii = 0; ii < figures.size(); ii++) {
-      SGFigure figure = (SGFigure) figures.get(ii);
+      SGFigure figure = figures.get(ii);
       SGIFigureElementGraph gElement = figure.getGraphElement();
       List<SGData> dataList;
       dataList = figure.getVisibleDataList();
       for (int jj = 0; jj < dataList.size(); jj++) {
-        SGData data = (SGData) dataList.get(jj);
+        SGData data = dataList.get(jj);
         String ext = data.getDataSetFileExtension();
         StringBuilder sb = new StringBuilder();
         sb.append(datasetDir.getPath());
@@ -704,7 +704,7 @@ class SGDataSetManager
         File file = new File(fname);
         if (!gs.saveData(file, mode, null)) {
           for (int kk = 0; kk < fList.size(); kk++) {
-            File f = (File) fList.get(kk);
+            File f = fList.get(kk);
             f.delete();
           }
           return null;
