@@ -29,6 +29,7 @@
         <app.name>Samurai Graph</app.name>
         <app.vendor>RIKEN Japan</app.vendor>
         <main.class>jp.riken.brain.ni.samuraigraph.application.SGDrawingServer</main.class>
+        <skipAssembly>true</skipAssembly>
     </properties>
 
     <build>
@@ -226,6 +227,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
+                            <skipAssembly>${skipAssembly}</skipAssembly>
                             <descriptors>
                                 <descriptor>src/main/assembly/jpackage-input.xml</descriptor>
                             </descriptors>
@@ -247,6 +249,9 @@
                     <family>windows</family>
                 </os>
             </activation>
+            <properties>
+                <skipAssembly>false</skipAssembly>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -256,7 +261,7 @@
                         <executions>
                             <execution>
                                 <id>jpackage-windows-exe</id>
-                                <phase>package</phase>
+                                <phase>verify</phase>
                                 <goals>
                                     <goal>jpackage</goal>
                                 </goals>
@@ -311,6 +316,9 @@
                     <family>mac</family>
                 </os>
             </activation>
+            <properties>
+                <skipAssembly>false</skipAssembly>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -320,7 +328,7 @@
                         <executions>
                             <execution>
                                 <id>jpackage-mac-dmg</id>
-                                <phase>package</phase>
+                                <phase>verify</phase>
                                 <goals>
                                     <goal>jpackage</goal>
                                 </goals>
@@ -354,6 +362,9 @@
                     <name>Linux</name>
                 </os>
             </activation>
+            <properties>
+                <skipAssembly>false</skipAssembly>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -364,7 +375,7 @@
                             <!-- DEB package (Debian/Ubuntu) -->
                             <execution>
                                 <id>jpackage-linux-deb</id>
-                                <phase>package</phase>
+                                <phase>verify</phase>
                                 <goals>
                                     <goal>jpackage</goal>
                                 </goals>
@@ -387,7 +398,7 @@
                             <!-- RPM package (RHEL/Fedora/CentOS) -->
                             <execution>
                                 <id>jpackage-linux-rpm</id>
-                                <phase>package</phase>
+                                <phase>verify</phase>
                                 <goals>
                                     <goal>jpackage</goal>
                                 </goals>

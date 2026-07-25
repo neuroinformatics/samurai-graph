@@ -61,19 +61,26 @@ Review the test output for any failures or errors. Write new tests for new funct
 
 ## 3. Distribution Build (jpackage)
 
-The project uses [jpackage](https://docs.oracle.com/en/java/javase/21/jpackage/) to create native platform installers. Each platform's installer must be built on that platform.
+The project uses [jpackage](https://docs.oracle.com/en/java/javase/21/jpackage/) to create native platform installers. Native packaging is bound to the `verify` phase (not `package`), so `mvn package` builds only the fat JAR and jpackage input directory, while `mvn verify` produces the platform-specific installer.
 
-| Platform | Command | Output |
-|----------|---------|--------|
-| Windows | `mvn clean package -Pjpackage-windows` | `target/dist/Samurai Graph-<ver>.exe` |
-| macOS | `mvn clean package -Pjpackage-mac` | `target/dist/Samurai Graph-<ver>.dmg` |
-| Linux | `JAVA_HOME=/path/to/temurin-jdk mvn clean package -Pjpackage-linux` | `target/dist/samurai-graph-<ver>.deb` + `.rpm` |
+The appropriate jpackage profile is auto-activated based on the host OS. Each platform's installer must be built on that platform.
+
+| Command | Phase | Output |
+|--------|-------|--------|
+| `mvn package` | `package` | Fat JAR + jpackage input directory |
+| `mvn verify` | `verify` | Above + native platform installer |
+
+| Platform | Installer Output |
+|----------|------------------|
+| Windows | `target/dist/Samurai Graph-<ver>.exe` |
+| macOS | `target/dist/Samurai Graph-<ver>.dmg` |
+| Linux | `target/dist/samurai-graph-<ver>.deb` + `.rpm` |
 
 > [!IMPORTANT]
 > On Fedora/RHEL, the system OpenJDK package modifies `java.security`, which causes `jlink` (used internally by `jpackage`) to fail with `"Error: .../java.security has been modified"`. Use a non-distro JDK (e.g. Eclipse Temurin) via `JAVA_HOME` when building Linux packages:
 >
 > ```bash
-> JAVA_HOME=/usr/lib/jvm/temurin-21-jdk mvn clean package -Pjpackage-linux
+> JAVA_HOME=/usr/lib/jvm/temurin-21-jdk mvn clean verify
 > ```
 
 ---
