@@ -392,7 +392,6 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @param list2 a list to set the copied objects
    * @return true if succeeded
    */
-  @SuppressWarnings("unchecked")
   public static boolean copyObjects(final List<? extends SGICopyable> list1, final List<?> list2) {
     if (list1 == null || list2 == null) {
       throw new IllegalArgumentException("list1==null || list2==null");
@@ -401,7 +400,9 @@ public class SGUtility implements SGIDrawingElementConstants {
     for (int ii = 0; ii < list1.size(); ii++) {
       SGICopyable cp = list1.get(ii);
       if (cp != null) {
-        ((List) list2).add(cp.copy());
+        @SuppressWarnings("unchecked")
+        List<Object> rawList = (List<Object>) list2;
+        rawList.add(cp.copy());
       }
     }
 
@@ -1039,26 +1040,28 @@ public class SGUtility implements SGIDrawingElementConstants {
   }
 
   /** Moves an object to the head or tail of a list. */
-  @SuppressWarnings("unchecked")
   public static boolean moveObjectToRawList(
       final Object obj, final List<?> list, final boolean toTail) {
     final int index = list.indexOf(obj);
     if (index == -1) {
       return false;
     }
-    ((List) list).remove(obj);
+    @SuppressWarnings("unchecked")
+    List<Object> rawList = (List<Object>) list;
+    rawList.remove(obj);
     if (toTail) {
-      ((List) list).add(obj);
+      rawList.add(obj);
     } else {
-      ((List) list).add(0, obj);
+      rawList.add(0, obj);
     }
     return true;
   }
 
   /** Moves objects from one list to another. */
-  @SuppressWarnings("unchecked")
   public static boolean moveObjectRawList(
       final List<?> movedList, final List<?> list, final int num) {
+    @SuppressWarnings("unchecked")
+    final List<Object> rawList = (List<Object>) list;
     if (num > 0) {
       for (int ii = movedList.size() - 1; ii >= 0; ii--) {
         Object obj = movedList.get(ii);
@@ -1070,8 +1073,8 @@ public class SGUtility implements SGIDrawingElementConstants {
         if (indexNew > list.size() - 1) {
           continue;
         }
-        ((List) list).remove(obj);
-        ((List) list).add(indexNew, obj);
+        rawList.remove(obj);
+        rawList.add(indexNew, obj);
       }
     } else {
       for (int ii = 0; ii < movedList.size(); ii++) {
@@ -1084,8 +1087,8 @@ public class SGUtility implements SGIDrawingElementConstants {
         if (indexNew < 0) {
           continue;
         }
-        ((List) list).remove(obj);
-        ((List) list).add(indexNew, obj);
+        rawList.remove(obj);
+        rawList.add(indexNew, obj);
       }
     }
     return true;

@@ -8,7 +8,6 @@ public class MDArray<T> {
   private final T[] mFlatArray;
   private final int[] mDimensions;
 
-  @SuppressWarnings("unchecked")
   public MDArray(final T[] flatArray, final int[] dimensions) {
     this.mFlatArray = flatArray;
     if (dimensions == null || dimensions.length == 0) {
@@ -18,7 +17,6 @@ public class MDArray<T> {
     }
   }
 
-  @SuppressWarnings("unchecked")
   public MDArray(final T[] flatArray) {
     this.mFlatArray = flatArray;
     this.mDimensions = new int[] {flatArray.length};

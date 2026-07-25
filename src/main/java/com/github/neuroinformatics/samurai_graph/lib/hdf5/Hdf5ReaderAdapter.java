@@ -479,7 +479,6 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
     }
   }
 
-  @SuppressWarnings("unchecked")
   private static MDArray<String> convertToMDStringArray(final Object data) {
     if (data instanceof String[]) {
       return new MDArray<>((String[]) data);
@@ -517,7 +516,6 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
     }
   }
 
-  @SuppressWarnings("unchecked")
   private static float[] toFloatArray(final Object value) {
     if (value instanceof float[]) {
       return (float[]) value;
@@ -562,7 +560,6 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
     }
   }
 
-  @SuppressWarnings("unchecked")
   private static int[] toIntArray(final Object value) {
     if (value instanceof int[]) {
       return (int[]) value;
@@ -585,7 +582,6 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
     }
   }
 
-  @SuppressWarnings("unchecked")
   private static String toStringValue(final Object value) {
     if (value instanceof String) {
       return (String) value;
@@ -596,7 +592,6 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
     }
   }
 
-  @SuppressWarnings("unchecked")
   private static String[] toStringArray(final Object value) {
     if (value instanceof String[]) {
       return (String[]) value;
