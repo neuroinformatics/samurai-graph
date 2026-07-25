@@ -196,7 +196,7 @@ public class SGDataViewerDialog extends SGDialog {
   // The default value for highlighting.
   private static boolean mDefaultHighlighting = false;
 
-  private SGData mData = null;
+  private transient SGData mData = null;
 
   private String mDataName = null;
 

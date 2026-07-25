@@ -1063,7 +1063,7 @@ public class SGDataAnimationDialog extends SGDialog
   }
 
   /** A thread of an animation. */
-  private SGDataAnimationThread mAnimationThread = null;
+  private transient SGDataAnimationThread mAnimationThread = null;
 
   /** Frame rate. */
   private double mFrameRate = FRAME_RATE_INIT;
@@ -1075,7 +1075,7 @@ public class SGDataAnimationDialog extends SGDialog
   private int mInitFrameIndex = -1;
 
   // Initial stride for frame index.
-  private SGIntegerSeriesSet mInitStride = null;
+  private transient SGIntegerSeriesSet mInitStride = null;
 
   // Initial value of loop playback flag.
   private boolean mInitLoopPlayback = false;
@@ -1084,7 +1084,7 @@ public class SGDataAnimationDialog extends SGDialog
   private double mInitFrameRate = 1.0;
 
   // The array of data.
-  private SGData[] mDataArray = null;
+  private transient SGData[] mDataArray = null;
 
   /**
    * Sets the animation data source.

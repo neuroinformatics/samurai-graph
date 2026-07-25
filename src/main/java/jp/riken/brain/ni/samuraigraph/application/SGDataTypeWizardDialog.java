@@ -1,6 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -499,7 +500,9 @@ public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplica
   }
 
   /** A class with data type and a radio button. */
-  protected static class DataTypeButton {
+  protected static class DataTypeButton implements Serializable {
+
+    private static final long serialVersionUID = -3645695024031964683L;
     AbstractButton btn;
     String dataType;
     String name;
@@ -546,7 +549,7 @@ public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplica
   }
 
   /** A list of available data types. */
-  private List<String> mAvailableDataTypeList = new ArrayList<String>();
+  private ArrayList<String> mAvailableDataTypeList = new ArrayList<String>();
 
   /**
    * Set available data types.

@@ -1,18 +1,21 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.filechooser.FileFilter;
 
 /** The file filter class to handle files with given file extensions. */
-public class SGExtensionFileFilter extends FileFilter {
+public class SGExtensionFileFilter extends FileFilter implements Serializable {
+
+  private static final long serialVersionUID = -3234515125186717816L;
 
   /** The description of the file format. */
   private String mExplanation = "";
 
   /** The list of file extension. */
-  private List<String> mExtensionsList = new ArrayList<String>();
+  private ArrayList<String> mExtensionsList = new ArrayList<String>();
 
   /**
    * Add an file extension.

@@ -363,7 +363,7 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     public void checkLocalFileTextField();
   }
 
-  private List<AcceptListener> listeners = new ArrayList<AcceptListener>();
+  private transient List<AcceptListener> listeners = new ArrayList<AcceptListener>();
 
   public void addAcceptListener(AcceptListener listener) {
     this.listeners.add(listener);
