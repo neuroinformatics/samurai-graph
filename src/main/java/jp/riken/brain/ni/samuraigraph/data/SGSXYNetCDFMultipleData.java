@@ -38,8 +38,8 @@ import ucar.ma2.DataType;
 import ucar.ma2.Index;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The class of multiple scalar XY type data with netCDF data. */
 public class SGSXYNetCDFMultipleData extends SGNetCDFData
@@ -3192,10 +3192,9 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return nameList;
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   protected boolean exportToFile(
-      NetcdfFileWriter ncWrite, final SGExportParameter mode, SGDataBufferPolicy policy)
+      NetcdfFormatWriter.Builder builder, final SGExportParameter mode, SGDataBufferPolicy policy)
       throws IOException, InvalidRangeException {
 
     if (!(policy instanceof SGSXYDataBufferPolicy)) {
@@ -3241,7 +3240,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     if (idx) {
       indexDimName = this.mIndexVariable.getName();
       validIndexDimName = this.getValidName(indexDimName);
-      this.addDimension(ncWrite, validIndexDimName, len);
+      builder.addDimension(validIndexDimName, len);
     }
 
     // pick up dimension
@@ -3250,7 +3249,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     if (pickedUp) {
       pickUpDimName = this.mPickUpDimensionInfo.getDimensionName();
       validPickUpDimName = this.getValidName(pickUpDimName);
-      this.addDimension(ncWrite, validPickUpDimName, multiplicity);
+      builder.addDimension(validPickUpDimName, multiplicity);
     }
 
     // x or y dimension
@@ -3260,7 +3259,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       SGNetCDFVariable cVar = yMultiple ? this.mXVariables[0] : this.mYVariables[0];
       cDimName = cVar.getName();
       validCDimName = this.getValidName(cDimName);
-      this.addDimension(ncWrite, validCDimName, len);
+      builder.addDimension(validCDimName, len);
     }
 
     // dimension of string length of tick labels
@@ -3275,7 +3274,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       }
       lenDimNames = new String[tNum];
       tlStrArray = new String[multiplicity][];
-      this.addTickLabelDimension(ncWrite, tNum, tickLabelVars, tickLabels, lenDimNames, tlStrArray);
+      this.addTickLabelDimension(builder, tNum, tickLabelVars, tickLabels, lenDimNames, tlStrArray);
     }
 
     // dimension of string length of date
@@ -3297,8 +3296,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         dateStrArray[ii] = dateArray[ii].toString();
       }
       final int maxLength = this.getMaxLength(dateStrArray);
-      Dimension dim = new Dimension(validDateLenDimName, maxLength);
-      ncWrite.addDimension(null, dim.getShortName(), dim.getLength());
+      builder.addDimension(validDateLenDimName, maxLength);
     }
 
     //
@@ -3307,14 +3305,14 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
 
     // coordinate variable for index dimension
     DataType idxDataType = null;
-    Variable indexVar = null;
+    Variable.Builder indexVar = null;
     if (idx) {
       SGNetCDFVariable idxVar = this.findVariable(indexDimName);
       idxDataType = this.getExportNumberDataType(idxVar, mode, policy);
       String dimString = SGDataUtility.getDimensionString(new String[] {validIndexDimName});
       indexVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               indexDimName,
               validIndexDimName,
@@ -3326,13 +3324,13 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
 
     // coordinate variable for picked up dimension
     DataType pDataType = null;
-    Variable pickUpVar = null;
+    Variable.Builder pickUpVar = null;
     if (pickedUp) {
       SGNetCDFVariable pVar = this.findVariable(pickUpDimName);
       pDataType = this.getExportNumberDataType(pVar, mode, policy);
       pickUpVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               pickUpDimName,
               validPickUpDimName,
@@ -3387,8 +3385,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     String xDimString = SGDataUtility.getDimensionString(xDimNameArray);
     String yDimString = SGDataUtility.getDimensionString(yDimNameArray);
 
-    Variable[] xVars = null;
-    Variable[] yVars = null;
+    Variable.Builder[] xVars = null;
+    Variable.Builder[] yVars = null;
     DataType[] xDataTypes = null;
     DataType[] yDataTypes = null;
     final int xNum;
@@ -3396,7 +3394,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     if (idx) {
       xNum = this.mXVariables.length;
       yNum = this.mYVariables.length;
-      xVars = new Variable[xNum];
+      xVars = new Variable.Builder[xNum];
       xDataTypes = new DataType[xNum];
       String xNumberType =
           (dateFlag != null && dateFlag)
@@ -3407,7 +3405,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         String xName = this.mXVariables[ii].getName();
         xVars[ii] =
             this.addVariable(
-                ncWrite,
+                builder,
                 mode,
                 xName,
                 this.getValidName(xName),
@@ -3416,7 +3414,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
                 xDimString,
                 policy);
       }
-      yVars = new Variable[yNum];
+      yVars = new Variable.Builder[yNum];
       yDataTypes = new DataType[yNum];
       String yNumberType =
           (dateFlag != null && !dateFlag)
@@ -3427,7 +3425,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         String yName = this.mYVariables[ii].getName();
         yVars[ii] =
             this.addVariable(
-                ncWrite,
+                builder,
                 mode,
                 yName,
                 this.getValidName(yName),
@@ -3441,7 +3439,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         String dimString =
             SGDataUtility.getDimensionString(new String[] {validDateDimName, validDateLenDimName});
         this.addVariable(
-            ncWrite,
+            builder,
             mode,
             dVar.getName(),
             validDateDimName,
@@ -3457,9 +3455,9 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         xNum = yMultiple ? 1 : multiplicity;
         yNum = yMultiple ? multiplicity : 1;
       }
-      xVars = new Variable[xNum];
+      xVars = new Variable.Builder[xNum];
       xDataTypes = new DataType[xNum];
-      yVars = new Variable[yNum];
+      yVars = new Variable.Builder[yNum];
       yDataTypes = new DataType[yNum];
       if (dateFlag == null || !dateFlag.booleanValue()) {
         for (int ii = 0; ii < xNum; ii++) {
@@ -3467,7 +3465,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
           String xName = this.mXVariables[ii].getName();
           xVars[ii] =
               this.addVariable(
-                  ncWrite,
+                  builder,
                   mode,
                   xName,
                   this.getValidName(xName),
@@ -3483,7 +3481,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
           String yName = this.mYVariables[ii].getName();
           yVars[ii] =
               this.addVariable(
-                  ncWrite,
+                  builder,
                   mode,
                   yName,
                   this.getValidName(yName),
@@ -3511,11 +3509,11 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       }
     }
     DataType[] leDataTypes = null;
-    Variable[] leVars = null;
+    Variable.Builder[] leVars = null;
     DataType[] ueDataTypes = null;
-    Variable[] ueVars = null;
+    Variable.Builder[] ueVars = null;
     DataType[] tlDataTypes = null;
-    Variable[] tlVars = null;
+    Variable.Builder[] tlVars = null;
     if (errorBarAvailable) {
       final int eNum;
       if (pickedUp) {
@@ -3523,12 +3521,12 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       } else {
         eNum = multiplicity;
       }
-      leVars = new Variable[eNum];
-      ueVars = new Variable[eNum];
+      leVars = new Variable.Builder[eNum];
+      ueVars = new Variable.Builder[eNum];
       leDataTypes = new DataType[eNum];
       ueDataTypes = new DataType[eNum];
       this.addErrorVariables(
-          ncWrite,
+          builder,
           eNum,
           lowerErrorVars,
           upperErrorVars,
@@ -3548,186 +3546,192 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       } else {
         tNum = multiplicity;
       }
-      tlVars = new Variable[tNum];
+      tlVars = new Variable.Builder[tNum];
       tlDataTypes = new DataType[tNum];
       this.addTickLabelVariables(
-          ncWrite, tNum, tickLabelVars, mode, policy, dimNames, lenDimNames, tlVars, tlDataTypes);
+          builder, tNum, tickLabelVars, mode, policy, dimNames, lenDimNames, tlVars, tlDataTypes);
     }
 
     // creates the file
-    ncWrite.create();
+    try (NetcdfFormatWriter writer = builder.build()) {
 
-    //
-    // writes data to the file
-    //
+      //
+      // writes data to the file
+      //
 
-    // coordinate variable for index dimension
-    if (this.isIndexAvailable()) {
-      SGNetCDFVariable idxVar = this.findVariable(indexDimName);
-      int[] idxUpIndices = this.mIndexStride.getNumbers();
-      double[] idxValueArrayAll = idxVar.getNumberArray();
-      double[] idxValueArray = new double[idxUpIndices.length];
-      for (int ii = 0; ii < idxValueArray.length; ii++) {
-        idxValueArray[ii] = idxValueArrayAll[idxUpIndices[ii]];
-      }
-      Array idxArray = Array.factory(idxDataType, new int[] {idxUpIndices.length});
-      this.setArray(idxArray, idxValueArray);
-      this.writeValues(ncWrite, indexVar, idxArray);
-    }
-
-    // coordinate variable for picked up dimension
-    if (pickedUp) {
-      SGNetCDFVariable pVar = this.findVariable(pickUpDimName);
-      int[] pickUpIndices = this.mPickUpDimensionInfo.getIndices().getNumbers();
-      double[] pValueArrayAll = pVar.getNumberArray();
-      double[] pValueArray = new double[pickUpIndices.length];
-      for (int ii = 0; ii < pValueArray.length; ii++) {
-        pValueArray[ii] = pValueArrayAll[pickUpIndices[ii]];
-      }
-      Array pickUpArray = Array.factory(pDataType, new int[] {multiplicity});
-      this.setArray(pickUpArray, pValueArray);
-      this.writeValues(ncWrite, pickUpVar, pickUpArray);
-    }
-
-    // date variable
-    if (dateFlag != null) {
-      this.writeCharValue(ncWrite, validDateDimName, validDateLenDimName, dateStrArray);
-    }
-
-    // variables for x and y values
-    if (pickedUp) {
-      if (idx) {
-        int[] shape = new int[] {multiplicity, len};
-        if (dateFlag == null || !dateFlag.booleanValue()) {
-          this.writeValues(ncWrite, xVars[0], xDataTypes[0], xValues, shape);
+      // coordinate variable for index dimension
+      if (this.isIndexAvailable()) {
+        SGNetCDFVariable idxVar = this.findVariable(indexDimName);
+        int[] idxUpIndices = this.mIndexStride.getNumbers();
+        double[] idxValueArrayAll = idxVar.getNumberArray();
+        double[] idxValueArray = new double[idxUpIndices.length];
+        for (int ii = 0; ii < idxValueArray.length; ii++) {
+          idxValueArray[ii] = idxValueArrayAll[idxUpIndices[ii]];
         }
-        if (dateFlag == null || dateFlag.booleanValue()) {
-          this.writeValues(ncWrite, yVars[0], yDataTypes[0], yValues, shape);
+        Array idxArray = Array.factory(idxDataType, new int[] {idxUpIndices.length});
+        this.setArray(idxArray, idxValueArray);
+        writer.write(indexVar.shortName, idxArray);
+      }
+
+      // coordinate variable for picked up dimension
+      if (pickedUp) {
+        SGNetCDFVariable pVar = this.findVariable(pickUpDimName);
+        int[] pickUpIndices = this.mPickUpDimensionInfo.getIndices().getNumbers();
+        double[] pValueArrayAll = pVar.getNumberArray();
+        double[] pValueArray = new double[pickUpIndices.length];
+        for (int ii = 0; ii < pValueArray.length; ii++) {
+          pValueArray[ii] = pValueArrayAll[pickUpIndices[ii]];
         }
-      } else {
-        Variable sVar, mVar;
-        DataType sDataType, mDataType;
-        double[] sValues;
-        double[][] mValues;
-        int[] sShape = new int[] {len};
-        int[] mShape = new int[] {multiplicity, len};
-        if (yMultiple) {
-          sVar = xVars[0];
-          mVar = yVars[0];
-          sDataType = xDataTypes[0];
-          mDataType = yDataTypes[0];
-          sValues = xValues[0];
-          mValues = yValues;
+        Array pickUpArray = Array.factory(pDataType, new int[] {multiplicity});
+        this.setArray(pickUpArray, pValueArray);
+        writer.write(pickUpVar.shortName, pickUpArray);
+      }
+
+      // date variable
+      if (dateFlag != null) {
+        this.writeCharValue(writer, validDateDimName, validDateLenDimName, dateStrArray);
+      }
+
+      // variables for x and y values
+      if (pickedUp) {
+        if (idx) {
+          int[] shape = new int[] {multiplicity, len};
+          if (dateFlag == null || !dateFlag.booleanValue()) {
+            this.writeValues(writer, xVars[0], xDataTypes[0], xValues, shape);
+          }
+          if (dateFlag == null || dateFlag.booleanValue()) {
+            this.writeValues(writer, yVars[0], yDataTypes[0], yValues, shape);
+          }
         } else {
-          sVar = yVars[0];
-          mVar = xVars[0];
-          sDataType = yDataTypes[0];
-          mDataType = xDataTypes[0];
-          sValues = yValues[0];
-          mValues = xValues;
+          Variable.Builder sVar, mVar;
+          DataType sDataType, mDataType;
+          double[] sValues;
+          double[][] mValues;
+          int[] sShape = new int[] {len};
+          int[] mShape = new int[] {multiplicity, len};
+          if (yMultiple) {
+            sVar = xVars[0];
+            mVar = yVars[0];
+            sDataType = xDataTypes[0];
+            mDataType = yDataTypes[0];
+            sValues = xValues[0];
+            mValues = yValues;
+          } else {
+            sVar = yVars[0];
+            mVar = xVars[0];
+            sDataType = yDataTypes[0];
+            mDataType = xDataTypes[0];
+            sValues = yValues[0];
+            mValues = xValues;
+          }
+          if (dateFlag == null || !dateFlag.booleanValue()) {
+            this.writeValues(writer, sVar, sDataType, sValues, sShape);
+          }
+          if (dateFlag == null || dateFlag.booleanValue()) {
+            this.writeValues(writer, mVar, mDataType, mValues, mShape);
+          }
         }
+      } else {
+        int[] shape = new int[] {len};
         if (dateFlag == null || !dateFlag.booleanValue()) {
-          this.writeValues(ncWrite, sVar, sDataType, sValues, sShape);
+          for (int ii = 0; ii < xVars.length; ii++) {
+            this.writeValues(writer, xVars[ii], xDataTypes[ii], xValues[ii], shape);
+          }
         }
         if (dateFlag == null || dateFlag.booleanValue()) {
-          this.writeValues(ncWrite, mVar, mDataType, mValues, mShape);
+          for (int ii = 0; ii < yVars.length; ii++) {
+            this.writeValues(writer, yVars[ii], yDataTypes[ii], yValues[ii], shape);
+          }
         }
       }
-    } else {
-      int[] shape = new int[] {len};
-      if (dateFlag == null || !dateFlag.booleanValue()) {
-        for (int ii = 0; ii < xVars.length; ii++) {
-          this.writeValues(ncWrite, xVars[ii], xDataTypes[ii], xValues[ii], shape);
-        }
-      }
-      if (dateFlag == null || dateFlag.booleanValue()) {
-        for (int ii = 0; ii < yVars.length; ii++) {
-          this.writeValues(ncWrite, yVars[ii], yDataTypes[ii], yValues[ii], shape);
-        }
-      }
-    }
 
-    // error bar variable
-    if (errorBarAvailable
-        && leVars != null
-        && ueVars != null
-        && leDataTypes != null
-        && ueDataTypes != null
-        && sameErrorVariableFlags != null
-        && sameErrorVariableFlags.length > 0
-        && sameErrorVariableFlags[0] != null) {
-      final int[] errorShape;
-      if (pickedUp) {
-        // this.setFillValue(leVars[0], lowerErrorValues);
-        Array lowerErrorArray = Array.factory(leDataTypes[0], new int[] {multiplicity, len});
-        this.setArray(lowerErrorArray, lowerErrorValues);
-        this.writeValues(ncWrite, leVars[0], lowerErrorArray);
-        if (!sameErrorVariableFlags[0].booleanValue()) {
-          // this.setFillValue(ueVars[0], upperErrorValues);
-          Array upperErrorArray = Array.factory(ueDataTypes[0], new int[] {multiplicity, len});
-          this.setArray(upperErrorArray, upperErrorValues);
-          this.writeValues(ncWrite, ueVars[0], upperErrorArray);
-        }
-      } else {
-        errorShape = new int[] {len};
-        for (int ii = 0; ii < lowerErrorValues.length; ii++) {
-          if (leVars[ii] != null && leDataTypes[ii] != null) {
-            // this.setFillValue(leVars[ii], lowerErrorValues);
-            Array lowerErrorArray = Array.factory(leDataTypes[ii], errorShape);
-            this.setArray(lowerErrorArray, lowerErrorValues[ii]);
-            this.writeValues(ncWrite, leVars[ii], lowerErrorArray);
+      // error bar variable
+      if (errorBarAvailable
+          && leVars != null
+          && ueVars != null
+          && leDataTypes != null
+          && ueDataTypes != null
+          && sameErrorVariableFlags != null
+          && sameErrorVariableFlags.length > 0
+          && sameErrorVariableFlags[0] != null) {
+        final int[] errorShape;
+        if (pickedUp) {
+          // this.setFillValue(leVars[0], lowerErrorValues);
+          Array lowerErrorArray = Array.factory(leDataTypes[0], new int[] {multiplicity, len});
+          this.setArray(lowerErrorArray, lowerErrorValues);
+          writer.write(leVars[0].shortName, lowerErrorArray);
+          if (!sameErrorVariableFlags[0].booleanValue()) {
+            // this.setFillValue(ueVars[0], upperErrorValues);
+            Array upperErrorArray = Array.factory(ueDataTypes[0], new int[] {multiplicity, len});
+            this.setArray(upperErrorArray, upperErrorValues);
+            writer.write(ueVars[0].shortName, upperErrorArray);
           }
-          if (ueVars[ii] != null && ueDataTypes[ii] != null) {
-            // this.setFillValue(ueVars[ii], upperErrorValues);
-            Array upperErrorArray = Array.factory(ueDataTypes[ii], errorShape);
-            this.setArray(upperErrorArray, upperErrorValues[ii]);
-            this.writeValues(ncWrite, ueVars[ii], upperErrorArray);
+        } else {
+          errorShape = new int[] {len};
+          for (int ii = 0; ii < lowerErrorValues.length; ii++) {
+            if (leVars[ii] != null && leDataTypes[ii] != null) {
+              // this.setFillValue(leVars[ii], lowerErrorValues);
+              Array lowerErrorArray = Array.factory(leDataTypes[ii], errorShape);
+              this.setArray(lowerErrorArray, lowerErrorValues[ii]);
+              writer.write(leVars[ii].shortName, lowerErrorArray);
+            }
+            if (ueVars[ii] != null && ueDataTypes[ii] != null) {
+              // this.setFillValue(ueVars[ii], upperErrorValues);
+              Array upperErrorArray = Array.factory(ueDataTypes[ii], errorShape);
+              this.setArray(upperErrorArray, upperErrorValues[ii]);
+              writer.write(ueVars[ii].shortName, upperErrorArray);
+            }
           }
         }
       }
-    }
 
-    // tick label variable
-    if (tickLabelAvailable
-        && dateFlag == null
-        && tlVars != null
-        && lenDimNames != null
-        && tlStrArray != null
-        && tlVars.length > 0
-        && lenDimNames.length > 0) {
-      if (pickedUp) {
-        this.writeCharValue(ncWrite, tlVars[0].getShortName(), lenDimNames[0], tlStrArray);
-      } else {
-        for (int ii = 0; ii < tickLabels.length; ii++) {
-          if (tlVars[ii] != null && lenDimNames[ii] != null && tlStrArray[ii] != null) {
-            this.writeCharValue(
-                ncWrite, tlVars[ii].getShortName(), lenDimNames[ii], tlStrArray[ii]);
+      // tick label variable
+      if (tickLabelAvailable
+          && dateFlag == null
+          && tlVars != null
+          && lenDimNames != null
+          && tlStrArray != null
+          && tlVars.length > 0
+          && lenDimNames.length > 0) {
+        if (pickedUp) {
+          this.writeCharValue(writer, tlVars[0].shortName, lenDimNames[0], tlStrArray);
+        } else {
+          for (int ii = 0; ii < tickLabels.length; ii++) {
+            if (tlVars[ii] != null && lenDimNames[ii] != null && tlStrArray[ii] != null) {
+              this.writeCharValue(writer, tlVars[ii].shortName, lenDimNames[ii], tlStrArray[ii]);
+            }
           }
         }
       }
-    }
+    } // try-with-resources closes writer
 
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   private void writeValues(
-      NetcdfFileWriter ncWrite, Variable var, DataType dataType, double[] values, int[] shape)
+      NetcdfFormatWriter writer,
+      Variable.Builder var,
+      DataType dataType,
+      double[] values,
+      int[] shape)
       throws IOException, InvalidRangeException {
     // this.setFillValue(var, values);
     Array array = Array.factory(dataType, shape);
     this.setArray(array, values);
-    this.writeValues(ncWrite, var, array);
+    writer.write(var.shortName, array);
   }
 
-  @SuppressWarnings("deprecation")
   private void writeValues(
-      NetcdfFileWriter ncWrite, Variable var, DataType dataType, double[][] values, int[] shape)
+      NetcdfFormatWriter writer,
+      Variable.Builder var,
+      DataType dataType,
+      double[][] values,
+      int[] shape)
       throws IOException, InvalidRangeException {
     // this.setFillValue(var, values);
     Array array = Array.factory(dataType, shape);
     this.setArray(array, values);
-    this.writeValues(ncWrite, var, array);
+    writer.write(var.shortName, array);
   }
 
   private SGNetCDFVariable[] getErrorBarTickLabelVariables(
@@ -3754,9 +3758,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return ret;
   }
 
-  @SuppressWarnings("deprecation")
   private void addErrorVariables(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter.Builder builder,
       final int num,
       SGNetCDFVariable[] lowerErrorVars,
       SGNetCDFVariable[] upperErrorVars,
@@ -3764,8 +3767,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       SGDataBufferPolicy policy,
       Boolean[] sameErrorVariableFlags,
       String[] dimNames,
-      Variable[] leVars,
-      Variable[] ueVars,
+      Variable.Builder[] leVars,
+      Variable.Builder[] ueVars,
       DataType[] leDataTypes,
       DataType[] ueDataTypes) {
     String dimString = SGDataUtility.getDimensionString(dimNames);
@@ -3777,7 +3780,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         String lName = lVar.getName();
         leVars[ii] =
             this.addVariable(
-                ncWrite,
+                builder,
                 mode,
                 lName,
                 this.getValidName(lName),
@@ -3793,7 +3796,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
           String uName = uVar.getName();
           ueVars[ii] =
               this.addVariable(
-                  ncWrite,
+                  builder,
                   mode,
                   uName,
                   this.getValidName(uName),
@@ -3809,16 +3812,15 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  @SuppressWarnings("deprecation")
   private void addTickLabelVariables(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter.Builder builder,
       final int num,
       SGNetCDFVariable[] tickLabelVars,
       SGExportParameter mode,
       SGDataBufferPolicy policy,
       String[] dimNames,
       String[] lenDimNames,
-      Variable[] tlVars,
+      Variable.Builder[] tlVars,
       DataType[] tlDataTypes) {
     for (int ii = 0; ii < num; ii++) {
       if (tickLabelVars[ii] != null) {
@@ -3835,7 +3837,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         String tName = tickLabelVars[ii].getName();
         tlVars[ii] =
             this.addVariable(
-                ncWrite,
+                builder,
                 mode,
                 tName,
                 this.getValidName(tName),
@@ -3849,9 +3851,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  @SuppressWarnings("deprecation")
   private void addTickLabelDimension(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter.Builder builder,
       final int num,
       SGNetCDFVariable[] tickLabelVars,
       String[][] tickLabels,
@@ -3870,8 +3871,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
             maxLength = len;
           }
         }
-        Dimension dim = new Dimension(lenDimName, maxLength);
-        ncWrite.addDimension(null, dim.getShortName(), dim.getLength());
+        builder.addDimension(lenDimName, maxLength);
         lenDimNames[0] = lenDimName;
         for (int ii = 0; ii < tlStrArray.length; ii++) {
           tlStrArray[ii] = tickLabels[ii];
@@ -3906,8 +3906,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
           }
           final int maxLength = this.getMaxLength(strArray);
           tlStrArray[ii] = strArray;
-          Dimension dim = new Dimension(lenDimNames[ii], maxLength);
-          ncWrite.addDimension(null, dim.getShortName(), dim.getLength());
+          builder.addDimension(lenDimNames[ii], maxLength);
         }
       }
     }
@@ -3924,12 +3923,11 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return maxLength;
   }
 
-  @SuppressWarnings("deprecation")
   private void writeCharValue(
-      NetcdfFileWriter ncWrite, String varName, String lenDimName, String[] strArray)
+      NetcdfFormatWriter writer, String varName, String lenDimName, String[] strArray)
       throws IOException, InvalidRangeException {
-    Dimension strLengthDim = ncWrite.getNetcdfFile().findDimension(lenDimName);
-    ArrayByte array = new ArrayByte(new int[] {strArray.length, strLengthDim.getLength()}, true);
+    int maxLen = this.getMaxLength(strArray);
+    ArrayByte array = new ArrayByte(new int[] {strArray.length, maxLen}, true);
     Index index = array.getIndex();
     int[] shape = index.getShape();
     for (int ii = 0; ii < shape[0]; ii++) {
@@ -3939,17 +3937,23 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         array.setByte(index.set(ii, jj), byteArray[jj]);
       }
     }
-    ncWrite.write(ncWrite.findVariable(varName), array);
+    writer.write(varName, array);
   }
 
-  @SuppressWarnings("deprecation")
   private void writeCharValue(
-      NetcdfFileWriter ncWrite, String varName, String lenDimName, String[][] strArray)
+      NetcdfFormatWriter writer, String varName, String lenDimName, String[][] strArray)
       throws IOException, InvalidRangeException {
-    Dimension strLengthDim = ncWrite.getNetcdfFile().findDimension(lenDimName);
-    ArrayByte array =
-        new ArrayByte(
-            new int[] {strArray.length, strArray[0].length, strLengthDim.getLength()}, true);
+    int maxLen = 0;
+    for (int ii = 0; ii < strArray.length; ii++) {
+      for (int jj = 0; jj < strArray[ii].length; jj++) {
+        String str = strArray[ii][jj];
+        byte[] ba = str.getBytes(CHAR_SET_NAME_UTF8);
+        if (ba.length > maxLen) {
+          maxLen = ba.length;
+        }
+      }
+    }
+    ArrayByte array = new ArrayByte(new int[] {strArray.length, strArray[0].length, maxLen}, true);
     Index index = array.getIndex();
     int[] shape = index.getShape();
     for (int ii = 0; ii < shape[0]; ii++) {
@@ -3961,25 +3965,25 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         }
       }
     }
-    ncWrite.write(ncWrite.findVariable(varName), array);
+    writer.write(varName, array);
   }
 
   /** Overrode to add the attributes taking into account the shift values. */
   @Override
   protected void addFillValueAttributes(
-      SGNetCDFVariable curVar, Variable var, SGDataBufferPolicy policy) {
+      SGNetCDFVariable curVar, Variable.Builder vb, SGDataBufferPolicy policy) {
     SGSXYDataBufferPolicy sxyPolicy = (SGSXYDataBufferPolicy) policy;
     if (sxyPolicy.isShiftValuesContained()) {
       Number fillValue = curVar.getFillValue();
       if (fillValue != null) {
-        this.addAttribute(var, ATTR_FILL_VALUE, Double.NaN);
+        vb.addAttribute(createNumberAttribute(ATTR_FILL_VALUE, Double.NaN));
       }
       Number missingValue = curVar.getMissingValue();
       if (missingValue != null) {
-        this.addAttribute(var, ATTR_MISSING_VALUE, Double.NaN);
+        vb.addAttribute(createNumberAttribute(ATTR_MISSING_VALUE, Double.NaN));
       }
     } else {
-      super.addFillValueAttributes(curVar, var, policy);
+      super.addFillValueAttributes(curVar, vb, policy);
     }
   }
 
@@ -4552,9 +4556,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   }
 
   @Override
-  @SuppressWarnings("deprecation")
   protected Array setEditedValues(
-      NetcdfFileWriter ncWrite, String varName, Array array, final boolean all) {
+      NetcdfFormatWriter writer, String varName, Array array, final boolean all) {
 
     for (int ii = 0; ii < this.mEditedDataValueList.size(); ii++) {
       SGDataValueHistory.NetCDF.MD1 dataValue =
@@ -4563,7 +4566,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         continue;
       }
 
-      Variable var = ncWrite.findVariable(varName);
+      Variable var = writer.findVariable(varName);
       List<Dimension> dims = var.getDimensions();
 
       final String dimName = dataValue.getDimName();

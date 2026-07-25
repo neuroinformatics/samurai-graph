@@ -27,8 +27,8 @@ import ucar.ma2.Array;
 import ucar.ma2.ArrayChar;
 import ucar.ma2.Index;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The base class of two dimensional NetCDF data. */
 public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
@@ -1059,7 +1059,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
   }
 
   protected Array setEditedValues(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter writer,
       String varName,
       Array array,
       String xColumnType,
@@ -1074,7 +1074,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
         continue;
       }
 
-      Variable var = ncWrite.findVariable(varName);
+      Variable var = writer.findVariable(varName);
       List<Dimension> dims = var.getDimensions();
 
       String columnType = dataValue.getColumnType();

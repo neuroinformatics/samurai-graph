@@ -43,8 +43,8 @@ import ucar.ma2.ArrayObject;
 import ucar.ma2.DataType;
 import ucar.ma2.Index;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The class of multiple scalar XY type data for multidimensional data. */
 public class SGSXYMDArrayMultipleData extends SGMDArrayData
@@ -2866,7 +2866,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    */
   @SuppressWarnings("deprecation")
   @Override
-  protected boolean addVariables(NetcdfFileWriter ncWrite) {
+  protected boolean addVariables(NetcdfFormatWriter.Builder builder) {
 
     // get the number of points
     final int num = this.getAllPointsNumber();
@@ -2892,10 +2892,10 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     this.getVariableNames(xNameList, yNameList, leNameList, ueNameList, tlNameList);
 
     // add index dimension
-    Dimension indexDim = ncWrite.addDimension(null, INDEX_DIM_NAME, num);
+    Dimension indexDim = builder.addDimension(INDEX_DIM_NAME, num);
 
     // add time dimensions
-    Dimension timeDim = this.addTimeVariable(ncWrite);
+    Dimension timeDim = this.addTimeVariable(builder);
 
     // add pick up dimension
     Dimension pickUpDim = null;
@@ -2914,13 +2914,13 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         SGMDArrayVariable var = this.findVariable(name);
         int[] dims = var.getDimensions();
         final int len = dims[dimension];
-        pickUpDim = ncWrite.addDimension(null, PICKUP_DIM_NAME, len);
+        pickUpDim = builder.addDimension(PICKUP_DIM_NAME, len);
         break;
       }
     }
 
     // add index variable
-    if (!this.addSequentialIntegerNumberVariable(ncWrite, indexDim, INDEX_DIM_NAME)) {
+    if (!this.addSequentialIntegerNumberVariable(builder, indexDim, INDEX_DIM_NAME)) {
       return false;
     }
 
@@ -2929,13 +2929,13 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     // add x-variables
     pDim = (this.isDimensionPicked() && !yVariablePicked) ? pickUpDim : null;
     if (xNameList.size() == 0) {
-      if (!this.addDoubleVariable(ncWrite, indexDim, null, pDim, X_VALUE_VAR_NAME)) {
+      if (!this.addDoubleVariable(builder, indexDim, null, pDim, X_VALUE_VAR_NAME)) {
         return false;
       }
     } else {
       for (int ii = 0; ii < xNameList.size(); ii++) {
         String name = xNameList.get(ii);
-        if (!this.addDoubleVariable(ncWrite, indexDim, timeDim, pDim, name)) {
+        if (!this.addDoubleVariable(builder, indexDim, timeDim, pDim, name)) {
           return false;
         }
       }
@@ -2944,13 +2944,13 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     // add y-variables
     pDim = (this.isDimensionPicked() && yVariablePicked) ? pickUpDim : null;
     if (yNameList.size() == 0) {
-      if (!this.addDoubleVariable(ncWrite, indexDim, null, pDim, Y_VALUE_VAR_NAME)) {
+      if (!this.addDoubleVariable(builder, indexDim, null, pDim, Y_VALUE_VAR_NAME)) {
         return false;
       }
     } else {
       for (int ii = 0; ii < yNameList.size(); ii++) {
         String name = yNameList.get(ii);
-        if (!this.addDoubleVariable(ncWrite, indexDim, timeDim, pDim, name)) {
+        if (!this.addDoubleVariable(builder, indexDim, timeDim, pDim, name)) {
           return false;
         }
       }
@@ -2960,14 +2960,14 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     if (this.isErrorBarAvailable()) {
       for (int ii = 0; ii < leNameList.size(); ii++) {
         String name = leNameList.get(ii);
-        if (!this.addDoubleVariable(ncWrite, indexDim, timeDim, pickUpDim, name)) {
+        if (!this.addDoubleVariable(builder, indexDim, timeDim, pickUpDim, name)) {
           return false;
         }
       }
       if (!bEqualLowerUpperErrorVariable) {
         for (int ii = 0; ii < ueNameList.size(); ii++) {
           String name = ueNameList.get(ii);
-          if (!this.addDoubleVariable(ncWrite, indexDim, timeDim, pickUpDim, name)) {
+          if (!this.addDoubleVariable(builder, indexDim, timeDim, pickUpDim, name)) {
             return false;
           }
         }
@@ -2981,7 +2981,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         String name = tlNameList.get(ii);
         SGMDArrayVariable var = this.findVariable(name);
         final int maxLength = this.getMaxLength(var);
-        if (!this.addStringVariable(ncWrite, indexDim, timeDim, pickUpDim, name, maxLength)) {
+        if (!this.addStringVariable(builder, indexDim, timeDim, pickUpDim, name, maxLength)) {
           return false;
         }
       }
@@ -2989,14 +2989,14 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
     // add time variable
     if (timeDim != null) {
-      if (!this.addSequentialIntegerNumberVariable(ncWrite, timeDim, TIME_DIM_NAME)) {
+      if (!this.addSequentialIntegerNumberVariable(builder, timeDim, TIME_DIM_NAME)) {
         return false;
       }
     }
 
     // add pick up variable
     if (pickUpDim != null) {
-      if (!this.addSequentialIntegerNumberVariable(ncWrite, pickUpDim, PICKUP_DIM_NAME)) {
+      if (!this.addSequentialIntegerNumberVariable(builder, pickUpDim, PICKUP_DIM_NAME)) {
         return false;
       }
     }
@@ -3011,7 +3011,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
   @SuppressWarnings("deprecation")
   private boolean addDoubleVariable(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter.Builder builder,
       Dimension indexDim,
       Dimension timeDim,
       Dimension pickUpDim,
@@ -3021,12 +3021,12 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     dimList.add(indexDim);
     dimList = this.addTimeDimension(var, timeDim, dimList);
     this.addPickUpDimension(var, pickUpDim, dimList);
-    return this.addDoubleVariable(ncWrite, dimList, name);
+    return this.addDoubleVariable(builder, dimList, name);
   }
 
   @SuppressWarnings("deprecation")
   private boolean addStringVariable(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter.Builder builder,
       Dimension indexDim,
       Dimension timeDim,
       Dimension pickUpDim,
@@ -3037,7 +3037,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     dimList.add(indexDim);
     dimList = this.addTimeDimension(var, timeDim, dimList);
     this.addPickUpDimension(var, pickUpDim, dimList);
-    return this.addStringVariable(ncWrite, dimList, name, maxStrLen);
+    return this.addStringVariable(builder, dimList, name, maxStrLen);
   }
 
   /**
@@ -3047,7 +3047,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    * @return true if succeeded
    */
   @SuppressWarnings("deprecation")
-  protected boolean writeData(NetcdfFileWriter ncWrite) {
+  protected boolean writeData(NetcdfFormatWriter writer) {
 
     // get the number of points
     final int num = this.getAllPointsNumber();
@@ -3064,53 +3064,53 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     this.getVariableNames(xNameList, yNameList, leNameList, ueNameList, tlNameList);
 
     // index
-    Dimension indexDim = ncWrite.getNetcdfFile().findDimension(INDEX_DIM_NAME);
-    if (!this.writeSequentialIntegerNumbers(ncWrite, INDEX_DIM_NAME, indexDim.getLength())) {
+    Dimension indexDim = writer.findDimension(INDEX_DIM_NAME);
+    if (!this.writeSequentialIntegerNumbers(writer, INDEX_DIM_NAME, indexDim.getLength())) {
       return false;
     }
 
     // time
-    if (!this.writeTimeData(ncWrite)) {
+    if (!this.writeTimeData(writer)) {
       return false;
     }
 
     // pickup
-    Dimension pickUpDim = ncWrite.getNetcdfFile().findDimension(PICKUP_DIM_NAME);
+    Dimension pickUpDim = writer.findDimension(PICKUP_DIM_NAME);
     if (pickUpDim != null) {
-      if (!this.writeSequentialIntegerNumbers(ncWrite, PICKUP_DIM_NAME, pickUpDim.getLength())) {
+      if (!this.writeSequentialIntegerNumbers(writer, PICKUP_DIM_NAME, pickUpDim.getLength())) {
         return false;
       }
     }
 
     // x-values
     if (xNameList.size() == 0) {
-      if (!this.writeSequentialDoubleNumbers(ncWrite, X_VALUE_VAR_NAME, num)) {
+      if (!this.writeSequentialDoubleNumbers(writer, X_VALUE_VAR_NAME, num)) {
         return false;
       }
     } else {
-      if (!this.writeDoubleData(ncWrite, xNameList)) {
+      if (!this.writeDoubleData(writer, xNameList)) {
         return false;
       }
     }
 
     // y-values
     if (yNameList.size() == 0) {
-      if (!this.writeSequentialDoubleNumbers(ncWrite, Y_VALUE_VAR_NAME, num)) {
+      if (!this.writeSequentialDoubleNumbers(writer, Y_VALUE_VAR_NAME, num)) {
         return false;
       }
     } else {
-      if (!this.writeDoubleData(ncWrite, yNameList)) {
+      if (!this.writeDoubleData(writer, yNameList)) {
         return false;
       }
     }
 
     // error values
     if (this.isErrorBarAvailable()) {
-      if (!this.writeDoubleData(ncWrite, leNameList)) {
+      if (!this.writeDoubleData(writer, leNameList)) {
         return false;
       }
       if (!bEqualLowerUpperErrorVariable) {
-        if (!this.writeDoubleData(ncWrite, ueNameList)) {
+        if (!this.writeDoubleData(writer, ueNameList)) {
           return false;
         }
       }
@@ -3118,7 +3118,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
     // tick label
     if (this.isTickLabelAvailable()) {
-      if (!this.writeStringData(ncWrite, tlNameList)) {
+      if (!this.writeStringData(writer, tlNameList)) {
         return false;
       }
     }
@@ -3127,12 +3127,12 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   }
 
   @SuppressWarnings("deprecation")
-  private boolean writeDoubleData(NetcdfFileWriter ncWrite, List<String> nameList) {
+  private boolean writeDoubleData(NetcdfFormatWriter writer, List<String> nameList) {
     for (int ii = 0; ii < nameList.size(); ii++) {
       String varName = nameList.get(ii);
       SGMDArrayVariable mdVar = this.findVariable(varName);
       Map<String, Integer> mdArrayIndexMap = new HashMap<String, Integer>();
-      Variable ncVar = ncWrite.findVariable(varName);
+      Variable ncVar = writer.findVariable(varName);
       List<Dimension> ncDimList = ncVar.getDimensions();
       for (Dimension dim : ncDimList) {
         String dimName = dim.getShortName();
@@ -3150,15 +3150,15 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       }
       final int dimSize = mdArrayIndexMap.size();
       if (dimSize == 1) {
-        if (!this.write1DDoubleArray(ncWrite, varName, ncDimList, mdArrayIndexMap)) {
+        if (!this.write1DDoubleArray(writer, varName, ncDimList, mdArrayIndexMap)) {
           return false;
         }
       } else if (dimSize == 2) {
-        if (!this.write2DDoubleArray(ncWrite, varName, ncDimList, mdArrayIndexMap)) {
+        if (!this.write2DDoubleArray(writer, varName, ncDimList, mdArrayIndexMap)) {
           return false;
         }
       } else if (dimSize == 3) {
-        if (!this.write3DDoubleArray(ncWrite, varName, ncDimList, mdArrayIndexMap)) {
+        if (!this.write3DDoubleArray(writer, varName, ncDimList, mdArrayIndexMap)) {
           return false;
         }
       } else {
@@ -3169,12 +3169,12 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   }
 
   @SuppressWarnings("deprecation")
-  private boolean writeStringData(NetcdfFileWriter ncWrite, List<String> nameList) {
+  private boolean writeStringData(NetcdfFormatWriter writer, List<String> nameList) {
     for (int ii = 0; ii < nameList.size(); ii++) {
       String varName = nameList.get(ii);
       SGMDArrayVariable mdVar = this.findVariable(varName);
       Map<String, Integer> mdArrayIndexMap = new HashMap<String, Integer>();
-      Variable ncVar = ncWrite.findVariable(varName);
+      Variable ncVar = writer.findVariable(varName);
       List<Dimension> ncDimList = ncVar.getDimensions();
       for (Dimension dim : ncDimList) {
         String dimName = dim.getShortName();
@@ -3192,15 +3192,15 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       }
       final int dimSize = mdArrayIndexMap.size(); // a hidden dimension is contained
       if (dimSize == 1) {
-        if (!this.write1DStringArray(ncWrite, varName, ncDimList, mdArrayIndexMap, ii)) {
+        if (!this.write1DStringArray(writer, varName, ncDimList, mdArrayIndexMap, ii)) {
           return false;
         }
       } else if (dimSize == 2) {
-        if (!this.write2DStringArray(ncWrite, varName, ncDimList, mdArrayIndexMap, ii)) {
+        if (!this.write2DStringArray(writer, varName, ncDimList, mdArrayIndexMap, ii)) {
           return false;
         }
       } else if (dimSize == 3) {
-        if (!this.write3DStringArray(ncWrite, varName, ncDimList, mdArrayIndexMap, ii)) {
+        if (!this.write3DStringArray(writer, varName, ncDimList, mdArrayIndexMap, ii)) {
           return false;
         }
       } else {
@@ -3212,7 +3212,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
   @SuppressWarnings("deprecation")
   private boolean write1DStringArray(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter writer,
       String varName,
       List<Dimension> ncDimList,
       Map<String, Integer> mdArrayIndexMap,
@@ -3231,7 +3231,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     for (int ii = 0; ii < num; ii++) {
       array.setObject(tempIndex.set(ii), textArray[ii]);
     }
-    if (!this.writeStringArray(ncWrite, varName, array)) {
+    if (!this.writeStringArray(writer, varName, array)) {
       return false;
     }
     return true;
@@ -3239,7 +3239,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
   @SuppressWarnings("deprecation")
   private boolean write2DStringArray(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter writer,
       String varName,
       List<Dimension> ncDimList,
       Map<String, Integer> mdArrayIndexMap,
@@ -3273,7 +3273,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         array.setObject(tempIndex.set(ii, jj), textArray[ii][jj]);
       }
     }
-    if (!this.writeStringArray(ncWrite, varName, array)) {
+    if (!this.writeStringArray(writer, varName, array)) {
       return false;
     }
     return true;
@@ -3281,7 +3281,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
   @SuppressWarnings("deprecation")
   private boolean write3DStringArray(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter writer,
       String varName,
       List<Dimension> ncDimList,
       Map<String, Integer> mdArrayIndexMap,
@@ -3317,7 +3317,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         }
       }
     }
-    if (!this.writeStringArray(ncWrite, varName, array)) {
+    if (!this.writeStringArray(writer, varName, array)) {
       return false;
     }
     return true;

@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import jp.riken.brain.ni.samuraigraph.base.SGAttribute;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
@@ -45,8 +46,8 @@ import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Attribute;
 import ucar.nc2.Dimension;
 import ucar.nc2.Group;
-import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The base class for multidimensional data. */
 public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumnTypeConstants {
@@ -1013,15 +1014,13 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * @param file the file to save
    * @return true if succeeded
    */
-  @SuppressWarnings("deprecation")
   @Override
   public boolean saveToNetCDFFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
     SGMDArrayFile mdFile = this.getMDArrayFile();
-    NetcdfFileWriter ncWrite = null;
     try {
-      ncWrite =
-          NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
+      NetcdfFormatWriter.Builder builder =
+          NetcdfFormatWriter.createNewNetcdf3(file.getAbsolutePath());
 
       // adds the global attributes
       List<SGAttribute> globalAttrList = mdFile.getAttributes();
@@ -1029,7 +1028,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
         String name = gAttr.getName();
         List<Object> values = gAttr.getValues();
         Attribute attr = Attribute.builder().setName(name).setValues(values, false).build();
-        ncWrite.addGroupAttribute(null, attr);
+        builder.addAttribute(attr);
       }
 
       // adds groups
@@ -1051,43 +1050,32 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
         groupNameList.toArray(groupNameArray);
         root.addChild(groupNameArray);
       }
-      this.addGroup(ncWrite, null, root);
+      this.addGroup(builder, builder.getRootGroup(), root);
 
       // adds variables to the NetCDF file
-      if (!this.addVariables(ncWrite)) {
+      if (!this.addVariables(builder)) {
         return false;
       }
 
-      // create the file
-      ncWrite.create();
-
-      // writes data to the file
-      if (!this.writeData(ncWrite)) {
-        return false;
+      // build the writer and write data to the file
+      try (NetcdfFormatWriter writer = builder.build()) {
+        if (!this.writeData(writer)) {
+          return false;
+        }
       }
 
     } catch (Exception e) {
       logger.warn("Error in MDArray data operation", e);
-    } finally {
-      if (ncWrite != null) {
-        try {
-          ncWrite.close();
-        } catch (IOException e) {
-          logger.debug("Exception occurred", e);
-        }
-      }
     }
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public boolean saveToDataSetNetCDFFile(final File file) {
     SGMDArrayFile mdFile = this.getMDArrayFile();
-    NetcdfFileWriter ncWrite = null;
     try {
-      ncWrite =
-          NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
+      NetcdfFormatWriter.Builder builder =
+          NetcdfFormatWriter.createNewNetcdf3(file.getAbsolutePath());
 
       // adds the global attributes
       List<SGAttribute> globalAttrList = mdFile.getAttributes();
@@ -1095,7 +1083,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
         String name = gAttr.getName();
         List<Object> values = gAttr.getValues();
         Attribute attr = Attribute.builder().setName(name).setValues(values, false).build();
-        ncWrite.addGroupAttribute(null, attr);
+        builder.addAttribute(attr);
       }
 
       // adds groups
@@ -1117,43 +1105,34 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
         groupNameList.toArray(groupNameArray);
         root.addChild(groupNameArray);
       }
-      this.addGroup(ncWrite, null, root);
+      this.addGroup(builder, builder.getRootGroup(), root);
 
       // adds variables to the NetCDF file
-      if (!this.addVariables(ncWrite)) {
+      if (!this.addVariables(builder)) {
         return false;
       }
 
-      // create the file
-      ncWrite.create();
-
-      // writes data to the file
-      if (!this.writeData(ncWrite)) {
-        return false;
+      // build the writer and write data to the file
+      try (NetcdfFormatWriter writer = builder.build()) {
+        if (!this.writeData(writer)) {
+          return false;
+        }
       }
 
     } catch (Exception e) {
       logger.warn("Error in MDArray data operation", e);
-    } finally {
-      if (ncWrite != null) {
-        try {
-          ncWrite.close();
-        } catch (IOException e) {
-          logger.debug("Exception occurred", e);
-        }
-      }
     }
     return true;
   }
 
-  @SuppressWarnings("deprecation")
-  void addGroup(NetcdfFileWriter ncWrite, Group parent, MDArrayNode node) {
-    Group g = null;
+  void addGroup(NetcdfFormatWriter.Builder builder, Group.Builder parentBuilder, MDArrayNode node) {
+    Group.Builder groupBuilder = null;
     if (node.name != null) {
-      g = ncWrite.addGroup(parent, node.name);
+      groupBuilder = parentBuilder.addGroup(Group.builder().setName(node.name));
     }
+    Group.Builder currentBuilder = (groupBuilder != null) ? groupBuilder : parentBuilder;
     for (MDArrayNode c : node.childList) {
-      this.addGroup(ncWrite, g, c);
+      this.addGroup(builder, currentBuilder, c);
     }
   }
 
@@ -1204,37 +1183,34 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   /**
    * Adds variables to a netCDF file.
    *
-   * @param ncWrite a netCDF file
+   * @param builder the builder for the netCDF file
    * @return true if succeeded
    */
-  @SuppressWarnings("deprecation")
-  protected abstract boolean addVariables(NetcdfFileWriter ncWrite);
+  protected abstract boolean addVariables(NetcdfFormatWriter.Builder builder);
 
   /**
    * Writes data to a netCDF file.
    *
-   * @param ncWrite a netCDF file
+   * @param writer the netCDF file writer
    * @return true if succeeded
    */
-  @SuppressWarnings("deprecation")
-  protected abstract boolean writeData(NetcdfFileWriter ncWrite);
+  protected abstract boolean writeData(NetcdfFormatWriter writer);
 
   @SuppressWarnings("deprecation")
   protected void appendAttribute(
-      NetcdfFileWriter ncWrite, SGMDArrayVariable var, String ncVarName) {
+      NetcdfFormatWriter writer, SGMDArrayVariable var, String ncVarName) {
     List<SGAttribute> attrList = var.getAttributes();
     for (SGAttribute attr : attrList) {
       String name = attr.getName();
       List<Object> values = attr.getValues();
-      ncWrite.addVariableAttribute(ncWrite.findVariable(ncVarName), new Attribute(name, values));
+      writer.findVariable(ncVarName).addAttribute(new Attribute(name, values));
     }
   }
 
   protected static final String TIME_DIM_NAME = "time";
 
   // add time dimensions
-  @SuppressWarnings("deprecation")
-  protected Dimension addTimeVariable(NetcdfFileWriter ncWrite) {
+  protected Dimension addTimeVariable(NetcdfFormatWriter.Builder builder) {
     int timeLen = -1;
     SGMDArrayVariable[] vars = this.getAssignedVariables();
     for (int ii = 0; ii < vars.length; ii++) {
@@ -1247,62 +1223,55 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     }
     Dimension timeDim = null;
     if (timeLen != -1) {
-      timeDim = ncWrite.addDimension(null, TIME_DIM_NAME, timeLen);
+      timeDim = builder.addDimension(TIME_DIM_NAME, timeLen);
     }
     return timeDim;
   }
 
-  @SuppressWarnings("deprecation")
   protected boolean addSequentialIntegerNumberVariable(
-      NetcdfFileWriter ncWrite, Dimension dim, String name) {
-    return this.addSequentialNumberVariable(ncWrite, dim, name, DataType.INT);
+      NetcdfFormatWriter.Builder builder, Dimension dim, String name) {
+    return this.addSequentialNumberVariable(builder, dim, name, DataType.INT);
   }
 
-  @SuppressWarnings("deprecation")
   protected boolean addSequentialDoubleNumberVariable(
-      NetcdfFileWriter ncWrite, Dimension dim, String name) {
-    return this.addSequentialNumberVariable(ncWrite, dim, name, DataType.DOUBLE);
+      NetcdfFormatWriter.Builder builder, Dimension dim, String name) {
+    return this.addSequentialNumberVariable(builder, dim, name, DataType.DOUBLE);
   }
 
-  @SuppressWarnings("deprecation")
   private boolean addSequentialNumberVariable(
-      NetcdfFileWriter ncWrite, Dimension dim, String name, DataType dataType) {
+      NetcdfFormatWriter.Builder builder, Dimension dim, String name, DataType dataType) {
     List<Dimension> dimList = new ArrayList<Dimension>();
     dimList.add(dim);
-    Variable ncVar = ncWrite.addVariable(null, name, dataType, dimList);
-    ncVar.addAttribute(
+    Variable.Builder vb = builder.addVariable(name, dataType, dimList);
+    vb.addAttribute(
         SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   protected boolean writeSequentialIntegerNumbers(
-      NetcdfFileWriter ncWrite, String varName, final int len) {
-    return this.writeSequentialNumbers(ncWrite, varName, len, DataType.INT);
+      NetcdfFormatWriter writer, String varName, final int len) {
+    return this.writeSequentialNumbers(writer, varName, len, DataType.INT);
   }
 
-  @SuppressWarnings("deprecation")
   protected boolean writeSequentialDoubleNumbers(
-      NetcdfFileWriter ncWrite, String varName, final int len) {
-    return this.writeSequentialNumbers(ncWrite, varName, len, DataType.DOUBLE);
+      NetcdfFormatWriter writer, String varName, final int len) {
+    return this.writeSequentialNumbers(writer, varName, len, DataType.DOUBLE);
   }
 
-  @SuppressWarnings("deprecation")
   private boolean writeSequentialNumbers(
-      NetcdfFileWriter ncWrite, String varName, final int len, DataType dataType) {
+      NetcdfFormatWriter writer, String varName, final int len, DataType dataType) {
     Array valueArray = Array.factory(dataType, new int[] {len});
     for (int ii = 0; ii < len; ii++) {
       valueArray.setInt(ii, ii);
     }
-    if (!this.writeArray(ncWrite, varName, valueArray)) {
+    if (!this.writeArray(writer, varName, valueArray)) {
       return false;
     }
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   protected boolean write1DDoubleArray(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter writer,
       String varName,
       List<Dimension> ncDimList,
       Map<String, Integer> mdArrayIndexMap) {
@@ -1316,15 +1285,14 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       final double value = mdVar.getDoubleValue(dimension, ii);
       valueArray.setDouble(idx.set(ii), value);
     }
-    if (!this.writeArray(ncWrite, varName, valueArray)) {
+    if (!this.writeArray(writer, varName, valueArray)) {
       return false;
     }
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   protected boolean write2DDoubleArray(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter writer,
       String varName,
       List<Dimension> ncDimList,
       Map<String, Integer> mdArrayIndexMap) {
@@ -1346,15 +1314,14 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
         valueArray.setDouble(idx.set(ii, jj), value);
       }
     }
-    if (!this.writeArray(ncWrite, varName, valueArray)) {
+    if (!this.writeArray(writer, varName, valueArray)) {
       return false;
     }
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   protected boolean write3DDoubleArray(
-      NetcdfFileWriter ncWrite,
+      NetcdfFormatWriter writer,
       String varName,
       List<Dimension> ncDimList,
       Map<String, Integer> mdArrayIndexMap) {
@@ -1382,16 +1349,15 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
         }
       }
     }
-    if (!this.writeArray(ncWrite, varName, valueArray)) {
+    if (!this.writeArray(writer, varName, valueArray)) {
       return false;
     }
     return true;
   }
 
-  @SuppressWarnings("deprecation")
-  protected boolean writeArray(NetcdfFileWriter ncWrite, String varName, Array array) {
+  protected boolean writeArray(NetcdfFormatWriter writer, String varName, Array array) {
     try {
-      ncWrite.write(ncWrite.findVariable(varName), array);
+      writer.write(varName, array);
     } catch (IOException e) {
       return false;
     } catch (InvalidRangeException e) {
@@ -1400,10 +1366,9 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
-  @SuppressWarnings("deprecation")
-  protected boolean writeStringArray(NetcdfFileWriter ncWrite, String varName, Array array) {
+  protected boolean writeStringArray(NetcdfFormatWriter writer, String varName, Array array) {
     try {
-      ncWrite.writeStringData(ncWrite.findVariable(varName), array);
+      writer.writeStringDataToChar(writer.findVariable(varName), array);
     } catch (IOException e) {
       return false;
     } catch (InvalidRangeException e) {
@@ -1430,9 +1395,26 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return retList;
   }
 
-  @SuppressWarnings("deprecation")
+  private Group.Builder findGroupBuilder(NetcdfFormatWriter.Builder builder, String groupName) {
+    if (groupName == null || groupName.isEmpty()) {
+      return builder.getRootGroup();
+    }
+    Group.Builder groupBuilder = builder.getRootGroup();
+    String[] parts = groupName.split("/");
+    for (String part : parts) {
+      if (part.isEmpty()) {
+        continue;
+      }
+      Optional<Group.Builder> child = groupBuilder.findGroupLocal(part);
+      if (child.isPresent()) {
+        groupBuilder = child.get();
+      }
+    }
+    return groupBuilder;
+  }
+
   protected boolean addDoubleVariable(
-      NetcdfFileWriter ncWrite, List<Dimension> dimList, String name) {
+      NetcdfFormatWriter.Builder builder, List<Dimension> dimList, String name) {
     SGMDArrayVariable var = this.findVariable(name);
 
     // get the short name and the group name
@@ -1442,23 +1424,29 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 
     String dimString = SGDataUtility.getDimensionString(dimList);
 
-    Group group = ncWrite.getNetcdfFile().findGroup(sbGroupName.toString());
-    Variable ncVar = ncWrite.addVariable(group, sbShortName.toString(), DataType.DOUBLE, dimString);
-    ncVar.addAttribute(
+    Group.Builder groupBuilder = this.findGroupBuilder(builder, sbGroupName.toString());
+    Variable.Builder vb =
+        Variable.builder()
+            .setName(sbShortName.toString())
+            .setDataType(DataType.DOUBLE)
+            .setDimensionsByName(dimString);
+    groupBuilder.addVariable(vb);
+    vb.addAttribute(
         SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-    // group.addVariable(ncVar); // already added by addVariable
 
     // adds attributes
     if (var != null) {
-      this.addAttributes(var, ncVar);
+      this.addAttributes(var, vb);
     }
 
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   protected boolean addStringVariable(
-      NetcdfFileWriter ncWrite, List<Dimension> indexDimList, String name, final int maxStrLen) {
+      NetcdfFormatWriter.Builder builder,
+      List<Dimension> indexDimList,
+      String name,
+      final int maxStrLen) {
     List<Dimension> dimList = new ArrayList<Dimension>();
     dimList.addAll(indexDimList);
 
@@ -1469,27 +1457,43 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     StringBuilder sbGroupName = new StringBuilder();
     this.getNames(name, sbShortName, sbGroupName);
 
-    Group group = ncWrite.getNetcdfFile().findGroup(sbGroupName.toString());
-    Variable ncVar = ncWrite.addStringVariable(group, sbShortName.toString(), dimList, maxStrLen);
-    ncVar.addAttribute(
+    // add the string length dimension
+    Dimension strLenDim = builder.addDimension("_strlen_" + sbShortName.toString(), maxStrLen);
+    dimList.add(strLenDim);
+
+    // build dimension string
+    StringBuilder dimStr = new StringBuilder();
+    for (int ii = 0; ii < dimList.size(); ii++) {
+      if (ii > 0) {
+        dimStr.append(' ');
+      }
+      dimStr.append(dimList.get(ii).getShortName());
+    }
+
+    Group.Builder groupBuilder = this.findGroupBuilder(builder, sbGroupName.toString());
+    Variable.Builder vb =
+        Variable.builder()
+            .setName(sbShortName.toString())
+            .setDataType(DataType.CHAR)
+            .setDimensionsByName(dimStr.toString());
+    groupBuilder.addVariable(vb);
+    vb.addAttribute(
         SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_TEXT));
-    // ncVar.setParentGroup(group); // already set in addStringVariable
 
     // adds attributes
     if (var != null) {
-      this.addAttributes(var, ncVar);
+      this.addAttributes(var, vb);
     }
 
     return true;
   }
 
-  @SuppressWarnings("deprecation")
-  private void addAttributes(SGMDArrayVariable mdVar, Variable ncVar) {
+  private void addAttributes(SGMDArrayVariable mdVar, Variable.Builder vb) {
     List<SGAttribute> attrList = mdVar.getAttributes();
     for (SGAttribute attr : attrList) {
       Attribute a =
           Attribute.builder().setName(attr.getName()).setValues(attr.getValues(), false).build();
-      ncVar.addAttribute(a);
+      vb.addAttribute(a);
     }
   }
 
@@ -1510,11 +1514,10 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     sbGroupName.append(groupName);
   }
 
-  @SuppressWarnings("deprecation")
-  protected boolean writeTimeData(NetcdfFileWriter ncWrite) {
-    Dimension timeDim = ncWrite.getNetcdfFile().findDimension(TIME_DIM_NAME);
+  protected boolean writeTimeData(NetcdfFormatWriter writer) {
+    Dimension timeDim = writer.findDimension(TIME_DIM_NAME);
     if (timeDim != null) {
-      if (!this.writeSequentialIntegerNumbers(ncWrite, TIME_DIM_NAME, timeDim.getLength())) {
+      if (!this.writeSequentialIntegerNumbers(writer, TIME_DIM_NAME, timeDim.getLength())) {
         return false;
       }
     }

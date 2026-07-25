@@ -27,8 +27,8 @@ import ucar.ma2.Array;
 import ucar.ma2.DataType;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /** An abstract data class which has arrays of numbers and strings. */
 public abstract class SGSDArrayData extends SGArrayData
@@ -591,27 +591,22 @@ public abstract class SGSDArrayData extends SGArrayData
   protected static final String ATTRIBUTE_KEY_LONG_NAME = "long_name";
 
   // Creates the dimension of indices.
-  protected Dimension addIndexDimension(NetcdfFileWriter ncfile, int len) {
-    Dimension serialNumberDim = new Dimension(INDEX_DIMENSION_NAME, len);
-    ncfile.addDimension(null, serialNumberDim.getShortName(), serialNumberDim.getLength());
-    return serialNumberDim;
+  protected Dimension addIndexDimension(NetcdfFormatWriter.Builder builder, int len) {
+    return builder.addDimension(INDEX_DIMENSION_NAME, len);
   }
 
   // Creates the variable of indices.
-  protected Variable addIndexVariable(NetcdfFileWriter ncfile, Dimension dim) {
-    Variable var = ncfile.addVariable(null, INDEX_DIMENSION_NAME, DataType.INT, dim.getShortName());
-    // ncfile.addVariable(null, var); // already added by addVariable
-    return var;
+  protected Variable.Builder addIndexVariable(NetcdfFormatWriter.Builder builder, Dimension dim) {
+    return builder.addVariable(INDEX_DIMENSION_NAME, DataType.INT, dim.getShortName());
   }
 
-  protected void writeIndexVariable(NetcdfFileWriter ncfile, Variable var)
+  protected void writeIndexVariable(NetcdfFormatWriter writer, String varName, int len)
       throws IOException, InvalidRangeException {
-    final int len = var.getDimension(0).getLength();
     Array indexArray = Array.factory(DataType.INT, new int[] {len});
     for (int ii = 0; ii < len; ii++) {
       indexArray.setInt(ii, ii);
     }
-    ncfile.write(ncfile.findVariable(var.getShortName()), indexArray);
+    writer.write(varName, indexArray);
   }
 
   /**
@@ -740,25 +735,16 @@ public abstract class SGSDArrayData extends SGArrayData
   @Override
   public boolean saveToNetCDFFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
-    NetcdfFileWriter ncWrite = null;
     try {
-      ncWrite =
-          NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
-      if (!this.exportToNetCDFFile(ncWrite, mode, policy)) {
+      NetcdfFormatWriter.Builder builder =
+          NetcdfFormatWriter.createNewNetcdf3(file.getAbsolutePath());
+      if (!this.exportToNetCDFFile(builder, mode, policy)) {
         return false;
       }
     } catch (IOException e) {
       return false;
     } catch (InvalidRangeException e) {
       return false;
-    } finally {
-      if (ncWrite != null) {
-        try {
-          ncWrite.close();
-        } catch (IOException e) {
-          logger.debug("Exception occurred", e);
-        }
-      }
     }
     return true;
   }
@@ -772,7 +758,7 @@ public abstract class SGSDArrayData extends SGArrayData
    * @return true if succeeded
    */
   public abstract boolean exportToNetCDFFile(
-      NetcdfFileWriter ncWrite, final SGExportParameter mode, SGDataBufferPolicy policy)
+      NetcdfFormatWriter.Builder builder, final SGExportParameter mode, SGDataBufferPolicy policy)
       throws IOException, InvalidRangeException;
 
   /**

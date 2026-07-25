@@ -31,8 +31,8 @@ import ucar.ma2.ArrayChar;
 import ucar.ma2.DataType;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The class of scalar XY type data with netCDF data. */
 public class SGSXYNetCDFData extends SGNetCDFData
@@ -1683,7 +1683,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
 
   @Override
   protected boolean exportToFile(
-      NetcdfFileWriter ncWrite, final SGExportParameter mode, SGDataBufferPolicy policy)
+      NetcdfFormatWriter.Builder builder, final SGExportParameter mode, SGDataBufferPolicy policy)
       throws IOException, InvalidRangeException {
     // do nothing
     return true;
@@ -2125,7 +2125,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
 
   @Override
   protected Array setEditedValues(
-      NetcdfFileWriter ncWrite, String varName, Array array, final boolean all) {
+      NetcdfFormatWriter writer, String varName, Array array, final boolean all) {
     // do nothing
     return array;
   }

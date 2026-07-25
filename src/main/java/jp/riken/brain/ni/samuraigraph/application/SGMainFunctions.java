@@ -6001,6 +6001,7 @@ class SGMainFunctions
       }
 
       // adds global attributes
+      @SuppressWarnings("deprecation")
       NetcdfFileWriter ncWrite = null;
       try {
         ncWrite = NetcdfFileWriter.openExisting(path);

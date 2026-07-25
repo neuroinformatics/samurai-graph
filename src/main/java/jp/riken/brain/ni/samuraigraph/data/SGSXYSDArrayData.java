@@ -22,7 +22,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 import org.w3c.dom.Element;
 import ucar.ma2.InvalidRangeException;
-import ucar.nc2.NetcdfFileWriter;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /**
  * Scalar type XY data. This object has of x and y values. If given, this object can keep error bar
@@ -1371,7 +1371,7 @@ public class SGSXYSDArrayData extends SGSDArrayData
    */
   @Override
   public boolean exportToNetCDFFile(
-      NetcdfFileWriter ncWrite, final SGExportParameter mode, SGDataBufferPolicy policy)
+      NetcdfFormatWriter.Builder builder, final SGExportParameter mode, SGDataBufferPolicy policy)
       throws IOException, InvalidRangeException {
     // do nothing
     return true;

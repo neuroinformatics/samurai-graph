@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
@@ -46,8 +47,8 @@ import ucar.nc2.Attribute;
 import ucar.nc2.Dimension;
 import ucar.nc2.Group;
 import ucar.nc2.NetcdfFile;
-import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The base class for netCDF data. */
 public abstract class SGNetCDFData extends SGArrayData
@@ -1916,7 +1917,6 @@ public abstract class SGNetCDFData extends SGArrayData
    * @param mode the mode of saving data
    * @return true if succeeded
    */
-  @SuppressWarnings("deprecation")
   @Override
   public boolean saveToArchiveDataSetFile(final File file, final SGExportParameter mode) {
     if (!SGDataUtility.isArchiveDataSetOperation(mode.getType())) {
@@ -1946,10 +1946,9 @@ public abstract class SGNetCDFData extends SGArrayData
     allCurDimList.addAll(curDimList);
     allCurDimList.addAll(curLenDimMap.values());
 
-    NetcdfFileWriter ncWrite = null;
     try {
-      ncWrite =
-          NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
+      NetcdfFormatWriter.Builder builder =
+          NetcdfFormatWriter.createNewNetcdf3(file.getAbsolutePath());
 
       // adds dimensions
       Map<String, Dimension> addedDimMap = new HashMap<String, Dimension>();
@@ -1958,15 +1957,18 @@ public abstract class SGNetCDFData extends SGArrayData
         final int len = curDim.getLength();
         String curDimName = curDim.getShortName();
         String validDimName = this.getValidName(curDimName);
-        Dimension dim =
-            ncWrite.addDimension(
-                validDimName, len, curDim.isUnlimited(), curDim.isVariableLength());
+        Dimension dim;
+        if (curDim.isUnlimited()) {
+          dim = builder.addUnlimitedDimension(validDimName);
+        } else {
+          dim = builder.addDimension(validDimName, len);
+        }
         addedDimMap.put(curDimName, dim);
         addedVarDimCurDimNameMap.put(validDimName, curDimName);
       }
 
       // adds variables other than coordinate variables
-      Map<String, Variable> addedVarMap = new HashMap<String, Variable>();
+      Map<String, String> addedVarNameMap = new HashMap<String, String>();
       for (SGNetCDFVariable curVar : curVars) {
         if (curVar.isCoordinateVariable()) {
           continue;
@@ -1987,10 +1989,9 @@ public abstract class SGNetCDFData extends SGArrayData
         }
         Dimension[] addedDimArray = addedDimList.toArray(new Dimension[addedDimList.size()]);
         String validVarName = this.getValidName(curVarName);
-        Variable var =
-            this.addVariable(
-                ncWrite, validVarName, curVar.getDataType(), curVar.getAttributes(), addedDimArray);
-        addedVarMap.put(curVarName, var);
+        this.addVariable(
+            builder, validVarName, curVar.getDataType(), curVar.getAttributes(), addedDimArray);
+        addedVarNameMap.put(curVarName, validVarName);
       }
 
       // adds coordinate variables
@@ -2001,113 +2002,95 @@ public abstract class SGNetCDFData extends SGArrayData
           continue;
         }
         Dimension addedDim = addedDimMap.get(curDimName);
-        Variable var =
-            this.addVariable(
-                ncWrite,
-                addedDim.getShortName(),
-                cVar.getDataType(),
-                cVar.getAttributes(),
-                new Dimension[] {addedDim});
-        addedVarMap.put(curDimName, var);
+        this.addVariable(
+            builder,
+            addedDim.getShortName(),
+            cVar.getDataType(),
+            cVar.getAttributes(),
+            new Dimension[] {addedDim});
+        addedVarNameMap.put(curDimName, addedDim.getShortName());
       }
 
-      ncWrite.create();
+      try (NetcdfFormatWriter writer = builder.build()) {
 
-      // writes values
-      Iterator<Entry<String, Variable>> addedVarItr = addedVarMap.entrySet().iterator();
-      while (addedVarItr.hasNext()) {
-        Entry<String, Variable> addedVarEntry = addedVarItr.next();
-        String curVarName = addedVarEntry.getKey();
-        Variable addedVar = addedVarEntry.getValue();
-        String addedVarName = addedVar.getShortName();
-        List<Dimension> addedVarDimList = addedVar.getDimensions();
-        List<String> addedVarDimCurDimNameList = new ArrayList<String>();
-        for (Dimension addedVarDim : addedVarDimList) {
-          String addedVarDimName = addedVarDim.getShortName();
-          String addedVarDimCurDimName = addedVarDimCurDimNameMap.get(addedVarDimName);
-          addedVarDimCurDimNameList.add(addedVarDimCurDimName);
-        }
-        Variable curVar = this.findVariable(curVarName).getVariable();
-        List<Dimension> curVarDimList = curVar.getDimensions();
-        List<Integer> reducedDimList = new ArrayList<Integer>();
-        StringBuilder sb = new StringBuilder();
-        for (int ii = 0; ii < curVarDimList.size(); ii++) {
-          if (ii > 0) {
-            sb.append(',');
+        // writes values
+        Iterator<Entry<String, String>> addedVarItr = addedVarNameMap.entrySet().iterator();
+        while (addedVarItr.hasNext()) {
+          Entry<String, String> addedVarEntry = addedVarItr.next();
+          String curVarName = addedVarEntry.getKey();
+          String addedVarName = addedVarEntry.getValue();
+          Variable curVar = this.findVariable(curVarName).getVariable();
+          List<Dimension> curVarDimList = curVar.getDimensions();
+          List<Integer> reducedDimList = new ArrayList<Integer>();
+          StringBuilder sb = new StringBuilder();
+          for (int ii = 0; ii < curVarDimList.size(); ii++) {
+            if (ii > 0) {
+              sb.append(',');
+            }
+            Dimension curVarDim = curVarDimList.get(ii);
+            String curVarDimName = curVarDim.getShortName();
+            if (addedVarDimCurDimNameMap.containsValue(curVarDimName)) {
+              SGIntegerSeries series = SGIntegerSeries.createInstance(curVarDim.getLength());
+              String str = getNetCDFStride(series);
+              sb.append(str);
+            } else {
+              Integer origin = this.mOriginMap.get(curVarDimName);
+              sb.append(origin);
+              reducedDimList.add(ii);
+            }
           }
-          Dimension curVarDim = curVarDimList.get(ii);
-          String curVarDimName = curVarDim.getShortName();
-          if (addedVarDimCurDimNameList.contains(curVarDimName)) {
-            SGIntegerSeries series = SGIntegerSeries.createInstance(curVarDim.getLength());
-            String str = getNetCDFStride(series);
-            sb.append(str);
-          } else {
-            Integer origin = this.mOriginMap.get(curVarDimName);
-            sb.append(origin);
-            reducedDimList.add(ii);
-          }
-        }
-        Array array = curVar.read(sb.toString());
-        Array reducedArray = array;
-        Integer[] sortedReducedDims = reducedDimList.toArray(new Integer[reducedDimList.size()]);
-        Arrays.sort(
-            sortedReducedDims,
-            new Comparator<Integer>() {
-              // sorts in descending order
-              @Override
-              public int compare(Integer o1, Integer o2) {
-                if (o1 < o2) {
-                  return 1;
-                } else if (o1.equals(o2)) {
-                  return 0;
-                } else {
-                  return -1;
+          Array array = curVar.read(sb.toString());
+          Array reducedArray = array;
+          Integer[] sortedReducedDims = reducedDimList.toArray(new Integer[reducedDimList.size()]);
+          Arrays.sort(
+              sortedReducedDims,
+              new Comparator<Integer>() {
+                // sorts in descending order
+                @Override
+                public int compare(Integer o1, Integer o2) {
+                  if (o1 < o2) {
+                    return 1;
+                  } else if (o1.equals(o2)) {
+                    return 0;
+                  } else {
+                    return -1;
+                  }
                 }
-              }
-            });
-        for (Integer reducedDim : sortedReducedDims) {
-          reducedArray = reducedArray.reduce(reducedDim);
+              });
+          for (Integer reducedDim : sortedReducedDims) {
+            reducedArray = reducedArray.reduce(reducedDim);
+          }
+
+          // set edited values
+          reducedArray = this.setEditedValues(writer, addedVarName, reducedArray, true);
+
+          writer.write(addedVarName, reducedArray);
         }
-
-        // set edited values
-        reducedArray = this.setEditedValues(ncWrite, addedVarName, reducedArray, true);
-
-        ncWrite.write(ncWrite.findVariable(addedVarName), reducedArray);
       }
 
     } catch (IOException e) {
       return false;
     } catch (InvalidRangeException e) {
       return false;
-    } finally {
-      if (ncWrite != null) {
-        try {
-          ncWrite.close();
-        } catch (IOException e) {
-          logger.debug("Failed to close NetCDF file writer", e);
-        }
-      }
     }
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   protected abstract Array setEditedValues(
-      NetcdfFileWriter ncWrite, String varName, Array array, final boolean all);
+      NetcdfFormatWriter writer, String varName, Array array, final boolean all);
 
-  @SuppressWarnings("deprecation")
-  private Variable addVariable(
-      NetcdfFileWriter ncWrite,
+  private Variable.Builder addVariable(
+      NetcdfFormatWriter.Builder builder,
       String varName,
       DataType dataType,
       List<Attribute> attrList,
       Dimension[] dims) {
-    Variable var = ncWrite.addVariable(null, varName, dataType, java.util.Arrays.asList(dims));
+    Variable.Builder vb = builder.addVariable(varName, dataType, java.util.Arrays.asList(dims));
     for (Attribute attr : attrList) {
-      var.addAttribute(
+      vb.addAttribute(
           Attribute.builder().setName(attr.getShortName()).setValues(attr.getValues()).build());
     }
-    return var;
+    return vb;
   }
 
   /**
@@ -2122,54 +2105,35 @@ public abstract class SGNetCDFData extends SGArrayData
     return this.saveToNetCDFFile(file, mode, policy);
   }
 
-  @SuppressWarnings("deprecation")
   protected abstract boolean exportToFile(
-      NetcdfFileWriter ncWrite, final SGExportParameter mode, SGDataBufferPolicy policy)
+      NetcdfFormatWriter.Builder builder, final SGExportParameter mode, SGDataBufferPolicy policy)
       throws IOException, InvalidRangeException;
 
-  @SuppressWarnings("deprecation")
-  protected Dimension addDimension(NetcdfFileWriter ncWrite, String name, final int len) {
-    Dimension dim = new Dimension(name, len);
-    ncWrite.addDimension(null, dim.getShortName(), dim.getLength());
-    return dim;
+  protected static Attribute createStringAttribute(String name, String value) {
+    return new Attribute(name, value);
   }
 
-  @SuppressWarnings("deprecation")
-  protected Attribute addAttribute(Variable var, String name, String value) {
-    Attribute attr = new Attribute(name, value);
-    var.addAttribute(attr);
-    return attr;
+  protected static Attribute createNumberAttribute(String name, Number value) {
+    return new Attribute(name, value);
   }
 
-  @SuppressWarnings("deprecation")
-  protected Attribute addAttribute(Variable var, String name, Number value) {
-    Attribute attr = new Attribute(name, value);
-    var.addAttribute(attr);
-    return attr;
+  protected static Attribute createArrayAttribute(String name, Array array) {
+    return Attribute.builder().setName(name).setValues(array).build();
   }
 
-  @SuppressWarnings("deprecation")
-  protected Attribute addAttribute(Variable var, String name, Array array) {
-    Attribute attr = Attribute.builder().setName(name).setValues(array).build();
-    var.addAttribute(attr);
-    return attr;
-  }
-
-  @SuppressWarnings("deprecation")
-  protected Variable addVariable(
-      NetcdfFileWriter ncWrite,
+  protected Variable.Builder addVariable(
+      NetcdfFormatWriter.Builder builder,
       SGExportParameter mode,
       String name,
       DataType dataType,
       String valueType,
       String dimString,
       SGDataBufferPolicy policy) {
-    return this.addVariable(ncWrite, mode, name, name, dataType, valueType, dimString, policy);
+    return this.addVariable(builder, mode, name, name, dataType, valueType, dimString, policy);
   }
 
-  @SuppressWarnings("deprecation")
-  protected Variable addVariable(
-      NetcdfFileWriter ncWrite,
+  protected Variable.Builder addVariable(
+      NetcdfFormatWriter.Builder builder,
       SGExportParameter mode,
       String oldName,
       String name,
@@ -2179,60 +2143,59 @@ public abstract class SGNetCDFData extends SGArrayData
       SGDataBufferPolicy policy) {
 
     SGNetCDFVariable curVar = this.getVariable(this.getNetcdfFile(), oldName);
-    Variable var = ncWrite.addVariable(null, name, dataType, dimString);
+    Variable.Builder vb = builder.addVariable(name, dataType, dimString);
 
     // value type
     if (valueType != null) {
-      this.addAttribute(var, ATTRIBUTE_VALUE_TYPE, valueType);
+      vb.addAttribute(createStringAttribute(ATTRIBUTE_VALUE_TYPE, valueType));
     }
 
     // long name and standard name
     String longName = curVar.getLongName();
     if (longName != null && !"".equals(longName)) {
-      this.addAttribute(var, ATTR_LONG_NAME, longName);
+      vb.addAttribute(createStringAttribute(ATTR_LONG_NAME, longName));
     }
     String standardName = curVar.getStandardName();
     if (standardName != null && !"".equals(standardName)) {
-      this.addAttribute(var, ATTR_STANDARD_NAME, standardName);
+      vb.addAttribute(createStringAttribute(ATTR_STANDARD_NAME, standardName));
     }
 
     // units string
     String unitsString = curVar.getUnitsString();
     if (unitsString != null && !"".equals(unitsString)) {
-      this.addAttribute(var, ATTR_UNITS, unitsString);
+      vb.addAttribute(createStringAttribute(ATTR_UNITS, unitsString));
     }
 
     // fill value and values for valid range
-    this.addFillValueAttributes(curVar, var, policy);
+    this.addFillValueAttributes(curVar, vb, policy);
 
-    // ncWrite.addVariable(null, var); // already added by addVariable
-    return var;
+    return vb;
   }
 
   protected void addFillValueAttributes(
-      SGNetCDFVariable curVar, Variable var, SGDataBufferPolicy policy) {
+      SGNetCDFVariable curVar, Variable.Builder vb, SGDataBufferPolicy policy) {
     Number fillValue = curVar.getFillValue();
     if (fillValue != null) {
-      this.addAttribute(var, ATTR_FILL_VALUE, fillValue);
+      vb.addAttribute(createNumberAttribute(ATTR_FILL_VALUE, fillValue));
     }
     Number missingValue = curVar.getMissingValue();
     if (missingValue != null) {
-      this.addAttribute(var, ATTR_MISSING_VALUE, missingValue);
+      vb.addAttribute(createNumberAttribute(ATTR_MISSING_VALUE, missingValue));
     }
     double[] validRange = curVar.getValidRange();
     if (validRange != null) {
       Array range = Array.factory(DataType.DOUBLE, new int[] {2});
       range.setDouble(0, validRange[0]);
       range.setDouble(1, validRange[1]);
-      this.addAttribute(var, ATTR_VALID_RANGE, range);
+      vb.addAttribute(createArrayAttribute(ATTR_VALID_RANGE, range));
     }
     Number validMin = curVar.getValidMin();
     if (validMin != null) {
-      this.addAttribute(var, ATTR_VALID_MIN, validMin);
+      vb.addAttribute(createNumberAttribute(ATTR_VALID_MIN, validMin));
     }
     Number validMax = curVar.getValidMax();
     if (validMax != null) {
-      this.addAttribute(var, ATTR_VALID_MAX, validMax);
+      vb.addAttribute(createNumberAttribute(ATTR_VALID_MAX, validMax));
     }
   }
 
@@ -2252,48 +2215,36 @@ public abstract class SGNetCDFData extends SGArrayData
    * @param file the file to save
    * @return true if succeeded
    */
-  @SuppressWarnings("deprecation")
   @Override
   public boolean saveToNetCDFFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy) {
 
-    NetcdfFileWriter ncWrite = null;
     try {
-      ncWrite =
-          NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
-      if (!this.exportToFile(ncWrite, mode, policy)) {
+      NetcdfFormatWriter.Builder builder =
+          NetcdfFormatWriter.createNewNetcdf3(file.getAbsolutePath());
+      if (!this.exportToFile(builder, mode, policy)) {
         return false;
       }
     } catch (IOException e) {
       return false;
     } catch (InvalidRangeException e) {
       return false;
-    } finally {
-      if (ncWrite != null) {
-        try {
-          ncWrite.close();
-        } catch (IOException e) {
-          logger.debug("Failed to close NetCDF file writer", e);
-        }
-      }
     }
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   public boolean saveToDataSetNetCDFFile(final File file) {
 
     SGNetCDFVariable[] vArray = this.getAssignedVariables();
 
     NetcdfFile ncRead = this.getNetcdfFile().getNetcdfFile();
-    NetcdfFileWriter ncWrite = null;
     try {
-      ncWrite =
-          NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
+      NetcdfFormatWriter.Builder builder =
+          NetcdfFormatWriter.createNewNetcdf3(file.getAbsolutePath());
 
       List<Attribute> globalAttrList = ncRead.getGlobalAttributes();
       for (Attribute gAttr : globalAttrList) {
-        ncWrite.addGroupAttribute(null, gAttr);
+        builder.addAttribute(gAttr);
       }
 
       // maps for text variable
@@ -2392,14 +2343,13 @@ public abstract class SGNetCDFData extends SGArrayData
       Set<Variable> modVarSet = modMap.keySet();
 
       for (Dimension dim : dimSet) {
-        Dimension d = new Dimension(dim.getShortName(), dim.getLength());
-        ncWrite.addDimension(null, d.getShortName(), d.getLength());
+        builder.addDimension(dim.getShortName(), dim.getLength());
       }
 
       for (Variable var : varList) {
         String varName = var.getShortName();
         if (varNameSet.contains(varName)) {
-          List<Attribute> attrList = var.getAttributes();
+          Iterable<Attribute> attrs = var.attributes();
           String[] groupNames = varName.split("/");
           StringBuilder sb = new StringBuilder();
           for (int ii = 0; ii < groupNames.length - 1; ii++) {
@@ -2410,61 +2360,67 @@ public abstract class SGNetCDFData extends SGArrayData
           }
           String groupName = sb.toString();
           if (groupName.length() == 0) {
-            Variable v =
-                ncWrite.addVariable(
-                    null, var.getShortName(), var.getDataType(), var.getDimensionsString());
-            for (Attribute attr : attrList) {
-              v.addAttribute(attr);
+            Variable.Builder vb =
+                builder.addVariable(
+                    var.getShortName(), var.getDataType(), var.getDimensionsString());
+            for (Attribute attr : attrs) {
+              vb.addAttribute(
+                  Attribute.builder()
+                      .setName(attr.getShortName())
+                      .setValues(attr.getValues())
+                      .build());
             }
-            // ncWrite.addVariable(null, v); // already added by addVariable
           } else {
-            Group group = ncWrite.getNetcdfFile().findGroup(groupName);
-            if (group == null) {
-              Group g = ncWrite.getNetcdfFile().getRootGroup();
-              for (int ii = 0; ii < groupNames.length - 1; ii++) {
-                Group g2 = g.findGroup(groupNames[ii]);
-                if (g2 == null) {
-                  g2 = ncWrite.addGroup(g, groupNames[ii]);
-                }
-                g = g2;
+            // Handle group variables
+            Group.Builder groupBuilder = builder.getRootGroup();
+            for (int ii = 0; ii < groupNames.length - 1; ii++) {
+              Optional<Group.Builder> child = groupBuilder.findGroupLocal(groupNames[ii]);
+              if (!child.isPresent()) {
+                child = Optional.of(groupBuilder.addGroup(Group.builder().setName(groupNames[ii])));
               }
+              groupBuilder = child.get();
             }
-            group = ncWrite.getNetcdfFile().findGroup(groupName);
-            String dimString = var.getDimensionsString();
-            Variable v =
-                ncWrite.addVariable(
-                    null, groupNames[groupNames.length - 1], var.getDataType(), dimString);
-            for (Attribute attr : attrList) {
-              v.addAttribute(attr);
+            Variable.Builder vb =
+                Variable.builder()
+                    .setName(groupNames[groupNames.length - 1])
+                    .setDataType(var.getDataType())
+                    .setDimensionsByName(var.getDimensionsString());
+            groupBuilder.addVariable(vb);
+            for (Attribute attr : attrs) {
+              vb.addAttribute(
+                  Attribute.builder()
+                      .setName(attr.getShortName())
+                      .setValues(attr.getValues())
+                      .build());
             }
-            // ncWrite.addVariable(group, v); // already added by addVariable
           }
         }
       }
 
-      ncWrite.create();
+      try (NetcdfFormatWriter writer = builder.build()) {
 
-      for (Variable var : varList) {
-        Array array = var.read();
-        if (modVarSet.contains(var)) {
-          // create new array
-          List<String> strList = strListMap.get(var);
-          Dimension strLengthDim = strLengthDimMap.get(var);
-          ArrayChar acNew = new ArrayChar.D2(strList.size(), strLengthDim.getLength());
-          Index idxNew = acNew.getIndex();
-          int[] shape = idxNew.getShape();
-          for (int ii = 0; ii < shape[0]; ii++) {
-            String str = strList.get(ii);
-            char[] cArray = str.toCharArray();
-            for (int jj = 0; jj < cArray.length; jj++) {
-              acNew.setChar(idxNew.set(ii, jj), cArray[jj]);
+        for (Variable var : varList) {
+          Array array = var.read();
+          if (modVarSet.contains(var)) {
+            // create new array
+            List<String> strList = strListMap.get(var);
+            Dimension strLengthDim = strLengthDimMap.get(var);
+            ArrayChar acNew = new ArrayChar.D2(strList.size(), strLengthDim.getLength());
+            Index idxNew = acNew.getIndex();
+            int[] shape = idxNew.getShape();
+            for (int ii = 0; ii < shape[0]; ii++) {
+              String str = strList.get(ii);
+              char[] cArray = str.toCharArray();
+              for (int jj = 0; jj < cArray.length; jj++) {
+                acNew.setChar(idxNew.set(ii, jj), cArray[jj]);
+              }
             }
+            array = acNew;
           }
-          array = acNew;
-        }
-        String varName = var.getShortName();
-        if (varNameSet.contains(varName)) {
-          ncWrite.write(ncWrite.findVariable(varName), array);
+          String varName = var.getShortName();
+          if (varNameSet.contains(varName)) {
+            writer.write(varName, array);
+          }
         }
       }
 
@@ -2472,13 +2428,6 @@ public abstract class SGNetCDFData extends SGArrayData
       return false;
     } catch (InvalidRangeException e) {
       return false;
-    } finally {
-      if (ncWrite != null) {
-        try {
-          ncWrite.close();
-        } catch (IOException e) {
-        }
-      }
     }
 
     return true;
@@ -2532,13 +2481,6 @@ public abstract class SGNetCDFData extends SGArrayData
     } else {
       return -1;
     }
-  }
-
-  @SuppressWarnings("deprecation")
-  protected void writeValues(NetcdfFileWriter ncWrite, Variable var, Array values)
-      throws IOException, InvalidRangeException {
-    String varName = var.getShortName();
-    ncWrite.write(ncWrite.findVariable(varName), values);
   }
 
   /*

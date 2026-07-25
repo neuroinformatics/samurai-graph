@@ -26,7 +26,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 import org.w3c.dom.Element;
-import ucar.nc2.NetcdfFileWriter;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The class of scalar XY type data for multidimensional data file. */
 public class SGSXYMDArrayData extends SGMDArrayData
@@ -1355,7 +1355,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
    * @return true if succeeded
    */
   @Override
-  protected boolean addVariables(NetcdfFileWriter ncWrite) {
+  protected boolean addVariables(NetcdfFormatWriter.Builder builder) {
     // do nothing
     return true;
   }
@@ -1367,7 +1367,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
    * @return true if succeeded
    */
   @Override
-  protected boolean writeData(NetcdfFileWriter ncWrite) {
+  protected boolean writeData(NetcdfFormatWriter writer) {
     // do nothing
     return true;
   }

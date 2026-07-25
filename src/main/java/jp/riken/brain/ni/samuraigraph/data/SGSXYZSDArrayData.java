@@ -31,8 +31,8 @@ import ucar.ma2.DataType;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Attribute;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /** Scalar type XYZ data. This object has of x, y and z values. */
 public class SGSXYZSDArrayData extends SGSDArrayData
@@ -723,7 +723,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    */
   @Override
   public boolean exportToNetCDFFile(
-      NetcdfFileWriter ncWrite, final SGExportParameter mode, SGDataBufferPolicy policy)
+      NetcdfFormatWriter.Builder builder, final SGExportParameter mode, SGDataBufferPolicy policy)
       throws IOException, InvalidRangeException {
 
     //
@@ -771,43 +771,37 @@ public class SGSXYZSDArrayData extends SGSDArrayData
      * List<Double> xValueList = new ArrayList<Double>(xMap.keySet());
      * List<Double> yValueList = new ArrayList<Double>(yMap.keySet());
      *
-     * Dimension xDim = new Dimension(xName, xValueList.size());
-     * ncWrite.addDimension(null, xDim.getShortName(), xDim.getLength());
-     * Dimension yDim = new Dimension(yName, yValueList.size());
-     * ncWrite.addDimension(null, yDim.getShortName(), yDim.getLength());
+     * Dimension xDim = builder.addDimension(xName, xValueList.size());
+     * Dimension yDim = builder.addDimension(yName, yValueList.size());
      *
-     * Variable xVar = ncWrite.addVariable(null, xName, DataType.DOUBLE, xName);
+     * Variable.Builder xVar = builder.addVariable(xName, DataType.DOUBLE, xName);
      * xVar.addAttribute(new Attribute(SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
      * SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-     * // ncWrite.addVariable(null, xVar); // already added by addVariable
      *
-     * Variable yVar = ncWrite.addVariable(null, yName, DataType.DOUBLE, yName);
+     * Variable.Builder yVar = builder.addVariable(yName, DataType.DOUBLE, yName);
      * yVar.addAttribute(new Attribute(SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
      * SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-     * // ncWrite.addVariable(null, yVar); // already added by addVariable
      *
      * String dimString = xName + " " + yName;
      *
-     * Variable zVar = ncWrite.addVariable(null, zName, DataType.DOUBLE, dimString);
+     * Variable.Builder zVar = builder.addVariable(zName, DataType.DOUBLE, dimString);
      * zVar.addAttribute(new Attribute(SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
      * SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-     * // ncWrite.addVariable(null, zVar); // already added by addVariable
      *
-     * ncWrite.create();
-     *
+     * try (NetcdfFormatWriter writer = builder.build()) {
      * final int xLen = xDim.getLength();
      * Array xArray = Array.factory(DataType.DOUBLE, new int[] { xLen });
      * for (int ii = 0; ii < xLen; ii++) {
      * xArray.setDouble(ii, xValueList.get(ii));
      * }
-     * ncWrite.write(ncWrite.findVariable(xName), xArray);
+     * writer.write(xName, xArray);
      *
      * final int yLen = yDim.getLength();
      * Array yArray = Array.factory(DataType.DOUBLE, new int[] { yLen });
      * for (int ii = 0; ii < yLen; ii++) {
      * yArray.setDouble(ii, yValueList.get(ii));
      * }
-     * ncWrite.write(ncWrite.findVariable(yName), yArray);
+     * writer.write(yName, yArray);
      *
      * Array zArray = Array.factory(DataType.DOUBLE, new int[] { xLen, yLen });
      * Index zIndex = zArray.getIndex();
@@ -828,66 +822,53 @@ public class SGSXYZSDArrayData extends SGSDArrayData
      * zArray.setDouble(zIndex, common.z);
      * }
      * }
-     * ncWrite.write(ncWrite.findVariable(zName), zArray);
+     * writer.write(zName, zArray);
+     * }
      */
 
     // scatter plot
     String indexName = "Index";
-    Dimension indexDim = new Dimension(indexName, len);
-    ncWrite.addDimension(null, indexDim.getShortName(), indexDim.getLength());
+    builder.addDimension(indexName, len);
 
-    Variable indexVar = ncWrite.addVariable(null, indexName, DataType.INT, indexName);
-    indexVar
-        .attributes()
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-    // ncWrite.addVariable(null, indexVar); // already added by addVariable
+    Variable.Builder indexVar = builder.addVariable(indexName, DataType.INT, indexName);
+    indexVar.addAttribute(
+        new Attribute(
+            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
-    Variable xVar = ncWrite.addVariable(null, xName, DataType.DOUBLE, indexName);
-    xVar.attributes()
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-    // ncWrite.addVariable(null, xVar); // already added by addVariable
+    Variable.Builder xVar = builder.addVariable(xName, DataType.DOUBLE, indexName);
+    xVar.addAttribute(
+        new Attribute(
+            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
-    Variable yVar = ncWrite.addVariable(null, yName, DataType.DOUBLE, indexName);
-    yVar.attributes()
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-    // ncWrite.addVariable(null, yVar); // already added by addVariable
+    Variable.Builder yVar = builder.addVariable(yName, DataType.DOUBLE, indexName);
+    yVar.addAttribute(
+        new Attribute(
+            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
-    Variable zVar = ncWrite.addVariable(null, zName, DataType.DOUBLE, indexName);
-    zVar.attributes()
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-    // ncWrite.addVariable(null, zVar); // already added by addVariable
+    Variable.Builder zVar = builder.addVariable(zName, DataType.DOUBLE, indexName);
+    zVar.addAttribute(
+        new Attribute(
+            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
-    ncWrite.create();
+    try (NetcdfFormatWriter writer = builder.build()) {
+      Array xArray = Array.factory(DataType.DOUBLE, new int[] {len});
+      for (int ii = 0; ii < len; ii++) {
+        xArray.setDouble(ii, xValues[ii]);
+      }
+      writer.write(xName, xArray);
 
-    Array xArray = Array.factory(DataType.DOUBLE, new int[] {len});
-    for (int ii = 0; ii < len; ii++) {
-      xArray.setDouble(ii, xValues[ii]);
+      Array yArray = Array.factory(DataType.DOUBLE, new int[] {len});
+      for (int ii = 0; ii < len; ii++) {
+        yArray.setDouble(ii, yValues[ii]);
+      }
+      writer.write(yName, yArray);
+
+      Array zArray = Array.factory(DataType.DOUBLE, new int[] {len});
+      for (int ii = 0; ii < len; ii++) {
+        zArray.setDouble(ii, zValues[ii]);
+      }
+      writer.write(zName, zArray);
     }
-    ncWrite.write(ncWrite.findVariable(xName), xArray);
-
-    Array yArray = Array.factory(DataType.DOUBLE, new int[] {len});
-    for (int ii = 0; ii < len; ii++) {
-      yArray.setDouble(ii, yValues[ii]);
-    }
-    ncWrite.write(ncWrite.findVariable(yName), yArray);
-
-    Array zArray = Array.factory(DataType.DOUBLE, new int[] {len});
-    for (int ii = 0; ii < len; ii++) {
-      zArray.setDouble(ii, zValues[ii]);
-    }
-    ncWrite.write(ncWrite.findVariable(zName), zArray);
 
     return true;
   }
@@ -908,90 +889,75 @@ public class SGSXYZSDArrayData extends SGSDArrayData
     double[] yValues = colY.getArray();
     double[] zValues = colZ.getArray();
 
-    NetcdfFileWriter ncfile = null;
     try {
-      ncfile = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
-      ncfile.setFill(true);
+      NetcdfFormatWriter.Builder builder =
+          NetcdfFormatWriter.createNewNetcdf3(file.getAbsolutePath());
+      builder.setFill(true);
 
       // Creates the dimension and variable of indices.
-      Dimension indexDim = this.addIndexDimension(ncfile, dataNum);
+      Dimension indexDim = this.addIndexDimension(builder, dataNum);
       String indexDimName = indexDim.getShortName();
-      Variable indexVar = this.addIndexVariable(ncfile, indexDim);
-      indexVar
-          .attributes()
-          .addAttribute(
-              SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+      Variable.Builder indexVar = this.addIndexVariable(builder, indexDim);
+      indexVar.addAttribute(
+          SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
       // Add data columns as variables.
-      Variable varX = ncfile.addVariable(null, "column0", DataType.DOUBLE, indexDimName);
-      Variable varY = ncfile.addVariable(null, "column1", DataType.DOUBLE, indexDimName);
-      Variable varZ = ncfile.addVariable(null, "column2", DataType.DOUBLE, indexDimName);
+      Variable.Builder varX = builder.addVariable("column0", DataType.DOUBLE, indexDimName);
+      Variable.Builder varY = builder.addVariable("column1", DataType.DOUBLE, indexDimName);
+      Variable.Builder varZ = builder.addVariable("column2", DataType.DOUBLE, indexDimName);
       String title = colX.getTitle();
       if (null != title && "".equals(title.trim()) == false) {
         Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-        varX.attributes().addAttribute(attr);
+        varX.addAttribute(attr);
       }
       title = colY.getTitle();
       if (null != title && "".equals(title.trim()) == false) {
         Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-        varY.attributes().addAttribute(attr);
+        varY.addAttribute(attr);
       }
       title = colZ.getTitle();
       if (null != title && "".equals(title.trim()) == false) {
         Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-        varZ.attributes().addAttribute(attr);
+        varZ.addAttribute(attr);
       }
-
-      // ncfile.addVariable(null, varX); // already added by addVariable
-      // ncfile.addVariable(null, varY); // already added by addVariable
-      // ncfile.addVariable(null, varZ); // already added by addVariable
 
       String[] varNames = new String[colArray.length];
-      varNames[0] = varX.getShortName();
-      varNames[1] = varY.getShortName();
-      varNames[2] = varZ.getShortName();
+      varNames[0] = "column0";
+      varNames[1] = "column1";
+      varNames[2] = "column2";
 
-      varX.attributes().addAttribute(SGDataUtility.getValueTypeAttribute(colX.getValueType()));
-      varY.attributes().addAttribute(SGDataUtility.getValueTypeAttribute(colY.getValueType()));
-      varZ.attributes().addAttribute(SGDataUtility.getValueTypeAttribute(colZ.getValueType()));
+      varX.addAttribute(SGDataUtility.getValueTypeAttribute(colX.getValueType()));
+      varY.addAttribute(SGDataUtility.getValueTypeAttribute(colY.getValueType()));
+      varZ.addAttribute(SGDataUtility.getValueTypeAttribute(colZ.getValueType()));
 
-      ncfile.create();
+      try (NetcdfFormatWriter writer = builder.build()) {
+        // add values
 
-      // add values
+        Array xArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+        for (int i = 0; i < xValues.length; i++) {
+          xArray.setDouble(i, xValues[i]);
+        }
+        writer.write(varNames[0], xArray);
 
-      Array xArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
-      for (int i = 0; i < xValues.length; i++) {
-        xArray.setDouble(i, xValues[i]);
+        Array yArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+        for (int i = 0; i < yValues.length; i++) {
+          yArray.setDouble(i, yValues[i]);
+        }
+        writer.write(varNames[1], yArray);
+
+        Array zArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+        for (int i = 0; i < zValues.length; i++) {
+          zArray.setDouble(i, zValues[i]);
+        }
+        writer.write(varNames[2], zArray);
+
+        // write serial numbers
+        this.writeIndexVariable(writer, INDEX_DIMENSION_NAME, dataNum);
       }
-      ncfile.write(ncfile.findVariable(varNames[0]), xArray);
-
-      Array yArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
-      for (int i = 0; i < yValues.length; i++) {
-        yArray.setDouble(i, yValues[i]);
-      }
-      ncfile.write(ncfile.findVariable(varNames[1]), yArray);
-
-      Array zArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
-      for (int i = 0; i < zValues.length; i++) {
-        zArray.setDouble(i, zValues[i]);
-      }
-      ncfile.write(ncfile.findVariable(varNames[2]), zArray);
-
-      // write serial numbers
-      this.writeIndexVariable(ncfile, indexVar);
-
     } catch (IOException e) {
       return false;
     } catch (InvalidRangeException e) {
       return false;
-    } finally {
-      if (ncfile != null) {
-        try {
-          ncfile.close();
-        } catch (IOException e) {
-          logger.debug("Exception occurred", e);
-        }
-      }
     }
 
     return true;

@@ -24,8 +24,8 @@ import ucar.ma2.Array;
 import ucar.ma2.DataType;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVXYTypeData {
 
@@ -873,7 +873,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
 
   @Override
   protected boolean exportToFile(
-      NetcdfFileWriter ncWrite, final SGExportParameter mode, SGDataBufferPolicy policy)
+      NetcdfFormatWriter.Builder builder, final SGExportParameter mode, SGDataBufferPolicy policy)
       throws IOException, InvalidRangeException {
 
     DataType xDataType = this.getExportNumberDataType(this.mXVariable, mode, policy);
@@ -889,7 +889,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
 
       // adds dimensions
       String indexDimName = this.mIndexVariable.getValidName();
-      this.addDimension(ncWrite, indexDimName, len);
+      builder.addDimension(indexDimName, len);
 
       String xName = this.mXVariable.getValidName();
       String yName = this.mYVariable.getValidName();
@@ -897,45 +897,45 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
       String sName = this.mSecondComponentVariable.getValidName();
 
       // adds variables
-      Variable indexVar =
+      Variable.Builder indexVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               indexDimName,
               DataType.INT,
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               indexDimName,
               policy);
-      Variable xVar =
+      Variable.Builder xVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               xName,
               xDataType,
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               indexDimName,
               policy);
-      Variable yVar =
+      Variable.Builder yVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               yName,
               yDataType,
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               indexDimName,
               policy);
-      Variable fVar =
+      Variable.Builder fVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               fName,
               fDataType,
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               indexDimName,
               policy);
-      Variable sVar =
+      Variable.Builder sVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               sName,
               sDataType,
@@ -944,37 +944,38 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
               policy);
 
       // creates the file
-      ncWrite.create();
+      try (NetcdfFormatWriter writer = builder.build()) {
 
-      // writes data to the file
-      int[] indices = this.mIndexStride.getNumbers();
-      double[] indexValues = new double[indices.length];
-      for (int ii = 0; ii < indexValues.length; ii++) {
-        indexValues[ii] = (double) indices[ii];
+        // writes data to the file
+        int[] indices = this.mIndexStride.getNumbers();
+        double[] indexValues = new double[indices.length];
+        for (int ii = 0; ii < indexValues.length; ii++) {
+          indexValues[ii] = (double) indices[ii];
+        }
+        Array indexArray = Array.factory(DataType.INT, new int[] {len});
+        this.setArray(indexArray, indexValues);
+        writer.write(indexDimName, indexArray);
+
+        double[] xValues = buffer.getXValues();
+        Array xArray = Array.factory(xDataType, new int[] {len});
+        this.setArray(xArray, xValues);
+        writer.write(xName, xArray);
+
+        double[] yValues = buffer.getYValues();
+        Array yArray = Array.factory(yDataType, new int[] {len});
+        this.setArray(yArray, yValues);
+        writer.write(yName, yArray);
+
+        double[] fValues = buffer.getFirstComponentValues();
+        Array fArray = Array.factory(fDataType, new int[] {len});
+        this.setArray(fArray, fValues);
+        writer.write(fName, fArray);
+
+        double[] sValues = buffer.getSecondComponentValues();
+        Array sArray = Array.factory(sDataType, new int[] {len});
+        this.setArray(sArray, sValues);
+        writer.write(sName, sArray);
       }
-      Array indexArray = Array.factory(DataType.INT, new int[] {len});
-      this.setArray(indexArray, indexValues);
-      this.writeValues(ncWrite, indexVar, indexArray);
-
-      double[] xValues = buffer.getXValues();
-      Array xArray = Array.factory(xDataType, new int[] {len});
-      this.setArray(xArray, xValues);
-      this.writeValues(ncWrite, xVar, xArray);
-
-      double[] yValues = buffer.getYValues();
-      Array yArray = Array.factory(yDataType, new int[] {len});
-      this.setArray(yArray, yValues);
-      this.writeValues(ncWrite, yVar, yArray);
-
-      double[] fValues = buffer.getFirstComponentValues();
-      Array fArray = Array.factory(fDataType, new int[] {len});
-      this.setArray(fArray, fValues);
-      this.writeValues(ncWrite, fVar, fArray);
-
-      double[] sValues = buffer.getSecondComponentValues();
-      Array sArray = Array.factory(sDataType, new int[] {len});
-      this.setArray(sArray, sValues);
-      this.writeValues(ncWrite, sVar, sArray);
 
     } else {
 
@@ -989,22 +990,22 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
       String sName = this.mSecondComponentVariable.getValidName();
 
       // adds dimensions
-      this.addDimension(ncWrite, xName, xLen);
-      this.addDimension(ncWrite, yName, yLen);
+      builder.addDimension(xName, xLen);
+      builder.addDimension(yName, yLen);
 
       // adds variables
-      Variable xVar =
+      Variable.Builder xVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               xName,
               xDataType,
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               xName,
               policy);
-      Variable yVar =
+      Variable.Builder yVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               yName,
               yDataType,
@@ -1012,18 +1013,18 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
               yName,
               policy);
       String dimString = SGDataUtility.getDimensionString(new String[] {xName, yName});
-      Variable fVar =
+      Variable.Builder fVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               fName,
               fDataType,
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               dimString,
               policy);
-      Variable sVar =
+      Variable.Builder sVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               sName,
               sDataType,
@@ -1032,34 +1033,35 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
               policy);
 
       // creates the file
-      ncWrite.create();
+      try (NetcdfFormatWriter writer = builder.build()) {
 
-      // writes data to the file
-      double[] xValues = buffer.getXValues();
-      Array xArray = Array.factory(xDataType, new int[] {xLen});
-      this.setArray(xArray, xValues);
-      this.writeValues(ncWrite, xVar, xArray);
+        // writes data to the file
+        double[] xValues = buffer.getXValues();
+        Array xArray = Array.factory(xDataType, new int[] {xLen});
+        this.setArray(xArray, xValues);
+        writer.write(xName, xArray);
 
-      double[] yValues = buffer.getYValues();
-      Array yArray = Array.factory(yDataType, new int[] {yLen});
-      this.setArray(yArray, yValues);
-      this.writeValues(ncWrite, yVar, yArray);
+        double[] yValues = buffer.getYValues();
+        Array yArray = Array.factory(yDataType, new int[] {yLen});
+        this.setArray(yArray, yValues);
+        writer.write(yName, yArray);
 
-      List<SGXYSimpleDoubleValueIndexBlock> fBlocks = buffer.getFirstComponentValueBlocks();
-      List<SGXYSimpleDoubleValueIndexBlock> sBlocks = buffer.getSecondComponentValueBlocks();
-      List<Integer> xIndexList = new ArrayList<Integer>();
-      List<Integer> yIndexList = new ArrayList<Integer>();
-      this.getIndexList(fBlocks, xIndexList, yIndexList);
-      double[][] fValues = SGDataUtility.getTwoDimensionalValues(fBlocks, xIndexList, yIndexList);
-      fValues = SGUtility.transpose(fValues);
-      Array fArray = Array.factory(fDataType, new int[] {xLen, yLen});
-      this.setArray(fArray, fValues);
-      this.writeValues(ncWrite, fVar, fArray);
-      double[][] sValues = SGDataUtility.getTwoDimensionalValues(sBlocks, xIndexList, yIndexList);
-      sValues = SGUtility.transpose(sValues);
-      Array sArray = Array.factory(sDataType, new int[] {xLen, yLen});
-      this.setArray(sArray, sValues);
-      this.writeValues(ncWrite, sVar, sArray);
+        List<SGXYSimpleDoubleValueIndexBlock> fBlocks = buffer.getFirstComponentValueBlocks();
+        List<SGXYSimpleDoubleValueIndexBlock> sBlocks = buffer.getSecondComponentValueBlocks();
+        List<Integer> xIndexList = new ArrayList<Integer>();
+        List<Integer> yIndexList = new ArrayList<Integer>();
+        this.getIndexList(fBlocks, xIndexList, yIndexList);
+        double[][] fValues = SGDataUtility.getTwoDimensionalValues(fBlocks, xIndexList, yIndexList);
+        fValues = SGUtility.transpose(fValues);
+        Array fArray = Array.factory(fDataType, new int[] {xLen, yLen});
+        this.setArray(fArray, fValues);
+        writer.write(fName, fArray);
+        double[][] sValues = SGDataUtility.getTwoDimensionalValues(sBlocks, xIndexList, yIndexList);
+        sValues = SGUtility.transpose(sValues);
+        Array sArray = Array.factory(sDataType, new int[] {xLen, yLen});
+        this.setArray(sArray, sValues);
+        writer.write(sName, sArray);
+      }
     }
 
     return true;
@@ -1442,12 +1444,12 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
 
   @Override
   protected Array setEditedValues(
-      NetcdfFileWriter ncWrite, String varName, Array array, final boolean all) {
+      NetcdfFormatWriter writer, String varName, Array array, final boolean all) {
     final boolean polar = this.isPolar();
     String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
     String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
     return this.setEditedValues(
-        ncWrite, varName, array, X_COORDINATE, Y_COORDINATE, new String[] {first, second}, all);
+        writer, varName, array, X_COORDINATE, Y_COORDINATE, new String[] {first, second}, all);
   }
 
   @Override

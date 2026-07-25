@@ -28,8 +28,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGTwoDimensionalArrayIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayByte;
@@ -38,14 +36,12 @@ import ucar.ma2.Index;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Attribute;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /** Data with multiple scalar type XY data. */
 public class SGSXYSDArrayMultipleData extends SGSDArrayData
     implements SGISXYTypeMultipleData, SGIDataPropertyKeyConstants {
-
-  private static final Logger logger = LogManager.getLogger(SGSXYSDArrayMultipleData.class);
 
   /** An array of column indices for x-values. */
   protected Integer[] mXIndices = null;
@@ -2087,7 +2083,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public boolean exportToNetCDFFile(
-      NetcdfFileWriter ncWrite, final SGExportParameter mode, SGDataBufferPolicy policy)
+      NetcdfFormatWriter.Builder builder, final SGExportParameter mode, SGDataBufferPolicy policy)
       throws IOException, InvalidRangeException {
 
     //
@@ -2125,44 +2121,37 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     final boolean tlFlag = this.isTickLabelAvailable() && (childNum == 1);
     String lenName = "clen";
 
-    Dimension xDim = new Dimension(xName, dataNum);
-    ncWrite.addDimension(null, xDim.getShortName(), xDim.getLength());
+    builder.addDimension(xName, dataNum);
 
-    Variable xVar = ncWrite.addVariable(null, xName, DataType.DOUBLE, xName);
-    xVar.attributes()
+    builder
+        .addVariable(xName, DataType.DOUBLE, xName)
         .addAttribute(
             new Attribute(
                 SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
                 SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-    // ncWrite.addVariable(null, xVar); // already added by addVariable
 
     for (int ii = 0; ii < childNum; ii++) {
-      Variable yVar = ncWrite.addVariable(null, yNames[ii], DataType.DOUBLE, xName);
-      yVar.attributes()
+      builder
+          .addVariable(yNames[ii], DataType.DOUBLE, xName)
           .addAttribute(
               new Attribute(
                   SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
                   SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-      // ncWrite.addVariable(null, yVar); // already added by addVariable
     }
 
     if (eFlag) {
-      Variable leVar = ncWrite.addVariable(null, leName, DataType.DOUBLE, xName);
-      leVar
-          .attributes()
+      builder
+          .addVariable(leName, DataType.DOUBLE, xName)
           .addAttribute(
               new Attribute(
                   SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
                   SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-      // ncWrite.addVariable(null, leVar); // already added by addVariable
-      Variable ueVar = ncWrite.addVariable(null, ueName, DataType.DOUBLE, xName);
-      ueVar
-          .attributes()
+      builder
+          .addVariable(ueName, DataType.DOUBLE, xName)
           .addAttribute(
               new Attribute(
                   SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
                   SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-      // ncWrite.addVariable(null, ueVar); // already added by addVariable
     }
 
     int maxLen = 0;
@@ -2176,61 +2165,58 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         }
       }
 
-      Dimension lenDim = new Dimension(lenName, maxLen);
-      ncWrite.addDimension(null, lenDim.getShortName(), lenDim.getLength());
+      builder.addDimension(lenName, maxLen);
 
       String dimString = xName + " " + lenName;
-      Variable tlVar = ncWrite.addVariable(null, tlName, DataType.CHAR, dimString);
-      tlVar
-          .attributes()
+      builder
+          .addVariable(tlName, DataType.CHAR, dimString)
           .addAttribute(
               new Attribute(
                   SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
                   SGIDataColumnTypeConstants.VALUE_TYPE_TEXT));
-      // ncWrite.addVariable(null, tlVar); // already added by addVariable
     }
 
-    ncWrite.create();
-
-    Array xArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
-    for (int ii = 0; ii < dataNum; ii++) {
-      xArray.setDouble(ii, xValues[0][ii]);
-    }
-    ncWrite.write(ncWrite.findVariable(xName), xArray);
-
-    for (int ii = 0; ii < childNum; ii++) {
-      Array yArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
-      for (int jj = 0; jj < dataNum; jj++) {
-        yArray.setDouble(jj, yValues[ii][jj]);
-      }
-      ncWrite.write(ncWrite.findVariable(yNames[ii]), yArray);
-    }
-
-    if (eFlag) {
-      Array leArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+    try (NetcdfFormatWriter writer = builder.build()) {
+      Array xArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
       for (int ii = 0; ii < dataNum; ii++) {
-        leArray.setDouble(ii, leValues[0][ii]);
+        xArray.setDouble(ii, xValues[0][ii]);
       }
-      ncWrite.write(ncWrite.findVariable(leName), leArray);
-      Array ueArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
-      for (int ii = 0; ii < dataNum; ii++) {
-        ueArray.setDouble(ii, ueValues[0][ii]);
-      }
-      ncWrite.write(ncWrite.findVariable(ueName), ueArray);
-    }
+      writer.write(xName, xArray);
 
-    if (tlFlag) {
-      Array tlArray = Array.factory(DataType.CHAR, new int[] {dataNum, maxLen});
-      for (int ii = 0; ii < dataNum; ii++) {
-        String str = tickLabels[0][ii];
-        Index idx = tlArray.getIndex();
-        for (int jj = 0; jj < str.length(); jj++) {
-          idx.set(ii, jj);
-          final char c = str.charAt(jj);
-          tlArray.setChar(idx, c);
+      for (int ii = 0; ii < childNum; ii++) {
+        Array yArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+        for (int jj = 0; jj < dataNum; jj++) {
+          yArray.setDouble(jj, yValues[ii][jj]);
         }
+        writer.write(yNames[ii], yArray);
       }
-      ncWrite.write(ncWrite.findVariable(tlName), tlArray);
+
+      if (eFlag) {
+        Array leArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+        for (int ii = 0; ii < dataNum; ii++) {
+          leArray.setDouble(ii, leValues[0][ii]);
+        }
+        writer.write(leName, leArray);
+        Array ueArray = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+        for (int ii = 0; ii < dataNum; ii++) {
+          ueArray.setDouble(ii, ueValues[0][ii]);
+        }
+        writer.write(ueName, ueArray);
+      }
+
+      if (tlFlag) {
+        Array tlArray = Array.factory(DataType.CHAR, new int[] {dataNum, maxLen});
+        for (int ii = 0; ii < dataNum; ii++) {
+          String str = tickLabels[0][ii];
+          Index idx = tlArray.getIndex();
+          for (int jj = 0; jj < str.length(); jj++) {
+            idx.set(ii, jj);
+            final char c = str.charAt(jj);
+            tlArray.setChar(idx, c);
+          }
+        }
+        writer.write(tlName, tlArray);
+      }
     }
 
     return true;
@@ -2241,19 +2227,17 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
 
     final int dataNum = this.getAllPointsNumber();
 
-    NetcdfFileWriter ncfile = null;
     try {
-      ncfile = NetcdfFileWriter.createNew(NetcdfFileWriter.Version.netcdf3, file.getAbsolutePath());
-      ncfile.setFill(true);
+      NetcdfFormatWriter.Builder builder =
+          NetcdfFormatWriter.createNewNetcdf3(file.getAbsolutePath());
+      builder.setFill(true);
 
       // Creates the dimension and variable of indices
-      Dimension indexDim = this.addIndexDimension(ncfile, dataNum);
+      Dimension indexDim = this.addIndexDimension(builder, dataNum);
       String indexDimName = indexDim.getShortName();
-      Variable indexVar = this.addIndexVariable(ncfile, indexDim);
-      indexVar
-          .attributes()
-          .addAttribute(
-              SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+      Variable.Builder indexVar = this.addIndexVariable(builder, indexDim);
+      indexVar.addAttribute(
+          SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
       // Add data columns as variables.
       SGDataColumn[] colArray = this.getExportedColumnsClone();
@@ -2276,8 +2260,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
           }
 
           String dimName = "clen" + i;
-          Dimension dimC = new Dimension(dimName, maxLength);
-          ncfile.addDimension(null, dimC.getShortName(), dimC.getLength());
+          builder.addDimension(dimName, maxLength);
 
           textDimensionName[i] = dimName;
           maxTextLength[i] = maxLength;
@@ -2289,23 +2272,23 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         SGDataColumn col = colArray[ii];
         String colValueType = col.getValueType();
         String varName = "column" + ii;
-        Variable var = null;
+        Variable.Builder var = null;
         if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(colValueType)
             || SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(colValueType)) {
-          var = ncfile.addVariable(null, varName, DataType.DOUBLE, indexDimName);
-          var.attributes().addAttribute(SGDataUtility.getValueTypeAttribute(col.getValueType()));
+          var = builder.addVariable(varName, DataType.DOUBLE, indexDimName);
+          var.addAttribute(SGDataUtility.getValueTypeAttribute(col.getValueType()));
         } else if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(colValueType)
             || SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(colValueType)) {
           String[] dimNames = {indexDimName, textDimensionName[ii]};
           String dims = SGDataUtility.getDimensionString(dimNames);
-          var = ncfile.addVariable(null, varName, DataType.CHAR, dims);
+          var = builder.addVariable(varName, DataType.CHAR, dims);
           String attrValueType;
           if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(colValueType)) {
             attrValueType = SGIDataColumnTypeConstants.VALUE_TYPE_TEXT;
           } else {
             attrValueType = SGIDataColumnTypeConstants.VALUE_TYPE_DATE;
           }
-          var.attributes().addAttribute(SGDataUtility.getValueTypeAttribute(attrValueType));
+          var.addAttribute(SGDataUtility.getValueTypeAttribute(attrValueType));
         } else {
           throw new Error(
               "Illegal value type="
@@ -2319,79 +2302,69 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
 
         String title = col.getTitle();
         if (null != title && !"".equals(title.trim())) {
-          Attribute attr = new Attribute(ATTRIBUTE_KEY_LONG_NAME, title);
-          var.attributes().addAttribute(attr);
+          var.addAttribute(new Attribute(ATTRIBUTE_KEY_LONG_NAME, title));
         }
 
-        varNames[ii] = var.getShortName();
-        // ncfile.addVariable(null, var); // already added by addVariable
+        varNames[ii] = varName;
       }
 
-      ncfile.create();
+      try (NetcdfFormatWriter writer = builder.build()) {
+        for (int i = 0; i < colArray.length; i++) {
+          SGDataColumn col = colArray[i];
+          String colValueType = col.getValueType();
+          if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(colValueType)
+              || SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(colValueType)) {
+            Array array = Array.factory(DataType.DOUBLE, new int[] {dataNum});
+            for (int j = 0; j < dataNum; j++) {
+              Object obj = col.getValue(j);
+              if (obj instanceof Double) {
+                array.setDouble(j, ((Double) obj).doubleValue());
+              } else {
+                array.setDouble(j, Double.NaN);
+              }
+            }
+            writer.write(varNames[i], array);
 
-      for (int i = 0; i < colArray.length; i++) {
-        SGDataColumn col = colArray[i];
-        String colValueType = col.getValueType();
-        if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(colValueType)
-            || SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(colValueType)) {
-          Array array = Array.factory(DataType.DOUBLE, new int[] {dataNum});
-          for (int j = 0; j < dataNum; j++) {
-            Object obj = col.getValue(j);
-            if (obj instanceof Double) {
-              array.setDouble(j, ((Double) obj).doubleValue());
-            } else {
-              array.setDouble(j, Double.NaN);
+          } else if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(colValueType)
+              || SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(colValueType)) {
+            int maxLength = 0;
+            byte[][] byteArrays = new byte[dataNum][];
+            for (int j = 0; j < dataNum; j++) {
+              Object obj = col.getValue(j);
+              String str;
+              if (obj instanceof String) {
+                str = (String) obj;
+              } else if (obj instanceof SGDate) {
+                str = ((SGDate) obj).toString();
+              } else {
+                str = "";
+              }
+              byteArrays[j] = str.getBytes(SGIConstants.CHAR_SET_NAME_UTF8);
+              int len = byteArrays[j].length;
+              if (len > maxLength) {
+                maxLength = len;
+              }
             }
-          }
-          ncfile.write(ncfile.findVariable(varNames[i]), array);
 
-        } else if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(colValueType)
-            || SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(colValueType)) {
-          int maxLength = 0;
-          byte[][] byteArrays = new byte[dataNum][];
-          for (int j = 0; j < dataNum; j++) {
-            Object obj = col.getValue(j);
-            String str;
-            if (obj instanceof String) {
-              str = (String) obj;
-            } else if (obj instanceof SGDate) {
-              str = ((SGDate) obj).toString();
-            } else {
-              str = "";
+            ArrayByte array = new ArrayByte(new int[] {dataNum, maxLength}, true);
+            Index index = array.getIndex();
+            for (int j = 0; j < dataNum; j++) {
+              for (int k = 0; k < byteArrays[j].length; k++) {
+                array.setByte(index.set(j, k), byteArrays[j][k]);
+              }
             }
-            byteArrays[j] = str.getBytes(SGIConstants.CHAR_SET_NAME_UTF8);
-            int len = byteArrays[j].length;
-            if (len > maxLength) {
-              maxLength = len;
-            }
+            writer.write(varNames[i], array);
           }
-
-          ArrayByte array = new ArrayByte(new int[] {dataNum, maxLength}, true);
-          Index index = array.getIndex();
-          for (int j = 0; j < dataNum; j++) {
-            for (int k = 0; k < byteArrays[j].length; k++) {
-              array.setByte(index.set(j, k), byteArrays[j][k]);
-            }
-          }
-          ncfile.write(ncfile.findVariable(varNames[i]), array);
         }
-      }
 
-      // write serial numbers
-      this.writeIndexVariable(ncfile, indexVar);
+        // write serial numbers
+        this.writeIndexVariable(writer, INDEX_DIMENSION_NAME, dataNum);
+      }
 
     } catch (IOException e) {
       return false;
     } catch (InvalidRangeException e) {
       return false;
-    } finally {
-      if (ncfile != null) {
-        try {
-          ncfile.close();
-        } catch (IOException e) {
-          logger.debug("Exception occurred", e);
-        }
-      }
     }
 
     return true;

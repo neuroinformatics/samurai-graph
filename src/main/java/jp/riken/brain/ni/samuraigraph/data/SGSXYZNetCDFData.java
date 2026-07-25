@@ -24,8 +24,8 @@ import ucar.ma2.Array;
 import ucar.ma2.DataType;
 import ucar.ma2.InvalidRangeException;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriter;
 import ucar.nc2.Variable;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGISXYZTypeData {
 
@@ -679,7 +679,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
 
   @Override
   protected boolean exportToFile(
-      NetcdfFileWriter ncWrite, final SGExportParameter mode, SGDataBufferPolicy policy)
+      NetcdfFormatWriter.Builder builder, final SGExportParameter mode, SGDataBufferPolicy policy)
       throws IOException, InvalidRangeException {
 
     DataType xDataType = this.getExportNumberDataType(this.mXVariable, mode, policy);
@@ -694,43 +694,43 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
 
       // adds dimensions
       String indexDimName = this.mIndexVariable.getValidName();
-      this.addDimension(ncWrite, indexDimName, len);
+      builder.addDimension(indexDimName, len);
 
       String xName = this.mXVariable.getValidName();
       String yName = this.mYVariable.getValidName();
       String zName = this.mZVariable.getValidName();
 
       // adds variables
-      Variable indexVar =
+      Variable.Builder indexVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               indexDimName,
               DataType.INT,
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               indexDimName,
               policy);
-      Variable xVar =
+      Variable.Builder xVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               xName,
               xDataType,
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               indexDimName,
               policy);
-      Variable yVar =
+      Variable.Builder yVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               yName,
               yDataType,
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               indexDimName,
               policy);
-      Variable zVar =
+      Variable.Builder zVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               zName,
               zDataType,
@@ -739,32 +739,33 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
               policy);
 
       // creates the file
-      ncWrite.create();
+      try (NetcdfFormatWriter writer = builder.build()) {
 
-      // writes data to the file
-      int[] indices = this.mIndexStride.getNumbers();
-      double[] indexValues = new double[indices.length];
-      for (int ii = 0; ii < indexValues.length; ii++) {
-        indexValues[ii] = (double) indices[ii];
+        // writes data to the file
+        int[] indices = this.mIndexStride.getNumbers();
+        double[] indexValues = new double[indices.length];
+        for (int ii = 0; ii < indexValues.length; ii++) {
+          indexValues[ii] = (double) indices[ii];
+        }
+        Array indexArray = Array.factory(DataType.INT, new int[] {len});
+        this.setArray(indexArray, indexValues);
+        writer.write(indexDimName, indexArray);
+
+        double[] xValues = buffer.getXValues();
+        Array xArray = Array.factory(xDataType, new int[] {len});
+        this.setArray(xArray, xValues);
+        writer.write(xName, xArray);
+
+        double[] yValues = buffer.getYValues();
+        Array yArray = Array.factory(yDataType, new int[] {len});
+        this.setArray(yArray, yValues);
+        writer.write(yName, yArray);
+
+        double[] zValues = buffer.getZValues();
+        Array zArray = Array.factory(zDataType, new int[] {len});
+        this.setArray(zArray, zValues);
+        writer.write(zName, zArray);
       }
-      Array indexArray = Array.factory(DataType.INT, new int[] {len});
-      this.setArray(indexArray, indexValues);
-      this.writeValues(ncWrite, indexVar, indexArray);
-
-      double[] xValues = buffer.getXValues();
-      Array xArray = Array.factory(xDataType, new int[] {len});
-      this.setArray(xArray, xValues);
-      this.writeValues(ncWrite, xVar, xArray);
-
-      double[] yValues = buffer.getYValues();
-      Array yArray = Array.factory(yDataType, new int[] {len});
-      this.setArray(yArray, yValues);
-      this.writeValues(ncWrite, yVar, yArray);
-
-      double[] zValues = buffer.getZValues();
-      Array zArray = Array.factory(zDataType, new int[] {len});
-      this.setArray(zArray, zValues);
-      this.writeValues(ncWrite, zVar, zArray);
 
     } else {
 
@@ -778,22 +779,22 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
       String zName = this.mZVariable.getValidName();
 
       // adds dimensions
-      this.addDimension(ncWrite, xName, xLen);
-      this.addDimension(ncWrite, yName, yLen);
+      builder.addDimension(xName, xLen);
+      builder.addDimension(yName, yLen);
 
       // adds variables
-      Variable xVar =
+      Variable.Builder xVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               xName,
               xDataType,
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               xName,
               policy);
-      Variable yVar =
+      Variable.Builder yVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               yName,
               yDataType,
@@ -801,9 +802,9 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
               yName,
               policy);
       String zDimString = SGDataUtility.getDimensionString(new String[] {xName, yName});
-      Variable zVar =
+      Variable.Builder zVar =
           this.addVariable(
-              ncWrite,
+              builder,
               mode,
               zName,
               zDataType,
@@ -812,28 +813,29 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
               policy);
 
       // creates the file
-      ncWrite.create();
+      try (NetcdfFormatWriter writer = builder.build()) {
 
-      // writes data to the file
-      double[] xValues = buffer.getXValues();
-      Array xArray = Array.factory(xDataType, new int[] {xLen});
-      this.setArray(xArray, xValues);
-      this.writeValues(ncWrite, xVar, xArray);
+        // writes data to the file
+        double[] xValues = buffer.getXValues();
+        Array xArray = Array.factory(xDataType, new int[] {xLen});
+        this.setArray(xArray, xValues);
+        writer.write(xName, xArray);
 
-      double[] yValues = buffer.getYValues();
-      Array yArray = Array.factory(yDataType, new int[] {yLen});
-      this.setArray(yArray, yValues);
-      this.writeValues(ncWrite, yVar, yArray);
+        double[] yValues = buffer.getYValues();
+        Array yArray = Array.factory(yDataType, new int[] {yLen});
+        this.setArray(yArray, yValues);
+        writer.write(yName, yArray);
 
-      List<SGXYSimpleDoubleValueIndexBlock> blocks = buffer.getZValueBlocks();
-      List<Integer> xIndexList = new ArrayList<Integer>();
-      List<Integer> yIndexList = new ArrayList<Integer>();
-      this.getIndexList(blocks, xIndexList, yIndexList);
-      double[][] values = SGDataUtility.getTwoDimensionalValues(blocks, xIndexList, yIndexList);
-      values = SGUtility.transpose(values);
-      Array array = Array.factory(zDataType, new int[] {xLen, yLen});
-      this.setArray(array, values);
-      this.writeValues(ncWrite, zVar, array);
+        List<SGXYSimpleDoubleValueIndexBlock> blocks = buffer.getZValueBlocks();
+        List<Integer> xIndexList = new ArrayList<Integer>();
+        List<Integer> yIndexList = new ArrayList<Integer>();
+        this.getIndexList(blocks, xIndexList, yIndexList);
+        double[][] values = SGDataUtility.getTwoDimensionalValues(blocks, xIndexList, yIndexList);
+        values = SGUtility.transpose(values);
+        Array array = Array.factory(zDataType, new int[] {xLen, yLen});
+        this.setArray(array, values);
+        writer.write(zName, array);
+      }
     }
 
     return true;
@@ -1188,9 +1190,9 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
 
   @Override
   protected Array setEditedValues(
-      NetcdfFileWriter ncWrite, String varName, Array array, final boolean all) {
+      NetcdfFormatWriter writer, String varName, Array array, final boolean all) {
     return this.setEditedValues(
-        ncWrite, varName, array, X_VALUE, Y_VALUE, new String[] {Z_VALUE}, all);
+        writer, varName, array, X_VALUE, Y_VALUE, new String[] {Z_VALUE}, all);
   }
 
   @Override

@@ -26,7 +26,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable.MDArrayDataType;
 import org.w3c.dom.Element;
 import ucar.nc2.Dimension;
-import ucar.nc2.NetcdfFileWriter;
+import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The class of scalar XYZ type data for multidimensional data file. */
 public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SGISXYZTypeData {
@@ -678,16 +678,16 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
    * @return true if succeeded
    */
   @Override
-  protected boolean addVariables(NetcdfFileWriter ncWrite) {
+  protected boolean addVariables(NetcdfFormatWriter.Builder builder) {
 
     // add time dimensions
-    Dimension timeDim = this.addTimeVariable(ncWrite);
+    Dimension timeDim = this.addTimeVariable(builder);
 
     if (this.isIndexAvailable()) {
       // scatter plot
 
       // index variable
-      Dimension indexDim = this.addIndexCoordinateVariable(ncWrite);
+      Dimension indexDim = this.addIndexCoordinateVariable(builder);
       if (indexDim == null) {
         return false;
       }
@@ -696,17 +696,17 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
       dimList.add(indexDim);
 
       // add x-variable
-      if (!this.addVariable(ncWrite, this.mXVariable, dimList, timeDim)) {
+      if (!this.addVariable(builder, this.mXVariable, dimList, timeDim)) {
         return false;
       }
 
       // add y-variable
-      if (!this.addVariable(ncWrite, this.mYVariable, dimList, timeDim)) {
+      if (!this.addVariable(builder, this.mYVariable, dimList, timeDim)) {
         return false;
       }
 
       // add z-variable
-      if (!this.addVariable(ncWrite, this.mZVariable, dimList, timeDim)) {
+      if (!this.addVariable(builder, this.mZVariable, dimList, timeDim)) {
         return false;
       }
 
@@ -714,13 +714,13 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
       // grid plot
 
       // add x-variable
-      Dimension xDim = this.addGridXCoordinateVariable(ncWrite, timeDim);
+      Dimension xDim = this.addGridXCoordinateVariable(builder, timeDim);
       if (xDim == null) {
         return false;
       }
 
       // add y-variable
-      Dimension yDim = this.addGridYCoordinateVariable(ncWrite, timeDim);
+      Dimension yDim = this.addGridYCoordinateVariable(builder, timeDim);
       if (yDim == null) {
         return false;
       }
@@ -729,14 +729,14 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
       List<Dimension> dimList = new ArrayList<Dimension>();
       dimList.add(xDim);
       dimList.add(yDim);
-      if (!this.addVariable(ncWrite, this.mZVariable, dimList, timeDim)) {
+      if (!this.addVariable(builder, this.mZVariable, dimList, timeDim)) {
         return false;
       }
     }
 
     // add time variable
     if (timeDim != null) {
-      if (!this.addSequentialIntegerNumberVariable(ncWrite, timeDim, TIME_DIM_NAME)) {
+      if (!this.addSequentialIntegerNumberVariable(builder, timeDim, TIME_DIM_NAME)) {
         return false;
       }
     }
@@ -750,10 +750,10 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
    * @param ncWrite a netCDF file
    * @return true if succeeded
    */
-  protected boolean writeData(NetcdfFileWriter ncWrite) {
+  protected boolean writeData(NetcdfFormatWriter writer) {
 
     // time variable
-    if (!this.writeTimeData(ncWrite)) {
+    if (!this.writeTimeData(writer)) {
       return false;
     }
 
@@ -761,22 +761,22 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
       // scatter plot
 
       // index variable
-      if (!this.writeIndexData(ncWrite)) {
+      if (!this.writeIndexData(writer)) {
         return false;
       }
 
       // x-values
-      if (!this.writeDoubleData(ncWrite, this.mXVariable.getName(), false)) {
+      if (!this.writeDoubleData(writer, this.mXVariable.getName(), false)) {
         return false;
       }
 
       // y-values
-      if (!this.writeDoubleData(ncWrite, this.mYVariable.getName(), false)) {
+      if (!this.writeDoubleData(writer, this.mYVariable.getName(), false)) {
         return false;
       }
 
       // z-values
-      if (!this.writeDoubleData(ncWrite, this.mZVariable.getName(), false)) {
+      if (!this.writeDoubleData(writer, this.mZVariable.getName(), false)) {
         return false;
       }
 
@@ -784,17 +784,17 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
       // grid plot
 
       // x-values
-      if (!this.writeGridXValues(ncWrite)) {
+      if (!this.writeGridXValues(writer)) {
         return false;
       }
 
       // y-values
-      if (!this.writeGridYValues(ncWrite)) {
+      if (!this.writeGridYValues(writer)) {
         return false;
       }
 
       // z-values
-      if (!this.writeDoubleData(ncWrite, this.mZVariable.getName(), false)) {
+      if (!this.writeDoubleData(writer, this.mZVariable.getName(), false)) {
         return false;
       }
     }
