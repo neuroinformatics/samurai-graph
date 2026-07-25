@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import java.util.Objects;
+
 /** The class for dimension of multidimensional data. */
 public class SGMDArrayDimensionInfo {
 
@@ -66,5 +68,10 @@ public class SGMDArrayDimensionInfo {
     sb.append(this.mIndex);
     sb.append(']');
     return sb.toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.mName, this.mIndex);
   }
 }

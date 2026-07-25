@@ -1,5 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import java.util.Objects;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 
 public abstract class SGPickUpDimensionInfo implements Cloneable {
@@ -16,6 +17,9 @@ public abstract class SGPickUpDimensionInfo implements Cloneable {
   }
 
   public SGIntegerSeriesSet getIndices() {
+    if (this.mIndices == null) {
+      return null;
+    }
     return (SGIntegerSeriesSet) this.mIndices.clone();
   }
 
@@ -53,9 +57,14 @@ public abstract class SGPickUpDimensionInfo implements Cloneable {
       return false;
     }
     SGPickUpDimensionInfo info = (SGPickUpDimensionInfo) obj;
-    if (!info.mIndices.equals(this.mIndices)) {
+    if (!Objects.equals(this.mIndices, info.mIndices)) {
       return false;
     }
     return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.mIndices);
   }
 }
