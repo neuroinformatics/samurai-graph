@@ -1196,17 +1196,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    */
   protected abstract boolean writeData(NetcdfFormatWriter writer);
 
-  @SuppressWarnings("deprecation")
-  protected void appendAttribute(
-      NetcdfFormatWriter writer, SGMDArrayVariable var, String ncVarName) {
-    List<SGAttribute> attrList = var.getAttributes();
-    for (SGAttribute attr : attrList) {
-      String name = attr.getName();
-      List<Object> values = attr.getValues();
-      writer.findVariable(ncVarName).addAttribute(new Attribute(name, values));
-    }
-  }
-
   protected static final String TIME_DIM_NAME = "time";
 
   // add time dimensions
@@ -1242,7 +1231,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       NetcdfFormatWriter.Builder builder, Dimension dim, String name, DataType dataType) {
     List<Dimension> dimList = new ArrayList<Dimension>();
     dimList.add(dim);
-    Variable.Builder vb = builder.addVariable(name, dataType, dimList);
+    Variable.Builder<?> vb = builder.addVariable(name, dataType, dimList);
     vb.addAttribute(
         SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
     return true;
@@ -1425,7 +1414,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     String dimString = SGDataUtility.getDimensionString(dimList);
 
     Group.Builder groupBuilder = this.findGroupBuilder(builder, sbGroupName.toString());
-    Variable.Builder vb =
+    Variable.Builder<?> vb =
         Variable.builder()
             .setName(sbShortName.toString())
             .setDataType(DataType.DOUBLE)
@@ -1471,7 +1460,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     }
 
     Group.Builder groupBuilder = this.findGroupBuilder(builder, sbGroupName.toString());
-    Variable.Builder vb =
+    Variable.Builder<?> vb =
         Variable.builder()
             .setName(sbShortName.toString())
             .setDataType(DataType.CHAR)
@@ -1488,7 +1477,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
-  private void addAttributes(SGMDArrayVariable mdVar, Variable.Builder vb) {
+  private void addAttributes(SGMDArrayVariable mdVar, Variable.Builder<?> vb) {
     List<SGAttribute> attrList = mdVar.getAttributes();
     for (SGAttribute attr : attrList) {
       Attribute a =

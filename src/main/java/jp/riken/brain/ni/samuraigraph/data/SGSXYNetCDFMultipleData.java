@@ -3305,7 +3305,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
 
     // coordinate variable for index dimension
     DataType idxDataType = null;
-    Variable.Builder indexVar = null;
+    Variable.Builder<?> indexVar = null;
     if (idx) {
       SGNetCDFVariable idxVar = this.findVariable(indexDimName);
       idxDataType = this.getExportNumberDataType(idxVar, mode, policy);
@@ -3324,7 +3324,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
 
     // coordinate variable for picked up dimension
     DataType pDataType = null;
-    Variable.Builder pickUpVar = null;
+    Variable.Builder<?> pickUpVar = null;
     if (pickedUp) {
       SGNetCDFVariable pVar = this.findVariable(pickUpDimName);
       pDataType = this.getExportNumberDataType(pVar, mode, policy);
@@ -3385,8 +3385,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     String xDimString = SGDataUtility.getDimensionString(xDimNameArray);
     String yDimString = SGDataUtility.getDimensionString(yDimNameArray);
 
-    Variable.Builder[] xVars = null;
-    Variable.Builder[] yVars = null;
+    Variable.Builder<?>[] xVars = null;
+    Variable.Builder<?>[] yVars = null;
     DataType[] xDataTypes = null;
     DataType[] yDataTypes = null;
     final int xNum;
@@ -3394,7 +3394,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     if (idx) {
       xNum = this.mXVariables.length;
       yNum = this.mYVariables.length;
-      xVars = new Variable.Builder[xNum];
+      xVars = new Variable.Builder<?>[xNum];
       xDataTypes = new DataType[xNum];
       String xNumberType =
           (dateFlag != null && dateFlag)
@@ -3414,7 +3414,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
                 xDimString,
                 policy);
       }
-      yVars = new Variable.Builder[yNum];
+      yVars = new Variable.Builder<?>[yNum];
       yDataTypes = new DataType[yNum];
       String yNumberType =
           (dateFlag != null && !dateFlag)
@@ -3455,9 +3455,9 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         xNum = yMultiple ? 1 : multiplicity;
         yNum = yMultiple ? multiplicity : 1;
       }
-      xVars = new Variable.Builder[xNum];
+      xVars = new Variable.Builder<?>[xNum];
       xDataTypes = new DataType[xNum];
-      yVars = new Variable.Builder[yNum];
+      yVars = new Variable.Builder<?>[yNum];
       yDataTypes = new DataType[yNum];
       if (dateFlag == null || !dateFlag.booleanValue()) {
         for (int ii = 0; ii < xNum; ii++) {
@@ -3509,11 +3509,11 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       }
     }
     DataType[] leDataTypes = null;
-    Variable.Builder[] leVars = null;
+    Variable.Builder<?>[] leVars = null;
     DataType[] ueDataTypes = null;
-    Variable.Builder[] ueVars = null;
+    Variable.Builder<?>[] ueVars = null;
     DataType[] tlDataTypes = null;
-    Variable.Builder[] tlVars = null;
+    Variable.Builder<?>[] tlVars = null;
     if (errorBarAvailable) {
       final int eNum;
       if (pickedUp) {
@@ -3521,8 +3521,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       } else {
         eNum = multiplicity;
       }
-      leVars = new Variable.Builder[eNum];
-      ueVars = new Variable.Builder[eNum];
+      leVars = new Variable.Builder<?>[eNum];
+      ueVars = new Variable.Builder<?>[eNum];
       leDataTypes = new DataType[eNum];
       ueDataTypes = new DataType[eNum];
       this.addErrorVariables(
@@ -3546,7 +3546,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       } else {
         tNum = multiplicity;
       }
-      tlVars = new Variable.Builder[tNum];
+      tlVars = new Variable.Builder<?>[tNum];
       tlDataTypes = new DataType[tNum];
       this.addTickLabelVariables(
           builder, tNum, tickLabelVars, mode, policy, dimNames, lenDimNames, tlVars, tlDataTypes);
@@ -3603,7 +3603,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
             this.writeValues(writer, yVars[0], yDataTypes[0], yValues, shape);
           }
         } else {
-          Variable.Builder sVar, mVar;
+          Variable.Builder<?> sVar, mVar;
           DataType sDataType, mDataType;
           double[] sValues;
           double[][] mValues;
@@ -3710,7 +3710,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
 
   private void writeValues(
       NetcdfFormatWriter writer,
-      Variable.Builder var,
+      Variable.Builder<?> var,
       DataType dataType,
       double[] values,
       int[] shape)
@@ -3723,7 +3723,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
 
   private void writeValues(
       NetcdfFormatWriter writer,
-      Variable.Builder var,
+      Variable.Builder<?> var,
       DataType dataType,
       double[][] values,
       int[] shape)
@@ -3767,8 +3767,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       SGDataBufferPolicy policy,
       Boolean[] sameErrorVariableFlags,
       String[] dimNames,
-      Variable.Builder[] leVars,
-      Variable.Builder[] ueVars,
+      Variable.Builder<?>[] leVars,
+      Variable.Builder<?>[] ueVars,
       DataType[] leDataTypes,
       DataType[] ueDataTypes) {
     String dimString = SGDataUtility.getDimensionString(dimNames);
@@ -3820,7 +3820,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       SGDataBufferPolicy policy,
       String[] dimNames,
       String[] lenDimNames,
-      Variable.Builder[] tlVars,
+      Variable.Builder<?>[] tlVars,
       DataType[] tlDataTypes) {
     for (int ii = 0; ii < num; ii++) {
       if (tickLabelVars[ii] != null) {
@@ -3971,7 +3971,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   /** Overrode to add the attributes taking into account the shift values. */
   @Override
   protected void addFillValueAttributes(
-      SGNetCDFVariable curVar, Variable.Builder vb, SGDataBufferPolicy policy) {
+      SGNetCDFVariable curVar, Variable.Builder<?> vb, SGDataBufferPolicy policy) {
     SGSXYDataBufferPolicy sxyPolicy = (SGSXYDataBufferPolicy) policy;
     if (sxyPolicy.isShiftValuesContained()) {
       Number fillValue = curVar.getFillValue();

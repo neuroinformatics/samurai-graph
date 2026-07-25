@@ -2864,7 +2864,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    * @param ncWrite a netCDF file
    * @return true if succeeded
    */
-  @SuppressWarnings("deprecation")
   @Override
   protected boolean addVariables(NetcdfFormatWriter.Builder builder) {
 
@@ -3009,7 +3008,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     this.addDimension(var, SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, pickUpDim, dimList);
   }
 
-  @SuppressWarnings("deprecation")
   private boolean addDoubleVariable(
       NetcdfFormatWriter.Builder builder,
       Dimension indexDim,
@@ -3024,7 +3022,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return this.addDoubleVariable(builder, dimList, name);
   }
 
-  @SuppressWarnings("deprecation")
   private boolean addStringVariable(
       NetcdfFormatWriter.Builder builder,
       Dimension indexDim,
@@ -3046,7 +3043,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    * @param ncWrite a netCDF file
    * @return true if succeeded
    */
-  @SuppressWarnings("deprecation")
   protected boolean writeData(NetcdfFormatWriter writer) {
 
     // get the number of points
@@ -3126,7 +3122,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   private boolean writeDoubleData(NetcdfFormatWriter writer, List<String> nameList) {
     for (int ii = 0; ii < nameList.size(); ii++) {
       String varName = nameList.get(ii);
@@ -3168,7 +3163,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   private boolean writeStringData(NetcdfFormatWriter writer, List<String> nameList) {
     for (int ii = 0; ii < nameList.size(); ii++) {
       String varName = nameList.get(ii);
@@ -3210,7 +3204,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   private boolean write1DStringArray(
       NetcdfFormatWriter writer,
       String varName,
@@ -3237,7 +3230,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   private boolean write2DStringArray(
       NetcdfFormatWriter writer,
       String varName,
@@ -3279,7 +3271,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return true;
   }
 
-  @SuppressWarnings("deprecation")
   private boolean write3DStringArray(
       NetcdfFormatWriter writer,
       String varName,

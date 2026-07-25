@@ -2079,13 +2079,13 @@ public abstract class SGNetCDFData extends SGArrayData
   protected abstract Array setEditedValues(
       NetcdfFormatWriter writer, String varName, Array array, final boolean all);
 
-  private Variable.Builder addVariable(
+  private Variable.Builder<?> addVariable(
       NetcdfFormatWriter.Builder builder,
       String varName,
       DataType dataType,
       List<Attribute> attrList,
       Dimension[] dims) {
-    Variable.Builder vb = builder.addVariable(varName, dataType, java.util.Arrays.asList(dims));
+    Variable.Builder<?> vb = builder.addVariable(varName, dataType, java.util.Arrays.asList(dims));
     for (Attribute attr : attrList) {
       vb.addAttribute(
           Attribute.builder().setName(attr.getShortName()).setValues(attr.getValues()).build());
@@ -2121,7 +2121,7 @@ public abstract class SGNetCDFData extends SGArrayData
     return Attribute.builder().setName(name).setValues(array).build();
   }
 
-  protected Variable.Builder addVariable(
+  protected Variable.Builder<?> addVariable(
       NetcdfFormatWriter.Builder builder,
       SGExportParameter mode,
       String name,
@@ -2132,7 +2132,7 @@ public abstract class SGNetCDFData extends SGArrayData
     return this.addVariable(builder, mode, name, name, dataType, valueType, dimString, policy);
   }
 
-  protected Variable.Builder addVariable(
+  protected Variable.Builder<?> addVariable(
       NetcdfFormatWriter.Builder builder,
       SGExportParameter mode,
       String oldName,
@@ -2143,7 +2143,7 @@ public abstract class SGNetCDFData extends SGArrayData
       SGDataBufferPolicy policy) {
 
     SGNetCDFVariable curVar = this.getVariable(this.getNetcdfFile(), oldName);
-    Variable.Builder vb = builder.addVariable(name, dataType, dimString);
+    Variable.Builder<?> vb = builder.addVariable(name, dataType, dimString);
 
     // value type
     if (valueType != null) {
@@ -2173,7 +2173,7 @@ public abstract class SGNetCDFData extends SGArrayData
   }
 
   protected void addFillValueAttributes(
-      SGNetCDFVariable curVar, Variable.Builder vb, SGDataBufferPolicy policy) {
+      SGNetCDFVariable curVar, Variable.Builder<?> vb, SGDataBufferPolicy policy) {
     Number fillValue = curVar.getFillValue();
     if (fillValue != null) {
       vb.addAttribute(createNumberAttribute(ATTR_FILL_VALUE, fillValue));
@@ -2360,7 +2360,7 @@ public abstract class SGNetCDFData extends SGArrayData
           }
           String groupName = sb.toString();
           if (groupName.length() == 0) {
-            Variable.Builder vb =
+            Variable.Builder<?> vb =
                 builder.addVariable(
                     var.getShortName(), var.getDataType(), var.getDimensionsString());
             for (Attribute attr : attrs) {
@@ -2380,7 +2380,7 @@ public abstract class SGNetCDFData extends SGArrayData
               }
               groupBuilder = child.get();
             }
-            Variable.Builder vb =
+            Variable.Builder<?> vb =
                 Variable.builder()
                     .setName(groupNames[groupNames.length - 1])
                     .setDataType(var.getDataType())
