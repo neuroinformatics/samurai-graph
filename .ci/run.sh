@@ -46,11 +46,11 @@ run_step() {
 
 cd "$PROJECT_DIR"
 
-run_step "Clean" mvn clean
-run_step "Format Check (spotless:check)" mvn spotless:check
-run_step "Compile (with lint)" mvn compile
-run_step "Unit Tests" mvn test
-run_step "Package (fat JAR)" mvn package -DskipTests
+run_step "Clean" ./mvnw clean
+run_step "Format Check (spotless:check)" ./mvnw spotless:check
+run_step "Compile (with lint)" ./mvnw compile
+run_step "Unit Tests" ./mvnw test
+run_step "Package (fat JAR)" ./mvnw package -DskipTests
 
 END_TIME=$(date +%s)
 ELAPSED=$((END_TIME - START_TIME))

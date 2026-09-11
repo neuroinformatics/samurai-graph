@@ -22,7 +22,7 @@ set FAILED_STEP=
 
 :step_clean
 echo [STEP] Clean
-call mvn clean >nul 2>&1
+call mvnw.cmd clean >nul 2>&1
 if errorlevel 1 (
     echo [FAIL] Clean
     echo Aborting due to failure in: Clean
@@ -33,7 +33,7 @@ echo.
 
 :step_spotless
 echo [STEP] Format Check (spotless:check)
-call mvn spotless:check >nul 2>&1
+call mvnw.cmd spotless:check >nul 2>&1
 if errorlevel 1 (
     echo [FAIL] Format Check (spotless:check)
     echo Aborting due to failure in: Format Check
@@ -44,7 +44,7 @@ echo.
 
 :step_compile
 echo [STEP] Compile (with lint)
-call mvn compile >nul 2>&1
+call mvnw.cmd compile >nul 2>&1
 if errorlevel 1 (
     echo [FAIL] Compile (with lint)
     echo Aborting due to failure in: Compile
@@ -55,7 +55,7 @@ echo.
 
 :step_test
 echo [STEP] Unit Tests
-call mvn test >nul 2>&1
+call mvnw.cmd test >nul 2>&1
 if errorlevel 1 (
     echo [FAIL] Unit Tests
     echo Aborting due to failure in: Unit Tests
@@ -66,7 +66,7 @@ echo.
 
 :step_package
 echo [STEP] Package (fat JAR)
-call mvn package -DskipTests >nul 2>&1
+call mvnw.cmd package -DskipTests >nul 2>&1
 if errorlevel 1 (
     echo [FAIL] Package (fat JAR)
     echo Aborting due to failure in: Package
