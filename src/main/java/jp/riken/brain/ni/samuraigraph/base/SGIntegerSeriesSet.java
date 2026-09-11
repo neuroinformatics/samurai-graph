@@ -304,8 +304,11 @@ public class SGIntegerSeriesSet implements Cloneable {
   /**
    * Parses a given text string and returns an integer series set.
    *
+   * <p>Aliases given in the map are registered on the parsed series, so methods such as {@link
+   * #getEndIndex()} and {@link #isComplete()} can resolve them afterwards.
+   *
    * @param str a text string
-   * @param aliasMap the alias map
+   * @param aliasMap the map of alias
    * @return an integer series set or null if failed to parse
    */
   public static SGIntegerSeriesSet parse(final String str, final Map<String, Integer> aliasMap) {
@@ -332,6 +335,9 @@ public class SGIntegerSeriesSet implements Cloneable {
           return null;
         }
       }
+    }
+    for (Map.Entry<String, Integer> entry : aliasMap.entrySet()) {
+      set.addAlias(entry.getValue(), entry.getKey());
     }
     return set;
   }
