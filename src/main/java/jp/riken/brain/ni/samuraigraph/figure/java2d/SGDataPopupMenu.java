@@ -15,7 +15,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIPluginManager;
 import jp.riken.brain.ni.samuraigraph.base.SGPopupMenu;
 import jp.riken.brain.ni.samuraigraph.base.SGUserProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.figure.SGILegendConstants;
 
 public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendConstants {
@@ -93,9 +93,9 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
 
     // edit
     rootList.add(convertCommandToPopupMenuItem(this.getEditCommandList()));
-    if (SGDataUtility.isNetCDFData(data)) {
+    if (SGDataDataTypeUtility.isNetCDFData(data)) {
       rootList.add(convertCommandToPopupMenuItem(this.getNetCDFCommandList()));
-    } else if (SGDataUtility.isMDArrayData(data)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
       rootList.add(convertCommandToPopupMenuItem(this.getMDArrayCommandList()));
     }
 
@@ -139,7 +139,7 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
     rootList.add(convertCommandToPopupMenuItem(this.getExportCommandList()));
 
     // save properties into global attributes
-    if (SGDataUtility.isNetCDFData(data)) {
+    if (SGDataDataTypeUtility.isNetCDFData(data)) {
       String path = data.getPath();
       if (path != null) {
         File dataFile = new File(path);

@@ -13,8 +13,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupDialog;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupDialog;
@@ -124,11 +124,11 @@ public abstract class SGDataDialog extends SGPropertyDialog {
         (SGIDataPropertyDialogObserver) this.mPropertyDialogObserverList.get(0);
     String dataType = obs.getDataType();
 
-    if (SGDataUtility.isSDArrayData(dataType)) {
+    if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
       this.mDataColumnSelectionDialog = new SGSDArrayDataSetupDialog(this, true);
-    } else if (SGDataUtility.isNetCDFData(dataType)) {
+    } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
       this.mDataColumnSelectionDialog = new SGNetCDFDataSetupDialog(this, true);
-    } else if (SGDataUtility.isMDArrayData(dataType)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
       this.mDataColumnSelectionDialog = new SGMDArrayDataSetupDialog(this, true);
     } else {
       throw new Error("Data type is not supported: " + dataType);
@@ -157,15 +157,15 @@ public abstract class SGDataDialog extends SGPropertyDialog {
 
     SGData data = obs.getData();
     SGDataColumnInfoSet colInfoSet = new SGDataColumnInfoSet(cols);
-    if (SGDataUtility.isSDArrayData(data)) {
+    if (SGDataDataTypeUtility.isSDArrayData(data)) {
       SGSDArrayDataSetupDialog dg = (SGSDArrayDataSetupDialog) this.mDataColumnSelectionDialog;
       SGSDArrayData sData = (SGSDArrayData) data;
       dg.setData(sData, colInfoSet, infoMap, false);
-    } else if (SGDataUtility.isNetCDFData(data)) {
+    } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
       SGNetCDFDataSetupDialog dg = (SGNetCDFDataSetupDialog) this.mDataColumnSelectionDialog;
       SGNetCDFData nData = (SGNetCDFData) data;
       dg.setData(nData, colInfoSet, infoMap, false);
-    } else if (SGDataUtility.isMDArrayData(data)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
       SGMDArrayDataSetupDialog dg = (SGMDArrayDataSetupDialog) this.mDataColumnSelectionDialog;
       SGMDArrayData mdData = (SGMDArrayData) data;
       dg.setData(mdData, colInfoSet, infoMap, false);

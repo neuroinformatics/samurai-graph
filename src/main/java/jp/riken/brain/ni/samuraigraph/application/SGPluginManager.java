@@ -20,7 +20,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGExtensionFileFilter;
 import jp.riken.brain.ni.samuraigraph.base.SGFileChooser;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataFileConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -161,13 +161,13 @@ public class SGPluginManager implements SGIDisposable {
           pluginMap.get(ff).writeData(file, data);
 
           FILE_TYPE fileType = null;
-          if (SGDataUtility.isSDArrayData(data)) {
+          if (SGDataDataTypeUtility.isSDArrayData(data)) {
             fileType = FILE_TYPE.TXT_DATA;
-          } else if (SGDataUtility.isNetCDFData(data)) {
+          } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
             fileType = FILE_TYPE.NETCDF_DATA;
-          } else if (SGDataUtility.isHDF5Data(data)) {
+          } else if (SGDataDataTypeUtility.isHDF5Data(data)) {
             fileType = FILE_TYPE.HDF5_DATA;
-          } else if (SGDataUtility.isMATLABData(data)) {
+          } else if (SGDataDataTypeUtility.isMATLABData(data)) {
             fileType = FILE_TYPE.MATLAB_DATA;
           }
           if (fileType != null) {

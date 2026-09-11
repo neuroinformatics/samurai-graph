@@ -323,7 +323,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    */
   @Override
   public SGValueRange getBoundsX() {
-    return SGDataUtility.getBoundsX(this);
+    return SGDataRangeUtility.getBoundsX(this);
   }
 
   /**
@@ -333,7 +333,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    */
   @Override
   public SGValueRange getBoundsY() {
-    return SGDataUtility.getBoundsY(this);
+    return SGDataRangeUtility.getBoundsY(this);
   }
 
   /**
@@ -343,7 +343,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    */
   @Override
   public double[] getFirstComponentValueArray(final boolean all) {
-    return SGDataUtility.getFirstComponentValueArray(this, all);
+    return SGDataViewerUtility.getFirstComponentValueArray(this, all);
   }
 
   @Override
@@ -369,7 +369,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    */
   @Override
   public double[] getSecondComponentValueArray(final boolean all) {
-    return SGDataUtility.getSecondComponentValueArray(this, all);
+    return SGDataViewerUtility.getSecondComponentValueArray(this, all);
   }
 
   @Override
@@ -460,8 +460,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   @Override
   public String[] getCurrentColumnType() {
     final boolean polar = this.isPolar();
-    final String com1 = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String com2 = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String com1 = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String com2 = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     SGMDArrayVariable[] vars = this.getVariables();
     String[] array = new String[vars.length];
     for (int ii = 0; ii < array.length; ii++) {
@@ -490,8 +490,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   @Override
   public boolean setColumnType(String[] columns) {
     final boolean polar = this.isPolar();
-    final String com1 = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String com2 = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String com1 = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String com2 = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     SGMDArrayVariable xVar = null;
     SGMDArrayVariable yVar = null;
     SGMDArrayVariable fVar = null;
@@ -500,22 +500,22 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     SGMDArrayVariable[] vars = this.getVariables();
     for (int ii = 0; ii < columns.length; ii++) {
       SGMDArrayVariable var = vars[ii];
-      if (SGDataUtility.isEqualColumnType(X_COORDINATE, columns[ii])) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_COORDINATE, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           return false;
         }
         xVar = var;
-      } else if (SGDataUtility.isEqualColumnType(Y_COORDINATE, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_COORDINATE, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           return false;
         }
         yVar = var;
-      } else if (SGDataUtility.isEqualColumnType(com1, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(com1, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           return false;
         }
         fVar = var;
-      } else if (SGDataUtility.isEqualColumnType(com2, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(com2, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(var.getValueType())) {
           return false;
         }
@@ -666,7 +666,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
 
     OPERATION type = params.getType();
     if (OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)
-        || SGDataUtility.isArchiveDataSetOperation(type)) {
+        || SGDataMiscUtility.isArchiveDataSetOperation(type)) {
 
       StringBuilder sb = new StringBuilder();
       sb.append(this.mFirstComponentVariable.getName());
@@ -759,7 +759,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getFirstComponentValueBlockList() {
-    return SGDataUtility.getFirstComponentValueBlockList(this, false, true, true);
+    return SGDataViewerUtility.getFirstComponentValueBlockList(this, false, true, true);
   }
 
   @Override
@@ -783,7 +783,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getSecondComponentValueBlockList() {
-    return SGDataUtility.getSecondComponentValueBlockList(this, false, true, true);
+    return SGDataViewerUtility.getSecondComponentValueBlockList(this, false, true, true);
   }
 
   @Override
@@ -1080,7 +1080,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
       // set edited values
       if (edit) {
         for (SGDataValueHistory dataValue : this.mEditedDataValueList) {
-          SGDataUtility.setEditedValue(this, xValues, yValues, fValues, sValues, all, dataValue);
+          SGDataViewerUtility.setEditedValue(
+              this, xValues, yValues, fValues, sValues, all, dataValue);
         }
       }
 
@@ -1093,7 +1094,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
       // set edited values
       if (edit) {
         for (SGDataValueHistory dataValue : this.mEditedDataValueList) {
-          SGDataUtility.setEditedValue(this, xValues, yValues, fValues, sValues, all, dataValue);
+          SGDataViewerUtility.setEditedValue(
+              this, xValues, yValues, fValues, sValues, all, dataValue);
         }
       }
 
@@ -1151,7 +1153,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
 
   private VXYExportInfo exportCommon(SGExportParameter mode, SGDataBufferPolicy policy) {
     final boolean all = policy.isAllValuesGotten();
-    final boolean archiveFlag = SGDataUtility.isArchiveDataSetOperation(mode.getType());
+    final boolean archiveFlag = SGDataMiscUtility.isArchiveDataSetOperation(mode.getType());
     final boolean exportXFlag = (this.hasEffectiveXStride() && !all) && !archiveFlag;
     final boolean exportYFlag = (this.hasEffectiveYStride() && !all) && !archiveFlag;
     boolean xValid = true;
@@ -1202,9 +1204,11 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
         List<Integer> xIndexList = new ArrayList<Integer>();
         List<Integer> yIndexList = new ArrayList<Integer>();
         this.getIndexList(fBlocks, xIndexList, yIndexList);
-        double[][] fValues = SGDataUtility.getTwoDimensionalValues(fBlocks, xIndexList, yIndexList);
+        double[][] fValues =
+            SGDataBufferUtility.getTwoDimensionalValues(fBlocks, xIndexList, yIndexList);
         twoDimFValues = SGUtility.transpose(fValues);
-        double[][] sValues = SGDataUtility.getTwoDimensionalValues(sBlocks, xIndexList, yIndexList);
+        double[][] sValues =
+            SGDataBufferUtility.getTwoDimensionalValues(sBlocks, xIndexList, yIndexList);
         twoDimSValues = SGUtility.transpose(sValues);
       }
     }
@@ -1335,9 +1339,9 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
               SGIMDArrayConstants.KEY_VXY_Y_DIMENSION);
     }
     varList.add(strF);
-    columnTypeList.add(SGDataUtility.getVXYFirstComponentColumnType(polar));
+    columnTypeList.add(SGDataStrideUtility.getVXYFirstComponentColumnType(polar));
     varList.add(strS);
-    columnTypeList.add(SGDataUtility.getVXYSecondComponentColumnType(polar));
+    columnTypeList.add(SGDataStrideUtility.getVXYSecondComponentColumnType(polar));
   }
 
   /**
@@ -1362,7 +1366,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsX() {
-    return SGDataUtility.getAllAnimationFrameBoundsX(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsX(this);
   }
 
   /**
@@ -1372,7 +1376,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsY() {
-    return SGDataUtility.getAllAnimationFrameBoundsY(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsY(this);
   }
 
   /**
@@ -1390,8 +1394,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
       list.add(SGIDataColumnTypeConstants.Y_COORDINATE);
     }
     final boolean polar = this.isPolar();
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     list.add(first);
     list.add(second);
     String[] ret = list.toArray(new String[list.size()]);
@@ -1405,20 +1409,20 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    */
   @Override
   public String getPreferredDataViewColumnType() {
-    return SGDataUtility.getPreferredDataViewColumnType(this);
+    return SGDataViewerUtility.getPreferredDataViewColumnType(this);
   }
 
   @Override
   public Double getDataViewerValue(String columnType, int row, int col) {
-    return SGDataUtility.getDataViewerValue(this, columnType, row, col);
+    return SGDataViewerUtility.getDataViewerValue(this, columnType, row, col);
   }
 
   @Override
   public int getDataViewerColumnNumber(final String columnType, final boolean all) {
     int ret = 0;
     final boolean polar = this.isPolar();
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)
         || SGIDataColumnTypeConstants.Y_COORDINATE.equals(columnType)) {
       ret = 1;
@@ -1440,8 +1444,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   public int getDataViewerRowNumber(final String columnType, final boolean all) {
     int ret = 0;
     final boolean polar = this.isPolar();
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
       if (this.mXVariable != null) {
         if (all) {
@@ -1538,8 +1542,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   public SGIntegerSeriesSet getDataViewerColStride(String columnType) {
     SGIntegerSeriesSet ret = null;
     final boolean polar = this.isPolar();
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     if (!this.isIndexAvailable() && (first.equals(columnType) || second.equals(columnType))) {
       if (this.isStrideAvailable()) {
         ret = this.mXStride;
@@ -1630,7 +1634,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   public void setDataViewerValue(
       final String columnType, final int row, final int col, final Object value) {
     SGDataValueHistory editedValue =
-        SGDataUtility.setDataViewerValue(this, columnType, row, col, value);
+        SGDataViewerUtility.setDataViewerValue(this, columnType, row, col, value);
     if (editedValue != null) {
       this.mEditedDataValueList.add(editedValue);
     }
@@ -1643,8 +1647,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    */
   @Override
   public double[] getXValueArray(final boolean all) {
-    double[] values = SGDataUtility.getXValueArray(this, all);
-    return SGDataUtility.updateXValueArray(this, all, values);
+    double[] values = SGDataViewerUtility.getXValueArray(this, all);
+    return SGDataViewerUtility.updateXValueArray(this, all, values);
   }
 
   @Override
@@ -1668,8 +1672,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    */
   @Override
   public double[] getYValueArray(final boolean all) {
-    double[] values = SGDataUtility.getYValueArray(this, all);
-    return SGDataUtility.updateYValueArray(this, all, values);
+    double[] values = SGDataViewerUtility.getYValueArray(this, all);
+    return SGDataViewerUtility.updateYValueArray(this, all, values);
   }
 
   @Override
@@ -1743,7 +1747,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
 
   @Override
   public void setDataValue(SGDataValueHistory value) {
-    SGDataUtility.setDataViewerValue(
+    SGDataViewerUtility.setDataViewerValue(
         this, value.getColumnType(), value.getRowIndex(), value.getColumnIndex(), value.getValue());
   }
 
@@ -1764,12 +1768,12 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
 
   @Override
   public SGDataValue getDataValue(final int index) {
-    return SGDataUtility.getDataValue(this, index);
+    return SGDataViewerUtility.getDataValue(this, index);
   }
 
   @Override
   public SGDataValue getDataValue(final int xIndex, final int yIndex) {
-    return SGDataUtility.getDataValue(this, xIndex, yIndex);
+    return SGDataViewerUtility.getDataValue(this, xIndex, yIndex);
   }
 
   @Override
@@ -1797,15 +1801,15 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   @Override
   protected boolean matches(
       final int col, final int row, String columnType, SGDataValueHistory value, final double d) {
-    return SGDataUtility.matches(col, row, columnType, value, d);
+    return SGDataViewerUtility.matches(col, row, columnType, value, d);
   }
 
   @Override
   protected MDDoubleArray setEditedValues(
       IHDF5Writer writer, SGMDArrayVariable var, MDDoubleArray array) {
     final boolean polar = this.isPolar();
-    String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     return this.setEditedValues(
         writer, var, array, X_COORDINATE, Y_COORDINATE, new String[] {first, second});
   }
@@ -1813,8 +1817,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   @Override
   protected MLDouble setEditedValues(SGMDArrayVariable var, MLDouble array) {
     final boolean polar = this.isPolar();
-    String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     return this.setEditedValues(
         var, array, X_COORDINATE, Y_COORDINATE, new String[] {first, second});
   }
@@ -1827,8 +1831,8 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
       ret = super.getDataViewerCell(cell, columnType, bStride);
     } else {
       final boolean polar = this.isPolar();
-      String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-      String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+      String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+      String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
       if (first.equals(columnType) || second.equals(columnType)) {
         ret = super.getDataViewerCell(cell, columnType, bStride);
       } else if (X_COORDINATE.equals(columnType)) {
@@ -1843,12 +1847,14 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getFirstComponentValueBlockList(
       final boolean all, final boolean useCache, final boolean removeInvalidValues) {
-    return SGDataUtility.getFirstComponentValueBlockList(this, all, useCache, removeInvalidValues);
+    return SGDataViewerUtility.getFirstComponentValueBlockList(
+        this, all, useCache, removeInvalidValues);
   }
 
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getSecondComponentValueBlockList(
       final boolean all, final boolean useCache, final boolean removeInvalidValues) {
-    return SGDataUtility.getSecondComponentValueBlockList(this, all, useCache, removeInvalidValues);
+    return SGDataViewerUtility.getSecondComponentValueBlockList(
+        this, all, useCache, removeInvalidValues);
   }
 }

@@ -15,9 +15,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoDimensionalArrayIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.SXYZDataValue;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.Value;
+import jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYZNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGXYSimpleDoubleValueIndexBlock;
@@ -455,11 +455,11 @@ public class SGElementGroupPseudocolorMapInGraph extends SGElementGroupPseudocol
   }
 
   SXYZDataValue getDataValueAt(SGISXYZTypeData data, final int index) {
-    return (SXYZDataValue) SGDataUtility.getDataValue(data, index);
+    return (SXYZDataValue) SGDataViewerUtility.getDataValue(data, index);
   }
 
   SXYZDataValue getDataValueAt(SGISXYZTypeData data, final int xIndex, final int yIndex) {
-    return (SXYZDataValue) SGDataUtility.getDataValue(data, xIndex, yIndex);
+    return (SXYZDataValue) SGDataViewerUtility.getDataValue(data, xIndex, yIndex);
   }
 
   protected SGTuple2f getLocation(final int index, SGTuple2f[] pointsArray) {

@@ -417,7 +417,7 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     if (infoMap.containsKey(SGIDataInformationKeyConstants.KEY_DATA_TYPE) == false) {
       infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
     }
-    //        final boolean compVisible = SGDataUtility.isComplementButtonVisible(infoMap);
+    //        final boolean compVisible = SGDataMiscUtility.isComplementButtonVisible(infoMap);
     //        this.mComplementButton.setVisible(compVisible);
     // not use complement button.
     this.mComplementButton.setVisible(false);
@@ -506,7 +506,7 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
 
     // call a static utility method
     String[] columnTypes =
-        SGDataUtility.updateDataColumns(
+        SGDataMiscUtility.updateDataColumns(
             this.mDataType,
             this.mColumnInfoList.toArray(new SGDataColumnInfo[this.mColumnInfoList.size()]),
             items);
@@ -795,7 +795,7 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
         }
       }
       String[] colTypeComp =
-          SGDataUtility.getComplementedColumnType(
+          SGDataMiscUtility.getComplementedColumnType(
               this.mDataInfoMap, colType, this.getColumnInfoList());
       for (int ii = 0; ii < num; ii++) {
         this.setColumnType(ii, colTypeComp[ii]);
@@ -888,7 +888,7 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
       curColType[ii] = colInfoArray[ii].getColumnType();
     }
     final boolean b =
-        SGDataUtility.isComplementedButtonEnabled(
+        SGDataMiscUtility.isComplementedButtonEnabled(
             this.mDataInfoMap, curColType, this.mColumnInfoList);
     this.getComplementButton().setEnabled(b);
   }
@@ -982,10 +982,10 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     // get the combo box items
     String valueType = cInfo.getValueType();
     Map<String, Object> infoMap =
-        SGDataUtility.updateInfoMap(mDataType, getDataColumnInfoArray(), infoMapUpd);
+        SGDataMiscUtility.updateInfoMap(mDataType, getDataColumnInfoArray(), infoMapUpd);
 
     // get combo box items
-    String[] items = SGDataUtility.getColumnTypeCandidates(mDataType, infoMap, valueType);
+    String[] items = SGDataMiscUtility.getColumnTypeCandidates(mDataType, infoMap, valueType);
     return items;
   }
 

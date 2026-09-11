@@ -17,8 +17,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupDialog;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
 import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
@@ -314,11 +314,11 @@ public class SGPropertyDialogVXYData extends SGDataDialog
         SGIVXYDataDialogObserver obs =
             (SGIVXYDataDialogObserver) this.mPropertyDialogObserverList.get(0);
         SGData data = obs.getData();
-        if (SGDataUtility.isSDArrayData(data)) {
+        if (SGDataDataTypeUtility.isSDArrayData(data)) {
           SGSDArrayDataSetupDialog sdg = (SGSDArrayDataSetupDialog) dg;
           SGIntegerSeriesSet stride = sdg.getVXYStride();
           this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, stride);
-        } else if (SGDataUtility.isNetCDFData(data)) {
+        } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
           SGNetCDFDataSetupDialog ndg = (SGNetCDFDataSetupDialog) dg;
           if (ndg.isIndexAvailable()) {
             SGIntegerSeriesSet stride = ndg.getVXYIndexStride();
@@ -329,7 +329,7 @@ public class SGPropertyDialogVXYData extends SGDataDialog
             this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X, xStride);
             this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y, yStride);
           }
-        } else if (SGDataUtility.isMDArrayData(data)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
           SGMDArrayDataSetupDialog mdg = (SGMDArrayDataSetupDialog) dg;
           if (mdg.isVXYIndexAvailable()) {
             SGIntegerSeriesSet stride = mdg.getVXYIndexStride();
@@ -537,7 +537,7 @@ public class SGPropertyDialogVXYData extends SGDataDialog
       SGData data = l.getData();
 
       // sets the stride
-      if (SGDataUtility.isSDArrayData(data)) {
+      if (SGDataDataTypeUtility.isSDArrayData(data)) {
         SGIntegerSeriesSet stride =
             this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
         if (!l.setSDArrayStride(stride)) {
@@ -546,10 +546,10 @@ public class SGPropertyDialogVXYData extends SGDataDialog
       }
       if (data instanceof SGIIndexData) {
         final boolean indexAvailable;
-        if (SGDataUtility.isNetCDFData(data)) {
+        if (SGDataDataTypeUtility.isNetCDFData(data)) {
           SGNetCDFDataSetupDialog dg = (SGNetCDFDataSetupDialog) this.mDataColumnSelectionDialog;
           indexAvailable = dg.isIndexAvailable();
-        } else if (SGDataUtility.isMDArrayData(data)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
           SGMDArrayDataSetupDialog dg = (SGMDArrayDataSetupDialog) this.mDataColumnSelectionDialog;
           indexAvailable = dg.isVXYIndexAvailable();
         } else {

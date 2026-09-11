@@ -287,14 +287,14 @@ public abstract class SGDataSetupPanel extends JPanel
       }
       if (header != null) {
         boolean bClear = true;
-        final String nameStr = SGDataUtility.removeHeaderTitle(columnType);
+        final String nameStr = SGDataColumnTitleUtility.removeHeaderTitle(columnType);
         for (int jj = 0; jj < cols.length; jj++) {
           boolean check = false;
           if (nameStr != null && nameStr.equals(cols[jj].getName())) {
             // NetCDF or MDArray data
             check = true;
           } else {
-            final String noStr = SGDataUtility.removeHeaderNo(columnType);
+            final String noStr = SGDataColumnTitleUtility.removeHeaderNo(columnType);
             Integer num = SGUtilityText.getInteger(noStr);
             if (num != null) {
               if (num.intValue() == jj + 1) {
@@ -339,21 +339,21 @@ public abstract class SGDataSetupPanel extends JPanel
 
   protected List<SGDataColumnInfo> findColumnsWithColumnType(
       SGDataColumnInfo[] cols, final String columnType) {
-    return SGDataUtility.findColumnsWithColumnType(cols, columnType);
+    return SGDataColumnInfoUtility.findColumnsWithColumnType(cols, columnType);
   }
 
   protected List<SGDataColumnInfo> findColumnsWithColumnTypeStartsWith(
       SGDataColumnInfo[] cols, final String columnType) {
-    return SGDataUtility.findColumnsWithColumnTypeStartsWith(cols, columnType);
+    return SGDataColumnInfoUtility.findColumnsWithColumnTypeStartsWith(cols, columnType);
   }
 
   protected SGDataColumnInfo findColumnWithName(SGDataColumnInfo[] cols, final String name) {
-    return SGDataUtility.findColumnWithName(cols, name);
+    return SGDataColumnInfoUtility.findColumnWithName(cols, name);
   }
 
   protected List<SGDataColumnInfo> findColumnsWithValueType(
       SGDataColumnInfo[] cols, final String columnType) {
-    return SGDataUtility.findColumnsWithValueType(cols, columnType);
+    return SGDataColumnInfoUtility.findColumnsWithValueType(cols, columnType);
   }
 
   /**

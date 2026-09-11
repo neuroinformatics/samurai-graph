@@ -67,7 +67,7 @@ public class SGDateVariable extends SGCharVariable {
     if (this.mDate == null) {
       return null;
     }
-    return SGDataUtility.getDateValueArray(this.mDate);
+    return SGDataBufferUtility.getDateValueArray(this.mDate);
   }
 
   /**

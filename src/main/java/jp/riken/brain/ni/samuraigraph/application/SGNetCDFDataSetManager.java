@@ -25,8 +25,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIStringModifier;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
@@ -122,7 +123,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
     // add attributes
     varBuilder.addAttribute(
-        SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_BYTE_DATA));
+        SGDataFileUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_BYTE_DATA));
     varBuilder.addAttribute(
         new Attribute(ATTRIBUTE_KEY_IMAGE_FILE_EXTENSION, bgImg.getExtension()));
 
@@ -455,17 +456,17 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
   private SGData getDataInstanceFromProperty(final String dataType, final Element elData) {
     Class<?> dataClass = null;
-    if (SGDataUtility.isSDArrayData(dataType)) {
+    if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
       // use netCDF data class for array data type.
-      if (SGDataUtility.isSXYTypeData(dataType)) {
+      if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
         dataClass = SGSXYNetCDFMultipleData.class;
       } else if (SGDataTypeConstants.VXY_DATA.equals(dataType)) {
         dataClass = SGVXYNetCDFData.class;
       } else if (SGDataTypeConstants.SXYZ_DATA.equals(dataType)) {
         dataClass = SGSXYZNetCDFData.class;
       }
-    } else if (SGDataUtility.isNetCDFData(dataType)) {
-      if (SGDataUtility.isSXYTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
+      if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
         dataClass = SGSXYNetCDFMultipleData.class;
       } else if (SGDataTypeConstants.VXY_NETCDF_DATA.equals(dataType)) {
         dataClass = SGVXYNetCDFData.class;
@@ -517,15 +518,16 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
       // data type as NetCDF data
       String ncDataType = originalDataType;
-      if (SGDataUtility.isSDArrayData(ncDataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(ncDataType)) {
         // replaces the data type
         // because sampling SXY-data and date SXY-date is to be eliminated at some stage.
         ncDataType = SGApplicationUtility.getArrayDataType(ncDataType);
       }
-      if (SGDataUtility.isSDArrayData(ncDataType) || SGDataUtility.isMDArrayData(ncDataType)) {
-        if (SGDataUtility.isSXYTypeData(ncDataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(ncDataType)
+          || SGDataDataTypeUtility.isMDArrayData(ncDataType)) {
+        if (SGDataDataTypeUtility.isSXYTypeData(ncDataType)) {
           ncDataType = SGDataTypeConstants.SXY_MULTIPLE_NETCDF_DATA;
-        } else if (SGDataUtility.isVXYTypeData(ncDataType)) {
+        } else if (SGDataDataTypeUtility.isVXYTypeData(ncDataType)) {
           ncDataType = SGDataTypeConstants.VXY_NETCDF_DATA;
         } else if (SGDataTypeConstants.SXYZ_DATA.equals(ncDataType)) {
           ncDataType = SGDataTypeConstants.SXYZ_NETCDF_DATA;
@@ -535,7 +537,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       // set the class type for backward compatibility between 1.0.7
       if (SGIFigureTypeConstants.FIGURE_TYPE_XY.equals(figure.getClassType())) {
         String type = null;
-        if (SGDataUtility.isVXYTypeData(ncDataType)) {
+        if (SGDataDataTypeUtility.isVXYTypeData(ncDataType)) {
           type = SGIFigureTypeConstants.FIGURE_TYPE_VXY;
         } else {
           type = SGIFigureTypeConstants.FIGURE_TYPE_SXY;

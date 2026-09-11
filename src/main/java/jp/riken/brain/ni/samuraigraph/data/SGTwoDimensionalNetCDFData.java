@@ -866,7 +866,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
       List<Integer> yIndexList) {
     final int xAllLen = this.getXDimensionLength();
     final int yAllLen = this.getYDimensionLength();
-    SGDataUtility.getIndexList(blocks, xIndexList, yIndexList, xAllLen, yAllLen);
+    SGDataBufferUtility.getIndexList(blocks, xIndexList, yIndexList, xAllLen, yAllLen);
   }
 
   @Override

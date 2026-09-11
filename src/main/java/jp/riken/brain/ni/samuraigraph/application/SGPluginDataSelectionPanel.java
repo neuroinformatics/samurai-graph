@@ -32,8 +32,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYDataBuffer;
@@ -595,7 +596,7 @@ public class SGPluginDataSelectionPanel extends javax.swing.JPanel implements Mo
       SGDataBuffer ret = null;
       SGDataBuffer buffer = this.wData.getDataBuffer();
       if (buffer != null) {
-        if (SGDataUtility.isMultipleData(buffer.getDataType())) {
+        if (SGDataDataTypeUtility.isMultipleData(buffer.getDataType())) {
           SGSXYMultipleDataBuffer sxyBuffer = (SGSXYMultipleDataBuffer) buffer;
           if (sxyBuffer.getMultiplicity() > 1) {
             ret = sxyBuffer.pickUp(this.getIndices());
@@ -613,8 +614,8 @@ public class SGPluginDataSelectionPanel extends javax.swing.JPanel implements Mo
         final boolean takeAllStride = false;
         SGData data = this.wData.getData();
         String dataType = data.getDataType();
-        if (SGDataUtility.isSXYTypeData(dataType)) {
-          if (SGDataUtility.isMultipleData(dataType)) {
+        if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
+          if (SGDataDataTypeUtility.isMultipleData(dataType)) {
             SGISXYTypeMultipleData mData = (SGISXYTypeMultipleData) data;
             final int num = mData.getChildNumber();
             if (num == 1) {
@@ -625,7 +626,7 @@ public class SGPluginDataSelectionPanel extends javax.swing.JPanel implements Mo
                           all, removeInvalidValues, editedValuesReflected, shift, takeAllStride));
 
               // disposes of data objects
-              SGDataUtility.disposeSXYDataArray(sxyArray);
+              SGDataMiscUtility.disposeSXYDataArray(sxyArray);
             } else if (num > 1) {
               ret =
                   mData.getDataBuffer(

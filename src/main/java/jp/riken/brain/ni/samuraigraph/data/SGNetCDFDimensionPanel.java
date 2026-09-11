@@ -195,7 +195,7 @@ public class SGNetCDFDimensionPanel extends SGDimensionPanel implements ISliderC
       this.mValueTextField.setToolTipText(null);
     } else {
       //            final double value = this.mValues[index];
-      final double value = SGDataUtility.getCoordinateVariableValue(this.mValues, index);
+      final double value = SGDataViewerUtility.getCoordinateVariableValue(this.mValues, index);
       final String text = Double.toString(value);
       this.mValueTextField.setText(text);
       this.mValueTextField.setToolTipText(text);

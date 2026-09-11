@@ -236,7 +236,7 @@ public class SGMDArrayDataColumnInfo extends SGDataColumnInfo implements SGIMDAr
    */
   public int getGenericDimensionLength() {
     Integer index = this.getGenericDimensionIndex();
-    if (!SGDataUtility.isValidDimensionIndex(index)) {
+    if (!SGDataDataTypeUtility.isValidDimensionIndex(index)) {
       return -1;
     }
     return this.mDimensions[index.intValue()];

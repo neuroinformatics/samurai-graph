@@ -114,8 +114,8 @@ public class SGSDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     }
 
     // call a static utility method
-    if (SGDataUtility.checkDataColumns(this.mDataType, items, this.mDataInfoMap) == false) {
-      this.setMessage(SGDataUtility.MSG_PROPER_COLUMN_TYPE);
+    if (SGDataMiscUtility.checkDataColumns(this.mDataType, items, this.mDataInfoMap) == false) {
+      this.setMessage(SGDataMiscUtility.MSG_PROPER_COLUMN_TYPE);
       return false;
     }
 

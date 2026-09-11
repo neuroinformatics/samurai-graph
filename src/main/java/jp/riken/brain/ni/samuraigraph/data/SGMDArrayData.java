@@ -750,7 +750,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       return false;
     }
 
-    if (SGDataUtility.isArchiveDataSetOperation(type.getType())
+    if (SGDataMiscUtility.isArchiveDataSetOperation(type.getType())
         || OPERATION.SAVE_TO_PROPERTY_FILE.equals(type.getType())) {
       // origins
       StringBuilder sb = new StringBuilder();
@@ -1233,7 +1233,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     dimList.add(dim);
     Variable.Builder<?> vb = builder.addVariable(name, dataType, dimList);
     vb.addAttribute(
-        SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+        SGDataFileUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
     return true;
   }
 
@@ -1411,7 +1411,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     StringBuilder sbGroupName = new StringBuilder();
     this.getNames(name, sbShortName, sbGroupName);
 
-    String dimString = SGDataUtility.getDimensionString(dimList);
+    String dimString = SGDataTextUtility.getDimensionString(dimList);
 
     Group.Builder groupBuilder = this.findGroupBuilder(builder, sbGroupName.toString());
     Variable.Builder<?> vb =
@@ -1421,7 +1421,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
             .setDimensionsByName(dimString);
     groupBuilder.addVariable(vb);
     vb.addAttribute(
-        SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+        SGDataFileUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
     // adds attributes
     if (var != null) {
@@ -1467,7 +1467,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
             .setDimensionsByName(dimStr.toString());
     groupBuilder.addVariable(vb);
     vb.addAttribute(
-        SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_TEXT));
+        SGDataFileUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_TEXT));
 
     // adds attributes
     if (var != null) {
@@ -1522,7 +1522,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    */
   @Override
   public boolean saveToArchiveDataSetFile(final File file, final SGExportParameter mode) {
-    if (!SGDataUtility.isArchiveDataSetOperation(mode.getType())) {
+    if (!SGDataMiscUtility.isArchiveDataSetOperation(mode.getType())) {
       return false;
     }
     SGIDataSource dataSrc = this.getDataSource();
@@ -1532,7 +1532,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       return this.saveToArchiveDataSetFileAsMATLABFile(file, mode);
     } else if (dataSrc instanceof SGVirtualMDArrayFile) {
       return this.saveToSameFormatFile(
-          file, mode, SGDataUtility.getArchiveDataSetBufferPolicy(this));
+          file, mode, SGDataViewerUtility.getArchiveDataSetBufferPolicy(this));
     } else {
       return false;
     }
@@ -1575,14 +1575,14 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 
         // writes attributes of variables
         List<String> attrNameList = reader.object().getAttributeNames(varName);
-        if (!SGDataUtility.writeHDF5Attribute(writer, reader, varName, attrNameList)) {
+        if (!SGDataFileUtility.writeHDF5Attribute(writer, reader, varName, attrNameList)) {
           return false;
         }
 
         // writes global attributes
         final String rootPath = "/";
         List<String> gAttrNameList = reader.object().getAttributeNames(rootPath);
-        if (!SGDataUtility.writeHDF5Attribute(writer, reader, rootPath, gAttrNameList)) {
+        if (!SGDataFileUtility.writeHDF5Attribute(writer, reader, rootPath, gAttrNameList)) {
           return false;
         }
       }
@@ -1828,7 +1828,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
 
   protected MDArrayDataType getExportNumberDataType(
       SGMDArrayVariable var, SGExportParameter mode, SGDataBufferPolicy policy) {
-    if (SGDataUtility.isArchiveDataSetOperation(mode.getType())) {
+    if (SGDataMiscUtility.isArchiveDataSetOperation(mode.getType())) {
       return var.getDataType();
     } else {
       return var.getExportFloatingNumberDataType();
@@ -1845,7 +1845,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     List<String> varList = new ArrayList<String>();
     List<String> columnTypeList = new ArrayList<String>();
     this.getVarNameColumnTypeList(varList, columnTypeList);
-    return SGDataUtility.getDataColumnTypeCommand(varList, columnTypeList);
+    return SGDataMiscUtility.getDataColumnTypeCommand(varList, columnTypeList);
   }
 
   protected void getVarNameColumnTypeList(List<String> varList, List<String> columnTypeList) {
@@ -1929,7 +1929,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     for (int ii = 0; ii < vars.length; ii++) {
       SGMDArrayVariable var = vars[ii];
       Integer index = var.getDimensionIndex(key);
-      if (!SGDataUtility.isValidDimensionIndex(index)) {
+      if (!SGDataDataTypeUtility.isValidDimensionIndex(index)) {
         continue;
       }
       if (cnt > 0) {

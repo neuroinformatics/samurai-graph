@@ -146,6 +146,6 @@ public class SGHDF5File extends SGMDArrayFile {
   public List<SGAttribute> getAttributes() {
     final String path = "/";
     List<String> names = this.mReader.object().getAllAttributeNames(path);
-    return SGDataUtility.findHDF5Attributes(this.mReader, path, names);
+    return SGDataFileUtility.findHDF5Attributes(this.mReader, path, names);
   }
 }

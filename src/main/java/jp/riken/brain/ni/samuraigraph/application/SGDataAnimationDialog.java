@@ -42,7 +42,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataAnimationThread;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataAnimation;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
@@ -1115,7 +1115,7 @@ public class SGDataAnimationDialog extends SGDialog
 
     boolean[] ncDataFlagArray = new boolean[num];
     for (int ii = 0; ii < num; ii++) {
-      ncDataFlagArray[ii] = SGDataUtility.isNetCDFData(dataArray[ii]);
+      ncDataFlagArray[ii] = SGDataDataTypeUtility.isNetCDFData(dataArray[ii]);
     }
     Boolean ncDataFlag = SGUtility.checkEquality(ncDataFlagArray);
     final boolean variablePanelVisible = (ncDataFlag != null) ? ncDataFlag : false;
@@ -1380,10 +1380,10 @@ public class SGDataAnimationDialog extends SGDialog
     SGIAnimation[] animations = this.mAnimationThread.getAnimations();
     SGIDataAnimation dataAnimation = (SGIDataAnimation) animations[0];
     SGData data = dataAnimation.getData();
-    if (SGDataUtility.isNetCDFData(data)) {
+    if (SGDataDataTypeUtility.isNetCDFData(data)) {
       SGNetCDFData ncData = (SGNetCDFData) data;
       ncData.setTimeStride(indices);
-    } else if (SGDataUtility.isMDArrayData(data)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
       SGMDArrayData mdData = (SGMDArrayData) data;
       mdData.setTimeStride(indices);
     }

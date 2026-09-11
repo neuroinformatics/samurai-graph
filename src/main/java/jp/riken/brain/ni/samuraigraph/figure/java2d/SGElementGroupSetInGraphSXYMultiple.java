@@ -43,8 +43,13 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 import jp.riken.brain.ni.samuraigraph.base.SGXYSimpleIndexBlock;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
+import jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
@@ -414,12 +419,12 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       }
 
       // updates the cache
-      SGDataUtility.updateCache(dataMulti, sxyArray);
+      SGDataViewerUtility.updateCache(dataMulti, sxyArray);
 
     } finally {
       if (sxyArray != null) {
         // disposes of data objects
-        SGDataUtility.disposeSXYDataArray(sxyArray);
+        SGDataMiscUtility.disposeSXYDataArray(sxyArray);
       }
     }
 
@@ -1456,7 +1461,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           continue;
         }
       } else if (COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
-        if (SGDataUtility.isNetCDFData(this.mData)) {
+        if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
           if (dataColumnContained) {
             // if ColumnType command exists, skip the command for pick up indices
             continue;
@@ -1470,7 +1475,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           continue;
         }
       } else if (COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
-        if (SGDataUtility.isNetCDFData(this.mData)) {
+        if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
           if (dataColumnContained) {
             // if ColumnType command exists, skip the command for pick up indices
             continue;
@@ -1484,7 +1489,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           continue;
         }
       } else if (COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
-        if (SGDataUtility.isNetCDFData(this.mData)) {
+        if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
           if (dataColumnContained) {
             // if ColumnType command exists, skip the command for pick up indices
             continue;
@@ -1659,10 +1664,10 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   private void setPickUpParameters(
       SGPropertyMap map, SGPropertyResults result, Map<String, SGInteger> pickUpMap) {
     SGPickUpDimensionInfo pickUpInfo = null;
-    if (SGDataUtility.isNetCDFData(this.mData)) {
+    if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGSXYNetCDFMultipleData ncData = (SGSXYNetCDFMultipleData) this.mData;
       pickUpInfo = ncData.getPickUpDimensionInfo();
-    } else if (SGDataUtility.isMDArrayData(this.mData)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) this.mData;
       pickUpInfo = mdData.getPickUpDimensionInfo();
     } else {
@@ -1846,7 +1851,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     final int len = pickUpColumn.getDimensions()[pickUpIndex];
     SGIntegerSeriesSet indices = curIndices;
     if (curLen == -1 || len != curLen) {
-      SGIntegerSeries series = SGDataUtility.createDefaultStepSeries(len);
+      SGIntegerSeries series = SGDataStrideUtility.createDefaultStepSeries(len);
       indices = new SGIntegerSeriesSet(series);
     }
 
@@ -1984,7 +1989,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
         return false;
       }
-      if (SGDataUtility.isNetCDFData(this.mData)) {
+      if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
         SGSXYNetCDFMultipleData sxyData = (SGSXYNetCDFMultipleData) this.mData;
         SGNetCDFVariable pickUpVar = this.getNetCDFPickUpVariable(null);
         if (pickUpVar == null) {
@@ -2005,7 +2010,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           return false;
         }
 
-      } else if (SGDataUtility.isMDArrayData(this.mData)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
         SGSXYMDArrayMultipleData sxyData = (SGSXYMDArrayMultipleData) this.mData;
         if (!sxyData.isDimensionPicked()) {
           result.putResult(key, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2033,7 +2038,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       }
       result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
     } else if (COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
-      if (SGDataUtility.isNetCDFData(this.mData)) {
+      if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
         Integer num = this.getNetCDFPickUpNumber(map, key, value);
         if (num == null) {
           result.putResult(COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2048,7 +2053,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         return false;
       }
     } else if (COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
-      if (SGDataUtility.isNetCDFData(this.mData)) {
+      if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
         Integer num = this.getNetCDFPickUpNumber(map, key, value);
         if (num == null) {
           result.putResult(COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2063,7 +2068,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         return false;
       }
     } else if (COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
-      if (SGDataUtility.isNetCDFData(this.mData)) {
+      if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
         Integer num = this.getNetCDFPickUpNumber(map, key, value);
         if (num == null) {
           result.putResult(COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2947,37 +2952,37 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     SGArrayData aData = (SGArrayData) this.mData;
     SGDataColumnInfo[] preColumnInfo = aData.getColumnInfo();
     try {
-      if (SGDataUtility.isNetCDFData(this.mData)) {
+      if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
         if (this.setNetCDFColumnType(map, result, cols) == false) {
           return false;
         }
-      } else if (SGDataUtility.isMDArrayData(this.mData)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
         if (this.setMDArrayColumnType(map, result, cols) == false) {
           return false;
         }
       }
     } finally {
       // updates the stride with new column types
-      if (!SGDataUtility.hasEqualInput(preColumnInfo, cols)) {
+      if (!SGDataColumnInfoUtility.hasEqualInput(preColumnInfo, cols)) {
         Map<String, Object> infoMap = new HashMap<String, Object>();
         infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, this.mData.getDataType());
         infoMap.put(
             SGIDataInformationKeyConstants.KEY_FIGURE_SIZE,
             new SGTuple2f(this.mGraph.getGraphRectWidth(), this.mGraph.getGraphRectHeight()));
-        if (SGDataUtility.isSDArrayData(this.mData)) {
+        if (SGDataDataTypeUtility.isSDArrayData(this.mData)) {
           SGSXYSDArrayMultipleData sdData = (SGSXYSDArrayMultipleData) this.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcSDArrayDefaultStride(cols, infoMap);
+              SGDataStrideUtility.calcSDArrayDefaultStride(cols, infoMap);
           SGIntegerSeriesSet stride =
               strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
           sdData.setStride(stride);
           SGIntegerSeriesSet tickLabelStride =
               strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
           sdData.setTickLabelStride(tickLabelStride);
-        } else if (SGDataUtility.isNetCDFData(this.mData)) {
+        } else if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
           SGSXYNetCDFMultipleData ncData = (SGSXYNetCDFMultipleData) this.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcNetCDFDefaultStride(cols, infoMap);
+              SGDataStrideUtility.calcNetCDFDefaultStride(cols, infoMap);
           SGIntegerSeriesSet stride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
           ncData.setStride(stride);
           SGIntegerSeriesSet tickLabelStride =
@@ -2986,10 +2991,10 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           SGIntegerSeriesSet indexStride =
               strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
           ncData.setIndexStride(indexStride);
-        } else if (SGDataUtility.isMDArrayData(this.mData)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
           SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) this.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcMDArrayDefaultStride(cols, infoMap);
+              SGDataStrideUtility.calcMDArrayDefaultStride(cols, infoMap);
           SGIntegerSeriesSet stride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
           mdData.setStride(stride);
           SGIntegerSeriesSet tickLabelStride =
@@ -3003,7 +3008,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     }
 
     // sets picked up dimension and animation dimension
-    if (SGDataUtility.isMDArrayData(this.mData)) {
+    if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       List<String> keys = map.getKeys();
       String strPickUpDimension = map.getValueString(COM_DATA_PICKUP_DIMENSION);
       String strTimeDimension = map.getValueString(COM_DATA_ANIMATION_FRAME_DIMENSION);
@@ -3156,7 +3161,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         newInfo = this.getNetCDFPickUpInfo(map, result, pickUpDimName, curLen, curSeries);
         if (newInfo == null) {
           SGIntegerSeriesSet indicesNew =
-              new SGIntegerSeriesSet(SGDataUtility.createDefaultStepSeries(newLen));
+              new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(newLen));
           newInfo = new SGNetCDFPickUpDimensionInfo(pickUpDimName, indicesNew);
         }
 
@@ -3175,7 +3180,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           }
           if (indices == null) {
             result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
-            indices = new SGIntegerSeriesSet(SGDataUtility.createDefaultStepSeries(len));
+            indices = new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(len));
           }
           newInfo = new SGNetCDFPickUpDimensionInfo(pickUpVar.getName(), indices);
           result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
@@ -3195,7 +3200,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
               nCols[ii].setColumnType(columnTypes[ii]);
             }
             Map<String, Object> infoMap = new HashMap<String, Object>();
-            SGDataUtility.updatePickupParameters(infoMap, nCols);
+            SGDataFileUtility.updatePickupParameters(infoMap, nCols);
             SGIntegerSeriesSet indices =
                 (SGIntegerSeriesSet)
                     infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
@@ -3371,7 +3376,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       SGMDArrayPickUpDimensionInfo newInfo = null;
       if (curInfo != null) {
         SGIntegerSeriesSet indicesNew =
-            new SGIntegerSeriesSet(SGDataUtility.createDefaultStepSeries(newLen));
+            new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(newLen));
         newInfo = new SGMDArrayPickUpDimensionInfo(pickUpMap, indicesNew);
 
       } else {
@@ -3387,7 +3392,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           }
           if (indices == null) {
             result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
-            indices = new SGIntegerSeriesSet(SGDataUtility.createDefaultStepSeries(newLen));
+            indices = new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(newLen));
           }
           newInfo = new SGMDArrayPickUpDimensionInfo(pickUpMap, indices);
           result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
@@ -3403,7 +3408,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
             mdCols[ii].setColumnType(columnTypes[ii]);
           }
           Map<String, Object> infoMap = new HashMap<String, Object>();
-          SGDataUtility.updatePickupParameters(infoMap, mdCols);
+          SGDataFileUtility.updatePickupParameters(infoMap, mdCols);
           SGIntegerSeriesSet indices =
               (SGIntegerSeriesSet)
                   infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
@@ -4032,7 +4037,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     SGPropertyMap map = super.getCommandPropertyMap(params);
 
     SGData data = this.getData();
-    if (SGDataUtility.isSDArrayData(data)) {
+    if (SGDataDataTypeUtility.isSDArrayData(data)) {
       SGSXYSDArrayMultipleData sxyData = (SGSXYSDArrayMultipleData) data;
       Double samplingRate = sxyData.getSamplingRate();
       if (samplingRate != null) {
@@ -4048,7 +4053,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     SGPropertyUtility.addProperty(map, COM_DATA_SHIFT_X, this.getShiftX());
     SGPropertyUtility.addProperty(map, COM_DATA_SHIFT_Y, this.getShiftY());
 
-    if (SGDataUtility.isMDArrayData(data)) {
+    if (SGDataDataTypeUtility.isMDArrayData(data)) {
       SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) data;
 
       // pick up dimension
@@ -4060,10 +4065,10 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
     // pick up indices
     SGPickUpDimensionInfo pickUpInfo = null;
-    if (SGDataUtility.isNetCDFData(data)) {
+    if (SGDataDataTypeUtility.isNetCDFData(data)) {
       SGSXYNetCDFMultipleData sxyData = (SGSXYNetCDFMultipleData) data;
       pickUpInfo = sxyData.getPickUpDimensionInfo();
-    } else if (SGDataUtility.isMDArrayData(data)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
       SGSXYMDArrayMultipleData sxyData = (SGSXYMDArrayMultipleData) data;
       pickUpInfo = sxyData.getPickUpDimensionInfo();
     }

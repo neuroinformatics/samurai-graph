@@ -15,9 +15,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoDimensionalArrayIndex;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.VXYDataValue;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.Value;
+import jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIVXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGXYSimpleDoubleValueIndexBlock;
@@ -540,10 +540,10 @@ public class SGElementGroupArrowInGraph extends SGElementGroupArrowForData
   }
 
   VXYDataValue getDataValueAt(SGIVXYTypeData data, final int index) {
-    return (VXYDataValue) SGDataUtility.getDataValue(data, index);
+    return (VXYDataValue) SGDataViewerUtility.getDataValue(data, index);
   }
 
   VXYDataValue getDataValueAt(SGIVXYTypeData data, final int xIndex, final int yIndex) {
-    return (VXYDataValue) SGDataUtility.getDataValue(data, xIndex, yIndex);
+    return (VXYDataValue) SGDataViewerUtility.getDataValue(data, xIndex, yIndex);
   }
 }

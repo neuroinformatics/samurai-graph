@@ -13,7 +13,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGSelectablePaint;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFData;
@@ -45,7 +45,7 @@ public abstract class SGElementGroupBarForData extends SGElementGroupBar
     this.setInterval(DEFAULT_BAR_INTERVAL);
 
     if (data != null) {
-      if (SGDataUtility.isNetCDFData(data.getDataType()) == false) {
+      if (SGDataDataTypeUtility.isNetCDFData(data.getDataType()) == false) {
         final boolean vertical;
         if (data.isErrorBarAvailable()) {
           vertical = data.isErrorBarVertical();

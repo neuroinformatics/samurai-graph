@@ -15,8 +15,8 @@ import java.util.Map;
 import javax.swing.JButton;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupPanel;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFFile;
 
@@ -169,7 +169,7 @@ public class SGNetCDFDataSetupWizardDialog extends SGDataSetupWizardDialog {
     this.setDataName(name);
 
     // set visible of next button
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       this.getNextButton().setVisible(true);
     } else {
       this.getNextButton().setVisible(false);

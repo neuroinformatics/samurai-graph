@@ -59,7 +59,7 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
     // get dimension which is used as max length of string.
     List<Dimension> textLengthDimension = new ArrayList<Dimension>();
     for (Variable var : varList) {
-      if (SGDataUtility.isSGTextVariable(var) || SGDataUtility.isSGDateVariable(var)) {
+      if (SGDataFileUtility.isSGTextVariable(var) || SGDataFileUtility.isSGDateVariable(var)) {
         List<Dimension> dims = var.getDimensions();
         textLengthDimension.add(var.getDimension(dims.size() - 1));
       }
@@ -137,7 +137,7 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
             } catch (IOException e) {
               continue;
             }
-            if (SGDataUtility.isSGDateVariable(var)) {
+            if (SGDataFileUtility.isSGDateVariable(var)) {
               ncVar = new SGDateVariable(var, this, str);
             } else {
               ncVar = new SGTextVariable(var, this, str, mod);

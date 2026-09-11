@@ -29,7 +29,7 @@ public class SGSamplingDataColumn extends SGNumberDataColumn {
     this.mLength = length;
 
     // initialize the title
-    this.mTitle = SGDataUtility.createSamplingRateTitle(samplingRate);
+    this.mTitle = SGDataMiscUtility.createSamplingRateTitle(samplingRate);
   }
 
   /**

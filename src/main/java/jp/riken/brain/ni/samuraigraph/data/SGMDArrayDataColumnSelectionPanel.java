@@ -147,7 +147,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
   }
 
   protected String[] getColumnNameArray() {
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       return COLUMN_NAME_ARRAY_SXY;
     } else {
       return COLUMN_NAME_ARRAY_MULTI_DIMENSION;
@@ -155,7 +155,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
   }
 
   protected int[] getPreferredColumnWidthArray() {
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       return PREFERRED_COLUMN_WIDTH_ARRAY_SXY;
     } else {
       return PREFERRED_COLUMN_WIDTH_ARRAY_MULTI_DIMENSION;
@@ -239,7 +239,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
       if (pickUpIndex == null) {
         pickUpIndexStr = UNSELECTED_STRING;
       } else {
-        if (SGDataUtility.isValidPickUpValue(pickUpIndex)) {
+        if (SGDataColumnInfoUtility.isValidPickUpValue(pickUpIndex)) {
           pickUpIndexStr = pickUpIndex.toString();
         } else {
           pickUpIndexStr = UNSELECTED_STRING;
@@ -267,7 +267,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     if (timeIndex == null) {
       timeIndexStr = UNSELECTED_STRING;
     } else {
-      if (SGDataUtility.isValidTimeValue(timeIndex)) {
+      if (SGDataColumnInfoUtility.isValidTimeValue(timeIndex)) {
         timeIndexStr = timeIndex.toString();
       } else {
         timeIndexStr = UNSELECTED_STRING;
@@ -304,8 +304,8 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     }
 
     // call a static utility method
-    if (SGDataUtility.checkDataColumns(this.mDataType, items, this.mDataInfoMap) == false) {
-      this.setMessage(SGDataUtility.MSG_PROPER_COLUMN_TYPE);
+    if (SGDataMiscUtility.checkDataColumns(this.mDataType, items, this.mDataInfoMap) == false) {
+      this.setMessage(SGDataMiscUtility.MSG_PROPER_COLUMN_TYPE);
       return false;
     }
 
@@ -315,17 +315,17 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
       String columnType = mdInfo.getColumnType();
       List<String> keyList = new ArrayList<String>();
       keyList.add(SGIMDArrayConstants.KEY_TIME_DIMENSION);
-      if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+      if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
         keyList.add(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
         keyList.add(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-      } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+      } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
         if (Z_VALUE.equals(columnType)) {
           keyList.add(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION);
           keyList.add(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
         } else {
           keyList.add(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
         }
-      } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+      } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
         if (X_COMPONENT.equals(columnType)
             || Y_COMPONENT.equals(columnType)
             || MAGNITUDE.equals(columnType)
@@ -346,7 +346,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
       Set<Integer> indexSet = new HashSet<Integer>();
       indexSet.addAll(indexList);
       if (indexSet.size() != indexList.size()) {
-        this.setMessage(SGDataUtility.MSG_UNIQUE_DIMENSIONS);
+        this.setMessage(SGDataMiscUtility.MSG_UNIQUE_DIMENSIONS);
         return false;
       }
     }
@@ -369,14 +369,14 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
         timeLen = len;
       } else {
         if (timeLen != len) {
-          this.setMessage(SGDataUtility.MSG_DIMENSIONS_SAME_LENGTH_ANIMATION_FRAME);
+          this.setMessage(SGDataMiscUtility.MSG_DIMENSIONS_SAME_LENGTH_ANIMATION_FRAME);
           return false;
         }
       }
     }
 
     // checks for pick up
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       List<SGMDArrayDataColumnInfo> xList = new ArrayList<SGMDArrayDataColumnInfo>();
       ;
       List<SGMDArrayDataColumnInfo> yList = new ArrayList<SGMDArrayDataColumnInfo>();
@@ -400,7 +400,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
       }
       if (pickUpList.size() > 0) {
         if (xList.size() > 1 || yList.size() > 1) {
-          this.setMessage(SGDataUtility.MSG_DIMENSION_AND_COLUMN_TYPE_PICK_UP);
+          this.setMessage(SGDataMiscUtility.MSG_DIMENSION_AND_COLUMN_TYPE_PICK_UP);
           return false;
         }
       }
@@ -426,7 +426,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     for (int ii = 0; ii < columnTypes.length; ii++) {
       this.setColumnType(ii, columnTypes[ii]);
     }
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       for (int ii = 0; ii < columnTypes.length; ii++) {
         this.setGenericDimensionIndex(ii, indices[ii]);
       }
@@ -454,7 +454,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     timeCol.setCellEditor(new TimeCellEditor(this.mTimeDimensionEditorComboBox));
     timeCol.setCellRenderer(new DataColumnCellRenderer(this.mTimeDimensionRendererComboBox));
 
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       // set up the combo_box
       final int dimensionColIndex = this.getColumnIndex(COLUMN_NAME_GENERIC_DIMENSION);
       TableColumn dimensionCol = this.mTable.getColumnModel().getColumn(dimensionColIndex);
@@ -510,7 +510,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
   protected List<String> getEditableColumnNameList() {
     List<String> list = super.getEditableColumnNameList();
     list.add(COLUMN_NAME_TIME_DIMENSION);
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       list.add(COLUMN_NAME_GENERIC_DIMENSION);
       list.add(COLUMN_NAME_PICKED_UP_DIMENSION);
     }
@@ -601,14 +601,14 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     nameList.add(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
     String dataType = getDataType();
     String columnType = cInfo.getColumnType();
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       nameList.add(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-    } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       if (Z_VALUE.equals(columnType)) {
         nameList.add(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION);
         nameList.add(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
       }
-    } else if (SGDataUtility.isVXYTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       if (X_COMPONENT.equals(columnType)
           || Y_COMPONENT.equals(columnType)
           || MAGNITUDE.equals(columnType)
@@ -672,12 +672,12 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
       SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) this.mInitColumnInfoArray[ii];
       this.setTimeDimensionIndex(
           ii, mdCol.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION));
-      if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+      if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
         this.setGenericDimensionIndex(
             ii, mdCol.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION));
         this.setPickUpDimensionIndex(
             ii, mdCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION));
-      } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+      } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
         this.setDimensionIndex(
             ii,
             SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION,
@@ -686,7 +686,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
             ii,
             SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION,
             mdCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION));
-      } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+      } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
         this.setDimensionIndex(
             ii,
             SGIMDArrayConstants.KEY_VXY_X_DIMENSION,
@@ -702,7 +702,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
   @Override
   protected void initTableModel(String dataType) {
     DataColumnTableModel model = null;
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       model = new SXYMDArrayDataColumnTableModel();
     } else {
       model = new MDArrayDataColumnTableModel();
@@ -715,7 +715,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     for (int ii = 0; ii < rowNum; ii++) {
       this.setTimeDimensionIndex(ii, -1);
     }
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       // clear selected data column type
       for (int ii = 0; ii < rowNum; ii++) {
         this.setGenericDimensionIndex(ii, 0);
@@ -753,7 +753,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     }
     info.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, time);
 
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       // generic
       Object objDimension =
           this.getValueAt(rowIndex, this.getColumnIndex(COLUMN_NAME_GENERIC_DIMENSION));
@@ -835,7 +835,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
   public void updateDimensionComboBox(final int rowIndex) {
     SGMDArrayDataColumnInfo cInfo = (SGMDArrayDataColumnInfo) this.findDataColumnInfo(rowIndex);
     this.updateTimeDimensionComboBox(cInfo);
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       this.updateGenericDimensionComboBox(cInfo);
       this.updatePickUpDimensionComboBox(cInfo);
     }
@@ -921,7 +921,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     List<String> deprecatedList = new ArrayList<String>();
     for (String name : nameList) {
       Integer dim = cInfo.getDimensionIndex(name);
-      if (SGDataUtility.isValidDimensionIndex(dim)) {
+      if (SGDataDataTypeUtility.isValidDimensionIndex(dim)) {
         deprecatedList.add(dim.toString());
       }
     }

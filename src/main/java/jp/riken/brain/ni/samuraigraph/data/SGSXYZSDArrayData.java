@@ -146,7 +146,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    * @return x-value array
    */
   public double[] getXValueArray(final boolean all) {
-    return SGDataUtility.getXValueArray(this, all);
+    return SGDataViewerUtility.getXValueArray(this, all);
   }
 
   @Override
@@ -171,7 +171,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    * @return y-value array
    */
   public double[] getYValueArray(final boolean all) {
-    return SGDataUtility.getYValueArray(this, all);
+    return SGDataViewerUtility.getYValueArray(this, all);
   }
 
   @Override
@@ -197,7 +197,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    */
   @Override
   public double[] getZValueArray(final boolean all) {
-    return SGDataUtility.getZValueArray(this, all);
+    return SGDataViewerUtility.getZValueArray(this, all);
   }
 
   @Override
@@ -327,11 +327,11 @@ public class SGSXYZSDArrayData extends SGSDArrayData
     Integer y = null;
     Integer z = null;
     for (int ii = 0; ii < columns.length; ii++) {
-      if (SGDataUtility.isEqualColumnType(X_VALUE, columns[ii])) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_VALUE, columns[ii])) {
         x = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
         y = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(Z_VALUE, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Z_VALUE, columns[ii])) {
         z = Integer.valueOf(ii);
       } else if ("".equals(columns[ii])) {
         continue;
@@ -565,7 +565,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    * @return the bounds of x-values
    */
   public SGValueRange getBoundsX() {
-    return SGDataUtility.getBoundsX(this);
+    return SGDataRangeUtility.getBoundsX(this);
   }
 
   /**
@@ -574,7 +574,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    * @return the bounds of y-values
    */
   public SGValueRange getBoundsY() {
-    return SGDataUtility.getBoundsY(this);
+    return SGDataRangeUtility.getBoundsY(this);
   }
 
   /**
@@ -583,7 +583,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    * @return the bounds of z-values
    */
   public SGValueRange getBoundsZ() {
-    return SGDataUtility.getBoundsZ(this);
+    return SGDataRangeUtility.getBoundsZ(this);
   }
 
   /**
@@ -899,7 +899,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
       String indexDimName = indexDim.getShortName();
       Variable.Builder indexVar = this.addIndexVariable(builder, indexDim);
       indexVar.addAttribute(
-          SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+          SGDataFileUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
       // Add data columns as variables.
       Variable.Builder varX = builder.addVariable("column0", DataType.DOUBLE, indexDimName);
@@ -926,9 +926,9 @@ public class SGSXYZSDArrayData extends SGSDArrayData
       varNames[1] = "column1";
       varNames[2] = "column2";
 
-      varX.addAttribute(SGDataUtility.getValueTypeAttribute(colX.getValueType()));
-      varY.addAttribute(SGDataUtility.getValueTypeAttribute(colY.getValueType()));
-      varZ.addAttribute(SGDataUtility.getValueTypeAttribute(colZ.getValueType()));
+      varX.addAttribute(SGDataFileUtility.getValueTypeAttribute(colX.getValueType()));
+      varY.addAttribute(SGDataFileUtility.getValueTypeAttribute(colY.getValueType()));
+      varZ.addAttribute(SGDataFileUtility.getValueTypeAttribute(colZ.getValueType()));
 
       try (NetcdfFormatWriter writer = builder.build()) {
         // add values
@@ -1012,12 +1012,12 @@ public class SGSXYZSDArrayData extends SGSDArrayData
 
   @Override
   protected Object[][] getArchiveDataSetExportValues(SGExportParameter mode) {
-    return this.getValueTable(mode, SGDataUtility.getArchiveDataSetBufferPolicy(this));
+    return this.getValueTable(mode, SGDataViewerUtility.getArchiveDataSetBufferPolicy(this));
   }
 
   @Override
   public Object[][] getValueTable(final SGExportParameter mode, SGDataBufferPolicy policy) {
-    return SGDataUtility.getValueTable(this, mode, policy);
+    return SGDataBufferUtility.getValueTable(this, mode, policy);
   }
 
   /**
@@ -1142,7 +1142,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
     varList.add(strZ);
     columnTypeList.add(Z_VALUE);
 
-    return SGDataUtility.getDataColumnTypeCommand(varList, columnTypeList);
+    return SGDataMiscUtility.getDataColumnTypeCommand(varList, columnTypeList);
   }
 
   @Override
@@ -1164,7 +1164,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsX() {
-    return SGDataUtility.getAllAnimationFrameBoundsX(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsX(this);
   }
 
   /**
@@ -1174,7 +1174,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsY() {
-    return SGDataUtility.getAllAnimationFrameBoundsY(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsY(this);
   }
 
   /**
@@ -1184,7 +1184,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsZ() {
-    return SGDataUtility.getAllAnimationFrameBoundsZ(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsZ(this);
   }
 
   /**
@@ -1209,12 +1209,12 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    */
   @Override
   public String getPreferredDataViewColumnType() {
-    return SGDataUtility.getPreferredDataViewColumnType(this);
+    return SGDataViewerUtility.getPreferredDataViewColumnType(this);
   }
 
   @Override
   public Double getDataViewerValue(String columnType, int row, int col) {
-    return SGDataUtility.getDataViewerValue(this, columnType, row, col);
+    return SGDataViewerUtility.getDataViewerValue(this, columnType, row, col);
   }
 
   @Override
@@ -1268,7 +1268,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
   @Override
   public void setDataViewerValue(String columnType, int row, int col, Object value) {
     SGDataValueHistory editedValue =
-        SGDataUtility.setDataViewerValue(this, columnType, row, col, value);
+        SGDataViewerUtility.setDataViewerValue(this, columnType, row, col, value);
     if (editedValue != null) {
       this.mEditedDataValueList.add(editedValue);
     }
@@ -1321,7 +1321,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
 
   @Override
   public void setDataValue(SGDataValueHistory value) {
-    SGDataUtility.setDataViewerValue(
+    SGDataViewerUtility.setDataViewerValue(
         this, value.getColumnType(), value.getRowIndex(), value.getColumnIndex(), value.getValue());
   }
 
@@ -1343,7 +1343,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
 
   @Override
   public SGDataValue getDataValue(final int index) {
-    return SGDataUtility.getDataValue(this, index);
+    return SGDataViewerUtility.getDataValue(this, index);
   }
 
   @Override
@@ -1369,7 +1369,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
   @Override
   protected boolean matches(
       final int col, final int row, String columnType, SGDataValueHistory value, final double d) {
-    return SGDataUtility.matches(col, row, columnType, value, d);
+    return SGDataViewerUtility.matches(col, row, columnType, value, d);
   }
 
   @Override

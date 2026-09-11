@@ -43,7 +43,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility.MouseDragResult;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
@@ -133,8 +134,8 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
         return false;
       }
     } catch (Exception e) {
-      if (SGDataUtility.isNetCDFData(data)) {
-        if (SGDataUtility.canOpenNetCDF((SGNetCDFData) data) == false) {
+      if (SGDataDataTypeUtility.isNetCDFData(data)) {
+        if (SGDataFileUtility.canOpenNetCDF((SGNetCDFData) data) == false) {
           SGUtility.showErrorMessageDialog(
               null, "NetCDF file connection refused. Delete this data.", "ERROR");
           this.notifyToListener(NOTIFY_UNKNOWN_DATA_ERROR, Integer.valueOf(groupSet.getID()));
@@ -258,7 +259,8 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
       return false;
     }
 
-    if (SGDataUtility.isSXYTypeData(data.getDataType()) && SGDataUtility.isNetCDFData(data)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(data.getDataType())
+        && SGDataDataTypeUtility.isNetCDFData(data)) {
       this.updateBarVerticalOfNetCDFData(groupSet, data);
     }
 

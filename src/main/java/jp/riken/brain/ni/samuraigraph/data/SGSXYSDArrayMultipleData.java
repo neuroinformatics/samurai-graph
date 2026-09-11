@@ -426,7 +426,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       dataArray[ii] = (SGISXYTypeSingleData) data;
     }
 
-    SGDataUtility.syncDataValueHistory(this.mEditedDataValueList, dataArray);
+    SGDataViewerUtility.syncDataValueHistory(this.mEditedDataValueList, dataArray);
 
     return dataArray;
   }
@@ -457,7 +457,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       ret[ii] = data.toMultiple();
     }
     // disposes of data objects
-    SGDataUtility.disposeSXYDataArray(sxyArray);
+    SGDataMiscUtility.disposeSXYDataArray(sxyArray);
     return ret;
   }
 
@@ -467,7 +467,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    * @return the bounds of x-values
    */
   public SGValueRange getBoundsX() {
-    return SGDataUtility.getBoundsX(this);
+    return SGDataRangeUtility.getBoundsX(this);
   }
 
   /**
@@ -476,7 +476,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    * @return the bounds of y-values
    */
   public SGValueRange getBoundsY() {
-    return SGDataUtility.getBoundsY(this);
+    return SGDataRangeUtility.getBoundsY(this);
   }
 
   /**
@@ -1214,37 +1214,37 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     List<Integer> tList = new ArrayList<Integer>();
     for (int ii = 0; ii < columns.length; ii++) {
       String valueType = cols[ii].getValueType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, columns[ii])) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_VALUE, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)
             && !VALUE_TYPE_DATE.equals(valueType)
             && !VALUE_TYPE_SAMPLING_RATE.equals(valueType)) {
           return false;
         }
         xList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)
             && !VALUE_TYPE_DATE.equals(valueType)
             && !VALUE_TYPE_SAMPLING_RATE.equals(valueType)) {
           return false;
         }
         yList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], LOWER_ERROR_VALUE)) {
+      } else if (SGDataDataTypeUtility.columnTypeStartsWith(columns[ii], LOWER_ERROR_VALUE)) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         lList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], UPPER_ERROR_VALUE)) {
+      } else if (SGDataDataTypeUtility.columnTypeStartsWith(columns[ii], UPPER_ERROR_VALUE)) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         uList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], LOWER_UPPER_ERROR_VALUE)) {
+      } else if (SGDataDataTypeUtility.columnTypeStartsWith(columns[ii], LOWER_UPPER_ERROR_VALUE)) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         lList.add(Integer.valueOf(ii));
         uList.add(Integer.valueOf(ii));
-      } else if (SGDataUtility.columnTypeStartsWith(columns[ii], TICK_LABEL)) {
+      } else if (SGDataDataTypeUtility.columnTypeStartsWith(columns[ii], TICK_LABEL)) {
         tList.add(Integer.valueOf(ii));
       } else if ("".equals(columns[ii])) {
         continue;
@@ -1283,7 +1283,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       for (int ii = 0; ii < ehIndices.length; ii++) {
         if (uIndices[ii] == null) return false;
         String str = columns[uIndices[ii].intValue()];
-        Integer eh = SGDataUtility.getAppendedColumnIndex(str, columnTitles);
+        Integer eh = SGDataColumnTitleUtility.getAppendedColumnIndex(str, columnTitles);
         if (eh == null) {
           return false;
         }
@@ -1292,7 +1292,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       for (int ii = 0; ii < ehIndices.length; ii++) {
         if (lIndices[ii] == null) return false;
         String str = columns[lIndices[ii].intValue()];
-        Integer eh = SGDataUtility.getAppendedColumnIndex(str, columnTitles);
+        Integer eh = SGDataColumnTitleUtility.getAppendedColumnIndex(str, columnTitles);
         if (eh == null) {
           return false;
         }
@@ -1313,7 +1313,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       for (int ii = 0; ii < thIndices.length; ii++) {
         if (tIndices[ii] == null) return false;
         String str = columns[tIndices[ii].intValue()];
-        Integer th = SGDataUtility.getAppendedColumnIndex(str, columnTitles);
+        Integer th = SGDataColumnTitleUtility.getAppendedColumnIndex(str, columnTitles);
         if (th == null) {
           return false;
         }
@@ -1496,7 +1496,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         int index = this.mErrorBarHolderIndices[ii].intValue();
         if (this.mLowerErrorIndices[ii].equals(this.mUpperErrorIndices[ii])) {
           array[this.mLowerErrorIndices[ii].intValue()] =
-              SGDataUtility.appendColumnNoOrTitle(
+              SGDataColumnTitleUtility.appendColumnNoOrTitle(
                   LOWER_UPPER_ERROR_VALUE,
                   index,
                   this.getDataFile().isEmptyTitle(index)
@@ -1504,14 +1504,14 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
                   this.getTitle(index));
         } else {
           array[this.mLowerErrorIndices[ii].intValue()] =
-              SGDataUtility.appendColumnNoOrTitle(
+              SGDataColumnTitleUtility.appendColumnNoOrTitle(
                   LOWER_ERROR_VALUE,
                   index,
                   this.getDataFile().isEmptyTitle(index)
                       || this.getDataFile().isRepeatedTitle(index),
                   this.getTitle(index));
           array[this.mUpperErrorIndices[ii].intValue()] =
-              SGDataUtility.appendColumnNoOrTitle(
+              SGDataColumnTitleUtility.appendColumnNoOrTitle(
                   UPPER_ERROR_VALUE,
                   index,
                   this.getDataFile().isEmptyTitle(index)
@@ -1524,7 +1524,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       for (int ii = 0; ii < this.mTickLabelIndices.length; ii++) {
         int index = this.mTickLabelHolderIndices[ii].intValue();
         array[this.mTickLabelIndices[ii].intValue()] =
-            SGDataUtility.appendColumnNoOrTitle(
+            SGDataColumnTitleUtility.appendColumnNoOrTitle(
                 TICK_LABEL,
                 index,
                 this.getDataFile().isEmptyTitle(index) || this.getDataFile().isRepeatedTitle(index),
@@ -2237,7 +2237,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       String indexDimName = indexDim.getShortName();
       Variable.Builder indexVar = this.addIndexVariable(builder, indexDim);
       indexVar.addAttribute(
-          SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+          SGDataFileUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
       // Add data columns as variables.
       SGDataColumn[] colArray = this.getExportedColumnsClone();
@@ -2276,11 +2276,11 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(colValueType)
             || SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(colValueType)) {
           var = builder.addVariable(varName, DataType.DOUBLE, indexDimName);
-          var.addAttribute(SGDataUtility.getValueTypeAttribute(col.getValueType()));
+          var.addAttribute(SGDataFileUtility.getValueTypeAttribute(col.getValueType()));
         } else if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(colValueType)
             || SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(colValueType)) {
           String[] dimNames = {indexDimName, textDimensionName[ii]};
-          String dims = SGDataUtility.getDimensionString(dimNames);
+          String dims = SGDataTextUtility.getDimensionString(dimNames);
           var = builder.addVariable(varName, DataType.CHAR, dims);
           String attrValueType;
           if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(colValueType)) {
@@ -2288,7 +2288,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
           } else {
             attrValueType = SGIDataColumnTypeConstants.VALUE_TYPE_DATE;
           }
-          var.addAttribute(SGDataUtility.getValueTypeAttribute(attrValueType));
+          var.addAttribute(SGDataFileUtility.getValueTypeAttribute(attrValueType));
         } else {
           throw new Error(
               "Illegal value type="
@@ -2399,7 +2399,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
 
   @Override
   protected Object[][] getArchiveDataSetExportValues(final SGExportParameter mode) {
-    return this.getValueTable(mode, SGDataUtility.getArchiveDataSetBufferPolicy(this));
+    return this.getValueTable(mode, SGDataViewerUtility.getArchiveDataSetBufferPolicy(this));
   }
 
   @Override
@@ -2407,7 +2407,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
 
     // get values from data
     OPERATION mode = params.getType();
-    final boolean archiveFlag = SGDataUtility.isArchiveDataSetOperation(mode);
+    final boolean archiveFlag = SGDataMiscUtility.isArchiveDataSetOperation(mode);
     final boolean exportFlag =
         (OPERATION.EXPORT_TO_FILE_AS_SAME_FORMAT.equals(mode)
             || OPERATION.EXPORT_TO_TEXT.equals(mode));
@@ -2465,7 +2465,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         // save to an archive file
         if (xDateFlag != null && xDateFlag.booleanValue()) {
           for (int jj = 0; jj < xValues.length; jj++) {
-            array[ii][cnt] = SGDataUtility.getTextValue(dateArray[ii].toString());
+            array[ii][cnt] = SGDataTextUtility.getTextValue(dateArray[ii].toString());
             cnt++;
           }
         } else {
@@ -2476,7 +2476,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         }
         if (xDateFlag != null && !xDateFlag.booleanValue()) {
           for (int jj = 0; jj < yValues.length; jj++) {
-            array[ii][cnt] = SGDataUtility.getTextValue(dateArray[ii].toString());
+            array[ii][cnt] = SGDataTextUtility.getTextValue(dateArray[ii].toString());
             cnt++;
           }
         } else {
@@ -2515,7 +2515,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       if (tickLabels != null) {
         for (int jj = 0; jj < tickLabels.length; jj++) {
           if (tickLabels[jj] != null) {
-            row[cnt] = SGDataUtility.getTextValue(tickLabels[jj][ii]);
+            row[cnt] = SGDataTextUtility.getTextValue(tickLabels[jj][ii]);
             cnt++;
           }
         }
@@ -2523,7 +2523,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         if (exportFlag) {
           if (xDateFlag != null) {
             SGDate date = dateArray[ii];
-            row[cnt] = SGDataUtility.getTextValue(date.toString());
+            row[cnt] = SGDataTextUtility.getTextValue(date.toString());
             cnt++;
           }
         }
@@ -2593,7 +2593,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public SGDataBuffer getDataBuffer(SGDataBufferPolicy policy) {
-    return SGDataUtility.getDataBuffer(this, (SGSXYDataBufferPolicy) policy);
+    return SGDataBufferUtility.getDataBuffer(this, (SGSXYDataBufferPolicy) policy);
   }
 
   /**
@@ -2605,7 +2605,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public SGDataBuffer getDataBuffer(SGSXYDataBufferPolicy param, int[] indices) {
-    return SGDataUtility.getDataBuffer(this, param, indices);
+    return SGDataBufferUtility.getDataBuffer(this, param, indices);
   }
 
   private SGDateDataColumn getDateDataColumn() {
@@ -2669,7 +2669,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
 
   @Override
   public SGDate[] getDateArray(SGSXYDataBufferPolicy policy) {
-    return SGDataUtility.getDateArray(this, policy);
+    return SGDataBufferUtility.getDateArray(this, policy);
   }
 
   @Override
@@ -2685,7 +2685,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       }
     }
     // disposes of data objects
-    SGDataUtility.disposeSXYDataArray(sxyArray);
+    SGDataMiscUtility.disposeSXYDataArray(sxyArray);
     return ret;
   }
 
@@ -2705,17 +2705,17 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public boolean hasEffectiveStride() {
-    return SGDataUtility.hasEffectiveStride(this);
+    return SGDataViewerUtility.hasEffectiveStride(this);
   }
 
   @Override
   public double[][] getXValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataUtility.getXValues(this, policy);
+    return SGDataBufferUtility.getXValues(this, policy);
   }
 
   @Override
   public double[][] getYValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataUtility.getYValues(this, policy);
+    return SGDataBufferUtility.getYValues(this, policy);
   }
 
   /**
@@ -2726,7 +2726,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public double[][] getUnshiftedXValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataUtility.getUnshiftedXValues(this, policy);
+    return SGDataBufferUtility.getUnshiftedXValues(this, policy);
   }
 
   /**
@@ -2737,7 +2737,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public double[][] getUnshiftedYValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataUtility.getUnshiftedYValues(this, policy);
+    return SGDataBufferUtility.getUnshiftedYValues(this, policy);
   }
 
   /**
@@ -2762,7 +2762,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public double[][] getLowerErrorValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataUtility.getLowerErrorValueArray(this, policy);
+    return SGDataBufferUtility.getLowerErrorValueArray(this, policy);
   }
 
   /**
@@ -2773,7 +2773,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public double[][] getUpperErrorValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataUtility.getUpperErrorValueArray(this, policy);
+    return SGDataBufferUtility.getUpperErrorValueArray(this, policy);
   }
 
   /**
@@ -2784,7 +2784,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public String[][] getTickLabelArray(SGSXYDataBufferPolicy policy) {
-    return SGDataUtility.getTickLabelArray(this, policy);
+    return SGDataBufferUtility.getTickLabelArray(this, policy);
   }
 
   @Override
@@ -2836,17 +2836,20 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         if (equalFlag) {
           String str = Integer.toString(leNo);
           varList.add(str);
-          String columnTypeStr = SGDataUtility.appendColumnNo(LOWER_UPPER_ERROR_VALUE, ehIndex);
+          String columnTypeStr =
+              SGDataColumnTitleUtility.appendColumnNo(LOWER_UPPER_ERROR_VALUE, ehIndex);
           columnTypeList.add(columnTypeStr);
         } else {
           String leStr = Integer.toString(leNo);
           varList.add(leStr);
-          String leColumnTypeStr = SGDataUtility.appendColumnNo(LOWER_ERROR_VALUE, ehIndex);
+          String leColumnTypeStr =
+              SGDataColumnTitleUtility.appendColumnNo(LOWER_ERROR_VALUE, ehIndex);
           columnTypeList.add(leColumnTypeStr);
 
           String ueStr = Integer.toString(ueNo);
           varList.add(ueStr);
-          String ueColumnTypeStr = SGDataUtility.appendColumnNo(UPPER_ERROR_VALUE, ehIndex);
+          String ueColumnTypeStr =
+              SGDataColumnTitleUtility.appendColumnNo(UPPER_ERROR_VALUE, ehIndex);
           columnTypeList.add(ueColumnTypeStr);
         }
       }
@@ -2857,11 +2860,11 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         final int thIndex = this.mTickLabelHolderIndices[ii];
         String str = Integer.toString(tlNo);
         varList.add(str);
-        String columnTypeStr = SGDataUtility.appendColumnNo(TICK_LABEL, thIndex);
+        String columnTypeStr = SGDataColumnTitleUtility.appendColumnNo(TICK_LABEL, thIndex);
         columnTypeList.add(columnTypeStr);
       }
     }
-    return SGDataUtility.getDataColumnTypeCommand(varList, columnTypeList);
+    return SGDataMiscUtility.getDataColumnTypeCommand(varList, columnTypeList);
   }
 
   @Override
@@ -2900,7 +2903,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsX() {
-    return SGDataUtility.getAllAnimationFrameBoundsX(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsX(this);
   }
 
   /**
@@ -2910,7 +2913,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsY() {
-    return SGDataUtility.getAllAnimationFrameBoundsY(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsY(this);
   }
 
   /**
@@ -2934,19 +2937,19 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public String getPreferredDataViewColumnType() {
-    return SGDataUtility.getPreferredDataViewColumnType(this);
+    return SGDataViewerUtility.getPreferredDataViewColumnType(this);
   }
 
   @Override
   public Double getDataViewerValue(String columnType, int row, int col) {
-    return SGDataUtility.getDataViewerValue(this, columnType, row, col);
+    return SGDataViewerUtility.getDataViewerValue(this, columnType, row, col);
   }
 
   @Override
   public double getXValueAt(final int childIndex, final int arrayIndex) {
     SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
     double[] values = sxyArray[childIndex].getXValueArray(false);
-    SGDataUtility.disposeSXYDataArray(sxyArray);
+    SGDataMiscUtility.disposeSXYDataArray(sxyArray);
     return values[arrayIndex];
   }
 
@@ -2954,13 +2957,13 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   public double getYValueAt(final int childIndex, final int arrayIndex) {
     SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
     double[] values = sxyArray[childIndex].getYValueArray(false);
-    SGDataUtility.disposeSXYDataArray(sxyArray);
+    SGDataMiscUtility.disposeSXYDataArray(sxyArray);
     return values[arrayIndex];
   }
 
   @Override
   public int getDataViewerColumnNumber(final String columnType, final boolean all) {
-    return SGDataUtility.getDataViewerColumnNumber(this, columnType);
+    return SGDataViewerUtility.getDataViewerColumnNumber(this, columnType);
   }
 
   @Override
@@ -2986,7 +2989,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   public void setDataViewerValue(
       final String columnType, final int row, final int col, final Object value) {
     List<SGDataValueHistory> editedDataValueList =
-        SGDataUtility.getEditedDataValueList(this, columnType, row, col, value, this.mStride);
+        SGDataViewerUtility.getEditedDataValueList(this, columnType, row, col, value, this.mStride);
     this.mEditedDataValueList.addAll(editedDataValueList);
   }
 
@@ -3014,7 +3017,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
 
   @Override
   public void setDataValue(SGDataValueHistory value) {
-    SGDataUtility.setDataViewerValue(
+    SGDataViewerUtility.setDataViewerValue(
         this,
         value.getColumnType(),
         value.getRowIndex(),
@@ -3031,10 +3034,10 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     }
 
     // updates the cache
-    SGDataUtility.updateCache(this, sxyArray);
+    SGDataViewerUtility.updateCache(this, sxyArray);
 
     // disposes of data objects
-    SGDataUtility.disposeSXYDataArray(sxyArray);
+    SGDataMiscUtility.disposeSXYDataArray(sxyArray);
   }
 
   @Override
@@ -3056,37 +3059,37 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   @Override
   protected boolean matches(
       final int col, final int row, String columnType, SGDataValueHistory value, final double d) {
-    return SGDataUtility.matches(col, row, columnType, value, d);
+    return SGDataViewerUtility.matches(col, row, columnType, value, d);
   }
 
   @Override
   public double[][] getXValueArray(final boolean all) {
-    return SGDataUtility.getXValueArray(this, all);
+    return SGDataViewerUtility.getXValueArray(this, all);
   }
 
   @Override
   public double[][] getXValueArray(boolean all, boolean useCache, boolean removeInvalidValues) {
-    return SGDataUtility.getXValueArray(this, all, useCache, removeInvalidValues);
+    return SGDataViewerUtility.getXValueArray(this, all, useCache, removeInvalidValues);
   }
 
   @Override
   public double[][] getXValueArray(boolean all, boolean useCache) {
-    return SGDataUtility.getXValueArray(this, all, useCache);
+    return SGDataViewerUtility.getXValueArray(this, all, useCache);
   }
 
   @Override
   public double[][] getYValueArray(final boolean all) {
-    return SGDataUtility.getYValueArray(this, all);
+    return SGDataViewerUtility.getYValueArray(this, all);
   }
 
   @Override
   public double[][] getYValueArray(boolean all, boolean useCache, boolean removeInvalidValues) {
-    return SGDataUtility.getYValueArray(this, all, useCache, removeInvalidValues);
+    return SGDataViewerUtility.getYValueArray(this, all, useCache, removeInvalidValues);
   }
 
   @Override
   public double[][] getYValueArray(boolean all, boolean useCache) {
-    return SGDataUtility.getYValueArray(this, all, useCache);
+    return SGDataViewerUtility.getYValueArray(this, all, useCache);
   }
 
   // /**
@@ -3107,7 +3110,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   // ret[ii] = sxyArray[ii].getXValueArray(all);
   // }
   // // disposes of data objects
-  // SGDataUtility.disposeSXYDataArray(sxyArray);
+  // SGDataMiscUtility.disposeSXYDataArray(sxyArray);
   // }
   // return ret;
   // }
@@ -3130,7 +3133,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   // ret[ii] = sxyArray[ii].getYValueArray(all);
   // }
   // // disposes of data objects
-  // SGDataUtility.disposeSXYDataArray(sxyArray);
+  // SGDataMiscUtility.disposeSXYDataArray(sxyArray);
   // }
   // return ret;
   // }

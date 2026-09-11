@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 
 public class SGSXYDataPopupMenu extends SGDataPopupMenu {
 
@@ -16,7 +16,7 @@ public class SGSXYDataPopupMenu extends SGDataPopupMenu {
   }
 
   protected boolean checkDataType(final String dataType) {
-    return SGDataUtility.isSXYTypeData(dataType);
+    return SGDataDataTypeUtility.isSXYTypeData(dataType);
   }
 
   /** Overrode to add a command to split data. */

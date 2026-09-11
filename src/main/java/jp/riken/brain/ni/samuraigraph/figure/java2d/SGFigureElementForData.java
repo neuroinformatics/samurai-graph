@@ -35,7 +35,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
@@ -715,7 +717,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
    * @return the initial magnitude of the vector per centimeter
    */
   protected float getInitialMagnitudePerCM(SGIVXYTypeData data) {
-    final float mag = SGDataUtility.getInitialMagnitudePerCM(data);
+    final float mag = SGDataStrideUtility.getInitialMagnitudePerCM(data);
     return mag;
   }
 
@@ -878,7 +880,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
     } finally {
       if (sxyArray != null) {
         // disposes of data objects
-        SGDataUtility.disposeSXYDataArray(sxyArray);
+        SGDataMiscUtility.disposeSXYDataArray(sxyArray);
       }
     }
 
@@ -1021,10 +1023,10 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
       return false;
     }
     if (animationArraySection != null) {
-      if (SGDataUtility.isNetCDFData(data)) {
+      if (SGDataDataTypeUtility.isNetCDFData(data)) {
         SGNetCDFData ncData = (SGNetCDFData) data;
         ncData.setTimeStride(animationArraySection);
-      } else if (SGDataUtility.isMDArrayData(data)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
         SGMDArrayData mdData = (SGMDArrayData) data;
         mdData.setTimeStride(animationArraySection);
       }
@@ -1417,7 +1419,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
     } finally {
       if (sxyArray != null) {
         // disposes of data objects
-        SGDataUtility.disposeSXYDataArray(sxyArray);
+        SGDataMiscUtility.disposeSXYDataArray(sxyArray);
       }
     }
 
@@ -1659,7 +1661,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
   // protected void doAnimation(SGElementGroupSetForData gs) {
   // SGData data = gs.getData();
   // boolean valid = false;
-  // if (SGDataUtility.isNetCDFData(data)) {
+  // if (SGDataDataTypeUtility.isNetCDFData(data)) {
   // SGNetCDFData nData = (SGNetCDFData) data;
   // if (nData.isTimeVariableAvailable()) {
   // valid = true;
@@ -1668,7 +1670,7 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
   // "Variable for animation frame is not selected properly.",
   // SGIConstants.ERROR);
   // }
-  // } else if (SGDataUtility.isMDArrayData(data)) {
+  // } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
   // SGMDArrayData mdData = (SGMDArrayData) data;
   // if (mdData.isTimeDimensionAvailable()) {
   // valid = true;
@@ -2049,11 +2051,11 @@ public abstract class SGFigureElementForData extends SGFigureElement2D
     SGData data = gs.getData();
     String dataType = data.getDataType();
     SGDataPopupMenu menu;
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       menu = new SGSXYDataPopupMenu(wnd, gs, inGraph);
-    } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       menu = new SGSXYZDataPopupMenu(wnd, gs, inGraph);
-    } else if (SGDataUtility.isVXYTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       menu = new SGVXYDataPopupMenu(wnd, gs, inGraph);
     } else {
       return;

@@ -320,6 +320,6 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
   }
 
   protected String getValidName() {
-    return SGDataUtility.getNetCDFValidName(this.getName());
+    return SGDataTextUtility.getNetCDFValidName(this.getName());
   }
 }

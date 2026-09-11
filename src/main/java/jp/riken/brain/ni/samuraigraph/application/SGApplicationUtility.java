@@ -57,8 +57,12 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumn;
+import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDateDataColumn;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
@@ -363,7 +367,7 @@ public class SGApplicationUtility
       // create column info for sampling
       SGDataColumnInfo samplingRateColumnInfo =
           new SGSDArrayDataColumnInfo(
-              SGDataUtility.createSamplingRateTitle(samplingRate.doubleValue()),
+              SGDataMiscUtility.createSamplingRateTitle(samplingRate.doubleValue()),
               SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE);
 
       // set X_VALUE to the column type
@@ -531,7 +535,7 @@ public class SGApplicationUtility
     SGIDataSource dataSource = null;
     try {
       final String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
-      if (SGDataUtility.isSDArrayData(dataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
 
         if (showProgress && progress != null) {
           progress.setProgressMessage(PROGRESS_MESSAGE_READ_FILE);
@@ -584,7 +588,7 @@ public class SGApplicationUtility
         // create data source
         dataSource = new SGSDArrayFile(path, columns);
 
-      } else if (SGDataUtility.isNetCDFData(dataType)) {
+      } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
 
         NetcdfFile ncFile = null;
         try {
@@ -596,7 +600,7 @@ public class SGApplicationUtility
         // create data source
         dataSource = new SGNetCDFFile(ncFile);
 
-      } else if (SGDataUtility.isMDArrayData(dataType)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
         dataSource = SGApplicationUtility.openMDArrayFile(dataType, path);
 
       } else {
@@ -637,7 +641,7 @@ public class SGApplicationUtility
 
   public static SGMDArrayFile openMDArrayFile(final String dataType, final String path) {
     SGMDArrayFile mdFile = null;
-    if (SGDataUtility.isHDF5FileData(dataType)) {
+    if (SGDataDataTypeUtility.isHDF5FileData(dataType)) {
       IHDF5Reader reader = null;
       try {
         reader = SGApplicationUtility.openHDF5(path);
@@ -645,7 +649,7 @@ public class SGApplicationUtility
         return null;
       }
       mdFile = new SGHDF5File(reader);
-    } else if (SGDataUtility.isMATLABData(dataType)) {
+    } else if (SGDataDataTypeUtility.isMATLABData(dataType)) {
       MatFileReader reader = null;
       try {
         reader = SGApplicationUtility.openMAT(path);
@@ -923,7 +927,7 @@ public class SGApplicationUtility
     String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
 
     // multiple variable or not
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       SGDataColumnInfo[] columns = colInfoSet.getDataColumnInfoArray();
       Boolean multipleVariable =
           (Boolean) pfInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
@@ -935,7 +939,7 @@ public class SGApplicationUtility
       int arrayLength = -1;
       int indexLength = -1;
 
-      if (SGDataUtility.isSDArrayData(dataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
         if (columns.length == 0) {
           return di;
         }
@@ -944,7 +948,7 @@ public class SGApplicationUtility
         if (indexLength == -1) {
           return di;
         }
-      } else if (SGDataUtility.isNetCDFData(dataType)) {
+      } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
         SGNetCDFDataColumnInfo pickedUpCol = null;
         for (int jj = 0; jj < columns.length; jj++) {
           SGNetCDFDataColumnInfo ncInfo = (SGNetCDFDataColumnInfo) columns[jj];
@@ -985,7 +989,7 @@ public class SGApplicationUtility
               for (int i = 0; i < nCols.length; i++) {
                 nCols[i] = (SGNetCDFDataColumnInfo) columns[i];
               }
-              SGDataUtility.updatePickupParameters(infoMap, nCols);
+              SGDataFileUtility.updatePickupParameters(infoMap, nCols);
             }
             if (startObj != null) {
               infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START, startObj);
@@ -998,7 +1002,7 @@ public class SGApplicationUtility
             }
           }
         }
-      } else if (SGDataUtility.isMDArrayData(dataType)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
         Map<String, Integer> pickUpDimMap = new HashMap<String, Integer>();
         for (int ii = 0; ii < columns.length; ii++) {
           SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) columns[ii];
@@ -1029,7 +1033,8 @@ public class SGApplicationUtility
             return di;
           }
           SGMDArrayDataColumnInfo pickedUpCol =
-              (SGMDArrayDataColumnInfo) SGDataUtility.findColumnWithName(columns, pickedUpName);
+              (SGMDArrayDataColumnInfo)
+                  SGDataColumnInfoUtility.findColumnWithName(columns, pickedUpName);
           final int[] dims = pickedUpCol.getDimensions();
           if (nDimension < 0 || dims.length <= nDimension) {
             return di;
@@ -1064,12 +1069,12 @@ public class SGApplicationUtility
             infoMap, SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, indexLength);
       }
 
-    } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       SGDataColumnInfo[] columns = colInfoSet.getDataColumnInfoArray();
       int xLength = -1;
       int yLength = -1;
       int indexLength = -1;
-      if (SGDataUtility.isSDArrayData(dataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
         if (columns.length == 0) {
           return di;
         }
@@ -1078,7 +1083,7 @@ public class SGApplicationUtility
         if (indexLength == -1) {
           return di;
         }
-      } else if (SGDataUtility.isNetCDFData(dataType)) {
+      } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
         for (int jj = 0; jj < columns.length; jj++) {
           SGNetCDFDataColumnInfo ncInfo = (SGNetCDFDataColumnInfo) columns[jj];
           String columnType = ncInfo.getColumnType();
@@ -1096,7 +1101,7 @@ public class SGApplicationUtility
             }
           }
         }
-      } else if (SGDataUtility.isMDArrayData(dataType)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
         SGMDArrayDataColumnInfo zInfo = null;
         for (int jj = 0; jj < columns.length; jj++) {
           SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) columns[jj];
@@ -1156,17 +1161,17 @@ public class SGApplicationUtility
         }
       }
 
-    } else if (SGDataUtility.isVXYTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
 
-      boolean polar = SGDataUtility.isPolar(infoMap);
-      String fColType = SGDataUtility.getVXYFirstComponentColumnType(polar);
-      String sColType = SGDataUtility.getVXYSecondComponentColumnType(polar);
+      boolean polar = SGDataMiscUtility.isPolar(infoMap);
+      String fColType = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+      String sColType = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
 
       SGDataColumnInfo[] columns = colInfoSet.getDataColumnInfoArray();
       int xLength = -1;
       int yLength = -1;
       int indexLength = -1;
-      if (SGDataUtility.isSDArrayData(dataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
         if (columns.length == 0) {
           return di;
         }
@@ -1175,7 +1180,7 @@ public class SGApplicationUtility
         if (indexLength == -1) {
           return di;
         }
-      } else if (SGDataUtility.isNetCDFData(dataType)) {
+      } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
         for (int jj = 0; jj < columns.length; jj++) {
           SGNetCDFDataColumnInfo ncInfo = (SGNetCDFDataColumnInfo) columns[jj];
           String columnType = ncInfo.getColumnType();
@@ -1194,7 +1199,7 @@ public class SGApplicationUtility
             }
           }
         }
-      } else if (SGDataUtility.isMDArrayData(dataType)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
         SGMDArrayDataColumnInfo cInfo = null;
         for (int jj = 0; jj < columns.length; jj++) {
           SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) columns[jj];
@@ -1369,7 +1374,7 @@ public class SGApplicationUtility
         }
 
         // format check
-        List<Integer> indexList = SGDataUtility.getColumnIndexListOfNumber(tokenList);
+        List<Integer> indexList = SGDataMiscUtility.getColumnIndexListOfNumber(tokenList);
 
         if (isFirstLine) {
           isFirstLine = false;
@@ -1458,7 +1463,7 @@ public class SGApplicationUtility
           return null;
         }
         List<String> valueList = listArray.get(ii);
-        if (SGDataUtility.hasTickLabels(dataType)) {
+        if (SGDataDataTypeUtility.hasTickLabels(dataType)) {
           for (int jj = 0; jj < len; jj++) {
             String value = valueList.get(jj);
             Double d = SGUtilityText.getDouble(value);
@@ -1579,7 +1584,7 @@ public class SGApplicationUtility
     if (!hdf5) {
       // only for Windows
       if (SGUtility.identifyOS(OS_NAME_WINDOWS)) {
-        if (!SGDataUtility.hasValidHDF5CharacterForWin(path)) {
+        if (!SGDataMiscUtility.hasValidHDF5CharacterForWin(path)) {
           if (hasExtension(path, HDF5_FILE_EXTENSION_ARRAY)
               || hasExtension(path, MATLAB_FILE_EXTENSION)) {
             return FILE_TYPE.POSSIBLY_HDF5_DATA;
@@ -1656,7 +1661,7 @@ public class SGApplicationUtility
     char[] cArray = str.toCharArray();
     for (int ii = 0; ii < cArray.length; ii++) {
       final char c = cArray[ii];
-      if (!SGDataUtility.isAcceptableCharHDF5Wind(c)) {
+      if (!SGDataMiscUtility.isAcceptableCharHDF5Wind(c)) {
         cList.add(c);
       }
     }

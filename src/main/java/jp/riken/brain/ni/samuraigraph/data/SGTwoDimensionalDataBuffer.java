@@ -139,7 +139,7 @@ public abstract class SGTwoDimensionalDataBuffer extends SGDataBuffer {
     for (int ii = 0; ii < yLen; ii++) {
       yIndexList.add(ii);
     }
-    double[][] ret = SGDataUtility.getTwoDimensionalValues(blocks, xIndexList, yIndexList);
+    double[][] ret = SGDataBufferUtility.getTwoDimensionalValues(blocks, xIndexList, yIndexList);
     return ret;
   }
 }

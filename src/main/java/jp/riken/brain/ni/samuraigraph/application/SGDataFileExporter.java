@@ -8,7 +8,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetForData;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetMultipleSXY;
@@ -47,13 +48,13 @@ public class SGDataFileExporter extends SGFileHandler implements SGIApplicationC
     if (MENUCMD_EXPORT_TO_FILE.equals(command)) {
       final SGData data = gs.getData();
       final String dataType = data.getDataType();
-      if (SGDataUtility.isSDArrayData(dataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
         extension = CSV_FILE_EXTENSION;
-      } else if (SGDataUtility.isNetCDFData(dataType)) {
+      } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
         extension = NETCDF_FILE_EXTENSION;
-      } else if (SGDataUtility.isHDF5FileData(dataType)) {
+      } else if (SGDataDataTypeUtility.isHDF5FileData(dataType)) {
         extension = HDF5_FILE_EXTENSION;
-      } else if (SGDataUtility.isMATLABData(dataType)) {
+      } else if (SGDataDataTypeUtility.isMATLABData(dataType)) {
         extension = MATLAB_FILE_EXTENSION;
       } else {
         throw new Error("Unsupported data type: " + dataType);
@@ -159,7 +160,7 @@ public class SGDataFileExporter extends SGFileHandler implements SGIApplicationC
       // only for Windows
       if (HDF5_FILE_EXTENSION.equals(extension)) {
         String path = file.getAbsolutePath();
-        if (!SGDataUtility.hasValidHDF5CharacterForWin(path)) {
+        if (!SGDataMiscUtility.hasValidHDF5CharacterForWin(path)) {
           SGApplicationUtility.showHDF5WriteErrorMessageDialog(wnd, path);
           return ERROR_OPTION;
         }

@@ -125,8 +125,10 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
     // (SGSXYMultipleVariableNetCDFData).
     final boolean be = this.isErrorBarAvailable();
     final boolean bt = this.isTickLabelAvailable() && !this.mIsTickLabelSubstitute;
-    SGNetCDFDataColumnInfo[] x = SGDataUtility.createDataColumnInfoArray(this.mXVariable, X_VALUE);
-    SGNetCDFDataColumnInfo[] y = SGDataUtility.createDataColumnInfoArray(this.mYVariable, Y_VALUE);
+    SGNetCDFDataColumnInfo[] x =
+        SGDataFileUtility.createDataColumnInfoArray(this.mXVariable, X_VALUE);
+    SGNetCDFDataColumnInfo[] y =
+        SGDataFileUtility.createDataColumnInfoArray(this.mYVariable, Y_VALUE);
     SGNetCDFDataColumnInfo[] le =
         be
             ? new SGNetCDFDataColumnInfo[] {
@@ -143,18 +145,18 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
     SGNetCDFDataColumnInfo[] tl =
         bt
             ? new SGNetCDFDataColumnInfo[] {
-              SGDataUtility.createDataColumnInfo(
+              SGDataFileUtility.createDataColumnInfo(
                   this.mTickLabelVariable, TICK_LABEL, this.mTickLabelHolderVariable.getName())
             }
             : null;
     SGNetCDFDataColumnInfo[] th = bt ? this.getTickLabelHolderInfo(x, y) : null;
     SGNetCDFDataColumnInfo time =
         (this.mTimeVariable != null)
-            ? SGDataUtility.createDataColumnInfo(this.mTimeVariable, ANIMATION_FRAME)
+            ? SGDataFileUtility.createDataColumnInfo(this.mTimeVariable, ANIMATION_FRAME)
             : null;
     SGNetCDFDataColumnInfo serialNumber =
         this.isIndexAvailable()
-            ? SGDataUtility.createDataColumnInfo(this.mIndexVariable, INDEX)
+            ? SGDataFileUtility.createDataColumnInfo(this.mIndexVariable, INDEX)
             : null;
     SGSXYNetCDFMultipleData data =
         new SGSXYNetCDFMultipleData(
@@ -188,7 +190,7 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
   protected SGNetCDFDataColumnInfo createTickLabelInfo(SGNetCDFVariable var) {
     if (this.isTickLabelAvailable() && !this.mIsTickLabelSubstitute) {
       String thName = this.mTickLabelHolderVariable.getName();
-      return SGDataUtility.createDataColumnInfo(this.mTickLabelVariable, TICK_LABEL, thName);
+      return SGDataFileUtility.createDataColumnInfo(this.mTickLabelVariable, TICK_LABEL, thName);
     } else {
       return null;
     }
@@ -197,8 +199,8 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
   @Override
   public SGISXYTypeMultipleData toMultiple(
       final Dimension dim, final int pickUpIndex, final int len) {
-    SGNetCDFDataColumnInfo x = SGDataUtility.createDataColumnInfo(this.mXVariable, X_VALUE);
-    SGNetCDFDataColumnInfo y = SGDataUtility.createDataColumnInfo(this.mYVariable, Y_VALUE);
+    SGNetCDFDataColumnInfo x = SGDataFileUtility.createDataColumnInfo(this.mXVariable, X_VALUE);
+    SGNetCDFDataColumnInfo y = SGDataFileUtility.createDataColumnInfo(this.mYVariable, Y_VALUE);
     SGNetCDFDataColumnInfo le = null;
     SGNetCDFDataColumnInfo ue = null;
     SGNetCDFDataColumnInfo eh = null;
@@ -211,16 +213,16 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
     SGNetCDFDataColumnInfo th = null;
     if (this.isTickLabelAvailable()) {
       String thName = this.mTickLabelHolderVariable.getName();
-      tl = SGDataUtility.createDataColumnInfo(this.mTickLabelVariable, TICK_LABEL, thName);
+      tl = SGDataFileUtility.createDataColumnInfo(this.mTickLabelVariable, TICK_LABEL, thName);
       th = this.getTickLabelHolderInfo(x, y);
     }
     SGNetCDFDataColumnInfo time =
         (this.mTimeVariable != null)
-            ? SGDataUtility.createDataColumnInfo(this.mTimeVariable, ANIMATION_FRAME)
+            ? SGDataFileUtility.createDataColumnInfo(this.mTimeVariable, ANIMATION_FRAME)
             : null;
     SGNetCDFDataColumnInfo id =
         this.isIndexAvailable()
-            ? SGDataUtility.createDataColumnInfo(this.mIndexVariable, INDEX)
+            ? SGDataFileUtility.createDataColumnInfo(this.mIndexVariable, INDEX)
             : null;
     SGIntegerSeriesSet pickUpIndices;
     if (pickUpIndex == len - 1) {

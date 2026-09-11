@@ -180,19 +180,19 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
 
     if (!this.mIndexStridePanel.hasValidInput()) {
       String msg = "";
-      if (SGDataUtility.isSXYTypeData(this.mDataType)) {
-        msg = SGDataUtility.MSG_PROPER_STRIDE_LINE_AND_BAR;
-      } else if (SGDataUtility.isSXYZTypeData(this.mDataType)
-          || SGDataUtility.isVXYTypeData(this.mDataType)) {
-        msg = SGDataUtility.MSG_PROPER_STRIDE;
+      if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
+        msg = SGDataMiscUtility.MSG_PROPER_STRIDE_LINE_AND_BAR;
+      } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)
+          || SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
+        msg = SGDataMiscUtility.MSG_PROPER_STRIDE;
       }
       selectionPanel.setMessage(msg);
       return false;
     }
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       if (this.isTickLabelAvailable()) {
         if (!this.mTickLabelStridePanel.hasValidInput()) {
-          selectionPanel.setMessage(SGDataUtility.MSG_PROPER_STRIDE_TICK_LABEL);
+          selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_STRIDE_TICK_LABEL);
           return false;
         }
       }
@@ -341,7 +341,7 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
     }
 
     boolean tickLabelVisible = false;
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       tickLabelVisible = true;
       this.mIndexStridePanel.setBorder(
           BorderFactory.createTitledBorder(
@@ -350,10 +350,10 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
               TitledBorder.DEFAULT_JUSTIFICATION,
               TitledBorder.DEFAULT_POSITION,
               new Font("Dialog", 0, 12)));
-    } else if (SGDataUtility.isVXYTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       tickLabelVisible = false;
       this.mIndexStridePanel.setBorder(null);
-    } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       tickLabelVisible = false;
       this.mIndexStridePanel.setBorder(null);
     }
@@ -388,11 +388,11 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
   private void initStride() {
     SGDataColumnInfo[] cols = this.getDataColumnInfoArray();
     String keyStride;
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       keyStride = SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE;
-    } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       keyStride = SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE;
-    } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       keyStride = SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE;
     } else {
       return;
@@ -403,7 +403,7 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
     SGIntegerSeriesSet stride = (SGIntegerSeriesSet) this.mInfoMap.get(keyStride);
     if (stride == null) {
       Map<String, SGIntegerSeriesSet> strideMap =
-          SGDataUtility.calcSDArrayDefaultStride(cols, this.mInfoMap);
+          SGDataStrideUtility.calcSDArrayDefaultStride(cols, this.mInfoMap);
       stride = strideMap.get(keyStride);
     } else {
       stride = SGUtility.createIndicesWithinRange(stride, len);
@@ -411,7 +411,7 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
     this.mIndexStridePanel.setLength(len);
     this.mIndexStridePanel.setIndices(stride);
 
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       // tick label
       this.initTickLabelStride(stride, len, cols);
     }
@@ -467,17 +467,17 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
   @Override
   public Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> strideMap = new HashMap<String, SGIntegerSeriesSet>();
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       this.updateStrideMap(
           this.mIndexStridePanel, SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, strideMap);
       this.updateStrideMap(
           this.mTickLabelStridePanel,
           SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           strideMap);
-    } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       this.updateStrideMap(
           this.mIndexStridePanel, SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, strideMap);
-    } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       this.updateStrideMap(
           this.mIndexStridePanel, SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, strideMap);
     }
@@ -486,17 +486,17 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
 
   @Override
   protected void setStrideMap(Map<String, SGIntegerSeriesSet> strideMap) {
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       this.setStride(
           this.mIndexStridePanel, SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, strideMap);
       this.setStride(
           this.mTickLabelStridePanel,
           SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           strideMap);
-    } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       this.setStride(
           this.mIndexStridePanel, SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, strideMap);
-    } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       this.setStride(
           this.mIndexStridePanel, SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, strideMap);
     }
@@ -505,17 +505,17 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
   @Override
   protected Map<String, Integer> getFullLengthMap() {
     Map<String, Integer> lengthMap = new HashMap<String, Integer>();
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       this.updateLengthMap(
           this.mIndexStridePanel, SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, lengthMap);
       this.updateLengthMap(
           this.mTickLabelStridePanel,
           SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           lengthMap);
-    } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       this.updateLengthMap(
           this.mIndexStridePanel, SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, lengthMap);
-    } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       this.updateLengthMap(
           this.mIndexStridePanel, SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, lengthMap);
     }

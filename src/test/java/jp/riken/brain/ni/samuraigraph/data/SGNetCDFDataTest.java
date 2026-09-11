@@ -16,10 +16,10 @@ class SGNetCDFDataTest {
   private SGSXYNetCDFData createSXYDataFromExample16() throws IOException {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open(EXAMPLE_16));
     SGNetCDFDataColumnInfo xInfo =
-        SGDataUtility.createDataColumnInfo(
+        SGDataFileUtility.createDataColumnInfo(
             file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
-        SGDataUtility.createDataColumnInfo(
+        SGDataFileUtility.createDataColumnInfo(
             file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
     return new SGSXYNetCDFData(
         file,

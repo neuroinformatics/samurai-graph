@@ -285,7 +285,7 @@ public abstract class SGNetCDFData extends SGArrayData
     // write the origins
     StringBuilder sb = new StringBuilder();
     Iterator<String> itr = this.mOriginMap.keySet().iterator();
-    if (SGDataUtility.isArchiveDataSetOperation(type.getType())) {
+    if (SGDataMiscUtility.isArchiveDataSetOperation(type.getType())) {
       // archive
       List<String> varNameList = new ArrayList<String>();
       SGNetCDFVariable[] vars = this.getAssignedVariables();
@@ -416,7 +416,7 @@ public abstract class SGNetCDFData extends SGArrayData
       for (int ii = 0; ii < size; ii++) {
         doubleArray[ii] = array.getDouble(ii);
       }
-      final double value = SGDataUtility.getCoordinateVariableValue(doubleArray, index);
+      final double value = SGDataViewerUtility.getCoordinateVariableValue(doubleArray, index);
       return value;
     }
   }
@@ -1161,7 +1161,7 @@ public abstract class SGNetCDFData extends SGArrayData
     }
     final int index = this.getCurrentTimeValueIndex();
     final double[] array = this.getTimeValueArray();
-    return SGDataUtility.getCoordinateVariableValue(array, index);
+    return SGDataViewerUtility.getCoordinateVariableValue(array, index);
   }
 
   /**
@@ -1919,7 +1919,7 @@ public abstract class SGNetCDFData extends SGArrayData
    */
   @Override
   public boolean saveToArchiveDataSetFile(final File file, final SGExportParameter mode) {
-    if (!SGDataUtility.isArchiveDataSetOperation(mode.getType())) {
+    if (!SGDataMiscUtility.isArchiveDataSetOperation(mode.getType())) {
       return false;
     }
 
@@ -2513,7 +2513,7 @@ public abstract class SGNetCDFData extends SGArrayData
 
   protected DataType getExportNumberDataType(
       SGNetCDFVariable var, SGExportParameter mode, SGDataBufferPolicy policy) {
-    if (SGDataUtility.isArchiveDataSetOperation(mode.getType())) {
+    if (SGDataMiscUtility.isArchiveDataSetOperation(mode.getType())) {
       return var.getDataType();
     } else {
       return DataType.DOUBLE;
@@ -2695,7 +2695,7 @@ public abstract class SGNetCDFData extends SGArrayData
   }
 
   protected String getValidName(String str) {
-    return SGDataUtility.getNetCDFValidName(str);
+    return SGDataTextUtility.getNetCDFValidName(str);
   }
 
   /**
@@ -2708,7 +2708,7 @@ public abstract class SGNetCDFData extends SGArrayData
     List<String> varList = new ArrayList<String>();
     List<String> columnTypeList = new ArrayList<String>();
     this.getVarNameColumnTypeList(varList, columnTypeList);
-    return SGDataUtility.getDataColumnTypeCommand(varList, columnTypeList);
+    return SGDataMiscUtility.getDataColumnTypeCommand(varList, columnTypeList);
   }
 
   protected void getVarNameColumnTypeList(List<String> varList, List<String> columnTypeList) {

@@ -25,8 +25,11 @@ import jp.riken.brain.ni.samuraigraph.base.SGIProgressControl;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDateVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
@@ -208,7 +211,7 @@ public class SGDataCreator
     Map<Integer, Integer> lIndexMap = new HashMap<Integer, Integer>();
     Map<Integer, Integer> uIndexMap = new HashMap<Integer, Integer>();
     Map<Integer, Integer> tIndexMap = new HashMap<Integer, Integer>();
-    if (SGDataUtility.getSXYColumnType(
+    if (SGDataMiscUtility.getSXYColumnType(
             colInfo, xIndexList, yIndexList, lIndexMap, uIndexMap, tIndexMap)
         == false) {
       return null;
@@ -393,7 +396,7 @@ public class SGDataCreator
     Map<Integer, Integer> lIndexMap = new HashMap<Integer, Integer>();
     Map<Integer, Integer> uIndexMap = new HashMap<Integer, Integer>();
     Map<Integer, Integer> tIndexMap = new HashMap<Integer, Integer>();
-    if (SGDataUtility.getSXYColumnType(
+    if (SGDataMiscUtility.getSXYColumnType(
             colInfo, xIndexList, yIndexList, lIndexMap, uIndexMap, tIndexMap)
         == false) {
       return null;
@@ -563,21 +566,21 @@ public class SGDataCreator
     final boolean isPolar = b.booleanValue();
 
     // get column indices
-    final String type1 = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
-    final String type2 = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
+    final String type1 = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
+    final String type2 = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
     Integer xIndex = null;
     Integer yIndex = null;
     Integer c1Index = null;
     Integer c2Index = null;
     for (int ii = 0; ii < colInfo.length; ii++) {
       String cType = colInfo[ii].getColumnType();
-      if (SGDataUtility.isEqualColumnType(X_COORDINATE, cType)) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_COORDINATE, cType)) {
         xIndex = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(Y_COORDINATE, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_COORDINATE, cType)) {
         yIndex = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(type1, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(type1, cType)) {
         c1Index = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(type2, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(type2, cType)) {
         c2Index = Integer.valueOf(ii);
       } else if ("".equals(cType)) {
         continue;
@@ -630,11 +633,11 @@ public class SGDataCreator
     Integer zIndex = null;
     for (int ii = 0; ii < colInfo.length; ii++) {
       String cType = colInfo[ii].getColumnType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, cType)) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_VALUE, cType)) {
         xIndex = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_VALUE, cType)) {
         yIndex = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(Z_VALUE, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Z_VALUE, cType)) {
         zIndex = Integer.valueOf(ii);
       } else if ("".equals(cType)) {
         continue;
@@ -744,8 +747,7 @@ public class SGDataCreator
           		SGDataTypeConstants.SXYZ_NETCDF_DATA
           };
           for (int ii = 0; ii < dataTypes.length; ii++) {
-              SGDataUtility.DefaultColumnTypeResult result = SGDataUtility
-  					.getDefaultColumnTypes(dataTypes[ii],
+              SGDefaultColumnTypeUtility.DefaultColumnTypeResult result = SGDefaultColumnTypeUtility.getDefaultColumnTypes(dataTypes[ii],
   							columnInfoList, infoMap);
               if (result.isSucceeded()) {
               	cList.add(dataTypes[ii]);
@@ -771,7 +773,7 @@ public class SGDataCreator
       }
 
       // get number convertible columns
-      List<Integer> firstIndexList = SGDataUtility.getColumnIndexListOfNumber(firstTokenList);
+      List<Integer> firstIndexList = SGDataMiscUtility.getColumnIndexListOfNumber(firstTokenList);
 
       // skip titles if they exist
       if (SGApplicationUtility.evaluateTitleList(firstIndexList)) {
@@ -780,7 +782,7 @@ public class SGDataCreator
         if (firstTokenList == null || firstTokenList.size() == 0) {
           return false;
         }
-        firstIndexList = SGDataUtility.getColumnIndexListOfNumber(firstTokenList);
+        firstIndexList = SGDataMiscUtility.getColumnIndexListOfNumber(firstTokenList);
       }
 
       // check all values
@@ -814,7 +816,7 @@ public class SGDataCreator
       }
 
       // get data type candidates
-      if (SGDataUtility.getDataTypeCandidateList(firstTokenList, indexList, cList) == false) {
+      if (SGDataMiscUtility.getDataTypeCandidateList(firstTokenList, indexList, cList) == false) {
         return false;
       }
 
@@ -895,7 +897,7 @@ public class SGDataCreator
       fileColumns = new FileColumn[colNum];
 
       // get number convertible columns
-      List<Integer> indexList = SGDataUtility.getColumnIndexListOfNumber(tokenList);
+      List<Integer> indexList = SGDataMiscUtility.getColumnIndexListOfNumber(tokenList);
 
       // get titles
       String[] titles = new String[colNum];
@@ -1027,7 +1029,7 @@ public class SGDataCreator
           // if version of the property file is older than 2.0.0
           if ("".equals(versionNumber)) {
             // data with tick labels
-            if (SGDataUtility.hasTickLabels(dataType)) {
+            if (SGDataDataTypeUtility.hasTickLabels(dataType)) {
               // the third and fifth columns are forced to be a text column
               if (colNum == 3 || colNum == 5) {
                 fileColumns[colNum - 1].valueType = VALUE_TYPE_TEXT;
@@ -1078,7 +1080,7 @@ public class SGDataCreator
     List<SGDataColumnInfo> timeInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> indexInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> pickUpInfoList = new ArrayList<SGDataColumnInfo>();
-    if (!SGDataUtility.getSXYColumnType(
+    if (!SGDataMiscUtility.getSXYColumnType(
         colInfo,
         xInfoList,
         yInfoList,
@@ -1365,7 +1367,7 @@ public class SGDataCreator
     List<SGDataColumnInfo> timeInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> indexInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> pickUpInfoList = new ArrayList<SGDataColumnInfo>();
-    if (!SGDataUtility.getSXYColumnType(
+    if (!SGDataMiscUtility.getSXYColumnType(
         colInfo,
         xInfoList,
         yInfoList,
@@ -1480,7 +1482,7 @@ public class SGDataCreator
     List<SGDataColumnInfo> timeNameList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> indexInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> pickUpInfoList = new ArrayList<SGDataColumnInfo>();
-    if (!SGDataUtility.getSXYColumnType(
+    if (!SGDataMiscUtility.getSXYColumnType(
         colInfo,
         xInfoList,
         yInfoList,
@@ -1590,7 +1592,7 @@ public class SGDataCreator
     List<SGDataColumnInfo> pickupInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> timeInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> indexInfoList = new ArrayList<SGDataColumnInfo>();
-    if (SGDataUtility.getSXYDimensionDataColumnType(
+    if (SGDataMiscUtility.getSXYDimensionDataColumnType(
             colInfo,
             xInfoList,
             yInfoList,
@@ -1641,11 +1643,11 @@ public class SGDataCreator
     }
     SGNetCDFDataColumnInfo ehInfo = null;
     if (leInfo != null) {
-      ehInfo = SGDataUtility.findHolderInfo(colInfo, leInfo);
+      ehInfo = SGDataFileUtility.findHolderInfo(colInfo, leInfo);
     }
     SGNetCDFDataColumnInfo thInfo = null;
     if (tlInfo != null) {
-      thInfo = SGDataUtility.findHolderInfo(colInfo, tlInfo);
+      thInfo = SGDataFileUtility.findHolderInfo(colInfo, tlInfo);
     }
 
     // create an array of dimension indices
@@ -1827,8 +1829,8 @@ public class SGDataCreator
     progress.setProgressMessage(PROGRESS_MESSAGE_CREATE_DATA);
 
     // get column indices
-    final String type1 = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
-    final String type2 = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
+    final String type1 = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
+    final String type2 = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
     SGNetCDFDataColumnInfo xInfo = null;
     SGNetCDFDataColumnInfo yInfo = null;
     SGNetCDFDataColumnInfo firstInfo = null;
@@ -1840,22 +1842,22 @@ public class SGDataCreator
     for (int ii = 0; ii < colInfo.length; ii++) {
       SGNetCDFDataColumnInfo col = (SGNetCDFDataColumnInfo) colInfo[ii];
       String cType = col.getColumnType();
-      if (SGDataUtility.isEqualColumnType(X_COORDINATE, cType)) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_COORDINATE, cType)) {
         xInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(Y_COORDINATE, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_COORDINATE, cType)) {
         yInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(type1, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(type1, cType)) {
         firstInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(type2, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(type2, cType)) {
         secondInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(ANIMATION_FRAME, cType)
-          || SGDataUtility.isEqualColumnType(TIME, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(ANIMATION_FRAME, cType)
+          || SGDataDataTypeUtility.isEqualColumnType(TIME, cType)) {
         timeInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(INDEX, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(INDEX, cType)) {
         indexInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(X_INDEX, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(X_INDEX, cType)) {
         xIndexInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(Y_INDEX, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_INDEX, cType)) {
         yIndexInfo = col;
       } else if ("".equals(cType)) {
         continue;
@@ -1925,20 +1927,20 @@ public class SGDataCreator
     for (int ii = 0; ii < colInfo.length; ii++) {
       SGNetCDFDataColumnInfo col = (SGNetCDFDataColumnInfo) colInfo[ii];
       String cType = col.getColumnType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, cType)) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_VALUE, cType)) {
         xInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_VALUE, cType)) {
         yInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(Z_VALUE, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Z_VALUE, cType)) {
         zInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(ANIMATION_FRAME, cType)
-          || SGDataUtility.isEqualColumnType(TIME, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(ANIMATION_FRAME, cType)
+          || SGDataDataTypeUtility.isEqualColumnType(TIME, cType)) {
         timeInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(INDEX, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(INDEX, cType)) {
         indexInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(X_INDEX, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(X_INDEX, cType)) {
         xIndexInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(Y_INDEX, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_INDEX, cType)) {
         yIndexInfo = col;
       } else if ("".equals(cType)) {
         continue;
@@ -2044,9 +2046,9 @@ public class SGDataCreator
 
       final String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
 
-      if (SGDataUtility.isSDArrayData(dataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
         SGSDArrayFile file = (SGSDArrayFile) dataSource;
-        if (SGDataUtility.isSXYTypeData(dataType)) {
+        if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
           Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
           if (multiple == null) {
             return null;
@@ -2056,15 +2058,15 @@ public class SGDataCreator
           } else {
             cdSet = this.createSingleSXYSDArrayData(file, progress, colInfoSet, infoMap);
           }
-        } else if (SGDataUtility.isVXYTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
           cdSet = this.createVXYSDArrayData(file, progress, colInfoSet, infoMap);
-        } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
           cdSet = this.createSXYZSDArrayData(file, progress, colInfoSet, infoMap);
         }
 
-      } else if (SGDataUtility.isNetCDFData(dataType)) {
+      } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
         SGNetCDFFile file = (SGNetCDFFile) dataSource;
-        if (SGDataUtility.isSXYTypeData(dataType)) {
+        if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
           Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
           if (multiple == null) {
             return null;
@@ -2085,14 +2087,14 @@ public class SGDataCreator
                 this.createDimensionSXYNetCDFData(
                     file, progress, colInfoSet, infoMap, multiple.booleanValue());
           }
-        } else if (SGDataUtility.isVXYTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
           cdSet = this.createVXYNetCDFData(file, progress, colInfoSet, infoMap);
-        } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
           cdSet = this.createSXYZNetCDFData(file, progress, colInfoSet, infoMap);
         }
-      } else if (SGDataUtility.isMDArrayData(dataType)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
         SGMDArrayFile file = (SGMDArrayFile) dataSource;
-        if (SGDataUtility.isSXYTypeData(dataType)) {
+        if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
           Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
           if (multiple == null) {
             return null;
@@ -2112,9 +2114,9 @@ public class SGDataCreator
               cdSet = this.createSingleVariableSXYMDArrayData(file, progress, colInfoSet, infoMap);
             }
           }
-        } else if (SGDataUtility.isVXYTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
           cdSet = this.createVXYMDArrayData(file, progress, colInfoSet, infoMap);
-        } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
           cdSet = this.createSXYZMDArrayData(file, progress, colInfoSet, infoMap);
         }
       } else {
@@ -2186,7 +2188,7 @@ public class SGDataCreator
         return null;
       }
 
-      if (SGDataUtility.isSDArrayData(dataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
         Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
         if (multiple == null) {
           infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
@@ -2199,7 +2201,7 @@ public class SGDataCreator
       }
 
       SGNetCDFFile file = (SGNetCDFFile) dataSource;
-      if (SGDataUtility.isSXYTypeData(dataType)) {
+      if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
         Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
         if (multiple == null) {
           return null;
@@ -2282,7 +2284,7 @@ public class SGDataCreator
     List<SGDataColumnInfo> timeInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> indexInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> pickUpInfoList = new ArrayList<SGDataColumnInfo>();
-    if (!SGDataUtility.getSXYColumnType(
+    if (!SGDataMiscUtility.getSXYColumnType(
         colArray,
         xInfoList,
         yInfoList,
@@ -2529,11 +2531,11 @@ public class SGDataCreator
     for (int ii = 0; ii < colInfo.length; ii++) {
       SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) colInfo[ii];
       String cType = mdInfo.getColumnType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, cType)) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_VALUE, cType)) {
         xInfo = mdInfo;
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_VALUE, cType)) {
         yInfo = mdInfo;
-      } else if (SGDataUtility.isEqualColumnType(Z_VALUE, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Z_VALUE, cType)) {
         zInfo = mdInfo;
       } else if ("".equals(cType)) {
         continue;
@@ -2596,7 +2598,7 @@ public class SGDataCreator
     List<SGDataColumnInfo> timeInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> indexInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> pickUpInfoList = new ArrayList<SGDataColumnInfo>();
-    if (!SGDataUtility.getSXYColumnType(
+    if (!SGDataMiscUtility.getSXYColumnType(
         cols,
         xInfoList,
         yInfoList,
@@ -2769,8 +2771,8 @@ public class SGDataCreator
     progress.setProgressMessage(PROGRESS_MESSAGE_CREATE_DATA);
 
     // get column indices
-    final String type1 = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
-    final String type2 = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
+    final String type1 = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
+    final String type2 = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
     SGMDArrayDataColumnInfo xInfo = null;
     SGMDArrayDataColumnInfo yInfo = null;
     SGMDArrayDataColumnInfo firstInfo = null;
@@ -2778,13 +2780,13 @@ public class SGDataCreator
     for (int ii = 0; ii < colInfo.length; ii++) {
       SGMDArrayDataColumnInfo col = (SGMDArrayDataColumnInfo) colInfo[ii];
       String cType = col.getColumnType();
-      if (SGDataUtility.isEqualColumnType(X_COORDINATE, cType)) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_COORDINATE, cType)) {
         xInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(Y_COORDINATE, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_COORDINATE, cType)) {
         yInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(type1, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(type1, cType)) {
         firstInfo = col;
-      } else if (SGDataUtility.isEqualColumnType(type2, cType)) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(type2, cType)) {
         secondInfo = col;
       } else if ("".equals(cType)) {
         continue;

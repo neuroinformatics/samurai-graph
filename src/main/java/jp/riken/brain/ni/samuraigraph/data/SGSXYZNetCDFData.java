@@ -191,29 +191,29 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     for (int ii = 0; ii < columns.length; ii++) {
       SGNetCDFVariable var = varList.get(ii);
       String valueType = var.getValueType();
-      if (SGDataUtility.isEqualColumnType(X_VALUE, columns[ii])) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_VALUE, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         xVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_VALUE, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         yVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(Z_VALUE, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Z_VALUE, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         zVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(ANIMATION_FRAME, columns[ii])
-          || SGDataUtility.isEqualColumnType(TIME, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(ANIMATION_FRAME, columns[ii])
+          || SGDataDataTypeUtility.isEqualColumnType(TIME, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         timeVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(INDEX, columns[ii])
-          || SGDataUtility.isEqualColumnType(SERIAL_NUMBERS, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(INDEX, columns[ii])
+          || SGDataDataTypeUtility.isEqualColumnType(SERIAL_NUMBERS, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
@@ -455,8 +455,8 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    */
   @Override
   public double[] getXValueArray(final boolean all) {
-    double[] values = SGDataUtility.getXValueArray(this, all);
-    return SGDataUtility.updateXValueArray(this, all, values);
+    double[] values = SGDataViewerUtility.getXValueArray(this, all);
+    return SGDataViewerUtility.updateXValueArray(this, all, values);
   }
 
   @Override
@@ -483,8 +483,8 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    */
   @Override
   public double[] getYValueArray(final boolean all) {
-    double[] values = SGDataUtility.getYValueArray(this, all);
-    return SGDataUtility.updateYValueArray(this, all, values);
+    double[] values = SGDataViewerUtility.getYValueArray(this, all);
+    return SGDataViewerUtility.updateYValueArray(this, all, values);
   }
 
   @Override
@@ -511,7 +511,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    */
   @Override
   public double[] getZValueArray(final boolean all) {
-    return SGDataUtility.getZValueArray(this, all);
+    return SGDataViewerUtility.getZValueArray(this, all);
   }
 
   @Override
@@ -547,7 +547,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getZValueBlockList() {
-    return SGDataUtility.getZValueBlockList(this, false, true, true);
+    return SGDataViewerUtility.getZValueBlockList(this, false, true, true);
   }
 
   @Override
@@ -577,7 +577,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    * @return the bounds of x-values
    */
   public SGValueRange getBoundsX() {
-    return SGDataUtility.getBoundsX(this);
+    return SGDataRangeUtility.getBoundsX(this);
   }
 
   /**
@@ -586,7 +586,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    * @return the bounds of y-values
    */
   public SGValueRange getBoundsY() {
-    return SGDataUtility.getBoundsY(this);
+    return SGDataRangeUtility.getBoundsY(this);
   }
 
   /**
@@ -595,7 +595,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    * @return the bounds of z-values
    */
   public SGValueRange getBoundsZ() {
-    return SGDataUtility.getBoundsZ(this);
+    return SGDataRangeUtility.getBoundsZ(this);
   }
 
   /**
@@ -656,7 +656,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
       // set edited values
       if (edit) {
         for (SGDataValueHistory dataValue : this.mEditedDataValueList) {
-          SGDataUtility.setEditedValue(this, xValues, yValues, zValues, all, dataValue);
+          SGDataViewerUtility.setEditedValue(this, xValues, yValues, zValues, all, dataValue);
         }
       }
 
@@ -669,7 +669,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
       // set edited values
       if (edit) {
         for (SGDataValueHistory dataValue : this.mEditedDataValueList) {
-          SGDataUtility.setEditedValue(this, xValues, yValues, zGridValues, all, dataValue);
+          SGDataViewerUtility.setEditedValue(this, xValues, yValues, zGridValues, all, dataValue);
         }
       }
 
@@ -801,7 +801,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               yName,
               policy);
-      String zDimString = SGDataUtility.getDimensionString(new String[] {xName, yName});
+      String zDimString = SGDataTextUtility.getDimensionString(new String[] {xName, yName});
       Variable.Builder zVar =
           this.addVariable(
               builder,
@@ -830,7 +830,8 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
         List<Integer> xIndexList = new ArrayList<Integer>();
         List<Integer> yIndexList = new ArrayList<Integer>();
         this.getIndexList(blocks, xIndexList, yIndexList);
-        double[][] values = SGDataUtility.getTwoDimensionalValues(blocks, xIndexList, yIndexList);
+        double[][] values =
+            SGDataBufferUtility.getTwoDimensionalValues(blocks, xIndexList, yIndexList);
         values = SGUtility.transpose(values);
         Array array = Array.factory(zDataType, new int[] {xLen, yLen});
         this.setArray(array, values);
@@ -880,7 +881,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsX() {
-    return SGDataUtility.getAllAnimationFrameBoundsX(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsX(this);
   }
 
   /**
@@ -890,7 +891,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsY() {
-    return SGDataUtility.getAllAnimationFrameBoundsY(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsY(this);
   }
 
   /**
@@ -900,7 +901,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsZ() {
-    return SGDataUtility.getAllAnimationFrameBoundsZ(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsZ(this);
   }
 
   /**
@@ -925,12 +926,12 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    */
   @Override
   public String getPreferredDataViewColumnType() {
-    return SGDataUtility.getPreferredDataViewColumnType(this);
+    return SGDataViewerUtility.getPreferredDataViewColumnType(this);
   }
 
   @Override
   public Double getDataViewerValue(String columnType, final int row, final int col) {
-    return SGDataUtility.getDataViewerValue(this, columnType, row, col);
+    return SGDataViewerUtility.getDataViewerValue(this, columnType, row, col);
   }
 
   @Override
@@ -1087,7 +1088,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
   public void setDataViewerValue(
       final String columnType, final int row, final int col, final Object value) {
     SGDataValueHistory editedValue =
-        SGDataUtility.setDataViewerValue(this, columnType, row, col, value);
+        SGDataViewerUtility.setDataViewerValue(this, columnType, row, col, value);
     if (editedValue != null) {
       this.mEditedDataValueList.add(editedValue);
     }
@@ -1140,7 +1141,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
 
   @Override
   public void setDataValue(SGDataValueHistory value) {
-    SGDataUtility.setDataViewerValue(
+    SGDataViewerUtility.setDataViewerValue(
         this, value.getColumnType(), value.getRowIndex(), value.getColumnIndex(), value.getValue());
   }
 
@@ -1159,12 +1160,12 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
 
   @Override
   public SGDataValue getDataValue(final int index) {
-    return SGDataUtility.getDataValue(this, index);
+    return SGDataViewerUtility.getDataValue(this, index);
   }
 
   @Override
   public SGDataValue getDataValue(final int xIndex, final int yIndex) {
-    return SGDataUtility.getDataValue(this, xIndex, yIndex);
+    return SGDataViewerUtility.getDataValue(this, xIndex, yIndex);
   }
 
   @Override
@@ -1185,7 +1186,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
   @Override
   protected boolean matches(
       final int col, final int row, String columnType, SGDataValueHistory value, final double d) {
-    return SGDataUtility.matches(col, row, columnType, value, d);
+    return SGDataViewerUtility.matches(col, row, columnType, value, d);
   }
 
   @Override
@@ -1216,6 +1217,6 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getZValueBlockList(
       final boolean all, final boolean useCache, final boolean removeInvalidValues) {
-    return SGDataUtility.getZValueBlockList(this, all, useCache, removeInvalidValues);
+    return SGDataViewerUtility.getZValueBlockList(this, all, useCache, removeInvalidValues);
   }
 }

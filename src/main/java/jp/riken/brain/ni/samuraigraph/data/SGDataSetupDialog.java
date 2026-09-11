@@ -112,7 +112,7 @@ public abstract class SGDataSetupDialog extends SGDataDialog {
   }
 
   protected void setupTitle(String dataType) {
-    String title = SGDataUtility.createTitleString("Set up the Data ", dataType);
+    String title = SGDataTextUtility.createTitleString("Set up the Data ", dataType);
     this.setTitle(title);
   }
 }

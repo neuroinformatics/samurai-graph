@@ -230,8 +230,8 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    */
   public String[] getCurrentColumnType() {
     final boolean polar = this.isPolar();
-    final String com1 = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String com2 = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String com1 = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String com2 = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     List<SGNetCDFVariable> varList = this.getNetcdfFile().getVariables();
     final int varNum = varList.size();
     String[] array = new String[varNum];
@@ -268,8 +268,8 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    */
   public boolean setColumnType(String[] columns) {
     final boolean polar = this.isPolar();
-    final String com1 = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String com2 = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String com1 = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String com2 = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
 
     List<SGNetCDFVariable> xVarList = new ArrayList<SGNetCDFVariable>();
     List<SGNetCDFVariable> yVarList = new ArrayList<SGNetCDFVariable>();
@@ -284,34 +284,34 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     for (int ii = 0; ii < columns.length; ii++) {
       SGNetCDFVariable var = varList.get(ii);
       String valueType = var.getValueType();
-      if (SGDataUtility.isEqualColumnType(X_COORDINATE, columns[ii])) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_COORDINATE, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         xVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(Y_COORDINATE, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_COORDINATE, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         yVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(com1, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(com1, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         fVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(com2, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(com2, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         sVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(ANIMATION_FRAME, columns[ii])
-          || SGDataUtility.isEqualColumnType(TIME, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(ANIMATION_FRAME, columns[ii])
+          || SGDataDataTypeUtility.isEqualColumnType(TIME, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
         timeVarList.add(var);
-      } else if (SGDataUtility.isEqualColumnType(INDEX, columns[ii])
-          || SGDataUtility.isEqualColumnType(SERIAL_NUMBERS, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(INDEX, columns[ii])
+          || SGDataDataTypeUtility.isEqualColumnType(SERIAL_NUMBERS, columns[ii])) {
         if (!VALUE_TYPE_NUMBER.equals(valueType)) {
           return false;
         }
@@ -466,7 +466,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    */
   @Override
   public double[] getFirstComponentValueArray(final boolean all) {
-    return SGDataUtility.getFirstComponentValueArray(this, all);
+    return SGDataViewerUtility.getFirstComponentValueArray(this, all);
   }
 
   @Override
@@ -502,7 +502,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    */
   @Override
   public double[] getSecondComponentValueArray(final boolean all) {
-    return SGDataUtility.getSecondComponentValueArray(this, all);
+    return SGDataViewerUtility.getSecondComponentValueArray(this, all);
   }
 
   @Override
@@ -558,8 +558,8 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    */
   @Override
   public double[] getXValueArray(final boolean all) {
-    double[] values = SGDataUtility.getXValueArray(this, all);
-    return SGDataUtility.updateXValueArray(this, all, values);
+    double[] values = SGDataViewerUtility.getXValueArray(this, all);
+    return SGDataViewerUtility.updateXValueArray(this, all, values);
   }
 
   @Override
@@ -586,8 +586,8 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    */
   @Override
   public double[] getYValueArray(final boolean all) {
-    double[] values = SGDataUtility.getYValueArray(this, all);
-    return SGDataUtility.updateYValueArray(this, all, values);
+    double[] values = SGDataViewerUtility.getYValueArray(this, all);
+    return SGDataViewerUtility.updateYValueArray(this, all, values);
   }
 
   @Override
@@ -681,7 +681,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    * @return the bounds of x-values
    */
   public SGValueRange getBoundsX() {
-    return SGDataUtility.getBoundsX(this);
+    return SGDataRangeUtility.getBoundsX(this);
   }
 
   /**
@@ -690,7 +690,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    * @return the bounds of y-values
    */
   public SGValueRange getBoundsY() {
-    return SGDataUtility.getBoundsY(this);
+    return SGDataRangeUtility.getBoundsY(this);
   }
 
   /** A class of vector XY NetCDF data properties. */
@@ -787,7 +787,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getFirstComponentValueBlockList() {
-    return SGDataUtility.getFirstComponentValueBlockList(this, false, true, true);
+    return SGDataViewerUtility.getFirstComponentValueBlockList(this, false, true, true);
   }
 
   @Override
@@ -808,7 +808,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getSecondComponentValueBlockList() {
-    return SGDataUtility.getSecondComponentValueBlockList(this, false, true, true);
+    return SGDataViewerUtility.getSecondComponentValueBlockList(this, false, true, true);
   }
 
   @Override
@@ -845,7 +845,8 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
       // set edited values
       if (edit) {
         for (SGDataValueHistory dataValue : this.mEditedDataValueList) {
-          SGDataUtility.setEditedValue(this, xValues, yValues, fValues, sValues, all, dataValue);
+          SGDataViewerUtility.setEditedValue(
+              this, xValues, yValues, fValues, sValues, all, dataValue);
         }
       }
 
@@ -862,7 +863,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
       // set edited values
       if (edit) {
         for (SGDataValueHistory dataValue : this.mEditedDataValueList) {
-          SGDataUtility.setEditedValue(
+          SGDataViewerUtility.setEditedValue(
               this, xValues, yValues, fGridValues, sGridValues, all, dataValue);
         }
       }
@@ -1012,7 +1013,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
               SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
               yName,
               policy);
-      String dimString = SGDataUtility.getDimensionString(new String[] {xName, yName});
+      String dimString = SGDataTextUtility.getDimensionString(new String[] {xName, yName});
       Variable.Builder fVar =
           this.addVariable(
               builder,
@@ -1051,12 +1052,14 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
         List<Integer> xIndexList = new ArrayList<Integer>();
         List<Integer> yIndexList = new ArrayList<Integer>();
         this.getIndexList(fBlocks, xIndexList, yIndexList);
-        double[][] fValues = SGDataUtility.getTwoDimensionalValues(fBlocks, xIndexList, yIndexList);
+        double[][] fValues =
+            SGDataBufferUtility.getTwoDimensionalValues(fBlocks, xIndexList, yIndexList);
         fValues = SGUtility.transpose(fValues);
         Array fArray = Array.factory(fDataType, new int[] {xLen, yLen});
         this.setArray(fArray, fValues);
         writer.write(fName, fArray);
-        double[][] sValues = SGDataUtility.getTwoDimensionalValues(sBlocks, xIndexList, yIndexList);
+        double[][] sValues =
+            SGDataBufferUtility.getTwoDimensionalValues(sBlocks, xIndexList, yIndexList);
         sValues = SGUtility.transpose(sValues);
         Array sArray = Array.factory(sDataType, new int[] {xLen, yLen});
         this.setArray(sArray, sValues);
@@ -1084,11 +1087,11 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
 
     String strF = this.mFirstComponentVariable.getName();
     varList.add(strF);
-    columnTypeList.add(SGDataUtility.getVXYFirstComponentColumnType(polar));
+    columnTypeList.add(SGDataStrideUtility.getVXYFirstComponentColumnType(polar));
 
     String strS = this.mSecondComponentVariable.getName();
     varList.add(strS);
-    columnTypeList.add(SGDataUtility.getVXYSecondComponentColumnType(polar));
+    columnTypeList.add(SGDataStrideUtility.getVXYSecondComponentColumnType(polar));
   }
 
   /**
@@ -1113,7 +1116,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsX() {
-    return SGDataUtility.getAllAnimationFrameBoundsX(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsX(this);
   }
 
   /**
@@ -1123,7 +1126,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsY() {
-    return SGDataUtility.getAllAnimationFrameBoundsY(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsY(this);
   }
 
   /**
@@ -1137,8 +1140,8 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     list.add(SGIDataColumnTypeConstants.X_COORDINATE);
     list.add(SGIDataColumnTypeConstants.Y_COORDINATE);
     final boolean polar = this.isPolar();
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     list.add(first);
     list.add(second);
     String[] ret = list.toArray(new String[list.size()]);
@@ -1152,12 +1155,12 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    */
   @Override
   public String getPreferredDataViewColumnType() {
-    return SGDataUtility.getPreferredDataViewColumnType(this);
+    return SGDataViewerUtility.getPreferredDataViewColumnType(this);
   }
 
   @Override
   public Double getDataViewerValue(String columnType, int row, int col) {
-    return SGDataUtility.getDataViewerValue(this, columnType, row, col);
+    return SGDataViewerUtility.getDataViewerValue(this, columnType, row, col);
   }
 
   @Override
@@ -1167,8 +1170,8 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
       ret = 1;
     } else {
       final boolean polar = this.isPolar();
-      final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-      final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+      final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+      final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
       if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)
           || SGIDataColumnTypeConstants.Y_COORDINATE.equals(columnType)) {
         ret = 1;
@@ -1194,8 +1197,8 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
       }
     } else {
       final boolean polar = this.isPolar();
-      final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-      final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+      final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+      final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
       if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
         if (all) {
           ret = this.mXVariable.getDimension(0).getLength();
@@ -1277,8 +1280,8 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
   public SGIntegerSeriesSet getDataViewerColStride(String columnType) {
     SGIntegerSeriesSet ret = null;
     final boolean polar = this.isPolar();
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     if (!this.isIndexAvailable() && (first.equals(columnType) || second.equals(columnType))) {
       if (this.isStrideAvailable()) {
         ret = this.mXStride;
@@ -1325,7 +1328,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
   public void setDataViewerValue(
       final String columnType, final int row, final int col, final Object value) {
     SGDataValueHistory editedValue =
-        SGDataUtility.setDataViewerValue(this, columnType, row, col, value);
+        SGDataViewerUtility.setDataViewerValue(this, columnType, row, col, value);
     if (editedValue != null) {
       this.mEditedDataValueList.add(editedValue);
     }
@@ -1387,7 +1390,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
 
   @Override
   public void setDataValue(SGDataValueHistory value) {
-    SGDataUtility.setDataViewerValue(
+    SGDataViewerUtility.setDataViewerValue(
         this, value.getColumnType(), value.getRowIndex(), value.getColumnIndex(), value.getValue());
   }
 
@@ -1408,12 +1411,12 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
 
   @Override
   public SGDataValue getDataValue(final int index) {
-    return SGDataUtility.getDataValue(this, index);
+    return SGDataViewerUtility.getDataValue(this, index);
   }
 
   @Override
   public SGDataValue getDataValue(final int xIndex, final int yIndex) {
-    return SGDataUtility.getDataValue(this, xIndex, yIndex);
+    return SGDataViewerUtility.getDataValue(this, xIndex, yIndex);
   }
 
   @Override
@@ -1439,15 +1442,15 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
   @Override
   protected boolean matches(
       final int col, final int row, String columnType, SGDataValueHistory value, final double d) {
-    return SGDataUtility.matches(col, row, columnType, value, d);
+    return SGDataViewerUtility.matches(col, row, columnType, value, d);
   }
 
   @Override
   protected Array setEditedValues(
       NetcdfFormatWriter writer, String varName, Array array, final boolean all) {
     final boolean polar = this.isPolar();
-    String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     return this.setEditedValues(
         writer, varName, array, X_COORDINATE, Y_COORDINATE, new String[] {first, second}, all);
   }
@@ -1460,8 +1463,8 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
       ret = super.getDataViewerCell(cell, columnType, bStride);
     } else {
       final boolean polar = this.isPolar();
-      String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-      String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+      String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+      String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
       if (first.equals(columnType) || second.equals(columnType)) {
         ret = super.getDataViewerCell(cell, columnType, bStride);
       } else if (X_COORDINATE.equals(columnType)) {
@@ -1476,12 +1479,14 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getFirstComponentValueBlockList(
       final boolean all, final boolean useCache, final boolean removeInvalidValues) {
-    return SGDataUtility.getFirstComponentValueBlockList(this, all, useCache, removeInvalidValues);
+    return SGDataViewerUtility.getFirstComponentValueBlockList(
+        this, all, useCache, removeInvalidValues);
   }
 
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getSecondComponentValueBlockList(
       final boolean all, final boolean useCache, final boolean removeInvalidValues) {
-    return SGDataUtility.getSecondComponentValueBlockList(this, all, useCache, removeInvalidValues);
+    return SGDataViewerUtility.getSecondComponentValueBlockList(
+        this, all, useCache, removeInvalidValues);
   }
 }

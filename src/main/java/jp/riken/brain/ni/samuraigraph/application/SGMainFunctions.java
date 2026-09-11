@@ -89,9 +89,11 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumn;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDuplicationDialog;
+import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGDefaultColumnTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDefaultColumnTypeUtility.DefaultMDColumnTypeResult;
@@ -854,7 +856,7 @@ class SGMainFunctions
         throw new IllegalArgumentException("Invalid type for data file: " + fileType);
     }
 
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       this.mPlotTypeSelectionWizardDialog.setDataName(dataSetupDialog.getDataName());
 
       dataSetupDialog.setNext(this.mPlotTypeSelectionWizardDialog);
@@ -875,7 +877,7 @@ class SGMainFunctions
         }
       }
       boolean enabled = false;
-      if (SGDataUtility.isNetCDFData(dataType)) {
+      if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
         SGNetCDFDataSetupWizardDialog ncDialog = (SGNetCDFDataSetupWizardDialog) dataSetupDialog;
         SGNetCDFDataSetupPanel ncPanel = (SGNetCDFDataSetupPanel) ncDialog.getDataSetupPanel();
         SGIntegerSeriesSet pickUpIndices = ncPanel.getSXYPickUpIndices();
@@ -883,7 +885,7 @@ class SGMainFunctions
           final int len = pickUpIndices.getLength();
           enabled = len > 1;
         }
-      } else if (SGDataUtility.isMDArrayData(dataType)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
         SGMDArrayDataSetupWizardDialog mdDialog = (SGMDArrayDataSetupWizardDialog) dataSetupDialog;
         SGMDArrayDataSetupPanel mdPanel = (SGMDArrayDataSetupPanel) mdDialog.getDataSetupPanel();
         SGIntegerSeriesSet pickUpIndices = mdPanel.getSXYPickUpIndices();
@@ -1031,21 +1033,21 @@ class SGMainFunctions
 
         // create a dialog and set data
         SGDataDuplicationDialog dg = null;
-        if (SGDataUtility.isSDArrayData(data)) {
+        if (SGDataDataTypeUtility.isSDArrayData(data)) {
           SGSDArrayData sData = (SGSDArrayData) data;
           SGSDArrayDataDuplicationDialog adg = new SGSDArrayDataDuplicationDialog(wnd, true);
           if (adg.setData(nameNew, sData, colInfoSet, infoMap) == false) {
             return false;
           }
           dg = adg;
-        } else if (SGDataUtility.isNetCDFData(data)) {
+        } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
           SGNetCDFData nData = (SGNetCDFData) data;
           SGNetCDFDataDuplicationDialog ndg = new SGNetCDFDataDuplicationDialog(wnd, true);
           if (ndg.setData(nameNew, nData, colInfoSet, infoMap) == false) {
             return false;
           }
           dg = ndg;
-        } else if (SGDataUtility.isMDArrayData(data)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
           SGMDArrayData mdData = (SGMDArrayData) data;
           SGMDArrayDataDuplicationDialog mdg = new SGMDArrayDataDuplicationDialog(wnd, true);
           if (mdg.setData(nameNew, mdData, colInfoSet, infoMap) == false) {
@@ -1069,7 +1071,7 @@ class SGMainFunctions
           SGDataColumnInfo[] result = dg.getDataColumnTypes();
 
           dCopy = (SGData) data.copy();
-          if (SGDataUtility.isArrayData(dCopy)) {
+          if (SGDataDataTypeUtility.isArrayData(dCopy)) {
             SGArrayData adCopy = (SGArrayData) dCopy;
 
             // copy the data and set columns
@@ -1414,13 +1416,13 @@ class SGMainFunctions
   private String getDataTypeButtonName(String dataType) {
     // selects the button
     String btnName = null;
-    if (SGDataUtility.isSXYTypeSingleData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeSingleData(dataType)) {
       btnName = SGDataTypeWizardDialog.SINGLE_SXY;
-    } else if (SGDataUtility.isSXYTypeMultipleData(dataType)) {
+    } else if (SGDataDataTypeUtility.isSXYTypeMultipleData(dataType)) {
       btnName = SGDataTypeWizardDialog.MULTIPLE_SXY;
-    } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       btnName = SGDataTypeWizardDialog.PSEUDOCOLOR_MAP;
-    } else if (SGDataUtility.isVXYTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       SGDataBuffer buffer = this.mVirtualMDArrayData.buffer;
       boolean polar;
       if (buffer instanceof SGVXYDataBuffer) {
@@ -1629,7 +1631,7 @@ class SGMainFunctions
         // calculate the stride
         SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
         Map<String, SGIntegerSeriesSet> strideMap =
-            SGDataUtility.calcSDArrayDefaultStride(colArray, infoMap);
+            SGDataStrideUtility.calcSDArrayDefaultStride(colArray, infoMap);
         strideMap.put(
             SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
             strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE));
@@ -1715,7 +1717,7 @@ class SGMainFunctions
       // calculate the stride
       SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
       Map<String, SGIntegerSeriesSet> strideMap =
-          SGDataUtility.calcNetCDFDefaultStride(colArray, infoMap);
+          SGDataStrideUtility.calcNetCDFDefaultStride(colArray, infoMap);
       strideMap.put(
           SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE));
@@ -1893,7 +1895,7 @@ class SGMainFunctions
       // calculate the stride
       SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
       Map<String, SGIntegerSeriesSet> strideMap =
-          SGDataUtility.calcMDArrayDefaultStride(colArray, infoMap);
+          SGDataStrideUtility.calcMDArrayDefaultStride(colArray, infoMap);
       strideMap.put(
           SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE));
@@ -2723,7 +2725,7 @@ class SGMainFunctions
   SGDataColumnInfoSet getNetCDFDefaultDataColumnInfo(
       SGNetCDFFile ncFile, String dataType, Map<String, Object> infoMap) {
     List<SGNetCDFVariable> varList = ncFile.getVariables();
-    SGNetCDFDataColumnInfo[] colArray = SGDataUtility.getNetCDFDataColumnInfo(varList, infoMap);
+    SGNetCDFDataColumnInfo[] colArray = SGDataFileUtility.getNetCDFDataColumnInfo(varList, infoMap);
     return this.createColumnInfoSet(dataType, infoMap, colArray);
   }
 
@@ -2731,7 +2733,7 @@ class SGMainFunctions
       SGMDArrayFile mdFile, String dataType, Map<String, Object> infoMap) {
     SGMDArrayVariable[] vars = mdFile.getVariables();
     SGMDArrayDataColumnInfo[] colArray =
-        SGDataUtility.getMDArrayDataColumnInfo(mdFile, vars, infoMap);
+        SGDataFileUtility.getMDArrayDataColumnInfo(mdFile, vars, infoMap);
     if (colArray == null) {
       return null;
     }
@@ -2751,25 +2753,27 @@ class SGMainFunctions
     Map<String, Object> infoMap = new HashMap<String, Object>();
     infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
 
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       final Boolean multiple = dg.isMultipleSelected();
       infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, multiple);
-      if (SGDataUtility.isNetCDFData(dataType) || SGDataUtility.isMDArrayData(dataType)) {
+      if (SGDataDataTypeUtility.isNetCDFData(dataType)
+          || SGDataDataTypeUtility.isMDArrayData(dataType)) {
         final boolean multipleVariable = true;
         infoMap.put(
             SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE,
             Boolean.valueOf(multipleVariable));
-      } else if (SGDataUtility.isSDArrayData(dataType) && SGDataUtility.isSXYTypeData(dataType)) {
+      } else if (SGDataDataTypeUtility.isSDArrayData(dataType)
+          && SGDataDataTypeUtility.isSXYTypeData(dataType)) {
         // add the sampling rate to the infoList
         Double d = dg.getSamplingRate();
         if (d != null) {
           putSamplingRate(infoMap, d);
         }
       }
-    } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       //        	// set true by default
       //        	infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, true);
-    } else if (SGDataUtility.isVXYTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       boolean b = dg.isPolarSelected();
       infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.valueOf(b));
 
@@ -2834,8 +2838,8 @@ class SGMainFunctions
     Map<String, Object> infoMap = new HashMap<String, Object>();
     infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
 
-    if (SGDataUtility.isSXYTypeData(dataType)) {
-      final boolean multiple = SGDataUtility.isMultipleData(dataType);
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
+      final boolean multiple = SGDataDataTypeUtility.isMultipleData(dataType);
       infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.valueOf(multiple));
 
       // picked up dimension
@@ -2866,10 +2870,10 @@ class SGMainFunctions
         }
       }
 
-      if (SGDataUtility.isSDArrayData(dataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
         infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
-      } else if (SGDataUtility.isNetCDFData(dataType)) {
-        if (SGDataUtility.isNetCDFDimensionData(dataType)) {
+      } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
+        if (SGDataDataTypeUtility.isNetCDFDimensionData(dataType)) {
           infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
         } else {
           infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
@@ -2879,7 +2883,7 @@ class SGMainFunctions
           infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
         }
 
-      } else if (SGDataUtility.isMDArrayData(dataType)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
 
         String dimensionIndexMapStr =
             el.getAttribute(SGIDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION);
@@ -2910,7 +2914,7 @@ class SGMainFunctions
         infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVar);
       }
 
-    } else if (SGDataUtility.isVXYTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       str = el.getAttribute(SGIFigureElementGraph.KEY_POLAR);
       if (str.length() == 0) {
         return null;
@@ -2958,9 +2962,9 @@ class SGMainFunctions
     // add the stride for each data type
     Map<String, Integer> aliasMap = new HashMap<String, Integer>();
     aliasMap.put(SGIntegerSeries.ARRAY_INDEX_END, null);
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       String strideKey =
-          SGDataUtility.isSDArrayData(dataType)
+          SGDataDataTypeUtility.isSDArrayData(dataType)
               ? SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE
               : SGIDataInformationKeyConstants.KEY_SXY_STRIDE;
       updateStrideInfo(
@@ -2988,7 +2992,7 @@ class SGMainFunctions
           SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
           infoMap,
           aliasMap);
-    } else if (SGDataUtility.isVXYTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       // x-direction
       updateStrideInfo(
           el,
@@ -3025,7 +3029,7 @@ class SGMainFunctions
           SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
           infoMap,
           aliasMap);
-    } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       // x-direction
       updateStrideInfo(
           el,
@@ -3105,7 +3109,7 @@ class SGMainFunctions
     Map<String, Object> infoMap = new HashMap<String, Object>();
     infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
 
-    if (SGDataUtility.isVXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       String str = null;
       Iterator<String> itr = map.getKeyIterator();
       while (itr.hasNext()) {
@@ -3125,10 +3129,10 @@ class SGMainFunctions
       infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, b);
     }
 
-    final boolean multiple = SGDataUtility.isMultipleData(dataType);
+    final boolean multiple = SGDataDataTypeUtility.isMultipleData(dataType);
     infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.valueOf(multiple));
-    if (SGDataUtility.isNetCDFData(dataType)) {
-      if (SGDataUtility.isNetCDFDimensionData(dataType)) {
+    if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
+      if (SGDataDataTypeUtility.isNetCDFDimensionData(dataType)) {
         // only for backward compatibility
         infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
         Integer start =
@@ -3155,7 +3159,7 @@ class SGMainFunctions
       } else {
         infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
       }
-    } else if (SGDataUtility.isMDArrayData(dataType)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
       infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
     }
 
@@ -4135,35 +4139,35 @@ class SGMainFunctions
         return ic;
       }
 
-      if (SGDataUtility.isSDArrayData(dataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
         // replaces the data type
         // because sampling SXY-data and date SXY-date is to be eliminated at some stage.
         dataType = SGApplicationUtility.getArrayDataType(dataType);
       }
 
       Class<?> dataClass = null;
-      if (SGDataUtility.isSDArrayData(dataType)) {
-        if (SGDataUtility.isSXYTypeData(dataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
+        if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
           dataClass = SGSXYSDArrayMultipleData.class;
-        } else if (SGDataUtility.isVXYTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
           dataClass = SGVXYSDArrayData.class;
-        } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
           dataClass = SGSXYZSDArrayData.class;
         }
-      } else if (SGDataUtility.isNetCDFData(dataType)) {
-        if (SGDataUtility.isSXYTypeData(dataType)) {
+      } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
+        if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
           dataClass = SGSXYNetCDFMultipleData.class;
-        } else if (SGDataUtility.isVXYTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
           dataClass = SGVXYNetCDFData.class;
-        } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
           dataClass = SGSXYZNetCDFData.class;
         }
-      } else if (SGDataUtility.isMDArrayData(dataType)) {
-        if (SGDataUtility.isSXYTypeData(dataType)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
+        if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
           dataClass = SGSXYMDArrayMultipleData.class;
-        } else if (SGDataUtility.isVXYTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
           dataClass = SGVXYMDArrayData.class;
-        } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
           dataClass = SGSXYZMDArrayData.class;
         }
       }
@@ -4180,7 +4184,7 @@ class SGMainFunctions
       // set the class type for backward compatibility between 1.0.7
       if (SGIFigureTypeConstants.FIGURE_TYPE_XY.equals(figure.getClassType())) {
         String type = null;
-        if (SGDataUtility.isVXYTypeData(dataType)) {
+        if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
           type = SGIFigureTypeConstants.FIGURE_TYPE_VXY;
         } else {
           type = SGIFigureTypeConstants.FIGURE_TYPE_SXY;
@@ -4206,12 +4210,12 @@ class SGMainFunctions
           // get the data column information
           SGDataColumnInfoSet colInfoSet = pfData.getColumnInfoSet();
           if (colInfoSet == null) {
-            if (SGDataUtility.isSDArrayData(dataType)) {
+            if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
               // get default column information
               colInfoSet =
                   this.getSDArrayDefaultDataColumnInfo(
                       fileName, dataType, infoMap, true, versionNumber);
-            } else if (SGDataUtility.isNetCDFData(dataType)) {
+            } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
               NetcdfFile ncFile = null;
               try {
                 if (NetcdfFiles.canOpen(fileName) == false) {
@@ -4235,15 +4239,15 @@ class SGMainFunctions
               } catch (Exception e) {
                 return di;
               }
-            } else if (SGDataUtility.isMDArrayData(dataType)) {
+            } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
               SGMDArrayFile mdFile = null;
               IHDF5Reader hdf5Reader = null;
               MatFileReader matReader = null;
               try {
-                if (SGDataUtility.isHDF5FileData(dataType)) {
+                if (SGDataDataTypeUtility.isHDF5FileData(dataType)) {
                   hdf5Reader = SGApplicationUtility.openHDF5(fileName);
                   mdFile = new SGHDF5File(hdf5Reader);
-                } else if (SGDataUtility.isMATLABData(dataType)) {
+                } else if (SGDataDataTypeUtility.isMATLABData(dataType)) {
                   matReader = SGApplicationUtility.openMAT(fileName);
                   mdFile = new SGMATLABFile(fileName, matReader);
                 } else {
@@ -5249,15 +5253,15 @@ class SGMainFunctions
         String name = gElement.getDataName(data);
         this.mTransformedData = new TransformedData(data, name, f.getID());
         FILE_TYPE dataFileType;
-        if (SGDataUtility.isSDArrayData(data)) {
+        if (SGDataDataTypeUtility.isSDArrayData(data)) {
           dataFileType = FILE_TYPE.TXT_DATA;
-        } else if (SGDataUtility.isNetCDFData(data)) {
+        } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
           dataFileType = FILE_TYPE.NETCDF_DATA;
-        } else if (SGDataUtility.isHDF5Data(data)) {
+        } else if (SGDataDataTypeUtility.isHDF5Data(data)) {
           dataFileType = FILE_TYPE.HDF5_DATA;
-        } else if (SGDataUtility.isMATLABData(data)) {
+        } else if (SGDataDataTypeUtility.isMATLABData(data)) {
           dataFileType = FILE_TYPE.MATLAB_DATA;
-        } else if (SGDataUtility.isVirtualMDArrayData(data)) {
+        } else if (SGDataDataTypeUtility.isVirtualMDArrayData(data)) {
           dataFileType = FILE_TYPE.VIRTUAL_DATA;
         } else {
           throw new Error("Unsupported data type: " + data.getDataType());
@@ -5534,7 +5538,7 @@ class SGMainFunctions
     // for text data
     for (SGData data : dataList) {
       SGFigure figure = dataFigureMap.get(data);
-      if (SGDataUtility.isSDArrayData(data)) {
+      if (SGDataDataTypeUtility.isSDArrayData(data)) {
         String path = data.getPath();
         SGIFigureElementGraph gElement = figure.getGraphElement();
         SGDataColumnInfo[] cols = gElement.getDataColumnInfoArray(data);
@@ -5926,7 +5930,7 @@ class SGMainFunctions
     for (SGFigure figure : visibleFigureList) {
       List<SGData> dataList = figure.getFocusedDataList();
       for (SGData data : dataList) {
-        if (SGDataUtility.isNetCDFData(data)) {
+        if (SGDataDataTypeUtility.isNetCDFData(data)) {
           focusedDataList.add(data);
           dataFigureMap.put(data, figure);
         }

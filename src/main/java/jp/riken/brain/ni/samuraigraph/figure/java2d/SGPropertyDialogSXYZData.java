@@ -17,8 +17,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupDialog;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
@@ -410,7 +410,7 @@ public class SGPropertyDialogSXYZData extends SGDataDialog
     for (int ii = 0; ii < list.size(); ii++) {
       SGISXYZDataDialogObserver obs = (SGISXYZDataDialogObserver) list.get(ii);
       SGData data = obs.getData();
-      if (SGDataUtility.isSDArrayData(data)) {
+      if (SGDataDataTypeUtility.isSDArrayData(data)) {
         enabled = true;
       } else if (data instanceof SGIIndexData) {
         if (this.mDataInfoArray != null) {
@@ -455,7 +455,7 @@ public class SGPropertyDialogSXYZData extends SGDataDialog
       SGData data = l.getData();
 
       // sets the stride
-      if (SGDataUtility.isSDArrayData(data)) {
+      if (SGDataDataTypeUtility.isSDArrayData(data)) {
         SGIntegerSeriesSet stride =
             this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
         if (!l.setSDArrayStride(stride)) {
@@ -464,10 +464,10 @@ public class SGPropertyDialogSXYZData extends SGDataDialog
       }
       if (data instanceof SGIIndexData) {
         final boolean indexAvailable;
-        if (SGDataUtility.isNetCDFData(data)) {
+        if (SGDataDataTypeUtility.isNetCDFData(data)) {
           SGNetCDFDataSetupDialog dg = (SGNetCDFDataSetupDialog) this.mDataColumnSelectionDialog;
           indexAvailable = dg.isIndexAvailable();
-        } else if (SGDataUtility.isMDArrayData(data)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
           SGMDArrayDataSetupDialog dg = (SGMDArrayDataSetupDialog) this.mDataColumnSelectionDialog;
           indexAvailable = dg.isSXYZIndexAvailable();
         } else {
@@ -582,11 +582,11 @@ public class SGPropertyDialogSXYZData extends SGDataDialog
         SGISXYZDataDialogObserver obs =
             (SGISXYZDataDialogObserver) this.mPropertyDialogObserverList.get(0);
         SGData data = obs.getData();
-        if (SGDataUtility.isSDArrayData(data)) {
+        if (SGDataDataTypeUtility.isSDArrayData(data)) {
           SGSDArrayDataSetupDialog sdg = (SGSDArrayDataSetupDialog) dg;
           SGIntegerSeriesSet stride = sdg.getSXYZStride();
           this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, stride);
-        } else if (SGDataUtility.isNetCDFData(data)) {
+        } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
           SGNetCDFDataSetupDialog ndg = (SGNetCDFDataSetupDialog) dg;
           if (ndg.isIndexAvailable()) {
             SGIntegerSeriesSet stride = ndg.getSXYZIndexStride();
@@ -597,7 +597,7 @@ public class SGPropertyDialogSXYZData extends SGDataDialog
             this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X, xStride);
             this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y, yStride);
           }
-        } else if (SGDataUtility.isMDArrayData(data)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
           SGMDArrayDataSetupDialog mdg = (SGMDArrayDataSetupDialog) dg;
           if (mdg.isSXYZIndexAvailable()) {
             SGIntegerSeriesSet stride = mdg.getSXYZIndexStride();

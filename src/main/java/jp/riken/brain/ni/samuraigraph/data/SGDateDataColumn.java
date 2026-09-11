@@ -127,7 +127,7 @@ public class SGDateDataColumn extends SGDataColumn implements SGINumberDataColum
    */
   public double[] getNumberArray() {
     final SGDate[] dArray = this.getDateArray();
-    return SGDataUtility.getDateValueArray(dArray);
+    return SGDataBufferUtility.getDateValueArray(dArray);
   }
 
   /**

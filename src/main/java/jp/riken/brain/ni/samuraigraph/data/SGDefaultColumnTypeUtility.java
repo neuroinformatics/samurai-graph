@@ -101,7 +101,7 @@ public class SGDefaultColumnTypeUtility
 
     // returned value
     DefaultColumnTypeResult result;
-    if (SGDataUtility.isMDArrayData(dataType)) {
+    if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
       result = new DefaultMDColumnTypeResult(columns, succeeded);
     } else {
       result = new DefaultColumnTypeResult(columns, succeeded);
@@ -121,7 +121,7 @@ public class SGDefaultColumnTypeUtility
     final NamedNodeMap nodeMap = (NamedNodeMap) infoMap.get(SGIFigureElementGraph.KEY_NODE_MAP);
     final String groupName = (String) infoMap.get(SGIFigureElementGraph.KEY_GROUP_NAME);
 
-    if (SGDataUtility.isSDArrayData(dataType)) {
+    if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
       // single dimensional array data
       List<Integer> numberIndexList = new ArrayList<Integer>();
       List<Integer> textIndexList = new ArrayList<Integer>();
@@ -140,14 +140,14 @@ public class SGDefaultColumnTypeUtility
           samplingIndexList.add(Integer.valueOf(ii));
         }
       }
-      if (SGDataUtility.isSXYTypeData(dataType)
+      if (SGDataDataTypeUtility.isSXYTypeData(dataType)
           || SGDataTypeConstants.SXY_SAMPLING_DATA.equals(dataType)) {
         if (nodeMap != null) {
           if (!getForSXYSDArrayData(columnInfoList, infoMap, nodeMap, groupName, columns)) {
             succeeded = false;
           }
           if (succeeded) {
-            if (!SGDataUtility.checkDataColumns(dataType, columns, infoMap)) {
+            if (!SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap)) {
               succeeded = false;
             }
           }
@@ -165,13 +165,13 @@ public class SGDefaultColumnTypeUtility
             return false;
           }
         }
-      } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+      } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
         if (nodeMap != null) {
           if (!getForSXYZSDArrayData(columnInfoList, infoMap, nodeMap, groupName, columns)) {
             succeeded = false;
           }
           if (succeeded) {
-            if (!SGDataUtility.checkDataColumns(dataType, columns, infoMap)) {
+            if (!SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap)) {
               succeeded = false;
             }
           }
@@ -189,13 +189,13 @@ public class SGDefaultColumnTypeUtility
             return false;
           }
         }
-      } else if (SGDataUtility.isVXYTypeData(dataType)) {
+      } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
         if (nodeMap != null) {
           if (!getForVXYSDArrayData(columnInfoList, infoMap, nodeMap, groupName, columns)) {
             succeeded = false;
           }
           if (succeeded) {
-            if (!SGDataUtility.checkDataColumns(dataType, columns, infoMap)) {
+            if (!SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap)) {
               succeeded = false;
             }
           }
@@ -217,19 +217,19 @@ public class SGDefaultColumnTypeUtility
         throw new Error("Invalid data type: " + dataType);
       }
 
-    } else if (SGDataUtility.isNetCDFData(dataType)) {
+    } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
       // NetCDF data
       SGNetCDFFile ncFile =
           (SGNetCDFFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
       List<SGNetCDFVariable> varList = ncFile.getVariables();
       final int size = varList.size();
-      if (SGDataUtility.isSXYTypeData(dataType)) {
+      if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
         if (nodeMap != null) {
           if (!getForSXYNetCDFData(columnInfoList, infoMap, nodeMap, groupName, columns)) {
             succeeded = false;
           }
           if (succeeded) {
-            if (!SGDataUtility.checkDataColumns(dataType, columns, infoMap)) {
+            if (!SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap)) {
               succeeded = false;
             }
           }
@@ -239,13 +239,13 @@ public class SGDefaultColumnTypeUtility
             return false;
           }
         }
-      } else if (SGDataUtility.isVXYTypeData(dataType)) {
+      } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
         if (nodeMap != null) {
           if (!getForVXYNetCDFData(columnInfoList, infoMap, nodeMap, groupName, columns)) {
             succeeded = false;
           }
           if (succeeded) {
-            if (!SGDataUtility.checkDataColumns(dataType, columns, infoMap)) {
+            if (!SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap)) {
               succeeded = false;
             }
           }
@@ -255,13 +255,13 @@ public class SGDefaultColumnTypeUtility
             return false;
           }
         }
-      } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+      } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
         if (nodeMap != null) {
           if (!getForSXYZNetCDFData(columnInfoList, infoMap, nodeMap, groupName, columns)) {
             succeeded = false;
           }
           if (succeeded) {
-            if (!SGDataUtility.checkDataColumns(dataType, columns, infoMap)) {
+            if (!SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap)) {
               succeeded = false;
             }
           }
@@ -274,19 +274,19 @@ public class SGDefaultColumnTypeUtility
       } else {
         throw new Error("Invalid data type: " + dataType);
       }
-    } else if (SGDataUtility.isMDArrayData(dataType)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
       // multidimensional array data
       SGMDArrayFile mdFile =
           (SGMDArrayFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
       SGMDArrayVariable[] vars = mdFile.getVariables();
       final int size = vars.length;
-      if (SGDataUtility.isSXYTypeData(dataType)) {
+      if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
         if (nodeMap != null) {
           if (!getForSXYMDArrayData(columnInfoList, infoMap, nodeMap, groupName, columns)) {
             succeeded = false;
           }
           if (succeeded) {
-            if (!SGDataUtility.checkDataColumns(dataType, columns, infoMap)) {
+            if (!SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap)) {
               succeeded = false;
             }
           }
@@ -296,13 +296,13 @@ public class SGDefaultColumnTypeUtility
             return false;
           }
         }
-      } else if (SGDataUtility.isVXYTypeData(dataType)) {
+      } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
         if (nodeMap != null) {
           if (!getForVXYMDArrayData(columnInfoList, infoMap, nodeMap, groupName, columns)) {
             succeeded = false;
           }
           if (succeeded) {
-            if (!SGDataUtility.checkDataColumns(dataType, columns, infoMap)) {
+            if (!SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap)) {
               succeeded = false;
             }
           }
@@ -313,13 +313,13 @@ public class SGDefaultColumnTypeUtility
           }
         }
 
-      } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+      } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
         if (nodeMap != null) {
           if (!getForSXYZMDArrayData(columnInfoList, infoMap, nodeMap, groupName, columns)) {
             succeeded = false;
           }
           if (succeeded) {
-            if (!SGDataUtility.checkDataColumns(dataType, columns, infoMap)) {
+            if (!SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap)) {
               succeeded = false;
             }
           }
@@ -471,7 +471,7 @@ public class SGDefaultColumnTypeUtility
         columnTypes[num2.intValue()] = Y_VALUE;
 
         boolean[] isRepeatedTitle =
-            SGDataUtility.isEmptyOrRepeatedColumnTitle(
+            SGDataMiscUtility.isEmptyOrRepeatedColumnTitle(
                 columnInfoList.toArray(new SGDataColumnInfo[len]));
 
         // error bars
@@ -479,13 +479,13 @@ public class SGDefaultColumnTypeUtility
           Integer num3 = numberIndexList.get(yNumberArrayIndex + 1);
           Integer num4 = numberIndexList.get(yNumberArrayIndex + 2);
           columnTypes[num3.intValue()] =
-              SGDataUtility.appendColumnNoOrTitle(
+              SGDataColumnTitleUtility.appendColumnNoOrTitle(
                   LOWER_ERROR_VALUE,
                   yNumberColumnIndex,
                   isRepeatedTitle[yNumberColumnIndex],
                   columnInfoList.get(yNumberColumnIndex).getTitle());
           columnTypes[num4.intValue()] =
-              SGDataUtility.appendColumnNoOrTitle(
+              SGDataColumnTitleUtility.appendColumnNoOrTitle(
                   UPPER_ERROR_VALUE,
                   yNumberColumnIndex,
                   isRepeatedTitle[yNumberColumnIndex],
@@ -496,7 +496,7 @@ public class SGDefaultColumnTypeUtility
         if (textIndexList.size() > 0) {
           Integer tick = textIndexList.get(0);
           columnTypes[tick.intValue()] =
-              SGDataUtility.appendColumnNoOrTitle(
+              SGDataColumnTitleUtility.appendColumnNoOrTitle(
                   TICK_LABEL,
                   yNumberColumnIndex,
                   isRepeatedTitle[yNumberColumnIndex],
@@ -504,7 +504,7 @@ public class SGDefaultColumnTypeUtility
         } else if (dateIndexList.size() > 0 && !dateAssigned) {
           Integer date = dateIndexList.get(0);
           columnTypes[date.intValue()] =
-              SGDataUtility.appendColumnNoOrTitle(
+              SGDataColumnTitleUtility.appendColumnNoOrTitle(
                   TICK_LABEL,
                   yNumberColumnIndex,
                   isRepeatedTitle[yNumberColumnIndex],
@@ -647,12 +647,13 @@ public class SGDefaultColumnTypeUtility
         }
         if (leIndex == ueIndex) {
           columnTypes[leIndex] =
-              SGDataUtility.appendColumnNoOrTitle(LOWER_UPPER_ERROR_VALUE, ehIndex, b, title);
+              SGDataColumnTitleUtility.appendColumnNoOrTitle(
+                  LOWER_UPPER_ERROR_VALUE, ehIndex, b, title);
         } else {
           columnTypes[leIndex] =
-              SGDataUtility.appendColumnNoOrTitle(LOWER_ERROR_VALUE, ehIndex, b, title);
+              SGDataColumnTitleUtility.appendColumnNoOrTitle(LOWER_ERROR_VALUE, ehIndex, b, title);
           columnTypes[ueIndex] =
-              SGDataUtility.appendColumnNoOrTitle(UPPER_ERROR_VALUE, ehIndex, b, title);
+              SGDataColumnTitleUtility.appendColumnNoOrTitle(UPPER_ERROR_VALUE, ehIndex, b, title);
         }
       }
     }
@@ -685,7 +686,7 @@ public class SGDefaultColumnTypeUtility
             isEmptyTitle(columnInfoList, thIndex) || isRepeatedTitle(columnInfoList, thIndex);
         final String title = thColInfo.getTitle();
         columnTypes[tlIndices[ii]] =
-            SGDataUtility.appendColumnNoOrTitle(TICK_LABEL, thIndex, b, title);
+            SGDataColumnTitleUtility.appendColumnNoOrTitle(TICK_LABEL, thIndex, b, title);
       }
     }
     return true;
@@ -713,8 +714,8 @@ public class SGDefaultColumnTypeUtility
       Integer num4 = numberIndexList.get(3);
       columnTypes[num1.intValue()] = X_COORDINATE;
       columnTypes[num2.intValue()] = Y_COORDINATE;
-      columnTypes[num3.intValue()] = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
-      columnTypes[num4.intValue()] = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
+      columnTypes[num3.intValue()] = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
+      columnTypes[num4.intValue()] = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
     } else {
       return false;
     }
@@ -795,13 +796,13 @@ public class SGDefaultColumnTypeUtility
     if (!VALUE_TYPE_NUMBER.equals(columns[fIndex].getValueType())) {
       return false;
     }
-    columnTypes[fIndex] = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
+    columnTypes[fIndex] = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
 
     final int sIndex = sIndices[0].intValue();
     if (!VALUE_TYPE_NUMBER.equals(columns[sIndex].getValueType())) {
       return false;
     }
-    columnTypes[sIndex] = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
+    columnTypes[sIndex] = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
 
     for (int ii = 0; ii < columns.length; ii++) {
       columns[ii].setColumnType(columnTypes[ii]);
@@ -2052,8 +2053,8 @@ public class SGDefaultColumnTypeUtility
       return false;
     }
 
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
     columnTypes[fVarIndex] = first;
     columnTypes[sVarIndex] = second;
 
@@ -2094,8 +2095,8 @@ public class SGDefaultColumnTypeUtility
     MDArrayDimension yDim = dimList.get(1);
     MDArrayDimension fDim = dimList.get(2);
     MDArrayDimension sDim = dimList.get(3);
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
     columnTypes[xDim.variableIndex] = X_COORDINATE;
     columnTypes[yDim.variableIndex] = Y_COORDINATE;
     columnTypes[fDim.variableIndex] = first;
@@ -2192,14 +2193,14 @@ public class SGDefaultColumnTypeUtility
     if (dataType == null) {
       return false;
     }
-    Boolean gridPlot = SGDataUtility.isGridPlot(dataType, infoMap);
+    Boolean gridPlot = SGDataMiscUtility.isGridPlot(dataType, infoMap);
     if (gridPlot == null) {
       return false;
     }
 
     // the first and the second component
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
     Map<String, Integer> dimensionMap = null;
 
     String[] fNames =
@@ -2455,8 +2456,8 @@ public class SGDefaultColumnTypeUtility
 
     columnTypes[xIndex] = X_COORDINATE;
     columnTypes[yIndex] = Y_COORDINATE;
-    columnTypes[comIndex1] = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
-    columnTypes[comIndex2] = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
+    columnTypes[comIndex1] = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
+    columnTypes[comIndex2] = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
     if (tIndex != -1) {
       columnTypes[tIndex] = ANIMATION_FRAME;
     }
@@ -2541,9 +2542,9 @@ public class SGDefaultColumnTypeUtility
     columnTypes[iIndex] = INDEX;
     columnTypes[xIndex] = X_COORDINATE;
     columnTypes[yIndex] = Y_COORDINATE;
-    columnTypes[fIndex] = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
+    columnTypes[fIndex] = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
     ;
-    columnTypes[sIndex] = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
+    columnTypes[sIndex] = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
     ;
 
     for (int ii = 0; ii < columns.length; ii++) {
@@ -2679,8 +2680,8 @@ public class SGDefaultColumnTypeUtility
     }
 
     // the first and the second component
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(infoMap);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(infoMap);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
 
     String[] fNames =
         getNames(
@@ -3260,7 +3261,7 @@ public class SGDefaultColumnTypeUtility
     if (dataType == null) {
       return false;
     }
-    Boolean gridPlot = SGDataUtility.isGridPlot(dataType, infoMap);
+    Boolean gridPlot = SGDataMiscUtility.isGridPlot(dataType, infoMap);
     if (gridPlot == null) {
       return false;
     }
@@ -3481,7 +3482,7 @@ public class SGDefaultColumnTypeUtility
       if (index < 0 || index >= columnTypes.length) {
         return -1;
       }
-      columnTypes[index] = SGDataUtility.appendColumnTitle(value, holderVarName);
+      columnTypes[index] = SGDataColumnTitleUtility.appendColumnTitle(value, holderVarName);
     }
     return index;
   }
@@ -3510,7 +3511,7 @@ public class SGDefaultColumnTypeUtility
       if (num < 0 || num >= columnTypes.length) {
         return -1;
       }
-      columnTypes[index] = SGDataUtility.appendColumnTitle(value, holderVarName);
+      columnTypes[index] = SGDataColumnTitleUtility.appendColumnTitle(value, holderVarName);
       dimensionIndex[index] = num;
     }
     return index;
@@ -3602,7 +3603,7 @@ public class SGDefaultColumnTypeUtility
     String[] names = SGUtilityText.parseStrings(strNames);
     if (groupName != null) {
       for (int ii = 0; ii < names.length; ii++) {
-        names[ii] = SGDataUtility.appendGroupName(names[ii], groupName);
+        names[ii] = SGDataTextUtility.appendGroupName(names[ii], groupName);
       }
     }
     return names;

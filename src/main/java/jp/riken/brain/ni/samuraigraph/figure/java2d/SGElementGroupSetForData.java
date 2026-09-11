@@ -37,7 +37,11 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData.ArrayDataProperties;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataTextUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataAnimation;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
@@ -800,13 +804,13 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   public SGDataColumnInfo[] getDataColumnInfoArray() {
     SGData data = this.getData();
     SGDataColumnInfo[] colArray = null;
-    if (SGDataUtility.isSDArrayData(data)) {
+    if (SGDataDataTypeUtility.isSDArrayData(data)) {
       SGSDArrayData aData = (SGSDArrayData) data;
       colArray = aData.getColumnInfo();
-    } else if (SGDataUtility.isNetCDFData(data)) {
+    } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
       SGNetCDFData nData = (SGNetCDFData) data;
       colArray = nData.getColumnInfo();
-    } else if (SGDataUtility.isMDArrayData(data)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
       SGMDArrayData mdData = (SGMDArrayData) data;
       colArray = mdData.getColumnInfo();
     } else {
@@ -853,7 +857,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
         if (nData instanceof SGSXYNetCDFMultipleData) {
           SGSXYNetCDFMultipleData dData = (SGSXYNetCDFMultipleData) nData;
           if (dData.isDimensionPicked()) {
-            if (SGDataUtility.isSameNetCDFGroup(name, dData.getDimensionName())) {
+            if (SGDataTextUtility.isSameNetCDFGroup(name, dData.getDimensionName())) {
               if (name.equals(dData.getDimensionName())) {
                 int[] array = dData.getIndices().getNumbers();
                 origin = array[0];
@@ -943,14 +947,14 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * @return the number of frames
    */
   public int getFrameNumber() {
-    if (SGDataUtility.isNetCDFData(this.mData)) {
+    if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGNetCDFData data = (SGNetCDFData) this.mData;
       double[] array = data.getTimeValueArray();
       if (array == null) {
         return -1;
       }
       return array.length;
-    } else if (SGDataUtility.isMDArrayData(this.mData)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       SGMDArrayData data = (SGMDArrayData) this.mData;
       return data.getTimeDimensionLength();
     } else {
@@ -964,10 +968,10 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * @return the current frame index
    */
   public int getCurrentFrameIndex() {
-    if (SGDataUtility.isNetCDFData(this.mData)) {
+    if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGNetCDFData data = (SGNetCDFData) this.mData;
       return data.getCurrentTimeValueIndex();
-    } else if (SGDataUtility.isMDArrayData(this.mData)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       SGMDArrayData data = (SGMDArrayData) this.mData;
       return data.getCurrentTimeValueIndex();
     } else {
@@ -981,10 +985,10 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * @param index the frame index to be set
    */
   public void setCurrentFrameIndex(int index) {
-    if (SGDataUtility.isNetCDFData(this.mData)) {
+    if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGNetCDFData data = (SGNetCDFData) this.mData;
       data.setCurrentTimeValueIndex(index);
-    } else if (SGDataUtility.isMDArrayData(this.mData)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       SGMDArrayData data = (SGMDArrayData) this.mData;
       data.setCurrentTimeValueIndex(index);
     } else {
@@ -995,14 +999,14 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   /** Saves all changes of this data source. */
   @Override
   public void saveChanges() {
-    // if (SGDataUtility.isNetCDFData(this.mData)) {
+    // if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
     // SGNetCDFData data = (SGNetCDFData) this.mData;
     // SGProperties p = data.getProperties();
     // if (p.equals(this.mTempDataProperties) == false) {
     // this.onSaveChanges();
     // }
     // this.mTempDataProperties = null;
-    // } else if (SGDataUtility.isMDArrayData(this.mData)) {
+    // } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
     // SGMDArrayData data = (SGMDArrayData) this.mData;
     // SGProperties p = data.getProperties();
     // if (p.equals(this.mTempDataProperties) == false) {
@@ -1024,14 +1028,14 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   /** Cancels all changes of this data source. */
   @Override
   public void cancelChanges() {
-    // if (SGDataUtility.isNetCDFData(this.mData)) {
+    // if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
     // SGNetCDFData data = (SGNetCDFData) this.mData;
     // data.setProperties(this.mTempDataProperties);
     //
     // // update drawing elements
     // this.updateWithData();
     // this.mTempDataProperties = null;
-    // } else if (SGDataUtility.isMDArrayData(this.mData)) {
+    // } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
     // SGMDArrayData data = (SGMDArrayData) this.mData;
     // data.setProperties(this.mTempDataProperties);
     //
@@ -1052,7 +1056,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * @return the name of this animation data source
    */
   public String getDataSourceName() {
-    if (SGDataUtility.isNetCDFData(this.mData)) {
+    if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGNetCDFData data = (SGNetCDFData) this.mData;
       SGNetCDFVariable var = data.getTimeVariable();
       if (var != null) {
@@ -1060,7 +1064,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       } else {
         return null;
       }
-    } else if (SGDataUtility.isMDArrayData(this.mData)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       return this.getName();
     } else {
       throw new Error("Invalid data type: " + this.mData.getDataType());
@@ -1073,7 +1077,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * @return the unit string of data source
    */
   public String getDataSourceUnitString() {
-    if (SGDataUtility.isNetCDFData(this.mData)) {
+    if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGNetCDFData data = (SGNetCDFData) this.mData;
       SGNetCDFVariable var = data.getTimeVariable();
       if (var != null) {
@@ -1081,7 +1085,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       } else {
         return null;
       }
-    } else if (SGDataUtility.isMDArrayData(this.mData)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       return "";
     } else {
       throw new Error("Invalid data type: " + this.mData.getDataType());
@@ -1094,10 +1098,10 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * @return the current value of data object
    */
   public Number getCurrentValue() {
-    if (SGDataUtility.isNetCDFData(this.mData)) {
+    if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGNetCDFData data = (SGNetCDFData) this.mData;
       return data.getCurrentTimeValue();
-    } else if (SGDataUtility.isMDArrayData(this.mData)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       SGMDArrayData data = (SGMDArrayData) this.mData;
       return data.getCurrentTimeValue();
     } else {
@@ -1224,7 +1228,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
         result.putResult(COM_DATA_NAME, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_ORIGIN.equalsIgnoreCase(key)
           || COM_DATA_COORDINATE_VARIABLES_INDEX.equalsIgnoreCase(key)) {
-        if (SGDataUtility.isNetCDFData(this.mData)) {
+        if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
           SGNetCDFData nData = (SGNetCDFData) this.mData;
           boolean succeeded = true;
 
@@ -1277,7 +1281,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
             result.putResult(COM_DATA_ORIGIN, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
           }
-        } else if (SGDataUtility.isMDArrayData(this.mData)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
           SGMDArrayData mdData = (SGMDArrayData) this.mData;
           boolean succeeded = true;
 
@@ -1426,9 +1430,9 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       return false;
     }
 
-    final boolean isSDArrayData = SGDataUtility.isSDArrayData(this.mData);
-    final boolean isNetCDFData = SGDataUtility.isNetCDFData(this.mData);
-    final boolean isMDArrayData = SGDataUtility.isMDArrayData(this.mData);
+    final boolean isSDArrayData = SGDataDataTypeUtility.isSDArrayData(this.mData);
+    final boolean isNetCDFData = SGDataDataTypeUtility.isNetCDFData(this.mData);
+    final boolean isMDArrayData = SGDataDataTypeUtility.isMDArrayData(this.mData);
 
     // get arrays of column names or indices and values for each column
     boolean succeeded = true;
@@ -1448,7 +1452,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     } else if (isMDArrayData) {
       SGMDArrayData mdData = (SGMDArrayData) this.mData;
       String dataType = mdData.getDataType();
-      if (SGDataUtility.isSXYTypeData(dataType)) {
+      if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
         for (int ii = 0; ii < values.length; ii++) {
           String[] tokens = values[ii].split(":");
           if (tokens == null || tokens.length != 3) {
@@ -1482,10 +1486,10 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       } else {
         // SXYZ or VXY
         String keyX, keyY;
-        if (SGDataUtility.isSXYZTypeData(dataType)) {
+        if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
           keyX = SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION;
           keyY = SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION;
-        } else if (SGDataUtility.isVXYTypeData(dataType)) {
+        } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
           keyX = SGIMDArrayConstants.KEY_VXY_X_DIMENSION;
           keyY = SGIMDArrayConstants.KEY_VXY_Y_DIMENSION;
         } else {
@@ -1577,7 +1581,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       return false;
     }
 
-    String[] columnTypeArray = SGDataUtility.getCanonicalColumnTypes(colValues);
+    String[] columnTypeArray = SGDataMiscUtility.getCanonicalColumnTypes(colValues);
 
     if (isSDArrayData) {
       if (!this.setDataColumnType(
@@ -1652,7 +1656,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     // checks the input
     String dataType = aData.getDataType();
     Map<String, Object> infoMap = aData.getInfoMap();
-    if (SGDataUtility.checkDataColumns(dataType, columns, infoMap) == false) {
+    if (SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap) == false) {
       this.setFailedColumnTypeResult(map, result);
       return false;
     }
@@ -1700,18 +1704,19 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     // checks the input
     String dataType = nData.getDataType();
     Map<String, Object> infoMap = nData.getInfoMap();
-    if (SGDataUtility.checkDataColumns(dataType, columns, infoMap) == false) {
+    if (SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap) == false) {
       this.setFailedColumnTypeResult(map, result);
       return false;
     }
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       // updates the information map
       List<SGDataColumnInfo> pickUpList =
-          SGDataUtility.findColumnsWithColumnType(columns, SGIDataColumnTypeConstants.PICKUP);
+          SGDataColumnInfoUtility.findColumnsWithColumnType(
+              columns, SGIDataColumnTypeConstants.PICKUP);
       final boolean multipleVariable = !(pickUpList.size() == 1);
       infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
     }
-    if (SGDataUtility.checkNetCDFDataColumns(columns, dataType, nData.getNetcdfFile(), infoMap)
+    if (SGDataFileUtility.checkNetCDFDataColumns(columns, dataType, nData.getNetcdfFile(), infoMap)
         == false) {
       this.setFailedColumnTypeResult(map, result);
       return false;
@@ -1769,18 +1774,20 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     // checks the input
     String dataType = mdData.getDataType();
     Map<String, Object> infoMap = mdData.getInfoMap();
-    if (SGDataUtility.checkDataColumns(dataType, columns, infoMap) == false) {
+    if (SGDataMiscUtility.checkDataColumns(dataType, columns, infoMap) == false) {
       this.setFailedColumnTypeResult(map, result);
       return false;
     }
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       // updates the information map
       List<SGDataColumnInfo> pickUpList =
-          SGDataUtility.findColumnsWithColumnType(columns, SGIDataColumnTypeConstants.PICKUP);
+          SGDataColumnInfoUtility.findColumnsWithColumnType(
+              columns, SGIDataColumnTypeConstants.PICKUP);
       final boolean multipleVariable = !(pickUpList.size() == 1);
       infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
     }
-    if (SGDataUtility.checkMDArrayDataColumns(columns, dataType, mdData.getMDArrayFile(), infoMap)
+    if (SGDataFileUtility.checkMDArrayDataColumns(
+            columns, dataType, mdData.getMDArrayFile(), infoMap)
         == false) {
       this.setFailedColumnTypeResult(map, result);
       return false;
@@ -1795,7 +1802,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
 
   // clears time dimension
   protected void clearTimeDimension() {
-    if (SGDataUtility.isMDArrayData(this.mData)) {
+    if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       SGMDArrayData mdData = (SGMDArrayData) this.mData;
       SGMDArrayVariable[] vars = mdData.getVariables();
       for (int ii = 0; ii < vars.length; ii++) {
@@ -1812,7 +1819,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   }
 
   protected boolean setTimeDimension(final String value) {
-    if (!SGDataUtility.isMDArrayData(this.mData)) {
+    if (!SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       return false;
     }
     SGMDArrayData mdData = (SGMDArrayData) this.mData;
@@ -1900,7 +1907,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   }
 
   protected boolean setTimeDimension(Map<String, Integer> timeDimMap) {
-    if (!SGDataUtility.isMDArrayData(this.mData)) {
+    if (!SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       return false;
     }
     SGMDArrayData mdData = (SGMDArrayData) this.mData;
@@ -1986,7 +1993,8 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
 
   // equalizes the time dimension
   protected void equalizeTimeDimension(SGMDArrayData mdData) {
-    final int fIndex = SGDataUtility.findFrequentTimeOrigin(this.getDataColumnInfoArray());
+    final int fIndex =
+        SGDataColumnInfoUtility.findFrequentTimeOrigin(this.getDataColumnInfoArray());
     if (fIndex != -1) {
       SGMDArrayVariable[] vars = mdData.getAssignedVariables();
       for (int ii = 0; ii < vars.length; ii++) {
@@ -2097,7 +2105,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       return data.saveToHDF5File(file, params, policy);
     } else if (OPERATION.EXPORT_TO_MATLAB.equals(mode)) {
       return data.saveToMATLABFile(file, params, policy);
-    } else if (SGDataUtility.isArchiveDataSetOperation(mode)) {
+    } else if (SGDataMiscUtility.isArchiveDataSetOperation(mode)) {
       return data.saveToArchiveDataSetFile(file, params);
     } else if (OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(mode)) {
       return data.saveToDataSetNetCDFFile(file);
@@ -2420,7 +2428,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     if (originStr != null) {
       SGPropertyUtility.addProperty(map, COM_DATA_ORIGIN, originStr);
     }
-    if (SGDataUtility.isMDArrayData(data)) {
+    if (SGDataDataTypeUtility.isMDArrayData(data)) {
       SGMDArrayData mdData = (SGMDArrayData) data;
 
       // animation frame dimension

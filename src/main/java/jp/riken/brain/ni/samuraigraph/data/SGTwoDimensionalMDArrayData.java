@@ -314,7 +314,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
 
     OPERATION type = params.getType();
     if (OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)
-        || SGDataUtility.isArchiveDataSetOperation(type)) {
+        || SGDataMiscUtility.isArchiveDataSetOperation(type)) {
 
       StringBuilder sb = new StringBuilder();
       if (this.mXVariable != null) {
@@ -1013,7 +1013,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
       List<Integer> yIndexList) {
     final int xAllLen = this.getXDimensionLength();
     final int yAllLen = this.getYDimensionLength();
-    SGDataUtility.getIndexList(blocks, xIndexList, yIndexList, xAllLen, yAllLen);
+    SGDataBufferUtility.getIndexList(blocks, xIndexList, yIndexList, xAllLen, yAllLen);
   }
 
   protected double[] getOneDimensionalValues(final double[] allValues, List<Integer> indexList) {

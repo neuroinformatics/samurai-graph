@@ -493,13 +493,13 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     // set up the tabbed pane
     boolean pickUpTabEnabled = false;
     JPanel stridePanel = null;
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       pickUpTabEnabled = true;
       stridePanel = this.mSXYDataStridePanel;
-    } else if (SGDataUtility.isVXYTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       pickUpTabEnabled = false;
       stridePanel = this.mVXYDataStridePanel;
-    } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       pickUpTabEnabled = false;
       stridePanel = this.mSXYZDataStridePanel;
     }
@@ -627,13 +627,13 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
 
       String keyStride;
       SGIndexPanel indexStridePanel;
-      if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+      if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
         keyStride = SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE;
         indexStridePanel = this.mSXYDataIndexStridePanel;
-      } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+      } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
         keyStride = SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE;
         indexStridePanel = this.mSXYZDataIndexStridePanel;
-      } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+      } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
         keyStride = SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE;
         indexStridePanel = this.mVXYDataIndexStridePanel;
       } else {
@@ -644,39 +644,39 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       final int len;
       if (stride == null) {
         Map<String, SGIntegerSeriesSet> strideMap =
-            SGDataUtility.calcNetCDFDefaultStride(cols, this.mInfoMap, dimNameMap);
+            SGDataStrideUtility.calcNetCDFDefaultStride(cols, this.mInfoMap, dimNameMap);
         final String name = dimNameMap.get(keyStride);
         SGNetCDFDataColumnInfo ncInfo =
             (SGNetCDFDataColumnInfo) this.findColumnWithName(cols, name);
         len = ncInfo.getDimension(0).getLength();
         stride = strideMap.get(keyStride);
       } else {
-        len = SGDataUtility.getNetCDFDataIndexLength(cols);
+        len = SGDataColumnInfoUtility.getNetCDFDataIndexLength(cols);
         stride = SGUtility.createIndicesWithinRange(stride, len);
       }
       indexStridePanel.setLength(len);
       indexStridePanel.setIndices(stride);
 
-      if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+      if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
         // tick label
         this.initTickLabelStride(stride, len, cols);
       }
 
     } else {
-      if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+      if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
         SGIntegerSeriesSet stride =
             (SGIntegerSeriesSet) this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
         final int len;
         if (stride == null) {
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcNetCDFDefaultStride(cols, this.mInfoMap, dimNameMap);
+              SGDataStrideUtility.calcNetCDFDefaultStride(cols, this.mInfoMap, dimNameMap);
           final String name = dimNameMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
           SGNetCDFDataColumnInfo ncInfo =
               (SGNetCDFDataColumnInfo) this.findColumnWithName(cols, name);
           len = ncInfo.getDimension(0).getLength();
           stride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
         } else {
-          len = SGDataUtility.getSXYNetCDFDataLength(cols);
+          len = SGDataColumnInfoUtility.getSXYNetCDFDataLength(cols);
           stride = SGUtility.createIndicesWithinRange(stride, len);
         }
         this.mSXYDataStrideMainPanel.setLength(len);
@@ -685,7 +685,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         // tick label
         this.initTickLabelStride(stride, len, cols);
 
-      } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+      } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
 
         SGIntegerSeriesSet xStride =
             (SGIntegerSeriesSet)
@@ -696,7 +696,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         final int lenX, lenY;
         if (xStride == null || yStride == null) {
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcNetCDFDefaultStride(cols, this.mInfoMap, dimNameMap);
+              SGDataStrideUtility.calcNetCDFDefaultStride(cols, this.mInfoMap, dimNameMap);
           final String nameX = dimNameMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
           final String nameY = dimNameMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
           SGNetCDFDataColumnInfo ncInfoX =
@@ -708,8 +708,8 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
           xStride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
           yStride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
         } else {
-          lenX = SGDataUtility.getSXYZNetCDFDataXLength(cols);
-          lenY = SGDataUtility.getSXYZNetCDFDataYLength(cols);
+          lenX = SGDataColumnInfoUtility.getSXYZNetCDFDataXLength(cols);
+          lenY = SGDataColumnInfoUtility.getSXYZNetCDFDataYLength(cols);
           xStride = SGUtility.createIndicesWithinRange(xStride, lenX);
           yStride = SGUtility.createIndicesWithinRange(yStride, lenY);
         }
@@ -718,7 +718,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         this.mSXYZDataXStridePanel.setIndices(xStride);
         this.mSXYZDataYStridePanel.setIndices(yStride);
 
-      } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+      } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
         SGIntegerSeriesSet xStride =
             (SGIntegerSeriesSet) this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
         SGIntegerSeriesSet yStride =
@@ -726,7 +726,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         final int lenX, lenY;
         if (xStride == null || yStride == null) {
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcNetCDFDefaultStride(cols, this.mInfoMap, dimNameMap);
+              SGDataStrideUtility.calcNetCDFDefaultStride(cols, this.mInfoMap, dimNameMap);
           final String nameX = dimNameMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
           final String nameY = dimNameMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
           SGNetCDFDataColumnInfo ncInfoX =
@@ -738,8 +738,8 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
           xStride = strideMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
           yStride = strideMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
         } else {
-          lenX = SGDataUtility.getVXYNetCDFDataXLength(cols);
-          lenY = SGDataUtility.getVXYNetCDFDataYLength(cols);
+          lenX = SGDataColumnInfoUtility.getVXYNetCDFDataXLength(cols);
+          lenY = SGDataColumnInfoUtility.getVXYNetCDFDataYLength(cols);
           xStride = SGUtility.createIndicesWithinRange(xStride, lenX);
           yStride = SGUtility.createIndicesWithinRange(yStride, lenY);
         }
@@ -769,7 +769,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         strideTickLabel = stride;
         lenTickLabel = len;
       } else {
-        lenTickLabel = SGDataUtility.getSXYNetCDFDataLength(cols);
+        lenTickLabel = SGDataColumnInfoUtility.getSXYNetCDFDataLength(cols);
       }
       strideTickLabel = SGUtility.createIndicesWithinRange(strideTickLabel, lenTickLabel);
     }
@@ -879,7 +879,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     // refresh the columns that error bars and tick labels are appended
     this.clearUselessColumnType(cols);
 
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       // get information of picked up dimension
       SGNetCDFDataColumnInfo pickUpColumn = null;
       int pickUpCnt = 0;
@@ -915,13 +915,14 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
           for (int ii = 0; ii < nCols.length; ii++) {
             nCols[ii] = (SGNetCDFDataColumnInfo) cols[ii];
           }
-          SGDataUtility.updatePickupParameters(this.mInfoMap, nCols);
+          SGDataFileUtility.updatePickupParameters(this.mInfoMap, nCols);
         }
         SGIntegerSeriesSet indices =
             (SGIntegerSeriesSet)
                 this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
         if (indices == null) {
-          indices = new SGIntegerSeriesSet(SGDataUtility.createDefaultStepSeries(dim.getLength()));
+          indices =
+              new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(dim.getLength()));
         }
         this.mPickUpDimensionPanel.setIndices(indices);
 
@@ -932,9 +933,9 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
 
     // updates stride
     Map<String, SGIntegerSeriesSet> strideMap =
-        SGDataUtility.calcNetCDFDefaultStride(cols, this.mInfoMap);
+        SGDataStrideUtility.calcNetCDFDefaultStride(cols, this.mInfoMap);
     List<String> cTypeList = new ArrayList<String>();
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       int dimLen = -1;
       if (indexAvailable) {
         cTypeList.add(INDEX);
@@ -945,7 +946,8 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
             cols,
             cTypeList);
         this.mSXYDataStrideMainPanel.clearAll();
-        List<SGDataColumnInfo> indexColList = SGDataUtility.findColumnsWithColumnType(cols, INDEX);
+        List<SGDataColumnInfo> indexColList =
+            SGDataColumnInfoUtility.findColumnsWithColumnType(cols, INDEX);
         if (indexColList.size() != 0) {
           SGNetCDFDataColumnInfo indexCol = (SGNetCDFDataColumnInfo) indexColList.get(0);
           if (indexCol != null && indexCol.isCoordinateVariable()) {
@@ -962,8 +964,10 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
             cols,
             cTypeList);
         this.mSXYDataIndexStridePanel.clearAll();
-        List<SGDataColumnInfo> xColList = SGDataUtility.findColumnsWithColumnType(cols, X_VALUE);
-        List<SGDataColumnInfo> yColList = SGDataUtility.findColumnsWithColumnType(cols, Y_VALUE);
+        List<SGDataColumnInfo> xColList =
+            SGDataColumnInfoUtility.findColumnsWithColumnType(cols, X_VALUE);
+        List<SGDataColumnInfo> yColList =
+            SGDataColumnInfoUtility.findColumnsWithColumnType(cols, Y_VALUE);
         if (xColList.size() != 0) {
           SGNetCDFDataColumnInfo xCol = (SGNetCDFDataColumnInfo) xColList.get(0);
           if (xCol != null && xCol.isCoordinateVariable()) {
@@ -993,7 +997,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         }
         this.mSXYDataTickLabelStridePanel.setIndices(tickLabelIndices);
       }
-    } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       if (indexAvailable) {
         cTypeList.add(INDEX);
         this.updateIndexPanel(
@@ -1024,7 +1028,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
             cTypeList);
         this.mSXYZDataIndexStridePanel.clearAll();
       }
-    } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       if (indexAvailable) {
         cTypeList.add(INDEX);
         this.updateIndexPanel(
@@ -1190,68 +1194,70 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
 
     // check netCDF data
     SGDataColumnInfo[] cols = this.getDataColumnInfoArray();
-    if (SGDataUtility.checkNetCDFDataColumns(cols, this.mDataType, this.mNetCDFFile, this.mInfoMap)
+    if (SGDataFileUtility.checkNetCDFDataColumns(
+            cols, this.mDataType, this.mNetCDFFile, this.mInfoMap)
         == false) {
-      selectionPanel.setMessage(SGDataUtility.MSG_PROPER_COLUMN_TYPE);
+      selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_COLUMN_TYPE);
       return false;
     }
 
     // checks the input for stride of arrays
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       if (!this.isIndexAvailable()) {
         if (!this.mSXYDataStrideMainPanel.hasValidInput()) {
-          selectionPanel.setMessage(SGDataUtility.MSG_PROPER_STRIDE_LINE_AND_BAR);
+          selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_STRIDE_LINE_AND_BAR);
           return false;
         }
       } else {
         if (!this.mSXYDataIndexStridePanel.hasValidInput()) {
-          selectionPanel.setMessage(SGDataUtility.MSG_PROPER_STRIDE_INDEX);
+          selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_STRIDE_INDEX);
           return false;
         }
       }
       if (this.isTickLabelAvailable()) {
         if (!this.mSXYDataTickLabelStridePanel.hasValidInput()) {
-          selectionPanel.setMessage(SGDataUtility.MSG_PROPER_STRIDE_TICK_LABEL);
+          selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_STRIDE_TICK_LABEL);
           return false;
         }
       }
-    } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       if (!this.isIndexAvailable()) {
         if (!this.mSXYZDataXStridePanel.hasValidInput()) {
-          selectionPanel.setMessage(SGDataUtility.MSG_PROPER_STRIDE_X);
+          selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_STRIDE_X);
           return false;
         }
         if (!this.mSXYZDataYStridePanel.hasValidInput()) {
-          selectionPanel.setMessage(SGDataUtility.MSG_PROPER_STRIDE_Y);
+          selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_STRIDE_Y);
           return false;
         }
       } else {
         if (!this.mSXYZDataIndexStridePanel.hasValidInput()) {
-          selectionPanel.setMessage(SGDataUtility.MSG_PROPER_STRIDE_INDEX);
+          selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_STRIDE_INDEX);
           return false;
         }
       }
-    } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       if (!this.isIndexAvailable()) {
         if (!this.mVXYDataXStridePanel.hasValidInput()) {
-          selectionPanel.setMessage(SGDataUtility.MSG_PROPER_STRIDE_X);
+          selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_STRIDE_X);
           return false;
         }
         if (!this.mVXYDataYStridePanel.hasValidInput()) {
-          selectionPanel.setMessage(SGDataUtility.MSG_PROPER_STRIDE_Y);
+          selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_STRIDE_Y);
           return false;
         }
       } else {
         if (!this.mVXYDataIndexStridePanel.hasValidInput()) {
-          selectionPanel.setMessage(SGDataUtility.MSG_PROPER_STRIDE_INDEX);
+          selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_STRIDE_INDEX);
           return false;
         }
       }
     }
 
     // checks pick up indices
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
-      List<SGDataColumnInfo> pickUpCols = SGDataUtility.findColumnsWithColumnType(cols, PICKUP);
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
+      List<SGDataColumnInfo> pickUpCols =
+          SGDataColumnInfoUtility.findColumnsWithColumnType(cols, PICKUP);
       if (pickUpCols.size() == 1) {
         SGNetCDFDataColumnInfo pickUpCol = (SGNetCDFDataColumnInfo) pickUpCols.get(0);
         SGDimensionInfo pickUpDim = pickUpCol.getDimension(0);
@@ -1259,13 +1265,13 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
             (SGIntegerSeriesSet)
                 this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
         if (indices == null) {
-          selectionPanel.setMessage(SGDataUtility.MSG_PROPER_PICK_UP_INDICES);
+          selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_PICK_UP_INDICES);
           return false;
         }
         int[] array = indices.getNumbers();
         for (int ii = 0; ii < array.length; ii++) {
           if (array[ii] < 0 || pickUpDim.getLength() <= array[ii]) {
-            selectionPanel.setMessage(SGDataUtility.MSG_PROPER_PICK_UP_INDICES);
+            selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_PICK_UP_INDICES);
             return false;
           }
         }
@@ -1453,7 +1459,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
   @Override
   public Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> strideMap = new HashMap<String, SGIntegerSeriesSet>();
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.updateStrideMap(
             this.mSXYDataIndexStridePanel,
@@ -1467,7 +1473,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
           this.mSXYDataTickLabelStridePanel,
           SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           strideMap);
-    } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.updateStrideMap(
             this.mSXYZDataIndexStridePanel,
@@ -1483,7 +1489,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
             SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
             strideMap);
       }
-    } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.updateStrideMap(
             this.mVXYDataIndexStridePanel,
@@ -1501,7 +1507,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
 
   @Override
   public void setStrideMap(Map<String, SGIntegerSeriesSet> strideMap) {
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.setStride(
             this.mSXYDataIndexStridePanel,
@@ -1515,7 +1521,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
           this.mSXYDataTickLabelStridePanel,
           SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           strideMap);
-    } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.setStride(
             this.mSXYZDataIndexStridePanel,
@@ -1531,7 +1537,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
             SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
             strideMap);
       }
-    } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.setStride(
             this.mVXYDataIndexStridePanel,
@@ -1549,7 +1555,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
   @Override
   protected Map<String, Integer> getFullLengthMap() {
     Map<String, Integer> lengthMap = new HashMap<String, Integer>();
-    if (SGDataUtility.isSXYTypeData(this.mDataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.updateLengthMap(
             this.mSXYDataIndexStridePanel,
@@ -1563,7 +1569,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
           this.mSXYDataTickLabelStridePanel,
           SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           lengthMap);
-    } else if (SGDataUtility.isSXYZTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.updateLengthMap(
             this.mSXYZDataIndexStridePanel,
@@ -1579,7 +1585,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
             SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
             lengthMap);
       }
-    } else if (SGDataUtility.isVXYTypeData(this.mDataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.updateLengthMap(
             this.mVXYDataIndexStridePanel,

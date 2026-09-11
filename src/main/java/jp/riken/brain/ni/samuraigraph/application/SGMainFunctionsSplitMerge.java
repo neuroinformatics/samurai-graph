@@ -19,7 +19,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumn;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable;
@@ -113,9 +113,9 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
     for (SGData data : dataList) {
       if (data instanceof SGISXYTypeMultipleData) {
         final String dataType = data.getDataType();
-        if (!SGDataUtility.isSDArrayData(dataType)
-            && !SGDataUtility.isNetCDFData(dataType)
-            && !SGDataUtility.isMDArrayData(dataType)) {
+        if (!SGDataDataTypeUtility.isSDArrayData(dataType)
+            && !SGDataDataTypeUtility.isNetCDFData(dataType)
+            && !SGDataDataTypeUtility.isMDArrayData(dataType)) {
           throw new Error("Unsupported data type: " + data.getDataType());
         }
         SGISXYTypeMultipleData dataMulti = (SGISXYTypeMultipleData) data;
@@ -255,7 +255,7 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
       StringBuilder sb = new StringBuilder();
       sb.append(dataNameMulti);
       String suffix = "";
-      if (SGDataUtility.isSDArrayData(dataType)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
         SGSXYSDArrayMultipleData aData = (SGSXYSDArrayMultipleData) dataMulti;
         SGDataColumn[] cols = aData.getMultipleColumns();
         String title = cols[ii].getTitle();
@@ -267,7 +267,7 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
 
         sb.append("\\_");
         sb.append(suffix);
-      } else if (SGDataUtility.isNetCDFData(dataType)) {
+      } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
         if (dataMulti instanceof SGSXYNetCDFMultipleData) {
           SGSXYNetCDFMultipleData nData = (SGSXYNetCDFMultipleData) dataMulti;
           if (nData.isDimensionPicked()) {
@@ -469,13 +469,13 @@ class SGMainFunctionsSplitMerge implements SGIApplicationTextConstants {
       Map<Class<? extends SGIFigureElement>, SGProperties> propertiesMap =
           new HashMap<Class<? extends SGIFigureElement>, SGProperties>();
 
-      if (SGDataUtility.isSDArrayData(dataLast)) {
+      if (SGDataDataTypeUtility.isSDArrayData(dataLast)) {
         dataMulti = SGSXYSDArrayMultipleData.merge(store);
-      } else if (SGDataUtility.isNetCDFData(dataLast)) {
+      } else if (SGDataDataTypeUtility.isNetCDFData(dataLast)) {
         if (dataLast instanceof SGSXYNetCDFMultipleData) {
           dataMulti = SGSXYNetCDFMultipleData.merge(store);
         }
-      } else if (SGDataUtility.isMDArrayData(dataLast)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(dataLast)) {
         dataMulti = SGSXYMDArrayMultipleData.merge(store);
       } else {
         return null;

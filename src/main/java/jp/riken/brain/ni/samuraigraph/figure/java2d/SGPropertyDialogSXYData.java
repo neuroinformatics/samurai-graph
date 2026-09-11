@@ -41,8 +41,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupDialog;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
@@ -2139,7 +2141,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     for (SGIPropertyDialogObserver g : this.mPropertyDialogObserverList) {
       SGISXYDataDialogObserver gxy = (SGISXYDataDialogObserver) g;
       SGData data = (SGData) gxy.getData();
-      final boolean b = !SGDataUtility.isNetCDFData(data);
+      final boolean b = !SGDataDataTypeUtility.isNetCDFData(data);
       if (verticalEnabled == null) {
         verticalEnabled = Boolean.valueOf(b);
       } else {
@@ -3140,7 +3142,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
         SGData data = obs.getData();
         SGIntegerSeriesSet pickUpIndices = null;
         SGIntegerSeriesSet pickUpIndicesOld = null;
-        if (SGDataUtility.isSDArrayData(data)) {
+        if (SGDataDataTypeUtility.isSDArrayData(data)) {
           // text data
           this.setupBarVerticalByChangingTextDataColumn(colInfo, data);
 
@@ -3152,7 +3154,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
           this.mStrideMap.put(
               SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
 
-        } else if (SGDataUtility.isNetCDFData(data)) {
+        } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
           // for netCDF data, changes the direction of error bars and tick labels
           // automatically.
           // but if change whether Pickup column type exists, data and data type are
@@ -3190,7 +3192,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
           this.mStrideMap.put(
               SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
 
-        } else if (SGDataUtility.isMDArrayData(data)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
           SGMDArrayDataSetupDialog ndg = (SGMDArrayDataSetupDialog) dg;
 
           // get multiple origin and step
@@ -3234,7 +3236,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
         // updates the line style
         if (this.mDataInfoArray != null) {
-          if (!SGDataUtility.hasEqualColumnType(this.mDataInfoArray, colInfo)) {
+          if (!SGDataColumnInfoUtility.hasEqualColumnType(this.mDataInfoArray, colInfo)) {
             this.updateLineStyle(obs, colInfo);
           } else if (this.mPickUpDimensionInfo != null) {
             if (!SGUtility.equals(pickUpIndicesOld, pickUpIndices)) {
@@ -3267,7 +3269,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   private void updateLineStyle(SGISXYDataDialogObserver obs, SGDataColumnInfo[] cols) {
 
     SGData data = obs.getData();
-    final boolean pickedUp = SGDataUtility.isPickupColumnContained(cols);
+    final boolean pickedUp = SGDataColumnInfoUtility.isPickupColumnContained(cols);
     int xNum = 0;
     int yNum = 0;
     final int childNum;
@@ -3330,24 +3332,24 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     // updates the list of child name
     List<String> nameList = new ArrayList<String>();
     if (pickedUp) {
-      if (SGDataUtility.isNetCDFData(data)) {
+      if (SGDataDataTypeUtility.isNetCDFData(data)) {
         SGNetCDFPickUpDimensionInfo pickUpInfo =
             (SGNetCDFPickUpDimensionInfo) this.mPickUpDimensionInfo;
         SGSXYNetCDFMultipleData sxyData = (SGSXYNetCDFMultipleData) data;
         nameList.addAll(
             SGSXYNetCDFMultipleData.getChildNameList(
                 (SGSXYNetCDFMultipleData) sxyData, pickUpInfo));
-      } else if (SGDataUtility.isMDArrayData(data)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
         SGMDArrayPickUpDimensionInfo pickUpInfo =
             (SGMDArrayPickUpDimensionInfo) this.mPickUpDimensionInfo;
         nameList.addAll(SGSXYMDArrayMultipleData.getChildNameList(pickUpInfo));
       }
     } else {
-      if (SGDataUtility.isSDArrayData(data)) {
+      if (SGDataDataTypeUtility.isSDArrayData(data)) {
         nameList.addAll(SGSXYSDArrayMultipleData.getChildNameList(cols));
-      } else if (SGDataUtility.isNetCDFData(data)) {
+      } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
         nameList.addAll(SGSXYNetCDFMultipleData.getChildNameList(cols));
-      } else if (SGDataUtility.isMDArrayData(data)) {
+      } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
         nameList.addAll(SGSXYMDArrayMultipleData.getChildNameList(cols));
       }
     }
@@ -3397,8 +3399,8 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     List<SGDataColumnInfo> timeInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> indexInfoList = new ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> pickUpInfoList = new ArrayList<SGDataColumnInfo>();
-    if (SGDataUtility.isPickupColumnContained(colInfo)) {
-      if (!SGDataUtility.getSXYDimensionDataColumnType(
+    if (SGDataColumnInfoUtility.isPickupColumnContained(colInfo)) {
+      if (!SGDataMiscUtility.getSXYDimensionDataColumnType(
           colInfo,
           xInfoList,
           yInfoList,
@@ -3417,7 +3419,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
           new HashMap<SGDataColumnInfo, SGDataColumnInfo>();
       Map<SGDataColumnInfo, SGDataColumnInfo> tNameMap =
           new HashMap<SGDataColumnInfo, SGDataColumnInfo>();
-      if (!SGDataUtility.getSXYColumnType(
+      if (!SGDataMiscUtility.getSXYColumnType(
           colInfo,
           xInfoList,
           yInfoList,
@@ -3451,7 +3453,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     Map<Integer, Integer> lIndexMap = new HashMap<Integer, Integer>();
     Map<Integer, Integer> uIndexMap = new HashMap<Integer, Integer>();
     Map<Integer, Integer> tIndexMap = new HashMap<Integer, Integer>();
-    if (SGDataUtility.getSXYColumnType(
+    if (SGDataMiscUtility.getSXYColumnType(
             colInfo, xIndexList, yIndexList, lIndexMap, uIndexMap, tIndexMap)
         == false) {
       return;
@@ -3532,19 +3534,19 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     SGData data = obs.getData();
     String dataType = obs.getDataType();
 
-    if (SGDataUtility.isSXYTypeData(dataType) == false) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType) == false) {
       return false;
     }
 
-    if (SGDataUtility.isMultipleData(dataType)) {
-      if (SGDataUtility.isNetCDFDimensionData(dataType)) {
+    if (SGDataDataTypeUtility.isMultipleData(dataType)) {
+      if (SGDataDataTypeUtility.isNetCDFDimensionData(dataType)) {
         if (obs.getData() instanceof SGSXYNetCDFMultipleData) {
           SGSXYNetCDFMultipleData ncData = (SGSXYNetCDFMultipleData) obs.getData();
           if (ncData.getDimensionIndices().length > 1) {
             return true;
           }
         }
-      } else if (SGDataUtility.isMDArrayDimensionData(data)) {
+      } else if (SGDataDataTypeUtility.isMDArrayDimensionData(data)) {
         SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) obs.getData();
         if (mdData.getDimensionIndices().length > 1) {
           return true;
@@ -3692,7 +3694,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       SGData data = l.getData();
 
       // sets the stride
-      if (SGDataUtility.isSDArrayData(data)) {
+      if (SGDataDataTypeUtility.isSDArrayData(data)) {
         SGIntegerSeriesSet stride =
             this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
         if (!l.setSDArrayStride(stride)) {
@@ -3717,7 +3719,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       l.setStrideAvailable(this.mDataColumnSelectionDialog.isStrideAvailable());
 
       // set pick up info
-      if (SGDataUtility.isNetCDFData(data) || SGDataUtility.isMDArrayData(data)) {
+      if (SGDataDataTypeUtility.isNetCDFData(data) || SGDataDataTypeUtility.isMDArrayData(data)) {
         if (!l.setPickUpDimensionInfo(this.mPickUpDimensionInfo)) {
           return false;
         }

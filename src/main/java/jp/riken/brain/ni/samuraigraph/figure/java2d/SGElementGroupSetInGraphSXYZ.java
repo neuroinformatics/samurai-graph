@@ -31,7 +31,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGTwoDimensionalArrayIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGXYSimpleIndexBlock;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.SXYZDataValue;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.Value;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
@@ -775,7 +778,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
     SGArrayData aData = (SGArrayData) this.mData;
     SGDataColumnInfo[] preColumnInfo = aData.getColumnInfo();
     try {
-      if (SGDataUtility.isMDArrayData(this.mData)) {
+      if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
         SGSXYZMDArrayData mdData = (SGSXYZMDArrayData) this.mData;
         if (mdData.setColumnType(cols) == false) {
           this.setFailedColumnTypeResult(map, result);
@@ -792,23 +795,23 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
       }
     } finally {
       // updates the stride with new column types
-      if (!SGDataUtility.hasEqualInput(preColumnInfo, cols)) {
+      if (!SGDataColumnInfoUtility.hasEqualInput(preColumnInfo, cols)) {
         Map<String, Object> infoMap = new HashMap<String, Object>();
         infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, this.mData.getDataType());
         infoMap.put(
             SGIDataInformationKeyConstants.KEY_FIGURE_SIZE,
             new SGTuple2f(this.mGraph.getGraphRectWidth(), this.mGraph.getGraphRectHeight()));
-        if (SGDataUtility.isSDArrayData(this.mData)) {
+        if (SGDataDataTypeUtility.isSDArrayData(this.mData)) {
           SGSXYZSDArrayData sdData = (SGSXYZSDArrayData) this.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcSDArrayDefaultStride(cols, infoMap);
+              SGDataStrideUtility.calcSDArrayDefaultStride(cols, infoMap);
           SGIntegerSeriesSet stride =
               strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
           sdData.setStride(stride);
-        } else if (SGDataUtility.isNetCDFData(this.mData)) {
+        } else if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
           SGSXYZNetCDFData ncData = (SGSXYZNetCDFData) this.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcNetCDFDefaultStride(cols, infoMap);
+              SGDataStrideUtility.calcNetCDFDefaultStride(cols, infoMap);
           SGIntegerSeriesSet strideX =
               strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
           ncData.setXStride(strideX);
@@ -818,13 +821,13 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
           SGIntegerSeriesSet indexStride =
               strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
           ncData.setIndexStride(indexStride);
-        } else if (SGDataUtility.isMDArrayData(this.mData)) {
-          if (!SGDataUtility.addGridType(cols, this.mData.getDataType(), infoMap)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
+          if (!SGDataMiscUtility.addGridType(cols, this.mData.getDataType(), infoMap)) {
             return false;
           }
           SGSXYZMDArrayData mdData = (SGSXYZMDArrayData) this.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcMDArrayDefaultStride(cols, infoMap);
+              SGDataStrideUtility.calcMDArrayDefaultStride(cols, infoMap);
           SGIntegerSeriesSet strideX =
               strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
           mdData.setXStride(strideX);
@@ -842,7 +845,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
     }
 
     // sets animation dimension
-    if (SGDataUtility.isMDArrayData(this.mData)) {
+    if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       List<String> keys = map.getKeys();
       String strTimeDimension = map.getValueString(COM_DATA_ANIMATION_FRAME_DIMENSION);
       final boolean timeDimContained =

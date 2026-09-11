@@ -61,8 +61,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTable;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
@@ -1061,7 +1062,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         this.mSingleDataFileChooserWizardDialog.setNext(null);
       }
       this.mSingleDataFileChooserWizardDialog.setVisibleUrlOfNetCDF(
-          SGDataUtility.isNetCDFData(dataType));
+          SGDataDataTypeUtility.isNetCDFData(dataType));
       this.mSingleDataFileChooserWizardDialog.addActionListener(this);
 
       if (null == fileName || fileName.equals("")) {
@@ -1117,11 +1118,11 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
   }
 
   private void createPropertyFileDataDialog(final String dataType) {
-    if (SGDataUtility.isSDArrayData(dataType)) {
+    if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
       this.mPropertyFileDataDialog = new SGPropertyFileSDArrayDataDialog(this, true);
-    } else if (SGDataUtility.isNetCDFData(dataType)) {
+    } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
       this.mPropertyFileDataDialog = new SGPropertyFileNetCDFDataDialog(this, true);
-    } else if (SGDataUtility.isMDArrayData(dataType)) {
+    } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
       this.mPropertyFileDataDialog = new SGPropertyFileMDArrayDataDialog(this, true);
     }
 
@@ -1169,7 +1170,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     MatFileReader matReader = null;
     try {
       if (dataColumnInfoSet != null) {
-        if (SGDataUtility.isSDArrayData(dataType)) {
+        if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
           SGPropertyFileSDArrayDataDialog dg =
               (SGPropertyFileSDArrayDataDialog) this.mPropertyFileDataDialog;
           SGSDArrayFile sdFile;
@@ -1191,7 +1192,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
               == false) {
             return false;
           }
-        } else if (SGDataUtility.isNetCDFData(dataType)) {
+        } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
           SGPropertyFileNetCDFDataDialog dg =
               (SGPropertyFileNetCDFDataDialog) this.mPropertyFileDataDialog;
           try {
@@ -1209,7 +1210,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
               == false) {
             return false;
           }
-        } else if (SGDataUtility.isMDArrayData(dataType)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
           SGPropertyFileMDArrayDataDialog dg =
               (SGPropertyFileMDArrayDataDialog) this.mPropertyFileDataDialog;
           SGMDArrayFile mdFile = null;
@@ -1238,7 +1239,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
 
       } else {
 
-        if (SGDataUtility.isSDArrayData(dataType)) {
+        if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
           FileColumn[] colInfo = null;
           int length = -1;
           boolean valid = true;
@@ -1287,7 +1288,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
             }
           }
 
-        } else if (SGDataUtility.isNetCDFData(dataType)) {
+        } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
 
           boolean valid = true;
           try {
@@ -1301,7 +1302,8 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
           if (valid) {
             SGNetCDFFile nc = new SGNetCDFFile(ncFile);
             List<SGNetCDFVariable> varList = nc.getVariables();
-            SGDataColumnInfo[] infoArray = SGDataUtility.getNetCDFDataColumnInfo(varList, infoMap);
+            SGDataColumnInfo[] infoArray =
+                SGDataFileUtility.getNetCDFDataColumnInfo(varList, infoMap);
             SGDataColumnInfoSet colInfoSet = new SGDataColumnInfoSet(infoArray);
             SGPropertyFileNetCDFDataDialog dg =
                 (SGPropertyFileNetCDFDataDialog) this.mPropertyFileDataDialog;
@@ -1310,10 +1312,10 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
             }
           }
 
-        } else if (SGDataUtility.isMDArrayData(dataType)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
 
           boolean valid = true;
-          if (SGDataUtility.isHDF5FileData(dataType)) {
+          if (SGDataDataTypeUtility.isHDF5FileData(dataType)) {
             try {
               hdf5Reader = SGApplicationUtility.openHDF5(fileName);
             } catch (Exception e) {
@@ -1321,7 +1323,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
               showFileOpenErrorMessage();
               return false;
             }
-          } else if (SGDataUtility.isMATLABData(dataType)) {
+          } else if (SGDataDataTypeUtility.isMATLABData(dataType)) {
             try {
               matReader = SGApplicationUtility.openMAT(fileName);
             } catch (Exception e) {
@@ -1342,7 +1344,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
             }
             SGMDArrayVariable[] vars = mdFile.getVariables();
             SGDataColumnInfo[] infoArray =
-                SGDataUtility.getMDArrayDataColumnInfo(mdFile, vars, infoMap);
+                SGDataFileUtility.getMDArrayDataColumnInfo(mdFile, vars, infoMap);
             if (infoArray == null) {
               return false;
             }

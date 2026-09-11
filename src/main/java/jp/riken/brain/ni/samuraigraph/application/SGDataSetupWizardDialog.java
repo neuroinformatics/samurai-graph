@@ -19,7 +19,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupPanel;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataTextUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 
 /** The base class of the wizard dialog to set up the data. */
@@ -242,7 +242,7 @@ public abstract class SGDataSetupWizardDialog extends SGWizardDialog
   }
 
   protected void setupTitle(String dataType) {
-    String title = SGDataUtility.createTitleString("Set up the Data ", dataType);
+    String title = SGDataTextUtility.createTitleString("Set up the Data ", dataType);
     this.setTitle(title);
   }
 }

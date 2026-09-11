@@ -35,8 +35,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGStyle;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
@@ -891,12 +893,12 @@ class SGCommandManager
         }
 
         // check the data type
-        if (SGDataUtility.isValidData(dataType) == false) {
+        if (SGDataDataTypeUtility.isValidData(dataType) == false) {
           return STATUS_FAILED;
         }
-        final boolean isNetCDF = SGDataUtility.isNetCDFData(dataType);
-        final boolean isHDF5 = SGDataUtility.isHDF5Data(dataType);
-        final boolean isMATLAB = SGDataUtility.isMATLABData(dataType);
+        final boolean isNetCDF = SGDataDataTypeUtility.isNetCDFData(dataType);
+        final boolean isHDF5 = SGDataDataTypeUtility.isHDF5Data(dataType);
+        final boolean isMATLAB = SGDataDataTypeUtility.isMATLABData(dataType);
 
         // get file path
         String path = map.getValueString(COM_DATA_FILE_PATH);
@@ -977,10 +979,11 @@ class SGCommandManager
         infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, size);
 
         // puts the grid flag
-        if (SGDataUtility.isMDArrayData(dataType)) {
-          if (SGDataUtility.isSXYZTypeData(dataType) || SGDataUtility.isVXYTypeData(dataType)) {
+        if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
+          if (SGDataDataTypeUtility.isSXYZTypeData(dataType)
+              || SGDataDataTypeUtility.isVXYTypeData(dataType)) {
             SGDataColumnInfo[] colInfoArray = colInfoSet.getDataColumnInfoArray();
-            if (!SGDataUtility.addGridType(colInfoArray, dataType, infoMap)) {
+            if (!SGDataMiscUtility.addGridType(colInfoArray, dataType, infoMap)) {
               return STATUS_FAILED;
             }
           }
@@ -990,11 +993,11 @@ class SGCommandManager
         SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
         Map<String, SGIntegerSeriesSet> strideMap = null;
         if (isNetCDF) {
-          strideMap = SGDataUtility.calcNetCDFDefaultStride(colArray, infoMap);
+          strideMap = SGDataStrideUtility.calcNetCDFDefaultStride(colArray, infoMap);
         } else if (isHDF5 || isMATLAB) {
-          strideMap = SGDataUtility.calcMDArrayDefaultStride(colArray, infoMap);
+          strideMap = SGDataStrideUtility.calcMDArrayDefaultStride(colArray, infoMap);
         } else {
-          strideMap = SGDataUtility.calcSDArrayDefaultStride(colArray, infoMap);
+          strideMap = SGDataStrideUtility.calcSDArrayDefaultStride(colArray, infoMap);
         }
         if (strideMap != null) {
           infoMap.putAll(strideMap);

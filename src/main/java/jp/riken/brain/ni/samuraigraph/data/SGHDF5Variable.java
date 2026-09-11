@@ -41,7 +41,7 @@ public class SGHDF5Variable extends SGMDArrayVariable {
     IHDF5Reader reader = this.getReader();
     this.mDataSetInfo = reader.getDataSetInformation(this.mName);
     List<String> attrNameList = reader.object().getAttributeNames(this.mName);
-    this.mAttrList = SGDataUtility.findHDF5Attributes(reader, this.mName, attrNameList);
+    this.mAttrList = SGDataFileUtility.findHDF5Attributes(reader, this.mName, attrNameList);
 
     // initializes the origins
     int[] dims = this.getDimensions();
@@ -143,7 +143,7 @@ public class SGHDF5Variable extends SGMDArrayVariable {
     }
     origins[dimensionIndex] = arrayIndex;
     final String value = mdArray.get(origins);
-    return SGDataUtility.decodeString(value);
+    return SGDataTextUtility.decodeString(value);
   }
 
   /**

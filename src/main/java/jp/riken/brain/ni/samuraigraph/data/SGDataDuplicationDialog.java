@@ -104,7 +104,7 @@ public abstract class SGDataDuplicationDialog extends SGDataDialog {
   }
 
   protected void setupTitle(String dataType) {
-    String title = SGDataUtility.createTitleString("Duplicate ", dataType);
+    String title = SGDataTextUtility.createTitleString("Duplicate ", dataType);
     this.setTitle(title);
   }
 }

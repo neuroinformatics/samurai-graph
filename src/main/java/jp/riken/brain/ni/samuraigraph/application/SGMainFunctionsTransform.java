@@ -17,7 +17,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumn;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayData;
@@ -459,7 +459,7 @@ class SGMainFunctionsTransform {
       // calculate the stride
       SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
       Map<String, SGIntegerSeriesSet> strideMap =
-          SGDataUtility.calcSDArrayDefaultStride(colArray, infoMap);
+          SGDataStrideUtility.calcSDArrayDefaultStride(colArray, infoMap);
       infoMap.putAll(strideMap);
     } else if (dg.equals(this.mSDArrayDataSetupWizardDialog)) {
       colInfoSet = this.mSDArrayDataSetupWizardDialog.getDataColumnInfoSet();
@@ -553,7 +553,7 @@ class SGMainFunctionsTransform {
       // calculate the stride
       SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
       Map<String, SGIntegerSeriesSet> strideMap =
-          SGDataUtility.calcNetCDFDefaultStride(colArray, infoMap);
+          SGDataStrideUtility.calcNetCDFDefaultStride(colArray, infoMap);
       infoMap.putAll(strideMap);
 
     } else if (dg.equals(this.mNetCDFDataSetupWizardDialog)) {
@@ -646,7 +646,7 @@ class SGMainFunctionsTransform {
       // calculate the stride
       SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
       Map<String, SGIntegerSeriesSet> strideMap =
-          SGDataUtility.calcMDArrayDefaultStride(colArray, infoMap);
+          SGDataStrideUtility.calcMDArrayDefaultStride(colArray, infoMap);
       infoMap.putAll(strideMap);
     } else if (dg.equals(dataSetupDialog)) {
       colInfoSet = dataSetupDialog.getDataColumnInfoSet();

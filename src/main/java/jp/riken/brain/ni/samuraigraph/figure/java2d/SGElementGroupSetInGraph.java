@@ -30,9 +30,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGTwoDimensionalArrayIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGXYSimpleIndexBlock;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData.ArrayDataProperties;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
+import jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGTwoDimensionalMDArrayData;
@@ -491,7 +492,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
    * @return true if a given data is under the grid mode
    */
   public boolean isGridMode(SGData data) {
-    if (SGDataUtility.isNetCDFData(data)) {
+    if (SGDataDataTypeUtility.isNetCDFData(data)) {
       SGNetCDFData nData = (SGNetCDFData) data;
       return !nData.isIndexAvailable();
     } else if (data instanceof SGTwoDimensionalMDArrayData) {
@@ -674,21 +675,21 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
       final String dataValueText) {
     StringBuilder sb = new StringBuilder();
     boolean exists = false;
-    if (SGDataUtility.isValidTooltipTextString(dataValueText)) {
+    if (SGDataViewerUtility.isValidTooltipTextString(dataValueText)) {
       if (exists) {
         sb.append(",<br>");
       }
       sb.append(dataValueText);
       exists = true;
     }
-    if (SGDataUtility.isValidTooltipTextString(spatiallyVariedText)) {
+    if (SGDataViewerUtility.isValidTooltipTextString(spatiallyVariedText)) {
       if (exists) {
         sb.append(",<br>");
       }
       sb.append(spatiallyVariedText);
       exists = true;
     }
-    if (SGDataUtility.isValidTooltipTextString(notSpatiallyVariedText)) {
+    if (SGDataViewerUtility.isValidTooltipTextString(notSpatiallyVariedText)) {
       if (exists) {
         sb.append(",<br>");
       }

@@ -26,7 +26,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementString;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementTimingLine;
 import jp.riken.brain.ni.samuraigraph.base.SGIProgressControl;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
@@ -652,13 +652,13 @@ public class SGFigureCreator implements SGIFigureConstants {
    */
   static SGTuple2f getDefaultFigureSize(final String dataType) {
     final float w, h;
-    if (SGDataUtility.isSXYTypeData(dataType)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       w = FIGURE_SXY_DEFAULT_WIDTH;
       h = FIGURE_SXY_DEFAULT_HEIGHT;
-    } else if (SGDataUtility.isVXYTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       w = FIGURE_VXY_DEFAULT_WIDTH;
       h = FIGURE_VXY_DEFAULT_HEIGHT;
-    } else if (SGDataUtility.isSXYZTypeData(dataType)) {
+    } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       w = FIGURE_SXYZ_DEFAULT_WIDTH;
       h = FIGURE_SXYZ_DEFAULT_HEIGHT;
     } else {

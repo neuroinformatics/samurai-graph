@@ -80,7 +80,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYMultipleDimensionData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
@@ -397,7 +398,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
       return false;
     }
 
-    if (SGDataUtility.isSXYTypeData(data.getDataType()) && SGDataUtility.isNetCDFData(data)) {
+    if (SGDataDataTypeUtility.isSXYTypeData(data.getDataType())
+        && SGDataDataTypeUtility.isNetCDFData(data)) {
       this.updateBarVerticalOfNetCDFData(legend, data);
     }
 
@@ -5468,7 +5470,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
       if (Float.isNaN(mag)) {
         this.mMagnitudePerCM = mag;
       } else {
-        this.mMagnitudePerCM = SGDataUtility.roundMagnitudePerCM(mag, vData);
+        this.mMagnitudePerCM = SGDataStrideUtility.roundMagnitudePerCM(mag, vData);
       }
       return true;
     }

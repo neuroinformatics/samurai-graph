@@ -66,7 +66,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility.MouseDragResult;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGIVXYTypeData;
@@ -1041,7 +1041,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
 
         String zTitle = null;
         String dataType = data.getDataType();
-        if (SGDataUtility.isSXYZTypeData(dataType)) {
+        if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
           zTitle = this.createTitleString(tData.getTitleZ(), AXIS_NORMAL);
 
         } else {

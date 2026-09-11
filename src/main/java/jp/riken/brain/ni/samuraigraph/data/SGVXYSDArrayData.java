@@ -178,7 +178,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
    * @return the bounds of x-values
    */
   public SGValueRange getBoundsX() {
-    return SGDataUtility.getBoundsX(this);
+    return SGDataRangeUtility.getBoundsX(this);
   }
 
   /**
@@ -187,7 +187,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
    * @return the bounds of y-values
    */
   public SGValueRange getBoundsY() {
-    return SGDataUtility.getBoundsY(this);
+    return SGDataRangeUtility.getBoundsY(this);
   }
 
   /**
@@ -272,7 +272,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
    */
   @Override
   public double[] getFirstComponentValueArray(final boolean all) {
-    return SGDataUtility.getFirstComponentValueArray(this, all);
+    return SGDataViewerUtility.getFirstComponentValueArray(this, all);
   }
 
   @Override
@@ -298,7 +298,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
    */
   @Override
   public double[] getSecondComponentValueArray(final boolean all) {
-    return SGDataUtility.getSecondComponentValueArray(this, all);
+    return SGDataViewerUtility.getSecondComponentValueArray(this, all);
   }
 
   @Override
@@ -512,20 +512,20 @@ public class SGVXYSDArrayData extends SGSDArrayData
     }
 
     final boolean polar = this.isPolar();
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     Integer xIndex = null;
     Integer yIndex = null;
     Integer fIndex = null;
     Integer sIndex = null;
     for (int ii = 0; ii < columns.length; ii++) {
-      if (SGDataUtility.isEqualColumnType(X_COORDINATE, columns[ii])) {
+      if (SGDataDataTypeUtility.isEqualColumnType(X_COORDINATE, columns[ii])) {
         xIndex = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(Y_COORDINATE, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(Y_COORDINATE, columns[ii])) {
         yIndex = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(first, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(first, columns[ii])) {
         fIndex = Integer.valueOf(ii);
-      } else if (SGDataUtility.isEqualColumnType(second, columns[ii])) {
+      } else if (SGDataDataTypeUtility.isEqualColumnType(second, columns[ii])) {
         sIndex = Integer.valueOf(ii);
       } else if ("".equals(columns[ii])) {
         continue;
@@ -628,8 +628,8 @@ public class SGVXYSDArrayData extends SGSDArrayData
    */
   public String[] getCurrentColumnType() {
     final boolean polar = this.isPolar();
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     final int colNum = this.getColNum();
     String[] array = new String[colNum];
     for (int ii = 0; ii < array.length; ii++) {
@@ -664,8 +664,8 @@ public class SGVXYSDArrayData extends SGSDArrayData
     colArray[3] = columns[this.mSecondComponentIndex.intValue()];
 
     final boolean polar = this.isPolar();
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     colArray[0].setColumnType(X_COORDINATE);
     colArray[1].setColumnType(Y_COORDINATE);
     colArray[2].setColumnType(first);
@@ -734,7 +734,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
 
   @Override
   public double[] getXValueArray(final boolean all) {
-    return SGDataUtility.getXValueArray(this, all);
+    return SGDataViewerUtility.getXValueArray(this, all);
   }
 
   @Override
@@ -755,7 +755,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
 
   @Override
   public double[] getYValueArray(final boolean all) {
-    return SGDataUtility.getYValueArray(this, all);
+    return SGDataViewerUtility.getYValueArray(this, all);
   }
 
   @Override
@@ -1040,7 +1040,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
       String indexDimName = indexDim.getShortName();
       Variable.Builder indexVarBuilder = this.addIndexVariable(builder, indexDim);
       indexVarBuilder.addAttribute(
-          SGDataUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+          SGDataFileUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
 
       // Add data columns as variables.
       Variable.Builder varXBuilder = builder.addVariable("column0", DataType.DOUBLE, indexDimName);
@@ -1074,10 +1074,10 @@ public class SGVXYSDArrayData extends SGSDArrayData
       varNames[2] = "column2";
       varNames[3] = "column3";
 
-      varXBuilder.addAttribute(SGDataUtility.getValueTypeAttribute(colX.getValueType()));
-      varYBuilder.addAttribute(SGDataUtility.getValueTypeAttribute(colY.getValueType()));
-      varC1Builder.addAttribute(SGDataUtility.getValueTypeAttribute(colC1.getValueType()));
-      varC2Builder.addAttribute(SGDataUtility.getValueTypeAttribute(colC2.getValueType()));
+      varXBuilder.addAttribute(SGDataFileUtility.getValueTypeAttribute(colX.getValueType()));
+      varYBuilder.addAttribute(SGDataFileUtility.getValueTypeAttribute(colY.getValueType()));
+      varC1Builder.addAttribute(SGDataFileUtility.getValueTypeAttribute(colC1.getValueType()));
+      varC2Builder.addAttribute(SGDataFileUtility.getValueTypeAttribute(colC2.getValueType()));
 
       try (NetcdfFormatWriter writer = builder.build()) {
 
@@ -1139,8 +1139,8 @@ public class SGVXYSDArrayData extends SGSDArrayData
     // set edited values
     if (edit) {
       final boolean polar = this.isPolar();
-      final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-      final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+      final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+      final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
       SGIntegerSeriesSet stride = this.getStride();
       int[] indices = stride.getNumbers();
       for (int ii = 0; ii < this.mEditedDataValueList.size(); ii++) {
@@ -1175,12 +1175,12 @@ public class SGVXYSDArrayData extends SGSDArrayData
 
   @Override
   protected Object[][] getArchiveDataSetExportValues(SGExportParameter mode) {
-    return this.getValueTable(mode, SGDataUtility.getArchiveDataSetBufferPolicy(this));
+    return this.getValueTable(mode, SGDataViewerUtility.getArchiveDataSetBufferPolicy(this));
   }
 
   @Override
   public Object[][] getValueTable(final SGExportParameter mode, SGDataBufferPolicy policy) {
-    return SGDataUtility.getValueTable(this, mode, policy);
+    return SGDataBufferUtility.getValueTable(this, mode, policy);
   }
 
   /**
@@ -1311,13 +1311,13 @@ public class SGVXYSDArrayData extends SGSDArrayData
 
     String strF = Integer.toString(this.mFirstComponentIndex + 1);
     varList.add(strF);
-    columnTypeList.add(SGDataUtility.getVXYFirstComponentColumnType(polar));
+    columnTypeList.add(SGDataStrideUtility.getVXYFirstComponentColumnType(polar));
 
     String strS = Integer.toString(this.mSecondComponentIndex + 1);
     varList.add(strS);
-    columnTypeList.add(SGDataUtility.getVXYSecondComponentColumnType(polar));
+    columnTypeList.add(SGDataStrideUtility.getVXYSecondComponentColumnType(polar));
 
-    return SGDataUtility.getDataColumnTypeCommand(varList, columnTypeList);
+    return SGDataMiscUtility.getDataColumnTypeCommand(varList, columnTypeList);
   }
 
   @Override
@@ -1339,7 +1339,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsX() {
-    return SGDataUtility.getAllAnimationFrameBoundsX(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsX(this);
   }
 
   /**
@@ -1349,7 +1349,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
    */
   @Override
   public SGValueRange getAllAnimationFrameBoundsY() {
-    return SGDataUtility.getAllAnimationFrameBoundsY(this);
+    return SGDataRangeUtility.getAllAnimationFrameBoundsY(this);
   }
 
   /**
@@ -1363,8 +1363,8 @@ public class SGVXYSDArrayData extends SGSDArrayData
     list.add(SGIDataColumnTypeConstants.X_COORDINATE);
     list.add(SGIDataColumnTypeConstants.Y_COORDINATE);
     final boolean polar = this.isPolar();
-    final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-    final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+    final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+    final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
     list.add(first);
     list.add(second);
     String[] ret = list.toArray(new String[list.size()]);
@@ -1378,12 +1378,12 @@ public class SGVXYSDArrayData extends SGSDArrayData
    */
   @Override
   public String getPreferredDataViewColumnType() {
-    return SGDataUtility.getPreferredDataViewColumnType(this);
+    return SGDataViewerUtility.getPreferredDataViewColumnType(this);
   }
 
   @Override
   public Double getDataViewerValue(String columnType, int row, int col) {
-    return SGDataUtility.getDataViewerValue(this, columnType, row, col);
+    return SGDataViewerUtility.getDataViewerValue(this, columnType, row, col);
   }
 
   @Override
@@ -1448,7 +1448,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
   @Override
   public void setDataViewerValue(String columnType, int row, int col, Object value) {
     SGDataValueHistory editedValue =
-        SGDataUtility.setDataViewerValue(this, columnType, row, col, value);
+        SGDataViewerUtility.setDataViewerValue(this, columnType, row, col, value);
     if (editedValue != null) {
       this.mEditedDataValueList.add(editedValue);
     }
@@ -1498,7 +1498,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
 
   @Override
   public void setDataValue(SGDataValueHistory value) {
-    SGDataUtility.setDataViewerValue(
+    SGDataViewerUtility.setDataViewerValue(
         this, value.getColumnType(), value.getRowIndex(), value.getColumnIndex(), value.getValue());
   }
 
@@ -1528,7 +1528,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
 
   @Override
   public SGDataValue getDataValue(final int index) {
-    return SGDataUtility.getDataValue(this, index);
+    return SGDataViewerUtility.getDataValue(this, index);
   }
 
   @Override
@@ -1561,7 +1561,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
   @Override
   protected boolean matches(
       final int col, final int row, String columnType, SGDataValueHistory value, final double d) {
-    return SGDataUtility.matches(col, row, columnType, value, d);
+    return SGDataViewerUtility.matches(col, row, columnType, value, d);
   }
 
   @Override

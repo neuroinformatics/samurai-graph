@@ -30,7 +30,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.base.SGXYSimpleIndexBlock;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData;
-import jp.riken.brain.ni.samuraigraph.data.SGDataUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.VXYDataValue;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
@@ -126,7 +129,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
       return false;
     }
     SGIVXYTypeData vData = (SGIVXYTypeData) this.mData;
-    this.mMagnitudePerCM = SGDataUtility.roundMagnitudePerCM(mag, vData);
+    this.mMagnitudePerCM = SGDataStrideUtility.roundMagnitudePerCM(mag, vData);
     this.updateDrawingElementsLocation(this.mGraph.getData(this));
     return true;
   }
@@ -950,7 +953,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
     SGArrayData aData = (SGArrayData) this.mData;
     SGDataColumnInfo[] preColumnInfo = aData.getColumnInfo();
     try {
-      if (SGDataUtility.isMDArrayData(this.mData)) {
+      if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
         SGVXYMDArrayData mdData = (SGVXYMDArrayData) this.mData;
         if (mdData.setColumnType(cols) == false) {
           this.setFailedColumnTypeResult(map, result);
@@ -967,24 +970,24 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
       }
     } finally {
       // updates the stride with new column types
-      if (!SGDataUtility.hasEqualInput(preColumnInfo, cols)) {
+      if (!SGDataColumnInfoUtility.hasEqualInput(preColumnInfo, cols)) {
         Map<String, Object> infoMap = new HashMap<String, Object>();
         infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, this.mData.getDataType());
         infoMap.put(
             SGIDataInformationKeyConstants.KEY_FIGURE_SIZE,
             new SGTuple2f(this.mGraph.getGraphRectWidth(), this.mGraph.getGraphRectHeight()));
-        if (SGDataUtility.isSDArrayData(this.mData)) {
+        if (SGDataDataTypeUtility.isSDArrayData(this.mData)) {
           SGVXYSDArrayData sdData = (SGVXYSDArrayData) this.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcSDArrayDefaultStride(cols, infoMap);
+              SGDataStrideUtility.calcSDArrayDefaultStride(cols, infoMap);
           SGIntegerSeriesSet stride =
               strideMap.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
           sdData.setStride(stride);
-        } else if (SGDataUtility.isNetCDFData(this.mData)) {
+        } else if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
           SGVXYNetCDFData ncData = (SGVXYNetCDFData) this.mData;
           infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, ncData.isPolar());
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcNetCDFDefaultStride(cols, infoMap);
+              SGDataStrideUtility.calcNetCDFDefaultStride(cols, infoMap);
           SGIntegerSeriesSet strideX =
               strideMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
           ncData.setXStride(strideX);
@@ -994,14 +997,14 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
           SGIntegerSeriesSet stride =
               strideMap.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
           ncData.setIndexStride(stride);
-        } else if (SGDataUtility.isMDArrayData(this.mData)) {
+        } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
           SGVXYMDArrayData mdData = (SGVXYMDArrayData) this.mData;
           infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, mdData.isPolar());
-          if (!SGDataUtility.addGridType(cols, this.mData.getDataType(), infoMap)) {
+          if (!SGDataMiscUtility.addGridType(cols, this.mData.getDataType(), infoMap)) {
             return false;
           }
           Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataUtility.calcMDArrayDefaultStride(cols, infoMap);
+              SGDataStrideUtility.calcMDArrayDefaultStride(cols, infoMap);
           SGIntegerSeriesSet strideX =
               strideMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
           mdData.setXStride(strideX);
@@ -1019,7 +1022,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
     }
 
     // sets animation dimension
-    if (SGDataUtility.isMDArrayData(this.mData)) {
+    if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
       List<String> keys = map.getKeys();
       String strTimeDimension = map.getValueString(COM_DATA_ANIMATION_FRAME_DIMENSION);
       final boolean timeDimContained =
@@ -1172,8 +1175,8 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
       final double[] yValues = dataVXY.getYValueArray(true);
 
       final boolean polar = dataVXY.isPolar();
-      final String first = SGDataUtility.getVXYFirstComponentColumnType(polar);
-      final String second = SGDataUtility.getVXYSecondComponentColumnType(polar);
+      final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
+      final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);
 
       if (first.equals(columnType) || second.equals(columnType)) {
         for (SGXYSimpleIndexBlock block : blockList) {
