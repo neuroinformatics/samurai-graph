@@ -310,7 +310,7 @@ public final class SGDataFileUtility
     NamedNodeMap nodeMap = (NamedNodeMap) infoMap.get(SGIFigureElementGraph.KEY_NODE_MAP);
     Map<String, int[]> originMap = null;
     if (nodeMap != null) {
-      originMap = SGDefaultColumnTypeUtility.getMDArrayDataOriginMap(nodeMap);
+      originMap = SGDefaultColumnTypeMDArrayUtility.getMDArrayDataOriginMap(nodeMap);
       if (originMap == null) {
         return null;
       }
@@ -434,7 +434,7 @@ public final class SGDataFileUtility
     NamedNodeMap nodeMap = (NamedNodeMap) infoMap.get(SGIFigureElementGraph.KEY_NODE_MAP);
     Map<String, Integer> originMap = null;
     if (nodeMap != null) {
-      originMap = SGDefaultColumnTypeUtility.getNetCDFOriginMap(nodeMap);
+      originMap = SGDefaultColumnTypeNetCDFUtility.getNetCDFOriginMap(nodeMap);
       if (originMap == null) {
         return null;
       }
