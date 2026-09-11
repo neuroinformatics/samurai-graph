@@ -5,23 +5,24 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage (Top Priority)
 
-Actual JaCoCo measurement (instruction coverage) is **3.0%** overall.
+Actual JaCoCo measurement (instruction coverage) is **4.0%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
 | `com.github...lib.mdarray` | 97.4% | 4 | Pure logic, well covered |
 | `org.freehep...util.export` | 86.8% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 68.2% | 0 (nested under `figure.java2d`) | Few instructions |
-| `jp...samuraigraph.base` | 9.3% | 19 | Only the pure-logic parts are tested |
-| `com.github...lib.hdf5` | 4.9% | 4 | Vendored shim |
-| `jp...samuraigraph.data` | 4.6% | 31 | Largest application package |
+| `com.github...lib.hdf5` | 14.1% | 5 | Round-trip tests read/write real HDF5 |
+| `jp...samuraigraph.base` | 9.9% | 18 | Only the pure-logic parts are tested |
+| `jp...samuraigraph.data` | 7.1% | 34 | Largest application package |
+| `jp...samuraigraph.application` | 1.4% | 3 | |
 | `jp...samuraigraph.figure` | 1.4% | 2 | |
-| `jp...samuraigraph.application` | 0.3% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **0.0%** | 0 | All 109 rendering-layer files untested |
 
-- 62 test files / 695 test methods against 573 main files / ~273,839 LOC
-- `SGDataUtility` is up to 11.3%; most of its remaining uncovered methods
-  require data instances or NetCDF/HDF5 files
+- 67 test files / 717 test methods against 573 main files / ~273,839 LOC
+- File-based tests cover the main import paths: example NetCDF files
+  (parsing, variables, SXY data objects), a generated MATLAB file,
+  a generated HDF5 file (write/read round trip), and a generated CSV
 - Tight coupling to Swing/AWT makes headless testing hard; the design itself
   is part of the problem
 - Thinning out tests in the pure-logic `data` / `base` / `mdarray` layers is
