@@ -5,21 +5,23 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage (Top Priority)
 
-Actual JaCoCo measurement (instruction coverage) is **2.7%** overall.
+Actual JaCoCo measurement (instruction coverage) is **3.0%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
 | `com.github...lib.mdarray` | 97.4% | 4 | Pure logic, well covered |
 | `org.freehep...util.export` | 86.8% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 68.2% | 0 (nested under `figure.java2d`) | Few instructions |
-| `jp...samuraigraph.base` | 9.2% | 19 | Only the pure-logic parts are tested |
+| `jp...samuraigraph.base` | 9.3% | 19 | Only the pure-logic parts are tested |
 | `com.github...lib.hdf5` | 4.9% | 4 | Vendored shim |
-| `jp...samuraigraph.data` | 3.7% | 31 | Largest application package |
+| `jp...samuraigraph.data` | 4.6% | 31 | Largest application package |
 | `jp...samuraigraph.figure` | 1.4% | 2 | |
 | `jp...samuraigraph.application` | 0.3% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **0.0%** | 0 | All 109 rendering-layer files untested |
 
-- 62 test files / 642 test methods against 573 main files / ~273,839 LOC
+- 62 test files / 695 test methods against 573 main files / ~273,839 LOC
+- `SGDataUtility` is up to 11.3%; most of its remaining uncovered methods
+  require data instances or NetCDF/HDF5 files
 - Tight coupling to Swing/AWT makes headless testing hard; the design itself
   is part of the problem
 - Thinning out tests in the pure-logic `data` / `base` / `mdarray` layers is
