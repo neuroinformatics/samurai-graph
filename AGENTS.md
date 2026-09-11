@@ -26,7 +26,7 @@ After making any code modifications, you **MUST** run the verification process i
 Format all changed files using:
 
 ```bash
-mvn spotless:apply
+./mvnw spotless:apply
 ```
 
 ### Step 2: Clean Build Artifacts
@@ -34,7 +34,7 @@ mvn spotless:apply
 Clean the project to avoid state pollution from prior builds:
 
 ```bash
-mvn clean
+./mvnw clean
 ```
 
 ### Step 3: Compile with Lint Warning Flags
@@ -42,17 +42,17 @@ mvn clean
 Compile the source code with lint flags to verify there are no compilation warnings, deprecation warnings, or lint failures:
 
 ```bash
-mvn compile
+./mvnw compile
 ```
 
-*(Note: The `pom.xml` is configured to automatically pass `-Xlint:all` to the compiler. Carefully review the output of `mvn compile` and resolve any compiler warnings introduced by your changes.)*
+*(Note: The `pom.xml` is configured to automatically pass `-Xlint:all` to the compiler. Carefully review the output of `./mvnw compile` and resolve any compiler warnings introduced by your changes.)*
 
 ### Step 4: Run Tests
 
 Execute the test suite to verify no existing tests are broken:
 
 ```bash
-mvn test
+./mvnw test
 ```
 
 Review the test output for any failures or errors. Write new tests for new functionality and update existing tests when behavior changes.
@@ -61,14 +61,14 @@ Review the test output for any failures or errors. Write new tests for new funct
 
 ## 3. Distribution Build (jpackage)
 
-The project uses [jpackage](https://docs.oracle.com/en/java/javase/21/jpackage/) to create native platform installers. Native packaging is bound to the `verify` phase (not `package`), so `mvn package` builds only the fat JAR and jpackage input directory, while `mvn verify` produces the platform-specific installer.
+The project uses [jpackage](https://docs.oracle.com/en/java/javase/21/jpackage/) to create native platform installers. Native packaging is bound to the `verify` phase (not `package`), so `./mvnw package` builds only the fat JAR and jpackage input directory, while `./mvnw verify` produces the platform-specific installer.
 
 The appropriate jpackage profile is auto-activated based on the host OS. Each platform's installer must be built on that platform.
 
 | Command | Phase | Output |
 |--------|-------|--------|
-| `mvn package` | `package` | Fat JAR + jpackage input directory |
-| `mvn verify` | `verify` | Above + native platform installer |
+| `./mvnw package` | `package` | Fat JAR + jpackage input directory |
+| `./mvnw verify` | `verify` | Above + native platform installer |
 
 | Platform | Installer Output |
 |----------|------------------|
@@ -80,7 +80,7 @@ The appropriate jpackage profile is auto-activated based on the host OS. Each pl
 > On Fedora/RHEL, the system OpenJDK package modifies `java.security`, which causes `jlink` (used internally by `jpackage`) to fail with `"Error: .../java.security has been modified"`. Use a non-distro JDK (e.g. Eclipse Temurin) via `JAVA_HOME` when building Linux packages:
 >
 > ```bash
-> JAVA_HOME=/usr/lib/jvm/temurin-21-jdk mvn clean verify
+> JAVA_HOME=/usr/lib/jvm/temurin-21-jdk ./mvnw clean verify
 > ```
 
 ---

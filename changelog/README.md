@@ -16,7 +16,7 @@ This directory contains the source files and tooling for generating `ChangeLog.h
 `ChangeLog.html` is automatically generated during the Maven build (`generate-resources` phase):
 
 ```bash
-mvn generate-resources
+./mvnw generate-resources
 ```
 
 The output is placed at `target/classes/ChangeLog.html` and included in the packaged JAR.
@@ -42,5 +42,5 @@ To add a new release, edit `product.xml` and insert a new `<release>` entry at t
 </product>
 ```
 
-Then run `mvn generate-resources` to regenerate `ChangeLog.html`.
+Then run `./mvnw generate-resources` to regenerate `ChangeLog.html`.
 

@@ -42,18 +42,18 @@ page.
 ### Build from Source
 
 ```bash
-mvn clean package
+./mvnw clean package
 ```
 
-The executable JAR is created at
-`target/samurai-graph-<version>-shaded.jar`.
+The executable fat JAR is created at
+`target/samurai-graph-<version>.jar`.
 
 ## Usage
 
 Launch the application:
 
 ```bash
-java -jar target/samurai-graph-*-shaded.jar
+java -jar target/samurai-graph-<version>.jar
 ```
 
 ### Supported Data Formats
@@ -62,7 +62,7 @@ java -jar target/samurai-graph-*-shaded.jar
 |--------|-----------------|
 | CSV / TSV | `.txt`, `.csv` (whitespace or comma delimited) |
 | NetCDF | `.nc` |
-| HDF5 | `.h5`, `.hdf5` |
+| HDF5 | `.h5`, `.he5`, `.hdf5`, `.hdf` |
 | MATLAB | `.mat` (v5) |
 
 ### Graph Property Files
@@ -76,6 +76,7 @@ Example property files are included in the `examples/data/` directory.
 samurai-graph/
 ├── src/main/java/       # Application source code
 ├── src/main/resources/  # Icons, properties, DTDs
+├── src/main/assembly/   # jpackage input assembly descriptor
 ├── src/main/jpackage/   # Platform-specific installer resources
 ├── src/test/java/       # JUnit 5 test suite
 ├── plugins/jna/         # JNA native plugin (C source)
@@ -89,27 +90,27 @@ samurai-graph/
 ### Prerequisites
 
 - Java 21 (JDK)
-- Maven 3.9+
+- Maven 3.9+ (or use the bundled Maven Wrapper: `./mvnw`)
 
 ### Build Commands
 
 ```bash
 # Format code (Google Java Format via Spotless)
-mvn spotless:apply
+./mvnw spotless:apply
 
 # Clean compile with lint checks
-mvn clean compile
+./mvnw clean compile
 
 # Create fat JAR
-mvn clean package
+./mvnw clean package
 
-# Create native installer (requires building on target OS)
+# Create native installer for the host OS (profile auto-activates; build on target OS)
 # Windows:
-mvn clean package -Pjpackage-windows
+./mvnw clean verify
 # macOS:
-mvn clean package -Pjpackage-mac
+./mvnw clean verify
 # Linux (use non-distro JDK on Fedora/RHEL):
-JAVA_HOME=/usr/lib/jvm/temurin-21-jdk mvn clean package -Pjpackage-linux
+JAVA_HOME=/usr/lib/jvm/temurin-21-jdk ./mvnw clean verify
 ```
 
 ### Testing
@@ -118,10 +119,10 @@ This project uses **JUnit 5** (Jupiter) with the Maven Surefire plugin.
 
 ```bash
 # Run all tests
-mvn test
+./mvnw test
 
 # Run a single test class
-mvn -Dtest=SGPeriodTest test
+./mvnw -Dtest=SGPeriodTest test
 ```
 
 The test suite covers utility and data classes in packages such as `lib.mdarray`, `base`, `data`, and `figure`.
