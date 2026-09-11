@@ -14,12 +14,19 @@ Actual JaCoCo measurement (instruction coverage) is **4.0%** overall.
 | `jp...samuraigraph.export` | 68.2% | 0 (nested under `figure.java2d`) | Few instructions |
 | `com.github...lib.hdf5` | 14.1% | 5 | Round-trip tests read/write real HDF5 |
 | `jp...samuraigraph.base` | 9.9% | 18 | Only the pure-logic parts are tested |
-| `jp...samuraigraph.data` | 7.1% | 34 | Largest application package |
+| `jp...samuraigraph.data` | 7.2% | 38 | Largest application package |
 | `jp...samuraigraph.application` | 1.4% | 3 | |
 | `jp...samuraigraph.figure` | 1.4% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **0.0%** | 0 | All 109 rendering-layer files untested |
 
-- 67 test files / 717 test methods against 573 main files / ~273,839 LOC
+- 71 test files / 765 test methods against 582 main files / ~274k LOC
+- `SGDataUtility` has been fully split into ten single-purpose utility
+  classes: `SGDataDataTypeUtility` (76.4%), `SGDataTextUtility` (78.5%),
+  `SGDataColumnTitleUtility` (78.0%), `SGDataColumnInfoUtility` (21.9%),
+  `SGDataRangeUtility` (17.8%), `SGDataMiscUtility` (15.5%),
+  `SGDataStrideUtility` (1.4%), `SGDataBufferUtility` (1.4%),
+  `SGDataViewerUtility` (1.5%), `SGDataFileUtility` (0.9%) — the old
+  class was deleted
 - File-based tests cover the main import paths: example NetCDF files
   (parsing, variables, SXY data objects), a generated MATLAB file,
   a generated HDF5 file (write/read round trip), and a generated CSV
@@ -32,8 +39,7 @@ Actual JaCoCo measurement (instruction coverage) is **4.0%** overall.
 
 | LOC | File | Problem |
 |-----|------|---------|
-| 8,237 | `data/SGDataUtility.java` | 230 static methods in one utility grab-bag |
-| 7,955 | `figure/java2d/SGFigureElementLegend.java` | |
+| 7,955 | `figure/java2d/SGFigureElementLegend.java` | Largest class |
 | 7,087 | `base/SGDrawingWindow.java` | Frame handling mixed with window logic |
 | 6,822 | `application/SGMainFunctions.java` | All commands, menu actions, and transforms in one class |
 | 5,754 | `figure/java2d/SGAxisElement.java` | |
@@ -43,7 +49,7 @@ Actual JaCoCo measurement (instruction coverage) is **4.0%** overall.
 | 4,532 | `data/SGSXYMDArrayMultipleData.java` | |
 | 4,511 | `base/SGFigure.java` | |
 
-69 files exceed 1,000 lines; 129 exceed 500.
+68 files exceed 1,000 lines; 129 exceed 500.
 
 Note: `SGMainFunctionsSplitMerge` (588 LOC) and `SGMainFunctionsTransform`
 (700 LOC) are separate classes, so the split of `SGMainFunctions` has started,
@@ -99,8 +105,8 @@ but the main class is still 6,822 lines.
 ## Recommended Priority
 
 1. **Split candidates** (progressively, guarded by tests):
-   `SGMainFunctions` / `SGDrawingWindow` / `SGDataUtility`
-2. **Integrate the dual hierarchy**: design work to merge `figure` and
+   `SGMainFunctions` / `SGDrawingWindow`
+3. **Integrate the dual hierarchy**: design work to merge `figure` and
    `figure.java2d` into a single layer
-3. **Thicken tests**: add unit tests to the pure-logic `data` / `base` /
+4. **Thicken tests**: add unit tests to the pure-logic `data` / `base` /
    `mdarray` layers to build a refactoring safety net
