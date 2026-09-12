@@ -67,6 +67,11 @@ public class SGDrawingWindow extends JFrame
         SGIProgressControl {
 
   private static final Logger logger = LoggerFactory.getLogger(SGDrawingWindow.class);
+  private final SGDrawingWindowClipboard mClipboard = new SGDrawingWindowClipboard(this);
+
+  SGDrawingWindowClipboard getClipboard() {
+    return this.mClipboard;
+  }
 
   // serialVersionUID
   private static final long serialVersionUID = -7587763518020468378L;
@@ -112,23 +117,6 @@ public class SGDrawingWindow extends JFrame
 
   /** Bounds of the client area. */
   private transient Rectangle2D mClientRect = null;
-
-  /** The list of copied figures in this window. */
-  private transient List<SGFigure> mCopiedFiguresList = new ArrayList<SGFigure>();
-
-  /** The list of copied objects in this window such as labels or symbols. */
-  private transient List<SGICopyable> mCopiedObjectsList = new ArrayList<SGICopyable>();
-
-  /** The list of copied data objects in this window. */
-  private transient List<SGData> mCopiedDataObjectsList = new ArrayList<SGData>();
-
-  /** The list of names of copied data objects. */
-  private transient List<String> mCopiedDataNameList = new ArrayList<String>();
-
-  /** The list of properties of copied data objects. */
-  private transient List<Map<Class<? extends SGIFigureElement>, SGProperties>>
-      mCopiedDataPropertiesMapList =
-          new ArrayList<Map<Class<? extends SGIFigureElement>, SGProperties>>();
 
   /** The background image. */
   private transient BackgroundImage mBackgroundImage = null;
@@ -198,26 +186,7 @@ public class SGDrawingWindow extends JFrame
     // dispose figures
     this.removeAllFigures();
 
-    // dispose copied objects
-    for (int ii = 0; ii < this.mCopiedDataObjectsList.size(); ii++) {
-      SGData data = this.mCopiedDataObjectsList.get(ii);
-      data.dispose();
-    }
-    for (int ii = 0; ii < this.mCopiedDataPropertiesMapList.size(); ii++) {
-      Map<Class<? extends SGIFigureElement>, SGProperties> map =
-          this.mCopiedDataPropertiesMapList.get(ii);
-      map.clear();
-    }
-    for (int ii = 0; ii < this.mCopiedObjectsList.size(); ii++) {
-      Object obj = this.mCopiedObjectsList.get(ii);
-      if (obj instanceof SGIDisposable) {
-        SGIDisposable disp = (SGIDisposable) obj;
-        disp.dispose();
-      }
-    }
-
-    // clear lists of copied objects
-    this.clearCopiedObjectsList();
+    this.mClipboard.disposeCopiedData();
 
     // dispose temporary properties
     if (this.mTemporaryProperties != null) {
@@ -665,7 +634,7 @@ public class SGDrawingWindow extends JFrame
    * @param figure
    * @return
    */
-  private boolean hideFigure(SGFigure figure) {
+  boolean hideFigure(SGFigure figure) {
     this.notifyToListener(NOTIFY_FIGURE_WILL_BE_HIDDEN);
     figure.setVisible(false);
     figure.setChanged(true);
@@ -733,6 +702,99 @@ public class SGDrawingWindow extends JFrame
   }
 
   //
+  public void pasteToFigures(
+      List<SGICopyable> list,
+      List<SGData> dataList,
+      List<String> nameList,
+      List<Map<Class<? extends SGIFigureElement>, SGProperties>> propertiesMapList) {
+    this.mClipboard.pasteToFigures(list, dataList, nameList, propertiesMapList);
+  }
+
+  public void doCopy() {
+    this.mClipboard.doCopy();
+  }
+
+  void copyFocusedObjects() {
+    this.mClipboard.copyFocusedObjects();
+  }
+
+  public void doCut() {
+    this.mClipboard.doCut();
+  }
+
+  void cutFocusedObjects() {
+    this.mClipboard.cutFocusedObjects();
+  }
+
+  public boolean cutOrCopyFigure(final int id, final boolean isCopy) {
+    return this.mClipboard.cutOrCopyFigure(id, isCopy);
+  }
+
+  public void doPaste() {
+    this.mClipboard.doPaste();
+  }
+
+  void pasteCopiedObjects() {
+    this.mClipboard.pasteCopiedObjects();
+  }
+
+  public void doDuplicate() {
+    this.mClipboard.doDuplicate();
+  }
+
+  void duplicateFocusedObjects() {
+    this.mClipboard.duplicateFocusedObjects();
+  }
+
+  public void doDelete() {
+    this.mClipboard.doDelete();
+  }
+
+  void deleteFocusedObjects() {
+    this.mClipboard.deleteFocusedObjects();
+  }
+
+  void cutAllObjectsInVisibleFigures() {
+    this.mClipboard.cutAllObjectsInVisibleFigures();
+  }
+
+  void copyAllObjectsInVisibleFigures() {
+    this.mClipboard.copyAllObjectsInVisibleFigures();
+  }
+
+  void cutOrCopyAllObjectsInVisibleFigures(final boolean isCopy) {
+    this.mClipboard.cutOrCopyAllObjectsInVisibleFigures(isCopy);
+  }
+
+  public List<SGICopyable> getCopiedObjectsList() {
+    return this.mClipboard.getCopiedObjectsList();
+  }
+
+  public List<SGData> getCopiedObjectsDataList() {
+    return this.mClipboard.getCopiedObjectsDataList();
+  }
+
+  public List<String> getCopiedDataNameList() {
+    return this.mClipboard.getCopiedDataNameList();
+  }
+
+  public List<Map<Class<? extends SGIFigureElement>, SGProperties>>
+      getCopiedDataPropertiesMapList() {
+    return this.mClipboard.getCopiedDataPropertiesMapList();
+  }
+
+  public void clearCopiedObjectsList() {
+    this.mClipboard.clearCopiedObjectsList();
+  }
+
+  void notifyPasteToFocusedFigures() {
+    this.mClipboard.notifyPasteToFocusedFigures();
+  }
+
+  public List<SGFigure> getCopiedFiguresList() {
+    return this.mClipboard.getCopiedFiguresList();
+  }
+
   public boolean needsConfirmationBeforeDiscard() {
     return (this.getVisibleFigureList().size() != 0 && !this.isSaved());
   }
@@ -941,15 +1003,6 @@ public class SGDrawingWindow extends JFrame
   public boolean getFocusedObjectsList(List<SGISelectable> list) {
     list.addAll(this.getFocusedFigureList());
     return true;
-  }
-
-  /**
-   * Returns a list of copied figures.
-   *
-   * @return a list of copied figures
-   */
-  public List<SGFigure> getCopiedFiguresList() {
-    return new ArrayList<SGFigure>(this.mCopiedFiguresList);
   }
 
   /** */
@@ -2140,47 +2193,6 @@ public class SGDrawingWindow extends JFrame
     return this.getInsertFlag(MENUBARCMD_INSERT_LINE);
   }
 
-  /**
-   * Paste the objects to the target figures.
-   *
-   * @param list a list of the objects.
-   * @param dataList a list of a data objects.
-   * @param nameList a list of a data name.
-   * @param propertiesMapList a list of property map
-   */
-  public void pasteToFigures(
-      List<SGICopyable> list,
-      List<SGData> dataList,
-      List<String> nameList,
-      List<Map<Class<? extends SGIFigureElement>, SGProperties>> propertiesMapList) {
-
-    List<SGFigure> fList = this.getFocusedFigureList();
-    if (fList.size() == 0) {
-      return;
-    }
-
-    // paste to the target object
-    for (int ii = 0; ii < fList.size(); ii++) {
-      SGFigure figure = fList.get(ii);
-      figure.paste(list);
-      for (int jj = 0; jj < nameList.size(); jj++) {
-        SGData data = dataList.get(jj);
-        String name = nameList.get(jj);
-        Map<Class<? extends SGIFigureElement>, SGProperties> map = propertiesMapList.get(jj);
-        SGData dataNew = (SGData) data.copy();
-        if (figure.addData(dataNew, name, map) == false) {
-          throw new Error("Failed to add data.");
-        }
-      }
-    }
-
-    // repaint after pasted
-    this.repaintContentPane();
-
-    // notify the change to the root
-    this.notifyToRoot();
-  }
-
   /** */
   protected void updateDataItem() {
     this.updateFocusedObjectItem();
@@ -2779,164 +2791,6 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /** Copy the focused objects. */
-  public void doCopy() {
-    this.copyFocusedObjects();
-  }
-
-  // Copy the focused objects.
-  void copyFocusedObjects() {
-    // get copied objects from all figures
-    this.copyAllObjectsInVisibleFigures();
-
-    // notify the copy command
-    this.notifyToListener(MENUBARCMD_COPY);
-
-    // update the menu items
-    this.updateFocusedObjectItem();
-  }
-
-  /** Cut the focused objects. */
-  public void doCut() {
-    this.cutFocusedObjects();
-  }
-
-  // Cut focused objects.
-  private void cutFocusedObjects() {
-    // get copied objects from all figures
-    this.cutAllObjectsInVisibleFigures();
-
-    // notify the cut command
-    this.notifyToListener(MENUBARCMD_CUT);
-
-    // notify the change to the root
-    this.notifyToRoot();
-
-    // update the menu items
-    this.updateFocusedObjectItem();
-
-    // repaint
-    this.repaintContentPane();
-  }
-
-  /**
-   * @param id
-   * @param isCopy
-   * @return
-   */
-  public boolean cutOrCopyFigure(final int id, final boolean isCopy) {
-    // get the figure
-    SGFigure f = this.getFigure(id);
-    if (f == null) {
-      return false;
-    }
-    if (f.isVisible() == false) {
-      return false;
-    }
-
-    // add to the attribute
-    this.mCopiedFiguresList.add(f);
-
-    // hide when cut the figure
-    if (!isCopy) {
-      this.hideFigure(f);
-    }
-
-    // notify the command
-    if (isCopy) {
-      this.notifyToListener(MENUBARCMD_COPY);
-    } else {
-      this.notifyToListener(MENUBARCMD_CUT);
-    }
-
-    // notify the change to the root
-    this.notifyToRoot();
-
-    // update the menu items
-    this.updateFocusedObjectItem();
-
-    // repaint
-    this.repaintContentPane();
-
-    return true;
-  }
-
-  /** Paste the copied objects. */
-  public void doPaste() {
-    this.pasteCopiedObjects();
-  }
-
-  // Paste the copied objects.
-  private void pasteCopiedObjects() {
-    this.notifyToListener(MENUBARCMD_PASTE);
-
-    // notify the change to the root
-    this.notifyToRoot();
-  }
-
-  /** Duplicate the focused objects. */
-  public void doDuplicate() {
-    this.duplicateFocusedObjects();
-  }
-
-  // Duplicate the focused objects.
-  void duplicateFocusedObjects() {
-    ArrayList<SGFigure> list = this.getVisibleFigureList();
-
-    // duplicate child object of all figures
-    for (int ii = 0; ii < list.size(); ii++) {
-      SGFigure figure = list.get(ii);
-      if (figure.duplicateFocusedObjects() == false) {
-        return;
-      }
-    }
-
-    // repaint after duplication
-    this.repaintContentPane();
-
-    // notify the duplication command
-    this.notifyToListener(MENUBARCMD_DUPLICATE);
-
-    // set unfocused the focused figures
-    List<SGFigure> fList = this.getFocusedFigureList();
-    for (int ii = 0; ii < fList.size(); ii++) {
-      SGFigure figure = fList.get(ii);
-      this.setFocusedFigure(figure, false);
-    }
-
-    // set focused the duplicated figures
-    List<SGFigure> listNew = this.getVisibleFigureList();
-    for (int ii = 0; ii < listNew.size(); ii++) {
-      SGFigure figure = listNew.get(ii);
-      if (list.contains(figure) == false) {
-        this.setFocusedFigure(figure, true);
-      }
-    }
-
-    // notify the change to the root
-    this.notifyToRoot();
-  }
-
-  /** Delete the focused objects. */
-  public void doDelete() {
-    this.deleteFocusedObjects();
-  }
-
-  // Delete the focused objects.
-  private void deleteFocusedObjects() {
-    // hide all focused objects
-    this.hideSelectedObjects();
-
-    // notify the change to the root
-    this.notifyToRoot();
-
-    // update the menu items
-    this.updateDataItem();
-
-    // repaint
-    this.repaintContentPane();
-  }
-
   /**
    * Hide the figure with given ID.
    *
@@ -2972,151 +2826,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /** Cuts all objects in all visible figures. */
-  private void cutAllObjectsInVisibleFigures() {
-    this.cutOrCopyAllObjectsInVisibleFigures(false);
-  }
-
-  /** Copies all objects in all visible figures. */
-  private void copyAllObjectsInVisibleFigures() {
-    this.cutOrCopyAllObjectsInVisibleFigures(true);
-  }
-
-  /**
-   * Cuts or copies all objects in all visible figures.
-   *
-   * @param isCopy true: copy, false: cut
-   */
-  private void cutOrCopyAllObjectsInVisibleFigures(final boolean isCopy) {
-
-    // get all visible figures
-    List<SGFigure> fList = this.getVisibleFigureList();
-
-    // get objects from all visible figures
-    List<SGICopyable> copiedObjList = new ArrayList<SGICopyable>();
-    List<SGData> dataList = new ArrayList<SGData>();
-    List<String> dataNameList = new ArrayList<String>();
-    List<Map<Class<? extends SGIFigureElement>, SGProperties>> propertiesMapList =
-        new ArrayList<Map<Class<? extends SGIFigureElement>, SGProperties>>();
-    if (isCopy) {
-      for (int ii = 0; ii < fList.size(); ii++) {
-        SGFigure figure = fList.get(ii);
-
-        // copied objects such as labels and symbols
-        copiedObjList.addAll(figure.createCopiedObjects());
-
-        // create copied data
-        figure.createCopiedDataObjects(dataList, dataNameList, propertiesMapList);
-      }
-    } else {
-      for (int ii = 0; ii < fList.size(); ii++) {
-        SGFigure figure = fList.get(ii);
-
-        // copied objects such as labels and symbols
-        copiedObjList.addAll(figure.cutFocusedObjects());
-
-        // create copied data
-        figure.cutFocusedDataObjects(dataList, dataNameList, propertiesMapList);
-      }
-    }
-
-    // clear all lists below
-    this.clearCopiedObjectsList();
-
-    // set to the attribute
-    this.mCopiedObjectsList.addAll(copiedObjList);
-    this.mCopiedDataObjectsList.addAll(dataList);
-    this.mCopiedDataNameList.addAll(dataNameList);
-    this.mCopiedDataPropertiesMapList.addAll(propertiesMapList);
-
-    List<SGFigure> focusedFigureList = this.getFocusedFigureList();
-    for (int ii = 0; ii < focusedFigureList.size(); ii++) {
-      this.mCopiedFiguresList.add(focusedFigureList.get(ii));
-    }
-  }
-
-  /**
-   * Returns the list of copied objects in this window.
-   *
-   * @return a list of copied objects
-   */
-  public List<SGICopyable> getCopiedObjectsList() {
-    List<SGICopyable> list = new ArrayList<SGICopyable>();
-    SGUtility.copyObjects(this.mCopiedObjectsList, list);
-    return list;
-  }
-
-  /**
-   * Returns the list of copied data objects in this window.
-   *
-   * @return a list of copied data objects
-   */
-  public List<SGData> getCopiedObjectsDataList() {
-    List<SGData> list = new ArrayList<SGData>();
-    SGUtility.copyObjects((List<? extends SGICopyable>) this.mCopiedDataObjectsList, list);
-    return list;
-  }
-
-  /**
-   * Returns the list of names of copied data objects in this window.
-   *
-   * @return a list of names of copied data objects
-   */
-  public List<String> getCopiedDataNameList() {
-    List<String> list = new ArrayList<String>(this.mCopiedDataNameList);
-    return list;
-  }
-
-  /**
-   * Returns the list of properties of copied data objects in this window.
-   *
-   * @return a list of properties of copied data objects
-   */
-  public List<Map<Class<? extends SGIFigureElement>, SGProperties>>
-      getCopiedDataPropertiesMapList() {
-    List<Map<Class<? extends SGIFigureElement>, SGProperties>> list =
-        new ArrayList<Map<Class<? extends SGIFigureElement>, SGProperties>>();
-    for (int ii = 0; ii < this.mCopiedDataPropertiesMapList.size(); ii++) {
-      Map<Class<? extends SGIFigureElement>, SGProperties> map =
-          this.mCopiedDataPropertiesMapList.get(ii);
-      list.add(new HashMap<Class<? extends SGIFigureElement>, SGProperties>(map));
-    }
-    return list;
-  }
-
-  /** Clear the list of copied objects. */
-  public void clearCopiedObjectsList() {
-
-    // disposes all copied objects
-    for (SGICopyable cp : this.mCopiedObjectsList) {
-      if (cp instanceof SGIDisposable) {
-        SGIDisposable d = (SGIDisposable) cp;
-        d.dispose();
-      }
-    }
-    this.mCopiedObjectsList.clear();
-
-    // disposes all copied data objects
-    for (SGData d : this.mCopiedDataObjectsList) {
-      d.dispose();
-    }
-    this.mCopiedDataObjectsList.clear();
-
-    // clear other lists
-    this.mCopiedDataNameList.clear();
-    this.mCopiedDataPropertiesMapList.clear();
-    this.mCopiedFiguresList.clear();
-  }
-
-  /** */
-  void notifyPasteToFocusedFigures() {
-    this.mPasteTargetList.clear();
-    this.mPasteTargetList.addAll(this.getFocusedObjectsList());
-    this.notifyToListener(MENUBARCMD_PASTE);
-  }
-
   /** The target object to paste the copied objects. */
-  private final transient List<SGISelectable> mPasteTargetList = new ArrayList<>();
 
   /** Insert a label for netCDF data. */
   void doInsertNetCDFLabel() {
@@ -3448,6 +3158,18 @@ public class SGDrawingWindow extends JFrame
    *
    * @return
    */
+  public boolean alignFiguresByGraphArea() {
+    return SGDrawingWindowAlignmentUtility.alignFiguresByGraphArea(this);
+  }
+
+  public boolean alignFiguresByBoundingBox() {
+    return SGDrawingWindowAlignmentUtility.alignFiguresByBoundingBox(this);
+  }
+
+  protected SGFigure[][] getOrderedFigureArray() {
+    return SGDrawingWindowAlignmentUtility.getOrderedFigureArray(this);
+  }
+
   public boolean alignFigures() {
     // record the location
     ArrayList<SGFigure> list = this.getVisibleFigureList();
@@ -3458,7 +3180,7 @@ public class SGDrawingWindow extends JFrame
     this.recordPaperRect();
 
     // aligns figures
-    if (this.alignFiguresByGraphAreaNew() == false) {
+    if (SGDrawingWindowAlignmentUtility.alignFiguresByGraphAreaNew(this) == false) {
       return false;
     }
 
@@ -4132,316 +3854,6 @@ public class SGDrawingWindow extends JFrame
     return rect;
   }
 
-  /**
-   * @return
-   */
-  protected SGFigure[][] getOrderedFigureArray() {
-
-    // get the visible figure list
-    ArrayList<SGFigure> list = this.getVisibleFigureList();
-
-    // get the size of array
-    final int n = list.size();
-    if (n == 0) {
-      return new SGFigure[0][0];
-    }
-    int size = 0;
-    for (int ii = 1; ii <= 16; ii++) {
-      final int sqSmall = (ii - 1) * (ii - 1);
-      final int sqLarge = ii * ii;
-      if ((sqSmall < n) && (n <= sqLarge)) {
-        size = ii;
-        break;
-      }
-    }
-    int sx = size;
-    int div = n / sx;
-    int sy = n % sx == 0 ? div : div + 1;
-
-    // create a figure array
-    final SGFigure[][] figureArray = new SGFigure[sy][sx];
-
-    //
-    // in the order of figure-ID
-    //
-
-    boolean flag = true;
-    for (int ny = 0; ny < sy; ny++) {
-      for (int nx = 0; nx < sx; nx++) {
-        final int index = ny * sx + nx;
-        if (index >= list.size()) {
-          flag = false;
-          break;
-        }
-        figureArray[ny][nx] = list.get(index);
-      }
-      if (!flag) {
-        break;
-      }
-    }
-
-    return figureArray;
-  }
-
-  /** Returns a two dimensional array of figure list. */
-  private ArrayList<ArrayList<ArrayList<SGFigure>>> getFigureListArray() {
-    // get the visible figure list
-    ArrayList<SGFigure> figureList = this.getVisibleFigureList();
-    if (figureList.size() == 0) {
-      return null;
-    }
-
-    // width of division
-    float minWidth = Float.MAX_VALUE;
-    float minHeight = Float.MAX_VALUE;
-    for (int ii = 0; ii < figureList.size(); ii++) {
-      SGFigure figure = figureList.get(ii);
-      Rectangle2D rect = figure.getGraphRect();
-      if (rect.getWidth() < minWidth) {
-        minWidth = (float) rect.getWidth();
-      }
-      if (rect.getHeight() < minHeight) {
-        minHeight = (float) rect.getHeight();
-      }
-    }
-    final float dx = minWidth;
-    final float dy = minHeight;
-
-    Rectangle2D bbRect = this.getBoundingBoxOfFigures(figureList);
-
-    final int numX = (int) ((float) bbRect.getWidth() / dx) + 1;
-    final int numY = (int) ((float) bbRect.getHeight() / dy) + 1;
-
-    // get a two-dimensional ArrayList of figures
-    ArrayList<ArrayList<ArrayList<SGFigure>>> fListArray =
-        new ArrayList<ArrayList<ArrayList<SGFigure>>>(numX);
-    for (int ii = 0; ii < numX; ii++) {
-      ArrayList<ArrayList<SGFigure>> row = new ArrayList<ArrayList<SGFigure>>(numY);
-      for (int jj = 0; jj < numY; jj++) {
-        row.add(new ArrayList<SGFigure>());
-      }
-      fListArray.add(row);
-    }
-    for (int ii = 0; ii < figureList.size(); ii++) {
-      SGFigure figure = figureList.get(ii);
-      Rectangle2D gRect = figure.getGraphRect();
-      int nx = (int) ((gRect.getCenterX() - bbRect.getX()) / dx);
-      int ny = (int) ((gRect.getCenterY() - bbRect.getY()) / dy);
-      fListArray.get(nx).get(ny).add(figure);
-    }
-
-    ArrayList<Integer> numListX = new ArrayList<Integer>();
-    for (int nx = 0; nx < numX; nx++) {
-      boolean flag = false;
-      for (int ny = 0; ny < numY; ny++) {
-        if (fListArray.get(nx).get(ny).size() != 0) {
-          flag = true;
-          break;
-        }
-      }
-      if (flag) {
-        numListX.add(Integer.valueOf(nx));
-      }
-    }
-
-    ArrayList<Integer> numListY = new ArrayList<Integer>();
-    for (int ny = 0; ny < numY; ny++) {
-      boolean flag = false;
-      for (int nx = 0; nx < numX; nx++) {
-        if (fListArray.get(nx).get(ny).size() != 0) {
-          flag = true;
-          break;
-        }
-      }
-      if (flag) {
-        numListY.add(Integer.valueOf(ny));
-      }
-    }
-
-    final int sx = numListX.size();
-    final int sy = numListY.size();
-
-    ArrayList<ArrayList<ArrayList<SGFigure>>> figureListArray =
-        new ArrayList<ArrayList<ArrayList<SGFigure>>>(sx);
-    for (int ii = 0; ii < sx; ii++) {
-      final int nx = numListX.get(ii);
-      ArrayList<ArrayList<SGFigure>> row = new ArrayList<ArrayList<SGFigure>>(sy);
-      for (int jj = 0; jj < sy; jj++) {
-        final int ny = numListY.get(jj);
-        row.add(fListArray.get(nx).get(ny));
-      }
-      figureListArray.add(row);
-    }
-
-    return figureListArray;
-  }
-
-  /**
-   * @return
-   */
-  private boolean alignFiguresLeftAndBottom(
-      ArrayList<ArrayList<ArrayList<SGFigure>>> figureListArray) {
-    final int sx = figureListArray.size();
-    final int sy = figureListArray.get(0).size();
-
-    //
-    final float[][] topArray = new float[sx][sy];
-    final float[][] bottomArray = new float[sx][sy];
-    final float[][] leftArray = new float[sx][sy];
-    final float[][] rightArray = new float[sx][sy];
-    for (int ii = 0; ii < sx; ii++) {
-      for (int jj = 0; jj < sy; jj++) {
-        ArrayList<SGFigure> list = figureListArray.get(ii).get(jj);
-        float maxTop = 0.0f;
-        float maxBottom = 0.0f;
-        float maxLeft = 0.0f;
-        float maxRight = 0.0f;
-        for (int kk = 0; kk < list.size(); kk++) {
-          SGFigure figure = list.get(kk);
-          Rectangle2D rect = figure.getGraphRect();
-          final float width = (float) rect.getWidth();
-          final float height = (float) rect.getHeight();
-          SGTuple2f tb = new SGTuple2f();
-          SGTuple2f lr = new SGTuple2f();
-          figure.calcMargin(tb, lr);
-          final float top = tb.x;
-          final float bottom = tb.y;
-          final float left = lr.x;
-          final float right = lr.y;
-          if (top + height > maxTop) {
-            maxTop = top + height;
-          }
-          if (bottom > maxBottom) {
-            maxBottom = bottom;
-          }
-          if (left > maxLeft) {
-            maxLeft = left;
-          }
-          if (right + width > maxRight) {
-            maxRight = right + width;
-          }
-        }
-
-        topArray[ii][jj] = maxTop;
-        bottomArray[ii][jj] = maxBottom;
-        leftArray[ii][jj] = maxLeft;
-        rightArray[ii][jj] = maxRight;
-      }
-    }
-
-    // get arrays of the width and the height
-    final float[] widthArray = new float[sx];
-    for (int nx = 0; nx < sx; nx++) {
-      float wMax = 0.0f;
-      for (int ny = 0; ny < sy; ny++) {
-        float width = leftArray[nx][ny] + rightArray[nx][ny];
-        if (width > wMax) {
-          wMax = width;
-        }
-      }
-      widthArray[nx] = wMax;
-    }
-
-    final float[] heightArray = new float[sy];
-    for (int ny = 0; ny < sy; ny++) {
-      float hMax = 0.0f;
-      for (int nx = 0; nx < sx; nx++) {
-        float height = topArray[nx][ny] + bottomArray[nx][ny];
-        if (height > hMax) {
-          hMax = height;
-        }
-      }
-      heightArray[ny] = hMax;
-    }
-
-    // get arrays of the width and the height
-    final float[] maxLeftArray = new float[sx];
-    for (int nx = 0; nx < sx; nx++) {
-      float wMax = 0.0f;
-      for (int ny = 0; ny < sy; ny++) {
-        float width = leftArray[nx][ny];
-        if (width > wMax) {
-          wMax = width;
-        }
-      }
-      maxLeftArray[nx] = wMax;
-    }
-
-    final float[] maxRightArray = new float[sx];
-    for (int nx = 0; nx < sx; nx++) {
-      float wMax = 0.0f;
-      for (int ny = 0; ny < sy; ny++) {
-        float width = rightArray[nx][ny];
-        if (width > wMax) {
-          wMax = width;
-        }
-      }
-      maxRightArray[nx] = wMax;
-    }
-
-    final float[] maxBottomArray = new float[sy];
-    for (int ny = 0; ny < sy; ny++) {
-      float hMax = 0.0f;
-      for (int nx = 0; nx < sx; nx++) {
-        float height = bottomArray[nx][ny];
-        if (height > hMax) {
-          hMax = height;
-        }
-      }
-      maxBottomArray[ny] = hMax;
-    }
-
-    // create arrays of the coordinate of the left-bottom corner
-    final float diff = this.getMagnification() * this.mClientPanel.getGridLineInterval();
-    Rectangle2D pRect = this.getPaperRect();
-    final float px = (float) pRect.getX();
-    final float py = (float) pRect.getY();
-    float x = px;
-    float y = py;
-    final float[] originXArray = new float[sx];
-    for (int nx = 0; nx < sx; nx++) {
-      final float value = x + maxLeftArray[nx];
-      final int index = (int) ((value - px) / diff) + 1;
-      originXArray[nx] = px + index * diff;
-      x = originXArray[nx] + maxRightArray[nx];
-    }
-    final float[] originYArray = new float[sy];
-    for (int ny = 0; ny < sy; ny++) {
-      final float value = y + heightArray[ny] - maxBottomArray[ny];
-      final int index = (int) ((value - py) / diff) + 1;
-      originYArray[ny] = py + index * diff;
-      y = originYArray[ny] + maxBottomArray[ny];
-    }
-
-    // set the location of figures
-    boolean flag = true;
-    for (int ny = 0; ny < sy; ny++) {
-      for (int nx = 0; nx < sx; nx++) {
-        ArrayList<SGFigure> list = figureListArray.get(nx).get(ny);
-        for (int ii = 0; ii < list.size(); ii++) {
-          SGFigure figure = list.get(ii);
-          if (figure == null) {
-            flag = false;
-            break;
-          }
-
-          if (figure.setGraphRectLocationByLeftBottom(originXArray[nx], originYArray[ny])
-              == false) {
-            return false;
-          }
-        }
-        if (!flag) {
-          break;
-        }
-      }
-      if (!flag) {
-        break;
-      }
-    }
-
-    return true;
-  }
-
   // private Float findCeilingValue( final float[] array, final float value )
   // {
   // float[] copy = (float[])array.clone();
@@ -4457,293 +3869,6 @@ public class SGDrawingWindow extends JFrame
   //
   // return null;
   // }
-
-  /**
-   * @return
-   */
-  public boolean alignFiguresByGraphArea() {
-    // get the visible figure list
-    ArrayList<SGFigure> figureList = this.getVisibleFigureList();
-    if (figureList.size() == 0) {
-      return true;
-    }
-
-    Rectangle2D cRect = this.mClientRect;
-
-    // width of division
-    float minWidth = Float.MAX_VALUE;
-    float minHeight = Float.MAX_VALUE;
-    for (int ii = 0; ii < figureList.size(); ii++) {
-      SGFigure figure = figureList.get(ii);
-      Rectangle2D rect = figure.getGraphRect();
-      if (rect.getWidth() < minWidth) {
-        minWidth = (float) rect.getWidth();
-      }
-      if (rect.getHeight() < minHeight) {
-        minHeight = (float) rect.getHeight();
-      }
-    }
-    final float dx = minWidth;
-    final float dy = minHeight;
-
-    Rectangle2D bbRect = this.getBoundingBoxOfFigures(figureList);
-
-    final int numX = (int) ((float) bbRect.getWidth() / dx) + 1;
-    final int numY = (int) ((float) bbRect.getHeight() / dy) + 1;
-
-    // get a two-dimensional ArrayList of figures
-    ArrayList<ArrayList<ArrayList<SGFigure>>> fListArray =
-        new ArrayList<ArrayList<ArrayList<SGFigure>>>(numX);
-    for (int ii = 0; ii < numX; ii++) {
-      ArrayList<ArrayList<SGFigure>> row = new ArrayList<ArrayList<SGFigure>>(numY);
-      for (int jj = 0; jj < numY; jj++) {
-        row.add(new ArrayList<SGFigure>());
-      }
-      fListArray.add(row);
-    }
-    for (int ii = 0; ii < figureList.size(); ii++) {
-      SGFigure figure = figureList.get(ii);
-      Rectangle2D gRect = figure.getGraphRect();
-
-      // int nx = (int)( ( gRect.getCenterX() - cRect.getX() )/dx );
-      // int ny = (int)( ( gRect.getCenterY() - cRect.getY() )/dy );
-
-      int nx = (int) ((gRect.getCenterX() - bbRect.getX()) / dx);
-      int ny = (int) ((gRect.getCenterY() - bbRect.getY()) / dy);
-
-      fListArray.get(nx).get(ny).add(figure);
-    }
-
-    ArrayList<Integer> numListX = new ArrayList<Integer>();
-    for (int nx = 0; nx < numX; nx++) {
-      boolean flag = false;
-      for (int ny = 0; ny < numY; ny++) {
-        if (fListArray.get(nx).get(ny).size() != 0) {
-          flag = true;
-          break;
-        }
-      }
-      if (flag) {
-        numListX.add(Integer.valueOf(nx));
-      }
-    }
-
-    ArrayList<Integer> numListY = new ArrayList<Integer>();
-    for (int ny = 0; ny < numY; ny++) {
-      boolean flag = false;
-      for (int nx = 0; nx < numX; nx++) {
-        if (fListArray.get(nx).get(ny).size() != 0) {
-          flag = true;
-          break;
-        }
-      }
-      if (flag) {
-        numListY.add(Integer.valueOf(ny));
-      }
-    }
-
-    final int sx = numListX.size();
-    final int sy = numListY.size();
-
-    ArrayList<ArrayList<ArrayList<SGFigure>>> figureListArray =
-        new ArrayList<ArrayList<ArrayList<SGFigure>>>(sx);
-    for (int ii = 0; ii < sx; ii++) {
-      final int nx = numListX.get(ii);
-      ArrayList<ArrayList<SGFigure>> row = new ArrayList<ArrayList<SGFigure>>(sy);
-      for (int jj = 0; jj < sy; jj++) {
-        final int ny = numListY.get(jj);
-        row.add(fListArray.get(nx).get(ny));
-      }
-      figureListArray.add(row);
-    }
-
-    //
-    float[][] topArray = new float[sx][sy];
-    float[][] bottomArray = new float[sx][sy];
-    float[][] leftArray = new float[sx][sy];
-    float[][] rightArray = new float[sx][sy];
-    for (int ii = 0; ii < sx; ii++) {
-      for (int jj = 0; jj < sy; jj++) {
-        ArrayList<SGFigure> list = figureListArray.get(ii).get(jj);
-        float maxTop = 0.0f;
-        float maxBottom = 0.0f;
-        float maxLeft = 0.0f;
-        float maxRight = 0.0f;
-        for (int kk = 0; kk < list.size(); kk++) {
-          SGFigure figure = list.get(kk);
-          Rectangle2D rect = figure.getGraphRect();
-          SGTuple2f tb = new SGTuple2f();
-          SGTuple2f lr = new SGTuple2f();
-          figure.calcMargin(tb, lr);
-          if (tb.x + (float) rect.getHeight() > maxTop) {
-            maxTop = tb.x + (float) rect.getHeight();
-          }
-          if (tb.y > maxBottom) {
-            maxBottom = tb.y;
-          }
-          if (lr.x > maxLeft) {
-            maxLeft = lr.x;
-          }
-          if (lr.y + (float) rect.getWidth() > maxRight) {
-            maxRight = lr.y + (float) rect.getWidth();
-          }
-        }
-
-        topArray[ii][jj] = maxTop;
-        bottomArray[ii][jj] = maxBottom;
-        leftArray[ii][jj] = maxLeft;
-        rightArray[ii][jj] = maxRight;
-      }
-    }
-
-    // get arrays of the width and the height
-    final float[] widthArray = new float[sx];
-    for (int nx = 0; nx < sx; nx++) {
-      float wMax = 0.0f;
-      for (int ny = 0; ny < sy; ny++) {
-        float width = leftArray[nx][ny] + rightArray[nx][ny];
-        if (width > wMax) {
-          wMax = width;
-        }
-      }
-      widthArray[nx] = wMax;
-    }
-
-    final float[] heightArray = new float[sy];
-    for (int ny = 0; ny < sy; ny++) {
-      float hMax = 0.0f;
-      for (int nx = 0; nx < sx; nx++) {
-        float height = topArray[nx][ny] + bottomArray[nx][ny];
-        if (height > hMax) {
-          hMax = height;
-        }
-      }
-      heightArray[ny] = hMax;
-    }
-
-    // get arrays of the width and the height
-    final float[] maxLeftArray = new float[sx];
-    for (int nx = 0; nx < sx; nx++) {
-      float wMax = 0.0f;
-      for (int ny = 0; ny < sy; ny++) {
-        float width = leftArray[nx][ny];
-        if (width > wMax) {
-          wMax = width;
-        }
-      }
-      maxLeftArray[nx] = wMax;
-    }
-
-    final float[] maxBottomArray = new float[sy];
-    for (int ny = 0; ny < sy; ny++) {
-      float hMax = 0.0f;
-      for (int nx = 0; nx < sx; nx++) {
-        float height = bottomArray[nx][ny];
-        if (height > hMax) {
-          hMax = height;
-        }
-      }
-      maxBottomArray[ny] = hMax;
-    }
-
-    // create arrays of the coordinate of the centers
-    final float[] originXArray = new float[sx];
-    float cx = (float) cRect.getX();
-    for (int nx = 0; nx < sx; nx++) {
-      originXArray[nx] = cx + maxLeftArray[nx];
-      cx += widthArray[nx];
-    }
-
-    final float[] originYArray = new float[sy];
-    float cy = (float) cRect.getY();
-    for (int ny = 0; ny < sy; ny++) {
-      originYArray[ny] = cy + heightArray[ny] - maxBottomArray[ny];
-      cy += heightArray[ny];
-    }
-
-    // set the location of figures
-    boolean flag = true;
-    for (int ny = 0; ny < sy; ny++) {
-      for (int nx = 0; nx < sx; nx++) {
-        ArrayList<SGFigure> list = figureListArray.get(nx).get(ny);
-        for (int ii = 0; ii < list.size(); ii++) {
-          SGFigure figure = list.get(ii);
-          if (figure == null) {
-            flag = false;
-            break;
-          }
-
-          if (figure.setGraphRectLocationByLeftBottom(originXArray[nx], originYArray[ny])
-              == false) {
-            return false;
-          }
-        }
-        if (!flag) {
-          break;
-        }
-      }
-      if (!flag) {
-        break;
-      }
-    }
-
-    /*
-     * // enlarge the size of paper int mode = -1; float wTotal = 0.0f;
-     * float hTotal = 0.0f; for( int ii=0; ii<widthArray.length; ii++ ) {
-     * wTotal += widthArray[ii]; } for( int ii=0; ii<heightArray.length;
-     * ii++ ) { hTotal += heightArray[ii]; } Rectangle2D pRect =
-     * this.getPaperRect(); final boolean bw = ( pRect.getWidth() < wTotal );
-     * final boolean bh = ( pRect.getHeight() < hTotal );
-     *
-     *
-     * if( bw && bh ) { mode = 0; } else if( bw ) { mode = 1; } else if( bh ) {
-     * mode = 2; }
-     */
-
-    final int mode = 0;
-
-    // if( mode!=-1 )
-    {
-      if (this.setFigureBoundingBox(mode) == false) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * @return
-   */
-  private boolean alignFiguresByGraphAreaNew() {
-
-    // get the visible figure list
-    ArrayList<SGFigure> figureList = this.getVisibleFigureList();
-    if (figureList.size() == 0) {
-      return true;
-    }
-
-    // get a two-dimensional array of the list of figures
-    ArrayList<ArrayList<ArrayList<SGFigure>>> figureListArray = this.getFigureListArray();
-    if (figureListArray == null) {
-      return false;
-    }
-    if (figureListArray.size() == 0) {
-      return false;
-    }
-
-    // align figures
-    if (this.alignFiguresLeftAndBottom(figureListArray) == false) {
-      return false;
-    }
-
-    // set bounding box
-    if (this.setFigureBoundingBox(0) == false) {
-      return false;
-    }
-
-    return true;
-  }
 
   /*
    * public static final double OVERLAP_RATIO = 0.50;
@@ -4809,140 +3934,6 @@ public class SGDrawingWindow extends JFrame
    * public String toString() { if( fig==null ) { return "null"; } else {
    * return fig.toString(); } } }
    */
-
-  /**
-   * Order the figures.
-   *
-   * @return
-   */
-  public boolean alignFiguresByBoundingBox() {
-    boolean flag;
-
-    final SGFigure[][] figureArray = this.getOrderedFigureArray();
-    if (figureArray == null) {
-      return false;
-    }
-    if (figureArray.length == 0) {
-      return true;
-    }
-    final int sy = figureArray.length;
-    final int sx = figureArray[0].length;
-
-    // create an array of the bounding box of the figures
-    Rectangle2D[][] rectArray = new Rectangle2D[sy][sx];
-    flag = true;
-    for (int ny = 0; ny < sy; ny++) {
-      for (int nx = 0; nx < sx; nx++) {
-        if (figureArray[ny][nx] == null) {
-          flag = false;
-          break;
-        }
-        rectArray[ny][nx] = figureArray[ny][nx].getBoundingBox();
-      }
-      if (!flag) {
-        break;
-      }
-    }
-
-    // get arrays of the width and the height
-    final float[] widthArray = new float[sx];
-    for (int nx = 0; nx < sx; nx++) {
-      float wMax = 0.0f;
-      for (int ny = 0; ny < sy; ny++) {
-        Rectangle2D rect = rectArray[ny][nx];
-        if (rect == null) {
-          break;
-        }
-        float width = (float) rectArray[ny][nx].getWidth();
-        if (width > wMax) {
-          wMax = width;
-        }
-      }
-      widthArray[nx] = wMax;
-    }
-
-    final float[] heightArray = new float[sy];
-    for (int ny = 0; ny < sy; ny++) {
-      float hMax = 0.0f;
-      for (int nx = 0; nx < sx; nx++) {
-        Rectangle2D rect = rectArray[ny][nx];
-        if (rect == null) {
-          break;
-        }
-        float height = (float) rectArray[ny][nx].getHeight();
-        if (height > hMax) {
-          hMax = height;
-        }
-      }
-      heightArray[ny] = hMax;
-    }
-
-    // create arrays of the coordinate of the centers
-    Rectangle2D cRect = this.getClientRect();
-
-    final float[] centerXArray = new float[sx];
-    float cx = (float) cRect.getX();
-    for (int nx = 0; nx < sx; nx++) {
-      centerXArray[nx] = cx + widthArray[nx] / 2.0f;
-      cx += widthArray[nx];
-    }
-
-    final float[] centerYArray = new float[sy];
-    float cy = (float) cRect.getY();
-    for (int ny = 0; ny < sy; ny++) {
-      centerYArray[ny] = cy + heightArray[ny] / 2.0f;
-      cy += heightArray[ny];
-    }
-
-    // set the location of figures
-    flag = true;
-    for (int ny = 0; ny < sy; ny++) {
-      for (int nx = 0; nx < sx; nx++) {
-        // final int index = ny*sx + nx;
-        SGFigure figure = figureArray[ny][nx];
-        if (figure == null) {
-          flag = false;
-          break;
-        }
-        if (figure.setCenter(centerXArray[nx], centerYArray[ny]) == false) {
-          return false;
-        }
-      }
-      if (!flag) {
-        break;
-      }
-    }
-
-    // enlarge the size of paper
-    int mode = -1;
-    float wTotal = 0.0f;
-    float hTotal = 0.0f;
-    for (int ii = 0; ii < widthArray.length; ii++) {
-      wTotal += widthArray[ii];
-    }
-    for (int ii = 0; ii < heightArray.length; ii++) {
-      hTotal += heightArray[ii];
-    }
-    Rectangle2D pRect = this.getPaperRect();
-    final boolean bw = (pRect.getWidth() < wTotal);
-    final boolean bh = (pRect.getHeight() < hTotal);
-
-    if (bw && bh) {
-      mode = 0;
-    } else if (bw) {
-      mode = 1;
-    } else if (bh) {
-      mode = 2;
-    }
-
-    if (mode != -1) {
-      if (this.setFigureBoundingBox(mode) == false) {
-        return false;
-      }
-    }
-
-    return true;
-  }
 
   private transient SGUndoManager mUndoManager;
 
