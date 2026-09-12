@@ -1214,6 +1214,9 @@ public final class SGDefaultColumnTypeMDArrayUtility
     if (yDimList.size() > maxSize) {
       yDimList = new ArrayList<MDArrayDimension>(yDimList.subList(0, maxSize));
     }
+    if (yDimList == null || yDimList.size() == 0) {
+      return false;
+    }
 
     // for multiple variables
     if (multiple.booleanValue()) {

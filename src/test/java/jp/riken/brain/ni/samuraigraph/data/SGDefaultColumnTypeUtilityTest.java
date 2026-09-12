@@ -180,6 +180,8 @@ class SGDefaultColumnTypeUtilityTest {
     assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
     assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "y")]);
     assertEquals(SGIDataColumnTypeConstants.Z_VALUE, types[findVariableIndex(file, "height")]);
+    assertEquals(
+        SGIDataColumnTypeConstants.ANIMATION_FRAME, types[findVariableIndex(file, "time")]);
   }
 
   @Test
@@ -258,6 +260,387 @@ class SGDefaultColumnTypeUtilityTest {
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXY_NETCDF_DATA, columns, infoMap);
     assertFalse(result.isSucceeded());
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForSXYNetCDFWithIndexVariable() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".nc");
+    Files.delete(path);
+    path.toFile().deleteOnExit();
+    ucar.nc2.write.NetcdfFormatWriter.Builder writer =
+        ucar.nc2.write.NetcdfFormatWriter.createNewNetcdf3(path.toString());
+    writer.addDimension("Index", 5);
+    writer.addVariable("Index", ucar.ma2.DataType.INT, "Index");
+    writer.addVariable("x", ucar.ma2.DataType.FLOAT, "Index");
+    writer.addVariable("height", ucar.ma2.DataType.FLOAT, "Index");
+    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    SGNetCDFFile file = new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
+    List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+    for (SGNetCDFVariable var : file.getVariables()) {
+      columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+    }
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.SXY_NETCDF_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded(), result.toString());
+    String[] types = result.getDefaultColumnTypes();
+    assertEquals(SGIDataColumnTypeConstants.INDEX, types[findVariableIndex(file, "Index")]);
+    assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "height")]);
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForMultipleSXYHDF5() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".h5");
+    Files.delete(path);
+    path.toFile().deleteOnExit();
+    try (com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer writer =
+        com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider.get()
+            .open(path.toFile())) {
+      writer.writeDoubleMatrix("a", new double[][] {{1.0}, {2.0}, {3.0}});
+      writer.writeDoubleMatrix("b", new double[][] {{4.0}, {5.0}, {6.0}});
+    }
+    try (com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader reader =
+        com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider.get()
+            .openForReading(path.toFile())) {
+      SGHDF5File file = new SGHDF5File(reader);
+      List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+      for (SGMDArrayVariable var : file.getVariables()) {
+        columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+      }
+      Map<String, Object> infoMap = new HashMap<String, Object>();
+      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
+      DefaultColumnTypeResult result =
+          SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+              SGDataTypeConstants.SXY_MULTIPLE_HDF5_DATA, columns, infoMap);
+      assertTrue(result.isSucceeded(), result.toString());
+      String[] types = result.getDefaultColumnTypes();
+      for (String type : types) {
+        assertEquals(SGIDataColumnTypeConstants.Y_VALUE, type);
+      }
+    }
+  }
+
+  private static SGNetCDFFile createNetCDFFile(final Path path) throws Exception {
+    Files.delete(path);
+    path.toFile().deleteOnExit();
+    ucar.nc2.write.NetcdfFormatWriter.Builder writer =
+        ucar.nc2.write.NetcdfFormatWriter.createNewNetcdf3(path.toString());
+    ucar.nc2.Dimension xDim = writer.addDimension("x", 5);
+    ucar.nc2.Dimension yDim = writer.addDimension("y", 4);
+    writer.addVariable("x", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(xDim));
+    writer.addVariable("y", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(yDim));
+    String[] varNames = {"v1", "v2", "v3", "v4"};
+    for (String var : varNames) {
+      writer.addVariable(var, ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(yDim, xDim));
+    }
+    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
+  }
+
+  private static SGNetCDFFile createNetCDFFileWithIndex(final Path path) throws Exception {
+    Files.delete(path);
+    path.toFile().deleteOnExit();
+    ucar.nc2.write.NetcdfFormatWriter.Builder writer =
+        ucar.nc2.write.NetcdfFormatWriter.createNewNetcdf3(path.toString());
+    writer.addDimension("Index", 5);
+    writer.addVariable("Index", ucar.ma2.DataType.INT, "Index");
+    String[] vars = {"a", "b", "c", "d"};
+    for (String var : vars) {
+      writer.addVariable(var, ucar.ma2.DataType.FLOAT, "Index");
+    }
+    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForVXYNetCDF() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".nc");
+    SGNetCDFFile file = createNetCDFFile(path);
+    List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+    for (SGNetCDFVariable var : file.getVariables()) {
+      if (var.getName().equals("Index")) {
+        continue;
+      }
+      columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+    }
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.VXY_NETCDF_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded(), result.toString());
+    String[] types = result.getDefaultColumnTypes();
+    assertEquals(SGIDataColumnTypeConstants.X_COORDINATE, types[findVariableIndex(file, "x")]);
+    assertEquals(SGIDataColumnTypeConstants.Y_COORDINATE, types[findVariableIndex(file, "y")]);
+    assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, types[findVariableIndex(file, "v1")]);
+    assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, types[findVariableIndex(file, "v2")]);
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForVXYNetCDFWithIndexVariable() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".nc");
+    SGNetCDFFile file = createNetCDFFileWithIndex(path);
+    List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+    for (SGNetCDFVariable var : file.getVariables()) {
+      columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+    }
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.VXY_NETCDF_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded(), result.toString());
+    String[] types = result.getDefaultColumnTypes();
+    assertEquals(SGIDataColumnTypeConstants.INDEX, types[findVariableIndex(file, "Index")]);
+    assertEquals(SGIDataColumnTypeConstants.X_COORDINATE, types[findVariableIndex(file, "a")]);
+    assertEquals(SGIDataColumnTypeConstants.Y_COORDINATE, types[findVariableIndex(file, "b")]);
+    assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, types[findVariableIndex(file, "c")]);
+    assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, types[findVariableIndex(file, "d")]);
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForSXYZNetCDFWithIndexVariable() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".nc");
+    SGNetCDFFile file = createNetCDFFileWithIndex(path);
+    List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+    for (SGNetCDFVariable var : file.getVariables()) {
+      columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+    }
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.SXYZ_NETCDF_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded(), result.toString());
+    String[] types = result.getDefaultColumnTypes();
+    assertEquals(SGIDataColumnTypeConstants.INDEX, types[findVariableIndex(file, "Index")]);
+    assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "a")]);
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "b")]);
+    assertEquals(SGIDataColumnTypeConstants.Z_VALUE, types[findVariableIndex(file, "c")]);
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForVXYHDF5() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".h5");
+    Files.delete(path);
+    path.toFile().deleteOnExit();
+    try (com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer writer =
+        com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider.get()
+            .open(path.toFile())) {
+      writer.writeDoubleMatrix("f", new double[][] {{1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}});
+      writer.writeDoubleMatrix("s", new double[][] {{7.0, 8.0}, {9.0, 10.0}, {11.0, 12.0}});
+    }
+    try (com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader reader =
+        com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider.get()
+            .openForReading(path.toFile())) {
+      SGHDF5File file = new SGHDF5File(reader);
+      List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+      for (SGMDArrayVariable var : file.getVariables()) {
+        columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+      }
+      Map<String, Object> infoMap = new HashMap<String, Object>();
+      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+      infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+      DefaultColumnTypeResult result =
+          SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+              SGDataTypeConstants.VXY_HDF5_DATA, columns, infoMap);
+      assertTrue(result.isSucceeded(), result.toString());
+      assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, result.getDefaultColumnTypes()[0]);
+      assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, result.getDefaultColumnTypes()[1]);
+    }
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForSXYZHDF5() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".h5");
+    Files.delete(path);
+    path.toFile().deleteOnExit();
+    try (com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer writer =
+        com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider.get()
+            .open(path.toFile())) {
+      writer.writeDoubleMatrix("z", new double[][] {{1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}});
+    }
+    try (com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader reader =
+        com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider.get()
+            .openForReading(path.toFile())) {
+      SGHDF5File file = new SGHDF5File(reader);
+      List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+      for (SGMDArrayVariable var : file.getVariables()) {
+        columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+      }
+      Map<String, Object> infoMap = new HashMap<String, Object>();
+      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+      DefaultColumnTypeResult result =
+          SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+              SGDataTypeConstants.SXYZ_HDF5_DATA, columns, infoMap);
+      assertTrue(result.isSucceeded(), result.toString());
+      assertEquals(SGIDataColumnTypeConstants.Z_VALUE, result.getDefaultColumnTypes()[0]);
+    }
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForVXYSDArrayPolar() {
+    List<SGDataColumnInfo> columns =
+        createColumns(
+            new String[] {"x", "y", "r", "a"}, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.VXY_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded());
+    assertArrayEquals(
+        new String[] {
+          SGIDataColumnTypeConstants.X_COORDINATE,
+          SGIDataColumnTypeConstants.Y_COORDINATE,
+          SGIDataColumnTypeConstants.MAGNITUDE,
+          SGIDataColumnTypeConstants.ANGLE
+        },
+        result.getDefaultColumnTypes());
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForSXYSDArrayWithSamplingRate() {
+    List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+    columns.add(
+        new SGSDArrayDataColumnInfo("t", SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE));
+    columns.add(new SGSDArrayDataColumnInfo("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SAMPLING_RATE, Double.valueOf(0.1));
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.SXY_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded(), result.toString());
+    assertArrayEquals(
+        new String[] {SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE},
+        result.getDefaultColumnTypes());
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForVXYNetCDFPolar() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".nc");
+    SGNetCDFFile file = createNetCDFFile(path);
+    List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+    for (SGNetCDFVariable var : file.getVariables()) {
+      columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+    }
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.VXY_NETCDF_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded(), result.toString());
+    String[] types = result.getDefaultColumnTypes();
+    assertEquals(SGIDataColumnTypeConstants.MAGNITUDE, types[findVariableIndex(file, "v1")]);
+    assertEquals(SGIDataColumnTypeConstants.ANGLE, types[findVariableIndex(file, "v2")]);
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForSXYNetCDFMultipleVariable() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".nc");
+    Files.delete(path);
+    path.toFile().deleteOnExit();
+    ucar.nc2.write.NetcdfFormatWriter.Builder writer =
+        ucar.nc2.write.NetcdfFormatWriter.createNewNetcdf3(path.toString());
+    ucar.nc2.Dimension xDim = writer.addDimension("x", 5);
+    writer.addVariable("x", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(xDim));
+    writer.addVariable("y1", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(xDim));
+    writer.addVariable("y2", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(xDim));
+    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    SGNetCDFFile file = new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
+    List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+    for (SGNetCDFVariable var : file.getVariables()) {
+      columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+    }
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.SXY_MULTIPLE_NETCDF_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded(), result.toString());
+    String[] types = result.getDefaultColumnTypes();
+    assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "y1")]);
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "y2")]);
+  }
+
+  @Test
+  void testGetDefaultColumnTypesRejectsInvalidDataType() {
+    assertThrows(
+        Error.class,
+        () ->
+            SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+                "UNKNOWN_DATA_TYPE",
+                createColumns(new String[] {"a"}, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER),
+                createInfoMap(false)));
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForSXYHDF5WithoutUnitDimension() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".h5");
+    Files.delete(path);
+    path.toFile().deleteOnExit();
+    try (com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer writer =
+        com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider.get()
+            .open(path.toFile())) {
+      writer.writeDoubleMatrix("z", new double[][] {{1.0, 2.0}, {3.0, 4.0}});
+    }
+    try (com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader reader =
+        com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider.get()
+            .openForReading(path.toFile())) {
+      SGHDF5File file = new SGHDF5File(reader);
+      List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+      for (SGMDArrayVariable var : file.getVariables()) {
+        columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+      }
+      Map<String, Object> infoMap = new HashMap<String, Object>();
+      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+      DefaultColumnTypeResult result =
+          SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+              SGDataTypeConstants.SXY_HDF5_DATA, columns, infoMap);
+      assertTrue(result.isSucceeded(), result.toString());
+      assertEquals(SGIDataColumnTypeConstants.Y_VALUE, result.getDefaultColumnTypes()[0]);
+    }
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForSXYHDF5SingleWithUnitDimension() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".h5");
+    Files.delete(path);
+    path.toFile().deleteOnExit();
+    try (com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer writer =
+        com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider.get()
+            .open(path.toFile())) {
+      writer.writeDoubleMatrix("a", new double[][] {{1.0}, {2.0}, {3.0}});
+    }
+    try (com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader reader =
+        com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider.get()
+            .openForReading(path.toFile())) {
+      SGHDF5File file = new SGHDF5File(reader);
+      List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+      for (SGMDArrayVariable var : file.getVariables()) {
+        columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+      }
+      Map<String, Object> infoMap = new HashMap<String, Object>();
+      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+      DefaultColumnTypeResult result =
+          SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+              SGDataTypeConstants.SXY_HDF5_DATA, columns, infoMap);
+      assertTrue(result.isSucceeded(), result.toString());
+      assertEquals(SGIDataColumnTypeConstants.Y_VALUE, result.getDefaultColumnTypes()[0]);
+    }
   }
 
   private static int findVariableIndex(final SGNetCDFFile file, final String name) {
