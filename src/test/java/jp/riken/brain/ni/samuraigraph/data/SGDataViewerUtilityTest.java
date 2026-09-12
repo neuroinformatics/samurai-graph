@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
+import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
+import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import org.junit.jupiter.api.Test;
 import ucar.nc2.NetcdfFiles;
 
@@ -60,6 +62,20 @@ class SGDataViewerUtilityTest {
   }
 
   @Test
+  void getDataViewerValueReadsCoordinateValues() throws IOException {
+    SGSXYNetCDFData data = createSXYDataFromExample16();
+    SGISXYTypeMultipleData multiple = data.toMultiple();
+    assertEquals(
+        1.0,
+        SGDataViewerUtility.getDataViewerValue(multiple, SGIDataColumnTypeConstants.X_VALUE, 0, 0),
+        0.0);
+    assertEquals(
+        1.5,
+        SGDataViewerUtility.getDataViewerValue(multiple, SGIDataColumnTypeConstants.Y_VALUE, 0, 0),
+        0.0);
+  }
+
+  @Test
   void getCoordinateVariableValueReturnsInRangeValue() {
     double[] array = {1.0, 2.5, 4.0};
     assertEquals(1.0, SGDataViewerUtility.getCoordinateVariableValue(array, 0), 0.0);
@@ -90,5 +106,29 @@ class SGDataViewerUtilityTest {
             0.0));
     assertFalse(SGDataViewerUtility.matches(2, 1, SGIDataColumnTypeConstants.Y_VALUE, value, 0.0));
     assertFalse(SGDataViewerUtility.matches(2, 0, SGIDataColumnTypeConstants.X_VALUE, value, 0.0));
+  }
+
+  @Test
+  void setDataViewerValueReturnsHistory() throws IOException {
+    SGSXYNetCDFData data = createSXYDataFromExample16();
+    SGISXYTypeMultipleData multiple = data.toMultiple();
+    SGIntegerSeriesSet stride = new SGIntegerSeriesSet();
+    stride.add(new SGIntegerSeries(0, 7, 1));
+    SGDataValueHistory history =
+        SGDataViewerUtility.setDataViewerValue(
+            multiple, SGIDataColumnTypeConstants.Y_VALUE, 0, 0, "9.5", stride);
+    assertNotNull(history);
+    assertEquals(9.5, history.getValue(), 0.0);
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, history.getColumnType());
+  }
+
+  @Test
+  void updateCacheRestoresSingleDataCaches() throws IOException {
+    SGSXYNetCDFData data = createSXYDataFromExample16();
+    SGISXYTypeMultipleData multiple = data.toMultiple();
+    SGDataViewerUtility.updateCache(multiple, new SGISXYTypeSingleData[] {data});
+    double[] xValues = SGDataViewerUtility.getXValueArray(data, false);
+    assertNotNull(xValues);
+    assertEquals(8, xValues.length);
   }
 }

@@ -5,7 +5,7 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage (Top Priority)
 
-Actual JaCoCo measurement (instruction coverage) is **5.0%** overall.
+Actual JaCoCo measurement (instruction coverage) is **5.2%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
@@ -14,18 +14,18 @@ Actual JaCoCo measurement (instruction coverage) is **5.0%** overall.
 | `jp...samuraigraph.export` | 68.2% | 0 (nested under `figure.java2d`) | Few instructions |
 | `com.github...lib.hdf5` | 14.1% | 5 | Round-trip tests read/write real HDF5 |
 | `jp...samuraigraph.base` | 10.1% | 18 | Only the pure-logic parts are tested |
-| `jp...samuraigraph.data` | 10.9% | 39 | Largest application package |
+| `jp...samuraigraph.data` | 11.6% | 39 | Largest application package |
 | `jp...samuraigraph.application` | 1.4% | 3 | |
 | `jp...samuraigraph.figure` | 1.4% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **0.0%** | 0 | All 109 rendering-layer files untested |
 
-- 75 test files / 792 test methods against 582 main files / ~274k LOC
+- 75 test files / 798 test methods against 582 main files / ~274k LOC
 - The data-layer helpers live in ten single-purpose utility classes:
   `SGDataDataTypeUtility` (76.4%), `SGDataTextUtility` (78.5%),
   `SGDataColumnTitleUtility` (78.0%), `SGDataColumnInfoUtility` (21.9%),
   `SGDataRangeUtility` (17.8%), `SGDataMiscUtility` (15.5%),
-  `SGDataBufferUtility` (29.9%), `SGDataViewerUtility` (4.5%),
-  `SGDataStrideUtility` (3.7%), `SGDataFileUtility` (0.9%); the former
+  `SGDataBufferUtility` (29.9%), `SGDataViewerUtility` (11.1%),
+  `SGDataStrideUtility` (24.6%), `SGDataFileUtility` (0.9%); the former
   `SGDataUtility` class no longer exists
 - `SGDefaultColumnTypeUtility` is a 499-line core (entry point, dispatcher,
   shared helpers) with three source-specific classes:
