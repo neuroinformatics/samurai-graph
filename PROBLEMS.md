@@ -11,15 +11,14 @@ Actual JaCoCo measurement (line coverage) is **13.2%** overall.
 |---------|----------|-----------|-------|
 | `com.github...lib.mdarray` | 97.8% | 4 | Pure logic, well covered |
 | `org.freehep...util.export` | 89.7% | 1 | Vendored replacement class |
-| `jp...samuraigraph.export` | 80.0% | 0 (nested under `figure.java2d`) | Few instructions |
+| `jp...samuraigraph.export` | 80.0% | 0 | Few instructions |
 | `com.github...lib.hdf5` | 25.5% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 26.5% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
+| `jp...samuraigraph.base` | 26.4% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
 | `jp...samuraigraph.data` | 24.8% | 43 | Largest application package |
 | `jp...samuraigraph.application` | 3.4% | 4 | Data setup dialog construction smoke tests added |
-| `jp...samuraigraph.figure` | 5.2% | 2 | |
-| `jp...samuraigraph.figure.java2d` | **4.2%** | 2 | Legend and axis property round-trip tests added |
+| `jp...samuraigraph.figure` | 4.3% | 2 | Legend and axis property round-trip tests added |
 
-- 86 test files / 977 test methods (1004 executions) against 616 main files
+- 86 test files / 977 test methods (1004 executions) against 605 main files
   / ~275k LOC
 - Per-class coverage of the data-layer utilities is uneven: the pure
   groups (data type 64%, text 80%, column title 73%) reach 64-80%, while
@@ -37,31 +36,18 @@ Actual JaCoCo measurement (line coverage) is **13.2%** overall.
 | LOC | File | Problem |
 |-----|------|---------|
 | 4,963 | `base/SGDrawingWindow.java` | Largest class |
-| 4,958 | `figure/java2d/SGPropertyDialogSXYData.java` | |
-| 4,889 | `figure/java2d/SGFigureElementShape.java` | |
+| 4,958 | `figure/SGPropertyDialogSXYData.java` | |
+| 4,889 | `figure/SGFigureElementShape.java` | |
 | 4,775 | `data/SGSXYNetCDFMultipleData.java` | |
 | 4,537 | `data/SGSXYMDArrayMultipleData.java` | |
-| 4,516 | `figure/java2d/SGAxisElement.java` | Delegates property I/O to a collaborator class |
+| 4,516 | `figure/SGAxisElement.java` | Delegates property I/O to a collaborator class |
 | 4,511 | `base/SGFigure.java` | |
-| 4,414 | `figure/java2d/SGElementGroupSetInGraphSXYMultiple.java` | |
+| 4,414 | `figure/SGElementGroupSetInGraphSXYMultiple.java` | |
 | 3,828 | `application/SGMainFunctions.java` | All menu actions, commands, and the console loop; delegates to eight collaborator classes |
 
 75 files exceed 1,000 lines; 141 exceed 500.
 
-## 3. Duplicated Architecture
-
-- **Dual class hierarchy**: `figure` (model) and `figure.java2d` (renderer)
-  maintain mirror class sets per element (model + `*2D` renderer + property
-  dialog). Changing one element ripples across 3+ files. A merge plan is
-  documented in `docs/dual-hierarchy-merge-design.md` (package unification
-  first, then collapsing the `*2D` subclasses into the model bases).
-- **Copy-paste dialog families**: the dialog and wizard data families
-  (`SGPropertyFile*DataDialog` / `SG*DataSetupWizardDialog`) previously
-  duplicated their button and data name scaffolding; the scaffolding is
-  now built by the shared base classes, and the remaining data-type
-  specific parts stay in the subclasses.
-
-## 4. Legacy Idioms
+## 3. Legacy Idioms
 
 - **Constant-bag interfaces**: 152 files use the `SGI*` prefix, and 55 of
   those interfaces declare no methods — they exist solely to hold constants
@@ -79,7 +65,7 @@ Actual JaCoCo measurement (line coverage) is **13.2%** overall.
   `SGApplicationAdapter.mAdapter` (static singleton), and
   `SGMainFunctions.virtualBounds`.
 
-## 5. Repository / Dependency Hygiene
+## 4. Repository / Dependency Hygiene
 
 - `dependency-reduced-pom.xml` (maven-shade-plugin output) is in `.gitignore`
   and untracked, but it is regenerated at the repository root by every
@@ -110,5 +96,3 @@ Actual JaCoCo measurement (line coverage) is **13.2%** overall.
    `SGElementGroupSetInGraphSXYMultiple` — the legend and axis classes
    (`SGDrawingWindow`, `SGMainFunctions`, `SGFigureElementLegend`,
    `SGAxisElement`) have already been decomposed
-3. **Integrate the dual hierarchy**: design work to merge `figure` and
-   `figure.java2d` into a single layer
