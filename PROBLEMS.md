@@ -52,7 +52,9 @@ Actual JaCoCo measurement (line coverage) is **13.2%** overall.
 
 - **Dual class hierarchy**: `figure` (model) and `figure.java2d` (renderer)
   maintain mirror class sets per element (model + `*2D` renderer + property
-  dialog). Changing one element ripples across 3+ files.
+  dialog). Changing one element ripples across 3+ files. A merge plan is
+  documented in `docs/dual-hierarchy-merge-design.md` (package unification
+  first, then collapsing the `*2D` subclasses into the model bases).
 - **Copy-paste dialog families**: the dialog and wizard data families
   (`SGPropertyFile*DataDialog` / `SG*DataSetupWizardDialog`) previously
   duplicated their button and data name scaffolding; the scaffolding is
