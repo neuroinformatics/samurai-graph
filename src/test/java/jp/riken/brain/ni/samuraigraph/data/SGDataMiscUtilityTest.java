@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import org.junit.jupiter.api.Test;
+import ucar.nc2.NetcdfFiles;
 
 /** Unit tests for {@link SGDataMiscUtility}. */
 class SGDataMiscUtilityTest {
@@ -320,5 +322,133 @@ class SGDataMiscUtilityTest {
   void isPolarThrowsWithoutSelection() {
     assertThrows(
         Error.class, () -> SGDataMiscUtility.isPolar(new java.util.HashMap<String, Object>()));
+  }
+
+  @Test
+  void getSXYColumnTypeClassifiesErrorAndTickCols() throws IOException {
+    SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+    SGNetCDFDataColumnInfo leInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("le"), SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, "height");
+    SGNetCDFDataColumnInfo ueInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("ue"), SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, "height");
+    SGNetCDFDataColumnInfo tInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("le"), SGIDataColumnTypeConstants.TICK_LABEL, "height");
+    SGDataColumnInfo[] cols = {xInfo, yInfo, leInfo, ueInfo, tInfo};
+    java.util.List<Integer> xIndexList = new java.util.ArrayList<Integer>();
+    java.util.List<Integer> yIndexList = new java.util.ArrayList<Integer>();
+    java.util.Map<Integer, Integer> lIndexMap = new java.util.HashMap<Integer, Integer>();
+    java.util.Map<Integer, Integer> uIndexMap = new java.util.HashMap<Integer, Integer>();
+    java.util.Map<Integer, Integer> tIndexMap = new java.util.HashMap<Integer, Integer>();
+    assertTrue(
+        SGDataMiscUtility.getSXYColumnType(
+            cols, xIndexList, yIndexList, lIndexMap, uIndexMap, tIndexMap));
+    assertEquals(0, xIndexList.get(0).intValue());
+    assertEquals(1, yIndexList.get(0).intValue());
+    assertEquals(2, lIndexMap.get(1).intValue());
+    assertEquals(3, uIndexMap.get(1).intValue());
+    assertEquals(4, tIndexMap.get(1).intValue());
+  }
+
+  @Test
+  void updateDataColumnsClearsUnassignableErrorTypes() {
+    SGSDArrayDataColumnInfo[] cols = {
+      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
+      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column("label", SGIDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
+    };
+    String[] types = {
+      SGIDataColumnTypeConstants.X_VALUE,
+      SGIDataColumnTypeConstants.Y_VALUE,
+      SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y"
+    };
+    String[] ret = SGDataMiscUtility.updateDataColumns(SGDataTypeConstants.SXY_DATA, cols, types);
+    assertEquals(
+        SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y", ret[2], Arrays.toString(ret));
+  }
+
+  @Test
+  void getColumnNameAndAppendedNumberListRejectsBadSuffix() {
+    SGSDArrayDataColumnInfo[] cols = {
+      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE)
+    };
+    cols[0].setColumnType(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for no");
+    List<String> nameList = new java.util.ArrayList<String>();
+    List<Integer> indexList = new java.util.ArrayList<Integer>();
+    assertFalse(
+        SGDataMiscUtility.getColumnNameAndAppendedNumberList(
+            cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, nameList, indexList));
+  }
+
+  @Test
+  void getColumnNameAndAppendedNumberListAcceptsHolderName() {
+    SGSDArrayDataColumnInfo[] cols = {
+      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE)
+    };
+    SGSDArrayDataColumnInfo le = column("le", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, "");
+    le.setColumnType(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y");
+    List<String> nameList = new java.util.ArrayList<String>();
+    List<Integer> indexList = new java.util.ArrayList<Integer>();
+    assertTrue(
+        SGDataMiscUtility.getColumnNameAndAppendedNumberList(
+            new SGSDArrayDataColumnInfo[] {cols[0], le},
+            SGIDataColumnTypeConstants.LOWER_ERROR_VALUE,
+            nameList,
+            indexList));
+    assertEquals("le", nameList.get(0));
+    assertEquals(0, indexList.get(0).intValue());
+  }
+
+  @Test
+  void getColumnListStartsWithFiltersByPrefix() {
+    SGSDArrayDataColumnInfo[] cols = {
+      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column(
+          "le",
+          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y")
+    };
+    List<SGDataColumnInfo> list =
+        SGDataMiscUtility.getColumnListStartsWith(
+            cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
+    assertEquals(1, list.size());
+    assertEquals("le", list.get(0).getName());
+  }
+
+  @Test
+  void getColumnListMatchesExactType() {
+    SGSDArrayDataColumnInfo[] cols = {
+      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column(
+          "le",
+          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y")
+    };
+    List<SGDataColumnInfo> list =
+        SGDataMiscUtility.getColumnList(cols, SGIDataColumnTypeConstants.Y_VALUE);
+    assertEquals(1, list.size());
+    assertEquals("y", list.get(0).getName());
+  }
+
+  @Test
+  void getColumnNameListCollectsMatchingNames() {
+    SGSDArrayDataColumnInfo[] cols = {
+      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column(
+          "le",
+          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y")
+    };
+    List<String> names =
+        SGDataMiscUtility.getColumnNameList(cols, SGIDataColumnTypeConstants.Y_VALUE);
+    assertEquals(java.util.Collections.singletonList("y"), names);
   }
 }

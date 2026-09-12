@@ -4,11 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
@@ -129,5 +132,117 @@ class SGDataBufferUtilityTest {
     SGDataBufferUtility.getIndexList(Arrays.asList(blockA, blockB), xIndexList, yIndexList, 3, 3);
     assertEquals(Arrays.asList(0, 1, 2), xIndexList);
     assertEquals(Arrays.asList(0, 2), yIndexList);
+  }
+
+  @Test
+  void getValueTableBuildsVXYTableFromBuffer() {
+    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
+    when(data.getDataBuffer(
+            org.mockito.ArgumentMatchers.any(
+                jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy.class)))
+        .thenReturn(
+            new SGVXYDataBuffer(
+                new double[] {1.0, 2.0},
+                new double[] {3.0, 4.0},
+                new double[] {5.0, 6.0},
+                new double[] {7.0, 8.0},
+                false));
+    Object[][] table =
+        SGDataBufferUtility.getValueTable(data, null, new SGDataBufferPolicy(false, false, false));
+    assertNotNull(table);
+    assertEquals(2, table.length);
+    assertEquals(1.0, (Double) table[0][0], 0.0);
+    assertEquals(3.0, (Double) table[0][1], 0.0);
+    assertEquals(5.0, (Double) table[0][2], 0.0);
+    assertEquals(7.0, (Double) table[0][3], 0.0);
+  }
+
+  @Test
+  void getValueTableBuildsSXYZTableFromBuffer() {
+    SGISXYZTypeData data = mock(SGISXYZTypeData.class);
+    when(data.getDataBuffer(
+            org.mockito.ArgumentMatchers.any(
+                jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy.class)))
+        .thenReturn(
+            new SGSXYZDataBuffer(
+                new double[] {1.0, 2.0}, new double[] {3.0, 4.0}, new double[] {5.0, 6.0}));
+    Object[][] table =
+        SGDataBufferUtility.getValueTable(data, null, new SGDataBufferPolicy(false, false, false));
+    assertNotNull(table);
+    assertEquals(2, table.length);
+    assertEquals(1.0, (Double) table[0][0], 0.0);
+    assertEquals(3.0, (Double) table[0][1], 0.0);
+    assertEquals(5.0, (Double) table[0][2], 0.0);
+  }
+
+  @Test
+  void getValueTableReturnsNullWithoutBuffer() {
+    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
+    when(data.getDataBuffer(
+            org.mockito.ArgumentMatchers.any(
+                jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy.class)))
+        .thenReturn(null);
+    assertNull(
+        SGDataBufferUtility.getValueTable(data, null, new SGDataBufferPolicy(false, false, false)));
+  }
+
+  @Test
+  void getValueTableReturnsNullForOtherBufferType() {
+    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
+    when(data.getDataBuffer(
+            org.mockito.ArgumentMatchers.any(
+                jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy.class)))
+        .thenReturn(mock(jp.riken.brain.ni.samuraigraph.base.SGDataBuffer.class));
+    assertNull(
+        SGDataBufferUtility.getValueTable(data, null, new SGDataBufferPolicy(false, false, false)));
+  }
+
+  @Test
+  void getValueTableSXYZReturnsNullWithoutBuffer() {
+    SGISXYZTypeData data = mock(SGISXYZTypeData.class);
+    when(data.getDataBuffer(
+            org.mockito.ArgumentMatchers.any(
+                jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy.class)))
+        .thenReturn(null);
+    assertNull(
+        SGDataBufferUtility.getValueTable(data, null, new SGDataBufferPolicy(false, false, false)));
+  }
+
+  @Test
+  void getValueTableSXYZReturnsNullForOtherBufferType() {
+    SGISXYZTypeData data = mock(SGISXYZTypeData.class);
+    when(data.getDataBuffer(
+            org.mockito.ArgumentMatchers.any(
+                jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy.class)))
+        .thenReturn(mock(jp.riken.brain.ni.samuraigraph.base.SGDataBuffer.class));
+    assertNull(
+        SGDataBufferUtility.getValueTable(data, null, new SGDataBufferPolicy(false, false, false)));
+  }
+
+  @Test
+  void getLowerErrorValueArrayUsesDataValues() {
+    SGISXYTypeSingleData data = mock(SGISXYTypeSingleData.class);
+    when(data.isErrorBarAvailable()).thenReturn(true);
+    when(data.useValueCache(false)).thenReturn(false);
+    when(data.getLowerErrorValueArray(false, false)).thenReturn(new double[] {1.0, 2.0});
+    assertArrayEquals(
+        new double[] {1.0, 2.0}, SGDataBufferUtility.getLowerErrorValueArray(data, false), 0.0);
+  }
+
+  @Test
+  void getUpperErrorValueArrayReturnsNullWithoutErrorBar() {
+    SGISXYTypeSingleData data = mock(SGISXYTypeSingleData.class);
+    when(data.isErrorBarAvailable()).thenReturn(false);
+    assertNull(SGDataBufferUtility.getUpperErrorValueArray(data, false));
+  }
+
+  @Test
+  void getUpperErrorValueArrayUsesDataValues() {
+    SGISXYTypeSingleData data = mock(SGISXYTypeSingleData.class);
+    when(data.isErrorBarAvailable()).thenReturn(true);
+    when(data.useValueCache(false)).thenReturn(false);
+    when(data.getUpperErrorValueArray(false, false)).thenReturn(new double[] {3.0, 4.0});
+    assertArrayEquals(
+        new double[] {3.0, 4.0}, SGDataBufferUtility.getUpperErrorValueArray(data, false), 0.0);
   }
 }

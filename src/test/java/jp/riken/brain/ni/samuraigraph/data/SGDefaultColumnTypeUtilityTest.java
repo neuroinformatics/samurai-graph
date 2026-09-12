@@ -18,8 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
+import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDefaultColumnTypeUtility.DefaultColumnTypeResult;
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import ucar.nc2.NetcdfFiles;
 
 /** Unit tests for {@link SGDefaultColumnTypeUtility}. */
@@ -679,5 +682,531 @@ class SGDefaultColumnTypeUtilityTest {
     for (String type : types) {
       assertEquals(SGIDataColumnTypeConstants.Y_VALUE, type);
     }
+  }
+
+  @Test
+  void getNetCDFOriginMapParsesAttribute() {
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_ORIGIN_MAP, "machine=3,date=5");
+    Map<String, Integer> map =
+        SGDefaultColumnTypeNetCDFUtility.getNetCDFOriginMap(root.getAttributes());
+    assertEquals(3, map.get("machine").intValue());
+    assertEquals(5, map.get("date").intValue());
+  }
+
+  @Test
+  void getNetCDFOriginMapReturnsEmptyOnBadValue() {
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_ORIGIN_MAP, "machine=x");
+    Map<String, Integer> map =
+        SGDefaultColumnTypeNetCDFUtility.getNetCDFOriginMap(root.getAttributes());
+    assertEquals(0, map.size());
+  }
+
+  @Test
+  void getNetCDFOriginMapReturnsEmptyWithoutAttribute() {
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Map<String, Integer> map =
+        SGDefaultColumnTypeNetCDFUtility.getNetCDFOriginMap(
+            doc.getDocumentElement().getAttributes());
+    assertEquals(0, map.size());
+  }
+
+  private static SGNetCDFDataColumnInfo[] createNetCDFColumns(
+      final SGNetCDFFile file, final String[] titles) throws IOException {
+    SGNetCDFDataColumnInfo[] cols = new SGNetCDFDataColumnInfo[titles.length];
+    for (int ii = 0; ii < titles.length; ii++) {
+      cols[ii] =
+          SGDataFileUtility.createDataColumnInfo(
+              file.findVariable(titles[ii]), SGIDataColumnTypeConstants.X_VALUE);
+    }
+    return cols;
+  }
+
+  @Test
+  void getForSXYNetCDFDataSetsXYTypes() throws IOException {
+    SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    columnInfoList.add(xInfo);
+    columnInfoList.add(yInfo);
+    SGDataColumnInfo[] columns = {xInfo, yInfo};
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
+            columnInfoList, infoMap, root.getAttributes(), null, columns));
+    assertEquals(SGIDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
+  }
+
+  @Test
+  void getForSXYNetCDFDataFailsWithoutXName() {
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    assertFalse(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
+            columnInfoList, infoMap, root.getAttributes(), null, new SGDataColumnInfo[0]));
+  }
+
+  @Test
+  void getForSXYNetCDFDataFailsForUnknownColumn() throws IOException {
+    SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
+    SGNetCDFDataColumnInfo heightInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    columnInfoList.add(heightInfo);
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "missing");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    assertFalse(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
+            columnInfoList, infoMap, root.getAttributes(), null, new SGDataColumnInfo[1]));
+  }
+
+  @Test
+  void getForSXYNetCDFDataSetsErrorBarTypes() throws IOException {
+    SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+    SGNetCDFDataColumnInfo leInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("le"), SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, "height");
+    SGNetCDFDataColumnInfo ueInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("ue"), SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, "height");
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    columnInfoList.add(xInfo);
+    columnInfoList.add(yInfo);
+    columnInfoList.add(leInfo);
+    columnInfoList.add(ueInfo);
+    SGDataColumnInfo[] columns = {xInfo, yInfo, leInfo, ueInfo};
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME, "le");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME, "ue");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME, "height");
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
+            columnInfoList, infoMap, root.getAttributes(), null, columns));
+    assertTrue(columns[2].getColumnType().startsWith(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE));
+    assertTrue(columns[3].getColumnType().startsWith(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE));
+  }
+
+  @Test
+  void getForSXYNetCDFDataSetsTickLabelType() throws IOException {
+    SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+    SGNetCDFDataColumnInfo leInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("le"), SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, "height");
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    columnInfoList.add(xInfo);
+    columnInfoList.add(yInfo);
+    columnInfoList.add(leInfo);
+    SGDataColumnInfo[] columns = {xInfo, yInfo, leInfo};
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_TICK_LABEL_NAME, "le");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME, "height");
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
+            columnInfoList, infoMap, root.getAttributes(), null, columns));
+    assertTrue(columns[2].getColumnType().startsWith(SGIDataColumnTypeConstants.TICK_LABEL));
+    assertTrue(columns[2].getColumnType().contains("height"));
+  }
+
+  @Test
+  void getForSXYNetCDFDataRejectsBothMultipleXY() {
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAMES, "x1,x2");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, "y1,y2");
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    assertFalse(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
+            new ArrayList<SGDataColumnInfo>(),
+            infoMap,
+            root.getAttributes(),
+            null,
+            new SGDataColumnInfo[0]));
+  }
+
+  private static List<SGNetCDFVariable> example16VariableList(final SGNetCDFFile file) {
+    List<SGNetCDFVariable> varList = new ArrayList<SGNetCDFVariable>();
+    varList.add(file.findVariable("x"));
+    varList.add(file.findVariable("height"));
+    varList.add(file.findVariable("le"));
+    return varList;
+  }
+
+  private static SGNetCDFDataColumnInfo[] example16Columns(final SGNetCDFFile file) {
+    return new SGNetCDFDataColumnInfo[] {
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("le"), SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, "height")
+    };
+  }
+
+  @Test
+  void getForSXYNetCDFDataIndexAssignsIndexAndXY() throws IOException {
+    SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
+    List<SGNetCDFVariable> varList = example16VariableList(file);
+    SGNetCDFDataColumnInfo[] columns = example16Columns(file);
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFDataIndex(
+            new HashMap<String, Object>(),
+            varList,
+            varList.size(),
+            columns,
+            new ArrayList<Integer>()));
+    assertEquals(SGIDataColumnTypeConstants.INDEX, columns[0].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.X_VALUE, columns[1].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[2].getColumnType());
+  }
+
+  @Test
+  void getForSXYNetCDFDataNormalAssignsXAndYWithMultipleVariable() throws IOException {
+    SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
+    List<SGNetCDFVariable> varList = example16VariableList(file);
+    SGNetCDFDataColumnInfo[] columns = example16Columns(file);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
+            infoMap, varList, varList.size(), columns));
+    assertEquals(SGIDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
+  }
+
+  private static SGNetCDFFile createVXYNetCDFFile() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".nc");
+    Files.delete(path);
+    path.toFile().deleteOnExit();
+    ucar.nc2.write.NetcdfFormatWriter.Builder writer =
+        ucar.nc2.write.NetcdfFormatWriter.createNewNetcdf3(path.toString());
+    ucar.nc2.Dimension xDim = writer.addDimension("x", 5);
+    ucar.nc2.Dimension yDim = writer.addDimension("y", 4);
+    writer.addVariable("x", ucar.ma2.DataType.FLOAT, Arrays.asList(xDim));
+    writer.addVariable("y", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim));
+    writer.addVariable("v1", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim, xDim));
+    writer.addVariable("v2", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim, xDim));
+    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
+  }
+
+  @Test
+  void getForVXYNetCDFDataAssignsCoordinatesAndComponents() throws Exception {
+    SGNetCDFFile file = createVXYNetCDFFile();
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_COORDINATE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("y"), SGIDataColumnTypeConstants.Y_COORDINATE);
+    SGNetCDFDataColumnInfo fInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("v1"), SGIDataColumnTypeConstants.X_COMPONENT);
+    SGNetCDFDataColumnInfo sInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("v2"), SGIDataColumnTypeConstants.Y_COMPONENT);
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    columnInfoList.add(xInfo);
+    columnInfoList.add(yInfo);
+    columnInfoList.add(fInfo);
+    columnInfoList.add(sInfo);
+    SGDataColumnInfo[] columns = {xInfo, yInfo, fInfo, sInfo};
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, "x");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, "y");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, "v1");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, "v2");
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForVXYNetCDFData(
+            columnInfoList, infoMap, root.getAttributes(), null, columns));
+    assertEquals(SGIDataColumnTypeConstants.X_COORDINATE, columns[0].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Y_COORDINATE, columns[1].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, columns[2].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, columns[3].getColumnType());
+  }
+
+  @Test
+  void getForVXYNetCDFDataRejectsMissingFirstComponent() throws Exception {
+    SGNetCDFFile file = createVXYNetCDFFile();
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_COORDINATE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("y"), SGIDataColumnTypeConstants.Y_COORDINATE);
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    columnInfoList.add(xInfo);
+    columnInfoList.add(yInfo);
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, "x");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, "y");
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    assertFalse(
+        SGDefaultColumnTypeNetCDFUtility.getForVXYNetCDFData(
+            columnInfoList, infoMap, root.getAttributes(), null, new SGDataColumnInfo[2]));
+  }
+
+  private static SGNetCDFFile createSXYZNetCDFFile() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".nc");
+    Files.delete(path);
+    path.toFile().deleteOnExit();
+    ucar.nc2.write.NetcdfFormatWriter.Builder writer =
+        ucar.nc2.write.NetcdfFormatWriter.createNewNetcdf3(path.toString());
+    ucar.nc2.Dimension xDim = writer.addDimension("x", 5);
+    ucar.nc2.Dimension yDim = writer.addDimension("y", 4);
+    ucar.nc2.Dimension zDim = writer.addDimension("z", 3);
+    writer.addVariable("x", ucar.ma2.DataType.FLOAT, Arrays.asList(xDim));
+    writer.addVariable("y", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim));
+    writer.addVariable("z", ucar.ma2.DataType.FLOAT, Arrays.asList(zDim));
+    writer.addVariable("v", ucar.ma2.DataType.FLOAT, Arrays.asList(zDim, yDim, xDim));
+    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
+  }
+
+  @Test
+  void getForSXYZNetCDFDataAssignsXYZTypes() throws Exception {
+    SGNetCDFFile file = createSXYZNetCDFFile();
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("y"), SGIDataColumnTypeConstants.Y_VALUE);
+    SGNetCDFDataColumnInfo zInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("v"), SGIDataColumnTypeConstants.Z_VALUE);
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    columnInfoList.add(xInfo);
+    columnInfoList.add(yInfo);
+    columnInfoList.add(zInfo);
+    SGDataColumnInfo[] columns = {xInfo, yInfo, zInfo};
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "y");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Z_VALUE_NAME, "v");
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYZNetCDFData(
+            columnInfoList, new HashMap<String, Object>(), root.getAttributes(), null, columns));
+    assertEquals(SGIDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Z_VALUE, columns[2].getColumnType());
+  }
+
+  @Test
+  void getForSXYZNetCDFDataRejectsMissingZ() throws Exception {
+    SGNetCDFFile file = createSXYZNetCDFFile();
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("y"), SGIDataColumnTypeConstants.Y_VALUE);
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    columnInfoList.add(xInfo);
+    columnInfoList.add(yInfo);
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "y");
+    assertFalse(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYZNetCDFData(
+            columnInfoList,
+            new HashMap<String, Object>(),
+            root.getAttributes(),
+            null,
+            new SGDataColumnInfo[2]));
+  }
+
+  @Test
+  void getForVXYNetCDFDataNormalAssignsCoordinatesAndComponents() throws Exception {
+    SGNetCDFFile file = createVXYNetCDFFile();
+    List<SGNetCDFVariable> varList = new ArrayList<SGNetCDFVariable>();
+    varList.add(file.findVariable("x"));
+    varList.add(file.findVariable("y"));
+    varList.add(file.findVariable("v1"));
+    varList.add(file.findVariable("v2"));
+    SGNetCDFDataColumnInfo[] columns = {
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("x"), SGIDataColumnTypeConstants.X_COORDINATE),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("y"), SGIDataColumnTypeConstants.Y_COORDINATE),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("v1"), SGIDataColumnTypeConstants.X_COMPONENT),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("v2"), SGIDataColumnTypeConstants.Y_COMPONENT)
+    };
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForVXYNetCDFDataNormal(
+            infoMap, varList, varList.size(), columns));
+    assertEquals(SGIDataColumnTypeConstants.X_COORDINATE, columns[0].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Y_COORDINATE, columns[1].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, columns[2].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, columns[3].getColumnType());
+  }
+
+  @Test
+  void getForSXYZNetCDFDataNormalAssignsXYZValues() throws Exception {
+    SGNetCDFFile file = createSXYZNetCDFFile();
+    List<SGNetCDFVariable> varList = new ArrayList<SGNetCDFVariable>();
+    varList.add(file.findVariable("x"));
+    varList.add(file.findVariable("y"));
+    varList.add(file.findVariable("z"));
+    varList.add(file.findVariable("v"));
+    SGNetCDFDataColumnInfo[] columns = {
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("y"), SGIDataColumnTypeConstants.Y_VALUE),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("z"), SGIDataColumnTypeConstants.Z_VALUE),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("v"), SGIDataColumnTypeConstants.Z_VALUE)
+    };
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYZNetCDFData(
+            new HashMap<String, Object>(), varList, varList.size(), columns));
+    assertEquals(SGIDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Z_VALUE, columns[3].getColumnType());
+  }
+
+  @Test
+  void getForSXYNetCDFDataSetsTimeType() throws IOException {
+    SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    columnInfoList.add(xInfo);
+    columnInfoList.add(yInfo);
+    SGDataColumnInfo[] columns = {xInfo, yInfo};
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_TIME_VARIABLE_NAME, "x");
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
+            columnInfoList, infoMap, root.getAttributes(), null, columns));
+    assertEquals(SGIDataColumnTypeConstants.ANIMATION_FRAME, columns[0].getColumnType());
+  }
+
+  @Test
+  void getForSXYNetCDFDataSetsPickUpType() throws IOException {
+    SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    columnInfoList.add(xInfo);
+    columnInfoList.add(yInfo);
+    SGDataColumnInfo[] columns = {xInfo, yInfo};
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME, "x");
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
+            columnInfoList, infoMap, root.getAttributes(), null, columns));
+    assertEquals(SGIDataColumnTypeConstants.PICKUP, columns[0].getColumnType());
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
+  }
+
+  @Test
+  void getForVXYNetCDFDataSetsTimeType() throws Exception {
+    SGNetCDFFile file = createVXYNetCDFFile();
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_COORDINATE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("y"), SGIDataColumnTypeConstants.Y_COORDINATE);
+    SGNetCDFDataColumnInfo fInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("v1"), SGIDataColumnTypeConstants.X_COMPONENT);
+    SGNetCDFDataColumnInfo sInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("v2"), SGIDataColumnTypeConstants.Y_COMPONENT);
+    List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
+    columnInfoList.add(xInfo);
+    columnInfoList.add(yInfo);
+    columnInfoList.add(fInfo);
+    columnInfoList.add(sInfo);
+    SGDataColumnInfo[] columns = {xInfo, yInfo, fInfo, sInfo};
+    Document doc = SGUtilityText.getDocumentFromString("<root/>");
+    Element root = doc.getDocumentElement();
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, "x");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, "y");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, "v1");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, "v2");
+    root.setAttribute(SGIDataPropertyKeyConstants.KEY_TIME_VARIABLE_NAME, "x");
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    assertTrue(
+        SGDefaultColumnTypeNetCDFUtility.getForVXYNetCDFData(
+            columnInfoList, infoMap, root.getAttributes(), null, columns));
+    assertEquals(SGIDataColumnTypeConstants.ANIMATION_FRAME, columns[0].getColumnType());
   }
 }

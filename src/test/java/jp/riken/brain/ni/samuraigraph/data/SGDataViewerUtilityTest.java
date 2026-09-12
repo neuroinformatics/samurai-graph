@@ -1,5 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -343,5 +344,94 @@ class SGDataViewerUtilityTest {
     assertTrue(
         SGDataViewerUtility.getArchiveDataSetBufferPolicy(mock(SGData.class))
             instanceof jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy);
+  }
+
+  private static SGISXYTypeMultipleData createMultipleWithSingles(
+      final double[][] y0, final double[][] y1, final double[][] x0, final double[][] x1) {
+    SGISXYTypeSingleData single0 = mock(SGISXYTypeSingleData.class);
+    when(single0.getYValueArray(false, true)).thenReturn(y0[0]);
+    when(single0.getYValueArray(false, true, true)).thenReturn(y0[1]);
+    when(single0.getYValueArray(false)).thenReturn(y0[2]);
+    when(single0.getXValueArray(false, true)).thenReturn(x0[0]);
+    when(single0.getXValueArray(false, true, true)).thenReturn(x0[1]);
+    when(single0.getXValueArray(false)).thenReturn(x0[2]);
+    SGISXYTypeSingleData single1 = mock(SGISXYTypeSingleData.class);
+    when(single1.getYValueArray(false, true)).thenReturn(y1[0]);
+    when(single1.getYValueArray(false, true, true)).thenReturn(y1[1]);
+    when(single1.getYValueArray(false)).thenReturn(y1[2]);
+    when(single1.getXValueArray(false, true)).thenReturn(x1[0]);
+    when(single1.getXValueArray(false, true, true)).thenReturn(x1[1]);
+    when(single1.getXValueArray(false)).thenReturn(x1[2]);
+    SGISXYTypeMultipleData multiple = mock(SGISXYTypeMultipleData.class);
+    when(multiple.getSXYDataArray()).thenReturn(new SGISXYTypeSingleData[] {single0, single1});
+    return multiple;
+  }
+
+  @Test
+  void getYValueArrayCombinesChildBuffers() {
+    SGISXYTypeMultipleData data =
+        createMultipleWithSingles(
+            new double[][] {{1.0}, {2.0}, {3.0}},
+            new double[][] {{4.0}, {5.0}, {6.0}},
+            new double[][] {{7.0}, {8.0}, {9.0}},
+            new double[][] {{10.0}, {11.0}, {12.0}});
+    double[][] ret = SGDataViewerUtility.getYValueArray(data, false, true);
+    assertArrayEquals(new double[] {1.0}, ret[0], 0.0);
+    assertArrayEquals(new double[] {4.0}, ret[1], 0.0);
+    double[][] ret2 = SGDataViewerUtility.getYValueArray(data, false, true, true);
+    assertArrayEquals(new double[] {2.0}, ret2[0], 0.0);
+    double[][] ret3 = SGDataViewerUtility.getYValueArray(data, false);
+    assertArrayEquals(new double[] {3.0}, ret3[0], 0.0);
+  }
+
+  @Test
+  void getXValueArrayCombinesChildBuffers() {
+    SGISXYTypeMultipleData data =
+        createMultipleWithSingles(
+            new double[][] {{1.0}, {2.0}, {3.0}},
+            new double[][] {{4.0}, {5.0}, {6.0}},
+            new double[][] {{7.0}, {8.0}, {9.0}},
+            new double[][] {{10.0}, {11.0}, {12.0}});
+    double[][] ret = SGDataViewerUtility.getXValueArray(data, false, true);
+    assertArrayEquals(new double[] {7.0}, ret[0], 0.0);
+    assertArrayEquals(new double[] {10.0}, ret[1], 0.0);
+    double[][] ret2 = SGDataViewerUtility.getXValueArray(data, false, true, true);
+    assertArrayEquals(new double[] {8.0}, ret2[0], 0.0);
+    double[][] ret3 = SGDataViewerUtility.getXValueArray(data, false);
+    assertArrayEquals(new double[] {9.0}, ret3[0], 0.0);
+  }
+
+  @Test
+  void syncDataValueHistoryFeedsChildData() {
+    SGDataValueHistory history =
+        mock(
+            SGDataValueHistory.class,
+            withSettings().extraInterfaces(SGDataValueHistory.IMultiple.class));
+    when(((SGDataValueHistory.IMultiple) history).getChildIndex()).thenReturn(0);
+    java.util.List<SGDataValueHistory> historyList = new java.util.ArrayList<SGDataValueHistory>();
+    historyList.add(history);
+    SGISXYTypeSingleData child = mock(SGISXYTypeSingleData.class);
+    SGDataViewerUtility.syncDataValueHistory(historyList, new SGISXYTypeSingleData[] {child});
+  }
+
+  @Test
+  void setEditedValueVXYGridWritesPolarComponents() {
+    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
+    when(data.isPolar()).thenReturn(true);
+    when(data.isStrideAvailable()).thenReturn(false);
+    when(data.getXStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 1));
+    when(data.getYStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 1));
+    double[] xValues = new double[5];
+    double[] yValues = new double[5];
+    double[][] fGrid = new double[7][5];
+    double[][] sGrid = new double[7][5];
+    SGDataValueHistory.SDArray.D1 magnitude =
+        new SGDataValueHistory.SDArray.D1(8.5, SGIDataColumnTypeConstants.MAGNITUDE, 6);
+    SGDataViewerUtility.setEditedValue(data, xValues, yValues, fGrid, sGrid, false, magnitude);
+    assertEquals(8.5, fGrid[6][0], 0.0);
+    SGDataValueHistory.SDArray.D1 angle =
+        new SGDataValueHistory.SDArray.D1(9.5, SGIDataColumnTypeConstants.ANGLE, 6);
+    SGDataViewerUtility.setEditedValue(data, xValues, yValues, fGrid, sGrid, false, angle);
+    assertEquals(9.5, sGrid[6][0], 0.0);
   }
 }
