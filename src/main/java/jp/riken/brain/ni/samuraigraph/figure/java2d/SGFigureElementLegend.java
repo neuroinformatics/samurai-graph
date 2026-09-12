@@ -97,10 +97,10 @@ public class SGFigureElementLegend extends SGFigureElementForData
   SGAxis mYAxis = null;
 
   /** Relative x-coordinate from the origin of the graph rectangle at the default magnification. */
-  private float mLegendX = 0.0f;
+  float mLegendX = 0.0f;
 
   /** Relative y-coordinate from the origin of the graph rectangle at the default magnification. */
-  private float mLegendY = 0.0f;
+  float mLegendY = 0.0f;
 
   /** The width at the default magnification. */
   private float mLegendWidth = 0.0f;
@@ -130,6 +130,9 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
   /** Temporary properties. */
   final SGFigureElementLegendStyle mStyleHolder = new SGFigureElementLegendStyle();
+
+  private final SGFigureElementLegendPropertyIO mPropertyIO =
+      new SGFigureElementLegendPropertyIO(this);
 
   private SGProperties mTemporaryProperties = null;
 
@@ -789,86 +792,22 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
   /** */
   public SGProperties getProperties() {
-    SGProperties p = new LegendProperties();
-    if (this.getProperties(p) == false) {
-      return null;
-    }
-    return p;
+    return this.mPropertyIO.getProperties();
   }
 
   /** */
   public boolean getProperties(final SGProperties p) {
-    if ((p instanceof LegendProperties) == false) {
-      return false;
-    }
-
-    LegendProperties lp = (LegendProperties) p;
-
-    lp.x = this.mLegendX;
-    lp.y = this.mLegendY;
-
-    lp.visible = this.isVisible();
-    lp.frameLineVisible = this.isFrameVisible();
-    lp.frameLineWidth = this.getFrameLineWidth();
-    lp.frameLineColor = this.getFrameColor();
-    lp.backgroundPaint.setColor(this.getBackgroundColor());
-    lp.backgroundPaint.setTransparency(this.getBackgroundTransparency());
-    lp.fontName = this.getFontName();
-    lp.fontSize = this.getFontSize();
-    lp.fontStyle = this.getFontStyle();
-    lp.stringColor = this.getFontColor();
-    lp.symbolSpan = this.getSymbolSpan();
-
-    lp.xAxis = this.mXAxis;
-    lp.yAxis = this.mYAxis;
-
-    lp.visibleElementGroupList = new ArrayList<SGIChildObject>(this.getVisibleChildList());
-
-    return true;
+    return this.mPropertyIO.getProperties(p);
   }
 
   /** */
   public boolean setProperties(final SGProperties p) {
-
-    if ((p instanceof LegendProperties) == false) return false;
-
-    LegendProperties wp = (LegendProperties) p;
-
-    if (this.setCommonProperties(wp) == false) {
-      return false;
-    }
-
-    return true;
+    return this.mPropertyIO.setProperties(p);
   }
 
   /** */
   private boolean setCommonProperties(final LegendProperties p) {
-
-    this.mLegendX = p.x;
-    this.mLegendY = p.y;
-
-    this.setVisible(p.visible);
-    this.setFrameVisible(p.frameLineVisible);
-    this.setFrameLineWidth(p.frameLineWidth);
-    this.setFrameLineColor(p.frameLineColor);
-    this.setBackgroundColor(p.backgroundPaint.getColor());
-    this.setBackgroundTransparent(p.backgroundPaint.getTransparencyPercent());
-    this.setFontName(p.fontName);
-    this.setFontSize(p.fontSize);
-    this.setFontStyle(p.fontStyle);
-    this.setFontColor(p.stringColor);
-    this.setSymbolSpan(p.symbolSpan);
-
-    this.mXAxis = p.xAxis;
-    this.mYAxis = p.yAxis;
-
-    boolean flag;
-    flag = this.setVisibleChildList(p.visibleElementGroupList);
-    if (!flag) {
-      return false;
-    }
-
-    return true;
+    return this.mPropertyIO.setCommonProperties(p);
   }
 
   private static final float MARGIN_HORIZONTAL = 6.0f;
@@ -2433,21 +2372,28 @@ public class SGFigureElementLegend extends SGFigureElementForData
   /**
    * @return
    */
+  /** */
+  boolean setVisibleChildListForPropertyIO(final List<SGIChildObject> list) {
+    return this.setVisibleChildList(list);
+  }
+
+  /** */
+  Element createThisElementForPropertyIO(final Document document, final SGExportParameter params) {
+    return this.createThisElement(document, params);
+  }
+
   public String getTagName() {
     return TAG_NAME_LEGEND;
   }
 
   /** */
-  public boolean writeProperty(final Element el, SGExportParameter params) {
-    SGPropertyMap map = this.getPropertyFileMap(params);
-    map.setToElement(el);
-    return true;
+  public boolean writeProperty(final Element el, final SGExportParameter params) {
+    return this.mPropertyIO.writeProperty(el, params);
   }
 
   /** */
-  public Element[] createElement(final Document document, SGExportParameter params) {
-    Element el = this.createThisElement(document, params);
-    return new Element[] {el};
+  public Element[] createElement(final Document document, final SGExportParameter params) {
+    return this.mPropertyIO.createElement(document, params);
   }
 
   /**
@@ -2458,208 +2404,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean readProperty(final Element element, final String versionNumber) {
-    String str = null;
-    Number num = null;
-    Color cl = null;
-    Boolean b = null;
-
-    // set legend visible
-    str = element.getAttribute(SGIFigureElementLegend.KEY_LEGEND_VISIBLE);
-    if (str.length() != 0) {
-      b = SGUtilityText.getBoolean(str);
-      if (b == null) {
-        return false;
-      }
-      if (this.setVisible(b.booleanValue()) == false) {
-        return false;
-      }
-    }
-
-    // set axes
-    str = element.getAttribute(KEY_X_AXIS_POSITION);
-    if (str.length() != 0) {
-      SGAxis xAxis = this.mAxisElement.getAxis(str);
-      this.mXAxis = xAxis;
-    }
-
-    str = element.getAttribute(KEY_Y_AXIS_POSITION);
-    if (str.length() != 0) {
-      SGAxis yAxis = this.mAxisElement.getAxis(str);
-      this.mYAxis = yAxis;
-    }
-
-    str = element.getAttribute(KEY_X_VALUE);
-    if (str.length() != 0) {
-      num = SGUtilityText.getDouble(str);
-      if (num == null) {
-        return false;
-      }
-      final double xValue = num.doubleValue();
-      if (this.mXAxis.isValidValue(xValue) == false) {
-        return false;
-      }
-      if (this.setXValue(xValue) == false) {
-        return false;
-      }
-    }
-
-    str = element.getAttribute(KEY_Y_VALUE);
-    if (str.length() != 0) {
-      num = SGUtilityText.getDouble(str);
-      if (num == null) {
-        return false;
-      }
-      final double yValue = num.doubleValue();
-      if (this.mYAxis.isValidValue(yValue) == false) {
-        return false;
-      }
-      if (this.setYValue(yValue) == false) {
-        return false;
-      }
-    }
-
-    // set frame visible
-    str = element.getAttribute(SGIFigureElementLegend.KEY_FRAME_VISIBLE);
-    if (str.length() != 0) {
-      b = SGUtilityText.getBoolean(str);
-      if (b == null) {
-        return false;
-      }
-      if (this.setFrameVisible(b.booleanValue()) == false) {
-        return false;
-      }
-    }
-
-    // set frame line width
-    str = element.getAttribute(SGIFigureElementLegend.KEY_FRAME_LINE_WIDTH);
-    if (str.length() != 0) {
-      StringBuilder uFrameLineWidth = new StringBuilder();
-      num = SGUtilityText.getNumber(str, uFrameLineWidth);
-      if (num == null) {
-        return false;
-      }
-      if (this.setFrameLineWidth(num.floatValue(), uFrameLineWidth.toString()) == false) {
-        return false;
-      }
-    }
-
-    // set frame line color
-    str = element.getAttribute(SGIFigureElementLegend.KEY_FRAME_LINE_COLOR);
-    if (str.length() != 0) {
-      cl = SGUtilityText.parseColor(str);
-      if (cl == null) {
-        return false;
-      }
-      if (this.setFrameLineColor(cl) == false) {
-        return false;
-      }
-    }
-
-    // background color
-    str = element.getAttribute(SGIFigureElementLegend.KEY_BACKGROUND_COLOR);
-    if (str.length() != 0) {
-      cl = SGUtilityText.parseColor(str);
-      if (cl == null) {
-        return false;
-      }
-      if (this.setBackgroundColor(cl) == false) {
-        return false;
-      }
-    }
-
-    // transparent
-    str = element.getAttribute(SGIFigureElementLegend.KEY_BACKGROUND_TRANSPARENT);
-    if (str.length() != 0) {
-      b = SGUtilityText.getBoolean(str);
-      if (b != null) {
-        if (b.booleanValue() == false) {
-          if (this.setBackgroundTransparent(SGTransparentPaint.ALL_OPAQUE_VALUE) == false) {
-            return false;
-          }
-        } else {
-          if (this.setBackgroundTransparent(SGTransparentPaint.ALL_TRANSPARENT_VALUE) == false) {
-            return false;
-          }
-        }
-      } else {
-        num = SGUtilityText.getInteger(str, SGIConstants.percent);
-        if (num == null) {
-          return false;
-        }
-        if (this.setBackgroundTransparent(num.intValue()) == false) {
-          return false;
-        }
-      }
-    }
-
-    // set font name
-    str = element.getAttribute(KEY_FONT_NAME);
-    if (str.length() != 0) {
-      final String fontName = str;
-      if (this.setFontName(fontName) == false) {
-        return false;
-      }
-    }
-
-    // set font size
-    str = element.getAttribute(KEY_FONT_SIZE);
-    if (str.length() != 0) {
-      StringBuilder uFontSize = new StringBuilder();
-      num = SGUtilityText.getNumber(str, uFontSize);
-      if (num == null) {
-        return false;
-      }
-      if (this.setFontSize(num.floatValue(), uFontSize.toString()) == false) {
-        return false;
-      }
-    }
-
-    // set font style
-    str = element.getAttribute(KEY_FONT_STYLE);
-    if (str.length() != 0) {
-      final Integer fontStyle = SGUtilityText.getFontStyle(str);
-      if (fontStyle == null) {
-        return false;
-      }
-      if (this.setFontStyle(fontStyle.intValue()) == false) {
-        return false;
-      }
-    }
-
-    // set the font color
-    str = element.getAttribute(KEY_STRING_COLORS);
-    if (str.length() != 0) {
-      cl = SGUtilityText.parseColor(str);
-      if (cl == null) {
-        return false;
-      }
-      if (this.setFontColor(cl) == false) {
-        return false;
-      }
-    }
-
-    // set symbol span
-    // SymbolSpan is appeared since ver. 0.9.1
-    str = element.getAttribute(KEY_SYMBOL_SPAN);
-    float symbolSpan;
-    if (str.length() != 0) {
-      num = SGUtilityText.getLengthInPoint(str);
-      if (num == null) {
-        return false;
-      }
-      symbolSpan = num.floatValue();
-    } else {
-      // for previous version before 0.9.1
-      num =
-          Float.valueOf(
-              (float) SGUtilityText.convertToPoint(DEFAULT_LEGEND_SYMBOL_SPAN, SYMBOL_SPAN_UNIT));
-      symbolSpan = num.floatValue();
-    }
-    if (this.setSymbolSpan(symbolSpan) == false) {
-      return false;
-    }
-
-    return true;
+    return this.mPropertyIO.readProperty(element, versionNumber);
   }
 
   /** An interface that element groups in the legend must implement. */
