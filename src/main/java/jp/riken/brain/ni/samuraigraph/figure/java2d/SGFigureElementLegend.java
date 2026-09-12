@@ -5,24 +5,17 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Frame;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Paint;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -46,7 +39,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGColorMap.ColorMapProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
-import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
@@ -93,10 +85,8 @@ import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
 import jp.riken.brain.ni.samuraigraph.figure.SGColorMapManager;
 import jp.riken.brain.ni.samuraigraph.figure.SGColorMapManager.HueColorMap;
-import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementArrow;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroup;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSet;
-import jp.riken.brain.ni.samuraigraph.figure.SGIArrowConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGILegendConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYDataConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGISXYZDataConstants;
@@ -104,10 +94,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGIStringConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIVXYDataConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyleColorMapManager;
-import jp.riken.brain.ni.samuraigraph.figure.SGStroke;
 import jp.riken.brain.ni.samuraigraph.figure.SGUtilityForFigureElement;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupBar.BarInGroup;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupPseudocolorMap.PseudocolorMapRectangle;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupSetInGraphSXY.SXYElementGroupSetPropertiesInFigureElement;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupSetInGraphSXYMultiple.MultipleSXYElementGroupSetPropertiesInFigureElement;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupSetInGraphVXY.ElementGroupSetInVXYGraphProperties;
@@ -2013,7 +2000,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
   }
 
   /** */
-  private SGData getData(final ElementGroupSetInLegend groupSet) {
+  SGData getData(final ElementGroupSetInLegend groupSet) {
     for (int ii = 0; ii < this.mChildList.size(); ii++) {
       ElementGroupSetInLegend groupSet_ = (ElementGroupSetInLegend) this.mChildList.get(ii);
       if (groupSet_.equals(groupSet)) {
@@ -2702,51 +2689,9 @@ public class SGFigureElementLegend extends SGFigureElementForData
   }
 
   /** An interface that element groups in the legend must implement. */
-  private interface ILegendElement {
-
-    /**
-     * Returns the preferred width.
-     *
-     * @return the preferred width
-     */
-    public float getPreferredWidth();
-
-    /**
-     * Returns the preferred height.
-     *
-     * @return the preferred height
-     */
-    public float getPreferredHeight();
-
-    /**
-     * @param rect
-     */
-    public void setDataElementBounds(final Rectangle2D rect);
-
-    /**
-     * @return
-     */
-    public boolean createDrawingElementInLegend();
-
-    /**
-     * Returns the number of points of this element group.
-     *
-     * @return the number of points
-     */
-    public int getNumberOfPoints();
-
-    /**
-     * Sets the element group set.
-     *
-     * @param gs the element group set.
-     * @return true if succeeded
-     */
-    public boolean setElementGroupSet(ElementGroupSetInLegend gs);
-  }
 
   /** A legend for single data object. */
-  private abstract class ElementGroupSetInLegend extends SGElementGroupSetForData
-      implements SGISelectable {
+  abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implements SGISelectable {
 
     /** A rectangle for this legend. */
     protected Rectangle2D mDataRect = null;
@@ -2797,7 +2742,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
      *
      * @return true if this legend is not deleted and is visible
      */
-    private boolean isViewable() {
+    boolean isViewable() {
       return (this.isVisible() && this.isVisibleInLegend());
     }
 
@@ -3309,7 +3254,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
   }
 
   /** */
-  private class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
+  class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
       implements SGIElementGroupSetSXY, SGISXYDataConstants {
 
     /** Shift to the x direction. */
@@ -4070,15 +4015,15 @@ public class SGFigureElementLegend extends SGFigureElementForData
       SGISXYTypeData data = (SGISXYTypeData) this.mData;
       SGElementGroup group = null;
       if (type == SGIElementGroupConstants.POLYLINE_GROUP) {
-        group = new ElementGroupLine(data);
+        group = new ElementGroupLine(SGFigureElementLegend.this, data);
       } else if (type == SGIElementGroupConstants.RECTANGLE_GROUP) {
-        group = new ElementGroupBar(data);
+        group = new ElementGroupBar(SGFigureElementLegend.this, data);
       } else if (type == SGIElementGroupConstants.SYMBOL_GROUP) {
-        group = new ElementGroupSymbol(data);
+        group = new ElementGroupSymbol(SGFigureElementLegend.this, data);
       } else if (type == SGIElementGroupConstants.ERROR_BAR_GROUP) {
-        group = new ElementGroupErrorBar(data);
+        group = new ElementGroupErrorBar(SGFigureElementLegend.this, data);
       } else if (type == SGIElementGroupConstants.TICK_LABEL_GROUP) {
-        group = new ElementGroupTickLabels(data);
+        group = new ElementGroupTickLabels(SGFigureElementLegend.this, data);
       } else {
         throw new Error();
       }
@@ -4325,7 +4270,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
   }
 
   /** A class of multiple element group set in legend. */
-  private class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
+  class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
       implements SGIElementGroupSetMultipleSXY, SGISXYDataDialogObserver {
 
     @Override
@@ -5366,7 +5311,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
   }
 
   /** */
-  private class ElementGroupSetInLegendVXY extends ElementGroupSetInLegend
+  class ElementGroupSetInLegendVXY extends ElementGroupSetInLegend
       implements SGIElementGroupSetVXY, SGIVXYDataDialogObserver, SGIVXYDataConstants {
 
     /** */
@@ -5419,7 +5364,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     public boolean addDrawingElementGroup(final int type) {
       SGElementGroup group = null;
       if (type == SGIElementGroupConstants.ARROW_GROUP) {
-        group = new ElementGroupArrow();
+        group = new ElementGroupArrow(SGFigureElementLegend.this);
       } else {
         throw new Error();
       }
@@ -5685,1109 +5630,12 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
   }
 
-  private class ElementGroupLine extends SGElementGroupLineForData implements ILegendElement {
-
-    private SGTuple2f mStart = new SGTuple2f();
-
-    private SGTuple2f mEnd = new SGTuple2f();
-
-    /** A group set that this element group belongs. */
-    protected ElementGroupSetInLegend mGroupSet = null;
-
-    /** The default constructor. */
-    protected ElementGroupLine(SGISXYTypeData data) {
-      super(data);
-
-      // initialize the index array
-      this.mEndPointsIndexArray = new int[1][2];
-    }
-
-    /**
-     * Sets the element group set.
-     *
-     * @param gs the element group set
-     */
-    public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
-      this.mGroupSet = gs;
-      return true;
-    }
-
-    /** */
-    public float getPreferredWidth() {
-      return this.getMagnification() * getSymbolSpan();
-    }
-
-    /**
-     * Returns the preferred height.
-     *
-     * @return the preferred height
-     */
-    public float getPreferredHeight() {
-      return this.getMagnification() * this.getLineWidth();
-    }
-
-    private Rectangle2D mBoundsRect = new Rectangle2D.Float();
-
-    /**
-     * @param rect
-     */
-    public void setDataElementBounds(final Rectangle2D rect) {
-      this.mBoundsRect = rect;
-    }
-
-    /**
-     * Returns the number of points in this element group.
-     *
-     * @return the number of points
-     */
-    public int getNumberOfPoints() {
-      return 2;
-    }
-
-    /** Create drawing elements. */
-    public boolean createDrawingElementInLegend() {
-      // final float width = this.getDataElementWidth();
-
-      Rectangle2D lRect = getRectOfGroupSet(this.mGroupSet);
-      Rectangle2D dRect = this.mBoundsRect;
-
-      SGTuple2f start = new SGTuple2f();
-      start.x = (float) lRect.getX();
-      start.y = (float) lRect.getY() + 0.50f * (float) lRect.getHeight();
-      SGTuple2f end = new SGTuple2f();
-      end.x = start.x + (float) dRect.getWidth();
-      end.y = start.y;
-
-      if (this.setLocation(new SGTuple2f[] {start, end}) == false) {
-        return false;
-      }
-      this.mStart = start;
-      this.mEnd = end;
-
-      return true;
-    }
-
-    /** Overrode for gradient paint and anchors. */
-    @Override
-    public boolean paintElement(final Graphics2D g2d, final Rectangle2D clipRect) {
-      if (g2d == null) {
-        return false;
-      }
-
-      // setup the stroke
-      List<Object> lineTypeList = new ArrayList<Object>();
-      List<Object> lineWidthList = new ArrayList<Object>();
-      for (SGLineStyle style : this.mLineStyleList) {
-        lineTypeList.add(style.getLineType());
-        lineWidthList.add(style.getLineWidth());
-      }
-
-      List<Object> mfLineTypeList = SGUtility.findMostFrequentObjects(lineTypeList);
-      if (mfLineTypeList.size() == 0) {
-        return false;
-      }
-      int minLineType = Integer.MAX_VALUE;
-      for (Object obj : mfLineTypeList) {
-        Integer lt = (Integer) obj;
-        if (lt < minLineType) {
-          minLineType = lt;
-        }
-      }
-      Integer lineType = minLineType;
-
-      List<Object> mfLineWidthList = SGUtility.findMostFrequentObjects(lineWidthList);
-      if (mfLineWidthList.size() == 0) {
-        return false;
-      }
-      float maxLineWidth = 0.0f;
-      for (Object obj : mfLineWidthList) {
-        Float lw = (Float) obj;
-        if (lw > maxLineWidth) {
-          maxLineWidth = lw;
-        }
-      }
-      Float lineWidth = maxLineWidth;
-
-      SGStroke tempStroke = (SGStroke) this.mStroke.clone();
-      tempStroke.setLineType(lineType);
-      tempStroke.setLineWidth(lineWidth);
-      Stroke stroke = tempStroke.getBasicStroke();
-      g2d.setStroke(stroke);
-
-      // draw lines
-      final float y = this.mStart.y;
-      if (this.mLineStyleList.size() == 1) {
-        SGLineStyle style = this.mLineStyleList.get(0);
-        Color cl = style.getColor();
-        g2d.setPaint(cl);
-        Line2D line = new Line2D.Float(this.mStart.x, y, this.mEnd.x, y);
-        g2d.draw(line);
-      } else if (this.mLineStyleList.size() > 1) {
-        // setup the location of lines
-        final float xDiff = (this.mEnd.x - this.mStart.x) / (this.mLineStyleList.size() - 1);
-        final float[] xArray = new float[this.mLineStyleList.size()];
-        for (int ii = 0; ii < this.mLineStyleList.size(); ii++) {
-          xArray[ii] = this.mStart.x + ii * xDiff;
-        }
-
-        final int lineNum = this.mLineStyleList.size() - 1;
-
-        // creates a single GeneralPath object
-        GeneralPath gPath = new GeneralPath();
-        for (int ii = 0; ii < lineNum; ii++) {
-          Line2D line = new Line2D.Float(xArray[ii], y, xArray[ii + 1], y);
-          gPath.append(line, true);
-        }
-
-        // creates GradientPaint objects
-        Paint[] paintArray = new Paint[lineNum];
-        for (int ii = 0; ii < lineNum; ii++) {
-          SGLineStyle style1 = this.mLineStyleList.get(ii);
-          SGLineStyle style2 = this.mLineStyleList.get(ii + 1);
-          final float start = xArray[ii];
-          final float end = xArray[ii + 1];
-          Color cl1 = style1.getColor();
-          Color cl2 = style2.getColor();
-          GradientPaint gp = new GradientPaint(start, y, cl1, end, y, cl2);
-          paintArray[ii] = gp;
-        }
-
-        // draw shapes
-        Rectangle2D rect = getRectOfGroupSet(this.mGroupSet);
-        if (rect != null) {
-          final float rectY = (float) rect.getY();
-          final float rectH = (float) rect.getHeight();
-          Shape clip = g2d.getClip();
-          for (int ii = 0; ii < lineNum; ii++) {
-            // clips the path
-            final float rectW = xArray[ii + 1] - xArray[ii];
-            Rectangle2D cRect = new Rectangle2D.Float(xArray[ii], rectY, rectW, rectH);
-            g2d.setClip(cRect);
-            g2d.setPaint(paintArray[ii]);
-            g2d.draw(gPath);
-          }
-          g2d.setClip(clip);
-        }
-      }
-
-      // draw anchors if the group set is selected
-      if (this.mGroupSet.isViewable()
-          && this.mGroupSet.isSelected()
-          && isSymbolsVisibleAroundFocusedObjects()) {
-        if (this.mGroupSet instanceof SGIElementGroupSetXY) {
-          SGIElementGroupSetXY gsSXY = (SGIElementGroupSetXY) this.mGroupSet;
-          if (!gsSXY.getSymbolGroup().isVisible() && !gsSXY.getBarGroup().isVisible()) {
-            SGDrawingElementLine2D line = (SGDrawingElementLine2D) this.mDrawingElementArray[0];
-            SGTuple2f start = line.getStart();
-            SGTuple2f end = line.getEnd();
-            SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(
-                new Point2D.Float(start.x, start.y), g2d);
-            SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(
-                new Point2D.Float(end.x, end.y), g2d);
-          }
-        }
-      }
-      return true;
-    }
-
-    /**
-     * @param el
-     * @return
-     */
-    public boolean readProperty(final Element el) {
-      if (super.readProperty(el) == false) {
-        return false;
-      }
-
-      return SGFigureElementLegend.this.readProperty(this, el);
-    }
-
-    @Override
-    public SGTuple2f getEnd(int index) {
-      return this.mEnd;
-    }
-
-    @Override
-    public SGTuple2f getStart(int index) {
-      return this.mStart;
-    }
-
-    @Override
-    public void setStyle(SGLineStyle s) {
-      super.setStyle(s);
-      SGLineStyle style = (s != null) ? (SGLineStyle) s.clone() : null;
-      this.mLineStyleList.clear();
-      this.mLineStyleList.add(style);
-    }
-
-    List<SGLineStyle> mLineStyleList = new ArrayList<SGLineStyle>();
-
-    void clearLineStyleList() {
-      this.mLineStyleList.clear();
-    }
-
-    void setLineStyleList(List<SGLineStyle> lineStyleList) {
-      this.mLineStyleList = new ArrayList<SGLineStyle>(lineStyleList);
-    }
-
-    void addLineStyle(SGLineStyle lineStyle) {
-      this.mLineStyleList.add(lineStyle);
-    }
-
-    void setLineStyle(SGLineStyle lineStyle, final int index) {
-      this.mLineStyleList.set(index, lineStyle);
-    }
-  }
-
-  protected static class BarInLegend extends BarInGroup {
-    /**
-     * Builds a rectangle in a group of rectangles.
-     *
-     * @param group a group of rectangles
-     */
-    public BarInLegend(ElementGroupBar group, final int index) {
-      super(group, index);
-    }
-
-    public float getWidth() {
-      return this.mGroup.getRectangleWidth();
-    }
-
-    public float getHeight() {
-      return this.mGroup.getRectangleHeight();
-    }
-
-    public boolean setWidth(final float w) {
-      return this.mGroup.setRectangleWidth(w);
-    }
-
-    public boolean setHeight(final float h) {
-      return this.mGroup.setRectangleHeight(h);
-    }
-  }
-
-  private class ElementGroupBar extends SGElementGroupBarForData implements ILegendElement {
-
-    /** A group set that this element group belongs. */
-    protected ElementGroupSetInLegend mGroupSet = null;
-
-    /** The default constructor. */
-    protected ElementGroupBar(SGISXYTypeData data) {
-      super(data);
-    }
-
-    /**
-     * Creates and returns an instance of drawing element.
-     *
-     * @return an instance of drawing element
-     */
-    protected SGDrawingElement createDrawingElementInstance(final int index) {
-      return new BarInLegend(this, index);
-    }
-
-    /**
-     * Sets the element group set.
-     *
-     * @param gs the element group set
-     */
-    public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
-      this.mGroupSet = gs;
-      return true;
-    }
-
-    /**
-     * Returns the preferred width.
-     *
-     * @return the preferred width
-     */
-    public float getPreferredWidth() {
-      final ElementGroupSetInLegendSXY gs = (ElementGroupSetInLegendSXY) this.mGroupSet;
-      Rectangle2D strRect = gs.mDrawingString.getElementBounds();
-      return (float) strRect.getHeight();
-    }
-
-    /**
-     * Returns the preferred height.
-     *
-     * @return the preferred height
-     */
-    public float getPreferredHeight() {
-      return this.getPreferredWidth();
-    }
-
-    private Rectangle2D mBoundsRect = new Rectangle2D.Float();
-
-    /**
-     * @param rect
-     */
-    public void setDataElementBounds(final Rectangle2D rect) {
-      this.mBoundsRect = rect;
-    }
-
-    /**
-     * Returns the number of points in this element group.
-     *
-     * @return the number of points
-     */
-    public int getNumberOfPoints() {
-      return 1;
-    }
-
-    /** */
-    public boolean createDrawingElementInLegend() {
-      Rectangle2D lRect = getRectOfGroupSet(this.mGroupSet);
-      Rectangle2D dRect = this.mBoundsRect;
-
-      // set size
-      final float h = this.getPreferredWidth();
-      this.setRectangleHeight(h);
-      final float w = (float) dRect.getWidth();
-      this.setRectangleWidth(w);
-
-      // set location
-      final float x = (float) lRect.getX();
-      final float y =
-          (float) (lRect.getY() + lRect.getHeight() / 2 - this.getPreferredHeight() / 2);
-      SGTuple2f start = new SGTuple2f(x, y);
-      this.setLocation(new SGTuple2f[] {start});
-
-      return true;
-    }
-
-    /**
-     * @return
-     */
-    public boolean initDrawingElement(final int num) {
-      super.initDrawingElement(num);
-      return true;
-    }
-
-    /** The location. */
-    private SGTuple2f mLocation = new SGTuple2f();
-
-    /** */
-    public boolean setLocation(final SGTuple2f[] pointArray) {
-
-      if (this.mDrawingElementArray == null) {
-        return true;
-      }
-
-      if (pointArray.length != this.mDrawingElementArray.length) {
-        // throw new IllegalArgumentException();
-        this.initDrawingElement(pointArray);
-      }
-
-      this.mLocation = pointArray[0];
-
-      return true;
-    }
-
-    /** Paint line objects. */
-    public boolean paintElement(final Graphics2D g2d, final Rectangle2D clipRect) {
-      if (super.paintElement(g2d, clipRect) == false) {
-        return false;
-      }
-
-      // draw anchors if the group set is selected
-      if (this.mGroupSet.isViewable()
-          && this.mGroupSet.isSelected()
-          && isSymbolsVisibleAroundFocusedObjects()) {
-        SGDrawingElementBar2D bar = (SGDrawingElementBar2D) this.mDrawingElementArray[0];
-        Rectangle2D rect = bar.getElementBounds();
-        SGUtilityForFigureElementJava2D.drawAnchorsOnRectangle(rect, g2d);
-      }
-      return true;
-    }
-
-    /**
-     * @param el
-     * @return
-     */
-    public boolean readProperty(final Element el) {
-      if (super.readProperty(el) == false) {
-        return false;
-      }
-      return SGFigureElementLegend.this.readProperty(this, el);
-    }
-
-    @Override
-    public float getX(int index) {
-      return this.mLocation.x;
-    }
-
-    @Override
-    public float getY(int index) {
-      return this.mLocation.y;
-    }
-
-    // @Override
-    // protected float getShiftXInGraph() {
-    // return 0;
-    // }
-    //
-    // @Override
-    // protected float getShiftYInGraph() {
-    // return 0;
-    // }
-
-  }
-
-  private class ElementGroupSymbol extends SGElementGroupSymbolForData implements ILegendElement {
-
-    /** A group set that this element group belongs. */
-    protected ElementGroupSetInLegend mGroupSet = null;
-
-    /** The default constructor. */
-    protected ElementGroupSymbol(SGISXYTypeData data) {
-      super(data);
-    }
-
-    /**
-     * Sets the element group set.
-     *
-     * @param gs the element group set
-     */
-    public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
-      this.mGroupSet = gs;
-      return true;
-    }
-
-    /**
-     * Returns the preferred width.
-     *
-     * @return the preferred width
-     */
-    public float getPreferredWidth() {
-      return this.getDataElementSize();
-    }
-
-    /**
-     * Returns the preferred height.
-     *
-     * @return the preferred height
-     */
-    public float getPreferredHeight() {
-      return 1.20f * this.getDataElementSize();
-    }
-
-    /** */
-    private float getDataElementSize() {
-      SGDrawingElement[] array = this.mDrawingElementArray;
-      if (array != null) {
-        if (array.length == 0) {
-          return 0.0f;
-        }
-
-        SGDrawingElementSymbol2D symbol = (SGDrawingElementSymbol2D) array[0];
-        Rectangle2D rect = symbol.getElementBounds().getBounds2D();
-        return (float) rect.getHeight();
-      }
-      return 0.0f;
-    }
-
-    private Rectangle2D mBoundsRect = new Rectangle2D.Float();
-
-    /**
-     * @param rect
-     */
-    public void setDataElementBounds(final Rectangle2D rect) {
-      this.mBoundsRect = rect;
-    }
-
-    /**
-     * Returns the number of points of this element group.
-     *
-     * @return the number of points
-     */
-    public int getNumberOfPoints() {
-      return 1;
-    }
-
-    private SGTuple2f mLocation = new SGTuple2f();
-
-    /** */
-    public boolean createDrawingElementInLegend() {
-      Rectangle2D lRect = getRectOfGroupSet(this.mGroupSet);
-      Rectangle2D dRect = this.mBoundsRect;
-      // final float x = (float)lRect.getX() +
-      // 0.50f*this.getDataElementWidth();
-      final float x = (float) lRect.getX() + 0.50f * (float) dRect.getWidth();
-      final float y = (float) lRect.getY() + 0.50f * (float) lRect.getHeight();
-      SGTuple2f position = new SGTuple2f(x, y);
-
-      this.mLocation = position;
-      if (this.setLocation(new SGTuple2f[] {position}) == false) {
-        return false;
-      }
-
-      return true;
-    }
-
-    /** Paint line objects. */
-    public boolean paintElement(final Graphics2D g2d, final Rectangle2D clipRect) {
-      if (super.paintElement(g2d, clipRect) == false) {
-        return false;
-      }
-
-      // draw anchors if the group set is selected
-      if (this.mGroupSet.isViewable()
-          && this.mGroupSet.isSelected()
-          && isSymbolsVisibleAroundFocusedObjects()) {
-        if (this.mGroupSet instanceof SGIElementGroupSetXY) {
-          SGIElementGroupSetXY gsSXY = (SGIElementGroupSetXY) this.mGroupSet;
-          if (!gsSXY.getBarGroup().isVisible()) {
-            SGDrawingElementSymbol2D symbol =
-                (SGDrawingElementSymbol2D) this.mDrawingElementArray[0];
-            Rectangle2D rect = symbol.getElementBounds();
-            SGUtilityForFigureElementJava2D.drawAnchorsOnRectangle(rect, g2d);
-          }
-        }
-      }
-      return true;
-    }
-
-    /**
-     * @param el
-     * @return
-     */
-    public boolean readProperty(final Element el) {
-      if (super.readProperty(el) == false) {
-        return false;
-      }
-
-      return SGFigureElementLegend.this.readProperty(this, el);
-    }
-
-    /**
-     * Returns the location at a given index.
-     *
-     * @param index the index
-     * @return the location
-     */
-    public SGTuple2f getLocation(final int index) {
-      return this.mLocation;
-    }
-  }
-
-  private class ElementGroupArrow extends SGElementGroupArrowForData implements ILegendElement {
-
-    /** A group set that this element group belongs. */
-    protected ElementGroupSetInLegend mGroupSet = null;
-
-    /** The default constructor. */
-    protected ElementGroupArrow() {
-      super();
-
-      // set properties to the magnitude label
-      this.mMagnitudeString.setFontName(DEFAULT_LEGEND_FONT_NAME);
-      this.mMagnitudeString.setFontStyle(DEFAULT_LEGEND_FONT_STYLE);
-      this.mMagnitudeString.setFontSize(DEFAULT_LEGEND_FONT_SIZE, FONT_SIZE_UNIT);
-      this.mMagnitudeString.setColor(DEFAULT_LEGEND_FONT_COLOR);
-    }
-
-    /**
-     * @return
-     */
-    protected SGDrawingElement createDrawingElementInstance(final int index) {
-      return new ArrowInGroup(this, index);
-    }
-
-    /**
-     * Sets the element group set.
-     *
-     * @param gs the element group set
-     */
-    public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
-      this.mGroupSet = gs;
-      return true;
-    }
-
-    /**
-     * Returns the preferred width.
-     *
-     * @return the preferred width
-     */
-    public float getPreferredWidth() {
-      return this.getMagnification() * getSymbolSpan();
-    }
-
-    /** */
-    private Rectangle2D getDataElementBounds() {
-      SGDrawingElement[] array = this.mDrawingElementArray;
-      if (array != null) {
-        if (array.length == 0) {
-          return new Rectangle2D.Float();
-        }
-
-        SGDrawingElementArrow2D el = (SGDrawingElementArrow2D) array[0];
-        Rectangle2D rect = el.getElementBounds();
-        return rect;
-      }
-      return new Rectangle2D.Float();
-    }
-
-    /**
-     * Returns the preferred height.
-     *
-     * @return the preferred height
-     */
-    public float getPreferredHeight() {
-      final float elementSize = 1.20f * (float) this.getDataElementBounds().getHeight();
-      final float strHeight = (float) this.mMagnitudeString.getElementBounds().getHeight();
-      final float size = elementSize + 2.0f * strHeight;
-      return size;
-    }
-
-    private Rectangle2D mBoundsRect = new Rectangle2D.Float();
-
-    /**
-     * @param rect
-     */
-    public void setDataElementBounds(final Rectangle2D rect) {
-      this.mBoundsRect = rect;
-    }
-
-    /**
-     * Returns the number of points in this element group.
-     *
-     * @return the number of points
-     */
-    public int getNumberOfPoints() {
-      return 1;
-    }
-
-    private SGTuple2f mStartPoint = new SGTuple2f();
-
-    private SGTuple2f mEndPoint = new SGTuple2f();
-
-    /** */
-    public boolean createDrawingElementInLegend() {
-      Rectangle2D lRect = getRectOfGroupSet(this.mGroupSet);
-      Rectangle2D dRect = this.mBoundsRect;
-      final float headSize = this.getMagnification() * this.getHeadSize();
-      final int startHeadType = this.getStartHeadType();
-      final int endHeadType = this.getEndHeadType();
-
-      final float x = (float) lRect.getX();
-      final float y = (float) lRect.getY();
-      final float w = (float) dRect.getWidth();
-      final float h = (float) lRect.getHeight();
-
-      SGTuple2f start = new SGTuple2f();
-      start.x = x;
-      if (this.doShiftX(startHeadType)) {
-        start.x += headSize;
-      }
-      start.y = y + 0.50f * h;
-
-      SGTuple2f end = new SGTuple2f();
-      end.x = x + w;
-      if (this.doShiftX(endHeadType)) {
-        end.x -= headSize;
-      }
-      end.y = start.y;
-
-      this.mStartPoint = start;
-      this.mEndPoint = end;
-      if (this.setLocation(new SGTuple2f[] {start}, new SGTuple2f[] {end}) == false) {
-        return false;
-      }
-
-      //
-      this.updateMagnitudeString();
-
-      return true;
-    }
-
-    private boolean doShiftX(final int type) {
-      final boolean b =
-          (type != SGIArrowConstants.SYMBOL_TYPE_ARROW_HEAD)
-              && (type != SGIArrowConstants.SYMBOL_TYPE_ARROW)
-              && (type != SGIArrowConstants.SYMBOL_TYPE_TRANSVERSELINE)
-              && (type != SGIArrowConstants.SYMBOL_TYPE_VOID);
-      return b;
-    }
-
-    private boolean updateMagnitudeString() {
-      ElementGroupSetInLegendVXY groupSet = (ElementGroupSetInLegendVXY) this.mGroupSet;
-      final float perCm = groupSet.getMagnitudePerCM();
-      if (Float.isNaN(perCm)) {
-        this.mMagnitudeString.setString("NaN");
-      } else {
-        final float span = SGFigureElementLegend.this.getSymbolSpan(cm);
-        final float value = perCm * span;
-        final float valueReduced =
-            (float)
-                SGUtilityNumber.getNumberInNumberOrder(
-                    value, value, 3, RoundingMode.HALF_UP.ordinal());
-        this.mMagnitudeString.setString(Float.toString(valueReduced));
-      }
-
-      Rectangle2D lRect = getRectOfGroupSet(this.mGroupSet);
-      Rectangle2D dRect = this.mBoundsRect;
-      Rectangle2D sRect = this.mMagnitudeString.getElementBounds();
-      Rectangle2D elRect = this.getDataElementBounds();
-
-      SGTuple2f location = new SGTuple2f();
-      location.x = (float) (lRect.getX() + 0.50f * (dRect.getWidth() - sRect.getWidth()));
-      location.y = (float) (elRect.getY() + elRect.getHeight()) + 2.0f;
-
-      this.mMagnitudeString.setLocation(location);
-
-      return true;
-    }
-
-    // string to display the magnitude of an arrow
-    private SGDrawingElementString2DExtended mMagnitudeString =
-        new SGDrawingElementString2DExtended();
-
-    /**
-     * Sets the magnification.
-     *
-     * @param mag the magnification to set
-     * @return true if succeeded
-     */
-    public boolean setMagnification(final float mag) {
-      if (super.setMagnification(mag) == false) {
-        return false;
-      }
-      if (this.mMagnitudeString.setMagnification(mag) == false) {
-        return false;
-      }
-      return true;
-    }
-
-    /** */
-    public boolean paintElement(final Graphics2D g2d, final Rectangle2D clipRect) {
-      super.paintElement(g2d, clipRect);
-
-      // paint the string to display the magnitude
-      this.mMagnitudeString.paint(g2d, clipRect);
-
-      // draw anchors if the group set is selected
-      if (this.mGroupSet.isViewable()
-          && this.mGroupSet.isSelected()
-          && isSymbolsVisibleAroundFocusedObjects()) {
-        SGDrawingElementArrow arrow = (SGDrawingElementArrow) this.mDrawingElementArray[0];
-        SGTuple2f start = arrow.getStart();
-        SGTuple2f end = arrow.getEnd();
-        SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(
-            new Point2D.Float(start.x, start.y), g2d);
-        SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(
-            new Point2D.Float(end.x, end.y), g2d);
-      }
-
-      return true;
-    }
-
-    /**
-     * @param el
-     * @return
-     */
-    public boolean readProperty(final Element el) {
-      if (super.readProperty(el) == false) {
-        return false;
-      }
-
-      return SGFigureElementLegend.this.readProperty(this, el);
-    }
-
-    @Override
-    public SGTuple2f getEndLocation(int index) {
-      return this.mEndPoint;
-    }
-
-    @Override
-    public SGTuple2f getStartLocation(int index) {
-      return this.mStartPoint;
-    }
-
-    public boolean initDrawingElement(float[] xArray, float[] yArray) {
-      return false;
-    }
-
-    public boolean setLocation(float[] xCoordinateArray, float[] yCoordinateArray) {
-      return false;
-    }
-  }
+  static
 
   /** Error bars. */
-  private class ElementGroupErrorBar extends SGElementGroupErrorBarForData
-      implements ILegendElement {
-
-    /** A group set that this element group belongs. */
-    protected ElementGroupSetInLegend mGroupSet = null;
-
-    /** The constructor. */
-    protected ElementGroupErrorBar(SGISXYTypeData data) {
-      super(data);
-    }
-
-    /**
-     * Sets the element group set.
-     *
-     * @param gs the element group set
-     */
-    public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
-      this.mGroupSet = gs;
-      return true;
-    }
-
-    /**
-     * Returns the preferred width.
-     *
-     * @return the preferred width
-     */
-    public float getPreferredWidth() {
-      return this.getMagnification() * this.getHeadSize();
-    }
-
-    private static final float DEFAULT_ERROR_BAR_HEIGHT = 10.0f;
-
-    /**
-     * Returns the preferred height.
-     *
-     * @return the preferred height
-     */
-    public float getPreferredHeight() {
-
-      ElementGroupSetInLegendSXY legend = (ElementGroupSetInLegendSXY) this.mGroupSet;
-
-      SGData data = legend.getData();
-      if (data instanceof SGISXYTypeData) {
-        SGISXYTypeData dataSXY = (SGISXYTypeData) data;
-        if (dataSXY.isErrorBarAvailable() == false) {
-          return 0.0f;
-        }
-      }
-
-      SGElementGroupSymbol sg = legend.getSymbolGroup();
-      SGElementGroupBar bg = legend.getBarGroup();
-
-      float size = 0.0f;
-      if (sg.isVisible() || bg.isVisible()) {
-        final float symbolSize = sg.isVisible() ? ((ILegendElement) sg).getPreferredHeight() : 0.0f;
-        final float barWidth = bg.isVisible() ? ((ILegendElement) bg).getPreferredHeight() : 0.0f;
-        size = (symbolSize > barWidth) ? symbolSize : barWidth;
-      } else {
-        size = DEFAULT_ERROR_BAR_HEIGHT;
-      }
-
-      final float mag = this.getMagnification();
-      final float barHeight = 1.20f * mag * size;
-      final float headSize = mag * this.getHeadSize();
-      return barHeight + 2.0f * headSize;
-    }
-
-    private Rectangle2D mBoundsRect = new Rectangle2D.Float();
-
-    /**
-     * @param rect
-     */
-    public void setDataElementBounds(final Rectangle2D rect) {
-      this.mBoundsRect = rect;
-    }
-
-    /**
-     * Returns the number of points of this element group.
-     *
-     * @return the number of points
-     */
-    public int getNumberOfPoints() {
-      return 1;
-    }
-
-    private SGTuple2f mCenter = new SGTuple2f();
-
-    private SGTuple2f mLower = new SGTuple2f();
-
-    private SGTuple2f mUpper = new SGTuple2f();
-
-    /** Create drawing elements. */
-    public boolean createDrawingElementInLegend() {
-      SGTuple2f center = new SGTuple2f();
-      SGTuple2f lower = new SGTuple2f();
-      SGTuple2f upper = new SGTuple2f();
-
-      Rectangle2D lRect = getRectOfGroupSet(this.mGroupSet);
-      Rectangle2D dRect = this.mBoundsRect;
-
-      final float mag = this.getMagnification();
-
-      final float x = (float) lRect.getX() + 0.50f * (float) dRect.getWidth();
-      center.x = x;
-      lower.x = x;
-      upper.x = x;
-
-      final float headSize = mag * this.getHeadSize();
-      final float y = (float) lRect.getY() + (float) lRect.getHeight() / 2;
-      final float d = ((float) dRect.getHeight() - headSize) / 2;
-
-      center.y = y;
-      lower.y = y + d;
-      upper.y = y - d;
-
-      this.mCenter = center;
-      this.mLower = lower;
-      this.mUpper = upper;
-      if (this.setLocation(
-              new SGTuple2f[] {center}, new SGTuple2f[] {lower}, new SGTuple2f[] {upper})
-          == false) {
-        return false;
-      }
-
-      return true;
-    }
-
-    /**
-     * @param el
-     * @return
-     */
-    public boolean readProperty(final Element el) {
-      if (super.readProperty(el) == false) {
-        return false;
-      }
-
-      return SGFigureElementLegend.this.readProperty(this, el);
-    }
-
-    /**
-     * Returns whether this group set contains the given point.
-     *
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @return true if this element group contains the given point
-     */
-    public boolean contains(final int x, final int y) {
-      // if the data object do not have error bars, return false
-      SGISXYTypeData dataSXY = (SGISXYTypeData) getData(this.mGroupSet);
-      if (dataSXY.isErrorBarAvailable() == false) {
-        return false;
-      }
-      return super.contains(x, y);
-    }
-
-    /**
-     * Update the location of error bars.
-     *
-     * @return true if succeeded
-     */
-    public boolean updateLocation() {
-      // do nothing
-      return true;
-    }
-
-    @Override
-    public SGTuple2f getLowerEndLocation(int index) {
-      return this.mLower;
-    }
-
-    @Override
-    public SGTuple2f getStartLocation(int index) {
-      return this.mCenter;
-    }
-
-    @Override
-    public SGTuple2f getUpperEndLocation(int index) {
-      return this.mUpper;
-    }
-  }
-
-  private class ElementGroupTickLabels extends SGElementGroupTickLabelForData
-      implements ILegendElement {
-
-    /** A group set that this element group belongs. */
-    protected ElementGroupSetInLegend mGroupSet = null;
-
-    /**
-     * Sets the element group set.
-     *
-     * @param gs the element group set
-     */
-    public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
-      this.mGroupSet = gs;
-      return true;
-    }
-
-    /** The default constructor. */
-    ElementGroupTickLabels(SGISXYTypeData data) {
-      super(data);
-    }
-
-    /** */
-    protected SGDrawingElement createDrawingElementInstance(final int index) {
-      return new SGDrawingElementString2DExtended();
-    }
-
-    /** Create drawing elements. */
-    public boolean createDrawingElementInLegend() {
-      // Do nothing
-      return true;
-    }
-
-    /** */
-    public float getPreferredWidth() {
-      return 0.0f;
-    }
-
-    /** */
-    public float getPreferredHeight() {
-      return 0.0f;
-    }
-
-    // private Rectangle2D mBoundsRect = new Rectangle2D.Float();
-
-    /**
-     * @param rect
-     */
-    public void setDataElementBounds(final Rectangle2D rect) {
-      // this.mBoundsRect = rect;
-    }
-
-    /**
-     * Returns the number of points of this element group.
-     *
-     * @return the number of points
-     */
-    public int getNumberOfPoints() {
-      return 0;
-    }
-
-    /**
-     * @param el
-     * @return
-     */
-    public boolean readProperty(final Element el) {
-      if (super.readProperty(el) == false) {
-        return false;
-      }
-      return SGFigureElementLegend.this.readProperty(this, el);
-    }
-
-    /**
-     * Returns whether this group set contains the given point.
-     *
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @return true if this element group contains the given point
-     */
-    public boolean contains(final int x, final int y) {
-      // always returns false
-      return false;
-    }
-
-    /**
-     * Update the location of tick labels.
-     *
-     * @return true if succeeded
-     */
-    public boolean updateLocation() {
-      return true;
-    }
-  }
 
   //
-  private boolean readProperty(final SGElementGroup group, final Element el) {
+  boolean readProperty(final SGElementGroup group, final Element el) {
     String str;
     Boolean b;
 
@@ -7030,7 +5878,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
   }
 
-  private class ElementGroupSetInLegendSXYZ extends ElementGroupSetInLegend
+  class ElementGroupSetInLegendSXYZ extends ElementGroupSetInLegend
       implements SGIElementGroupSetSXYZ, SGISXYZDataConstants, SGISXYZDataDialogObserver {
 
     protected ElementGroupSetInLegendSXYZ(SGData data) {
@@ -7064,7 +5912,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
     public boolean addDrawingElementGroup(int type) {
       SGElementGroup group = null;
       if (type == SGIElementGroupConstants.RECTANGLE_GROUP) {
-        SGElementGroupPseudocolorMap colorMap = new ElementGroupPseudocolorMap();
+        SGElementGroupPseudocolorMap colorMap =
+            new ElementGroupPseudocolorMap(SGFigureElementLegend.this);
         colorMap.setColorBarModel(SGFigureElementLegend.this.getColorBarModel());
         group = colorMap;
       } else {
@@ -7275,176 +6124,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
     @Override
     public boolean getAxisDateMode(final int location) {
       return mAxisElement.getAxisDateMode(location);
-    }
-  }
-
-  /** A rectangle in a color map in legend. */
-  protected static class PseudocolorMapRectangleInLegend extends PseudocolorMapRectangle {
-    /**
-     * Builds a rectangle in a color map.
-     *
-     * @param group a color map
-     */
-    public PseudocolorMapRectangleInLegend(SGElementGroupPseudocolorMap group, final int index) {
-      super(group, index);
-    }
-
-    public float getWidth() {
-      return this.mGroup.getRectangleWidth();
-    }
-
-    public float getHeight() {
-      return this.mGroup.getRectangleHeight();
-    }
-
-    public boolean setWidth(final float w) {
-      return this.mGroup.setRectangleWidth(w);
-    }
-
-    public boolean setHeight(final float h) {
-      return this.mGroup.setRectangleHeight(h);
-    }
-  }
-
-  private class ElementGroupPseudocolorMap extends SGElementGroupPseudocolorMapForData
-      implements ILegendElement {
-
-    /**
-     * Creates and returns an instance of drawing element.
-     *
-     * @return an instance of drawing element
-     */
-    protected SGDrawingElement createDrawingElementInstance(final int index) {
-      return new PseudocolorMapRectangleInLegend(this, index);
-    }
-
-    public boolean createDrawingElementInLegend() {
-      // set size
-      final float w = this.getPreferredWidth();
-      final float h = this.getPreferredHeight();
-      PseudocolorMapRectangle rect = (PseudocolorMapRectangle) this.mDrawingElementArray[0];
-      rect.setWidth(w);
-      rect.setHeight(h);
-
-      // set the location
-      Rectangle2D lRect = getRectOfGroupSet(this.mGroupSet);
-      Rectangle2D dRect = this.mBoundsRect;
-      final float x = (float) lRect.getX() + 0.50f * (float) dRect.getWidth();
-      final float y = (float) lRect.getY() + 0.50f * (float) lRect.getHeight();
-      SGTuple2f position = new SGTuple2f(x, y);
-      if (this.setLocation(new SGTuple2f[] {position}) == false) {
-        return false;
-      }
-
-      return true;
-    }
-
-    public int getNumberOfPoints() {
-      return 1;
-    }
-
-    public float getPreferredHeight() {
-      final ElementGroupSetInLegendSXYZ gs = (ElementGroupSetInLegendSXYZ) this.mGroupSet;
-      Rectangle2D strRect = gs.mDrawingString.getElementBounds();
-      return (float) strRect.getHeight();
-    }
-
-    public float getPreferredWidth() {
-      return this.getMagnification() * getSymbolSpan();
-    }
-
-    private Rectangle2D mBoundsRect = new Rectangle2D.Float();
-
-    public void setDataElementBounds(Rectangle2D rect) {
-      this.mBoundsRect = rect;
-    }
-
-    /** A group set that this element group belongs. */
-    protected ElementGroupSetInLegend mGroupSet = null;
-
-    public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
-      this.mGroupSet = gs;
-      return true;
-    }
-
-    /** Paint a color bar. */
-    public boolean paintElement(final Graphics2D g2d, final Rectangle2D clipRect) {
-      // if (super.paintElement(g2d, clipRect) == false) {
-      // return false;
-      // }
-      PseudocolorMapRectangle rect = (PseudocolorMapRectangle) this.mDrawingElementArray[0];
-      Rectangle bounds = rect.getElementBounds().getBounds();
-
-      final double x = bounds.getX();
-      final double y = bounds.getY();
-      final double w = 1.0;
-      final double h = bounds.getHeight();
-      final int nStart = (int) bounds.getMinX();
-      final int nEnd = (int) bounds.getMaxX();
-
-      // get the value range of the color bar
-      final double zMin = this.mColorBarModel.getMinValue();
-      final double zMax = this.mColorBarModel.getMaxValue();
-      final double zRange = zMax - zMin;
-
-      // fill the rectangle
-      final int nDiff = nEnd - nStart;
-      if (nDiff != 0) {
-        for (int ii = 0; ii <= nDiff; ii++) {
-          final Rectangle2D thinRect = new Rectangle2D.Double();
-          thinRect.setRect(x + ii, y, w, h);
-          final double ratio = (double) ii / nDiff;
-          final double zValue = zMin + ratio * zRange;
-          final Color cl = this.mColorBarModel.evaluate(zValue, SGAxis.LINEAR_SCALE);
-          g2d.setColor(cl);
-          g2d.fill(thinRect);
-        }
-      }
-
-      // draw bounds
-      g2d.setStroke(new BasicStroke(1.0f));
-      g2d.setColor(Color.BLACK);
-      g2d.draw(bounds);
-
-      // draw anchors if the group set is selected
-      if (this.mGroupSet.isViewable()
-          && this.mGroupSet.isSelected()
-          && isSymbolsVisibleAroundFocusedObjects()) {
-        SGUtilityForFigureElementJava2D.drawAnchorsOnRectangle(bounds, g2d);
-      }
-      return true;
-    }
-
-    /**
-     * Sets the location of each rectangle.
-     *
-     * @param pointArray an array of location
-     */
-    public boolean setLocation(SGTuple2f[] pointArray) {
-      if (this.mDrawingElementArray == null) {
-        return true;
-      }
-
-      if (pointArray.length != this.mDrawingElementArray.length) {
-        // throw new IllegalArgumentException();
-        this.initDrawingElement(pointArray);
-      }
-
-      this.mLocation.setValues(pointArray[0]);
-
-      return true;
-    }
-
-    private SGTuple2f mLocation = new SGTuple2f();
-
-    @Override
-    public float getX(int index) {
-      return this.mLocation.x;
-    }
-
-    @Override
-    public float getY(int index) {
-      return this.mLocation.y;
     }
   }
 
