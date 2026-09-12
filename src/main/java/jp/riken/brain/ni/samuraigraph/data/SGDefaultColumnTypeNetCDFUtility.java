@@ -95,6 +95,23 @@ public final class SGDefaultColumnTypeNetCDFUtility
     return cList1.equals(cList2);
   }
 
+  /**
+   * Returns the index of the column matching the given netCDF variable in the selection.
+   *
+   * @param columns the selected columns
+   * @param var the netCDF variable
+   * @return the column index, or -1 if the variable is not selected
+   */
+  private static int findColumnIndex(final SGDataColumnInfo[] columns, final SGNetCDFVariable var) {
+    for (int ii = 0; ii < columns.length; ii++) {
+      SGNetCDFDataColumnInfo info = (SGNetCDFDataColumnInfo) columns[ii];
+      if (isEqualNetCDFName(info.getName(), var.getName())) {
+        return ii;
+      }
+    }
+    return -1;
+  }
+
   private static int findNetCDFColumnInfo(
       final List<SGDataColumnInfo> columnInfoList, final String varName) {
     for (int ii = 0; ii < columnInfoList.size(); ii++) {
@@ -409,10 +426,18 @@ public final class SGDefaultColumnTypeNetCDFUtility
       return false;
     }
 
-    columnTypes[iIndex] = INDEX;
-    columnTypes[xIndex] = X_VALUE;
-    columnTypes[yIndex] = Y_VALUE;
-    columnTypes[zIndex] = Z_VALUE;
+    int iCol = findColumnIndex(columns, varListSorted.get(iIndex));
+    int xCol = findColumnIndex(columns, varListSorted.get(xIndex));
+    int yCol = findColumnIndex(columns, varListSorted.get(yIndex));
+    int zCol = findColumnIndex(columns, varListSorted.get(zIndex));
+    if (iCol == -1 || xCol == -1 || yCol == -1 || zCol == -1) {
+      return false;
+    }
+
+    columnTypes[iCol] = INDEX;
+    columnTypes[xCol] = X_VALUE;
+    columnTypes[yCol] = Y_VALUE;
+    columnTypes[zCol] = Z_VALUE;
 
     for (int ii = 0; ii < columns.length; ii++) {
       columns[ii].setColumnType(columnTypes[ii]);
@@ -495,11 +520,20 @@ public final class SGDefaultColumnTypeNetCDFUtility
       }
     }
 
-    columnTypes[xIndex] = X_VALUE;
-    columnTypes[yIndex] = Y_VALUE;
-    columnTypes[zIndex] = Z_VALUE;
+    int xCol = findColumnIndex(columns, xVar);
+    int yCol = findColumnIndex(columns, yVar);
+    int zCol = findColumnIndex(columns, varList.get(zIndex));
+    if (xCol == -1 || yCol == -1 || zCol == -1) {
+      return false;
+    }
+    columnTypes[xCol] = X_VALUE;
+    columnTypes[yCol] = Y_VALUE;
+    columnTypes[zCol] = Z_VALUE;
     if (tIndex != -1) {
-      columnTypes[tIndex] = ANIMATION_FRAME;
+      int tCol = findColumnIndex(columns, varList.get(tIndex));
+      if (tCol != -1) {
+        columnTypes[tCol] = ANIMATION_FRAME;
+      }
     }
 
     for (int ii = 0; ii < columns.length; ii++) {
@@ -800,13 +834,20 @@ public final class SGDefaultColumnTypeNetCDFUtility
       return false;
     }
 
-    columnTypes[iIndex] = INDEX;
-    columnTypes[xIndex] = X_COORDINATE;
-    columnTypes[yIndex] = Y_COORDINATE;
-    columnTypes[fIndex] = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
-    ;
-    columnTypes[sIndex] = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
-    ;
+    int iCol = findColumnIndex(columns, varListSorted.get(iIndex));
+    int xCol = findColumnIndex(columns, varListSorted.get(xIndex));
+    int yCol = findColumnIndex(columns, varListSorted.get(yIndex));
+    int fCol = findColumnIndex(columns, varListSorted.get(fIndex));
+    int sCol = findColumnIndex(columns, varListSorted.get(sIndex));
+    if (iCol == -1 || xCol == -1 || yCol == -1 || fCol == -1 || sCol == -1) {
+      return false;
+    }
+
+    columnTypes[iCol] = INDEX;
+    columnTypes[xCol] = X_COORDINATE;
+    columnTypes[yCol] = Y_COORDINATE;
+    columnTypes[fCol] = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
+    columnTypes[sCol] = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
 
     for (int ii = 0; ii < columns.length; ii++) {
       columns[ii].setColumnType(columnTypes[ii]);
@@ -915,12 +956,22 @@ public final class SGDefaultColumnTypeNetCDFUtility
       }
     }
 
-    columnTypes[xIndex] = X_COORDINATE;
-    columnTypes[yIndex] = Y_COORDINATE;
-    columnTypes[comIndex1] = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
-    columnTypes[comIndex2] = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
+    int xCol = findColumnIndex(columns, xVar);
+    int yCol = findColumnIndex(columns, yVar);
+    int com1Col = findColumnIndex(columns, varList.get(comIndex1));
+    int com2Col = findColumnIndex(columns, varList.get(comIndex2));
+    if (xCol == -1 || yCol == -1 || com1Col == -1 || com2Col == -1) {
+      return false;
+    }
+    columnTypes[xCol] = X_COORDINATE;
+    columnTypes[yCol] = Y_COORDINATE;
+    columnTypes[com1Col] = SGDataStrideUtility.getVXYFirstComponentColumnType(infoMap);
+    columnTypes[com2Col] = SGDataStrideUtility.getVXYSecondComponentColumnType(infoMap);
     if (tIndex != -1) {
-      columnTypes[tIndex] = ANIMATION_FRAME;
+      int tCol = findColumnIndex(columns, varList.get(tIndex));
+      if (tCol != -1) {
+        columnTypes[tCol] = ANIMATION_FRAME;
+      }
     }
 
     for (int ii = 0; ii < columns.length; ii++) {
@@ -1306,9 +1357,16 @@ public final class SGDefaultColumnTypeNetCDFUtility
       return false;
     }
 
-    columnTypes[iIndex] = INDEX;
-    columnTypes[xIndex] = X_VALUE;
-    columnTypes[yIndex] = Y_VALUE;
+    int iCol = findColumnIndex(columns, varListSorted.get(iIndex));
+    int xCol = findColumnIndex(columns, varListSorted.get(xIndex));
+    int yCol = findColumnIndex(columns, varListSorted.get(yIndex));
+    if (iCol == -1 || xCol == -1 || yCol == -1) {
+      return false;
+    }
+
+    columnTypes[iCol] = INDEX;
+    columnTypes[xCol] = X_VALUE;
+    columnTypes[yCol] = Y_VALUE;
 
     for (int ii = 0; ii < columns.length; ii++) {
       columns[ii].setColumnType(columnTypes[ii]);
@@ -1428,14 +1486,22 @@ public final class SGDefaultColumnTypeNetCDFUtility
       }
     }
 
+    int xCol = findColumnIndex(columns, xVar);
+    if (xCol == -1) {
+      return false;
+    }
+
     // for multiple variables
     if (variable.booleanValue()) {
-      columnTypes[xIndex] = X_VALUE;
+      columnTypes[xCol] = X_VALUE;
 
       if (multiple.booleanValue()) {
         // multiple y-indices
         for (int yIndex : yIndices) {
-          columnTypes[yIndex] = Y_VALUE;
+          int yCol = findColumnIndex(columns, varList.get(yIndex));
+          if (yCol != -1) {
+            columnTypes[yCol] = Y_VALUE;
+          }
         }
       } else {
         // finds the y-index
@@ -1443,7 +1509,10 @@ public final class SGDefaultColumnTypeNetCDFUtility
           final int yIndex = yIndices[ii];
           SGNetCDFVariable var = varList.get(yIndex);
           if (VALUE_TYPE_NUMBER.equals(var.getValueType())) {
-            columnTypes[yIndex] = Y_VALUE;
+            int yCol = findColumnIndex(columns, var);
+            if (yCol != -1) {
+              columnTypes[yCol] = Y_VALUE;
+            }
             break;
           }
         }
@@ -1451,8 +1520,12 @@ public final class SGDefaultColumnTypeNetCDFUtility
     } else {
       // for multiple dimension indices
       final int yIndex = yIndices[0];
-      columnTypes[xIndex] = X_VALUE;
-      columnTypes[yIndex] = Y_VALUE;
+      int yCol = findColumnIndex(columns, varList.get(yIndex));
+      if (yCol == -1) {
+        return false;
+      }
+      columnTypes[xCol] = X_VALUE;
+      columnTypes[yCol] = Y_VALUE;
 
       int dIndex = -1;
       final SGNetCDFVariable yVar = varList.get(yIndex);
@@ -1468,7 +1541,10 @@ public final class SGDefaultColumnTypeNetCDFUtility
         }
       }
       if (dIndex != -1) {
-        columnTypes[dIndex] = PICKUP;
+        int dCol = findColumnIndex(columns, varList.get(dIndex));
+        if (dCol != -1) {
+          columnTypes[dCol] = PICKUP;
+        }
       } else {
         return false;
       }
