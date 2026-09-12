@@ -5,7 +5,7 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage (Top Priority)
 
-Actual JaCoCo measurement (line coverage) is **9.9%** overall.
+Actual JaCoCo measurement (line coverage) is **11.6%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
@@ -13,13 +13,13 @@ Actual JaCoCo measurement (line coverage) is **9.9%** overall.
 | `org.freehep...util.export` | 89.7% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 80.0% | 0 (nested under `figure.java2d`) | Few instructions |
 | `com.github...lib.hdf5` | 25.5% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 25.1% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
+| `jp...samuraigraph.base` | 26.2% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
 | `jp...samuraigraph.data` | 20.0% | 43 | Largest application package |
 | `jp...samuraigraph.application` | 1.8% | 3 | |
-| `jp...samuraigraph.figure` | 2.1% | 2 | |
-| `jp...samuraigraph.figure.java2d` | **0.5%** | 1 | Legend property round-trip tests added |
+| `jp...samuraigraph.figure` | 5.2% | 2 | |
+| `jp...samuraigraph.figure.java2d` | **4.2%** | 2 | Legend and axis property round-trip tests added |
 
-- 84 test files / 972 test methods (999 executions) against 615 main files
+- 85 test files / 975 test methods (1002 executions) against 616 main files
   / ~275k LOC
 - Per-class coverage of the data-layer utilities is uneven: the pure
   groups (data type 64%, text 80%, column title 73%) reach 64-80%, while
@@ -34,12 +34,12 @@ Actual JaCoCo measurement (line coverage) is **9.9%** overall.
 
 | LOC | File | Problem |
 |-----|------|---------|
-| 5,754 | `figure/java2d/SGAxisElement.java` | Largest class |
-| 4,963 | `base/SGDrawingWindow.java` | Frame handling mixed with window logic; delegates to clipboard, alignment, property I/O, viewport, property dialog, and undo helpers |
+| 4,963 | `base/SGDrawingWindow.java` | Largest class |
 | 4,958 | `figure/java2d/SGPropertyDialogSXYData.java` | |
 | 4,889 | `figure/java2d/SGFigureElementShape.java` | |
 | 4,775 | `data/SGSXYNetCDFMultipleData.java` | |
 | 4,537 | `data/SGSXYMDArrayMultipleData.java` | |
+| 4,516 | `figure/java2d/SGAxisElement.java` | Delegates property I/O to a collaborator class |
 | 4,511 | `base/SGFigure.java` | |
 | 4,414 | `figure/java2d/SGElementGroupSetInGraphSXYMultiple.java` | |
 | 3,828 | `application/SGMainFunctions.java` | All menu actions, commands, and the console loop; delegates to eight collaborator classes |
