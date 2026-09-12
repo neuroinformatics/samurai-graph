@@ -4497,31 +4497,15 @@ public class SGDrawingWindow extends JFrame
   }
 
   boolean showPropertyDialogForSelectedFigures() {
+    return SGDrawingWindowPropertyDialogUtility.showPropertyDialogForSelectedFigures(this);
+  }
 
-    List<SGFigure> figList = this.getFocusedFigureList();
-    List<SGPropertyDialog> dList = new ArrayList<SGPropertyDialog>();
-    for (int ii = 0; ii < figList.size(); ii++) {
-      SGFigure fig = figList.get(ii);
-      SGPropertyDialog dg = fig.getPropertyDialog();
-      if (dg != null) {
-        dList.add(dg);
-      }
-    }
+  private void showPropertyDialog(SGPropertyDialog dg, SGIPropertyDialogObserver l) {
+    SGDrawingWindowPropertyDialogUtility.showPropertyDialog(this, dg, l);
+  }
 
-    // clear focused objects in figures
-    List<SGFigure> listAll = this.mFigureList;
-    for (int ii = 0; ii < listAll.size(); ii++) {
-      SGFigure fig = listAll.get(ii);
-      fig.clearFocusedObjects();
-    }
-
-    // add listeners to the property dialog
-    SGPropertyDialog dg = dList.get(0);
-    List<SGIPropertyDialogObserver> lList = new ArrayList<SGIPropertyDialogObserver>();
-    lList.addAll(figList);
-    this.showPropertyDialog(dg, lList);
-
-    return true;
+  private void showPropertyDialog(SGPropertyDialog dg, List<SGIPropertyDialogObserver> lList) {
+    SGDrawingWindowPropertyDialogUtility.showPropertyDialog(this, dg, lList);
   }
 
   boolean showPopupMenuForSelectedFigures(JComponent component, final int x, final int y) {
@@ -4686,195 +4670,35 @@ public class SGDrawingWindow extends JFrame
    */
   boolean showPropertyDialogForSelectedObjects(
       final SGFigure figure, final SGIFigureElement element) {
-
-    ArrayList<SGFigure> figList = this.getVisibleFigureList();
-
-    // clears focused objects
-    this.clearFocusedObjects(figure, element, figList);
-
-    // gets observers
-    List<SGIPropertyDialogObserver> obsList =
-        this.getSelectedPropertyDialogObserverList(element, figList);
-    if (obsList.size() == 0) {
-      return false;
-    }
-
-    // gets property dialogs
-    List<SGPropertyDialog> dList = this.getPropertyDialogList(obsList);
-    if (dList == null || dList.size() == 0) {
-      return false;
-    }
-
-    // show the property dialog
-    SGPropertyDialog dg = dList.get(0);
-    this.showPropertyDialog(dg, obsList);
-
-    return true;
+    return SGDrawingWindowPropertyDialogUtility.showPropertyDialogForSelectedObjects(
+        this, figure, element);
   }
 
   boolean showPropertyDialogForAllVisibleObjects(
       final SGFigure figure, final SGIFigureElement element) {
-
-    ArrayList<SGFigure> figList = this.getVisibleFigureList();
-
-    // clears focused objects
-    this.clearFocusedObjects(figure, element, figList);
-
-    // gets observers
-    List<SGIPropertyDialogObserver> obsList =
-        this.getVisiblePropertyDialogObserverList(element, figList);
-    if (obsList.size() == 0) {
-      return false;
-    }
-
-    // gets property dialogs
-    List<SGPropertyDialog> dList = this.getPropertyDialogList(obsList);
-    if (dList == null || dList.size() == 0) {
-      return false;
-    }
-
-    // show the property dialog
-    SGPropertyDialog dg = dList.get(0);
-    this.showPropertyDialog(dg, obsList);
-
-    return true;
+    return SGDrawingWindowPropertyDialogUtility.showPropertyDialogForAllVisibleObjects(
+        this, figure, element);
   }
 
   boolean showPropertyDialogForAllObjects(final SGFigure figure, final SGIFigureElement element) {
-
-    ArrayList<SGFigure> figList = this.getVisibleFigureList();
-
-    // clears focused objects
-    this.clearFocusedObjects(figure, element, figList);
-
-    // gets observers
-    List<SGIPropertyDialogObserver> obsList =
-        this.getAllPropertyDialogObserverList(element, figList);
-    if (obsList.size() == 0) {
-      return false;
-    }
-
-    // gets property dialogs
-    List<SGPropertyDialog> dList = this.getPropertyDialogList(obsList);
-    if (dList == null || dList.size() == 0) {
-      return false;
-    }
-
-    // show the property dialog
-    SGPropertyDialog dg = dList.get(0);
-    this.showPropertyDialog(dg, obsList);
-
-    return true;
+    return SGDrawingWindowPropertyDialogUtility.showPropertyDialogForAllObjects(
+        this, figure, element);
   }
 
   // Clears focused objects.
-  private void clearFocusedObjects(
-      final SGFigure figure, final SGIFigureElement element, ArrayList<SGFigure> figList) {
-
-    // sets the class object of property observer
-    Class<?> cl = element.getPropertyDialogObserverClass();
-    for (int ii = 0; ii < figList.size(); ii++) {
-      SGFigure fig = figList.get(ii);
-      fig.setPropertyDialogObserverClass(cl);
-    }
-
-    // clears focused objects
-    for (int ii = 0; ii < figList.size(); ii++) {
-      SGFigure fig = figList.get(ii);
-      fig.clearFocusedObjects(element);
-      if (fig.equals(figure) == false) {
-        fig.setSelected(false);
-      }
-    }
-    this.repaintContentPane();
-  }
-
-  enum PROPERTY_SETTING_CONDITION {
-    SELECTED,
-    VISIBLE,
-    ALL,
-  };
-
-  private List<SGIPropertyDialogObserver> getPropertyDialogObserverList(
-      SGIFigureElement element, ArrayList<SGFigure> figList, PROPERTY_SETTING_CONDITION condition) {
-    List<SGIPropertyDialogObserver> obsList = new ArrayList<>();
-    Class<?> cl = element.getClass();
-    Class<?> obsClass = element.getPropertyDialogObserverClass();
-    for (int ii = 0; ii < figList.size(); ii++) {
-      SGFigure fig = figList.get(ii);
-      SGIFigureElement el = fig.getIFigureElement(cl);
-      if (el == null) {
-        continue;
-      }
-      List<SGIPropertyDialogObserver> list = null;
-      if (PROPERTY_SETTING_CONDITION.SELECTED.equals(condition)) {
-        list = el.getSelectedPropertyDialogObserverList(obsClass);
-      } else if (PROPERTY_SETTING_CONDITION.VISIBLE.equals(condition)) {
-        list = el.getVisiblePropertyDialogObserverList(obsClass);
-      } else if (PROPERTY_SETTING_CONDITION.ALL.equals(condition)) {
-        list = el.getAllPropertyDialogObserverList(obsClass);
-      }
-      if (list == null || list.size() == 0) {
-        continue;
-      }
-      obsList.addAll(list);
-    }
-    return obsList;
-  }
 
   // Returns the list of selected property dialog observers.
-  private List<SGIPropertyDialogObserver> getSelectedPropertyDialogObserverList(
-      SGIFigureElement element, ArrayList<SGFigure> figList) {
-    return this.getPropertyDialogObserverList(
-        element, figList, PROPERTY_SETTING_CONDITION.SELECTED);
-  }
 
   // Returns the list of visible property dialog observers.
-  private List<SGIPropertyDialogObserver> getVisiblePropertyDialogObserverList(
-      SGIFigureElement element, ArrayList<SGFigure> figList) {
-    return this.getPropertyDialogObserverList(element, figList, PROPERTY_SETTING_CONDITION.VISIBLE);
-  }
 
   // Returns the list of all property dialog observers.
-  private List<SGIPropertyDialogObserver> getAllPropertyDialogObserverList(
-      SGIFigureElement element, ArrayList<SGFigure> figList) {
-    return this.getPropertyDialogObserverList(element, figList, PROPERTY_SETTING_CONDITION.ALL);
-  }
 
   // Returns the list of property dialogs.
-  private List<SGPropertyDialog> getPropertyDialogList(List<SGIPropertyDialogObserver> obsList) {
-    List<SGPropertyDialog> dList = new ArrayList<SGPropertyDialog>();
-    for (int ii = 0; ii < obsList.size(); ii++) {
-      SGIPropertyDialogObserver obs = obsList.get(ii);
-      SGPropertyDialog dg = obs.getPropertyDialog();
-      dList.add(dg);
-    }
-    for (int ii = 0; ii < dList.size() - 1; ii++) {
-      Object obj1 = dList.get(ii);
-      for (int jj = ii + 1; jj < dList.size(); jj++) {
-        Object obj2 = dList.get(jj);
-        if (obj1.getClass().equals(obj2.getClass()) == false) {
-          SGUtility.showMessageDialog(
-              this,
-              "Object type is different.",
-              "Failed to show the property dialog.",
-              JOptionPane.WARNING_MESSAGE);
-          return null;
-        }
-      }
-    }
-    return dList;
-  }
 
   /**
    * @param dg
    * @param l - a property dialog observer
    */
-  private void showPropertyDialog(SGPropertyDialog dg, SGIPropertyDialogObserver l) {
-    ArrayList<SGIPropertyDialogObserver> list = new ArrayList<>();
-    list.add(l);
-    this.showPropertyDialog(dg, list);
-  }
 
   // true if modal dialog is shown
   private boolean mModalDialogShownFlag = false;
@@ -4919,32 +4743,6 @@ public class SGDrawingWindow extends JFrame
    * @param dg the property dialog to be shown
    * @param lList a list of property dialog observer
    */
-  private void showPropertyDialog(SGPropertyDialog dg, List<SGIPropertyDialogObserver> lList) {
-
-    // add dialog observers
-    for (int ii = 0; ii < lList.size(); ii++) {
-      SGIPropertyDialogObserver l = lList.get(ii);
-      dg.addPropertyDialogObserver(l);
-      l.prepare();
-    }
-
-    // set properties to dialog
-    dg.setDialogProperty();
-    dg.setLocation(this.getLocation());
-
-    // show property dialog
-    dg.setVisible(true);
-
-    // remove all dialog observers
-    dg.removeAllPropertyDialogObserver();
-
-    // when the OK button is pressed, update the history tree
-    final int closeOption = dg.getCloseOption();
-    if (closeOption == SGDialog.OK_OPTION) {
-      this.notifyToRoot();
-    }
-  }
-
   private int mSavedListIndex = -1;
 
   /**
