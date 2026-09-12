@@ -468,8 +468,6 @@ public class SGDrawingWindow extends JFrame
     return id;
   }
 
-  // private JToolBar mBottomToolBar = new JToolBar();
-
   /**
    * @return
    */
@@ -1156,28 +1154,6 @@ public class SGDrawingWindow extends JFrame
     return SGDrawingWindowViewportUtility.setPaperOrigin(this, x, y);
   }
 
-  // /**
-  // *
-  // */
-  // private boolean mPaperPortraitFlag = true;
-  //
-  // /**
-  // *
-  // * @param b
-  // */
-  // public void setPaperPortrait(final boolean b) {
-  // this.mPaperPortraitFlag = b;
-  // this.updatePaperItems();
-  // }
-  //
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean getPaperPortrait() {
-  // return this.mPaperPortraitFlag;
-  // }
-
   /**
    * @return
    */
@@ -1615,16 +1591,6 @@ public class SGDrawingWindow extends JFrame
   public void componentResized(final ComponentEvent e) {
     this.onResized();
   }
-
-  // private int getTopShift()
-  // {
-  // return this.getTopWidth() + this.mClientPanel.getRulerWidth();
-  // }
-
-  // private int getLeftShift()
-  // {
-  // return this.getLeftWidth() + this.mClientPanel.getRulerWidth();
-  // }
 
   /**
    * Shows the property dialog of this window.
@@ -2809,26 +2775,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   // Updates menu items for data plug-in in the menu bar.
-  private void updateDataPluginMenuBarItems() {
-    /*
-     * boolean eff = false;
-     * ArrayList<SGFigure> list = this.getVisibleFigureList();
-     * for (int ii = 0; ii < list.size(); ii++) {
-     * SGFigure figure = list.get(ii);
-     * SGIFigureElementGraph gElement = figure.getGraphElement();
-     * List<SGData> dataList = gElement.getFocusedDataList();
-     * if (dataList.size() > 0) {
-     * eff = true;
-     * break;
-     * }
-     * }
-     * List<JMenuItem> itemList = SGMenuBar.getAllMenuItems(this.mMenuBar,
-     * MENUBAR_PLUGIN);
-     * for (JMenuItem item : itemList) {
-     * item.setEnabled(eff);
-     * }
-     */
-  }
+  private void updateDataPluginMenuBarItems() {}
 
   /**
    * @param sb
@@ -3098,12 +3045,6 @@ public class SGDrawingWindow extends JFrame
     return SGDrawingWindowUndoUtility.initPropertiesHistory(this);
   }
 
-  // //
-  // private void updatePaperItems() {
-  // this.mMenuBar.setMenuItemSelected(MENUBAR_LAYOUT,
-  // MENUBARCMD_PAPER_PORTRAIT, this.getPaperPortrait());
-  // }
-
   /** */
   public boolean commit() {
 
@@ -3228,8 +3169,6 @@ public class SGDrawingWindow extends JFrame
     this.updateClientRectOld();
     return true;
   }
-
-  // private Rectangle2D mTempRect = new Rectangle2D.Double();
 
   /**
    * @return
@@ -3395,49 +3334,6 @@ public class SGDrawingWindow extends JFrame
     return (Rectangle2D) this.mClientRect.clone();
   }
 
-  // public void dumpClientRect()
-  // {
-  // Rectangle2D rect = this.getClientRect();
-  // final double x = rect.getX();
-  // final double y = rect.getY();
-  // final double w = rect.getWidth();
-  // final double h = rect.getHeight();
-  //
-  // }
-
-  // public void dumpRect()
-  // {
-  // Rectangle2D cRect = this.getClientRect();
-  // Rectangle2D vpRect = this.getViewportBounds();
-  // Rectangle2D bbRect = this.getBoundingBox();
-  //
-  // Rectangle2D cRect_ = new Rectangle2D.Float();
-  // Rectangle2D vpRect_ = new Rectangle2D.Float();
-  // Rectangle2D bbRect_ = new Rectangle2D.Float();
-  //
-  // cRect_.setRect(
-  // (float)cRect.getX()*SGIConstants.CM_POINT_RATIO,
-  // (float)cRect.getY()*SGIConstants.CM_POINT_RATIO,
-  // (float)cRect.getWidth()*SGIConstants.CM_POINT_RATIO,
-  // (float)cRect.getHeight()*SGIConstants.CM_POINT_RATIO
-  // );
-  //
-  // vpRect_.setRect(
-  // (float)vpRect.getX()*SGIConstants.CM_POINT_RATIO,
-  // (float)vpRect.getY()*SGIConstants.CM_POINT_RATIO,
-  // (float)vpRect.getWidth()*SGIConstants.CM_POINT_RATIO,
-  // (float)vpRect.getHeight()*SGIConstants.CM_POINT_RATIO
-  // );
-  //
-  // bbRect_.setRect(
-  // (float)bbRect.getX()*SGIConstants.CM_POINT_RATIO,
-  // (float)bbRect.getY()*SGIConstants.CM_POINT_RATIO,
-  // (float)bbRect.getWidth()*SGIConstants.CM_POINT_RATIO,
-  // (float)bbRect.getHeight()*SGIConstants.CM_POINT_RATIO
-  // );
-  //
-  // }
-
   /**
    * @param x
    * @param y
@@ -3446,7 +3342,6 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   public boolean setClientRect(final float x, final float y, final float w, final float h) {
-    // this.dumpClientRect();
     this.mClientRect.setRect(x, y, w, h);
     return true;
   }
@@ -3477,87 +3372,6 @@ public class SGDrawingWindow extends JFrame
   public Rectangle2D getViewportBoundsInComponent() {
     return SGDrawingWindowViewportUtility.getViewportBoundsInComponent(this);
   }
-
-  // private Float findCeilingValue( final float[] array, final float value )
-  // {
-  // float[] copy = (float[])array.clone();
-  // Arrays.sort(copy);
-  //
-  // for( int ii=0; ii<copy.length; ii++ )
-  // {
-  // if( value <= copy[ii] )
-  // {
-  // return Float.valueOf( copy[ii] );
-  // }
-  // }
-  //
-  // return null;
-  // }
-
-  /*
-   * public static final double OVERLAP_RATIO = 0.50;
-   *
-   *
-   * private boolean isOverlapping( SGFigure figure1, SGFigure figure2, final
-   * boolean flag ) {
-   *
-   * Rectangle2D rect1 = figure1.getGraphAreaRect(); Rectangle2D rect2 =
-   * figure2.getGraphAreaRect();
-   *
-   * final double value = SGUtility.getOverlapping( rect1, rect2, flag );
-   *
-   * boolean ret = false; if( flag ) { final double ratio1 =
-   * value/rect1.getWidth(); final double ratio2 = value/rect2.getWidth(); if(
-   * ratio1>OVERLAP_RATIO || ratio2>OVERLAP_RATIO ) { ret = true; } } else {
-   * final double ratio1 = value/rect1.getHeight(); final double ratio2 =
-   * value/rect2.getHeight(); if( ratio1>OVERLAP_RATIO || ratio2>OVERLAP_RATIO ) {
-   * ret = true; } }
-   *
-   * return ret; }
-   *
-   */
-
-  /*
-   * Returns the relative location of figure2 to figure1.
-   *
-   * @param figure1
-   *
-   * @param figure2
-   *
-   * @return 0:top 1:bottom 2:left 3:right
-   */
-  /*
-   * private int getAlignment( SGFigure figure1, SGFigure figure2 ) {
-   * Rectangle2D rect1 = figure1.getGraphAreaRect(); Rectangle2D rect2 =
-   * figure2.getGraphAreaRect();
-   *
-   * final double vx = rect2.getCenterX() - rect1.getCenterX(); final double
-   * vy = rect2.getCenterY() - rect1.getCenterY();
-   *
-   * final double angle = Math.atan2(vy,vx);
-   *
-   *
-   * int num = -1; if( -0.75*Math.PI<=angle && angle<-0.25*Math.PI ) { num =
-   * 0; } else if( 0.25*Math.PI<=angle && angle<0.75*Math.PI ) { num = 1; }
-   * else if( ( -Math.PI<=angle && angle<-0.75*Math.PI ) || ( 0.75*Math.PI<=angle
-   * &&
-   * angle<=Math.PI ) ) { num = 2; } else if( -0.25*Math.PI<=angle &&
-   * angle<0.25*Math.PI ) {
-   * num = 3; }
-   *
-   * return num; }
-   */
-
-  /*
-   * class Figure { SGFigure fig; Figure top; Figure bottom; Figure left;
-   * Figure right; Figure topLeft; Figure topRight; Figure bottomLeft; Figure
-   * bottomRight; ArrayList topList = new ArrayList(); ArrayList bottomList =
-   * new ArrayList(); ArrayList leftList = new ArrayList(); ArrayList
-   * rightList = new ArrayList();
-   *
-   * public String toString() { if( fig==null ) { return "null"; } else {
-   * return fig.toString(); } } }
-   */
 
   private transient SGUndoManager mUndoManager;
 
@@ -4697,14 +4511,6 @@ public class SGDrawingWindow extends JFrame
   public boolean setImageLocationY(final float value, final String unit) {
     return this.mClientPanel.setImageLocationY(value, unit);
   }
-
-  // public boolean setImageWidth(final float value, final String unit) {
-  // return this.mClientPanel.setImageWidth(value, unit);
-  // }
-  //
-  // public boolean setImageHeight(final float value, final String unit) {
-  // return this.mClientPanel.setImageHeight(value, unit);
-  // }
 
   public boolean setImageScalingFactor(final float f) {
     return this.mClientPanel.setImageScalingFactor(f);

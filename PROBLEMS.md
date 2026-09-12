@@ -35,7 +35,7 @@ Actual JaCoCo measurement (line coverage) is **8.8%** overall.
 | LOC | File | Problem |
 |-----|------|---------|
 | 7,955 | `figure/java2d/SGFigureElementLegend.java` | Largest class |
-| 5,157 | `base/SGDrawingWindow.java` | Frame handling mixed with window logic; delegates to clipboard, alignment, property I/O, viewport, property dialog, and undo helpers |
+| 4,963 | `base/SGDrawingWindow.java` | Frame handling mixed with window logic; delegates to clipboard, alignment, property I/O, viewport, property dialog, and undo helpers |
 | 3,828 | `application/SGMainFunctions.java` | All menu actions, commands, and the console loop; delegates to eight collaborator classes |
 | 5,754 | `figure/java2d/SGAxisElement.java` | |
 | 4,956 | `figure/java2d/SGPropertyDialogSXYData.java` | |
