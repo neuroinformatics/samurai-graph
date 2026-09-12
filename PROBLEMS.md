@@ -13,18 +13,18 @@ Actual JaCoCo measurement (line coverage) is **9.0%** overall.
 | `org.freehep...util.export` | 86.8% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 68.2% | 0 (nested under `figure.java2d`) | Few instructions |
 | `com.github...lib.hdf5` | 20.8% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 24.3% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
-| `jp...samuraigraph.data` | 17.3% | 43 | Largest application package |
+| `jp...samuraigraph.base` | 24.9% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
+| `jp...samuraigraph.data` | 17.6% | 43 | Largest application package |
 | `jp...samuraigraph.application` | 1.8% | 3 | |
 | `jp...samuraigraph.figure` | 1.4% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **0.0%** | 0 | All 109 rendering-layer files untested |
 
-- 83 test files / 880 test methods (910 executions) against 590 main files
+- 83 test files / 896 test methods (923 executions) against 590 main files
   / ~275k LOC
 - Per-class coverage of the data-layer utilities is uneven: the pure
-  groups (data type, text, column title) reach 76-78%, while the others
-  remain below 60% (buffer 30%, stride 25%, column info 56%, range 31%,
-  misc 33%, viewer 11%, file 10%)
+  groups (data type 64%, text 80%, column title 73%) reach 64-80%, while
+  the others remain below 60% (buffer 51%, stride 31%, column info 54%,
+  range 32%, misc 32%, viewer 18%, file 14%)
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - Tight coupling to Swing/AWT makes headless testing hard; the design itself

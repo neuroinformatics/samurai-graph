@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
@@ -18,7 +20,9 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGAttribute;
+import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import org.junit.jupiter.api.Test;
 import ucar.nc2.NetcdfFiles;
@@ -148,5 +152,64 @@ class SGDataFileUtilityTest {
             null,
             true);
     assertTrue(SGDataFileUtility.canOpenNetCDF(data));
+  }
+
+  private static SGSDArrayDataColumnInfo column(final String title, final String columnType) {
+    SGSDArrayDataColumnInfo info =
+        new SGSDArrayDataColumnInfo(title, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, 4);
+    info.setColumnType(columnType);
+    return info;
+  }
+
+  @Test
+  void checkNetCDFDataColumnsRejectsMultipleAnimationFrames() {
+    SGDataColumnInfo[] cols = {
+      column("t1", SGIDataColumnTypeConstants.ANIMATION_FRAME),
+      column("t2", SGIDataColumnTypeConstants.ANIMATION_FRAME)
+    };
+    SGNetCDFFile file = mock(SGNetCDFFile.class);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    assertFalse(
+        SGDataFileUtility.checkNetCDFDataColumns(
+            cols, SGDataTypeConstants.SXY_NETCDF_DATA, file, infoMap));
+  }
+
+  @Test
+  void checkNetCDFDataColumnsRejectsUnknownAnimationVariable() {
+    SGDataColumnInfo[] cols = {
+      column("t1", SGIDataColumnTypeConstants.ANIMATION_FRAME),
+      column("x", SGIDataColumnTypeConstants.X_VALUE)
+    };
+    SGNetCDFFile file = mock(SGNetCDFFile.class);
+    when(file.findVariable("t1")).thenReturn(null);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    assertFalse(
+        SGDataFileUtility.checkNetCDFDataColumns(
+            cols, SGDataTypeConstants.SXY_NETCDF_DATA, file, infoMap));
+  }
+
+  @Test
+  void checkNetCDFDataColumnsRejectsMissingMultipleVariableFlag() {
+    SGDataColumnInfo[] cols = {column("x", SGIDataColumnTypeConstants.X_VALUE)};
+    SGNetCDFFile file = mock(SGNetCDFFile.class);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    assertFalse(
+        SGDataFileUtility.checkNetCDFDataColumns(
+            cols, SGDataTypeConstants.SXY_NETCDF_DATA, file, infoMap));
+  }
+
+  @Test
+  void checkNetCDFDataColumnsRejectsMultipleXWithoutFlag() {
+    SGDataColumnInfo[] cols = {
+      column("x1", SGIDataColumnTypeConstants.X_VALUE),
+      column("x2", SGIDataColumnTypeConstants.X_VALUE),
+      column("y", SGIDataColumnTypeConstants.Y_VALUE)
+    };
+    SGNetCDFFile file = mock(SGNetCDFFile.class);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    assertFalse(
+        SGDataFileUtility.checkNetCDFDataColumns(
+            cols, SGDataTypeConstants.SXY_NETCDF_DATA, file, infoMap));
   }
 }

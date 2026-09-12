@@ -20,6 +20,13 @@ import org.junit.jupiter.api.Test;
 /** Unit tests for {@link SGDataMiscUtility}. */
 class SGDataMiscUtilityTest {
 
+  private static SGSDArrayDataColumnInfo column(
+      final String title, final String valueType, final String columnType) {
+    SGSDArrayDataColumnInfo info = new SGSDArrayDataColumnInfo(title, valueType, 4);
+    info.setColumnType(columnType);
+    return info;
+  }
+
   @Test
   void createSamplingRateTitleFormatsValue() {
     assertEquals("Sampling Rate 0.5 Hz", SGDataMiscUtility.createSamplingRateTitle(0.5));
@@ -165,5 +172,52 @@ class SGDataMiscUtilityTest {
     assertFalse(
         SGDataMiscUtility.isComplementedButtonEnabled(
             infoMap, new String[] {"", ""}, new java.util.ArrayList<SGDataColumnInfo>()));
+  }
+
+  @Test
+  void isAcceptableCharHDF5WindChecksAsciiRange() {
+    assertTrue(SGDataMiscUtility.isAcceptableCharHDF5Wind('a'));
+    assertTrue(SGDataMiscUtility.isAcceptableCharHDF5Wind(' '));
+    assertTrue(SGDataMiscUtility.isAcceptableCharHDF5Wind('~'));
+    assertFalse(SGDataMiscUtility.isAcceptableCharHDF5Wind('\u001f'));
+    assertFalse(SGDataMiscUtility.isAcceptableCharHDF5Wind('\u007f'));
+    assertFalse(SGDataMiscUtility.isAcceptableCharHDF5Wind('\u00e9'));
+  }
+
+  @Test
+  void getSXYColumnTypeCollectsXAndYIndexes() {
+    SGSDArrayDataColumnInfo[] cols = {
+      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
+      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column("label", SGIDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
+    };
+    java.util.List<Integer> xIndexList = new java.util.ArrayList<Integer>();
+    java.util.List<Integer> yIndexList = new java.util.ArrayList<Integer>();
+    java.util.Map<Integer, Integer> lIndexMap = new java.util.HashMap<Integer, Integer>();
+    java.util.Map<Integer, Integer> uIndexMap = new java.util.HashMap<Integer, Integer>();
+    java.util.Map<Integer, Integer> tIndexMap = new java.util.HashMap<Integer, Integer>();
+    assertTrue(
+        SGDataMiscUtility.getSXYColumnType(
+            cols, xIndexList, yIndexList, lIndexMap, uIndexMap, tIndexMap));
+    assertEquals(0, xIndexList.get(0).intValue());
+    assertEquals(1, yIndexList.get(0).intValue());
+    assertEquals(0, lIndexMap.size());
+    assertEquals(0, uIndexMap.size());
+    assertEquals(0, tIndexMap.size());
+  }
+
+  @Test
+  void getSXYColumnTypeRejectsUnknownColumnType() {
+    SGSDArrayDataColumnInfo[] cols = {
+      column("bad", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, "UnknownType")
+    };
+    java.util.List<Integer> xIndexList = new java.util.ArrayList<Integer>();
+    java.util.List<Integer> yIndexList = new java.util.ArrayList<Integer>();
+    java.util.Map<Integer, Integer> lIndexMap = new java.util.HashMap<Integer, Integer>();
+    java.util.Map<Integer, Integer> uIndexMap = new java.util.HashMap<Integer, Integer>();
+    java.util.Map<Integer, Integer> tIndexMap = new java.util.HashMap<Integer, Integer>();
+    assertFalse(
+        SGDataMiscUtility.getSXYColumnType(
+            cols, xIndexList, yIndexList, lIndexMap, uIndexMap, tIndexMap));
   }
 }
