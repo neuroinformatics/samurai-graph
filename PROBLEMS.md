@@ -36,7 +36,7 @@ Actual JaCoCo measurement (instruction coverage) is **6.8%** overall.
 |-----|------|---------|
 | 7,955 | `figure/java2d/SGFigureElementLegend.java` | Largest class |
 | 7,087 | `base/SGDrawingWindow.java` | Frame handling mixed with window logic |
-| 4,046 | `application/SGMainFunctions.java` | All menu actions, commands, and the console loop; delegates to seven collaborator classes |
+| 3,828 | `application/SGMainFunctions.java` | All menu actions, commands, and the console loop; delegates to eight collaborator classes |
 | 5,754 | `figure/java2d/SGAxisElement.java` | |
 | 4,956 | `figure/java2d/SGPropertyDialogSXYData.java` | |
 | 4,889 | `figure/java2d/SGFigureElementShape.java` | |

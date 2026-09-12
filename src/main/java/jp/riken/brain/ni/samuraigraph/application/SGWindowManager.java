@@ -532,7 +532,7 @@ class SGWindowManager
           this.setCurrentWindow(wnd);
 
           // loads the command script file
-          this.mMain.loadCommandScriptFile(file.getPath());
+          this.mMain.getConsoleRunner().loadCommandScriptFile(file.getPath());
 
           // updates the current file
           this.mMain.updateCurrentFile(file, FILE_TYPE.SCRIPT);

@@ -49,7 +49,6 @@ import javax.swing.event.ListSelectionListener;
 import jp.riken.brain.ni.samuraigraph.application.SGDataCreator.CreatedData;
 import jp.riken.brain.ni.samuraigraph.application.SGDataCreator.CreatedDataSet;
 import jp.riken.brain.ni.samuraigraph.base.SGAsyncWorker;
-import jp.riken.brain.ni.samuraigraph.base.SGBufferedFileReader;
 import jp.riken.brain.ni.samuraigraph.base.SGColorMap;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
@@ -197,6 +196,15 @@ class SGMainFunctions
     return this.mDataAdditionHandler;
   }
 
+  private SGConsoleRunner mConsoleRunner = null;
+
+  SGConsoleRunner getConsoleRunner() {
+    if (this.mConsoleRunner == null) {
+      this.mConsoleRunner = new SGConsoleRunner(this);
+    }
+    return this.mConsoleRunner;
+  }
+
   private SGDataWizardTransition mWizardTransition = null;
 
   SGDataWizardTransition getWizardTransition() {
@@ -226,11 +234,8 @@ class SGMainFunctions
   private Initializer mInit = null;
 
   /** The standard output stream. */
-  private BufferedWriter mStdoutWriter = null;
 
   /** The standard input stream. */
-  private BufferedReader mStdinReader = null;
-
   static final int DATA_ADDITION_TOOL_BAR = 0;
 
   static final int DATA_ADDITION_DRAG_AND_DROP = 1;
@@ -534,16 +539,20 @@ class SGMainFunctions
 
       } else if (this.mStartupFileType == FILE_TYPE.SCRIPT) {
         // setup standard output stream
-        mStdoutWriter = new BufferedWriter(new OutputStreamWriter(System.out));
+        SGMainFunctions.this
+            .getConsoleRunner()
+            .setOutputStream(new BufferedWriter(new OutputStreamWriter(System.out)));
 
         // load the command script file
-        loadCommandScriptFile(path);
+        SGMainFunctions.this.getConsoleRunner().loadCommandScriptFile(path);
 
         // set up standard input stream
-        mStdinReader = new BufferedReader(new InputStreamReader(System.in));
+        SGMainFunctions.this
+            .getConsoleRunner()
+            .setInputStream(new BufferedReader(new InputStreamReader(System.in)));
         try {
           // read input recursively
-          startReadingInput();
+          SGMainFunctions.this.getConsoleRunner().startReadingInput();
         } catch (IOException ex) {
           return;
         }
@@ -557,13 +566,17 @@ class SGMainFunctions
 
       if (mCommandModeFlag && !FILE_TYPE.SCRIPT.equals(this.mStartupFileType)) {
         // setup standard output stream
-        mStdoutWriter = new BufferedWriter(new OutputStreamWriter(System.out));
+        SGMainFunctions.this
+            .getConsoleRunner()
+            .setOutputStream(new BufferedWriter(new OutputStreamWriter(System.out)));
 
         // setup standard input stream
-        mStdinReader = new BufferedReader(new InputStreamReader(System.in));
+        SGMainFunctions.this
+            .getConsoleRunner()
+            .setInputStream(new BufferedReader(new InputStreamReader(System.in)));
         try {
           // read input recursively
-          startReadingInput();
+          SGMainFunctions.this.getConsoleRunner().startReadingInput();
         } catch (IOException ex) {
           return;
         }
@@ -1644,11 +1657,6 @@ class SGMainFunctions
     return this.openFile(fileList, wnd, null);
   }
 
-  // start to read the input
-  private void startReadingInput() throws IOException {
-    this.readRecursively(mStdinReader, mStdoutWriter, 0, true, false);
-  }
-
   /**
    * Called when files are dropped onto the window.
    *
@@ -1813,12 +1821,12 @@ class SGMainFunctions
         SGUtility.clearMessageDialogVisible();
         wnd.setSaved(result);
       } else if (scriptFile != null) {
-        if (this.mStdoutWriter != null && this.mStdinReader != null) {
+        if (this.getConsoleRunner().hasStreams()) {
           // sets the current window
           this.mWindowManager.setCurrentWindow(wnd);
 
           // loads the command script file
-          this.loadCommandScriptFile(scriptFile.getPath());
+          this.getConsoleRunner().loadCommandScriptFile(scriptFile.getPath());
         } else {
           SGUtility.showErrorMessageDialog(wnd, ERRMSG_SCRIPT_START, SGIConstants.TITLE_ERROR);
         }
@@ -2065,12 +2073,16 @@ class SGMainFunctions
                   new Thread() {
                     public void run() {
                       // setup standard output stream
-                      mStdoutWriter = new BufferedWriter(new OutputStreamWriter(System.out));
+                      SGMainFunctions.this
+                          .getConsoleRunner()
+                          .setOutputStream(new BufferedWriter(new OutputStreamWriter(System.out)));
                       // setup standard input stream
-                      mStdinReader = new BufferedReader(new StringReader(commands));
+                      SGMainFunctions.this
+                          .getConsoleRunner()
+                          .setInputStream(new BufferedReader(new StringReader(commands)));
                       try {
                         // read input recursively
-                        startReadingInput();
+                        SGMainFunctions.this.getConsoleRunner().startReadingInput();
                         mCommandManager.removeAlias(
                             SGIDataCommandConstants.FILE_PATH_NETCDF_ITSELF);
                       } catch (IOException e1) {
@@ -2078,9 +2090,8 @@ class SGMainFunctions
                       } finally {
                         try {
                           // Replaces the input stream.
-                          mStdinReader.close();
-                          mStdinReader = new BufferedReader(new InputStreamReader(System.in));
-                          startReadingInput();
+                          SGMainFunctions.this.getConsoleRunner().restoreSystemInput();
+                          SGMainFunctions.this.getConsoleRunner().startReadingInput();
                         } catch (IOException e) {
                           logger.debug("Exception occurred", e);
                         }
@@ -2226,238 +2237,11 @@ class SGMainFunctions
     }
   }
 
-  // the prompt
-  private static final String PROMPT = "$ ";
-
-  // a symbol for the file input stream
-  private static final String FILE_INPUT = "<<";
-
-  // the maximum number for the recursion of file input
-  private static final int FILE_RECURSION_DEPTH_MAX = 10;
-
-  // the header for a comment line
-  private static final String COMMENT_HEADER = "#";
-
-  // the header for a comment line
-  private static final String COMMENT_HEADER_2 = "//";
-
-  // a text string that represents the start of a block comment
-  private static final String BLOCK_COMMENT_START = "/*";
-
-  // a text string that represents the end of a block comment
-  private static final String BLOCK_COMMENT_END = "*/";
-
-  // a flag whether the current position is in a block comment
-  private boolean mBlockComment = false;
-
-  private void readRecursively(
-      BufferedReader br,
-      BufferedWriter bw,
-      int depth,
-      final boolean showPrompt,
-      final boolean inFile)
-      throws IOException {
-
-    // check whether the recursion depth is within range
-    depth++;
-    if (depth > FILE_RECURSION_DEPTH_MAX) {
-      bw.write("Recursion is too deep.\n");
-      bw.flush();
-      return;
-    }
-
-    // infinite loop as a server process
-    while (true) {
-
-      if (showPrompt) {
-        // display the prompt
-        bw.write(PROMPT);
-        bw.flush();
-      }
-
-      // get a line
-      String line = br.readLine();
-      if (line == null) {
-        break;
-      }
-
-      // closes the text field
-      this.closeTextField();
-
-      // checks whether a dialog is open
-      if (this.isDialogOpen()) {
-        bw.write("Dialog is open.\n");
-        bw.flush();
-        continue;
-      }
-
-      // trim the line
-      String tLine = line.trim();
-
-      // skip an empty line
-      if (tLine.length() == 0) {
-        continue;
-      }
-
-      // skip the comment line
-      if (tLine.startsWith(COMMENT_HEADER) || tLine.startsWith(COMMENT_HEADER_2)) {
-        continue;
-      }
-
-      // start or end a block comment only when the file input stream is opened
-      if (inFile) {
-        //              if (tLine.startsWith(BLOCK_COMMENT_START)) {
-        //              this.mBlockComment = true;
-        //              continue;
-        //            } else if (tLine.startsWith(BLOCK_COMMENT_END)) {
-        //              this.mBlockComment = false;
-        //              continue;
-        //            }
-        //
-        //            // skip the current line if it is in a block comment
-        //            if (this.mBlockComment) {
-        //              continue;
-        //            }
-
-        // remove block comment.
-        int sPos = tLine.indexOf(BLOCK_COMMENT_START);
-        int ePos = tLine.indexOf(BLOCK_COMMENT_END);
-        if (this.mBlockComment && ((sPos < 0 && ePos >= 0) || (ePos >= 0 && sPos > ePos + 1))) {
-          // "... */" in block comment
-          tLine = tLine.substring(ePos + 2);
-          this.mBlockComment = false;
-          sPos = tLine.indexOf(BLOCK_COMMENT_START);
-          ePos = tLine.indexOf(BLOCK_COMMENT_END);
-        }
-
-        if (this.mBlockComment) {
-          continue;
-        }
-
-        while (sPos >= 0 && ePos >= 1 && sPos + 1 < ePos) {
-          //   "/* ... */"
-          tLine = tLine.substring(0, sPos) + tLine.substring(ePos + 2);
-          sPos = tLine.indexOf(BLOCK_COMMENT_START);
-          ePos = tLine.indexOf(BLOCK_COMMENT_END);
-        }
-
-        sPos = tLine.indexOf(BLOCK_COMMENT_START);
-        if (sPos >= 0) {
-          // "/* ..."
-          this.mBlockComment = true;
-          tLine = tLine.substring(0, sPos);
-        }
-        tLine = tLine.trim();
-        if (tLine.length() == 0) {
-          continue;
-        }
-      }
-
-      // interpret as a file path
-      if (tLine.startsWith(FILE_INPUT)) {
-        String path = tLine.substring(FILE_INPUT.length());
-        path = path.trim();
-        if (SGUtilityText.isDoubleQuoted(path)) {
-          path = path.substring(1, path.length() - 1);
-        }
-        File file = new File(path);
-        if (!file.exists()) {
-          String errmsg = getFileNotFoundString(file);
-          bw.write(errmsg);
-          bw.flush();
-          continue;
-        }
-        SGBufferedFileReader reader = new SGBufferedFileReader(path);
-        BufferedReader br2 = reader.getBufferedReader();
-        readRecursively(br2, bw, depth, false, true);
-        reader.close();
-        continue;
-      }
-
-      // parse the line and execute the command
-      final int ret = this.exec(tLine);
-
-      // output the status
-      StringBuilder status = new StringBuilder();
-      if (ret == SGMainFunctions.STATUS_FAILED) {
-        status.append("failed: ");
-      } else if (ret == SGMainFunctions.STATUS_NOT_FOUND) {
-        status.append("not found: ");
-      } else if (ret == SGMainFunctions.STATUS_SUCCEEDED) {
-        status.append("succeeded: ");
-      } else if (ret == SGMainFunctions.STATUS_PARTIALLY_FAILED) {
-        status.append("partially failed: ");
-      }
-      status.append(tLine);
-      status.append('\n');
-      bw.write(status.toString());
-      bw.flush();
-    }
-  }
-
   /**
    * Loads the command script file.
    *
    * @param fileName file name
    */
-  void loadCommandScriptFile(final String fileName) {
-    // creates and starts a thread
-    new CommandThread(fileName);
-  }
-
-  class CommandThread extends Thread {
-
-    private String mScriptFileName = null;
-
-    CommandThread(final String script) {
-      super();
-      this.mScriptFileName = script;
-      this.start();
-    }
-
-    /** Runs the thread. */
-    public void run() {
-
-      File sf = new File(this.mScriptFileName);
-      SGBufferedFileReader reader = null;
-      try {
-        reader = new SGBufferedFileReader(this.mScriptFileName);
-        BufferedReader brs = reader.getBufferedReader();
-        try {
-          // read the input script file
-          readRecursively(brs, mStdoutWriter, 0, false, true);
-
-          // show a prompt
-          mStdoutWriter.write(PROMPT);
-          mStdoutWriter.flush();
-        } catch (IOException ex) {
-          logger.debug("Exception occurred", ex);
-        }
-      } catch (FileNotFoundException e) {
-        String errmsg = getFileNotFoundString(sf);
-        try {
-          mStdoutWriter.write(errmsg);
-          mStdoutWriter.flush();
-        } catch (IOException e1) {
-          logger.debug("Failed to write error message to stdout", e1);
-        }
-      } catch (IOException e) {
-        logger.debug("Exception occurred", e);
-      } finally {
-        if (reader != null) {
-          reader.close();
-        }
-      }
-    }
-  }
-
-  private String getFileNotFoundString(File file) {
-    StringBuilder sb = new StringBuilder();
-    sb.append("file not found: ");
-    sb.append(file.getPath());
-    sb.append('\n');
-    return sb.toString();
-  }
 
   /**
    * Splits focused SXY type data into multiple data.
