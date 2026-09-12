@@ -59,13 +59,13 @@ import ucar.nc2.NetcdfFile;
 import ucar.nc2.NetcdfFiles;
 
 /** Creates data objects and figures from property file information. */
-final class SGMainFunctionsPropertyFileHandler {
+final class SGPropertyFileDataHandler {
 
   private final SGDataCreator mDataCreator;
 
   private final SGFigureCreator mFigureCreator;
 
-  SGMainFunctionsPropertyFileHandler(SGDataCreator dataCreator, SGFigureCreator figureCreator) {
+  SGPropertyFileDataHandler(SGDataCreator dataCreator, SGFigureCreator figureCreator) {
     this.mDataCreator = dataCreator;
     this.mFigureCreator = figureCreator;
   }

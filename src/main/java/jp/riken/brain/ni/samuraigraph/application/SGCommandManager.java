@@ -1240,7 +1240,7 @@ class SGCommandManager
       }
 
       // split
-      List<SGData> dataList = SGMainFunctionsSplitMerge.splitData(figure, dataIdArray);
+      List<SGData> dataList = SGDataSplitMergeUtility.splitData(figure, dataIdArray);
       if (dataList == null || dataList.size() == 0) {
         return STATUS_FAILED;
       }
@@ -1262,7 +1262,7 @@ class SGCommandManager
       }
 
       // merge
-      List<SGData> dataList = SGMainFunctionsSplitMerge.mergeData(figure, dataIdArray);
+      List<SGData> dataList = SGDataSplitMergeUtility.mergeData(figure, dataIdArray);
       if (dataList == null || dataList.size() == 0) {
         return STATUS_FAILED;
       }

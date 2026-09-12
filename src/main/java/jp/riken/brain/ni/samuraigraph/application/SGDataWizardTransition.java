@@ -29,14 +29,13 @@ import org.apache.logging.log4j.Logger;
 import ucar.nc2.NetcdfFile;
 
 /** Transition logic between the wizard dialogs for data addition. */
-final class SGMainFunctionsWizardTransition
-    implements SGIApplicationConstants, SGIApplicationTextConstants {
+final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplicationTextConstants {
 
-  private static final Logger logger = LogManager.getLogger(SGMainFunctionsWizardTransition.class);
+  private static final Logger logger = LogManager.getLogger(SGDataWizardTransition.class);
 
   private final SGMainFunctions mMain;
 
-  SGMainFunctionsWizardTransition(SGMainFunctions main) {
+  SGDataWizardTransition(SGMainFunctions main) {
     this.mMain = main;
   }
 

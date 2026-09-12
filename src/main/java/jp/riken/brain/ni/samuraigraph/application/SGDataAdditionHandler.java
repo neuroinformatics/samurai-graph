@@ -37,7 +37,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /** Dialog flow and graph creation for data addition. */
-final class SGMainFunctionsDataAdditionHandler
+final class SGDataAdditionHandler
     implements SGIUpgradeConstants,
         SGIApplicationCommandConstants,
         SGIApplicationConstants,
@@ -49,12 +49,11 @@ final class SGMainFunctionsDataAdditionHandler
         SGIDataColumnTypeConstants,
         SGINetCDFConstants {
 
-  private static final Logger logger =
-      LogManager.getLogger(SGMainFunctionsDataAdditionHandler.class);
+  private static final Logger logger = LogManager.getLogger(SGDataAdditionHandler.class);
 
   private final SGMainFunctions mMain;
 
-  SGMainFunctionsDataAdditionHandler(SGMainFunctions main) {
+  SGDataAdditionHandler(SGMainFunctions main) {
     this.mMain = main;
   }
 

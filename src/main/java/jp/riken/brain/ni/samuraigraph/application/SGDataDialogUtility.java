@@ -12,9 +12,9 @@ import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
 import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupSetInGraph;
 
 /** Static helper for dialog lifecycle operations. */
-final class SGMainFunctionsDialogUtility {
+final class SGDataDialogUtility {
 
-  private SGMainFunctionsDialogUtility() {}
+  private SGDataDialogUtility() {}
 
   static DataList getVisibleDataList(List<SGFigure> figureList) {
     DataList ret = new DataList();

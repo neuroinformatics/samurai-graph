@@ -33,7 +33,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGSamplingDataColumn;
 
-class SGMainFunctionsTransform {
+class SGDataTransformationHandler {
 
   private final SGMainFunctions mMain;
 
@@ -54,7 +54,7 @@ class SGMainFunctionsTransform {
 
   private final TransformedData mTransformedData;
 
-  SGMainFunctionsTransform(
+  SGDataTransformationHandler(
       final SGMainFunctions mainFunctions,
       final SGDataTypeWizardDialog dataTypeWizardDialog,
       final SGSDArrayDataSetupWizardDialog dataColumnSelectionWizardDialog,

@@ -5,21 +5,22 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage (Top Priority)
 
-Actual JaCoCo measurement (instruction coverage) is **5.8%** overall.
+Actual JaCoCo measurement (instruction coverage) is **5.9%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
 | `com.github...lib.mdarray` | 97.4% | 4 | Pure logic, well covered |
 | `org.freehep...util.export` | 86.8% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 68.2% | 0 (nested under `figure.java2d`) | Few instructions |
-| `com.github...lib.hdf5` | 14.1% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 10.1% | 18 | Only the pure-logic parts are tested |
+| `com.github...lib.hdf5` | 20.2% | 5 | Round-trip tests read/write real HDF5 |
+| `jp...samuraigraph.base` | 10.4% | 18 | Only the pure-logic parts are tested |
 | `jp...samuraigraph.data` | 13.5% | 40 | Largest application package |
-| `jp...samuraigraph.application` | 1.4% | 3 | |
+| `jp...samuraigraph.application` | 1.8% | 3 | |
 | `jp...samuraigraph.figure` | 1.4% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **0.0%** | 0 | All 109 rendering-layer files untested |
 
-- 78 test files / 851 test methods against 582 main files / ~274k LOC
+- 79 test files / 826 test methods (856 executions) against 590 main files
+  / ~275k LOC
 - Per-class coverage of the data-layer utilities is uneven: the pure
   groups (data type, text, column title) reach 76-78%, while the others
   remain below 60% (buffer 30%, stride 25%, column info 56%, range 31%,
@@ -35,7 +36,7 @@ Actual JaCoCo measurement (instruction coverage) is **5.8%** overall.
 |-----|------|---------|
 | 7,955 | `figure/java2d/SGFigureElementLegend.java` | Largest class |
 | 7,087 | `base/SGDrawingWindow.java` | Frame handling mixed with window logic |
-| 4,046 | `application/SGMainFunctions.java` | All commands, menu actions, and transforms in one class |
+| 4,046 | `application/SGMainFunctions.java` | All menu actions, commands, and the console loop; delegates to seven collaborator classes |
 | 5,754 | `figure/java2d/SGAxisElement.java` | |
 | 4,956 | `figure/java2d/SGPropertyDialogSXYData.java` | |
 | 4,889 | `figure/java2d/SGFigureElementShape.java` | |
@@ -44,14 +45,6 @@ Actual JaCoCo measurement (instruction coverage) is **5.8%** overall.
 | 4,511 | `base/SGFigure.java` | |
 
 68 files exceed 1,000 lines; 129 exceed 500.
-
-Note: `SGMainFunctionsSplitMerge` (588 LOC), `SGMainFunctionsTransform`
-(700 LOC), `SGDataInfoMapUtility` (519 LOC),
-`SGMainFunctionsPropertyFileHandler` (597 LOC),
-`SGMainFunctionsDialogUtility` (151 LOC),
-`SGMainFunctionsWizardTransition` (428 LOC) and
-`SGMainFunctionsDataAdditionHandler` (1,416 LOC) are separate classes,
-but the main class is still 4,046 lines.
 
 ## 3. Duplicated Architecture
 
@@ -73,7 +66,7 @@ but the main class is still 4,046 lines.
 - **Raw `Thread` usage**: 7 files spawn 9 raw threads instead of using an
   executor: three `InputObserver extends Thread` classes,
   `SGMainFunctions.Initializer` / `SGMainFunctions.CommandThread` /
-  anonymous `new Thread` (SGMainFunctions.java:4568),
+  anonymous `new Thread` (SGMainFunctions.java:2065),
   `SGWindowManager.DropEventHandler`, `SGAnimationThread extends Thread`,
   and `SGAsyncWorker` (`new Thread`, SGAsyncWorker.java:36).
 - **Static mutable fields**: instance state held in static fields — e.g.
