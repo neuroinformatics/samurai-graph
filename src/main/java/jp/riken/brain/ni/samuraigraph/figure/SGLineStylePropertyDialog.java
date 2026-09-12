@@ -26,7 +26,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGStyle;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetMultipleSXY;
 
 /** A property dialog to set the line style. */
 public class SGLineStylePropertyDialog extends SGPropertyDialog {

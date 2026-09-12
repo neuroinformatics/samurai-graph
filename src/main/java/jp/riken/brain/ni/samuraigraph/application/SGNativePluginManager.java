@@ -45,7 +45,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGVXYDataBuffer;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYGridDataBuffer;
 import jp.riken.brain.ni.samuraigraph.data.SGVirtualMDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGVirtualMDArrayVariable;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGDataPopupMenu;
+import jp.riken.brain.ni.samuraigraph.figure.SGDataPopupMenu;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

@@ -7,7 +7,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIVisible;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

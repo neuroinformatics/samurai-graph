@@ -27,8 +27,8 @@ import jp.riken.brain.ni.samuraigraph.data.SGNetCDFVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYMDArrayMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYSDArrayMultipleData;
+import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetInGraphSXYMultiple.MultipleSXYElementGroupSetPropertiesInFigureElement;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupSetInGraphSXYMultiple.MultipleSXYElementGroupSetPropertiesInFigureElement;
 
 class SGDataSplitMergeUtility implements SGIApplicationTextConstants {
 

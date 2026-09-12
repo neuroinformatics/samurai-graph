@@ -50,6 +50,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGColorBarColorMapManager;
 import jp.riken.brain.ni.samuraigraph.figure.SGIAxisBreakConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIAxisConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIColorBarConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetMultipleSXY;
 import jp.riken.brain.ni.samuraigraph.figure.SGILegendConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIScaleConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIShapeConstants;
@@ -59,7 +60,6 @@ import jp.riken.brain.ni.samuraigraph.figure.SGITimingLineConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyleColorMapManager;
 import jp.riken.brain.ni.samuraigraph.figure.SGUtilityForFigureElement;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetMultipleSXY;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

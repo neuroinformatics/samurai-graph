@@ -32,7 +32,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementGrid.GridProperties;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGrid.GridProperties;
 
 /** An XY-type figure. */
 public class SGXYFigure extends SGFigure

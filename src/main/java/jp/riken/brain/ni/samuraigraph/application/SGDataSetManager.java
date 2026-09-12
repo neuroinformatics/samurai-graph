@@ -23,7 +23,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataFileConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetForData;
+import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetForData;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

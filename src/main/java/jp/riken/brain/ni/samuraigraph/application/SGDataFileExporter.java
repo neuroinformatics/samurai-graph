@@ -11,8 +11,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYDataBufferPolicy;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetForData;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGIElementGroupSetMultipleSXY;
+import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetForData;
+import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetMultipleSXY;
 
 /** A class to export a data to a file. */
 public class SGDataFileExporter extends SGFileHandler implements SGIApplicationConstants {

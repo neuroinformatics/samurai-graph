@@ -44,35 +44,35 @@ public class SGFigureCreator implements SGIFigureConstants {
 
   // 2D class names
   private static final String CLASS_NAME_OF_AXIS_ELEMENT_2D =
-      "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementAxis";
+      "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementAxis";
 
   // private static final String CLASS_NAME_OF_SXY_GRAPH_ELEMENT_2D
-  // = "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementGraphSXY";
+  // = "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGraphSXY";
   // private static final String CLASS_NAME_OF_VXY_GRAPH_ELEMENT_2D
-  // = "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementGraphVXY";
+  // = "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGraphVXY";
   private static final String CLASS_NAME_OF_GRAPH_ELEMENT_2D =
-      "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementGraph";
+      "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGraph";
 
   private static final String CLASS_NAME_OF_GRID_ELEMENT_2D =
-      "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementGrid";
+      "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGrid";
 
   private static final String CLASS_NAME_OF_STRING_ELEMENT_2D =
-      "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementString";
+      "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementString";
 
   private static final String CLASS_NAME_OF_LEGEND_ELEMENT_2D =
-      "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementLegend";
+      "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementLegend";
 
   private static final String CLASS_NAME_OF_AXIS_BREAK_ELEMENT_2D =
-      "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementAxisBreak";
+      "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementAxisBreak";
 
   private static final String CLASS_NAME_OF_SIGNIFICANT_DIFFERENCE_ELEMENT_2D =
-      "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementSignificantDifference";
+      "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementSignificantDifference";
 
   private static final String CLASS_NAME_OF_TIMING_LINE_ELEMENT_2D =
-      "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementTimingLine";
+      "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementTimingLine";
 
   private static final String CLASS_NAME_OF_SHAPE_ELEMENT_2D =
-      "jp.riken.brain.ni.samuraigraph.figure.java2d.SGFigureElementShape";
+      "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementShape";
 
   // 3D class names - not implemented now
   private static final String CLASS_NAME_OF_AXIS_ELEMENT_3D =

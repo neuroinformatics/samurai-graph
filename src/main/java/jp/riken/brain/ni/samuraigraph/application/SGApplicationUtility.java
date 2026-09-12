@@ -78,7 +78,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGSamplingDataColumn;
 import jp.riken.brain.ni.samuraigraph.data.SGTextDataColumn;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGStringBraceModifier;
+import jp.riken.brain.ni.samuraigraph.figure.SGStringBraceModifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.DOMImplementation;

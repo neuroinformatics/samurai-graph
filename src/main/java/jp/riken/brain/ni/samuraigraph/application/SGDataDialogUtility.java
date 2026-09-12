@@ -9,7 +9,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
-import jp.riken.brain.ni.samuraigraph.figure.java2d.SGElementGroupSetInGraph;
+import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetInGraph;
 
 /** Static helper for dialog lifecycle operations. */
 final class SGDataDialogUtility {
