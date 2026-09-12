@@ -14,26 +14,26 @@ Actual JaCoCo measurement (instruction coverage) is **4.0%** overall.
 | `jp...samuraigraph.export` | 68.2% | 0 (nested under `figure.java2d`) | Few instructions |
 | `com.github...lib.hdf5` | 14.1% | 5 | Round-trip tests read/write real HDF5 |
 | `jp...samuraigraph.base` | 9.9% | 18 | Only the pure-logic parts are tested |
-| `jp...samuraigraph.data` | 8.3% | 39 | Largest application package |
+| `jp...samuraigraph.data` | 9.1% | 39 | Largest application package |
 | `jp...samuraigraph.application` | 1.4% | 3 | |
 | `jp...samuraigraph.figure` | 1.4% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **0.0%** | 0 | All 109 rendering-layer files untested |
 
-- 72 test files / 774 test methods against 582 main files / ~274k LOC
-- `SGDataUtility` has been fully split into ten single-purpose utility
-  classes: `SGDataDataTypeUtility` (76.4%), `SGDataTextUtility` (78.5%),
+- 72 test files / 779 test methods against 582 main files / ~274k LOC
+- The data-layer helpers live in ten single-purpose utility classes:
+  `SGDataDataTypeUtility` (76.4%), `SGDataTextUtility` (78.5%),
   `SGDataColumnTitleUtility` (78.0%), `SGDataColumnInfoUtility` (21.9%),
   `SGDataRangeUtility` (17.8%), `SGDataMiscUtility` (15.5%),
   `SGDataStrideUtility` (1.4%), `SGDataBufferUtility` (1.4%),
-  `SGDataViewerUtility` (1.5%), `SGDataFileUtility` (0.9%) — the old
-  class was deleted
-- `SGDefaultColumnTypeUtility` (3,797 lines) was split by data source:
-  the core dispatcher/entry is 499 lines, with
-  `SGDefaultColumnTypeSDArrayUtility` (17.2%),
-  `SGDefaultColumnTypeNetCDFUtility` (15.7%), and
-  `SGDefaultColumnTypeMDArrayUtility` (8.2%) holding the source-specific
-  logic; the NetCDF and MATLAB resolution paths are exercised by
-  file-based tests
+  `SGDataViewerUtility` (1.5%), `SGDataFileUtility` (0.9%); the former
+  `SGDataUtility` class no longer exists
+- `SGDefaultColumnTypeUtility` is a 499-line core (entry point, dispatcher,
+  shared helpers) with three source-specific classes:
+  `SGDefaultColumnTypeSDArrayUtility` (28.1%),
+  `SGDefaultColumnTypeNetCDFUtility` (24.3%), and
+  `SGDefaultColumnTypeMDArrayUtility` (22.8%); the SXY/VXY/SXYZ resolution
+  paths for SDArray, NetCDF and MATLAB data are exercised by file-based
+  tests
 - File-based tests cover the main import paths: example NetCDF files
   (parsing, variables, SXY data objects), a generated MATLAB file,
   a generated HDF5 file (write/read round trip), and a generated CSV
@@ -59,8 +59,7 @@ Actual JaCoCo measurement (instruction coverage) is **4.0%** overall.
 68 files exceed 1,000 lines; 129 exceed 500.
 
 Note: `SGMainFunctionsSplitMerge` (588 LOC) and `SGMainFunctionsTransform`
-(700 LOC) are separate classes, so the split of `SGMainFunctions` has started,
-but the main class is still 6,822 lines.
+(700 LOC) are separate classes, but the main class is still 6,822 lines.
 
 ## 3. Duplicated Architecture
 
@@ -113,7 +112,7 @@ but the main class is still 6,822 lines.
 
 1. **Split candidates** (progressively, guarded by tests):
    `SGMainFunctions` / `SGDrawingWindow`
-3. **Integrate the dual hierarchy**: design work to merge `figure` and
+2. **Integrate the dual hierarchy**: design work to merge `figure` and
    `figure.java2d` into a single layer
-4. **Thicken tests**: add unit tests to the pure-logic `data` / `base` /
+3. **Thicken tests**: add unit tests to the pure-logic `data` / `base` /
    `mdarray` layers to build a refactoring safety net
