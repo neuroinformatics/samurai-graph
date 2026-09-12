@@ -28,71 +28,20 @@ public class SGSDArrayDataSetupWizardDialog extends SGDataSetupWizardDialog {
   }
 
   private void initComponents() {
-    java.awt.GridBagConstraints gridBagConstraints;
+    this.mDataSetupPanel = new jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupPanel();
 
-    mButtonPanel = new javax.swing.JPanel();
-    mPreviousButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mNextButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mOKButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mCancelButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mDataNamePanel = new javax.swing.JPanel();
-    mDataNameLabel = new javax.swing.JLabel();
-    mDataNameTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
-    mDataSetupPanel = new jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupPanel();
+    this.getContentPane().setLayout(new java.awt.GridBagLayout());
 
-    getContentPane().setLayout(new java.awt.GridBagLayout());
+    this.initializeButtonPanel(new java.awt.Insets(5, 0, 0, 0));
 
-    mButtonPanel.setFont(new java.awt.Font("Dialog", 0, 11));
+    this.initializeDataNamePanel();
 
-    mPreviousButton.setText("<Prev");
-    mPreviousButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mPreviousButton);
-
-    mNextButton.setText("Next>");
-    mNextButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mNextButton);
-
-    mOKButton.setText("OK");
-    mOKButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mOKButton);
-
-    mCancelButton.setText("Cancel");
-    mCancelButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mCancelButton);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
-    getContentPane().add(mButtonPanel, gridBagConstraints);
-
-    mDataNamePanel.setLayout(new java.awt.GridBagLayout());
-
-    mDataNameLabel.setFont(new java.awt.Font("Dialog", 1, 12));
-    mDataNameLabel.setText("Data Name");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-    mDataNamePanel.add(mDataNameLabel, gridBagConstraints);
-
-    mDataNameTextField.setColumns(20);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-    mDataNamePanel.add(mDataNameTextField, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(2, 2, 0, 0);
-    getContentPane().add(mDataNamePanel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
-    getContentPane().add(mDataSetupPanel, gridBagConstraints);
+    this.getContentPane().add(this.mDataSetupPanel, gridBagConstraints);
 
-    pack();
+    this.pack();
   }
 
   protected JButton getPreviousButton() {
@@ -111,15 +60,7 @@ public class SGSDArrayDataSetupWizardDialog extends SGDataSetupWizardDialog {
     return this.mCancelButton;
   }
 
-  private javax.swing.JPanel mButtonPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mCancelButton;
-  private javax.swing.JLabel mDataNameLabel;
-  private javax.swing.JPanel mDataNamePanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGTextField mDataNameTextField;
   private jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupPanel mDataSetupPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mNextButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mOKButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mPreviousButton;
 
   /**
    * Set information of data columns.

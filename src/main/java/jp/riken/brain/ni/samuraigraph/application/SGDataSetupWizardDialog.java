@@ -1,6 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import java.awt.Font;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
@@ -8,10 +12,13 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Map;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import jp.riken.brain.ni.samuraigraph.base.SGButton;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
@@ -59,6 +66,101 @@ public abstract class SGDataSetupWizardDialog extends SGWizardDialog
             pack();
           }
         });
+  }
+
+  /** Data name panel. */
+  protected JPanel mDataNamePanel;
+
+  /** Data name label. */
+  protected JLabel mDataNameLabel;
+
+  /** Data name text field. */
+  protected SGTextField mDataNameTextField;
+
+  /** Button panel. */
+  protected JPanel mButtonPanel;
+
+  /** Previous button. */
+  protected SGButton mPreviousButton;
+
+  /** Next button. */
+  protected SGButton mNextButton;
+
+  /** OK button. */
+  protected SGButton mOKButton;
+
+  /** Cancel button. */
+  protected SGButton mCancelButton;
+
+  /** Initializes the data name panel and adds it to the content pane. */
+  protected void initializeDataNamePanel() {
+    this.mDataNamePanel = new JPanel();
+    this.mDataNameLabel = new JLabel();
+    this.mDataNameTextField = new SGTextField();
+
+    this.mDataNamePanel.setLayout(new GridBagLayout());
+
+    this.mDataNameLabel.setFont(new Font("Dialog", Font.BOLD, 12));
+    this.mDataNameLabel.setText("Data Name");
+    GridBagConstraints c = new GridBagConstraints();
+    c.insets = new Insets(4, 4, 4, 4);
+    this.mDataNamePanel.add(this.mDataNameLabel, c);
+
+    this.mDataNameTextField.setColumns(20);
+    c = new GridBagConstraints();
+    c.insets = new Insets(4, 4, 4, 4);
+    this.mDataNamePanel.add(this.mDataNameTextField, c);
+
+    c = new GridBagConstraints();
+    c.gridx = 0;
+    c.gridy = 0;
+    c.fill = GridBagConstraints.VERTICAL;
+    c.anchor = GridBagConstraints.WEST;
+    c.insets = new Insets(2, 2, 0, 0);
+    this.getContentPane().add(this.mDataNamePanel, c);
+  }
+
+  /**
+   * Initializes the Previous/Next/OK/Cancel buttons and adds the button panel to the content pane.
+   */
+  protected void initializeButtonPanel() {
+    this.initializeButtonPanel(new Insets(5, 5, 5, 5));
+  }
+
+  /**
+   * Initializes the Previous/Next/OK/Cancel buttons and adds the button panel to the content pane.
+   *
+   * @param insets the insets of the button panel
+   */
+  protected void initializeButtonPanel(final Insets insets) {
+    this.mButtonPanel = new JPanel();
+    this.mPreviousButton = new SGButton();
+    this.mNextButton = new SGButton();
+    this.mOKButton = new SGButton();
+    this.mCancelButton = new SGButton();
+
+    this.mPreviousButton.setText("<Prev");
+    this.mPreviousButton.setFont(new Font("Dialog", Font.BOLD, 12));
+    this.mButtonPanel.add(this.mPreviousButton);
+
+    this.mNextButton.setText("Next>");
+    this.mNextButton.setFont(new Font("Dialog", Font.BOLD, 12));
+    this.mButtonPanel.add(this.mNextButton);
+
+    this.mOKButton.setText("OK");
+    this.mOKButton.setFont(new Font("Dialog", Font.BOLD, 12));
+    this.mButtonPanel.add(this.mOKButton);
+
+    this.mCancelButton.setText("Cancel");
+    this.mCancelButton.setFont(new Font("Dialog", Font.BOLD, 12));
+    this.mButtonPanel.add(this.mCancelButton);
+
+    GridBagConstraints c = new GridBagConstraints();
+    c.gridx = 0;
+    c.gridy = 2;
+    c.anchor = GridBagConstraints.EAST;
+    c.insets = insets;
+    this.getContentPane().add(this.mButtonPanel, c);
   }
 
   protected abstract SGDataSetupPanel getDataSetupPanel();

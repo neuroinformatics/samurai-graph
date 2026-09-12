@@ -11,6 +11,9 @@
 
 package jp.riken.brain.ni.samuraigraph.application;
 
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
@@ -20,6 +23,7 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import jp.riken.brain.ni.samuraigraph.base.SGButton;
@@ -72,6 +76,43 @@ public abstract class SGPropertyFileDataDialog extends SGSingleFileChooserWizard
 
   /** Version number of the property file. */
   protected String mVersionNumber = null;
+
+  /** Button panel. */
+  protected JPanel mButtonPanel;
+
+  /** OK button. */
+  protected SGButton mOKButton;
+
+  /** Cancel button. */
+  protected SGButton mCancelButton;
+
+  /**
+   * Initializes the OK/Cancel buttons and places the button panel at the given row of the content
+   * pane.
+   *
+   * @param gridy the row index of the button panel
+   */
+  protected void initializeButtonPanel(final int gridy) {
+    this.mButtonPanel = new JPanel();
+    this.mButtonPanel.setFont(new Font("Dialog", Font.PLAIN, 11));
+
+    this.mOKButton = new SGButton();
+    this.mOKButton.setText("OK");
+    this.mOKButton.setFont(new Font("Dialog", Font.BOLD, 12));
+    this.mButtonPanel.add(this.mOKButton);
+
+    this.mCancelButton = new SGButton();
+    this.mCancelButton.setText("Cancel");
+    this.mCancelButton.setFont(new Font("Dialog", Font.BOLD, 12));
+    this.mButtonPanel.add(this.mCancelButton);
+
+    GridBagConstraints c = new GridBagConstraints();
+    c.gridx = 0;
+    c.gridy = gridy;
+    c.anchor = GridBagConstraints.EAST;
+    c.insets = new Insets(5, 0, 0, 0);
+    this.getContentPane().add(this.mButtonPanel, c);
+  }
 
   /** Initialize this dialog. */
   private void initProperty() {

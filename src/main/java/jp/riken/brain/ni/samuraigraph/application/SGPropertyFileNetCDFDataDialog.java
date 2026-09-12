@@ -31,40 +31,17 @@ public class SGPropertyFileNetCDFDataDialog extends SGPropertyFileDataDialog {
   }
 
   private void initComponents() {
-    java.awt.GridBagConstraints gridBagConstraints;
+    this.mNetCDFDataSetupPanel = new jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupPanel();
 
-    mButtonPanel = new javax.swing.JPanel();
-    mOKButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mCancelButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mNetCDFDataSetupPanel = new jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupPanel();
+    this.getContentPane().setLayout(new java.awt.GridBagLayout());
+    this.getContentPane().add(this.mNetCDFDataSetupPanel, new java.awt.GridBagConstraints());
 
-    getContentPane().setLayout(new java.awt.GridBagLayout());
+    this.initializeButtonPanel(2);
 
-    mButtonPanel.setFont(new java.awt.Font("Dialog", 0, 11));
-
-    mOKButton.setText("OK");
-    mOKButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mOKButton);
-
-    mCancelButton.setText("Cancel");
-    mCancelButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mCancelButton);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
-    getContentPane().add(mButtonPanel, gridBagConstraints);
-    getContentPane().add(mNetCDFDataSetupPanel, new java.awt.GridBagConstraints());
-
-    pack();
+    this.pack();
   }
 
-  private javax.swing.JPanel mButtonPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mCancelButton;
   private jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupPanel mNetCDFDataSetupPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mOKButton;
 
   /** Initialize the properties. */
   private void initProperty() {

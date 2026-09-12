@@ -40,45 +40,22 @@ public class SGPropertyFileSDArrayDataDialog extends SGPropertyFileDataDialog {
   }
 
   private void initComponents() {
-    java.awt.GridBagConstraints gridBagConstraints;
+    this.mPanel = new javax.swing.JPanel();
+    this.mDataSetupPanel = new jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupPanel();
 
-    mPanel = new javax.swing.JPanel();
-    mDataSetupPanel = new jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupPanel();
-    mButtonPanel = new javax.swing.JPanel();
-    mOKButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mCancelButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
+    this.getContentPane().setLayout(new java.awt.GridBagLayout());
 
-    getContentPane().setLayout(new java.awt.GridBagLayout());
+    this.mPanel.setLayout(new java.awt.GridBagLayout());
+    this.mPanel.add(this.mDataSetupPanel, new java.awt.GridBagConstraints());
 
-    mPanel.setLayout(new java.awt.GridBagLayout());
-    mPanel.add(mDataSetupPanel, new java.awt.GridBagConstraints());
+    this.getContentPane().add(this.mPanel, new java.awt.GridBagConstraints());
 
-    getContentPane().add(mPanel, new java.awt.GridBagConstraints());
+    this.initializeButtonPanel(1);
 
-    mButtonPanel.setFont(new java.awt.Font("Dialog", 0, 11));
-
-    mOKButton.setText("OK");
-    mOKButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mOKButton);
-
-    mCancelButton.setText("Cancel");
-    mCancelButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mCancelButton);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
-    getContentPane().add(mButtonPanel, gridBagConstraints);
-
-    pack();
+    this.pack();
   }
 
-  private javax.swing.JPanel mButtonPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mCancelButton;
   private jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupPanel mDataSetupPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mOKButton;
   private javax.swing.JPanel mPanel;
 
   private void initProperty() {}

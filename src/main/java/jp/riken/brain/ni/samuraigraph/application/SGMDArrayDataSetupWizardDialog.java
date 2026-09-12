@@ -35,70 +35,21 @@ public class SGMDArrayDataSetupWizardDialog extends SGDataSetupWizardDialog {
   }
 
   private void initComponents() {
-    java.awt.GridBagConstraints gridBagConstraints;
+    this.mMDArrayDataSetupPanel = new jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupPanel();
 
-    mMDArrayDataSetupPanel = new jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupPanel();
-    mDataNamePanel = new javax.swing.JPanel();
-    mDataNameLabel = new javax.swing.JLabel();
-    mDataNameTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
-    mButtonPanel = new javax.swing.JPanel();
-    mPreviousButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mNextButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mOKButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mCancelButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
+    this.getContentPane().setLayout(new java.awt.GridBagLayout());
 
-    getContentPane().setLayout(new java.awt.GridBagLayout());
-    gridBagConstraints = new java.awt.GridBagConstraints();
+    this.initializeDataNamePanel();
+
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
     gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-    getContentPane().add(mMDArrayDataSetupPanel, gridBagConstraints);
+    this.getContentPane().add(this.mMDArrayDataSetupPanel, gridBagConstraints);
 
-    mDataNamePanel.setLayout(new java.awt.GridBagLayout());
+    this.initializeButtonPanel();
 
-    mDataNameLabel.setFont(new java.awt.Font("Dialog", 1, 12));
-    mDataNameLabel.setText("Data Name");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-    mDataNamePanel.add(mDataNameLabel, gridBagConstraints);
-
-    mDataNameTextField.setColumns(20);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-    mDataNamePanel.add(mDataNameTextField, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(2, 2, 0, 0);
-    getContentPane().add(mDataNamePanel, gridBagConstraints);
-
-    mPreviousButton.setText("<Prev");
-    mPreviousButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mPreviousButton);
-
-    mNextButton.setText("Next>");
-    mNextButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mNextButton);
-
-    mOKButton.setText("OK");
-    mOKButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mOKButton);
-
-    mCancelButton.setText("Cancel");
-    mCancelButton.setFont(new java.awt.Font("Dialog", 1, 12));
-    mButtonPanel.add(mCancelButton);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    getContentPane().add(mButtonPanel, gridBagConstraints);
-
-    pack();
+    this.pack();
   }
 
   @Override
@@ -131,15 +82,7 @@ public class SGMDArrayDataSetupWizardDialog extends SGDataSetupWizardDialog {
     return this.mDataNameTextField;
   }
 
-  private javax.swing.JPanel mButtonPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mCancelButton;
-  private javax.swing.JLabel mDataNameLabel;
-  private javax.swing.JPanel mDataNamePanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGTextField mDataNameTextField;
   private jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupPanel mMDArrayDataSetupPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mNextButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mOKButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mPreviousButton;
 
   /**
    * Sets the multidimensional array data.
