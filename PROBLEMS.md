@@ -5,7 +5,7 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage (Top Priority)
 
-Actual JaCoCo measurement (instruction coverage) is **6.8%** overall.
+Actual JaCoCo measurement (line coverage) is **8.8%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
@@ -13,13 +13,13 @@ Actual JaCoCo measurement (instruction coverage) is **6.8%** overall.
 | `org.freehep...util.export` | 86.8% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 68.2% | 0 (nested under `figure.java2d`) | Few instructions |
 | `com.github...lib.hdf5` | 20.8% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 10.5% | 18 | Only the pure-logic parts are tested |
-| `jp...samuraigraph.data` | 16.8% | 43 | Largest application package |
+| `jp...samuraigraph.base` | 24.2% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
+| `jp...samuraigraph.data` | 17.0% | 43 | Largest application package |
 | `jp...samuraigraph.application` | 1.8% | 3 | |
 | `jp...samuraigraph.figure` | 1.4% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **0.0%** | 0 | All 109 rendering-layer files untested |
 
-- 82 test files / 866 test methods (896 executions) against 590 main files
+- 83 test files / 872 test methods (902 executions) against 590 main files
   / ~275k LOC
 - Per-class coverage of the data-layer utilities is uneven: the pure
   groups (data type, text, column title) reach 76-78%, while the others
@@ -35,7 +35,7 @@ Actual JaCoCo measurement (instruction coverage) is **6.8%** overall.
 | LOC | File | Problem |
 |-----|------|---------|
 | 7,955 | `figure/java2d/SGFigureElementLegend.java` | Largest class |
-| 6,078 | `base/SGDrawingWindow.java` | Frame handling mixed with window logic; delegates to clipboard and alignment helpers |
+| 5,637 | `base/SGDrawingWindow.java` | Frame handling mixed with window logic; delegates to clipboard, alignment, and property I/O helpers |
 | 3,828 | `application/SGMainFunctions.java` | All menu actions, commands, and the console loop; delegates to eight collaborator classes |
 | 5,754 | `figure/java2d/SGAxisElement.java` | |
 | 4,956 | `figure/java2d/SGPropertyDialogSXYData.java` | |

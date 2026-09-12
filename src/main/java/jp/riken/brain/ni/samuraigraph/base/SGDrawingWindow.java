@@ -1171,6 +1171,10 @@ public class SGDrawingWindow extends JFrame
     return this.mClientPanel.getFigurePanel();
   }
 
+  SGClientPanel getClientPanel() {
+    return this.mClientPanel;
+  }
+
   public float getGridLineInterval() {
     return this.mClientPanel.getGridLineInterval();
   }
@@ -1570,7 +1574,6 @@ public class SGDrawingWindow extends JFrame
    * @return the result of setting properties
    */
   public SGPropertyResults setProperties(SGPropertyMap map) {
-
     SGPropertyResults result = new SGPropertyResults();
 
     // prepare
@@ -1583,31 +1586,7 @@ public class SGDrawingWindow extends JFrame
       String key = itr.next();
       String value = map.getValueString(key);
 
-      if (COM_PAPER_WIDTH.equalsIgnoreCase(key)) {
-        StringBuilder unit = new StringBuilder();
-        Number num = SGUtilityText.getNumber(value, unit);
-        if (num == null) {
-          result.putResult(COM_PAPER_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.mClientPanel.setPaperWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_PAPER_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_PAPER_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_PAPER_HEIGHT.equalsIgnoreCase(key)) {
-        StringBuilder unit = new StringBuilder();
-        Number num = SGUtilityText.getNumber(value, unit);
-        if (num == null) {
-          result.putResult(COM_PAPER_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.mClientPanel.setPaperHeight(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_PAPER_HEIGHT, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_PAPER_HEIGHT, SGPropertyResults.SUCCEEDED);
-      } else if (COM_PAPER_SIZE.equalsIgnoreCase(key)) {
+      if (COM_PAPER_SIZE.equalsIgnoreCase(key)) {
         String[] strArray = SGUtilityText.getStringsInBracket(value);
         if (strArray == null) {
           result.putResult(COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1634,118 +1613,18 @@ public class SGDrawingWindow extends JFrame
           continue;
         }
         result.putResult(COM_PAPER_SIZE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_WINDOW_BACKGROUND_COLOR.equalsIgnoreCase(key)) {
-        Color cl = SGUtilityText.getColor(value);
-        if (cl != null) {
-          if (this.mClientPanel.setPaperColor(cl) == false) {
-            result.putResult(COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
-            continue;
-          }
-        } else {
-          cl = SGUtilityText.parseColor(value);
-          if (cl == null) {
-            result.putResult(COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
-            continue;
-          }
-          if (this.mClientPanel.setPaperColor(cl) == false) {
-            result.putResult(COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
-            continue;
-          }
-        }
-        result.putResult(COM_WINDOW_BACKGROUND_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_WINDOW_GRID_VISIBLE.equalsIgnoreCase(key)) {
-        Boolean b = SGUtilityText.getBoolean(value);
-        if (b == null) {
-          result.putResult(COM_WINDOW_GRID_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.mClientPanel.setGridLineVisible(b.booleanValue()) == false) {
-          result.putResult(COM_WINDOW_GRID_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_WINDOW_GRID_VISIBLE, SGPropertyResults.SUCCEEDED);
-      } else if (COM_WINDOW_GRID_INTERVAL.equalsIgnoreCase(key)) {
-        StringBuilder unit = new StringBuilder();
-        Number num = SGUtilityText.getNumber(value, unit);
-        if (num == null) {
-          result.putResult(COM_WINDOW_GRID_INTERVAL, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.mClientPanel.setGridLineInterval(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_WINDOW_GRID_INTERVAL, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_WINDOW_GRID_INTERVAL, SGPropertyResults.SUCCEEDED);
-      } else if (COM_WINDOW_GRID_LINE_WIDTH.equalsIgnoreCase(key)) {
-        StringBuilder unit = new StringBuilder();
-        Number num = SGUtilityText.getNumber(value, unit);
-        if (num == null) {
-          result.putResult(COM_WINDOW_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.mClientPanel.setGridLineWidth(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_WINDOW_GRID_LINE_WIDTH, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_WINDOW_GRID_LINE_WIDTH, SGPropertyResults.SUCCEEDED);
-      } else if (COM_WINDOW_GRID_COLOR.equalsIgnoreCase(key)) {
-        Color cl = SGUtilityText.getColor(value);
-        if (cl != null) {
-          if (this.mClientPanel.setGridLineColor(cl) == false) {
-            result.putResult(COM_WINDOW_GRID_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
-            continue;
-          }
-        } else {
-          cl = SGUtilityText.parseColor(value);
-          if (cl == null) {
-            result.putResult(COM_WINDOW_GRID_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
-            continue;
-          }
-          if (this.mClientPanel.setGridLineColor(cl) == false) {
-            result.putResult(COM_WINDOW_GRID_COLOR, SGPropertyResults.INVALID_INPUT_VALUE);
-            continue;
-          }
-        }
-        result.putResult(COM_WINDOW_GRID_COLOR, SGPropertyResults.SUCCEEDED);
-      } else if (COM_IMAGE_LOCATION_X.equalsIgnoreCase(key)) {
-        StringBuilder unit = new StringBuilder();
-        Number num = SGUtilityText.getNumber(value, unit);
-        if (num == null) {
-          result.putResult(COM_IMAGE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.mClientPanel.setImageLocationX(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_IMAGE_LOCATION_X, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_IMAGE_LOCATION_X, SGPropertyResults.SUCCEEDED);
-      } else if (COM_IMAGE_LOCATION_Y.equalsIgnoreCase(key)) {
-        StringBuilder unit = new StringBuilder();
-        Number num = SGUtilityText.getNumber(value, unit);
-        if (num == null) {
-          result.putResult(COM_IMAGE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.mClientPanel.setImageLocationY(num.floatValue(), unit.toString()) == false) {
-          result.putResult(COM_IMAGE_LOCATION_Y, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_IMAGE_LOCATION_Y, SGPropertyResults.SUCCEEDED);
-      } else if (COM_IMAGE_SCALING_FACTOR.equalsIgnoreCase(key)) {
-        Number num = SGUtilityText.getFloat(value);
-        if (num == null) {
-          result.putResult(COM_IMAGE_SCALING_FACTOR, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (SGUtility.isValidPropertyValue(num.floatValue()) == false) {
-          result.putResult(COM_IMAGE_SCALING_FACTOR, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.mClientPanel.setImageScalingFactor(num.floatValue()) == false) {
-          result.putResult(COM_IMAGE_SCALING_FACTOR, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_IMAGE_SCALING_FACTOR, SGPropertyResults.SUCCEEDED);
+        continue;
+      }
+
+      String comKey = SGDrawingWindowPropertyIO.getComKey(key);
+      if (comKey == null) {
+        continue;
+      }
+      Boolean r = SGDrawingWindowPropertyIO.applyStringValue(this, key, value);
+      if (r.booleanValue()) {
+        result.putResult(comKey, SGPropertyResults.SUCCEEDED);
+      } else {
+        result.putResult(comKey, SGPropertyResults.INVALID_INPUT_VALUE);
       }
     }
 
@@ -3644,61 +3523,9 @@ public class SGDrawingWindow extends JFrame
 
     WindowProperties wp = (WindowProperties) p;
 
-    final Float w = wp.getPaperWidth();
-    final Float h = wp.getPaperHeight();
-    if (w == null || h == null) {
+    if (SGDrawingWindowPropertyIO.applyWindowProperties(this, wp) == false) {
       return false;
     }
-
-    this.mClientPanel.setPaperSize(w.floatValue(), h.floatValue());
-
-    final Color bgColor = wp.getBackgroundColor();
-    if (bgColor == null) {
-      return false;
-    }
-    this.mClientPanel.setPaperColor(bgColor);
-
-    final Color gridColor = wp.getGridColor();
-    if (gridColor == null) {
-      return false;
-    }
-    this.mClientPanel.setGridLineColor(gridColor);
-
-    final Boolean gridVisible = wp.getGridVisible();
-    if (gridVisible == null) {
-      return false;
-    }
-    this.mClientPanel.setGridLineVisible(gridVisible.booleanValue());
-
-    final Float gridInterval = wp.getGridInterval();
-    if (gridInterval == null) {
-      return false;
-    }
-    this.mClientPanel.setGridLineInterval(gridInterval.floatValue());
-
-    final Float gridLineWidth = wp.getGridLineWidth();
-    if (gridLineWidth == null) {
-      return false;
-    }
-    this.mClientPanel.setGridLineWidth(gridLineWidth.floatValue());
-
-    final Float imageLocationX = wp.getImageLocationX();
-    if (imageLocationX == null) {
-      return false;
-    }
-    this.mClientPanel.setImageLocationX(imageLocationX.floatValue());
-
-    final Float imageLocationY = wp.getImageLocationY();
-    if (imageLocationY == null) {
-      return false;
-    }
-    this.mClientPanel.setImageLocationY(imageLocationY.floatValue());
-
-    final Float imageScalingFactor = wp.getImageScalingFactor();
-    if (imageScalingFactor == null) {
-      return false;
-    }
-    this.mClientPanel.setImageScalingFactor(imageScalingFactor.floatValue());
 
     final Image img = wp.getImage();
     this.mClientPanel.setImage(img);
@@ -3715,23 +3542,7 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   public SGProperties getProperties() {
-
-    final WindowProperties p = new WindowProperties();
-
-    p.setPaperWidth(this.mClientPanel.getPaperWidth());
-    p.setPaperHeight(this.mClientPanel.getPaperHeight());
-    p.setBackGroundColor(this.mClientPanel.getPaperColor());
-    p.setGridColor(this.mClientPanel.getGridLineColor());
-    p.setGridVisible(this.mClientPanel.isGridLineVisible());
-    p.setGridInterval(this.mClientPanel.getGridLineInterval());
-    p.setGridLineWidth(this.mClientPanel.getGridLineWidth());
-    p.setVisibleFigureList(this.getVisibleFigureList());
-    p.setImageLocationX(this.getImageLocationX());
-    p.setImageLocationY(this.getImageLocationY());
-    p.setImageScalingFactor(this.getImageScalingFactor());
-    p.setImage(this.getImage());
-
-    return p;
+    return SGDrawingWindowPropertyIO.collectWindowProperties(this);
   }
 
   /** */
@@ -5753,20 +5564,7 @@ public class SGDrawingWindow extends JFrame
    * @return the map of properties
    */
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
-    SGPropertyMap map = new SGPropertyMap();
-    this.addProperties(
-        map,
-        KEY_PAPER_WIDTH,
-        KEY_PAPER_HEIGHT,
-        KEY_BACKGROUND_COLOR,
-        KEY_GRID_VISIBLE,
-        KEY_GRID_INTERVAL,
-        KEY_GRID_LINE_WIDTH,
-        KEY_GRID_COLOR,
-        KEY_IMAGE_LOCATION_X,
-        KEY_IMAGE_LOCATION_Y,
-        KEY_IMAGE_SCALE);
-    return map;
+    return SGDrawingWindowPropertyIO.getPropertyFileMap(this);
   }
 
   /**
@@ -5775,82 +5573,7 @@ public class SGDrawingWindow extends JFrame
    * @return the map of properties
    */
   public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
-    SGPropertyMap map = new SGPropertyMap();
-    this.addProperties(
-        map,
-        COM_PAPER_WIDTH,
-        COM_PAPER_HEIGHT,
-        COM_WINDOW_BACKGROUND_COLOR,
-        COM_WINDOW_GRID_VISIBLE,
-        COM_WINDOW_GRID_INTERVAL,
-        COM_WINDOW_GRID_LINE_WIDTH,
-        COM_WINDOW_GRID_COLOR,
-        COM_IMAGE_LOCATION_X,
-        COM_IMAGE_LOCATION_Y,
-        COM_IMAGE_SCALING_FACTOR);
-    String path = this.getImageFilePath();
-    if (path != null) {
-      SGPropertyUtility.addQuotedStringProperty(map, COM_IMAGE_FILE_PATH, path);
-    }
-    return map;
-  }
-
-  private void addProperties(
-      SGPropertyMap map,
-      String widthKey,
-      String heightKey,
-      String bgColorKey,
-      String gridVisibleKey,
-      String gridIntervalKey,
-      String gridLineWidthKey,
-      String gridColorKey,
-      String imageXKey,
-      String imageYKey,
-      String imageScaleKey) {
-
-    // paper
-    SGPropertyUtility.addProperty(
-        map,
-        widthKey,
-        this.getExportLengthValue(this.getPaperWidth(PAPER_SIZE_UNIT)),
-        PAPER_SIZE_UNIT);
-    SGPropertyUtility.addProperty(
-        map,
-        heightKey,
-        this.getExportLengthValue(this.getPaperHeight(PAPER_SIZE_UNIT)),
-        PAPER_SIZE_UNIT);
-    SGPropertyUtility.addProperty(map, bgColorKey, this.getPaperColor());
-
-    // grid
-    SGPropertyUtility.addProperty(map, gridVisibleKey, this.isGridLineVisible());
-    SGPropertyUtility.addProperty(
-        map,
-        gridIntervalKey,
-        this.getExportLengthValue(this.getGridLineInterval(GRID_INTERVAL_UNIT)),
-        GRID_INTERVAL_UNIT);
-    SGPropertyUtility.addProperty(
-        map,
-        gridLineWidthKey,
-        SGUtility.getExportLineWidth(this.getGridLineWidth(LINE_WIDTH_UNIT)),
-        LINE_WIDTH_UNIT);
-    SGPropertyUtility.addProperty(map, gridColorKey, this.getGridLineColor());
-
-    // image
-    SGPropertyUtility.addProperty(
-        map,
-        imageXKey,
-        this.getExportLengthValue(this.getImageLocationX(IMAGE_LOCATION_UNIT)),
-        IMAGE_LOCATION_UNIT);
-    SGPropertyUtility.addProperty(
-        map,
-        imageYKey,
-        this.getExportLengthValue(this.getImageLocationY(IMAGE_LOCATION_UNIT)),
-        IMAGE_LOCATION_UNIT);
-    SGPropertyUtility.addProperty(
-        map,
-        imageScaleKey,
-        SGUtility.getExportValue(
-            this.getImageScalingFactor(), SGIRootObjectConstants.IMAGE_SCALING_ORDER));
+    return SGDrawingWindowPropertyIO.getCommandPropertyMap(this, params);
   }
 
   /**
@@ -5900,7 +5623,7 @@ public class SGDrawingWindow extends JFrame
     this.mMenuBar.setMenuItemEnabled(MENUBAR_FILE, MENUBARCMD_LOAD_SCRIPT, commandEnabled);
   }
 
-  private float getExportLengthValue(final float len) {
+  float getExportLengthValue(final float len) {
     return SGUtility.getExportValue(len, SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
   }
 
