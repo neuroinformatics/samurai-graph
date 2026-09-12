@@ -20,6 +20,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumn;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMergeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable;
@@ -473,7 +474,7 @@ class SGDataSplitMergeUtility implements SGIApplicationTextConstants {
         dataMulti = SGSXYSDArrayMultipleData.merge(store);
       } else if (SGDataDataTypeUtility.isNetCDFData(dataLast)) {
         if (dataLast instanceof SGSXYNetCDFMultipleData) {
-          dataMulti = SGSXYNetCDFMultipleData.merge(store);
+          dataMulti = SGDataMergeUtility.merge(store);
         }
       } else if (SGDataDataTypeUtility.isMDArrayData(dataLast)) {
         dataMulti = SGSXYMDArrayMultipleData.merge(store);
