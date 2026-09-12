@@ -4983,7 +4983,7 @@ class SGMainFunctions
 
     // get all figures and data
     List<SGFigure> figureList = wnd.getVisibleFigureList();
-    DataList dl = this.getVisibleDataList(figureList);
+    DataList dl = SGMainFunctionsDialogUtility.getVisibleDataList(figureList);
     List<SGData> dataList = dl.dataList;
     Map<SGData, SGFigure> dataFigureMap = dl.figureMap;
 
@@ -6086,10 +6086,12 @@ class SGMainFunctions
       return;
     }
     List<SGFigure> focusedFigureList = wnd.getVisibleFigureList();
-    DataList dl = this.getVisibleDataList(focusedFigureList);
+    DataList dl = SGMainFunctionsDialogUtility.getVisibleDataList(focusedFigureList);
     List<SGData> dataList = dl.dataList;
     Map<SGData, SGFigure> figureMap = dl.figureMap;
-    this.closeDataViewerDialogsSub(dataList, figureMap, wnd);
+    this.mDataViewerDialogArray =
+        SGMainFunctionsDialogUtility.closeDataViewerDialogsSub(
+            this.mDataViewerDialogArray, dataList, figureMap, wnd);
   }
 
   void closeDataViewerDialogsOfFocusedData(SGDrawingWindow wnd) {
@@ -6106,7 +6108,9 @@ class SGMainFunctions
         figureMap.put(data, f);
       }
     }
-    this.closeDataViewerDialogsSub(focusedDataList, figureMap, wnd);
+    this.mDataViewerDialogArray =
+        SGMainFunctionsDialogUtility.closeDataViewerDialogsSub(
+            this.mDataViewerDialogArray, focusedDataList, figureMap, wnd);
   }
 
   void closeDataViewerDialogsInFocusedFigures(SGDrawingWindow wnd) {
@@ -6114,10 +6118,12 @@ class SGMainFunctions
       return;
     }
     List<SGFigure> focusedFigureList = wnd.getFocusedFigureList();
-    DataList dl = this.getVisibleDataList(focusedFigureList);
+    DataList dl = SGMainFunctionsDialogUtility.getVisibleDataList(focusedFigureList);
     List<SGData> dataList = dl.dataList;
     Map<SGData, SGFigure> figureMap = dl.figureMap;
-    this.closeDataViewerDialogsSub(dataList, figureMap, wnd);
+    this.mDataViewerDialogArray =
+        SGMainFunctionsDialogUtility.closeDataViewerDialogsSub(
+            this.mDataViewerDialogArray, dataList, figureMap, wnd);
   }
 
   void closeDataViewerDialogInAllFigures(SGDrawingWindow wnd, final boolean bUndo) {
@@ -6125,63 +6131,12 @@ class SGMainFunctions
       return;
     }
     List<SGFigure> focusedFigureList = wnd.getVisibleFigureList();
-    DataList dl = this.getVisibleDataList(focusedFigureList);
+    DataList dl = SGMainFunctionsDialogUtility.getVisibleDataList(focusedFigureList);
     List<SGData> dataList = dl.dataList;
     Map<SGData, SGFigure> figureMap = dl.figureMap;
-    this.closeDataViewerDialogsSub(dataList, figureMap, wnd, bUndo);
-  }
-
-  private void closeDataViewerDialogsSub(
-      List<SGData> dataList, Map<SGData, SGFigure> figureMap, SGDrawingWindow wnd) {
-    if (this.mDataViewerDialogArray.length == 0) {
-      return;
-    }
-    List<SGDataViewerDialog> dgList = new ArrayList<SGDataViewerDialog>();
-    for (SGDataViewerDialog dg : this.mDataViewerDialogArray) {
-      SGData data = dg.getData();
-      if (dataList.contains(data)) {
-        dg.setVisible(false);
-        SGFigure figure = figureMap.get(data);
-        SGElementGroupSetInGraph gs =
-            (SGElementGroupSetInGraph) figure.getGraphElement().getChild(data);
-        gs.removeFocusedValueList(dg);
-      } else {
-        dgList.add(dg);
-      }
-    }
-    this.mDataViewerDialogArray = dgList.toArray(new SGDataViewerDialog[dgList.size()]);
-    ;
-  }
-
-  private void closeDataViewerDialogsSub(
-      List<SGData> dataList,
-      Map<SGData, SGFigure> figureMap,
-      SGDrawingWindow wnd,
-      final boolean bUndo) {
-    if (this.mDataViewerDialogArray.length == 0) {
-      return;
-    }
-    List<SGDataViewerDialog> dgList = new ArrayList<SGDataViewerDialog>();
-    for (SGDataViewerDialog dg : this.mDataViewerDialogArray) {
-      SGData data = dg.getData();
-      boolean bClose = false;
-      if (dataList.contains(data)) {
-        SGFigure figure = figureMap.get(data);
-        SGElementGroupSetInGraph gs =
-            (SGElementGroupSetInGraph) figure.getGraphElement().getChild(data);
-        if (!wnd.existsOnUndo(bUndo, figure, gs.getData())) {
-          bClose = true;
-        }
-        if (bClose) {
-          gs.removeFocusedValueList(dg);
-          dg.setVisible(false);
-        }
-      }
-      if (!bClose) {
-        dgList.add(dg);
-      }
-    }
-    this.mDataViewerDialogArray = dgList.toArray(new SGDataViewerDialog[dgList.size()]);
+    this.mDataViewerDialogArray =
+        SGMainFunctionsDialogUtility.closeDataViewerDialogsSub(
+            this.mDataViewerDialogArray, dataList, figureMap, wnd, bUndo);
   }
 
   void closeAllDataAnimationDialogs(SGDrawingWindow wnd) {
@@ -6189,9 +6144,11 @@ class SGMainFunctions
       return;
     }
     List<SGFigure> visibleFigureList = wnd.getVisibleFigureList();
-    DataList dl = this.getVisibleDataList(visibleFigureList);
+    DataList dl = SGMainFunctionsDialogUtility.getVisibleDataList(visibleFigureList);
     List<SGData> dataList = dl.dataList;
-    this.closeDataAnimationDialogsSub(dataList);
+    this.mDataAnimationDialogArray =
+        SGMainFunctionsDialogUtility.closeDataAnimationDialogsSub(
+            this.mDataAnimationDialogArray, dataList);
   }
 
   void closeDataAnimationDialogsOfFocusedData(SGDrawingWindow wnd) {
@@ -6204,7 +6161,9 @@ class SGMainFunctions
       List<SGData> dList = f.getFocusedDataList();
       focusedDataList.addAll(dList);
     }
-    this.closeDataAnimationDialogsSub(focusedDataList);
+    this.mDataAnimationDialogArray =
+        SGMainFunctionsDialogUtility.closeDataAnimationDialogsSub(
+            this.mDataAnimationDialogArray, focusedDataList);
   }
 
   void closeDataAnimationDialogsInFocusedFigures(SGDrawingWindow wnd) {
@@ -6212,9 +6171,11 @@ class SGMainFunctions
       return;
     }
     List<SGFigure> focusedFigureList = wnd.getFocusedFigureList();
-    DataList dl = this.getVisibleDataList(focusedFigureList);
+    DataList dl = SGMainFunctionsDialogUtility.getVisibleDataList(focusedFigureList);
     List<SGData> dataList = dl.dataList;
-    this.closeDataAnimationDialogsSub(dataList);
+    this.mDataAnimationDialogArray =
+        SGMainFunctionsDialogUtility.closeDataAnimationDialogsSub(
+            this.mDataAnimationDialogArray, dataList);
   }
 
   void closeDataAnimationDialogInAllFigures(SGDrawingWindow wnd, final boolean bUndo) {
@@ -6222,71 +6183,12 @@ class SGMainFunctions
       return;
     }
     List<SGFigure> focusedFigureList = wnd.getVisibleFigureList();
-    DataList dl = this.getVisibleDataList(focusedFigureList);
+    DataList dl = SGMainFunctionsDialogUtility.getVisibleDataList(focusedFigureList);
     List<SGData> dataList = dl.dataList;
     Map<SGData, SGFigure> figureMap = dl.figureMap;
-    this.closeDataAnimationDialogsSub(dataList, figureMap, wnd, bUndo);
-  }
-
-  private void closeDataAnimationDialogsSub(List<SGData> removedDataList) {
-    if (this.mDataAnimationDialogArray.length == 0) {
-      return;
-    }
-    List<SGDataAnimationDialog> dgList = new ArrayList<SGDataAnimationDialog>();
-    for (SGDataAnimationDialog dg : this.mDataAnimationDialogArray) {
-      SGData[] animationDataArray = dg.getDataArray();
-      boolean found = false;
-      for (SGData animationData : animationDataArray) {
-        if (removedDataList.contains(animationData)) {
-          found = true;
-          break;
-        }
-      }
-      if (found) {
-        dg.close();
-      } else {
-        dgList.add(dg);
-      }
-    }
-    this.mDataAnimationDialogArray = dgList.toArray(new SGDataAnimationDialog[dgList.size()]);
-    ;
-  }
-
-  private void closeDataAnimationDialogsSub(
-      List<SGData> removedDataList,
-      Map<SGData, SGFigure> figureMap,
-      SGDrawingWindow wnd,
-      final boolean bUndo) {
-    if (this.mDataAnimationDialogArray.length == 0) {
-      return;
-    }
-    List<SGDataAnimationDialog> dgList = new ArrayList<SGDataAnimationDialog>();
-    for (SGDataAnimationDialog dg : this.mDataAnimationDialogArray) {
-      SGData[] animationDataArray = dg.getDataArray();
-      boolean bClose = false;
-      SGData rData = null;
-      for (SGData animationData : animationDataArray) {
-        if (removedDataList.contains(animationData)) {
-          rData = animationData;
-          break;
-        }
-      }
-      if (rData != null) {
-        SGFigure figure = figureMap.get(rData);
-        SGElementGroupSetInGraph gs =
-            (SGElementGroupSetInGraph) figure.getGraphElement().getChild(rData);
-        if (!wnd.existsOnUndo(bUndo, figure, gs.getData())) {
-          bClose = true;
-        }
-      }
-      if (bClose) {
-        dg.close();
-      } else {
-        dgList.add(dg);
-      }
-    }
-    this.mDataAnimationDialogArray = dgList.toArray(new SGDataAnimationDialog[dgList.size()]);
-    ;
+    this.mDataAnimationDialogArray =
+        SGMainFunctionsDialogUtility.closeDataAnimationDialogsSub(
+            this.mDataAnimationDialogArray, dataList, figureMap, wnd, bUndo);
   }
 
   void refreshAllDataViewerDialogs() {
@@ -6300,7 +6202,7 @@ class SGMainFunctions
       return;
     }
     List<SGFigure> focusedFigureList = wnd.getVisibleFigureList();
-    DataList dl = this.getVisibleDataList(focusedFigureList);
+    DataList dl = SGMainFunctionsDialogUtility.getVisibleDataList(focusedFigureList);
     List<SGData> dataList = dl.dataList;
     Map<SGData, SGFigure> figureMap = dl.figureMap;
     for (SGDataViewerDialog dg : this.mDataViewerDialogArray) {
@@ -6320,22 +6222,6 @@ class SGMainFunctions
   static class DataList {
     List<SGData> dataList = new ArrayList<SGData>();
     Map<SGData, SGFigure> figureMap = new HashMap<SGData, SGFigure>();
-  }
-
-  DataList getVisibleDataList(List<SGFigure> figureList) {
-    DataList ret = new DataList();
-    List<SGData> dataList = new ArrayList<SGData>();
-    Map<SGData, SGFigure> figureMap = new HashMap<SGData, SGFigure>();
-    for (SGFigure f : figureList) {
-      List<SGData> dList = f.getVisibleDataList();
-      dataList.addAll(dList);
-      for (SGData data : dList) {
-        figureMap.put(data, f);
-      }
-    }
-    ret.dataList = dataList;
-    ret.figureMap = figureMap;
-    return ret;
   }
 
   void closeAllModelessDialogs(SGDrawingWindow wnd) {
