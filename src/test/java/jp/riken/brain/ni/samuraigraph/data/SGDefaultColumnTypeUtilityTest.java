@@ -126,6 +126,108 @@ class SGDefaultColumnTypeUtilityTest {
   }
 
   @Test
+  void testGetDefaultColumnTypesForVXYSDArray() {
+    List<SGDataColumnInfo> columns =
+        createColumns(
+            new String[] {"x", "y", "u", "v"}, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.VXY_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded());
+    assertArrayEquals(
+        new String[] {
+          SGIDataColumnTypeConstants.X_COORDINATE,
+          SGIDataColumnTypeConstants.Y_COORDINATE,
+          SGIDataColumnTypeConstants.X_COMPONENT,
+          SGIDataColumnTypeConstants.Y_COMPONENT
+        },
+        result.getDefaultColumnTypes());
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForSXYZSDArray() {
+    List<SGDataColumnInfo> columns =
+        createColumns(new String[] {"x", "y", "z"}, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.SXYZ_DATA, columns, createInfoMap(false));
+    assertTrue(result.isSucceeded());
+    assertArrayEquals(
+        new String[] {
+          SGIDataColumnTypeConstants.X_VALUE,
+          SGIDataColumnTypeConstants.Y_VALUE,
+          SGIDataColumnTypeConstants.Z_VALUE
+        },
+        result.getDefaultColumnTypes());
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForSXYZNetCDF() throws IOException {
+    SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example15.nc"));
+    List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+    for (SGNetCDFVariable var : file.getVariables()) {
+      columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+    }
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.SXYZ_NETCDF_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded());
+    String[] types = result.getDefaultColumnTypes();
+    assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
+    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "y")]);
+    assertEquals(SGIDataColumnTypeConstants.Z_VALUE, types[findVariableIndex(file, "height")]);
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForSXYZMATLAB() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".mat");
+    path.toFile().deleteOnExit();
+    MLDouble data = new MLDouble("z", new double[][] {{1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}});
+    new MatFileWriter(path.toFile(), Arrays.asList(data));
+    MatFileReader reader = new MatFileReader(path.toFile());
+    SGMATLABFile matFile = new SGMATLABFile(path.toString(), reader);
+    List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+    for (SGMDArrayVariable var : matFile.getVariables()) {
+      columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+    }
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, matFile);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.SXYZ_MATLAB_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded());
+    assertEquals(SGIDataColumnTypeConstants.Z_VALUE, result.getDefaultColumnTypes()[0]);
+  }
+
+  @Test
+  void testGetDefaultColumnTypesForVXYMATLAB() throws Exception {
+    Path path = Files.createTempFile("samurai-graph-test", ".mat");
+    path.toFile().deleteOnExit();
+    MLDouble u = new MLDouble("u", new double[][] {{1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}});
+    MLDouble v = new MLDouble("v", new double[][] {{7.0, 8.0}, {9.0, 10.0}, {11.0, 12.0}});
+    new MatFileWriter(path.toFile(), Arrays.asList(u, v));
+    MatFileReader reader = new MatFileReader(path.toFile());
+    SGMATLABFile matFile = new SGMATLABFile(path.toString(), reader);
+    List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
+    for (SGMDArrayVariable var : matFile.getVariables()) {
+      columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
+    }
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, matFile);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    DefaultColumnTypeResult result =
+        SGDefaultColumnTypeUtility.getDefaultColumnTypes(
+            SGDataTypeConstants.VXY_MATLAB_DATA, columns, infoMap);
+    assertTrue(result.isSucceeded());
+    assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, result.getDefaultColumnTypes()[0]);
+    assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, result.getDefaultColumnTypes()[1]);
+  }
+
+  @Test
   void testGetDefaultColumnTypesForSXYNetCDFWithSubsetOfVariables() throws IOException {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
