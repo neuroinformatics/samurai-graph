@@ -16,7 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -2281,11 +2280,7 @@ public class SGDrawingWindow extends JFrame
     bar.setMenuItemEnabled(MENUBAR_LAYOUT, MENUBARCMD_MINUS_GRID, minusFlag);
   }
 
-  private void updateModeMenuItems() {
-    // final boolean b = ( this.getMode() == MODE_NORMAL );
-    // this.mMenuBar.setMenuItemSelected(
-    // MENUBAR_ARRANGE, MENUBARCMD_MODE, b );
-  }
+  private void updateModeMenuItems() {}
 
   // update the menu item "Snap to Grid"
   void updateSnapToGridItems() {
@@ -3498,7 +3493,6 @@ public class SGDrawingWindow extends JFrame
     RootPaneContainer root = (RootPaneContainer) this.getRootPane().getTopLevelAncestor();
     root.getGlassPane().setCursor(cur);
     root.getGlassPane().setVisible(b);
-    if (b) root.getGlassPane().addMouseListener(new MouseAdapter() {});
   }
 
   /**
@@ -4794,166 +4788,8 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * @param el
-   * @return
-   */
   public boolean readProperty(final Element el, final float min, final float max) {
-    String str = null;
-    Number num = null;
-    Boolean b = null;
-    Color cl = null;
-
-    final float ratio = (max - min) / 9;
-    final SGIProgressControl progress = (SGIProgressControl) this;
-
-    // width
-    progress.setProgressValue(min);
-    str = el.getAttribute(SGIRootObjectConstants.KEY_PAPER_WIDTH);
-    if (str.length() != 0) {
-      StringBuilder uWidth = new StringBuilder();
-      num = SGUtilityText.getNumber(str, uWidth);
-      if (num == null) {
-        return false;
-      }
-      final float width = num.floatValue();
-      if (this.mClientPanel.setPaperWidth(width, uWidth.toString()) == false) {
-        return false;
-      }
-    }
-
-    // height
-    progress.setProgressValue(min + ratio * 1);
-    str = el.getAttribute(SGIRootObjectConstants.KEY_PAPER_HEIGHT);
-    if (str.length() != 0) {
-      StringBuilder uHeight = new StringBuilder();
-      num = SGUtilityText.getNumber(str, uHeight);
-      if (num == null) {
-        return false;
-      }
-      final float height = num.floatValue();
-      if (this.mClientPanel.setPaperHeight(height, uHeight.toString()) == false) {
-        return false;
-      }
-    }
-
-    // grid visible
-    progress.setProgressValue(min + ratio * 2);
-    str = el.getAttribute(SGIRootObjectConstants.KEY_GRID_VISIBLE);
-    if (str.length() != 0) {
-      b = SGUtilityText.getBoolean(str);
-      if (b == null) {
-        return false;
-      }
-      final boolean gridVisible = b.booleanValue();
-      if (this.mClientPanel.setGridLineVisible(gridVisible) == false) {
-        return false;
-      }
-    }
-
-    // grid interval
-    progress.setProgressValue(min + ratio * 3);
-    str = el.getAttribute(SGIRootObjectConstants.KEY_GRID_INTERVAL);
-    if (str.length() != 0) {
-      StringBuilder uInterval = new StringBuilder();
-      num = SGUtilityText.getNumber(str, uInterval);
-      if (num == null) {
-        return false;
-      }
-      final float interval = num.floatValue();
-      if (this.mClientPanel.setGridLineInterval(interval, uInterval.toString()) == false) {
-        return false;
-      }
-    }
-
-    // grid line width
-    progress.setProgressValue(min + ratio * 4);
-    str = el.getAttribute(SGIRootObjectConstants.KEY_GRID_LINE_WIDTH);
-    if (str.length() != 0) {
-      StringBuilder uGridLineWidth = new StringBuilder();
-      num = SGUtilityText.getNumber(str, uGridLineWidth);
-      if (num == null) {
-        return false;
-      }
-      final float gridLineWidth = num.floatValue();
-      if (this.mClientPanel.setGridLineWidth(gridLineWidth, uGridLineWidth.toString()) == false) {
-        return false;
-      }
-    }
-
-    // background color
-    progress.setProgressValue(min + ratio * 5);
-    str = el.getAttribute(SGIRootObjectConstants.KEY_BACKGROUND_COLOR);
-    if (str.length() != 0) {
-      cl = SGUtilityText.parseColor(str);
-      if (cl == null) {
-        return false;
-      }
-      final Color bgColor = cl;
-      if (this.mClientPanel.setPaperColor(bgColor) == false) {
-        return false;
-      }
-    }
-
-    // grid line color
-    progress.setProgressValue(min + ratio * 6);
-    str = el.getAttribute(SGIRootObjectConstants.KEY_GRID_COLOR);
-    if (str.length() != 0) {
-      cl = SGUtilityText.parseColor(str);
-      if (cl == null) {
-        return false;
-      }
-      final Color gridColor = cl;
-      if (this.mClientPanel.setGridLineColor(gridColor) == false) {
-        return false;
-      }
-    }
-
-    // image location X
-    progress.setProgressValue(min + ratio * 7);
-    str = el.getAttribute(SGIRootObjectConstants.KEY_IMAGE_LOCATION_X);
-    if (str.length() != 0) {
-      StringBuilder uX = new StringBuilder();
-      num = SGUtilityText.getNumber(str, uX);
-      if (num == null) {
-        return false;
-      }
-      final float x = num.floatValue();
-      if (this.mClientPanel.setImageLocationX(x, uX.toString()) == false) {
-        return false;
-      }
-    }
-
-    // image location Y
-    progress.setProgressValue(min + ratio * 8);
-    str = el.getAttribute(SGIRootObjectConstants.KEY_IMAGE_LOCATION_Y);
-    if (str.length() != 0) {
-      StringBuilder uY = new StringBuilder();
-      num = SGUtilityText.getNumber(str, uY);
-      if (num == null) {
-        return false;
-      }
-      final float y = num.floatValue();
-      if (this.mClientPanel.setImageLocationY(y, uY.toString()) == false) {
-        return false;
-      }
-    }
-
-    // image scaling factor
-    progress.setProgressValue(max);
-    str = el.getAttribute(SGIRootObjectConstants.KEY_IMAGE_SCALE);
-    if (str.length() != 0) {
-      num = SGUtilityText.getDouble(str);
-      if (num == null) {
-        return false;
-      }
-      final float f = num.floatValue();
-      if (this.mClientPanel.setImageScalingFactor(f) == false) {
-        return false;
-      }
-    }
-
-    return true;
+    return SGDrawingWindowPropertyIO.readAttributes(this, el, this, min, max);
   }
 
   boolean showPropertyDialogForSelectedFigures() {
