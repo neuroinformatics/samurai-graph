@@ -5,7 +5,7 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage
 
-Actual JaCoCo measurement (line coverage) is **11.6%** overall.
+Actual JaCoCo measurement (line coverage) is **13.2%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
@@ -13,13 +13,13 @@ Actual JaCoCo measurement (line coverage) is **11.6%** overall.
 | `org.freehep...util.export` | 89.7% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 80.0% | 0 (nested under `figure.java2d`) | Few instructions |
 | `com.github...lib.hdf5` | 25.5% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 26.2% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
-| `jp...samuraigraph.data` | 20.0% | 43 | Largest application package |
-| `jp...samuraigraph.application` | 1.8% | 3 | |
+| `jp...samuraigraph.base` | 26.5% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
+| `jp...samuraigraph.data` | 24.8% | 43 | Largest application package |
+| `jp...samuraigraph.application` | 3.4% | 4 | Data setup dialog construction smoke tests added |
 | `jp...samuraigraph.figure` | 5.2% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **4.2%** | 2 | Legend and axis property round-trip tests added |
 
-- 85 test files / 975 test methods (1002 executions) against 616 main files
+- 86 test files / 977 test methods (1004 executions) against 616 main files
   / ~275k LOC
 - Per-class coverage of the data-layer utilities is uneven: the pure
   groups (data type 64%, text 80%, column title 73%) reach 64-80%, while
@@ -53,10 +53,11 @@ Actual JaCoCo measurement (line coverage) is **11.6%** overall.
 - **Dual class hierarchy**: `figure` (model) and `figure.java2d` (renderer)
   maintain mirror class sets per element (model + `*2D` renderer + property
   dialog). Changing one element ripples across 3+ files.
-- **Copy-paste dialog families**: `SGPropertyFileMDArrayDataDialog` /
-  `SGPropertyFileNetCDFDataDialog` / `SGPropertyFileSDArrayDataDialog`, and
-  likewise the `*WizardDialog` family — each duplicates shared scaffolding
-  as separate classes.
+- **Copy-paste dialog families**: the dialog and wizard data families
+  (`SGPropertyFile*DataDialog` / `SG*DataSetupWizardDialog`) previously
+  duplicated their button and data name scaffolding; the scaffolding is
+  now built by the shared base classes, and the remaining data-type
+  specific parts stay in the subclasses.
 
 ## 4. Legacy Idioms
 
