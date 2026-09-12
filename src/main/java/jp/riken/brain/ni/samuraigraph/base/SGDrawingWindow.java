@@ -380,7 +380,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** */
-  private int getToolBarHeight() {
+  int getToolBarHeight() {
     int height = 0;
     if (this.mToolBar.isVisible()) {
       height = this.mToolBar.getHeight();
@@ -391,7 +391,7 @@ public class SGDrawingWindow extends JFrame
   /**
    * @return
    */
-  private int getToolBarWidth() {
+  int getToolBarWidth() {
     int width = 0;
     if (this.mToolBar.isVisible()) {
       width = this.mToolBar.getWidth();
@@ -475,56 +475,28 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   public int getTopWidth() {
-    final Insets insets = this.getInsets();
-    final int iTop = insets.top;
-
-    // width of menu bar
-    final JMenuBar menuBar = this.getJMenuBar();
-    final int menuBarWidth = menuBar.getHeight();
-
-    // width of tool bar
-    int tHeight = 0;
-    if (this.mToolBar.getOrientation() == SwingConstants.HORIZONTAL) {
-      tHeight = this.getToolBarHeight();
-    }
-
-    final int width = iTop + menuBarWidth + tHeight;
-
-    return width;
+    return SGDrawingWindowViewportUtility.getTopWidth(this);
   }
 
   /**
    * @return
    */
   public int getBottomWidth() {
-    final Insets insets = this.getInsets();
-    final int iBottom = insets.bottom;
-
-    return iBottom;
+    return SGDrawingWindowViewportUtility.getBottomWidth(this);
   }
 
   /**
    * @return
    */
   public int getLeftWidth() {
-    final Insets insets = this.getInsets();
-    final int iLeft = insets.left;
-
-    int tWidth = 0;
-    if (this.mToolBar.getOrientation() == SwingConstants.VERTICAL) {
-      tWidth = this.getToolBarWidth();
-    }
-
-    return iLeft + tWidth;
+    return SGDrawingWindowViewportUtility.getLeftWidth(this);
   }
 
   /**
    * @return
    */
   public int getRightWidth() {
-    final Insets insets = this.getInsets();
-    final int iRight = insets.right;
-    return iRight;
+    return SGDrawingWindowViewportUtility.getRightWidth(this);
   }
 
   /**
@@ -1106,58 +1078,23 @@ public class SGDrawingWindow extends JFrame
 
   /** get view port size */
   public SGTuple2f getViewportSize() {
-    final SGTuple2f size = this.getPaneSize();
-    final int rw = this.mClientPanel.getRulerWidth();
-    size.x -= rw;
-    size.y -= rw;
-    return size;
+    return SGDrawingWindowViewportUtility.getViewportSize(this);
   }
 
   /**
    * @return
    */
   public SGTuple2f getPaneOrigin() {
-    Rectangle2D rect = this.getPaneBounds();
-    final SGTuple2f origin = new SGTuple2f((float) rect.getX(), (float) rect.getY());
-    return origin;
+    return SGDrawingWindowViewportUtility.getPaneOrigin(this);
   }
 
   /** Returns the size of pane. */
   public SGTuple2f getPaneSize() {
-    Rectangle2D rect = this.getPaneBounds();
-    final SGTuple2f size = new SGTuple2f((float) rect.getWidth(), (float) rect.getHeight());
-    return size;
+    return SGDrawingWindowViewportUtility.getPaneSize(this);
   }
 
   public Rectangle2D getPaneBounds() {
-
-    // get size of boarder area
-    final Insets insets = this.getInsets();
-    final int iTop = insets.top;
-    final int iBottom = insets.bottom;
-    final int iLeft = insets.left;
-    final int iRight = insets.right;
-
-    // width of menu bar
-    final JMenuBar menuBar = this.getJMenuBar();
-    final int menuBarWidth = menuBar.getHeight();
-
-    // width of tool bar
-    final int toolBarWidth = this.getToolBarHeight();
-
-    // StatusBar
-    final int sbH = this.mStatusBar.getHeight();
-
-    // set size
-    final float sizeX = this.getWidth() - (iLeft + iRight);
-    final float sizeY = this.getHeight() - (iTop + iBottom + menuBarWidth + toolBarWidth + sbH);
-
-    final float x = iLeft;
-    final float y = iTop + menuBarWidth + toolBarWidth;
-
-    Rectangle2D rect = new Rectangle2D.Float(x, y, sizeX, sizeY);
-
-    return rect;
+    return SGDrawingWindowViewportUtility.getPaneBounds(this);
   }
 
   public boolean setPaperSize(final float width, final float height) {
@@ -1175,6 +1112,22 @@ public class SGDrawingWindow extends JFrame
     return this.mClientPanel;
   }
 
+  SGToolBar getToolBar() {
+    return this.mToolBar;
+  }
+
+  SGStatusBar getStatusBar() {
+    return this.mStatusBar;
+  }
+
+  SGTuple2f getPaperOriginTuple() {
+    return this.mPaperOrigin;
+  }
+
+  SGTuple2f getTemporaryViewportSize() {
+    return this.mTemporaryViewportSize;
+  }
+
   public float getGridLineInterval() {
     return this.mClientPanel.getGridLineInterval();
   }
@@ -1185,12 +1138,7 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   public boolean setPaperOrigin(final float x, final float y) {
-    final Rectangle2D cRect = this.getClientRect();
-    final float mag = this.mMagnification;
-    final float xx = (x - (float) cRect.getX()) / mag;
-    final float yy = (y - (float) cRect.getY()) / mag;
-    this.mPaperOrigin.setValues(xx, yy);
-    return true;
+    return SGDrawingWindowViewportUtility.setPaperOrigin(this, x, y);
   }
 
   // /**
@@ -1219,37 +1167,28 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   public SGTuple2f getPaperSize() {
-    return new SGTuple2f(this.mClientPanel.getPaperWidth(), this.mClientPanel.getPaperHeight());
+    return SGDrawingWindowViewportUtility.getPaperSize(this);
   }
 
   /**
    * @return
    */
   public float getPaperX() {
-    final Rectangle2D cRect = this.getClientRect();
-    return (float) cRect.getX() + this.mMagnification * this.mPaperOrigin.x;
+    return SGDrawingWindowViewportUtility.getPaperX(this);
   }
 
   /**
    * @return
    */
   public float getPaperY() {
-    final Rectangle2D cRect = this.getClientRect();
-    return (float) cRect.getY() + this.mMagnification * this.mPaperOrigin.y;
+    return SGDrawingWindowViewportUtility.getPaperY(this);
   }
 
   /**
    * @return
    */
   public Rectangle2D getPaperRect() {
-    final float mag = this.getMagnification();
-    Rectangle2D rect =
-        new Rectangle2D.Float(
-            this.getPaperX(),
-            this.getPaperY(),
-            mag * this.mClientPanel.getPaperWidth(),
-            mag * this.mClientPanel.getPaperHeight());
-    return rect;
+    return SGDrawingWindowViewportUtility.getPaperRect(this);
   }
 
   public static final float PAPER_MARGIN = 2.0f / SGIConstants.CM_POINT_RATIO;
@@ -1258,42 +1197,12 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   public Rectangle2D getBoundingBox() {
-    Rectangle2D rect = new Rectangle2D.Float();
-
-    final float margin = this.mMagnification * PAPER_MARGIN;
-    Rectangle2D pRect = this.getPaperRect();
-    rect.setRect(pRect.getX(), pRect.getY(), pRect.getWidth() + margin, pRect.getHeight() + margin);
-
-    return rect;
+    return SGDrawingWindowViewportUtility.getBoundingBox(this);
   }
 
   /** Set size of viewport in units of pixel. */
   public boolean setViewportSize(final float width, final float height) {
-
-    this.mTemporaryViewportSize.setValues(width, height);
-
-    // get size of boarder area
-    final Insets insets = this.getInsets();
-    final int iTop = insets.top;
-    final int iBottom = insets.bottom;
-    final int iLeft = insets.left;
-    final int iRight = insets.right;
-
-    // width of menu bar
-    final JMenuBar menuBar = this.getJMenuBar();
-    final int menuBarWidth = menuBar.getHeight();
-
-    // width of tool bar
-    final int toolBarWidth = this.getToolBarHeight();
-
-    // set size
-    final int rw = this.mClientPanel.getRulerWidth();
-    final float sizeX = width + iLeft + iRight + rw;
-    final float sizeY =
-        height + iTop + iBottom + menuBarWidth + toolBarWidth + rw + this.mStatusBar.getHeight();
-    this.setSize((int) sizeX, (int) sizeY);
-
-    return true;
+    return SGDrawingWindowViewportUtility.setViewportSize(this, width, height);
   }
 
   /**
@@ -3629,34 +3538,18 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   public Rectangle2D getViewportBounds() {
-    final SGTuple2f dim = this.getViewportSize();
-    final float w = dim.x;
-    final float h = dim.y;
-    Rectangle2D rect = new Rectangle2D.Float(0.0f, 0.0f, w, h);
-    return rect;
+    return SGDrawingWindowViewportUtility.getViewportBounds(this);
   }
 
   public Rectangle2D getViewportBoundsInLayeredPane() {
-    final SGTuple2f dim = this.getViewportSize();
-    final float w = dim.x;
-    final float h = dim.y;
-    final int rw = this.mClientPanel.getRulerWidth();
-    Rectangle2D rect = new Rectangle2D.Float(rw, rw, w, h);
-    return rect;
+    return SGDrawingWindowViewportUtility.getViewportBoundsInLayeredPane(this);
   }
 
   /**
    * @return
    */
   public Rectangle2D getViewportBoundsInComponent() {
-    final int top = this.getTopWidth();
-    final int left = this.getLeftWidth();
-    final int rw = this.mClientPanel.getRulerWidth();
-    final SGTuple2f dim = this.getViewportSize();
-    final float w = dim.x + rw;
-    final float h = dim.y + rw;
-    Rectangle2D rect = new Rectangle2D.Float(left, top, w, h);
-    return rect;
+    return SGDrawingWindowViewportUtility.getViewportBoundsInComponent(this);
   }
 
   // private Float findCeilingValue( final float[] array, final float value )
