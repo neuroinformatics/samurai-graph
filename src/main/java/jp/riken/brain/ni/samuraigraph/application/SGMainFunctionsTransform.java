@@ -127,7 +127,9 @@ class SGMainFunctionsTransform {
 
         FILE_TYPE dataFileType = this.mDataTypeWizardDialog.getDataFileType();
         if (dataFileType == FILE_TYPE.TXT_DATA) {
-          this.mMain.setupPlotTypeSelectionWizardDialogConnection(FILE_TYPE.TXT_DATA, dataType);
+          this.mMain
+              .getDataAdditionHandler()
+              .setupPlotTypeSelectionWizardDialogConnection(FILE_TYPE.TXT_DATA, dataType);
           SGSDArrayData aData = (SGSDArrayData) this.mTransformedData.data;
           infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, aData.getDataSource());
           if (this.makeTransition(
@@ -140,7 +142,9 @@ class SGMainFunctionsTransform {
             return false;
           }
         } else if (dataFileType == FILE_TYPE.NETCDF_DATA) {
-          this.mMain.setupPlotTypeSelectionWizardDialogConnection(FILE_TYPE.NETCDF_DATA, dataType);
+          this.mMain
+              .getDataAdditionHandler()
+              .setupPlotTypeSelectionWizardDialogConnection(FILE_TYPE.NETCDF_DATA, dataType);
           if (this.makeTransition(
                   this.mDataTypeWizardDialog,
                   this.mNetCDFDataSetupWizardDialog,
@@ -153,7 +157,9 @@ class SGMainFunctionsTransform {
         } else if (dataFileType == FILE_TYPE.HDF5_DATA
             || dataFileType == FILE_TYPE.MATLAB_DATA
             || dataFileType == FILE_TYPE.VIRTUAL_DATA) {
-          this.mMain.setupPlotTypeSelectionWizardDialogConnection(FILE_TYPE.HDF5_DATA, dataType);
+          this.mMain
+              .getDataAdditionHandler()
+              .setupPlotTypeSelectionWizardDialogConnection(FILE_TYPE.HDF5_DATA, dataType);
           if (this.makeTransition(
                   this.mDataTypeWizardDialog,
                   this.mMDArrayDataSetupWizardDialog,

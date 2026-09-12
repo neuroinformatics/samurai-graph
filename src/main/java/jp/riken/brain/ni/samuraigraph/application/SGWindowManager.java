@@ -478,7 +478,7 @@ class SGWindowManager
         this.closeAllWindow();
         // exit();
       } else if (command.equals(MENUBARCMD_DRAW_GRAPH)) {
-        this.mMain.onToolBarDataAdditionExecuted(wnd);
+        this.mMain.getDataAdditionHandler().onToolBarDataAdditionExecuted(wnd);
       } else if (command.equals(MENUBARCMD_RELOAD)) {
         this.mMain.reloadData(wnd, true);
       } else if (command.equals(MENUBARCMD_SAVE_PROPERTY)) {

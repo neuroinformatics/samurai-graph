@@ -11,7 +11,6 @@ import java.awt.Frame;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -84,7 +83,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDuplicationDialog;
-import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
@@ -102,20 +100,15 @@ import jp.riken.brain.ni.samuraigraph.data.SGMATLABFile;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataDuplicationDialog;
-import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupPanel;
-import jp.riken.brain.ni.samuraigraph.data.SGMDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataDuplicationDialog;
-import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupPanel;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFFile;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataDuplicationDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYMDArrayMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
-import jp.riken.brain.ni.samuraigraph.data.SGVXYDataBuffer;
-import jp.riken.brain.ni.samuraigraph.data.SGVXYGridDataBuffer;
 import jp.riken.brain.ni.samuraigraph.data.SGVirtualMDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGVirtualMDArrayVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGXYSimpleDoubleValueIndexBlock;
@@ -195,6 +188,15 @@ class SGMainFunctions
   /** Figure creator. */
   SGFigureCreator mFigureCreator = null;
 
+  private SGMainFunctionsDataAdditionHandler mDataAdditionHandler = null;
+
+  SGMainFunctionsDataAdditionHandler getDataAdditionHandler() {
+    if (this.mDataAdditionHandler == null) {
+      this.mDataAdditionHandler = new SGMainFunctionsDataAdditionHandler(this);
+    }
+    return this.mDataAdditionHandler;
+  }
+
   private SGMainFunctionsWizardTransition mWizardTransition = null;
 
   SGMainFunctionsWizardTransition getWizardTransition() {
@@ -229,11 +231,11 @@ class SGMainFunctions
   /** The standard input stream. */
   private BufferedReader mStdinReader = null;
 
-  private static final int DATA_ADDITION_TOOL_BAR = 0;
+  static final int DATA_ADDITION_TOOL_BAR = 0;
 
-  private static final int DATA_ADDITION_DRAG_AND_DROP = 1;
+  static final int DATA_ADDITION_DRAG_AND_DROP = 1;
 
-  private static final int DATA_ADDITION_VIRTUAL = 2;
+  static final int DATA_ADDITION_VIRTUAL = 2;
 
   static final String KEY_FILE_TYPE = "fileType";
 
@@ -246,7 +248,7 @@ class SGMainFunctions
   private static final String TEMP_DATA_FILE_DIR_NAME = "SamuraiGraphData";
 
   /** A file drag and dropped into a window. */
-  private DroppedDataFile mDroppedDataFile = null;
+  DroppedDataFile mDroppedDataFile = null;
 
   /** A transformed data object. */
   private TransformedData mTransformedData = null;
@@ -655,243 +657,28 @@ class SGMainFunctions
   }
 
   /** A wizard dialog to select the figure ID. */
-  private SGFigureIDSelectionWizardDialog mFigureIDSelectionWizardDialog = null;
+  SGFigureIDSelectionWizardDialog mFigureIDSelectionWizardDialog = null;
 
   /** A wizard dialog to select a single data file. */
-  private SGSingleDataFileChooserWizardDialog mSingleDataFileChooserWizardDialog = null;
+  SGSingleDataFileChooserWizardDialog mSingleDataFileChooserWizardDialog = null;
 
   /** A wizard dialog to select the file type. */
-  private SGFileTypeSelectionWizardDialog mFileTypeSelectionWizardDialog = null;
+  SGFileTypeSelectionWizardDialog mFileTypeSelectionWizardDialog = null;
 
   /** A wizard dialog to select the data type. */
-  private SGDataTypeWizardDialog mDataTypeWizardDialog = null;
+  SGDataTypeWizardDialog mDataTypeWizardDialog = null;
 
   /** A wizard dialog to setup single-dimensional array data. */
-  private SGSDArrayDataSetupWizardDialog mSDArrayDataSetupWizardDialog = null;
+  SGSDArrayDataSetupWizardDialog mSDArrayDataSetupWizardDialog = null;
 
   /** A wizard dialog to setup NetCDF data. */
-  private SGNetCDFDataSetupWizardDialog mNetCDFDataSetupWizardDialog = null;
+  SGNetCDFDataSetupWizardDialog mNetCDFDataSetupWizardDialog = null;
 
   /** A wizard dialog to setup multidimensional array data. */
-  private SGMDArrayDataSetupWizardDialog mMDArrayDataSetupWizardDialog = null;
+  SGMDArrayDataSetupWizardDialog mMDArrayDataSetupWizardDialog = null;
 
   /** A wizard dialog to select the plot type if the data type is scalar-xy. */
-  private SGPlotTypeSelectionWizardDialog mPlotTypeSelectionWizardDialog = null;
-
-  /**
-   * Creates the wizard dialogs for data addition.
-   *
-   * @param owner the owner of wizard dialogs
-   */
-  private void createDataAdditionWizardDialogs(final SGDrawingWindow owner) {
-
-    // if the owner window is the same, do nothing
-    if (this.mFigureIDSelectionWizardDialog != null) {
-      SGDrawingWindow curOwner = this.mFigureIDSelectionWizardDialog.getOwnerWindow();
-      if (curOwner.equals(owner)) {
-        return;
-      }
-    }
-
-    //
-    // creates dialogs
-    //
-
-    // common to all data types
-    this.mFigureIDSelectionWizardDialog = new SGFigureIDSelectionWizardDialog(owner, true);
-    this.mSingleDataFileChooserWizardDialog = new SGSingleDataFileChooserWizardDialog(owner, true);
-    this.mDataTypeWizardDialog = new SGDataTypeWizardDialog(owner, true);
-    this.mPlotTypeSelectionWizardDialog = new SGPlotTypeSelectionWizardDialog(owner, true);
-
-    // for text data
-    this.mSDArrayDataSetupWizardDialog = new SGSDArrayDataSetupWizardDialog(owner, true);
-    this.mSDArrayDataSetupWizardDialog.setPrevious(this.mDataTypeWizardDialog);
-
-    // for netCDF data
-    this.mNetCDFDataSetupWizardDialog = new SGNetCDFDataSetupWizardDialog(owner, true);
-    this.mNetCDFDataSetupWizardDialog.setPrevious(this.mDataTypeWizardDialog);
-
-    // for multidimensional array data
-    this.mMDArrayDataSetupWizardDialog = new SGMDArrayDataSetupWizardDialog(owner, true);
-    this.mMDArrayDataSetupWizardDialog.setPrevious(this.mDataTypeWizardDialog);
-
-    // for HDF5 and NetCDF-4 file
-    this.mFileTypeSelectionWizardDialog = new SGFileTypeSelectionWizardDialog(owner, true);
-
-    // sets the connection between wizard dialogs
-    this.mFigureIDSelectionWizardDialog.setPrevious(null);
-
-    //
-    // Remaining connections are selected depending on the method of data addition
-    //
-
-    // sets the selected file name
-    String path = this.getCurrentFileDirectory();
-    this.mSingleDataFileChooserWizardDialog.setCurrentFile(path, null);
-
-    // add action listener
-    this.mFigureIDSelectionWizardDialog.addActionListener(this);
-    this.mSingleDataFileChooserWizardDialog.addActionListener(this);
-    this.mFileTypeSelectionWizardDialog.addActionListener(this);
-    this.mDataTypeWizardDialog.addActionListener(this);
-    this.mSDArrayDataSetupWizardDialog.addActionListener(this);
-    this.mNetCDFDataSetupWizardDialog.addActionListener(this);
-    this.mMDArrayDataSetupWizardDialog.addActionListener(this);
-    this.mPlotTypeSelectionWizardDialog.addActionListener(this);
-
-    // add window listener
-    this.mFigureIDSelectionWizardDialog.addWindowListener(this);
-    this.mSingleDataFileChooserWizardDialog.addWindowListener(this);
-    this.mFileTypeSelectionWizardDialog.addWindowListener(this);
-    this.mDataTypeWizardDialog.addWindowListener(this);
-    this.mSDArrayDataSetupWizardDialog.addWindowListener(this);
-    this.mNetCDFDataSetupWizardDialog.addWindowListener(this);
-    this.mMDArrayDataSetupWizardDialog.addWindowListener(this);
-    this.mPlotTypeSelectionWizardDialog.addWindowListener(this);
-
-    // packs the dialogs
-    this.mFigureIDSelectionWizardDialog.pack();
-    this.mSingleDataFileChooserWizardDialog.pack();
-    this.mFileTypeSelectionWizardDialog.pack();
-  }
-
-  private void setupDataAdditionWizardDialogConnection(
-      final SGDataTypeWizardDialog dataTypeDialog,
-      final int method,
-      final FILE_TYPE fileType,
-      final boolean isFileTypeDialogPrev) {
-
-    // setup the connection
-    switch (method) {
-      case DATA_ADDITION_TOOL_BAR:
-        this.mFigureIDSelectionWizardDialog.setPrevious(null);
-
-        this.mFigureIDSelectionWizardDialog.setNext(this.mSingleDataFileChooserWizardDialog);
-        this.mSingleDataFileChooserWizardDialog.setPrevious(this.mFigureIDSelectionWizardDialog);
-
-        if (dataTypeDialog != null) {
-          if (isFileTypeDialogPrev) {
-            this.mSingleDataFileChooserWizardDialog.setNext(this.mFileTypeSelectionWizardDialog);
-            this.mFileTypeSelectionWizardDialog.setPrevious(
-                this.mSingleDataFileChooserWizardDialog);
-
-            this.mFileTypeSelectionWizardDialog.setNext(dataTypeDialog);
-            dataTypeDialog.setPrevious(this.mFileTypeSelectionWizardDialog);
-          } else {
-            this.mSingleDataFileChooserWizardDialog.setNext(dataTypeDialog);
-            dataTypeDialog.setPrevious(this.mSingleDataFileChooserWizardDialog);
-          }
-        }
-
-        // packs
-        this.mSingleDataFileChooserWizardDialog.pack();
-        if (dataTypeDialog != null) {
-          dataTypeDialog.pack();
-        }
-        break;
-      case DATA_ADDITION_DRAG_AND_DROP:
-        if (dataTypeDialog != null) {
-          if (isFileTypeDialogPrev) {
-            this.mFileTypeSelectionWizardDialog.setPrevious(null);
-
-            this.mFileTypeSelectionWizardDialog.setNext(dataTypeDialog);
-            dataTypeDialog.setPrevious(this.mFileTypeSelectionWizardDialog);
-          } else {
-            dataTypeDialog.setPrevious(null);
-          }
-
-          // packs
-          dataTypeDialog.pack();
-        }
-        break;
-      case DATA_ADDITION_VIRTUAL:
-        this.mFigureIDSelectionWizardDialog.setPrevious(null);
-
-        if (dataTypeDialog != null) {
-          this.mFigureIDSelectionWizardDialog.setNext(dataTypeDialog);
-          dataTypeDialog.setPrevious(this.mFigureIDSelectionWizardDialog);
-
-          // packs
-          dataTypeDialog.pack();
-        }
-        break;
-      default:
-        throw new IllegalArgumentException("Invalid method: " + method);
-    }
-  }
-
-  /**
-   * Sets up the connection of wizard dialogs. If the data type is Scalar-XY, Plot type selection
-   * dialog is connected.
-   *
-   * @param fileType the file type (array data or netcdf)
-   * @param dataType the method of data addition (tool bar or drag and drop)
-   */
-  void setupPlotTypeSelectionWizardDialogConnection(
-      final FILE_TYPE fileType, final String dataType) {
-
-    // select the data column type wizard dialog
-    final SGDataSetupWizardDialog dataSetupDialog;
-    switch (fileType) {
-      case TXT_DATA:
-        dataSetupDialog = this.mSDArrayDataSetupWizardDialog;
-        break;
-      case NETCDF_DATA:
-        dataSetupDialog = this.mNetCDFDataSetupWizardDialog;
-        break;
-      case HDF5_DATA:
-      case MATLAB_DATA:
-      case VIRTUAL_DATA:
-        dataSetupDialog = this.mMDArrayDataSetupWizardDialog;
-        break;
-      default:
-        throw new IllegalArgumentException("Invalid type for data file: " + fileType);
-    }
-
-    if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
-      this.mPlotTypeSelectionWizardDialog.setDataName(dataSetupDialog.getDataName());
-
-      dataSetupDialog.setNext(this.mPlotTypeSelectionWizardDialog);
-      this.mPlotTypeSelectionWizardDialog.setPrevious(dataSetupDialog);
-      this.mPlotTypeSelectionWizardDialog.setNext(null);
-      dataSetupDialog.pack();
-      this.mPlotTypeSelectionWizardDialog.pack();
-
-      SGDataColumnInfo[] cols = dataSetupDialog.getDataColumnInfoSet().getDataColumnInfoArray();
-      int xCnt = 0;
-      int yCnt = 0;
-      for (SGDataColumnInfo col : cols) {
-        String columnType = col.getColumnType();
-        if (X_VALUE.equals(columnType)) {
-          xCnt++;
-        } else if (Y_VALUE.equals(columnType)) {
-          yCnt++;
-        }
-      }
-      boolean enabled = false;
-      if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
-        SGNetCDFDataSetupWizardDialog ncDialog = (SGNetCDFDataSetupWizardDialog) dataSetupDialog;
-        SGNetCDFDataSetupPanel ncPanel = (SGNetCDFDataSetupPanel) ncDialog.getDataSetupPanel();
-        SGIntegerSeriesSet pickUpIndices = ncPanel.getSXYPickUpIndices();
-        if (pickUpIndices != null) {
-          final int len = pickUpIndices.getLength();
-          enabled = len > 1;
-        }
-      } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
-        SGMDArrayDataSetupWizardDialog mdDialog = (SGMDArrayDataSetupWizardDialog) dataSetupDialog;
-        SGMDArrayDataSetupPanel mdPanel = (SGMDArrayDataSetupPanel) mdDialog.getDataSetupPanel();
-        SGIntegerSeriesSet pickUpIndices = mdPanel.getSXYPickUpIndices();
-        if (pickUpIndices != null) {
-          final int len = pickUpIndices.getLength();
-          enabled = len > 1;
-        }
-      }
-      if (!enabled) {
-        enabled = (xCnt > 1 || yCnt > 1);
-      }
-      this.mPlotTypeSelectionWizardDialog.setLineColorAutoAssignmentEnabled(enabled);
-    }
-  }
+  SGPlotTypeSelectionWizardDialog mPlotTypeSelectionWizardDialog = null;
 
   /** Map for the current file name. */
   private Map<FILE_TYPE, String> mCurrentFileNameMap = new HashMap<FILE_TYPE, String>();
@@ -1314,693 +1101,6 @@ class SGMainFunctions
     return true;
   }
 
-  private boolean makeTransitionForDragAndDrop(final ActionEvent e) {
-    Object source = e.getSource();
-    SGWizardDialog dg = (SGWizardDialog) source;
-    String command = e.getActionCommand();
-
-    // cancel or previous
-    if (command.equals(SGDialog.CANCEL_BUTTON_TEXT)) {
-      dg.setVisible(false);
-      this.clearTemporaryData();
-    } else if (command.equals(SGDialog.PREVIOUS_BUTTON_TEXT)) {
-      dg.showPrevious();
-    } else if (command.equals(SGDialog.NEXT_BUTTON_TEXT)) {
-      if (dg.equals(this.mFileTypeSelectionWizardDialog)) {
-        SGDrawingWindow wnd = dg.getOwnerWindow();
-        FILE_TYPE fileType = this.mFileTypeSelectionWizardDialog.getSelectedFileType();
-
-        // setup the wizard dialogs
-        this.mDataTypeWizardDialog.setDataFileType(fileType);
-        this.mDataTypeWizardDialog.setNext(dg);
-        this.setupDataAdditionWizardDialogConnection(
-            this.mDataTypeWizardDialog, DATA_ADDITION_DRAG_AND_DROP, fileType, true);
-
-        if (this.toNetCDFOrMDArrayDataTypeDialog(
-                wnd, this.mDataTypeWizardDialog, this.mDroppedDataFile.file)
-            == false) {
-          return false;
-        }
-
-        // set the location of wizard dialog
-        this.mDataTypeWizardDialog.setCenter(wnd);
-
-        dg.showNext();
-      } else if (dg.equals(this.mDataTypeWizardDialog)) {
-        FILE_TYPE dataFileType = this.mDataTypeWizardDialog.getDataFileType();
-        if (FILE_TYPE.TXT_DATA.equals(dataFileType)) {
-          String path = this.mDroppedDataFile.file.getPath();
-          if (this.getWizardTransition()
-                  .makeTransition(
-                      this.mDataTypeWizardDialog,
-                      this.mSDArrayDataSetupWizardDialog,
-                      path,
-                      this.mDroppedDataFile.figureID,
-                      this.mDroppedDataFile.pos)
-              == false) {
-            return false;
-          }
-        } else if (FILE_TYPE.NETCDF_DATA.equals(dataFileType)) {
-          if (this.getWizardTransition()
-                  .makeTransition(
-                      this.mDataTypeWizardDialog,
-                      this.mNetCDFDataSetupWizardDialog,
-                      this.mDroppedDataFile.file.getPath(),
-                      this.mDroppedDataFile.figureID,
-                      this.mDroppedDataFile.pos)
-              == false) {
-            return false;
-          }
-        } else if (FILE_TYPE.HDF5_DATA.equals(dataFileType)
-            || FILE_TYPE.MATLAB_DATA.equals(dataFileType)) {
-          String path = this.mDroppedDataFile.file.getPath();
-          String dataName = SGUtility.createDataNameBase(path);
-          if (this.getWizardTransition()
-                  .makeTransition(
-                      this.mDataTypeWizardDialog,
-                      this.mMDArrayDataSetupWizardDialog,
-                      path,
-                      this.mDroppedDataFile.figureID,
-                      this.mDroppedDataFile.pos,
-                      dataFileType,
-                      dataName,
-                      true)
-              == false) {
-            return false;
-          }
-        }
-      } else if (dg instanceof SGDataSetupWizardDialog) {
-        String dataType = this.mDataTypeWizardDialog.getSelectedDataType();
-        FILE_TYPE dataFileType = this.mDataTypeWizardDialog.getDataFileType();
-        setupPlotTypeSelectionWizardDialogConnection(dataFileType, dataType);
-        dg.showNext();
-      }
-
-    } else if (command.equals(SGDialog.OK_BUTTON_TEXT)) {
-      try {
-        if (this.addDataByDragAndDropOK(dg) == false) {
-          return false;
-        }
-      } finally {
-        this.clearTemporaryData();
-      }
-    }
-
-    return true;
-  }
-
-  private String getDataTypeButtonName(String dataType) {
-    // selects the button
-    String btnName = null;
-    if (SGDataDataTypeUtility.isSXYTypeSingleData(dataType)) {
-      btnName = SGDataTypeWizardDialog.SINGLE_SXY;
-    } else if (SGDataDataTypeUtility.isSXYTypeMultipleData(dataType)) {
-      btnName = SGDataTypeWizardDialog.MULTIPLE_SXY;
-    } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
-      btnName = SGDataTypeWizardDialog.PSEUDOCOLOR_MAP;
-    } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
-      SGDataBuffer buffer = this.mVirtualMDArrayData.buffer;
-      boolean polar;
-      if (buffer instanceof SGVXYDataBuffer) {
-        SGVXYDataBuffer vxyBuffer = (SGVXYDataBuffer) buffer;
-        polar = vxyBuffer.isPolar();
-      } else if (buffer instanceof SGVXYGridDataBuffer) {
-        SGVXYGridDataBuffer vxyBuffer = (SGVXYGridDataBuffer) buffer;
-        polar = vxyBuffer.isPolar();
-      } else {
-        throw new IllegalArgumentException("Invalid data buffer.");
-      }
-      if (polar) {
-        btnName = SGDataTypeWizardDialog.POLAR_VXY;
-      } else {
-        btnName = SGDataTypeWizardDialog.ORTHOGONAL_VXY;
-      }
-    } else {
-      throw new IllegalArgumentException("Invalid data type: " + dataType);
-    }
-    return btnName;
-  }
-
-  private boolean makeTransitionForPlugin(final ActionEvent e) {
-    Object source = e.getSource();
-    SGWizardDialog dg = (SGWizardDialog) source;
-    String command = e.getActionCommand();
-
-    // cancel or previous
-    if (command.equals(SGDialog.CANCEL_BUTTON_TEXT)) {
-      dg.setVisible(false);
-      this.clearTemporaryData();
-    } else if (command.equals(SGDialog.PREVIOUS_BUTTON_TEXT)) {
-      dg.showPrevious();
-    } else if (command.equals(SGDialog.NEXT_BUTTON_TEXT)) {
-      if (dg.equals(this.mFigureIDSelectionWizardDialog)) {
-        this.setupDataAdditionWizardDialogConnection(
-            this.mDataTypeWizardDialog, DATA_ADDITION_VIRTUAL, FILE_TYPE.VIRTUAL_DATA, false);
-
-        // selects the button
-        if (this.mVirtualMDArrayData.dataType != null) {
-          String btnName = this.getDataTypeButtonName(this.mVirtualMDArrayData.dataType);
-          this.mDataTypeWizardDialog.setSelected(btnName);
-        }
-
-        this.mDataTypeWizardDialog.setDataName(this.mFigureIDSelectionWizardDialog.getDataName());
-
-        dg.showNext();
-      } else if (dg.equals(this.mDataTypeWizardDialog)) {
-        String selectedBtnName = this.mDataTypeWizardDialog.getSelected();
-        final boolean showDefault;
-        if (this.mVirtualMDArrayData.dataType != null) {
-          String defaultBtnName = this.getDataTypeButtonName(this.mVirtualMDArrayData.dataType);
-          showDefault = !selectedBtnName.equals(defaultBtnName);
-        } else {
-          showDefault = true;
-        }
-        if (this.getWizardTransition()
-                .makeTransition(
-                    this.mDataTypeWizardDialog,
-                    this.mMDArrayDataSetupWizardDialog,
-                    null,
-                    this.mFigureIDSelectionWizardDialog.getFigureID(),
-                    null,
-                    FILE_TYPE.VIRTUAL_DATA,
-                    this.mDataTypeWizardDialog.getDataName(),
-                    showDefault)
-            == false) {
-          return false;
-        }
-      } else if (dg.equals(this.mMDArrayDataSetupWizardDialog)) {
-        String dataType = this.mDataTypeWizardDialog.getSelectedDataType();
-        this.mPlotTypeSelectionWizardDialog.setDataName(
-            this.mMDArrayDataSetupWizardDialog.getDataName());
-        setupPlotTypeSelectionWizardDialogConnection(FILE_TYPE.VIRTUAL_DATA, dataType);
-        dg.showNext();
-      }
-    } else if (command.equals(SGDialog.OK_BUTTON_TEXT)) {
-      try {
-        if (this.addDataByPlugin(dg) == false) {
-          return false;
-        }
-      } finally {
-        this.clearTemporaryData();
-      }
-    }
-    return true;
-  }
-
-  /**
-   * Add data from a dropped file.
-   *
-   * @param dg an event source
-   * @return true if succeeded
-   */
-  private boolean addDataByDragAndDropOK(SGWizardDialog dg) {
-
-    SGDrawingWindow wnd = dg.getOwnerWindow();
-    String path = this.mDroppedDataFile.file.getAbsolutePath();
-
-    // the location of a figure if it is created
-    Point figureLocation;
-
-    Object com;
-    if (this.mDroppedDataFile.pos != null) {
-      com = wnd.getComponent(this.mDroppedDataFile.pos.x, this.mDroppedDataFile.pos.y);
-    } else {
-      com = wnd;
-    }
-
-    // get the ID of figure
-    int figureID;
-    if (com instanceof SGDrawingWindow) {
-      // get current figure ID
-      figureID = wnd.assignFigureId();
-
-      // set the dropped point to the new figure location
-      figureLocation = this.mDroppedDataFile.pos;
-    } else {
-      SGFigure figure = (SGFigure) com;
-      figureID = figure.getID();
-      figureLocation = null;
-    }
-
-    FILE_TYPE dataFileType = null;
-    if (dg.equals(this.mDataTypeWizardDialog)) {
-      dataFileType = this.mDataTypeWizardDialog.getDataFileType();
-    }
-
-    if (dg.equals(this.mSDArrayDataSetupWizardDialog) || dataFileType == FILE_TYPE.TXT_DATA) {
-      // text data
-      if (this.drawNewGraphOfSDArrayData(wnd, dg, path, figureID, figureLocation) == false) {
-        return false;
-      }
-    } else if (dg.equals(this.mNetCDFDataSetupWizardDialog)
-        || dataFileType == FILE_TYPE.NETCDF_DATA) {
-      // netCDF data
-      if (this.drawNewGraphOfNetcdfData(wnd, dg, path, figureID, figureLocation) == false) {
-        return false;
-      }
-    } else if (dg.equals(this.mMDArrayDataSetupWizardDialog)
-        || dataFileType == FILE_TYPE.HDF5_DATA
-        || dataFileType == FILE_TYPE.MATLAB_DATA) {
-      if (this.drawNewGraphOfMDArrayData(
-              wnd,
-              dg,
-              this.mDataTypeWizardDialog,
-              this.mMDArrayDataSetupWizardDialog,
-              path,
-              figureID,
-              figureLocation)
-          == false) {
-        return false;
-      }
-    } else if (dg.equals(this.mPlotTypeSelectionWizardDialog)) {
-      // plot type selection (text, netCDF or multidimensional data)
-      SGWizardDialog prev = dg.getPrevious();
-      if (this.mSDArrayDataSetupWizardDialog.equals(prev)) {
-        if (this.drawNewGraphOfSDArrayData(wnd, dg, path, figureID, figureLocation) == false) {
-          return false;
-        }
-      } else if (this.mNetCDFDataSetupWizardDialog.equals(prev)) {
-        if (this.drawNewGraphOfNetcdfData(wnd, dg, path, figureID, figureLocation) == false) {
-          return false;
-        }
-      } else if (this.mMDArrayDataSetupWizardDialog.equals(prev)) {
-        if (this.drawNewGraphOfMDArrayData(
-                wnd,
-                dg,
-                this.mDataTypeWizardDialog,
-                this.mMDArrayDataSetupWizardDialog,
-                path,
-                figureID,
-                figureLocation)
-            == false) {
-          return false;
-        }
-      }
-    }
-
-    wnd.notifyToRoot();
-
-    return true;
-  }
-
-  private boolean drawNewGraphOfSDArrayData(
-      SGDrawingWindow wnd, SGWizardDialog dg, String path, int figureID, Point figureLocation) {
-
-    // get data type
-    String dataType = this.mDataTypeWizardDialog.getSelectedDataType();
-    if (dataType == null) {
-      SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    SGSDArrayDataSetupWizardDialog setupDialog = this.mSDArrayDataSetupWizardDialog;
-
-    // get information
-    Map<String, Object> infoMap =
-        SGDataInfoMapUtility.createInfoMap(
-            dataType, this.mDataTypeWizardDialog, figureID, figureLocation);
-
-    // get selected column types
-    boolean strideAvailable = false;
-    SGDataColumnInfoSet colInfoSet = null;
-    if (dg.equals(this.mDataTypeWizardDialog)) {
-      colInfoSet =
-          this.getPropertyFileHandler()
-              .getSDArrayDefaultDataColumnInfo(path, dataType, infoMap, false, null);
-      if (colInfoSet != null) {
-        // calculate the stride
-        SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
-        Map<String, SGIntegerSeriesSet> strideMap =
-            SGDataStrideUtility.calcSDArrayDefaultStride(colArray, infoMap);
-        strideMap.put(
-            SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
-            strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE));
-        infoMap.putAll(strideMap);
-
-        final boolean defaultStrideAvailable =
-            (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
-        strideAvailable = this.confirmStrideAvailable(strideMap, wnd, defaultStrideAvailable);
-
-        String dataNameBase = SGUtility.createDataNameBase(path);
-        infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataNameBase);
-      }
-    } else if (dg.equals(setupDialog)) {
-      colInfoSet = setupDialog.getDataColumnInfoSet();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
-      infoMap.putAll(setupDialog.getStrideMap());
-      strideAvailable = setupDialog.isStrideAvailable();
-    } else if (dg.equals(this.mPlotTypeSelectionWizardDialog)) {
-      colInfoSet = setupDialog.getDataColumnInfoSet();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
-      infoMap.putAll(setupDialog.getStrideMap());
-      strideAvailable = setupDialog.isStrideAvailable();
-      addPlotTypeSelectionValuesToInfoMap(infoMap, this.mPlotTypeSelectionWizardDialog);
-    }
-    infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
-
-    if (colInfoSet == null) {
-      SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_DRAW_GRAPH, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    // draw the graph
-    // open the file
-    DataSourceInfo dataSource = new DataSourceInfo(path);
-    SGStatus status =
-        this.drawGraph(wnd, figureID, colInfoSet, infoMap, dataSource, null, true, figureLocation);
-    if (status.isSucceeded() == false) {
-      String msg = status.getMessage();
-      if (msg == null) {
-        msg = ERRMSG_DATA_ADDITION;
-      }
-      SGUtility.showErrorMessageDialog(wnd, msg, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    return true;
-  }
-
-  private boolean drawNewGraphOfNetcdfData(
-      SGDrawingWindow wnd, SGWizardDialog dg, String path, int figureID, Point figureLocation) {
-
-    // get data type
-    String dataType = this.mDataTypeWizardDialog.getSelectedDataType();
-    if (dataType == null) {
-      SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    // create a information map
-    Map<String, Object> infoMap =
-        SGDataInfoMapUtility.createInfoMap(
-            dataType, this.mDataTypeWizardDialog, figureID, figureLocation);
-
-    // open the file
-    SGNetCDFFile nc = this.getNetCDFFile(path);
-    if (nc == null) {
-      return false;
-    }
-    DataSourceInfo dataSource = new DataSourceInfo(nc);
-
-    // put the netCDF file
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, nc);
-
-    // get selected column types
-    SGDataColumnInfoSet colInfoSet = null;
-    boolean strideAvailable = false;
-    if (dg.equals(this.mDataTypeWizardDialog)) {
-      colInfoSet =
-          this.getPropertyFileHandler().getNetCDFDefaultDataColumnInfo(nc, dataType, infoMap);
-      if (colInfoSet == null) {
-        SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
-        return false;
-      }
-
-      // calculate the stride
-      SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
-      Map<String, SGIntegerSeriesSet> strideMap =
-          SGDataStrideUtility.calcNetCDFDefaultStride(colArray, infoMap);
-      strideMap.put(
-          SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
-          strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE));
-      infoMap.putAll(strideMap);
-
-      final boolean defaultStrideAvailable =
-          (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
-      strideAvailable = this.confirmStrideAvailable(strideMap, wnd, defaultStrideAvailable);
-
-      String dataNameBase = SGUtility.createDataNameBase(path);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataNameBase);
-    } else if (dg.equals(this.mNetCDFDataSetupWizardDialog)) {
-      colInfoSet = this.mNetCDFDataSetupWizardDialog.getDataColumnInfoSet();
-      infoMap.put(
-          SGIDataInformationKeyConstants.KEY_DATA_NAME,
-          this.mNetCDFDataSetupWizardDialog.getDataName());
-      infoMap.putAll(this.mNetCDFDataSetupWizardDialog.getStrideMap());
-      addDimensionValuesToInfoMap(infoMap, this.mNetCDFDataSetupWizardDialog);
-      strideAvailable = this.mNetCDFDataSetupWizardDialog.isStrideAvailable();
-    } else if (dg.equals(this.mPlotTypeSelectionWizardDialog)) {
-      colInfoSet = this.mNetCDFDataSetupWizardDialog.getDataColumnInfoSet();
-      infoMap.put(
-          SGIDataInformationKeyConstants.KEY_DATA_NAME,
-          this.mNetCDFDataSetupWizardDialog.getDataName());
-      infoMap.putAll(this.mNetCDFDataSetupWizardDialog.getStrideMap());
-      addDimensionValuesToInfoMap(infoMap, this.mNetCDFDataSetupWizardDialog);
-      addPlotTypeSelectionValuesToInfoMap(infoMap, this.mPlotTypeSelectionWizardDialog);
-      strideAvailable = this.mNetCDFDataSetupWizardDialog.isStrideAvailable();
-    }
-
-    infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
-
-    if (colInfoSet == null) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    if (dg.equals(this.mDataTypeWizardDialog)) {
-      // set default value of dimension origin and step
-      if (this.getWizardTransition()
-              .setupNetCDFDefaultDimensionValues(
-                  dataType, infoMap, this.mNetCDFDataSetupWizardDialog)
-          == false) {
-        return false;
-      }
-    } else if (dg.equals(this.mNetCDFDataSetupWizardDialog)
-        || dg.equals(this.mPlotTypeSelectionWizardDialog)) {
-      // set dimension origin and step
-      if (addDimensionValuesToInfoMap(infoMap, this.mNetCDFDataSetupWizardDialog) == false) {
-        return false;
-      }
-    }
-
-    // draw the graph
-    SGStatus status =
-        this.drawGraph(wnd, figureID, colInfoSet, infoMap, dataSource, null, false, figureLocation);
-    if (status.isSucceeded() == false) {
-      String msg = status.getMessage();
-      if (msg == null) {
-        msg = ERRMSG_DATA_ADDITION;
-      }
-      SGUtility.showErrorMessageDialog(wnd, msg, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    // puts stride flag
-    SGDataInfoMapUtility.putDataStrideAvailable(strideAvailable);
-
-    return true;
-  }
-
-  private boolean confirmStrideAvailable(
-      Map<String, SGIntegerSeriesSet> strideMap, SGDrawingWindow wnd, final boolean defaultValue) {
-    boolean strideAvailable = defaultValue;
-    Iterator<Entry<String, SGIntegerSeriesSet>> itr = strideMap.entrySet().iterator();
-    List<String> strideKeyList = new ArrayList<String>();
-    while (itr.hasNext()) {
-      Entry<String, SGIntegerSeriesSet> entry = itr.next();
-      String key = entry.getKey();
-      SGIntegerSeriesSet stride = entry.getValue();
-      if (stride != null) {
-        if (!"0:end".equals(stride.toString())) {
-          strideKeyList.add(key);
-        }
-      }
-    }
-    if (strideKeyList.size() > 0) {
-      final String message =
-          "Data plot might be too slow due to its size.\nCan you use auto assigned array section?";
-      final int ret = SGUtility.showYesNoConfirmationDialog(wnd, message);
-      if (ret == JOptionPane.YES_OPTION) {
-        strideAvailable = true;
-      }
-    }
-    return strideAvailable;
-  }
-
-  private boolean drawNewGraphOfMDArrayData(
-      SGDrawingWindow wnd,
-      SGWizardDialog dg,
-      SGDataTypeWizardDialog dataTypeDialog,
-      SGMDArrayDataSetupWizardDialog setupDialog,
-      String path,
-      int figureID,
-      Point figureLocation) {
-
-    // get data type
-    String dataType = null;
-    if (dg.equals(this.mFigureIDSelectionWizardDialog)) {
-      if (this.mVirtualMDArrayData != null) {
-        dataType = this.mVirtualMDArrayData.dataType;
-      } else {
-        SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
-        return false;
-      }
-    } else {
-      dataType = dataTypeDialog.getSelectedDataType();
-      if (dataType == null) {
-        SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
-        return false;
-      }
-    }
-
-    // create a information map
-    Map<String, Object> infoMap =
-        SGDataInfoMapUtility.createInfoMap(dataType, dataTypeDialog, figureID, figureLocation);
-
-    SGDataColumnInfoSet colInfoSet = null;
-    SGMDArrayFile file = null;
-    DataSourceInfo dataSource = null;
-    if (path != null) {
-      FILE_TYPE type = SGApplicationUtility.identifyDataFileType(path);
-      if (FILE_TYPE.HDF5_DATA.equals(type)) {
-        file = this.getHDF5File(path);
-        if (file == null) {
-          return false;
-        }
-      } else {
-        file = this.getMATLABFile(path);
-        if (file == null) {
-          return false;
-        }
-      }
-    } else {
-      file = this.mVirtualMDArrayData.file;
-      SGDataBuffer buffer = this.mVirtualMDArrayData.buffer;
-      if (buffer != null) {
-        String gridTypeKey = buffer.getGridTypeKey();
-        if (gridTypeKey != null) {
-          infoMap.put(gridTypeKey, buffer.isGridType());
-        }
-      }
-    }
-    dataSource = new DataSourceInfo(file);
-
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-
-    // get selected column types
-    boolean strideAvailable = false;
-    if (dg.equals(dataTypeDialog) || dg.equals(this.mFigureIDSelectionWizardDialog)) {
-      if (this.mVirtualMDArrayData != null) {
-        if (this.mVirtualMDArrayData.infoMap != null) {
-          infoMap.putAll(this.mVirtualMDArrayData.infoMap);
-        }
-        colInfoSet = this.mVirtualMDArrayData.colInfoSet;
-        if (colInfoSet == null) {
-          colInfoSet =
-              this.getPropertyFileHandler()
-                  .getMDArrayDataDefaultDataColumnInfo(file, dataType, infoMap);
-        }
-      } else {
-        colInfoSet =
-            this.getPropertyFileHandler()
-                .getMDArrayDataDefaultDataColumnInfo(file, dataType, infoMap);
-      }
-      if (colInfoSet == null) {
-        SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
-        return false;
-      }
-
-      // calculate the stride
-      SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
-      Map<String, SGIntegerSeriesSet> strideMap =
-          SGDataStrideUtility.calcMDArrayDefaultStride(colArray, infoMap);
-      strideMap.put(
-          SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
-          strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE));
-      infoMap.putAll(strideMap);
-
-      final boolean defaultStrideAvailable =
-          (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
-      strideAvailable = this.confirmStrideAvailable(strideMap, wnd, defaultStrideAvailable);
-
-      String dataNameBase;
-      if (this.mVirtualMDArrayData != null) {
-        dataNameBase = this.mVirtualMDArrayData.name;
-      } else {
-        dataNameBase = SGUtility.createDataNameBase(path);
-      }
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataNameBase);
-    } else if (dg.equals(setupDialog)) {
-      colInfoSet = setupDialog.getDataColumnInfoSet();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
-      infoMap.putAll(setupDialog.getStrideMap());
-      addDimensionValuesToInfoMap(infoMap, setupDialog);
-      strideAvailable = setupDialog.isStrideAvailable();
-    } else if (dg.equals(this.mPlotTypeSelectionWizardDialog)) {
-      colInfoSet = setupDialog.getDataColumnInfoSet();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
-      infoMap.putAll(setupDialog.getStrideMap());
-      addDimensionValuesToInfoMap(infoMap, setupDialog);
-      strideAvailable = setupDialog.isStrideAvailable();
-      addPlotTypeSelectionValuesToInfoMap(infoMap, this.mPlotTypeSelectionWizardDialog);
-    }
-    infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
-
-    if (colInfoSet == null) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    if (dg.equals(this.mDataTypeWizardDialog)) {
-      SGMDArrayDataSetupWizardDialog dataSetupDialog;
-      boolean showDefault;
-      FILE_TYPE dataFileType = this.mDataTypeWizardDialog.getDataFileType();
-      if (FILE_TYPE.HDF5_DATA.equals(dataFileType)
-          || FILE_TYPE.MATLAB_DATA.equals(dataFileType)
-          || FILE_TYPE.VIRTUAL_DATA.equals(dataFileType)) {
-        dataSetupDialog = this.mMDArrayDataSetupWizardDialog;
-        if (FILE_TYPE.VIRTUAL_DATA.equals(dataFileType)) {
-          if (this.mVirtualMDArrayData.colInfoSet != null) {
-            // from the plug-in
-            showDefault = false;
-          } else {
-            // from the data viewer
-            showDefault = true;
-          }
-        } else {
-          showDefault = true;
-        }
-      } else {
-        return false;
-      }
-
-      // set default value of dimension origin and step
-      if (this.getWizardTransition()
-              .setupMDArrayDefaultDimensionValues(dataType, infoMap, dataSetupDialog, showDefault)
-          == false) {
-        return false;
-      }
-    } else if (dg.equals(this.mMDArrayDataSetupWizardDialog)) {
-      // set dimension origin and step
-      if (addDimensionValuesToInfoMap(infoMap, (SGMDArrayDataSetupWizardDialog) dg) == false) {
-        return false;
-      }
-    } else if (dg.equals(this.mPlotTypeSelectionWizardDialog)) {
-      SGWizardDialog prev = this.mPlotTypeSelectionWizardDialog.getPrevious();
-      // set dimension origin and step
-      if (addDimensionValuesToInfoMap(infoMap, (SGMDArrayDataSetupWizardDialog) prev) == false) {
-        return false;
-      }
-    }
-
-    // draw the graph
-    SGStatus status =
-        this.drawGraph(wnd, figureID, colInfoSet, infoMap, dataSource, null, false, figureLocation);
-    if (status.isSucceeded() == false) {
-      String msg = status.getMessage();
-      if (msg == null) {
-        msg = ERRMSG_DATA_ADDITION;
-      }
-      SGUtility.showErrorMessageDialog(wnd, msg, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    // puts stride flag
-    SGDataInfoMapUtility.putDataStrideAvailable(strideAvailable);
-
-    return true;
-  }
-
   static class DataSourceInfo {
     String path = null;
     SGIDataSource src = null;
@@ -2026,377 +1126,14 @@ class SGMainFunctions
   private static final String ERRMSG_SCRIPT_START =
       "To use Samurai Graph script, the application must be started in the command mode.";
 
-  private static final String ERRMSG_DATA_ADDITION =
+  static final String ERRMSG_DATA_ADDITION =
       "Failed to add data.\n" + "Valid data was not obtained with input values.";
 
-  private static final String ERRMSG_URL_OF_NETCDF = "Failed to add NetCDF file from input URL.";
-
-  private boolean makeTransitionForToolBar(final ActionEvent e) {
-
-    Object source = e.getSource();
-    SGWizardDialog dg = (SGWizardDialog) source;
-    String command = e.getActionCommand();
-
-    // cancel or previous
-    if (command.equals(SGDialog.CANCEL_BUTTON_TEXT)) {
-      dg.setVisible(false);
-      this.clearTemporaryData();
-    } else if (command.equals(SGDialog.PREVIOUS_BUTTON_TEXT)) {
-      dg.showPrevious();
-    } else if (command.equals(SGDialog.NEXT_BUTTON_TEXT)) {
-      if (dg.equals(this.mFigureIDSelectionWizardDialog)) {
-        this.mSingleDataFileChooserWizardDialog.setCurrentFile(
-            this.getCurrentFileDirectory(), null);
-        dg.showNext();
-      } else if (dg.equals(this.mSingleDataFileChooserWizardDialog)) {
-        if (this.mSingleDataFileChooserWizardDialog.isLocalFileSelected()) {
-          String fileName = this.mSingleDataFileChooserWizardDialog.getFileName();
-          File file = new File(fileName);
-          String filePath = file.getAbsolutePath();
-          FILE_TYPE fileType = SGApplicationUtility.identifyDataFileType(filePath);
-          if (FILE_TYPE.POSSIBLY_HDF5_DATA.equals(fileType)) {
-            SGApplicationUtility.showHDF5ReadErrorMessageDialog(dg, filePath);
-            return false;
-          }
-          this.mDataTypeWizardDialog.setDataFileType(fileType);
-
-          final boolean isHDF5 = FILE_TYPE.HDF5_DATA.equals(fileType);
-          this.setupDataAdditionWizardDialogConnection(
-              this.mDataTypeWizardDialog, DATA_ADDITION_TOOL_BAR, fileType, isHDF5);
-
-          if (isHDF5) {
-            // set up the dialog to select HDF5/NetCDF-4
-            String dataName = SGUtility.createDataNameBase(filePath);
-            this.mFileTypeSelectionWizardDialog.setDataName(dataName);
-            FILE_TYPE selectedFileType = this.getNetCDF4orHDF5FileType(file);
-            this.mFileTypeSelectionWizardDialog.setSelectedFileType(selectedFileType);
-          } else {
-            // for TXT, NetCDF-3 or MATLAB file
-            if (FILE_TYPE.TXT_DATA.equals(fileType)) {
-              if (this.toSDArrayDataTypeDialog(
-                      this.mSingleDataFileChooserWizardDialog, this.mDataTypeWizardDialog, file)
-                  == false) {
-                return false;
-              }
-            } else if (FILE_TYPE.NETCDF_DATA.equals(fileType)
-                || FILE_TYPE.MATLAB_DATA.equals(fileType)) {
-              if (this.toNetCDFOrMDArrayDataTypeDialog(
-                      this.mSingleDataFileChooserWizardDialog, this.mDataTypeWizardDialog, file)
-                  == false) {
-                return false;
-              }
-            }
-          }
-
-          // set to the file chooser because file path is due to be taken from file chooser dialog
-          this.mSingleDataFileChooserWizardDialog.setSelectedFile(file);
-
-        } else {
-          this.mDataTypeWizardDialog.setDataFileType(FILE_TYPE.NETCDF_DATA);
-
-          // setup the next dialog
-          this.setupDataAdditionWizardDialogConnection(
-              this.mDataTypeWizardDialog, DATA_ADDITION_TOOL_BAR, FILE_TYPE.NETCDF_DATA, false);
-        }
-
-        // show the next dialog
-        dg.showNext();
-
-      } else if (dg.equals(this.mFileTypeSelectionWizardDialog)) {
-
-        FILE_TYPE fileType = this.mFileTypeSelectionWizardDialog.getSelectedFileType();
-        if (FILE_TYPE.NETCDF_DATA.equals(fileType) || FILE_TYPE.HDF5_DATA.equals(fileType)) {
-          String fileName = this.mSingleDataFileChooserWizardDialog.getFileName();
-          if (this.toNetCDFOrMDArrayDataTypeDialog(
-                  this.mSingleDataFileChooserWizardDialog,
-                  this.mDataTypeWizardDialog,
-                  new File(fileName))
-              == false) {
-            return false;
-          }
-        } else {
-          return false;
-        }
-        this.mDataTypeWizardDialog.setDataFileType(fileType);
-
-        // show the next dialog
-        dg.showNext();
-
-      } else if (dg.equals(this.mDataTypeWizardDialog)) {
-
-        FILE_TYPE dataFileType = this.mDataTypeWizardDialog.getDataFileType();
-        if (FILE_TYPE.TXT_DATA.equals(dataFileType)) {
-          final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
-          File f = this.mSingleDataFileChooserWizardDialog.getSelectedFile();
-          String path = f.getPath();
-          if (this.getWizardTransition()
-                  .makeTransition(
-                      this.mDataTypeWizardDialog,
-                      this.mSDArrayDataSetupWizardDialog,
-                      path,
-                      figureID,
-                      null)
-              == false) {
-            return false;
-          }
-
-        } else if (FILE_TYPE.NETCDF_DATA.equals(dataFileType)) {
-          final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
-          String fileName = this.mSingleDataFileChooserWizardDialog.getFileName();
-          if (this.mSingleDataFileChooserWizardDialog.isLocalFileSelected()) {
-            if (this.getWizardTransition()
-                    .makeTransition(
-                        this.mDataTypeWizardDialog,
-                        this.mNetCDFDataSetupWizardDialog,
-                        fileName,
-                        figureID,
-                        null)
-                == false) {
-              return false;
-            }
-          } else {
-            FILE_TYPE type = SGApplicationUtility.identifyDataFileType(fileName);
-            if (FILE_TYPE.NETCDF_DATA.equals(type)) {
-              if (this.getWizardTransition()
-                      .makeTransition(
-                          this.mDataTypeWizardDialog,
-                          this.mNetCDFDataSetupWizardDialog,
-                          fileName,
-                          figureID,
-                          null)
-                  == false) {
-                return false;
-              }
-            } else {
-              SGUtility.showErrorMessageDialog(dg, ERRMSG_URL_OF_NETCDF, SGIConstants.TITLE_ERROR);
-              this.mDataTypeWizardDialog.setVisible(false);
-              this.mSingleDataFileChooserWizardDialog.setVisible(true);
-            }
-          }
-        } else if (FILE_TYPE.HDF5_DATA.equals(dataFileType)
-            || FILE_TYPE.MATLAB_DATA.equals(dataFileType)) {
-          final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
-          String path = this.mSingleDataFileChooserWizardDialog.getFileName();
-          String dataName = SGUtility.createDataNameBase(path);
-          if (this.getWizardTransition()
-                  .makeTransition(
-                      this.mDataTypeWizardDialog,
-                      this.mMDArrayDataSetupWizardDialog,
-                      path,
-                      figureID,
-                      null,
-                      dataFileType,
-                      dataName,
-                      true)
-              == false) {
-            return false;
-          }
-        }
-
-      } else if (dg instanceof SGDataSetupWizardDialog) {
-        String dataType = this.mDataTypeWizardDialog.getSelectedDataType();
-        FILE_TYPE dataFileType = this.mDataTypeWizardDialog.getDataFileType();
-        setupPlotTypeSelectionWizardDialogConnection(dataFileType, dataType);
-        dg.showNext();
-      }
-
-    } else if (command.equals(SGDialog.OK_BUTTON_TEXT)) {
-
-      try {
-        if (this.addDataByToolBar(dg) == false) {
-          return false;
-        }
-      } finally {
-        this.clearTemporaryData();
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * Do add data to figure.
-   *
-   * @param dg wizard dialog which is source on doing addition.
-   * @return
-   */
-  private boolean addDataByToolBar(SGWizardDialog dg) {
-
-    // set invisible the dialog
-    dg.setVisible(false);
-
-    SGDrawingWindow wnd = dg.getOwnerWindow();
-
-    // figure id
-    final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
-
-    // data path
-    String filename = this.mSingleDataFileChooserWizardDialog.getFileName();
-    String path = filename;
-    if (this.mSingleDataFileChooserWizardDialog.isLocalFileSelected()) {
-      // path of the local data file
-      File f = this.mSingleDataFileChooserWizardDialog.getSelectedFile();
-      path = f.getPath();
-    }
-
-    FILE_TYPE dataFileType = this.mDataTypeWizardDialog.getDataFileType();
-
-    if (dg.equals(this.mSDArrayDataSetupWizardDialog) || dataFileType == FILE_TYPE.TXT_DATA) {
-      // text data
-      if (this.drawNewGraphOfSDArrayData(wnd, dg, path, figureID, null) == false) {
-        return false;
-      }
-    } else if (dg.equals(this.mNetCDFDataSetupWizardDialog)
-        || dataFileType == FILE_TYPE.NETCDF_DATA) {
-      // netCDF data
-      if (this.drawNewGraphOfNetcdfData(wnd, dg, path, figureID, null) == false) {
-        return false;
-      }
-    } else if (dg.equals(this.mMDArrayDataSetupWizardDialog)
-        || dataFileType == FILE_TYPE.HDF5_DATA
-        || dataFileType == FILE_TYPE.MATLAB_DATA) {
-      // MDArray data
-      if (this.drawNewGraphOfMDArrayData(
-              wnd,
-              dg,
-              this.mDataTypeWizardDialog,
-              this.mMDArrayDataSetupWizardDialog,
-              path,
-              figureID,
-              null)
-          == false) {
-        return false;
-      }
-    } else if (dg.equals(this.mPlotTypeSelectionWizardDialog)) {
-      if (dg.getPrevious().equals(this.mSDArrayDataSetupWizardDialog)) {
-        if (this.drawNewGraphOfSDArrayData(wnd, dg, path, figureID, null) == false) {
-          return false;
-        }
-      } else {
-        if (this.drawNewGraphOfNetcdfData(wnd, dg, path, figureID, null) == false) {
-          return false;
-        }
-      }
-    }
-
-    wnd.notifyToRoot();
-
-    return true;
-  }
+  static final String ERRMSG_URL_OF_NETCDF = "Failed to add NetCDF file from input URL.";
 
   // Sets the default value of dimension origin and step.
 
   // Sets the default value of dimension origin and step.
-
-  /**
-   * Process to data type selection dialog.
-   *
-   * @param owner the owner of dialogs
-   * @param next a dialog for data type selection
-   * @param f a file
-   * @return true if succeeded
-   */
-  private boolean toSDArrayDataTypeDialog(Window owner, SGDataTypeWizardDialog next, File f) {
-
-    if (f.exists() == false) {
-      SGUtility.showFileNotFoundMessageDialog(owner);
-      return false;
-    }
-
-    String path = f.getPath();
-
-    List<String> cList = new ArrayList<String>();
-    try {
-      if (this.mDataCreator.getDataTypeCandidateList(path, cList) == false) {
-        SGApplicationUtility.showDataFileInvalidMessageDialog(owner);
-        return false;
-      }
-    } catch (FileNotFoundException ex) {
-      SGUtility.showFileNotFoundMessageDialog(owner);
-      return false;
-    }
-    if (cList.size() == 0) {
-      SGApplicationUtility.showDataFileInvalidMessageDialog(owner);
-      return false;
-    }
-
-    List<String> typeList = new ArrayList<String>();
-    for (int i = 0; i < cList.size(); i++) {
-      typeList.add(SGApplicationUtility.getArrayDataType(cList.get(i)));
-    }
-
-    // set candidate data-type to the dialog
-    if (next.setAvailableDataType(typeList) == false) {
-      SGApplicationUtility.showDataFileInvalidMessageDialog(owner);
-      return false;
-    }
-
-    String dataName = SGUtility.createDataNameBase(path);
-    next.setDataName(dataName);
-
-    return true;
-  }
-
-  /**
-   * Process to data type selection dialog.
-   *
-   * @param owner the owner of dialogs
-   * @param next a dialog for data type selection
-   * @param f a file
-   * @return true if succeeded
-   */
-  private boolean toNetCDFOrMDArrayDataTypeDialog(
-      Window owner, SGDataTypeWizardDialog next, File f) {
-    if (f.exists() == false) {
-      SGUtility.showFileNotFoundMessageDialog(owner);
-      return false;
-    }
-
-    next.setAllDataTypeButtonsEnabled(true);
-
-    String path = f.getPath();
-    String dataName = SGUtility.createDataNameBase(path);
-    next.setDataName(dataName);
-
-    return true;
-  }
-
-  boolean onToolBarDataAdditionExecuted(final SGDrawingWindow wnd) {
-
-    // create wizard dialogs
-    this.createDataAdditionWizardDialogs(wnd);
-
-    // set figure ID numbers
-    final int[] idArray = wnd.getVisibleFigureIDArray();
-    this.mFigureIDSelectionWizardDialog.setIDNumbers(idArray);
-
-    // sets the OK button invisible
-    this.mFigureIDSelectionWizardDialog.setOKButtonVisible(false);
-
-    // sets the name
-    this.mFigureIDSelectionWizardDialog.setDataName(null);
-
-    // packs the dialog
-    this.mFigureIDSelectionWizardDialog.pack();
-
-    // setup the connection
-    this.setupDataAdditionWizardDialogConnection(null, DATA_ADDITION_TOOL_BAR, null, false);
-
-    // set location
-    this.mFigureIDSelectionWizardDialog.setCenter(wnd);
-
-    // show the first wizard dialog
-    this.mFigureIDSelectionWizardDialog.setVisible(true);
-
-    // update the selected file name
-    File f = this.mSingleDataFileChooserWizardDialog.getSelectedFile();
-    if (f == null) {
-      return false;
-    }
-    this.updateCurrentFile(f, FILE_TYPE.TXT_DATA);
-
-    return true;
-  }
 
   private SGStatus drawGraphSub(
       final SGDrawingWindow wnd,
@@ -2673,18 +1410,6 @@ class SGMainFunctions
     return result;
   }
 
-  /** Returns true if given object is a wizard dialog for data-addition. */
-  private boolean isDataAdditionDialog(Object obj) {
-    return obj.equals(this.mFigureIDSelectionWizardDialog)
-        || obj.equals(this.mSingleDataFileChooserWizardDialog)
-        || obj.equals(this.mFileTypeSelectionWizardDialog)
-        || obj.equals(this.mDataTypeWizardDialog)
-        || obj.equals(this.mSDArrayDataSetupWizardDialog)
-        || obj.equals(this.mNetCDFDataSetupWizardDialog)
-        || obj.equals(this.mMDArrayDataSetupWizardDialog)
-        || obj.equals(this.mPlotTypeSelectionWizardDialog);
-  }
-
   private List<double[][]> createDoubleValueBlockList(
       List<SGXYSimpleDoubleValueIndexBlock> blockList) {
     List<double[][]> doubleArrayList = new ArrayList<double[][]>();
@@ -2708,19 +1433,19 @@ class SGMainFunctions
   public void actionPerformed(final ActionEvent e) {
     Object source = e.getSource();
     String command = e.getActionCommand();
-    if (this.isDataAdditionDialog(source)) {
+    if (this.getDataAdditionHandler().isDataAdditionDialog(source)) {
       if (this.mDroppedDataFile != null) {
         // drag and drop
-        this.makeTransitionForDragAndDrop(e);
+        this.getDataAdditionHandler().makeTransitionForDragAndDrop(e);
       } else if (this.mTransformedData != null) {
         // transformation
         this.makeTransitionForDataTransformation(e);
       } else if (this.mVirtualMDArrayData != null) {
         // plug-in
-        this.makeTransitionForPlugin(e);
+        this.getDataAdditionHandler().makeTransitionForPlugin(e);
       } else {
         // tool bar
-        this.makeTransitionForToolBar(e);
+        this.getDataAdditionHandler().makeTransitionForToolBar(e);
       }
     } else if (source instanceof SGDataViewerDialog) {
 
@@ -3172,7 +1897,7 @@ class SGMainFunctions
   // create the data object
 
   /** The class for dropped data file. */
-  private static class DroppedDataFile {
+  static class DroppedDataFile {
 
     Point pos = null;
 
@@ -3198,13 +1923,14 @@ class SGMainFunctions
       final List<File> fileList, final SGDrawingWindow wnd, final Point pos) {
 
     // sets up wizard dialogs
-    this.createDataAdditionWizardDialogs(wnd);
+    this.getDataAdditionHandler().createDataAdditionWizardDialogs(wnd);
 
     // setup with given files
     this.onDataFileDropped(
         pos, wnd, fileList, FILE_TYPE.TXT_DATA, this.mMDArrayDataSetupWizardDialog);
 
-    if (this.toSDArrayDataTypeDialog(wnd, this.mDataTypeWizardDialog, this.mDroppedDataFile.file)
+    if (this.getDataAdditionHandler()
+            .toSDArrayDataTypeDialog(wnd, this.mDataTypeWizardDialog, this.mDroppedDataFile.file)
         == false) {
       return false;
     }
@@ -3222,7 +1948,7 @@ class SGMainFunctions
       final List<File> fileList, final SGDrawingWindow wnd, final Point pos) {
 
     // sets up wizard dialogs
-    this.createDataAdditionWizardDialogs(wnd);
+    this.getDataAdditionHandler().createDataAdditionWizardDialogs(wnd);
 
     // setup with given files
     this.onDataFileDropped(
@@ -3255,7 +1981,9 @@ class SGMainFunctions
       return true;
     }
 
-    if (this.toNetCDFOrMDArrayDataTypeDialog(wnd, this.mDataTypeWizardDialog, file) == false) {
+    if (this.getDataAdditionHandler()
+            .toNetCDFOrMDArrayDataTypeDialog(wnd, this.mDataTypeWizardDialog, file)
+        == false) {
       return false;
     }
 
@@ -3413,8 +2141,9 @@ class SGMainFunctions
     // setup the wizard dialogs
     this.mDataTypeWizardDialog.setDataFileType(fileType);
     this.mDataTypeWizardDialog.setNext(dg);
-    this.setupDataAdditionWizardDialogConnection(
-        this.mDataTypeWizardDialog, DATA_ADDITION_DRAG_AND_DROP, fileType, false);
+    this.getDataAdditionHandler()
+        .setupDataAdditionWizardDialogConnection(
+            this.mDataTypeWizardDialog, DATA_ADDITION_DRAG_AND_DROP, fileType, false);
 
     // gets only the first file
     File file = fileList.get(0);
@@ -3920,7 +2649,7 @@ class SGMainFunctions
    */
   boolean transformData(SGDrawingWindow wnd) {
 
-    this.createDataAdditionWizardDialogs(wnd);
+    this.getDataAdditionHandler().createDataAdditionWizardDialogs(wnd);
 
     List<SGFigure> fList = wnd.getVisibleFigureList();
     for (SGFigure f : fList) {
@@ -3986,7 +2715,7 @@ class SGMainFunctions
   /** Invoked when a wizard dialog for data addition is closed. */
   public void windowClosing(WindowEvent e) {
     Object source = e.getSource();
-    if (this.isDataAdditionDialog(source)) {
+    if (this.getDataAdditionHandler().isDataAdditionDialog(source)) {
       this.clearTemporaryData();
     }
   }
@@ -4344,7 +3073,7 @@ class SGMainFunctions
   private boolean onHDF5DataFilesDropped(
       final List<File> fileList, final SGDrawingWindow wnd, final Point pos) {
 
-    this.createDataAdditionWizardDialogs(wnd);
+    this.getDataAdditionHandler().createDataAdditionWizardDialogs(wnd);
 
     // gets only the first file
     File file = fileList.get(0);
@@ -4377,8 +3106,9 @@ class SGMainFunctions
     this.mFileTypeSelectionWizardDialog.setDataName(dataName);
 
     this.mFileTypeSelectionWizardDialog.setSelectedFileType(initFileType);
-    this.setupDataAdditionWizardDialogConnection(
-        this.mDataTypeWizardDialog, DATA_ADDITION_DRAG_AND_DROP, FILE_TYPE.HDF5_DATA, true);
+    this.getDataAdditionHandler()
+        .setupDataAdditionWizardDialogConnection(
+            this.mDataTypeWizardDialog, DATA_ADDITION_DRAG_AND_DROP, FILE_TYPE.HDF5_DATA, true);
 
     this.mFileTypeSelectionWizardDialog.setCenter(wnd);
     this.mFileTypeSelectionWizardDialog.setVisible(true);
@@ -4389,13 +3119,14 @@ class SGMainFunctions
   private boolean onMATLABDataFilesDropped(
       final List<File> fileList, final SGDrawingWindow wnd, final Point pos) {
 
-    this.createDataAdditionWizardDialogs(wnd);
+    this.getDataAdditionHandler().createDataAdditionWizardDialogs(wnd);
 
     this.onDataFileDropped(
         pos, wnd, fileList, FILE_TYPE.MATLAB_DATA, this.mMDArrayDataSetupWizardDialog);
 
-    if (this.toNetCDFOrMDArrayDataTypeDialog(
-            wnd, this.mDataTypeWizardDialog, this.mDroppedDataFile.file)
+    if (this.getDataAdditionHandler()
+            .toNetCDFOrMDArrayDataTypeDialog(
+                wnd, this.mDataTypeWizardDialog, this.mDroppedDataFile.file)
         == false) {
       return false;
     }
@@ -4412,7 +3143,7 @@ class SGMainFunctions
   boolean startVirtualMDArrayDataAdditionWizard(final SGDrawingWindow wnd) {
 
     // sets up wizard dialogs
-    this.createDataAdditionWizardDialogs(wnd);
+    this.getDataAdditionHandler().createDataAdditionWizardDialogs(wnd);
     this.mDataTypeWizardDialog.setDataFileType(FILE_TYPE.VIRTUAL_DATA);
     this.mDataTypeWizardDialog.setAllDataTypeButtonsEnabled(true);
 
@@ -4497,38 +3228,11 @@ class SGMainFunctions
     }
   }
 
-  private boolean addDataByPlugin(SGWizardDialog dg) {
-
-    // set invisible the dialog
-    dg.setVisible(false);
-
-    SGDrawingWindow wnd = dg.getOwnerWindow();
-
-    // figure id
-    final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
-
-    if (this.drawNewGraphOfMDArrayData(
-            wnd,
-            dg,
-            this.mDataTypeWizardDialog,
-            this.mMDArrayDataSetupWizardDialog,
-            null,
-            figureID,
-            null)
-        == false) {
-      return false;
-    }
-
-    wnd.notifyToRoot();
-
-    return true;
-  }
-
   void showPluginDetailDialog(SGDrawingWindow wnd) {
     this.mNativePluginManager.showPluginInfoDialog(wnd);
   }
 
-  private FILE_TYPE getNetCDF4orHDF5FileType(File file) {
+  FILE_TYPE getNetCDF4orHDF5FileType(File file) {
     String ext = SGApplicationUtility.getExtension(file);
     FILE_TYPE fileType =
         NETCDF_FILE_EXTENSION.equalsIgnoreCase(ext) ? FILE_TYPE.NETCDF_DATA : FILE_TYPE.HDF5_DATA;
