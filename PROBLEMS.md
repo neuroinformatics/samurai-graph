@@ -5,21 +5,21 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage (Top Priority)
 
-Actual JaCoCo measurement (line coverage) is **10.0%** overall.
+Actual JaCoCo measurement (line coverage) is **9.9%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
-| `com.github...lib.mdarray` | 97.4% | 4 | Pure logic, well covered |
-| `org.freehep...util.export` | 86.8% | 1 | Vendored replacement class |
-| `jp...samuraigraph.export` | 68.2% | 0 (nested under `figure.java2d`) | Few instructions |
-| `com.github...lib.hdf5` | 20.8% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 25.0% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
-| `jp...samuraigraph.data` | 18.2% | 43 | Largest application package |
+| `com.github...lib.mdarray` | 97.8% | 4 | Pure logic, well covered |
+| `org.freehep...util.export` | 89.7% | 1 | Vendored replacement class |
+| `jp...samuraigraph.export` | 80.0% | 0 (nested under `figure.java2d`) | Few instructions |
+| `com.github...lib.hdf5` | 25.5% | 5 | Round-trip tests read/write real HDF5 |
+| `jp...samuraigraph.base` | 25.1% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
+| `jp...samuraigraph.data` | 20.0% | 43 | Largest application package |
 | `jp...samuraigraph.application` | 1.8% | 3 | |
 | `jp...samuraigraph.figure` | 2.1% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **0.5%** | 1 | Legend property round-trip tests added |
 
-- 84 test files / 972 test methods (999 executions) against 590 main files
+- 84 test files / 972 test methods (999 executions) against 615 main files
   / ~275k LOC
 - Per-class coverage of the data-layer utilities is uneven: the pure
   groups (data type 64%, text 80%, column title 73%) reach 64-80%, while
@@ -34,17 +34,17 @@ Actual JaCoCo measurement (line coverage) is **10.0%** overall.
 
 | LOC | File | Problem |
 |-----|------|---------|
-| 7,955 | `figure/java2d/SGFigureElementLegend.java` | Largest class |
+| 5,754 | `figure/java2d/SGAxisElement.java` | Largest class |
 | 4,963 | `base/SGDrawingWindow.java` | Frame handling mixed with window logic; delegates to clipboard, alignment, property I/O, viewport, property dialog, and undo helpers |
-| 3,828 | `application/SGMainFunctions.java` | All menu actions, commands, and the console loop; delegates to eight collaborator classes |
-| 5,754 | `figure/java2d/SGAxisElement.java` | |
-| 4,956 | `figure/java2d/SGPropertyDialogSXYData.java` | |
+| 4,958 | `figure/java2d/SGPropertyDialogSXYData.java` | |
 | 4,889 | `figure/java2d/SGFigureElementShape.java` | |
-| 4,763 | `data/SGSXYNetCDFMultipleData.java` | |
-| 4,532 | `data/SGSXYMDArrayMultipleData.java` | |
+| 4,775 | `data/SGSXYNetCDFMultipleData.java` | |
+| 4,537 | `data/SGSXYMDArrayMultipleData.java` | |
 | 4,511 | `base/SGFigure.java` | |
+| 4,414 | `figure/java2d/SGElementGroupSetInGraphSXYMultiple.java` | |
+| 3,828 | `application/SGMainFunctions.java` | All menu actions, commands, and the console loop; delegates to eight collaborator classes |
 
-68 files exceed 1,000 lines; 129 exceed 500.
+75 files exceed 1,000 lines; 141 exceed 500.
 
 ## 3. Duplicated Architecture
 
