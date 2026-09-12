@@ -15,14 +15,14 @@ class ElementGroupTickLabels extends SGElementGroupTickLabelForData implements I
   private final SGFigureElementLegend legend;
 
   /** A group set that this element group belongs. */
-  protected SGFigureElementLegend.ElementGroupSetInLegend mGroupSet = null;
+  protected ElementGroupSetInLegend mGroupSet = null;
 
   /**
    * Sets the element group set.
    *
    * @param gs the element group set
    */
-  public boolean setElementGroupSet(SGFigureElementLegend.ElementGroupSetInLegend gs) {
+  public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
     this.mGroupSet = gs;
     return true;
   }

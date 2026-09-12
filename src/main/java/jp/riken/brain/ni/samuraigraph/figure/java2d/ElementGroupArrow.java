@@ -21,7 +21,7 @@ class ElementGroupArrow extends SGElementGroupArrowForData implements ILegendEle
   private final SGFigureElementLegend legend;
 
   /** A group set that this element group belongs. */
-  protected SGFigureElementLegend.ElementGroupSetInLegend mGroupSet = null;
+  protected ElementGroupSetInLegend mGroupSet = null;
 
   /** The default constructor. */
   protected ElementGroupArrow(final SGFigureElementLegend legend) {
@@ -47,7 +47,7 @@ class ElementGroupArrow extends SGElementGroupArrowForData implements ILegendEle
    *
    * @param gs the element group set
    */
-  public boolean setElementGroupSet(SGFigureElementLegend.ElementGroupSetInLegend gs) {
+  public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
     this.mGroupSet = gs;
     return true;
   }
@@ -159,8 +159,7 @@ class ElementGroupArrow extends SGElementGroupArrowForData implements ILegendEle
   }
 
   private boolean updateMagnitudeString() {
-    SGFigureElementLegend.ElementGroupSetInLegendVXY groupSet =
-        (SGFigureElementLegend.ElementGroupSetInLegendVXY) this.mGroupSet;
+    ElementGroupSetInLegendVXY groupSet = (ElementGroupSetInLegendVXY) this.mGroupSet;
     final float perCm = groupSet.getMagnitudePerCM();
     if (Float.isNaN(perCm)) {
       this.mMagnitudeString.setString("NaN");

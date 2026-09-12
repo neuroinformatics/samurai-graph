@@ -16,7 +16,7 @@ class ElementGroupErrorBar extends SGElementGroupErrorBarForData implements ILeg
   private final SGFigureElementLegend legend;
 
   /** A group set that this element group belongs. */
-  protected SGFigureElementLegend.ElementGroupSetInLegend mGroupSet = null;
+  protected ElementGroupSetInLegend mGroupSet = null;
 
   /** The constructor. */
   protected ElementGroupErrorBar(final SGFigureElementLegend legend, SGISXYTypeData data) {
@@ -29,7 +29,7 @@ class ElementGroupErrorBar extends SGElementGroupErrorBarForData implements ILeg
    *
    * @param gs the element group set
    */
-  public boolean setElementGroupSet(SGFigureElementLegend.ElementGroupSetInLegend gs) {
+  public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
     this.mGroupSet = gs;
     return true;
   }
@@ -52,8 +52,7 @@ class ElementGroupErrorBar extends SGElementGroupErrorBarForData implements ILeg
    */
   public float getPreferredHeight() {
 
-    SGFigureElementLegend.ElementGroupSetInLegendSXY legend =
-        (SGFigureElementLegend.ElementGroupSetInLegendSXY) this.mGroupSet;
+    ElementGroupSetInLegendSXY legend = (ElementGroupSetInLegendSXY) this.mGroupSet;
 
     SGData data = legend.getData();
     if (data instanceof SGISXYTypeData) {

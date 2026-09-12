@@ -47,5 +47,5 @@ interface ILegendElement {
    * @param gs the element group set.
    * @return true if succeeded
    */
-  public boolean setElementGroupSet(SGFigureElementLegend.ElementGroupSetInLegend gs);
+  public boolean setElementGroupSet(ElementGroupSetInLegend gs);
 }

@@ -58,8 +58,7 @@ class ElementGroupPseudocolorMap extends SGElementGroupPseudocolorMapForData
   }
 
   public float getPreferredHeight() {
-    final SGFigureElementLegend.ElementGroupSetInLegendSXYZ gs =
-        (SGFigureElementLegend.ElementGroupSetInLegendSXYZ) this.mGroupSet;
+    final ElementGroupSetInLegendSXYZ gs = (ElementGroupSetInLegendSXYZ) this.mGroupSet;
     Rectangle2D strRect = gs.mDrawingString.getElementBounds();
     return (float) strRect.getHeight();
   }
@@ -75,9 +74,9 @@ class ElementGroupPseudocolorMap extends SGElementGroupPseudocolorMapForData
   }
 
   /** A group set that this element group belongs. */
-  protected SGFigureElementLegend.ElementGroupSetInLegend mGroupSet = null;
+  protected ElementGroupSetInLegend mGroupSet = null;
 
-  public boolean setElementGroupSet(SGFigureElementLegend.ElementGroupSetInLegend gs) {
+  public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
     this.mGroupSet = gs;
     return true;
   }

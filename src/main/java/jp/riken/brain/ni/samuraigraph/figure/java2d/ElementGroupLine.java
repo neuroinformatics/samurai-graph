@@ -27,7 +27,7 @@ class ElementGroupLine extends SGElementGroupLineForData implements ILegendEleme
   private SGTuple2f mEnd = new SGTuple2f();
 
   /** A group set that this element group belongs. */
-  protected SGFigureElementLegend.ElementGroupSetInLegend mGroupSet = null;
+  protected ElementGroupSetInLegend mGroupSet = null;
 
   /** The default constructor. */
   protected ElementGroupLine(final SGFigureElementLegend legend, SGISXYTypeData data) {
@@ -43,7 +43,7 @@ class ElementGroupLine extends SGElementGroupLineForData implements ILegendEleme
    *
    * @param gs the element group set
    */
-  public boolean setElementGroupSet(SGFigureElementLegend.ElementGroupSetInLegend gs) {
+  public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
     this.mGroupSet = gs;
     return true;
   }

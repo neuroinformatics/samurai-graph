@@ -17,7 +17,7 @@ class ElementGroupSymbol extends SGElementGroupSymbolForData implements ILegendE
   private final SGFigureElementLegend legend;
 
   /** A group set that this element group belongs. */
-  protected SGFigureElementLegend.ElementGroupSetInLegend mGroupSet = null;
+  protected ElementGroupSetInLegend mGroupSet = null;
 
   /** The default constructor. */
   protected ElementGroupSymbol(final SGFigureElementLegend legend, SGISXYTypeData data) {
@@ -30,7 +30,7 @@ class ElementGroupSymbol extends SGElementGroupSymbolForData implements ILegendE
    *
    * @param gs the element group set
    */
-  public boolean setElementGroupSet(SGFigureElementLegend.ElementGroupSetInLegend gs) {
+  public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
     this.mGroupSet = gs;
     return true;
   }

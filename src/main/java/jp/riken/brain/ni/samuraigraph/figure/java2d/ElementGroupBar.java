@@ -17,7 +17,7 @@ class ElementGroupBar extends SGElementGroupBarForData implements ILegendElement
   private final SGFigureElementLegend legend;
 
   /** A group set that this element group belongs. */
-  protected SGFigureElementLegend.ElementGroupSetInLegend mGroupSet = null;
+  protected ElementGroupSetInLegend mGroupSet = null;
 
   /** The default constructor. */
   protected ElementGroupBar(final SGFigureElementLegend legend, SGISXYTypeData data) {
@@ -39,7 +39,7 @@ class ElementGroupBar extends SGElementGroupBarForData implements ILegendElement
    *
    * @param gs the element group set
    */
-  public boolean setElementGroupSet(SGFigureElementLegend.ElementGroupSetInLegend gs) {
+  public boolean setElementGroupSet(ElementGroupSetInLegend gs) {
     this.mGroupSet = gs;
     return true;
   }
@@ -50,8 +50,7 @@ class ElementGroupBar extends SGElementGroupBarForData implements ILegendElement
    * @return the preferred width
    */
   public float getPreferredWidth() {
-    final SGFigureElementLegend.ElementGroupSetInLegendSXY gs =
-        (SGFigureElementLegend.ElementGroupSetInLegendSXY) this.mGroupSet;
+    final ElementGroupSetInLegendSXY gs = (ElementGroupSetInLegendSXY) this.mGroupSet;
     Rectangle2D strRect = gs.mDrawingString.getElementBounds();
     return (float) strRect.getHeight();
   }
