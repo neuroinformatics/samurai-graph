@@ -2,13 +2,62 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
+import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
 import org.junit.jupiter.api.Test;
+import ucar.nc2.NetcdfFiles;
 
 /** Unit tests for {@link SGDataViewerUtility}. */
 class SGDataViewerUtilityTest {
+
+  private SGSXYNetCDFData createSXYDataFromExample16() throws IOException {
+    SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
+    SGNetCDFDataColumnInfo xInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+    SGNetCDFDataColumnInfo yInfo =
+        SGDataFileUtility.createDataColumnInfo(
+            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+    return new SGSXYNetCDFData(
+        file,
+        new SGDataSourceObserver(),
+        xInfo,
+        yInfo,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        true);
+  }
+
+  @Test
+  void getXValueArrayReadsCoordinateSlice() throws IOException {
+    SGSXYNetCDFData data = createSXYDataFromExample16();
+    double[] xValues = SGDataViewerUtility.getXValueArray(data, false);
+    assertNotNull(xValues);
+    assertEquals(8, xValues.length);
+    assertEquals(1.0, xValues[0], 0.0);
+  }
+
+  @Test
+  void getYValueArrayReadsTwoDimensionalVariable() throws IOException {
+    SGSXYNetCDFData data = createSXYDataFromExample16();
+    double[] yValues = SGDataViewerUtility.getYValueArray(data, false);
+    assertNotNull(yValues);
+    assertEquals(8, yValues.length);
+    assertEquals(1.5, yValues[0], 0.0);
+    assertEquals(3.5, yValues[1], 0.0);
+  }
 
   @Test
   void getCoordinateVariableValueReturnsInRangeValue() {
