@@ -24,7 +24,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -1126,6 +1125,22 @@ public class SGDrawingWindow extends JFrame
 
   SGTuple2f getTemporaryViewportSize() {
     return this.mTemporaryViewportSize;
+  }
+
+  SGUndoManager getUndoManager() {
+    return this.mUndoManager;
+  }
+
+  List<SGFigure> getFigureListInternal() {
+    return this.mFigureList;
+  }
+
+  int getSavedListIndex() {
+    return this.mSavedListIndex;
+  }
+
+  void setSavedListIndex(final int index) {
+    this.mSavedListIndex = index;
   }
 
   public float getGridLineInterval() {
@@ -2697,9 +2712,9 @@ public class SGDrawingWindow extends JFrame
     // set the saved index
     if (saved) {
       this.mSavedListIndex = 0;
-      this.updateStatusBarSavedFlag();
+      SGDrawingWindowUndoUtility.updateStatusBarSavedFlag(this);
     } else {
-      this.initSavedHistory();
+      SGDrawingWindowUndoUtility.initSavedHistory(this);
     }
 
     // update items in the menu bar
@@ -3080,7 +3095,7 @@ public class SGDrawingWindow extends JFrame
 
   /** */
   public boolean initPropertiesHistory() {
-    return this.mUndoManager.initPropertiesHistory();
+    return SGDrawingWindowUndoUtility.initPropertiesHistory(this);
   }
 
   // //
@@ -3112,131 +3127,42 @@ public class SGDrawingWindow extends JFrame
 
   /** */
   public boolean updateHistory() {
-
-    // update the updated index
-    // this method must be called before SGUndoManager::updateHistory is
-    // called
-    this.updateSavedListIndex();
-
-    // update the history
-    if (this.mUndoManager.updateHistory(this.getVisibleFigureList()) == false) {
-      return false;
-    }
-
-    // update items
-    this.updateUndoItems();
-
-    // update the status bar
-    this.updateStatusBarSavedFlag();
-
-    return true;
+    return SGDrawingWindowUndoUtility.updateHistory(this);
   }
 
   // update the index the properties has changed
-  private void updateSavedListIndex() {
-    boolean changed = false;
-    if (this.isChanged()) {
-      changed = true;
-    } else {
-      ArrayList<SGFigure> list = this.getVisibleFigureList();
-      for (int ii = 0; ii < list.size(); ii++) {
-        SGFigure f = list.get(ii);
-        if (f.isChanged()) {
-          changed = true;
-          break;
-        }
-      }
-    }
-
-    //
-    if (changed) {
-      final int index = this.mUndoManager.getChangedObjectListIndex();
-      if (index < this.mSavedListIndex) {
-        this.initSavedHistory();
-      }
-    }
-  }
 
   //
-  private void updateStatusBarSavedFlag() {
-    boolean b = false;
-    if (this.getVisibleFigureList().size() != 0) {
-      final int index = this.mUndoManager.getChangedObjectListIndex();
-      b = (index != this.mSavedListIndex);
-    }
-    this.mStatusBar.setSaved(b);
-  }
 
   /** */
-  public void initSavedHistory() {
-    this.mSavedListIndex = -1;
-    this.updateStatusBarSavedFlag();
-  }
 
   /** */
   protected Set<SGFigure> getAvailableChildSet() {
-    Set<SGFigure> set = new HashSet<SGFigure>();
-    List<SGProperties> mList = this.mUndoManager.getMementoList();
-    for (int ii = 0; ii < mList.size(); ii++) {
-      SGProperties p = mList.get(ii);
-      if (p instanceof WindowProperties) {
-        WindowProperties wp = (WindowProperties) p;
-        set.addAll(wp.mVisibleFigureList);
-      }
-    }
-
-    return set;
+    return SGDrawingWindowUndoUtility.getAvailableChildSet(this);
   }
 
   /** Initialize the undo buffer. Useless figures are deleted here. */
   public void initUndoBuffer() {
-
-    // figures
-    for (int ii = 0; ii < this.mFigureList.size(); ii++) {
-      SGFigure f = this.mFigureList.get(ii);
-      f.initUndoBuffer();
-    }
-
-    // // dispose invisible figures
-    // for (int ii = this.mFigureList.size() - 1; ii >= 0; ii--) {
-    // SGFigure f = (SGFigure) this.mFigureList.get(ii);
-    // if (!f.isVisible()) {
-    // this.mFigureList.remove(f);
-    // f.dispose();
-    // }
-    // }
-
-    // initialize undo buffer
-    this.mUndoManager.initUndoBuffer();
-
-    // delete useless figures
-    if (this.deleteUselessFigures() == false) {
-      throw new Error("Failed to initialize undo buffer.");
-    }
+    SGDrawingWindowUndoUtility.initUndoBuffer(this);
   }
 
   /**
    * @return
    */
   public boolean isUndoable() {
-    return this.mUndoManager.isUndoable();
+    return SGDrawingWindowUndoUtility.isUndoable(this);
   }
 
   /**
    * @return
    */
   public boolean isRedoable() {
-    return this.mUndoManager.isRedoable();
+    return SGDrawingWindowUndoUtility.isRedoable(this);
   }
 
   /** Clear changed flag of this undoable object and all child objects. */
   public void clearChanged() {
-    this.setChanged(false);
-    List<SGFigure> fList = this.getVisibleFigureList();
-    for (int ii = 0; ii < fList.size(); ii++) {
-      SGFigure f = fList.get(ii);
-      f.clearChanged();
-    }
+    SGDrawingWindowUndoUtility.clearChanged(this);
   }
 
   /** */
@@ -3679,7 +3605,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** Update method called on undo and redo. */
-  private boolean updateOnUndo() {
+  boolean updateOnUndo() {
     // clear all focused objects
     this.clearAllFocusedObjectsInFigures();
 
@@ -3702,32 +3628,12 @@ public class SGDrawingWindow extends JFrame
 
   /** Undo the operations. */
   public boolean undo() {
-    if (this.mUndoManager.undo() == false) {
-      return false;
-    }
-
-    // update
-    this.updateOnUndo();
-    this.updateStatusBarSavedFlag();
-
-    this.repaintContentPane();
-
-    return true;
+    return SGDrawingWindowUndoUtility.undo(this);
   }
 
   /** Redo the operations. */
   public boolean redo() {
-    if (this.mUndoManager.redo() == false) {
-      return false;
-    }
-
-    // update
-    this.updateOnUndo();
-    this.updateStatusBarSavedFlag();
-
-    this.repaintContentPane();
-
-    return true;
+    return SGDrawingWindowUndoUtility.redo(this);
   }
 
   /**
@@ -3739,51 +3645,14 @@ public class SGDrawingWindow extends JFrame
    * @return true if both of given figure and data exists
    */
   public boolean existsOnUndo(final boolean bUndo, final SGFigure figure, final SGData data) {
-
-    // try undo / redo
-    if (bUndo) {
-      if (this.isUndoable() == false) {
-        throw new Error("This must not happen.");
-      }
-      this.mUndoManager.undo();
-    } else {
-      if (this.isRedoable() == false) {
-        throw new Error("This must not happen.");
-      }
-      this.mUndoManager.redo();
-    }
-
-    try {
-      List<SGFigure> figureList = this.getVisibleFigureList();
-      if (!figureList.contains(figure)) {
-        return false;
-      }
-      boolean dataFound = false;
-      for (SGFigure f : figureList) {
-        List<SGData> dataList = f.getVisibleDataList();
-        if (dataList.contains(data)) {
-          dataFound = true;
-          break;
-        }
-      }
-      return dataFound;
-
-    } finally {
-
-      // recover the state
-      if (bUndo) {
-        this.mUndoManager.redo();
-      } else {
-        this.mUndoManager.undo();
-      }
-    }
+    return SGDrawingWindowUndoUtility.existsOnUndo(this, bUndo, figure, data);
   }
 
   /**
    * @return
    */
   public boolean isChanged() {
-    return this.mUndoManager.isChanged();
+    return SGDrawingWindowUndoUtility.isChanged(this);
   }
 
   /**
@@ -3805,11 +3674,11 @@ public class SGDrawingWindow extends JFrame
 
   /** */
   public void setChanged(final boolean b) {
-    this.mUndoManager.setChanged(b);
+    SGDrawingWindowUndoUtility.setChanged(this, b);
   }
 
   // update items in menu bar and tool bar related to undo / redo operations
-  private void updateUndoItems() {
+  void updateUndoItems() {
     final boolean undoEnable = this.mUndoManager.isUndoable();
     final boolean redoEnable = this.mUndoManager.isRedoable();
 
@@ -3860,55 +3729,12 @@ public class SGDrawingWindow extends JFrame
    * @return true if succeeded
    */
   public boolean deleteForwardHistory() {
-
-    // delete forward history of figures
-    for (int ii = 0; ii < this.mFigureList.size(); ii++) {
-      SGFigure f = this.mFigureList.get(ii);
-      if (f.deleteForwardHistory() == false) {
-        return false;
-      }
-    }
-
-    // delete forward history of this window
-    if (this.mUndoManager.deleteForwardHistory() == false) {
-      return false;
-    }
-
-    // delete useless child objects
-    if (this.deleteUselessFigures() == false) {
-      return false;
-    }
-
-    return true;
+    return SGDrawingWindowUndoUtility.deleteForwardHistory(this);
   }
 
   // delete useless figures in histories
-  private boolean deleteUselessFigures() {
-    Set<SGFigure> set = this.getAvailableChildSet();
-    boolean gc = false;
-    List<SGFigure> cList = new ArrayList<SGFigure>(this.mFigureList);
-    for (int ii = cList.size() - 1; ii >= 0; ii--) {
-      Object obj = cList.get(ii);
-      if (set.contains(obj) == false) {
-        SGFigure f = (SGFigure) obj;
-        this.deleteFigure(f);
-        gc = true;
-      }
-      obj = null;
-    }
-
-    if (gc) {
-      cList.clear();
-      set.clear();
-    }
-    return true;
-  }
 
   // delete figure from this window
-  private void deleteFigure(SGFigure f) {
-    this.mFigureList.remove(f);
-    f.dispose();
-  }
 
   // The menu bar.
   private SGMenuBar mMenuBar = null;
@@ -4751,8 +4577,11 @@ public class SGDrawingWindow extends JFrame
    * @param b
    */
   public void setSaved(final boolean b) {
-    if (b) this.mSavedListIndex = this.mUndoManager.getChangedObjectListIndex();
-    this.updateStatusBarSavedFlag();
+    SGDrawingWindowUndoUtility.setSaved(this, b);
+  }
+
+  public void initSavedHistory() {
+    SGDrawingWindowUndoUtility.initSavedHistory(this);
   }
 
   /**
@@ -4761,7 +4590,7 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   public boolean isSaved() {
-    return (this.mSavedListIndex == this.mUndoManager.getChangedObjectListIndex());
+    return SGDrawingWindowUndoUtility.isSaved(this);
   }
 
   // interface implements of 'SGIWindowDialogObserver'
