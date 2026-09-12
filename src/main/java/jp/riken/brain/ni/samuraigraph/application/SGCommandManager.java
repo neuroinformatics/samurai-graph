@@ -938,7 +938,7 @@ class SGCommandManager
         }
 
         // get information map
-        final Map<String, Object> infoMap = SGMainFunctions.createInfoMap(dataType, map);
+        final Map<String, Object> infoMap = SGDataInfoMapUtility.createInfoMap(dataType, map);
         if (infoMap == null) {
           return STATUS_FAILED;
         }
@@ -1028,7 +1028,7 @@ class SGCommandManager
         if (strStrideAvailable != null) {
           Boolean strideAvailable = SGUtilityText.getBoolean(strStrideAvailable);
           if (strideAvailable != null) {
-            SGMainFunctions.putDataStrideAvailable(strideAvailable);
+            SGDataInfoMapUtility.putDataStrideAvailable(strideAvailable);
           }
         }
 

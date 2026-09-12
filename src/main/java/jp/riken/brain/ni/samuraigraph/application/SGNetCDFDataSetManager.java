@@ -551,7 +551,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       }
 
       // create information map
-      Map<String, Object> infoMap = SGMainFunctions.createInfoMap(ncDataType, elData);
+      Map<String, Object> infoMap = SGDataInfoMapUtility.createInfoMap(ncDataType, elData);
       infoMap.put(SGIFigureElementGraph.KEY_GROUP_NAME, groupName);
 
       if (this.getNumberOfDataInNetcdfFile(ncfile, figureIndex) == 0) {
@@ -582,7 +582,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       }
 
       // create information map
-      Map<String, Object> pfInfoMap = SGMainFunctions.createInfoMap(originalDataType, elData);
+      Map<String, Object> pfInfoMap = SGDataInfoMapUtility.createInfoMap(originalDataType, elData);
 
       // updates the information map
       final int ret = SGApplicationUtility.updateInformationMap(colInfoSet, infoMap, pfInfoMap);

@@ -35,7 +35,7 @@ Actual JaCoCo measurement (instruction coverage) is **5.8%** overall.
 |-----|------|---------|
 | 7,955 | `figure/java2d/SGFigureElementLegend.java` | Largest class |
 | 7,087 | `base/SGDrawingWindow.java` | Frame handling mixed with window logic |
-| 6,822 | `application/SGMainFunctions.java` | All commands, menu actions, and transforms in one class |
+| 6,346 | `application/SGMainFunctions.java` | All commands, menu actions, and transforms in one class |
 | 5,754 | `figure/java2d/SGAxisElement.java` | |
 | 4,956 | `figure/java2d/SGPropertyDialogSXYData.java` | |
 | 4,889 | `figure/java2d/SGFigureElementShape.java` | |
@@ -45,8 +45,9 @@ Actual JaCoCo measurement (instruction coverage) is **5.8%** overall.
 
 68 files exceed 1,000 lines; 129 exceed 500.
 
-Note: `SGMainFunctionsSplitMerge` (588 LOC) and `SGMainFunctionsTransform`
-(700 LOC) are separate classes, but the main class is still 6,822 lines.
+Note: `SGMainFunctionsSplitMerge` (588 LOC), `SGMainFunctionsTransform`
+(700 LOC) and `SGDataInfoMapUtility` (519 LOC) are separate classes,
+but the main class is still 6,346 lines.
 
 ## 3. Duplicated Architecture
 

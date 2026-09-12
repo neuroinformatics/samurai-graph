@@ -448,7 +448,7 @@ class SGPropertyFileManager
             String type = el.getAttribute(SGIFigureElement.KEY_DATA_TYPE);
 
             // create information map
-            Map<String, Object> infoMap = SGMainFunctions.createInfoMap(type, el);
+            Map<String, Object> infoMap = SGDataInfoMapUtility.createInfoMap(type, el);
 
             // create a data object and set values
             SGPropertyFileData pData = new SGPropertyFileData(id, type, name, infoMap);

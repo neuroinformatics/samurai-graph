@@ -122,7 +122,8 @@ class SGMainFunctionsTransform {
 
         // overwrites the properties gotten from the previous dialog
         infoMap.putAll(
-            SGMainFunctions.createInfoMap(dataType, prev, this.mTransformedData.figureId, null));
+            SGDataInfoMapUtility.createInfoMap(
+                dataType, prev, this.mTransformedData.figureId, null));
 
         FILE_TYPE dataFileType = this.mDataTypeWizardDialog.getDataFileType();
         if (dataFileType == FILE_TYPE.TXT_DATA) {
@@ -445,7 +446,8 @@ class SGMainFunctionsTransform {
     }
 
     // get information
-    infoMap = SGMainFunctions.createInfoMap(dataType, this.mDataTypeWizardDialog, figureID, null);
+    infoMap =
+        SGDataInfoMapUtility.createInfoMap(dataType, this.mDataTypeWizardDialog, figureID, null);
     infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, data.getDataSource());
 
     // get selected column types
@@ -537,7 +539,8 @@ class SGMainFunctionsTransform {
     }
 
     // create a information map
-    infoMap = SGMainFunctions.createInfoMap(dataType, this.mDataTypeWizardDialog, figureID, null);
+    infoMap =
+        SGDataInfoMapUtility.createInfoMap(dataType, this.mDataTypeWizardDialog, figureID, null);
     infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, data.getDataSource());
 
     // get selected column types
@@ -630,7 +633,7 @@ class SGMainFunctionsTransform {
     }
 
     // create a information map
-    infoMap = SGMainFunctions.createInfoMap(dataType, dataTypeDialog, figureID, null);
+    infoMap = SGDataInfoMapUtility.createInfoMap(dataType, dataTypeDialog, figureID, null);
     infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, data.getDataSource());
 
     // get selected column types
