@@ -584,8 +584,10 @@ class SGMainFunctionsTransform {
 
     if (dg.equals(this.mDataTypeWizardDialog)) {
       // set default value of dimension origin and step
-      if (this.mMain.setupNetCDFDefaultDimensionValues(
-              dataType, infoMap, this.mNetCDFDataSetupWizardDialog)
+      if (this.mMain
+              .getWizardTransition()
+              .setupNetCDFDefaultDimensionValues(
+                  dataType, infoMap, this.mNetCDFDataSetupWizardDialog)
           == false) {
         return false;
       }
@@ -679,7 +681,9 @@ class SGMainFunctionsTransform {
 
     if (dg.equals(dataTypeDialog)) {
       // set default value of dimension origin and step
-      if (this.mMain.setupMDArrayDefaultDimensionValues(dataType, infoMap, dataSetupDialog, true)
+      if (this.mMain
+              .getWizardTransition()
+              .setupMDArrayDefaultDimensionValues(dataType, infoMap, dataSetupDialog, true)
           == false) {
         return false;
       }

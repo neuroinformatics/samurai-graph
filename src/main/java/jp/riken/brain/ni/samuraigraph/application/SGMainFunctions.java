@@ -105,17 +105,13 @@ import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataDuplicationDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupPanel;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayPickUpDimensionInfo;
-import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
-import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataDuplicationDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupPanel;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFFile;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFPickUpDimensionInfo;
-import jp.riken.brain.ni.samuraigraph.data.SGNetCDFVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataDuplicationDialog;
-import jp.riken.brain.ni.samuraigraph.data.SGSDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYMDArrayMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYDataBuffer;
@@ -198,6 +194,15 @@ class SGMainFunctions
 
   /** Figure creator. */
   SGFigureCreator mFigureCreator = null;
+
+  private SGMainFunctionsWizardTransition mWizardTransition = null;
+
+  SGMainFunctionsWizardTransition getWizardTransition() {
+    if (this.mWizardTransition == null) {
+      this.mWizardTransition = new SGMainFunctionsWizardTransition(this);
+    }
+    return this.mWizardTransition;
+  }
 
   private SGMainFunctionsPropertyFileHandler mPropertyFileHandler = null;
 
@@ -1345,22 +1350,24 @@ class SGMainFunctions
         FILE_TYPE dataFileType = this.mDataTypeWizardDialog.getDataFileType();
         if (FILE_TYPE.TXT_DATA.equals(dataFileType)) {
           String path = this.mDroppedDataFile.file.getPath();
-          if (this.makeTransition(
-                  this.mDataTypeWizardDialog,
-                  this.mSDArrayDataSetupWizardDialog,
-                  path,
-                  this.mDroppedDataFile.figureID,
-                  this.mDroppedDataFile.pos)
+          if (this.getWizardTransition()
+                  .makeTransition(
+                      this.mDataTypeWizardDialog,
+                      this.mSDArrayDataSetupWizardDialog,
+                      path,
+                      this.mDroppedDataFile.figureID,
+                      this.mDroppedDataFile.pos)
               == false) {
             return false;
           }
         } else if (FILE_TYPE.NETCDF_DATA.equals(dataFileType)) {
-          if (this.makeTransition(
-                  this.mDataTypeWizardDialog,
-                  this.mNetCDFDataSetupWizardDialog,
-                  this.mDroppedDataFile.file.getPath(),
-                  this.mDroppedDataFile.figureID,
-                  this.mDroppedDataFile.pos)
+          if (this.getWizardTransition()
+                  .makeTransition(
+                      this.mDataTypeWizardDialog,
+                      this.mNetCDFDataSetupWizardDialog,
+                      this.mDroppedDataFile.file.getPath(),
+                      this.mDroppedDataFile.figureID,
+                      this.mDroppedDataFile.pos)
               == false) {
             return false;
           }
@@ -1368,15 +1375,16 @@ class SGMainFunctions
             || FILE_TYPE.MATLAB_DATA.equals(dataFileType)) {
           String path = this.mDroppedDataFile.file.getPath();
           String dataName = SGUtility.createDataNameBase(path);
-          if (this.makeTransition(
-                  this.mDataTypeWizardDialog,
-                  this.mMDArrayDataSetupWizardDialog,
-                  path,
-                  this.mDroppedDataFile.figureID,
-                  this.mDroppedDataFile.pos,
-                  dataFileType,
-                  dataName,
-                  true)
+          if (this.getWizardTransition()
+                  .makeTransition(
+                      this.mDataTypeWizardDialog,
+                      this.mMDArrayDataSetupWizardDialog,
+                      path,
+                      this.mDroppedDataFile.figureID,
+                      this.mDroppedDataFile.pos,
+                      dataFileType,
+                      dataName,
+                      true)
               == false) {
             return false;
           }
@@ -1467,15 +1475,16 @@ class SGMainFunctions
         } else {
           showDefault = true;
         }
-        if (this.makeTransition(
-                this.mDataTypeWizardDialog,
-                this.mMDArrayDataSetupWizardDialog,
-                null,
-                this.mFigureIDSelectionWizardDialog.getFigureID(),
-                null,
-                FILE_TYPE.VIRTUAL_DATA,
-                this.mDataTypeWizardDialog.getDataName(),
-                showDefault)
+        if (this.getWizardTransition()
+                .makeTransition(
+                    this.mDataTypeWizardDialog,
+                    this.mMDArrayDataSetupWizardDialog,
+                    null,
+                    this.mFigureIDSelectionWizardDialog.getFigureID(),
+                    null,
+                    FILE_TYPE.VIRTUAL_DATA,
+                    this.mDataTypeWizardDialog.getDataName(),
+                    showDefault)
             == false) {
           return false;
         }
@@ -1750,8 +1759,9 @@ class SGMainFunctions
 
     if (dg.equals(this.mDataTypeWizardDialog)) {
       // set default value of dimension origin and step
-      if (this.setupNetCDFDefaultDimensionValues(
-              dataType, infoMap, this.mNetCDFDataSetupWizardDialog)
+      if (this.getWizardTransition()
+              .setupNetCDFDefaultDimensionValues(
+                  dataType, infoMap, this.mNetCDFDataSetupWizardDialog)
           == false) {
         return false;
       }
@@ -1955,7 +1965,8 @@ class SGMainFunctions
       }
 
       // set default value of dimension origin and step
-      if (this.setupMDArrayDefaultDimensionValues(dataType, infoMap, dataSetupDialog, showDefault)
+      if (this.getWizardTransition()
+              .setupMDArrayDefaultDimensionValues(dataType, infoMap, dataSetupDialog, showDefault)
           == false) {
         return false;
       }
@@ -2118,12 +2129,13 @@ class SGMainFunctions
           final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
           File f = this.mSingleDataFileChooserWizardDialog.getSelectedFile();
           String path = f.getPath();
-          if (this.makeTransition(
-                  this.mDataTypeWizardDialog,
-                  this.mSDArrayDataSetupWizardDialog,
-                  path,
-                  figureID,
-                  null)
+          if (this.getWizardTransition()
+                  .makeTransition(
+                      this.mDataTypeWizardDialog,
+                      this.mSDArrayDataSetupWizardDialog,
+                      path,
+                      figureID,
+                      null)
               == false) {
             return false;
           }
@@ -2132,24 +2144,26 @@ class SGMainFunctions
           final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
           String fileName = this.mSingleDataFileChooserWizardDialog.getFileName();
           if (this.mSingleDataFileChooserWizardDialog.isLocalFileSelected()) {
-            if (this.makeTransition(
-                    this.mDataTypeWizardDialog,
-                    this.mNetCDFDataSetupWizardDialog,
-                    fileName,
-                    figureID,
-                    null)
+            if (this.getWizardTransition()
+                    .makeTransition(
+                        this.mDataTypeWizardDialog,
+                        this.mNetCDFDataSetupWizardDialog,
+                        fileName,
+                        figureID,
+                        null)
                 == false) {
               return false;
             }
           } else {
             FILE_TYPE type = SGApplicationUtility.identifyDataFileType(fileName);
             if (FILE_TYPE.NETCDF_DATA.equals(type)) {
-              if (this.makeTransition(
-                      this.mDataTypeWizardDialog,
-                      this.mNetCDFDataSetupWizardDialog,
-                      fileName,
-                      figureID,
-                      null)
+              if (this.getWizardTransition()
+                      .makeTransition(
+                          this.mDataTypeWizardDialog,
+                          this.mNetCDFDataSetupWizardDialog,
+                          fileName,
+                          figureID,
+                          null)
                   == false) {
                 return false;
               }
@@ -2164,15 +2178,16 @@ class SGMainFunctions
           final int figureID = this.mFigureIDSelectionWizardDialog.getFigureID();
           String path = this.mSingleDataFileChooserWizardDialog.getFileName();
           String dataName = SGUtility.createDataNameBase(path);
-          if (this.makeTransition(
-                  this.mDataTypeWizardDialog,
-                  this.mMDArrayDataSetupWizardDialog,
-                  path,
-                  figureID,
-                  null,
-                  dataFileType,
-                  dataName,
-                  true)
+          if (this.getWizardTransition()
+                  .makeTransition(
+                      this.mDataTypeWizardDialog,
+                      this.mMDArrayDataSetupWizardDialog,
+                      path,
+                      figureID,
+                      null,
+                      dataFileType,
+                      dataName,
+                      true)
               == false) {
             return false;
           }
@@ -2270,81 +2285,8 @@ class SGMainFunctions
   }
 
   // Sets the default value of dimension origin and step.
-  boolean setupNetCDFDefaultDimensionValues(
-      final String dataType,
-      final Map<String, Object> infoMap,
-      final SGNetCDFDataSetupWizardDialog dg) {
-    final boolean multipleVariable = true;
-    infoMap.put(
-        SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE,
-        Boolean.valueOf(multipleVariable));
-
-    SGNetCDFFile ncSource =
-        (SGNetCDFFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
-    NetcdfFile ncFile = null;
-    try {
-      String path = ncSource.getNetcdfFile().getLocation();
-      ncFile = SGApplicationUtility.openNetCDF(path);
-      if (ncFile == null) {
-        return false;
-      }
-      SGNetCDFFile nc = new SGNetCDFFile(ncFile);
-      if (this.setupNetCDFDataSetupDialog(nc, dataType, infoMap, this.mNetCDFDataSetupWizardDialog)
-          == false) {
-        return false;
-      }
-    } catch (IOException e1) {
-      return false;
-    } finally {
-      try {
-        if (ncFile != null) {
-          ncFile.close();
-        }
-      } catch (IOException e1) {
-        logger.debug("Exception occurred", e1);
-      }
-    }
-
-    SGIntegerSeriesSet indices = dg.getSXYPickUpIndices();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
-
-    return true;
-  }
 
   // Sets the default value of dimension origin and step.
-  boolean setupMDArrayDefaultDimensionValues(
-      final String dataType,
-      final Map<String, Object> infoMap,
-      SGMDArrayDataSetupWizardDialog dg,
-      final boolean showDefault) {
-    final boolean multipleVariable = true;
-    infoMap.put(
-        SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE,
-        Boolean.valueOf(multipleVariable));
-
-    SGMDArrayFile dataSource =
-        (SGMDArrayFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
-    SGMDArrayFile mdFile = null;
-    String path = dataSource.getPath();
-    SGDataColumnInfoSet colInfoSet = null;
-    if (path != null) {
-      mdFile = SGApplicationUtility.openMDArrayFile(dataType, path);
-    } else {
-      mdFile = this.mVirtualMDArrayData.file;
-      if (this.mVirtualMDArrayData.colInfoSet != null) {
-        colInfoSet = (SGDataColumnInfoSet) this.mVirtualMDArrayData.colInfoSet.clone();
-      }
-    }
-    if (this.setupMDArrayDataSetupDialog(mdFile, dataType, infoMap, dg, colInfoSet, showDefault)
-        == false) {
-      return false;
-    }
-
-    SGIntegerSeriesSet indices = dg.getSXYPickUpIndices();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
-
-    return true;
-  }
 
   /**
    * Process to data type selection dialog.
@@ -2415,230 +2357,6 @@ class SGMainFunctions
     String path = f.getPath();
     String dataName = SGUtility.createDataNameBase(path);
     next.setDataName(dataName);
-
-    return true;
-  }
-
-  /**
-   * Makes the transition between wizard dialogs.
-   *
-   * @param prev previous dialog to select data type
-   * @param next next dialog to select column
-   * @param f a data file
-   * @return true if succeeded
-   */
-  private boolean makeTransition(
-      SGDataTypeWizardDialog prev,
-      SGSDArrayDataSetupWizardDialog next,
-      String path,
-      int figureID,
-      Point pos) {
-
-    SGDrawingWindow wnd = prev.getOwnerWindow();
-
-    // set invisible the dialog
-    prev.setVisible(false);
-
-    // get selected file type
-    String dataType = prev.getSelectedDataType();
-    if (dataType == null) {
-      SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    // create a map of information
-    Map<String, Object> infoMap = SGDataInfoMapUtility.createInfoMap(dataType, prev, figureID, pos);
-
-    SGDataColumnInfoSet colInfoSet =
-        this.getPropertyFileHandler()
-            .getSDArrayDefaultDataColumnInfo(path, dataType, infoMap, false, null);
-    if (colInfoSet == null) {
-      SGApplicationUtility.showDataFileInvalidMessageDialog(wnd);
-      return false;
-    }
-
-    // create default data name
-    String dataName = SGUtility.createDataNameBase(path);
-
-    // put into the infoMap
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
-
-    SGSDArrayFile sdFile;
-    try {
-      sdFile = (SGSDArrayFile) SGApplicationUtility.createDataSource(path, colInfoSet, infoMap);
-    } catch (FileNotFoundException e) {
-      return false;
-    }
-
-    // set information to the dialog for data column selection
-    next.setData(sdFile, dataType, colInfoSet, infoMap, false);
-
-    // show the dialog to select data columns
-    next.setCenter(wnd);
-    next.setVisible(true);
-
-    return true;
-  }
-
-  /**
-   * Makes the transition between wizard dialogs of netCDF data.
-   *
-   * @param prev previous dialog to select data type
-   * @param next next dialog to select column
-   * @param path a data file path
-   * @return true if succeeded
-   */
-  private boolean makeTransition(
-      SGDataTypeWizardDialog prev,
-      SGNetCDFDataSetupWizardDialog next,
-      String path,
-      int figureID,
-      Point pos) {
-
-    SGDrawingWindow wnd = prev.getOwnerWindow();
-
-    // set invisible the dialog
-    prev.setVisible(false);
-
-    // get selected file type
-    String dataType = prev.getSelectedDataType();
-    if (dataType == null) {
-      SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    // create a map of information
-    Map<String, Object> infoMap = SGDataInfoMapUtility.createInfoMap(dataType, prev, figureID, pos);
-
-    // create default data name
-    String dataName = SGUtility.createDataNameBase(path);
-
-    // put into the infoMap
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
-
-    // open the file
-    NetcdfFile ncFile = null;
-    try {
-      ncFile = SGApplicationUtility.openNetCDF(path);
-    } catch (Exception e1) {
-      SGApplicationUtility.showDataFileInvalidMessageDialog(wnd);
-      return false;
-    }
-    if (ncFile == null) {
-      SGApplicationUtility.showDataFileInvalidMessageDialog(wnd);
-      return false;
-    }
-    SGNetCDFFile nc = new SGNetCDFFile(ncFile);
-    try {
-      if (this.setupNetCDFDataSetupDialog(nc, dataType, infoMap, next) == false) {
-        return false;
-      }
-    } finally {
-      try {
-        ncFile.close();
-      } catch (IOException e1) {
-        return false;
-      }
-    }
-
-    // show the dialog to select data columns
-    next.setCenter(wnd);
-    next.setVisible(true);
-
-    return true;
-  }
-
-  /**
-   * Makes the transition between wizard dialogs of netCDF data.
-   *
-   * @param prev previous dialog to select data type
-   * @param next next dialog to select column
-   * @param path a data file path
-   * @return true if succeeded
-   */
-  private boolean makeTransition(
-      SGDataTypeWizardDialog prev,
-      SGMDArrayDataSetupWizardDialog next,
-      String path,
-      int figureID,
-      Point pos,
-      final FILE_TYPE fileType,
-      String dataName,
-      final boolean showDefault) {
-
-    SGDrawingWindow wnd = prev.getOwnerWindow();
-
-    // set invisible the dialog
-    prev.setVisible(false);
-
-    // get selected file type
-    String dataType = prev.getSelectedDataType();
-    if (dataType == null) {
-      SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    // create a map of information
-    Map<String, Object> infoMap = SGDataInfoMapUtility.createInfoMap(dataType, prev, figureID, pos);
-
-    // put into the infoMap
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
-
-    // open the file
-    if (fileType == FILE_TYPE.HDF5_DATA) {
-      IHDF5Reader reader = null;
-      try {
-        reader = SGApplicationUtility.openHDF5(path);
-      } catch (HDF5Exception e1) {
-        return false;
-      }
-      SGHDF5File hdf5File = new SGHDF5File(reader);
-      try {
-        if (this.setupMDArrayDataSetupDialog(hdf5File, dataType, infoMap, next, null, showDefault)
-            == false) {
-          return false;
-        }
-      } finally {
-        reader.close();
-      }
-    } else if (fileType == FILE_TYPE.MATLAB_DATA) {
-      MatFileReader reader = null;
-      try {
-        reader = SGApplicationUtility.openMAT(path);
-      } catch (IOException e) {
-        return false;
-      }
-      SGMATLABFile matFile = new SGMATLABFile(path, reader);
-      if (this.setupMDArrayDataSetupDialog(matFile, dataType, infoMap, next, null, showDefault)
-          == false) {
-        return false;
-      }
-    } else if (fileType == FILE_TYPE.VIRTUAL_DATA) {
-      SGDataColumnInfoSet colInfoSet = null;
-      if (this.mVirtualMDArrayData.colInfoSet != null) {
-        colInfoSet = (SGDataColumnInfoSet) this.mVirtualMDArrayData.colInfoSet.clone();
-      }
-
-      // puts information for grid plot / scatter plot
-      if (this.mVirtualMDArrayData.buffer != null) {
-        final String key = this.mVirtualMDArrayData.buffer.getGridTypeKey();
-        if (key != null) {
-          infoMap.put(key, this.mVirtualMDArrayData.buffer.isGridType());
-        }
-      }
-
-      if (this.setupMDArrayDataSetupDialog(
-              this.mVirtualMDArrayData.file, dataType, infoMap, next, colInfoSet, showDefault)
-          == false) {
-        return false;
-      }
-    } else {
-      throw new Error("Invalid file type: " + fileType);
-    }
-
-    // show the dialog to select data columns
-    next.setCenter(wnd);
-    next.setVisible(true);
 
     return true;
   }
@@ -3722,90 +3440,6 @@ class SGMainFunctions
       size.y = (float) SGUtilityText.convert(mag * size.y, defaultUnit, unitNew);
     }
     return size;
-  }
-
-  /**
-   * Sets up the the dialog to setup the netCDF data.
-   *
-   * @param ncFile a netCDF file
-   * @param dataType the type of data
-   * @param dg the dialog to setup netCDF data
-   * @return true if succeeded
-   */
-  private boolean setupNetCDFDataSetupDialog(
-      SGNetCDFFile ncFile,
-      String dataType,
-      Map<String, Object> infoMap,
-      SGNetCDFDataSetupWizardDialog dg) {
-
-    Window wnd = dg.getOwner();
-
-    // create column info
-    List<SGNetCDFVariable> varList = ncFile.getVariables();
-    final int size = varList.size();
-    SGNetCDFDataColumnInfo[] cols = new SGNetCDFDataColumnInfo[size];
-    int cnt = 0;
-    for (SGNetCDFVariable var : varList) {
-      cols[cnt] = new SGNetCDFDataColumnInfo(var, var.getName(), var.getValueType());
-      cnt++;
-    }
-    SGDataColumnInfoSet colInfoSet = new SGDataColumnInfoSet(cols);
-
-    // set the data
-    if (dg.setData(ncFile, dataType, colInfoSet, infoMap, true) == false) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    // pack the dialog
-    dg.pack();
-
-    return true;
-  }
-
-  /**
-   * Sets up the the dialog to setup the multidimensional data.
-   *
-   * @param mdFile a multidimensional data file
-   * @param dataType the type of data
-   * @param dg the dialog to setup multidimensional data
-   * @return true if succeeded
-   */
-  private boolean setupMDArrayDataSetupDialog(
-      SGMDArrayFile mdFile,
-      String dataType,
-      Map<String, Object> infoMap,
-      SGMDArrayDataSetupWizardDialog dg,
-      SGDataColumnInfoSet colInfoSet,
-      final boolean showDefault) {
-
-    Window wnd = dg.getOwner();
-
-    // create column info
-
-    SGDataColumnInfoSet colInfoSetNew = null;
-    if (colInfoSet != null) {
-      colInfoSetNew = (SGDataColumnInfoSet) colInfoSet.clone();
-    } else {
-      SGMDArrayVariable[] vars = mdFile.getVariables();
-      SGMDArrayDataColumnInfo[] cols = new SGMDArrayDataColumnInfo[vars.length];
-      for (int ii = 0; ii < cols.length; ii++) {
-        SGMDArrayVariable var = vars[ii];
-        cols[ii] = new SGMDArrayDataColumnInfo(var, var.getName(), var.getValueType());
-      }
-      colInfoSetNew = new SGDataColumnInfoSet(cols);
-    }
-
-    // set the data
-    if (dg.setData(mdFile, dataType, colInfoSetNew, infoMap, showDefault) == false) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
-      return false;
-    }
-
-    // pack the dialog
-    dg.pack();
-
-    return true;
   }
 
   /**
