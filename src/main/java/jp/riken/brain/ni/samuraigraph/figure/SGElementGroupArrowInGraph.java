@@ -118,7 +118,7 @@ public class SGElementGroupArrowInGraph extends SGElementGroupArrowForData
       if (this.isFocused() && this.mGraph.isSymbolsVisibleAroundFocusedObjects()) {
         SGDrawingElement[] array = this.mDrawingElementArray;
         for (int ii = 0; ii < array.length; ii++) {
-          SGDrawingElementArrow2D arrow = (SGDrawingElementArrow2D) array[ii];
+          SGDrawingElementArrow arrow = (SGDrawingElementArrow) array[ii];
           emphasisArrow(arrow, g2d);
         }
       }
@@ -132,7 +132,7 @@ public class SGElementGroupArrowInGraph extends SGElementGroupArrowForData
    * @param symbol
    * @return
    */
-  private boolean emphasisArrow(final SGDrawingElementArrow2D arrow, final Graphics2D g2d) {
+  private boolean emphasisArrow(final SGDrawingElementArrow arrow, final Graphics2D g2d) {
     SGTuple2f start = arrow.getStart();
     SGTuple2f end = arrow.getEnd();
     SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(

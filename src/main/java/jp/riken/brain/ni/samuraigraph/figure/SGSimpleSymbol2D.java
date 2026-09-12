@@ -6,7 +6,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 
-public class SGSimpleSymbol2D extends SGDrawingElementSymbol2D {
+public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
 
   /** The location. */
   protected SGTuple2f mLocation = new SGTuple2f();

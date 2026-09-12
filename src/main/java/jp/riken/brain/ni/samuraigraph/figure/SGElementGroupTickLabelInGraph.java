@@ -133,7 +133,7 @@ public abstract class SGElementGroupTickLabelInGraph extends SGElementGroupTickL
       final int num = array.length;
       if (num <= MAX_NUMBER_OF_ANCHORS) {
         for (int ii = 0; ii < num; ii++) {
-          SGDrawingElementString2D label = (SGDrawingElementString2D) array[ii];
+          SGDrawingElementString label = (SGDrawingElementString) array[ii];
           if (label.isVisible()) {
             emphasisLabel(label, g2d);
           }
@@ -142,7 +142,7 @@ public abstract class SGElementGroupTickLabelInGraph extends SGElementGroupTickL
         int div = num / MAX_NUMBER_OF_ANCHORS + 1;
         int cnt = 0;
         while (true) {
-          SGDrawingElementString2D label = (SGDrawingElementString2D) array[cnt];
+          SGDrawingElementString label = (SGDrawingElementString) array[cnt];
           if (label.isVisible()) {
             emphasisLabel(label, g2d);
           }
@@ -163,7 +163,7 @@ public abstract class SGElementGroupTickLabelInGraph extends SGElementGroupTickL
    * @param label a string element
    * @param g2d the graphics context
    */
-  private void emphasisLabel(final SGDrawingElementString2D label, final Graphics2D g2d) {
+  private void emphasisLabel(final SGDrawingElementString label, final Graphics2D g2d) {
     SGUtilityForFigureElementJava2D.drawAnchorsOnRectangle(label.getElementBounds(), g2d);
   }
 

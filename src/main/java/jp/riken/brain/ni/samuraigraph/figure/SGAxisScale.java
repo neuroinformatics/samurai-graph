@@ -39,7 +39,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementScale.ScaleProperti
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-class SGAxisScale extends SGDrawingElementScale2D
+class SGAxisScale extends SGDrawingElementScale
     implements SGIMovable,
         SGIUndoable,
         AxisScaleChangeListener,
@@ -1120,7 +1120,7 @@ class SGAxisScale extends SGDrawingElementScale2D
                 ? this.mHorizontalUnit
                 : this.mVerticalUnit;
         if (this.isValidText(unitStr)) {
-          SGDrawingElementString2D elUnit = new SGDrawingElementString2DExtended(unitStr);
+          SGDrawingElementString elUnit = new SGDrawingElementString2DExtended(unitStr);
           elUnit.setFont(el.getFontName(), el.getFontStyle(), el.getFontSize());
           elUnit.setMagnification(el.getMagnification());
           elUnit.setAngle(el.getAngle());

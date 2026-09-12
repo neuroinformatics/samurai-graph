@@ -360,11 +360,11 @@ public class SGElementGroupErrorBarInGraph extends SGElementGroupErrorBarForData
           vertical
               ? new SGTuple2f(centerPoint.x, endLocation)
               : new SGTuple2f(endLocation, centerPoint.y);
-      if (SGDrawingElementLine2D.contains(x, y, centerPoint, endPoint, lineWidth)) {
+      if (SGDrawingElementLine.contains(x, y, centerPoint, endPoint, lineWidth)) {
         return true;
       }
       final float size = this.getHeadSize() * this.getMagnification();
-      if (SGDrawingElementSymbol2D.contains(x, y, endPoint, size)) {
+      if (SGDrawingElementSymbol.contains(x, y, endPoint, size)) {
         return true;
       }
       return false;

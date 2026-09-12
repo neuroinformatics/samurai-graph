@@ -69,7 +69,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /** A class managing shape objects. */
-public class SGFigureElementShape extends SGFigureElement2D
+public class SGFigureElementShape extends SGFigureElement
     implements SGIFigureElementShape, SGIShapeConstants {
 
   /** */

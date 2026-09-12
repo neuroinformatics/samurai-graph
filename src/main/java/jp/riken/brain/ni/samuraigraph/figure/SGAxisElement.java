@@ -854,7 +854,7 @@ public abstract class SGAxisElement
   }
 
   // draw a bounding box for a string element
-  boolean drawStringBounds(final SGDrawingElementString2D element, final Graphics2D g2d) {
+  boolean drawStringBounds(final SGDrawingElementString element, final Graphics2D g2d) {
     if (element == null || g2d == null) {
       return false;
     }
@@ -869,7 +869,7 @@ public abstract class SGAxisElement
   }
 
   // draw a string element
-  boolean drawString(final SGDrawingElementString2D element, final Graphics2D g2d) {
+  boolean drawString(final SGDrawingElementString element, final Graphics2D g2d) {
     if (element == null || g2d == null) {
       return false;
     }
@@ -879,7 +879,7 @@ public abstract class SGAxisElement
 
   // draw a line
   boolean drawLine(
-      final SGDrawingElementLine2D element, final Graphics2D g2d, final BasicStroke stroke) {
+      final SGDrawingElementLine element, final Graphics2D g2d, final BasicStroke stroke) {
     if (element == null || g2d == null) {
       return false;
     }
@@ -4043,8 +4043,7 @@ public abstract class SGAxisElement
   }
 
   // line for tick marks
-  public static class ElementLineTickMark extends SGDrawingElementLine2D
-      implements AxisScaleElement {
+  public static class ElementLineTickMark extends SGDrawingElementLine implements AxisScaleElement {
 
     SGTuple2f mStart = new SGTuple2f();
 

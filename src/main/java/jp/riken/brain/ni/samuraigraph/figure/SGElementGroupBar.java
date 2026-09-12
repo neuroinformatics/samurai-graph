@@ -158,7 +158,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     SGDrawingElement[] array = this.mDrawingElementArray;
     if (array != null) {
       for (int ii = 0; ii < array.length; ii++) {
-        SGDrawingElementBar2D el = (SGDrawingElementBar2D) array[ii];
+        SGDrawingElementBar el = (SGDrawingElementBar) array[ii];
         el.paint(g2d, clipRect);
       }
     }
@@ -375,7 +375,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     return true;
   }
 
-  protected abstract static class BarInGroup extends SGDrawingElementBar2D {
+  protected abstract static class BarInGroup extends SGDrawingElementBar {
 
     // a group of bars
     protected SGElementGroupBar mGroup = null;
@@ -567,7 +567,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
 
     SGDrawingElement[] array = this.mDrawingElementArray;
     for (int ii = 0; ii < array.length; ii++) {
-      SGDrawingElementBar2D bar = (SGDrawingElementBar2D) array[ii];
+      SGDrawingElementBar bar = (SGDrawingElementBar) array[ii];
       final boolean eff = !(pointArray[ii].isInfinite() || pointArray[ii].isNaN());
       bar.setVisible(eff);
       //            if (eff) {

@@ -58,7 +58,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /** A class managing axis break symbols. */
-public class SGFigureElementAxisBreak extends SGFigureElement2D
+public class SGFigureElementAxisBreak extends SGFigureElement
     implements SGIFigureElementAxisBreak, SGIAxisBreakConstants {
 
   /** */
@@ -975,7 +975,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement2D
     }
   }
 
-  private class AxisBreakSymbol extends SGDrawingElementAxisBreak2D
+  private class AxisBreakSymbol extends SGDrawingElementAxisBreak
       implements ActionListener,
           SGIUndoable,
           SGIChildObject,

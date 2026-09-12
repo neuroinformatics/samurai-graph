@@ -69,7 +69,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /** A class managing labels. */
-public class SGFigureElementString extends SGFigureElement2D
+public class SGFigureElementString extends SGFigureElement
     implements SGIFigureElementString,
         SGIStringConstants,
         CaretListener,
@@ -2296,7 +2296,7 @@ public class SGFigureElementString extends SGFigureElement2D
     // create a font
     Font font = null;
     if (this.mEditedLabelElement != null) {
-      SGDrawingElementString2D el = this.mEditedLabelElement;
+      SGDrawingElementString el = this.mEditedLabelElement;
 
       // edit
       final float fontSize = el.getFontSize();

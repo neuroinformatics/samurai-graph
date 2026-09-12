@@ -192,9 +192,9 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     final float open = this.getHeadOpenAngle();
     final float close = this.getHeadCloseAngle();
     this.mStartHeadShape =
-        SGDrawingElementArrow2D.createHeadShape(this.getStartHeadType(), size, open, close);
+        SGDrawingElementArrow.createHeadShape(this.getStartHeadType(), size, open, close);
     this.mEndHeadShape =
-        SGDrawingElementArrow2D.createHeadShape(this.getEndHeadType(), size, open, close);
+        SGDrawingElementArrow.createHeadShape(this.getEndHeadType(), size, open, close);
   }
 
   /**
@@ -335,7 +335,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
       return true;
     }
     for (int ii = 0; ii < array.length; ii++) {
-      SGDrawingElementArrow2D el = (SGDrawingElementArrow2D) array[ii];
+      SGDrawingElementArrow el = (SGDrawingElementArrow) array[ii];
       if (el.isVisible() == false) {
         continue;
       }
@@ -784,7 +784,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
   }
 
   /** Arrow in a group of arrows. */
-  protected static class ArrowInGroup extends SGDrawingElementArrow2D {
+  protected static class ArrowInGroup extends SGDrawingElementArrow {
 
     /** The group of arrows. */
     protected SGElementGroup mGroup = null;

@@ -79,7 +79,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /** A class managing axes. */
-public class SGFigureElementAxis extends SGFigureElement2D
+public class SGFigureElementAxis extends SGFigureElement
     implements SGIFigureElementAxis,
         SGIStringConstants,
         CaretListener,
@@ -1707,7 +1707,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
   }
 
   // edited string
-  SGDrawingElementString2D mEditingStringElement = null;
+  SGDrawingElementString mEditingStringElement = null;
 
   // Returns whether a string is edited now
   boolean isEdited() {
@@ -1719,7 +1719,7 @@ public class SGFigureElementAxis extends SGFigureElement2D
     final List<ElementStringNumber> numberList = group.mNumberList;
     double maxLength = Double.MIN_VALUE;
     for (int ii = 0; ii < numberList.size(); ii++) {
-      final SGDrawingElementString2D str = (SGDrawingElementString2D) numberList.get(ii);
+      final SGDrawingElementString str = (SGDrawingElementString) numberList.get(ii);
       final Rectangle2D rect = str.getElementBounds();
       final double width = rect.getWidth();
       if (width > maxLength) {

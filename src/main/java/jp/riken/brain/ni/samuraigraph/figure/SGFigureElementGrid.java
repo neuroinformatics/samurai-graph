@@ -52,7 +52,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /** An object to draw grid lines. */
-public class SGFigureElementGrid extends SGFigureElement2D
+public class SGFigureElementGrid extends SGFigureElement
     implements SGIFigureElementGrid, SGIFigureGridConstants, SGIFigureConstants {
 
   /** An SGIAxisElement object. */

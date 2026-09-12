@@ -56,7 +56,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /** A class of timing lines. */
-public class SGFigureElementTimingLine extends SGFigureElement2D
+public class SGFigureElementTimingLine extends SGFigureElement
     implements SGIFigureElementTimingLine, SGITimingLineConstants {
 
   /** */
@@ -70,7 +70,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     super();
 
     // create an instance of the guide arrow
-    SGDrawingElementArrow2D a = new GuideArrow();
+    SGDrawingElementArrow a = new GuideArrow();
     a.setVisible(false);
     this.mGuideArrow = a;
   }
@@ -742,7 +742,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
   }
 
   /** An arrow for the guide to add a timing line. */
-  private SGDrawingElementArrow2D mGuideArrow = null;
+  private SGDrawingElementArrow mGuideArrow = null;
 
   /** */
   public void paintGraphics(Graphics g, boolean clip) {
@@ -1025,7 +1025,7 @@ public class SGFigureElementTimingLine extends SGFigureElement2D
     }
   }
 
-  protected class TimingLine extends SGDrawingElementLine2D
+  protected class TimingLine extends SGDrawingElementLine
       implements ActionListener,
           SGIUndoable,
           SGICopyable,

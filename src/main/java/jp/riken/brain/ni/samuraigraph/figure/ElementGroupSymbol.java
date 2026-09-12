@@ -61,7 +61,7 @@ class ElementGroupSymbol extends SGElementGroupSymbolForData implements ILegendE
         return 0.0f;
       }
 
-      SGDrawingElementSymbol2D symbol = (SGDrawingElementSymbol2D) array[0];
+      SGDrawingElementSymbol symbol = (SGDrawingElementSymbol) array[0];
       Rectangle2D rect = symbol.getElementBounds().getBounds2D();
       return (float) rect.getHeight();
     }
@@ -119,7 +119,7 @@ class ElementGroupSymbol extends SGElementGroupSymbolForData implements ILegendE
       if (this.mGroupSet instanceof SGIElementGroupSetXY) {
         SGIElementGroupSetXY gsSXY = (SGIElementGroupSetXY) this.mGroupSet;
         if (!gsSXY.getBarGroup().isVisible()) {
-          SGDrawingElementSymbol2D symbol = (SGDrawingElementSymbol2D) this.mDrawingElementArray[0];
+          SGDrawingElementSymbol symbol = (SGDrawingElementSymbol) this.mDrawingElementArray[0];
           Rectangle2D rect = symbol.getElementBounds();
           SGUtilityForFigureElementJava2D.drawAnchorsOnRectangle(rect, g2d);
         }

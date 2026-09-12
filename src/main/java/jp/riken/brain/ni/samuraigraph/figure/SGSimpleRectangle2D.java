@@ -9,7 +9,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGPatternPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGSelectablePaint;
 import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 
-public class SGSimpleRectangle2D extends SGDrawingElementRectangle2D {
+public class SGSimpleRectangle2D extends SGDrawingElementRectangle {
 
   /** X coordinate of this rectangle. */
   protected float mX;

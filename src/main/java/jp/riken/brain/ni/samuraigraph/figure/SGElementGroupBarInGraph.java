@@ -126,7 +126,7 @@ public class SGElementGroupBarInGraph extends SGElementGroupBarForData
     final float yOffset = locInfo.yOffset;
 
     for (int ii = 0; ii < this.mDrawingElementArray.length; ii++) {
-      final SGDrawingElementBar2D bar = (SGDrawingElementBar2D) this.mDrawingElementArray[ii];
+      final SGDrawingElementBar bar = (SGDrawingElementBar) this.mDrawingElementArray[ii];
       final float x = pointArray[ii].x + xOffset;
       final float y = pointArray[ii].y + yOffset;
       if (!baselineAvailable
@@ -201,14 +201,14 @@ public class SGElementGroupBarInGraph extends SGElementGroupBarForData
       final int num = array.length;
       if (num <= MAX_NUMBER_OF_ANCHORS) {
         for (int ii = 0; ii < num; ii++) {
-          SGDrawingElementBar2D bar = (SGDrawingElementBar2D) array[ii];
+          SGDrawingElementBar bar = (SGDrawingElementBar) array[ii];
           emphasisBar(bar, g2d);
         }
       } else {
         int div = num / MAX_NUMBER_OF_ANCHORS;
         int cnt = 0;
         while (true) {
-          SGDrawingElementBar2D bar = (SGDrawingElementBar2D) array[cnt];
+          SGDrawingElementBar bar = (SGDrawingElementBar) array[cnt];
           emphasisBar(bar, g2d);
           cnt += div;
           if (cnt >= num) {
@@ -226,7 +226,7 @@ public class SGElementGroupBarInGraph extends SGElementGroupBarForData
    * @param symbol
    * @return
    */
-  private boolean emphasisBar(final SGDrawingElementBar2D bar, final Graphics2D g2d) {
+  private boolean emphasisBar(final SGDrawingElementBar bar, final Graphics2D g2d) {
     SGUtilityForFigureElementJava2D.drawAnchorsOnRectangle(bar.getElementBounds(), g2d);
     return true;
   }

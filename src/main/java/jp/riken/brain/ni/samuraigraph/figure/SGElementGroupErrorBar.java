@@ -12,7 +12,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementArrow2D.ArrowHead;
+import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementArrow.ArrowHead;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupArrow.ArrowInGroup;
 import org.w3c.dom.Element;
 
@@ -542,7 +542,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     SGDrawingElement[] array = this.mDrawingElementArray;
     if (array != null) {
       for (int ii = 0; ii < array.length; ii++) {
-        SGDrawingElementErrorBar2D el = (SGDrawingElementErrorBar2D) array[ii];
+        SGDrawingElementErrorBar el = (SGDrawingElementErrorBar) array[ii];
         if (el.isVisible() == false) {
           continue;
         }
@@ -767,7 +767,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
   public abstract boolean updateLocation();
 
   /** Error bar in a group of error bars. */
-  protected static class ErrorBarInGroup extends SGDrawingElementErrorBar2D {
+  protected static class ErrorBarInGroup extends SGDrawingElementErrorBar {
 
     // a group of error bars
     protected SGElementGroupErrorBar mGroup = null;
@@ -1115,7 +1115,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
   protected void updateHeadShape() {
     final int type = this.getHeadType();
     final float size = this.getMagnification() * this.getHeadSize();
-    this.mHeadShape = SGDrawingElementArrow2D.createHeadShape(type, size, 0.0f, 0.0f);
+    this.mHeadShape = SGDrawingElementArrow.createHeadShape(type, size, 0.0f, 0.0f);
   }
 
   /**

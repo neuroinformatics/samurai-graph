@@ -2,6 +2,14 @@ package jp.riken.brain.ni.samuraigraph.figure;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineMetrics;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
@@ -14,8 +22,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
 /** Drawing element of the text string. */
-public abstract class SGDrawingElementString extends SGDrawingElement
-    implements SGIStringConstants {
+public class SGDrawingElementString extends SGDrawingElement
+    implements SGIDrawingElementJava2D, SGIStringConstants {
 
   /** The magnification. */
   protected float mMagnification = 1.0f;
@@ -53,6 +61,8 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     this.mString = "";
     this.mColor = DEFAULT_STRING_FONT_COLOR;
     this.updateFont();
+    this.updateMetrics();
+    this.updateElementBounds();
   }
 
   /** Construct a string element with given text. */
@@ -61,6 +71,8 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     this.mString = str;
     this.mColor = DEFAULT_STRING_FONT_COLOR;
     this.updateFont();
+    this.updateMetrics();
+    this.updateElementBounds();
   }
 
   /** Construct a string element with given string element. */
@@ -73,6 +85,8 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     this.mFontSize = element.getFontSize();
     this.mAngle = element.mAngle;
     this.updateFont();
+    this.updateMetrics();
+    this.updateElementBounds();
   }
 
   /** Construct a string element with given text and font information. */
@@ -93,6 +107,8 @@ public abstract class SGDrawingElementString extends SGDrawingElement
     this.mColor = color;
     this.mMagnification = mag;
     this.updateFont();
+    this.updateMetrics();
+    this.updateElementBounds();
   }
 
   /** Disposes this object. */
@@ -619,5 +635,251 @@ public abstract class SGDrawingElementString extends SGDrawingElement
       this.mColor = cl;
       return true;
     }
+  }
+
+  /**
+   * Visual bounding box of this string element on zero angle and given magnification and font
+   * properties.
+   */
+  protected Rectangle2D mStringRect = null;
+
+  /** Element bounds */
+  protected Rectangle2D mElementBounds = null;
+
+  /** test metrics */
+  protected float mAscent = 0.0f;
+
+  protected float mDescent = 0.0f;
+
+  protected float mLeading = 0.0f;
+
+  protected float mStrikethroughOffset = 0.0f;
+
+  protected float mAdvance = 0.0f;
+
+  /** Default constructor. */
+
+  /** Construct a string element with given text. */
+
+  /** Construct a string element with given string element. */
+
+  /** Construct a string element with given text and font information. */
+
+  /** Dispose this object. */
+
+  /**
+   * Sets the text.
+   *
+   * @param str a text to set
+   * @return true if succeeded
+   */
+
+  /**
+   * Set the magnification.
+   *
+   * @param mag the magnification to set
+   * @return true if succeeded
+   */
+
+  /** */
+
+  /**
+   * Sets the location of this symbol.
+   *
+   * @param pos the location to set
+   * @return true if succeeded
+   */
+
+  /**
+   * Sets the location of this symbol.
+   *
+   * @param x the x coordinate to set
+   * @param y the y coordinate to set
+   * @return true if succeeded
+   */
+
+  /**
+   * Sets the angle of this string.
+   *
+   * @param angle the angle to be set in units of degree
+   * @return true if succeeded
+   */
+
+  /** */
+  public final boolean contains(final int x, final int y) {
+    return this.mElementBounds.contains(x, y);
+  }
+
+  /** Update the attributes of bounding box. */
+  private void updateMetrics() {
+    final Font font = this.getFont();
+    final String str = this.getString();
+
+    if (str.length() == 0) {
+      this.mStringRect = new Rectangle2D.Float(); // (0,0), (0,0)
+      this.mAscent = 0.0f;
+      this.mDescent = 0.0f;
+      this.mLeading = 0.0f;
+      this.mStrikethroughOffset = 0.0f;
+      this.mAdvance = 0.0f;
+      return;
+    }
+
+    // create font render context
+    final FontRenderContext frc = new FontRenderContext(null, false, false);
+
+    // create text layout
+    final TextLayout layout = new TextLayout(str, font, frc);
+
+    // get a visual bounds rectangle from Font object
+    //        this.mStringRect = layout.getBounds();
+    this.mStringRect = layout.getOutline(new AffineTransform()).getBounds2D();
+    if (this.mStringRect.isEmpty()) {
+      this.mStringRect.setRect(0, 0, 0, 0);
+    }
+
+    // get a line metrics from the Font object
+    final LineMetrics metrics = font.getLineMetrics(str, frc);
+
+    // this.mAscent = metrics.getAscent();
+    // this.mDescent = metrics.getDescent();
+    this.mAscent = (float) (-this.mStringRect.getY());
+    this.mDescent = (float) (this.mStringRect.getHeight() + this.mStringRect.getY());
+    this.mLeading = metrics.getLeading();
+    this.mStrikethroughOffset = metrics.getStrikethroughOffset();
+    this.mAdvance = layout.getAdvance();
+  }
+
+  /** Returns the bounding box with the given magnification, location, font and angle properties. */
+  private void updateElementBounds() {
+    final String str = this.getString();
+    if (str.length() == 0) {
+      this.mElementBounds = new Rectangle2D.Float(); // (0,0), (0,0)
+      return;
+    }
+
+    // shift position
+    final float angle = this.getAngle() * SGIConstants.RADIAN_DEGREE_RATIO;
+    final float cv = (float) Math.cos(angle);
+    final float sv = (float) Math.sin(angle);
+    final float dy = (float) (this.mStringRect.getHeight() + this.mStringRect.getY());
+    final float dx = 0.0f;
+    final float pos_x = this.getX() + dx * cv + dy * sv;
+    final float pos_y = this.getY() - dx * sv + dy * cv;
+
+    // create affine trans form
+    final AffineTransform af = new AffineTransform();
+    af.translate(pos_x, pos_y);
+
+    // rotate position
+    af.rotate(-angle);
+
+    // get element bounds
+    final Rectangle2D sRect = (Rectangle2D) this.mStringRect.clone();
+    sRect.setRect(0, 0, this.mAdvance, this.mStringRect.getHeight());
+    final Shape sh = af.createTransformedShape(sRect);
+    this.mElementBounds = sh.getBounds2D();
+  }
+
+  /** Returns the bounding box with the given magnification, location, font and angle properties. */
+  public Rectangle2D getElementBounds() {
+    return (Rectangle2D) this.mElementBounds.clone();
+  }
+
+  /**
+   * Returns the bounding box with the given magnification and font properties. The angle does not
+   * affect the returned value. The x- and y-coordinate of this rectangle always equals to zero.
+   */
+  public Rectangle2D getStringRect() {
+    return (Rectangle2D) this.mStringRect.clone();
+  }
+
+  /** get ascent of text line */
+  protected float getAscent() {
+    return this.mAscent;
+  }
+
+  /** get descent of text line */
+  protected float getDescent() {
+    return this.mDescent;
+  }
+
+  /** get leading of text line */
+  protected float getLeading() {
+    return this.mLeading;
+  }
+
+  /**
+   * get strike through offset of text line
+   *
+   * @return
+   */
+  protected float getStrikethroughOffset() {
+    return this.mStrikethroughOffset;
+  }
+
+  /** get advance of text line */
+  protected float getAdvance() {
+    return this.mAdvance;
+  }
+
+  /**
+   * Paint this object.
+   *
+   * @param g2d graphics context
+   */
+  public void paint(final Graphics2D g2d) {
+    if (g2d == null) {
+      return;
+    }
+    if (this.isVisible() == false) {
+      return;
+    }
+
+    final String str = this.getString();
+
+    g2d.setPaint(this.getColor());
+
+    // set the font
+    g2d.setFont(this.getFont());
+
+    // create an affine transformation matrix
+    final AffineTransform af = new AffineTransform();
+    // shift position
+    af.translate(this.getX(), this.getY());
+    // rotate position
+    af.rotate(-this.getAngle() * SGIConstants.RADIAN_DEGREE_RATIO);
+
+    // transform
+    final AffineTransform saveAT = g2d.getTransform();
+    g2d.transform(af);
+
+    final boolean useAntiAliasing = true;
+
+    if (useAntiAliasing) {
+      // enable anti aliasing for text
+      g2d.setRenderingHint(
+          RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    }
+    // draw string
+    g2d.drawString(str, 0, (float) this.mStringRect.getHeight());
+
+    if (useAntiAliasing) {
+      // disable anti aliasing for text
+      g2d.setRenderingHint(
+          RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+    }
+
+    g2d.setTransform(saveAT);
+  }
+
+  /**
+   * Paint this object with given clipping rectangle.
+   *
+   * @param g2d graphics context
+   * @param clipRect clipping rectangle
+   */
+  public void paint(final Graphics2D g2d, final Rectangle2D clipRect) {
+    this.paint(g2d);
   }
 }

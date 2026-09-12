@@ -198,7 +198,7 @@ public class SGStringBraceModifier implements SGIStringModifier {
     private String generateString() {
       StringBuilder sb = new StringBuilder();
       for (int ii = 0; ii < this.mBaseElementList.size(); ii++) {
-        SGDrawingElementString2D base = this.mBaseElementList.get(ii);
+        SGDrawingElementString base = this.mBaseElementList.get(ii);
         sb.append(this.insertEscapeCharacter(base.getString()));
         DrawingElementString2DExtendedOlder sub =
             (DrawingElementString2DExtendedOlder) this.mSubscriptElementList.get(ii);
@@ -250,7 +250,7 @@ public class SGStringBraceModifier implements SGIStringModifier {
     }
 
     @Override
-    protected SGDrawingElementString2D createIndexInstance(
+    protected SGDrawingElementString createIndexInstance(
         final String str,
         final String name,
         final int style,

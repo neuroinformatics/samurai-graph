@@ -15,22 +15,21 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
  * An extended class of string element. This drawing element represent a string with superscript and
  * subscript.
  */
-public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
+public class SGDrawingElementString2DExtended extends SGDrawingElementString {
 
   /** The super/subscript font size scaling factor */
   private static final float SCRIPT_FONT_FACTOR = 1.4f;
 
   /** The list of string elements of base characters. */
-  protected List<SGDrawingElementString2D> mBaseElementList =
-      new ArrayList<SGDrawingElementString2D>();
+  protected List<SGDrawingElementString> mBaseElementList = new ArrayList<SGDrawingElementString>();
 
   /** The list of string elements of subscript. */
-  protected List<SGDrawingElementString2D> mSubscriptElementList =
-      new ArrayList<SGDrawingElementString2D>();
+  protected List<SGDrawingElementString> mSubscriptElementList =
+      new ArrayList<SGDrawingElementString>();
 
   /** The list of string elements of superscript. */
-  protected List<SGDrawingElementString2D> mSuperscriptElementList =
-      new ArrayList<SGDrawingElementString2D>();
+  protected List<SGDrawingElementString> mSuperscriptElementList =
+      new ArrayList<SGDrawingElementString>();
 
   /** Check flag for update location requirements */
   private boolean mUpdateLocationRequired = true;
@@ -69,9 +68,9 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
   /** */
   public void dispose() {
     super.dispose();
-    ArrayList<SGDrawingElementString2D> list = this.getAllStringElement();
+    ArrayList<SGDrawingElementString> list = this.getAllStringElement();
     for (int ii = 0; ii < list.size(); ii++) {
-      SGDrawingElementString2D el = (SGDrawingElementString2D) list.get(ii);
+      SGDrawingElementString el = (SGDrawingElementString) list.get(ii);
       el.dispose();
     }
     this.mBaseElementList.clear();
@@ -113,8 +112,8 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
    *
    * @return a list of all string elements
    */
-  protected final ArrayList<SGDrawingElementString2D> getAllStringElement() {
-    ArrayList<SGDrawingElementString2D> list = new ArrayList<SGDrawingElementString2D>();
+  protected final ArrayList<SGDrawingElementString> getAllStringElement() {
+    ArrayList<SGDrawingElementString> list = new ArrayList<SGDrawingElementString>();
     list.addAll(this.mBaseElementList);
     list.addAll(this.mSubscriptElementList);
     list.addAll(this.mSuperscriptElementList);
@@ -145,9 +144,9 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
     if (super.setMagnification(mag) == false) {
       return false;
     }
-    List<SGDrawingElementString2D> list = this.getAllStringElement();
+    List<SGDrawingElementString> list = this.getAllStringElement();
     for (int ii = 0; ii < list.size(); ii++) {
-      SGDrawingElementString2D el = list.get(ii);
+      SGDrawingElementString el = list.get(ii);
       if (el.setMagnification(mag) == false) {
         return false;
       }
@@ -166,7 +165,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
     if (super.setColor(color) == false) {
       return false;
     }
-    ArrayList<SGDrawingElementString2D> list = this.getAllStringElement();
+    ArrayList<SGDrawingElementString> list = this.getAllStringElement();
     for (int ii = 0; ii < list.size(); ii++) {
       SGDrawingElementString el = (SGDrawingElementString) list.get(ii);
       el.setColor(color);
@@ -183,17 +182,17 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
     Font f = new Font(name, style, (int) size);
     Font f2 = new Font(name, style, (int) (size / SCRIPT_FONT_FACTOR));
     for (int ii = 0; ii < this.mBaseElementList.size(); ii++) {
-      SGDrawingElementString2D el = this.mBaseElementList.get(ii);
+      SGDrawingElementString el = this.mBaseElementList.get(ii);
       el.setFont(f.getFamily(), f.getStyle(), f.getSize());
     }
     for (int ii = 0; ii < this.mSubscriptElementList.size(); ii++) {
-      SGDrawingElementString2D el = this.mSubscriptElementList.get(ii);
+      SGDrawingElementString el = this.mSubscriptElementList.get(ii);
       if (el != null) {
         el.setFont(f2.getFamily(), f2.getStyle(), f2.getSize());
       }
     }
     for (int ii = 0; ii < this.mSuperscriptElementList.size(); ii++) {
-      SGDrawingElementString2D el = this.mSuperscriptElementList.get(ii);
+      SGDrawingElementString el = this.mSuperscriptElementList.get(ii);
       if (el != null) {
         el.setFont(f2.getFamily(), f2.getStyle(), f2.getSize());
       }
@@ -237,9 +236,9 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
     if (super.setAngle(angle) == false) {
       return false;
     }
-    ArrayList<SGDrawingElementString2D> list = this.getAllStringElement();
+    ArrayList<SGDrawingElementString> list = this.getAllStringElement();
     for (int ii = 0; ii < list.size(); ii++) {
-      SGDrawingElementString2D el = list.get(ii);
+      SGDrawingElementString el = list.get(ii);
       el.setAngle(angle);
     }
     this.mUpdateLocationRequired = true;
@@ -253,8 +252,8 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
    * @return true if succeeded
    */
   protected boolean createStringElementsDirectly(final String str) {
-    SGDrawingElementString2D el =
-        new SGDrawingElementString2D(
+    SGDrawingElementString el =
+        new SGDrawingElementString(
             str,
             this.getFontName(),
             this.getFontStyle(),
@@ -313,11 +312,11 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
 
     for (int ii = 0; ii < baseList.size(); ii++) {
       String str = null;
-      SGDrawingElementString2D el = null;
+      SGDrawingElementString el = null;
 
       // base characters
       str = (String) baseList.get(ii);
-      el = new SGDrawingElementString2D(str, name, style, size, cl, mag, angle);
+      el = new SGDrawingElementString(str, name, style, size, cl, mag, angle);
       this.mBaseElementList.add(el);
 
       // subscript characters
@@ -344,7 +343,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
     return true;
   }
 
-  protected SGDrawingElementString2D createIndexInstance(
+  protected SGDrawingElementString createIndexInstance(
       final String str,
       final String name,
       final int style,
@@ -452,9 +451,9 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
     }
 
     // draw strings
-    ArrayList<SGDrawingElementString2D> list = this.getAllStringElement();
+    ArrayList<SGDrawingElementString> list = this.getAllStringElement();
     for (int ii = 0; ii < list.size(); ii++) {
-      SGDrawingElementString2D el = list.get(ii);
+      SGDrawingElementString el = list.get(ii);
       el.paint(g2d);
     }
   }
@@ -487,7 +486,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
       // base list
       float base_advance = 0.0f;
       {
-        final SGDrawingElementString2D base_el = this.mBaseElementList.get(ii);
+        final SGDrawingElementString base_el = this.mBaseElementList.get(ii);
         // get visual height of base list
         final float base_visual_height = (float) base_el.getStringRect().getHeight();
         // calculate location
@@ -573,7 +572,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
 
     // calculate font specific values
     if (this.mBaseElementList.size() != 0) {
-      final SGDrawingElementString2D el = this.mBaseElementList.get(0);
+      final SGDrawingElementString el = this.mBaseElementList.get(0);
       // get center line height ( baseline to center line : negative value
       // )
       base_strike_through_offset = el.getStrikethroughOffset();
@@ -590,7 +589,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
       // base list
       float base_advance = 0.0f;
       {
-        final SGDrawingElementString2D base_el = this.mBaseElementList.get(ii);
+        final SGDrawingElementString base_el = this.mBaseElementList.get(ii);
         // get visual ascent
         final float tmp_bva = -(float) base_el.getStringRect().getY();
         if (tmp_bva > base_visual_ascent) base_visual_ascent = tmp_bva;
@@ -674,9 +673,9 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
   /** Calculate the bounding box of this string element. */
   private void calcElementBounds() {
     final ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
-    final ArrayList<SGDrawingElementString2D> list = this.getAllStringElement();
+    final ArrayList<SGDrawingElementString> list = this.getAllStringElement();
     for (int ii = 0; ii < list.size(); ii++) {
-      SGDrawingElementString2D el = list.get(ii);
+      SGDrawingElementString el = list.get(ii);
       rectList.add(el.getElementBounds());
     }
 
@@ -702,7 +701,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString2D {
     return this.hasElement(this.mSuperscriptElementList);
   }
 
-  private boolean hasElement(List<SGDrawingElementString2D> list) {
+  private boolean hasElement(List<SGDrawingElementString> list) {
     for (int ii = 0; ii < list.size(); ii++) {
       if (list.get(ii) != null) {
         return true;

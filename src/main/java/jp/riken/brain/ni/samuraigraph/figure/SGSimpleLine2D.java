@@ -5,7 +5,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
-public abstract class SGSimpleLine2D extends SGDrawingElementLine2D {
+public abstract class SGSimpleLine2D extends SGDrawingElementLine {
 
   /** The start point. */
   protected SGTuple2f mStartPoint = new SGTuple2f();

@@ -211,7 +211,7 @@ class ElementGroupLine extends SGElementGroupLineForData implements ILegendEleme
       if (this.mGroupSet instanceof SGIElementGroupSetXY) {
         SGIElementGroupSetXY gsSXY = (SGIElementGroupSetXY) this.mGroupSet;
         if (!gsSXY.getSymbolGroup().isVisible() && !gsSXY.getBarGroup().isVisible()) {
-          SGDrawingElementLine2D line = (SGDrawingElementLine2D) this.mDrawingElementArray[0];
+          SGDrawingElementLine line = (SGDrawingElementLine) this.mDrawingElementArray[0];
           SGTuple2f start = line.getStart();
           SGTuple2f end = line.getEnd();
           SGUtilityForFigureElementJava2D.drawAnchorAsFocusedObject(

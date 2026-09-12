@@ -67,7 +67,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /** A class managing significant difference symbols. */
-public class SGFigureElementSignificantDifference extends SGFigureElement2D
+public class SGFigureElementSignificantDifference extends SGFigureElement
     implements SGIFigureElementSignificantDifference,
         SGISignificantDifferenceConstants,
         CaretListener,
@@ -712,7 +712,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
             final int tx = this.mPressedPoint.x - (int) sRect.getX();
             final int ty = this.mPressedPoint.y - (int) sRect.getY();
             this.showEditField(
-                this.mEditField, (SGDrawingElementString2D) el.getStringElement(), tx, ty);
+                this.mEditField, (SGDrawingElementString) el.getStringElement(), tx, ty);
           } else {
             this.updateFocusedObjectsList(el, e);
           }
@@ -1227,7 +1227,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement2D
     }
   }
 
-  private class SigDiffSymbol extends SGDrawingElementSignificantDifference2D
+  private class SigDiffSymbol extends SGDrawingElementSignificantDifference
       implements ActionListener,
           SGIUndoable,
           SGIChildObject,

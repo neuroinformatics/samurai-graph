@@ -408,7 +408,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
   }
 
   /** A line in a group of lines. */
-  protected static class LineInGroup extends SGDrawingElementLine2D {
+  protected static class LineInGroup extends SGDrawingElementLine {
 
     // a group of lines
     protected SGElementGroupLine mGroup = null;
@@ -702,7 +702,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
         final List<SGDrawingElementLine> lineList = lineListList.get(ii);
         final GeneralPath gp = new GeneralPath();
         final SGDrawingElementLine el = lineList.get(0);
-        final Line2D line = SGDrawingElementLine2D.getLine(el);
+        final Line2D line = SGDrawingElementLine.getLine(el);
         gp.append(line, true);
         if (lineList.size() >= 2) {
           Point2D pos = line.getP2();

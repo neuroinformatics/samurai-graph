@@ -654,7 +654,7 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
   }
 
   /** A rectangle in a group. */
-  protected static class RectInGroup extends SGDrawingElementRectangle2D {
+  protected static class RectInGroup extends SGDrawingElementRectangle {
 
     // a group of rectangles
     protected SGElementGroupRectangle mGroup = null;

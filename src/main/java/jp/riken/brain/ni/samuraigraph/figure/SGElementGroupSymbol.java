@@ -309,7 +309,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     SGDrawingElement[] array = this.mDrawingElementArray;
     if (array != null) {
       for (int ii = 0; ii < array.length; ii++) {
-        SGDrawingElementSymbol2D el = (SGDrawingElementSymbol2D) array[ii];
+        SGDrawingElementSymbol el = (SGDrawingElementSymbol) array[ii];
         if (el.isVisible() == false) {
           continue;
         }
@@ -488,7 +488,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
   }
 
   /** A symbol in a group. */
-  protected class SymbolInGroup extends SGDrawingElementSymbol2D {
+  protected class SymbolInGroup extends SGDrawingElementSymbol {
 
     /** The group of symbols. */
     protected SGElementGroupSymbol mGroup = null;
@@ -718,7 +718,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     }
 
     for (int ii = 0; ii < pointArray.length; ii++) {
-      SGDrawingElementSymbol2D symbol = (SGDrawingElementSymbol2D) this.mDrawingElementArray[ii];
+      SGDrawingElementSymbol symbol = (SGDrawingElementSymbol) this.mDrawingElementArray[ii];
       final boolean eff = !(pointArray[ii].isInfinite() || pointArray[ii].isNaN());
       symbol.setVisible(eff);
       //            if (eff) {
@@ -735,7 +735,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
   //     */
   //    public boolean setPropertiesOfDrawingElements() {
   //        for (int ii = 0; ii < this.mDrawingElementArray.length; ii++) {
-  //            SGDrawingElementSymbol2D symbol = (SGDrawingElementSymbol2D)
+  //            SGDrawingElementSymbol symbol = (SGDrawingElementSymbol)
   // this.mDrawingElementArray[ii];
   //            symbol.setMagnification(this.mMagnification);
   ////            symbol.setColorList(this.mColorList);
@@ -929,7 +929,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
   /** Updates the shape. */
   protected void updateShape() {
     this.mShape =
-        SGDrawingElementSymbol2D.createShape(
+        SGDrawingElementSymbol.createShape(
             this.getType(), this.getMagnification() * this.getSize());
   }
 }

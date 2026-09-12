@@ -75,14 +75,14 @@ public class SGElementGroupSymbolInGraph extends SGElementGroupSymbolForData
         final int num = array.length;
         if (num <= MAX_NUMBER_OF_ANCHORS) {
           for (int ii = 0; ii < num; ii++) {
-            SGDrawingElementSymbol2D symbol = (SGDrawingElementSymbol2D) array[ii];
+            SGDrawingElementSymbol symbol = (SGDrawingElementSymbol) array[ii];
             emphasisSymbol(symbol, g2d);
           }
         } else {
           int div = num / MAX_NUMBER_OF_ANCHORS;
           int cnt = 0;
           while (true) {
-            SGDrawingElementSymbol2D symbol = (SGDrawingElementSymbol2D) array[cnt];
+            SGDrawingElementSymbol symbol = (SGDrawingElementSymbol) array[cnt];
             emphasisSymbol(symbol, g2d);
             cnt += div;
             if (cnt >= num) {
@@ -101,7 +101,7 @@ public class SGElementGroupSymbolInGraph extends SGElementGroupSymbolForData
    * @param symbol
    * @return
    */
-  private boolean emphasisSymbol(final SGDrawingElementSymbol2D symbol, final Graphics2D g2d) {
+  private boolean emphasisSymbol(final SGDrawingElementSymbol symbol, final Graphics2D g2d) {
     SGUtilityForFigureElementJava2D.drawAnchorsOnRectangle(symbol.getElementBounds(), g2d);
     return true;
   }

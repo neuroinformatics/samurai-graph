@@ -54,7 +54,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /** The base class of figure element which has data object and related element group set. */
-public abstract class SGFigureElementForData extends SGFigureElement2D
+public abstract class SGFigureElementForData extends SGFigureElement
     implements SGIFigureElementForData, SGISXYDataConstants, SGIVXYDataConstants {
 
   /** The axis element. */

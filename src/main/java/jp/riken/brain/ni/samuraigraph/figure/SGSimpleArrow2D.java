@@ -6,7 +6,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** The base class for a simple arrow with Java2D. */
-public abstract class SGSimpleArrow2D extends SGDrawingElementArrow2D {
+public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
 
   /** The start point. */
   protected SGTuple2f mStartPoint = new SGTuple2f();
@@ -375,7 +375,7 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow2D {
 
   /** Updates the head shape. */
   protected void updateHeadShape() {
-    this.mStartHeadShape = ((SGDrawingElementSymbol2D) this.getStartHead()).createShape();
-    this.mEndHeadShape = ((SGDrawingElementSymbol2D) this.getEndHead()).createShape();
+    this.mStartHeadShape = ((SGDrawingElementSymbol) this.getStartHead()).createShape();
+    this.mEndHeadShape = ((SGDrawingElementSymbol) this.getEndHead()).createShape();
   }
 }

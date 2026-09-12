@@ -140,7 +140,7 @@ class ElementGroupBar extends SGElementGroupBarForData implements ILegendElement
     if (this.mGroupSet.isViewable()
         && this.mGroupSet.isSelected()
         && legend.isSymbolsVisibleAroundFocusedObjects()) {
-      SGDrawingElementBar2D bar = (SGDrawingElementBar2D) this.mDrawingElementArray[0];
+      SGDrawingElementBar bar = (SGDrawingElementBar) this.mDrawingElementArray[0];
       Rectangle2D rect = bar.getElementBounds();
       SGUtilityForFigureElementJava2D.drawAnchorsOnRectangle(rect, g2d);
     }

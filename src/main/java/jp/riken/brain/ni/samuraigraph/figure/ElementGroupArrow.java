@@ -67,7 +67,7 @@ class ElementGroupArrow extends SGElementGroupArrowForData implements ILegendEle
         return new Rectangle2D.Float();
       }
 
-      SGDrawingElementArrow2D el = (SGDrawingElementArrow2D) array[0];
+      SGDrawingElementArrow el = (SGDrawingElementArrow) array[0];
       Rectangle2D rect = el.getElementBounds();
       return rect;
     }

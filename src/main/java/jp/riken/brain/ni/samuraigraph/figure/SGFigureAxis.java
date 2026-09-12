@@ -545,7 +545,7 @@ class SGFigureAxis extends SGAxisElement {
   }
 
   private boolean initLocationOfExponentDrawingElement() {
-    SGDrawingElementString2D el = this.mExponentSymbol;
+    SGDrawingElementString el = this.mExponentSymbol;
     final Rectangle2D rect = el.getElementBounds();
     final float mag = this.mAxisElement.getMagnification();
     final float spaceLN =
