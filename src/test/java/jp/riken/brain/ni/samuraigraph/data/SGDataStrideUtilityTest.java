@@ -3,6 +3,9 @@ package jp.riken.brain.ni.samuraigraph.data;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
 
 import com.jmatio.io.MatFileReader;
 import com.jmatio.io.MatFileWriter;
@@ -10,8 +13,11 @@ import com.jmatio.types.MLDouble;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
@@ -142,5 +148,39 @@ class SGDataStrideUtilityTest {
     assertEquals(8, series.getMax());
     assertEquals(5, series.getLength());
     assertEquals(2, series.getStep().getNumber());
+  }
+
+  @Test
+  void dimensionSeriesMergesIndicesOfMultipleDimensionData() {
+    SGData d1 =
+        mock(SGData.class, withSettings().extraInterfaces(SGISXYMultipleDimensionData.class));
+    when(((SGISXYMultipleDimensionData) d1).getIndices())
+        .thenReturn(new SGIntegerSeriesSet(0, 8, 2));
+    SGData d2 =
+        mock(SGData.class, withSettings().extraInterfaces(SGISXYMultipleDimensionData.class));
+    when(((SGISXYMultipleDimensionData) d2).getIndices())
+        .thenReturn(new SGIntegerSeriesSet(1, 5, 2));
+    List<SGData> dataList = new ArrayList<SGData>();
+    dataList.add(d1);
+    dataList.add(d2);
+    SGIntegerSeriesSet set = SGDataStrideUtility.getDimensionSeries(dataList, 10);
+    assertEquals(0, set.getNumbers()[0]);
+    assertEquals(8, set.getNumbers()[set.getNumbers().length - 1]);
+    assertEquals(8, set.getNumbers().length);
+  }
+
+  @Test
+  void dimensionSeriesSkipsOtherDataTypes() {
+    SGData d1 =
+        mock(SGData.class, withSettings().extraInterfaces(SGISXYMultipleDimensionData.class));
+    when(((SGISXYMultipleDimensionData) d1).getIndices())
+        .thenReturn(new SGIntegerSeriesSet(0, 3, 3));
+    List<SGData> dataList = new ArrayList<SGData>();
+    dataList.add(d1);
+    dataList.add(mock(SGData.class));
+    SGIntegerSeriesSet set = SGDataStrideUtility.getDimensionSeries(dataList, 4);
+    assertEquals(2, set.getNumbers().length);
+    assertEquals(0, set.getNumbers()[0]);
+    assertEquals(3, set.getNumbers()[1]);
   }
 }

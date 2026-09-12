@@ -172,4 +172,32 @@ class SGDataRangeUtilityTest {
     assertEquals(expected.getMinValue(), actual.getMinValue(), 0.0);
     assertEquals(expected.getMaxValue(), actual.getMaxValue(), 0.0);
   }
+
+  @Test
+  void getMinValueOfAllInvalidRangeListReturnsNull() {
+    assertNull(
+        SGDataRangeUtility.getMinValue(
+            Arrays.asList(
+                new SGValueRange(Double.NaN, Double.NaN),
+                new SGValueRange(Double.NaN, Double.NaN))));
+  }
+
+  @Test
+  void getMaxValueOfAllInvalidRangeListReturnsNull() {
+    assertNull(
+        SGDataRangeUtility.getMaxValue(
+            Arrays.asList(
+                new SGValueRange(Double.NaN, Double.NaN),
+                new SGValueRange(Double.NaN, Double.NaN))));
+  }
+
+  @Test
+  void getBoundsOfInvalidArrayMarksRangeInvalid() {
+    SGValueRange range =
+        SGDataRangeUtility.getBounds(new double[] {Double.NaN, Double.POSITIVE_INFINITY});
+    assertTrue(Double.isNaN(range.getMinValue()));
+    assertTrue(Double.isNaN(range.getMaxValue()));
+    assertTrue(range.isMinValid() == false);
+    assertTrue(range.isMaxValid() == false);
+  }
 }

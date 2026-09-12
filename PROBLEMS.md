@@ -5,7 +5,7 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage (Top Priority)
 
-Actual JaCoCo measurement (line coverage) is **8.8%** overall.
+Actual JaCoCo measurement (line coverage) is **8.9%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
@@ -14,12 +14,12 @@ Actual JaCoCo measurement (line coverage) is **8.8%** overall.
 | `jp...samuraigraph.export` | 68.2% | 0 (nested under `figure.java2d`) | Few instructions |
 | `com.github...lib.hdf5` | 20.8% | 5 | Round-trip tests read/write real HDF5 |
 | `jp...samuraigraph.base` | 24.3% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
-| `jp...samuraigraph.data` | 17.0% | 43 | Largest application package |
+| `jp...samuraigraph.data` | 17.1% | 43 | Largest application package |
 | `jp...samuraigraph.application` | 1.8% | 3 | |
 | `jp...samuraigraph.figure` | 1.4% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **0.0%** | 0 | All 109 rendering-layer files untested |
 
-- 83 test files / 872 test methods (902 executions) against 590 main files
+- 83 test files / 877 test methods (907 executions) against 590 main files
   / ~275k LOC
 - Per-class coverage of the data-layer utilities is uneven: the pure
   groups (data type, text, column title) reach 76-78%, while the others
