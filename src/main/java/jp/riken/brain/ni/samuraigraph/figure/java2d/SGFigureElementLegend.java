@@ -148,36 +148,28 @@ public class SGFigureElementLegend extends SGFigureElementForData
   private float mLegendHeight = 0.0f;
 
   /** Font size for data names. */
-  private float mFontSize;
 
   /** Font style for data names. */
-  private int mFontStyle;
 
   /** Font name for data names. */
-  private String mFontName;
 
   /** Font color for data names. */
-  private Color mFontColor;
 
   /** Span width of symbols. */
-  private float mSymbolSpan;
 
   /** Line width of frame lines. */
-  private float mFrameLineWidth;
 
   /** Color of frame lines. */
-  private Color mFrameLineColor;
 
   /** Background paint. */
-  private SGFillPaint mBackgroundPaint = new SGFillPaint();
 
   /** The flag for visibility of legend. */
-  private boolean mLegendVisibleFlag = true;
 
   /** The flag for visibility of frame lines. */
-  private boolean mFrameVisibleFlag = true;
 
   /** Temporary properties. */
+  private final SGFigureElementLegendStyle mStyleHolder = new SGFigureElementLegendStyle();
+
   private SGProperties mTemporaryProperties = null;
 
   /** The pop-up menu. */
@@ -232,9 +224,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
     this.mTextField = null;
     this.mPopupMenu = null;
-    this.mBackgroundPaint = null;
-    this.mFontName = null;
-    this.mFrameLineColor = null;
+    this.mStyleHolder.clear();
   }
 
   /**
@@ -1087,7 +1077,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
         // paint background
         if (this.getBackgroundTransparency() != SGTransparentPaint.ALL_TRANSPARENT_VALUE) {
           Rectangle rect = this.getLegendRect().getBounds();
-          g2d.setPaint(this.mBackgroundPaint.getPaint(rect));
+          g2d.setPaint(this.mStyleHolder.getBackgroundPaint().getPaint(rect));
           g2d.fill(rect);
         }
 
@@ -1098,7 +1088,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
         }
 
         // draw frame
-        if (this.mFrameVisibleFlag) {
+        if (this.mStyleHolder.isFrameVisible()) {
           this.drawLegendFrameLines(g2d);
         }
 
@@ -1157,11 +1147,11 @@ public class SGFigureElementLegend extends SGFigureElementForData
       return;
     }
 
-    g2d.setPaint(this.mFrameLineColor);
+    g2d.setPaint(this.mStyleHolder.getFrameColor());
 
     g2d.setStroke(
         new BasicStroke(
-            this.mMagnification * this.mFrameLineWidth,
+            this.mMagnification * this.mStyleHolder.getFrameLineWidth(),
             BasicStroke.CAP_BUTT,
             BasicStroke.JOIN_MITER));
 
@@ -1526,53 +1516,53 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
   /** */
   public String getFontName() {
-    return this.mFontName;
+    return this.mStyleHolder.getFontName();
   }
 
   /** */
   public int getFontStyle() {
-    return this.mFontStyle;
+    return this.mStyleHolder.getFontStyle();
   }
 
   /** */
   public float getFontSize() {
-    return this.mFontSize;
+    return this.mStyleHolder.getFontSize();
   }
 
   /** */
   public float getFontSize(final String unit) {
-    return (float) SGUtilityText.convertFromPoint(this.getFontSize(), unit);
+    return this.mStyleHolder.getFontSize(unit);
   }
 
   /** */
   public float getFrameLineWidth() {
-    return this.mFrameLineWidth;
+    return this.mStyleHolder.getFrameLineWidth();
   }
 
   /** */
   public float getFrameLineWidth(final String unit) {
-    return (float) SGUtilityText.convertFromPoint(this.getFrameLineWidth(), unit);
+    return this.mStyleHolder.getFrameLineWidth(unit);
   }
 
   /** */
   public Color getFrameColor() {
-    return this.mFrameLineColor;
+    return this.mStyleHolder.getFrameColor();
   }
 
   /** */
   @Override
   public Color getBackgroundColor() {
-    return this.mBackgroundPaint.getColor();
+    return this.mStyleHolder.getBackgroundColor();
   }
 
   @Override
   public int getBackgroundTransparency() {
-    return this.mBackgroundPaint.getTransparencyPercent();
+    return this.mStyleHolder.getBackgroundTransparency();
   }
 
   /** */
   public Color getFontColor() {
-    return this.mFontColor;
+    return this.mStyleHolder.getFontColor();
   }
 
   /**
@@ -1581,14 +1571,14 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return the symbol span
    */
   public float getSymbolSpan() {
-    return this.mSymbolSpan;
+    return this.mStyleHolder.getSymbolSpan();
   }
 
   /**
    * @return
    */
   public float getSymbolSpan(final String unit) {
-    return (float) SGUtilityText.convertFromPoint(this.getSymbolSpan(), unit);
+    return this.mStyleHolder.getSymbolSpan(unit);
   }
 
   /**
@@ -1598,11 +1588,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean setSymbolSpan(final float span) {
-    if (span < 0.0f) {
-      throw new IllegalArgumentException("span < 0.0f");
-    }
-    this.mSymbolSpan = span;
-    return true;
+    return this.mStyleHolder.setSymbolSpan(span);
   }
 
   /**
@@ -1613,18 +1599,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean setSymbolSpan(final float span, final String unit) {
-    final Float sNew =
-        SGUtility.calcPropertyValue(
-            span,
-            unit,
-            SYMBOL_SPAN_UNIT,
-            SYMBOL_SPAN_MIN,
-            SYMBOL_SPAN_MAX,
-            SYMBOL_SPAN_MINIMAL_ORDER);
-    if (sNew == null) {
-      return false;
-    }
-    return this.setSymbolSpan(sNew);
+    return this.mStyleHolder.setSymbolSpan(span, unit);
   }
 
   /** */
@@ -1898,7 +1873,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
   /** */
   public boolean setVisible(final boolean b) {
-    this.mLegendVisibleFlag = b;
+    this.mStyleHolder.setVisible(b);
     return true;
   }
 
@@ -1910,7 +1885,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    */
   @Override
   public boolean setBackgroundTransparent(final int percentAlpha) {
-    return this.mBackgroundPaint.setTransparency(percentAlpha);
+    return this.mStyleHolder.setBackgroundTransparent(percentAlpha);
   }
 
   /**
@@ -1920,7 +1895,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean setFrameVisible(final boolean b) {
-    this.mFrameVisibleFlag = b;
+    this.mStyleHolder.setFrameVisible(b);
     return true;
   }
 
@@ -1931,11 +1906,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean setFrameLineWidth(final float lw) {
-    if (lw < 0.0f) {
-      throw new IllegalArgumentException("lw < 0.0f");
-    }
-    this.mFrameLineWidth = lw;
-    return true;
+    return this.mStyleHolder.setFrameLineWidth(lw);
   }
 
   /**
@@ -1946,11 +1917,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean setFrameLineWidth(final float lw, final String unit) {
-    final Float lwNew = SGUtility.getLineWidth(lw, unit);
-    if (lwNew == null) {
-      return false;
-    }
-    return this.setFrameLineWidth(lwNew);
+    return this.mStyleHolder.setFrameLineWidth(lw, unit);
   }
 
   /**
@@ -1960,11 +1927,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean setFrameLineColor(final Color cl) {
-    if (cl == null) {
-      throw new IllegalArgumentException("cl == null");
-    }
-    this.mFrameLineColor = cl;
-    return true;
+    return this.mStyleHolder.setFrameLineColor(cl);
   }
 
   /**
@@ -1975,10 +1938,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    */
   @Override
   public boolean setBackgroundColor(final Color cl) {
-    if (cl == null) {
-      throw new IllegalArgumentException("cl == null");
-    }
-    return this.mBackgroundPaint.setColor(cl);
+    return this.mStyleHolder.setBackgroundColor(cl);
   }
 
   /**
@@ -1988,7 +1948,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean setFontSize(final float size) {
-    return this.setFont(this.getFontName(), this.getFontStyle(), size);
+    this.mStyleHolder.setFontSize(size);
+    return true;
   }
 
   /**
@@ -1999,13 +1960,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean setFontSize(final float size, final String unit) {
-    final Float sNew = SGUtility.getFontSize(size, unit);
-    if (sNew == null) {
-      return false;
-    }
-    if (this.setFontSize(sNew) == false) {
-      return false;
-    }
+    this.mStyleHolder.setFontSize(size, unit);
     return true;
   }
 
@@ -2016,10 +1971,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean setFontStyle(final int style) {
-    if (SGUtilityText.isValidFontStyle(style) == false) {
-      return false;
-    }
-    return this.setFont(this.getFontName(), style, this.getFontSize());
+    this.mStyleHolder.setFontStyle(style);
+    return true;
   }
 
   /**
@@ -2029,11 +1982,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean setFontColor(final Color color) {
-    if (color == null) {
-      throw new IllegalArgumentException("color == null");
-    }
-    this.mFontColor = color;
-    return true;
+    return this.mStyleHolder.setFontColor(color);
   }
 
   /**
@@ -2043,7 +1992,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   public boolean setFontName(final String name) {
-    return this.setFont(name, this.getFontStyle(), this.getFontSize());
+    this.mStyleHolder.setFontName(name);
+    return true;
   }
 
   /**
@@ -2055,29 +2005,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if succeeded
    */
   private boolean setFont(final String name, final int style, final float size) {
-    boolean changed = false;
-    if (name != null) {
-      if (!name.equals(this.mFontName)) {
-        changed = true;
-      }
-    } else {
-      if (this.mFontName != null) {
-        changed = true;
-      }
-    }
-    if (!changed) {
-      if (style != this.mFontStyle) {
-        changed = true;
-      }
-    }
-    if (!changed) {
-      if (size != this.mFontSize) {
-        changed = true;
-      }
-    }
-    this.mFontName = name;
-    this.mFontStyle = style;
-    this.mFontSize = size;
+    final boolean changed = this.mStyleHolder.setFont(name, style, size);
     if (changed) {
       this.updateAllDrawingElements();
     }
@@ -2103,12 +2031,12 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @return true if the legend is visible
    */
   public boolean isVisible() {
-    return this.mLegendVisibleFlag;
+    return this.mStyleHolder.isVisible();
   }
 
   /** */
   public boolean isFrameVisible() {
-    return this.mFrameVisibleFlag;
+    return this.mStyleHolder.isFrameVisible();
   }
 
   /** */
@@ -2919,10 +2847,10 @@ public class SGFigureElementLegend extends SGFigureElementForData
       SGDrawingElementString2DExtended el =
           new SGDrawingElementString2DExtended(
               this.mName,
-              mFontName,
-              mFontStyle,
-              mFontSize,
-              mFontColor,
+              SGFigureElementLegend.this.mStyleHolder.getFontName(),
+              SGFigureElementLegend.this.mStyleHolder.getFontStyle(),
+              SGFigureElementLegend.this.mStyleHolder.getFontSize(),
+              SGFigureElementLegend.this.mStyleHolder.getFontColor(),
               this.getMagnification(),
               0.0f);
       this.mDrawingString = el;
@@ -3065,7 +2993,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     /** */
     public void paintGraphics2D(final Graphics2D g2d) {
       // draw the name of data
-      g2d.setPaint(SGFigureElementLegend.this.mFontColor);
+      g2d.setPaint(SGFigureElementLegend.this.mStyleHolder.getFontColor());
       this.paintString(g2d);
 
       // draw the symbols
