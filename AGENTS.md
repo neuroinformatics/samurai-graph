@@ -98,3 +98,13 @@ The appropriate jpackage profile is auto-activated based on the host OS. Each pl
 
 - **Java Version:** The project is configured for **Java 21**. Do not use language features or APIs that are incompatible with Java 21.
 - **Existing Code:** Respect the existing architecture and patterns. If you need to make changes to GUI components or backend data parsing, search the codebase for similar implementations first to ensure consistency.
+
+---
+
+## 6. Git Commit Workflow
+
+- **Never commit without explicit user confirmation.**
+- Before committing, present the commit message draft (subject/body) and the target files to the user, and wait for their explicit approval (e.g. "go", "OK").
+- Only run `git commit` after the user has approved the draft.
+- Follow the project's commit message conventions (see `git-commit` skill / Conventional Commits): valid type, lowercase imperative description, subject and every body line ≤ 72 characters, no agent attribution or session references.
+- Stage changes only after the work is verified (format, compile, tests) and the commit plan is approved.
