@@ -227,6 +227,9 @@ public final class SGDataColumnInfoUtility
 
   public static int getNetCDFDataIndexLength(SGDataColumnInfo[] cols) {
     List<SGDataColumnInfo> colList = findColumnsWithColumnType(cols, INDEX);
+    if (colList.size() == 0) {
+      return -1;
+    }
     SGNetCDFDataColumnInfo col = (SGNetCDFDataColumnInfo) colList.get(0);
     final int len = col.getDimension(0).getLength();
     return len;
@@ -234,6 +237,9 @@ public final class SGDataColumnInfoUtility
 
   private static int getTwoDimensionNetCDFDataLength(SGDataColumnInfo[] cols, String key) {
     List<SGDataColumnInfo> colList = findColumnsWithColumnType(cols, key);
+    if (colList.size() == 0) {
+      return -1;
+    }
     SGNetCDFDataColumnInfo col = (SGNetCDFDataColumnInfo) colList.get(0);
     return col.getDimension(0).getLength();
   }
@@ -294,6 +300,9 @@ public final class SGDataColumnInfoUtility
       len = col.getGenericDimensionLength();
     } else {
       List<SGDataColumnInfo> zColList = findColumnsWithColumnType(cols, Z_VALUE);
+      if (zColList.size() != 1) {
+        return -1;
+      }
       SGMDArrayDataColumnInfo zCol = (SGMDArrayDataColumnInfo) zColList.get(0);
       int[] zDims = zCol.getDimensions();
       Integer dim = zCol.getDimensionIndex(key);
