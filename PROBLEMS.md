@@ -1,9 +1,9 @@
 # Known Problems
 
-Findings from a project-wide review of Samurai Graph (as of 2026-09-12, v2.2.0).
+Findings from a project-wide review of Samurai Graph (as of 2026-09-13, v2.2.0).
 Items are ordered by priority.
 
-## 1. Low Test Coverage (Top Priority)
+## 1. Low Test Coverage
 
 Actual JaCoCo measurement (line coverage) is **11.6%** overall.
 
@@ -27,8 +27,10 @@ Actual JaCoCo measurement (line coverage) is **11.6%** overall.
   range 32%, misc 32%, viewer 18%, file 14%)
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
-- Tight coupling to Swing/AWT makes headless testing hard; the design itself
-  is part of the problem
+- The heavy Swing/AWT coupling still limits coverage of the GUI classes,
+  but the property round-trip pattern now works headlessly for the
+  legend and axis elements, which keeps top-priority splitting work
+  testable
 
 ## 2. God Classes
 
@@ -95,9 +97,15 @@ Actual JaCoCo measurement (line coverage) is **11.6%** overall.
 
 ## Recommended Priority
 
-1. **Split candidates** (progressively, guarded by tests):
-   `SGMainFunctions` / `SGDrawingWindow`
-2. **Integrate the dual hierarchy**: design work to merge `figure` and
+1. **Thicken tests (top priority)**: extend unit tests to the pure-logic
+   `data` / `base` / `mdarray` layers and apply the proven property
+   round-trip pattern to more GUI classes, to keep a safety net for
+   further splitting
+2. **Split remaining god classes** (progressively, guarded by tests):
+   `SGPropertyDialogSXYData` / `SGFigureElementShape` /
+   `SGSXYNetCDFMultipleData` / `SGSXYMDArrayMultipleData` /
+   `SGElementGroupSetInGraphSXYMultiple` — the legend and axis classes
+   (`SGDrawingWindow`, `SGMainFunctions`, `SGFigureElementLegend`,
+   `SGAxisElement`) have already been decomposed
+3. **Integrate the dual hierarchy**: design work to merge `figure` and
    `figure.java2d` into a single layer
-3. **Thicken tests**: add unit tests to the pure-logic `data` / `base` /
-   `mdarray` layers to build a refactoring safety net
