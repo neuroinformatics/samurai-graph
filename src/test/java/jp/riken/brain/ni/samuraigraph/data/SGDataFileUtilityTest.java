@@ -212,4 +212,20 @@ class SGDataFileUtilityTest {
         SGDataFileUtility.checkNetCDFDataColumns(
             cols, SGDataTypeConstants.SXY_NETCDF_DATA, file, infoMap));
   }
+
+  @Test
+  void checkNetCDFDataColumnsRejectsCoordinateYVariable() throws IOException {
+    SGNetCDFFile file = openExample16();
+    SGDataColumnInfo[] cols = {
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("x"), SGIDataColumnTypeConstants.Y_VALUE)
+    };
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    assertFalse(
+        SGDataFileUtility.checkNetCDFDataColumns(
+            cols, SGDataTypeConstants.SXY_NETCDF_DATA, file, infoMap));
+  }
 }

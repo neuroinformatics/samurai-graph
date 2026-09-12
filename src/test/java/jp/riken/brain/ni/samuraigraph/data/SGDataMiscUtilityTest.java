@@ -7,11 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
@@ -219,5 +222,103 @@ class SGDataMiscUtilityTest {
     assertFalse(
         SGDataMiscUtility.getSXYColumnType(
             cols, xIndexList, yIndexList, lIndexMap, uIndexMap, tIndexMap));
+  }
+
+  @Test
+  void disposeSXYDataArrayDisposesEachElement() {
+    SGISXYTypeSingleData[] array = {
+      mock(SGISXYTypeSingleData.class), mock(SGISXYTypeSingleData.class)
+    };
+    SGDataMiscUtility.disposeSXYDataArray(array);
+    verify(array[0]).dispose();
+    verify(array[1]).dispose();
+  }
+
+  @Test
+  void getColumnIndexListOfNumberMarksNumericTokens() {
+    assertEquals(
+        java.util.Arrays.asList(1, 0, 1, 1, 0),
+        SGDataMiscUtility.getColumnIndexListOfNumber(
+            java.util.Arrays.asList(
+                new SGCSVTokenizer.Token("1.5", false),
+                new SGCSVTokenizer.Token("abc", false),
+                new SGCSVTokenizer.Token("10", false),
+                new SGCSVTokenizer.Token("1e3", false),
+                new SGCSVTokenizer.Token("1.5", true))));
+  }
+
+  @Test
+  void updateDataColumnsReturnsCopyForNonSXYTypes() {
+    SGSDArrayDataColumnInfo[] cols = {
+      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE)
+    };
+    String[] types = {SGIDataColumnTypeConstants.X_VALUE};
+    String[] ret = SGDataMiscUtility.updateDataColumns(SGDataTypeConstants.SXYZ_DATA, cols, types);
+    assertArrayEquals(types, ret);
+  }
+
+  @Test
+  void updateDataColumnsKeepsValidXYTypes() {
+    SGSDArrayDataColumnInfo[] cols = {
+      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
+      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column("l", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, "")
+    };
+    String[] types = {SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE, ""};
+    String[] ret = SGDataMiscUtility.updateDataColumns(SGDataTypeConstants.SXY_DATA, cols, types);
+    assertArrayEquals(types, ret);
+  }
+
+  @Test
+  void getDataTypeCandidateListAddsTypesForNumberColumns() {
+    java.util.List<SGCSVTokenizer.Token> tokens =
+        java.util.Arrays.asList(
+            new SGCSVTokenizer.Token("1.5", false), new SGCSVTokenizer.Token("abc", false));
+    java.util.List<Integer> indexList = java.util.Arrays.asList(1, 0);
+    java.util.List<String> cList = new java.util.ArrayList<String>();
+    assertTrue(SGDataMiscUtility.getDataTypeCandidateList(tokens, indexList, cList));
+    assertTrue(cList.contains(SGDataTypeConstants.SXY_DATA));
+    assertFalse(cList.contains(SGDataTypeConstants.SXYZ_DATA));
+  }
+
+  @Test
+  void getDataTypeCandidateListAddsDateTypeForDateTokens() {
+    java.util.List<SGCSVTokenizer.Token> tokens =
+        java.util.Arrays.asList(new SGCSVTokenizer.Token("2020-01-01", false));
+    java.util.List<Integer> indexList = java.util.Arrays.asList(1);
+    java.util.List<String> cList = new java.util.ArrayList<String>();
+    SGDataMiscUtility.getDataTypeCandidateList(tokens, indexList, cList);
+    assertTrue(cList.contains(SGDataTypeConstants.SXY_DATA));
+    assertTrue(cList.contains(SGDataTypeConstants.SXY_DATE_DATA));
+  }
+
+  @Test
+  void isEmptyOrRepeatedColumnTitleMarksEmptyAndDuplicates() {
+    SGSDArrayDataColumnInfo[] cols = {
+      column("", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, ""),
+      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, ""),
+      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, ""),
+      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, "")
+    };
+    boolean[] result = SGDataMiscUtility.isEmptyOrRepeatedColumnTitle(cols);
+    assertTrue(result[0]);
+    assertTrue(result[1]);
+    assertTrue(result[2]);
+    assertFalse(result[3]);
+  }
+
+  @Test
+  void isPolarReadsSelectionFlag() {
+    java.util.Map<String, Object> infoMap = new java.util.HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    assertTrue(SGDataMiscUtility.isPolar(infoMap));
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    assertFalse(SGDataMiscUtility.isPolar(infoMap));
+  }
+
+  @Test
+  void isPolarThrowsWithoutSelection() {
+    assertThrows(
+        Error.class, () -> SGDataMiscUtility.isPolar(new java.util.HashMap<String, Object>()));
   }
 }
