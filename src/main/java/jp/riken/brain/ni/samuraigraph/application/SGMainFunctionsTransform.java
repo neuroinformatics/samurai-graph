@@ -312,7 +312,7 @@ class SGMainFunctionsTransform {
               columns[ii].getTitle(), columns[ii].getValueType(), columns[ii].getLength());
     }
     colArray = removeAdditionalColumnInfo(colArray);
-    return this.mMain.createColumnInfoSet(dataType, infoMap, colArray);
+    return this.mMain.getPropertyFileHandler().createColumnInfoSet(dataType, infoMap, colArray);
   }
 
   private SGDataColumnInfoSet createColumnInfoList(
@@ -331,7 +331,7 @@ class SGMainFunctionsTransform {
       }
       colArray[ii] = new SGNetCDFDataColumnInfo(var, var.getName(), var.getValueType(), origin);
     }
-    return this.mMain.createColumnInfoSet(dataType, infoMap, colArray);
+    return this.mMain.getPropertyFileHandler().createColumnInfoSet(dataType, infoMap, colArray);
   }
 
   private SGDataColumnInfoSet createColumnInfoList(
@@ -347,7 +347,7 @@ class SGMainFunctionsTransform {
       colArray[ii] =
           new SGMDArrayDataColumnInfo(var, var.getName(), var.getValueType(), var.getOrigins());
     }
-    return this.mMain.createColumnInfoSet(dataType, infoMap, colArray);
+    return this.mMain.getPropertyFileHandler().createColumnInfoSet(dataType, infoMap, colArray);
   }
 
   /**
@@ -549,7 +549,10 @@ class SGMainFunctionsTransform {
     if (dg.equals(this.mDataTypeWizardDialog)) {
       SGNetCDFFile ncFile =
           (SGNetCDFFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
-      colInfoSet = this.mMain.getNetCDFDefaultDataColumnInfo(ncFile, dataType, infoMap);
+      colInfoSet =
+          this.mMain
+              .getPropertyFileHandler()
+              .getNetCDFDefaultDataColumnInfo(ncFile, dataType, infoMap);
       dataName = this.mTransformedData.name;
       infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
 
@@ -642,7 +645,10 @@ class SGMainFunctionsTransform {
     if (dg.equals(dataTypeDialog)) {
       SGMDArrayFile mdFile =
           (SGMDArrayFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
-      colInfoSet = this.mMain.getMDArrayDataDefaultDataColumnInfo(mdFile, dataType, infoMap);
+      colInfoSet =
+          this.mMain
+              .getPropertyFileHandler()
+              .getMDArrayDataDefaultDataColumnInfo(mdFile, dataType, infoMap);
       dataName = this.mTransformedData.name;
       infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
 

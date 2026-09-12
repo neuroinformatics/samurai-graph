@@ -259,8 +259,10 @@ class SGClipBoardManager
 
       // create figures from a DOM tree
       final int ret =
-          this.mMain.createFiguresFromPropertyFile(
-              elWnd, wnd, wdArray, true, versionNumber, LOAD_PROPERTIES_IN_PASTING);
+          this.mMain
+              .getPropertyFileHandler()
+              .createFiguresFromPropertyFile(
+                  elWnd, wnd, wdArray, true, versionNumber, LOAD_PROPERTIES_IN_PASTING);
       if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
         return false;
       }

@@ -951,24 +951,35 @@ class SGCommandManager
             return STATUS_FAILED;
           }
           infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, nc);
-          colInfoSet = this.mMain.getNetCDFDefaultDataColumnInfo(nc, dataType, infoMap);
+          colInfoSet =
+              this.mMain
+                  .getPropertyFileHandler()
+                  .getNetCDFDefaultDataColumnInfo(nc, dataType, infoMap);
         } else if (isHDF5) {
           SGHDF5File hdf5File = this.mMain.getHDF5File(path);
           if (hdf5File == null) {
             return STATUS_FAILED;
           }
           infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, hdf5File);
-          colInfoSet = this.mMain.getMDArrayDataDefaultDataColumnInfo(hdf5File, dataType, infoMap);
+          colInfoSet =
+              this.mMain
+                  .getPropertyFileHandler()
+                  .getMDArrayDataDefaultDataColumnInfo(hdf5File, dataType, infoMap);
         } else if (isMATLAB) {
           SGMATLABFile matFile = this.mMain.getMATLABFile(path);
           if (matFile == null) {
             return STATUS_FAILED;
           }
           infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, matFile);
-          colInfoSet = this.mMain.getMDArrayDataDefaultDataColumnInfo(matFile, dataType, infoMap);
+          colInfoSet =
+              this.mMain
+                  .getPropertyFileHandler()
+                  .getMDArrayDataDefaultDataColumnInfo(matFile, dataType, infoMap);
         } else {
           colInfoSet =
-              this.mMain.getSDArrayDefaultDataColumnInfo(path, dataType, infoMap, false, null);
+              this.mMain
+                  .getPropertyFileHandler()
+                  .getSDArrayDefaultDataColumnInfo(path, dataType, infoMap, false, null);
         }
         if (colInfoSet == null) {
           return STATUS_FAILED;

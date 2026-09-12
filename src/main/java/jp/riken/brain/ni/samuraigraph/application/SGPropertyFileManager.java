@@ -231,8 +231,10 @@ class SGPropertyFileManager
     } else {
       // create figure objects in a window
       errCode =
-          this.mMain.createFiguresFromPropertyFile(
-              elWnd, wnd, wDataArray, readDataProperty, versionNumber, mode);
+          this.mMain
+              .getPropertyFileHandler()
+              .createFiguresFromPropertyFile(
+                  elWnd, wnd, wDataArray, readDataProperty, versionNumber, mode);
 
       if (errCode == SGIConstants.SUCCESSFUL_COMPLETION) {
         // add history

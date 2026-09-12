@@ -576,7 +576,10 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         return di;
       }
       infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, nc);
-      colInfoSet = this.mMain.getNetCDFDefaultDataColumnInfo(nc, ncDataType, infoMap);
+      colInfoSet =
+          this.mMain
+              .getPropertyFileHandler()
+              .getNetCDFDefaultDataColumnInfo(nc, ncDataType, infoMap);
       if (colInfoSet == null) {
         return di;
       }
