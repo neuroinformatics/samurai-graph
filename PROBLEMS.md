@@ -19,13 +19,13 @@ Actual JaCoCo measurement (instruction coverage) is **4.0%** overall.
 | `jp...samuraigraph.figure` | 1.4% | 2 | |
 | `jp...samuraigraph.figure.java2d` | **0.0%** | 0 | All 109 rendering-layer files untested |
 
-- 72 test files / 779 test methods against 582 main files / ~274k LOC
+- 75 test files / 788 test methods against 582 main files / ~274k LOC
 - The data-layer helpers live in ten single-purpose utility classes:
   `SGDataDataTypeUtility` (76.4%), `SGDataTextUtility` (78.5%),
   `SGDataColumnTitleUtility` (78.0%), `SGDataColumnInfoUtility` (21.9%),
   `SGDataRangeUtility` (17.8%), `SGDataMiscUtility` (15.5%),
-  `SGDataStrideUtility` (1.4%), `SGDataBufferUtility` (1.4%),
-  `SGDataViewerUtility` (1.5%), `SGDataFileUtility` (0.9%); the former
+  `SGDataStrideUtility` (3.7%), `SGDataBufferUtility` (1.4%),
+  `SGDataViewerUtility` (2.7%), `SGDataFileUtility` (0.9%); the former
   `SGDataUtility` class no longer exists
 - `SGDefaultColumnTypeUtility` is a 499-line core (entry point, dispatcher,
   shared helpers) with three source-specific classes:
