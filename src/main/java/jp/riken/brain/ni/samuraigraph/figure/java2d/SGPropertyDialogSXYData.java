@@ -104,7 +104,23 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   private void initComponents() {
-    java.awt.GridBagConstraints gridBagConstraints;
+    this.createComponents();
+
+    this.setupCommonSection();
+
+    this.setupLineTab();
+
+    this.setupBarTab();
+
+    this.setupErrorBarTab();
+
+    this.setupTickLabelTab();
+
+    this.finishComponentLayout();
+  }
+
+  private void createComponents() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
 
     mLineEditButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
     mCommonPanel = new javax.swing.JPanel();
@@ -272,7 +288,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     mHeadPanel = new javax.swing.JPanel();
 
     mLineEditButton.setText("Edit");
+  }
 
+  private void setupCommonSection() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     getContentPane().setLayout(new java.awt.GridBagLayout());
 
     mCommonPanel.setLayout(new java.awt.GridBagLayout());
@@ -324,8 +343,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
     mTabbedPane.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
     mTabbedPane.setPreferredSize(new java.awt.Dimension(360, 360));
+  }
 
-    mLinePanel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+  private void setupLineTab() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mLinePanel.setLayout(new java.awt.GridBagLayout());
 
     mLineSubPanel.setLayout(new java.awt.GridBagLayout());
@@ -425,6 +446,21 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.insets = new java.awt.Insets(0, 50, 2, 10);
     mLineSubPanel.add(mLineSymbolSeparator, gridBagConstraints);
 
+    this.initializeLineSymbolPanel();
+
+    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
+    mLineSubPanel.add(mLineStyleCustomizeButton, gridBagConstraints);
+
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
+    mLinePanel.add(mLineSubPanel, gridBagConstraints);
+
+    mTabbedPane.addTab("Line", mLinePanel);
+  }
+
+  private void initializeLineSymbolPanel() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mLineSymbolPanel.setLayout(new java.awt.GridBagLayout());
 
     mSymbolVisibleCheckBox.setText("Visible");
@@ -626,20 +662,88 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.gridx = 3;
     gridBagConstraints.gridy = 2;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
-    mLineSubPanel.add(mLineStyleCustomizeButton, gridBagConstraints);
+  }
 
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
-    mLinePanel.add(mLineSubPanel, gridBagConstraints);
-
-    mTabbedPane.addTab("Line", mLinePanel);
-
+  private void setupBarTab() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mBarPanel.setLayout(new java.awt.GridBagLayout());
 
     mBarSubPanel.setLayout(new java.awt.GridBagLayout());
 
+    this.initializeBarBodyPanel();
+
+    this.initializeBarLinePanel();
+
+    this.initializeBarOffsetPanel();
+
+    mBarSubPanel.add(mBarBodyLabel, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 1;
+    gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 50, 2, 0);
+    mBarSubPanel.add(mBarBodySeparator, gridBagConstraints);
+
+    this.initializeBarTopAndBaselinePanel();
+
+    mBarSubPanel.add(mBarTopPanel, gridBagConstraints);
+
+    mBarLineLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+    mBarLineLabel.setText("Line");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 3;
+    gridBagConstraints.gridwidth = 4;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
+    mBarSubPanel.add(mBarLineLabel, gridBagConstraints);
+
+    mBarLineVisibleCheckBox.setText("Visible");
+    mBarLineVisibleCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 3;
+    gridBagConstraints.gridwidth = 2;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
+    mBarSubPanel.add(mBarLineVisibleCheckBox, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 3;
+    gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 125, 0, 0);
+    mBarSubPanel.add(mBarLineSeparator, gridBagConstraints);
+
+    mBarOffsetLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+    mBarOffsetLabel.setText("Offset ");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 5;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
+    mBarSubPanel.add(mBarOffsetLabel, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 5;
+    gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 80, 0, 0);
+    mBarSubPanel.add(mBarOffsetSeparator, gridBagConstraints);
+
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    mBarPanel.add(mBarSubPanel, gridBagConstraints);
+
+    mTabbedPane.addTab("Bar", mBarPanel);
+  }
+
+  private void initializeBarBodyPanel() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mBodyPanel.setLayout(new java.awt.GridBagLayout());
 
     mBarBodyTransparencyPanel.setLayout(new java.awt.GridBagLayout());
@@ -809,7 +913,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.gridy = 2;
     gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
     mBarSubPanel.add(mBodyPanel, gridBagConstraints);
+  }
 
+  private void initializeBarLinePanel() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mBarLinePanel.setLayout(new java.awt.GridBagLayout());
 
     mBarLineWidthLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -856,7 +963,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
     mBarSubPanel.add(mBarLinePanel, gridBagConstraints);
+  }
 
+  private void initializeBarOffsetPanel() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mBarOffsetPanel.setLayout(new java.awt.GridBagLayout());
 
     mBarOffsetXPanel.setLayout(new java.awt.GridBagLayout());
@@ -936,16 +1046,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.gridy = 1;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
-    mBarSubPanel.add(mBarBodyLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 50, 2, 0);
-    mBarSubPanel.add(mBarBodySeparator, gridBagConstraints);
+  }
 
+  private void initializeBarTopAndBaselinePanel() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mBarTopPanel.setLayout(new java.awt.GridBagLayout());
 
     mBarBaseLineValueLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -1001,59 +1105,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarSubPanel.add(mBarTopPanel, gridBagConstraints);
+  }
 
-    mBarLineLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mBarLineLabel.setText("Line");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
-    mBarSubPanel.add(mBarLineLabel, gridBagConstraints);
-
-    mBarLineVisibleCheckBox.setText("Visible");
-    mBarLineVisibleCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.gridwidth = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
-    mBarSubPanel.add(mBarLineVisibleCheckBox, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 125, 0, 0);
-    mBarSubPanel.add(mBarLineSeparator, gridBagConstraints);
-
-    mBarOffsetLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mBarOffsetLabel.setText("Offset ");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 5;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
-    mBarSubPanel.add(mBarOffsetLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 5;
-    gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 80, 0, 0);
-    mBarSubPanel.add(mBarOffsetSeparator, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    mBarPanel.add(mBarSubPanel, gridBagConstraints);
-
-    mTabbedPane.addTab("Bar", mBarPanel);
-
+  private void setupErrorBarTab() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mErrorBarPanel.setLayout(new java.awt.GridBagLayout());
 
     mErrorBarSubPanel.setLayout(new java.awt.GridBagLayout());
@@ -1157,6 +1212,36 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.insets = new java.awt.Insets(0, 65, 0, 10);
     mErrorBarSubPanel.add(mErrorBarSymbolSeparator, gridBagConstraints);
 
+    this.initializeErrorBarStylePanel();
+
+    this.initializeErrorBarLineWidthPanel();
+
+    mErrorBarPositionLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+    mErrorBarPositionLabel.setText("Position");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 7;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 10);
+    mErrorBarSubPanel.add(mErrorBarPositionLabel, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 7;
+    gridBagConstraints.gridwidth = 4;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 70, 0, 10);
+    mErrorBarSubPanel.add(mErrorBarPositionSeparator, gridBagConstraints);
+
+    this.initializeErrorBarPositionPanel();
+
+    mErrorBarPanel.add(mErrorBarSubPanel, gridBagConstraints);
+
+    mTabbedPane.addTab("Error Bar", mErrorBarPanel);
+  }
+
+  private void initializeErrorBarStylePanel() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mErrorBarStylePanel.setLayout(new java.awt.GridBagLayout());
 
     mErrorBarBothsidesRadioButton.setText("Bothsides");
@@ -1190,7 +1275,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(0, 30, 0, 10);
     mErrorBarSubPanel.add(mErrorBarStylePanel, gridBagConstraints);
+  }
 
+  private void initializeErrorBarLineWidthPanel() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mErrorBarLineWidthPanel.setLayout(new java.awt.GridBagLayout());
 
     mErrorBarLineWidthLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -1227,24 +1315,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(0, 25, 0, 10);
     mErrorBarSubPanel.add(mErrorBarLineWidthPanel, gridBagConstraints);
+  }
 
-    mErrorBarPositionLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mErrorBarPositionLabel.setText("Position");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 7;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 10);
-    mErrorBarSubPanel.add(mErrorBarPositionLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 7;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 70, 0, 10);
-    mErrorBarSubPanel.add(mErrorBarPositionSeparator, gridBagConstraints);
-
+  private void initializeErrorBarPositionPanel() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mErrorBarPositionPanel.setLayout(new java.awt.GridBagLayout());
 
     mErrorBarPositionLineRadioButton.setText("Line");
@@ -1276,12 +1350,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.insets = new java.awt.Insets(0, 0, 80, 0);
-    mErrorBarPanel.add(mErrorBarSubPanel, gridBagConstraints);
+  }
 
-    mTabbedPane.addTab("Error Bar", mErrorBarPanel);
-
-    mTickLabelPanel.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-    mTickLabelPanel.setMinimumSize(new java.awt.Dimension(297, 229));
+  private void setupTickLabelTab() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mTickLabelPanel.setLayout(new java.awt.GridBagLayout());
 
     mTickLabelSubPanel.setLayout(new java.awt.GridBagLayout());
@@ -1332,33 +1404,8 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     mTickLabelSubPanel.add(mTickLabelColorLabel, gridBagConstraints);
 
     mTickLabelAnglePanel.setMinimumSize(new java.awt.Dimension(150, 22));
-    mTickLabelAnglePanel.setLayout(new java.awt.GridBagLayout());
 
-    mTickLabelAngleLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mTickLabelAngleLabel.setText("Angle");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    mTickLabelAnglePanel.add(mTickLabelAngleLabel, gridBagConstraints);
-
-    mTickLabelAngleSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mTickLabelAngleSpinner.setPreferredSize(new java.awt.Dimension(75, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 27, 0, 0);
-    mTickLabelAnglePanel.add(mTickLabelAngleSpinner, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 6;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 10);
-    mTickLabelSubPanel.add(mTickLabelAnglePanel, gridBagConstraints);
+    this.initializeTickLabelAnglePanel();
 
     mTickLabelFontLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
     mTickLabelFontLabel.setText("Font");
@@ -1453,6 +1500,53 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
     mTickLabelSubPanel.add(mTickLabelFormatSeparator, gridBagConstraints);
 
+    this.initializeTickLabelFormatPanel();
+
+    this.initializeTickLabelExponentPanel();
+
+    mTickLabelSubPanel.add(mTickLabelFormatPanel, gridBagConstraints);
+
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 0, 40, 0);
+    mTickLabelPanel.add(mTickLabelSubPanel, gridBagConstraints);
+
+    mTabbedPane.addTab("Tick Label", mTickLabelPanel);
+  }
+
+  private void initializeTickLabelAnglePanel() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+    mTickLabelAnglePanel.setLayout(new java.awt.GridBagLayout());
+
+    mTickLabelAngleLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+    mTickLabelAngleLabel.setText("Angle");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 0;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+    mTickLabelAnglePanel.add(mTickLabelAngleLabel, gridBagConstraints);
+
+    mTickLabelAngleSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+    mTickLabelAngleSpinner.setPreferredSize(new java.awt.Dimension(75, 22));
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 0;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 27, 0, 0);
+    mTickLabelAnglePanel.add(mTickLabelAngleSpinner, gridBagConstraints);
+
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 6;
+    gridBagConstraints.gridwidth = 4;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 10);
+    mTickLabelSubPanel.add(mTickLabelAnglePanel, gridBagConstraints);
+  }
+
+  private void initializeTickLabelFormatPanel() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mTickLabelFormatPanel.setLayout(new java.awt.GridBagLayout());
 
     mTickLabelDecimalPlacesSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -1490,7 +1584,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
     mTickLabelFormatPanel.add(mTickLabelDateFormatComboBox, gridBagConstraints);
+  }
 
+  private void initializeTickLabelExponentPanel() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mExponentPanel.setLayout(new java.awt.GridBagLayout());
 
     mTickLabelExponentSpinner.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
@@ -1534,14 +1631,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     gridBagConstraints.gridwidth = 4;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 10);
-    mTickLabelSubPanel.add(mTickLabelFormatPanel, gridBagConstraints);
+  }
 
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 40, 0);
-    mTickLabelPanel.add(mTickLabelSubPanel, gridBagConstraints);
-
-    mTabbedPane.addTab("Tick Label", mTickLabelPanel);
+  private void finishComponentLayout() {
+    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
 
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -1869,6 +1962,25 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.mHeadPanel.add(this.mAxisPanel);
     this.mAxisPanel.addAxisSelectionListener(this);
 
+    this.initComboBoxItems();
+
+    this.initRadioButtonGroups();
+
+    this.initSpinnerModels();
+
+    this.initListeners();
+
+    this.initPaintDialogs();
+
+    this.initComponentGroups();
+
+    this.initDateButtonIcons();
+
+    return true;
+  }
+
+  private void initComboBoxItems() {
+
     // set the title
     this.setTitle(SGPropertyDialogSXYData.TITLE);
 
@@ -1893,6 +2005,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     }
 
     // create a button group for the radio buttons of error bar style
+  }
+
+  private void initRadioButtonGroups() {
     this.mNoErrorBarStyleSelectionRadioButton.setVisible(false);
     final ButtonGroup errorBarStyleButtonGroup = new ButtonGroup();
     errorBarStyleButtonGroup.add(this.mErrorBarBothsidesRadioButton);
@@ -1919,8 +2034,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.initFontFamilyNameComboBox(this.mTickLabelFontNameComboBox);
     this.initFontStyleComboBox(this.mTickLabelFontStyleComboBox);
     this.initDateFormatComboBox(this.mTickLabelDateFormatComboBox);
+  }
 
-    //
+  private void initSpinnerModels() {
     // Sets up spinner models
     //
 
@@ -2019,7 +2135,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
         degree,
         TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MIN,
         TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MAX);
+  }
 
+  private void initListeners() {
     // add an action listener to each items
     this.mLegendVisibleCheckBox.addActionListener(this);
     this.mLineEditButton.addActionListener(this);
@@ -2079,7 +2197,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.mTabbedPane.addChangeListener(this);
     this.mBarBodyTransparencySpinner.addChangeListener(this);
     this.mSymbolBodyTransparencySpinner.addChangeListener(this);
+  }
 
+  private void initPaintDialogs() {
     // create a dialog to edit line stroke
 
     // setup gradation paint dialog.
@@ -2093,7 +2213,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.mPatternPaintDialog.pack();
     this.mPatternPaintDialog.setResizable(false);
     this.mPatternPaintDialog.addModelChangeListener(this);
+  }
 
+  private void initComponentGroups() {
     SGComponentGroupElement[] dateTickLabelComponents = {
       new SGComponentGroupElement(this.mTickLabelDateFormatLabel),
       new SGComponentGroupElement(this.mTickLabelDateFormatComboBox)
@@ -2123,7 +2245,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       dateTickLabelComponents[1]
     };
     this.mTickLabelComponentGroup.addElement(tickLabelComponents);
+  }
 
+  private void initDateButtonIcons() {
     // sets the calendar icon
     this.setCalendarIcon(this.mShiftXDateButton);
     this.setCalendarIcon(this.mShiftYDateButton);
@@ -2132,8 +2256,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.setCalendarIcon(this.mBarIntervalDateButton);
     this.setCalendarIcon(this.mBarOffsetXDateButton);
     this.setCalendarIcon(this.mBarOffsetYDateButton);
-
-    return true;
   }
 
   private void initBarVerticalCheckBox() {
@@ -3036,6 +3158,18 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       }
     }
     if (source instanceof SGCheckBox) {
+      this.handleCheckBoxAction(source);
+    } else if (source instanceof JButton) {
+      this.handleButtonAction(source);
+    } else if (source.equals(this.mDataColumnSelectionDialog)) {
+      this.handleDataColumnSelectionDialogAction(source, command);
+    } else if (source.equals(this.mLineStyleDialog)) {
+      this.handleLineStyleDialogAction(source, command);
+    }
+  }
+
+  private void handleCheckBoxAction(final Object source) {
+    if (source instanceof SGCheckBox) {
       if (source.equals(this.mLineVisibleCheckBox)) {
         this.setLineVisible(this.getLineVisible());
       } else if (source.equals(this.mSymbolVisibleCheckBox)) {
@@ -3057,7 +3191,11 @@ public class SGPropertyDialogSXYData extends SGDataDialog
         this.setBarDateComponentsEnabled(
             this.mDateXComponentGroup.isEnabled(), this.mDateYComponentGroup.isEnabled());
       }
-    } else if (source instanceof JButton) {
+    }
+  }
+
+  private void handleButtonAction(final Object source) {
+    if (source instanceof JButton) {
       if (source.equals(this.mLineEditButton)) {
       } else if (source.equals(this.mDataColumnSelectionButton)) {
         this.showDataColumnSelectionDialog();
@@ -3096,7 +3234,11 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       } else if (source.equals(this.mBarIntervalDateButton)) {
         this.onPeriodButtonPressedForDoubleValue(this.mBarIntervalTextField);
       }
-    } else if (source.equals(this.mDataColumnSelectionDialog)) {
+    }
+  }
+
+  private void handleDataColumnSelectionDialogAction(final Object source, final String command) {
+    if (source.equals(this.mDataColumnSelectionDialog)) {
       SGDataSetupDialog dg = (SGDataSetupDialog) source;
       if (OK_BUTTON_TEXT.equals(command)) {
         // get column types
@@ -3250,8 +3392,11 @@ public class SGPropertyDialogSXYData extends SGDataDialog
         // set to the attribute
         this.mDataInfoArray = colInfo;
       }
+    }
+  }
 
-    } else if (source.equals(this.mLineStyleDialog)) {
+  private void handleLineStyleDialogAction(final Object source, final String command) {
+    if (source.equals(this.mLineStyleDialog)) {
       SGLineStyleDialog dg = (SGLineStyleDialog) source;
       if (OK_BUTTON_TEXT.equals(command)) {
         // sets to the attribute
