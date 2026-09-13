@@ -10,6 +10,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
+import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import ucar.nc2.Dimension;
 
@@ -363,6 +364,270 @@ public class SGDataMergeUtility implements SGIDataColumnTypeConstants {
               dataLast.mTickLabelStride,
               dataLast.isStrideAvailable());
       data.mOriginMap = new HashMap<String, Integer>(dataLast.mOriginMap);
+      data.setDecimalPlaces(dataLast.getDecimalPlaces());
+      data.setExponent(dataLast.getExponent());
+      data.setTimeStride(dataLast.getTimeStride());
+
+      return data;
+    }
+  }
+
+  public static SGISXYTypeMultipleData mergeMDArray(final List<SGData> dataList) {
+    if (dataList.size() == 0) {
+      return null;
+    }
+
+    // checks whether all data is picked up or not
+    Boolean dimensionPicked = null;
+    for (SGData data : dataList) {
+      if ((data instanceof SGSXYMDArrayMultipleData) == false) {
+        return null;
+      }
+      SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) data;
+      final boolean b = mdData.isDimensionPicked();
+      if (dimensionPicked == null) {
+        dimensionPicked = b;
+      } else {
+        if (!dimensionPicked.equals(b)) {
+          return null;
+        }
+      }
+    }
+    if (dimensionPicked == null) {
+      return null;
+    }
+
+    // checks the length
+    int dimLen = -1;
+    for (SGData data : dataList) {
+      SGSXYMDArrayMultipleData dataMulti = (SGSXYMDArrayMultipleData) data;
+      final int len = dataMulti.getAllPointsNumber();
+      if (dimLen == -1) {
+        dimLen = len;
+      } else {
+        if (len != dimLen) {
+          return null;
+        }
+      }
+    }
+
+    SGSXYMDArrayMultipleData dataLast =
+        (SGSXYMDArrayMultipleData) dataList.get(dataList.size() - 1);
+    SGDataSourceObserver obs = dataLast.getDataSourceObserver();
+
+    if (dimensionPicked) {
+      SGMDArrayDataColumnInfo xInfo =
+          SGDataFileUtility.createDataColumnInfo(dataLast.getXVariable(), X_VALUE);
+      SGMDArrayDataColumnInfo yInfo =
+          SGDataFileUtility.createDataColumnInfo(dataLast.getYVariable(), Y_VALUE);
+      SGMDArrayDataColumnInfo leInfo =
+          (null != dataLast.getLowerErrorVariable())
+              ? SGDataFileUtility.createDataColumnInfo(
+                  dataLast.getLowerErrorVariable(), LOWER_ERROR_VALUE)
+              : null;
+      SGMDArrayDataColumnInfo ueInfo =
+          (null != dataLast.getUpperErrorVariable())
+              ? SGDataFileUtility.createDataColumnInfo(
+                  dataLast.getUpperErrorVariable(), UPPER_ERROR_VALUE)
+              : null;
+      SGMDArrayDataColumnInfo tlInfo =
+          (null != dataLast.getTickLabelVariable())
+              ? SGDataFileUtility.createDataColumnInfo(dataLast.getTickLabelVariable(), TICK_LABEL)
+              : null;
+
+      // get dimension indices
+      int len = -1;
+      if (xInfo != null) {
+        Integer index = xInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+        if (index != null && index != -1) {
+          int[] dims = xInfo.getDimensions();
+          len = dims[index];
+        }
+      }
+      if (yInfo != null && len == -1) {
+        Integer index = yInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+        if (index != null && index != -1) {
+          int[] dims = yInfo.getDimensions();
+          len = dims[index];
+        }
+      }
+      if (len == -1) {
+        return null;
+      }
+      SGIntegerSeriesSet indices = SGDataStrideUtility.getDimensionSeries(dataList, len);
+      if (indices == null) {
+        return null;
+      }
+      indices.addAlias(len - 1, SGIntegerSeries.ARRAY_INDEX_END);
+
+      SGSXYMDArrayMultipleData data =
+          new SGSXYMDArrayMultipleData(
+              dataLast.getMDArrayFile(),
+              obs,
+              xInfo,
+              yInfo,
+              leInfo,
+              ueInfo,
+              tlInfo,
+              indices,
+              dataLast.getStride(),
+              dataLast.getTickLabelStride(),
+              dataLast.isStrideAvailable());
+      data.setDecimalPlaces(dataLast.getDecimalPlaces());
+      data.setExponent(dataLast.getExponent());
+      data.setTimeStride(dataLast.getTimeStride());
+      return data;
+
+    } else {
+
+      List<SGMDArrayVariable> xList = new ArrayList<SGMDArrayVariable>();
+      List<SGMDArrayVariable> yList = new ArrayList<SGMDArrayVariable>();
+      List<SGMDArrayVariable> leList = new ArrayList<SGMDArrayVariable>();
+      List<SGMDArrayVariable> ueList = new ArrayList<SGMDArrayVariable>();
+      List<SGMDArrayVariable> ehList = new ArrayList<SGMDArrayVariable>();
+      List<SGMDArrayVariable> tlList = new ArrayList<SGMDArrayVariable>();
+      List<SGMDArrayVariable> thList = new ArrayList<SGMDArrayVariable>();
+      for (SGData data : dataList) {
+        SGSXYMDArrayMultipleData dataMulti = (SGSXYMDArrayMultipleData) data;
+
+        SGMDArrayVariable[] xVars = dataMulti.getXVariables();
+        SGMDArrayVariable[] yVars = dataMulti.getYVariables();
+        SGMDArrayVariable[] leVars = dataMulti.getLowerErrorVariables();
+        SGMDArrayVariable[] ueVars = dataMulti.getUpperErrorVariables();
+        SGMDArrayVariable[] ehVars = dataMulti.getErrorHolderVariables();
+        SGMDArrayVariable[] tlVars = dataMulti.getTickLabelVariables();
+        SGMDArrayVariable[] thVars = dataMulti.getTickLabelHolderVariables();
+        for (int ii = 0; ii < xVars.length; ii++) {
+          xList.add(xVars[ii]);
+        }
+        for (int ii = 0; ii < yVars.length; ii++) {
+          yList.add(yVars[ii]);
+        }
+        if (dataMulti.isErrorBarAvailable()) {
+          for (int ii = 0; ii < leVars.length; ii++) {
+            leList.add(leVars[ii]);
+          }
+          for (int ii = 0; ii < ueVars.length; ii++) {
+            ueList.add(ueVars[ii]);
+          }
+          for (int ii = 0; ii < ehVars.length; ii++) {
+            ehList.add(ehVars[ii]);
+          }
+        }
+        if (dataMulti.isTickLabelAvailable()) {
+          for (int ii = 0; ii < tlVars.length; ii++) {
+            tlList.add(tlVars[ii]);
+          }
+          for (int ii = 0; ii < thVars.length; ii++) {
+            thList.add(thVars[ii]);
+          }
+        }
+      }
+
+      List<SGMDArrayVariable> xListNew = new ArrayList<SGMDArrayVariable>();
+      for (SGMDArrayVariable var : xList) {
+        if (!xListNew.contains(var)) {
+          xListNew.add(var);
+        }
+      }
+      List<SGMDArrayVariable> yListNew = new ArrayList<SGMDArrayVariable>();
+      for (SGMDArrayVariable var : yList) {
+        if (!yListNew.contains(var)) {
+          yListNew.add(var);
+        }
+      }
+
+      SGMDArrayVariable[] x = xListNew.toArray(new SGMDArrayVariable[xListNew.size()]);
+      SGMDArrayDataColumnInfo[] xInfo = SGDataFileUtility.createDataColumnInfoArray(x, X_VALUE);
+
+      SGMDArrayVariable[] y = yListNew.toArray(new SGMDArrayVariable[yListNew.size()]);
+      SGMDArrayDataColumnInfo[] yInfo = SGDataFileUtility.createDataColumnInfoArray(y, Y_VALUE);
+
+      SGMDArrayDataColumnInfo[] leInfo = new SGMDArrayDataColumnInfo[leList.size()];
+      SGMDArrayDataColumnInfo[] ueInfo = new SGMDArrayDataColumnInfo[ueList.size()];
+      SGMDArrayDataColumnInfo[] ehInfo = new SGMDArrayDataColumnInfo[ehList.size()];
+      for (int ii = 0; ii < leInfo.length; ii++) {
+        String leColumnType, ueColumnType, ehColumnType;
+        SGMDArrayVariable leVar = leList.get(ii);
+        SGMDArrayVariable ueVar = ueList.get(ii);
+        SGMDArrayVariable ehVar = ehList.get(ii);
+        StringBuilder sb = new StringBuilder();
+        final boolean common = leVar.equals(ueVar);
+        String ehName = ehVar.getName();
+
+        // lower error
+        if (common) {
+          sb.append(LOWER_UPPER_ERROR_VALUE);
+        } else {
+          sb.append(LOWER_ERROR_VALUE);
+        }
+        sb.append(SGDataColumnTitleUtility.MID_COLUMN);
+        sb.append(ehName);
+        leColumnType = sb.toString();
+
+        // upper error
+        if (common) {
+          ueColumnType = leColumnType;
+        } else {
+          sb.setLength(0);
+          sb.append(UPPER_ERROR_VALUE);
+          sb.append(SGDataColumnTitleUtility.MID_COLUMN);
+          sb.append(ehName);
+          ueColumnType = sb.toString();
+        }
+
+        // error bar holder
+        SGDataColumnInfo ehInfoX = SGDataColumnInfoUtility.findColumnWithName(xInfo, ehName);
+        ehColumnType = (ehInfoX != null) ? X_VALUE : Y_VALUE;
+
+        leInfo[ii] = new SGMDArrayDataColumnInfo(leVar, null, leVar.getValueType());
+        leInfo[ii].setColumnType(leColumnType);
+        ueInfo[ii] = new SGMDArrayDataColumnInfo(ueVar, null, ueVar.getValueType());
+        ueInfo[ii].setColumnType(ueColumnType);
+        ehInfo[ii] = new SGMDArrayDataColumnInfo(ehVar, null, ehVar.getValueType());
+        ehInfo[ii].setColumnType(ehColumnType);
+      }
+
+      SGMDArrayDataColumnInfo[] tlInfo = new SGMDArrayDataColumnInfo[tlList.size()];
+      SGMDArrayDataColumnInfo[] thInfo = new SGMDArrayDataColumnInfo[thList.size()];
+      for (int ii = 0; ii < tlInfo.length; ii++) {
+        String tlColumnType, thColumnType;
+        SGMDArrayVariable tlVar = tlList.get(ii);
+        SGMDArrayVariable thVar = thList.get(ii);
+        StringBuilder sb = new StringBuilder();
+        String thName = thVar.getName();
+
+        // tick label
+        sb.append(TICK_LABEL);
+        sb.append(SGDataColumnTitleUtility.MID_COLUMN);
+        sb.append(thName);
+        tlColumnType = sb.toString();
+
+        // error bar holder
+        SGDataColumnInfo thInfoX = SGDataColumnInfoUtility.findColumnWithName(xInfo, thName);
+        thColumnType = (thInfoX != null) ? X_VALUE : Y_VALUE;
+
+        tlInfo[ii] = new SGMDArrayDataColumnInfo(tlVar, null, tlVar.getValueType());
+        tlInfo[ii].setColumnType(tlColumnType);
+        thInfo[ii] = new SGMDArrayDataColumnInfo(thVar, null, thVar.getValueType());
+        thInfo[ii].setColumnType(thColumnType);
+      }
+
+      SGSXYMDArrayMultipleData data =
+          new SGSXYMDArrayMultipleData(
+              dataLast.getMDArrayFile(),
+              obs,
+              xInfo,
+              yInfo,
+              leInfo,
+              ueInfo,
+              ehInfo,
+              tlInfo,
+              thInfo,
+              dataLast.mStride,
+              dataLast.mTickLabelStride,
+              dataLast.isStrideAvailable());
+      data.setOrigin(dataLast.getOriginMap());
       data.setDecimalPlaces(dataLast.getDecimalPlaces());
       data.setExponent(dataLast.getExponent());
       data.setTimeStride(dataLast.getTimeStride());

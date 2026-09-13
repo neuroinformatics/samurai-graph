@@ -25,7 +25,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
-import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
@@ -36,14 +35,12 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable.MDArrayDataType;
-import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable.VALUE_TYPE;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayObject;
 import ucar.ma2.DataType;
 import ucar.ma2.Index;
 import ucar.nc2.Dimension;
-import ucar.nc2.Variable;
 import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The class of multiple scalar XY type data for multidimensional data. */
@@ -52,6 +49,9 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         SGIDataPropertyKeyConstants,
         SGISXYMultipleDimensionData,
         SGIMDArrayConstants {
+
+  private final SGSXYMDArrayMultipleDataExporter mExporter =
+      new SGSXYMDArrayMultipleDataExporter(this);
 
   /** The variables for x-values. */
   protected SGMDArrayVariable[] mXVariables = null;
@@ -1804,157 +1804,10 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    */
   @Override
   public boolean writeProperty(Element el, SGExportParameter params) {
-    if (super.writeProperty(el, params) == false) {
-      return false;
-    }
-    OPERATION type = params.getType();
-    if (SGDataMiscUtility.isArchiveDataSetOperation(type)
-        || OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)) {
-
-      String value = null;
-      if (this.isDimensionPicked()) {
-        SGMDArrayVariable xVar = this.getXVariable();
-        SGMDArrayVariable yVar = this.getYVariable();
-        if (xVar != null) {
-          value = this.bindVariableNames(xVar, true);
-          el.setAttribute(KEY_X_VALUE_NAME, value);
-        }
-        if (yVar != null) {
-          value = this.bindVariableNames(yVar, true);
-          el.setAttribute(KEY_Y_VALUE_NAME, value);
-        }
-        if (this.isErrorBarAvailable()) {
-          SGMDArrayVariable lVar = this.getLowerErrorVariable();
-          value = this.bindVariableNames(lVar, true);
-          el.setAttribute(KEY_LOWER_ERROR_VALUE_NAME, value);
-          SGMDArrayVariable uVar = this.getUpperErrorVariable();
-          value = this.bindVariableNames(uVar, true);
-          el.setAttribute(KEY_UPPER_ERROR_VALUE_NAME, value);
-          SGMDArrayVariable hVar = this.getErrorBarHolderVariable();
-          value = this.bindVariableNames(hVar, false);
-          el.setAttribute(KEY_ERROR_BAR_HOLDER_NAME, value);
-        }
-        if (this.isTickLabelAvailable()) {
-          SGMDArrayVariable tVar = this.getTickLabelVariable();
-          value = this.bindVariableNames(tVar, true);
-          el.setAttribute(KEY_TICK_LABEL_NAME, value);
-          SGMDArrayVariable hVar = this.getTickLabelHolderVariable();
-          value = this.bindVariableNames(hVar, false);
-          el.setAttribute(KEY_TICK_LABEL_HOLDER_NAME, value);
-        }
-
-        String pickUpIndicesStr = this.mPickUpDimensionInfo.getIndices().toString();
-        el.setAttribute(KEY_PICK_UP_DIMENSION_INDICES, pickUpIndicesStr);
-
-        StringBuilder sb = new StringBuilder();
-        SGMDArrayVariable[] vars = this.getVariables();
-        int cnt = 0;
-        for (int ii = 0; ii < vars.length; ii++) {
-          Integer index = vars[ii].getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-          if (index == null || index == -1) {
-            continue;
-          }
-          if (cnt > 0) {
-            sb.append(',');
-          }
-          sb.append(vars[ii].getName());
-          sb.append(':');
-          sb.append(index);
-          cnt++;
-        }
-        el.setAttribute(KEY_PICK_UP_DIMENSION, sb.toString());
-
-      } else {
-        value = this.bindVariableNamesInBracket(this.mXVariables, true);
-        el.setAttribute(KEY_X_VALUE_NAMES, value);
-        value = this.bindVariableNamesInBracket(this.mYVariables, true);
-        el.setAttribute(KEY_Y_VALUE_NAMES, value);
-        if (this.isErrorBarAvailable()) {
-          value = this.bindVariableNamesInBracket(this.mLowerErrorVariables, true);
-          el.setAttribute(KEY_LOWER_ERROR_VALUE_NAMES, value);
-          value = this.bindVariableNamesInBracket(this.mUpperErrorVariables, true);
-          el.setAttribute(KEY_UPPER_ERROR_VALUE_NAMES, value);
-          value = this.bindVariableNamesInBracket(this.mErrorBarHolderVariables, false);
-          el.setAttribute(KEY_ERROR_BAR_HOLDER_NAMES, value);
-        }
-        if (this.isTickLabelAvailable()) {
-          value = this.bindVariableNamesInBracket(this.mTickLabelVariables, true);
-          el.setAttribute(KEY_TICK_LABEL_NAMES, value);
-          value = this.bindVariableNamesInBracket(this.mTickLabelHolderVariables, false);
-          el.setAttribute(KEY_TICK_LABEL_HOLDER_NAMES, value);
-        }
-      }
-
-      // stride
-      el.setAttribute(KEY_ARRAY_SECTION, this.mStride.toString());
-      if (this.isTickLabelAvailable()) {
-        el.setAttribute(KEY_TICK_LABEL_ARRAY_SECTION, this.mTickLabelStride.toString());
-      }
-
-    } else if (OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
-
-      // get variable names
-      List<String> xNameList = new ArrayList<String>();
-      List<String> yNameList = new ArrayList<String>();
-      List<String> leNameList = new ArrayList<String>();
-      List<String> ueNameList = new ArrayList<String>();
-      List<String> tlNameList = new ArrayList<String>();
-      this.getVariableNames(xNameList, yNameList, leNameList, ueNameList, tlNameList);
-
-      // index variable
-      el.setAttribute(SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, INDEX_DIM_NAME);
-
-      // stride as the index stride
-      el.setAttribute(SGIDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION, this.mStride.toString());
-
-      if (this.isTickLabelAvailable()) {
-        el.setAttribute(
-            SGIDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
-            this.mTickLabelStride.toString());
-      }
-
-      String value = null;
-      if (xNameList.size() == 0) {
-        value = this.bindVariableNameInBracket(X_VALUE_VAR_NAME);
-      } else {
-        value = SGDataTextUtility.bindVariableNamesInBracket(xNameList);
-      }
-      el.setAttribute(KEY_X_VALUE_NAMES, value);
-
-      if (yNameList.size() == 0) {
-        value = this.bindVariableNameInBracket(Y_VALUE_VAR_NAME);
-      } else {
-        value = SGDataTextUtility.bindVariableNamesInBracket(yNameList);
-      }
-      el.setAttribute(KEY_Y_VALUE_NAMES, value);
-
-      if (this.isErrorBarAvailable()) {
-        value = SGDataTextUtility.bindVariableNamesInBracket(leNameList);
-        el.setAttribute(KEY_LOWER_ERROR_VALUE_NAMES, value);
-        value = SGDataTextUtility.bindVariableNamesInBracket(ueNameList);
-        el.setAttribute(KEY_UPPER_ERROR_VALUE_NAMES, value);
-        value = SGDataTextUtility.bindVariableNamesInBracket(this.mErrorBarHolderVariables);
-        el.setAttribute(KEY_ERROR_BAR_HOLDER_NAMES, value);
-      }
-
-      if (this.isTickLabelAvailable()) {
-        value = SGDataTextUtility.bindVariableNamesInBracket(tlNameList);
-        el.setAttribute(KEY_TICK_LABEL_NAMES, value);
-        value = SGDataTextUtility.bindVariableNamesInBracket(this.mTickLabelHolderVariables);
-        el.setAttribute(KEY_TICK_LABEL_HOLDER_NAMES, value);
-      }
-
-      if (this.isDimensionPicked()) {
-        el.setAttribute(SGIDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME, PICKUP_DIM_NAME);
-        el.setAttribute(
-            KEY_PICK_UP_DIMENSION_INDICES, this.mPickUpDimensionInfo.getIndices().toString());
-      }
-    }
-
-    return true;
+    return this.mExporter.writeProperty(el, params);
   }
 
-  private String bindVariableNameInBracket(String name) {
+  String bindVariableNameInBracket(String name) {
     StringBuilder sb = new StringBuilder();
     sb.append('{');
     sb.append(name);
@@ -1962,7 +1815,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return sb.toString();
   }
 
-  private String bindVariableNamesInBracket(
+  String bindVariableNamesInBracket(
       SGMDArrayVariable[] variables, final boolean withDimensionIndex) {
     StringBuilder sb = new StringBuilder("{");
     for (int ii = 0; ii < variables.length; ii++) {
@@ -1980,7 +1833,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return sb.toString();
   }
 
-  private String bindVariableNames(SGMDArrayVariable var, final boolean withDimensionIndex) {
+  String bindVariableNames(SGMDArrayVariable var, final boolean withDimensionIndex) {
     StringBuilder sb = new StringBuilder();
     sb.append(var.getName());
     if (withDimensionIndex) {
@@ -1991,267 +1844,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   }
 
   public static SGISXYTypeMultipleData merge(final List<SGData> dataList) {
-    if (dataList.size() == 0) {
-      return null;
-    }
-
-    // checks whether all data is picked up or not
-    Boolean dimensionPicked = null;
-    for (SGData data : dataList) {
-      if ((data instanceof SGSXYMDArrayMultipleData) == false) {
-        return null;
-      }
-      SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) data;
-      final boolean b = mdData.isDimensionPicked();
-      if (dimensionPicked == null) {
-        dimensionPicked = b;
-      } else {
-        if (!dimensionPicked.equals(b)) {
-          return null;
-        }
-      }
-    }
-    if (dimensionPicked == null) {
-      return null;
-    }
-
-    // checks the length
-    int dimLen = -1;
-    for (SGData data : dataList) {
-      SGSXYMDArrayMultipleData dataMulti = (SGSXYMDArrayMultipleData) data;
-      final int len = dataMulti.getAllPointsNumber();
-      if (dimLen == -1) {
-        dimLen = len;
-      } else {
-        if (len != dimLen) {
-          return null;
-        }
-      }
-    }
-
-    SGSXYMDArrayMultipleData dataLast =
-        (SGSXYMDArrayMultipleData) dataList.get(dataList.size() - 1);
-    SGDataSourceObserver obs = dataLast.getDataSourceObserver();
-
-    if (dimensionPicked) {
-      SGMDArrayDataColumnInfo xInfo =
-          SGDataFileUtility.createDataColumnInfo(dataLast.getXVariable(), X_VALUE);
-      SGMDArrayDataColumnInfo yInfo =
-          SGDataFileUtility.createDataColumnInfo(dataLast.getYVariable(), Y_VALUE);
-      SGMDArrayDataColumnInfo leInfo =
-          (null != dataLast.getLowerErrorVariable())
-              ? SGDataFileUtility.createDataColumnInfo(
-                  dataLast.getLowerErrorVariable(), LOWER_ERROR_VALUE)
-              : null;
-      SGMDArrayDataColumnInfo ueInfo =
-          (null != dataLast.getUpperErrorVariable())
-              ? SGDataFileUtility.createDataColumnInfo(
-                  dataLast.getUpperErrorVariable(), UPPER_ERROR_VALUE)
-              : null;
-      SGMDArrayDataColumnInfo tlInfo =
-          (null != dataLast.getTickLabelVariable())
-              ? SGDataFileUtility.createDataColumnInfo(dataLast.getTickLabelVariable(), TICK_LABEL)
-              : null;
-
-      // get dimension indices
-      int len = -1;
-      if (xInfo != null) {
-        Integer index = xInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-        if (index != null && index != -1) {
-          int[] dims = xInfo.getDimensions();
-          len = dims[index];
-        }
-      }
-      if (yInfo != null && len == -1) {
-        Integer index = yInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-        if (index != null && index != -1) {
-          int[] dims = yInfo.getDimensions();
-          len = dims[index];
-        }
-      }
-      if (len == -1) {
-        return null;
-      }
-      SGIntegerSeriesSet indices = SGDataStrideUtility.getDimensionSeries(dataList, len);
-      if (indices == null) {
-        return null;
-      }
-      indices.addAlias(len - 1, SGIntegerSeries.ARRAY_INDEX_END);
-
-      SGSXYMDArrayMultipleData data =
-          new SGSXYMDArrayMultipleData(
-              dataLast.getMDArrayFile(),
-              obs,
-              xInfo,
-              yInfo,
-              leInfo,
-              ueInfo,
-              tlInfo,
-              indices,
-              dataLast.getStride(),
-              dataLast.getTickLabelStride(),
-              dataLast.isStrideAvailable());
-      data.setDecimalPlaces(dataLast.getDecimalPlaces());
-      data.setExponent(dataLast.getExponent());
-      data.setTimeStride(dataLast.getTimeStride());
-      return data;
-
-    } else {
-
-      List<SGMDArrayVariable> xList = new ArrayList<SGMDArrayVariable>();
-      List<SGMDArrayVariable> yList = new ArrayList<SGMDArrayVariable>();
-      List<SGMDArrayVariable> leList = new ArrayList<SGMDArrayVariable>();
-      List<SGMDArrayVariable> ueList = new ArrayList<SGMDArrayVariable>();
-      List<SGMDArrayVariable> ehList = new ArrayList<SGMDArrayVariable>();
-      List<SGMDArrayVariable> tlList = new ArrayList<SGMDArrayVariable>();
-      List<SGMDArrayVariable> thList = new ArrayList<SGMDArrayVariable>();
-      for (SGData data : dataList) {
-        SGSXYMDArrayMultipleData dataMulti = (SGSXYMDArrayMultipleData) data;
-
-        SGMDArrayVariable[] xVars = dataMulti.getXVariables();
-        SGMDArrayVariable[] yVars = dataMulti.getYVariables();
-        SGMDArrayVariable[] leVars = dataMulti.getLowerErrorVariables();
-        SGMDArrayVariable[] ueVars = dataMulti.getUpperErrorVariables();
-        SGMDArrayVariable[] ehVars = dataMulti.getErrorHolderVariables();
-        SGMDArrayVariable[] tlVars = dataMulti.getTickLabelVariables();
-        SGMDArrayVariable[] thVars = dataMulti.getTickLabelHolderVariables();
-        for (int ii = 0; ii < xVars.length; ii++) {
-          xList.add(xVars[ii]);
-        }
-        for (int ii = 0; ii < yVars.length; ii++) {
-          yList.add(yVars[ii]);
-        }
-        if (dataMulti.isErrorBarAvailable()) {
-          for (int ii = 0; ii < leVars.length; ii++) {
-            leList.add(leVars[ii]);
-          }
-          for (int ii = 0; ii < ueVars.length; ii++) {
-            ueList.add(ueVars[ii]);
-          }
-          for (int ii = 0; ii < ehVars.length; ii++) {
-            ehList.add(ehVars[ii]);
-          }
-        }
-        if (dataMulti.isTickLabelAvailable()) {
-          for (int ii = 0; ii < tlVars.length; ii++) {
-            tlList.add(tlVars[ii]);
-          }
-          for (int ii = 0; ii < thVars.length; ii++) {
-            thList.add(thVars[ii]);
-          }
-        }
-      }
-
-      List<SGMDArrayVariable> xListNew = new ArrayList<SGMDArrayVariable>();
-      for (SGMDArrayVariable var : xList) {
-        if (!xListNew.contains(var)) {
-          xListNew.add(var);
-        }
-      }
-      List<SGMDArrayVariable> yListNew = new ArrayList<SGMDArrayVariable>();
-      for (SGMDArrayVariable var : yList) {
-        if (!yListNew.contains(var)) {
-          yListNew.add(var);
-        }
-      }
-
-      SGMDArrayVariable[] x = xListNew.toArray(new SGMDArrayVariable[xListNew.size()]);
-      SGMDArrayDataColumnInfo[] xInfo = SGDataFileUtility.createDataColumnInfoArray(x, X_VALUE);
-
-      SGMDArrayVariable[] y = yListNew.toArray(new SGMDArrayVariable[yListNew.size()]);
-      SGMDArrayDataColumnInfo[] yInfo = SGDataFileUtility.createDataColumnInfoArray(y, Y_VALUE);
-
-      SGMDArrayDataColumnInfo[] leInfo = new SGMDArrayDataColumnInfo[leList.size()];
-      SGMDArrayDataColumnInfo[] ueInfo = new SGMDArrayDataColumnInfo[ueList.size()];
-      SGMDArrayDataColumnInfo[] ehInfo = new SGMDArrayDataColumnInfo[ehList.size()];
-      for (int ii = 0; ii < leInfo.length; ii++) {
-        String leColumnType, ueColumnType, ehColumnType;
-        SGMDArrayVariable leVar = leList.get(ii);
-        SGMDArrayVariable ueVar = ueList.get(ii);
-        SGMDArrayVariable ehVar = ehList.get(ii);
-        StringBuilder sb = new StringBuilder();
-        final boolean common = leVar.equals(ueVar);
-        String ehName = ehVar.getName();
-
-        // lower error
-        if (common) {
-          sb.append(LOWER_UPPER_ERROR_VALUE);
-        } else {
-          sb.append(LOWER_ERROR_VALUE);
-        }
-        sb.append(SGDataColumnTitleUtility.MID_COLUMN);
-        sb.append(ehName);
-        leColumnType = sb.toString();
-
-        // upper error
-        if (common) {
-          ueColumnType = leColumnType;
-        } else {
-          sb.setLength(0);
-          sb.append(UPPER_ERROR_VALUE);
-          sb.append(SGDataColumnTitleUtility.MID_COLUMN);
-          sb.append(ehName);
-          ueColumnType = sb.toString();
-        }
-
-        // error bar holder
-        SGDataColumnInfo ehInfoX = SGDataColumnInfoUtility.findColumnWithName(xInfo, ehName);
-        ehColumnType = (ehInfoX != null) ? X_VALUE : Y_VALUE;
-
-        leInfo[ii] = new SGMDArrayDataColumnInfo(leVar, null, leVar.getValueType());
-        leInfo[ii].setColumnType(leColumnType);
-        ueInfo[ii] = new SGMDArrayDataColumnInfo(ueVar, null, ueVar.getValueType());
-        ueInfo[ii].setColumnType(ueColumnType);
-        ehInfo[ii] = new SGMDArrayDataColumnInfo(ehVar, null, ehVar.getValueType());
-        ehInfo[ii].setColumnType(ehColumnType);
-      }
-
-      SGMDArrayDataColumnInfo[] tlInfo = new SGMDArrayDataColumnInfo[tlList.size()];
-      SGMDArrayDataColumnInfo[] thInfo = new SGMDArrayDataColumnInfo[thList.size()];
-      for (int ii = 0; ii < tlInfo.length; ii++) {
-        String tlColumnType, thColumnType;
-        SGMDArrayVariable tlVar = tlList.get(ii);
-        SGMDArrayVariable thVar = thList.get(ii);
-        StringBuilder sb = new StringBuilder();
-        String thName = thVar.getName();
-
-        // tick label
-        sb.append(TICK_LABEL);
-        sb.append(SGDataColumnTitleUtility.MID_COLUMN);
-        sb.append(thName);
-        tlColumnType = sb.toString();
-
-        // error bar holder
-        SGDataColumnInfo thInfoX = SGDataColumnInfoUtility.findColumnWithName(xInfo, thName);
-        thColumnType = (thInfoX != null) ? X_VALUE : Y_VALUE;
-
-        tlInfo[ii] = new SGMDArrayDataColumnInfo(tlVar, null, tlVar.getValueType());
-        tlInfo[ii].setColumnType(tlColumnType);
-        thInfo[ii] = new SGMDArrayDataColumnInfo(thVar, null, thVar.getValueType());
-        thInfo[ii].setColumnType(thColumnType);
-      }
-
-      SGSXYMDArrayMultipleData data =
-          new SGSXYMDArrayMultipleData(
-              dataLast.getMDArrayFile(),
-              obs,
-              xInfo,
-              yInfo,
-              leInfo,
-              ueInfo,
-              ehInfo,
-              tlInfo,
-              thInfo,
-              dataLast.mStride,
-              dataLast.mTickLabelStride,
-              dataLast.isStrideAvailable());
-      data.setOrigin(dataLast.getOriginMap());
-      data.setDecimalPlaces(dataLast.getDecimalPlaces());
-      data.setExponent(dataLast.getExponent());
-      data.setTimeStride(dataLast.getTimeStride());
-
-      return data;
-    }
+    return SGDataMergeUtility.mergeMDArray(dataList);
   }
 
   /**
@@ -2441,6 +2034,10 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     } else {
       return this.setColumnTypeDimensionNotPicked(columns);
     }
+  }
+
+  boolean callSuperWriteProperty(final Element el, final SGExportParameter type) {
+    return super.writeProperty(el, type);
   }
 
   private boolean setColumnTypeDimensionPicked(String[] columns) {
@@ -2802,7 +2399,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return varList.toArray(vars);
   }
 
-  private void getVariableNames(
+  void getVariableNames(
       List<String> xNameList,
       List<String> yNameList,
       List<String> leNameList,
@@ -2868,141 +2465,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    */
   @Override
   protected boolean addVariables(NetcdfFormatWriter.Builder builder) {
-
-    // get the number of points
-    final int num = this.getAllPointsNumber();
-
-    // whether equal variables are assigned to lower and upper errors
-    final boolean bEqualLowerUpperErrorVariable = this.hasEqualLowerUpperErrorVariable();
-
-    // whether y variable is picked
-    List<SGMDArrayVariable> pickUpVarList = this.getPickUpMDArrayVariables();
-    boolean yVariablePicked = false;
-    if (this.isDimensionPicked()) {
-      if (pickUpVarList.contains(this.mYVariables[0])) {
-        yVariablePicked = true;
-      }
-    }
-
-    // get variable names
-    List<String> xNameList = new ArrayList<String>();
-    List<String> yNameList = new ArrayList<String>();
-    List<String> leNameList = new ArrayList<String>();
-    List<String> ueNameList = new ArrayList<String>();
-    List<String> tlNameList = new ArrayList<String>();
-    this.getVariableNames(xNameList, yNameList, leNameList, ueNameList, tlNameList);
-
-    // add index dimension
-    Dimension indexDim = builder.addDimension(INDEX_DIM_NAME, num);
-
-    // add time dimensions
-    Dimension timeDim = this.addTimeVariable(builder);
-
-    // add pick up dimension
-    Dimension pickUpDim = null;
-    if (this.isDimensionPicked()) {
-      SGMDArrayPickUpDimensionInfo pickUpInfo =
-          (SGMDArrayPickUpDimensionInfo) this.getPickUpDimensionInfo();
-      Map<String, Integer> dimensionMap = pickUpInfo.getDimensionMap();
-      Iterator<Entry<String, Integer>> itr = dimensionMap.entrySet().iterator();
-      while (itr.hasNext()) {
-        Entry<String, Integer> entry = itr.next();
-        String name = entry.getKey();
-        Integer dimension = entry.getValue();
-        if (dimension == null || dimension == -1) {
-          continue;
-        }
-        SGMDArrayVariable var = this.findVariable(name);
-        int[] dims = var.getDimensions();
-        final int len = dims[dimension];
-        pickUpDim = builder.addDimension(PICKUP_DIM_NAME, len);
-        break;
-      }
-    }
-
-    // add index variable
-    if (!this.addSequentialIntegerNumberVariable(builder, indexDim, INDEX_DIM_NAME)) {
-      return false;
-    }
-
-    Dimension pDim;
-
-    // add x-variables
-    pDim = (this.isDimensionPicked() && !yVariablePicked) ? pickUpDim : null;
-    if (xNameList.size() == 0) {
-      if (!this.addDoubleVariable(builder, indexDim, null, pDim, X_VALUE_VAR_NAME)) {
-        return false;
-      }
-    } else {
-      for (int ii = 0; ii < xNameList.size(); ii++) {
-        String name = xNameList.get(ii);
-        if (!this.addDoubleVariable(builder, indexDim, timeDim, pDim, name)) {
-          return false;
-        }
-      }
-    }
-
-    // add y-variables
-    pDim = (this.isDimensionPicked() && yVariablePicked) ? pickUpDim : null;
-    if (yNameList.size() == 0) {
-      if (!this.addDoubleVariable(builder, indexDim, null, pDim, Y_VALUE_VAR_NAME)) {
-        return false;
-      }
-    } else {
-      for (int ii = 0; ii < yNameList.size(); ii++) {
-        String name = yNameList.get(ii);
-        if (!this.addDoubleVariable(builder, indexDim, timeDim, pDim, name)) {
-          return false;
-        }
-      }
-    }
-
-    // add error variables
-    if (this.isErrorBarAvailable()) {
-      for (int ii = 0; ii < leNameList.size(); ii++) {
-        String name = leNameList.get(ii);
-        if (!this.addDoubleVariable(builder, indexDim, timeDim, pickUpDim, name)) {
-          return false;
-        }
-      }
-      if (!bEqualLowerUpperErrorVariable) {
-        for (int ii = 0; ii < ueNameList.size(); ii++) {
-          String name = ueNameList.get(ii);
-          if (!this.addDoubleVariable(builder, indexDim, timeDim, pickUpDim, name)) {
-            return false;
-          }
-        }
-      }
-    }
-
-    // add tick label variables
-    if (this.isTickLabelAvailable()) {
-      for (int ii = 0; ii < tlNameList.size(); ii++) {
-        // adds a dimension for text strings
-        String name = tlNameList.get(ii);
-        SGMDArrayVariable var = this.findVariable(name);
-        final int maxLength = this.getMaxLength(var);
-        if (!this.addStringVariable(builder, indexDim, timeDim, pickUpDim, name, maxLength)) {
-          return false;
-        }
-      }
-    }
-
-    // add time variable
-    if (timeDim != null) {
-      if (!this.addSequentialIntegerNumberVariable(builder, timeDim, TIME_DIM_NAME)) {
-        return false;
-      }
-    }
-
-    // add pick up variable
-    if (pickUpDim != null) {
-      if (!this.addSequentialIntegerNumberVariable(builder, pickUpDim, PICKUP_DIM_NAME)) {
-        return false;
-      }
-    }
-
-    return true;
+    return this.mExporter.addVariables(builder);
   }
 
   protected void addPickUpDimension(
@@ -3010,7 +2473,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     this.addDimension(var, SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, pickUpDim, dimList);
   }
 
-  private boolean addDoubleVariable(
+  boolean addDoubleVariable(
       NetcdfFormatWriter.Builder builder,
       Dimension indexDim,
       Dimension timeDim,
@@ -3024,7 +2487,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return this.addDoubleVariable(builder, dimList, name);
   }
 
-  private boolean addStringVariable(
+  boolean addStringVariable(
       NetcdfFormatWriter.Builder builder,
       Dimension indexDim,
       Dimension timeDim,
@@ -3046,167 +2509,18 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    * @return true if succeeded
    */
   protected boolean writeData(NetcdfFormatWriter writer) {
-
-    // get the number of points
-    final int num = this.getAllPointsNumber();
-
-    // whether equal variables are assigned to lower and upper errors
-    final boolean bEqualLowerUpperErrorVariable = this.hasEqualLowerUpperErrorVariable();
-
-    // get variable names
-    List<String> xNameList = new ArrayList<String>();
-    List<String> yNameList = new ArrayList<String>();
-    List<String> leNameList = new ArrayList<String>();
-    List<String> ueNameList = new ArrayList<String>();
-    List<String> tlNameList = new ArrayList<String>();
-    this.getVariableNames(xNameList, yNameList, leNameList, ueNameList, tlNameList);
-
-    // index
-    Dimension indexDim = writer.findDimension(INDEX_DIM_NAME);
-    if (!this.writeSequentialIntegerNumbers(writer, INDEX_DIM_NAME, indexDim.getLength())) {
-      return false;
-    }
-
-    // time
-    if (!this.writeTimeData(writer)) {
-      return false;
-    }
-
-    // pickup
-    Dimension pickUpDim = writer.findDimension(PICKUP_DIM_NAME);
-    if (pickUpDim != null) {
-      if (!this.writeSequentialIntegerNumbers(writer, PICKUP_DIM_NAME, pickUpDim.getLength())) {
-        return false;
-      }
-    }
-
-    // x-values
-    if (xNameList.size() == 0) {
-      if (!this.writeSequentialDoubleNumbers(writer, X_VALUE_VAR_NAME, num)) {
-        return false;
-      }
-    } else {
-      if (!this.writeDoubleData(writer, xNameList)) {
-        return false;
-      }
-    }
-
-    // y-values
-    if (yNameList.size() == 0) {
-      if (!this.writeSequentialDoubleNumbers(writer, Y_VALUE_VAR_NAME, num)) {
-        return false;
-      }
-    } else {
-      if (!this.writeDoubleData(writer, yNameList)) {
-        return false;
-      }
-    }
-
-    // error values
-    if (this.isErrorBarAvailable()) {
-      if (!this.writeDoubleData(writer, leNameList)) {
-        return false;
-      }
-      if (!bEqualLowerUpperErrorVariable) {
-        if (!this.writeDoubleData(writer, ueNameList)) {
-          return false;
-        }
-      }
-    }
-
-    // tick label
-    if (this.isTickLabelAvailable()) {
-      if (!this.writeStringData(writer, tlNameList)) {
-        return false;
-      }
-    }
-
-    return true;
+    return this.mExporter.writeData(writer);
   }
 
   private boolean writeDoubleData(NetcdfFormatWriter writer, List<String> nameList) {
-    for (int ii = 0; ii < nameList.size(); ii++) {
-      String varName = nameList.get(ii);
-      SGMDArrayVariable mdVar = this.findVariable(varName);
-      Map<String, Integer> mdArrayIndexMap = new HashMap<String, Integer>();
-      Variable ncVar = writer.findVariable(varName);
-      List<Dimension> ncDimList = ncVar.getDimensions();
-      for (Dimension dim : ncDimList) {
-        String dimName = dim.getShortName();
-        Integer index = null;
-        if (INDEX_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
-        } else if (TIME_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
-        } else if (PICKUP_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-        }
-        if (index != null && index != -1) {
-          mdArrayIndexMap.put(dimName, index);
-        }
-      }
-      final int dimSize = mdArrayIndexMap.size();
-      if (dimSize == 1) {
-        if (!this.write1DDoubleArray(writer, varName, ncDimList, mdArrayIndexMap)) {
-          return false;
-        }
-      } else if (dimSize == 2) {
-        if (!this.write2DDoubleArray(writer, varName, ncDimList, mdArrayIndexMap)) {
-          return false;
-        }
-      } else if (dimSize == 3) {
-        if (!this.write3DDoubleArray(writer, varName, ncDimList, mdArrayIndexMap)) {
-          return false;
-        }
-      } else {
-        throw new Error("Unsupported dimension size: " + dimSize);
-      }
-    }
-    return true;
+    return this.mExporter.writeDoubleData(writer, nameList);
   }
 
   private boolean writeStringData(NetcdfFormatWriter writer, List<String> nameList) {
-    for (int ii = 0; ii < nameList.size(); ii++) {
-      String varName = nameList.get(ii);
-      SGMDArrayVariable mdVar = this.findVariable(varName);
-      Map<String, Integer> mdArrayIndexMap = new HashMap<String, Integer>();
-      Variable ncVar = writer.findVariable(varName);
-      List<Dimension> ncDimList = ncVar.getDimensions();
-      for (Dimension dim : ncDimList) {
-        String dimName = dim.getShortName();
-        Integer index = null;
-        if (INDEX_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
-        } else if (TIME_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
-        } else if (PICKUP_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-        } else {
-          continue;
-        }
-        mdArrayIndexMap.put(dimName, index);
-      }
-      final int dimSize = mdArrayIndexMap.size(); // a hidden dimension is contained
-      if (dimSize == 1) {
-        if (!this.write1DStringArray(writer, varName, ncDimList, mdArrayIndexMap, ii)) {
-          return false;
-        }
-      } else if (dimSize == 2) {
-        if (!this.write2DStringArray(writer, varName, ncDimList, mdArrayIndexMap, ii)) {
-          return false;
-        }
-      } else if (dimSize == 3) {
-        if (!this.write3DStringArray(writer, varName, ncDimList, mdArrayIndexMap, ii)) {
-          return false;
-        }
-      } else {
-        throw new Error("Unsupported dimension size: " + dimSize);
-      }
-    }
-    return true;
+    return this.mExporter.writeStringData(writer, nameList);
   }
 
-  private boolean write1DStringArray(
+  boolean write1DStringArray(
       NetcdfFormatWriter writer,
       String varName,
       List<Dimension> ncDimList,
@@ -3232,7 +2546,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return true;
   }
 
-  private boolean write2DStringArray(
+  boolean write2DStringArray(
       NetcdfFormatWriter writer,
       String varName,
       List<Dimension> ncDimList,
@@ -3273,7 +2587,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return true;
   }
 
-  private boolean write3DStringArray(
+  boolean write3DStringArray(
       NetcdfFormatWriter writer,
       String varName,
       List<Dimension> ncDimList,
@@ -3316,7 +2630,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return true;
   }
 
-  private int getMaxLength(SGMDArrayVariable var) {
+  int getMaxLength(SGMDArrayVariable var) {
     int maxLength = 0;
     Integer genericIndex = var.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
     Integer pickUpIndex = var.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
@@ -3363,7 +2677,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return maxLength;
   }
 
-  private int getMaxLength(SGMDArrayVariable var, int[] origins, final int curMaxLength) {
+  int getMaxLength(SGMDArrayVariable var, int[] origins, final int curMaxLength) {
     int maxLength = curMaxLength;
     String textString = var.getString(origins);
     byte[] byteArray;
@@ -3522,141 +2836,15 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     MDArrayDataType[] tlDataTypes;
   }
 
-  private static final String DEFAULT_VAR_NAME_BASE_X = "X";
+  static final String DEFAULT_VAR_NAME_BASE_X = "X";
 
-  private static final String DEFAULT_VAR_NAME_BASE_Y = "Y";
+  static final String DEFAULT_VAR_NAME_BASE_Y = "Y";
 
   private SXYExportInfo exportCommon(SGExportParameter mode, SGDataBufferPolicy policy) {
-    SGSXYDataBufferPolicy sxyPolicy = (SGSXYDataBufferPolicy) policy;
-    final boolean all = sxyPolicy.isAllValuesGotten();
-    final boolean shift = sxyPolicy.isShiftValuesContained();
-    final boolean archiveFlag = SGDataMiscUtility.isArchiveDataSetOperation(mode.getType());
-    final boolean exportFlag = (shift || (this.hasEffectiveStride() && !all)) && !archiveFlag;
-    boolean xValid = true;
-    boolean yValid = true;
-
-    // gets arrays of variables in the same order of XY variables
-    SGMDArrayVariable[] leVars = null;
-    SGMDArrayVariable[] ueVars = null;
-    if (this.isErrorBarAvailable()) {
-      leVars = this.getVariablesInXYOrder(this.mLowerErrorVariables, this.mErrorBarHolderVariables);
-      ueVars = this.getVariablesInXYOrder(this.mUpperErrorVariables, this.mErrorBarHolderVariables);
-    }
-    SGMDArrayVariable[] tlVars = null;
-    if (this.isTickLabelAvailable()) {
-      tlVars = this.getVariablesInXYOrder(this.mTickLabelVariables, this.mTickLabelHolderVariables);
-    }
-
-    SGMDArrayVariable[] vars = this.getVariables();
-    String[] xNames = null;
-    if (this.mXVariables == null || this.mXVariables.length == 0) {
-      if (exportFlag) {
-        xNames = new String[] {this.getUniqueVarName(DEFAULT_VAR_NAME_BASE_X, vars)};
-      } else {
-        xValid = false;
-      }
-    } else {
-      xNames = this.getNames(this.mXVariables);
-    }
-    String[] yNames = null;
-    if (this.mYVariables == null || this.mYVariables.length == 0) {
-      if (exportFlag) {
-        yNames = new String[] {this.getUniqueVarName(DEFAULT_VAR_NAME_BASE_Y, vars)};
-      } else {
-        yValid = false;
-      }
-    } else {
-      yNames = this.getNames(this.mYVariables);
-    }
-    String[] leNames = null;
-    String[] ueNames = null;
-    if (this.isErrorBarAvailable()) {
-      leNames = this.getNames(leVars);
-      ueNames = this.getNames(ueVars);
-    }
-    String[] tlNames = null;
-    if (this.isTickLabelAvailable()) {
-      tlNames = this.getNames(tlVars);
-    }
-
-    double[][] xValues = null;
-    double[][] yValues = null;
-    double[][] leValues = null;
-    double[][] ueValues = null;
-    String[][] tickLabels = null;
-    SGIDataSource src = this.getDataSource();
-    if ((src instanceof SGVirtualMDArrayFile && archiveFlag) || !archiveFlag) {
-      // export data to a file or save virtual MDArray data to an archive data set
-      // file
-      SGSXYMultipleDataBuffer buffer = (SGSXYMultipleDataBuffer) this.getDataBuffer(policy);
-      xValues = buffer.getXValues();
-      yValues = buffer.getYValues();
-      leValues = buffer.getLowerErrorValues();
-      ueValues = buffer.getUpperErrorValues();
-      tickLabels = buffer.getTickLabels();
-    }
-
-    SXYExportInfo info = new SXYExportInfo();
-    info.xNames = xNames;
-    info.yNames = yNames;
-    info.leNames = leNames;
-    info.ueNames = ueNames;
-    info.tlNames = tlNames;
-    info.xValues = xValues;
-    info.yValues = yValues;
-    info.leValues = leValues;
-    info.ueValues = ueValues;
-    info.tlValues = tickLabels;
-    MDArrayDataType[] xDataTypes = null;
-    if (xValid) {
-      if (this.mXVariables == null || this.mXVariables.length == 0) {
-        xDataTypes = new MDArrayDataType[1];
-        final VALUE_TYPE valueType = shift ? VALUE_TYPE.FLOAT : VALUE_TYPE.INTEGER;
-        xDataTypes[0] = new MDArrayDataType(valueType);
-      } else {
-        xDataTypes = new MDArrayDataType[this.mXVariables.length];
-        for (int ii = 0; ii < this.mXVariables.length; ii++) {
-          xDataTypes[ii] = this.getExportNumberDataType(this.mXVariables[ii], mode, sxyPolicy);
-        }
-      }
-    }
-    MDArrayDataType[] yDataTypes = null;
-    if (yValid) {
-      if (this.mYVariables == null || this.mYVariables.length == 0) {
-        yDataTypes = new MDArrayDataType[1];
-        final VALUE_TYPE valueType = shift ? VALUE_TYPE.FLOAT : VALUE_TYPE.INTEGER;
-        yDataTypes[0] = new MDArrayDataType(valueType);
-      } else {
-        yDataTypes = new MDArrayDataType[this.mYVariables.length];
-        for (int ii = 0; ii < this.mYVariables.length; ii++) {
-          yDataTypes[ii] = this.getExportNumberDataType(this.mYVariables[ii], mode, sxyPolicy);
-        }
-      }
-    }
-    MDArrayDataType[] leDataTypes = null;
-    MDArrayDataType[] ueDataTypes = null;
-    if (this.isErrorBarAvailable()) {
-      leDataTypes = this.getDataTypes(leVars);
-      ueDataTypes = this.getDataTypes(ueVars);
-    }
-    MDArrayDataType[] tlDataTypes = null;
-    if (this.isTickLabelAvailable()) {
-      tlDataTypes = this.getDataTypes(tlVars);
-    }
-
-    info.xDataTypes = xDataTypes;
-    info.yDataTypes = yDataTypes;
-    info.leDataTypes = leDataTypes;
-    info.ueDataTypes = ueDataTypes;
-    info.tlDataTypes = tlDataTypes;
-
-    info.xValid = xValid;
-    info.yValid = yValid;
-
-    return info;
+    return this.mExporter.exportCommon(mode, policy);
   }
 
-  private SGMDArrayVariable[] getVariablesInXYOrder(
+  SGMDArrayVariable[] getVariablesInXYOrder(
       SGMDArrayVariable[] vars, SGMDArrayVariable[] holderVars) {
     SGMDArrayVariable[] xyVars = null;
     if (this.mXVariables != null) {
@@ -3689,7 +2877,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return ret;
   }
 
-  private String[] getNames(SGMDArrayVariable[] vars) {
+  String[] getNames(SGMDArrayVariable[] vars) {
     String[] names = new String[vars.length];
     for (int ii = 0; ii < names.length; ii++) {
       names[ii] = (vars[ii] != null) ? vars[ii].getName() : null;
@@ -3697,7 +2885,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return names;
   }
 
-  private MDArrayDataType[] getDataTypes(SGMDArrayVariable[] vars) {
+  MDArrayDataType[] getDataTypes(SGMDArrayVariable[] vars) {
     MDArrayDataType[] dataTypes = new MDArrayDataType[vars.length];
     for (int ii = 0; ii < dataTypes.length; ii++) {
       dataTypes[ii] = (vars[ii] != null) ? vars[ii].getDataType() : null;
