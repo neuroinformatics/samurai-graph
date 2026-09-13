@@ -132,6 +132,8 @@ public class SGDrawingElementString extends SGDrawingElement
    */
   public boolean setString(final String str) {
     this.mString = str;
+    this.updateMetrics();
+    this.updateElementBounds();
     return true;
   }
 
@@ -153,6 +155,8 @@ public class SGDrawingElementString extends SGDrawingElement
 
     // update the attribute
     this.updateFont();
+    this.updateMetrics();
+    this.updateElementBounds();
 
     return true;
   }
@@ -220,6 +224,8 @@ public class SGDrawingElementString extends SGDrawingElement
 
     // update the attribute
     this.updateFont();
+    this.updateMetrics();
+    this.updateElementBounds();
 
     return true;
   }
@@ -240,6 +246,7 @@ public class SGDrawingElementString extends SGDrawingElement
    */
   public boolean setLocation(final float x, final float y) {
     this.mLocation.setValues(x, y);
+    this.updateElementBounds();
     return true;
   }
 
@@ -251,6 +258,7 @@ public class SGDrawingElementString extends SGDrawingElement
    */
   public boolean setLocation(final SGTuple2f pos) {
     this.mLocation = pos;
+    this.updateElementBounds();
     return true;
   }
 
@@ -268,6 +276,7 @@ public class SGDrawingElementString extends SGDrawingElement
       return false;
     }
     this.mAngle = aNew.floatValue();
+    this.updateElementBounds();
     return true;
   }
 

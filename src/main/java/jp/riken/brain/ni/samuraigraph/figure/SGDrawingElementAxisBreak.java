@@ -179,7 +179,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    */
   public boolean setLocation(final float x, final float y) {
     this.mLocation.setValues(x, y);
-    return true;
+    return this.create();
   }
 
   /**
@@ -190,7 +190,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    */
   public boolean setLocation(final SGTuple2f pos) {
     this.mLocation = pos;
-    return true;
+    return this.create();
   }
 
   /**
