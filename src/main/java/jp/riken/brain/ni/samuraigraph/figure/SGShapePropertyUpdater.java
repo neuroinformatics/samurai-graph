@@ -190,7 +190,7 @@ class SGShapePropertyUpdater implements SGIShapeConstants {
             return null;
           }
 
-          SGFigureElementShape.Arrow arrow = owner.new Arrow();
+          SGShapeArrow arrow = new SGShapeArrow(owner);
           if (type == SGIFigureElementShape.ARROW) {
             arrow.setStartHeadType(DEFAULT_SHAPE_ARROW_START_HEAD_TYPE);
             arrow.setEndHeadType(DEFAULT_SHAPE_ARROW_END_HEAD_TYPE);
