@@ -1979,38 +1979,16 @@ public class SGDrawingWindow extends JFrame
   }
 
   // The list of data plug-in.
-  private static List<SGIPlugin> mDataPluginList = new ArrayList<SGIPlugin>();
-
-  private static SGIPluginManager mDataPluginManager = null;
-
-  /**
-   * Sets the list of data plug-in.
-   *
-   * @param pluginList the list of data plug-in
-   */
-  public static void setDataPlugins(List<SGIPlugin> pluginList) {
-    mDataPluginList = new ArrayList<SGIPlugin>(pluginList);
-  }
-
-  /**
-   * Sets the data plug-in manager.
-   *
-   * @param m the data plug-in manager
-   */
-  public static void setDataPluginManager(SGIPluginManager m) {
-    mDataPluginManager = m;
-  }
-
   // Creates the menu items in the menu bar for data plug-in.
   private void createDataPluginMenuBarItem() {
     ActionListener l =
         new ActionListener() {
           public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-            mDataPluginManager.execCommand(command, SGDrawingWindow.this);
+            SGDataPluginHolder.getDataPluginManager().execCommand(command, SGDrawingWindow.this);
           }
         };
-    this.mMenuBar.createDataPluginMenuBarItem(mDataPluginList, l);
+    this.mMenuBar.createDataPluginMenuBarItem(SGDataPluginHolder.getDataPlugins(), l);
     this.updateDataPluginMenuBarItems();
   }
 

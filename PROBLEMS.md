@@ -38,20 +38,23 @@ Actual JaCoCo measurement (line coverage) is **15.1%** overall.
   `SGIImageConstants`) or as empty marker interfaces (`SGIRootObject`,
   `SGIWindowDialogObserver`). Classes implement 3–5 of them at once.
   A Java 1.x idiom.
-- **Raw `Thread` usage**: seven `extends Thread` classes still run
-  directly instead of through an executor — `InputObserver` in
+- **Raw `Thread` usage resolved**: all `extends Thread` classes were
+  converted to `Runnable` tasks on executors — `InputObserver` in
   `SGDataSetupWizardDialog` / `SGPropertyFileDataDialog` / `SGDataDialog`,
   `CommandThread` in `SGConsoleRunner`,
-  `SGMainFunctions.Initializer`, `SGWindowManager.DropEventHandler`,
-  and `SGAnimationThread`. The one-off command reader
-  (`SGMainFunctions`) and `SGAsyncWorker` now submit to a shared
-  daemon executor service.
-- **Static mutable fields**: instance state held in static fields — e.g.
-  `SGDrawingWindow.mDataPluginList` / `mDataPluginManager` (also
-  duplicated in `SGDataViewerDialog` and `SGDataPopupMenu`),
-  `SGUserProperties.mInstance` (static singleton), and
-  `SGDialog.virtualBounds`. The server adapter, look-and-feel and
-  main-function references were moved to instance state.
+  `SGMainFunctions.Initializer` (via `Future` join),
+  `SGWindowManager.DropEventHandler` (inlined into the EDT), and
+  `SGAnimationThread` (single-flight submit, `join()`, daemon
+  executor). The one-off command reader (`SGMainFunctions`) and
+  `SGAsyncWorker` submit to a shared daemon executor service.
+- **Static mutable fields**: the data plug-in list / manager statics
+  duplicated in `SGDrawingWindow`, `SGDataViewerDialog` and
+  `SGDataPopupMenu` were consolidated into a single
+  `SGDataPluginHolder`. `SGUserProperties.mInstance` is now `final`.
+  `SGDialog.virtualBounds` is still a static mutable `Rectangle`
+  (screen bounds computed once at startup). The server adapter,
+  look-and-feel and main-function references were moved to instance
+  state.
 
 ## 3. Repository / Dependency Hygiene
 
@@ -78,5 +81,5 @@ Actual JaCoCo measurement (line coverage) is **15.1%** overall.
    `mdarray` layers are covered; keep extending the property
    round-trip pattern to more GUI classes
 2. **Replace legacy idioms**: migrate constant-bag interfaces to typed
-   constants or enums, replace raw `Thread` usage with an executor, and
-   move static mutable state into instance or immutable holders
+   constants or enums and move the remaining static mutable state
+   (`SGDialog.virtualBounds`) into instance or immutable holders

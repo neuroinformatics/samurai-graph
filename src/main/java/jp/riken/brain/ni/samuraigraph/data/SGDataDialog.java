@@ -80,10 +80,7 @@ public abstract class SGDataDialog extends SGDialog
   protected abstract SGDataSetupPanel getDataSetupPanel();
 
   /** An observer to set enabled / disabled the OK button with input values. */
-  protected class InputObserver extends Thread {
-    InputObserver() {
-      super();
-    }
+  protected class InputObserver implements Runnable {
 
     public void run() {
       final boolean b = getTableHolder().checkSelectedItems();

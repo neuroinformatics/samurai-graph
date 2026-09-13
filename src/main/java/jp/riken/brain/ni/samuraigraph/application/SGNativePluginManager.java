@@ -23,6 +23,7 @@ import jp.riken.brain.ni.samuraigraph.application.SGPluginFile.Parameter;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
+import jp.riken.brain.ni.samuraigraph.base.SGDataPluginHolder;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
@@ -32,7 +33,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
@@ -45,7 +45,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGVXYDataBuffer;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYGridDataBuffer;
 import jp.riken.brain.ni.samuraigraph.data.SGVirtualMDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGVirtualMDArrayVariable;
-import jp.riken.brain.ni.samuraigraph.figure.SGDataPopupMenu;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -79,11 +78,8 @@ public class SGNativePluginManager
         pList.add(pf);
       }
     }
-    SGDrawingWindow.setDataPlugins(pList);
-    SGDrawingWindow.setDataPluginManager(this);
-    SGDataPopupMenu.setDataPlugins(pList);
-    SGDataPopupMenu.setDataPluginManager(this);
-    SGDataViewerDialog.setDataPlugins(pList);
+    SGDataPluginHolder.setDataPlugins(pList);
+    SGDataPluginHolder.setDataPluginManager(this);
     return true;
   }
 

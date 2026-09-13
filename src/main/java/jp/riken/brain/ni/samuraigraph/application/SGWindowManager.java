@@ -677,7 +677,17 @@ class SGWindowManager
     // get dropped file list
     List<File> fileList = SGApplicationUtility.getDroppedFileList(event);
     if (fileList != null && fileList.size() != 0) {
-      new DropEventHandler(this.mMain, event, fileList);
+      DropTarget tg = (DropTarget) event.getSource();
+      Component com = tg.getComponent();
+      final SGDrawingWindow wnd = (SGDrawingWindow) com;
+      final Point point = event.getLocation();
+      SwingUtilities.invokeLater(
+          new Runnable() {
+            public void run() {
+              SGWindowManager.this.mMain.onFilesDropped(fileList, wnd, point);
+              wnd.getContentPane().repaint();
+            }
+          });
     }
   }
 
@@ -758,58 +768,6 @@ class SGWindowManager
    */
   public void windowDeactivated(final WindowEvent e) {
     e.getWindow().repaint();
-  }
-
-  /** A class for drag and drop. */
-  static class DropEventHandler extends Thread {
-
-    /** A list of dropped files. */
-    private List<File> mDroppedFileList = null;
-
-    /** Dropped point. */
-    private Point mDroppedPoint = null;
-
-    /** A window onto which the files are dropped. */
-    private SGDrawingWindow mDroppedWindow = null;
-
-    private SGMainFunctions mMain = null;
-
-    /**
-     * Builds an event handler object.
-     *
-     * @param main the main parameter
-     * @param event the drop event
-     * @param fileList the list of dropped files
-     */
-    DropEventHandler(SGMainFunctions main, DropTargetDropEvent event, List<File> fileList) {
-      super();
-
-      // set to attributes
-      this.mMain = main;
-      this.mDroppedFileList = fileList;
-      DropTarget tg = (DropTarget) event.getSource();
-      Component com = tg.getComponent();
-      SGDrawingWindow wnd = (SGDrawingWindow) com;
-      this.mDroppedPoint = event.getLocation();
-      this.mDroppedWindow = wnd;
-
-      // start this thread
-      this.start();
-    }
-
-    /** Run this thread. */
-    public void run() {
-      SwingUtilities.invokeLater(
-          new Runnable() {
-            public void run() {
-              mMain.onFilesDropped(mDroppedFileList, mDroppedWindow, mDroppedPoint);
-              mDroppedWindow.getContentPane().repaint();
-              mDroppedFileList = null;
-              mDroppedPoint = null;
-              mDroppedWindow = null;
-            }
-          });
-    }
   }
 
   /**

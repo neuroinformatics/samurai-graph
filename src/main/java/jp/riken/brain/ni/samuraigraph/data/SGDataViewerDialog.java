@@ -31,6 +31,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
+import jp.riken.brain.ni.samuraigraph.base.SGDataPluginHolder;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPlugin;
@@ -443,8 +444,9 @@ public class SGDataViewerDialog extends SGDialog {
             notifyToListener(command);
           }
         };
-    if (mDataPluginList != null && mDataPluginList.size() != 0) {
-      for (SGIPlugin lib : mDataPluginList) {
+    List<SGIPlugin> dataPluginList = SGDataPluginHolder.getDataPlugins();
+    if (dataPluginList != null && dataPluginList.size() != 0) {
+      for (SGIPlugin lib : dataPluginList) {
         String text = SGUtility.createPluginItemString(lib);
         if (text == null) {
           continue;
@@ -972,17 +974,6 @@ public class SGDataViewerDialog extends SGDialog {
   }
 
   // The list of data plug-in.
-  private static List<SGIPlugin> mDataPluginList = null;
-
-  /**
-   * Sets the list of data plug-in.
-   *
-   * @param pluginList the list of data plug-in
-   */
-  public static void setDataPlugins(List<SGIPlugin> pluginList) {
-    mDataPluginList = new ArrayList<SGIPlugin>(pluginList);
-  }
-
   public void addTableSelectionListener(ListSelectionListener x) {
     this.mTable.getSelectionModel().addListSelectionListener(x);
   }

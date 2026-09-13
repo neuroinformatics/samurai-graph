@@ -19,6 +19,9 @@ final class SGConsoleRunner {
 
   private static final Logger logger = LogManager.getLogger(SGConsoleRunner.class);
 
+  private static final java.util.concurrent.ExecutorService EXECUTOR =
+      java.util.concurrent.Executors.newCachedThreadPool();
+
   // the prompt
   private static final String PROMPT = "$ ";
 
@@ -101,8 +104,8 @@ final class SGConsoleRunner {
    * @param fileName file name
    */
   void loadCommandScriptFile(final String fileName) {
-    // creates and starts a thread
-    new CommandThread(fileName);
+    // creates and starts a task on the executor
+    EXECUTOR.execute(new CommandThread(fileName));
   }
 
   private void readRecursively(
@@ -246,14 +249,12 @@ final class SGConsoleRunner {
     return sb.toString();
   }
 
-  class CommandThread extends Thread {
+  class CommandThread implements Runnable {
 
     private String mScriptFileName = null;
 
     CommandThread(final String script) {
-      super();
       this.mScriptFileName = script;
-      this.start();
     }
 
     /** Runs the thread. */

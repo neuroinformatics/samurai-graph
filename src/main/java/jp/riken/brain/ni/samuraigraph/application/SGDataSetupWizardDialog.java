@@ -171,10 +171,7 @@ public abstract class SGDataSetupWizardDialog extends SGWizardDialog
   }
 
   /** An observer to set enabled / disabled the OK button with input values. */
-  class InputObserver extends Thread {
-    InputObserver() {
-      super();
-    }
+  class InputObserver implements Runnable {
 
     public void run() {
       final boolean b = getDataSetupPanel().checkSelectedItems();

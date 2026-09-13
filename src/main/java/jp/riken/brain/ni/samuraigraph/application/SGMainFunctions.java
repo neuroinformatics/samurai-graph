@@ -235,8 +235,8 @@ class SGMainFunctions
   /** Native plug-in manager. */
   SGNativePluginManager mNativePluginManager = null;
 
-  /** Initializer. */
-  private Initializer mInit = null;
+  /** Initializer future. */
+  private java.util.concurrent.Future<?> mInitFuture = null;
 
   /** The standard output stream. */
 
@@ -273,19 +273,17 @@ class SGMainFunctions
   public SGMainFunctions(final SGApplicationProperties prop, final Map<String, Object> paramMap) {
     super();
     this.mAppProp = prop;
-    this.mInit = new Initializer(paramMap);
-    this.mInit.start();
+    this.mInitFuture = this.mCommandExecutor.submit(new Initializer(paramMap));
   }
 
   /** SGMainFunctions :: Initializer class */
-  private class Initializer extends Thread {
+  private class Initializer implements Runnable {
 
     private String mStartupFilePath = null;
 
     private FILE_TYPE mStartupFileType = null;
 
     private Initializer(final Map<String, Object> paramMap) {
-      super();
       Set<String> keys = paramMap.keySet();
 
       // command mode
@@ -620,11 +618,11 @@ class SGMainFunctions
 
   public boolean waitInit() {
     try {
-      this.mInit.join();
-    } catch (InterruptedException e) {
+      this.mInitFuture.get();
+    } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
       return false;
     }
-    this.mInit = null;
+    this.mInitFuture = null;
     return true;
   }
 

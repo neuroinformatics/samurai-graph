@@ -9,7 +9,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /** A class of the animation. */
-public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnimationConstants {
+public class SGAnimationThread implements Runnable, SGIDisposable, SGIAnimationConstants {
+
+  /** Executor for animation loops. */
+  private static final java.util.concurrent.ExecutorService EXECUTOR =
+      java.util.concurrent.Executors.newCachedThreadPool(
+          runnable -> {
+            Thread th = new Thread(runnable, "SGAnimationThread");
+            th.setDaemon(true);
+            return th;
+          });
 
   private static final Logger logger = LogManager.getLogger(SGAnimationThread.class);
 
@@ -50,7 +59,6 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
    * @param animations an animation data source
    */
   public SGAnimationThread(SGIAnimation[] animations) {
-    super();
     if (animations == null) {
       throw new IllegalArgumentException("animations == null");
     }
@@ -116,7 +124,6 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
    * @param th an animation thread to copy
    */
   public SGAnimationThread(SGAnimationThread th) {
-    super();
     this.mAnimations = th.mAnimations.clone();
     this.mCurrentFrameIndex = th.mCurrentFrameIndex;
     this.mFrameNumber = th.mFrameNumber;
@@ -137,96 +144,104 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
 
   /** Run this thread. */
   public void run() {
+    try {
 
-    // get the number of frame
-    final int fSize = this.mFrameNumber;
+      // get the number of frame
+      final int fSize = this.mFrameNumber;
 
-    PlayInfo info = this.getPlayInfo();
+      PlayInfo info = this.getPlayInfo();
 
-    // endless loop for the animation
-    while (this.mPlayFlag) {
+      // endless loop for the animation
+      while (this.mPlayFlag) {
 
-      // current index
-      final int curIndex = this.mCurrentFrameIndex;
+        // current index
+        final int curIndex = this.mCurrentFrameIndex;
 
-      // increment the counter
-      int nextIndex = curIndex;
-      if (this.mForwardFlag) {
-        nextIndex++;
-      } else {
-        nextIndex--;
-      }
-
-      final int vIndex =
-          getValidFrameIndex(
-              nextIndex,
-              fSize,
-              this.mFrameIndexArray,
-              this.mForwardFlag,
-              this.isLoopPlaybackEnabled());
-      if (vIndex == -1) {
-        this.mPlayFlag = false;
-        continue;
-      }
-
-      // set the frame index
-      final int nIndex = vIndex;
-      try {
-        SwingUtilities.invokeAndWait(
-            new Runnable() {
-              public void run() {
-                mCurrentFrameIndex = nIndex;
-                for (SGIAnimation animation : mAnimations) {
-                  animation.setCurrentFrameIndex(nIndex);
-                }
-              }
-            });
-      } catch (InterruptedException e1) {
-        logger.debug("Exception occurred", e1);
-      } catch (InvocationTargetException e1) {
-        logger.debug("Exception occurred", e1);
-      }
-
-      // notify to the observers
-      for (AnimationThreadObserver obs : this.mObserverList) {
-        obs.updated(this);
-      }
-
-      // sleep seconds for time step
-      try {
-        final long initTime = System.currentTimeMillis();
-
-        // loops of minimum sleeping time
-        boolean endFlag = false;
-        for (int ii = 0; ii < info.repeatNum; ii++) {
-          info = this.getPlayInfo();
-          if (!this.mPlayFlag) {
-            break;
-          }
-          Thread.sleep(MIN_SLEEP_TIME);
-          final long curTime = System.currentTimeMillis();
-          final long spentTime = curTime - initTime;
-          if (spentTime > this.mTimeInterval) {
-            endFlag = true;
-            break;
-          }
+        // increment the counter
+        int nextIndex = curIndex;
+        if (this.mForwardFlag) {
+          nextIndex++;
+        } else {
+          nextIndex--;
         }
 
-        if (endFlag) {
+        final int vIndex =
+            getValidFrameIndex(
+                nextIndex,
+                fSize,
+                this.mFrameIndexArray,
+                this.mForwardFlag,
+                this.isLoopPlaybackEnabled());
+        if (vIndex == -1) {
+          this.mPlayFlag = false;
           continue;
         }
 
-        if (!this.mPlayFlag) {
-          break;
+        // set the frame index
+        final int nIndex = vIndex;
+        try {
+          SwingUtilities.invokeAndWait(
+              new Runnable() {
+                public void run() {
+                  mCurrentFrameIndex = nIndex;
+                  for (SGIAnimation animation : mAnimations) {
+                    animation.setCurrentFrameIndex(nIndex);
+                  }
+                }
+              });
+        } catch (InterruptedException e1) {
+          logger.debug("Exception occurred", e1);
+        } catch (InvocationTargetException e1) {
+          logger.debug("Exception occurred", e1);
         }
 
-        info = this.getPlayInfo();
+        // notify to the observers
+        for (AnimationThreadObserver obs : this.mObserverList) {
+          obs.updated(this);
+        }
 
-        // sleep remained time
-        Thread.sleep(info.remainedTime);
+        // sleep seconds for time step
+        try {
+          final long initTime = System.currentTimeMillis();
 
-      } catch (InterruptedException e) {
-        logger.debug("Exception occurred", e);
+          // loops of minimum sleeping time
+          boolean endFlag = false;
+          for (int ii = 0; ii < info.repeatNum; ii++) {
+            info = this.getPlayInfo();
+            if (!this.mPlayFlag) {
+              break;
+            }
+            Thread.sleep(MIN_SLEEP_TIME);
+            final long curTime = System.currentTimeMillis();
+            final long spentTime = curTime - initTime;
+            if (spentTime > this.mTimeInterval) {
+              endFlag = true;
+              break;
+            }
+          }
+
+          if (endFlag) {
+            continue;
+          }
+
+          if (!this.mPlayFlag) {
+            break;
+          }
+
+          info = this.getPlayInfo();
+
+          // sleep remained time
+          Thread.sleep(info.remainedTime);
+
+        } catch (InterruptedException e) {
+          logger.debug("Exception occurred", e);
+        }
+      }
+    } finally {
+      this.mSubmitted.set(false);
+      java.util.concurrent.CountDownLatch latch = this.mRunLatch;
+      if (latch != null) {
+        latch.countDown();
       }
     }
   }
@@ -323,11 +338,29 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
     this.mForwardFlag = b;
   }
 
-  /** Overrode to set the flag. */
-  @Override
+  /** Single-flight guard for the submitted task. */
+  private final java.util.concurrent.atomic.AtomicBoolean mSubmitted =
+      new java.util.concurrent.atomic.AtomicBoolean(false);
+
+  /** Latch released when the current run() exits. */
+  private volatile java.util.concurrent.CountDownLatch mRunLatch = null;
+
+  /** Starts the animation loop on the shared executor. */
   public void start() {
+    if (!this.mSubmitted.compareAndSet(false, true)) {
+      return;
+    }
+    this.mRunLatch = new java.util.concurrent.CountDownLatch(1);
     this.mPlayFlag = true;
-    super.start();
+    EXECUTOR.execute(this);
+  }
+
+  /** Waits until the animation loop exits. */
+  public void join() throws InterruptedException {
+    java.util.concurrent.CountDownLatch latch = this.mRunLatch;
+    if (latch != null) {
+      latch.await();
+    }
   }
 
   /** Stops the animation. */

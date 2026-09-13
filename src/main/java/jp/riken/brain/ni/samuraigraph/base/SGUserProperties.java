@@ -8,7 +8,7 @@ public class SGUserProperties {
 
   private Map<String, String> mProperties = new HashMap<String, String>();
 
-  private static SGUserProperties mInstance = new SGUserProperties();
+  private static final SGUserProperties mInstance = new SGUserProperties();
 
   private SGUserProperties() {}
 

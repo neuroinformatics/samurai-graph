@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
+import jp.riken.brain.ni.samuraigraph.base.SGDataPluginHolder;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGIPlugin;
 import jp.riken.brain.ni.samuraigraph.base.SGIPluginManager;
@@ -106,12 +107,13 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
         new ActionListener() {
           public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-            mDataPluginManager.execCommand(command, mWnd);
+            SGDataPluginHolder.getDataPluginManager().execCommand(command, mWnd);
           }
         };
     List<PopupMenuItem> pluginItemList = new ArrayList<PopupMenuItem>();
-    if (mDataPluginList != null && mDataPluginList.size() != 0) {
-      for (SGIPlugin lib : mDataPluginList) {
+    List<SGIPlugin> dataPluginList = SGDataPluginHolder.getDataPlugins();
+    if (dataPluginList != null && dataPluginList.size() != 0) {
+      for (SGIPlugin lib : dataPluginList) {
         String text = SGUtility.createPluginItemString(lib);
         if (text == null) {
           continue;
@@ -417,25 +419,4 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
   }
 
   // The list of data plug-in.
-  private static List<SGIPlugin> mDataPluginList = null;
-
-  private static SGIPluginManager mDataPluginManager = null;
-
-  /**
-   * Sets the data plug-in manager.
-   *
-   * @param m the data plug-in manager
-   */
-  public static void setDataPluginManager(SGIPluginManager m) {
-    mDataPluginManager = m;
-  }
-
-  /**
-   * Sets the list of data plug-in.
-   *
-   * @param pluginList the list of data plug-in
-   */
-  public static void setDataPlugins(List<SGIPlugin> pluginList) {
-    mDataPluginList = new ArrayList<SGIPlugin>(pluginList);
-  }
 }
