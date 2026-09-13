@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -35,8 +38,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGIAnimation;
-import jp.riken.brain.ni.samuraigraph.base.SGIAnimationConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
@@ -54,11 +55,7 @@ import org.freehep.graphicsio.PageConstants;
 
 /** A dialog to set configuration of animation of data object. */
 public class SGDataAnimationDialog extends SGDialog
-    implements SGIAnimationConstants,
-        DocumentListener,
-        AnimationThreadObserver,
-        MouseListener,
-        ItemListener {
+    implements DocumentListener, AnimationThreadObserver, MouseListener, ItemListener {
 
   /** Serial Version UID */
   private static final long serialVersionUID = -422924558519688171L;
@@ -798,7 +795,7 @@ public class SGDataAnimationDialog extends SGDialog
               String indexString = String.format(format, indices[ii]);
               StringBuilder sb = new StringBuilder();
               sb.append(dir);
-              sb.append(SGIConstants.FILE_SEPARATOR);
+              sb.append(FILE_SEPARATOR);
               sb.append(name);
               sb.append('_');
               sb.append(indexString);

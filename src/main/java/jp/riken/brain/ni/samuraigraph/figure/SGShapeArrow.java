@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -10,7 +14,7 @@ import jp.riken.brain.ni.samuraigraph.base.*;
 import org.w3c.dom.Element;
 
 class SGShapeArrow extends SGSimpleArrow2D
-    implements SGFigureElementShape.IElement, SGIArrowDialogObserver, SGIShapeConstants {
+    implements SGFigureElementShape.IElement, SGIArrowDialogObserver {
 
   private final SGFigureElementShape owner;
 
@@ -57,7 +61,7 @@ class SGShapeArrow extends SGSimpleArrow2D
     this.setLineWidth(DEFAULT_SHAPE_ARROW_LINE_WIDTH, LINE_WIDTH_UNIT);
     this.setLineType(DEFAULT_SHAPE_ARROW_LINE_TYPE);
     this.setColor(DEFAULT_SHAPE_ARROW_COLOR);
-    this.setHeadSize(DEFAULT_SHAPE_ARROW_HEAD_SIZE, SGIArrowConstants.ARROW_HEAD_SIZE_UNIT);
+    this.setHeadSize(DEFAULT_SHAPE_ARROW_HEAD_SIZE, ARROW_HEAD_SIZE_UNIT);
     this.setHeadAngle(DEFAULT_SHAPE_ARROW_HEAD_OPEN_ANGLE, DEFAULT_SHAPE_ARROW_HEAD_CLOSE_ANGLE);
     this.setAnchored(DEFAULT_SHAPE_ARROW_ANCHORED);
   }

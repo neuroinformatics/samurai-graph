@@ -1,7 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGIConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGILegendConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
 
 import java.awt.*;
 import java.awt.Graphics2D;
@@ -139,10 +139,10 @@ class ElementGroupArrow extends SGElementGroupArrowForData implements ILegendEle
 
   private boolean doShiftX(final int type) {
     final boolean b =
-        (type != SGIArrowConstants.SYMBOL_TYPE_ARROW_HEAD)
-            && (type != SGIArrowConstants.SYMBOL_TYPE_ARROW)
-            && (type != SGIArrowConstants.SYMBOL_TYPE_TRANSVERSELINE)
-            && (type != SGIArrowConstants.SYMBOL_TYPE_VOID);
+        (type != SGArrowConstants.SYMBOL_TYPE_ARROW_HEAD)
+            && (type != SGArrowConstants.SYMBOL_TYPE_ARROW)
+            && (type != SGArrowConstants.SYMBOL_TYPE_TRANSVERSELINE)
+            && (type != SGArrowConstants.SYMBOL_TYPE_VOID);
     return b;
   }
 

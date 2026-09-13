@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -20,22 +45,16 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import jp.riken.brain.ni.samuraigraph.base.SGButton;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupPanel;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTextUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 
 /** The base class of the wizard dialog to set up the data. */
 public abstract class SGDataSetupWizardDialog extends SGWizardDialog
-    implements PropertyChangeListener,
-        DocumentListener,
-        ItemListener,
-        SGIDataColumnTypeConstants,
-        SGIApplicationTextConstants {
+    implements PropertyChangeListener, DocumentListener, ItemListener {
 
   private static final long serialVersionUID = -225586291971946590L;
 
@@ -288,7 +307,7 @@ public abstract class SGDataSetupWizardDialog extends SGWizardDialog
     }
     if (!ok) {
       SGUtility.showMessageDialog(
-          this, MSG_INVALID_INPUT_VALUE, SGIConstants.TITLE_ERROR, JOptionPane.ERROR_MESSAGE);
+          this, MSG_INVALID_INPUT_VALUE, TITLE_ERROR, JOptionPane.ERROR_MESSAGE);
       return false;
     }
     return super.onOK();

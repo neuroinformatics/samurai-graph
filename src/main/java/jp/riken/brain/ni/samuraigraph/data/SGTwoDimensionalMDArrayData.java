@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
 import com.jmatio.types.MLDouble;
@@ -29,10 +54,7 @@ import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The base class of two dimensional MDArray data. */
 public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
-    implements SGITwoDimensionalData,
-        SGIIndexData,
-        SGIDataPropertyKeyConstants,
-        SGIMDArrayConstants {
+    implements SGITwoDimensionalData, SGIIndexData {
 
   /** The variable for x-values. */
   protected SGMDArrayVariable mXVariable = null;
@@ -179,7 +201,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     String key;
     if (this.isIndexAvailable()) {
       stride = this.mIndexStride;
-      key = SGIMDArrayConstants.KEY_GENERIC_DIMENSION;
+      key = KEY_GENERIC_DIMENSION;
     } else {
       stride = this.mXStride;
       key = this.getXDimensionKey();
@@ -193,7 +215,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     String key;
     if (this.isIndexAvailable()) {
       stride = this.mIndexStride;
-      key = SGIMDArrayConstants.KEY_GENERIC_DIMENSION;
+      key = KEY_GENERIC_DIMENSION;
     } else {
       stride = this.mYStride;
       key = this.getYDimensionKey();
@@ -632,15 +654,15 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
       String dimName = dim.getShortName();
       Integer index = null;
       if (xNameList.contains(dimName)) {
-        String key = bGeneric ? SGIMDArrayConstants.KEY_GENERIC_DIMENSION : this.getXDimensionKey();
+        String key = bGeneric ? KEY_GENERIC_DIMENSION : this.getXDimensionKey();
         index = mdVar.getDimensionIndex(key);
       } else if (yNameList.contains(dimName)) {
-        String key = bGeneric ? SGIMDArrayConstants.KEY_GENERIC_DIMENSION : this.getYDimensionKey();
+        String key = bGeneric ? KEY_GENERIC_DIMENSION : this.getYDimensionKey();
         index = mdVar.getDimensionIndex(key);
       } else if (INDEX_DIM_NAME.equals(dimName)) {
         index = mdVar.getGenericDimensionIndex();
       } else if (TIME_DIM_NAME.equals(dimName)) {
-        index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
+        index = mdVar.getDimensionIndex(KEY_TIME_DIMENSION);
       }
       if (index != null && index != -1) {
         mdArrayIndexMap.put(dimName, index);

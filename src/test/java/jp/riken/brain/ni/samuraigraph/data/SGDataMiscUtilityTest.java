@@ -18,8 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import org.junit.jupiter.api.Test;
 import ucar.nc2.NetcdfFiles;
@@ -53,25 +53,25 @@ class SGDataMiscUtilityTest {
   void getCanonicalColumnTypesNormalizesEntries() {
     String[] canonical =
         SGDataMiscUtility.getCanonicalColumnTypes(
-            new String[] {SGIDataColumnTypeConstants.X_VALUE, "Y"});
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, canonical[0]);
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, canonical[1]);
+            new String[] {SGDataColumnTypeConstants.X_VALUE, "Y"});
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, canonical[0]);
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, canonical[1]);
   }
 
   @Test
   void isArchiveDataSetOperationChecksMode() {
     assertTrue(
         SGDataMiscUtility.isArchiveDataSetOperation(
-            SGIConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET));
+            SGConstants.OPERATION.SAVE_TO_ARCHIVE_DATA_SET));
     assertFalse(
-        SGDataMiscUtility.isArchiveDataSetOperation(SGIConstants.OPERATION.DUPLICATE_OBJECT));
+        SGDataMiscUtility.isArchiveDataSetOperation(SGConstants.OPERATION.DUPLICATE_OBJECT));
   }
 
   @Test
   void getDataColumnTypeCommandBuildsParenthesizedMapping() {
     List<String> vars = Arrays.asList("x", "y");
     List<String> types =
-        Arrays.asList(SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE);
+        Arrays.asList(SGDataColumnTypeConstants.X_VALUE, SGDataColumnTypeConstants.Y_VALUE);
     assertEquals("(x:X,y:Y)", SGDataMiscUtility.getDataColumnTypeCommand(vars, types));
     assertThrows(
         IllegalArgumentException.class,
@@ -81,13 +81,13 @@ class SGDataMiscUtilityTest {
   @Test
   void checkDataColumnsAcceptsBasicSXYSelection() {
     SGDataColumnInfo[] columns = {
-      new SGSDArrayDataColumnInfo("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, 4),
-      new SGSDArrayDataColumnInfo("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, 4)
+      new SGSDArrayDataColumnInfo("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, 4),
+      new SGSDArrayDataColumnInfo("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, 4)
     };
-    columns[0].setColumnType(SGIDataColumnTypeConstants.X_VALUE);
-    columns[1].setColumnType(SGIDataColumnTypeConstants.Y_VALUE);
+    columns[0].setColumnType(SGDataColumnTypeConstants.X_VALUE);
+    columns[1].setColumnType(SGDataColumnTypeConstants.Y_VALUE);
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
     assertTrue(SGDataMiscUtility.checkDataColumns(SGDataTypeConstants.SXY_DATA, columns, infoMap));
   }
 
@@ -97,28 +97,27 @@ class SGDataMiscUtilityTest {
         SGDataMiscUtility.getColumnTypeCandidates(
             SGDataTypeConstants.SXYZ_DATA,
             new HashMap<String, Object>(),
-            SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     assertNotNull(candidates);
     assertEquals(4, candidates.length);
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, candidates[1]);
-    assertEquals(SGIDataColumnTypeConstants.Z_VALUE, candidates[3]);
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, candidates[1]);
+    assertEquals(SGDataColumnTypeConstants.Z_VALUE, candidates[3]);
   }
 
   @Test
   void isComplementButtonVisibleForMultipleSXY() {
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(
-        SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_MULTIPLE_DATA);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_MULTIPLE_DATA);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
     assertTrue(SGDataMiscUtility.isComplementButtonVisible(infoMap));
   }
 
   @Test
   void isComplementButtonVisibleForSingleSXY() {
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_DATA);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_DATA);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
     assertFalse(SGDataMiscUtility.isComplementButtonVisible(infoMap));
   }
 
@@ -132,10 +131,10 @@ class SGDataMiscUtilityTest {
   @Test
   void isGridPlotForSXYZData() {
     Map<String, Object> grid = new HashMap<String, Object>();
-    grid.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, Boolean.TRUE);
+    grid.put(SGDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, Boolean.TRUE);
     assertEquals(Boolean.TRUE, SGDataMiscUtility.isGridPlot(SGDataTypeConstants.SXYZ_DATA, grid));
     Map<String, Object> stride = new HashMap<String, Object>();
-    stride.put(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, new SGIntegerSeriesSet());
+    stride.put(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, new SGIntegerSeriesSet());
     assertEquals(
         Boolean.FALSE, SGDataMiscUtility.isGridPlot(SGDataTypeConstants.SXYZ_DATA, stride));
     assertNull(
@@ -153,28 +152,28 @@ class SGDataMiscUtilityTest {
   @Test
   void getComplementedColumnTypeCompletesSingleSelection() {
     List<SGDataColumnInfo> cols = new java.util.ArrayList<SGDataColumnInfo>();
-    cols.add(new SGSDArrayDataColumnInfo("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, 4));
-    cols.add(new SGSDArrayDataColumnInfo("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, 4));
+    cols.add(new SGSDArrayDataColumnInfo("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, 4));
+    cols.add(new SGSDArrayDataColumnInfo("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, 4));
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_DATA);
-    String[] cur = {SGIDataColumnTypeConstants.X_VALUE, ""};
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_DATA);
+    String[] cur = {SGDataColumnTypeConstants.X_VALUE, ""};
     String[] complemented = SGDataMiscUtility.getComplementedColumnType(infoMap, cur, cols);
     assertArrayEquals(
-        new String[] {SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE},
+        new String[] {SGDataColumnTypeConstants.X_VALUE, SGDataColumnTypeConstants.Y_VALUE},
         complemented);
     assertNull(
         SGDataMiscUtility.getComplementedColumnType(
-            infoMap, new String[] {SGIDataColumnTypeConstants.X_VALUE}, cols));
+            infoMap, new String[] {SGDataColumnTypeConstants.X_VALUE}, cols));
   }
 
   @Test
   void isComplementedButtonEnabledForSingleSDArraySelection() {
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_DATA);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_DATA);
     assertTrue(
         SGDataMiscUtility.isComplementedButtonEnabled(
             infoMap,
-            new String[] {SGIDataColumnTypeConstants.X_VALUE, ""},
+            new String[] {SGDataColumnTypeConstants.X_VALUE, ""},
             new java.util.ArrayList<SGDataColumnInfo>()));
     assertFalse(
         SGDataMiscUtility.isComplementedButtonEnabled(
@@ -194,9 +193,9 @@ class SGDataMiscUtilityTest {
   @Test
   void getSXYColumnTypeCollectsXAndYIndexes() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
-      column("label", SGIDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
+      column("label", SGDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
     };
     java.util.List<Integer> xIndexList = new java.util.ArrayList<Integer>();
     java.util.List<Integer> yIndexList = new java.util.ArrayList<Integer>();
@@ -216,7 +215,7 @@ class SGDataMiscUtilityTest {
   @Test
   void getSXYColumnTypeRejectsUnknownColumnType() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("bad", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, "UnknownType")
+      column("bad", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, "UnknownType")
     };
     java.util.List<Integer> xIndexList = new java.util.ArrayList<Integer>();
     java.util.List<Integer> yIndexList = new java.util.ArrayList<Integer>();
@@ -254,9 +253,9 @@ class SGDataMiscUtilityTest {
   @Test
   void updateDataColumnsReturnsCopyForNonSXYTypes() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE)
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE)
     };
-    String[] types = {SGIDataColumnTypeConstants.X_VALUE};
+    String[] types = {SGDataColumnTypeConstants.X_VALUE};
     String[] ret = SGDataMiscUtility.updateDataColumns(SGDataTypeConstants.SXYZ_DATA, cols, types);
     assertArrayEquals(types, ret);
   }
@@ -264,11 +263,11 @@ class SGDataMiscUtilityTest {
   @Test
   void updateDataColumnsKeepsValidXYTypes() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
-      column("l", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, "")
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
+      column("l", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, "")
     };
-    String[] types = {SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE, ""};
+    String[] types = {SGDataColumnTypeConstants.X_VALUE, SGDataColumnTypeConstants.Y_VALUE, ""};
     String[] ret = SGDataMiscUtility.updateDataColumns(SGDataTypeConstants.SXY_DATA, cols, types);
     assertArrayEquals(types, ret);
   }
@@ -299,10 +298,10 @@ class SGDataMiscUtilityTest {
   @Test
   void isEmptyOrRepeatedColumnTitleMarksEmptyAndDuplicates() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, ""),
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, ""),
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, ""),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, "")
+      column("", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, ""),
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, ""),
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, ""),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, "")
     };
     boolean[] result = SGDataMiscUtility.isEmptyOrRepeatedColumnTitle(cols);
     assertTrue(result[0]);
@@ -314,9 +313,9 @@ class SGDataMiscUtilityTest {
   @Test
   void isPolarReadsSelectionFlag() {
     java.util.Map<String, Object> infoMap = new java.util.HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
     assertTrue(SGDataMiscUtility.isPolar(infoMap));
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     assertFalse(SGDataMiscUtility.isPolar(infoMap));
   }
 
@@ -331,19 +330,19 @@ class SGDataMiscUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     SGNetCDFDataColumnInfo leInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("le"), SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, "height");
+            file.findVariable("le"), SGDataColumnTypeConstants.LOWER_ERROR_VALUE, "height");
     SGNetCDFDataColumnInfo ueInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("ue"), SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, "height");
+            file.findVariable("ue"), SGDataColumnTypeConstants.UPPER_ERROR_VALUE, "height");
     SGNetCDFDataColumnInfo tInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("le"), SGIDataColumnTypeConstants.TICK_LABEL, "height");
+            file.findVariable("le"), SGDataColumnTypeConstants.TICK_LABEL, "height");
     SGDataColumnInfo[] cols = {xInfo, yInfo, leInfo, ueInfo, tInfo};
     java.util.List<Integer> xIndexList = new java.util.ArrayList<Integer>();
     java.util.List<Integer> yIndexList = new java.util.ArrayList<Integer>();
@@ -363,46 +362,46 @@ class SGDataMiscUtilityTest {
   @Test
   void updateDataColumnsClearsUnassignableErrorTypes() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
-      column("label", SGIDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
+      column("label", SGDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
     };
     String[] types = {
-      SGIDataColumnTypeConstants.X_VALUE,
-      SGIDataColumnTypeConstants.Y_VALUE,
-      SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y"
+      SGDataColumnTypeConstants.X_VALUE,
+      SGDataColumnTypeConstants.Y_VALUE,
+      SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y"
     };
     String[] ret = SGDataMiscUtility.updateDataColumns(SGDataTypeConstants.SXY_DATA, cols, types);
     assertEquals(
-        SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y", ret[2], Arrays.toString(ret));
+        SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y", ret[2], Arrays.toString(ret));
   }
 
   @Test
   void getColumnNameAndAppendedNumberListRejectsBadSuffix() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE)
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE)
     };
-    cols[0].setColumnType(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for no");
+    cols[0].setColumnType(SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for no");
     List<String> nameList = new java.util.ArrayList<String>();
     List<Integer> indexList = new java.util.ArrayList<Integer>();
     assertFalse(
         SGDataMiscUtility.getColumnNameAndAppendedNumberList(
-            cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, nameList, indexList));
+            cols, SGDataColumnTypeConstants.LOWER_ERROR_VALUE, nameList, indexList));
   }
 
   @Test
   void getColumnNameAndAppendedNumberListAcceptsHolderName() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE)
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE)
     };
-    SGSDArrayDataColumnInfo le = column("le", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, "");
-    le.setColumnType(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y");
+    SGSDArrayDataColumnInfo le = column("le", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, "");
+    le.setColumnType(SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y");
     List<String> nameList = new java.util.ArrayList<String>();
     List<Integer> indexList = new java.util.ArrayList<Integer>();
     assertTrue(
         SGDataMiscUtility.getColumnNameAndAppendedNumberList(
             new SGSDArrayDataColumnInfo[] {cols[0], le},
-            SGIDataColumnTypeConstants.LOWER_ERROR_VALUE,
+            SGDataColumnTypeConstants.LOWER_ERROR_VALUE,
             nameList,
             indexList));
     assertEquals("le", nameList.get(0));
@@ -412,15 +411,15 @@ class SGDataMiscUtilityTest {
   @Test
   void getColumnListStartsWithFiltersByPrefix() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
       column(
           "le",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y")
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y")
     };
     List<SGDataColumnInfo> list =
         SGDataMiscUtility.getColumnListStartsWith(
-            cols, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE);
+            cols, SGDataColumnTypeConstants.LOWER_ERROR_VALUE);
     assertEquals(1, list.size());
     assertEquals("le", list.get(0).getName());
   }
@@ -428,14 +427,14 @@ class SGDataMiscUtilityTest {
   @Test
   void getColumnListMatchesExactType() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
       column(
           "le",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y")
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y")
     };
     List<SGDataColumnInfo> list =
-        SGDataMiscUtility.getColumnList(cols, SGIDataColumnTypeConstants.Y_VALUE);
+        SGDataMiscUtility.getColumnList(cols, SGDataColumnTypeConstants.Y_VALUE);
     assertEquals(1, list.size());
     assertEquals("y", list.get(0).getName());
   }
@@ -443,24 +442,23 @@ class SGDataMiscUtilityTest {
   @Test
   void getColumnNameListCollectsMatchingNames() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
       column(
           "le",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y")
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y")
     };
     List<String> names =
-        SGDataMiscUtility.getColumnNameList(cols, SGIDataColumnTypeConstants.Y_VALUE);
+        SGDataMiscUtility.getColumnNameList(cols, SGDataColumnTypeConstants.Y_VALUE);
     assertEquals(java.util.Collections.singletonList("y"), names);
   }
 
   @Test
   void checkDataColumnsAcceptsMultipleSXY() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column(
-          "y1", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
-      column("y2", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE)
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y1", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
+      column("y2", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE)
     };
     assertTrue(
         SGDataMiscUtility.checkDataColumns(
@@ -470,8 +468,8 @@ class SGDataMiscUtilityTest {
   @Test
   void checkDataColumnsRejectsMissingXY() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("l", SGIDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("l", SGDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
     };
     assertFalse(
         SGDataMiscUtility.checkDataColumns(
@@ -481,15 +479,15 @@ class SGDataMiscUtilityTest {
   @Test
   void checkDataColumnsRejectsSamplingRateMultipleValues() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
       column(
           "y1",
-          SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE,
-          SGIDataColumnTypeConstants.Y_VALUE),
+          SGDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE,
+          SGDataColumnTypeConstants.Y_VALUE),
       column(
           "y2",
-          SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE,
-          SGIDataColumnTypeConstants.Y_VALUE)
+          SGDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE,
+          SGDataColumnTypeConstants.Y_VALUE)
     };
     assertFalse(
         SGDataMiscUtility.checkDataColumns(
@@ -499,17 +497,16 @@ class SGDataMiscUtilityTest {
   @Test
   void checkDataColumnsAcceptsSXYZAndRejectsDuplicates() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
-      column("z", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Z_VALUE)
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
+      column("z", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Z_VALUE)
     };
     assertTrue(
         SGDataMiscUtility.checkDataColumns(SGDataTypeConstants.SXYZ_DATA, cols, new HashMap<>()));
     SGSDArrayDataColumnInfo[] dups = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column(
-          "x2", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("z", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Z_VALUE)
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("x2", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("z", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Z_VALUE)
     };
     assertFalse(
         SGDataMiscUtility.checkDataColumns(SGDataTypeConstants.SXYZ_DATA, dups, new HashMap<>()));
@@ -519,41 +516,27 @@ class SGDataMiscUtilityTest {
   void checkDataColumnsAcceptsVXYModes() {
     SGSDArrayDataColumnInfo[] ortho = {
       column(
-          "x",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.X_COORDINATE),
+          "x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_COORDINATE),
       column(
-          "y",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.Y_COORDINATE),
+          "y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_COORDINATE),
       column(
-          "vx",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.X_COMPONENT),
+          "vx", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_COMPONENT),
       column(
-          "vy",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.Y_COMPONENT)
+          "vy", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_COMPONENT)
     };
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     assertTrue(SGDataMiscUtility.checkDataColumns(SGDataTypeConstants.VXY_DATA, ortho, infoMap));
     SGSDArrayDataColumnInfo[] polar = {
       column(
-          "x",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.X_COORDINATE),
+          "x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_COORDINATE),
       column(
-          "y",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.Y_COORDINATE),
+          "y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_COORDINATE),
       column(
-          "mag",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.MAGNITUDE),
-      column("ang", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.ANGLE)
+          "mag", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.MAGNITUDE),
+      column("ang", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.ANGLE)
     };
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
     assertTrue(SGDataMiscUtility.checkDataColumns(SGDataTypeConstants.VXY_DATA, polar, infoMap));
     assertFalse(SGDataMiscUtility.checkDataColumns(SGDataTypeConstants.VXY_DATA, ortho, infoMap));
   }
@@ -561,45 +544,45 @@ class SGDataMiscUtilityTest {
   @Test
   void checkDataColumnsChecksErrorBarConsistency() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
       column(
           "le",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y"),
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y"),
       column(
           "ue",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.UPPER_ERROR_VALUE + " for y")
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.UPPER_ERROR_VALUE + " for y")
     };
     assertTrue(
         SGDataMiscUtility.checkDataColumns(SGDataTypeConstants.SXY_DATA, cols, new HashMap<>()));
     SGSDArrayDataColumnInfo[] onlyLower = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
       column(
           "le",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y")
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y")
     };
     assertFalse(
         SGDataMiscUtility.checkDataColumns(
             SGDataTypeConstants.SXY_DATA, onlyLower, new HashMap<>()));
     SGSDArrayDataColumnInfo[] dupLower = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
       column(
           "le1",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y"),
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y"),
       column(
           "le2",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y"),
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y"),
       column(
           "ue",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.UPPER_ERROR_VALUE + " for y")
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.UPPER_ERROR_VALUE + " for y")
     };
     assertFalse(
         SGDataMiscUtility.checkDataColumns(
@@ -609,14 +592,14 @@ class SGDataMiscUtilityTest {
   @Test
   void checkDataColumnsAcceptsMDArrayMultiple() {
     SGMDArrayDataColumnInfo x =
-        SGTestMDArrayColumns.column("x", new int[] {4}, SGIDataColumnTypeConstants.X_VALUE);
-    x.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+        SGTestMDArrayColumns.column("x", new int[] {4}, SGDataColumnTypeConstants.X_VALUE);
+    x.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
     SGMDArrayDataColumnInfo y1 =
-        SGTestMDArrayColumns.column("y1", new int[] {4}, SGIDataColumnTypeConstants.Y_VALUE);
-    y1.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+        SGTestMDArrayColumns.column("y1", new int[] {4}, SGDataColumnTypeConstants.Y_VALUE);
+    y1.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
     SGMDArrayDataColumnInfo y2 =
-        SGTestMDArrayColumns.column("y2", new int[] {4}, SGIDataColumnTypeConstants.Y_VALUE);
-    y2.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+        SGTestMDArrayColumns.column("y2", new int[] {4}, SGDataColumnTypeConstants.Y_VALUE);
+    y2.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
     assertTrue(
         SGDataMiscUtility.checkDataColumns(
             SGDataTypeConstants.SXY_MULTIPLE_MATLAB_DATA,
@@ -627,19 +610,19 @@ class SGDataMiscUtilityTest {
   @Test
   void getColumnTypeCandidatesForSXYSDArray() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE)
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE)
     };
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_COLUMN_INFO, cols);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX, 0);
+    infoMap.put(SGDataInformationKeyConstants.KEY_COLUMN_INFO, cols);
+    infoMap.put(SGDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX, 0);
     String[] items =
         SGDataMiscUtility.getColumnTypeCandidates(
-            SGDataTypeConstants.SXY_DATA, infoMap, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            SGDataTypeConstants.SXY_DATA, infoMap, SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     assertNotNull(items);
-    assertTrue(java.util.Arrays.asList(items).contains(SGIDataColumnTypeConstants.X_VALUE));
+    assertTrue(java.util.Arrays.asList(items).contains(SGDataColumnTypeConstants.X_VALUE));
     assertTrue(
-        java.util.Arrays.asList(items).contains(SGIDataColumnTypeConstants.TICK_LABEL + " for y"));
+        java.util.Arrays.asList(items).contains(SGDataColumnTypeConstants.TICK_LABEL + " for y"));
   }
 
   private static SGNetCDFFile createNetCDFFile(final String path) throws Exception {
@@ -662,77 +645,76 @@ class SGDataMiscUtilityTest {
     SGNetCDFFile file = createNetCDFFile(path);
     SGNetCDFDataColumnInfo xCoord =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_COORDINATE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_COORDINATE);
     SGNetCDFDataColumnInfo v1 =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("v1"), SGIDataColumnTypeConstants.X_COMPONENT);
+            file.findVariable("v1"), SGDataColumnTypeConstants.X_COMPONENT);
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
-    infoMap.put(
-        SGIDataInformationKeyConstants.KEY_COLUMN_INFO, new SGDataColumnInfo[] {xCoord, v1});
-    infoMap.put(SGIDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX, 0);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_COLUMN_INFO, new SGDataColumnInfo[] {xCoord, v1});
+    infoMap.put(SGDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX, 0);
     String[] items =
         SGDataMiscUtility.getColumnTypeCandidates(
             SGDataTypeConstants.SXY_NETCDF_DATA,
             infoMap,
-            SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     assertNotNull(items);
-    assertTrue(java.util.Arrays.asList(items).contains(SGIDataColumnTypeConstants.PICKUP));
+    assertTrue(java.util.Arrays.asList(items).contains(SGDataColumnTypeConstants.PICKUP));
 
-    infoMap.put(SGIDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX, 1);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX, 1);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
     String[] polar =
         SGDataMiscUtility.getColumnTypeCandidates(
             SGDataTypeConstants.VXY_NETCDF_DATA,
             infoMap,
-            SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     assertNotNull(polar);
-    assertTrue(java.util.Arrays.asList(polar).contains(SGIDataColumnTypeConstants.MAGNITUDE));
+    assertTrue(java.util.Arrays.asList(polar).contains(SGDataColumnTypeConstants.MAGNITUDE));
 
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     String[] orthogonal =
         SGDataMiscUtility.getColumnTypeCandidates(
             SGDataTypeConstants.VXY_NETCDF_DATA,
             infoMap,
-            SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     assertNotNull(orthogonal);
 
     String[] sxyz =
         SGDataMiscUtility.getColumnTypeCandidates(
             SGDataTypeConstants.SXYZ_NETCDF_DATA,
             infoMap,
-            SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     assertNotNull(sxyz);
-    assertTrue(java.util.Arrays.asList(sxyz).contains(SGIDataColumnTypeConstants.Z_VALUE));
+    assertTrue(java.util.Arrays.asList(sxyz).contains(SGDataColumnTypeConstants.Z_VALUE));
   }
 
   @Test
   void getColumnTypeCandidatesForMDArrayTypes() {
     SGMDArrayDataColumnInfo x =
-        SGTestMDArrayColumns.column("x", new int[] {4}, SGIDataColumnTypeConstants.X_VALUE);
-    x.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+        SGTestMDArrayColumns.column("x", new int[] {4}, SGDataColumnTypeConstants.X_VALUE);
+    x.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_COLUMN_INFO, new SGDataColumnInfo[] {x});
-    infoMap.put(SGIDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX, 0);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_COLUMN_INFO, new SGDataColumnInfo[] {x});
+    infoMap.put(SGDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX, 0);
     String[] sxy =
         SGDataMiscUtility.getColumnTypeCandidates(
             SGDataTypeConstants.SXY_VIRTUAL_MDARRAY_DATA,
             infoMap,
-            SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     assertNotNull(sxy);
     String[] sxyz =
         SGDataMiscUtility.getColumnTypeCandidates(
             SGDataTypeConstants.SXYZ_VIRTUAL_MDARRAY_DATA,
             new HashMap<String, Object>(),
-            SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     assertEquals(4, sxyz.length);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
     String[] vxy =
         SGDataMiscUtility.getColumnTypeCandidates(
             SGDataTypeConstants.VXY_VIRTUAL_MDARRAY_DATA,
             infoMap,
-            SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     assertNotNull(vxy);
   }
 
@@ -744,37 +726,37 @@ class SGDataMiscUtilityTest {
             SGDataMiscUtility.getColumnTypeCandidates(
                 "INVALID_TYPE",
                 new HashMap<String, Object>(),
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+                SGDataColumnTypeConstants.VALUE_TYPE_NUMBER));
   }
 
   @Test
   void getSXYDimensionDataColumnTypeSortsColumns() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
       column(
           "le",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y"),
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for y"),
       column(
           "ue",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.UPPER_ERROR_VALUE + " for y"),
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.UPPER_ERROR_VALUE + " for y"),
       column(
           "lu",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE + " for y"),
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE + " for y"),
       column(
           "tl",
-          SGIDataColumnTypeConstants.VALUE_TYPE_TEXT,
-          SGIDataColumnTypeConstants.TICK_LABEL + " for y"),
-      column("pk", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.PICKUP),
+          SGDataColumnTypeConstants.VALUE_TYPE_TEXT,
+          SGDataColumnTypeConstants.TICK_LABEL + " for y"),
+      column("pk", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.PICKUP),
       column(
           "tm",
-          SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-          SGIDataColumnTypeConstants.ANIMATION_FRAME),
-      column("ix", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.INDEX),
-      column("blank", SGIDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
+          SGDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+          SGDataColumnTypeConstants.ANIMATION_FRAME),
+      column("ix", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.INDEX),
+      column("blank", SGDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
     };
     List<SGDataColumnInfo> xInfoList = new java.util.ArrayList<SGDataColumnInfo>();
     List<SGDataColumnInfo> yInfoList = new java.util.ArrayList<SGDataColumnInfo>();
@@ -806,7 +788,7 @@ class SGDataMiscUtilityTest {
     assertFalse(
         SGDataMiscUtility.getSXYDimensionDataColumnType(
             new SGDataColumnInfo[] {
-              column("bad", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, "UnknownType")
+              column("bad", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, "UnknownType")
             },
             new java.util.ArrayList<SGDataColumnInfo>(),
             new java.util.ArrayList<SGDataColumnInfo>(),
@@ -821,25 +803,25 @@ class SGDataMiscUtilityTest {
   @Test
   void addGridTypeSetsFlagForMDArray() {
     SGMDArrayDataColumnInfo z =
-        SGTestMDArrayColumns.column("z", new int[] {4, 5}, SGIDataColumnTypeConstants.Z_VALUE);
-    z.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION, 1);
-    z.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 0);
+        SGTestMDArrayColumns.column("z", new int[] {4, 5}, SGDataColumnTypeConstants.Z_VALUE);
+    z.setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_X_DIMENSION, 1);
+    z.setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 0);
     Map<String, Object> infoMap = new HashMap<String, Object>();
     assertTrue(
         SGDataMiscUtility.addGridType(
             new SGDataColumnInfo[] {z}, SGDataTypeConstants.SXYZ_VIRTUAL_MDARRAY_DATA, infoMap));
-    assertEquals(Boolean.TRUE, infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG));
+    assertEquals(Boolean.TRUE, infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG));
 
     SGMDArrayDataColumnInfo mag =
-        SGTestMDArrayColumns.column("mag", new int[] {4, 5}, SGIDataColumnTypeConstants.MAGNITUDE);
-    mag.setDimensionIndex(SGIMDArrayConstants.KEY_VXY_X_DIMENSION, 1);
-    mag.setDimensionIndex(SGIMDArrayConstants.KEY_VXY_Y_DIMENSION, 0);
+        SGTestMDArrayColumns.column("mag", new int[] {4, 5}, SGDataColumnTypeConstants.MAGNITUDE);
+    mag.setDimensionIndex(SGMDArrayConstants.KEY_VXY_X_DIMENSION, 1);
+    mag.setDimensionIndex(SGMDArrayConstants.KEY_VXY_Y_DIMENSION, 0);
     Map<String, Object> vxyMap = new HashMap<String, Object>();
-    vxyMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    vxyMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
     assertTrue(
         SGDataMiscUtility.addGridType(
             new SGDataColumnInfo[] {mag}, SGDataTypeConstants.VXY_VIRTUAL_MDARRAY_DATA, vxyMap));
-    assertEquals(Boolean.TRUE, vxyMap.get(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG));
+    assertEquals(Boolean.TRUE, vxyMap.get(SGDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG));
     assertFalse(
         SGDataMiscUtility.addGridType(
             new SGDataColumnInfo[] {mag},
@@ -850,10 +832,10 @@ class SGDataMiscUtilityTest {
   @Test
   void isGridPlotForVXYData() {
     Map<String, Object> grid = new HashMap<String, Object>();
-    grid.put(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, Boolean.TRUE);
+    grid.put(SGDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, Boolean.TRUE);
     assertEquals(Boolean.TRUE, SGDataMiscUtility.isGridPlot(SGDataTypeConstants.VXY_DATA, grid));
     Map<String, Object> stride = new HashMap<String, Object>();
-    stride.put(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, new SGIntegerSeriesSet());
+    stride.put(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, new SGIntegerSeriesSet());
     assertEquals(Boolean.FALSE, SGDataMiscUtility.isGridPlot(SGDataTypeConstants.VXY_DATA, stride));
     assertEquals(
         Boolean.TRUE, SGDataMiscUtility.isGridPlot(SGDataTypeConstants.VXY_DATA, new HashMap<>()));
@@ -862,12 +844,12 @@ class SGDataMiscUtilityTest {
   @Test
   void updateDataColumnsClearsErrorBarsForInvalidHolder() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("l", SGIDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("l", SGDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
     };
     String[] types = {
-      SGIDataColumnTypeConstants.X_VALUE,
-      SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for missing"
+      SGDataColumnTypeConstants.X_VALUE,
+      SGDataColumnTypeConstants.LOWER_ERROR_VALUE + " for missing"
     };
     String[] ret = SGDataMiscUtility.updateDataColumns(SGDataTypeConstants.SXY_DATA, cols, types);
     assertNull(ret);

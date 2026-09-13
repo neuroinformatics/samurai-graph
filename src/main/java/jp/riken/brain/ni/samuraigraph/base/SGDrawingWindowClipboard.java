@@ -1,12 +1,15 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /** Clipboard operations for copied figures, objects and data. */
-final class SGDrawingWindowClipboard implements SGIRootObjectConstants {
+final class SGDrawingWindowClipboard {
 
   private final SGDrawingWindow mWnd;
 

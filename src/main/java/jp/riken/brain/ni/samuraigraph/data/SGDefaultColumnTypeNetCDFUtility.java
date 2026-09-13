@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDefaultColumnTypeUtility.*;
 
 import java.util.ArrayList;
@@ -14,8 +16,7 @@ import org.w3c.dom.NamedNodeMap;
 import ucar.nc2.Dimension;
 
 /** Static helper for the NetCDF default column types. */
-public final class SGDefaultColumnTypeNetCDFUtility
-    implements SGIDataColumnTypeConstants, SGIDataPropertyKeyConstants {
+public final class SGDefaultColumnTypeNetCDFUtility {
 
   private SGDefaultColumnTypeNetCDFUtility() {}
 
@@ -43,7 +44,7 @@ public final class SGDefaultColumnTypeNetCDFUtility
   public static Map<String, Integer> getNetCDFOriginMap(NamedNodeMap nodeMap) {
     Map<String, Integer> map = new HashMap<String, Integer>();
     if (nodeMap != null) {
-      String originMapStr = getString(nodeMap, SGIDataPropertyKeyConstants.KEY_ORIGIN_MAP);
+      String originMapStr = getString(nodeMap, KEY_ORIGIN_MAP);
       if (originMapStr != null) {
         String[][] originMapArray = SGUtilityText.readStringMaps(originMapStr);
         for (int ii = 0; ii < originMapArray.length; ii++) {
@@ -1266,7 +1267,7 @@ public final class SGDefaultColumnTypeNetCDFUtility
     }
 
     Boolean variable =
-        (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
+        (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
     if (variable != null) {
       if (!variable.booleanValue()) {
         // pick up
@@ -1446,13 +1447,13 @@ public final class SGDefaultColumnTypeNetCDFUtility
       return false;
     }
 
-    Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
+    Boolean multiple = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE);
     if (multiple == null) {
       return false;
     }
 
     Boolean variable =
-        (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
+        (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
     if (variable == null) {
       return false;
     }

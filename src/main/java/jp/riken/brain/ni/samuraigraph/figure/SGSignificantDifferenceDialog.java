@@ -1,5 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSignificantDifferenceConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -18,8 +25,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** A dialog to set the properties of significant difference symbols. */
-public class SGSignificantDifferenceDialog extends SGPropertyDialog
-    implements SGISignificantDifferenceConstants, SGITwoAxesDialog {
+public class SGSignificantDifferenceDialog extends SGPropertyDialog implements SGITwoAxesDialog {
 
   // serialVersionUID
   private static final long serialVersionUID = -248688033390165086L;

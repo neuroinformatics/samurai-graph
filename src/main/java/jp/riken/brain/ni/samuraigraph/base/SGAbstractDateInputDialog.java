@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;

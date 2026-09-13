@@ -15,7 +15,7 @@ public interface SGISXYDataDialogObserver
    *
    * @return
    */
-  public SGISXYDataConstants.ELEMENT_TYPE getSelectedGroupType();
+  public SGSXYDataConstants.ELEMENT_TYPE getSelectedGroupType();
 
   // Line
   /**

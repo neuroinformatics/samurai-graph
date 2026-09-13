@@ -3,25 +3,25 @@ package jp.riken.brain.ni.samuraigraph.data;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataBufferUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTitleUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataRangeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import ucar.nc2.Dimension;
 
 /** Static helpers for text and name manipulation. */
-public final class SGDataTextUtility
-    implements SGIDataColumnTypeConstants,
-        SGIDataPropertyKeyConstants,
-        SGINetCDFConstants,
-        SGIMDArrayConstants {
+public final class SGDataTextUtility {
 
   private SGDataTextUtility() {}
 
@@ -136,7 +136,7 @@ public final class SGDataTextUtility
   static String encodeString(String str) {
     byte[] bArray;
     try {
-      bArray = str.getBytes(SGIConstants.CHAR_SET_NAME_UTF8);
+      bArray = str.getBytes(SGConstants.CHAR_SET_NAME_UTF8);
     } catch (UnsupportedEncodingException e) {
       return null;
     }
@@ -156,7 +156,7 @@ public final class SGDataTextUtility
     }
     String strNew;
     try {
-      strNew = new String(bArray, SGIConstants.CHAR_SET_NAME_UTF8);
+      strNew = new String(bArray, SGConstants.CHAR_SET_NAME_UTF8);
     } catch (UnsupportedEncodingException e) {
       return null;
     }

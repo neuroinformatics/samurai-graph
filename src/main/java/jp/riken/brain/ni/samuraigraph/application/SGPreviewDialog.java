@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -1,13 +1,37 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 
 /** The base class of data column. */
-public abstract class SGDataColumn implements Cloneable, SGIDisposable, SGIConstants {
+public abstract class SGDataColumn implements Cloneable, SGIDisposable {
 
   /** The title of this column. */
   protected String mTitle = null;

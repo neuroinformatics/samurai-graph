@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JToggleButton;
 
@@ -64,13 +67,13 @@ public class SGSingleAxisSelectionPanel extends SGAxisSelectionPanel {
     int location = -1;
     if (this.mNoAxisSelectionButton.isSelected() == false) {
       if (this.isTopSelected()) {
-        location = SGIFigureElementAxis.AXIS_HORIZONTAL_2;
+        location = AXIS_HORIZONTAL_2;
       } else if (this.isBottomSelected()) {
-        location = SGIFigureElementAxis.AXIS_HORIZONTAL_1;
+        location = AXIS_HORIZONTAL_1;
       } else if (this.isLeftSelected()) {
-        location = SGIFigureElementAxis.AXIS_VERTICAL_1;
+        location = AXIS_VERTICAL_1;
       } else if (this.isRightSelected()) {
-        location = SGIFigureElementAxis.AXIS_VERTICAL_2;
+        location = AXIS_VERTICAL_2;
       }
     }
     return location;
@@ -91,22 +94,22 @@ public class SGSingleAxisSelectionPanel extends SGAxisSelectionPanel {
   // set selected buttons with given configuration
   private void selectAxis(final int location) {
     switch (location) {
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_1:
+      case AXIS_HORIZONTAL_1:
         {
           this.setBottomSelected(true);
           break;
         }
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_2:
+      case AXIS_HORIZONTAL_2:
         {
           this.setTopSelected(true);
           break;
         }
-      case SGIFigureElementAxis.AXIS_VERTICAL_1:
+      case AXIS_VERTICAL_1:
         {
           this.setLeftSelected(true);
           break;
         }
-      case SGIFigureElementAxis.AXIS_VERTICAL_2:
+      case AXIS_VERTICAL_2:
         {
           this.setRightSelected(true);
           break;

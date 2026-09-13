@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGRectangleConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -20,7 +24,7 @@ import org.w3c.dom.Element;
 
 /** Drawing element of the rectangle. */
 public abstract class SGDrawingElementRectangle extends SGDrawingElement
-    implements SGIRectangleConstants, SGIDrawingElementJava2D {
+    implements SGIDrawingElementJava2D {
 
   /** Construct a rectangle object. */
   public SGDrawingElementRectangle() {
@@ -356,7 +360,7 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
     }
 
     // inner paint
-    str = el.getAttribute(KEY_INNER_COLOR);
+    str = el.getAttribute(SGRectangleConstants.KEY_INNER_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColorIncludingList(str);
       if (cl == null) {

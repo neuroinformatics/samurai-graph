@@ -32,12 +32,14 @@ Actual JaCoCo measurement (line coverage) is **15.1%** overall.
 
 ## 2. Legacy Idioms
 
-- **Constant-bag interfaces**: 152 files use the `SGI*` prefix, and 60 of
-  the 149 interface declarations found there declare no methods — they
-  exist solely to hold constants (e.g. `SGIApplicationConstants`,
-  `SGIImageConstants`) or as empty marker interfaces (`SGIRootObject`,
-  `SGIWindowDialogObserver`). Classes implement 3–5 of them at once.
-  A Java 1.x idiom.
+- **Constant-bag interfaces resolved**: 51 constant-only `SGI*Constants`
+  interfaces were converted to `SG*Constants` final classes (private
+  constructor, `public static final` fields, nested types promoted to
+  `public static`); implementing classes now use `import static` from
+  the relevant constant classes and ambiguous same-named constants were
+  qualified with their declaring class. Empty marker interfaces
+  (`SGIRootObject`, `SGIIndex`, `SGIWindowDialogObserver`) remain as
+  interfaces since they are used as marker types.
 - **Raw `Thread` usage resolved**: all `extends Thread` classes were
   converted to `Runnable` tasks on executors — `InputObserver` in
   `SGDataSetupWizardDialog` / `SGPropertyFileDataDialog` / `SGDataDialog`,
@@ -80,6 +82,7 @@ Actual JaCoCo measurement (line coverage) is **15.1%** overall.
 1. **Thicken tests (top priority)**: the pure-logic `data` / `base` /
    `mdarray` layers are covered; keep extending the property
    round-trip pattern to more GUI classes
-2. **Replace legacy idioms**: migrate constant-bag interfaces to typed
-   constants or enums and move the remaining static mutable state
-   (`SGDialog.virtualBounds`) into instance or immutable holders
+2. **Replace legacy idioms**: the remaining items are the typed
+   constants migration for the marker interfaces (if desired) and moving
+   the remaining static mutable state (`SGDialog.virtualBounds`) into
+   instance or immutable holders

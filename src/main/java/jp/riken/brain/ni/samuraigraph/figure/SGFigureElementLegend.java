@@ -1,5 +1,34 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGRectangleConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -36,7 +65,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGColorMap;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
@@ -74,12 +102,10 @@ import org.w3c.dom.Element;
 /** The legend which displays symbols of data objects. */
 public class SGFigureElementLegend extends SGFigureElementForData
     implements SGIFigureElementLegend,
-        SGIStringConstants,
         CaretListener,
         DocumentListener,
         KeyListener,
         ActionListener,
-        SGILegendConstants,
         SGIMovable,
         SGILegendDialogObserver {
 
@@ -1619,8 +1645,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @param location the location of the x-axis to set
    */
   public boolean setXAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-        && location != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+    if (location != AXIS_HORIZONTAL_1 && location != AXIS_HORIZONTAL_2) {
       return false;
     }
     SGAxis axis = this.mAxisElement.getAxisInPlane(location);
@@ -1637,8 +1662,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @param location the location of the y-axis to set
    */
   public boolean setYAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
-        && location != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+    if (location != AXIS_VERTICAL_1 && location != AXIS_VERTICAL_2) {
       return false;
     }
     SGAxis axis = this.mAxisElement.getAxisInPlane(location);
@@ -2593,7 +2617,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
         }
         result.putResult(COM_LEGEND_FRAME_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (COM_LEGEND_BACKGROUND_TRANSPARENCY.equalsIgnoreCase(key)) {
-        final Integer num = SGUtilityText.getInteger(value, SGIConstants.percent);
+        final Integer num = SGUtilityText.getInteger(value, percent);
         if (num == null) {
           result.putResult(
               COM_LEGEND_BACKGROUND_TRANSPARENCY, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -2762,8 +2786,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
         map, KEY_Y_AXIS_POSITION, this.mAxisElement.getLocationName(this.mYAxis));
 
     // location
-    SGPropertyUtility.addProperty(map, KEY_X_VALUE, this.getXValue());
-    SGPropertyUtility.addProperty(map, KEY_Y_VALUE, this.getYValue());
+    SGPropertyUtility.addProperty(map, SGStringConstants.KEY_X_VALUE, this.getXValue());
+    SGPropertyUtility.addProperty(map, SGStringConstants.KEY_Y_VALUE, this.getYValue());
 
     // font
     SGPropertyUtility.addProperty(map, KEY_FONT_NAME, this.getFontName());

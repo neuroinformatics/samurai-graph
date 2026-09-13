@@ -1,5 +1,15 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGScaleConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
@@ -18,8 +28,6 @@ import javax.swing.SwingUtilities;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIMovable;
 import jp.riken.brain.ni.samuraigraph.base.SGINode;
 import jp.riken.brain.ni.samuraigraph.base.SGIUndoable;
@@ -45,7 +53,6 @@ class SGAxisScale extends SGDrawingElementScale
         AxisScaleChangeListener,
         SGIAxisScaleDialogObserver,
         ActionListener,
-        SGIFigureElementAxisConstants,
         SGINode {
 
   private SGAxis mXAxis = null;
@@ -159,8 +166,7 @@ class SGAxisScale extends SGDrawingElementScale
    */
   @Override
   public boolean setXAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-        && location != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+    if (location != AXIS_HORIZONTAL_1 && location != AXIS_HORIZONTAL_2) {
       return false;
     }
     SGAxis axis = mAxisElement.getAxisInPlane(location);
@@ -178,8 +184,7 @@ class SGAxisScale extends SGDrawingElementScale
    */
   @Override
   public boolean setYAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
-        && location != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+    if (location != AXIS_VERTICAL_1 && location != AXIS_VERTICAL_2) {
       return false;
     }
     SGAxis axis = mAxisElement.getAxisInPlane(location);
@@ -379,7 +384,7 @@ class SGAxisScale extends SGDrawingElementScale
    */
   @Override
   public void translate(final float dx, final float dy) {
-    if (this.mMouseLocation == BODY
+    if (this.mMouseLocation == SGScaleConstants.BODY
         || this.mMouseLocation == ON_HORIZONTAL_STRING
         || this.mMouseLocation == ON_VERTICAL_STRING
         || this.mMouseLocation == -1) {
@@ -405,7 +410,7 @@ class SGAxisScale extends SGDrawingElementScale
 
       this.mMouseLocation = this.getMouseLocation(x, y);
       Cursor cur = null;
-      if (this.mMouseLocation == BODY
+      if (this.mMouseLocation == SGScaleConstants.BODY
           || this.mMouseLocation == ON_HORIZONTAL_STRING
           || this.mMouseLocation == ON_VERTICAL_STRING) {
         cur = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);
@@ -456,7 +461,7 @@ class SGAxisScale extends SGDrawingElementScale
 
     int location = -1;
     if (this.isInside(posHorizontalMiddle, radius, x, y)) {
-      location = HORIZONTAL_MIDDLE;
+      location = SGScaleConstants.HORIZONTAL_MIDDLE;
     } else if (this.isInside(posVerticalMiddle, radius, x, y)) {
       location = VERTICAL_MIDDLE;
     } else if (this.isInside(posJoint, radius, x, y)) {
@@ -466,7 +471,7 @@ class SGAxisScale extends SGDrawingElementScale
     } else if (this.isInside(posVerticalEnd, radius, x, y)) {
       location = VERTICAL_END;
     } else {
-      location = BODY;
+      location = SGScaleConstants.BODY;
     }
     if (this.getHorizontalStringElement().contains(x, y)) {
       location = ON_HORIZONTAL_STRING;
@@ -481,7 +486,7 @@ class SGAxisScale extends SGDrawingElementScale
   private Cursor getCursor(final int location) {
     Cursor cur = null;
     switch (location) {
-      case HORIZONTAL_MIDDLE:
+      case SGScaleConstants.HORIZONTAL_MIDDLE:
         if (!this.isFlippingVertical()) {
           cur = new Cursor(Cursor.N_RESIZE_CURSOR);
         } else {
@@ -543,7 +548,7 @@ class SGAxisScale extends SGDrawingElementScale
       return false;
     }
 
-    if (this.mMouseLocation == BODY
+    if (this.mMouseLocation == SGScaleConstants.BODY
         || this.mMouseLocation == ON_HORIZONTAL_STRING
         || this.mMouseLocation == ON_VERTICAL_STRING) {
       if (this.isSelected()) {
@@ -579,7 +584,7 @@ class SGAxisScale extends SGDrawingElementScale
     float h = hOld;
 
     final int loc = this.mMouseLocation;
-    if (loc == HORIZONTAL_MIDDLE) {
+    if (loc == SGScaleConstants.HORIZONTAL_MIDDLE) {
       sizeNewY = sizeOldY - diffY;
 
       y = yOld + sizeOldY - sizeNewY;
@@ -1128,7 +1133,7 @@ class SGAxisScale extends SGDrawingElementScale
 
   public boolean onMouseDragged(final MouseEvent e) {
     if (!this.isSelected()) {
-      this.mMouseLocation = BODY;
+      this.mMouseLocation = SGScaleConstants.BODY;
       return false;
     }
     Point point = this.mAxisElement.getPressedPoint();
@@ -1887,7 +1892,7 @@ class SGAxisScale extends SGDrawingElementScale
   }
 }
 
-class AxisScaleProperties extends ScaleProperties implements SGIScaleConstants {
+class AxisScaleProperties extends ScaleProperties {
 
   double mXValue;
 

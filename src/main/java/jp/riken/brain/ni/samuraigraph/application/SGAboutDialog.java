@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Frame;
@@ -20,7 +24,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** About dialog. */
-public class SGAboutDialog extends SGDialog implements SGIApplicationConstants {
+public class SGAboutDialog extends SGDialog {
 
   private static final org.apache.logging.log4j.Logger logger =
       org.apache.logging.log4j.LogManager.getLogger(SGAboutDialog.class);

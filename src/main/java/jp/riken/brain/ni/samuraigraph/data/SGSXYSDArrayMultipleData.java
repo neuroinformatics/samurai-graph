@@ -1,5 +1,23 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +35,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
@@ -40,8 +57,7 @@ import ucar.nc2.Variable;
 import ucar.nc2.write.NetcdfFormatWriter;
 
 /** Data with multiple scalar type XY data. */
-public class SGSXYSDArrayMultipleData extends SGSDArrayData
-    implements SGISXYTypeMultipleData, SGIDataPropertyKeyConstants {
+public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTypeMultipleData {
 
   /** An array of column indices for x-values. */
   protected Integer[] mXIndices = null;
@@ -885,7 +901,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   public boolean writeSamplingRateToProperty(Element el) {
     SGDataColumn[] columns = this.getExportedColumnsClone();
     for (int i = 0; i < columns.length; i++) {
-      if (SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(columns[i].getValueType())) {
+      if (VALUE_TYPE_SAMPLING_RATE.equals(columns[i].getValueType())) {
         SGSamplingDataColumn sCol = (SGSamplingDataColumn) columns[i];
         el.setAttribute(
             SGIFigureElementGraph.KEY_SAMPLING_RATE, Double.toString(sCol.getSamplingRate()));
@@ -1707,7 +1723,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   /** Returns a map which has data information. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> infoMap = super.getInfoMap();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
 
     // add the sampling rate if it exists
     SGDataColumn[] dataColumns = this.getTextDataFile().getDataColumns();
@@ -1715,7 +1731,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       if (dataColumns[ii] instanceof SGSamplingDataColumn) {
         SGSamplingDataColumn sampleColumn = (SGSamplingDataColumn) dataColumns[ii];
         final double samplingRate = sampleColumn.getSamplingRate();
-        infoMap.put(SGIDataInformationKeyConstants.KEY_SAMPLING_RATE, samplingRate);
+        infoMap.put(SGDataInformationKeyConstants.KEY_SAMPLING_RATE, samplingRate);
         break;
       }
     }
@@ -1902,16 +1918,16 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    */
   @Override
   public void setStrideMap(Map<String, SGIntegerSeriesSet> map) {
-    this.mStride = map.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
-    this.mTickLabelStride = map.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+    this.mStride = map.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+    this.mTickLabelStride = map.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
   }
 
   /** Returns a map of stride for data arrays. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
-    map.put(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, this.getStride());
-    map.put(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, this.getTickLabelStride());
+    map.put(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, this.getStride());
+    map.put(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, this.getTickLabelStride());
     return map;
   }
 
@@ -1929,9 +1945,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
 
     // tick label stride
     if (this.isTickLabelAvailable()) {
-      el.setAttribute(
-          SGIDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
-          this.mTickLabelStride.toString());
+      el.setAttribute(KEY_TICK_LABEL_ARRAY_SECTION, this.mTickLabelStride.toString());
     }
 
     return true;
@@ -1988,33 +2002,21 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
 
     builder
         .addVariable(xName, DataType.DOUBLE, xName)
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+        .addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
 
     for (int ii = 0; ii < childNum; ii++) {
       builder
           .addVariable(yNames[ii], DataType.DOUBLE, xName)
-          .addAttribute(
-              new Attribute(
-                  SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                  SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+          .addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
     }
 
     if (eFlag) {
       builder
           .addVariable(leName, DataType.DOUBLE, xName)
-          .addAttribute(
-              new Attribute(
-                  SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                  SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+          .addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
       builder
           .addVariable(ueName, DataType.DOUBLE, xName)
-          .addAttribute(
-              new Attribute(
-                  SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                  SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+          .addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
     }
 
     int maxLen = 0;
@@ -2033,10 +2035,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       String dimString = xName + " " + lenName;
       builder
           .addVariable(tlName, DataType.CHAR, dimString)
-          .addAttribute(
-              new Attribute(
-                  SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                  SGIDataColumnTypeConstants.VALUE_TYPE_TEXT));
+          .addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_TEXT));
     }
 
     try (NetcdfFormatWriter writer = builder.build()) {
@@ -2099,8 +2098,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       Dimension indexDim = this.addIndexDimension(builder, dataNum);
       String indexDimName = indexDim.getShortName();
       Variable.Builder indexVar = this.addIndexVariable(builder, indexDim);
-      indexVar.addAttribute(
-          SGDataFileUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+      indexVar.addAttribute(SGDataFileUtility.getValueTypeAttribute(VALUE_TYPE_NUMBER));
 
       // Add data columns as variables.
       SGDataColumn[] colArray = this.getExportedColumnsClone();
@@ -2111,12 +2109,12 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       Arrays.fill(maxTextLength, 0);
       for (int i = 0; i < colArray.length; i++) {
         SGDataColumn col = colArray[i];
-        if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(col.getValueType())
-            || SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(col.getValueType())) {
+        if (VALUE_TYPE_TEXT.equals(col.getValueType())
+            || VALUE_TYPE_DATE.equals(col.getValueType())) {
           String[] textString = ((SGDataColumn) col).getStringArray();
           int maxLength = 0;
           for (int j = 0; j < textString.length; j++) {
-            byte[] byteArray = textString[j].getBytes(SGIConstants.CHAR_SET_NAME_UTF8);
+            byte[] byteArray = textString[j].getBytes(CHAR_SET_NAME_UTF8);
             if (maxLength < byteArray.length) {
               maxLength = byteArray.length;
             }
@@ -2136,20 +2134,19 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         String colValueType = col.getValueType();
         String varName = "column" + ii;
         Variable.Builder var = null;
-        if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(colValueType)
-            || SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(colValueType)) {
+        if (VALUE_TYPE_NUMBER.equals(colValueType)
+            || VALUE_TYPE_SAMPLING_RATE.equals(colValueType)) {
           var = builder.addVariable(varName, DataType.DOUBLE, indexDimName);
           var.addAttribute(SGDataFileUtility.getValueTypeAttribute(col.getValueType()));
-        } else if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(colValueType)
-            || SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(colValueType)) {
+        } else if (VALUE_TYPE_TEXT.equals(colValueType) || VALUE_TYPE_DATE.equals(colValueType)) {
           String[] dimNames = {indexDimName, textDimensionName[ii]};
           String dims = SGDataTextUtility.getDimensionString(dimNames);
           var = builder.addVariable(varName, DataType.CHAR, dims);
           String attrValueType;
-          if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(colValueType)) {
-            attrValueType = SGIDataColumnTypeConstants.VALUE_TYPE_TEXT;
+          if (VALUE_TYPE_TEXT.equals(colValueType)) {
+            attrValueType = VALUE_TYPE_TEXT;
           } else {
-            attrValueType = SGIDataColumnTypeConstants.VALUE_TYPE_DATE;
+            attrValueType = VALUE_TYPE_DATE;
           }
           var.addAttribute(SGDataFileUtility.getValueTypeAttribute(attrValueType));
         } else {
@@ -2175,8 +2172,8 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
         for (int i = 0; i < colArray.length; i++) {
           SGDataColumn col = colArray[i];
           String colValueType = col.getValueType();
-          if (SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(colValueType)
-              || SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(colValueType)) {
+          if (VALUE_TYPE_NUMBER.equals(colValueType)
+              || VALUE_TYPE_SAMPLING_RATE.equals(colValueType)) {
             Array array = Array.factory(DataType.DOUBLE, new int[] {dataNum});
             for (int j = 0; j < dataNum; j++) {
               Object obj = col.getValue(j);
@@ -2188,8 +2185,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
             }
             writer.write(varNames[i], array);
 
-          } else if (SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(colValueType)
-              || SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(colValueType)) {
+          } else if (VALUE_TYPE_TEXT.equals(colValueType) || VALUE_TYPE_DATE.equals(colValueType)) {
             int maxLength = 0;
             byte[][] byteArrays = new byte[dataNum][];
             for (int j = 0; j < dataNum; j++) {
@@ -2202,7 +2198,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
               } else {
                 str = "";
               }
-              byteArrays[j] = str.getBytes(SGIConstants.CHAR_SET_NAME_UTF8);
+              byteArrays[j] = str.getBytes(CHAR_SET_NAME_UTF8);
               int len = byteArrays[j].length;
               if (len > maxLength) {
                 maxLength = len;
@@ -2783,8 +2779,8 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   @Override
   public String[] getDataViewerColumnTypes() {
     List<String> list = new ArrayList<String>();
-    list.add(SGIDataColumnTypeConstants.X_VALUE);
-    list.add(SGIDataColumnTypeConstants.Y_VALUE);
+    list.add(X_VALUE);
+    list.add(Y_VALUE);
     String[] ret = list.toArray(new String[list.size()]);
     return ret;
   }

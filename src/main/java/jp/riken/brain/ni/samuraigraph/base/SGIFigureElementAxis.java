@@ -1,10 +1,15 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+
 import java.awt.Color;
 import java.util.List;
 
 /** An object to manage axes. */
-public interface SGIFigureElementAxis extends SGIFigureElement, SGIFigureElementAxisConstants {
+public interface SGIFigureElementAxis extends SGIFigureElement {
 
   /** Returns the list of all axes. */
   public List<SGAxis> getAxisList();

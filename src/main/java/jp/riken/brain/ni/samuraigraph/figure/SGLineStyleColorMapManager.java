@@ -1,13 +1,17 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGColorMap;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 
 /** A class that manages color maps of the line style. */
-public class SGLineStyleColorMapManager extends SGColorMapManager
-    implements SGIDataCommandConstants {
+public class SGLineStyleColorMapManager extends SGColorMapManager {
 
   public static final String COLOR_MAP_NAME_HUE_GRADATION = "Hue Gradation";
 

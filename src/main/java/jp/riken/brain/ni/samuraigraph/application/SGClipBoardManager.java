@@ -1,5 +1,17 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,22 +24,20 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIRootObjectConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGISelectable;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
+import jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /** SGMainFunctions :: ClipBoardManager class */
-class SGClipBoardManager
-    implements SGIDisposable, SGIConstants, SGIApplicationTextConstants, SGIPropertyFileConstants {
+class SGClipBoardManager implements SGIDisposable {
 
   /** The list of copied objects. */
   private List<SGICopyable> mCopiedObjectsBuffer = new ArrayList<SGICopyable>();
@@ -171,7 +181,7 @@ class SGClipBoardManager
 
     // create a DOM tree
     if (wnd.createDOMTree(
-            document, SGIRootObjectConstants.FOCUSED_FIGURES_FOR_DUPLICATION, operation)
+            document, SGRootObjectConstants.FOCUSED_FIGURES_FOR_DUPLICATION, operation)
         == false) {
       return false;
     }
@@ -249,7 +259,7 @@ class SGClipBoardManager
       root.setAttribute(KEY_VERSION_NUMBER, versionNumber);
 
       // get the node of window
-      NodeList wList = root.getElementsByTagName(SGIRootObjectConstants.TAG_NAME_WINDOW);
+      NodeList wList = root.getElementsByTagName(SGRootObjectConstants.TAG_NAME_WINDOW);
       if (wList.getLength() == 0) {
         return false;
       }
@@ -263,7 +273,7 @@ class SGClipBoardManager
               .getPropertyFileHandler()
               .createFiguresFromPropertyFile(
                   elWnd, wnd, wdArray, true, versionNumber, LOAD_PROPERTIES_IN_PASTING);
-      if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
+      if (ret != SUCCESSFUL_COMPLETION) {
         return false;
       }
 
@@ -282,7 +292,7 @@ class SGClipBoardManager
     boolean b3 = false;
     if (this.mWindowInfo != null) {
       Document doc = this.mWindowInfo.mDocument;
-      NodeList nodeList = doc.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+      NodeList nodeList = doc.getElementsByTagName(SGFigureConstants.TAG_NAME_FIGURE);
       final int len = nodeList.getLength();
       b3 = (len != 0);
     }

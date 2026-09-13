@@ -1,5 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -12,7 +17,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
@@ -22,8 +26,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
 /** Drawing element of the text string. */
-public class SGDrawingElementString extends SGDrawingElement
-    implements SGIDrawingElementJava2D, SGIStringConstants {
+public class SGDrawingElementString extends SGDrawingElement implements SGIDrawingElementJava2D {
 
   /** The magnification. */
   protected float mMagnification = 1.0f;
@@ -399,7 +402,12 @@ public class SGDrawingElementString extends SGDrawingElement
     SGPropertyMap map = new SGPropertyMap();
     SGPropertyUtility.addProperty(map, KEY_TEXT, this.getString());
     this.addProperties(
-        map, KEY_FONT_NAME, KEY_FONT_SIZE, KEY_FONT_STYLE, KEY_STRING_COLORS, KEY_ANGLE);
+        map,
+        KEY_FONT_NAME,
+        KEY_FONT_SIZE,
+        KEY_FONT_STYLE,
+        KEY_STRING_COLORS,
+        SGStringConstants.KEY_ANGLE);
     return map;
   }
 
@@ -485,9 +493,9 @@ public class SGDrawingElementString extends SGDrawingElement
     }
 
     // set angle
-    str = el.getAttribute(KEY_ANGLE);
+    str = el.getAttribute(SGStringConstants.KEY_ANGLE);
     if (str.length() != 0) {
-      num = SGUtilityText.getFloat(str, SGIConstants.degree);
+      num = SGUtilityText.getFloat(str, degree);
       if (num == null) {
         return false;
       }
@@ -689,7 +697,7 @@ public class SGDrawingElementString extends SGDrawingElement
     }
 
     // shift position
-    final float angle = this.getAngle() * SGIConstants.RADIAN_DEGREE_RATIO;
+    final float angle = this.getAngle() * RADIAN_DEGREE_RATIO;
     final float cv = (float) Math.cos(angle);
     final float sv = (float) Math.sin(angle);
     final float dy = (float) (this.mStringRect.getHeight() + this.mStringRect.getY());
@@ -774,7 +782,7 @@ public class SGDrawingElementString extends SGDrawingElement
     // shift position
     af.translate(this.getX(), this.getY());
     // rotate position
-    af.rotate(-this.getAngle() * SGIConstants.RADIAN_DEGREE_RATIO);
+    af.rotate(-this.getAngle() * RADIAN_DEGREE_RATIO);
 
     // transform
     final AffineTransform saveAT = g2d.getTransform();

@@ -1,5 +1,15 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -22,8 +32,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 /** An original spinner class. */
-public class SGSpinner extends JSpinner
-    implements SGIConstants, FocusListener, KeyListener, MouseListener {
+public class SGSpinner extends JSpinner implements FocusListener, KeyListener, MouseListener {
 
   // serialVersionUID
   private static final long serialVersionUID = -107749809547053625L;
@@ -201,15 +210,15 @@ public class SGSpinner extends JSpinner
   // Returned value is a string only used in the spinners.
   private static String getSuffix(final String unit) {
     String suffix = null;
-    if (unit.equals(SGIConstants.cm)) {
+    if (unit.equals(cm)) {
       suffix = SUFFIX_CM;
-    } else if (SGIConstants.mm.equals(unit)) {
+    } else if (mm.equals(unit)) {
       suffix = SUFFIX_MM;
-    } else if (SGIConstants.pt.equals(unit)) {
+    } else if (pt.equals(unit)) {
       suffix = SUFFIX_PT;
-    } else if (SGIConstants.inch.equals(unit)) {
+    } else if (inch.equals(unit)) {
       suffix = SUFFIX_INCH;
-    } else if (SGIConstants.degree.equals(unit)) {
+    } else if (degree.equals(unit)) {
       suffix = SUFFIX_DEGREE;
     } else if (percent.equals(unit)) {
       suffix = SUFFIX_PERCENT;
@@ -222,15 +231,15 @@ public class SGSpinner extends JSpinner
     String suffix = this.getSuffix();
     String unit = null;
     if (SUFFIX_CM.equals(suffix)) {
-      unit = SGIConstants.cm;
+      unit = cm;
     } else if (SUFFIX_MM.equals(suffix)) {
-      unit = SGIConstants.mm;
+      unit = mm;
     } else if (SUFFIX_INCH.equals(suffix)) {
-      unit = SGIConstants.inch;
+      unit = inch;
     } else if (SUFFIX_PT.equals(suffix)) {
-      unit = SGIConstants.pt;
+      unit = pt;
     } else if (SUFFIX_DEGREE.equals(suffix)) {
-      unit = SGIConstants.degree;
+      unit = degree;
     } else if (SUFFIX_PERCENT.equals(suffix)) {
       unit = percent;
     }
@@ -583,9 +592,7 @@ public class SGSpinner extends JSpinner
   private String getTextSuffix() {
     String txt = this.getText();
     String suffix = null;
-    String[] sArray = {
-      SGIConstants.cm, SGIConstants.mm, SGIConstants.pt, SGIConstants.inch, SGIConstants.degree
-    };
+    String[] sArray = {cm, mm, pt, inch, degree};
     for (int ii = 0; ii < sArray.length; ii++) {
       if (txt.endsWith(sArray[ii])) {
         suffix = sArray[ii];

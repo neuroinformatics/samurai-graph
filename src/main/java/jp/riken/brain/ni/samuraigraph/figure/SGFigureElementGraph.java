@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -21,7 +25,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIData;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
@@ -1354,7 +1357,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
       SGUtility.showErrorMessageDialog(
           this.mDialogOwner,
           errorName + ": " + "Coordinate variables with fixed values do not exist.",
-          SGIConstants.ERROR);
+          ERROR);
 
       return errorName;
     }
@@ -1663,17 +1666,17 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
               SGUtilityNumber.getNumberInRangeOrder(
                   barWidth,
                   axis,
-                  SGIBarConstants.BAR_EFFECTIVE_DIGIT,
+                  SGBarConstants.BAR_EFFECTIVE_DIGIT,
                   RoundingMode.HALF_UP.ordinal());
           barInterval =
               SGUtilityNumber.getNumberInRangeOrder(
                   barInterval,
                   axis,
-                  SGIBarConstants.BAR_EFFECTIVE_DIGIT,
+                  SGBarConstants.BAR_EFFECTIVE_DIGIT,
                   RoundingMode.HALF_UP.ordinal());
           shift =
               SGUtilityNumber.getNumberInRangeOrder(
-                  shift, axis, SGIBarConstants.BAR_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
+                  shift, axis, SGBarConstants.BAR_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
         } else {
           continue;
         }

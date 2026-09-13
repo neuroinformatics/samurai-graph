@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.*;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 
 class SGAxisElementPropertyHelper {
 
@@ -40,7 +42,7 @@ class SGAxisElementPropertyHelper {
               new SGAxisDateValue(maxValue),
               baseline,
               step,
-              SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT);
+              SGConstants.AXIS_SCALE_EFFECTIVE_DIGIT);
 
     } else {
 
@@ -51,7 +53,7 @@ class SGAxisElementPropertyHelper {
               new SGAxisDoubleValue(maxValue),
               baseline,
               step,
-              SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT);
+              SGConstants.AXIS_SCALE_EFFECTIVE_DIGIT);
 
       // set scale numbers integer when all numbers
       // can be replaced with an integer
@@ -132,7 +134,7 @@ class SGAxisElementPropertyHelper {
     SGPropertyMap map = new SGPropertyMap();
 
     // visible
-    SGPropertyUtility.addProperty(map, owner.COM_AXIS_VISIBLE, owner.isVisible());
+    SGPropertyUtility.addProperty(map, SGAxisConstants.COM_AXIS_VISIBLE, owner.isVisible());
 
     // frame line
     owner.addAxisLineProperties(
@@ -144,31 +146,31 @@ class SGAxisElementPropertyHelper {
 
     // title
     SGPropertyUtility.addQuotedStringProperty(
-        map, owner.COM_AXIS_TITLE_TEXT, owner.getTitleString());
+        map, SGAxisConstants.COM_AXIS_TITLE_TEXT, owner.getTitleString());
     owner.addTitleProperties(
         map,
-        owner.COM_AXIS_TITLE_VISIBLE,
-        owner.COM_AXIS_SPACE_TITLE_AND_NUMBER,
-        owner.COM_AXIS_TITLE_CENTER_SHIFT,
-        owner.COM_AXIS_TITLE_FONT_NAME,
-        owner.COM_AXIS_TITLE_FONT_SIZE,
-        owner.COM_AXIS_TITLE_FONT_STYLE,
-        owner.COM_AXIS_TITLE_FONT_COLOR);
+        SGAxisConstants.COM_AXIS_TITLE_VISIBLE,
+        SGAxisConstants.COM_AXIS_SPACE_TITLE_AND_NUMBER,
+        SGAxisConstants.COM_AXIS_TITLE_CENTER_SHIFT,
+        SGAxisConstants.COM_AXIS_TITLE_FONT_NAME,
+        SGAxisConstants.COM_AXIS_TITLE_FONT_SIZE,
+        SGAxisConstants.COM_AXIS_TITLE_FONT_STYLE,
+        SGAxisConstants.COM_AXIS_TITLE_FONT_COLOR);
 
     // number
     owner.addNumberProperties(
         map,
-        owner.COM_AXIS_NUMBER_VISIBLE,
-        owner.COM_AXIS_NUMBER_INTEGER,
-        owner.COM_AXIS_NUMBER_ANGLE,
-        owner.COM_AXIS_EXPONENT_VISIBLE,
-        owner.COM_AXIS_EXPONENT_VALUE,
-        owner.COM_AXIS_EXPONENT_LOCATION_X,
-        owner.COM_AXIS_EXPONENT_LOCATION_Y,
-        owner.COM_AXIS_NUMBER_FONT_NAME,
-        owner.COM_AXIS_NUMBER_FONT_SIZE,
-        owner.COM_AXIS_NUMBER_FONT_STYLE,
-        owner.COM_AXIS_NUMBER_FONT_COLOR);
+        SGAxisConstants.COM_AXIS_NUMBER_VISIBLE,
+        SGAxisConstants.COM_AXIS_NUMBER_INTEGER,
+        SGAxisConstants.COM_AXIS_NUMBER_ANGLE,
+        SGAxisConstants.COM_AXIS_EXPONENT_VISIBLE,
+        SGAxisConstants.COM_AXIS_EXPONENT_VALUE,
+        SGAxisConstants.COM_AXIS_EXPONENT_LOCATION_X,
+        SGAxisConstants.COM_AXIS_EXPONENT_LOCATION_Y,
+        SGAxisConstants.COM_AXIS_NUMBER_FONT_NAME,
+        SGAxisConstants.COM_AXIS_NUMBER_FONT_SIZE,
+        SGAxisConstants.COM_AXIS_NUMBER_FONT_STYLE,
+        SGAxisConstants.COM_AXIS_NUMBER_FONT_COLOR);
 
     // scale
     StringBuilder sbScale = new StringBuilder();
@@ -179,24 +181,24 @@ class SGAxisElementPropertyHelper {
     sbScale.append(',');
     sbScale.append(SGUtilityText.getScaleTypeName(owner.getScaleType()));
     sbScale.append(')');
-    SGPropertyUtility.addProperty(map, owner.COM_AXIS_SCALE_RANGE, sbScale.toString());
+    SGPropertyUtility.addProperty(map, SGAxisConstants.COM_AXIS_SCALE_RANGE, sbScale.toString());
     owner.addScaleProperties(
         map,
-        owner.COM_AXIS_INVERT_COORDINATES,
-        owner.COM_AXIS_SCALE_AUTO,
-        owner.COM_AXIS_SCALE_STEP,
-        owner.COM_AXIS_SCALE_BASE);
+        SGAxisConstants.COM_AXIS_INVERT_COORDINATES,
+        SGAxisConstants.COM_AXIS_SCALE_AUTO,
+        SGAxisConstants.COM_AXIS_SCALE_STEP,
+        SGAxisConstants.COM_AXIS_SCALE_BASE);
 
     // tick mark
     owner.addTickMarkProperties(
         map,
-        owner.COM_AXIS_TICK_MARK_VISIBLE,
-        owner.COM_AXIS_TICK_MARK_BOTHSIDES,
-        owner.COM_AXIS_TICK_MARK_WIDTH,
-        owner.COM_AXIS_MAJOR_TICK_MARK_LENGTH,
-        owner.COM_AXIS_MINOR_TICK_MARK_LENGTH,
-        owner.COM_AXIS_MINOR_TICK_MARK_NUMBER,
-        owner.COM_AXIS_TICK_MARK_COLOR);
+        SGAxisConstants.COM_AXIS_TICK_MARK_VISIBLE,
+        SGAxisConstants.COM_AXIS_TICK_MARK_BOTHSIDES,
+        SGAxisConstants.COM_AXIS_TICK_MARK_WIDTH,
+        SGAxisConstants.COM_AXIS_MAJOR_TICK_MARK_LENGTH,
+        SGAxisConstants.COM_AXIS_MINOR_TICK_MARK_LENGTH,
+        SGAxisConstants.COM_AXIS_MINOR_TICK_MARK_NUMBER,
+        SGAxisConstants.COM_AXIS_TICK_MARK_COLOR);
 
     return map;
   }
@@ -205,7 +207,7 @@ class SGAxisElementPropertyHelper {
     SGPropertyMap map = new SGPropertyMap();
 
     // visible
-    SGPropertyUtility.addProperty(map, SGIDrawingElementConstants.KEY_VISIBLE, owner.isVisible());
+    SGPropertyUtility.addProperty(map, SGDrawingElementConstants.KEY_VISIBLE, owner.isVisible());
 
     // axis line
     owner.addAxisLineProperties(
@@ -217,58 +219,58 @@ class SGAxisElementPropertyHelper {
 
     // Title
     SGPropertyUtility.addProperty(
-        map, SGIFigureElementAxisConstants.KEY_TITLE_TEXT, owner.getTitleString());
+        map, SGFigureElementAxisConstants.KEY_TITLE_TEXT, owner.getTitleString());
     owner.addTitleProperties(
         map,
-        SGIFigureElementAxisConstants.KEY_TITLE_VISIBLE,
-        SGIFigureElementAxisConstants.KEY_SPACE_TITLE_AND_NUMBERS,
-        SGIFigureElementAxisConstants.KEY_TITLE_SHIFT_FROM_CENTER,
-        SGIFigureElementAxisConstants.KEY_TITLE_FONT_NAME,
-        SGIFigureElementAxisConstants.KEY_TITLE_FONT_SIZE,
-        SGIFigureElementAxisConstants.KEY_TITLE_FONT_STYLE,
-        SGIFigureElementAxisConstants.KEY_TITLE_FONT_COLOR);
+        SGFigureElementAxisConstants.KEY_TITLE_VISIBLE,
+        SGFigureElementAxisConstants.KEY_SPACE_TITLE_AND_NUMBERS,
+        SGFigureElementAxisConstants.KEY_TITLE_SHIFT_FROM_CENTER,
+        SGFigureElementAxisConstants.KEY_TITLE_FONT_NAME,
+        SGFigureElementAxisConstants.KEY_TITLE_FONT_SIZE,
+        SGFigureElementAxisConstants.KEY_TITLE_FONT_STYLE,
+        SGFigureElementAxisConstants.KEY_TITLE_FONT_COLOR);
 
     // Number
     owner.addNumberProperties(
         map,
-        SGIFigureElementAxisConstants.KEY_NUMBER_VISIBLE,
-        SGIFigureElementAxisConstants.KEY_NUMBER_INTEGER,
-        SGIFigureElementAxisConstants.KEY_NUMBER_ANGLE,
-        SGIFigureElementAxisConstants.KEY_EXPONENT_VISIBLE,
-        SGIFigureElementAxisConstants.KEY_EXPONENT_VALUE,
-        SGIFigureElementAxisConstants.KEY_EXPONENT_LOCATION_X,
-        SGIFigureElementAxisConstants.KEY_EXPONENT_LOCATION_Y,
-        SGIFigureElementAxisConstants.KEY_NUMBER_FONT_NAME,
-        SGIFigureElementAxisConstants.KEY_NUMBER_FONT_SIZE,
-        SGIFigureElementAxisConstants.KEY_NUMBER_FONT_STYLE,
-        SGIFigureElementAxisConstants.KEY_NUMBER_FONT_COLOR);
+        SGFigureElementAxisConstants.KEY_NUMBER_VISIBLE,
+        SGFigureElementAxisConstants.KEY_NUMBER_INTEGER,
+        SGFigureElementAxisConstants.KEY_NUMBER_ANGLE,
+        SGFigureElementAxisConstants.KEY_EXPONENT_VISIBLE,
+        SGFigureElementAxisConstants.KEY_EXPONENT_VALUE,
+        SGFigureElementAxisConstants.KEY_EXPONENT_LOCATION_X,
+        SGFigureElementAxisConstants.KEY_EXPONENT_LOCATION_Y,
+        SGFigureElementAxisConstants.KEY_NUMBER_FONT_NAME,
+        SGFigureElementAxisConstants.KEY_NUMBER_FONT_SIZE,
+        SGFigureElementAxisConstants.KEY_NUMBER_FONT_STYLE,
+        SGFigureElementAxisConstants.KEY_NUMBER_FONT_COLOR);
 
     // Scale
     SGPropertyUtility.addProperty(
-        map, SGIFigureElementAxisConstants.KEY_AXIS_MIN_VALUE, owner.mAxis.getMinValue());
+        map, SGFigureElementAxisConstants.KEY_AXIS_MIN_VALUE, owner.mAxis.getMinValue());
     SGPropertyUtility.addProperty(
-        map, SGIFigureElementAxisConstants.KEY_AXIS_MAX_VALUE, owner.mAxis.getMaxValue());
+        map, SGFigureElementAxisConstants.KEY_AXIS_MAX_VALUE, owner.mAxis.getMaxValue());
     SGPropertyUtility.addProperty(
         map,
-        SGIFigureElementAxisConstants.KEY_AXIS_SCALE_TYPE,
+        SGFigureElementAxisConstants.KEY_AXIS_SCALE_TYPE,
         SGUtilityText.getScaleTypeName(owner.getScaleType()));
     owner.addScaleProperties(
         map,
-        SGIFigureElementAxisConstants.KEY_AXIS_INVERT_COORDINATES,
-        SGIFigureElementAxisConstants.KEY_AUTO_CALC_NUMBER,
-        SGIFigureElementAxisConstants.KEY_STEP_VALUE,
-        SGIFigureElementAxisConstants.KEY_BASELINE_VALUE);
+        SGFigureElementAxisConstants.KEY_AXIS_INVERT_COORDINATES,
+        SGFigureElementAxisConstants.KEY_AUTO_CALC_NUMBER,
+        SGFigureElementAxisConstants.KEY_STEP_VALUE,
+        SGFigureElementAxisConstants.KEY_BASELINE_VALUE);
 
     // Tick Mark
     owner.addTickMarkProperties(
         map,
-        SGIFigureElementAxisConstants.KEY_TICK_MARK_VISIBLE,
-        SGIFigureElementAxisConstants.KEY_TICK_MARK_BOTHSIDES,
-        SGIFigureElementAxisConstants.KEY_TICK_MARK_WIDTH,
-        SGIFigureElementAxisConstants.KEY_MAJOR_TICK_MARK_LENGTH,
-        SGIFigureElementAxisConstants.KEY_MINOR_TICK_MARK_LENGTH,
-        SGIFigureElementAxisConstants.KEY_MINOR_TICK_MARK_NUMBER,
-        SGIFigureElementAxisConstants.KEY_TICK_MARK_COLOR);
+        SGFigureElementAxisConstants.KEY_TICK_MARK_VISIBLE,
+        SGFigureElementAxisConstants.KEY_TICK_MARK_BOTHSIDES,
+        SGFigureElementAxisConstants.KEY_TICK_MARK_WIDTH,
+        SGFigureElementAxisConstants.KEY_MAJOR_TICK_MARK_LENGTH,
+        SGFigureElementAxisConstants.KEY_MINOR_TICK_MARK_LENGTH,
+        SGFigureElementAxisConstants.KEY_MINOR_TICK_MARK_NUMBER,
+        SGFigureElementAxisConstants.KEY_TICK_MARK_COLOR);
 
     return map;
   }

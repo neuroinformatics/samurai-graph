@@ -1,5 +1,13 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorBarConstants.*;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics2D;
@@ -24,8 +32,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGColorMap;
 import jp.riken.brain.ni.samuraigraph.base.SGColorMap.ColorMapProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGINode;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
@@ -43,8 +49,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /** The axis for the color bar. */
-class SGColorBarAxis extends SGAxisElement
-    implements SGINode, SGIColorBarDialogObserver, SGIColorBarConstants, SGIFigureConstants {
+class SGColorBarAxis extends SGAxisElement implements SGINode, SGIColorBarDialogObserver {
 
   /** Relative x-coordinate from the origin of the graph rectangle at the default magnification. */
   private float mX = 0.0f;
@@ -234,20 +239,20 @@ class SGColorBarAxis extends SGAxisElement
 
   protected int getLocationInPlane() {
     if (DIRECTION_HORIZONTAL_LOWER.equals(this.mDirection)) {
-      return SGIFigureElementAxis.AXIS_NORMAL_HORIZONTAL_LOWER;
+      return AXIS_NORMAL_HORIZONTAL_LOWER;
     } else if (DIRECTION_HORIZONTAL_UPPER.equals(this.mDirection)) {
-      return SGIFigureElementAxis.AXIS_NORMAL_HORIZONTAL_UPPER;
+      return AXIS_NORMAL_HORIZONTAL_UPPER;
     } else if (DIRECTION_VERTICAL_LEFT.equals(this.mDirection)) {
-      return SGIFigureElementAxis.AXIS_NORMAL_VERTICAL_LEFT;
+      return AXIS_NORMAL_VERTICAL_LEFT;
     } else if (DIRECTION_VERTICAL_RIGHT.equals(this.mDirection)) {
-      return SGIFigureElementAxis.AXIS_NORMAL_VERTICAL_RIGHT;
+      return AXIS_NORMAL_VERTICAL_RIGHT;
     } else {
       return -1;
     }
   }
 
   protected int getLocation() {
-    return SGIFigureElementAxis.AXIS_NORMAL;
+    return AXIS_NORMAL;
   }
 
   /** Set properties to axis lines. */
@@ -813,7 +818,7 @@ class SGColorBarAxis extends SGAxisElement
   /** Sets the location of the title. */
   protected boolean setLocationOfTitle() {
     final float mag = this.mAxisElement.getMagnification();
-    final float factor = mag / SGIConstants.CM_POINT_RATIO;
+    final float factor = mag / CM_POINT_RATIO;
     final float spaceLN = this.mSpaceAxisLineAndNumbers * factor;
     final float spaceNT = this.mSpaceTitleAndNumbers * factor;
     final float barWidth = this.getBarWidth();
@@ -859,7 +864,7 @@ class SGColorBarAxis extends SGAxisElement
     final boolean invCoord = this.isInvertCoordinates();
     final int scaleType = this.mAxis.getScaleType();
     final float mag = this.mAxisElement.getMagnification();
-    final float factor = mag / SGIConstants.CM_POINT_RATIO;
+    final float factor = mag / CM_POINT_RATIO;
     final float spaceLN = this.mSpaceAxisLineAndNumbers * factor;
 
     double[] valueArrayInScale = null;
@@ -990,7 +995,7 @@ class SGColorBarAxis extends SGAxisElement
       throw new Error();
     }
 
-    final float factor = aElement.getMagnification() / SGIConstants.CM_POINT_RATIO;
+    final float factor = aElement.getMagnification() / CM_POINT_RATIO;
     final float x = baseX + this.mExponentLocationX * factor;
     final float y = baseY + this.mExponentLocationY * factor;
 
@@ -1004,7 +1009,7 @@ class SGColorBarAxis extends SGAxisElement
     SGDrawingElementString el = this.mExponentSymbol;
     final Rectangle2D rect = el.getElementBounds();
     final float mag = this.mAxisElement.getMagnification();
-    final float factor = mag / SGIConstants.CM_POINT_RATIO;
+    final float factor = mag / CM_POINT_RATIO;
     final float spaceLN = this.mSpaceAxisLineAndNumbers * factor;
     final float spaceNT = this.mSpaceTitleAndNumbers * factor;
     float x, y;
@@ -1034,8 +1039,8 @@ class SGColorBarAxis extends SGAxisElement
     }
     x /= mag;
     y /= mag;
-    x *= SGIConstants.CM_POINT_RATIO;
-    y *= SGIConstants.CM_POINT_RATIO;
+    x *= CM_POINT_RATIO;
+    y *= CM_POINT_RATIO;
     x = this.roundOffExponentShift(x);
     y = this.roundOffExponentShift(y);
 
@@ -1110,8 +1115,7 @@ class SGColorBarAxis extends SGAxisElement
   }
 
   public boolean setXAxisLocation(int location) {
-    if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-        && location != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+    if (location != AXIS_HORIZONTAL_1 && location != AXIS_HORIZONTAL_2) {
       return false;
     }
     this.mXAxis = this.mAxisElement.getAxisInPlane(location);
@@ -1119,8 +1123,7 @@ class SGColorBarAxis extends SGAxisElement
   }
 
   public boolean setYAxisLocation(int location) {
-    if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
-        && location != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+    if (location != AXIS_VERTICAL_1 && location != AXIS_VERTICAL_2) {
       return false;
     }
     this.mYAxis = this.mAxisElement.getAxisInPlane(location);
@@ -1502,7 +1505,7 @@ class SGColorBarAxis extends SGAxisElement
 
   /** Returns the tag name. */
   public String getTagName() {
-    return SGIColorBarConstants.TAG_NAME_COLOR_BAR;
+    return TAG_NAME_COLOR_BAR;
   }
 
   /**
@@ -1558,7 +1561,7 @@ class SGColorBarAxis extends SGAxisElement
     }
 
     // x value
-    str = element.getAttribute(KEY_X_VALUE);
+    str = element.getAttribute(SGStringConstants.KEY_X_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -1570,7 +1573,7 @@ class SGColorBarAxis extends SGAxisElement
     }
 
     // y value
-    str = element.getAttribute(KEY_Y_VALUE);
+    str = element.getAttribute(SGStringConstants.KEY_Y_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -1582,7 +1585,7 @@ class SGColorBarAxis extends SGAxisElement
     }
 
     // bar width
-    str = element.getAttribute(SGIColorBarConstants.KEY_COLOR_BAR_WIDTH);
+    str = element.getAttribute(KEY_COLOR_BAR_WIDTH);
     if (str.length() != 0) {
       StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
@@ -1595,7 +1598,7 @@ class SGColorBarAxis extends SGAxisElement
     }
 
     // bar length
-    str = element.getAttribute(SGIColorBarConstants.KEY_COLOR_BAR_LENGTH);
+    str = element.getAttribute(KEY_COLOR_BAR_LENGTH);
     if (str.length() != 0) {
       StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
@@ -1608,13 +1611,13 @@ class SGColorBarAxis extends SGAxisElement
     }
 
     // direction
-    str = element.getAttribute(SGIColorBarConstants.KEY_COLOR_BAR_DIRECTION);
+    str = element.getAttribute(KEY_COLOR_BAR_DIRECTION);
     if (this.setDirection(str) == false) {
       return false;
     }
 
     // color bar style
-    str = element.getAttribute(SGIColorBarConstants.KEY_COLOR_BAR_STYLE);
+    str = element.getAttribute(KEY_COLOR_BAR_STYLE);
     if (this.mColorMapManager.getColorMap(str) == null) {
       return false;
     }
@@ -1624,7 +1627,7 @@ class SGColorBarAxis extends SGAxisElement
 
     // reversed order
     if (SGUtility.isVersionNumberEqualOrSmallerThanPermittingEmptyString(versionNumber, "2.0.0")) {
-      str = element.getAttribute(SGIColorBarConstants.KEY_COLOR_BAR_REVERSED_ORDER);
+      str = element.getAttribute(KEY_COLOR_BAR_REVERSED_ORDER);
       if (str.length() != 0) {
         b = SGUtilityText.getBoolean(str);
         if (b == null) {
@@ -1976,12 +1979,14 @@ class SGColorBarAxis extends SGAxisElement
         map, KEY_Y_AXIS_POSITION, this.mAxisElement.getLocationName(this.mYAxis));
 
     // location
-    SGPropertyUtility.addProperty(map, KEY_X_VALUE, this.getXValue());
-    SGPropertyUtility.addProperty(map, KEY_Y_VALUE, this.getYValue());
+    SGPropertyUtility.addProperty(map, SGStringConstants.KEY_X_VALUE, this.getXValue());
+    SGPropertyUtility.addProperty(map, SGStringConstants.KEY_Y_VALUE, this.getYValue());
 
     // layout
-    SGPropertyUtility.addProperty(map, KEY_X_VALUE, Double.toString(this.getXValue()));
-    SGPropertyUtility.addProperty(map, KEY_Y_VALUE, Double.toString(this.getYValue()));
+    SGPropertyUtility.addProperty(
+        map, SGStringConstants.KEY_X_VALUE, Double.toString(this.getXValue()));
+    SGPropertyUtility.addProperty(
+        map, SGStringConstants.KEY_Y_VALUE, Double.toString(this.getYValue()));
     SGPropertyUtility.addProperty(
         map,
         KEY_COLOR_BAR_WIDTH,

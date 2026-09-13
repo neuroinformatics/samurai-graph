@@ -1,12 +1,13 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
-public class SGFileHandler implements SGIConstants {
+public class SGFileHandler {
 
   /** Current directory. */
   protected String mCurrentDirectory = null;

@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -12,9 +37,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIData;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
@@ -39,10 +63,8 @@ import org.w3c.dom.Element;
 public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     implements SGIElementGroupSetInGraphSXY,
         SGIElementGroupSetSXY,
-        SGIFigureDrawingElementConstants,
         SGIStrokeEditDialogObserver,
-        SGISXYAxisShiftEnabled,
-        SGISXYDataConstants {
+        SGISXYAxisShiftEnabled {
 
   /** Shift to the x-axis direction. */
   protected double mShiftX;
@@ -528,11 +550,11 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
 
     SGISXYTypeData data = (SGISXYTypeData) this.mData;
     SGElementGroup group = null;
-    if (type == SGIElementGroupConstants.POLYLINE_GROUP) {
+    if (type == SGElementGroupConstants.POLYLINE_GROUP) {
       group = new SGElementGroupLineInGraph(data, this.mGraph);
-    } else if (type == SGIElementGroupConstants.RECTANGLE_GROUP) {
+    } else if (type == SGElementGroupConstants.RECTANGLE_GROUP) {
       group = new SGElementGroupBarInGraph(data, this.mGraph);
-    } else if (type == SGIElementGroupConstants.SYMBOL_GROUP) {
+    } else if (type == SGElementGroupConstants.SYMBOL_GROUP) {
       group = new SGElementGroupSymbolInGraph(data, this.mGraph);
     } else {
       return false;
@@ -858,8 +880,8 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
 
   /** */
   public boolean setXAxisLocation(final int config) {
-    if (config != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-        && config != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+    if (config != SGFigureElementAxisConstants.AXIS_HORIZONTAL_1
+        && config != SGFigureElementAxisConstants.AXIS_HORIZONTAL_2) {
       return false;
     }
     return this.setXAxis(this.getAxis(config));
@@ -867,8 +889,8 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
 
   /** */
   public boolean setYAxisLocation(final int config) {
-    if (config != SGIFigureElementAxis.AXIS_VERTICAL_1
-        && config != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+    if (config != SGFigureElementAxisConstants.AXIS_VERTICAL_1
+        && config != SGFigureElementAxisConstants.AXIS_VERTICAL_2) {
       return false;
     }
     return this.setYAxis(this.getAxis(config));
@@ -898,8 +920,8 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     final String strX = this.mGraph.getAxisElement().getLocationName(this.getXAxis());
     final String strY = this.mGraph.getAxisElement().getLocationName(this.getYAxis());
 
-    el.setAttribute(SGIFigureElement.KEY_X_AXIS_POSITION, strX);
-    el.setAttribute(SGIFigureElement.KEY_Y_AXIS_POSITION, strY);
+    el.setAttribute(KEY_X_AXIS_POSITION, strX);
+    el.setAttribute(KEY_Y_AXIS_POSITION, strY);
 
     return true;
   }

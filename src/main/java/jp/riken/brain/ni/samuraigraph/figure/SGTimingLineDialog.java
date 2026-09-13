@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -19,8 +23,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** A dialog to set the properties of timing lines. */
-public class SGTimingLineDialog extends SGPropertyDialog
-    implements SGILineConstants, SGISingleAxisDialog {
+public class SGTimingLineDialog extends SGPropertyDialog implements SGISingleAxisDialog {
 
   // serialVersionUID
   private static final long serialVersionUID = 4323568731217858586L;

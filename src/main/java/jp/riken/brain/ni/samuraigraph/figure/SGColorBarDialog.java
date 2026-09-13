@@ -1,5 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorBarConstants.*;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
@@ -16,7 +21,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGColorMap;
 import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
@@ -25,8 +29,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** Property dialog for the color bar. */
-public class SGColorBarDialog extends SGAxisDialog
-    implements SGIColorBarConstants, SGIFigureConstants, ItemListener, SGITwoAxesDialog {
+public class SGColorBarDialog extends SGAxisDialog implements ItemListener, SGITwoAxesDialog {
 
   /** Serial version UID. */
   private static final long serialVersionUID = -5966935892328455296L;
@@ -524,13 +527,13 @@ public class SGColorBarDialog extends SGAxisDialog
   public String getColorBarDirection() {
     String direction = null;
     if (this.mHorizontalLowerRadioButton.isSelected()) {
-      direction = SGIColorBarConstants.DIRECTION_HORIZONTAL_LOWER;
+      direction = DIRECTION_HORIZONTAL_LOWER;
     } else if (this.mHorizontalUpperRadioButton.isSelected()) {
-      direction = SGIColorBarConstants.DIRECTION_HORIZONTAL_UPPER;
+      direction = DIRECTION_HORIZONTAL_UPPER;
     } else if (this.mVerticalLeftRadioButton.isSelected()) {
-      direction = SGIColorBarConstants.DIRECTION_VERTICAL_LEFT;
+      direction = DIRECTION_VERTICAL_LEFT;
     } else if (this.mVerticalRightRadioButton.isSelected()) {
-      direction = SGIColorBarConstants.DIRECTION_VERTICAL_RIGHT;
+      direction = DIRECTION_VERTICAL_RIGHT;
     }
     return direction;
   }
@@ -563,13 +566,13 @@ public class SGColorBarDialog extends SGAxisDialog
     if (direction == null) {
       this.mColorBarDirectionNoSelectedRadioButton.setSelected(true);
     } else {
-      if (direction.equals(SGIColorBarConstants.DIRECTION_HORIZONTAL_LOWER)) {
+      if (direction.equals(DIRECTION_HORIZONTAL_LOWER)) {
         this.mHorizontalLowerRadioButton.setSelected(true);
-      } else if (direction.equals(SGIColorBarConstants.DIRECTION_HORIZONTAL_UPPER)) {
+      } else if (direction.equals(DIRECTION_HORIZONTAL_UPPER)) {
         this.mHorizontalUpperRadioButton.setSelected(true);
-      } else if (direction.equals(SGIColorBarConstants.DIRECTION_VERTICAL_LEFT)) {
+      } else if (direction.equals(DIRECTION_VERTICAL_LEFT)) {
         this.mVerticalLeftRadioButton.setSelected(true);
-      } else if (direction.equals(SGIColorBarConstants.DIRECTION_VERTICAL_RIGHT)) {
+      } else if (direction.equals(DIRECTION_VERTICAL_RIGHT)) {
         this.mVerticalRightRadioButton.setSelected(true);
       }
     }

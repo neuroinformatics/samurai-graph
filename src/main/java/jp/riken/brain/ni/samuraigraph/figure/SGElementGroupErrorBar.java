@@ -1,5 +1,13 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGErrorBarConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -7,7 +15,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
@@ -17,8 +24,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupArrow.ArrowInGroup;
 import org.w3c.dom.Element;
 
 /** A group of error bars. */
-public abstract class SGElementGroupErrorBar extends SGElementGroup
-    implements SGIErrorBarConstants {
+public abstract class SGElementGroupErrorBar extends SGElementGroup {
 
   /** The line stroke. */
   protected SGStroke mStroke = new SGStroke();
@@ -240,12 +246,10 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
   public boolean writeProperty(final Element el) {
 
     final int digitSymbolSize = ERROR_BAR_HEAD_SIZE_MINIMAL_ORDER - 1;
-    final int digitLineWidth = SGIConstants.LINE_WIDTH_MINIMAL_ORDER - 1;
+    final int digitLineWidth = LINE_WIDTH_MINIMAL_ORDER - 1;
 
     final float headSize =
-        (float)
-            SGUtilityNumber.roundOffNumber(
-                this.mHeadSize * SGIConstants.CM_POINT_RATIO, digitSymbolSize);
+        (float) SGUtilityNumber.roundOffNumber(this.mHeadSize * CM_POINT_RATIO, digitSymbolSize);
     final float lineWidth =
         (float) SGUtilityNumber.roundOffNumber(this.getLineWidth(), digitLineWidth);
     List<Color> cList = new ArrayList<Color>();
@@ -253,8 +257,8 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
 
     el.setAttribute(
         KEY_ERROR_BAR_STYLE, SGDrawingElementErrorBar.getErrorBarStyleName(this.mErrorBarStyle));
-    el.setAttribute(KEY_HEAD_SIZE, Float.toString(headSize) + SGIConstants.cm);
-    el.setAttribute(KEY_LINE_WIDTH, Float.toString(lineWidth) + SGIConstants.pt);
+    el.setAttribute(KEY_HEAD_SIZE, Float.toString(headSize) + cm);
+    el.setAttribute(SGLineConstants.KEY_LINE_WIDTH, Float.toString(lineWidth) + pt);
     el.setAttribute(
         KEY_ERROR_BAR_HEAD_TYPE, SGDrawingElementErrorBar.getHeadTypeName(this.getHeadType()));
     el.setAttribute(KEY_COLOR, SGUtilityText.getColorListString(cList));
@@ -311,7 +315,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     }
 
     // line width
-    str = el.getAttribute(KEY_LINE_WIDTH);
+    str = el.getAttribute(SGLineConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -662,8 +666,8 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
       this.mUpperArrowElement = this.createArrowInstance(index);
 
       // set the start head type for both arrows
-      this.mLowerArrowElement.setStartHeadType(SGIErrorBarConstants.SYMBOL_TYPE_VOID);
-      this.mUpperArrowElement.setStartHeadType(SGIErrorBarConstants.SYMBOL_TYPE_VOID);
+      this.mLowerArrowElement.setStartHeadType(SYMBOL_TYPE_VOID);
+      this.mUpperArrowElement.setStartHeadType(SYMBOL_TYPE_VOID);
 
       this.mIndex = index;
     }
@@ -741,7 +745,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
      */
     protected SGDrawingElementArrow createArrowInstance(final int index) {
       SGDrawingElementArrow arrow = new ErrorBarArrowInGroup(this.mGroup, index);
-      arrow.setLineType(SGILineConstants.LINE_TYPE_SOLID);
+      arrow.setLineType(LINE_TYPE_SOLID);
       return arrow;
     }
 
@@ -831,7 +835,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     /** Returns the line type. */
     public int getLineType() {
       // returns a constant
-      return SGDrawingElementLine.LINE_TYPE_SOLID;
+      return LINE_TYPE_SOLID;
     }
 
     /** Returns the head size. */
@@ -841,7 +845,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
 
     /** Returns the start head type. */
     public int getStartHeadType() {
-      return SGDrawingElementErrorBar.SYMBOL_TYPE_VOID;
+      return SYMBOL_TYPE_VOID;
     }
 
     /** Returns the end head type. */
@@ -907,7 +911,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     @Override
     public int getType() {
       if (this.mStartFlag) {
-        return SGDrawingElementErrorBar.SYMBOL_TYPE_VOID;
+        return SYMBOL_TYPE_VOID;
       } else {
         return this.mArrow.getEndHeadType();
       }

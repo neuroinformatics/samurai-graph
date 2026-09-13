@@ -1,5 +1,14 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -29,10 +38,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIMovable;
 import jp.riken.brain.ni.samuraigraph.base.SGIUndoable;
 import jp.riken.brain.ni.samuraigraph.base.SGPeriod;
@@ -51,14 +57,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public abstract class SGAxisElement
-    implements ActionListener,
-        SGIFigureElementAxisConstants,
-        SGIAxisDialogObserver,
-        SGIDisposable,
-        SGIAxisConstants,
-        SGIStringConstants,
-        SGIUndoable,
-        SGIMovable {
+    implements ActionListener, SGIAxisDialogObserver, SGIDisposable, SGIUndoable, SGIMovable {
 
   private final SGAxisMouseHandler mMouseHandler = new SGAxisMouseHandler(this);
 
@@ -233,15 +232,15 @@ public abstract class SGAxisElement
 
     // axis line
     this.setAxisLineWidth(DEFAULT_AXIS_LINE_WIDTH, LINE_WIDTH_UNIT);
-    this.setAxisLineColor(DEFAULT_LINE_COLOR);
-    this.setSpaceAxisLineAndNumbers(DEFAULT_SPACE_AXIS_LINE_AND_NUMBER, SPACE_UNIT);
+    this.setAxisLineColor(SGAxisConstants.DEFAULT_LINE_COLOR);
+    this.setSpaceAxisLineAndNumbers(DEFAULT_SPACE_AXIS_LINE_AND_NUMBER, SGAxisConstants.SPACE_UNIT);
 
     // title
     this.setTitleVisible(DEFAULT_TITLE_VISIBLE);
-    this.setSpaceTitleAndNumbers(DEFAULT_SPACE_NUMBER_AND_TITLE, SPACE_UNIT);
+    this.setSpaceTitleAndNumbers(DEFAULT_SPACE_NUMBER_AND_TITLE, SGAxisConstants.SPACE_UNIT);
     this.setTitleShiftFromCenter(DEFAULT_TITLE_SHIFT_FROM_CENTER, TITLE_SHIFT_UNIT);
-    this.setTitleFontName(DEFAULT_FONT_NAME);
-    this.setTitleFontStyle(DEFAULT_FONT_STYLE);
+    this.setTitleFontName(SGAxisConstants.DEFAULT_FONT_NAME);
+    this.setTitleFontStyle(SGAxisConstants.DEFAULT_FONT_STYLE);
     this.setTitleFontSize(DEFAULT_FONT_SIZE, FONT_SIZE_UNIT);
     this.setTitleFontColor(DEFAULT_FONT_COLOR);
 
@@ -254,9 +253,9 @@ public abstract class SGAxisElement
     this.setNumbersAngle(DEFAULT_NUMBER_ANGLE);
     this.setExponentVisible(DEFAULT_EXPONENT_VISIBLE);
     this.setExponent(DEFAULT_EXPONENT);
-    this.setNumberFontName(DEFAULT_FONT_NAME);
+    this.setNumberFontName(SGAxisConstants.DEFAULT_FONT_NAME);
     this.setNumberFontSize(DEFAULT_FONT_SIZE, FONT_SIZE_UNIT);
-    this.setNumberFontStyle(DEFAULT_FONT_STYLE);
+    this.setNumberFontStyle(SGAxisConstants.DEFAULT_FONT_STYLE);
     this.setNumberFontColor(DEFAULT_FONT_COLOR);
 
     // tick mark
@@ -266,7 +265,7 @@ public abstract class SGAxisElement
     this.setMajorTickMarkLength(DEFAULT_TICK_MARK_LENGTH, TICK_MARK_LENGTH_UNIT);
     this.setMinorTickMarkNumber(DEFAULT_MINOR_TICK_MARK_NUMBER);
     this.setMinorTickMarkLength(DEFAULT_MINOR_TICK_MARK_LENGTH, TICK_MARK_LENGTH_UNIT);
-    this.setTickMarkColor(DEFAULT_LINE_COLOR);
+    this.setTickMarkColor(SGAxisConstants.DEFAULT_LINE_COLOR);
   }
 
   public abstract void init();
@@ -1189,7 +1188,7 @@ public abstract class SGAxisElement
   }
 
   protected float roundOffSpace(final float value) {
-    final int digitShift = SPACE_MINIMAL_ORDER - 1;
+    final int digitShift = SGAxisConstants.SPACE_MINIMAL_ORDER - 1;
     final float shift = (float) SGUtilityNumber.roundOffNumber(value, digitShift);
     return shift;
   }
@@ -1865,7 +1864,7 @@ public abstract class SGAxisElement
 
   /** Returns the tag name. */
   public String getTagName() {
-    return SGIFigureElementAxis.TAG_NAME_AXIS;
+    return TAG_NAME_AXIS;
   }
 
   /**
@@ -2072,10 +2071,10 @@ public abstract class SGAxisElement
         SGUtility.calcPropertyValue(
             space,
             unit,
-            SPACE_UNIT,
+            SGAxisConstants.SPACE_UNIT,
             SPACE_BETWEEN_LINE_AND_NUMBERS_MIN,
             SPACE_BETWEEN_LINE_AND_NUMBERS_MAX,
-            SPACE_MINIMAL_ORDER);
+            SGAxisConstants.SPACE_MINIMAL_ORDER);
     if (sNew == null) {
       return false;
     }
@@ -2103,10 +2102,10 @@ public abstract class SGAxisElement
         SGUtility.calcPropertyValue(
             space,
             unit,
-            SPACE_UNIT,
+            SGAxisConstants.SPACE_UNIT,
             SPACE_BETWEEN_TITLE_AND_NUMBERS_MIN,
             SPACE_BETWEEN_TITLE_AND_NUMBERS_MAX,
-            SPACE_MINIMAL_ORDER);
+            SGAxisConstants.SPACE_MINIMAL_ORDER);
     if (sNew == null) {
       return false;
     }
@@ -2379,7 +2378,8 @@ public abstract class SGAxisElement
    * @param unit the unit of length
    */
   public float getSpaceAxisLineAndNumbers(final String unit) {
-    return (float) SGUtilityText.convert(this.getSpaceAxisLineAndNumbers(), SPACE_UNIT, unit);
+    return (float)
+        SGUtilityText.convert(this.getSpaceAxisLineAndNumbers(), SGAxisConstants.SPACE_UNIT, unit);
   }
 
   /**
@@ -2399,7 +2399,7 @@ public abstract class SGAxisElement
    * @param unit the unit of length
    */
   public boolean setSpaceAxisLineAndNumbers(final float space, final String unit) {
-    final double value = SGUtilityText.convert(space, unit, SPACE_UNIT);
+    final double value = SGUtilityText.convert(space, unit, SGAxisConstants.SPACE_UNIT);
     if (value < SPACE_BETWEEN_LINE_AND_NUMBERS_MIN) {
       return false;
     }
@@ -2420,7 +2420,8 @@ public abstract class SGAxisElement
    * @param unit the unit of length
    */
   public float getSpaceTitleAndNumbers(final String unit) {
-    return (float) SGUtilityText.convert(this.getSpaceTitleAndNumbers(), SPACE_UNIT, unit);
+    return (float)
+        SGUtilityText.convert(this.getSpaceTitleAndNumbers(), SGAxisConstants.SPACE_UNIT, unit);
   }
 
   /**
@@ -2440,7 +2441,7 @@ public abstract class SGAxisElement
    * @param unit the unit of length
    */
   public boolean setSpaceTitleAndNumbers(final float space, final String unit) {
-    final double value = SGUtilityText.convert(space, unit, SPACE_UNIT);
+    final double value = SGUtilityText.convert(space, unit, SGAxisConstants.SPACE_UNIT);
     if (value < SPACE_BETWEEN_TITLE_AND_NUMBERS_MIN) {
       return false;
     }
@@ -2481,7 +2482,7 @@ public abstract class SGAxisElement
    * @param unit the unit of length
    */
   public boolean setTitleShiftFromCenter(final float shift, final String unit) {
-    final double value = SGUtilityText.convert(shift, unit, SPACE_UNIT);
+    final double value = SGUtilityText.convert(shift, unit, SGAxisConstants.SPACE_UNIT);
     if (value < TITLE_SHIFT_MIN) {
       return false;
     }
@@ -2757,8 +2758,10 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(
         map,
         spaceKey,
-        SGUtility.getExportValue(this.getSpaceAxisLineAndNumbers(SPACE_UNIT), SPACE_MINIMAL_ORDER),
-        SPACE_UNIT);
+        SGUtility.getExportValue(
+            this.getSpaceAxisLineAndNumbers(SGAxisConstants.SPACE_UNIT),
+            SGAxisConstants.SPACE_MINIMAL_ORDER),
+        SGAxisConstants.SPACE_UNIT);
     SGPropertyUtility.addProperty(map, colorKey, this.mAxisLineColor);
   }
 
@@ -2775,8 +2778,10 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(
         map,
         spaceKey,
-        SGUtility.getExportValue(this.getSpaceTitleAndNumbers(SPACE_UNIT), SPACE_MINIMAL_ORDER),
-        SPACE_UNIT);
+        SGUtility.getExportValue(
+            this.getSpaceTitleAndNumbers(SGAxisConstants.SPACE_UNIT),
+            SGAxisConstants.SPACE_MINIMAL_ORDER),
+        SGAxisConstants.SPACE_UNIT);
     SGPropertyUtility.addProperty(
         map,
         centerShiftKey,
@@ -3093,7 +3098,7 @@ public abstract class SGAxisElement
 
   // axis title
   public static class ElementStringTitle extends SGDrawingElementString2DExtended
-      implements SGIMovable, SGIFigureElementAxisConstants {
+      implements SGIMovable {
 
     SGAxisElement mAxisElement = null;
 
@@ -3139,7 +3144,7 @@ public abstract class SGAxisElement
 
     @Override
     public void translate(final float dx, final float dy) {
-      final float factor = SGIConstants.CM_POINT_RATIO / this.mMagnification;
+      final float factor = CM_POINT_RATIO / this.mMagnification;
       final float space = this.mAxisElement.getSpaceTitleAndNumbers();
       final float centerShift = this.mAxisElement.getTitleShiftFromCenter();
       final float spaceDiff, centerShiftDiff;
@@ -3347,16 +3352,16 @@ public abstract class SGAxisElement
         this.setLocation(thisX + diffX, thisY);
       }
 
-      if (this.mLocationInPlane == SGIFigureElementAxis.AXIS_VERTICAL_1
-          || mLocationInPlane == SGIFigureElementAxis.AXIS_NORMAL_VERTICAL_LEFT) {
+      if (this.mLocationInPlane == AXIS_VERTICAL_1
+          || mLocationInPlane == AXIS_NORMAL_VERTICAL_LEFT) {
         Rectangle2D replacedRect = super.getElementBounds();
         float diffX =
             (float) (replacedRect.getX() + replacedRect.getWidth() - thisX - rect.getWidth());
         if (diffX > 0) {
           this.setLocation(this.getX() - diffX, thisY);
         }
-      } else if (this.mLocationInPlane == SGIFigureElementAxis.AXIS_VERTICAL_2
-          || mLocationInPlane == SGIFigureElementAxis.AXIS_NORMAL_VERTICAL_RIGHT) {
+      } else if (this.mLocationInPlane == AXIS_VERTICAL_2
+          || mLocationInPlane == AXIS_NORMAL_VERTICAL_RIGHT) {
         Rectangle2D replacedRect = super.getElementBounds();
         float diffX = (float) (replacedRect.getX() - thisX);
         if (diffX > 0) {
@@ -3385,7 +3390,7 @@ public abstract class SGAxisElement
 
   // exponent symbol
   public static class ElementStringExponent extends SGDrawingElementString2DExtended
-      implements SGIMovable, SGIFigureElementAxisConstants {
+      implements SGIMovable {
 
     SGAxisElement mAxisElement = null;
 
@@ -3449,7 +3454,7 @@ public abstract class SGAxisElement
 
     @Override
     public void translate(final float dx, final float dy) {
-      final float factor = SGIConstants.CM_POINT_RATIO / this.mMagnification;
+      final float factor = CM_POINT_RATIO / this.mMagnification;
       final float x = this.mAxisElement.getExponentLocationX();
       final float y = this.mAxisElement.getExponentLocationY();
       final float xNew = this.mAxisElement.roundOffExponentShift(x + factor * dx);

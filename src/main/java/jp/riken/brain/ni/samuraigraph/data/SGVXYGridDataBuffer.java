@@ -101,7 +101,7 @@ public class SGVXYGridDataBuffer extends SGTwoDimensionalDataBuffer {
    */
   @Override
   public String getGridTypeKey() {
-    return SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG;
+    return SGDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG;
   }
 
   /**

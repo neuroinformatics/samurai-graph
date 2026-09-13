@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,14 +14,13 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 
 /** Create a property file. */
-public class SGPropertyFileCreator extends SGFileHandler implements SGIPropertyFileConstants {
+public class SGPropertyFileCreator extends SGFileHandler {
 
   /** Default name of the property file with the extension. */
   public static final String DEFAULT_PROPERTY_FILE_NAME_WITH_EXTENSION =

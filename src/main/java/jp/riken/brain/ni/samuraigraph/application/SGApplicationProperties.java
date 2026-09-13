@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -8,7 +11,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class SGApplicationProperties implements SGIApplicationConstants {
+public class SGApplicationProperties {
 
   private static final Logger logger = LogManager.getLogger(SGApplicationProperties.class);
   // version string

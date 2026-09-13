@@ -1,5 +1,23 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
 import java.io.File;
@@ -35,8 +53,7 @@ import ucar.nc2.Variable;
 import ucar.nc2.write.NetcdfFormatWriter;
 
 /** Scalar type XYZ data. This object has of x, y and z values. */
-public class SGSXYZSDArrayData extends SGSDArrayData
-    implements SGISXYZTypeData, SGIDataPropertyKeyConstants {
+public class SGSXYZSDArrayData extends SGSDArrayData implements SGISXYZTypeData {
 
   private static final Logger logger = LogManager.getLogger(SGSXYZSDArrayData.class);
 
@@ -539,7 +556,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
    */
   @Override
   public void setStrideMap(Map<String, SGIntegerSeriesSet> map) {
-    this.mStride = map.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+    this.mStride = map.get(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
   }
 
   /**
@@ -550,7 +567,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
-    map.put(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, this.getStride());
+    map.put(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, this.getStride());
     return map;
   }
 
@@ -618,24 +635,16 @@ public class SGSXYZSDArrayData extends SGSDArrayData
     builder.addDimension(indexName, len);
 
     Variable.Builder indexVar = builder.addVariable(indexName, DataType.INT, indexName);
-    indexVar.addAttribute(
-        new Attribute(
-            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+    indexVar.addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
 
     Variable.Builder xVar = builder.addVariable(xName, DataType.DOUBLE, indexName);
-    xVar.addAttribute(
-        new Attribute(
-            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+    xVar.addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
 
     Variable.Builder yVar = builder.addVariable(yName, DataType.DOUBLE, indexName);
-    yVar.addAttribute(
-        new Attribute(
-            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+    yVar.addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
 
     Variable.Builder zVar = builder.addVariable(zName, DataType.DOUBLE, indexName);
-    zVar.addAttribute(
-        new Attribute(
-            SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+    zVar.addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
 
     try (NetcdfFormatWriter writer = builder.build()) {
       Array xArray = Array.factory(DataType.DOUBLE, new int[] {len});
@@ -685,8 +694,7 @@ public class SGSXYZSDArrayData extends SGSDArrayData
       Dimension indexDim = this.addIndexDimension(builder, dataNum);
       String indexDimName = indexDim.getShortName();
       Variable.Builder indexVar = this.addIndexVariable(builder, indexDim);
-      indexVar.addAttribute(
-          SGDataFileUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+      indexVar.addAttribute(SGDataFileUtility.getValueTypeAttribute(VALUE_TYPE_NUMBER));
 
       // Add data columns as variables.
       Variable.Builder varX = builder.addVariable("column0", DataType.DOUBLE, indexDimName);
@@ -982,9 +990,9 @@ public class SGSXYZSDArrayData extends SGSDArrayData
   @Override
   public String[] getDataViewerColumnTypes() {
     List<String> list = new ArrayList<String>();
-    list.add(SGIDataColumnTypeConstants.X_VALUE);
-    list.add(SGIDataColumnTypeConstants.Y_VALUE);
-    list.add(SGIDataColumnTypeConstants.Z_VALUE);
+    list.add(X_VALUE);
+    list.add(Y_VALUE);
+    list.add(Z_VALUE);
     String[] ret = list.toArray(new String[list.size()]);
     return ret;
   }

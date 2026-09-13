@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.*;
 import jp.riken.brain.ni.samuraigraph.base.*;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.data.*;
+import jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
+import jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants;
 
 class SGSXYDataDialogBuilder {
 
@@ -1099,23 +1103,26 @@ class SGSXYDataDialogBuilder {
     // line
     owner.mLineWidthSpinner.initProperties(
         owner.getLineWidthSpinnerNumberModel(),
-        owner.LINE_WIDTH_UNIT,
-        owner.LINE_WIDTH_FRAC_DIGIT_MIN,
-        owner.LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGConstants.LINE_WIDTH_UNIT,
+        SGConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // symbol
     owner.mSymbolSizeSpinner.initProperties(
         new SpinnerNumberModel(
-            0.1, owner.SYMBOL_SIZE_MIN, owner.SYMBOL_SIZE_MAX, owner.SYMBOL_SIZE_STEP),
-        owner.SYMBOL_SIZE_UNIT,
-        owner.SYMBOL_SIZE_FRAC_DIFIT_MIN,
-        owner.SYMBOL_SIZE_FRAC_DIFIT_MAX);
+            0.1,
+            SGFigureDrawingElementConstants.SYMBOL_SIZE_MIN,
+            SGFigureDrawingElementConstants.SYMBOL_SIZE_MAX,
+            SGFigureDrawingElementConstants.SYMBOL_SIZE_STEP),
+        SGFigureDrawingElementConstants.SYMBOL_SIZE_UNIT,
+        SGFigureDrawingElementConstants.SYMBOL_SIZE_FRAC_DIFIT_MIN,
+        SGFigureDrawingElementConstants.SYMBOL_SIZE_FRAC_DIFIT_MAX);
 
     owner.mSymbolLineWidthSpinner.initProperties(
         owner.getLineWidthSpinnerNumberModel(),
-        owner.LINE_WIDTH_UNIT,
-        owner.LINE_WIDTH_FRAC_DIGIT_MIN,
-        owner.LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGConstants.LINE_WIDTH_UNIT,
+        SGConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     owner.mSymbolBodyTransparencySpinner.initProperties(
         new SpinnerNumberModel(
@@ -1123,23 +1130,23 @@ class SGSXYDataDialogBuilder {
             (float) SGPaintConstants.TRANSPARENCY_MIN,
             (float) SGPaintConstants.TRANSPARENCY_MAX,
             (float) SGPaintConstants.TRANSPARENCY_STEP),
-        SGIConstants.percent,
+        SGConstants.percent,
         SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MIN,
         SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MAX);
 
     // bar
     owner.mBarLineWidthSpinner.initProperties(
         owner.getLineWidthSpinnerNumberModel(),
-        owner.LINE_WIDTH_UNIT,
-        owner.LINE_WIDTH_FRAC_DIGIT_MIN,
-        owner.LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGConstants.LINE_WIDTH_UNIT,
+        SGConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // error bar
     owner.mErrorBarLineWidthSpinner.initProperties(
         owner.getLineWidthSpinnerNumberModel(),
-        owner.LINE_WIDTH_UNIT,
-        owner.LINE_WIDTH_FRAC_DIGIT_MIN,
-        owner.LINE_WIDTH_FRAC_DIGIT_MAX);
+        SGConstants.LINE_WIDTH_UNIT,
+        SGConstants.LINE_WIDTH_FRAC_DIGIT_MIN,
+        SGConstants.LINE_WIDTH_FRAC_DIGIT_MAX);
 
     // bar inner paint transparency
     owner.mBarBodyTransparencySpinner.initProperties(
@@ -1148,53 +1155,53 @@ class SGSXYDataDialogBuilder {
             (float) SGPaintConstants.TRANSPARENCY_MIN,
             (float) SGPaintConstants.TRANSPARENCY_MAX,
             (float) SGPaintConstants.TRANSPARENCY_STEP),
-        SGIConstants.percent,
+        SGConstants.percent,
         SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MIN,
         SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MAX);
 
     owner.mErrorBarSymbolSizeSpinner.initProperties(
         new SpinnerNumberModel(
             0.1,
-            owner.ERROR_BAR_HEAD_SIZE_MIN,
-            owner.ERROR_BAR_HEAD_SIZE_MAX,
-            owner.ERROR_BAR_HEAD_SIZE_STEP),
-        owner.ERROR_BAR_HEAD_SIZE_UNIT,
-        owner.ERROR_BAR_HEAD_SIZE_FRAC_DIFIT_MIN,
-        owner.ERROR_BAR_HEAD_SIZE_FRAC_DIFIT_MAX);
+            SGFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_MIN,
+            SGFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_MAX,
+            SGFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_STEP),
+        SGFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_UNIT,
+        SGFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_FRAC_DIFIT_MIN,
+        SGFigureDrawingElementConstants.ERROR_BAR_HEAD_SIZE_FRAC_DIFIT_MAX);
 
     // tick label
     owner.mTickLabelFontSizeSpinner.initProperties(
         owner.getFontSizeSpinnerNumberModel(),
-        owner.FONT_SIZE_UNIT,
-        owner.FONT_SIZE_FRAC_DIGIT_MIN,
-        owner.FONT_SIZE_FRAC_DIGIT_MAX);
+        SGConstants.FONT_SIZE_UNIT,
+        SGConstants.FONT_SIZE_FRAC_DIGIT_MIN,
+        SGConstants.FONT_SIZE_FRAC_DIGIT_MAX);
     owner.mTickLabelDecimalPlacesSpinner.initProperties(
         new SpinnerNumberModel(
             0.0,
-            (float) owner.TICK_LABEL_DECIMAL_PLACES_MIN,
-            (float) owner.TICK_LABEL_DECIMAL_PLACES_MAX,
-            (float) owner.TICK_LABEL_DECIMAL_PLACES_STEP),
+            (float) SGFigureDrawingElementConstants.TICK_LABEL_DECIMAL_PLACES_MIN,
+            (float) SGFigureDrawingElementConstants.TICK_LABEL_DECIMAL_PLACES_MAX,
+            (float) SGFigureDrawingElementConstants.TICK_LABEL_DECIMAL_PLACES_STEP),
         null,
         0,
         0);
     owner.mTickLabelExponentSpinner.initProperties(
         new SpinnerNumberModel(
             0.0,
-            (float) owner.TICK_LABEL_EXPONENT_MIN,
-            (float) owner.TICK_LABEL_EXPONENT_MAX,
-            (float) owner.TICK_LABEL_EXPONENT_STEP),
+            (float) SGFigureDrawingElementConstants.TICK_LABEL_EXPONENT_MIN,
+            (float) SGFigureDrawingElementConstants.TICK_LABEL_EXPONENT_MAX,
+            (float) SGFigureDrawingElementConstants.TICK_LABEL_EXPONENT_STEP),
         null,
         0,
         0);
     owner.mTickLabelAngleSpinner.initProperties(
         new SpinnerNumberModel(
             0.0,
-            (float) owner.TICK_LABEL_TEXT_ANGLE_MIN,
-            (float) owner.TICK_LABEL_TEXT_ANGLE_MAX,
-            (float) owner.TICK_LABEL_TEXT_ANGLE_STEP),
-        SGIConstants.degree,
-        owner.TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MIN,
-        owner.TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MAX);
+            (float) SGFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_MIN,
+            (float) SGFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_MAX,
+            (float) SGFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_STEP),
+        SGConstants.degree,
+        SGFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MIN,
+        SGFigureDrawingElementConstants.TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MAX);
   }
 
   void handleDataColumnSelectionDialogAction(final Object source, final String command) {
@@ -1213,14 +1220,15 @@ class SGSXYDataDialogBuilder {
           if (colType == null) {
             continue;
           }
-          if (colType.startsWith(owner.LOWER_ERROR_VALUE)
-              || colType.startsWith(owner.UPPER_ERROR_VALUE)
-              || colType.startsWith(owner.LOWER_UPPER_ERROR_VALUE)) {
+          if (colType.startsWith(SGDataColumnTypeConstants.LOWER_ERROR_VALUE)
+              || colType.startsWith(SGDataColumnTypeConstants.UPPER_ERROR_VALUE)
+              || colType.startsWith(SGDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE)) {
             ebFlag = true;
-          } else if (colType.startsWith(owner.TICK_LABEL)) {
+          } else if (colType.startsWith(SGDataColumnTypeConstants.TICK_LABEL)) {
             tlFlag = true;
-          } else if (owner.VALUE_TYPE_DATE.equals(valueType)) {
-            if (owner.X_VALUE.equals(colType) || owner.Y_VALUE.equals(colType)) {
+          } else if (SGDataColumnTypeConstants.VALUE_TYPE_DATE.equals(valueType)) {
+            if (SGDataColumnTypeConstants.X_VALUE.equals(colType)
+                || SGDataColumnTypeConstants.Y_VALUE.equals(colType)) {
               tlFlag = true;
             }
           }
@@ -1251,10 +1259,10 @@ class SGSXYDataDialogBuilder {
           // get stride
           SGSDArrayDataSetupDialog sdg = (SGSDArrayDataSetupDialog) dg;
           SGIntegerSeriesSet stride = sdg.getSXYStride();
-          owner.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, stride);
+          owner.mStrideMap.put(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, stride);
           SGIntegerSeriesSet tickLabelStride = sdg.getSXYTickLabelStride();
           owner.mStrideMap.put(
-              SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
+              SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
 
         } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
           // automatically.
@@ -1284,14 +1292,14 @@ class SGSXYDataDialogBuilder {
           SGNetCDFData nData = (SGNetCDFData) data;
           if (nData.isIndexAvailable()) {
             SGIntegerSeriesSet indexStride = ndg.getSXYIndexStride();
-            owner.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, indexStride);
+            owner.mStrideMap.put(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, indexStride);
           } else {
             SGIntegerSeriesSet stride = ndg.getSXYStride();
-            owner.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXY_STRIDE, stride);
+            owner.mStrideMap.put(SGDataInformationKeyConstants.KEY_SXY_STRIDE, stride);
           }
           SGIntegerSeriesSet tickLabelStride = ndg.getSXYTickLabelStride();
           owner.mStrideMap.put(
-              SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
+              SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
 
         } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
           SGMDArrayDataSetupDialog ndg = (SGMDArrayDataSetupDialog) dg;
@@ -1315,7 +1323,7 @@ class SGSXYDataDialogBuilder {
               if (pickUpVarNameList.contains(name)) {
                 Integer dimensionIndex = dimensionIndexMap.get(name);
                 mdInfo.setDimensionIndex(
-                    SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, dimensionIndex);
+                    SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, dimensionIndex);
                 break;
               }
             }
@@ -1323,16 +1331,16 @@ class SGSXYDataDialogBuilder {
             owner.mPickUpDimensionInfo = null;
             for (int ii = 0; ii < colInfo.length; ii++) {
               SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) colInfo[ii];
-              mdInfo.clearDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+              mdInfo.clearDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
             }
           }
 
           // get stride
           SGIntegerSeriesSet stride = ndg.getSXYStride();
-          owner.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXY_STRIDE, stride);
+          owner.mStrideMap.put(SGDataInformationKeyConstants.KEY_SXY_STRIDE, stride);
           SGIntegerSeriesSet tickLabelStride = ndg.getSXYTickLabelStride();
           owner.mStrideMap.put(
-              SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
+              SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
         }
 
         // updates the line style

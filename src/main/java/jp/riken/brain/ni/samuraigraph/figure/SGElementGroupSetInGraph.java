@@ -12,12 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import javax.swing.SwingUtilities;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIData;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGIMovable;
@@ -58,8 +59,8 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
    * @param location the location of the x-axis
    */
   public boolean setXAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-        && location != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+    if (location != SGFigureElementAxisConstants.AXIS_HORIZONTAL_1
+        && location != SGFigureElementAxisConstants.AXIS_HORIZONTAL_2) {
       return false;
     }
     this.mXAxis = this.mGraph.getAxisElement().getAxisInPlane(location);
@@ -72,8 +73,8 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
    * @param location the location of the y-axis
    */
   public boolean setYAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
-        && location != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+    if (location != SGFigureElementAxisConstants.AXIS_VERTICAL_1
+        && location != SGFigureElementAxisConstants.AXIS_VERTICAL_2) {
       return false;
     }
     this.mYAxis = this.mGraph.getAxisElement().getAxisInPlane(location);
@@ -123,7 +124,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
   /** */
   public void actionPerformed(final ActionEvent e) {
     final String command = e.getActionCommand();
-    if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
+    if (command.equals(SGConstants.MENUCMD_PROPERTY)) {
       this.mGraph.setPropertiesOfSelectedObjects(this);
     } else {
       this.mGraph.notifyToListener(command, e.getSource());
@@ -171,7 +172,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
             this.mGraph.putDataTableCellList(this.mData, tableIndexList);
 
             // notify clicked cells
-            this.notifyToListener(SGIFigureElement.NOTIFY_DATA_CLICKED);
+            this.notifyToListener(SGFigureElementConstants.NOTIFY_DATA_CLICKED);
           }
         }
       }
@@ -221,8 +222,8 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     // compare current data properties and temporary data properties and notify the change
     this.notifyDataProperties(
         this.mTemporaryProperties,
-        SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT,
-        SGIFigureElement.NOTIFY_DATA_PROPERTIES_CHANGE_ON_COMMIT);
+        SGFigureElementConstants.NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT,
+        SGFigureElementConstants.NOTIFY_DATA_PROPERTIES_CHANGE_ON_COMMIT);
 
     // compare properties
     SGProperties pTemp = this.mTemporaryProperties;
@@ -250,8 +251,8 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     // compare current data properties and temporary data properties and notify the change
     this.notifyDataProperties(
         this.mTemporaryProperties,
-        SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_CANCEL,
-        SGIFigureElement.NOTIFY_DATA_PROPERTIES_CHANGE_ON_CANCEL);
+        SGFigureElementConstants.NOTIFY_DATA_STRUCTURE_CHANGE_ON_CANCEL,
+        SGFigureElementConstants.NOTIFY_DATA_PROPERTIES_CHANGE_ON_CANCEL);
 
     // restore properties
     if (this.setProperties(this.mTemporaryProperties) == false) {
@@ -283,8 +284,8 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     // compare current data properties and temporary data properties and notify the change
     this.notifyDataProperties(
         this.mTemporaryProperties,
-        SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW,
-        SGIFigureElement.NOTIFY_DATA_PROPERTIES_CHANGE_ON_PREVIEW);
+        SGFigureElementConstants.NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW,
+        SGFigureElementConstants.NOTIFY_DATA_PROPERTIES_CHANGE_ON_PREVIEW);
 
     // update drawing elements
     if (this.updateWithData() == false) {

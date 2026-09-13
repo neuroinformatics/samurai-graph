@@ -139,7 +139,7 @@ class SGAxisScaleDragHelper {
       SGPropertyResults result) {
     String[] strArray = SGUtilityText.getStringsInBracket(value);
     if (strArray == null) {
-      result.putResult(owner.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
+      result.putResult(SGAxisConstants.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
       return;
     }
     final SGAxisValue min;
@@ -152,7 +152,8 @@ class SGAxisScaleDragHelper {
         dMax = SGUtilityText.getDate(strArray[1]);
       }
       if (dMin == null || dMax == null) {
-        result.putResult(owner.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(
+            SGAxisConstants.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
         return;
       }
       min = new SGAxisDateValue(dMin);
@@ -165,15 +166,18 @@ class SGAxisScaleDragHelper {
         dMax = SGUtilityText.getDouble(strArray[1]);
       }
       if (dMin == null || dMax == null) {
-        result.putResult(owner.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(
+            SGAxisConstants.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
         return;
       }
       if (SGUtility.isValidPropertyValue(dMin.doubleValue()) == false) {
-        result.putResult(owner.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(
+            SGAxisConstants.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
         return;
       }
       if (SGUtility.isValidPropertyValue(dMax.doubleValue()) == false) {
-        result.putResult(owner.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(
+            SGAxisConstants.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
         return;
       }
       min = new SGAxisDoubleValue(dMin);
@@ -181,23 +185,26 @@ class SGAxisScaleDragHelper {
     }
     if (strArray.length == 2) {
       if (owner.setScale(min, max) == false) {
-        result.putResult(owner.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(
+            SGAxisConstants.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
         return;
       }
     } else if (strArray.length == 3) {
       final int scaleType = SGUtilityText.getScaleType(strArray[2]);
       if (scaleType == -1) {
-        result.putResult(owner.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(
+            SGAxisConstants.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
         return;
       }
       if (owner.setScale(min, max, scaleType) == false) {
-        result.putResult(owner.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(
+            SGAxisConstants.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
         return;
       }
     } else {
-      result.putResult(owner.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
+      result.putResult(SGAxisConstants.COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
       return;
     }
-    result.putResult(owner.COM_AXIS_SCALE_RANGE, SGPropertyResults.SUCCEEDED);
+    result.putResult(SGAxisConstants.COM_AXIS_SCALE_RANGE, SGPropertyResults.SUCCEEDED);
   }
 }

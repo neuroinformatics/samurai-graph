@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGImageConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Point;
@@ -33,9 +58,6 @@ import jp.riken.brain.ni.samuraigraph.application.SGMainFunctions.SAVED_OBJECT_T
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer.Token;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIRootObjectConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
@@ -45,12 +67,7 @@ class SGWindowManager
         DropTargetListener,
         PropertyChangeListener,
         WindowListener,
-        ComponentListener,
-        SGIPreferencesConstants,
-        SGIApplicationTextConstants,
-        SGIApplicationConstants,
-        SGIImageConstants,
-        SGIApplicationCommandConstants {
+        ComponentListener {
 
   /** Image file creator. */
   private SGImageExportManager mImageFileCreator = null;
@@ -135,7 +152,7 @@ class SGWindowManager
 
         array = keyList.toArray(new String[0]);
       } else {
-        array = SGIRootObjectConstants.TOOLBAR_MENUCMD_ARRAY;
+        array = TOOLBAR_MENUCMD_ARRAY;
       }
     } else {
       array =
@@ -158,10 +175,10 @@ class SGWindowManager
       if (num != null) {
         width = num.floatValue();
       } else {
-        width = SGIRootObjectConstants.DEFAULT_VIEWPORT_WIDTH;
+        width = DEFAULT_VIEWPORT_WIDTH;
       }
     } else {
-      width = SGIRootObjectConstants.DEFAULT_VIEWPORT_WIDTH;
+      width = DEFAULT_VIEWPORT_WIDTH;
     }
     final float height;
     final String hStr = pref.get(PREF_KEY_VIEWPORT_HEIGHT, null);
@@ -170,10 +187,10 @@ class SGWindowManager
       if (num != null) {
         height = num.floatValue();
       } else {
-        height = SGIRootObjectConstants.DEFAULT_VIEWPORT_HEIGHT;
+        height = DEFAULT_VIEWPORT_HEIGHT;
       }
     } else {
-      height = SGIRootObjectConstants.DEFAULT_VIEWPORT_HEIGHT;
+      height = DEFAULT_VIEWPORT_HEIGHT;
     }
     wnd.setViewportSize(width, height);
 
@@ -470,8 +487,7 @@ class SGWindowManager
 
         final boolean result = this.mMain.mDataSetManager.loadDataSetFromDialog(wnd);
         if (!result) {
-          SGUtility.showErrorMessageDialog(
-              wnd, MSG_DATA_SET_FILE_INVALID, SGIConstants.TITLE_ERROR);
+          SGUtility.showErrorMessageDialog(wnd, MSG_DATA_SET_FILE_INVALID, TITLE_ERROR);
         }
         wnd.setSaved(result);
       } else if (command.equals(MENUBARCMD_LOAD_SCRIPT)) {
@@ -567,7 +583,7 @@ class SGWindowManager
       } else if (command.equals(MENUBARCMD_ASSIGN_LINE_COLORS)) {
         if (!this.mMain.assignLineColors(wnd)) {
           SGUtility.showErrorMessageDialog(
-              wnd, "Cannot open the dialog to setup line style.", SGIConstants.TITLE_ERROR);
+              wnd, "Cannot open the dialog to setup line style.", TITLE_ERROR);
           return;
         }
       } else if (command.equals(MENUCMD_EXPORT_TO_FILE)
@@ -590,11 +606,11 @@ class SGWindowManager
           || MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)
           || MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
         this.mMain.fitAxisRangeToFocusedData(wnd, command);
-      } else if (SGIFigureElement.NOTIFY_DATA_WILL_BE_HIDDEN.equals(command)) {
+      } else if (NOTIFY_DATA_WILL_BE_HIDDEN.equals(command)) {
         this.mMain.closeDataViewerDialogsOfFocusedData(wnd);
         this.mMain.closeDataAnimationDialogsOfFocusedData(wnd);
-      } else if (SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT.equals(command)
-          || SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW.equals(command)) {
+      } else if (NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT.equals(command)
+          || NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW.equals(command)) {
         // column types of data are changed
         this.mMain.refreshAllDataViewerDialogs();
         this.mMain.closeDataAnimationDialogsOfFocusedData(wnd);
@@ -611,7 +627,7 @@ class SGWindowManager
         this.mMain.closeDataAnimationDialogInAllFigures(wnd, false);
         wnd.redo();
         this.mMain.refreshAllDataViewerDialogs();
-      } else if (command.equals(SGIFigureElement.NOTIFY_DATA_CLICKED)) {
+      } else if (command.equals(NOTIFY_DATA_CLICKED)) {
         this.mMain.updateDataTableCellSelection(wnd);
       }
     }
@@ -703,7 +719,7 @@ class SGWindowManager
     String name = e.getPropertyName();
 
     if (source instanceof SGDrawingWindow) {
-      if (SGIRootObjectConstants.PROPERTY_NAME_TOOL_BAR.equals(name)) {
+      if (PROPERTY_NAME_TOOL_BAR.equals(name)) {
         SGDrawingWindow wnd = (SGDrawingWindow) source;
         this.mMain.updateToolBarPatternInPreferences(wnd.getToolBarPattern());
       }

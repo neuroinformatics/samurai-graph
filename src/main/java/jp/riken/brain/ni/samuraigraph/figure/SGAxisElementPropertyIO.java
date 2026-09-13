@@ -1,10 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGIFigureElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGIAxisConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGIScaleConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
 
 import java.awt.*;
 import java.awt.Color;
@@ -20,7 +22,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxisValue;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGPeriod;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
@@ -30,7 +31,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants {
+class SGAxisElementPropertyIO {
 
   private final SGAxisElement axis;
 
@@ -239,7 +240,7 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
       }
     }
 
-    str = element.getAttribute(SGIFigureElementAxis.KEY_NUMBER_ANGLE);
+    str = element.getAttribute(KEY_NUMBER_ANGLE);
     if (str.length() != 0) {
       num = SGUtilityText.getFloat(str);
       if (num == null) {
@@ -250,7 +251,7 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
       }
     }
 
-    str = element.getAttribute(SGIFigureElementAxis.KEY_EXPONENT_VISIBLE);
+    str = element.getAttribute(KEY_EXPONENT_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -262,7 +263,7 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
     }
 
     // exponent value
-    str = element.getAttribute(SGIFigureElementAxis.KEY_EXPONENT_VALUE);
+    str = element.getAttribute(KEY_EXPONENT_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getInteger(str);
       if (num == null) {
@@ -274,7 +275,7 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
     }
 
     // exponent location
-    str = element.getAttribute(SGIFigureElementAxis.KEY_EXPONENT_LOCATION_X);
+    str = element.getAttribute(KEY_EXPONENT_LOCATION_X);
     if (str.length() != 0) {
       StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
@@ -285,7 +286,7 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
         return false;
       }
     }
-    str = element.getAttribute(SGIFigureElementAxis.KEY_EXPONENT_LOCATION_Y);
+    str = element.getAttribute(KEY_EXPONENT_LOCATION_Y);
     if (str.length() != 0) {
       StringBuilder unit = new StringBuilder();
       num = SGUtilityText.getNumber(str, unit);
@@ -437,7 +438,7 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
           return false;
         }
       }
-      str = element.getAttribute(SGIFigureElementAxis.KEY_MINOR_TICK_MARK_LENGTH);
+      str = element.getAttribute(KEY_MINOR_TICK_MARK_LENGTH);
       if (str.length() != 0) {
         StringBuilder unit = new StringBuilder();
         num = SGUtilityText.getNumber(str, unit);
@@ -547,7 +548,7 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
     }
 
     // baseline value
-    str = element.getAttribute(SGIFigureElementAxis.KEY_BASELINE_VALUE);
+    str = element.getAttribute(KEY_BASELINE_VALUE);
     if (str.length() != 0) {
       SGAxisValue baseline = null;
       if (dateMode) {

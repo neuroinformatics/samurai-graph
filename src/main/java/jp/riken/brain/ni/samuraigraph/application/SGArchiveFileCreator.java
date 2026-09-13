@@ -1,5 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGArchiveFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -28,8 +33,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /** Create an archive file. */
-public class SGArchiveFileCreator extends SGFileHandler
-    implements SGIApplicationConstants, SGIArchiveFileConstants {
+public class SGArchiveFileCreator extends SGFileHandler {
 
   private static final Logger logger = LogManager.getLogger(SGArchiveFileCreator.class);
 

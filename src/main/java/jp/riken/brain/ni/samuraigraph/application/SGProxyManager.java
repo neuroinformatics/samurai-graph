@@ -1,5 +1,15 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +17,7 @@ import java.util.prefs.Preferences;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 
 /** A class to handle proxy connection. */
-class SGProxyManager implements ActionListener, SGIPreferencesConstants {
+class SGProxyManager implements ActionListener {
 
   /** A flag whether access to the internet is direct. */
   private boolean mDirectAccessFlag = true;

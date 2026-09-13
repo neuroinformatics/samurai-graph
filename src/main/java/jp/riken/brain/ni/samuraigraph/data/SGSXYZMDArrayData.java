@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
 import com.jmatio.io.MatFileWriter;
@@ -157,23 +182,23 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   protected SGMDArrayVariable initVariable(SGMDArrayFile file, SGMDArrayDataColumnInfo info) {
     SGMDArrayVariable var = super.initVariable(file, info);
     if (info != null) {
-      Integer xDim = info.getDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION);
+      Integer xDim = info.getDimensionIndex(KEY_SXYZ_X_DIMENSION);
       Integer xValue = null;
       if (xDim != null) {
         xValue = xDim;
       } else {
         xValue = 0;
       }
-      var.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION, xValue);
+      var.setDimensionIndex(KEY_SXYZ_X_DIMENSION, xValue);
 
-      Integer yDim = info.getDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
+      Integer yDim = info.getDimensionIndex(KEY_SXYZ_Y_DIMENSION);
       Integer yValue = null;
       if (yDim != null) {
         yValue = yDim;
       } else {
         yValue = 0;
       }
-      var.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION, yValue);
+      var.setDimensionIndex(KEY_SXYZ_Y_DIMENSION, yValue);
 
       Integer zDim = info.getGenericDimensionIndex();
       Integer zValue = null;
@@ -189,8 +214,8 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
 
   protected SGMDArrayVariable initVariable(SGMDArrayVariable var) {
     super.initVariable(var);
-    var.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION, -1);
-    var.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION, -1);
+    var.setDimensionIndex(KEY_SXYZ_X_DIMENSION, -1);
+    var.setDimensionIndex(KEY_SXYZ_Y_DIMENSION, -1);
     return var;
   }
 
@@ -590,7 +615,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   public Map<String, Map<String, Integer>> getUsedDimensionIndexMap() {
     Map<String, Map<String, Integer>> map = this.getDimensionIndexMap();
     Map<String, Integer> dimMap = map.get(this.mZVariable.getName());
-    dimMap.remove(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
+    dimMap.remove(KEY_GENERIC_DIMENSION);
     return map;
   }
 
@@ -758,27 +783,27 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
 
   @Override
   protected String getXDimensionKey() {
-    return SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION;
+    return KEY_SXYZ_X_DIMENSION;
   }
 
   @Override
   protected String getYDimensionKey() {
-    return SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION;
+    return KEY_SXYZ_Y_DIMENSION;
   }
 
   @Override
   protected String getXStrideKey() {
-    return SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X;
+    return KEY_SXYZ_STRIDE_X;
   }
 
   @Override
   protected String getYStrideKey() {
-    return SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y;
+    return KEY_SXYZ_STRIDE_Y;
   }
 
   @Override
   protected String getScatterStrideKey() {
-    return SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE;
+    return KEY_SXYZ_INDEX_STRIDE;
   }
 
   /**
@@ -823,7 +848,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   /** Returns a map of information. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> map = super.getInfoMap();
-    map.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, !this.isIndexAvailable());
+    map.put(KEY_SXYZ_GRID_PLOT_FLAG, !this.isIndexAvailable());
     return map;
   }
 
@@ -1000,9 +1025,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     } else {
       strZ =
           this.getTwoDimensionalVarCommandString(
-              this.mZVariable,
-              SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION,
-              SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
+              this.mZVariable, KEY_SXYZ_X_DIMENSION, KEY_SXYZ_Y_DIMENSION);
     }
     varList.add(strZ);
     columnTypeList.add(Z_VALUE);
@@ -1061,12 +1084,12 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   public String[] getDataViewerColumnTypes() {
     List<String> list = new ArrayList<String>();
     if (this.mXVariable != null) {
-      list.add(SGIDataColumnTypeConstants.X_VALUE);
+      list.add(X_VALUE);
     }
     if (this.mYVariable != null) {
-      list.add(SGIDataColumnTypeConstants.Y_VALUE);
+      list.add(Y_VALUE);
     }
-    list.add(SGIDataColumnTypeConstants.Z_VALUE);
+    list.add(Z_VALUE);
     String[] ret = list.toArray(new String[list.size()]);
     return ret;
   }
@@ -1089,10 +1112,9 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   @Override
   public int getDataViewerColumnNumber(final String columnType, final boolean all) {
     int ret = 0;
-    if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)
-        || SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
+    if (X_VALUE.equals(columnType) || Y_VALUE.equals(columnType)) {
       ret = 1;
-    } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
+    } else if (Z_VALUE.equals(columnType)) {
       if (this.isIndexAvailable()) {
         ret = 1;
       } else {
@@ -1109,7 +1131,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   @Override
   public int getDataViewerRowNumber(final String columnType, final boolean all) {
     int ret = 0;
-    if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
+    if (X_VALUE.equals(columnType)) {
       if (this.mXVariable != null) {
         if (all) {
           ret = this.mXVariable.getGenericDimensionLength();
@@ -1121,7 +1143,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
           }
         }
       }
-    } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
+    } else if (Y_VALUE.equals(columnType)) {
       if (this.mYVariable != null) {
         if (all) {
           ret = this.mYVariable.getGenericDimensionLength();
@@ -1133,7 +1155,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
           }
         }
       }
-    } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
+    } else if (Z_VALUE.equals(columnType)) {
       if (this.isIndexAvailable()) {
         if (all) {
           ret = this.mZVariable.getGenericDimensionLength();
@@ -1302,11 +1324,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     }
     String zStr =
         this.getComponentToolTipSpatiallyVaried(
-            this.mZVariable,
-            SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION,
-            SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION,
-            index0,
-            index1);
+            this.mZVariable, KEY_SXYZ_X_DIMENSION, KEY_SXYZ_Y_DIMENSION, index0, index1);
     sb.append(zStr);
     return sb.toString();
   }

@@ -2,13 +2,17 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTitleUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataRangeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataTextUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,11 +33,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /** Static helper for the Buffer responsibility. */
-public final class SGDataBufferUtility
-    implements SGIDataColumnTypeConstants,
-        SGIDataPropertyKeyConstants,
-        SGINetCDFConstants,
-        SGIMDArrayConstants {
+public final class SGDataBufferUtility {
 
   private static final Logger logger = LogManager.getLogger(SGDataBufferUtility.class);
 

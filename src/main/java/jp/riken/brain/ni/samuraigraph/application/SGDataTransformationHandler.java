@@ -1,25 +1,27 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import jp.riken.brain.ni.samuraigraph.application.SGIApplicationConstants.FILE_TYPE;
+import jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.FILE_TYPE;
 import jp.riken.brain.ni.samuraigraph.application.SGMainFunctions.TransformedData;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumn;
+import jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayFile;
@@ -104,7 +106,7 @@ class SGDataTransformationHandler {
         if (dataType == null) {
           SGDrawingWindow wnd = prev.getOwnerWindow();
           SGUtility.showErrorMessageDialog(
-              wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
+              wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGConstants.TITLE_ERROR);
           return false;
         }
 
@@ -113,12 +115,12 @@ class SGDataTransformationHandler {
         infoMap.putAll(this.mTransformedData.data.getInfoMap());
 
         // removes unused keys from the information map
-        infoMap.remove(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
-        infoMap.remove(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP);
+        infoMap.remove(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
+        infoMap.remove(SGDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP);
 
         // adds data name
         String dataName = this.mTransformedData.name;
-        infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+        infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
 
         // overwrites the properties gotten from the previous dialog
         infoMap.putAll(
@@ -131,7 +133,7 @@ class SGDataTransformationHandler {
               .getDataAdditionHandler()
               .setupPlotTypeSelectionWizardDialogConnection(FILE_TYPE.TXT_DATA, dataType);
           SGSDArrayData aData = (SGSDArrayData) this.mTransformedData.data;
-          infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, aData.getDataSource());
+          infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, aData.getDataSource());
           if (this.makeTransition(
                   this.mDataTypeWizardDialog,
                   this.mSDArrayDataSetupWizardDialog,
@@ -216,7 +218,7 @@ class SGDataTransformationHandler {
 
     // set information to the dialog for data column selection
     SGSDArrayFile sdFile =
-        (SGSDArrayFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
+        (SGSDArrayFile) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_SOURCE);
     if (next.setData(sdFile, dataType, colInfoSet, infoMap, false) == false) {
       return false;
     }
@@ -252,8 +254,7 @@ class SGDataTransformationHandler {
     }
 
     // set information to the dialog for data column selection
-    SGNetCDFFile ncfile =
-        (SGNetCDFFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
+    SGNetCDFFile ncfile = (SGNetCDFFile) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_SOURCE);
     if (next.setData(ncfile, dataType, colInfoSet, infoMap, false) == false) {
       return false;
     }
@@ -281,7 +282,7 @@ class SGDataTransformationHandler {
 
     // set information to the dialog for data column selection
     SGMDArrayFile mdFile =
-        (SGMDArrayFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
+        (SGMDArrayFile) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_SOURCE);
     if (next.setData(mdFile, dataType, colInfoSet, infoMap, false) == false) {
       return false;
     }
@@ -297,7 +298,7 @@ class SGDataTransformationHandler {
   private SGDataColumnInfo[] removeAdditionalColumnInfo(SGDataColumnInfo[] colInfo) {
     List<SGDataColumnInfo> newColInfo = new ArrayList<SGDataColumnInfo>();
     for (int i = 0; i < colInfo.length; i++) {
-      if (SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(colInfo[i].getValueType())
+      if (SGDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(colInfo[i].getValueType())
           == false) {
         newColInfo.add(colInfo[i]);
       }
@@ -420,7 +421,7 @@ class SGDataTransformationHandler {
       }
     } else {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, SGIConstants.TITLE_ERROR);
+          wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, SGConstants.TITLE_ERROR);
       return false;
     }
 
@@ -447,14 +448,14 @@ class SGDataTransformationHandler {
     String dataType = this.mDataTypeWizardDialog.getSelectedDataType();
     if (dataType == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
+          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGConstants.TITLE_ERROR);
       return false;
     }
 
     // get information
     infoMap =
         SGDataInfoMapUtility.createInfoMap(dataType, this.mDataTypeWizardDialog, figureID, null);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, data.getDataSource());
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, data.getDataSource());
 
     // get selected column types
     SGDataColumnInfoSet colInfoSet = null;
@@ -462,7 +463,7 @@ class SGDataTransformationHandler {
     if (dg.equals(this.mDataTypeWizardDialog)) {
       colInfoSet = this.createColumnInfoList(file, dataType, infoMap);
       dataName = this.mTransformedData.name;
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
 
       // calculate the stride
       SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
@@ -472,17 +473,17 @@ class SGDataTransformationHandler {
     } else if (dg.equals(this.mSDArrayDataSetupWizardDialog)) {
       colInfoSet = this.mSDArrayDataSetupWizardDialog.getDataColumnInfoSet();
       dataName = this.mSDArrayDataSetupWizardDialog.getDataName();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
     } else if (dg.equals(this.mPlotTypeSelectionWizardDialog)) {
       colInfoSet = this.mSDArrayDataSetupWizardDialog.getDataColumnInfoSet();
       dataName = this.mSDArrayDataSetupWizardDialog.getDataName();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
       SGMainFunctions.addPlotTypeSelectionValuesToInfoMap(
           infoMap, this.mPlotTypeSelectionWizardDialog);
     }
     if (colInfoSet == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, SGIConstants.TITLE_ERROR);
+          wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, SGConstants.TITLE_ERROR);
       return false;
     }
 
@@ -493,10 +494,10 @@ class SGDataTransformationHandler {
       SGDataColumn[] newColumns = new SGDataColumn[colInfo.length];
       for (int i = 0; i < colInfo.length; i++) {
         String valueType = colInfo[i].getValueType();
-        if (!SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(valueType)) {
+        if (!SGDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE.equals(valueType)) {
           newColumns[i] = columns[i];
         } else {
-          Object obj = infoMap.get(SGIDataInformationKeyConstants.KEY_SAMPLING_RATE);
+          Object obj = infoMap.get(SGDataInformationKeyConstants.KEY_SAMPLING_RATE);
           if (null != obj && (obj instanceof Number)) {
             double samplingRate = ((Number) obj).doubleValue();
             newColumns[i] = new SGSamplingDataColumn(samplingRate, dataLength);
@@ -512,7 +513,7 @@ class SGDataTransformationHandler {
     cdSet = this.mMain.mDataCreator.create(file, colInfoSet, infoMap, wnd);
     if (cdSet == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, SGIConstants.TITLE_ERROR);
+          wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, SGConstants.TITLE_ERROR);
       return false;
     }
 
@@ -540,27 +541,27 @@ class SGDataTransformationHandler {
     String dataType = this.mDataTypeWizardDialog.getSelectedDataType();
     if (dataType == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
+          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGConstants.TITLE_ERROR);
       return false;
     }
 
     // create a information map
     infoMap =
         SGDataInfoMapUtility.createInfoMap(dataType, this.mDataTypeWizardDialog, figureID, null);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, data.getDataSource());
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, data.getDataSource());
 
     // get selected column types
     SGDataColumnInfoSet colInfoSet = null;
     String dataName = "";
     if (dg.equals(this.mDataTypeWizardDialog)) {
       SGNetCDFFile ncFile =
-          (SGNetCDFFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
+          (SGNetCDFFile) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_SOURCE);
       colInfoSet =
           this.mMain
               .getPropertyFileHandler()
               .getNetCDFDefaultDataColumnInfo(ncFile, dataType, infoMap);
       dataName = this.mTransformedData.name;
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
 
       // calculate the stride
       SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
@@ -571,12 +572,12 @@ class SGDataTransformationHandler {
     } else if (dg.equals(this.mNetCDFDataSetupWizardDialog)) {
       colInfoSet = this.mNetCDFDataSetupWizardDialog.getDataColumnInfoSet();
       dataName = this.mNetCDFDataSetupWizardDialog.getDataName();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
       infoMap.putAll(this.mNetCDFDataSetupWizardDialog.getStrideMap());
     } else if (dg.equals(this.mPlotTypeSelectionWizardDialog)) {
       colInfoSet = this.mNetCDFDataSetupWizardDialog.getDataColumnInfoSet();
       dataName = this.mNetCDFDataSetupWizardDialog.getDataName();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
       infoMap.putAll(this.mNetCDFDataSetupWizardDialog.getStrideMap());
       SGMainFunctions.addPlotTypeSelectionValuesToInfoMap(
           infoMap, this.mPlotTypeSelectionWizardDialog);
@@ -584,7 +585,7 @@ class SGDataTransformationHandler {
 
     if (colInfoSet == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+          wnd, SGApplicationTextConstants.MSG_INVALID_DATA_FILE, SGConstants.TITLE_ERROR);
       return false;
     }
 
@@ -609,7 +610,7 @@ class SGDataTransformationHandler {
     cdSet = this.mMain.mDataCreator.create(data.getDataSource(), colInfoSet, infoMap, wnd);
     if (cdSet == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, SGIConstants.TITLE_ERROR);
+          wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, SGConstants.TITLE_ERROR);
       return false;
     }
 
@@ -639,26 +640,26 @@ class SGDataTransformationHandler {
     String dataType = dataTypeDialog.getSelectedDataType();
     if (dataType == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
+          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGConstants.TITLE_ERROR);
       return false;
     }
 
     // create a information map
     infoMap = SGDataInfoMapUtility.createInfoMap(dataType, dataTypeDialog, figureID, null);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, data.getDataSource());
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, data.getDataSource());
 
     // get selected column types
     SGDataColumnInfoSet colInfoSet = null;
     String dataName = "";
     if (dg.equals(dataTypeDialog)) {
       SGMDArrayFile mdFile =
-          (SGMDArrayFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
+          (SGMDArrayFile) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_SOURCE);
       colInfoSet =
           this.mMain
               .getPropertyFileHandler()
               .getMDArrayDataDefaultDataColumnInfo(mdFile, dataType, infoMap);
       dataName = this.mTransformedData.name;
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
 
       // calculate the stride
       SGDataColumnInfo[] colArray = colInfoSet.getDataColumnInfoArray();
@@ -668,12 +669,12 @@ class SGDataTransformationHandler {
     } else if (dg.equals(dataSetupDialog)) {
       colInfoSet = dataSetupDialog.getDataColumnInfoSet();
       dataName = dataSetupDialog.getDataName();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
       infoMap.putAll(dataSetupDialog.getStrideMap());
     } else if (dg.equals(this.mPlotTypeSelectionWizardDialog)) {
       colInfoSet = dataSetupDialog.getDataColumnInfoSet();
       dataName = dataSetupDialog.getDataName();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
       infoMap.putAll(dataSetupDialog.getStrideMap());
       SGMainFunctions.addPlotTypeSelectionValuesToInfoMap(
           infoMap, this.mPlotTypeSelectionWizardDialog);
@@ -681,7 +682,7 @@ class SGDataTransformationHandler {
 
     if (colInfoSet == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+          wnd, SGApplicationTextConstants.MSG_INVALID_DATA_FILE, SGConstants.TITLE_ERROR);
       return false;
     }
 
@@ -704,7 +705,7 @@ class SGDataTransformationHandler {
     cdSet = this.mMain.mDataCreator.create(data.getDataSource(), colInfoSet, infoMap, wnd);
     if (cdSet == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, SGIConstants.TITLE_ERROR);
+          wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, SGConstants.TITLE_ERROR);
       return false;
     }
 

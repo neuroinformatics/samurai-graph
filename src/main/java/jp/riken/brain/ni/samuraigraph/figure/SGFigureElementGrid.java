@@ -1,5 +1,13 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureGridConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -26,7 +34,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
@@ -52,8 +60,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /** An object to draw grid lines. */
-public class SGFigureElementGrid extends SGFigureElement
-    implements SGIFigureElementGrid, SGIFigureGridConstants, SGIFigureConstants {
+public class SGFigureElementGrid extends SGFigureElement implements SGIFigureElementGrid {
 
   /** An SGIAxisElement object. */
   private SGIFigureElementAxis mAxisElement;
@@ -104,9 +111,9 @@ public class SGFigureElementGrid extends SGFigureElement
   }
 
   private void init() {
-    this.setGridVisible(DEFAULT_GRID_VISIBLE);
+    this.setGridVisible(SGFigureGridConstants.DEFAULT_GRID_VISIBLE);
     this.setAutoRangeFlag(DEFAULT_GRID_AUTO_CALC);
-    this.setLineWidth(DEFAULT_GRID_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setLineWidth(SGFigureGridConstants.DEFAULT_GRID_LINE_WIDTH, LINE_WIDTH_UNIT);
     this.setLineType(DEFAULT_GRID_LINE_TYPE);
     this.setColor(DEFAULT_GRID_COLOR);
   }
@@ -228,8 +235,7 @@ public class SGFigureElementGrid extends SGFigureElement
     } else if (element instanceof SGIFigureElementLegend) {
 
     } else if (element instanceof SGIFigureElementAxis) {
-      if (SGIFigureElement.NOTIFY_CHANGE.equals(msg)
-          || SGIFigureElement.NOTIFY_CHANGE_ON_COMMIT.equals(msg)) {
+      if (NOTIFY_CHANGE.equals(msg) || NOTIFY_CHANGE_ON_COMMIT.equals(msg)) {
         SGProperties pTemp = this.getProperties();
         if (this.mTemporaryProperties == null) {
           this.mTemporaryProperties = pTemp;
@@ -243,7 +249,7 @@ public class SGFigureElementGrid extends SGFigureElement
         this.mBaselineValueY = this.convertAxisValue(dateY, this.mBaselineValueY);
         this.mStepValueY = this.convertAxisStepValue(dateY, this.mStepValueY);
 
-        if (SGIFigureElement.NOTIFY_CHANGE_ON_COMMIT.equals(msg)) {
+        if (NOTIFY_CHANGE_ON_COMMIT.equals(msg)) {
           SGProperties p = this.getProperties();
           if (!p.equals(pTemp)) {
             // notifies the change
@@ -251,7 +257,7 @@ public class SGFigureElementGrid extends SGFigureElement
           }
         }
 
-      } else if (SGIFigureElement.NOTIFY_CHANGE_ON_CANCEL.equals(msg)) {
+      } else if (NOTIFY_CHANGE_ON_CANCEL.equals(msg)) {
         if (this.mTemporaryProperties != null) {
           this.setProperties(this.mTemporaryProperties);
           this.mTemporaryProperties = null;
@@ -624,7 +630,7 @@ public class SGFigureElementGrid extends SGFigureElement
    */
   public boolean initCompatibleProperty() {
     // KEY_GRID_VISIBLE
-    this.setGridVisible(DEFAULT_GRID_VISIBLE);
+    this.setGridVisible(SGFigureGridConstants.DEFAULT_GRID_VISIBLE);
     // KEY_AUTO_CALC
     this.setAutoRangeFlag(DEFAULT_GRID_AUTO_CALC);
     // KEY_X_AXIS_POSITION
@@ -643,8 +649,8 @@ public class SGFigureElementGrid extends SGFigureElement
     this.mStepValueY = new SGAxisDoubleStepValue(DEFAULT_GRID_STEP_VALUE_Y);
     // KEY_BASELINE_VALUE_Y
     this.mBaselineValueY = new SGAxisDoubleValue(DEFAULT_GRID_BASELINE_VALUE_Y);
-    // KEY_LINE_WIDTH
-    this.setLineWidth(DEFAULT_GRID_LINE_WIDTH, LINE_WIDTH_UNIT);
+    // SGLineConstants.KEY_LINE_WIDTH
+    this.setLineWidth(SGFigureGridConstants.DEFAULT_GRID_LINE_WIDTH, LINE_WIDTH_UNIT);
     // KEY_LINE_TYPE
     this.setLineType(DEFAULT_GRID_LINE_TYPE);
     // KEY_GRID_COLOR
@@ -715,7 +721,7 @@ public class SGFigureElementGrid extends SGFigureElement
     }
 
     // line width
-    str = element.getAttribute(KEY_LINE_WIDTH);
+    str = element.getAttribute(SGLineConstants.KEY_LINE_WIDTH);
     if (str != null) {
       StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -1199,8 +1205,8 @@ public class SGFigureElementGrid extends SGFigureElement
    * @return true if succeeded
    */
   public boolean setXAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-        && location != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+    if (location != SGFigureElementAxisConstants.AXIS_HORIZONTAL_1
+        && location != SGFigureElementAxisConstants.AXIS_HORIZONTAL_2) {
       return false;
     }
     SGAxis axis = this.getAxis(location);
@@ -1220,8 +1226,8 @@ public class SGFigureElementGrid extends SGFigureElement
    * @return true if succeeded
    */
   public boolean setYAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
-        && location != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+    if (location != SGFigureElementAxisConstants.AXIS_VERTICAL_1
+        && location != SGFigureElementAxisConstants.AXIS_VERTICAL_2) {
       return false;
     }
     SGAxis axis = this.getAxis(location);
@@ -1407,7 +1413,7 @@ public class SGFigureElementGrid extends SGFigureElement
         KEY_STEP_VALUE_Y,
         KEY_BASELINE_VALUE_X,
         KEY_BASELINE_VALUE_Y,
-        KEY_LINE_WIDTH,
+        SGLineConstants.KEY_LINE_WIDTH,
         KEY_LINE_TYPE,
         KEY_GRID_COLOR);
     return map;

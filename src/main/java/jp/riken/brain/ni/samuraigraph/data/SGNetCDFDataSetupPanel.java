@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
@@ -25,8 +28,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** A panel to setup the properties of netCDF data. */
-public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
-    implements DocumentListener, SGINetCDFConstants {
+public class SGNetCDFDataSetupPanel extends SGDataSetupPanel implements DocumentListener {
 
   private static final long serialVersionUID = -7931773969660601629L;
 
@@ -466,7 +468,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     }
 
     // put the netCDF data into a map
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, ncFile);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, ncFile);
 
     // clear all
     this.clear();
@@ -475,7 +477,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     this.mNetCDFFile = ncFile;
     this.mDataType = dataType;
     this.mInfoMap = infoMap;
-    this.mInfoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
+    this.mInfoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
 
     // get variables
     List<SGNetCDFVariable> varList = ncFile.getVariables();
@@ -552,7 +554,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
 
     // initializes stride components
     final Boolean strideAvailable =
-        (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
+        (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
     final boolean b;
     if (strideAvailable != null) {
       b = strideAvailable.booleanValue();
@@ -623,13 +625,13 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       String keyStride;
       SGIndexPanel indexStridePanel;
       if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
-        keyStride = SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE;
+        keyStride = SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE;
         indexStridePanel = this.mSXYDataIndexStridePanel;
       } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
-        keyStride = SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE;
+        keyStride = SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE;
         indexStridePanel = this.mSXYZDataIndexStridePanel;
       } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
-        keyStride = SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE;
+        keyStride = SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE;
         indexStridePanel = this.mVXYDataIndexStridePanel;
       } else {
         return;
@@ -660,16 +662,16 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     } else {
       if (SGDataDataTypeUtility.isSXYTypeData(this.mDataType)) {
         SGIntegerSeriesSet stride =
-            (SGIntegerSeriesSet) this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+            (SGIntegerSeriesSet) this.mInfoMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
         final int len;
         if (stride == null) {
           Map<String, SGIntegerSeriesSet> strideMap =
               SGDataStrideUtility.calcNetCDFDefaultStride(cols, this.mInfoMap, dimNameMap);
-          final String name = dimNameMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+          final String name = dimNameMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
           SGNetCDFDataColumnInfo ncInfo =
               (SGNetCDFDataColumnInfo) this.findColumnWithName(cols, name);
           len = ncInfo.getDimension(0).getLength();
-          stride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+          stride = strideMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
         } else {
           len = SGDataColumnInfoUtility.getSXYNetCDFDataLength(cols);
           stride = SGUtility.createIndicesWithinRange(stride, len);
@@ -683,25 +685,23 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
 
         SGIntegerSeriesSet xStride =
-            (SGIntegerSeriesSet)
-                this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
+            (SGIntegerSeriesSet) this.mInfoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
         SGIntegerSeriesSet yStride =
-            (SGIntegerSeriesSet)
-                this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+            (SGIntegerSeriesSet) this.mInfoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
         final int lenX, lenY;
         if (xStride == null || yStride == null) {
           Map<String, SGIntegerSeriesSet> strideMap =
               SGDataStrideUtility.calcNetCDFDefaultStride(cols, this.mInfoMap, dimNameMap);
-          final String nameX = dimNameMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
-          final String nameY = dimNameMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+          final String nameX = dimNameMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
+          final String nameY = dimNameMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
           SGNetCDFDataColumnInfo ncInfoX =
               (SGNetCDFDataColumnInfo) this.findColumnWithName(cols, nameX);
           SGNetCDFDataColumnInfo ncInfoY =
               (SGNetCDFDataColumnInfo) this.findColumnWithName(cols, nameY);
           lenX = ncInfoX.getDimension(0).getLength();
           lenY = ncInfoY.getDimension(0).getLength();
-          xStride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
-          yStride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+          xStride = strideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
+          yStride = strideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
         } else {
           lenX = SGDataColumnInfoUtility.getSXYZNetCDFDataXLength(cols);
           lenY = SGDataColumnInfoUtility.getSXYZNetCDFDataYLength(cols);
@@ -715,23 +715,23 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
 
       } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
         SGIntegerSeriesSet xStride =
-            (SGIntegerSeriesSet) this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
+            (SGIntegerSeriesSet) this.mInfoMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X);
         SGIntegerSeriesSet yStride =
-            (SGIntegerSeriesSet) this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
+            (SGIntegerSeriesSet) this.mInfoMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
         final int lenX, lenY;
         if (xStride == null || yStride == null) {
           Map<String, SGIntegerSeriesSet> strideMap =
               SGDataStrideUtility.calcNetCDFDefaultStride(cols, this.mInfoMap, dimNameMap);
-          final String nameX = dimNameMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
-          final String nameY = dimNameMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
+          final String nameX = dimNameMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X);
+          final String nameY = dimNameMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
           SGNetCDFDataColumnInfo ncInfoX =
               (SGNetCDFDataColumnInfo) this.findColumnWithName(cols, nameX);
           SGNetCDFDataColumnInfo ncInfoY =
               (SGNetCDFDataColumnInfo) this.findColumnWithName(cols, nameY);
           lenX = ncInfoX.getDimension(0).getLength();
           lenY = ncInfoY.getDimension(0).getLength();
-          xStride = strideMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
-          yStride = strideMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
+          xStride = strideMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X);
+          yStride = strideMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
         } else {
           lenX = SGDataColumnInfoUtility.getVXYNetCDFDataXLength(cols);
           lenY = SGDataColumnInfoUtility.getVXYNetCDFDataYLength(cols);
@@ -751,7 +751,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       final SGIntegerSeriesSet stride, final int len, SGDataColumnInfo[] cols) {
     SGIntegerSeriesSet strideTickLabel =
         (SGIntegerSeriesSet)
-            this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+            this.mInfoMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
     boolean sync = SGUtility.equals(strideTickLabel, stride);
     final int lenTickLabel;
     if (strideTickLabel == null) {
@@ -884,7 +884,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       }
       final boolean multipleVariable = (pickUpColumn == null);
       this.mInfoMap.put(
-          SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE,
+          SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE,
           Boolean.valueOf(multipleVariable));
 
       // set enabled/disabled the panel for picked up dimension
@@ -898,7 +898,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
 
         if (!this.mInfoMap
             .keySet()
-            .contains(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES)) {
+            .contains(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES)) {
           SGNetCDFDataColumnInfo[] nCols = new SGNetCDFDataColumnInfo[cols.length];
           for (int ii = 0; ii < nCols.length; ii++) {
             nCols[ii] = (SGNetCDFDataColumnInfo) cols[ii];
@@ -907,7 +907,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         }
         SGIntegerSeriesSet indices =
             (SGIntegerSeriesSet)
-                this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
+                this.mInfoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
         if (indices == null) {
           indices =
               new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(dim.getLength()));
@@ -929,7 +929,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         cTypeList.add(INDEX);
         this.updateIndexPanel(
             strideMap,
-            SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
             this.mSXYDataIndexStridePanel,
             cols,
             cTypeList);
@@ -947,7 +947,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         cTypeList.add(Y_VALUE);
         this.updateIndexPanel(
             strideMap,
-            SGIDataInformationKeyConstants.KEY_SXY_STRIDE,
+            SGDataInformationKeyConstants.KEY_SXY_STRIDE,
             this.mSXYDataStrideMainPanel,
             cols,
             cTypeList);
@@ -990,7 +990,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         cTypeList.add(INDEX);
         this.updateIndexPanel(
             strideMap,
-            SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
             this.mSXYZDataIndexStridePanel,
             cols,
             cTypeList);
@@ -1001,7 +1001,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         cTypeList.add(X_INDEX);
         this.updateIndexPanel(
             strideMap,
-            SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
+            SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
             this.mSXYZDataXStridePanel,
             cols,
             cTypeList);
@@ -1010,7 +1010,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         cTypeList.add(Y_INDEX);
         this.updateIndexPanel(
             strideMap,
-            SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
+            SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
             this.mSXYZDataYStridePanel,
             cols,
             cTypeList);
@@ -1021,7 +1021,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         cTypeList.add(INDEX);
         this.updateIndexPanel(
             strideMap,
-            SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
             this.mVXYDataIndexStridePanel,
             cols,
             cTypeList);
@@ -1032,7 +1032,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         cTypeList.add(X_INDEX);
         this.updateIndexPanel(
             strideMap,
-            SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X,
+            SGDataInformationKeyConstants.KEY_VXY_STRIDE_X,
             this.mVXYDataXStridePanel,
             cols,
             cTypeList);
@@ -1041,7 +1041,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         cTypeList.add(Y_INDEX);
         this.updateIndexPanel(
             strideMap,
-            SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y,
+            SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y,
             this.mVXYDataYStridePanel,
             cols,
             cTypeList);
@@ -1246,7 +1246,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
         SGDimensionInfo pickUpDim = pickUpCol.getDimension(0);
         SGIntegerSeriesSet indices =
             (SGIntegerSeriesSet)
-                this.mInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
+                this.mInfoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
         if (indices == null) {
           selectionPanel.setMessage(SGDataMiscUtility.MSG_PROPER_PICK_UP_INDICES);
           return false;
@@ -1344,7 +1344,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     Document doc = e.getDocument();
     if (this.mPickUpDimensionPanel.hasDocument(doc)) {
       SGIntegerSeriesSet indices = this.mPickUpDimensionPanel.getIndices();
-      this.mInfoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
+      this.mInfoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
     } else if (this.mSXYDataStrideMainPanel.hasDocument(doc)) {
       this.syncTickLabelStride(this.mSXYDataStrideMainPanel);
     } else if (this.mSXYDataIndexStridePanel.hasDocument(doc)) {
@@ -1365,7 +1365,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     SGDataColumnInfo[] cols = this.getDataColumnInfoArray();
     for (int ii = 0; ii < cols.length; ii++) {
       String colType = cols[ii].getColumnType();
-      if (SGIDataColumnTypeConstants.PICKUP.equals(colType)) {
+      if (PICKUP.equals(colType)) {
         name = cols[ii].getName();
         break;
       }
@@ -1442,43 +1442,39 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       if (this.isIndexAvailable()) {
         this.updateStrideMap(
             this.mSXYDataIndexStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
             strideMap);
       } else {
         this.updateStrideMap(
-            this.mSXYDataStrideMainPanel, SGIDataInformationKeyConstants.KEY_SXY_STRIDE, strideMap);
+            this.mSXYDataStrideMainPanel, SGDataInformationKeyConstants.KEY_SXY_STRIDE, strideMap);
       }
       this.updateStrideMap(
           this.mSXYDataTickLabelStridePanel,
-          SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
+          SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           strideMap);
     } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.updateStrideMap(
             this.mSXYZDataIndexStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
             strideMap);
       } else {
         this.updateStrideMap(
-            this.mSXYZDataXStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
-            strideMap);
+            this.mSXYZDataXStridePanel, SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X, strideMap);
         this.updateStrideMap(
-            this.mSXYZDataYStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
-            strideMap);
+            this.mSXYZDataYStridePanel, SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y, strideMap);
       }
     } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.updateStrideMap(
             this.mVXYDataIndexStridePanel,
-            SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
             strideMap);
       } else {
         this.updateStrideMap(
-            this.mVXYDataXStridePanel, SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X, strideMap);
+            this.mVXYDataXStridePanel, SGDataInformationKeyConstants.KEY_VXY_STRIDE_X, strideMap);
         this.updateStrideMap(
-            this.mVXYDataYStridePanel, SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y, strideMap);
+            this.mVXYDataYStridePanel, SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y, strideMap);
       }
     }
     return strideMap;
@@ -1490,43 +1486,39 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       if (this.isIndexAvailable()) {
         this.setStride(
             this.mSXYDataIndexStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
             strideMap);
       } else {
         this.setStride(
-            this.mSXYDataStrideMainPanel, SGIDataInformationKeyConstants.KEY_SXY_STRIDE, strideMap);
+            this.mSXYDataStrideMainPanel, SGDataInformationKeyConstants.KEY_SXY_STRIDE, strideMap);
       }
       this.setStride(
           this.mSXYDataTickLabelStridePanel,
-          SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
+          SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           strideMap);
     } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.setStride(
             this.mSXYZDataIndexStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
             strideMap);
       } else {
         this.setStride(
-            this.mSXYZDataXStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
-            strideMap);
+            this.mSXYZDataXStridePanel, SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X, strideMap);
         this.setStride(
-            this.mSXYZDataYStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
-            strideMap);
+            this.mSXYZDataYStridePanel, SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y, strideMap);
       }
     } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.setStride(
             this.mVXYDataIndexStridePanel,
-            SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
             strideMap);
       } else {
         this.setStride(
-            this.mVXYDataXStridePanel, SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X, strideMap);
+            this.mVXYDataXStridePanel, SGDataInformationKeyConstants.KEY_VXY_STRIDE_X, strideMap);
         this.setStride(
-            this.mVXYDataYStridePanel, SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y, strideMap);
+            this.mVXYDataYStridePanel, SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y, strideMap);
       }
     }
   }
@@ -1538,43 +1530,39 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
       if (this.isIndexAvailable()) {
         this.updateLengthMap(
             this.mSXYDataIndexStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
             lengthMap);
       } else {
         this.updateLengthMap(
-            this.mSXYDataStrideMainPanel, SGIDataInformationKeyConstants.KEY_SXY_STRIDE, lengthMap);
+            this.mSXYDataStrideMainPanel, SGDataInformationKeyConstants.KEY_SXY_STRIDE, lengthMap);
       }
       this.updateLengthMap(
           this.mSXYDataTickLabelStridePanel,
-          SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
+          SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           lengthMap);
     } else if (SGDataDataTypeUtility.isSXYZTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.updateLengthMap(
             this.mSXYZDataIndexStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
             lengthMap);
       } else {
         this.updateLengthMap(
-            this.mSXYZDataXStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
-            lengthMap);
+            this.mSXYZDataXStridePanel, SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X, lengthMap);
         this.updateLengthMap(
-            this.mSXYZDataYStridePanel,
-            SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
-            lengthMap);
+            this.mSXYZDataYStridePanel, SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y, lengthMap);
       }
     } else if (SGDataDataTypeUtility.isVXYTypeData(this.mDataType)) {
       if (this.isIndexAvailable()) {
         this.updateLengthMap(
             this.mVXYDataIndexStridePanel,
-            SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
+            SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
             lengthMap);
       } else {
         this.updateLengthMap(
-            this.mVXYDataXStridePanel, SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X, lengthMap);
+            this.mVXYDataXStridePanel, SGDataInformationKeyConstants.KEY_VXY_STRIDE_X, lengthMap);
         this.updateLengthMap(
-            this.mVXYDataYStridePanel, SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y, lengthMap);
+            this.mVXYDataYStridePanel, SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y, lengthMap);
       }
     }
     return lengthMap;

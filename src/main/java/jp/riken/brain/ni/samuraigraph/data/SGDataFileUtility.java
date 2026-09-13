@@ -3,12 +3,16 @@ package jp.riken.brain.ni.samuraigraph.data;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataBufferUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTitleUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataRangeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataTextUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
 
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataClass;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataTypeInformation;
@@ -36,11 +40,7 @@ import ucar.nc2.NetcdfFiles;
 import ucar.nc2.Variable;
 
 /** Static helper for the File responsibility. */
-public final class SGDataFileUtility
-    implements SGIDataColumnTypeConstants,
-        SGIDataPropertyKeyConstants,
-        SGINetCDFConstants,
-        SGIMDArrayConstants {
+public final class SGDataFileUtility {
 
   private static final Logger logger = LogManager.getLogger(SGDataFileUtility.class);
 
@@ -345,12 +345,12 @@ public final class SGDataFileUtility
     }
 
     Map<?, ?> timeDimensionMap =
-        (infoMap.get(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP)
+        (infoMap.get(SGDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP)
                 instanceof Map<?, ?> m1)
             ? m1
             : null;
     Map<?, ?> pickupDimensionMap =
-        (infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
+        (infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
                 instanceof Map<?, ?> m2)
             ? m2
             : null;
@@ -373,7 +373,7 @@ public final class SGDataFileUtility
           if (timeDimension.equals(generic)) {
             return null;
           }
-          mdCol.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, timeDimension);
+          mdCol.setDimensionIndex(KEY_TIME_DIMENSION, timeDimension);
         }
       }
       if (pickupDimensionMap != null) {
@@ -392,7 +392,7 @@ public final class SGDataFileUtility
               return null;
             }
           }
-          mdCol.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, pickupDimension);
+          mdCol.setDimensionIndex(KEY_SXY_PICKUP_DIMENSION, pickupDimension);
         }
       }
     }
@@ -499,7 +499,7 @@ public final class SGDataFileUtility
           if (name != null
               && value != null
               && ATTRIBUTE_VALUE_TYPE.equals(name.trim())
-              && SGIDataColumnTypeConstants.VALUE_TYPE_TEXT.equals(value.trim())) {
+              && VALUE_TYPE_TEXT.equals(value.trim())) {
             return true;
           }
         }
@@ -522,8 +522,7 @@ public final class SGDataFileUtility
         if (attr.isString()) {
           String name = attr.getShortName();
           String value = attr.getStringValue();
-          if (ATTRIBUTE_VALUE_TYPE.equals(name.trim())
-              && SGIDataColumnTypeConstants.VALUE_TYPE_DATE.equals(value.trim())) {
+          if (ATTRIBUTE_VALUE_TYPE.equals(name.trim()) && VALUE_TYPE_DATE.equals(value.trim())) {
             return true;
           }
         }
@@ -539,7 +538,7 @@ public final class SGDataFileUtility
     final SGIntegerSeries series;
     if (col != null) {
       int[] dims = col.getDimensions();
-      Integer pickUpDim = col.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      Integer pickUpDim = col.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
       if (pickUpDim == null || pickUpDim == -1) {
         return false;
       }
@@ -549,7 +548,7 @@ public final class SGDataFileUtility
       series = new SGIntegerSeries(0);
     }
     indices.add(series);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
     return true;
   }
 
@@ -573,7 +572,7 @@ public final class SGDataFileUtility
       series = new SGIntegerSeries(0);
     }
     indices.add(series);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
     return true;
   }
 
@@ -620,7 +619,7 @@ public final class SGDataFileUtility
     if (isSXYTypeData(dataType)) {
       // picked up dimension
       Map<?, ?> dimensionIndexMap =
-          (infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
+          (infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
                   instanceof Map<?, ?> m)
               ? m
               : null;
@@ -629,7 +628,7 @@ public final class SGDataFileUtility
         SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) cols[ii];
         String columnType = mdCol.getColumnType();
         if (X_VALUE.equals(columnType) || Y_VALUE.equals(columnType)) {
-          Integer dim = mdCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+          Integer dim = mdCol.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
           if (SGDataDataTypeUtility.isValidDimensionIndex(dim)) {
             pickUpColumn = mdCol;
             break;
@@ -656,7 +655,7 @@ public final class SGDataFileUtility
         pickUpDimLen = dims[dimIndex];
 
         SGIntegerSeriesSet indices =
-            (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
+            (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
         if (indices == null) {
           errmsgBuffer.append(MSG_PROPER_PICK_UP_INDICES);
           return false;
@@ -1133,7 +1132,7 @@ public final class SGDataFileUtility
 
     if (isSXYTypeData(dataType)) {
       Boolean multipleVariable =
-          (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
+          (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
       if (multipleVariable == null) {
         return false;
       }
@@ -1651,11 +1650,11 @@ public final class SGDataFileUtility
       final String[] thValueNames) {
     for (int i = 0; i < xValueNames.length; i++) {
       int xVarIndex = nc.getVariableIndex(xValueNames[i]);
-      columns[xVarIndex].setColumnType(SGIDataColumnTypeConstants.X_VALUE);
+      columns[xVarIndex].setColumnType(X_VALUE);
     }
     for (int i = 0; i < yValueNames.length; i++) {
       int yVarIndex = nc.getVariableIndex(yValueNames[i]);
-      columns[yVarIndex].setColumnType(SGIDataColumnTypeConstants.Y_VALUE);
+      columns[yVarIndex].setColumnType(Y_VALUE);
     }
 
     boolean errorbarFlag = false;
@@ -1682,21 +1681,17 @@ public final class SGDataFileUtility
         int leVarIndex = nc.getVariableIndex(leValueNames[i]);
         int ueVarIndex = nc.getVariableIndex(ueValueNames[i]);
         if (leVarIndex != ueVarIndex) {
-          columns[leVarIndex].setColumnType(
-              SGIDataColumnTypeConstants.LOWER_ERROR_VALUE + " for " + ehValueNames[i]);
-          columns[ueVarIndex].setColumnType(
-              SGIDataColumnTypeConstants.UPPER_ERROR_VALUE + " for " + ehValueNames[i]);
+          columns[leVarIndex].setColumnType(LOWER_ERROR_VALUE + " for " + ehValueNames[i]);
+          columns[ueVarIndex].setColumnType(UPPER_ERROR_VALUE + " for " + ehValueNames[i]);
         } else {
-          columns[leVarIndex].setColumnType(
-              SGIDataColumnTypeConstants.LOWER_UPPER_ERROR_VALUE + " for " + ehValueNames[i]);
+          columns[leVarIndex].setColumnType(LOWER_UPPER_ERROR_VALUE + " for " + ehValueNames[i]);
         }
       }
     }
     if (tickLabelFlag && tlValueNames != null && thValueNames != null) {
       for (int i = 0; i < tlValueNames.length; i++) {
         int tlVarIndex = nc.getVariableIndex(tlValueNames[i]);
-        columns[tlVarIndex].setColumnType(
-            SGIDataColumnTypeConstants.TICK_LABEL + " for " + thValueNames[i]);
+        columns[tlVarIndex].setColumnType(TICK_LABEL + " for " + thValueNames[i]);
       }
     }
   }

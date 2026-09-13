@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +20,15 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupDialog;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupDialog;
 
 /** A dialog to set the properties of two-dimensional vector type data. */
-public class SGPropertyDialogVXYData extends SGDataDialog
-    implements SGINetCDFConstants, SGITwoAxesDialog {
+public class SGPropertyDialogVXYData extends SGDataDialog implements SGITwoAxesDialog {
 
   // serialVersionUID
   private static final long serialVersionUID = -8568651377496230416L;
@@ -313,28 +313,28 @@ public class SGPropertyDialogVXYData extends SGDataDialog
         if (SGDataDataTypeUtility.isSDArrayData(data)) {
           SGSDArrayDataSetupDialog sdg = (SGSDArrayDataSetupDialog) dg;
           SGIntegerSeriesSet stride = sdg.getVXYStride();
-          this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, stride);
+          this.mStrideMap.put(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, stride);
         } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
           SGNetCDFDataSetupDialog ndg = (SGNetCDFDataSetupDialog) dg;
           if (ndg.isIndexAvailable()) {
             SGIntegerSeriesSet stride = ndg.getVXYIndexStride();
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, stride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, stride);
           } else {
             SGIntegerSeriesSet xStride = ndg.getVXYStrideX();
             SGIntegerSeriesSet yStride = ndg.getVXYStrideY();
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X, xStride);
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y, yStride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X, xStride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y, yStride);
           }
         } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
           SGMDArrayDataSetupDialog mdg = (SGMDArrayDataSetupDialog) dg;
           if (mdg.isVXYIndexAvailable()) {
             SGIntegerSeriesSet stride = mdg.getVXYIndexStride();
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, stride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, stride);
           } else {
             SGIntegerSeriesSet xStride = mdg.getVXYStrideX();
             SGIntegerSeriesSet yStride = mdg.getVXYStrideY();
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X, xStride);
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y, yStride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X, xStride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y, yStride);
           }
         }
       }
@@ -530,7 +530,7 @@ public class SGPropertyDialogVXYData extends SGDataDialog
       // sets the stride
       if (SGDataDataTypeUtility.isSDArrayData(data)) {
         SGIntegerSeriesSet stride =
-            this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
+            this.mStrideMap.get(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
         if (!l.setSDArrayStride(stride)) {
           return false;
         }
@@ -548,7 +548,7 @@ public class SGPropertyDialogVXYData extends SGDataDialog
         }
         if (indexAvailable) {
           SGIntegerSeriesSet indexStride =
-              this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
+              this.mStrideMap.get(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
           if (!l.setIndexStride(indexStride)) {
             return false;
           }
@@ -560,12 +560,12 @@ public class SGPropertyDialogVXYData extends SGDataDialog
           }
         } else {
           SGIntegerSeriesSet xStride =
-              this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
+              this.mStrideMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X);
           if (!l.setStrideX(xStride)) {
             return false;
           }
           SGIntegerSeriesSet yStride =
-              this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
+              this.mStrideMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
           if (!l.setStrideY(yStride)) {
             return false;
           }

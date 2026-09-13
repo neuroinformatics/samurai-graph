@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+
 import java.awt.*;
 import java.awt.Color;
 import java.awt.geom.*;
@@ -422,14 +425,14 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
   }
 
   public SGElementGroupErrorBar createErrorBars(SGISXYTypeMultipleData dataXY) {
-    if (this.addDrawingElementGroup(SGIElementGroupConstants.ERROR_BAR_GROUP) == false) {
+    if (this.addDrawingElementGroup(SGElementGroupConstants.ERROR_BAR_GROUP) == false) {
       return null;
     }
     return this.getErrorBarGroup();
   }
 
   public SGElementGroupTickLabel createTickLabels(SGISXYTypeMultipleData dataXY) {
-    if (this.addDrawingElementGroup(SGIElementGroupConstants.TICK_LABEL_GROUP) == false) {
+    if (this.addDrawingElementGroup(SGElementGroupConstants.TICK_LABEL_GROUP) == false) {
       return null;
     }
     return this.getTickLabelGroup();
@@ -758,7 +761,9 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
         ElementGroupSetInLegendSXY gs =
             (ElementGroupSetInLegendSXY) this.mElementGroupSetList.get(ii);
         Color cl = model.eval((double) ii / (dataNum - 1));
-        SGLineStyle s = new SGLineStyle(DEFAULT_LINE_TYPE, cl, DEFAULT_LINE_WIDTH);
+        SGLineStyle s =
+            new SGLineStyle(
+                SGSXYDataConstants.DEFAULT_LINE_TYPE, cl, SGSXYDataConstants.DEFAULT_LINE_WIDTH);
         gs.setLineStyle(s);
         lineStyleList.add(s);
       }
@@ -769,7 +774,11 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
       for (int ii = 0; ii < dataNum; ii++) {
         ElementGroupSetInLegendSXY gs =
             (ElementGroupSetInLegendSXY) this.mElementGroupSetList.get(ii);
-        SGLineStyle s = new SGLineStyle(DEFAULT_LINE_TYPE, DEFAULT_LINE_COLOR, DEFAULT_LINE_WIDTH);
+        SGLineStyle s =
+            new SGLineStyle(
+                SGSXYDataConstants.DEFAULT_LINE_TYPE,
+                SGSXYDataConstants.DEFAULT_LINE_COLOR,
+                SGSXYDataConstants.DEFAULT_LINE_WIDTH);
         gs.setLineStyle(s);
 
         // set to line group of this group set

@@ -14,12 +14,14 @@ import jp.riken.brain.ni.samuraigraph.application.SGDataCreator.SDArrayFileParse
 import jp.riken.brain.ni.samuraigraph.application.SGMainFunctions.DataSourceInfo;
 import jp.riken.brain.ni.samuraigraph.application.SGMainFunctions.FigureData;
 import jp.riken.brain.ni.samuraigraph.application.SGMainFunctions.WrappedData;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementLegend;
@@ -28,10 +30,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumn;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDefaultColumnTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDefaultColumnTypeUtility.DefaultMDColumnTypeResult;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMATLABFile;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayFile;
@@ -50,7 +52,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGSXYZSDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYSDArrayData;
-import jp.riken.brain.ni.samuraigraph.figure.SGIFigureTypeConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureTypeConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGXYFigure;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -181,19 +183,19 @@ final class SGPropertyFileDataHandler {
       final String versionNumber,
       final int mode) {
 
-    final int ic = SGIConstants.PROPERTY_FILE_INCORRECT;
+    final int ic = SGConstants.PROPERTY_FILE_INCORRECT;
 
     String str = null;
 
-    str = elFigure.getAttribute(SGFigure.KEY_FIGURE_TYPE);
+    str = elFigure.getAttribute(SGFigureConstants.KEY_FIGURE_TYPE);
     if (str.length() == 0) {
       return ic;
     }
 
     SGFigure figure = null;
-    if (SGIFigureTypeConstants.FIGURE_TYPE_SXY.equals(str)
-        || SGIFigureTypeConstants.FIGURE_TYPE_VXY.equals(str)
-        || SGIFigureTypeConstants.FIGURE_TYPE_XY.equals(str)) {
+    if (SGFigureTypeConstants.FIGURE_TYPE_SXY.equals(str)
+        || SGFigureTypeConstants.FIGURE_TYPE_VXY.equals(str)
+        || SGFigureTypeConstants.FIGURE_TYPE_XY.equals(str)) {
       figure = new SGXYFigure(wnd);
       figure.setClassType(str);
     } else {
@@ -224,7 +226,7 @@ final class SGPropertyFileDataHandler {
     final int ret =
         this.createDataObjectsFromPropertyFile(
             elFigure, figure, dataList, wnd, readDataProperty, versionNumber, mode);
-    if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
+    if (ret != SGConstants.SUCCESSFUL_COMPLETION) {
       return ret;
     }
 
@@ -237,7 +239,7 @@ final class SGPropertyFileDataHandler {
     // initialize properties of the figure and figure elements
     figure.initPropertiesHistory();
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SGConstants.SUCCESSFUL_COMPLETION;
   }
 
   private int createDataObjectsFromPropertyFile(
@@ -249,8 +251,8 @@ final class SGPropertyFileDataHandler {
       final String versionNumber,
       final int mode) {
 
-    final int ic = SGIConstants.PROPERTY_FILE_INCORRECT;
-    final int di = SGIConstants.DATA_FILE_INVALID;
+    final int ic = SGConstants.PROPERTY_FILE_INCORRECT;
+    final int di = SGConstants.DATA_FILE_INVALID;
 
     NodeList nList = elFigure.getElementsByTagName(SGIFigureElementGraph.TAG_NAME_DATA);
     final int len = nList.getLength();
@@ -274,7 +276,7 @@ final class SGPropertyFileDataHandler {
       Element elData = (Element) node;
 
       // data type
-      String dataType = elData.getAttribute(SGIFigureElement.KEY_DATA_TYPE);
+      String dataType = elData.getAttribute(SGFigureElementConstants.KEY_DATA_TYPE);
       if (dataType == null) {
         return ic;
       }
@@ -322,12 +324,12 @@ final class SGPropertyFileDataHandler {
       }
 
       // set the class type for backward compatibility between 1.0.7
-      if (SGIFigureTypeConstants.FIGURE_TYPE_XY.equals(figure.getClassType())) {
+      if (SGFigureTypeConstants.FIGURE_TYPE_XY.equals(figure.getClassType())) {
         String type = null;
         if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
-          type = SGIFigureTypeConstants.FIGURE_TYPE_VXY;
+          type = SGFigureTypeConstants.FIGURE_TYPE_VXY;
         } else {
-          type = SGIFigureTypeConstants.FIGURE_TYPE_SXY;
+          type = SGFigureTypeConstants.FIGURE_TYPE_SXY;
         }
         figure.setClassType(type);
       }
@@ -337,7 +339,7 @@ final class SGPropertyFileDataHandler {
 
       // get the data file
       if (dataList.size() == 0) {
-        return SGIConstants.DATA_NUMBER_SHORTAGE;
+        return SGConstants.DATA_NUMBER_SHORTAGE;
       }
 
       // get an object from dataList
@@ -367,7 +369,7 @@ final class SGPropertyFileDataHandler {
                 }
                 try {
                   SGNetCDFFile nc = new SGNetCDFFile(ncFile);
-                  infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, nc);
+                  infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, nc);
                   colInfoSet = this.getNetCDFDefaultDataColumnInfo(nc, dataType, infoMap);
                 } finally {
                   try {
@@ -393,7 +395,7 @@ final class SGPropertyFileDataHandler {
                 } else {
                   return di;
                 }
-                infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, mdFile);
+                infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, mdFile);
                 colInfoSet = this.getMDArrayDataDefaultDataColumnInfo(mdFile, dataType, infoMap);
               } catch (Exception e) {
                 return di;
@@ -416,15 +418,15 @@ final class SGPropertyFileDataHandler {
           }
 
           // data type
-          String dataTypeNew = (String) pfInfoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+          String dataTypeNew = (String) pfInfoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
           if (dataTypeNew == null) {
             return di;
           }
-          infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataTypeNew);
+          infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, dataTypeNew);
 
           // updates the information map
           final int ret = SGApplicationUtility.updateInformationMap(colInfoSet, infoMap, pfInfoMap);
-          if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
+          if (ret != SGConstants.SUCCESSFUL_COMPLETION) {
             return ret;
           }
 
@@ -451,7 +453,7 @@ final class SGPropertyFileDataHandler {
           }
 
         } catch (FileNotFoundException ex) {
-          return SGIConstants.FILE_OPEN_FAILURE;
+          return SGConstants.FILE_OPEN_FAILURE;
         }
 
       } else if (wData.hasFigureData()) {
@@ -463,7 +465,7 @@ final class SGPropertyFileDataHandler {
       }
 
       // get the index in the legend
-      String str = elData.getAttribute(SGIFigureElement.KEY_INDEX_IN_LEGEND);
+      String str = elData.getAttribute(SGFigureElementConstants.KEY_INDEX_IN_LEGEND);
       if (str.length() != 0) {
         Number num = SGUtilityText.getInteger(str);
         if (num == null) {
@@ -492,7 +494,7 @@ final class SGPropertyFileDataHandler {
       array[ii].initPropertiesHistory();
     }
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SGConstants.SUCCESSFUL_COMPLETION;
   }
 
   /**
@@ -512,7 +514,7 @@ final class SGPropertyFileDataHandler {
       final String versionNumber,
       final int mode) {
 
-    NodeList nList = elWnd.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+    NodeList nList = elWnd.getElementsByTagName(SGFigureConstants.TAG_NAME_FIGURE);
     final int len = nList.getLength();
 
     for (int ii = 0; ii < len; ii++) {
@@ -540,13 +542,13 @@ final class SGPropertyFileDataHandler {
         final int ret =
             this.createSingleFigureFromPropertyFile(
                 el, wnd, dataList, readDataProperty, versionNumber, mode);
-        if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
+        if (ret != SGConstants.SUCCESSFUL_COMPLETION) {
           return ret;
         }
       }
     }
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SGConstants.SUCCESSFUL_COMPLETION;
   }
 
   /**

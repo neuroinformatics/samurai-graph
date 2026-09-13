@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
@@ -37,7 +39,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGColorMap;
 import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComboBox;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTable;
@@ -48,7 +49,7 @@ import org.slf4j.LoggerFactory;
 
 /** A panel to set the line style. */
 public class SGLineStylePanel extends javax.swing.JPanel
-    implements SGIConstants, ActionListener, ItemListener, MouseInputListener, MouseWheelListener {
+    implements ActionListener, ItemListener, MouseInputListener, MouseWheelListener {
 
   private static final Logger logger = LoggerFactory.getLogger(SGLineStylePanel.class);
 
@@ -326,8 +327,8 @@ public class SGLineStylePanel extends javax.swing.JPanel
 
     // setup the scroll bar
     JScrollBar vertBar = this.mScrollPane.getVerticalScrollBar();
-    vertBar.setUnitIncrement(SGIConstants.SCROLL_BAR_UNIT_INCREMENT);
-    vertBar.setBlockIncrement(SGIConstants.SCROLL_BAR_BLOCK_INCREMENT);
+    vertBar.setUnitIncrement(SCROLL_BAR_UNIT_INCREMENT);
+    vertBar.setBlockIncrement(SCROLL_BAR_BLOCK_INCREMENT);
 
     // initializes the color map and the components for line colors
     for (String name : SGLineStyleColorMapManager.DEFAULT_COLOR_MAP_NAMES) {
@@ -828,7 +829,7 @@ public class SGLineStylePanel extends javax.swing.JPanel
         JTable table, Object value, boolean isSelected, int row, int column) {
       Component comp = super.getTableCellEditorComponent(table, value, isSelected, row, column);
       if (comp instanceof JComboBox cb) {
-        setLineTypeEditorComboBoxItems(cb, SGILineConstants.LINE_NAME_ARRAY, value);
+        setLineTypeEditorComboBoxItems(cb, SGLineConstants.LINE_NAME_ARRAY, value);
       }
       return comp;
     }

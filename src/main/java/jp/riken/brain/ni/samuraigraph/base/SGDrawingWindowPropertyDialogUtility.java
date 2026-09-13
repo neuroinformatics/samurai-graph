@@ -251,7 +251,7 @@ final class SGDrawingWindowPropertyDialogUtility {
 
     // when the OK button is pressed, update the history tree
     final int closeOption = dg.getCloseOption();
-    if (closeOption == SGDialog.OK_OPTION) {
+    if (closeOption == SGConstants.OK_OPTION) {
       wnd.notifyToRoot();
     }
   }

@@ -11,13 +11,16 @@
 
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+
 import java.util.Map;
 import javax.swing.JButton;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupPanel;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFFile;
 
 /** A wizard dialog to setup netCDF data when it is added. */
@@ -108,7 +111,7 @@ public class SGNetCDFDataSetupWizardDialog extends SGDataSetupWizardDialog {
     }
 
     // set data name
-    String name = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_NAME);
+    String name = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_NAME);
     this.setDataName(name);
 
     // set visible of next button

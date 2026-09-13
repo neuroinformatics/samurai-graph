@@ -33,59 +33,59 @@ class SGDataColumnInfoUtilityTest {
   @Test
   void hasEqualColumnTypeComparesTypes() {
     SGSDArrayDataColumnInfo[] a = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE)
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE)
     };
     SGSDArrayDataColumnInfo[] b = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE)
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE)
     };
     assertTrue(SGDataColumnInfoUtility.hasEqualColumnType(a, b));
-    b[1].setColumnType(SGIDataColumnTypeConstants.Z_VALUE);
+    b[1].setColumnType(SGDataColumnTypeConstants.Z_VALUE);
     assertFalse(SGDataColumnInfoUtility.hasEqualColumnType(a, b));
   }
 
   @Test
   void hasEqualInputComparesColumns() {
     SGSDArrayDataColumnInfo[] a = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE)
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE)
     };
     SGSDArrayDataColumnInfo[] b = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE)
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE)
     };
     assertTrue(SGDataColumnInfoUtility.hasEqualInput(a, b));
-    b[0].setColumnType(SGIDataColumnTypeConstants.Z_VALUE);
+    b[0].setColumnType(SGDataColumnTypeConstants.Z_VALUE);
     assertFalse(SGDataColumnInfoUtility.hasEqualInput(a, b));
   }
 
   @Test
   void findColumnsByTypeNameAndValueType() {
     SGSDArrayDataColumnInfo[] cols = {
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE),
-      column("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.Y_VALUE),
-      column("label", SGIDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE),
+      column("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.Y_VALUE),
+      column("label", SGDataColumnTypeConstants.VALUE_TYPE_TEXT, "")
     };
     List<SGDataColumnInfo> byType =
-        SGDataColumnInfoUtility.findColumnsWithColumnType(cols, SGIDataColumnTypeConstants.Y_VALUE);
+        SGDataColumnInfoUtility.findColumnsWithColumnType(cols, SGDataColumnTypeConstants.Y_VALUE);
     assertEquals(1, byType.size());
     assertEquals("y", byType.get(0).getName());
     assertNotNull(SGDataColumnInfoUtility.findColumnWithName(cols, "x"));
     assertNull(SGDataColumnInfoUtility.findColumnWithName(cols, "missing"));
     List<SGDataColumnInfo> byValue =
         SGDataColumnInfoUtility.findColumnsWithValueType(
-            cols, SGIDataColumnTypeConstants.VALUE_TYPE_TEXT);
+            cols, SGDataColumnTypeConstants.VALUE_TYPE_TEXT);
     assertEquals(1, byValue.size());
     assertEquals("label", byValue.get(0).getName());
     List<SGDataColumnInfo> startsWith =
         SGDataColumnInfoUtility.findColumnsWithColumnTypeStartsWith(
-            cols, SGIDataColumnTypeConstants.Y_VALUE);
+            cols, SGDataColumnTypeConstants.Y_VALUE);
     assertEquals(1, startsWith.size());
   }
 
   @Test
   void getHolderNameExtractsNameAfterMiddleColumn() {
     SGSDArrayDataColumnInfo info =
-        column("t", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, "Lower for y");
+        column("t", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, "Lower for y");
     assertEquals("y", SGDataColumnInfoUtility.getHolderName(info));
   }
 
@@ -101,9 +101,8 @@ class SGDataColumnInfoUtilityTest {
   @Test
   void hasIndexAndPickupChecks() {
     SGSDArrayDataColumnInfo[] cols = {
-      column(
-          "index", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.INDEX),
-      column("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGIDataColumnTypeConstants.X_VALUE)
+      column("index", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.INDEX),
+      column("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, SGDataColumnTypeConstants.X_VALUE)
     };
     assertTrue(SGDataColumnInfoUtility.hasIndexColumnType(cols));
     assertFalse(SGDataColumnInfoUtility.isPickupColumnContained(cols));
@@ -119,8 +118,8 @@ class SGDataColumnInfoUtilityTest {
     SGMATLABFile matFile = new SGMATLABFile(path.toString(), reader);
     SGMDArrayVariable[] vars = matFile.getVariables();
     SGMDArrayDataColumnInfo[] cols = new SGMDArrayDataColumnInfo[2];
-    cols[0] = SGDataFileUtility.createDataColumnInfo(vars[0], SGIDataColumnTypeConstants.X_VALUE);
-    cols[1] = SGDataFileUtility.createDataColumnInfo(vars[1], SGIDataColumnTypeConstants.Y_VALUE);
+    cols[0] = SGDataFileUtility.createDataColumnInfo(vars[0], SGDataColumnTypeConstants.X_VALUE);
+    cols[1] = SGDataFileUtility.createDataColumnInfo(vars[1], SGDataColumnTypeConstants.Y_VALUE);
     return cols;
   }
 
@@ -134,9 +133,9 @@ class SGDataColumnInfoUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGDataColumnInfo[] cols = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE),
+          file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE)
+          file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE)
     };
     assertEquals(8, SGDataColumnInfoUtility.getSXYNetCDFDataLength(cols));
     assertEquals(-1, SGDataColumnInfoUtility.getNetCDFDataIndexLength(cols));
@@ -168,11 +167,11 @@ class SGDataColumnInfoUtilityTest {
     SGNetCDFFile file = createVXYNetCDFFile();
     SGDataColumnInfo[] cols = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("x"), SGIDataColumnTypeConstants.X_COORDINATE),
+          file.findVariable("x"), SGDataColumnTypeConstants.X_COORDINATE),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("y"), SGIDataColumnTypeConstants.Y_COORDINATE),
+          file.findVariable("y"), SGDataColumnTypeConstants.Y_COORDINATE),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("v1"), SGIDataColumnTypeConstants.X_COMPONENT)
+          file.findVariable("v1"), SGDataColumnTypeConstants.X_COMPONENT)
     };
     assertEquals(5, SGDataColumnInfoUtility.getVXYNetCDFDataXLength(cols));
     assertEquals(4, SGDataColumnInfoUtility.getVXYNetCDFDataYLength(cols));
@@ -183,7 +182,7 @@ class SGDataColumnInfoUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGDataColumnInfo[] cols = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE)
+          file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE)
     };
     assertEquals(-1, SGDataColumnInfoUtility.getVXYNetCDFDataXLength(cols));
   }
@@ -204,7 +203,7 @@ class SGDataColumnInfoUtilityTest {
   @Test
   void findValidPickUpXYColumnsReturnsPickUpColumn() throws Exception {
     SGMDArrayDataColumnInfo[] cols = createMDArrayColumns();
-    cols[0].setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
+    cols[0].setDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
     cols[0].setGenericDimensionIndex(1);
     List<SGMDArrayDataColumnInfo> list = SGDataColumnInfoUtility.findValidPickUpXYColumns(cols);
     assertNotNull(list);
@@ -233,7 +232,7 @@ class SGDataColumnInfoUtilityTest {
 
           @Override
           public String getValueType() {
-            return SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER;
+            return SGDataColumnTypeConstants.VALUE_TYPE_NUMBER;
           }
 
           @Override
@@ -337,7 +336,7 @@ class SGDataColumnInfoUtilityTest {
         new SGMDArrayDataColumnInfo(
             variable(name, dims, new int[dims.length]),
             name,
-            SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     info.setColumnType(columnType);
     return info;
   }
@@ -345,16 +344,16 @@ class SGDataColumnInfoUtilityTest {
   @Test
   void findFrequentTimeOriginReturnsMostFrequentOrigin() {
     SGMDArrayDataColumnInfo xCol =
-        mdColumn("x", new int[] {10, 5}, SGIDataColumnTypeConstants.X_VALUE);
-    xCol.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, 0);
+        mdColumn("x", new int[] {10, 5}, SGDataColumnTypeConstants.X_VALUE);
+    xCol.setDimensionIndex(SGMDArrayConstants.KEY_TIME_DIMENSION, 0);
     xCol.setOrigins(new int[] {3, 0});
     SGMDArrayDataColumnInfo yCol =
-        mdColumn("y", new int[] {10, 5}, SGIDataColumnTypeConstants.Y_VALUE);
-    yCol.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, 0);
+        mdColumn("y", new int[] {10, 5}, SGDataColumnTypeConstants.Y_VALUE);
+    yCol.setDimensionIndex(SGMDArrayConstants.KEY_TIME_DIMENSION, 0);
     yCol.setOrigins(new int[] {3, 0});
     SGMDArrayDataColumnInfo zCol =
-        mdColumn("z", new int[] {10, 5}, SGIDataColumnTypeConstants.Z_VALUE);
-    zCol.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, 0);
+        mdColumn("z", new int[] {10, 5}, SGDataColumnTypeConstants.Z_VALUE);
+    zCol.setDimensionIndex(SGMDArrayConstants.KEY_TIME_DIMENSION, 0);
     zCol.setOrigins(new int[] {1, 0});
     assertEquals(
         3,
@@ -364,11 +363,11 @@ class SGDataColumnInfoUtilityTest {
   @Test
   void findFrequentTimeOriginRejectsMismatchedLengths() {
     SGMDArrayDataColumnInfo xCol =
-        mdColumn("x", new int[] {10, 5}, SGIDataColumnTypeConstants.X_VALUE);
-    xCol.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, 0);
+        mdColumn("x", new int[] {10, 5}, SGDataColumnTypeConstants.X_VALUE);
+    xCol.setDimensionIndex(SGMDArrayConstants.KEY_TIME_DIMENSION, 0);
     SGMDArrayDataColumnInfo yCol =
-        mdColumn("y", new int[] {20, 5}, SGIDataColumnTypeConstants.Y_VALUE);
-    yCol.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, 0);
+        mdColumn("y", new int[] {20, 5}, SGDataColumnTypeConstants.Y_VALUE);
+    yCol.setDimensionIndex(SGMDArrayConstants.KEY_TIME_DIMENSION, 0);
     assertEquals(
         -1, SGDataColumnInfoUtility.findFrequentTimeOrigin(new SGDataColumnInfo[] {xCol, yCol}));
   }
@@ -376,25 +375,25 @@ class SGDataColumnInfoUtilityTest {
   @Test
   void findFrequentTimeOriginRejectsAllEqualOrigins() {
     SGMDArrayDataColumnInfo xCol =
-        mdColumn("x", new int[] {10, 5}, SGIDataColumnTypeConstants.X_VALUE);
-    xCol.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, 0);
+        mdColumn("x", new int[] {10, 5}, SGDataColumnTypeConstants.X_VALUE);
+    xCol.setDimensionIndex(SGMDArrayConstants.KEY_TIME_DIMENSION, 0);
     SGMDArrayDataColumnInfo yCol =
-        mdColumn("y", new int[] {10, 5}, SGIDataColumnTypeConstants.Y_VALUE);
-    yCol.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, 0);
+        mdColumn("y", new int[] {10, 5}, SGDataColumnTypeConstants.Y_VALUE);
+    yCol.setDimensionIndex(SGMDArrayConstants.KEY_TIME_DIMENSION, 0);
     assertEquals(
         -1, SGDataColumnInfoUtility.findFrequentTimeOrigin(new SGDataColumnInfo[] {xCol, yCol}));
   }
 
   @Test
   void hasEqualInputComparesMdArrayDimensionIndices() {
-    SGMDArrayDataColumnInfo a = mdColumn("x", new int[] {5, 5}, SGIDataColumnTypeConstants.X_VALUE);
-    a.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
-    SGMDArrayDataColumnInfo b = mdColumn("x", new int[] {5, 5}, SGIDataColumnTypeConstants.X_VALUE);
-    b.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
+    SGMDArrayDataColumnInfo a = mdColumn("x", new int[] {5, 5}, SGDataColumnTypeConstants.X_VALUE);
+    a.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
+    SGMDArrayDataColumnInfo b = mdColumn("x", new int[] {5, 5}, SGDataColumnTypeConstants.X_VALUE);
+    b.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
     assertTrue(
         SGDataColumnInfoUtility.hasEqualInput(
             new SGDataColumnInfo[] {a}, new SGDataColumnInfo[] {b}));
-    b.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+    b.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
     assertFalse(
         SGDataColumnInfoUtility.hasEqualInput(
             new SGDataColumnInfo[] {a}, new SGDataColumnInfo[] {b}));
@@ -403,16 +402,16 @@ class SGDataColumnInfoUtilityTest {
   @Test
   void getVXYMDArrayDataXYLengthsUseGenericOrComponentDimension() {
     SGMDArrayDataColumnInfo xCol =
-        mdColumn("x", new int[] {6, 4}, SGIDataColumnTypeConstants.X_COORDINATE);
-    xCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+        mdColumn("x", new int[] {6, 4}, SGDataColumnTypeConstants.X_COORDINATE);
+    xCol.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
     assertEquals(
         6, SGDataColumnInfoUtility.getVXYMDArrayDataXLength(new SGDataColumnInfo[] {xCol}, false));
 
     SGMDArrayDataColumnInfo fCol =
-        mdColumn("v1", new int[] {6, 4}, SGIDataColumnTypeConstants.X_COMPONENT);
-    fCol.setDimensionIndex(SGIMDArrayConstants.KEY_VXY_X_DIMENSION, 1);
-    fCol.setDimensionIndex(SGIMDArrayConstants.KEY_VXY_Y_DIMENSION, 0);
-    fCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
+        mdColumn("v1", new int[] {6, 4}, SGDataColumnTypeConstants.X_COMPONENT);
+    fCol.setDimensionIndex(SGMDArrayConstants.KEY_VXY_X_DIMENSION, 1);
+    fCol.setDimensionIndex(SGMDArrayConstants.KEY_VXY_Y_DIMENSION, 0);
+    fCol.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
     assertEquals(
         4, SGDataColumnInfoUtility.getVXYMDArrayDataXLength(new SGDataColumnInfo[] {fCol}, false));
     assertEquals(
@@ -426,17 +425,17 @@ class SGDataColumnInfoUtilityTest {
   @Test
   void getSXYZMDArrayDataXYLengthsUseGenericOrZDimension() {
     SGMDArrayDataColumnInfo xCol =
-        mdColumn("x", new int[] {5, 3}, SGIDataColumnTypeConstants.X_VALUE);
-    xCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+        mdColumn("x", new int[] {5, 3}, SGDataColumnTypeConstants.X_VALUE);
+    xCol.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
     assertEquals(
         5, SGDataColumnInfoUtility.getSXYZMDArrayDataXLength(new SGDataColumnInfo[] {xCol}));
     assertEquals(
         -1, SGDataColumnInfoUtility.getSXYZMDArrayDataYLength(new SGDataColumnInfo[] {xCol}));
 
     SGMDArrayDataColumnInfo zCol =
-        mdColumn("z", new int[] {3, 2}, SGIDataColumnTypeConstants.Z_VALUE);
-    zCol.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 0);
-    zCol.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION, 1);
+        mdColumn("z", new int[] {3, 2}, SGDataColumnTypeConstants.Z_VALUE);
+    zCol.setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 0);
+    zCol.setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_X_DIMENSION, 1);
     assertEquals(
         3, SGDataColumnInfoUtility.getSXYZMDArrayDataYLength(new SGDataColumnInfo[] {zCol}));
     assertEquals(
@@ -445,7 +444,7 @@ class SGDataColumnInfoUtilityTest {
         -1,
         SGDataColumnInfoUtility.getSXYZMDArrayDataZGenericDimensionLength(
             new SGDataColumnInfo[] {zCol}));
-    zCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
+    zCol.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
     assertEquals(
         2,
         SGDataColumnInfoUtility.getSXYZMDArrayDataZGenericDimensionLength(
@@ -454,19 +453,19 @@ class SGDataColumnInfoUtilityTest {
 
   @Test
   void getSXYMDArrayDataLengthUsesFirstAvailableColumn() {
-    SGMDArrayDataColumnInfo yCol = mdColumn("y", new int[] {7}, SGIDataColumnTypeConstants.Y_VALUE);
-    yCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+    SGMDArrayDataColumnInfo yCol = mdColumn("y", new int[] {7}, SGDataColumnTypeConstants.Y_VALUE);
+    yCol.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
     assertEquals(7, SGDataColumnInfoUtility.getSXYMDArrayDataLength(new SGDataColumnInfo[] {yCol}));
   }
 
   @Test
   void getMDArrayPickUpColumnReturnsSinglePickUpColumn() {
-    SGMDArrayDataColumnInfo xCol = mdColumn("x", new int[] {5}, SGIDataColumnTypeConstants.X_VALUE);
-    xCol.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
-    SGMDArrayDataColumnInfo yCol = mdColumn("y", new int[] {5}, SGIDataColumnTypeConstants.Y_VALUE);
-    yCol.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
+    SGMDArrayDataColumnInfo xCol = mdColumn("x", new int[] {5}, SGDataColumnTypeConstants.X_VALUE);
+    xCol.setDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
+    SGMDArrayDataColumnInfo yCol = mdColumn("y", new int[] {5}, SGDataColumnTypeConstants.Y_VALUE);
+    yCol.setDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
     assertNull(SGDataColumnInfoUtility.getMDArrayPickUpColumn(new SGDataColumnInfo[] {xCol, yCol}));
-    yCol.clearDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+    yCol.clearDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
     assertEquals(
         xCol.getName(),
         SGDataColumnInfoUtility.getMDArrayPickUpColumn(new SGDataColumnInfo[] {xCol, yCol})
@@ -475,20 +474,20 @@ class SGDataColumnInfoUtilityTest {
 
   @Test
   void findValidPickUpXYColumnsHandlesBothAndInvalidCases() {
-    SGMDArrayDataColumnInfo xCol = mdColumn("x", new int[] {5}, SGIDataColumnTypeConstants.X_VALUE);
-    xCol.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
+    SGMDArrayDataColumnInfo xCol = mdColumn("x", new int[] {5}, SGDataColumnTypeConstants.X_VALUE);
+    xCol.setDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
     SGMDArrayDataColumnInfo yCol =
-        mdColumn("y", new int[] {5, 5}, SGIDataColumnTypeConstants.Y_VALUE);
-    yCol.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
-    yCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+        mdColumn("y", new int[] {5, 5}, SGDataColumnTypeConstants.Y_VALUE);
+    yCol.setDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
+    yCol.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
     assertNull(
         SGDataColumnInfoUtility.findValidPickUpXYColumns(new SGDataColumnInfo[] {xCol, yCol}));
 
-    yCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
+    yCol.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
     assertEquals(
         1, SGDataColumnInfoUtility.findValidPickUpXYColumns(new SGDataColumnInfo[] {yCol}).size());
 
-    yCol.clearDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+    yCol.clearDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
     assertEquals(
         0, SGDataColumnInfoUtility.findValidPickUpXYColumns(new SGDataColumnInfo[] {yCol}).size());
   }
@@ -496,14 +495,14 @@ class SGDataColumnInfoUtilityTest {
   @Test
   void isPickupColumnContainedDetectsNetCDFAndMdArray() throws IOException {
     assertFalse(SGDataColumnInfoUtility.isPickupColumnContained(new SGDataColumnInfo[] {}));
-    SGMDArrayDataColumnInfo xCol = mdColumn("x", new int[] {5}, SGIDataColumnTypeConstants.X_VALUE);
-    xCol.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
+    SGMDArrayDataColumnInfo xCol = mdColumn("x", new int[] {5}, SGDataColumnTypeConstants.X_VALUE);
+    xCol.setDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
     assertTrue(SGDataColumnInfoUtility.isPickupColumnContained(new SGDataColumnInfo[] {xCol}));
 
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGDataColumnInfo[] cols = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("x"), SGIDataColumnTypeConstants.PICKUP)
+          file.findVariable("x"), SGDataColumnTypeConstants.PICKUP)
     };
     assertTrue(SGDataColumnInfoUtility.isPickupColumnContained(cols));
   }
@@ -513,7 +512,7 @@ class SGDataColumnInfoUtilityTest {
     SGNetCDFFile file = createVXYNetCDFFile();
     SGDataColumnInfo[] cols = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("x"), SGIDataColumnTypeConstants.INDEX)
+          file.findVariable("x"), SGDataColumnTypeConstants.INDEX)
     };
     assertEquals(5, SGDataColumnInfoUtility.getNetCDFDataIndexLength(cols));
     assertEquals(5, SGDataColumnInfoUtility.getSXYNetCDFDataLength(cols));
@@ -524,9 +523,9 @@ class SGDataColumnInfoUtilityTest {
     SGNetCDFFile file = createVXYNetCDFFile();
     SGDataColumnInfo[] cols = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("y"), SGIDataColumnTypeConstants.Y_VALUE),
+          file.findVariable("y"), SGDataColumnTypeConstants.Y_VALUE),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE)
+          file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE)
     };
     assertEquals(4, SGDataColumnInfoUtility.getSXYZNetCDFDataYLength(cols));
     assertEquals(5, SGDataColumnInfoUtility.getSXYZNetCDFDataXLength(cols));
@@ -535,7 +534,7 @@ class SGDataColumnInfoUtilityTest {
         SGDataColumnInfoUtility.getVXYNetCDFDataYLength(
             new SGDataColumnInfo[] {
               SGDataFileUtility.createDataColumnInfo(
-                  file.findVariable("y"), SGIDataColumnTypeConstants.Y_COORDINATE)
+                  file.findVariable("y"), SGDataColumnTypeConstants.Y_COORDINATE)
             }));
   }
 }

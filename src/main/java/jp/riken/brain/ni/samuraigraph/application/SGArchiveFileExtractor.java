@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGArchiveFileConstants.*;
+
 import java.awt.Component;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -16,7 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /** Extract an archive file. */
-public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveFileConstants {
+public class SGArchiveFileExtractor extends SGFileHandler {
 
   private static final Logger logger = LogManager.getLogger(SGArchiveFileExtractor.class);
 

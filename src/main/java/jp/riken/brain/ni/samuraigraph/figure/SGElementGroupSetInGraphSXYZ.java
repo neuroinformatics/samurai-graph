@@ -1,5 +1,22 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -18,7 +35,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIData;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
@@ -33,13 +49,12 @@ import jp.riken.brain.ni.samuraigraph.base.SGXYSimpleIndexBlock;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.SXYZDataValue;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.Value;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYZMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYZNetCDFData;
@@ -202,7 +217,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
   /** Add an element group. */
   public boolean addDrawingElementGroup(int type) {
     SGElementGroupPseudocolorMap colorMap = null;
-    if (type == SGIElementGroupConstants.RECTANGLE_GROUP) {
+    if (type == RECTANGLE_GROUP) {
       colorMap = new SGElementGroupPseudocolorMapInGraph(this.mGraph);
       colorMap.setColorBarModel(this.mGraph.getColorBarModel());
       colorMap.setGridMode(this.isGridMode());
@@ -356,8 +371,8 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
     }
     final String strX = this.mGraph.getAxisElement().getLocationName(this.getXAxis());
     final String strY = this.mGraph.getAxisElement().getLocationName(this.getYAxis());
-    el.setAttribute(SGIFigureElement.KEY_X_AXIS_POSITION, strX);
-    el.setAttribute(SGIFigureElement.KEY_Y_AXIS_POSITION, strY);
+    el.setAttribute(KEY_X_AXIS_POSITION, strX);
+    el.setAttribute(KEY_Y_AXIS_POSITION, strY);
     return true;
   }
 
@@ -774,29 +789,29 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
       // updates the stride with new column types
       if (!SGDataColumnInfoUtility.hasEqualInput(preColumnInfo, cols)) {
         Map<String, Object> infoMap = new HashMap<String, Object>();
-        infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, this.mData.getDataType());
+        infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, this.mData.getDataType());
         infoMap.put(
-            SGIDataInformationKeyConstants.KEY_FIGURE_SIZE,
+            SGDataInformationKeyConstants.KEY_FIGURE_SIZE,
             new SGTuple2f(this.mGraph.getGraphRectWidth(), this.mGraph.getGraphRectHeight()));
         if (SGDataDataTypeUtility.isSDArrayData(this.mData)) {
           SGSXYZSDArrayData sdData = (SGSXYZSDArrayData) this.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
               SGDataStrideUtility.calcSDArrayDefaultStride(cols, infoMap);
           SGIntegerSeriesSet stride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
           sdData.setStride(stride);
         } else if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
           SGSXYZNetCDFData ncData = (SGSXYZNetCDFData) this.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
               SGDataStrideUtility.calcNetCDFDefaultStride(cols, infoMap);
           SGIntegerSeriesSet strideX =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
           ncData.setXStride(strideX);
           SGIntegerSeriesSet strideY =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
           ncData.setYStride(strideY);
           SGIntegerSeriesSet indexStride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
           ncData.setIndexStride(indexStride);
         } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
           if (!SGDataMiscUtility.addGridType(cols, this.mData.getDataType(), infoMap)) {
@@ -806,13 +821,13 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
           Map<String, SGIntegerSeriesSet> strideMap =
               SGDataStrideUtility.calcMDArrayDefaultStride(cols, infoMap);
           SGIntegerSeriesSet strideX =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
           mdData.setXStride(strideX);
           SGIntegerSeriesSet strideY =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
           mdData.setYStride(strideY);
           SGIntegerSeriesSet indexStride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
           mdData.setIndexStride(indexStride);
         }
       }
@@ -995,7 +1010,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
       final double[] xValues = dataSXYZ.getXValueArray(true);
       final double[] yValues = dataSXYZ.getYValueArray(true);
 
-      if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
+      if (Z_VALUE.equals(columnType)) {
         for (SGXYSimpleIndexBlock block : blockList) {
           // calculate the center-X of a block
           SGIntegerSeries xSeries = block.getXSeries();
@@ -1015,7 +1030,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
           sizeList.add(new SGTuple2f(rectWidth, rectHeight));
         }
 
-      } else if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
+      } else if (X_VALUE.equals(columnType)) {
 
         // calculate the center-Y of a block
         SGIntegerSeriesSet yStride = dataSXYZ.getYStride();
@@ -1047,7 +1062,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
           }
         }
 
-      } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
+      } else if (Y_VALUE.equals(columnType)) {
 
         // calculate the center-X of a block
         SGIntegerSeriesSet xStride = dataSXYZ.getXStride();

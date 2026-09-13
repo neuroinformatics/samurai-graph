@@ -1,5 +1,41 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisBreakConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorBarConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSignificantDifferenceConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.Cursor;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -61,8 +97,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /** A class managing shape objects. */
-public class SGFigureElementShape extends SGFigureElement
-    implements SGIFigureElementShape, SGIShapeConstants {
+public class SGFigureElementShape extends SGFigureElement implements SGIFigureElementShape {
 
   private final SGShapePropertyUpdater mShapePropertyUpdater = new SGShapePropertyUpdater(this);
 
@@ -413,17 +448,7 @@ public class SGFigureElementShape extends SGFigureElement
       final SGAxis xAxis,
       final SGAxis yAxis) {
     SGShapeArrow el = new SGShapeArrow(SGFigureElementShape.this);
-    return this.addArrow(
-        id,
-        el,
-        SGIArrowConstants.SYMBOL_TYPE_VOID,
-        SGIArrowConstants.SYMBOL_TYPE_VOID,
-        sx,
-        sy,
-        ex,
-        ey,
-        xAxis,
-        yAxis);
+    return this.addArrow(id, el, SYMBOL_TYPE_VOID, SYMBOL_TYPE_VOID, sx, sy, ex, ey, xAxis, yAxis);
   }
 
   //
@@ -1538,8 +1563,7 @@ public class SGFigureElementShape extends SGFigureElement
      * @param location the location of the x-axis
      */
     public boolean setXAxis(final int location) {
-      if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-          && location != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+      if (location != AXIS_HORIZONTAL_1 && location != AXIS_HORIZONTAL_2) {
         return false;
       }
       this.setXAxis(SGFigureElementShape.this.mAxisElement.getAxisInPlane(location));
@@ -1552,8 +1576,7 @@ public class SGFigureElementShape extends SGFigureElement
      * @param location the location of the y-axis
      */
     public boolean setYAxis(final int location) {
-      if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
-          && location != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+      if (location != AXIS_VERTICAL_1 && location != AXIS_VERTICAL_2) {
         return false;
       }
       this.setYAxis(SGFigureElementShape.this.mAxisElement.getAxisInPlane(location));

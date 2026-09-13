@@ -1,6 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.figure.SGILegendConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
 
 import java.awt.*;
 import java.awt.Graphics2D;
@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.*;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGINode;
 import jp.riken.brain.ni.samuraigraph.base.SGISelectable;
@@ -88,8 +89,8 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
    * @param location the location of the x-axis
    */
   public boolean setXAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-        && location != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+    if (location != SGFigureElementAxisConstants.AXIS_HORIZONTAL_1
+        && location != SGFigureElementAxisConstants.AXIS_HORIZONTAL_2) {
       return false;
     }
     this.mXAxis = legend.mAxisElement.getAxisInPlane(location);
@@ -102,8 +103,8 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
    * @param location the location of the y-axis
    */
   public boolean setYAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
-        && location != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+    if (location != SGFigureElementAxisConstants.AXIS_VERTICAL_1
+        && location != SGFigureElementAxisConstants.AXIS_VERTICAL_2) {
       return false;
     }
     this.mYAxis = legend.mAxisElement.getAxisInPlane(location);
@@ -317,8 +318,8 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     // change
     this.notifyDataProperties(
         this.mTemporaryPropertiesInner,
-        SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT,
-        SGIFigureElement.NOTIFY_DATA_PROPERTIES_CHANGE_ON_COMMIT);
+        SGFigureElementConstants.NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT,
+        SGFigureElementConstants.NOTIFY_DATA_PROPERTIES_CHANGE_ON_COMMIT);
 
     // compare two properties
     SGProperties pTemp = this.mTemporaryPropertiesInner;
@@ -347,8 +348,8 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     // change
     this.notifyDataProperties(
         this.mTemporaryPropertiesInner,
-        SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_CANCEL,
-        SGIFigureElement.NOTIFY_DATA_PROPERTIES_CHANGE_ON_CANCEL);
+        SGFigureElementConstants.NOTIFY_DATA_STRUCTURE_CHANGE_ON_CANCEL,
+        SGFigureElementConstants.NOTIFY_DATA_PROPERTIES_CHANGE_ON_CANCEL);
 
     // set temporary properties to drawing elements to cancel the change
     if (this.setProperties(this.mTemporaryPropertiesInner) == false) {
@@ -375,8 +376,8 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     // change
     this.notifyDataProperties(
         this.mTemporaryPropertiesInner,
-        SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW,
-        SGIFigureElement.NOTIFY_DATA_PROPERTIES_CHANGE_ON_PREVIEW);
+        SGFigureElementConstants.NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW,
+        SGFigureElementConstants.NOTIFY_DATA_PROPERTIES_CHANGE_ON_PREVIEW);
 
     // update drawing elements
     if (this.updateWithData() == false) {
@@ -413,7 +414,7 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     String command = e.getActionCommand();
     Object source = e.getSource();
 
-    if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
+    if (command.equals(SGConstants.MENUCMD_PROPERTY)) {
       // clear the selection of figure element
       legend.setSelected(false);
 

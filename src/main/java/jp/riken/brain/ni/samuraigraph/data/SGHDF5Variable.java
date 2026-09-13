@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataClass;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataSetInformation;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataTypeInformation;
@@ -180,7 +205,7 @@ public class SGHDF5Variable extends SGMDArrayVariable {
    */
   @Override
   public boolean isNumberVariable() {
-    return SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(this.getValueType());
+    return VALUE_TYPE_NUMBER.equals(this.getValueType());
   }
 
   /**
@@ -192,9 +217,9 @@ public class SGHDF5Variable extends SGMDArrayVariable {
   public String getValueType() {
     HDF5DataClass dClass = this.getDataClass();
     if (HDF5DataClass.FLOAT.equals(dClass) || HDF5DataClass.INTEGER.equals(dClass)) {
-      return SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER;
+      return VALUE_TYPE_NUMBER;
     } else if (HDF5DataClass.STRING.equals(dClass)) {
-      return SGIDataColumnTypeConstants.VALUE_TYPE_TEXT;
+      return VALUE_TYPE_TEXT;
     } else {
       throw new Error("Unsupported data class: " + dClass);
     }

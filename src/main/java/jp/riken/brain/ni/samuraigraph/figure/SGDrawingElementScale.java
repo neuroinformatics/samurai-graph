@@ -1,5 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGScaleConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -17,8 +24,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
-public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStringSymbol
-    implements SGIScaleConstants {
+public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStringSymbol {
 
   protected float mWidth;
 

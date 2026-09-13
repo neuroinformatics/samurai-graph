@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.util.Iterator;
@@ -8,15 +12,16 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 
-public abstract class SGElementGroupLineForData extends SGElementGroupLine
-    implements SGISXYDataConstants, SGIDataCommandConstants {
+public abstract class SGElementGroupLineForData extends SGElementGroupLine {
 
   /** Create a group of lines. */
   public SGElementGroupLineForData(SGISXYTypeData data) {
-    super(DEFAULT_LINE_TYPE, DEFAULT_LINE_COLOR, DEFAULT_LINE_WIDTH);
+    super(
+        SGSXYDataConstants.DEFAULT_LINE_TYPE,
+        SGSXYDataConstants.DEFAULT_LINE_COLOR,
+        SGSXYDataConstants.DEFAULT_LINE_WIDTH);
 
     // set default properties
     this.setVisible(DEFAULT_LINE_VISIBLE);

@@ -25,16 +25,16 @@ class SGDataBufferUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     SGNetCDFDataColumnInfo leInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("le"), SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, "height");
+            file.findVariable("le"), SGDataColumnTypeConstants.LOWER_ERROR_VALUE, "height");
     SGNetCDFDataColumnInfo ueInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("ue"), SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, "height");
+            file.findVariable("ue"), SGDataColumnTypeConstants.UPPER_ERROR_VALUE, "height");
     return new SGSXYNetCDFData(
         file,
         new SGDataSourceObserver(),

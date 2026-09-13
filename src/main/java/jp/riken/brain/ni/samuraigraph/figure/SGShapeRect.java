@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -10,10 +13,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.*;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 import org.w3c.dom.Element;
 
 class SGShapeRect extends SGSimpleRectangle2D
-    implements SGFigureElementShape.IElement, SGIRectangularShapeDialogObserver, SGIShapeConstants {
+    implements SGFigureElementShape.IElement, SGIRectangularShapeDialogObserver {
 
   private final SGFigureElementShape owner;
 
@@ -745,8 +749,8 @@ class SGShapeRect extends SGSimpleRectangle2D
 
   /** */
   public boolean setXAxisLocation(final int config) {
-    if (config != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-        && config != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+    if (config != SGFigureElementAxisConstants.AXIS_HORIZONTAL_1
+        && config != SGFigureElementAxisConstants.AXIS_HORIZONTAL_2) {
       return false;
     }
     this.mShape.setXAxis(config);
@@ -755,8 +759,8 @@ class SGShapeRect extends SGSimpleRectangle2D
 
   /** */
   public boolean setYAxisLocation(final int config) {
-    if (config != SGIFigureElementAxis.AXIS_VERTICAL_1
-        && config != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+    if (config != SGFigureElementAxisConstants.AXIS_VERTICAL_1
+        && config != SGFigureElementAxisConstants.AXIS_VERTICAL_2) {
       return false;
     }
     this.mShape.setYAxis(config);
@@ -1254,7 +1258,7 @@ class SGShapeRect extends SGSimpleRectangle2D
         }
         result.putResult(COM_RECTANGLE_BACKGROUND_GRADATION_ORDER, SGPropertyResults.SUCCEEDED);
       } else if (COM_RECTANGLE_BACKGROUND_TRANSPARENCY.equalsIgnoreCase(key)) {
-        Integer num = SGUtilityText.getInteger(value, SGIConstants.percent);
+        Integer num = SGUtilityText.getInteger(value, percent);
         if (num == null) {
           result.putResult(
               COM_RECTANGLE_BACKGROUND_TRANSPARENCY, SGPropertyResults.INVALID_INPUT_VALUE);

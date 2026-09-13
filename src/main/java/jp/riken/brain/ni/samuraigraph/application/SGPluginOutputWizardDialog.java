@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import javax.swing.JButton;
 import jp.riken.brain.ni.samuraigraph.application.SGPluginDataSelectionPanel.NamedDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;

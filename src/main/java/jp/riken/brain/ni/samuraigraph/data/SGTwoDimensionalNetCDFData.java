@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +57,7 @@ import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The base class of two dimensional NetCDF data. */
 public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
-    implements SGITwoDimensionalData, SGIDataPropertyKeyConstants {
+    implements SGITwoDimensionalData {
 
   private static final Logger logger = LogManager.getLogger(SGTwoDimensionalNetCDFData.class);
 
@@ -461,14 +486,10 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     }
 
     if (this.isXIndexAvailable()) {
-      el.setAttribute(
-          SGIDataPropertyKeyConstants.KEY_X_INDEX_VARIABLE_NAME,
-          this.mXIndexVariable.getValidName());
+      el.setAttribute(KEY_X_INDEX_VARIABLE_NAME, this.mXIndexVariable.getValidName());
     }
     if (this.isYIndexAvailable()) {
-      el.setAttribute(
-          SGIDataPropertyKeyConstants.KEY_Y_INDEX_VARIABLE_NAME,
-          this.mYIndexVariable.getValidName());
+      el.setAttribute(KEY_Y_INDEX_VARIABLE_NAME, this.mYIndexVariable.getValidName());
     }
 
     // stride

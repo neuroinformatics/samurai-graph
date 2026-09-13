@@ -17,7 +17,7 @@ class SGStrokeTest {
 
     assertEquals(1.0f, stroke.getMagnification(), 0.0f);
     assertEquals(1.0f, stroke.getLineWidth(), 0.0f);
-    assertEquals(SGILineConstants.LINE_TYPE_SOLID, stroke.getLineType());
+    assertEquals(SGLineConstants.LINE_TYPE_SOLID, stroke.getLineType());
     assertEquals(BasicStroke.CAP_BUTT, stroke.getEndCap());
     assertEquals(BasicStroke.JOIN_BEVEL, stroke.getLineJoin());
     assertEquals(1.0f, stroke.getMiterLimit(), 0.0f);
@@ -65,22 +65,22 @@ class SGStrokeTest {
   @Test
   void setLineTypeToSolid() {
     SGStroke stroke = new SGStroke();
-    stroke.setLineType(SGILineConstants.LINE_TYPE_SOLID);
-    assertEquals(SGILineConstants.LINE_TYPE_SOLID, stroke.getLineType());
+    stroke.setLineType(SGLineConstants.LINE_TYPE_SOLID);
+    assertEquals(SGLineConstants.LINE_TYPE_SOLID, stroke.getLineType());
   }
 
   @Test
   void setLineTypeToDotted() {
     SGStroke stroke = new SGStroke();
-    stroke.setLineType(SGILineConstants.LINE_TYPE_DOTTED);
-    assertEquals(SGILineConstants.LINE_TYPE_DOTTED, stroke.getLineType());
+    stroke.setLineType(SGLineConstants.LINE_TYPE_DOTTED);
+    assertEquals(SGLineConstants.LINE_TYPE_DOTTED, stroke.getLineType());
   }
 
   @Test
   void setLineTypeToDashed() {
     SGStroke stroke = new SGStroke();
-    stroke.setLineType(SGILineConstants.LINE_TYPE_DASHED);
-    assertEquals(SGILineConstants.LINE_TYPE_DASHED, stroke.getLineType());
+    stroke.setLineType(SGLineConstants.LINE_TYPE_DASHED);
+    assertEquals(SGLineConstants.LINE_TYPE_DASHED, stroke.getLineType());
   }
 
   @Test
@@ -145,27 +145,27 @@ class SGStrokeTest {
   @Test
   void getBasicStrokeReturnsNonNullAfterSetLineType() {
     SGStroke stroke = new SGStroke();
-    stroke.setLineType(SGILineConstants.LINE_TYPE_DOTTED);
+    stroke.setLineType(SGLineConstants.LINE_TYPE_DOTTED);
     assertNotNull(stroke.getBasicStroke());
   }
 
   @Test
   void getStrokeDashForSolidReturnsNull() {
     SGStroke stroke = new SGStroke();
-    assertEquals(null, stroke.getStrokeDash(SGILineConstants.LINE_TYPE_SOLID));
+    assertEquals(null, stroke.getStrokeDash(SGLineConstants.LINE_TYPE_SOLID));
   }
 
   @Test
   void getStrokeDashForDottedReturnsNonNull() {
     SGStroke stroke = new SGStroke();
-    assertNotNull(stroke.getStrokeDash(SGILineConstants.LINE_TYPE_DOTTED));
+    assertNotNull(stroke.getStrokeDash(SGLineConstants.LINE_TYPE_DOTTED));
   }
 
   @Test
   void getStrokeDashReturnsClone() {
     SGStroke stroke = new SGStroke();
-    SGStrokeDash d1 = stroke.getStrokeDash(SGILineConstants.LINE_TYPE_DOTTED);
-    SGStrokeDash d2 = stroke.getStrokeDash(SGILineConstants.LINE_TYPE_DOTTED);
+    SGStrokeDash d1 = stroke.getStrokeDash(SGLineConstants.LINE_TYPE_DOTTED);
+    SGStrokeDash d2 = stroke.getStrokeDash(SGLineConstants.LINE_TYPE_DOTTED);
     assertNotSame(d1, d2);
   }
 
@@ -184,12 +184,12 @@ class SGStrokeTest {
   void getLineNum1ForDashed() {
     SGStroke stroke = new SGStroke();
     // Default dashed: (1, 1, 4.0f, 1.0f, 1.0f)
-    assertEquals(1, stroke.getLineNum1(SGILineConstants.LINE_TYPE_DASHED));
+    assertEquals(1, stroke.getLineNum1(SGLineConstants.LINE_TYPE_DASHED));
   }
 
   @Test
   void getLineLength1ForDashed() {
     SGStroke stroke = new SGStroke();
-    assertEquals(4.0f, stroke.getLineLength1(SGILineConstants.LINE_TYPE_DASHED), 0.0f);
+    assertEquals(4.0f, stroke.getLineLength1(SGLineConstants.LINE_TYPE_DASHED), 0.0f);
   }
 }

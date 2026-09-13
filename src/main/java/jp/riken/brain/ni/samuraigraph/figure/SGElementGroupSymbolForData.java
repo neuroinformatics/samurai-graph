@@ -1,18 +1,20 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+
 import java.awt.Color;
 import java.util.Iterator;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 
-public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
-    implements SGISXYDataConstants, SGIDataCommandConstants {
+public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol {
 
   /** The default constructor. */
   public SGElementGroupSymbolForData(SGISXYTypeData data) {
@@ -124,7 +126,7 @@ public abstract class SGElementGroupSymbolForData extends SGElementGroupSymbol
         }
         result.putResult(COM_DATA_SYMBOL_BODY_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_SYMBOL_BODY_TRANSPARENCY.equalsIgnoreCase(key)) {
-        final Integer num = SGUtilityText.getInteger(value, SGIConstants.percent);
+        final Integer num = SGUtilityText.getInteger(value, percent);
         if (num == null) {
           result.putResult(
               COM_DATA_SYMBOL_BODY_TRANSPARENCY, SGPropertyResults.INVALID_INPUT_VALUE);

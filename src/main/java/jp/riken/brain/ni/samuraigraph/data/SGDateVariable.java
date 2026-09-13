@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+
 import java.text.ParseException;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGIStringModifier;
@@ -94,6 +96,6 @@ public class SGDateVariable extends SGCharVariable {
    */
   @Override
   public String getValueType() {
-    return SGIDataColumnTypeConstants.VALUE_TYPE_DATE;
+    return SGDataColumnTypeConstants.VALUE_TYPE_DATE;
   }
 }

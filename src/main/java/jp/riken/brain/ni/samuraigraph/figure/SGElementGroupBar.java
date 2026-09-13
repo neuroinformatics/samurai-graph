@@ -1,11 +1,15 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGBarConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGRectangleConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGSelectablePaint;
@@ -15,7 +19,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
 /** */
-public abstract class SGElementGroupBar extends SGElementGroupRectangle implements SGIBarConstants {
+public abstract class SGElementGroupBar extends SGElementGroupRectangle {
 
   /** The axis value of baseline. */
   protected double mBaselineValue;
@@ -145,20 +149,20 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
   /** */
   public boolean writeProperty(final Element el) {
 
-    final int digitLineWidth = SGIConstants.LINE_WIDTH_MINIMAL_ORDER - 1;
+    final int digitLineWidth = LINE_WIDTH_MINIMAL_ORDER - 1;
     final float edgeLineWidth =
         (float) SGUtilityNumber.roundOffNumber(this.getEdgeLineWidth(), digitLineWidth);
 
-    el.setAttribute(KEY_RECTANGLE_WIDTH_VALUE, Double.toString(this.mWidthValue));
-    el.setAttribute(KEY_EDGE_LINE_WIDTH, Float.toString(edgeLineWidth) + SGIConstants.pt);
-    el.setAttribute(KEY_BASELINE_VALUE, Double.toString(this.mBaselineValue));
+    el.setAttribute(SGBarConstants.KEY_RECTANGLE_WIDTH_VALUE, Double.toString(this.mWidthValue));
+    el.setAttribute(KEY_EDGE_LINE_WIDTH, Float.toString(edgeLineWidth) + pt);
+    el.setAttribute(SGBarConstants.KEY_BASELINE_VALUE, Double.toString(this.mBaselineValue));
     el.setAttribute(KEY_EDGE_LINE_COLOR, SGUtilityText.getColorString(this.mEdgeLineColor));
     el.setAttribute(KEY_EDGE_LINE_VISIBLE, Boolean.toString(this.isEdgeLineVisible()));
     if (!this.mInnerPaint.writeProperty(el)) {
       return false;
     }
     el.setAttribute(KEY_VERTICAL, Boolean.toString(this.mVerticalFlag));
-    el.setAttribute(KEY_INTERVAL, Double.toString(this.mInterval));
+    el.setAttribute(SGBarConstants.KEY_INTERVAL, Double.toString(this.mInterval));
     el.setAttribute(KEY_OFFSET_X, Double.toString(this.mOffsetX));
     el.setAttribute(KEY_OFFSET_Y, Double.toString(this.mOffsetY));
 
@@ -176,7 +180,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     Boolean b = null;
 
     // width of the bar
-    str = el.getAttribute(KEY_RECTANGLE_WIDTH_VALUE);
+    str = el.getAttribute(SGBarConstants.KEY_RECTANGLE_WIDTH_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -203,7 +207,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // baseline value
-    str = el.getAttribute(KEY_BASELINE_VALUE);
+    str = el.getAttribute(SGBarConstants.KEY_BASELINE_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -298,7 +302,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     // bar interval
-    str = el.getAttribute(KEY_INTERVAL);
+    str = el.getAttribute(SGBarConstants.KEY_INTERVAL);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {

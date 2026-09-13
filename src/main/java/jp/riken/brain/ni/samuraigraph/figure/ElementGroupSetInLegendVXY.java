@@ -1,5 +1,14 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.*;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -22,7 +31,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGIVXYTypeData;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetInGraphVXY.ElementGroupSetInVXYGraphProperties;
 
 class ElementGroupSetInLegendVXY extends ElementGroupSetInLegend
-    implements SGIElementGroupSetVXY, SGIVXYDataDialogObserver, SGIVXYDataConstants {
+    implements SGIElementGroupSetVXY, SGIVXYDataDialogObserver {
   private final SGFigureElementLegend legend;
 
   /** */
@@ -71,7 +80,7 @@ class ElementGroupSetInLegendVXY extends ElementGroupSetInLegend
   /** */
   public boolean addDrawingElementGroup(final int type) {
     SGElementGroup group = null;
-    if (type == SGIElementGroupConstants.ARROW_GROUP) {
+    if (type == SGElementGroupConstants.ARROW_GROUP) {
       group = new ElementGroupArrow(legend);
     } else {
       throw new Error();

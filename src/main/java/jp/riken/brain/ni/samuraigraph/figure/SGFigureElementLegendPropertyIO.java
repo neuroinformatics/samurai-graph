@@ -1,7 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGIFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGIFigureElementLegend.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -10,7 +15,7 @@ import jp.riken.brain.ni.samuraigraph.base.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-class SGFigureElementLegendPropertyIO implements SGIStringConstants, SGILegendConstants {
+class SGFigureElementLegendPropertyIO {
 
   private final SGFigureElementLegend legend;
 
@@ -140,7 +145,7 @@ class SGFigureElementLegendPropertyIO implements SGIStringConstants, SGILegendCo
       legend.mYAxis = yAxis;
     }
 
-    str = element.getAttribute(KEY_X_VALUE);
+    str = element.getAttribute(SGStringConstants.KEY_X_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -155,7 +160,7 @@ class SGFigureElementLegendPropertyIO implements SGIStringConstants, SGILegendCo
       }
     }
 
-    str = element.getAttribute(KEY_Y_VALUE);
+    str = element.getAttribute(SGStringConstants.KEY_Y_VALUE);
     if (str.length() != 0) {
       num = SGUtilityText.getDouble(str);
       if (num == null) {
@@ -234,7 +239,7 @@ class SGFigureElementLegendPropertyIO implements SGIStringConstants, SGILegendCo
           }
         }
       } else {
-        num = SGUtilityText.getInteger(str, SGIConstants.percent);
+        num = SGUtilityText.getInteger(str, percent);
         if (num == null) {
           return false;
         }

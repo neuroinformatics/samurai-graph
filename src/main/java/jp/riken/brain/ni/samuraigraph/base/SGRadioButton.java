@@ -1,13 +1,13 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JRadioButton;
 
 /** The original radio button class. */
-public class SGRadioButton extends JRadioButton
-// implements KeyListener, SGIConstants
-{
+public class SGRadioButton extends JRadioButton {
 
   /** */
   private static final long serialVersionUID = -5664751933445633492L;

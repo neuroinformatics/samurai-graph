@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -42,7 +45,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /** */
-public class SGUtility implements SGIDrawingElementConstants {
+public class SGUtility {
 
   private static final Logger logger = LogManager.getLogger(SGUtility.class);
 
@@ -332,7 +335,7 @@ public class SGUtility implements SGIDrawingElementConstants {
         JOptionPane.showOptionDialog(
             parentComponent,
             message,
-            SGIConstants.TITLE_CONFIRMATION,
+            TITLE_CONFIRMATION,
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE,
             null,
@@ -1451,14 +1454,14 @@ public class SGUtility implements SGIDrawingElementConstants {
   // returns an integer value for axis location from a string
   public static int getAxisLocation(final String location) {
     int loc = -1;
-    if (SGUtilityText.isEqualString(SGIFigureElementAxis.AXIS_BOTTOM, location)) {
-      loc = SGIFigureElementAxis.AXIS_HORIZONTAL_1;
-    } else if (SGUtilityText.isEqualString(SGIFigureElementAxis.AXIS_TOP, location)) {
-      loc = SGIFigureElementAxis.AXIS_HORIZONTAL_2;
-    } else if (SGUtilityText.isEqualString(SGIFigureElementAxis.AXIS_LEFT, location)) {
-      loc = SGIFigureElementAxis.AXIS_VERTICAL_1;
-    } else if (SGUtilityText.isEqualString(SGIFigureElementAxis.AXIS_RIGHT, location)) {
-      loc = SGIFigureElementAxis.AXIS_VERTICAL_2;
+    if (SGUtilityText.isEqualString(SGFigureElementAxisConstants.AXIS_BOTTOM, location)) {
+      loc = SGFigureElementAxisConstants.AXIS_HORIZONTAL_1;
+    } else if (SGUtilityText.isEqualString(SGFigureElementAxisConstants.AXIS_TOP, location)) {
+      loc = SGFigureElementAxisConstants.AXIS_HORIZONTAL_2;
+    } else if (SGUtilityText.isEqualString(SGFigureElementAxisConstants.AXIS_LEFT, location)) {
+      loc = SGFigureElementAxisConstants.AXIS_VERTICAL_1;
+    } else if (SGUtilityText.isEqualString(SGFigureElementAxisConstants.AXIS_RIGHT, location)) {
+      loc = SGFigureElementAxisConstants.AXIS_VERTICAL_2;
     }
     return loc;
   }
@@ -1472,20 +1475,20 @@ public class SGUtility implements SGIDrawingElementConstants {
   public static String getLocationName(final int id) {
     String name = null;
     switch (id) {
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_1:
-        name = SGIFigureElementAxis.AXIS_BOTTOM;
+      case SGFigureElementAxisConstants.AXIS_HORIZONTAL_1:
+        name = SGFigureElementAxisConstants.AXIS_BOTTOM;
         break;
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_2:
-        name = SGIFigureElementAxis.AXIS_TOP;
+      case SGFigureElementAxisConstants.AXIS_HORIZONTAL_2:
+        name = SGFigureElementAxisConstants.AXIS_TOP;
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_1:
-        name = SGIFigureElementAxis.AXIS_LEFT;
+      case SGFigureElementAxisConstants.AXIS_VERTICAL_1:
+        name = SGFigureElementAxisConstants.AXIS_LEFT;
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_2:
-        name = SGIFigureElementAxis.AXIS_RIGHT;
+      case SGFigureElementAxisConstants.AXIS_VERTICAL_2:
+        name = SGFigureElementAxisConstants.AXIS_RIGHT;
         break;
-      case SGIFigureElementAxis.AXIS_NORMAL:
-        name = SGIFigureElementAxis.AXIS_COLOR_BAR;
+      case SGFigureElementAxisConstants.AXIS_NORMAL:
+        name = SGFigureElementAxisConstants.AXIS_COLOR_BAR;
         break;
     }
     return name;
@@ -1499,16 +1502,16 @@ public class SGUtility implements SGIDrawingElementConstants {
    */
   public static int getLocationInPlane(final String str) {
     int loc = -1;
-    if (SGUtilityText.isEqualString(SGIFigureElementAxis.AXIS_BOTTOM, str)) {
-      loc = SGIFigureElementAxis.AXIS_HORIZONTAL_1;
-    } else if (SGUtilityText.isEqualString(SGIFigureElementAxis.AXIS_TOP, str)) {
-      loc = SGIFigureElementAxis.AXIS_HORIZONTAL_2;
-    } else if (SGUtilityText.isEqualString(SGIFigureElementAxis.AXIS_LEFT, str)) {
-      loc = SGIFigureElementAxis.AXIS_VERTICAL_1;
-    } else if (SGUtilityText.isEqualString(SGIFigureElementAxis.AXIS_RIGHT, str)) {
-      loc = SGIFigureElementAxis.AXIS_VERTICAL_2;
-    } else if (SGUtilityText.isEqualString(SGIFigureElementAxis.AXIS_COLOR_BAR, str)) {
-      loc = SGIFigureElementAxis.AXIS_NORMAL;
+    if (SGUtilityText.isEqualString(SGFigureElementAxisConstants.AXIS_BOTTOM, str)) {
+      loc = SGFigureElementAxisConstants.AXIS_HORIZONTAL_1;
+    } else if (SGUtilityText.isEqualString(SGFigureElementAxisConstants.AXIS_TOP, str)) {
+      loc = SGFigureElementAxisConstants.AXIS_HORIZONTAL_2;
+    } else if (SGUtilityText.isEqualString(SGFigureElementAxisConstants.AXIS_LEFT, str)) {
+      loc = SGFigureElementAxisConstants.AXIS_VERTICAL_1;
+    } else if (SGUtilityText.isEqualString(SGFigureElementAxisConstants.AXIS_RIGHT, str)) {
+      loc = SGFigureElementAxisConstants.AXIS_VERTICAL_2;
+    } else if (SGUtilityText.isEqualString(SGFigureElementAxisConstants.AXIS_COLOR_BAR, str)) {
+      loc = SGFigureElementAxisConstants.AXIS_NORMAL;
     }
     return loc;
   }
@@ -2217,7 +2220,7 @@ public class SGUtility implements SGIDrawingElementConstants {
     if (property == null) {
       return null;
     }
-    String version = property.getAttribute(SGIPropertyFileConstants.KEY_VERSION_NUMBER);
+    String version = property.getAttribute(SGPropertyFileConstants.KEY_VERSION_NUMBER);
     return version;
   }
 
@@ -2437,7 +2440,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   }
 
   public static ImageIcon createIcon(Class<?> cl, Component comp, final String name) {
-    URL url = cl.getResource(SGIConstants.RESOURCES_DIRNAME + name);
+    URL url = cl.getResource(RESOURCES_DIRNAME + name);
     ImageIcon icon = null;
     if (url != null) {
       icon = new ImageIcon(url);
@@ -2460,7 +2463,7 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @return created image
    */
   public static Image createImage(Class<?> cl, Component comp, String name) {
-    URL url = cl.getResource(SGIConstants.RESOURCES_DIRNAME + name);
+    URL url = cl.getResource(RESOURCES_DIRNAME + name);
     Image image = Toolkit.getDefaultToolkit().getImage(url);
     if (comp != null) {
       // setup the media tracker
@@ -2672,7 +2675,7 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @return line width to export
    */
   public static float getExportLineWidth(final float lw) {
-    final int digit = SGIConstants.LINE_WIDTH_MINIMAL_ORDER - 1;
+    final int digit = LINE_WIDTH_MINIMAL_ORDER - 1;
     return (float) SGUtilityNumber.roundOffNumber(lw, digit);
   }
 
@@ -2683,7 +2686,7 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @return font size to export
    */
   public static float getExportFontSize(final float size) {
-    final int digit = SGIConstants.FONT_SIZE_MINIMAL_ORDER - 1;
+    final int digit = FONT_SIZE_MINIMAL_ORDER - 1;
     return (float) SGUtilityNumber.roundOffNumber(size, digit);
   }
 

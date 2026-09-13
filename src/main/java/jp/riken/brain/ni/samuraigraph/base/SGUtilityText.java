@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -41,7 +45,7 @@ import org.xml.sax.SAXException;
  * A class with utility methods which are used to transform a text string into a value such as
  * number or color, and vice versa.
  */
-public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFileConstants {
+public class SGUtilityText {
 
   private static final Logger logger = LogManager.getLogger(SGUtilityText.class);
 
@@ -786,7 +790,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     if (value == null) {
       return null;
     }
-    if (SGITextDataConstants.NOT_A_NUMBER_VALUE.equalsIgnoreCase(value)) {
+    if (SGTextDataConstants.NOT_A_NUMBER_VALUE.equalsIgnoreCase(value)) {
       return Double.NaN;
     }
     Number num = parse(value);
@@ -977,10 +981,10 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     String name = null;
     switch (type) {
       case SGAxis.LINEAR_SCALE:
-        name = SGIConstants.SCALE_TYPE_LINEAR;
+        name = SCALE_TYPE_LINEAR;
         break;
       case SGAxis.LOG_SCALE:
-        name = SGIConstants.SCALE_TYPE_LOG;
+        name = SCALE_TYPE_LOG;
         break;
       default:
     }
@@ -1030,7 +1034,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
         throws SAXException, IOException {
       if (publicId.startsWith(PROPERTY_FILE_PUBLIC_ID)
           && systemId.startsWith(PROPERTY_FILE_SYSTEM_ID)) {
-        String name = SGIConstants.RESOURCES_DIRNAME + PROPERTY_DTD_FILE_NAME;
+        String name = RESOURCES_DIRNAME + PROPERTY_DTD_FILE_NAME;
         InputStream in = this.getClass().getResourceAsStream(name);
         return new InputSource(in);
       }
@@ -1093,7 +1097,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     try {
       bis =
           new BufferedInputStream(
-              new ByteArrayInputStream(documentString.getBytes(SGIConstants.CHAR_SET_NAME_UTF8)));
+              new ByteArrayInputStream(documentString.getBytes(CHAR_SET_NAME_UTF8)));
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       DocumentBuilder builder = factory.newDocumentBuilder();
       builder.setEntityResolver(SGUtilityText.mPropertyEntityResolver);
@@ -1305,7 +1309,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * @return
    */
   public static String[] getUnitsArrayOfLength() {
-    return new String[] {SGIConstants.cm, SGIConstants.mm, SGIConstants.pt, SGIConstants.inch};
+    return new String[] {cm, mm, pt, inch};
   }
 
   /**
@@ -1985,12 +1989,12 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
       return -1;
     }
     int type = -1;
-    if (SGIFigureElementAxisConstants.AXIS_DIRECTION_NAME_HORIZONTAL.equalsIgnoreCase(name)) {
-      type = SGIFigureElementAxisConstants.AXIS_DIRECTION_HORIZONTAL;
-    } else if (SGIFigureElementAxisConstants.AXIS_DIRECTION_NAME_VERTICAL.equalsIgnoreCase(name)) {
-      type = SGIFigureElementAxisConstants.AXIS_DIRECTION_VERTICAL;
-    } else if (SGIFigureElementAxisConstants.AXIS_DIRECTION_NAME_COLOR_BAR.equalsIgnoreCase(name)) {
-      type = SGIFigureElementAxisConstants.AXIS_DIRECTION_NORMAL;
+    if (SGFigureElementAxisConstants.AXIS_DIRECTION_NAME_HORIZONTAL.equalsIgnoreCase(name)) {
+      type = SGFigureElementAxisConstants.AXIS_DIRECTION_HORIZONTAL;
+    } else if (SGFigureElementAxisConstants.AXIS_DIRECTION_NAME_VERTICAL.equalsIgnoreCase(name)) {
+      type = SGFigureElementAxisConstants.AXIS_DIRECTION_VERTICAL;
+    } else if (SGFigureElementAxisConstants.AXIS_DIRECTION_NAME_COLOR_BAR.equalsIgnoreCase(name)) {
+      type = SGFigureElementAxisConstants.AXIS_DIRECTION_NORMAL;
     }
     return type;
   }

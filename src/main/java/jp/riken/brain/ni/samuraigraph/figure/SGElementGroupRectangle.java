@@ -1,11 +1,15 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGRectangleConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGGradationPaint;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGPatternPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGSelectablePaint;
@@ -16,8 +20,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
 /** */
-public abstract class SGElementGroupRectangle extends SGElementGroup
-    implements SGIRectangleConstants, SGIFigureDrawingElementConstants {
+public abstract class SGElementGroupRectangle extends SGElementGroup {
 
   /** The line stroke for edge lines. */
   protected SGStroke mStroke = new SGStroke();
@@ -429,22 +432,20 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
   public boolean writeProperty(final Element el) {
 
     final int digitRectSize = RECT_SIZE_MINIMAL_ORDER - 1;
-    final int digitLineWidth = SGIConstants.LINE_WIDTH_MINIMAL_ORDER - 1;
+    final int digitLineWidth = LINE_WIDTH_MINIMAL_ORDER - 1;
 
     final float rectWidth =
         (float)
-            SGUtilityNumber.roundOffNumber(
-                this.mRectangleWidth * SGIConstants.CM_POINT_RATIO, digitRectSize);
+            SGUtilityNumber.roundOffNumber(this.mRectangleWidth * CM_POINT_RATIO, digitRectSize);
     final float rectHeight =
         (float)
-            SGUtilityNumber.roundOffNumber(
-                this.mRectangleHeight * SGIConstants.CM_POINT_RATIO, digitRectSize);
+            SGUtilityNumber.roundOffNumber(this.mRectangleHeight * CM_POINT_RATIO, digitRectSize);
     final float edgeLineWidth =
         (float) SGUtilityNumber.roundOffNumber(this.getEdgeLineWidth(), digitLineWidth);
 
-    el.setAttribute(KEY_RECTANGLE_WIDTH, Float.toString(rectWidth) + SGIConstants.cm);
-    el.setAttribute(KEY_RECTANGLE_HEIGHT, Float.toString(rectHeight) + SGIConstants.cm);
-    el.setAttribute(KEY_EDGE_LINE_WIDTH, Float.toString(edgeLineWidth) + SGIConstants.pt);
+    el.setAttribute(KEY_RECTANGLE_WIDTH, Float.toString(rectWidth) + cm);
+    el.setAttribute(KEY_RECTANGLE_HEIGHT, Float.toString(rectHeight) + cm);
+    el.setAttribute(KEY_EDGE_LINE_WIDTH, Float.toString(edgeLineWidth) + pt);
     el.setAttribute(KEY_EDGE_LINE_COLOR, SGUtilityText.getColorString(this.mEdgeLineColor));
     el.setAttribute(KEY_EDGE_LINE_VISIBLE, Boolean.toString(this.mEdgeLineVisible));
     if (!this.mInnerPaint.writeProperty(el)) {

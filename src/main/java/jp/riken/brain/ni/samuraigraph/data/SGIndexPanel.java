@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.FocusEvent;
@@ -15,14 +17,12 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGInteger;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 
 /** The panel to set array indices. */
-public class SGIndexPanel extends javax.swing.JPanel
-    implements DocumentListener, FocusListener, SGIConstants {
+public class SGIndexPanel extends javax.swing.JPanel implements DocumentListener, FocusListener {
 
   private static final long serialVersionUID = -2603135691486810038L;
 

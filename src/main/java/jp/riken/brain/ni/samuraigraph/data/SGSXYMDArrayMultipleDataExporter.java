@@ -2,6 +2,7 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import java.util.*;
 import jp.riken.brain.ni.samuraigraph.base.*;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import org.w3c.dom.Element;
 import ucar.ma2.*;
 import ucar.nc2.*;
@@ -20,9 +21,9 @@ class SGSXYMDArrayMultipleDataExporter {
     if (data.callSuperWriteProperty(el, params) == false) {
       return false;
     }
-    SGIConstants.OPERATION type = params.getType();
+    SGConstants.OPERATION type = params.getType();
     if (SGDataMiscUtility.isArchiveDataSetOperation(type)
-        || SGIConstants.OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)) {
+        || SGConstants.OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)) {
 
       String value = null;
       if (data.isDimensionPicked()) {
@@ -30,40 +31,40 @@ class SGSXYMDArrayMultipleDataExporter {
         SGMDArrayVariable yVar = data.getYVariable();
         if (xVar != null) {
           value = data.bindVariableNames(xVar, true);
-          el.setAttribute(data.KEY_X_VALUE_NAME, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, value);
         }
         if (yVar != null) {
           value = data.bindVariableNames(yVar, true);
-          el.setAttribute(data.KEY_Y_VALUE_NAME, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, value);
         }
         if (data.isErrorBarAvailable()) {
           SGMDArrayVariable lVar = data.getLowerErrorVariable();
           value = data.bindVariableNames(lVar, true);
-          el.setAttribute(data.KEY_LOWER_ERROR_VALUE_NAME, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME, value);
           SGMDArrayVariable uVar = data.getUpperErrorVariable();
           value = data.bindVariableNames(uVar, true);
-          el.setAttribute(data.KEY_UPPER_ERROR_VALUE_NAME, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME, value);
           SGMDArrayVariable hVar = data.getErrorBarHolderVariable();
           value = data.bindVariableNames(hVar, false);
-          el.setAttribute(data.KEY_ERROR_BAR_HOLDER_NAME, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME, value);
         }
         if (data.isTickLabelAvailable()) {
           SGMDArrayVariable tVar = data.getTickLabelVariable();
           value = data.bindVariableNames(tVar, true);
-          el.setAttribute(data.KEY_TICK_LABEL_NAME, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAME, value);
           SGMDArrayVariable hVar = data.getTickLabelHolderVariable();
           value = data.bindVariableNames(hVar, false);
-          el.setAttribute(data.KEY_TICK_LABEL_HOLDER_NAME, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME, value);
         }
 
         String pickUpIndicesStr = data.mPickUpDimensionInfo.getIndices().toString();
-        el.setAttribute(data.KEY_PICK_UP_DIMENSION_INDICES, pickUpIndicesStr);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION_INDICES, pickUpIndicesStr);
 
         StringBuilder sb = new StringBuilder();
         SGMDArrayVariable[] vars = data.getVariables();
         int cnt = 0;
         for (int ii = 0; ii < vars.length; ii++) {
-          Integer index = vars[ii].getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+          Integer index = vars[ii].getDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
           if (index == null || index == -1) {
             continue;
           }
@@ -75,36 +76,38 @@ class SGSXYMDArrayMultipleDataExporter {
           sb.append(index);
           cnt++;
         }
-        el.setAttribute(data.KEY_PICK_UP_DIMENSION, sb.toString());
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION, sb.toString());
 
       } else {
         value = data.bindVariableNamesInBracket(data.mXVariables, true);
-        el.setAttribute(data.KEY_X_VALUE_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAMES, value);
         value = data.bindVariableNamesInBracket(data.mYVariables, true);
-        el.setAttribute(data.KEY_Y_VALUE_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, value);
         if (data.isErrorBarAvailable()) {
           value = data.bindVariableNamesInBracket(data.mLowerErrorVariables, true);
-          el.setAttribute(data.KEY_LOWER_ERROR_VALUE_NAMES, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES, value);
           value = data.bindVariableNamesInBracket(data.mUpperErrorVariables, true);
-          el.setAttribute(data.KEY_UPPER_ERROR_VALUE_NAMES, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAMES, value);
           value = data.bindVariableNamesInBracket(data.mErrorBarHolderVariables, false);
-          el.setAttribute(data.KEY_ERROR_BAR_HOLDER_NAMES, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAMES, value);
         }
         if (data.isTickLabelAvailable()) {
           value = data.bindVariableNamesInBracket(data.mTickLabelVariables, true);
-          el.setAttribute(data.KEY_TICK_LABEL_NAMES, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES, value);
           value = data.bindVariableNamesInBracket(data.mTickLabelHolderVariables, false);
-          el.setAttribute(data.KEY_TICK_LABEL_HOLDER_NAMES, value);
+          el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAMES, value);
         }
       }
 
       // stride
-      el.setAttribute(data.KEY_ARRAY_SECTION, data.mStride.toString());
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_ARRAY_SECTION, data.mStride.toString());
       if (data.isTickLabelAvailable()) {
-        el.setAttribute(data.KEY_TICK_LABEL_ARRAY_SECTION, data.mTickLabelStride.toString());
+        el.setAttribute(
+            SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
+            data.mTickLabelStride.toString());
       }
 
-    } else if (SGIConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
+    } else if (SGConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
 
       // get variable names
       List<String> xNameList = new ArrayList<String>();
@@ -115,14 +118,14 @@ class SGSXYMDArrayMultipleDataExporter {
       data.getVariableNames(xNameList, yNameList, leNameList, ueNameList, tlNameList);
 
       // index variable
-      el.setAttribute(SGIDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, data.INDEX_DIM_NAME);
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_INDEX_VARIABLE_NAME, data.INDEX_DIM_NAME);
 
       // stride as the index stride
-      el.setAttribute(SGIDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION, data.mStride.toString());
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION, data.mStride.toString());
 
       if (data.isTickLabelAvailable()) {
         el.setAttribute(
-            SGIDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
+            SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
             data.mTickLabelStride.toString());
       }
 
@@ -132,36 +135,36 @@ class SGSXYMDArrayMultipleDataExporter {
       } else {
         value = SGDataTextUtility.bindVariableNamesInBracket(xNameList);
       }
-      el.setAttribute(data.KEY_X_VALUE_NAMES, value);
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAMES, value);
 
       if (yNameList.size() == 0) {
         value = data.bindVariableNameInBracket(data.Y_VALUE_VAR_NAME);
       } else {
         value = SGDataTextUtility.bindVariableNamesInBracket(yNameList);
       }
-      el.setAttribute(data.KEY_Y_VALUE_NAMES, value);
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, value);
 
       if (data.isErrorBarAvailable()) {
         value = SGDataTextUtility.bindVariableNamesInBracket(leNameList);
-        el.setAttribute(data.KEY_LOWER_ERROR_VALUE_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES, value);
         value = SGDataTextUtility.bindVariableNamesInBracket(ueNameList);
-        el.setAttribute(data.KEY_UPPER_ERROR_VALUE_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAMES, value);
         value = SGDataTextUtility.bindVariableNamesInBracket(data.mErrorBarHolderVariables);
-        el.setAttribute(data.KEY_ERROR_BAR_HOLDER_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAMES, value);
       }
 
       if (data.isTickLabelAvailable()) {
         value = SGDataTextUtility.bindVariableNamesInBracket(tlNameList);
-        el.setAttribute(data.KEY_TICK_LABEL_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES, value);
         value = SGDataTextUtility.bindVariableNamesInBracket(data.mTickLabelHolderVariables);
-        el.setAttribute(data.KEY_TICK_LABEL_HOLDER_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAMES, value);
       }
 
       if (data.isDimensionPicked()) {
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME, data.PICKUP_DIM_NAME);
         el.setAttribute(
-            SGIDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME, data.PICKUP_DIM_NAME);
-        el.setAttribute(
-            data.KEY_PICK_UP_DIMENSION_INDICES, data.mPickUpDimensionInfo.getIndices().toString());
+            SGDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION_INDICES,
+            data.mPickUpDimensionInfo.getIndices().toString());
       }
     }
 
@@ -530,11 +533,11 @@ class SGSXYMDArrayMultipleDataExporter {
         String dimName = dim.getShortName();
         Integer index = null;
         if (data.INDEX_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
+          index = mdVar.getDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION);
         } else if (data.TIME_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
+          index = mdVar.getDimensionIndex(SGMDArrayConstants.KEY_TIME_DIMENSION);
         } else if (data.PICKUP_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+          index = mdVar.getDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
         }
         if (index != null && index != -1) {
           mdArrayIndexMap.put(dimName, index);
@@ -571,11 +574,11 @@ class SGSXYMDArrayMultipleDataExporter {
         String dimName = dim.getShortName();
         Integer index = null;
         if (data.INDEX_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
+          index = mdVar.getDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION);
         } else if (data.TIME_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
+          index = mdVar.getDimensionIndex(SGMDArrayConstants.KEY_TIME_DIMENSION);
         } else if (data.PICKUP_DIM_NAME.equals(dimName)) {
-          index = mdVar.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+          index = mdVar.getDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
         } else {
           continue;
         }

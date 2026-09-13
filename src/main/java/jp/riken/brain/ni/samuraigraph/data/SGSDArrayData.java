@@ -1,5 +1,22 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
 import java.io.BufferedWriter;
@@ -13,9 +30,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
-import jp.riken.brain.ni.samuraigraph.base.SGITextDataConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
@@ -31,8 +46,7 @@ import ucar.nc2.Variable;
 import ucar.nc2.write.NetcdfFormatWriter;
 
 /** An abstract data class which has arrays of numbers and strings. */
-public abstract class SGSDArrayData extends SGArrayData
-    implements SGITextDataConstants, SGIDataColumnTypeConstants {
+public abstract class SGSDArrayData extends SGArrayData {
 
   private static final Logger logger = LogManager.getLogger(SGSDArrayData.class);
 
@@ -326,7 +340,7 @@ public abstract class SGSDArrayData extends SGArrayData
         if (this.writeAttributeColumnIndices(el) == false) {
           return false;
         }
-        keyStride = SGIDataPropertyKeyConstants.KEY_ARRAY_SECTION;
+        keyStride = SGDataPropertyKeyConstants.KEY_ARRAY_SECTION;
         break;
       case SAVE_TO_ARCHIVE_DATA_SET:
       case SAVE_TO_ARCHIVE_DATA_SET_107:
@@ -334,13 +348,13 @@ public abstract class SGSDArrayData extends SGArrayData
         if (this.writeSequentialColumnIndices(el) == false) {
           return false;
         }
-        keyStride = SGIDataPropertyKeyConstants.KEY_ARRAY_SECTION;
+        keyStride = SGDataPropertyKeyConstants.KEY_ARRAY_SECTION;
         break;
       case SAVE_TO_DATA_SET_NETCDF:
         if (this.writeSequentialColumnName(el) == false) {
           return false;
         }
-        keyStride = SGIDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION;
+        keyStride = SGDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION;
         break;
       default:
         return false;
@@ -405,7 +419,7 @@ public abstract class SGSDArrayData extends SGArrayData
   /** Returns a map which has data information. Overrode to set the data type. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> map = super.getInfoMap();
-    map.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, this.getDataType());
+    map.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, this.getDataType());
     return map;
   }
 
@@ -512,7 +526,7 @@ public abstract class SGSDArrayData extends SGArrayData
     }
   }
 
-  protected static final String INDEX_DIMENSION_NAME = SGIDataColumnTypeConstants.INDEX;
+  protected static final String INDEX_DIMENSION_NAME = INDEX;
 
   protected static final String ATTRIBUTE_KEY_LONG_NAME = "long_name";
 
@@ -594,7 +608,7 @@ public abstract class SGSDArrayData extends SGArrayData
   /** Returns a text string of file extension for the file in a data set file. */
   @Override
   public String getDataSetFileExtension() {
-    return SGIDataFileConstants.CSV_FILE_EXTENSION;
+    return SGDataFileConstants.CSV_FILE_EXTENSION;
   }
 
   /**
@@ -632,7 +646,7 @@ public abstract class SGSDArrayData extends SGArrayData
   private boolean doExport(final File file, final SGExportParameter mode, Object[][] array) {
     SGBufferedFileWriter writer = null;
     try {
-      writer = new SGBufferedFileWriter(file.getPath(), SGIConstants.CHAR_SET_NAME_UTF8);
+      writer = new SGBufferedFileWriter(file.getPath(), CHAR_SET_NAME_UTF8);
       BufferedWriter bw = writer.getBufferedWriter();
       this.exportTitle(bw);
       if (!this.writeData(bw, mode, array)) {

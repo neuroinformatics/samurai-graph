@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,7 +21,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUserProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 
-public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendConstants {
+public abstract class SGDataPopupMenu extends SGPopupMenu {
 
   private static final long serialVersionUID = 7831256502597635653L;
 

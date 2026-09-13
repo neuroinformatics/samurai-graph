@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
 import com.jmatio.io.MatFileWriter;
@@ -23,7 +48,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
@@ -45,10 +69,7 @@ import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The class of multiple scalar XY type data for multidimensional data. */
 public class SGSXYMDArrayMultipleData extends SGMDArrayData
-    implements SGISXYTypeMultipleData,
-        SGIDataPropertyKeyConstants,
-        SGISXYMultipleDimensionData,
-        SGIMDArrayConstants {
+    implements SGISXYTypeMultipleData, SGISXYMultipleDimensionData {
 
   private final SGSXYMDArrayMultipleDataExporter mExporter =
       new SGSXYMDArrayMultipleDataExporter(this);
@@ -575,22 +596,21 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   protected SGMDArrayVariable initVariable(SGMDArrayFile file, SGMDArrayDataColumnInfo info) {
     SGMDArrayVariable var = super.initVariable(file, info);
     if (info != null) {
-      Integer pickUpDimension =
-          info.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      Integer pickUpDimension = info.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
       Integer value = null;
       if (pickUpDimension != null) {
         value = pickUpDimension;
       } else {
         value = -1;
       }
-      var.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, value);
+      var.setDimensionIndex(KEY_SXY_PICKUP_DIMENSION, value);
     }
     return var;
   }
 
   protected SGMDArrayVariable initVariable(SGMDArrayVariable var) {
     super.initVariable(var);
-    var.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, -1);
+    var.setDimensionIndex(KEY_SXY_PICKUP_DIMENSION, -1);
     return var;
   }
 
@@ -780,8 +800,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     if (pickUpStride != null) {
       pickUpIndices = pickUpStride.getNumbers();
     } else {
-      final int pickUpLen =
-          pickUpVar.getDimensionLength(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      final int pickUpLen = pickUpVar.getDimensionLength(KEY_SXY_PICKUP_DIMENSION);
       pickUpIndices = new int[pickUpLen];
       for (int ii = 0; ii < pickUpLen; ii++) {
         pickUpIndices[ii] = ii;
@@ -798,8 +817,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       }
     }
     final int dimensionIndex = pickUpVar.getGenericDimensionIndex();
-    final int pickUpDimensionIndex =
-        pickUpVar.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+    final int pickUpDimensionIndex = pickUpVar.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
     double[][] array = new double[pickUpIndices.length][];
     for (int ii = 0; ii < array.length; ii++) {
       int[] origins = pickUpVar.getOrigins();
@@ -818,7 +836,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     if (this.isDimensionPicked()) {
       SGMDArrayVariable yVar = this.getYVariable();
       if (yVar != null) {
-        Integer index = yVar.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+        Integer index = yVar.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
         return (index != null && index != -1);
       } else {
         return false;
@@ -1367,7 +1385,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
           final int[] origins = var.getOrigins();
           final String varName = var.getName();
           if (pickUpVars.contains(var)) {
-            Integer pickUpDim = var.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+            Integer pickUpDim = var.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
             origins[pickUpDim] = pickUpIndices[ii];
           }
           if (leVar != null && ueVar != null && leInfo != null && ueInfo != null) {
@@ -1521,9 +1539,8 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         SGSXYMDArrayData data = (SGSXYMDArrayData) sxyArray[ii];
         List<SGMDArrayVariable> pickUpVars = this.getPickUpMDArrayVariables();
         SGMDArrayVariable pickUpVar = pickUpVars.get(0);
-        final int len = pickUpVar.getDimensionLength(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-        Integer pickUpDim =
-            pickUpVar.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+        final int len = pickUpVar.getDimensionLength(KEY_SXY_PICKUP_DIMENSION);
+        Integer pickUpDim = pickUpVar.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
         ret[ii] = data.toMultiple(this.hasMultipleYValues(), pickUpDim, len);
       }
       // disposes of data objects
@@ -1626,12 +1643,10 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   @Override
   public Map<String, Object> getInfoMap() {
     Map<String, Object> infoMap = super.getInfoMap();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
+    infoMap.put(KEY_SXY_MULTIPLE, Boolean.TRUE);
     if (this.isDimensionPicked()) {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
-      infoMap.put(
-          SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES,
-          this.mPickUpDimensionInfo.getIndices());
+      infoMap.put(KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+      infoMap.put(KEY_SXY_PICKUP_INDICES, this.mPickUpDimensionInfo.getIndices());
       Map<String, Integer> dimensionIndexMap = new HashMap<String, Integer>();
       SGMDArrayVariable[] vars = this.getVariables();
       for (int ii = 0; ii < vars.length; ii++) {
@@ -1641,12 +1656,10 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
           dimensionIndexMap.put(name, index);
         }
       }
-      infoMap.put(
-          SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP,
-          dimensionIndexMap);
+      infoMap.put(KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP, dimensionIndexMap);
 
     } else {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+      infoMap.put(KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
     }
     return infoMap;
   }
@@ -1810,8 +1823,8 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
-    map.put(SGIDataInformationKeyConstants.KEY_SXY_STRIDE, this.mStride);
-    map.put(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, this.mTickLabelStride);
+    map.put(KEY_SXY_STRIDE, this.mStride);
+    map.put(KEY_SXY_TICK_LABEL_STRIDE, this.mTickLabelStride);
     return map;
   }
 
@@ -1822,7 +1835,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    */
   @Override
   public void setStrideMap(Map<String, SGIntegerSeriesSet> map) {
-    this.mStride = map.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+    this.mStride = map.get(KEY_SXY_STRIDE);
   }
 
   /** Returns the indices of tick labels. */
@@ -2207,7 +2220,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     // clears the dimension index
     for (int ii = 0; ii < cols.length; ii++) {
       SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) cols[ii];
-      mdCol.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, -1);
+      mdCol.setDimensionIndex(KEY_SXY_PICKUP_DIMENSION, -1);
     }
 
     // clears the attribute
@@ -2318,7 +2331,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
   protected void addPickUpDimension(
       SGMDArrayVariable var, Dimension pickUpDim, List<Dimension> dimList) {
-    this.addDimension(var, SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, pickUpDim, dimList);
+    this.addDimension(var, KEY_SXY_PICKUP_DIMENSION, pickUpDim, dimList);
   }
 
   boolean addDoubleVariable(
@@ -2401,10 +2414,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       final int index) {
     SGMDArrayVariable mdVar = this.findVariable(varName);
     Integer timeDimIndex = mdArrayIndexMap.get(TIME_DIM_NAME);
-    String mdSecondDimName =
-        (timeDimIndex != null)
-            ? SGIMDArrayConstants.KEY_TIME_DIMENSION
-            : SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION;
+    String mdSecondDimName = (timeDimIndex != null) ? KEY_TIME_DIMENSION : KEY_SXY_PICKUP_DIMENSION;
     String mapSecondDimName = (timeDimIndex != null) ? TIME_DIM_NAME : PICKUP_DIM_NAME;
     final int firstDimLen = this.getAllPointsNumber();
     final int secondDimLen = mdVar.getDimensionLength(mdSecondDimName);
@@ -2442,8 +2452,8 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       final int index) {
     SGMDArrayVariable mdVar = this.findVariable(varName);
     final int firstDimLen = this.getAllPointsNumber();
-    final int secondDimLen = mdVar.getDimensionLength(SGIMDArrayConstants.KEY_TIME_DIMENSION);
-    final int thirdDimLen = mdVar.getDimensionLength(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+    final int secondDimLen = mdVar.getDimensionLength(KEY_TIME_DIMENSION);
+    final int thirdDimLen = mdVar.getDimensionLength(KEY_SXY_PICKUP_DIMENSION);
     Integer dimension1 = mdArrayIndexMap.get(INDEX_DIM_NAME);
     Integer dimension2 = mdArrayIndexMap.get(TIME_DIM_NAME);
     Integer dimension3 = mdArrayIndexMap.get(PICKUP_DIM_NAME);
@@ -2479,9 +2489,9 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
   int getMaxLength(SGMDArrayVariable var) {
     int maxLength = 0;
-    Integer genericIndex = var.getDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION);
-    Integer pickUpIndex = var.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-    Integer timeIndex = var.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
+    Integer genericIndex = var.getDimensionIndex(KEY_GENERIC_DIMENSION);
+    Integer pickUpIndex = var.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
+    Integer timeIndex = var.getDimensionIndex(KEY_TIME_DIMENSION);
     final int pIdx = (pickUpIndex != null) ? pickUpIndex.intValue() : -1;
     final int tIdx = (timeIndex != null) ? timeIndex.intValue() : -1;
     int[] dimension = var.getDimensions();
@@ -2529,7 +2539,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     String textString = var.getString(origins);
     byte[] byteArray;
     try {
-      byteArray = textString.getBytes(SGIConstants.CHAR_SET_NAME_UTF8);
+      byteArray = textString.getBytes(CHAR_SET_NAME_UTF8);
     } catch (UnsupportedEncodingException e) {
       return maxLength;
     }
@@ -3065,7 +3075,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     if (!this.isDimensionPicked()) {
       return null;
     }
-    return this.getDimensionCommandString(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+    return this.getDimensionCommandString(KEY_SXY_PICKUP_DIMENSION);
   }
 
   @Override
@@ -3149,10 +3159,10 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   public String[] getDataViewerColumnTypes() {
     List<String> list = new ArrayList<String>();
     if (this.mXVariables != null && this.mXVariables.length != 0) {
-      list.add(SGIDataColumnTypeConstants.X_VALUE);
+      list.add(X_VALUE);
     }
     if (this.mYVariables != null && this.mYVariables.length != 0) {
-      list.add(SGIDataColumnTypeConstants.Y_VALUE);
+      list.add(Y_VALUE);
     }
     String[] ret = list.toArray(new String[list.size()]);
     return ret;
@@ -3208,8 +3218,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         num = this.getChildNumber();
       } else {
         SGMDArrayVariable yVar = this.getYVariable();
-        Integer pickUpDimension =
-            yVar.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+        Integer pickUpDimension = yVar.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
         if (pickUpDimension != null && pickUpDimension != -1) {
           num = yVar.getDimensions()[pickUpDimension];
         } else {
@@ -3221,8 +3230,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         num = this.getChildNumber();
       } else {
         SGMDArrayVariable xVar = this.getXVariable();
-        Integer pickUpDimension =
-            xVar.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+        Integer pickUpDimension = xVar.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
         if (pickUpDimension != null && pickUpDimension != -1) {
           num = xVar.getDimensions()[pickUpDimension];
         } else {
@@ -3491,8 +3499,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         ret = super.getDataViewerCell(cell, columnType, bStride);
       } else {
         SGMDArrayVariable xVar = this.getXVariable();
-        Integer pickUpDimension =
-            xVar.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+        Integer pickUpDimension = xVar.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
         if (pickUpDimension != null && pickUpDimension != -1) {
           ret = super.getDataViewerCell(cell, columnType, bStride);
         } else {
@@ -3506,8 +3513,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         ret = super.getDataViewerCell(cell, columnType, bStride);
       } else {
         SGMDArrayVariable yVar = this.getYVariable();
-        Integer pickUpDimension =
-            yVar.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+        Integer pickUpDimension = yVar.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
         if (pickUpDimension != null && pickUpDimension != -1) {
           ret = super.getDataViewerCell(cell, columnType, bStride);
         } else {

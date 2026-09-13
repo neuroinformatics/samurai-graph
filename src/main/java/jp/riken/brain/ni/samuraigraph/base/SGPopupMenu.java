@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
@@ -7,7 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-public abstract class SGPopupMenu extends JPopupMenu implements ActionListener, SGIConstants {
+public abstract class SGPopupMenu extends JPopupMenu implements ActionListener {
 
   private static final long serialVersionUID = 4221949302356042792L;
 

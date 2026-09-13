@@ -1,5 +1,33 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGArchiveFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGImageConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5Exception;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
@@ -62,16 +90,12 @@ import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGIProgressControl;
-import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIRootObjectConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGPlotTypeConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGPluginsQueryMessage;
@@ -84,15 +108,11 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDuplicationDialog;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataAnimation;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
@@ -114,9 +134,9 @@ import jp.riken.brain.ni.samuraigraph.data.SGVirtualMDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGVirtualMDArrayVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGXYSimpleDoubleValueIndexBlock;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetInGraph;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureTypeConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetForData;
 import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetMultipleSXY;
-import jp.riken.brain.ni.samuraigraph.figure.SGIFigureTypeConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGILineStylePropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyleColorMapManager;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStylePropertyDialog;
@@ -131,19 +151,7 @@ import ucar.nc2.NetcdfFile;
 import ucar.nc2.NetcdfFileWriter;
 
 /** The main thread. */
-class SGMainFunctions
-    implements ActionListener,
-        SGIUpgradeConstants,
-        SGIApplicationCommandConstants,
-        SGIApplicationConstants,
-        SGIPropertyFileConstants,
-        SGIPreferencesConstants,
-        SGIApplicationTextConstants,
-        SGIImageConstants,
-        SGIArchiveFileConstants,
-        SGIDataColumnTypeConstants,
-        WindowListener,
-        SGINetCDFConstants {
+class SGMainFunctions implements ActionListener, WindowListener {
 
   private static final Logger logger = LogManager.getLogger(SGMainFunctions.class);
 
@@ -437,12 +445,10 @@ class SGMainFunctions
       // loads the plug-in files
       SGMainFunctions.this.mPluginManager = new SGPluginManager(SGMainFunctions.this);
       boolean result =
-          SGMainFunctions.this.mPluginManager.loadPlugins(
-              SGIApplicationConstants.APPLICATION_PLUGIN_DIRECTORY);
+          SGMainFunctions.this.mPluginManager.loadPlugins(APPLICATION_PLUGIN_DIRECTORY);
       if (result == false) {
         String filename = SGMainFunctions.this.mPluginManager.getFirstExceptionJarFilename();
-        SGUtility.showErrorMessageDialog(
-            null, "Plugins load error.\n" + filename, SGIConstants.TITLE_ERROR);
+        SGUtility.showErrorMessageDialog(null, "Plugins load error.\n" + filename, TITLE_ERROR);
       }
       SGMainFunctions.this.mNativePluginManager = new SGNativePluginManager(SGMainFunctions.this);
       SGMainFunctions.this.mNativePluginManager.loadPlugins(APPLICATION_PLUGIN_DIRECTORY);
@@ -491,8 +497,7 @@ class SGMainFunctions
                     if (SGMainFunctions.this.mDataSetManager.loadDataSetFromEventDispatchThread(
                             wnd, f)
                         == false) {
-                      SGUtility.showErrorMessageDialog(
-                          wnd, MSG_DATA_SET_FILE_INVALID, SGIConstants.TITLE_ERROR);
+                      SGUtility.showErrorMessageDialog(wnd, MSG_DATA_SET_FILE_INVALID, TITLE_ERROR);
                     }
                   }
                 });
@@ -808,7 +813,7 @@ class SGMainFunctions
         SGDataColumnInfo[] cols = gElement.getDataColumnInfoArray(data);
         Map<String, Object> infoMap = gElement.getInfoMap(data);
         infoMap.put(
-            SGIDataInformationKeyConstants.KEY_FIGURE_SIZE,
+            SGDataInformationKeyConstants.KEY_FIGURE_SIZE,
             new SGTuple2f(f.getFigureWidth(), f.getFigureHeight()));
         SGDataColumnInfoSet colInfoSet = new SGDataColumnInfoSet(cols);
 
@@ -848,7 +853,7 @@ class SGMainFunctions
 
         // after the dialog is closed
         SGData dCopy = null;
-        if (dg.getCloseOption() == SGDialog.OK_OPTION) {
+        if (dg.getCloseOption() == OK_OPTION) {
 
           // get the results
           SGDataColumnInfo[] result = dg.getDataColumnTypes();
@@ -962,7 +967,7 @@ class SGMainFunctions
     // create a DOM tree
     if (wnd.createDOMTree(
             document,
-            SGIRootObjectConstants.FOCUSED_FIGURES_FOR_DUPLICATION,
+            FOCUSED_FIGURES_FOR_DUPLICATION,
             new SGExportParameter(OPERATION.DUPLICATE_OBJECT))
         == false) {
       return false;
@@ -991,7 +996,7 @@ class SGMainFunctions
     String versionNumber = root.getAttribute(KEY_VERSION_NUMBER);
 
     // get the node of window
-    NodeList wList = root.getElementsByTagName(SGIRootObjectConstants.TAG_NAME_WINDOW);
+    NodeList wList = root.getElementsByTagName(TAG_NAME_WINDOW);
     if (wList.getLength() == 0) {
       return false;
     }
@@ -1003,7 +1008,7 @@ class SGMainFunctions
         this.getPropertyFileHandler()
             .createFiguresFromPropertyFile(
                 elWnd, wnd, wDataArray, true, versionNumber, LOAD_PROPERTIES_IN_DUPLICATION);
-    if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
+    if (ret != SUCCESSFUL_COMPLETION) {
       return false;
     }
 
@@ -1058,7 +1063,7 @@ class SGMainFunctions
         JOptionPane.showOptionDialog(
             component,
             message,
-            SGIConstants.TITLE_CONFIRMATION,
+            TITLE_CONFIRMATION,
             JOptionPane.YES_NO_CANCEL_OPTION,
             JOptionPane.WARNING_MESSAGE,
             null,
@@ -1153,7 +1158,7 @@ class SGMainFunctions
       return new SGStatus(false);
     }
 
-    String dataNameBase = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_NAME);
+    String dataNameBase = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_NAME);
 
     final SGFigure fig = wnd.getFigure(figureID);
 
@@ -1323,11 +1328,11 @@ class SGMainFunctions
         SGData dataFirst = dataArray[0];
         if (dataFirst instanceof SGISXYTypeSingleData
             || dataFirst instanceof SGISXYTypeMultipleData) {
-          type = SGIFigureTypeConstants.FIGURE_TYPE_SXY;
+          type = SGFigureTypeConstants.FIGURE_TYPE_SXY;
         } else if (dataFirst instanceof SGIVXYTypeData) {
-          type = SGIFigureTypeConstants.FIGURE_TYPE_VXY;
+          type = SGFigureTypeConstants.FIGURE_TYPE_VXY;
         } else if (dataFirst instanceof SGISXYZTypeData) {
-          type = SGIFigureTypeConstants.FIGURE_TYPE_SXY;
+          type = SGFigureTypeConstants.FIGURE_TYPE_SXY;
         }
         fig.setClassType(type);
       }
@@ -1558,16 +1563,15 @@ class SGMainFunctions
             // create information map
             Map<String, Object> infoMap = new HashMap<String, Object>();
             infoMap.put(
-                SGIDataInformationKeyConstants.KEY_DATA_TYPE,
+                SGDataInformationKeyConstants.KEY_DATA_TYPE,
                 SGDataTypeConstants.SXYZ_VIRTUAL_MDARRAY_DATA);
-            infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, true);
+            infoMap.put(SGDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, true);
 
             // create column information set
             SGMDArrayDataColumnInfo col =
-                new SGMDArrayDataColumnInfo(
-                    var, varName, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
-            col.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION, 0);
-            col.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 1);
+                new SGMDArrayDataColumnInfo(var, varName, VALUE_TYPE_NUMBER);
+            col.setDimensionIndex(KEY_SXYZ_X_DIMENSION, 0);
+            col.setDimensionIndex(KEY_SXYZ_Y_DIMENSION, 1);
             col.setColumnType(Z_VALUE);
             SGDataColumnInfoSet colInfoSet = new SGDataColumnInfoSet(new SGDataColumnInfo[] {col});
 
@@ -1681,8 +1685,7 @@ class SGMainFunctions
         }
 
         // image file?
-        boolean imageFlag =
-            SGApplicationUtility.hasExtension(path, SGIImageConstants.DRAWABLE_IMAGE_EXTENSIONS);
+        boolean imageFlag = SGApplicationUtility.hasExtension(path, DRAWABLE_IMAGE_EXTENSIONS);
         if (imageFlag) {
           imageFile = file;
           continue;
@@ -1768,7 +1771,7 @@ class SGMainFunctions
         final boolean result =
             this.mDataSetManager.loadDataSetFromEventDispatchThread(wnd, archiveFile);
         if (result == false && SGUtility.wasMessageDialogVisible() == false) {
-          SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_LOAD_DATASET, SGIConstants.TITLE_ERROR);
+          SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_LOAD_DATASET, TITLE_ERROR);
         }
         SGUtility.clearMessageDialogVisible();
         wnd.setSaved(result);
@@ -1788,7 +1791,7 @@ class SGMainFunctions
         final boolean result =
             this.mDataSetManager.loadDataSetFromEventDispatchThread(wnd, netcdfArchiveFile);
         if (result == false && SGUtility.wasMessageDialogVisible() == false) {
-          SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_LOAD_DATASET, SGIConstants.TITLE_ERROR);
+          SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_LOAD_DATASET, TITLE_ERROR);
         }
         SGUtility.clearMessageDialogVisible();
         wnd.setSaved(result);
@@ -1800,7 +1803,7 @@ class SGMainFunctions
           // loads the command script file
           this.getConsoleRunner().loadCommandScriptFile(scriptFile.getPath());
         } else {
-          SGUtility.showErrorMessageDialog(wnd, ERRMSG_SCRIPT_START, SGIConstants.TITLE_ERROR);
+          SGUtility.showErrorMessageDialog(wnd, ERRMSG_SCRIPT_START, TITLE_ERROR);
         }
       } else if (imageFile != null) {
         // use a image file
@@ -2030,13 +2033,10 @@ class SGMainFunctions
       sbFilePath.append('"');
       StringBuilder sbAlias = new StringBuilder();
       sbAlias.append('"');
-      sbAlias.append(SGIDataCommandConstants.FILE_PATH_NETCDF_ITSELF);
+      sbAlias.append(FILE_PATH_NETCDF_ITSELF);
       sbAlias.append('"');
       this.mCommandManager.addAlias(
-          SGIDataCommandConstants.COM_DATA,
-          SGIDataCommandConstants.COM_DATA_FILE_PATH,
-          sbAlias.toString(),
-          sbFilePath.toString());
+          COM_DATA, COM_DATA_FILE_PATH, sbAlias.toString(), sbFilePath.toString());
       SwingUtilities.invokeLater(
           new Runnable() {
             public void run() {
@@ -2055,8 +2055,7 @@ class SGMainFunctions
                       try {
                         // read input recursively
                         SGMainFunctions.this.getConsoleRunner().startReadingInput();
-                        mCommandManager.removeAlias(
-                            SGIDataCommandConstants.FILE_PATH_NETCDF_ITSELF);
+                        mCommandManager.removeAlias(FILE_PATH_NETCDF_ITSELF);
                       } catch (IOException e1) {
                         return;
                       } finally {
@@ -2144,8 +2143,8 @@ class SGMainFunctions
     } else {
       // window
       size = SGFigureCreator.getDefaultFigureSize(dataType);
-      final String defaultUnit = SGIFigureConstants.FIGURE_SIZE_UNIT;
-      final String unitNew = SGIConstants.pt;
+      final String defaultUnit = FIGURE_SIZE_UNIT;
+      final String unitNew = pt;
       final float mag = wnd.getMagnification();
       size.x = (float) SGUtilityText.convert(mag * size.x, defaultUnit, unitNew);
       size.y = (float) SGUtilityText.convert(mag * size.y, defaultUnit, unitNew);
@@ -2500,17 +2499,17 @@ class SGMainFunctions
       final Map<String, Object> infoMap, final SGMDArrayDataSetupWizardDialog dg) {
     addDimensionValuesToInfoMapSub(infoMap, dg);
     infoMap.put(
-        SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP,
+        SGDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP,
         dg.getPickupDimensionIndexMap());
     return true;
   }
 
   static boolean addDimensionValuesToInfoMapSub(
       final Map<String, Object> infoMap, final SGDataSetupWizardDialog dg) {
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, dg.isVariableDataType());
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, dg.isVariableDataType());
     SGIntegerSeriesSet indices = dg.getSXYPickUpIndices();
     if (indices != null) {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
     }
     return true;
   }
@@ -2551,8 +2550,7 @@ class SGMainFunctions
         try {
           this.mPluginManager.doOutputToFile(wnd, (SGData) obj);
         } catch (Exception e) {
-          SGUtility.showErrorMessageDialog(
-              wnd, "Failed to output data to file", SGIConstants.TITLE_ERROR);
+          SGUtility.showErrorMessageDialog(wnd, "Failed to output data to file", TITLE_ERROR);
         }
       }
     }
@@ -2717,7 +2715,7 @@ class SGMainFunctions
           Toolkit.getDefaultToolkit().beep();
 
           // show a dialog
-          SGUtility.showMessageDialog(wnd, p, SGIConstants.TITLE_ERROR, JOptionPane.ERROR_MESSAGE);
+          SGUtility.showMessageDialog(wnd, p, TITLE_ERROR, JOptionPane.ERROR_MESSAGE);
         }
         return false;
       }
@@ -3018,9 +3016,7 @@ class SGMainFunctions
     }
     if (focusedDataList.size() == 0) {
       SGUtility.showErrorMessageDialog(
-          wnd,
-          "Data objects originated from NetCDF files are not selected.",
-          SGIConstants.TITLE_ERROR);
+          wnd, "Data objects originated from NetCDF files are not selected.", TITLE_ERROR);
       return;
     }
 
@@ -3174,14 +3170,14 @@ class SGMainFunctions
       SGUtility.showMessageDialog(
           wnd,
           "Succeeded to add commands to NetCDF files.",
-          SGIConstants.TITLE_MESSAGE,
+          TITLE_MESSAGE,
           JOptionPane.INFORMATION_MESSAGE);
     }
   }
 
   private static void showErrMsgDialogSavingNetCDFAttribute(SGDrawingWindow wnd, String path) {
     SGUtility.showErrorMessageDialog(
-        wnd, "Failed to add commands to a NetCDF file: \n" + path, SGIConstants.TITLE_ERROR);
+        wnd, "Failed to add commands to a NetCDF file: \n" + path, TITLE_ERROR);
   }
 
   /**
@@ -3607,18 +3603,18 @@ class SGMainFunctions
     boolean forAnimationFrames = false;
     if (MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
         || MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
-      axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL);
-      axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL);
-      axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_NORMAL);
+      axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_HORIZONTAL);
+      axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_VERTICAL);
+      axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_NORMAL);
       if (MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
         forAnimationFrames = true;
       }
     } else if (MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)) {
-      axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL);
+      axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_HORIZONTAL);
     } else if (MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)) {
-      axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL);
+      axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_VERTICAL);
     } else if (MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)) {
-      axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_NORMAL);
+      axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_NORMAL);
     }
 
     boolean changed = false;

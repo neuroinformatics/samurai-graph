@@ -3,8 +3,9 @@ package jp.riken.brain.ni.samuraigraph.figure;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
@@ -134,7 +135,7 @@ public class SGElementGroupTickLabelInGraphSXY extends SGElementGroupTickLabelIn
     final int axisLocationX = aElement.getLocationInPlane(axisX);
     final int axisLocationY = aElement.getLocationInPlane(axisY);
     final float angle = this.getAngle();
-    final float radAngle = angle * SGIConstants.RADIAN_DEGREE_RATIO;
+    final float radAngle = angle * SGConstants.RADIAN_DEGREE_RATIO;
     final SGAxis axis = alignHorizontal ? axisX : axisY;
 
     // calculate baseline height
@@ -172,29 +173,29 @@ public class SGElementGroupTickLabelInGraphSXY extends SGElementGroupTickLabelIn
         // aligned to the x-axis
 
         // x-coordinates
-        if (angle == SGITickLabelConstants.ANGLE_HORIZONTAL) {
+        if (angle == SGTickLabelConstants.ANGLE_HORIZONTAL) {
           x = location - wHalf;
         } else {
-          if (axisLocationX == SGIFigureElementAxis.AXIS_HORIZONTAL_1) {
+          if (axisLocationX == SGFigureElementAxisConstants.AXIS_HORIZONTAL_1) {
             x = location - sw * ((float) Math.cos(radAngle));
-          } else if (axisLocationX == SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+          } else if (axisLocationX == SGFigureElementAxisConstants.AXIS_HORIZONTAL_2) {
             x = location - 0.5f * sh * ((float) Math.sin(radAngle));
           }
         }
 
         // y-coordinates
         float yDefault = 0.0f;
-        if (axisLocationX == SGIFigureElementAxis.AXIS_HORIZONTAL_1) {
-          if (angle == SGITickLabelConstants.ANGLE_HORIZONTAL) {
+        if (axisLocationX == SGFigureElementAxisConstants.AXIS_HORIZONTAL_1) {
+          if (angle == SGTickLabelConstants.ANGLE_HORIZONTAL) {
             yDefault = maxAscent - el.getAscent();
           }
-          space = this.calcSpace(SGIFigureElementAxis.AXIS_HORIZONTAL_1);
+          space = this.calcSpace(SGFigureElementAxisConstants.AXIS_HORIZONTAL_1);
           yDefault += gy + gh + space;
-        } else if (axisLocationX == SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
-          if (angle == SGITickLabelConstants.ANGLE_HORIZONTAL) {
+        } else if (axisLocationX == SGFigureElementAxisConstants.AXIS_HORIZONTAL_2) {
+          if (angle == SGTickLabelConstants.ANGLE_HORIZONTAL) {
             yDefault = -maxDescent + el.getDescent();
           }
-          space = this.calcSpace(SGIFigureElementAxis.AXIS_HORIZONTAL_2);
+          space = this.calcSpace(SGFigureElementAxisConstants.AXIS_HORIZONTAL_2);
           yDefault += gy - space - h;
         }
 
@@ -206,28 +207,28 @@ public class SGElementGroupTickLabelInGraphSXY extends SGElementGroupTickLabelIn
         // aligned to the y-axis
 
         // y-coordinates
-        if (angle == SGITickLabelConstants.ANGLE_HORIZONTAL) {
+        if (angle == SGTickLabelConstants.ANGLE_HORIZONTAL) {
           y = location - hHalf;
         } else {
-          if (axisLocationY == SGIFigureElementAxis.AXIS_VERTICAL_1) {
+          if (axisLocationY == SGFigureElementAxisConstants.AXIS_VERTICAL_1) {
             y = location - 0.5f * sh + sw * ((float) Math.sin(radAngle));
-          } else if (axisLocationY == SGIFigureElementAxis.AXIS_VERTICAL_2) {
+          } else if (axisLocationY == SGFigureElementAxisConstants.AXIS_VERTICAL_2) {
             y = location - 0.5f * sh * ((float) Math.cos(radAngle));
           }
         }
 
         // x-coordinates
-        if (angle == SGITickLabelConstants.ANGLE_HORIZONTAL) {
-          if (axisLocationY == SGIFigureElementAxis.AXIS_VERTICAL_1) {
-            space = this.calcSpace(SGIFigureElementAxis.AXIS_VERTICAL_1);
+        if (angle == SGTickLabelConstants.ANGLE_HORIZONTAL) {
+          if (axisLocationY == SGFigureElementAxisConstants.AXIS_VERTICAL_1) {
+            space = this.calcSpace(SGFigureElementAxisConstants.AXIS_VERTICAL_1);
             x = gx - space - w;
-          } else if (axisLocationY == SGIFigureElementAxis.AXIS_VERTICAL_2) {
-            space = this.calcSpace(SGIFigureElementAxis.AXIS_VERTICAL_2);
+          } else if (axisLocationY == SGFigureElementAxisConstants.AXIS_VERTICAL_2) {
+            space = this.calcSpace(SGFigureElementAxisConstants.AXIS_VERTICAL_2);
             x = gx + gw + space;
           }
         } else {
-          if (axisLocationY == SGIFigureElementAxis.AXIS_VERTICAL_1) {
-            space = this.calcSpace(SGIFigureElementAxis.AXIS_VERTICAL_1);
+          if (axisLocationY == SGFigureElementAxisConstants.AXIS_VERTICAL_1) {
+            space = this.calcSpace(SGFigureElementAxisConstants.AXIS_VERTICAL_1);
             x = gx - space - (float) rect.getWidth();
             if (angle > 90) {
               x = x - sw * ((float) Math.cos(radAngle));
@@ -236,8 +237,8 @@ public class SGElementGroupTickLabelInGraphSXY extends SGElementGroupTickLabelIn
             } else if (angle < -90) {
               x = x - sh * ((float) Math.sin(radAngle)) + sw * ((float) Math.sin(radAngle) + 1.0f);
             }
-          } else if (axisLocationY == SGIFigureElementAxis.AXIS_VERTICAL_2) {
-            space = this.calcSpace(SGIFigureElementAxis.AXIS_VERTICAL_2);
+          } else if (axisLocationY == SGFigureElementAxisConstants.AXIS_VERTICAL_2) {
+            space = this.calcSpace(SGFigureElementAxisConstants.AXIS_VERTICAL_2);
             x = gx + gw + space;
             if (angle > 90) {
               x = x - sw * ((float) Math.cos(radAngle));
@@ -260,7 +261,7 @@ public class SGElementGroupTickLabelInGraphSXY extends SGElementGroupTickLabelIn
   private float calcSpace(final int location) {
     final SGIFigureElementAxis aElement = this.mGraph.getAxisElement();
     float space = aElement.getSpaceAxisLineAndNumber(location) * this.mMagnification;
-    space = (float) SGUtilityText.convert(space, SGIAxisConstants.SPACE_UNIT, SGIConstants.pt);
+    space = (float) SGUtilityText.convert(space, SGAxisConstants.SPACE_UNIT, SGConstants.pt);
     return space;
   }
 

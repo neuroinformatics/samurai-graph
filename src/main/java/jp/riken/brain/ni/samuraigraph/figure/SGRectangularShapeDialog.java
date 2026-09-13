@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -16,7 +20,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
 import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGGradationPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGGradationPaintDialog;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
@@ -30,8 +33,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 
 /** A dialog to set the properties of rectangular shapes. */
-public class SGRectangularShapeDialog extends SGPropertyDialog
-    implements SGILineConstants, SGITwoAxesDialog {
+public class SGRectangularShapeDialog extends SGPropertyDialog implements SGITwoAxesDialog {
 
   // serialVersionUID
   private static final long serialVersionUID = 1791114777174503450L;
@@ -569,7 +571,7 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
             (float) SGPaintConstants.TRANSPARENCY_MIN,
             (float) SGPaintConstants.TRANSPARENCY_MAX,
             (float) SGPaintConstants.TRANSPARENCY_STEP),
-        SGIConstants.percent,
+        percent,
         SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MIN,
         SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MAX);
 

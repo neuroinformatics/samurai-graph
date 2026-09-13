@@ -1,5 +1,18 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisBreakConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorBarConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSignificantDifferenceConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -71,7 +84,6 @@ import org.w3c.dom.NodeList;
 /** A class managing labels. */
 public class SGFigureElementString extends SGFigureElement
     implements SGIFigureElementString,
-        SGIStringConstants,
         CaretListener,
         DocumentListener,
         ActionListener,
@@ -395,7 +407,7 @@ public class SGFigureElementString extends SGFigureElement
 
     boolean flag = true;
     if (element instanceof SGIFigureElementGraph) {
-      if (SGIFigureElement.NOTIFY_DATA_WILL_BE_HIDDEN.equals(msg)) {
+      if (NOTIFY_DATA_WILL_BE_HIDDEN.equals(msg)) {
         SGIFigureElementGraph gElement = (SGIFigureElementGraph) element;
         gElement.hideNetCDFLabelsOfFocusedObjects(this);
       }
@@ -833,7 +845,7 @@ public class SGFigureElementString extends SGFigureElement
    * @param versionNumber the version number of property file
    */
   public boolean readProperty(final Element element, final String versionNumber) {
-    NodeList nList = element.getElementsByTagName(SGIStringConstants.TAG_NAME_LABEL);
+    NodeList nList = element.getElementsByTagName(TAG_NAME_LABEL);
     for (int ii = 0; ii < nList.getLength(); ii++) {
       Node node = nList.item(ii);
       if (node instanceof Element) {
@@ -1250,8 +1262,7 @@ public class SGFigureElementString extends SGFigureElement
      * @param location the location of the x-axis
      */
     public boolean setXAxisLocation(final int location) {
-      if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-          && location != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+      if (location != AXIS_HORIZONTAL_1 && location != AXIS_HORIZONTAL_2) {
         return false;
       }
       this.mXAxis = SGFigureElementString.this.mAxisElement.getAxisInPlane(location);
@@ -1264,8 +1275,7 @@ public class SGFigureElementString extends SGFigureElement
      * @param location the location of the y-axis
      */
     public boolean setYAxisLocation(final int location) {
-      if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
-          && location != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+      if (location != AXIS_VERTICAL_1 && location != AXIS_VERTICAL_2) {
         return false;
       }
       this.mYAxis = SGFigureElementString.this.mAxisElement.getAxisInPlane(location);
@@ -1373,7 +1383,7 @@ public class SGFigureElementString extends SGFigureElement
 
     /** */
     public String getTagName() {
-      return SGIStringConstants.TAG_NAME_LABEL;
+      return TAG_NAME_LABEL;
     }
 
     /**
@@ -1417,7 +1427,7 @@ public class SGFigureElementString extends SGFigureElement
       }
 
       // x value
-      str = el.getAttribute(KEY_X_VALUE);
+      str = el.getAttribute(SGStringConstants.KEY_X_VALUE);
       if (str.length() != 0) {
         num = SGUtilityText.getDouble(str);
         if (num == null) {
@@ -1433,7 +1443,7 @@ public class SGFigureElementString extends SGFigureElement
       }
 
       // y value
-      str = el.getAttribute(KEY_Y_VALUE);
+      str = el.getAttribute(SGStringConstants.KEY_Y_VALUE);
       if (str.length() != 0) {
         num = SGUtilityText.getDouble(str);
         if (num == null) {
@@ -1876,7 +1886,12 @@ public class SGFigureElementString extends SGFigureElement
     @Override
     public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
       SGPropertyMap map = super.getPropertyFileMap(params);
-      this.addProperties(map, KEY_X_VALUE, KEY_Y_VALUE, KEY_X_AXIS_POSITION, KEY_Y_AXIS_POSITION);
+      this.addProperties(
+          map,
+          SGStringConstants.KEY_X_VALUE,
+          SGStringConstants.KEY_Y_VALUE,
+          KEY_X_AXIS_POSITION,
+          KEY_Y_AXIS_POSITION);
       return map;
     }
 
@@ -2115,11 +2130,11 @@ public class SGFigureElementString extends SGFigureElement
           new Font(el.getFontName(), el.getFontStyle(), (int) (el.getMagnification() * fontSize));
     } else {
       // add
-      final float fontSize = SGIStringConstants.DEFAULT_LABEL_FONT_SIZE;
+      final float fontSize = DEFAULT_LABEL_FONT_SIZE;
       font =
           new Font(
-              SGIStringConstants.DEFAULT_LABEL_FONT_NAME,
-              SGIStringConstants.DEFAULT_LABEL_FONT_STYLE,
+              DEFAULT_LABEL_FONT_NAME,
+              DEFAULT_LABEL_FONT_STYLE,
               (int) (this.mMagnification * fontSize));
     }
 

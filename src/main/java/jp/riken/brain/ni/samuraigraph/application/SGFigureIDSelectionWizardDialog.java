@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;

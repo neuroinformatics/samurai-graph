@@ -100,6 +100,6 @@ class SGVXYDataBufferTest {
     SGVXYDataBuffer buf =
         new SGVXYDataBuffer(
             new double[] {1.0}, new double[] {2.0}, new double[] {3.0}, new double[] {4.0}, false);
-    assertEquals(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, buf.getGridTypeKey());
+    assertEquals(SGDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, buf.getGridTypeKey());
   }
 }

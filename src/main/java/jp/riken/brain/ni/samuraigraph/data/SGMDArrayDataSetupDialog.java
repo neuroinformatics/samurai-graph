@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+
 import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;
@@ -135,38 +138,38 @@ public class SGMDArrayDataSetupDialog extends SGDataSetupDialog {
   }
 
   public SGIntegerSeriesSet getSXYStride() {
-    return this.mMDArrayDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+    return this.mMDArrayDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
   }
 
   public SGIntegerSeriesSet getSXYTickLabelStride() {
     return this.mMDArrayDataSetupPanel.getStride(
-        SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+        SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
   }
 
   public SGIntegerSeriesSet getSXYZStrideX() {
-    return this.mMDArrayDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
+    return this.mMDArrayDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
   }
 
   public SGIntegerSeriesSet getSXYZStrideY() {
-    return this.mMDArrayDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+    return this.mMDArrayDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
   }
 
   public SGIntegerSeriesSet getSXYZIndexStride() {
     return this.mMDArrayDataSetupPanel.getStride(
-        SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+        SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
   }
 
   public SGIntegerSeriesSet getVXYStrideX() {
-    return this.mMDArrayDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
+    return this.mMDArrayDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X);
   }
 
   public SGIntegerSeriesSet getVXYStrideY() {
-    return this.mMDArrayDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
+    return this.mMDArrayDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
   }
 
   public SGIntegerSeriesSet getVXYIndexStride() {
     return this.mMDArrayDataSetupPanel.getStride(
-        SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
+        SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
   }
 
   /**

@@ -1,16 +1,17 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGGradationPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
-import jp.riken.brain.ni.samuraigraph.base.SGIPaintConstant;
 import jp.riken.brain.ni.samuraigraph.base.SGPatternPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGSelectablePaint;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
-public class SGPaintUtility implements SGIPaintConstant {
+public class SGPaintUtility {
 
   public static SGIPaint readProperty(final Element el) {
 

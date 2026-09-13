@@ -1,9 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+
 import java.util.*;
 import jp.riken.brain.ni.samuraigraph.base.*;
 
-class SGShapePropertyUpdater implements SGIShapeConstants {
+class SGShapePropertyUpdater {
 
   private final SGFigureElementShape owner;
 
@@ -195,8 +197,8 @@ class SGShapePropertyUpdater implements SGIShapeConstants {
             arrow.setStartHeadType(DEFAULT_SHAPE_ARROW_START_HEAD_TYPE);
             arrow.setEndHeadType(DEFAULT_SHAPE_ARROW_END_HEAD_TYPE);
           } else {
-            arrow.setStartHeadType(SGIArrowConstants.SYMBOL_TYPE_VOID);
-            arrow.setEndHeadType(SGIArrowConstants.SYMBOL_TYPE_VOID);
+            arrow.setStartHeadType(SGArrowConstants.SYMBOL_TYPE_VOID);
+            arrow.setEndHeadType(SGArrowConstants.SYMBOL_TYPE_VOID);
           }
           if (owner.addArrowShape(id, arrow, startX, startY, endX, endY, xAxis, yAxis) == false) {
             return null;

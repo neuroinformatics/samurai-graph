@@ -6,6 +6,13 @@
 
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -20,7 +27,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** A panel to set the properties of arrows. */
-public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, ItemListener {
+public class SGArrowPanel extends SGPropertyPanel implements ItemListener {
 
   // serialVersionUID
   private static final long serialVersionUID = -9105514967167799562L;
@@ -226,9 +233,9 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
     }
 
     // the combo box for head type
-    for (int ii = 0; ii < ARROW_SYMBOL_NAME_ARRAY.length; ii++) {
-      this.mStartHeadTypeComboBox.addItem(ARROW_SYMBOL_NAME_ARRAY[ii]);
-      this.mEndHeadTypeComboBox.addItem(ARROW_SYMBOL_NAME_ARRAY[ii]);
+    for (int ii = 0; ii < SGArrowConstants.ARROW_SYMBOL_NAME_ARRAY.length; ii++) {
+      this.mStartHeadTypeComboBox.addItem(SGArrowConstants.ARROW_SYMBOL_NAME_ARRAY[ii]);
+      this.mEndHeadTypeComboBox.addItem(SGArrowConstants.ARROW_SYMBOL_NAME_ARRAY[ii]);
     }
 
     //

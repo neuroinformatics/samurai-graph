@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -300,11 +303,10 @@ public class SGDrawingWindow extends JFrame
     this.mClientRect = new Rectangle2D.Float();
 
     // set the paper rectangle
-    final float initX = 0.0f / SGIConstants.CM_POINT_RATIO;
+    final float initX = 0.0f / CM_POINT_RATIO;
     final float initY = initX;
     this.setPaperOrigin(initX, initY);
-    this.mClientPanel.setPaperSizeRoundingOff(
-        SGIRootObjectConstants.DEFAULT_PAPER_WIDTH, SGIRootObjectConstants.DEFAULT_PAPER_HEIGHT);
+    this.mClientPanel.setPaperSizeRoundingOff(DEFAULT_PAPER_WIDTH, DEFAULT_PAPER_HEIGHT);
 
     this.updateClientRect();
 
@@ -574,7 +576,7 @@ public class SGDrawingWindow extends JFrame
     }
 
     // snap to the lines
-    figure.snapToLines(SGIConstants.OTHER);
+    figure.snapToLines(OTHER);
     figure.setGraphRectOnDragging();
 
     return true;
@@ -1065,7 +1067,7 @@ public class SGDrawingWindow extends JFrame
     return SGDrawingWindowViewportUtility.getPaperRect(this);
   }
 
-  public static final float PAPER_MARGIN = 2.0f / SGIConstants.CM_POINT_RATIO;
+  public static final float PAPER_MARGIN = 2.0f / CM_POINT_RATIO;
 
   /** */
   public Rectangle2D getBoundingBox() {
@@ -1599,9 +1601,9 @@ public class SGDrawingWindow extends JFrame
     boolean minusFlag = false;
     if (gridVisible) {
       final double interval = this.mClientPanel.getGridLineInterval() * CM_POINT_RATIO;
-      final double min = SGIRootObjectConstants.GRID_INTERVAL_MIN_VALUE;
-      final double max = SGIRootObjectConstants.GRID_INTERVAL_MAX_VALUE;
-      final double step = SGIRootObjectConstants.GRID_INTERVAL_STEP_SIZE;
+      final double min = GRID_INTERVAL_MIN_VALUE;
+      final double max = GRID_INTERVAL_MAX_VALUE;
+      final double step = GRID_INTERVAL_STEP_SIZE;
       final int nCeilInterval = (int) Math.ceil(interval / step);
       final int nFloorInterval = (int) Math.floor(interval / step);
       final int nMin = (int) Math.rint(min / step);
@@ -1631,7 +1633,7 @@ public class SGDrawingWindow extends JFrame
 
   // update the items for zooming
   private void updateZoomItems() {
-    final int[] array = SGIRootObjectConstants.MAGNIFICATION_ARRAY;
+    final int[] array = MAGNIFICATION_ARRAY;
     final int max = array[0];
     final int min = array[array.length - 1];
     final int mag = (int) (this.getMagnificationPercent());
@@ -2038,7 +2040,7 @@ public class SGDrawingWindow extends JFrame
       sb.append(s);
     }
     sb.append(str);
-    sb.append(SGIConstants.LINE_SEPARATOR);
+    sb.append(LINE_SEPARATOR);
   }
 
   //
@@ -2162,7 +2164,7 @@ public class SGDrawingWindow extends JFrame
   static final float BOUNDING_BOX_MARGIN;
 
   static {
-    final float ratio = SGIConstants.CM_POINT_RATIO;
+    final float ratio = CM_POINT_RATIO;
     final float ten = (float) SGUtilityNumber.getPowersOfTen(LENGTH_MINIMAL_ORDER);
     BOUNDING_BOX_MARGIN = ten / ratio;
   }
@@ -2745,7 +2747,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   public Element createElement(final Document document, SGExportParameter params) {
-    Element element = document.createElement(SGIRootObjectConstants.TAG_NAME_WINDOW);
+    Element element = document.createElement(TAG_NAME_WINDOW);
     SGPropertyMap map = this.getPropertyFileMap(params);
     map.setToElement(element);
     return element;
@@ -2757,7 +2759,7 @@ public class SGDrawingWindow extends JFrame
    */
   public Element createElementForFocusedFiguresInBoundingBox(
       final Document document, SGExportParameter params) {
-    Element element = document.createElement(SGIRootObjectConstants.TAG_NAME_WINDOW);
+    Element element = document.createElement(TAG_NAME_WINDOW);
     if (this.createElementForFocusedFiguresInBoundingBox(element, params) == false) {
       return null;
     }
@@ -2889,9 +2891,8 @@ public class SGDrawingWindow extends JFrame
 
     // replaces the attributes for the size
     Rectangle2D rect = this.getBoundingBoxOfFigures(this.getFocusedFigureList());
-    final float width = (float) rect.getWidth() * SGIConstants.CM_POINT_RATIO / this.mMagnification;
-    final float height =
-        (float) rect.getHeight() * SGIConstants.CM_POINT_RATIO / this.mMagnification;
+    final float width = (float) rect.getWidth() * CM_POINT_RATIO / this.mMagnification;
+    final float height = (float) rect.getHeight() * CM_POINT_RATIO / this.mMagnification;
     SGPropertyUtility.addProperty(map, KEY_PAPER_WIDTH, width, PAPER_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, KEY_PAPER_HEIGHT, height, PAPER_SIZE_UNIT);
 
@@ -2943,11 +2944,13 @@ public class SGDrawingWindow extends JFrame
       dataAnchoredArray[ii] = fig.isDataAnchored();
       SGIFigureElementAxis aElement = fig.getAxisElement();
       horizontalAxis1VisibleArray[ii] =
-          aElement.isAxisVisible(SGIFigureElementAxis.AXIS_HORIZONTAL_1);
+          aElement.isAxisVisible(SGFigureElementAxisConstants.AXIS_HORIZONTAL_1);
       horizontalAxis2VisibleArray[ii] =
-          aElement.isAxisVisible(SGIFigureElementAxis.AXIS_HORIZONTAL_2);
-      verticalAxis1VisibleArray[ii] = aElement.isAxisVisible(SGIFigureElementAxis.AXIS_VERTICAL_1);
-      verticalAxis2VisibleArray[ii] = aElement.isAxisVisible(SGIFigureElementAxis.AXIS_VERTICAL_2);
+          aElement.isAxisVisible(SGFigureElementAxisConstants.AXIS_HORIZONTAL_2);
+      verticalAxis1VisibleArray[ii] =
+          aElement.isAxisVisible(SGFigureElementAxisConstants.AXIS_VERTICAL_1);
+      verticalAxis2VisibleArray[ii] =
+          aElement.isAxisVisible(SGFigureElementAxisConstants.AXIS_VERTICAL_2);
       legendAvailableArray[ii] = fig.isLegendAvailable();
       colorBarAvailableArray[ii] = fig.isColorBarAvailable();
       alignmentBarsAvailableArray[ii] = fig.isAlignmentBarsAvailable();
@@ -3644,7 +3647,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   float getExportLengthValue(final float len) {
-    return SGUtility.getExportValue(len, SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
+    return SGUtility.getExportValue(len, LENGTH_MINIMAL_ORDER);
   }
 
   void doAnimation() {

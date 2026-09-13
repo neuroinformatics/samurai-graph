@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -539,10 +564,10 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
     if (!this.isIndexAvailable()) {
-      map.put(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X, this.getXStride());
-      map.put(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y, this.getYStride());
+      map.put(KEY_SXYZ_STRIDE_X, this.getXStride());
+      map.put(KEY_SXYZ_STRIDE_Y, this.getYStride());
     } else {
-      map.put(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, this.getIndexStride());
+      map.put(KEY_SXYZ_INDEX_STRIDE, this.getIndexStride());
     }
     return map;
   }
@@ -553,9 +578,9 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    * @param map the map of the stride
    */
   public void setStrideMap(Map<String, SGIntegerSeriesSet> map) {
-    this.mIndexStride = map.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
-    this.mXStride = map.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
-    this.mYStride = map.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+    this.mIndexStride = map.get(KEY_SXYZ_INDEX_STRIDE);
+    this.mXStride = map.get(KEY_SXYZ_STRIDE_X);
+    this.mYStride = map.get(KEY_SXYZ_STRIDE_Y);
   }
 
   /**
@@ -625,40 +650,16 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
       // adds variables
       Variable.Builder indexVar =
           this.addVariable(
-              builder,
-              mode,
-              indexDimName,
-              DataType.INT,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-              indexDimName,
-              policy);
+              builder, mode, indexDimName, DataType.INT, VALUE_TYPE_NUMBER, indexDimName, policy);
       Variable.Builder xVar =
           this.addVariable(
-              builder,
-              mode,
-              xName,
-              xDataType,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-              indexDimName,
-              policy);
+              builder, mode, xName, xDataType, VALUE_TYPE_NUMBER, indexDimName, policy);
       Variable.Builder yVar =
           this.addVariable(
-              builder,
-              mode,
-              yName,
-              yDataType,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-              indexDimName,
-              policy);
+              builder, mode, yName, yDataType, VALUE_TYPE_NUMBER, indexDimName, policy);
       Variable.Builder zVar =
           this.addVariable(
-              builder,
-              mode,
-              zName,
-              zDataType,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-              indexDimName,
-              policy);
+              builder, mode, zName, zDataType, VALUE_TYPE_NUMBER, indexDimName, policy);
 
       // creates the file
       try (NetcdfFormatWriter writer = builder.build()) {
@@ -706,33 +707,12 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
 
       // adds variables
       Variable.Builder xVar =
-          this.addVariable(
-              builder,
-              mode,
-              xName,
-              xDataType,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-              xName,
-              policy);
+          this.addVariable(builder, mode, xName, xDataType, VALUE_TYPE_NUMBER, xName, policy);
       Variable.Builder yVar =
-          this.addVariable(
-              builder,
-              mode,
-              yName,
-              yDataType,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-              yName,
-              policy);
+          this.addVariable(builder, mode, yName, yDataType, VALUE_TYPE_NUMBER, yName, policy);
       String zDimString = SGDataTextUtility.getDimensionString(new String[] {xName, yName});
       Variable.Builder zVar =
-          this.addVariable(
-              builder,
-              mode,
-              zName,
-              zDataType,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
-              zDimString,
-              policy);
+          this.addVariable(builder, mode, zName, zDataType, VALUE_TYPE_NUMBER, zDimString, policy);
 
       // creates the file
       try (NetcdfFormatWriter writer = builder.build()) {
@@ -834,9 +814,9 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
   @Override
   public String[] getDataViewerColumnTypes() {
     List<String> list = new ArrayList<String>();
-    list.add(SGIDataColumnTypeConstants.X_VALUE);
-    list.add(SGIDataColumnTypeConstants.Y_VALUE);
-    list.add(SGIDataColumnTypeConstants.Z_VALUE);
+    list.add(X_VALUE);
+    list.add(Y_VALUE);
+    list.add(Z_VALUE);
     String[] ret = list.toArray(new String[list.size()]);
     return ret;
   }
@@ -862,10 +842,9 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     if (this.isIndexAvailable()) {
       ret = 1;
     } else {
-      if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)
-          || SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
+      if (X_VALUE.equals(columnType) || Y_VALUE.equals(columnType)) {
         ret = 1;
-      } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
+      } else if (Z_VALUE.equals(columnType)) {
         if (all) {
           ret = this.mXVariable.getDimension(0).getLength();
         } else {
@@ -886,19 +865,19 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
         ret = this.mIndexStride.getLength();
       }
     } else {
-      if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
+      if (X_VALUE.equals(columnType)) {
         if (all) {
           ret = this.mXVariable.getDimension(0).getLength();
         } else {
           ret = this.mXStride.getLength();
         }
-      } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
+      } else if (Y_VALUE.equals(columnType)) {
         if (all) {
           ret = this.mYVariable.getDimension(0).getLength();
         } else {
           ret = this.mYStride.getLength();
         }
-      } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
+      } else if (Z_VALUE.equals(columnType)) {
         if (all) {
           ret = this.mYVariable.getDimension(0).getLength();
         } else {

@@ -64,7 +64,7 @@ public class SGSXYZDataBuffer extends SGOneDimensionalDataBuffer {
    */
   @Override
   public String getGridTypeKey() {
-    return SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG;
+    return SGDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG;
   }
 
   /**

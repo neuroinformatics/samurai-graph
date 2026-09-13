@@ -146,19 +146,29 @@ class SGDrawingWindowObjectHelper {
 
     // set to the menu bar
     SGMenuBar mBar = owner.mMenuBar;
-    mBar.setMenuItemEnabled(owner.MENUBAR_EDIT, owner.MENUBARCMD_CUT, eff);
-    mBar.setMenuItemEnabled(owner.MENUBAR_EDIT, owner.MENUBARCMD_COPY, eff);
-    mBar.setMenuItemEnabled(owner.MENUBAR_EDIT, owner.MENUBARCMD_DELETE, eff);
-    mBar.setMenuItemEnabled(owner.MENUBAR_EDIT, owner.MENUBARCMD_DUPLICATE, eff);
-    mBar.setMenuItemEnabled(owner.MENUBAR_ARRANGE, owner.MENUBARCMD_BRING_TO_FRONT, eff);
-    mBar.setMenuItemEnabled(owner.MENUBAR_ARRANGE, owner.MENUBARCMD_BRING_FORWARD, eff);
-    mBar.setMenuItemEnabled(owner.MENUBAR_ARRANGE, owner.MENUBARCMD_SEND_BACKWARD, eff);
-    mBar.setMenuItemEnabled(owner.MENUBAR_ARRANGE, owner.MENUBARCMD_SEND_TO_BACK, eff);
+    mBar.setMenuItemEnabled(
+        SGRootObjectConstants.MENUBAR_EDIT, SGRootObjectConstants.MENUBARCMD_CUT, eff);
+    mBar.setMenuItemEnabled(
+        SGRootObjectConstants.MENUBAR_EDIT, SGRootObjectConstants.MENUBARCMD_COPY, eff);
+    mBar.setMenuItemEnabled(
+        SGRootObjectConstants.MENUBAR_EDIT, SGRootObjectConstants.MENUBARCMD_DELETE, eff);
+    mBar.setMenuItemEnabled(
+        SGRootObjectConstants.MENUBAR_EDIT, SGRootObjectConstants.MENUBARCMD_DUPLICATE, eff);
+    mBar.setMenuItemEnabled(
+        SGRootObjectConstants.MENUBAR_ARRANGE,
+        SGRootObjectConstants.MENUBARCMD_BRING_TO_FRONT,
+        eff);
+    mBar.setMenuItemEnabled(
+        SGRootObjectConstants.MENUBAR_ARRANGE, SGRootObjectConstants.MENUBARCMD_BRING_FORWARD, eff);
+    mBar.setMenuItemEnabled(
+        SGRootObjectConstants.MENUBAR_ARRANGE, SGRootObjectConstants.MENUBARCMD_SEND_BACKWARD, eff);
+    mBar.setMenuItemEnabled(
+        SGRootObjectConstants.MENUBAR_ARRANGE, SGRootObjectConstants.MENUBARCMD_SEND_TO_BACK, eff);
 
     // set to the tool bar
     SGToolBar tBar = owner.mToolBar;
-    tBar.setButtonEnabled(owner.MENUBARCMD_CUT, eff);
-    tBar.setButtonEnabled(owner.MENUBARCMD_COPY, eff);
+    tBar.setButtonEnabled(SGRootObjectConstants.MENUBARCMD_CUT, eff);
+    tBar.setButtonEnabled(SGRootObjectConstants.MENUBARCMD_COPY, eff);
   }
 
   public boolean moveFigureToEnd(final int id, final boolean toFront) {

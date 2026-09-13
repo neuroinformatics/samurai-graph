@@ -1,19 +1,26 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.Color;
 import java.util.Iterator;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIVXYTypeData;
 
-public class SGArrowUtility implements SGIVXYDataConstants, SGIDataCommandConstants {
+public class SGArrowUtility {
 
   /**
    * Sets the line width with a given unit.
@@ -396,7 +403,7 @@ public class SGArrowUtility implements SGIVXYDataConstants, SGIDataCommandConsta
       SGTuple2f[] startArray,
       SGTuple2f[] endArray) {
     final boolean polar = dataVXY.isPolar();
-    final float factor = groupSet.getMagnification() / (SGIConstants.CM_POINT_RATIO * magPerCM);
+    final float factor = groupSet.getMagnification() / (CM_POINT_RATIO * magPerCM);
     final double xyRatio = calcXYRatio(dataVXY, graph, groupSet, invariant);
     if (polar) {
       final double[] magnitudeArray = firstValueArray;

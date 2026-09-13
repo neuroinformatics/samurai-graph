@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Frame;
@@ -41,7 +45,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
@@ -530,7 +533,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
   /** Notify that the mouse cursor is changed. */
   public void notifyChangeCursor() {
-    this.notifyToListener(SGIFigureElement.NOTIFY_CHANGE_CURSOR);
+    this.notifyToListener(NOTIFY_CHANGE_CURSOR);
   }
 
   /** */
@@ -571,7 +574,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
         // do nothing
       } else {
         // set all objects unselected
-        this.notifyToListener(SGIFigureElement.CLEAR_FOCUSED_OBJECTS);
+        this.notifyToListener(CLEAR_FOCUSED_OBJECTS);
 
         // set given object selected
         el.setSelected(true);
@@ -687,38 +690,38 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
   /** Notify the change to other figure elements for synchronization. */
   public void notifyChange() {
-    this.notifyToListener(SGIFigureElement.NOTIFY_CHANGE);
+    this.notifyToListener(NOTIFY_CHANGE);
   }
 
   /** Notify the undo operation to other figure elements for synchronization. */
   public void notifyChangeOnUndo() {
-    this.notifyToListener(SGIFigureElement.NOTIFY_CHANGE_ON_UNDO);
+    this.notifyToListener(NOTIFY_CHANGE_ON_UNDO);
   }
 
   /** Notify the change on commitment to other figure elements for synchronization. */
   public void notifyChangeOnCommit() {
-    this.notifyToListener(SGIFigureElement.NOTIFY_CHANGE_ON_COMMIT);
+    this.notifyToListener(NOTIFY_CHANGE_ON_COMMIT);
   }
 
   public void notifyChangeOnCancel() {
-    this.notifyToListener(SGIFigureElement.NOTIFY_CHANGE_ON_CANCEL);
+    this.notifyToListener(NOTIFY_CHANGE_ON_CANCEL);
   }
 
   public void setPropertiesOfSelectedObjects(SGIPropertyDialogObserver obs) {
     this.setPropertyDialogObserverClass(obs.getClass());
-    this.notifyToListener(SGIFigureElement.SHOW_PROPERTY_DIALOG_FOR_SELECTED_OBJECTS);
+    this.notifyToListener(SHOW_PROPERTY_DIALOG_FOR_SELECTED_OBJECTS);
     this.setPropertyDialogObserverClass(null);
   }
 
   public void setPropertiesOfAllVisibleObjects(SGIPropertyDialogObserver obs) {
     this.setPropertyDialogObserverClass(obs.getClass());
-    this.notifyToListener(SGIFigureElement.SHOW_PROPERTY_DIALOG_FOR_VISIBLE_OBJECTS);
+    this.notifyToListener(SHOW_PROPERTY_DIALOG_FOR_VISIBLE_OBJECTS);
     this.setPropertyDialogObserverClass(null);
   }
 
   public void setPropertiesOfAllObjects(SGIPropertyDialogObserver obs) {
     this.setPropertyDialogObserverClass(obs.getClass());
-    this.notifyToListener(SGIFigureElement.SHOW_PROPERTY_DIALOG_FOR_ALL_OBJECTS);
+    this.notifyToListener(SHOW_PROPERTY_DIALOG_FOR_ALL_OBJECTS);
     this.setPropertyDialogObserverClass(null);
   }
 
@@ -957,7 +960,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
   /** Notify the change to the root object. This method is used to update the history tree. */
   public void notifyToRoot() {
-    this.notifyToListener(SGIFigureElement.NOTIFY_CHANGE_TO_ROOT);
+    this.notifyToListener(NOTIFY_CHANGE_TO_ROOT);
   }
 
   public void setChanged(final boolean b) {
@@ -1904,7 +1907,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
   /** Notify to listeners that the data selection is updated. */
   public void notifyDataSelection() {
-    this.notifyToListener(SGIFigureElement.NOTIFY_DATA_SELECTION);
+    this.notifyToListener(NOTIFY_DATA_SELECTION);
   }
 
   /** Returns a string representation of this class. This method returns the simple class name. */
@@ -1956,7 +1959,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
         dateMode ? new SGAxisDateValue(max) : new SGAxisDoubleValue(max),
         baseline,
         step,
-        SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT);
+        AXIS_SCALE_EFFECTIVE_DIGIT);
   }
 
   /**
@@ -2119,10 +2122,10 @@ public abstract class SGFigureElement implements SGIFigureElement {
   }
 
   protected boolean isNotificationMessage(final String msg) {
-    return SGIFigureElement.NOTIFY_CHANGE.equals(msg)
-        || SGIFigureElement.NOTIFY_CHANGE_ON_CANCEL.equals(msg)
-        || SGIFigureElement.NOTIFY_CHANGE_ON_COMMIT.equals(msg)
-        || SGIFigureElement.NOTIFY_CHANGE_ON_UNDO.equals(msg);
+    return NOTIFY_CHANGE.equals(msg)
+        || NOTIFY_CHANGE_ON_CANCEL.equals(msg)
+        || NOTIFY_CHANGE_ON_COMMIT.equals(msg)
+        || NOTIFY_CHANGE_ON_UNDO.equals(msg);
   }
 
   /**

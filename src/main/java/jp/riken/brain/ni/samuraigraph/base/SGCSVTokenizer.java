@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -50,9 +52,9 @@ import org.apache.commons.csv.QuoteMode;
  *
  * </blockquote>
  *
- * @see SGITextDataConstants
+ * @see SGTextDataConstants
  */
-public class SGCSVTokenizer implements Iterator<SGCSVTokenizer.Token>, SGITextDataConstants {
+public class SGCSVTokenizer implements Iterator {
 
   private final boolean isCommentLine;
   private final Iterator<CSVRecord> recordIterator;

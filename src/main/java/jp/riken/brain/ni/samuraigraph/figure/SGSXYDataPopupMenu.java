@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;

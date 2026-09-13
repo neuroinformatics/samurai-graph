@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;

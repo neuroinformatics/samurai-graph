@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -9,7 +12,7 @@ import javax.swing.JComboBox;
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer.Token;
 
 /** A combo box to display the magnification. */
-public class SGZoomComboBox extends JComboBox<String> implements SGIRootObjectConstants {
+public class SGZoomComboBox extends JComboBox<String> {
 
   /** */
   private static final long serialVersionUID = 4844389430288943687L;

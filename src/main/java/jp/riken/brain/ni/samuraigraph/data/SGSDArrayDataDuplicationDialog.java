@@ -11,6 +11,9 @@
 
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+
 import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JTextField;

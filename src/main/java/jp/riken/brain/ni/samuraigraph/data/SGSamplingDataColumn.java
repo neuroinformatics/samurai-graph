@@ -48,7 +48,7 @@ public class SGSamplingDataColumn extends SGNumberDataColumn {
    * @return the value type of this column
    */
   public String getValueType() {
-    return SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE;
+    return SGDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE;
   }
 
   /**

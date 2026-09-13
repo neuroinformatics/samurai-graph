@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDefaultColumnTypeUtility.*;
 
 import java.util.List;
@@ -8,8 +10,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import org.w3c.dom.NamedNodeMap;
 
 /** Static helper for the SDArray default column types. */
-public final class SGDefaultColumnTypeSDArrayUtility
-    implements SGIDataColumnTypeConstants, SGIDataPropertyKeyConstants {
+public final class SGDefaultColumnTypeSDArrayUtility {
 
   private SGDefaultColumnTypeSDArrayUtility() {}
 
@@ -451,8 +452,8 @@ public final class SGDefaultColumnTypeSDArrayUtility
       return false;
     }
 
-    Double samplingRate = (Double) infoMap.get(SGIDataInformationKeyConstants.KEY_SAMPLING_RATE);
-    Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
+    Double samplingRate = (Double) infoMap.get(SGDataInformationKeyConstants.KEY_SAMPLING_RATE);
+    Boolean multiple = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE);
     if (multiple == null) {
       return false;
     }

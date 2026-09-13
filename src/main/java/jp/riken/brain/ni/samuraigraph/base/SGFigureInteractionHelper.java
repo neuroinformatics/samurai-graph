@@ -24,7 +24,7 @@ class SGFigureInteractionHelper {
     Color cl = null;
 
     // x
-    str = el.getAttribute(SGFigure.KEY_FIGURE_X_IN_CLIENT);
+    str = el.getAttribute(SGFigureConstants.KEY_FIGURE_X_IN_CLIENT);
     if (str.length() != 0) {
       StringBuilder ux = new StringBuilder();
       num = SGUtilityText.getNumber(str, ux);
@@ -38,7 +38,7 @@ class SGFigureInteractionHelper {
     }
 
     // y
-    str = el.getAttribute(SGFigure.KEY_FIGURE_Y_IN_CLIENT);
+    str = el.getAttribute(SGFigureConstants.KEY_FIGURE_Y_IN_CLIENT);
     if (str.length() != 0) {
       StringBuilder uy = new StringBuilder();
       num = SGUtilityText.getNumber(str, uy);
@@ -52,7 +52,7 @@ class SGFigureInteractionHelper {
     }
 
     // width
-    str = el.getAttribute(SGFigure.KEY_FIGURE_WIDTH);
+    str = el.getAttribute(SGFigureConstants.KEY_FIGURE_WIDTH);
     if (str.length() != 0) {
       StringBuilder uWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uWidth);
@@ -66,7 +66,7 @@ class SGFigureInteractionHelper {
     }
 
     // height
-    str = el.getAttribute(SGFigure.KEY_FIGURE_HEIGHT);
+    str = el.getAttribute(SGFigureConstants.KEY_FIGURE_HEIGHT);
     if (str.length() != 0) {
       StringBuilder uHeight = new StringBuilder();
       num = SGUtilityText.getNumber(str, uHeight);
@@ -80,7 +80,7 @@ class SGFigureInteractionHelper {
     }
 
     // background color
-    str = el.getAttribute(SGFigure.KEY_FIGURE_BACKGROUND_COLOR);
+    str = el.getAttribute(SGFigureConstants.KEY_FIGURE_BACKGROUND_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColor(str);
       if (cl == null) {
@@ -92,7 +92,7 @@ class SGFigureInteractionHelper {
     }
 
     // transparent
-    str = el.getAttribute(SGFigure.KEY_FIGURE_BACKGROUND_TRANSPARENT);
+    str = el.getAttribute(SGFigureConstants.KEY_FIGURE_BACKGROUND_TRANSPARENT);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -105,7 +105,7 @@ class SGFigureInteractionHelper {
     }
 
     // data anchor
-    str = el.getAttribute(SGFigure.KEY_FIGURE_DATA_ANCHOR);
+    str = el.getAttribute(SGFigureConstants.KEY_FIGURE_DATA_ANCHOR);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -160,14 +160,14 @@ class SGFigureInteractionHelper {
     float hNew;
 
     // x
-    if (mouseLocation == SGIConstants.WEST
-        || mouseLocation == SGIConstants.SOUTH_WEST
-        || mouseLocation == SGIConstants.NORTH_WEST) {
+    if (mouseLocation == SGConstants.WEST
+        || mouseLocation == SGConstants.SOUTH_WEST
+        || mouseLocation == SGConstants.NORTH_WEST) {
       xNew = oxNew;
       wNew = maxX - xNew;
-    } else if (mouseLocation == SGIConstants.EAST
-        || mouseLocation == SGIConstants.SOUTH_EAST
-        || mouseLocation == SGIConstants.NORTH_EAST) {
+    } else if (mouseLocation == SGConstants.EAST
+        || mouseLocation == SGConstants.SOUTH_EAST
+        || mouseLocation == SGConstants.NORTH_EAST) {
       xNew = minX;
 
       final int nMax = (int) ((maxX - px) / interval);
@@ -180,7 +180,7 @@ class SGFigureInteractionHelper {
 
       final float maxNew = px + nNew * interval;
       wNew = maxNew - minX;
-    } else if (mouseLocation == SGIConstants.OTHER) {
+    } else if (mouseLocation == SGConstants.OTHER) {
       xNew = oxNew;
       wNew = (float) dRect.getWidth();
     } else {
@@ -189,14 +189,14 @@ class SGFigureInteractionHelper {
     }
 
     // y
-    if (mouseLocation == SGIConstants.SOUTH
-        || mouseLocation == SGIConstants.SOUTH_WEST
-        || mouseLocation == SGIConstants.SOUTH_EAST) {
+    if (mouseLocation == SGConstants.SOUTH
+        || mouseLocation == SGConstants.SOUTH_WEST
+        || mouseLocation == SGConstants.SOUTH_EAST) {
       yNew = minY;
       hNew = oyNew - minY;
-    } else if (mouseLocation == SGIConstants.NORTH
-        || mouseLocation == SGIConstants.NORTH_EAST
-        || mouseLocation == SGIConstants.NORTH_WEST) {
+    } else if (mouseLocation == SGConstants.NORTH
+        || mouseLocation == SGConstants.NORTH_EAST
+        || mouseLocation == SGConstants.NORTH_WEST) {
       final int nMin = (int) ((minY - py) / interval);
       final float rMin = interval * nMin;
 
@@ -209,7 +209,7 @@ class SGFigureInteractionHelper {
       hNew = maxY - minNew;
 
       yNew = minNew;
-    } else if (mouseLocation == SGIConstants.OTHER) {
+    } else if (mouseLocation == SGConstants.OTHER) {
       hNew = (float) dRect.getHeight();
       yNew = oyNew - hNew;
     } else {
@@ -249,7 +249,7 @@ class SGFigureInteractionHelper {
     final int ml = owner.mMouseLocation;
 
     // other points
-    if (ml == SGIConstants.OTHER) {
+    if (ml == SGConstants.OTHER) {
       Rectangle2D rect = owner.getExtraRegionBounds();
       if (owner.mWnd.mMousePressLocation != null
           && !rect.contains(owner.mWnd.mMousePressLocation)) {
@@ -293,42 +293,42 @@ class SGFigureInteractionHelper {
 
     Cursor cur = null;
     switch (owner.mMouseLocation) {
-      case SGIConstants.WEST:
+      case SGConstants.WEST:
         {
           cur = new Cursor(Cursor.W_RESIZE_CURSOR);
           break;
         }
-      case SGIConstants.EAST:
+      case SGConstants.EAST:
         {
           cur = new Cursor(Cursor.E_RESIZE_CURSOR);
           break;
         }
-      case SGIConstants.NORTH:
+      case SGConstants.NORTH:
         {
           cur = new Cursor(Cursor.N_RESIZE_CURSOR);
           break;
         }
-      case SGIConstants.SOUTH:
+      case SGConstants.SOUTH:
         {
           cur = new Cursor(Cursor.S_RESIZE_CURSOR);
           break;
         }
-      case SGIConstants.NORTH_WEST:
+      case SGConstants.NORTH_WEST:
         {
           cur = new Cursor(Cursor.NW_RESIZE_CURSOR);
           break;
         }
-      case SGIConstants.SOUTH_EAST:
+      case SGConstants.SOUTH_EAST:
         {
           cur = new Cursor(Cursor.SE_RESIZE_CURSOR);
           break;
         }
-      case SGIConstants.NORTH_EAST:
+      case SGConstants.NORTH_EAST:
         {
           cur = new Cursor(Cursor.NE_RESIZE_CURSOR);
           break;
         }
-      case SGIConstants.SOUTH_WEST:
+      case SGConstants.SOUTH_WEST:
         {
           cur = new Cursor(Cursor.SW_RESIZE_CURSOR);
           break;
@@ -376,7 +376,7 @@ class SGFigureInteractionHelper {
       if (SGFigure.isSnappingToGrid()) interval *= owner.mWnd.getGridLineInterval();
       else
         interval *=
-            (float) (SGIRootObjectConstants.GRID_INTERVAL_STEP_SIZE / SGIConstants.CM_POINT_RATIO);
+            (float) (SGRootObjectConstants.GRID_INTERVAL_STEP_SIZE / SGConstants.CM_POINT_RATIO);
       // horizontal
       if (dx != 0)
         rect.setRect(rect.getX() + interval * dx, rect.getY(), rect.getWidth(), rect.getHeight());
@@ -386,7 +386,7 @@ class SGFigureInteractionHelper {
 
       // moves figure
       owner.setDraggingRect(rect);
-      owner.snapToLines(SGIConstants.OTHER);
+      owner.snapToLines(SGConstants.OTHER);
       owner.setGraphRectOnDragging();
       if (owner.isFigureMoved()) {
         owner.setChanged(true);
@@ -487,7 +487,7 @@ class SGFigureInteractionHelper {
     }
 
     // snap to the lines
-    owner.snapToLines(SGIConstants.OTHER);
+    owner.snapToLines(SGConstants.OTHER);
     owner.setGraphRectOnDragging();
 
     return true;
@@ -526,7 +526,7 @@ class SGFigureInteractionHelper {
       if (index < 0) {
         return false;
       }
-      el.setAttribute(SGIFigureElement.KEY_INDEX_IN_LEGEND, Integer.toString(index));
+      el.setAttribute(SGFigureElementConstants.KEY_INDEX_IN_LEGEND, Integer.toString(index));
     }
 
     // append new Element objects to the parent
@@ -603,10 +603,10 @@ class SGFigureInteractionHelper {
         final int loc = owner.mMouseLocation;
 
         // except the four corners
-        if (loc != SGIConstants.NORTH_WEST
-            && loc != SGIConstants.NORTH_EAST
-            && loc != SGIConstants.SOUTH_EAST
-            && loc != SGIConstants.SOUTH_WEST) {
+        if (loc != SGConstants.NORTH_WEST
+            && loc != SGConstants.NORTH_EAST
+            && loc != SGConstants.SOUTH_EAST
+            && loc != SGConstants.SOUTH_WEST) {
           // from the list of the selected figure
           if (owner.mPressedElement == null) {
             wnd.setFocusedFigure(owner, !owner.isSelected());

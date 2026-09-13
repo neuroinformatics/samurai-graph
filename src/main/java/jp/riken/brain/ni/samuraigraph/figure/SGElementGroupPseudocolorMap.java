@@ -1,5 +1,23 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGRectangleConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Area;
@@ -18,7 +36,7 @@ import org.w3c.dom.Element;
 
 /** The base class for the pseudocolor map. */
 public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectangle
-    implements SGIColorMapConstants, SGIElementGroupGridSXY {
+    implements SGIElementGroupGridSXY {
 
   /** A value for rectangle width with related axis. */
   protected double mWidthValue;
@@ -392,7 +410,7 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
       Number num = null;
 
       // width of the rectangle
-      str = el.getAttribute(KEY_RECTANGLE_WIDTH_VALUE);
+      str = el.getAttribute(SGColorMapConstants.KEY_RECTANGLE_WIDTH_VALUE);
       if (str.length() != 0) {
         num = SGUtilityText.getDouble(str);
         if (num == null) {
@@ -424,7 +442,8 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
     if (this.mGridMode) {
       // do nothing
     } else {
-      el.setAttribute(KEY_RECTANGLE_WIDTH_VALUE, Double.toString(this.mWidthValue));
+      el.setAttribute(
+          SGColorMapConstants.KEY_RECTANGLE_WIDTH_VALUE, Double.toString(this.mWidthValue));
       el.setAttribute(KEY_RECTANGLE_HEIGHT_VALUE, Double.toString(this.mHeightValue));
     }
     return true;

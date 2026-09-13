@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5Exception;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
 import com.jmatio.io.MatFileReader;
@@ -9,13 +13,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMATLABFile;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayFile;
@@ -29,7 +33,7 @@ import org.apache.logging.log4j.Logger;
 import ucar.nc2.NetcdfFile;
 
 /** Transition logic between the wizard dialogs for data addition. */
-final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplicationTextConstants {
+final class SGDataWizardTransition {
 
   private static final Logger logger = LogManager.getLogger(SGDataWizardTransition.class);
 
@@ -45,11 +49,10 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
       final SGNetCDFDataSetupWizardDialog dg) {
     final boolean multipleVariable = true;
     infoMap.put(
-        SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE,
-        Boolean.valueOf(multipleVariable));
+        SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.valueOf(multipleVariable));
 
     SGNetCDFFile ncSource =
-        (SGNetCDFFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
+        (SGNetCDFFile) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_SOURCE);
     NetcdfFile ncFile = null;
     try {
       String path = ncSource.getNetcdfFile().getLocation();
@@ -74,7 +77,7 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
     }
 
     SGIntegerSeriesSet indices = dg.getSXYPickUpIndices();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
 
     return true;
   }
@@ -86,11 +89,10 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
       final boolean showDefault) {
     final boolean multipleVariable = true;
     infoMap.put(
-        SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE,
-        Boolean.valueOf(multipleVariable));
+        SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.valueOf(multipleVariable));
 
     SGMDArrayFile dataSource =
-        (SGMDArrayFile) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_SOURCE);
+        (SGMDArrayFile) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_SOURCE);
     SGMDArrayFile mdFile = null;
     String path = dataSource.getPath();
     SGDataColumnInfoSet colInfoSet = null;
@@ -108,7 +110,7 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
     }
 
     SGIntegerSeriesSet indices = dg.getSXYPickUpIndices();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
 
     return true;
   }
@@ -139,7 +141,7 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
     String dataType = prev.getSelectedDataType();
     if (dataType == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
+          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGConstants.TITLE_ERROR);
       return false;
     }
 
@@ -159,7 +161,7 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
     String dataName = SGUtility.createDataNameBase(path);
 
     // put into the infoMap
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
 
     SGSDArrayFile sdFile;
     try {
@@ -204,7 +206,7 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
     String dataType = prev.getSelectedDataType();
     if (dataType == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
+          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGConstants.TITLE_ERROR);
       return false;
     }
 
@@ -215,7 +217,7 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
     String dataName = SGUtility.createDataNameBase(path);
 
     // put into the infoMap
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
 
     // open the file
     NetcdfFile ncFile = null;
@@ -281,7 +283,7 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
     String dataType = prev.getSelectedDataType();
     if (dataType == null) {
       SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
+          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGConstants.TITLE_ERROR);
       return false;
     }
 
@@ -289,7 +291,7 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
     Map<String, Object> infoMap = SGDataInfoMapUtility.createInfoMap(dataType, prev, figureID, pos);
 
     // put into the infoMap
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataName);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataName);
 
     // open the file
     if (fileType == FILE_TYPE.HDF5_DATA) {
@@ -380,7 +382,7 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
 
     // set the data
     if (dg.setData(ncFile, dataType, colInfoSet, infoMap, true) == false) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGConstants.TITLE_ERROR);
       return false;
     }
 
@@ -428,7 +430,7 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
 
     // set the data
     if (dg.setData(mdFile, dataType, colInfoSetNew, infoMap, showDefault) == false) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGConstants.TITLE_ERROR);
       return false;
     }
 

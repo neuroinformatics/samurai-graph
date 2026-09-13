@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -21,7 +25,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** Drawing element of the symbol. */
 public abstract class SGDrawingElementSymbol extends SGDrawingElement
-    implements SGIDrawingElementJava2D, SGISymbolConstants {
+    implements SGIDrawingElementJava2D {
 
   /** */
   public SGDrawingElementSymbol() {
@@ -203,26 +207,26 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
   public static String getSymbolTypeName(final int type) {
     String name = null;
     switch (type) {
-      case SGISymbolConstants.SYMBOL_TYPE_CIRCLE:
-        name = SGISymbolConstants.SYMBOL_NAME_CIRCLE;
+      case SYMBOL_TYPE_CIRCLE:
+        name = SYMBOL_NAME_CIRCLE;
         break;
-      case SGISymbolConstants.SYMBOL_TYPE_SQUARE:
-        name = SGISymbolConstants.SYMBOL_NAME_SQUARE;
+      case SYMBOL_TYPE_SQUARE:
+        name = SYMBOL_NAME_SQUARE;
         break;
-      case SGISymbolConstants.SYMBOL_TYPE_DIAMOND:
-        name = SGISymbolConstants.SYMBOL_NAME_DIAMOND;
+      case SYMBOL_TYPE_DIAMOND:
+        name = SYMBOL_NAME_DIAMOND;
         break;
-      case SGISymbolConstants.SYMBOL_TYPE_TRIANGLE:
-        name = SGISymbolConstants.SYMBOL_NAME_TRIANGLE;
+      case SYMBOL_TYPE_TRIANGLE:
+        name = SYMBOL_NAME_TRIANGLE;
         break;
-      case SGISymbolConstants.SYMBOL_TYPE_INVERTED_TRIANGLE:
-        name = SGISymbolConstants.SYMBOL_NAME_INVERTED_TRIANGLE;
+      case SYMBOL_TYPE_INVERTED_TRIANGLE:
+        name = SYMBOL_NAME_INVERTED_TRIANGLE;
         break;
-      case SGISymbolConstants.SYMBOL_TYPE_CROSS:
-        name = SGISymbolConstants.SYMBOL_NAME_CROSS;
+      case SYMBOL_TYPE_CROSS:
+        name = SYMBOL_NAME_CROSS;
         break;
-      case SGISymbolConstants.SYMBOL_TYPE_PLUS:
-        name = SGISymbolConstants.SYMBOL_NAME_PLUS;
+      case SYMBOL_TYPE_PLUS:
+        name = SYMBOL_NAME_PLUS;
         break;
       default:
     }

@@ -1,5 +1,26 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5Exception;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
 import com.jmatio.io.MatFileReader;
@@ -50,23 +71,21 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.FILE_TYPE;
 import jp.riken.brain.ni.samuraigraph.application.SGDataCreator.FileColumn;
 import jp.riken.brain.ni.samuraigraph.application.SGDataCreator.SDArrayFileParseResult;
-import jp.riken.brain.ni.samuraigraph.application.SGIApplicationConstants.FILE_TYPE;
 import jp.riken.brain.ni.samuraigraph.base.SGButton;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTable;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMATLABFile;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable;
@@ -84,8 +103,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         CellEditorListener,
         MouseListener,
         MouseMotionListener,
-        MouseWheelListener,
-        SGIDataColumnTypeConstants {
+        MouseWheelListener {
 
   private static final Logger logger =
       LogManager.getLogger(SGPropertyDataFileChooserWizardDialog.class);
@@ -259,8 +277,8 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
 
     // set up the scroll bar properties
     JScrollBar vertBar = this.mScrollPane.getVerticalScrollBar();
-    vertBar.setUnitIncrement(SGIConstants.SCROLL_BAR_UNIT_INCREMENT);
-    vertBar.setBlockIncrement(SGIConstants.SCROLL_BAR_BLOCK_INCREMENT);
+    vertBar.setUnitIncrement(SCROLL_BAR_UNIT_INCREMENT);
+    vertBar.setBlockIncrement(SCROLL_BAR_BLOCK_INCREMENT);
 
     return true;
   }
@@ -364,9 +382,9 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
 
         // set to the information map
         Map<String, Object> infoMap = dataFile.infoMap;
-        infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
-        infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
-        infoMap.put(SGIDataInformationKeyConstants.KEY_ALL_STRIDE, strideMap);
+        infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
+        infoMap.put(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
+        infoMap.put(SGDataInformationKeyConstants.KEY_ALL_STRIDE, strideMap);
 
         if (this.mPropertyFileDataDialog instanceof SGPropertyFileSDArrayDataDialog) {
           // SDArray
@@ -379,9 +397,9 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
           final boolean multipleVariable = (pickUpIndices == null);
 
           // set to the information map
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
           if (pickUpIndices != null) {
-            infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, pickUpIndices);
+            infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, pickUpIndices);
           }
 
         } else if (this.mPropertyFileDataDialog instanceof SGPropertyFileMDArrayDataDialog) {
@@ -396,12 +414,11 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
 
           // set to the information map
           infoMap.put(
-              SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP,
+              SGDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP,
               pickUpDimensionMap);
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, pickUpIndices);
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
-          infoMap.put(
-              SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP, timeDimensionMap);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, pickUpIndices);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
+          infoMap.put(SGDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP, timeDimensionMap);
         } else {
           throw new Error("This must not happen.");
         }
@@ -433,7 +450,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
         Map<String, Object> infoMap = dataFile.infoMap;
         SGDataColumnInfoSet dataColumnInfoSet = dataFile.dataColInfoSet;
         SGTuple2f figureSize = dataFile.figureSize;
-        infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, figureSize);
+        infoMap.put(SGDataInformationKeyConstants.KEY_FIGURE_SIZE, figureSize);
         String fileName = this.mSingleDataFileChooserWizardDialog.getFileName();
         if (this.showPropertyFileDataDialog(fileName, dataType, dataColumnInfoSet, infoMap)
             == false) {
@@ -1062,7 +1079,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
 
   String getCurrentFileDirectory() {
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
-    String currentDir = pref.get(SGIPreferencesConstants.PREF_KEY_CURRENT_DIRECTORY, null);
+    String currentDir = pref.get(PREF_KEY_CURRENT_DIRECTORY, null);
 
     boolean b = false;
     if (currentDir == null) {
@@ -1169,10 +1186,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
             ncFile = SGApplicationUtility.openNetCDF(fileName);
           } catch (Exception e1) {
             SGUtility.showMessageDialog(
-                this,
-                "Failed to open NetCDF file.",
-                SGIConstants.TITLE_ERROR,
-                JOptionPane.WARNING_MESSAGE);
+                this, "Failed to open NetCDF file.", TITLE_ERROR, JOptionPane.WARNING_MESSAGE);
             return false;
           }
           if (dg.setData(
@@ -1230,10 +1244,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
           } catch (FileNotFoundException e1) {
             valid = false;
             SGUtility.showMessageDialog(
-                this,
-                "Data file is not found.",
-                SGIConstants.TITLE_ERROR,
-                JOptionPane.WARNING_MESSAGE);
+                this, "Data file is not found.", TITLE_ERROR, JOptionPane.WARNING_MESSAGE);
             return false;
           }
 
@@ -1358,8 +1369,8 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
   private void showFileOpenErrorMessage() {
     SGUtility.showMessageDialog(
         this,
-        SGIApplicationTextConstants.MSG_DATA_FILE_OPEN_FAILURE,
-        SGIConstants.TITLE_ERROR,
+        SGApplicationTextConstants.MSG_DATA_FILE_OPEN_FAILURE,
+        TITLE_ERROR,
         JOptionPane.WARNING_MESSAGE);
   }
 

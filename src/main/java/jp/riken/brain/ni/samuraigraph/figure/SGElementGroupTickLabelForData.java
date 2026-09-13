@@ -1,5 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+
 import java.awt.Color;
 import java.util.Iterator;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
@@ -8,11 +13,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 
-public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickLabel
-    implements SGISXYDataConstants, SGIDataCommandConstants {
+public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickLabel {
 
   /** The default constructor. */
   public SGElementGroupTickLabelForData(SGISXYTypeData data) {

@@ -1,5 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGImageConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5Exception;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
@@ -49,7 +56,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGExtensionFileFilter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.base.SGFileChooser;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementLegend;
 import jp.riken.brain.ni.samuraigraph.base.SGIProgressControl;
@@ -60,15 +66,14 @@ import jp.riken.brain.ni.samuraigraph.data.SGDataColumn;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDateDataColumn;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMATLABFile;
+import jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataColumnInfo;
@@ -86,12 +91,7 @@ import ucar.nc2.NetcdfFile;
 import ucar.nc2.NetcdfFiles;
 
 /** This class provides static methods for the application. */
-public class SGApplicationUtility
-    implements SGIApplicationConstants,
-        SGIApplicationTextConstants,
-        SGIDataColumnTypeConstants,
-        SGIImageConstants,
-        SGIConstants {
+public class SGApplicationUtility {
 
   private static final Logger logger = LogManager.getLogger(SGApplicationUtility.class);
 
@@ -102,7 +102,7 @@ public class SGApplicationUtility
    */
   public static void deleteRecursively(final File f) {
     if (f.isDirectory()) {
-      String fs = SGIConstants.FILE_SEPARATOR;
+      String fs = FILE_SEPARATOR;
       String[] fList = f.list();
       StringBuilder sb = new StringBuilder();
       sb.append(f.toString());
@@ -125,7 +125,7 @@ public class SGApplicationUtility
    */
   public static void deleteOnExitRecursively(final File f) {
     if (f.isDirectory()) {
-      String fs = SGIConstants.FILE_SEPARATOR;
+      String fs = FILE_SEPARATOR;
       String[] fList = f.list();
       StringBuilder sb = new StringBuilder();
       sb.append(f.toString());
@@ -249,11 +249,11 @@ public class SGApplicationUtility
   }
 
   public static final void showDataFileInvalidMessageDialog(final Window owner) {
-    SGUtility.showErrorMessageDialog(owner, MSG_DATA_FILE_OPEN_FAILURE, SGIConstants.TITLE_ERROR);
+    SGUtility.showErrorMessageDialog(owner, MSG_DATA_FILE_OPEN_FAILURE, TITLE_ERROR);
   }
 
   public static final void showDataTypeInvalidMessageDialog(final Window owner) {
-    SGUtility.showErrorMessageDialog(owner, MSG_INVALID_DATA_TYPE, SGIConstants.TITLE_ERROR);
+    SGUtility.showErrorMessageDialog(owner, MSG_INVALID_DATA_TYPE, TITLE_ERROR);
   }
 
   /**
@@ -266,7 +266,7 @@ public class SGApplicationUtility
   public static String getPathName(final String parent, final String child) {
     StringBuilder sb = new StringBuilder();
     sb.append(parent);
-    sb.append(SGIConstants.FILE_SEPARATOR);
+    sb.append(FILE_SEPARATOR);
     sb.append(child);
     String path = sb.toString();
     return path;
@@ -362,13 +362,13 @@ public class SGApplicationUtility
     List<SGDataColumnInfo> aColInfoList = new ArrayList<SGDataColumnInfo>();
 
     // create a column for the sampling rate
-    Double samplingRate = (Double) infoMap.get(SGIDataInformationKeyConstants.KEY_SAMPLING_RATE);
+    Double samplingRate = (Double) infoMap.get(SGDataInformationKeyConstants.KEY_SAMPLING_RATE);
     if (samplingRate != null) {
       // create column info for sampling
       SGDataColumnInfo samplingRateColumnInfo =
           new SGSDArrayDataColumnInfo(
               SGDataMiscUtility.createSamplingRateTitle(samplingRate.doubleValue()),
-              SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE);
+              VALUE_TYPE_SAMPLING_RATE);
 
       // set X_VALUE to the column type
       samplingRateColumnInfo.setColumnType(X_VALUE);
@@ -518,7 +518,7 @@ public class SGApplicationUtility
 
     SGIDataSource dataSource = null;
     try {
-      final String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+      final String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
       if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
 
         if (showProgress && progress != null) {
@@ -890,33 +890,33 @@ public class SGApplicationUtility
   static void adjustSXYDataStride(Map<String, Object> infoMap, String strideKey, final int length) {
     SGIntegerSeriesSet stride = (SGIntegerSeriesSet) infoMap.get(strideKey);
     SGIntegerSeriesSet tickLabelStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
     if (stride != null) {
       stride = SGUtility.createIndicesWithinRange(stride, length);
       infoMap.put(strideKey, stride);
     }
     if (tickLabelStride != null) {
       tickLabelStride = SGUtility.createIndicesWithinRange(tickLabelStride, length);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
     }
   }
 
   static int updateInformationMap(
       SGDataColumnInfoSet colInfoSet, Map<String, Object> infoMap, Map<String, Object> pfInfoMap) {
 
-    final int di = SGIConstants.DATA_FILE_INVALID;
+    final int di = DATA_FILE_INVALID;
 
-    String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+    String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
 
     // multiple variable or not
     if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       SGDataColumnInfo[] columns = colInfoSet.getDataColumnInfoArray();
       Boolean multipleVariable =
-          (Boolean) pfInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
+          (Boolean) pfInfoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
       if (multipleVariable == null) {
         return di;
       }
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
 
       int arrayLength = -1;
       int indexLength = -1;
@@ -951,21 +951,21 @@ public class SGApplicationUtility
         }
         if (pickedUpCol != null) {
           // get information of picked up dimension
-          Object indicesObj = pfInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
+          Object indicesObj = pfInfoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
           if (indicesObj != null) {
             String str = indicesObj.toString();
             final int num = pickedUpCol.getDimension(0).getLength();
             SGIntegerSeriesSet indices = SGIntegerSeriesSet.parse(str, num);
             if (indices != null) {
-              infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
+              infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
             }
           } else {
             Object startObj =
-                pfInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START);
+                pfInfoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START);
             Object endObj =
-                pfInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_END);
+                pfInfoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_END);
             Object stepObj =
-                pfInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_STEP);
+                pfInfoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_STEP);
             if (startObj == null || endObj == null || stepObj == null) {
               SGNetCDFDataColumnInfo[] nCols = new SGNetCDFDataColumnInfo[columns.length];
               for (int i = 0; i < nCols.length; i++) {
@@ -974,13 +974,13 @@ public class SGApplicationUtility
               SGDataFileUtility.updatePickupParameters(infoMap, nCols);
             }
             if (startObj != null) {
-              infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START, startObj);
+              infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START, startObj);
             }
             if (endObj != null) {
-              infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_END, endObj);
+              infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_END, endObj);
             }
             if (stepObj != null) {
-              infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_STEP, stepObj);
+              infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_STEP, stepObj);
             }
           }
         }
@@ -992,7 +992,7 @@ public class SGApplicationUtility
           if (X_VALUE.equals(columnType) || Y_VALUE.equals(columnType)) {
             String name = mdInfo.getName();
             Integer dimensionIndex =
-                mdInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+                mdInfo.getDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
             if (dimensionIndex != null && dimensionIndex != -1) {
               pickUpDimMap.put(name, dimensionIndex);
             }
@@ -1006,7 +1006,7 @@ public class SGApplicationUtility
           Integer pickedUpDimension = firstEntry.getValue();
 
           Object pickedUpIndices =
-              pfInfoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
+              pfInfoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
           if (pickedUpDimension == null || pickedUpIndices == null) {
             return di;
           }
@@ -1025,11 +1025,11 @@ public class SGApplicationUtility
           String str = pickedUpIndices.toString();
           SGIntegerSeriesSet indices = SGIntegerSeriesSet.parse(str, num);
           if (indices != null) {
-            infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
+            infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, indices);
           }
         }
 
-        String mapKey = SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP;
+        String mapKey = SGDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP;
         infoMap.put(mapKey, pfInfoMap.get(mapKey));
 
         for (int jj = 0; jj < columns.length; jj++) {
@@ -1044,11 +1044,11 @@ public class SGApplicationUtility
 
       // adjusts the stride
       if (arrayLength != -1) {
-        adjustSXYDataStride(infoMap, SGIDataInformationKeyConstants.KEY_SXY_STRIDE, arrayLength);
+        adjustSXYDataStride(infoMap, SGDataInformationKeyConstants.KEY_SXY_STRIDE, arrayLength);
       }
       if (indexLength != -1) {
         adjustSXYDataStride(
-            infoMap, SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, indexLength);
+            infoMap, SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, indexLength);
       }
 
     } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
@@ -1098,13 +1098,13 @@ public class SGApplicationUtility
         }
         int[] dims = zInfo.getDimensions();
         if (xLength == -1) {
-          Integer xIndex = zInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION);
+          Integer xIndex = zInfo.getDimensionIndex(SGMDArrayConstants.KEY_SXYZ_X_DIMENSION);
           if (xIndex != null && xIndex != -1) {
             xLength = dims[xIndex];
           }
         }
         if (yLength == -1) {
-          Integer yIndex = zInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
+          Integer yIndex = zInfo.getDimensionIndex(SGMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
           if (yIndex != null && yIndex != -1) {
             yLength = dims[yIndex];
           }
@@ -1120,26 +1120,26 @@ public class SGApplicationUtility
       // adjusts the stride
       if (xLength != -1) {
         SGIntegerSeriesSet xStride =
-            (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
+            (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
         if (xStride != null) {
           xStride = SGUtility.createIndicesWithinRange(xStride, xLength);
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X, xStride);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X, xStride);
         }
       }
       if (yLength != -1) {
         SGIntegerSeriesSet yStride =
-            (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+            (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
         if (yStride != null) {
           yStride = SGUtility.createIndicesWithinRange(yStride, yLength);
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y, yStride);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y, yStride);
         }
       }
       if (indexLength != -1) {
         SGIntegerSeriesSet indexStride =
-            (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+            (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
         if (indexStride != null) {
           indexStride = SGUtility.createIndicesWithinRange(indexStride, indexLength);
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, indexStride);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, indexStride);
         }
       }
 
@@ -1199,13 +1199,13 @@ public class SGApplicationUtility
         }
         int[] dims = cInfo.getDimensions();
         if (xLength == -1) {
-          Integer xIndex = cInfo.getDimensionIndex(SGIMDArrayConstants.KEY_VXY_X_DIMENSION);
+          Integer xIndex = cInfo.getDimensionIndex(SGMDArrayConstants.KEY_VXY_X_DIMENSION);
           if (xIndex != null && xIndex != -1) {
             xLength = dims[xIndex];
           }
         }
         if (yLength == -1) {
-          Integer yIndex = cInfo.getDimensionIndex(SGIMDArrayConstants.KEY_VXY_Y_DIMENSION);
+          Integer yIndex = cInfo.getDimensionIndex(SGMDArrayConstants.KEY_VXY_Y_DIMENSION);
           if (yIndex != null && yIndex != -1) {
             yLength = dims[yIndex];
           }
@@ -1221,36 +1221,36 @@ public class SGApplicationUtility
       // adjusts the stride
       if (xLength != -1) {
         SGIntegerSeriesSet xStride =
-            (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
+            (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X);
         if (xStride != null) {
           xStride = SGUtility.createIndicesWithinRange(xStride, xLength);
-          infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X, xStride);
+          infoMap.put(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X, xStride);
         }
       }
       if (yLength != -1) {
         SGIntegerSeriesSet yStride =
-            (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
+            (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
         if (yStride != null) {
           yStride = SGUtility.createIndicesWithinRange(yStride, yLength);
-          infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y, yStride);
+          infoMap.put(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y, yStride);
         }
       }
       if (indexLength != -1) {
         SGIntegerSeriesSet indexStride =
-            (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
+            (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
         if (indexStride != null) {
           indexStride = SGUtility.createIndicesWithinRange(indexStride, indexLength);
-          infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, indexStride);
+          infoMap.put(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, indexStride);
         }
       }
     }
 
     // get stride information
     infoMap.put(
-        SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE,
-        pfInfoMap.get(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE));
+        SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE,
+        pfInfoMap.get(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE));
     Map<?, ?> strideMap =
-        (pfInfoMap.get(SGIDataInformationKeyConstants.KEY_ALL_STRIDE) instanceof Map<?, ?> m1)
+        (pfInfoMap.get(SGDataInformationKeyConstants.KEY_ALL_STRIDE) instanceof Map<?, ?> m1)
             ? m1
             : null;
     if (strideMap != null) {
@@ -1261,15 +1261,15 @@ public class SGApplicationUtility
 
     // updates time dimension map
     Map<?, ?> timeDimensionMap =
-        (pfInfoMap.get(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP)
+        (pfInfoMap.get(SGDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP)
                 instanceof Map<?, ?> m2)
             ? m2
             : null;
     if (timeDimensionMap != null) {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP, timeDimensionMap);
+      infoMap.put(SGDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP, timeDimensionMap);
     }
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SUCCESSFUL_COMPLETION;
   }
 
   /**
@@ -1426,7 +1426,7 @@ public class SGApplicationUtility
       final String versionNumber) {
 
     // get data type
-    final String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+    final String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
 
     // check data length
     final int len = listArray.get(0).size();
@@ -1519,7 +1519,7 @@ public class SGApplicationUtility
 
   // Returns the sampling rate.
   static Number getSamplingRate(Map<String, Object> infoMap) {
-    Object obj = infoMap.get(SGIDataInformationKeyConstants.KEY_SAMPLING_RATE);
+    Object obj = infoMap.get(SGDataInformationKeyConstants.KEY_SAMPLING_RATE);
     if (obj == null) {
       return null;
     }
@@ -1622,7 +1622,7 @@ public class SGApplicationUtility
 
   private static void showHDF5ReadErrorMessageDialog(Window wnd, String msg, String path) {
     SGHDF5ErrorMessagePanel p = new SGHDF5ErrorMessagePanel(msg, path);
-    SGUtility.showErrorMessageDialog(wnd, p, SGIConstants.TITLE_ERROR);
+    SGUtility.showErrorMessageDialog(wnd, p, TITLE_ERROR);
   }
 
   public static void showHDF5ReadErrorMessageDialog(Window wnd, String path) {
@@ -1722,7 +1722,7 @@ public class SGApplicationUtility
     try {
       baOs = new ByteArrayOutputStream();
       propFileCreator.create(wnd, baOs, params, versionString);
-      return baOs.toString(SGIConstants.CHAR_SET_NAME_UTF8);
+      return baOs.toString(CHAR_SET_NAME_UTF8);
     } catch (Exception e) {
       return null;
     } finally {

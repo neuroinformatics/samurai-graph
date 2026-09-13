@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -11,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 /** A class with utility methods for the calculation of numbers. */
-public class SGUtilityNumber implements SGIConstants {
+public class SGUtilityNumber {
 
   /**
    * Returns the order of number. For example: 35.5 -> 1, -121.1 -> 2, 0.025 -> -2.
@@ -743,8 +747,7 @@ public class SGUtilityNumber implements SGIConstants {
 
   public static double getNumberInRangeOrder(
       final double value, final SGAxis axis, final int mode) {
-    return SGUtilityNumber.getNumberInRangeOrder(
-        value, axis, SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT, mode);
+    return SGUtilityNumber.getNumberInRangeOrder(value, axis, AXIS_SCALE_EFFECTIVE_DIGIT, mode);
   }
 
   public static double getNumberInRangeOrder(final double value, final SGAxis axis) {
@@ -761,7 +764,7 @@ public class SGUtilityNumber implements SGIConstants {
 
   public static double getNumberInNumberOrder(final double value, final double ref) {
     return getNumberInNumberOrder(
-        value, ref, SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
+        value, ref, AXIS_SCALE_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
   }
 
   /**

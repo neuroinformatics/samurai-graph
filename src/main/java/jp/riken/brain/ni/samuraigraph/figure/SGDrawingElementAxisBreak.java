@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisBreakConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -15,7 +19,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
@@ -25,8 +28,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
 /** Drawing element of axis break symbol. */
-public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
-    implements SGIAxisBreakConstants {
+public abstract class SGDrawingElementAxisBreak extends SGDrawingElement {
 
   /** The location of this symbol. */
   private SGTuple2f mLocation = new SGTuple2f();
@@ -472,13 +474,13 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     this.addProperties(
         map,
         KEY_LENGTH,
-        KEY_INTERVAL,
+        SGAxisBreakConstants.KEY_INTERVAL,
         KEY_DISTORTION,
-        KEY_ANGLE,
-        KEY_LINE_WIDTH,
+        SGAxisBreakConstants.KEY_ANGLE,
+        SGAxisBreakConstants.KEY_LINE_WIDTH,
         KEY_HORIZONTAL,
-        KEY_LINE_COLOR,
-        KEY_INNER_COLOR);
+        SGAxisBreakConstants.KEY_LINE_COLOR,
+        SGAxisBreakConstants.KEY_INNER_COLOR);
     return map;
   }
 
@@ -525,7 +527,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     Boolean b = null;
 
     // width
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_LENGTH);
+    str = el.getAttribute(KEY_LENGTH);
     if (str.length() != 0) {
       StringBuilder uLength = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLength);
@@ -539,7 +541,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // interval
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_INTERVAL);
+    str = el.getAttribute(SGAxisBreakConstants.KEY_INTERVAL);
     if (str.length() != 0) {
       StringBuilder uInterval = new StringBuilder();
       num = SGUtilityText.getNumber(str, uInterval);
@@ -553,7 +555,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // distortion
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_DISTORTION);
+    str = el.getAttribute(KEY_DISTORTION);
     if (str.length() != 0) {
       num = SGUtilityText.getFloat(str);
       if (num == null) {
@@ -566,9 +568,9 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // angle
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_ANGLE);
+    str = el.getAttribute(SGAxisBreakConstants.KEY_ANGLE);
     if (str.length() != 0) {
-      num = SGUtilityText.getFloat(str, SGIConstants.degree);
+      num = SGUtilityText.getFloat(str, degree);
       if (num == null) {
         return false;
       }
@@ -579,7 +581,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // line width
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_LINE_WIDTH);
+    str = el.getAttribute(SGAxisBreakConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -593,7 +595,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // horizontal
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_HORIZONTAL);
+    str = el.getAttribute(KEY_HORIZONTAL);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -606,7 +608,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // line color
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_LINE_COLOR);
+    str = el.getAttribute(SGAxisBreakConstants.KEY_LINE_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColor(str);
       if (cl == null) {
@@ -619,7 +621,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     }
 
     // inner color
-    str = el.getAttribute(SGIAxisBreakConstants.KEY_INNER_COLOR);
+    str = el.getAttribute(SGAxisBreakConstants.KEY_INNER_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColorIncludingList(str);
       if (cl == null) {
@@ -858,7 +860,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     final float mag = this.getMagnification();
     final float length = this.getLength() * mag;
     final float interval = this.getInterval() * mag;
-    final float angle = this.getAngle() * SGIConstants.RADIAN_DEGREE_RATIO;
+    final float angle = this.getAngle() * RADIAN_DEGREE_RATIO;
 
     final float sn = (float) Math.sin(angle);
     final float cs = (float) Math.cos(angle);

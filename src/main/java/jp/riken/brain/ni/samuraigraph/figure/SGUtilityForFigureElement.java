@@ -1,5 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGImageConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +68,7 @@ public class SGUtilityForFigureElement {
       final Color cl = (dataNum > 1) ? colorMap.eval((double) ii / (dataNum - 1)) : color0;
       SGLineStyle style =
           new SGLineStyle(
-              SGISXYDataConstants.DEFAULT_LINE_TYPE, cl, SGISXYDataConstants.DEFAULT_LINE_WIDTH);
+              SGSXYDataConstants.DEFAULT_LINE_TYPE, cl, SGSXYDataConstants.DEFAULT_LINE_WIDTH);
       lineStyleList.add(style);
     }
     return lineStyleList;

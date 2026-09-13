@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.event.ActionEvent;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 

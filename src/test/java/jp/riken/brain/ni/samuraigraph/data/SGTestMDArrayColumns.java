@@ -26,7 +26,7 @@ final class SGTestMDArrayColumns {
 
           @Override
           public String getValueType() {
-            return SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER;
+            return SGDataColumnTypeConstants.VALUE_TYPE_NUMBER;
           }
 
           @Override
@@ -130,7 +130,7 @@ final class SGTestMDArrayColumns {
         new SGMDArrayDataColumnInfo(
             variable(name, dims, new int[dims.length]),
             name,
-            SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     info.setColumnType(columnType);
     return info;
   }

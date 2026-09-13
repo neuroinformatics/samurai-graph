@@ -1,5 +1,15 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+
 import java.awt.Desktop;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -23,7 +33,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Document;
@@ -37,8 +46,7 @@ import org.w3c.dom.NodeList;
  * the changelog from the tagged source tree and opens a confirmation dialog. On confirmation, opens
  * the GitHub Releases page in the default browser.
  */
-class SGUpgradeManager
-    implements ActionListener, SGIConstants, SGIUpgradeConstants, SGIPreferencesConstants {
+class SGUpgradeManager implements ActionListener {
 
   private static final String MSG_LATEST_VERSION_INSTALLED =
       "The latest version is already installed.";

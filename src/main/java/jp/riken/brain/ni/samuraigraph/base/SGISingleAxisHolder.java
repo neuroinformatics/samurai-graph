@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+
 /** An interface which provides the definition of the objects which holds single axis. */
 public interface SGISingleAxisHolder extends SGIAxisHolder {
 

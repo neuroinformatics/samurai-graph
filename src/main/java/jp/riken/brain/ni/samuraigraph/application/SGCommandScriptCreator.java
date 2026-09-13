@@ -1,13 +1,18 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+
 import java.io.File;
 import java.io.IOException;
 import jp.riken.brain.ni.samuraigraph.base.SGBufferedFileWriter;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
-public class SGCommandScriptCreator extends SGFileHandler
-    implements SGIApplicationCommandConstants {
+public class SGCommandScriptCreator extends SGFileHandler {
 
   /** Default name of the property file with the extension. */
   public static final String DEFAULT_SCRIPT_FILE_NAME_WITH_EXTENSION =
@@ -32,7 +37,7 @@ public class SGCommandScriptCreator extends SGFileHandler
 
     SGBufferedFileWriter bw = null;
     try {
-      bw = new SGBufferedFileWriter(file.getPath(), SGIConstants.CHAR_SET_NAME_UTF8);
+      bw = new SGBufferedFileWriter(file.getPath(), CHAR_SET_NAME_UTF8);
       bw.getBufferedWriter().write(commandString);
     } catch (IOException e1) {
       return ERROR_OPTION;

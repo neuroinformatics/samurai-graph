@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -11,8 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 /** A dialog to set the properties of windows. */
-public class SGWindowDialog extends SGPropertyDialog
-    implements SGIRootObjectConstants, PropertyChangeListener {
+public class SGWindowDialog extends SGPropertyDialog implements PropertyChangeListener {
 
   /** */
   private static final long serialVersionUID = -4062469276075732615L;
@@ -436,7 +438,7 @@ public class SGWindowDialog extends SGPropertyDialog
     // spinner
     //
 
-    final int digits = -SGIRootObjectConstants.LENGTH_MINIMAL_ORDER;
+    final int digits = -LENGTH_MINIMAL_ORDER;
 
     this.mWidthSpinner.initProperties(
         new SpinnerNumberModel(

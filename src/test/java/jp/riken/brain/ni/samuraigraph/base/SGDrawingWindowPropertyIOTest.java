@@ -59,14 +59,14 @@ class SGDrawingWindowPropertyIOTest {
   void attributesAreReadFromElement() {
     SGDrawingWindow wnd = this.createReadyWindow();
     Element el = createRootElement();
-    el.setAttribute(SGIRootObjectConstants.KEY_PAPER_WIDTH, "20cm");
-    el.setAttribute(SGIRootObjectConstants.KEY_PAPER_HEIGHT, "10cm");
-    el.setAttribute(SGIRootObjectConstants.KEY_GRID_VISIBLE, "true");
-    el.setAttribute(SGIRootObjectConstants.KEY_GRID_INTERVAL, "2cm");
-    el.setAttribute(SGIRootObjectConstants.KEY_GRID_LINE_WIDTH, "2pt");
-    el.setAttribute(SGIRootObjectConstants.KEY_IMAGE_LOCATION_X, "3cm");
-    el.setAttribute(SGIRootObjectConstants.KEY_IMAGE_LOCATION_Y, "4cm");
-    el.setAttribute(SGIRootObjectConstants.KEY_IMAGE_SCALE, "2.0");
+    el.setAttribute(SGRootObjectConstants.KEY_PAPER_WIDTH, "20cm");
+    el.setAttribute(SGRootObjectConstants.KEY_PAPER_HEIGHT, "10cm");
+    el.setAttribute(SGRootObjectConstants.KEY_GRID_VISIBLE, "true");
+    el.setAttribute(SGRootObjectConstants.KEY_GRID_INTERVAL, "2cm");
+    el.setAttribute(SGRootObjectConstants.KEY_GRID_LINE_WIDTH, "2pt");
+    el.setAttribute(SGRootObjectConstants.KEY_IMAGE_LOCATION_X, "3cm");
+    el.setAttribute(SGRootObjectConstants.KEY_IMAGE_LOCATION_Y, "4cm");
+    el.setAttribute(SGRootObjectConstants.KEY_IMAGE_SCALE, "2.0");
     assertTrue(wnd.setPaperWidth(20.0f, "cm"), "setPaperWidth");
     assertTrue(wnd.setPaperHeight(10.0f, "cm"), "setPaperHeight");
     assertTrue(wnd.setGridLineVisible(true), "setGridLineVisible");
@@ -98,7 +98,7 @@ class SGDrawingWindowPropertyIOTest {
   void invalidNumberRejected() {
     SGDrawingWindow wnd = this.createReadyWindow();
     Element el = createRootElement();
-    el.setAttribute(SGIRootObjectConstants.KEY_PAPER_WIDTH, "twentycm");
+    el.setAttribute(SGRootObjectConstants.KEY_PAPER_WIDTH, "twentycm");
     assertTrue(wnd.readProperty(el, 0.0f, 9.0f) == false);
   }
 
@@ -137,39 +137,37 @@ class SGDrawingWindowPropertyIOTest {
   void commandMapRoundTrip() {
     SGDrawingWindow wnd = this.createReadyWindow();
     SGPropertyMap map = new SGPropertyMap();
-    map.putValue(SGIRootObjectConstants.COM_PAPER_WIDTH, "20cm");
-    map.putValue(SGIRootObjectConstants.COM_PAPER_HEIGHT, "10cm");
-    map.putValue(SGIRootObjectConstants.COM_WINDOW_GRID_VISIBLE, "true");
-    map.putValue(SGIRootObjectConstants.COM_WINDOW_GRID_INTERVAL, "2cm");
-    map.putValue(SGIRootObjectConstants.COM_WINDOW_GRID_LINE_WIDTH, "2pt");
-    map.putValue(SGIRootObjectConstants.COM_IMAGE_LOCATION_X, "3cm");
-    map.putValue(SGIRootObjectConstants.COM_IMAGE_LOCATION_Y, "4cm");
-    map.putValue(SGIRootObjectConstants.COM_IMAGE_SCALING_FACTOR, "2.0");
+    map.putValue(SGRootObjectConstants.COM_PAPER_WIDTH, "20cm");
+    map.putValue(SGRootObjectConstants.COM_PAPER_HEIGHT, "10cm");
+    map.putValue(SGRootObjectConstants.COM_WINDOW_GRID_VISIBLE, "true");
+    map.putValue(SGRootObjectConstants.COM_WINDOW_GRID_INTERVAL, "2cm");
+    map.putValue(SGRootObjectConstants.COM_WINDOW_GRID_LINE_WIDTH, "2pt");
+    map.putValue(SGRootObjectConstants.COM_IMAGE_LOCATION_X, "3cm");
+    map.putValue(SGRootObjectConstants.COM_IMAGE_LOCATION_Y, "4cm");
+    map.putValue(SGRootObjectConstants.COM_IMAGE_SCALING_FACTOR, "2.0");
 
     SGPropertyResults results = wnd.setProperties(map);
     assertNotNull(results);
     assertEquals(
-        SGPropertyResults.SUCCEEDED, results.getResult(SGIRootObjectConstants.COM_PAPER_WIDTH));
+        SGPropertyResults.SUCCEEDED, results.getResult(SGRootObjectConstants.COM_PAPER_WIDTH));
     assertEquals(
-        SGPropertyResults.SUCCEEDED, results.getResult(SGIRootObjectConstants.COM_PAPER_HEIGHT));
-    assertEquals(
-        SGPropertyResults.SUCCEEDED,
-        results.getResult(SGIRootObjectConstants.COM_WINDOW_GRID_VISIBLE));
+        SGPropertyResults.SUCCEEDED, results.getResult(SGRootObjectConstants.COM_PAPER_HEIGHT));
     assertEquals(
         SGPropertyResults.SUCCEEDED,
-        results.getResult(SGIRootObjectConstants.COM_WINDOW_GRID_INTERVAL));
+        results.getResult(SGRootObjectConstants.COM_WINDOW_GRID_VISIBLE));
     assertEquals(
         SGPropertyResults.SUCCEEDED,
-        results.getResult(SGIRootObjectConstants.COM_WINDOW_GRID_LINE_WIDTH));
+        results.getResult(SGRootObjectConstants.COM_WINDOW_GRID_INTERVAL));
     assertEquals(
         SGPropertyResults.SUCCEEDED,
-        results.getResult(SGIRootObjectConstants.COM_IMAGE_LOCATION_X));
+        results.getResult(SGRootObjectConstants.COM_WINDOW_GRID_LINE_WIDTH));
+    assertEquals(
+        SGPropertyResults.SUCCEEDED, results.getResult(SGRootObjectConstants.COM_IMAGE_LOCATION_X));
+    assertEquals(
+        SGPropertyResults.SUCCEEDED, results.getResult(SGRootObjectConstants.COM_IMAGE_LOCATION_Y));
     assertEquals(
         SGPropertyResults.SUCCEEDED,
-        results.getResult(SGIRootObjectConstants.COM_IMAGE_LOCATION_Y));
-    assertEquals(
-        SGPropertyResults.SUCCEEDED,
-        results.getResult(SGIRootObjectConstants.COM_IMAGE_SCALING_FACTOR));
+        results.getResult(SGRootObjectConstants.COM_IMAGE_SCALING_FACTOR));
     assertEquals(20.0f, wnd.getPaperWidth("cm"), 0.001f);
     assertEquals(10.0f, wnd.getPaperHeight("cm"), 0.001f);
     assertTrue(wnd.isGridLineVisible());

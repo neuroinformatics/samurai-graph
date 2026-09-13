@@ -38,12 +38,12 @@ class SGDataMergeUtilityTest {
 
   private SGNetCDFDataColumnInfo xInfo(String name) {
     return SGDataFileUtility.createDataColumnInfo(
-        this.ncfile.findVariable(name), SGIDataColumnTypeConstants.X_VALUE);
+        this.ncfile.findVariable(name), SGDataColumnTypeConstants.X_VALUE);
   }
 
   private SGNetCDFDataColumnInfo yInfo(String name) {
     return SGDataFileUtility.createDataColumnInfo(
-        this.ncfile.findVariable(name), SGIDataColumnTypeConstants.Y_VALUE);
+        this.ncfile.findVariable(name), SGDataColumnTypeConstants.Y_VALUE);
   }
 
   private SGSXYNetCDFMultipleData createBasic() {
@@ -100,11 +100,11 @@ class SGDataMergeUtilityTest {
             new SGDataSourceObserver(),
             new SGNetCDFDataColumnInfo[] {
               SGDataFileUtility.createDataColumnInfo(
-                  otherFile.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE)
+                  otherFile.findVariable("x"), SGDataColumnTypeConstants.X_VALUE)
             },
             new SGNetCDFDataColumnInfo[] {
               SGDataFileUtility.createDataColumnInfo(
-                  otherFile.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE)
+                  otherFile.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE)
             },
             null,
             null,
@@ -229,9 +229,9 @@ class SGDataMergeUtilityTest {
             file,
             new SGDataSourceObserver(),
             SGDataFileUtility.createDataColumnInfo(
-                file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE),
+                file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE),
             SGDataFileUtility.createDataColumnInfo(
-                file.findVariable("v"), SGIDataColumnTypeConstants.Y_VALUE),
+                file.findVariable("v"), SGDataColumnTypeConstants.Y_VALUE),
             null,
             null,
             null,

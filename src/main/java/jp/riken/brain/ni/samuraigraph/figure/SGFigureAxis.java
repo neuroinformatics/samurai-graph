@@ -1,5 +1,13 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics2D;
@@ -19,9 +27,7 @@ import javax.swing.SwingUtilities;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
@@ -65,7 +71,7 @@ class SGFigureAxis extends SGAxisElement {
   }
 
   private float getMagnifiedShift() {
-    return this.mAxisElement.getMagnification() * this.getShift() / SGIConstants.CM_POINT_RATIO;
+    return this.mAxisElement.getMagnification() * this.getShift() / CM_POINT_RATIO;
   }
 
   /** Disposes of this object. */
@@ -199,25 +205,25 @@ class SGFigureAxis extends SGAxisElement {
     final float gh = this.mAxisElement.getGraphRectHeight();
     final int loc = this.getLocationInPlane();
     switch (loc) {
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_1:
+      case AXIS_HORIZONTAL_1:
         x1 = gx;
         y1 = gy + gh - this.getMagnifiedShift();
         x2 = gx + gw;
         y2 = y1;
         break;
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_2:
+      case AXIS_HORIZONTAL_2:
         x1 = gx;
         y1 = gy + this.getMagnifiedShift();
         x2 = gx + gw;
         y2 = y1;
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_1:
+      case AXIS_VERTICAL_1:
         x1 = gx + this.getMagnifiedShift();
         y1 = gy + gh;
         x2 = x1;
         y2 = gy;
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_2:
+      case AXIS_VERTICAL_2:
         x1 = gx + gw - this.getMagnifiedShift();
         y1 = gy + gh;
         x2 = x1;
@@ -261,7 +267,7 @@ class SGFigureAxis extends SGAxisElement {
     }
 
     final float mag = this.mAxisElement.getMagnification();
-    final float factor = mag / SGIConstants.CM_POINT_RATIO;
+    final float factor = mag / CM_POINT_RATIO;
     final float spaceLN = this.getSpaceAxisLineAndNumbers() * factor;
     for (int ii = 0; ii < this.mNumberList.size(); ii++) {
       ElementStringNumber el = this.mNumberList.get(ii);
@@ -271,7 +277,7 @@ class SGFigureAxis extends SGAxisElement {
       float x;
       float y;
       switch (loc) {
-        case SGIFigureElementAxis.AXIS_HORIZONTAL_1: // bottom
+        case AXIS_HORIZONTAL_1: // bottom
           if (invCoord) {
             x =
                 (float)
@@ -290,7 +296,7 @@ class SGFigureAxis extends SGAxisElement {
           x -= width / 2;
           y = gy + gh + spaceLN - this.getMagnifiedShift();
           break;
-        case SGIFigureElementAxis.AXIS_HORIZONTAL_2: // top
+        case AXIS_HORIZONTAL_2: // top
           if (invCoord) {
             x =
                 (float)
@@ -309,7 +315,7 @@ class SGFigureAxis extends SGAxisElement {
           x -= width / 2;
           y = gy - spaceLN - (float) rect.getHeight() + this.getMagnifiedShift();
           break;
-        case SGIFigureElementAxis.AXIS_VERTICAL_1: // left
+        case AXIS_VERTICAL_1: // left
           if (invCoord) {
             y =
                 (float)
@@ -330,7 +336,7 @@ class SGFigureAxis extends SGAxisElement {
           y -= height / 2;
           x = gx - spaceLN - (float) rect.getWidth() + this.getMagnifiedShift();
           break;
-        case SGIFigureElementAxis.AXIS_VERTICAL_2: // right
+        case AXIS_VERTICAL_2: // right
           if (invCoord) {
             y =
                 (float)
@@ -417,7 +423,7 @@ class SGFigureAxis extends SGAxisElement {
     final float gw = this.mAxisElement.getGraphRectWidth();
     final float gh = this.mAxisElement.getGraphRectHeight();
     final float mag = this.mAxisElement.getMagnification();
-    final float factor = mag / SGIConstants.CM_POINT_RATIO;
+    final float factor = mag / CM_POINT_RATIO;
     final float spaceLN = this.getSpaceAxisLineAndNumbers() * factor;
     final float spaceNT = this.getSpaceTitleAndNumbers() * factor;
     final float scaleNumberHeight = (float) getScaleHeight();
@@ -428,12 +434,12 @@ class SGFigureAxis extends SGAxisElement {
     float x;
     float y;
     switch (location) {
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_1:
+      case AXIS_HORIZONTAL_1:
         rectTitle = this.mTitle.getElementBounds();
         x = gx + (gw - (float) rectTitle.getWidth()) / 2.0f + shiftFromCenter;
         y = gy + gh + scaleNumberHeight + (spaceLN + spaceNT) - this.getMagnifiedShift();
         break;
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_2:
+      case AXIS_HORIZONTAL_2:
         rectTitle = this.mTitle.getElementBounds();
         x = gx + (gw - (float) rectTitle.getWidth()) / 2.0f + shiftFromCenter;
         y =
@@ -443,7 +449,7 @@ class SGFigureAxis extends SGAxisElement {
                 - (spaceLN + spaceNT)
                 + this.getMagnifiedShift();
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_1:
+      case AXIS_VERTICAL_1:
         this.mTitle.setAngle(90.0f); // rotation of 90 degree
         rectTitle = this.mTitle.getElementBounds();
         x =
@@ -454,7 +460,7 @@ class SGFigureAxis extends SGAxisElement {
                 + this.getMagnifiedShift();
         y = gy + (gh + (float) rectTitle.getHeight()) / 2.0f + shiftFromCenter;
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_2:
+      case AXIS_VERTICAL_2:
         this.mTitle.setAngle(90.0f); // rotation of 90 degree
         rectTitle = this.mTitle.getElementBounds();
         x = gx + gw + maxWidth + (spaceLN + spaceNT) - this.getMagnifiedShift();
@@ -480,19 +486,19 @@ class SGFigureAxis extends SGAxisElement {
     final int loc = this.getLocationInPlane();
     final float baseX, baseY;
     switch (loc) {
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_1:
+      case AXIS_HORIZONTAL_1:
         baseX = gx + gw;
         baseY = gy + gh - this.getMagnifiedShift();
         break;
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_2:
+      case AXIS_HORIZONTAL_2:
         baseX = gx + gw;
         baseY = gy + this.getMagnifiedShift();
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_1:
+      case AXIS_VERTICAL_1:
         baseX = gx + this.getMagnifiedShift();
         baseY = gy;
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_2:
+      case AXIS_VERTICAL_2:
         baseX = gx + gw - this.getMagnifiedShift();
         baseY = gy;
         break;
@@ -500,7 +506,7 @@ class SGFigureAxis extends SGAxisElement {
         throw new Error("Invalid location: " + loc);
     }
 
-    final float factor = aElement.getMagnification() / SGIConstants.CM_POINT_RATIO;
+    final float factor = aElement.getMagnification() / CM_POINT_RATIO;
     final float x = baseX + this.mExponentLocationX * factor;
     final float y = baseY + this.mExponentLocationY * factor;
 
@@ -515,37 +521,31 @@ class SGFigureAxis extends SGAxisElement {
     final Rectangle2D rect = el.getElementBounds();
     final float mag = this.mAxisElement.getMagnification();
     final float spaceLN =
-        (float)
-                SGUtilityText.convert(
-                    this.getSpaceAxisLineAndNumbers(), SGIAxisConstants.SPACE_UNIT, SGIConstants.pt)
-            * mag;
+        (float) SGUtilityText.convert(this.getSpaceAxisLineAndNumbers(), SPACE_UNIT, pt) * mag;
     final float spaceNT =
-        (float)
-                SGUtilityText.convert(
-                    this.getSpaceTitleAndNumbers(), SGIAxisConstants.SPACE_UNIT, SGIConstants.pt)
-            * mag;
+        (float) SGUtilityText.convert(this.getSpaceTitleAndNumbers(), SPACE_UNIT, pt) * mag;
     float x = 0.0f;
     float y = 0.0f;
     final int loc = this.getLocationInPlane();
     switch (loc) {
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_1:
+      case AXIS_HORIZONTAL_1:
         x = 0.0f;
         y = (float) (spaceLN + getScaleHeight() + spaceNT) - this.getMagnifiedShift();
         break;
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_2:
+      case AXIS_HORIZONTAL_2:
         Rectangle2D titleRect = this.mTitle.getStringRect();
         x = 0.0f;
         y =
             -(float) (spaceLN + getScaleHeight() + spaceNT + titleRect.getHeight())
                 + this.getMagnifiedShift();
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_1:
+      case AXIS_VERTICAL_1:
         x =
             -(float) (spaceLN + rect.getWidth() + mag * this.getNumberFontSize())
                 + this.getMagnifiedShift();
         y = -(float) rect.getHeight();
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_2:
+      case AXIS_VERTICAL_2:
         x = spaceLN + mag * this.getNumberFontSize() - this.getMagnifiedShift();
         y = -(float) rect.getHeight();
         break;
@@ -554,8 +554,8 @@ class SGFigureAxis extends SGAxisElement {
     }
     x /= mag;
     y /= mag;
-    x = (float) SGUtilityText.convert(x, SGIConstants.pt, SGIAxisConstants.SPACE_UNIT);
-    y = (float) SGUtilityText.convert(y, SGIConstants.pt, SGIAxisConstants.SPACE_UNIT);
+    x = (float) SGUtilityText.convert(x, pt, SPACE_UNIT);
+    y = (float) SGUtilityText.convert(y, pt, SPACE_UNIT);
     x = this.roundOffExponentShift(x);
     y = this.roundOffExponentShift(y);
 
@@ -611,7 +611,7 @@ class SGFigureAxis extends SGAxisElement {
     final double xStart, xEnd, yStart, yEnd;
     final double range = max - min;
     switch (loc) {
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_1: // bottom
+      case AXIS_HORIZONTAL_1: // bottom
         if (invCoord) {
           x = gx + gw * (max - valueInScale) / range;
         } else {
@@ -626,7 +626,7 @@ class SGFigureAxis extends SGAxisElement {
         start = new SGTuple2f((float) x, (float) yStart);
         end = new SGTuple2f((float) x, (float) yEnd);
         break;
-      case SGIFigureElementAxis.AXIS_HORIZONTAL_2: // top
+      case AXIS_HORIZONTAL_2: // top
         if (invCoord) {
           x = gx + gw * (max - valueInScale) / range;
         } else {
@@ -641,7 +641,7 @@ class SGFigureAxis extends SGAxisElement {
         start = new SGTuple2f((float) x, (float) yStart);
         end = new SGTuple2f((float) x, (float) yEnd);
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_1: // left
+      case AXIS_VERTICAL_1: // left
         if (invCoord) {
           y = gy + gh * (1.0 - (max - valueInScale) / range);
         } else {
@@ -656,7 +656,7 @@ class SGFigureAxis extends SGAxisElement {
         start = new SGTuple2f((float) xStart, (float) y);
         end = new SGTuple2f((float) xEnd, (float) y);
         break;
-      case SGIFigureElementAxis.AXIS_VERTICAL_2: // right
+      case AXIS_VERTICAL_2: // right
         if (invCoord) {
           y = gy + gh * (1.0 - (max - valueInScale) / range);
         } else {
@@ -1047,16 +1047,16 @@ class SGFigureAxis extends SGAxisElement {
     // difference in units of pt
     float diff = 0.0f;
     switch (location) {
-      case SGIFigureElementAxisConstants.AXIS_HORIZONTAL_1:
+      case AXIS_HORIZONTAL_1:
         diff = -dy;
         break;
-      case SGIFigureElementAxisConstants.AXIS_HORIZONTAL_2:
+      case AXIS_HORIZONTAL_2:
         diff = dy;
         break;
-      case SGIFigureElementAxisConstants.AXIS_VERTICAL_1:
+      case AXIS_VERTICAL_1:
         diff = dx;
         break;
-      case SGIFigureElementAxisConstants.AXIS_VERTICAL_2:
+      case AXIS_VERTICAL_2:
         diff = -dx;
         break;
       default:
@@ -1065,7 +1065,7 @@ class SGFigureAxis extends SGAxisElement {
     diff /= mag;
 
     // transform into a value in units of cm
-    diff *= SGIConstants.CM_POINT_RATIO;
+    diff *= CM_POINT_RATIO;
     float shift = this.getShift() + diff;
     this.setShift(shift);
     this.updateLocationOfDrawingElements();

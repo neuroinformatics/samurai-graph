@@ -1,22 +1,29 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 
-public abstract class SGElementGroupArrowForData extends SGElementGroupArrow
-    implements SGIVXYDataConstants, SGIDataCommandConstants {
+public abstract class SGElementGroupArrowForData extends SGElementGroupArrow {
 
   /** The default constructor. */
   public SGElementGroupArrowForData() {
     super();
 
     // set default properties
-    this.setLineWidth(DEFAULT_LINE_WIDTH, LINE_WIDTH_UNIT);
-    this.setLineType(DEFAULT_LINE_TYPE);
-    this.setColor(DEFAULT_COLOR);
+    this.setLineWidth(SGVXYDataConstants.DEFAULT_LINE_WIDTH, LINE_WIDTH_UNIT);
+    this.setLineType(SGVXYDataConstants.DEFAULT_LINE_TYPE);
+    this.setColor(SGVXYDataConstants.DEFAULT_COLOR);
     this.setStartHeadType(DEFAULT_START_HEAD_TYPE);
     this.setEndHeadType(DEFAULT_END_HEAD_TYPE);
     this.setHeadSize(DEFAULT_HEAD_SIZE, ARROW_HEAD_SIZE_UNIT);

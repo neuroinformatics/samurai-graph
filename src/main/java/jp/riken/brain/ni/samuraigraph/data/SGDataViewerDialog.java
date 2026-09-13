@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.Component;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -33,7 +35,6 @@ import javax.swing.table.TableColumn;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataPluginHolder;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPlugin;
 import jp.riken.brain.ni.samuraigraph.base.SGIPluginManager;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
@@ -407,8 +408,8 @@ public class SGDataViewerDialog extends SGDialog {
 
     // set up the scroll bar properties
     JScrollBar vertBar = this.mScrollPane.getVerticalScrollBar();
-    vertBar.setUnitIncrement(SGIConstants.SCROLL_BAR_UNIT_INCREMENT);
-    vertBar.setBlockIncrement(SGIConstants.SCROLL_BAR_BLOCK_INCREMENT);
+    vertBar.setUnitIncrement(SCROLL_BAR_UNIT_INCREMENT);
+    vertBar.setBlockIncrement(SCROLL_BAR_BLOCK_INCREMENT);
 
     // create the popup menu
     this.mPopupMenu = this.createPopupMenu();

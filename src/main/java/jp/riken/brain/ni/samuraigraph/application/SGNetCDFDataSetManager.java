@@ -1,5 +1,23 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGArchiveFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -9,34 +27,33 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JOptionPane;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants.OPERATION;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow.BackgroundImage;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants.OPERATION;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementLegend;
 import jp.riken.brain.ni.samuraigraph.base.SGIProgressControl;
-import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIStringModifier;
+import jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFFile;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYZNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYNetCDFData;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureTypeConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetForData;
-import jp.riken.brain.ni.samuraigraph.figure.SGIFigureTypeConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGStringBraceModifier;
 import jp.riken.brain.ni.samuraigraph.figure.SGXYFigure;
 import org.apache.logging.log4j.LogManager;
@@ -57,7 +74,7 @@ import ucar.nc2.NetcdfFile;
 import ucar.nc2.Variable;
 import ucar.nc2.write.NetcdfFormatWriter;
 
-class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConstants {
+class SGNetCDFDataSetManager {
 
   private static final Logger logger = LogManager.getLogger(SGNetCDFDataSetManager.class);
 
@@ -122,8 +139,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
             DIMENSION_NAME_BACKGROUND_IMAGE_BYTE_INDEX);
 
     // add attributes
-    varBuilder.addAttribute(
-        SGDataFileUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_BYTE_DATA));
+    varBuilder.addAttribute(SGDataFileUtility.getValueTypeAttribute(VALUE_TYPE_BYTE_DATA));
     varBuilder.addAttribute(
         new Attribute(ATTRIBUTE_KEY_IMAGE_FILE_EXTENSION, bgImg.getExtension()));
 
@@ -151,10 +167,10 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       throws IOException, InvalidRangeException {
     StringBuilder sb = new StringBuilder();
     sb.append(datasetTempDir);
-    sb.append(SGIConstants.FILE_SEPARATOR);
+    sb.append(FILE_SEPARATOR);
     sb.append(ARCHIVE_IMAGE_NAME);
     sb.append('.');
-    sb.append(SGIApplicationConstants.NETCDF_FILE_EXTENSION);
+    sb.append(SGDataFileConstants.NETCDF_FILE_EXTENSION);
     String fname = sb.toString();
     File file = new File(fname);
     NetcdfFormatWriter.Builder builder =
@@ -189,10 +205,10 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
         StringBuilder sb = new StringBuilder();
         sb.append(datasetTempDir.getPath());
-        sb.append(SGIConstants.FILE_SEPARATOR);
+        sb.append(FILE_SEPARATOR);
         sb.append(groupName);
         sb.append('.');
-        sb.append(SGIApplicationConstants.NETCDF_FILE_EXTENSION);
+        sb.append(SGDataFileConstants.NETCDF_FILE_EXTENSION);
         String fname = sb.toString();
         File file = new File(fname);
 
@@ -379,14 +395,14 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       this.copyNetcdfTempFileToOutFile(propertyString, datasetTempDir, outFile);
 
     } catch (IOException e1) {
-      return SGIConstants.FILE_SAVE_FAILURE;
+      return FILE_SAVE_FAILURE;
     } catch (InvalidRangeException e1) {
-      return SGIConstants.FILE_SAVE_FAILURE;
+      return FILE_SAVE_FAILURE;
     } catch (Exception e1) {
-      return SGIConstants.FILE_SAVE_FAILURE;
+      return FILE_SAVE_FAILURE;
     }
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SUCCESSFUL_COMPLETION;
   }
 
   private void setupNetCDFGroup(final NetcdfFile ncfile) {
@@ -447,7 +463,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
     if (this.mMain.mFigureCreator.createFigureElementFromPropertyFile(
             figure, elFigure, versionNumber)
-        == SGIConstants.PROPERTY_FILE_INCORRECT) {
+        == PROPERTY_FILE_INCORRECT) {
       return false;
     }
 
@@ -489,8 +505,8 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       final boolean readDataProperty,
       final String versionNumber) {
 
-    final int ic = SGIConstants.PROPERTY_FILE_INCORRECT;
-    final int di = SGIConstants.DATA_FILE_INVALID;
+    final int ic = PROPERTY_FILE_INCORRECT;
+    final int di = DATA_FILE_INVALID;
 
     NodeList nList = elFigure.getElementsByTagName(SGIFigureElementGraph.TAG_NAME_DATA);
     final int len = nList.getLength();
@@ -511,7 +527,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       Element elData = (Element) node;
 
       // data type from the property file
-      String originalDataType = elData.getAttribute(SGIFigureElement.KEY_DATA_TYPE);
+      String originalDataType = elData.getAttribute(KEY_DATA_TYPE);
       if (originalDataType == null) {
         return ic;
       }
@@ -535,12 +551,12 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       }
 
       // set the class type for backward compatibility between 1.0.7
-      if (SGIFigureTypeConstants.FIGURE_TYPE_XY.equals(figure.getClassType())) {
+      if (SGFigureTypeConstants.FIGURE_TYPE_XY.equals(figure.getClassType())) {
         String type = null;
         if (SGDataDataTypeUtility.isVXYTypeData(ncDataType)) {
-          type = SGIFigureTypeConstants.FIGURE_TYPE_VXY;
+          type = SGFigureTypeConstants.FIGURE_TYPE_VXY;
         } else {
-          type = SGIFigureTypeConstants.FIGURE_TYPE_SXY;
+          type = SGFigureTypeConstants.FIGURE_TYPE_SXY;
         }
         figure.setClassType(type);
       }
@@ -555,7 +571,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       infoMap.put(SGIFigureElementGraph.KEY_GROUP_NAME, groupName);
 
       if (this.getNumberOfDataInNetcdfFile(ncfile, figureIndex) == 0) {
-        return SGIConstants.DATA_NUMBER_SHORTAGE;
+        return DATA_NUMBER_SHORTAGE;
       }
 
       // when given version number in a data set is smaller than or equal to 2.0.0,
@@ -575,7 +591,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       } catch (IOException e) {
         return di;
       }
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, nc);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, nc);
       colInfoSet =
           this.mMain
               .getPropertyFileHandler()
@@ -589,7 +605,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
       // updates the information map
       final int ret = SGApplicationUtility.updateInformationMap(colInfoSet, infoMap, pfInfoMap);
-      if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
+      if (ret != SUCCESSFUL_COMPLETION) {
         return ret;
       }
 
@@ -617,7 +633,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       }
 
       // get the index in the legend
-      String str = elData.getAttribute(SGIFigureElement.KEY_INDEX_IN_LEGEND);
+      String str = elData.getAttribute(KEY_INDEX_IN_LEGEND);
       if (str.length() != 0) {
         Number num = SGUtilityText.getInteger(str);
         if (num == null) {
@@ -646,7 +662,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       array[ii].initPropertiesHistory();
     }
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SUCCESSFUL_COMPLETION;
   }
 
   private int createSingleFigureFromPropertyFile(
@@ -657,19 +673,19 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       final boolean readDataProperty,
       final String versionNumber) {
 
-    final int ic = SGIConstants.PROPERTY_FILE_INCORRECT;
+    final int ic = PROPERTY_FILE_INCORRECT;
 
     String str = null;
 
-    str = elFigure.getAttribute(SGFigure.KEY_FIGURE_TYPE);
+    str = elFigure.getAttribute(SGFigureConstants.KEY_FIGURE_TYPE);
     if (str.length() == 0) {
       return ic;
     }
 
     SGFigure figure = null;
-    if (SGIFigureTypeConstants.FIGURE_TYPE_SXY.equals(str)
-        || SGIFigureTypeConstants.FIGURE_TYPE_VXY.equals(str)
-        || SGIFigureTypeConstants.FIGURE_TYPE_XY.equals(str)) {
+    if (SGFigureTypeConstants.FIGURE_TYPE_SXY.equals(str)
+        || SGFigureTypeConstants.FIGURE_TYPE_VXY.equals(str)
+        || SGFigureTypeConstants.FIGURE_TYPE_XY.equals(str)) {
       figure = new SGXYFigure(wnd);
       figure.setClassType(str);
     } else {
@@ -684,7 +700,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     final int ret =
         this.createDataObjectsFromPropertyFile(
             elFigure, figure, figureIndex, ncfile, wnd, readDataProperty, versionNumber);
-    if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
+    if (ret != SUCCESSFUL_COMPLETION) {
       return ret;
     }
 
@@ -697,7 +713,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     // initialize properties of the figure and figure elements
     figure.initPropertiesHistory();
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SUCCESSFUL_COMPLETION;
   }
 
   private int createFiguresFromPropertyFile(
@@ -707,7 +723,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       final boolean readDataProperty,
       final String versionNumber) {
 
-    NodeList nList = elWnd.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+    NodeList nList = elWnd.getElementsByTagName(SGFigureConstants.TAG_NAME_FIGURE);
     final int len = nList.getLength();
 
     for (int ii = 0; ii < len; ii++) {
@@ -718,13 +734,13 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
         final int ret =
             this.createSingleFigureFromPropertyFile(
                 el, wnd, figureIndex, ncfile, readDataProperty, versionNumber);
-        if (ret != SGIConstants.SUCCESSFUL_COMPLETION) {
+        if (ret != SUCCESSFUL_COMPLETION) {
           return ret;
         }
       }
     }
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SUCCESSFUL_COMPLETION;
   }
 
   /**
@@ -751,14 +767,14 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
 
     int errCode;
     if (!result) {
-      errCode = SGIConstants.PROPERTY_FILE_INCORRECT;
+      errCode = PROPERTY_FILE_INCORRECT;
     } else {
       // create figure objects in a window
       final boolean readDataProperty = true;
       errCode =
           this.createFiguresFromPropertyFile(elWnd, wnd, ncfile, readDataProperty, versionNumber);
 
-      if (errCode == SGIConstants.SUCCESSFUL_COMPLETION) {
+      if (errCode == SUCCESSFUL_COMPLETION) {
         // add history
         wnd.initPropertiesHistory();
 
@@ -773,30 +789,30 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     // set the message
     String msg = null;
     switch (errCode) {
-      case SGIConstants.SUCCESSFUL_COMPLETION:
-        msg = SGIApplicationTextConstants.MSG_SUCCESSFUL_COMPLETION;
+      case SUCCESSFUL_COMPLETION:
+        msg = SGApplicationTextConstants.MSG_SUCCESSFUL_COMPLETION;
         break;
-      case SGIConstants.DATA_NUMBER_SHORTAGE:
-        msg = SGIApplicationTextConstants.MSG_DATA_NUMBER_SHORTAGE;
+      case DATA_NUMBER_SHORTAGE:
+        msg = SGApplicationTextConstants.MSG_DATA_NUMBER_SHORTAGE;
         break;
-      case SGIConstants.DATA_NUMBER_EXCESS:
-        msg = SGIApplicationTextConstants.MSG_DATA_NUMBER_EXCESS;
+      case DATA_NUMBER_EXCESS:
+        msg = SGApplicationTextConstants.MSG_DATA_NUMBER_EXCESS;
         break;
-      case SGIConstants.FILE_OPEN_FAILURE:
-        msg = SGIApplicationTextConstants.MSG_FILE_OPEN_FAILURE;
+      case FILE_OPEN_FAILURE:
+        msg = SGApplicationTextConstants.MSG_FILE_OPEN_FAILURE;
         break;
-      case SGIConstants.PROPERTY_FILE_INCORRECT:
-        msg = SGIApplicationTextConstants.MSG_PROPERTY_FILE_INVALID;
+      case PROPERTY_FILE_INCORRECT:
+        msg = SGApplicationTextConstants.MSG_PROPERTY_FILE_INVALID;
         break;
-      case SGIConstants.DATA_FILE_INVALID:
-        msg = SGIApplicationTextConstants.MSG_DATA_FILE_OPEN_FAILURE;
+      case DATA_FILE_INVALID:
+        msg = SGApplicationTextConstants.MSG_DATA_FILE_OPEN_FAILURE;
         break;
       default:
-        msg = SGIApplicationTextConstants.MSG_UNKNOWN_ERROR_OCCURRED;
+        msg = SGApplicationTextConstants.MSG_UNKNOWN_ERROR_OCCURRED;
     }
 
     // show the message dialog
-    if (msg != SGIApplicationTextConstants.MSG_SUCCESSFUL_COMPLETION) {
+    if (msg != SGApplicationTextConstants.MSG_SUCCESSFUL_COMPLETION) {
       SGUtility.showMessageDialog(null, msg, "Property file", JOptionPane.ERROR_MESSAGE);
       return false;
     }
@@ -808,11 +824,11 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
     Element root = doc.getDocumentElement();
 
     // get version number
-    String versionNumber = root.getAttribute(SGIPropertyFileConstants.KEY_VERSION_NUMBER);
+    String versionNumber = root.getAttribute(SGPropertyFileConstants.KEY_VERSION_NUMBER);
 
     // get window element
     Element elWnd = this.mMain.mPropertyFileManager.getWindowElement(doc);
-    NodeList nListFigure = elWnd.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+    NodeList nListFigure = elWnd.getElementsByTagName(SGFigureConstants.TAG_NAME_FIGURE);
     final int figureNum = nListFigure.getLength();
     int cnt = 0;
     final int[] dataNumArray = new int[figureNum];
@@ -979,7 +995,7 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
       }
     }
 
-    return SGIConstants.OK_OPTION;
+    return OK_OPTION;
   }
 
   /**

@@ -76,10 +76,10 @@ class SGDataRangeUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     SGSXYNetCDFData data =
         new SGSXYNetCDFData(
             file,
@@ -114,10 +114,10 @@ class SGDataRangeUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     SGSXYNetCDFData data =
         new SGSXYNetCDFData(
             file,
@@ -148,10 +148,10 @@ class SGDataRangeUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     SGSXYNetCDFData data =
         new SGSXYNetCDFData(
             file,

@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -18,15 +20,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionListener;
 import jp.riken.brain.ni.samuraigraph.base.SGButton;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 public abstract class SGDataSetupPanel extends JPanel
-    implements SGIDataColumnTypeConstants,
-        PropertyChangeListener,
+    implements PropertyChangeListener,
         ActionListener,
         ListSelectionListener,
         SGIDataSetupTableHolder {
@@ -56,8 +57,8 @@ public abstract class SGDataSetupPanel extends JPanel
             JScrollPane scrollPane = getOriginScrollPane();
             if (scrollPane != null) {
               JScrollBar vertBar = scrollPane.getVerticalScrollBar();
-              vertBar.setUnitIncrement(SGIConstants.SCROLL_BAR_UNIT_INCREMENT);
-              vertBar.setBlockIncrement(SGIConstants.SCROLL_BAR_BLOCK_INCREMENT);
+              vertBar.setUnitIncrement(SGConstants.SCROLL_BAR_UNIT_INCREMENT);
+              vertBar.setBlockIncrement(SGConstants.SCROLL_BAR_BLOCK_INCREMENT);
             }
 
             // add an action event listener

@@ -1,5 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -17,19 +23,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 
 /** This class has utility methods for the subclasses of SGFigureElement in this package. */
-public class SGUtilityForFigureElementJava2D
-    implements SGIFigureElementConstants, SGIDataCommandConstants, SGILineConstants {
+public class SGUtilityForFigureElementJava2D {
 
   /**
    * Draw an anchor around a focused object.
@@ -275,10 +277,7 @@ public class SGUtilityForFigureElementJava2D
     } else {
       minDiff =
           SGUtilityNumber.getNumberInRangeOrder(
-              minDiff,
-              axis,
-              SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT,
-              RoundingMode.HALF_UP.ordinal());
+              minDiff, axis, AXIS_SCALE_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
       size = minDiff;
     }
 

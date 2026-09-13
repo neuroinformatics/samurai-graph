@@ -3,12 +3,16 @@ package jp.riken.brain.ni.samuraigraph.data;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataBufferUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTitleUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataRangeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataTextUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,11 +34,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGDataValue.Value;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData.DoubleValueSetResult;
 
 /** Static helper for the Viewer responsibility. */
-public final class SGDataViewerUtility
-    implements SGIDataColumnTypeConstants,
-        SGIDataPropertyKeyConstants,
-        SGINetCDFConstants,
-        SGIMDArrayConstants {
+public final class SGDataViewerUtility {
 
   private SGDataViewerUtility() {}
 
@@ -184,8 +184,7 @@ public final class SGDataViewerUtility
 
   public static double getCoordinateVariableValue(final double[] array, final int index) {
     final double value = array[index];
-    return SGUtilityNumber.getNumberInRangeOrder(
-        value, array, SGINetCDFConstants.DIMENSION_EFFECTIVE_DIGIT);
+    return SGUtilityNumber.getNumberInRangeOrder(value, array, DIMENSION_EFFECTIVE_DIGIT);
   }
 
   public static List<SGDataValueHistory> getEditedDataValueList(
@@ -1163,8 +1162,8 @@ public final class SGDataViewerUtility
     String varName = var.getName();
     SGDataValueHistory.MDArray.D2 curValue =
         new SGDataValueHistory.MDArray.D2(d, columnType, col, row, varName, prev);
-    final int xDim = var.getDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION);
-    final int yDim = var.getDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
+    final int xDim = var.getDimensionIndex(KEY_SXYZ_X_DIMENSION);
+    final int yDim = var.getDimensionIndex(KEY_SXYZ_Y_DIMENSION);
     curValue.setXYDimension(xDim, yDim);
     return curValue;
   }
@@ -1318,8 +1317,7 @@ public final class SGDataViewerUtility
         SGDataValueHistory.MDArray.MD1 cur =
             new SGDataValueHistory.MDArray.MD1(d, columnType, col, row, varName, setResult.prev);
         cur.setDimension(dimension);
-        Integer pickUpDimension =
-            var.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+        Integer pickUpDimension = var.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
         if (pickUpDimension != null && pickUpDimension != -1) {
           SGMDArrayPickUpDimensionInfo pickUpInfo =
               (SGMDArrayPickUpDimensionInfo) mdData.getPickUpDimensionInfo();
@@ -1327,7 +1325,7 @@ public final class SGDataViewerUtility
           final int pickUpOrigin = pickUpIndices[col];
           cur.setPickUpInfo(pickUpDimension, pickUpOrigin);
         }
-        Integer timeDimension = var.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
+        Integer timeDimension = var.getDimensionIndex(KEY_TIME_DIMENSION);
         if (timeDimension != null && timeDimension != -1) {
           final int timeOrigin = var.getOrigin(timeDimension);
           cur.setAnimationInfo(timeDimension, timeOrigin);
@@ -1367,9 +1365,9 @@ public final class SGDataViewerUtility
       rIndex = row;
       cIndex = col;
     }
-    if (SGIDataColumnTypeConstants.X_COORDINATE.equals(columnType)) {
+    if (X_COORDINATE.equals(columnType)) {
       return vxyData.getXValueAt(rIndex);
-    } else if (SGIDataColumnTypeConstants.Y_COORDINATE.equals(columnType)) {
+    } else if (Y_COORDINATE.equals(columnType)) {
       return vxyData.getYValueAt(rIndex);
     } else {
       final boolean polar = vxyData.isPolar();
@@ -1400,15 +1398,15 @@ public final class SGDataViewerUtility
   }
 
   public static String getPreferredDataViewColumnType(final SGISXYZTypeData sxyData) {
-    return SGIDataColumnTypeConstants.Z_VALUE;
+    return Z_VALUE;
   }
 
   public static String getPreferredDataViewColumnType(final SGISXYTypeMultipleData sxyData) {
     String ret = null;
     if (sxyData.hasMultipleYValues()) {
-      ret = SGIDataColumnTypeConstants.Y_VALUE;
+      ret = Y_VALUE;
     } else {
-      ret = SGIDataColumnTypeConstants.X_VALUE;
+      ret = X_VALUE;
     }
     return ret;
   }
@@ -1439,11 +1437,11 @@ public final class SGDataViewerUtility
       rIndex = row;
       cIndex = col;
     }
-    if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
+    if (X_VALUE.equals(columnType)) {
       return sxyzData.getXValueAt(rIndex);
-    } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
+    } else if (Y_VALUE.equals(columnType)) {
       return sxyzData.getYValueAt(rIndex);
-    } else if (SGIDataColumnTypeConstants.Z_VALUE.equals(columnType)) {
+    } else if (Z_VALUE.equals(columnType)) {
       if (sxyzData.isIndexAvailable()) {
         return sxyzData.getZValueAt(rIndex);
       } else {
@@ -1466,10 +1464,10 @@ public final class SGDataViewerUtility
     } else {
       rIndex = row;
     }
-    if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)) {
+    if (X_VALUE.equals(columnType)) {
       // add the shift value
       return sxyData.getXValueAt(col, rIndex) + sxyData.getShift().x;
-    } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
+    } else if (Y_VALUE.equals(columnType)) {
       // add the shift value
       return sxyData.getYValueAt(col, rIndex) + sxyData.getShift().y;
     } else {

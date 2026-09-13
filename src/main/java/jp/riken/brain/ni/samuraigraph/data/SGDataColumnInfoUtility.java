@@ -2,13 +2,17 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import static jp.riken.brain.ni.samuraigraph.data.SGDataBufferUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTitleUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataRangeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataTextUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +20,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** Static helper for the ColumnInfo responsibility. */
-public final class SGDataColumnInfoUtility
-    implements SGIDataColumnTypeConstants,
-        SGIDataPropertyKeyConstants,
-        SGINetCDFConstants,
-        SGIMDArrayConstants {
+public final class SGDataColumnInfoUtility {
 
   private SGDataColumnInfoUtility() {}
 
@@ -143,8 +143,8 @@ public final class SGDataColumnInfoUtility
       yCol = (SGMDArrayDataColumnInfo) yColList.get(0);
     }
     if (xCol != null && yCol != null) {
-      Integer xIndex = xCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-      Integer yIndex = yCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      Integer xIndex = xCol.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
+      Integer yIndex = yCol.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
       final boolean xValid = isValidPickUpValue(xIndex);
       final boolean yValid = isValidPickUpValue(yIndex);
       if (xValid && !yValid) {
@@ -168,7 +168,7 @@ public final class SGDataColumnInfoUtility
         pickUpColList.add(yCol);
       }
     } else if (xCol != null) {
-      Integer xIndex = xCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      Integer xIndex = xCol.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
       final boolean xValid = isValidPickUpValue(xIndex);
       if (xValid) {
         if (xIndex.equals(xCol.getGenericDimensionIndex())) {
@@ -177,7 +177,7 @@ public final class SGDataColumnInfoUtility
         pickUpColList.add(xCol);
       }
     } else if (yCol != null) {
-      Integer yIndex = yCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      Integer yIndex = yCol.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
       final boolean yValid = isValidPickUpValue(yIndex);
       if (yValid) {
         if (yIndex.equals(yCol.getGenericDimensionIndex())) {
@@ -434,7 +434,7 @@ public final class SGDataColumnInfoUtility
     int cnt = 0;
     for (int ii = 0; ii < cols.length; ii++) {
       SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) cols[ii];
-      Integer dim = mdCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      Integer dim = mdCol.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
       if (dim != null && dim != -1) {
         pickUpCol = mdCol;
         cnt++;

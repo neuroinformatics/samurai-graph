@@ -1,5 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -8,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
+import jp.riken.brain.ni.samuraigraph.base.SGPaintConstant;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
@@ -18,8 +23,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
 /** A group of symbols. */
-public abstract class SGElementGroupSymbol extends SGElementGroup
-    implements SGISymbolConstants, SGIFigureDrawingElementConstants {
+public abstract class SGElementGroupSymbol extends SGElementGroup {
 
   /** The size of each symbol. */
   protected float mSymbolSize;
@@ -295,12 +299,10 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
   public boolean writeProperty(final Element el) {
 
     final int digitSymbolSize = SYMBOL_SIZE_MINIMAL_ORDER - 1;
-    final int digitLineWidth = SGIConstants.LINE_WIDTH_MINIMAL_ORDER - 1;
+    final int digitLineWidth = LINE_WIDTH_MINIMAL_ORDER - 1;
 
     final float symbolSize =
-        (float)
-            SGUtilityNumber.roundOffNumber(
-                this.mSymbolSize * SGIConstants.CM_POINT_RATIO, digitSymbolSize);
+        (float) SGUtilityNumber.roundOffNumber(this.mSymbolSize * CM_POINT_RATIO, digitSymbolSize);
     final float lineWidth =
         (float) SGUtilityNumber.roundOffNumber(this.getLineWidth(), digitLineWidth);
 
@@ -308,15 +310,15 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     List<Color> cList = new ArrayList<Color>();
     cList.add(paint.getColor());
 
-    el.setAttribute(KEY_SYMBOL_SIZE, Float.toString(symbolSize) + SGIConstants.cm);
+    el.setAttribute(KEY_SYMBOL_SIZE, Float.toString(symbolSize) + cm);
     el.setAttribute(KEY_SYMBOL_TYPE, SGDrawingElementSymbol.getSymbolTypeName(this.mSymbolType));
-    el.setAttribute(KEY_SYMBOL_LINE_WIDTH, Float.toString(lineWidth) + SGIConstants.pt);
+    el.setAttribute(KEY_SYMBOL_LINE_WIDTH, Float.toString(lineWidth) + pt);
     el.setAttribute(KEY_SYMBOL_LINE_COLOR, SGUtilityText.getColorString(this.mLineColor));
     el.setAttribute(KEY_SYMBOL_LINE_VISIBLE, Boolean.toString(this.mLineVisible));
     el.setAttribute(KEY_SYMBOL_INNER_COLOR_LIST, SGUtilityText.getColorListString(cList));
     el.setAttribute(
         KEY_SYMBOL_INNER_TRANSPARENT,
-        Integer.toString(paint.getTransparencyPercent()) + SGPaintUtility.TRANSPARENCY_UNIT);
+        Integer.toString(paint.getTransparencyPercent()) + SGPaintConstant.TRANSPARENCY_UNIT);
 
     return true;
   }
@@ -388,7 +390,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
           }
         }
       } else {
-        num = SGUtilityText.getInteger(str, SGPaintUtility.TRANSPARENCY_UNIT);
+        num = SGUtilityText.getInteger(str, SGPaintConstant.TRANSPARENCY_UNIT);
         if (num == null) {
           return false;
         }

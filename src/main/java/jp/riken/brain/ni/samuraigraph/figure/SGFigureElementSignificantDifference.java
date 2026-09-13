@@ -1,5 +1,18 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisBreakConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorBarConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSignificantDifferenceConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -69,7 +82,6 @@ import org.w3c.dom.NodeList;
 /** A class managing significant difference symbols. */
 public class SGFigureElementSignificantDifference extends SGFigureElement
     implements SGIFigureElementSignificantDifference,
-        SGISignificantDifferenceConstants,
         CaretListener,
         DocumentListener,
         ActionListener,
@@ -442,8 +454,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    * @param versionNumber the version number of property file
    */
   public boolean readProperty(final Element element, final String versionNumber) {
-    NodeList nList =
-        element.getElementsByTagName(SGISignificantDifferenceConstants.TAG_NAME_SIGDIFF_SYMBOL);
+    NodeList nList = element.getElementsByTagName(TAG_NAME_SIGDIFF_SYMBOL);
     for (int ii = 0; ii < nList.getLength(); ii++) {
       Node node = nList.item(ii);
       if (node instanceof Element) {
@@ -1282,8 +1293,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * @param location the axis location
      */
     public boolean setXAxisLocation(final int location) {
-      if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-          && location != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+      if (location != AXIS_HORIZONTAL_1 && location != AXIS_HORIZONTAL_2) {
         return false;
       }
       SGAxis axis = mAxisElement.getAxisInPlane(location);
@@ -1300,8 +1310,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * @param location the axis location
      */
     public boolean setYAxisLocation(final int location) {
-      if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
-          && location != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+      if (location != AXIS_VERTICAL_1 && location != AXIS_VERTICAL_2) {
         return false;
       }
       SGAxis axis = mAxisElement.getAxisInPlane(location);
@@ -1961,7 +1970,8 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
 
         this.mMouseLocation = this.getMouseLocation(x, y);
         Cursor cur = null;
-        if (this.mMouseLocation == BODY || this.mMouseLocation == ON_STRING) {
+        if (this.mMouseLocation == SGSignificantDifferenceConstants.BODY
+            || this.mMouseLocation == ON_STRING) {
           cur = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);
         } else {
           this.getCursor(this.mMouseLocation);
@@ -2025,7 +2035,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
 
       if (this.isLineVisible()) {
         if (this.isInside(posHorizontalMiddle, radius, x, y)) {
-          location = HORIZONTAL_MIDDLE;
+          location = SGSignificantDifferenceConstants.HORIZONTAL_MIDDLE;
         } else if (this.isInside(posLeftJoint, radius, x, y)) {
           location = LEFT_JOINT;
         } else if (this.isInside(posRightJoint, radius, x, y)) {
@@ -2039,7 +2049,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
         } else if (this.isInside(posRightMiddle, radius, x, y)) {
           location = RIGHT_MIDDLE;
         } else {
-          location = BODY;
+          location = SGSignificantDifferenceConstants.BODY;
         }
       }
 
@@ -2055,7 +2065,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
 
       Cursor cur = null;
       switch (location) {
-        case HORIZONTAL_MIDDLE:
+        case SGSignificantDifferenceConstants.HORIZONTAL_MIDDLE:
           {
             if (!this.isFlippingVertical()) {
               cur = new Cursor(Cursor.N_RESIZE_CURSOR);
@@ -2146,7 +2156,8 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
         return false;
       }
 
-      if (this.mMouseLocation == BODY || this.mMouseLocation == ON_STRING) {
+      if (this.mMouseLocation == SGSignificantDifferenceConstants.BODY
+          || this.mMouseLocation == ON_STRING) {
         return this.dragOtherPoint(e);
       }
 
@@ -2180,7 +2191,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
 
       final int loc = this.mMouseLocation;
       final boolean flag = this.mFlippingHorizontalFlag;
-      if (loc == HORIZONTAL_MIDDLE) {
+      if (loc == SGSignificantDifferenceConstants.HORIZONTAL_MIDDLE) {
         sizeNewY1 = sizeOldY1 - diffY;
         sizeNewY2 = sizeOldY2 - diffY;
 

@@ -1,5 +1,22 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -22,7 +39,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIImageExportManager;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
@@ -47,7 +63,7 @@ import org.freehep.graphicsio.svg.SVGGraphics2D;
 import org.freehep.graphicsio.swf.SWFGraphics2D;
 
 /** A class used to preview, print and export an image. */
-public class SGImageExportManager implements SGIImageExportManager, SGIConstants {
+public class SGImageExportManager implements SGIImageExportManager {
 
   private static final Logger logger = LogManager.getLogger(SGImageExportManager.class);
 
@@ -1118,7 +1134,7 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
     // dispose preview window
     dg.dispose();
 
-    if (ret == SGIConstants.CANCEL_OPTION) {
+    if (ret == CANCEL_OPTION) {
       return CANCEL;
     }
 
@@ -1146,7 +1162,7 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
     if (services.length <= 0) {
       if (!silent) {
         SGUtility.showMessageDialog(
-            owner, "No printer is available.", SGIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+            owner, "No printer is available.", ERROR, JOptionPane.ERROR_MESSAGE);
       }
       return false;
     }
@@ -1191,8 +1207,7 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
       try {
         printerJob.print();
       } catch (PrinterException ex) {
-        SGUtility.showMessageDialog(
-            owner, "Printing failed.", SGIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+        SGUtility.showMessageDialog(owner, "Printing failed.", ERROR, JOptionPane.ERROR_MESSAGE);
         return false;
       }
     }

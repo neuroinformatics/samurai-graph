@@ -1,5 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGImageConstants.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -13,7 +14,7 @@ class SGApplicationUtilityTest {
   @Test
   void getPathNameConcatenatesParentAndChild() {
     String result = SGApplicationUtility.getPathName("/parent", "child");
-    // Uses File.separator from SGIConstants
+    // Uses File.separator from SGConstants
     assertTrue(result.startsWith("/parent"));
     assertTrue(result.endsWith("child"));
   }

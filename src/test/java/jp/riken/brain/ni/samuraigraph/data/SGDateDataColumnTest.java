@@ -51,7 +51,7 @@ class SGDateDataColumnTest {
   @Test
   void getValueType() {
     SGDateDataColumn col = new SGDateDataColumn("time", createDateArray(1.0));
-    assertEquals(SGIDataColumnTypeConstants.VALUE_TYPE_DATE, col.getValueType());
+    assertEquals(SGDataColumnTypeConstants.VALUE_TYPE_DATE, col.getValueType());
   }
 
   @Test

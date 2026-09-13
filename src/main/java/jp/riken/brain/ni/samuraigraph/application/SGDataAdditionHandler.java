@@ -1,5 +1,22 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGArchiveFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGImageConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+
 import java.awt.Point;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -18,15 +35,11 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupPanel;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayFile;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupPanel;
@@ -37,17 +50,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /** Dialog flow and graph creation for data addition. */
-final class SGDataAdditionHandler
-    implements SGIUpgradeConstants,
-        SGIApplicationCommandConstants,
-        SGIApplicationConstants,
-        SGIPropertyFileConstants,
-        SGIPreferencesConstants,
-        SGIApplicationTextConstants,
-        SGIImageConstants,
-        SGIArchiveFileConstants,
-        SGIDataColumnTypeConstants,
-        SGINetCDFConstants {
+final class SGDataAdditionHandler {
 
   private static final Logger logger = LogManager.getLogger(SGDataAdditionHandler.class);
 
@@ -577,8 +580,7 @@ final class SGDataAdditionHandler
     // get data type
     String dataType = this.mMain.mDataTypeWizardDialog.getSelectedDataType();
     if (dataType == null) {
-      SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, TITLE_ERROR);
       return false;
     }
 
@@ -603,35 +605,34 @@ final class SGDataAdditionHandler
         Map<String, SGIntegerSeriesSet> strideMap =
             SGDataStrideUtility.calcSDArrayDefaultStride(colArray, infoMap);
         strideMap.put(
-            SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
-            strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE));
+            SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
+            strideMap.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE));
         infoMap.putAll(strideMap);
 
         final boolean defaultStrideAvailable =
-            (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
+            (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
         strideAvailable = this.confirmStrideAvailable(strideMap, wnd, defaultStrideAvailable);
 
         String dataNameBase = SGUtility.createDataNameBase(path);
-        infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataNameBase);
+        infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataNameBase);
       }
     } else if (dg.equals(setupDialog)) {
       colInfoSet = setupDialog.getDataColumnInfoSet();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
       infoMap.putAll(setupDialog.getStrideMap());
       strideAvailable = setupDialog.isStrideAvailable();
     } else if (dg.equals(this.mMain.mPlotTypeSelectionWizardDialog)) {
       colInfoSet = setupDialog.getDataColumnInfoSet();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
       infoMap.putAll(setupDialog.getStrideMap());
       strideAvailable = setupDialog.isStrideAvailable();
       SGMainFunctions.addPlotTypeSelectionValuesToInfoMap(
           infoMap, this.mMain.mPlotTypeSelectionWizardDialog);
     }
-    infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
+    infoMap.put(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
 
     if (colInfoSet == null) {
-      SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, SGMainFunctions.ERRMSG_TO_DRAW_GRAPH, TITLE_ERROR);
       return false;
     }
 
@@ -646,7 +647,7 @@ final class SGDataAdditionHandler
       if (msg == null) {
         msg = SGMainFunctions.ERRMSG_DATA_ADDITION;
       }
-      SGUtility.showErrorMessageDialog(wnd, msg, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, msg, TITLE_ERROR);
       return false;
     }
 
@@ -659,8 +660,7 @@ final class SGDataAdditionHandler
     // get data type
     String dataType = this.mMain.mDataTypeWizardDialog.getSelectedDataType();
     if (dataType == null) {
-      SGUtility.showErrorMessageDialog(
-          wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, TITLE_ERROR);
       return false;
     }
 
@@ -677,7 +677,7 @@ final class SGDataAdditionHandler
     DataSourceInfo dataSource = new DataSourceInfo(nc);
 
     // put the netCDF file
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, nc);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, nc);
 
     // get selected column types
     SGDataColumnInfoSet colInfoSet = null;
@@ -686,7 +686,7 @@ final class SGDataAdditionHandler
       colInfoSet =
           this.mMain.getPropertyFileHandler().getNetCDFDefaultDataColumnInfo(nc, dataType, infoMap);
       if (colInfoSet == null) {
-        SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+        SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, TITLE_ERROR);
         return false;
       }
 
@@ -695,20 +695,20 @@ final class SGDataAdditionHandler
       Map<String, SGIntegerSeriesSet> strideMap =
           SGDataStrideUtility.calcNetCDFDefaultStride(colArray, infoMap);
       strideMap.put(
-          SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
-          strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE));
+          SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
+          strideMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE));
       infoMap.putAll(strideMap);
 
       final boolean defaultStrideAvailable =
-          (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
+          (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
       strideAvailable = this.confirmStrideAvailable(strideMap, wnd, defaultStrideAvailable);
 
       String dataNameBase = SGUtility.createDataNameBase(path);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataNameBase);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataNameBase);
     } else if (dg.equals(this.mMain.mNetCDFDataSetupWizardDialog)) {
       colInfoSet = this.mMain.mNetCDFDataSetupWizardDialog.getDataColumnInfoSet();
       infoMap.put(
-          SGIDataInformationKeyConstants.KEY_DATA_NAME,
+          SGDataInformationKeyConstants.KEY_DATA_NAME,
           this.mMain.mNetCDFDataSetupWizardDialog.getDataName());
       infoMap.putAll(this.mMain.mNetCDFDataSetupWizardDialog.getStrideMap());
       SGMainFunctions.addDimensionValuesToInfoMap(infoMap, this.mMain.mNetCDFDataSetupWizardDialog);
@@ -716,7 +716,7 @@ final class SGDataAdditionHandler
     } else if (dg.equals(this.mMain.mPlotTypeSelectionWizardDialog)) {
       colInfoSet = this.mMain.mNetCDFDataSetupWizardDialog.getDataColumnInfoSet();
       infoMap.put(
-          SGIDataInformationKeyConstants.KEY_DATA_NAME,
+          SGDataInformationKeyConstants.KEY_DATA_NAME,
           this.mMain.mNetCDFDataSetupWizardDialog.getDataName());
       infoMap.putAll(this.mMain.mNetCDFDataSetupWizardDialog.getStrideMap());
       SGMainFunctions.addDimensionValuesToInfoMap(infoMap, this.mMain.mNetCDFDataSetupWizardDialog);
@@ -725,10 +725,10 @@ final class SGDataAdditionHandler
       strideAvailable = this.mMain.mNetCDFDataSetupWizardDialog.isStrideAvailable();
     }
 
-    infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
+    infoMap.put(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
 
     if (colInfoSet == null) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, TITLE_ERROR);
       return false;
     }
 
@@ -760,7 +760,7 @@ final class SGDataAdditionHandler
       if (msg == null) {
         msg = SGMainFunctions.ERRMSG_DATA_ADDITION;
       }
-      SGUtility.showErrorMessageDialog(wnd, msg, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, msg, TITLE_ERROR);
       return false;
     }
 
@@ -811,15 +811,13 @@ final class SGDataAdditionHandler
       if (this.mMain.mVirtualMDArrayData != null) {
         dataType = this.mMain.mVirtualMDArrayData.dataType;
       } else {
-        SGUtility.showErrorMessageDialog(
-            wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
+        SGUtility.showErrorMessageDialog(wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, TITLE_ERROR);
         return false;
       }
     } else {
       dataType = dataTypeDialog.getSelectedDataType();
       if (dataType == null) {
-        SGUtility.showErrorMessageDialog(
-            wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, SGIConstants.TITLE_ERROR);
+        SGUtility.showErrorMessageDialog(wnd, SGMainFunctions.ERRMSG_TO_GET_DATA_TYPE, TITLE_ERROR);
         return false;
       }
     }
@@ -856,7 +854,7 @@ final class SGDataAdditionHandler
     }
     dataSource = new DataSourceInfo(file);
 
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
 
     // get selected column types
     boolean strideAvailable = false;
@@ -879,7 +877,7 @@ final class SGDataAdditionHandler
                 .getMDArrayDataDefaultDataColumnInfo(file, dataType, infoMap);
       }
       if (colInfoSet == null) {
-        SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+        SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, TITLE_ERROR);
         return false;
       }
 
@@ -888,12 +886,12 @@ final class SGDataAdditionHandler
       Map<String, SGIntegerSeriesSet> strideMap =
           SGDataStrideUtility.calcMDArrayDefaultStride(colArray, infoMap);
       strideMap.put(
-          SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
-          strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE));
+          SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
+          strideMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE));
       infoMap.putAll(strideMap);
 
       final boolean defaultStrideAvailable =
-          (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
+          (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
       strideAvailable = this.confirmStrideAvailable(strideMap, wnd, defaultStrideAvailable);
 
       String dataNameBase;
@@ -902,26 +900,26 @@ final class SGDataAdditionHandler
       } else {
         dataNameBase = SGUtility.createDataNameBase(path);
       }
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataNameBase);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataNameBase);
     } else if (dg.equals(setupDialog)) {
       colInfoSet = setupDialog.getDataColumnInfoSet();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
       infoMap.putAll(setupDialog.getStrideMap());
       SGMainFunctions.addDimensionValuesToInfoMap(infoMap, setupDialog);
       strideAvailable = setupDialog.isStrideAvailable();
     } else if (dg.equals(this.mMain.mPlotTypeSelectionWizardDialog)) {
       colInfoSet = setupDialog.getDataColumnInfoSet();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, setupDialog.getDataName());
       infoMap.putAll(setupDialog.getStrideMap());
       SGMainFunctions.addDimensionValuesToInfoMap(infoMap, setupDialog);
       strideAvailable = setupDialog.isStrideAvailable();
       SGMainFunctions.addPlotTypeSelectionValuesToInfoMap(
           infoMap, this.mMain.mPlotTypeSelectionWizardDialog);
     }
-    infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
+    infoMap.put(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
 
     if (colInfoSet == null) {
-      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, MSG_INVALID_DATA_FILE, TITLE_ERROR);
       return false;
     }
 
@@ -980,7 +978,7 @@ final class SGDataAdditionHandler
       if (msg == null) {
         msg = SGMainFunctions.ERRMSG_DATA_ADDITION;
       }
-      SGUtility.showErrorMessageDialog(wnd, msg, SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, msg, TITLE_ERROR);
       return false;
     }
 
@@ -1140,7 +1138,7 @@ final class SGDataAdditionHandler
               }
             } else {
               SGUtility.showErrorMessageDialog(
-                  dg, SGMainFunctions.ERRMSG_URL_OF_NETCDF, SGIConstants.TITLE_ERROR);
+                  dg, SGMainFunctions.ERRMSG_URL_OF_NETCDF, TITLE_ERROR);
               this.mMain.mDataTypeWizardDialog.setVisible(false);
               this.mMain.mSingleDataFileChooserWizardDialog.setVisible(true);
             }

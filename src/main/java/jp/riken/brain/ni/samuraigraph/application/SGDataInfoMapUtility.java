@@ -1,5 +1,22 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGArchiveFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGImageConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -7,34 +24,20 @@ import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
-import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
+import jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataPropertyKeyConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
 /** Static helper for data information map construction. */
-final class SGDataInfoMapUtility
-    implements SGIUpgradeConstants,
-        SGIApplicationCommandConstants,
-        SGIApplicationConstants,
-        SGIPropertyFileConstants,
-        SGIPreferencesConstants,
-        SGIApplicationTextConstants,
-        SGIImageConstants,
-        SGIArchiveFileConstants,
-        SGIDataColumnTypeConstants,
-        SGINetCDFConstants {
+final class SGDataInfoMapUtility {
 
   private SGDataInfoMapUtility() {}
 
@@ -47,7 +50,7 @@ final class SGDataInfoMapUtility
     if (d.doubleValue() <= 0.0) {
       return false;
     }
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SAMPLING_RATE, d);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SAMPLING_RATE, d);
     return true;
   }
 
@@ -75,14 +78,14 @@ final class SGDataInfoMapUtility
    */
   static Map<String, Object> createInfoMap(String dataType, SGPropertyMap map) {
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
 
     if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       String str = null;
       Iterator<String> itr = map.getKeyIterator();
       while (itr.hasNext()) {
         String key = itr.next();
-        if (SGIDataCommandConstants.COM_DATA_POLAR.equalsIgnoreCase(key)) {
+        if (COM_DATA_POLAR.equalsIgnoreCase(key)) {
           str = map.getValueString(key);
           break;
         }
@@ -94,41 +97,38 @@ final class SGDataInfoMapUtility
       if (b == null) {
         return null;
       }
-      infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, b);
+      infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, b);
     }
 
     final boolean multiple = SGDataDataTypeUtility.isMultipleData(dataType);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.valueOf(multiple));
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.valueOf(multiple));
     if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
       if (SGDataDataTypeUtility.isNetCDFDimensionData(dataType)) {
         // only for backward compatibility
-        infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
-        Integer start =
-            SGUtilityText.getInteger(map.getValue(SGIDataCommandConstants.COM_DATA_PICKUP_START));
+        infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+        Integer start = SGUtilityText.getInteger(map.getValue(COM_DATA_PICKUP_START));
         if (start == null) {
           return null;
         }
-        Integer end =
-            SGUtilityText.getInteger(map.getValue(SGIDataCommandConstants.COM_DATA_PICKUP_END));
+        Integer end = SGUtilityText.getInteger(map.getValue(COM_DATA_PICKUP_END));
         if (end == null) {
           return null;
         }
-        Integer step =
-            SGUtilityText.getInteger(map.getValue(SGIDataCommandConstants.COM_DATA_PICKUP_STEP));
+        Integer step = SGUtilityText.getInteger(map.getValue(COM_DATA_PICKUP_STEP));
         if (step == null) {
           return null;
         }
         if (!SGIntegerSeries.isValidSeries(start, end, step)) {
           return null;
         }
-        infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START, start);
-        infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_END, end);
-        infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_STEP, step);
+        infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START, start);
+        infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_END, end);
+        infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_STEP, step);
       } else {
-        infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+        infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
       }
     } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
     }
 
     // add the sampling rate to the infoList
@@ -138,7 +138,7 @@ final class SGDataInfoMapUtility
       Iterator<String> itr = map.getKeyIterator();
       while (itr.hasNext()) {
         String key = itr.next();
-        if (SGIDataCommandConstants.COM_DATA_SAMPLING_RATE.equalsIgnoreCase(key)) {
+        if (COM_DATA_SAMPLING_RATE.equalsIgnoreCase(key)) {
           str = map.getValueString(key);
           break;
         }
@@ -149,8 +149,8 @@ final class SGDataInfoMapUtility
         }
         if (dataType.equalsIgnoreCase(SGDataTypeConstants.SXY_SAMPLING_DATA)) {
           infoMap.put(
-              SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_MULTIPLE_DATA);
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, false);
+              SGDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_MULTIPLE_DATA);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, false);
         }
       }
     }
@@ -174,57 +174,57 @@ final class SGDataInfoMapUtility
 
     String str = null;
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
 
     if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       final boolean multiple = SGDataDataTypeUtility.isMultipleData(dataType);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.valueOf(multiple));
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.valueOf(multiple));
 
       // picked up dimension
       SGIntegerSeriesSet pickUpIndices = null;
-      str = el.getAttribute(SGIDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION_INDICES);
+      str = el.getAttribute(SGDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION_INDICES);
       if (str != null && str.length() != 0) {
         Map<String, Integer> aliasMap = new HashMap<String, Integer>();
         aliasMap.put(SGIntegerSeries.ARRAY_INDEX_END, null);
         pickUpIndices = SGIntegerSeriesSet.parse(str, aliasMap);
         if (pickUpIndices != null) {
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, pickUpIndices);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, pickUpIndices);
         }
       } else {
-        str = el.getAttribute(SGIDataPropertyKeyConstants.KEY_PICKUP_START);
+        str = el.getAttribute(SGDataPropertyKeyConstants.KEY_PICKUP_START);
         if (null != str && str.length() != 0) {
           Integer num = SGUtilityText.getInteger(str.trim());
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START, num);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START, num);
         }
-        str = el.getAttribute(SGIDataPropertyKeyConstants.KEY_PICKUP_END);
+        str = el.getAttribute(SGDataPropertyKeyConstants.KEY_PICKUP_END);
         if (null != str && str.length() != 0) {
           Integer num = SGUtilityText.getInteger(str.trim());
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_END, num);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_END, num);
         }
-        str = el.getAttribute(SGIDataPropertyKeyConstants.KEY_PICKUP_STEP);
+        str = el.getAttribute(SGDataPropertyKeyConstants.KEY_PICKUP_STEP);
         if (null != str && str.length() != 0) {
           Integer num = SGUtilityText.getInteger(str.trim());
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_STEP, num);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_STEP, num);
         }
       }
 
       if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
-        infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+        infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
       } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
         if (SGDataDataTypeUtility.isNetCDFDimensionData(dataType)) {
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
         } else {
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
         }
-        str = el.getAttribute(SGIDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME);
+        str = el.getAttribute(SGDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME);
         if (null != str && str.length() != 0) {
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
         }
 
       } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
 
         String dimensionIndexMapStr =
-            el.getAttribute(SGIDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION);
+            el.getAttribute(SGDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION);
         if (dimensionIndexMapStr != null && dimensionIndexMapStr.length() != 0) {
           Map<String, Integer> dimensionIndexMap = new HashMap<String, Integer>();
           String[] tokens = dimensionIndexMapStr.split(",");
@@ -242,14 +242,14 @@ final class SGDataInfoMapUtility
             dimensionIndexMap.put(name, index);
           }
           infoMap.put(
-              SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP,
+              SGDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP,
               dimensionIndexMap);
         }
         final boolean multipleVar =
             (dimensionIndexMapStr == null
                 || dimensionIndexMapStr.length() == 0
                 || pickUpIndices == null);
-        infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVar);
+        infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVar);
       }
 
     } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
@@ -261,10 +261,10 @@ final class SGDataInfoMapUtility
       if (b == null) {
         return null;
       }
-      infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, b);
+      infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, b);
     }
 
-    String timeIndexMapStr = el.getAttribute(SGIDataPropertyKeyConstants.KEY_ANIMATION_DIMENSION);
+    String timeIndexMapStr = el.getAttribute(SGDataPropertyKeyConstants.KEY_ANIMATION_DIMENSION);
     if (timeIndexMapStr != null && timeIndexMapStr.length() != 0) {
       Map<String, Integer> timeIndexMap = new HashMap<String, Integer>();
       String[] tokens = timeIndexMapStr.split(",");
@@ -281,17 +281,17 @@ final class SGDataInfoMapUtility
         }
         timeIndexMap.put(name, index);
       }
-      infoMap.put(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP, timeIndexMap);
+      infoMap.put(SGDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP, timeIndexMap);
     }
 
     // add the flag of availability of stride
     Boolean strideAvailable = null;
-    str = el.getAttribute(SGIDataPropertyKeyConstants.KEY_ARRAY_SECTION_AVAILABLE);
+    str = el.getAttribute(SGDataPropertyKeyConstants.KEY_ARRAY_SECTION_AVAILABLE);
     if (str != null && str.length() != 0) {
       strideAvailable = SGUtilityText.getBoolean(str);
     }
     if (strideAvailable != null) {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
+      infoMap.put(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, strideAvailable);
     } else {
       // get from the preferences
       getDataStrideAvailable(infoMap);
@@ -303,102 +303,102 @@ final class SGDataInfoMapUtility
     if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       String strideKey =
           SGDataDataTypeUtility.isSDArrayData(dataType)
-              ? SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE
-              : SGIDataInformationKeyConstants.KEY_SXY_STRIDE;
+              ? SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE
+              : SGDataInformationKeyConstants.KEY_SXY_STRIDE;
       updateStrideInfo(
-          el, SGIDataPropertyKeyConstants.KEY_ARRAY_SECTION, strideKey, infoMap, aliasMap);
+          el, SGDataPropertyKeyConstants.KEY_ARRAY_SECTION, strideKey, infoMap, aliasMap);
 
       // tick label
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
+          SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE,
           infoMap,
           aliasMap);
 
       // index
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
+          SGDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
           infoMap,
           aliasMap);
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_SERIAL_NUMBER_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
+          SGDataPropertyKeyConstants.KEY_SERIAL_NUMBER_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
           infoMap,
           aliasMap);
     } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       // x-direction
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_X_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X,
+          SGDataPropertyKeyConstants.KEY_X_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_VXY_STRIDE_X,
           infoMap,
           aliasMap);
 
       // y-direction
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_Y_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y,
+          SGDataPropertyKeyConstants.KEY_Y_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y,
           infoMap,
           aliasMap);
 
       // index
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
+          SGDataPropertyKeyConstants.KEY_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
           infoMap,
           aliasMap);
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
+          SGDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
           infoMap,
           aliasMap);
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_SERIAL_NUMBER_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
+          SGDataPropertyKeyConstants.KEY_SERIAL_NUMBER_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
           infoMap,
           aliasMap);
     } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       // x-direction
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_X_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
+          SGDataPropertyKeyConstants.KEY_X_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
           infoMap,
           aliasMap);
 
       // y-direction
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_Y_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
+          SGDataPropertyKeyConstants.KEY_Y_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
           infoMap,
           aliasMap);
 
       // index
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
+          SGDataPropertyKeyConstants.KEY_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
           infoMap,
           aliasMap);
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
+          SGDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
           infoMap,
           aliasMap);
       updateStrideInfo(
           el,
-          SGIDataPropertyKeyConstants.KEY_SERIAL_NUMBER_ARRAY_SECTION,
-          SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
+          SGDataPropertyKeyConstants.KEY_SERIAL_NUMBER_ARRAY_SECTION,
+          SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
           infoMap,
           aliasMap);
     }
@@ -429,16 +429,16 @@ final class SGDataInfoMapUtility
       String dataType, SGDataTypeWizardDialog dg, int figureID, Point pos) {
 
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
 
     if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       final Boolean multiple = dg.isMultipleSelected();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, multiple);
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, multiple);
       if (SGDataDataTypeUtility.isNetCDFData(dataType)
           || SGDataDataTypeUtility.isMDArrayData(dataType)) {
         final boolean multipleVariable = true;
         infoMap.put(
-            SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE,
+            SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE,
             Boolean.valueOf(multipleVariable));
       } else if (SGDataDataTypeUtility.isSDArrayData(dataType)
           && SGDataDataTypeUtility.isSXYTypeData(dataType)) {
@@ -452,7 +452,7 @@ final class SGDataInfoMapUtility
       //        	// set true by default
     } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       boolean b = dg.isPolarSelected();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.valueOf(b));
+      infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.valueOf(b));
 
       //        	// set true by default
     }
@@ -466,7 +466,7 @@ final class SGDataInfoMapUtility
     } else {
       size = SGMainFunctions.getDefaultFigureSize(wnd, pos, dataType);
     }
-    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, size);
+    infoMap.put(SGDataInformationKeyConstants.KEY_FIGURE_SIZE, size);
 
     // stride of data arrays
     getDataStrideAvailable(infoMap);
@@ -500,6 +500,6 @@ final class SGDataInfoMapUtility
   static void getDataStrideAvailable(Map<String, Object> infoMap) {
 
     // sets false by default
-    infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, false);
+    infoMap.put(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, false);
   }
 }

@@ -1,5 +1,14 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -41,11 +50,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
@@ -59,14 +66,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYSDArrayMultipleData;
 
 /** A dialog to set the properties of two-dimensional scalar type data. */
-public class SGPropertyDialogSXYData extends SGDataDialog
-    implements SGIFigureDrawingElementConstants,
-        SGIDataColumnTypeConstants,
-        SGISXYDataConstants,
-        SGINetCDFConstants,
-        SGILineConstants,
-        SGISymbolConstants,
-        SGITwoAxesDialog {
+public class SGPropertyDialogSXYData extends SGDataDialog implements SGITwoAxesDialog {
 
   final SGSXYDataDialogBuilder mDialogBuilder = new SGSXYDataDialogBuilder(this);
 
@@ -936,9 +936,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
     // add items to the error bar type combo box
     final String typeArray[] = {
-      SGIErrorBarConstants.SYMBOL_NAME_CIRCLE,
-      SGIErrorBarConstants.SYMBOL_NAME_TRANSVERSE_LINE,
-      SGIErrorBarConstants.SYMBOL_NAME_VOID
+      SGSymbolConstants.SYMBOL_NAME_CIRCLE,
+      SGArrowConstants.SYMBOL_NAME_TRANSVERSE_LINE,
+      SGArrowConstants.SYMBOL_NAME_VOID
     };
     for (int ii = 0; ii < typeArray.length; ii++) {
       this.mErrorBarTypeComboBox.addItem(typeArray[ii]);
@@ -1666,11 +1666,11 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   public Integer getErrorBarStyle() {
     int style = -1;
     if (this.mErrorBarBothsidesRadioButton.isSelected()) {
-      style = SGIErrorBarConstants.ERROR_BAR_BOTHSIDES;
+      style = SGErrorBarConstants.ERROR_BAR_BOTHSIDES;
     } else if (this.mErrorBarUpsideRadioButton.isSelected()) {
-      style = SGIErrorBarConstants.ERROR_BAR_UPSIDE;
+      style = SGErrorBarConstants.ERROR_BAR_UPSIDE;
     } else if (this.mErrorBarDownsideRadioButton.isSelected()) {
-      style = SGIErrorBarConstants.ERROR_BAR_DOWNSIDE;
+      style = SGErrorBarConstants.ERROR_BAR_DOWNSIDE;
     } else {
       return null;
     }
@@ -1733,19 +1733,19 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     }
 
     switch (style.intValue()) {
-      case SGIErrorBarConstants.ERROR_BAR_BOTHSIDES:
+      case SGErrorBarConstants.ERROR_BAR_BOTHSIDES:
         {
           this.mErrorBarBothsidesRadioButton.setSelected(true);
           break;
         }
 
-      case SGIErrorBarConstants.ERROR_BAR_UPSIDE:
+      case SGErrorBarConstants.ERROR_BAR_UPSIDE:
         {
           this.mErrorBarUpsideRadioButton.setSelected(true);
           break;
         }
 
-      case SGIErrorBarConstants.ERROR_BAR_DOWNSIDE:
+      case SGErrorBarConstants.ERROR_BAR_DOWNSIDE:
         {
           this.mErrorBarDownsideRadioButton.setSelected(true);
           break;
@@ -2112,7 +2112,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       lineStyleList = new ArrayList<SGLineStyle>();
       for (int ii = 0; ii < childNum; ii++) {
         SGLineStyle style =
-            new SGLineStyle(DEFAULT_LINE_TYPE, DEFAULT_LINE_COLOR, DEFAULT_LINE_WIDTH);
+            new SGLineStyle(
+                SGSXYDataConstants.DEFAULT_LINE_TYPE,
+                SGSXYDataConstants.DEFAULT_LINE_COLOR,
+                SGSXYDataConstants.DEFAULT_LINE_WIDTH);
         lineStyleList.add(style);
       }
     }
@@ -2327,9 +2330,9 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     int xCount = 0;
     int yCount = 0;
     for (int i = 0; i < cols.length; i++) {
-      if (SGIDataColumnTypeConstants.X_VALUE.equals(cols[i].getColumnType())) {
+      if (X_VALUE.equals(cols[i].getColumnType())) {
         xCount++;
-      } else if (SGIDataColumnTypeConstants.Y_VALUE.equals(cols[i].getColumnType())) {
+      } else if (Y_VALUE.equals(cols[i].getColumnType())) {
         yCount++;
       }
     }
@@ -2489,12 +2492,12 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       // sets the stride
       if (SGDataDataTypeUtility.isSDArrayData(data)) {
         SGIntegerSeriesSet stride =
-            this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+            this.mStrideMap.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
         if (!l.setSDArrayStride(stride)) {
           return false;
         }
         SGIntegerSeriesSet tickLabelStride =
-            this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+            this.mStrideMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
         if (!l.setTickLabelStride(tickLabelStride)) {
           return false;
         }
@@ -2503,7 +2506,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
         SGIIndexData indexData = (SGIIndexData) data;
         if (indexData.isIndexAvailable()) {
           SGIntegerSeriesSet indexStride =
-              this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+              this.mStrideMap.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
           if (!l.setIndexStride(indexStride)) {
             return false;
           }
@@ -2517,12 +2520,12 @@ public class SGPropertyDialogSXYData extends SGDataDialog
           return false;
         }
         SGIntegerSeriesSet stride =
-            this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+            this.mStrideMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
         if (!l.setStride(stride)) {
           return false;
         }
         SGIntegerSeriesSet tickLabelStride =
-            this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+            this.mStrideMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
         if (!l.setTickLabelStride(tickLabelStride)) {
           return false;
         }
@@ -3579,7 +3582,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     Map<String, Object> infoMap = super.createInfoMap(obs);
     if (this.mPickUpDimensionInfo != null) {
       infoMap.put(
-          SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES,
+          SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES,
           this.mPickUpDimensionInfo.getIndices());
     }
     return infoMap;

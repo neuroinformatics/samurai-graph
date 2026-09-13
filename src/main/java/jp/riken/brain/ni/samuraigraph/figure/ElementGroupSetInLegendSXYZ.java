@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYZDataConstants.*;
+
 import java.awt.*;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -20,7 +24,7 @@ import jp.riken.brain.ni.samuraigraph.data.*;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
 
 class ElementGroupSetInLegendSXYZ extends ElementGroupSetInLegend
-    implements SGIElementGroupSetSXYZ, SGISXYZDataConstants, SGISXYZDataDialogObserver {
+    implements SGIElementGroupSetSXYZ, SGISXYZDataDialogObserver {
   private final SGFigureElementLegend legend;
 
   protected ElementGroupSetInLegendSXYZ(final SGFigureElementLegend legend, SGData data) {
@@ -50,7 +54,7 @@ class ElementGroupSetInLegendSXYZ extends ElementGroupSetInLegend
 
   public boolean addDrawingElementGroup(int type) {
     SGElementGroup group = null;
-    if (type == SGIElementGroupConstants.RECTANGLE_GROUP) {
+    if (type == SGElementGroupConstants.RECTANGLE_GROUP) {
       SGElementGroupPseudocolorMap colorMap = new ElementGroupPseudocolorMap(legend);
       colorMap.setColorBarModel(legend.getColorBarModel());
       group = colorMap;

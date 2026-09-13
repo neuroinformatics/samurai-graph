@@ -1,11 +1,14 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGGradationPaint;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGPatternPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
@@ -14,13 +17,11 @@ import jp.riken.brain.ni.samuraigraph.base.SGSelectablePaint;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
 
-public abstract class SGElementGroupBarForData extends SGElementGroupBar
-    implements SGISXYDataConstants, SGIDataCommandConstants {
+public abstract class SGElementGroupBarForData extends SGElementGroupBar {
 
   /** The default constructor. */
   public SGElementGroupBarForData(SGISXYTypeData data) {
@@ -222,7 +223,7 @@ public abstract class SGElementGroupBarForData extends SGElementGroupBar
         }
         result.putResult(COM_DATA_BAR_BODY_GRADATION_ORDER, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_BAR_BODY_TRANSPARENCY.equalsIgnoreCase(key)) {
-        final Integer num = SGUtilityText.getInteger(value, SGIConstants.percent);
+        final Integer num = SGUtilityText.getInteger(value, percent);
         if (num == null) {
           result.putResult(COM_DATA_BAR_BODY_TRANSPARENCY, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;

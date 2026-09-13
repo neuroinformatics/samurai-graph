@@ -1,13 +1,21 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+
 import java.io.File;
 import java.io.IOException;
-import jp.riken.brain.ni.samuraigraph.application.SGIApplicationConstants.FILE_TYPE;
+import jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.FILE_TYPE;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
-class SGCommandScriptManager implements SGIApplicationCommandConstants {
+class SGCommandScriptManager {
 
   private SGCommandScriptCreator mCommandScriptCreator = null;
 

@@ -40,7 +40,7 @@ class SGSamplingDataColumnTest {
   @Test
   void getValueType() {
     SGSamplingDataColumn col = new SGSamplingDataColumn(1000.0, 5);
-    assertEquals(SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE, col.getValueType());
+    assertEquals(SGDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE, col.getValueType());
   }
 
   @Test

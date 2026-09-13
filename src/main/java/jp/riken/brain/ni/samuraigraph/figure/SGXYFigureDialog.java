@@ -1,5 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -21,14 +27,13 @@ import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGDateInputDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
-import jp.riken.brain.ni.samuraigraph.base.SGIRootObjectConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPeriod;
 import jp.riken.brain.ni.samuraigraph.base.SGPeriodInputDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
+import jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
@@ -36,8 +41,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** A property dialog for figures with two-dimensional data. */
-public class SGXYFigureDialog extends SGPropertyDialog
-    implements SGIFigureConstants, SGIFigureTypeConstants, SGILineConstants, SGITwoAxesDialog {
+public class SGXYFigureDialog extends SGPropertyDialog implements SGITwoAxesDialog {
 
   private static final long serialVersionUID = -5394120960119844819L;
 
@@ -751,7 +755,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
     // set up spinners
     //
 
-    final int digits = -SGIRootObjectConstants.LENGTH_MINIMAL_ORDER;
+    final int digits = -SGRootObjectConstants.LENGTH_MINIMAL_ORDER;
 
     this.mXSpinner.initProperties(
         new SpinnerNumberModel(0.0, FIGURE_X_MIN, FIGURE_X_MAX, FIGURE_LOCATION_STEP),

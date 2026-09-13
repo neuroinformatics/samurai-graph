@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ComponentEvent;
@@ -18,12 +21,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import jp.riken.brain.ni.samuraigraph.application.SGMainFunctions.DataReloadResult;
 import jp.riken.brain.ni.samuraigraph.application.SGMainFunctions.DataReloadResultSet;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGTable;
 
 /** The panel to display the result of reloading data. */
 public class SGDataReloadResultPanel extends javax.swing.JPanel
-    implements ComponentListener, MouseWheelListener, SGIApplicationConstants {
+    implements ComponentListener, MouseWheelListener {
 
   private static final long serialVersionUID = 5922400604249692824L;
 
@@ -93,8 +96,8 @@ public class SGDataReloadResultPanel extends javax.swing.JPanel
 
     // set up the scroll bar properties
     JScrollBar vertBar = this.mTableScrollPane.getVerticalScrollBar();
-    vertBar.setUnitIncrement(SGIConstants.SCROLL_BAR_UNIT_INCREMENT);
-    vertBar.setBlockIncrement(SGIConstants.SCROLL_BAR_BLOCK_INCREMENT);
+    vertBar.setUnitIncrement(SGConstants.SCROLL_BAR_UNIT_INCREMENT);
+    vertBar.setBlockIncrement(SGConstants.SCROLL_BAR_BLOCK_INCREMENT);
 
     this.addComponentListener(this);
 

@@ -1,5 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGArchiveFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
@@ -15,12 +22,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
-import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataFileConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
 import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetForData;
@@ -30,12 +35,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /** SGMainFunctions :: DataSetManager class */
-class SGDataSetManager
-    implements SGIConstants,
-        SGIApplicationConstants,
-        SGIPropertyFileConstants,
-        SGIApplicationTextConstants,
-        SGIArchiveFileConstants {
+class SGDataSetManager {
 
   private static final String DATASET_TEMPDIR_NAME = "SamuraiGraphArchive";
 
@@ -130,7 +130,7 @@ class SGDataSetManager
     for (int ii = 0; ii < fList.size(); ii++) {
       File f = fList.get(ii);
       String path = f.getPath();
-      if (this.hasExtension(path, SGIImageConstants.DRAWABLE_IMAGE_EXTENSIONS)) {
+      if (this.hasExtension(path, SGImageConstants.DRAWABLE_IMAGE_EXTENSIONS)) {
         imageFile = f;
         break;
       }
@@ -151,10 +151,7 @@ class SGDataSetManager
 
   private boolean isDataFile(String path) {
     String[] extensions = {
-      SGIDataFileConstants.CSV_FILE_EXTENSION,
-      SGIDataFileConstants.NETCDF_FILE_EXTENSION,
-      SGIDataFileConstants.HDF5_FILE_EXTENSION,
-      SGIDataFileConstants.MATLAB_FILE_EXTENSION
+      CSV_FILE_EXTENSION, NETCDF_FILE_EXTENSION, HDF5_FILE_EXTENSION, MATLAB_FILE_EXTENSION
     };
     return this.hasExtension(path, extensions);
   }
@@ -357,7 +354,7 @@ class SGDataSetManager
 
     // get window element
     Element elWnd = this.mMain.mPropertyFileManager.getWindowElement(doc);
-    NodeList nListFigure = elWnd.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+    NodeList nListFigure = elWnd.getElementsByTagName(SGFigureConstants.TAG_NAME_FIGURE);
     final int figureNum = nListFigure.getLength();
     int cnt = 0;
     final int[] dataNumArray = new int[figureNum];
@@ -501,8 +498,7 @@ class SGDataSetManager
         // checks the data type
         if (OPERATION.SAVE_TO_ARCHIVE_DATA_SET_107.equals(mode)) {
           if (this.checkNetCDFDataExists(wnd) || this.checkMDArrayDataExists(wnd)) {
-            SGUtility.showErrorMessageDialog(
-                wnd, ERRMSG_FAILED_TO_CREATE_DATASET, SGIConstants.TITLE_ERROR);
+            SGUtility.showErrorMessageDialog(wnd, ERRMSG_FAILED_TO_CREATE_DATASET, TITLE_ERROR);
             return ERROR_OPTION;
           }
         }

@@ -1,5 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
+
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,14 +18,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
-import jp.riken.brain.ni.samuraigraph.application.SGIApplicationConstants.FILE_TYPE;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.FILE_TYPE;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
 
 /** A wizard dialog to select the data type. */
-public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplicationTextConstants {
+public class SGDataTypeWizardDialog extends SGWizardDialog {
 
   private static final long serialVersionUID = 816214461842908836L;
 
@@ -697,7 +702,7 @@ public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplica
       }
       if (!ok) {
         SGUtility.showMessageDialog(
-            this, MSG_INVALID_INPUT_VALUE, SGIConstants.TITLE_ERROR, JOptionPane.ERROR_MESSAGE);
+            this, MSG_INVALID_INPUT_VALUE, TITLE_ERROR, JOptionPane.ERROR_MESSAGE);
         return false;
       }
     }

@@ -1,5 +1,23 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisBreakConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSignificantDifferenceConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+
 import java.awt.EventQueue;
 import java.awt.Point;
 import java.io.File;
@@ -16,10 +34,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementLegend;
@@ -27,7 +44,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementShape;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementSignificantDifference;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementString;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementTimingLine;
-import jp.riken.brain.ni.samuraigraph.base.SGIRootObjectConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
@@ -36,42 +52,26 @@ import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGMATLABFile;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFFile;
 import jp.riken.brain.ni.samuraigraph.figure.SGColorBarColorMapManager;
-import jp.riken.brain.ni.samuraigraph.figure.SGIAxisBreakConstants;
-import jp.riken.brain.ni.samuraigraph.figure.SGIAxisConstants;
-import jp.riken.brain.ni.samuraigraph.figure.SGIColorBarConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGColorBarConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetMultipleSXY;
-import jp.riken.brain.ni.samuraigraph.figure.SGILegendConstants;
-import jp.riken.brain.ni.samuraigraph.figure.SGIScaleConstants;
-import jp.riken.brain.ni.samuraigraph.figure.SGIShapeConstants;
-import jp.riken.brain.ni.samuraigraph.figure.SGISignificantDifferenceConstants;
-import jp.riken.brain.ni.samuraigraph.figure.SGIStringConstants;
-import jp.riken.brain.ni.samuraigraph.figure.SGITimingLineConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyleColorMapManager;
+import jp.riken.brain.ni.samuraigraph.figure.SGScaleConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGUtilityForFigureElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /** The property manager. */
-class SGCommandManager
-    implements SGIApplicationCommandConstants,
-        SGIDataColumnTypeConstants,
-        SGILegendConstants,
-        SGISignificantDifferenceConstants,
-        SGIAxisBreakConstants,
-        SGITimingLineConstants,
-        SGIShapeConstants {
+class SGCommandManager {
 
   private static final Logger logger = LogManager.getLogger(SGCommandManager.class);
 
@@ -142,18 +142,17 @@ class SGCommandManager
   private SGIFigureElement getFigureElementToMove(final String name, final SGFigure f) {
     final String uc = name.toUpperCase();
     Class<? extends SGIFigureElement> cl = null;
-    if (uc.endsWith(SGIDataCommandConstants.COM_DATA.toUpperCase())) {
+    if (uc.endsWith(COM_DATA.toUpperCase())) {
       cl = SGIFigureElementGraph.class;
-    } else if (uc.endsWith(SGIStringConstants.COM_LABEL.toUpperCase())) {
+    } else if (uc.endsWith(COM_LABEL.toUpperCase())) {
       cl = SGIFigureElementString.class;
-    } else if (uc.endsWith(
-        SGISignificantDifferenceConstants.COM_SIGNIFICANT_DIFFERENCE.toUpperCase())) {
+    } else if (uc.endsWith(COM_SIGNIFICANT_DIFFERENCE.toUpperCase())) {
       cl = SGIFigureElementSignificantDifference.class;
-    } else if (uc.endsWith(SGIAxisBreakConstants.COM_AXIS_BREAK.toUpperCase())) {
+    } else if (uc.endsWith(COM_AXIS_BREAK.toUpperCase())) {
       cl = SGIFigureElementAxisBreak.class;
-    } else if (uc.endsWith(SGITimingLineConstants.COM_TIMING_LINE.toUpperCase())) {
+    } else if (uc.endsWith(COM_TIMING_LINE.toUpperCase())) {
       cl = SGIFigureElementTimingLine.class;
-    } else if (uc.endsWith(SGIShapeConstants.COM_SHAPE.toUpperCase())) {
+    } else if (uc.endsWith(COM_SHAPE.toUpperCase())) {
       cl = SGIFigureElementShape.class;
     } else {
       return null;
@@ -445,9 +444,9 @@ class SGCommandManager
         }
       }
       final String[] archiveTypes = {
-        SGIArchiveFileConstants.ARCHIVE_FILE_TYPE_SGA,
-        SGIArchiveFileConstants.ARCHIVE_FILE_TYPE_SGA107,
-        //                    SGIArchiveFileConstants.ARCHIVE_FILETYPE_NETCDF
+        SGArchiveFileConstants.ARCHIVE_FILE_TYPE_SGA,
+        SGArchiveFileConstants.ARCHIVE_FILE_TYPE_SGA107,
+        //                    SGArchiveFileConstants.ARCHIVE_FILETYPE_NETCDF
       };
       fileType = SGApplicationUtility.getExactTypeString(archiveTypes, fileType);
       if (filePath == null || fileType == null) {
@@ -496,7 +495,7 @@ class SGCommandManager
    */
   private int execWindowCommand(final String command, final List<String> argsList) {
 
-    if (SGIRootObjectConstants.COM_WINDOW.equalsIgnoreCase(command)) {
+    if (COM_WINDOW.equalsIgnoreCase(command)) {
       final List<String> paramsList = new ArrayList<String>();
       Integer wndId = this.getNewWindowId(argsList, paramsList);
       if (wndId == null) {
@@ -586,7 +585,7 @@ class SGCommandManager
       return STATUS_FAILED;
     }
 
-    if (SGIFigureConstants.COM_FIGURE.equalsIgnoreCase(command)) {
+    if (COM_FIGURE.equalsIgnoreCase(command)) {
       Integer figureId = this.getId(argsList);
       if (figureId == null) {
         return STATUS_FAILED;
@@ -700,7 +699,7 @@ class SGCommandManager
     }
     SGDrawingWindow wnd = figure.getWindow();
 
-    if (SGIDataCommandConstants.COM_DATA.equalsIgnoreCase(command)) {
+    if (COM_DATA.equalsIgnoreCase(command)) {
       // create a data object
       if (argsList.size() < 2) {
         return STATUS_FAILED;
@@ -759,7 +758,7 @@ class SGCommandManager
         // get file path
         String path = map.getValueString(COM_DATA_FILE_PATH);
         if (!"".equals(path)) {
-          if (map.isDoubleQuoted(SGIDataCommandConstants.COM_DATA_FILE_PATH) == false) {
+          if (map.isDoubleQuoted(COM_DATA_FILE_PATH) == false) {
             return STATUS_FAILED;
           }
         } else {
@@ -806,7 +805,7 @@ class SGCommandManager
           if (nc == null) {
             return STATUS_FAILED;
           }
-          infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, nc);
+          infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, nc);
           colInfoSet =
               this.mMain
                   .getPropertyFileHandler()
@@ -816,7 +815,7 @@ class SGCommandManager
           if (hdf5File == null) {
             return STATUS_FAILED;
           }
-          infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, hdf5File);
+          infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, hdf5File);
           colInfoSet =
               this.mMain
                   .getPropertyFileHandler()
@@ -826,7 +825,7 @@ class SGCommandManager
           if (matFile == null) {
             return STATUS_FAILED;
           }
-          infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, matFile);
+          infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, matFile);
           colInfoSet =
               this.mMain
                   .getPropertyFileHandler()
@@ -843,7 +842,7 @@ class SGCommandManager
 
         // puts the figure size
         SGTuple2f size = new SGTuple2f(figure.getGraphRectWidth(), figure.getGraphRectHeight());
-        infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, size);
+        infoMap.put(SGDataInformationKeyConstants.KEY_FIGURE_SIZE, size);
 
         // puts the grid flag
         if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
@@ -872,7 +871,7 @@ class SGCommandManager
 
         // puts the data name
         String dataNameBase = SGUtility.createDataNameBase(path);
-        infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_NAME, dataNameBase);
+        infoMap.put(SGDataInformationKeyConstants.KEY_DATA_NAME, dataNameBase);
 
         // draw the graph
         SGMainFunctions.DataSourceInfo dataSource = new SGMainFunctions.DataSourceInfo(path);
@@ -904,10 +903,10 @@ class SGCommandManager
         wnd.notifyToRoot();
 
         // remove keys
-        map.removeValue(SGIDataCommandConstants.COM_DATA_FILE_PATH);
-        map.removeValue(SGIDataCommandConstants.COM_DATA_TYPE);
-        map.removeValue(SGIDataCommandConstants.COM_DATA_SAMPLING_RATE);
-        map.removeValue(SGIDataCommandConstants.COM_DATA_POLAR);
+        map.removeValue(COM_DATA_FILE_PATH);
+        map.removeValue(COM_DATA_TYPE);
+        map.removeValue(COM_DATA_SAMPLING_RATE);
+        map.removeValue(COM_DATA_POLAR);
 
       } else {
         // Data of given ID already exists.
@@ -1140,7 +1139,7 @@ class SGCommandManager
       }
 
       return STATUS_SUCCEEDED;
-    } else if (SGIAxisConstants.COM_AXIS.equalsIgnoreCase(command)) {
+    } else if (COM_AXIS.equalsIgnoreCase(command)) {
       if (argsList.size() < 1) {
         return STATUS_FAILED;
       }
@@ -1178,7 +1177,7 @@ class SGCommandManager
       // after setting properties
       return this.afterSetProperties(map, result);
 
-    } else if (SGIColorBarConstants.COM_COLOR_BAR.equalsIgnoreCase(command)) {
+    } else if (SGColorBarConstants.COM_COLOR_BAR.equalsIgnoreCase(command)) {
 
       String colorMapName = null;
       if (argsList.size() > 1) {
@@ -1200,9 +1199,13 @@ class SGCommandManager
         result =
             figure
                 .getAxisElement()
-                .setChildColorMapProperties(SGIFigureElementAxis.AXIS_NORMAL, colorMapName, map);
+                .setChildColorMapProperties(
+                    SGFigureElementAxisConstants.AXIS_NORMAL, colorMapName, map);
       } else {
-        result = figure.getAxisElement().setChildProperties(SGIFigureElementAxis.AXIS_NORMAL, map);
+        result =
+            figure
+                .getAxisElement()
+                .setChildProperties(SGFigureElementAxisConstants.AXIS_NORMAL, map);
       }
 
       if (result == null) {
@@ -1212,7 +1215,7 @@ class SGCommandManager
       // after setting properties
       return this.afterSetProperties(map, result);
 
-    } else if (SGIScaleConstants.COM_SCALE.equalsIgnoreCase(command)) {
+    } else if (SGScaleConstants.COM_SCALE.equalsIgnoreCase(command)) {
 
       SGPropertyMap map = this.getPropertiesMap(command, argsList);
       if (map == null) {
@@ -1228,7 +1231,7 @@ class SGCommandManager
       // after setting properties
       return this.afterSetProperties(map, result);
 
-    } else if (SGILegendConstants.COM_LEGEND.equalsIgnoreCase(command)) {
+    } else if (COM_LEGEND.equalsIgnoreCase(command)) {
       SGPropertyMap map = this.getPropertiesMap(command, argsList);
       if (map == null) {
         return STATUS_FAILED;
@@ -1243,23 +1246,22 @@ class SGCommandManager
       // after setting properties
       return this.afterSetProperties(map, result);
 
-    } else if (SGIStringConstants.COM_LABEL.equalsIgnoreCase(command)
-        || SGISignificantDifferenceConstants.COM_SIGNIFICANT_DIFFERENCE.equalsIgnoreCase(command)
-        || SGIAxisBreakConstants.COM_AXIS_BREAK.equalsIgnoreCase(command)
-        || SGITimingLineConstants.COM_TIMING_LINE.equalsIgnoreCase(command)
-        || SGIShapeConstants.COM_SHAPE.equalsIgnoreCase(command)) {
+    } else if (COM_LABEL.equalsIgnoreCase(command)
+        || COM_SIGNIFICANT_DIFFERENCE.equalsIgnoreCase(command)
+        || COM_AXIS_BREAK.equalsIgnoreCase(command)
+        || COM_TIMING_LINE.equalsIgnoreCase(command)
+        || COM_SHAPE.equalsIgnoreCase(command)) {
 
       Class<? extends SGIFigureElement> cl = null;
-      if (SGIStringConstants.COM_LABEL.equalsIgnoreCase(command)) {
+      if (COM_LABEL.equalsIgnoreCase(command)) {
         cl = SGIFigureElementString.class;
-      } else if (SGISignificantDifferenceConstants.COM_SIGNIFICANT_DIFFERENCE.equalsIgnoreCase(
-          command)) {
+      } else if (COM_SIGNIFICANT_DIFFERENCE.equalsIgnoreCase(command)) {
         cl = SGIFigureElementSignificantDifference.class;
-      } else if (SGIAxisBreakConstants.COM_AXIS_BREAK.equalsIgnoreCase(command)) {
+      } else if (COM_AXIS_BREAK.equalsIgnoreCase(command)) {
         cl = SGIFigureElementAxisBreak.class;
-      } else if (SGITimingLineConstants.COM_TIMING_LINE.equalsIgnoreCase(command)) {
+      } else if (COM_TIMING_LINE.equalsIgnoreCase(command)) {
         cl = SGIFigureElementTimingLine.class;
-      } else if (SGIShapeConstants.COM_SHAPE.equalsIgnoreCase(command)) {
+      } else if (COM_SHAPE.equalsIgnoreCase(command)) {
         cl = SGIFigureElementShape.class;
       } else {
         return STATUS_FAILED;

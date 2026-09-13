@@ -1,5 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+
 import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -19,12 +25,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGExtensionFileFilter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
-import jp.riken.brain.ni.samuraigraph.base.SGIPropertyFileConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIRootObjectConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
@@ -35,12 +39,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-class SGPropertyFileManager
-    implements ActionListener,
-        SGIConstants,
-        SGIApplicationConstants,
-        SGIApplicationTextConstants,
-        SGIPropertyFileConstants {
+class SGPropertyFileManager implements ActionListener {
 
   private static final Logger logger = LogManager.getLogger(SGPropertyFileManager.class);
 
@@ -202,7 +201,7 @@ class SGPropertyFileManager
 
     int errCode;
     if (!result) {
-      errCode = SGIConstants.PROPERTY_FILE_INCORRECT;
+      errCode = PROPERTY_FILE_INCORRECT;
     } else {
       // create figure objects in a window
       errCode =
@@ -211,7 +210,7 @@ class SGPropertyFileManager
               .createFiguresFromPropertyFile(
                   elWnd, wnd, wDataArray, readDataProperty, versionNumber, mode);
 
-      if (errCode == SGIConstants.SUCCESSFUL_COMPLETION) {
+      if (errCode == SUCCESSFUL_COMPLETION) {
         // add history
         wnd.initPropertiesHistory();
 
@@ -226,22 +225,22 @@ class SGPropertyFileManager
     // set the message
     String msg = null;
     switch (errCode) {
-      case SGIConstants.SUCCESSFUL_COMPLETION:
+      case SUCCESSFUL_COMPLETION:
         msg = MSG_SUCCESSFUL_COMPLETION;
         break;
-      case SGIConstants.DATA_NUMBER_SHORTAGE:
+      case DATA_NUMBER_SHORTAGE:
         msg = MSG_DATA_NUMBER_SHORTAGE;
         break;
-      case SGIConstants.DATA_NUMBER_EXCESS:
+      case DATA_NUMBER_EXCESS:
         msg = MSG_DATA_NUMBER_EXCESS;
         break;
-      case SGIConstants.FILE_OPEN_FAILURE:
+      case FILE_OPEN_FAILURE:
         msg = MSG_FILE_OPEN_FAILURE;
         break;
-      case SGIConstants.PROPERTY_FILE_INCORRECT:
+      case PROPERTY_FILE_INCORRECT:
         msg = MSG_PROPERTY_FILE_INVALID;
         break;
-      case SGIConstants.DATA_FILE_INVALID:
+      case DATA_FILE_INVALID:
         msg = MSG_DATA_FILE_OPEN_FAILURE;
         break;
       default:
@@ -310,7 +309,7 @@ class SGPropertyFileManager
     Element root = doc.getDocumentElement();
 
     // get the node of window
-    NodeList wList = root.getElementsByTagName(SGIRootObjectConstants.TAG_NAME_WINDOW);
+    NodeList wList = root.getElementsByTagName(SGRootObjectConstants.TAG_NAME_WINDOW);
     if (wList.getLength() == 0) {
       return null;
     }
@@ -371,13 +370,13 @@ class SGPropertyFileManager
     this.mVersionNumber = versionNumber;
 
     // get the node of window
-    NodeList wList = root.getElementsByTagName(SGIRootObjectConstants.TAG_NAME_WINDOW);
+    NodeList wList = root.getElementsByTagName(SGRootObjectConstants.TAG_NAME_WINDOW);
     if (wList.getLength() == 0) {
       return false;
     }
 
     // figure ID
-    NodeList figureNodeList = doc.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
+    NodeList figureNodeList = doc.getElementsByTagName(SGFigureConstants.TAG_NAME_FIGURE);
     if (figureNodeList.getLength() == 0) {
       if (!silent) {
         SGUtility.showMessageDialog(
@@ -417,8 +416,8 @@ class SGPropertyFileManager
           Node n = dataList.item(jj);
           if (n instanceof Element) {
             Element el = (Element) n;
-            String name = el.getAttribute(SGIFigureElement.KEY_DATA_NAME);
-            String type = el.getAttribute(SGIFigureElement.KEY_DATA_TYPE);
+            String name = el.getAttribute(SGFigureElementConstants.KEY_DATA_NAME);
+            String type = el.getAttribute(SGFigureElementConstants.KEY_DATA_TYPE);
 
             // create information map
             Map<String, Object> infoMap = SGDataInfoMapUtility.createInfoMap(type, el);
@@ -439,7 +438,7 @@ class SGPropertyFileManager
 
   SGTuple2f getFigureSize(Element el) {
     // get the size of figure
-    String strFigureWidth = el.getAttribute(SGIFigureConstants.KEY_FIGURE_WIDTH);
+    String strFigureWidth = el.getAttribute(SGFigureConstants.KEY_FIGURE_WIDTH);
     if (strFigureWidth == null || strFigureWidth.length() == 0) {
       return null;
     }
@@ -452,13 +451,13 @@ class SGPropertyFileManager
         SGFigure.calcFigureScale(
             figureWidth.floatValue(),
             sbFigureWidth.toString(),
-            SGIFigureConstants.FIGURE_SIZE_UNIT,
-            SGIFigureConstants.FIGURE_WIDTH_MIN,
-            SGIFigureConstants.FIGURE_WIDTH_MAX);
+            SGFigureConstants.FIGURE_SIZE_UNIT,
+            SGFigureConstants.FIGURE_WIDTH_MIN,
+            SGFigureConstants.FIGURE_WIDTH_MAX);
     if (wPt == null) {
       return null;
     }
-    String strFigureHeight = el.getAttribute(SGIFigureConstants.KEY_FIGURE_HEIGHT);
+    String strFigureHeight = el.getAttribute(SGFigureConstants.KEY_FIGURE_HEIGHT);
     if (strFigureHeight == null || strFigureHeight.length() == 0) {
       return null;
     }
@@ -471,9 +470,9 @@ class SGPropertyFileManager
         SGFigure.calcFigureScale(
             figureHeight.floatValue(),
             sbFigureHeight.toString(),
-            SGIFigureConstants.FIGURE_SIZE_UNIT,
-            SGIFigureConstants.FIGURE_HEIGHT_MIN,
-            SGIFigureConstants.FIGURE_HEIGHT_MAX);
+            SGFigureConstants.FIGURE_SIZE_UNIT,
+            SGFigureConstants.FIGURE_HEIGHT_MIN,
+            SGFigureConstants.FIGURE_HEIGHT_MAX);
     if (hPt == null) {
       return null;
     }

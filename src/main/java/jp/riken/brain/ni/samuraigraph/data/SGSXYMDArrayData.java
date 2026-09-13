@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
 import com.jmatio.io.MatFileWriter;
@@ -29,8 +54,7 @@ import org.w3c.dom.Element;
 import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The class of scalar XY type data for multidimensional data file. */
-public class SGSXYMDArrayData extends SGMDArrayData
-    implements SGISXYTypeSingleData, SGIMDArrayConstants {
+public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleData {
 
   /** The variable for x-values. */
   protected SGMDArrayVariable mXVariable = null;
@@ -230,22 +254,21 @@ public class SGSXYMDArrayData extends SGMDArrayData
   protected SGMDArrayVariable initVariable(SGMDArrayFile file, SGMDArrayDataColumnInfo info) {
     SGMDArrayVariable var = super.initVariable(file, info);
     if (info != null) {
-      Integer pickUpDimension =
-          info.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      Integer pickUpDimension = info.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
       Integer value = null;
       if (pickUpDimension != null) {
         value = pickUpDimension;
       } else {
         value = -1;
       }
-      var.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, value);
+      var.setDimensionIndex(KEY_SXY_PICKUP_DIMENSION, value);
     }
     return var;
   }
 
   protected SGMDArrayVariable initVariable(SGMDArrayVariable var) {
     super.initVariable(var);
-    var.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, -1);
+    var.setDimensionIndex(KEY_SXY_PICKUP_DIMENSION, -1);
     return var;
   }
 
@@ -1160,8 +1183,8 @@ public class SGSXYMDArrayData extends SGMDArrayData
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
-    map.put(SGIDataInformationKeyConstants.KEY_SXY_STRIDE, this.mStride);
-    map.put(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, this.mTickLabelStride);
+    map.put(KEY_SXY_STRIDE, this.mStride);
+    map.put(KEY_SXY_TICK_LABEL_STRIDE, this.mTickLabelStride);
     return map;
   }
 
@@ -1172,7 +1195,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
    */
   @Override
   public void setStrideMap(Map<String, SGIntegerSeriesSet> map) {
-    this.mStride = map.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+    this.mStride = map.get(KEY_SXY_STRIDE);
   }
 
   /** Returns the number of strings. */

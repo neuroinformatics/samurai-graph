@@ -1,8 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.util.HashMap;
 import java.util.Map;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants.OPERATION;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants.OPERATION;
 
 /** Parameters for an operation. */
 public class SGExportParameter {

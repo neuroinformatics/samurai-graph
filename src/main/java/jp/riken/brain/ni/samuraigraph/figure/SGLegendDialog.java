@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -12,7 +15,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroup;
 import jp.riken.brain.ni.samuraigraph.base.SGComponentGroupElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
@@ -24,8 +26,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** A dialog to set the properties of legend. */
-public class SGLegendDialog extends SGPropertyDialog
-    implements SGILegendConstants, SGITwoAxesDialog {
+public class SGLegendDialog extends SGPropertyDialog implements SGITwoAxesDialog {
 
   // serialVersionUID
   private static final long serialVersionUID = -54582360939741917L;
@@ -581,7 +582,7 @@ public class SGLegendDialog extends SGPropertyDialog
             (float) SGPaintConstants.TRANSPARENCY_MIN,
             (float) SGPaintConstants.TRANSPARENCY_MAX,
             (float) SGPaintConstants.TRANSPARENCY_STEP),
-        SGIConstants.percent,
+        percent,
         SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MIN,
         SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MAX);
 

@@ -109,7 +109,7 @@ class SGDrawingWindowExportHelper {
 
     for (int ii = 0; ii < list.size(); ii++) {
       SGFigure figure = list.get(ii);
-      figure.setMode(owner.MODE_EXPORT_AS_IMAGE);
+      figure.setMode(SGConstants.MODE_EXPORT_AS_IMAGE);
     }
 
     // set information
@@ -176,14 +176,14 @@ class SGDrawingWindowExportHelper {
 
     boolean ret;
     switch (mode) {
-      case SGIRootObjectConstants.EXPORT:
+      case SGRootObjectConstants.EXPORT:
         {
           // export as image
           ret = man.export(target, owner, width, height, silent);
           break;
         }
 
-      case SGIRootObjectConstants.PRINT:
+      case SGRootObjectConstants.PRINT:
         {
           // print as image
           ret = man.print(target, owner, width, height, silent);
@@ -204,25 +204,25 @@ class SGDrawingWindowExportHelper {
   public boolean createDOMTree(Document document, final SGExportParameter params) {
     boolean flag;
     switch (owner.mPropertyFileCreationModeOfFigures) {
-      case SGIRootObjectConstants.ALL_FIGURES:
+      case SGRootObjectConstants.ALL_FIGURES:
         {
           flag = owner.createDOMTreeForAllFigures(document, params);
           break;
         }
 
-      case SGIRootObjectConstants.FOCUSED_FIGURES_FOR_COPY:
+      case SGRootObjectConstants.FOCUSED_FIGURES_FOR_COPY:
         {
           flag = owner.createDOMTreeForFocusedFiguresForDuplication(document, params);
           break;
         }
 
-      case SGIRootObjectConstants.FOCUSED_FIGURES_IN_BOUNDING_BOX:
+      case SGRootObjectConstants.FOCUSED_FIGURES_IN_BOUNDING_BOX:
         {
           flag = owner.createDOMTreeForFocusedFiguresInBoundingBox(document, params);
           break;
         }
 
-      case SGIRootObjectConstants.FOCUSED_FIGURES_FOR_DUPLICATION:
+      case SGRootObjectConstants.FOCUSED_FIGURES_FOR_DUPLICATION:
         {
           flag = owner.createDOMTreeForFocusedFiguresForDuplication(document, params);
           break;
@@ -238,20 +238,20 @@ class SGDrawingWindowExportHelper {
   }
 
   public String getCommandString(SGExportParameter params) {
-    SGIConstants.OPERATION type = params.getType();
+    SGConstants.OPERATION type = params.getType();
 
     StringBuilder sb = new StringBuilder();
 
     // creates the command for owner window
     String wndCommands =
         SGCommandUtility.createCommandString(
-            owner.COM_WINDOW, null, owner.getCommandPropertyMap(params));
+            SGRootObjectConstants.COM_WINDOW, null, owner.getCommandPropertyMap(params));
     sb.append(wndCommands);
 
     // creates the command of figures
     List<SGFigure> figureList = owner.getVisibleFigureList();
     for (SGFigure f : figureList) {
-      if (SGIConstants.OPERATION.SAVE_INTO_FILE_ATTRIBUTE.equals(type)) {
+      if (SGConstants.OPERATION.SAVE_INTO_FILE_ATTRIBUTE.equals(type)) {
         List<SGData> dataList = f.getVisibleDataList();
         SGDataExportParameter exportParams = (SGDataExportParameter) params;
         boolean found = false;

@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
 import java.io.File;
@@ -35,8 +60,7 @@ import ucar.nc2.Variable;
 import ucar.nc2.write.NetcdfFormatWriter;
 
 /** Two dimensional vector data. */
-public class SGVXYSDArrayData extends SGSDArrayData
-    implements SGIVXYTypeData, SGIDataPropertyKeyConstants {
+public class SGVXYSDArrayData extends SGSDArrayData implements SGIVXYTypeData {
 
   private static final Logger logger = LogManager.getLogger(SGVXYSDArrayData.class);
 
@@ -322,7 +346,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
 
   public Map<String, Object> getInfoMap() {
     Map<String, Object> map = super.getInfoMap();
-    map.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.valueOf(this.isPolar()));
+    map.put(KEY_VXY_POLAR_SELECTED, Boolean.valueOf(this.isPolar()));
     return map;
   }
 
@@ -634,7 +658,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
    */
   @Override
   public void setStrideMap(Map<String, SGIntegerSeriesSet> map) {
-    this.mStride = map.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
+    this.mStride = map.get(KEY_VXY_INDEX_STRIDE);
   }
 
   /**
@@ -645,7 +669,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
-    map.put(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, this.getStride());
+    map.put(KEY_VXY_INDEX_STRIDE, this.getStride());
     return map;
   }
 
@@ -765,38 +789,23 @@ public class SGVXYSDArrayData extends SGSDArrayData
 
     builder
         .addVariable(indexName, DataType.INT, indexName)
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+        .addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
 
     builder
         .addVariable(xName, DataType.DOUBLE, indexName)
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+        .addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
 
     builder
         .addVariable(yName, DataType.DOUBLE, indexName)
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+        .addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
 
     builder
         .addVariable(fName, DataType.DOUBLE, indexName)
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+        .addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
 
     builder
         .addVariable(sName, DataType.DOUBLE, indexName)
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+        .addAttribute(new Attribute(ATTRIBUTE_VALUE_TYPE, VALUE_TYPE_NUMBER));
 
     try (NetcdfFormatWriter writer = builder.build()) {
 
@@ -855,8 +864,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
       Dimension indexDim = this.addIndexDimension(builder, dataNum);
       String indexDimName = indexDim.getShortName();
       Variable.Builder indexVarBuilder = this.addIndexVariable(builder, indexDim);
-      indexVarBuilder.addAttribute(
-          SGDataFileUtility.getValueTypeAttribute(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+      indexVarBuilder.addAttribute(SGDataFileUtility.getValueTypeAttribute(VALUE_TYPE_NUMBER));
 
       // Add data columns as variables.
       Variable.Builder varXBuilder = builder.addVariable("column0", DataType.DOUBLE, indexDimName);
@@ -1176,8 +1184,8 @@ public class SGVXYSDArrayData extends SGSDArrayData
   @Override
   public String[] getDataViewerColumnTypes() {
     List<String> list = new ArrayList<String>();
-    list.add(SGIDataColumnTypeConstants.X_COORDINATE);
-    list.add(SGIDataColumnTypeConstants.Y_COORDINATE);
+    list.add(X_COORDINATE);
+    list.add(Y_COORDINATE);
     final boolean polar = this.isPolar();
     final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
     final String second = SGDataStrideUtility.getVXYSecondComponentColumnType(polar);

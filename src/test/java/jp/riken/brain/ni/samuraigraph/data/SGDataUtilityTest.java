@@ -1,5 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -256,7 +257,7 @@ class SGDataUtilityTest {
     Map<String, Object> map = new HashMap<String, Object>();
     Map<String, Object> updated =
         SGDataMiscUtility.updateInfoMap(SGDataTypeConstants.SXY_DATA, colInfo, map);
-    Object stored = updated.get(SGIDataInformationKeyConstants.KEY_COLUMN_INFO);
+    Object stored = updated.get(SGDataInformationKeyConstants.KEY_COLUMN_INFO);
     assertTrue(stored instanceof SGDataColumnInfo[]);
     assertArrayEquals(colInfo, (SGDataColumnInfo[]) stored);
   }
@@ -480,9 +481,9 @@ class SGDataUtilityTest {
   @Test
   void isPolarReadsPolarFlag() {
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
     assertTrue(SGDataMiscUtility.isPolar(infoMap));
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     assertFalse(SGDataMiscUtility.isPolar(infoMap));
   }
 

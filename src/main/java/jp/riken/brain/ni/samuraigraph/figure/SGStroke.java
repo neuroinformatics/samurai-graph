@@ -1,10 +1,35 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.BasicStroke;
 import java.util.HashMap;
 
 /** The class of the line stroke. */
-public class SGStroke implements Cloneable, SGILineConstants {
+public class SGStroke implements Cloneable {
 
   // magnification
   private float mMagnification = 1.0f;
@@ -13,7 +38,7 @@ public class SGStroke implements Cloneable, SGILineConstants {
   private float mLineWidth = 1.0f;
 
   // line type
-  private int mLineType = SGILineConstants.LINE_TYPE_SOLID;
+  private int mLineType = LINE_TYPE_SOLID;
 
   // cap style
   private int mCap = BasicStroke.CAP_BUTT;
@@ -55,16 +80,15 @@ public class SGStroke implements Cloneable, SGILineConstants {
     SGStrokeDash doubleDashed = new SGStrokeDash(1, 2, 4.0f, 1.0f, 1.0f);
 
     // put into the map
-    this.mStrokeDashMap.put(Integer.valueOf(SGILineConstants.LINE_TYPE_BROKEN), broken);
-    this.mStrokeDashMap.put(Integer.valueOf(SGILineConstants.LINE_TYPE_DOTTED), dot);
-    this.mStrokeDashMap.put(Integer.valueOf(SGILineConstants.LINE_TYPE_DASHED), dashed);
-    this.mStrokeDashMap.put(
-        Integer.valueOf(SGILineConstants.LINE_TYPE_DOUBLE_DASHED), doubleDashed);
+    this.mStrokeDashMap.put(Integer.valueOf(LINE_TYPE_BROKEN), broken);
+    this.mStrokeDashMap.put(Integer.valueOf(LINE_TYPE_DOTTED), dot);
+    this.mStrokeDashMap.put(Integer.valueOf(LINE_TYPE_DASHED), dashed);
+    this.mStrokeDashMap.put(Integer.valueOf(LINE_TYPE_DOUBLE_DASHED), doubleDashed);
   }
 
   // Check whether the input line type is valid.
   private boolean isValidLineType(final int lineType) {
-    if (lineType == SGILineConstants.LINE_TYPE_SOLID) {
+    if (lineType == LINE_TYPE_SOLID) {
       return true;
     } else {
       SGStrokeDash sd = (SGStrokeDash) this.mStrokeDashMap.get(Integer.valueOf(lineType));
@@ -221,7 +245,7 @@ public class SGStroke implements Cloneable, SGILineConstants {
     // line width
     final float lw = this.mLineWidth * this.mMagnification;
 
-    if (this.mLineType == SGILineConstants.LINE_TYPE_SOLID) {
+    if (this.mLineType == LINE_TYPE_SOLID) {
       this.mBasicStroke = new BasicStroke(lw, this.mCap, this.mJoin);
       return;
     }

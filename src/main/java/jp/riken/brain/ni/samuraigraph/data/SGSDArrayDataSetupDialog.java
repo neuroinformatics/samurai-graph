@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.Map;
@@ -8,8 +10,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 
 /** A dialog to set up the single-dimensional array data. */
-public class SGSDArrayDataSetupDialog extends SGDataSetupDialog
-    implements SGIDataColumnTypeConstants {
+public class SGSDArrayDataSetupDialog extends SGDataSetupDialog {
 
   /** Serial Version UID */
   private static final long serialVersionUID = -6874865640705737852L;
@@ -133,18 +134,18 @@ public class SGSDArrayDataSetupDialog extends SGDataSetupDialog
   }
 
   public SGIntegerSeriesSet getSXYStride() {
-    return this.mDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+    return this.mDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
   }
 
   public SGIntegerSeriesSet getSXYZStride() {
-    return this.mDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+    return this.mDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
   }
 
   public SGIntegerSeriesSet getVXYStride() {
-    return this.mDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
+    return this.mDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
   }
 
   public SGIntegerSeriesSet getSXYTickLabelStride() {
-    return this.mDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+    return this.mDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
   }
 }

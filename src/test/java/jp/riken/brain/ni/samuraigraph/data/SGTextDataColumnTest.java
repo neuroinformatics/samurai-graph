@@ -66,7 +66,7 @@ class SGTextDataColumnTest {
   @Test
   void getValueType() {
     SGTextDataColumn col = new SGTextDataColumn("label", new String[] {"a"});
-    assertEquals(SGIDataColumnTypeConstants.VALUE_TYPE_TEXT, col.getValueType());
+    assertEquals(SGDataColumnTypeConstants.VALUE_TYPE_TEXT, col.getValueType());
   }
 
   @Test

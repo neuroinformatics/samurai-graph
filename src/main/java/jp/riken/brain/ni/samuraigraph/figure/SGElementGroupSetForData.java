@@ -1,5 +1,35 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
@@ -19,11 +49,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIAnimationConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementForData.DataLabel;
-import jp.riken.brain.ni.samuraigraph.base.SGITextDataConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIUndoable;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
@@ -40,13 +67,11 @@ import jp.riken.brain.ni.samuraigraph.data.SGArrayData.ArrayDataProperties;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTextUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataAnimation;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
-import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGITwoDimensionalData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayData;
@@ -65,7 +90,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     implements SGIElementGroupSetForData,
         SGIUndoable,
         SGIDataPropertyDialogObserver,
-        SGITextDataConstants,
         SGIDataAnimation,
         ActionListener {
 
@@ -291,19 +315,16 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     OPERATION type = params.getType();
     SGArrayData data = (SGArrayData) this.getData();
 
-    el.setAttribute(SGIFigureElement.KEY_DATA_NAME, this.mName);
-    el.setAttribute(
-        SGIFigureElement.KEY_VISIBLE_IN_LEGEND, Boolean.toString(this.mVisibleInLegendFlag));
+    el.setAttribute(SGDataInformationKeyConstants.KEY_DATA_NAME, this.mName);
+    el.setAttribute(KEY_VISIBLE_IN_LEGEND, Boolean.toString(this.mVisibleInLegendFlag));
 
     // attributes for the animation
     if (data.isAnimationAvailable()) {
-      final int digitFrameRate = SGIAnimationConstants.FRAME_RATE_MINIMAL_ORDER - 1;
+      final int digitFrameRate = FRAME_RATE_MINIMAL_ORDER - 1;
       final double frameRate = SGUtilityNumber.roundOffNumber(this.mFrameRate, digitFrameRate);
-      el.setAttribute(
-          SGIFigureElement.KEY_ANIMATION_ARRAY_SECTION, this.getAnimationArraySection().toString());
-      el.setAttribute(SGIFigureElement.KEY_ANIMATION_FRAME_RATE, Double.toString(frameRate));
-      el.setAttribute(
-          SGIFigureElement.KEY_ANIMATION_LOOP_PLAYBACK, Boolean.toString(this.mLoopPlaybackFlag));
+      el.setAttribute(KEY_ANIMATION_ARRAY_SECTION, this.getAnimationArraySection().toString());
+      el.setAttribute(KEY_ANIMATION_FRAME_RATE, Double.toString(frameRate));
+      el.setAttribute(KEY_ANIMATION_LOOP_PLAYBACK, Boolean.toString(this.mLoopPlaybackFlag));
     }
 
     final String dataType;
@@ -312,7 +333,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     } else {
       dataType = data.getDataType();
     }
-    el.setAttribute(SGIFigureElement.KEY_DATA_TYPE, dataType);
+    el.setAttribute(SGDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
 
     switch (type) {
       case SAVE_TO_PROPERTY_FILE:
@@ -1291,8 +1312,8 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
           }
 
           Map<String, Integer> dimMap = new HashMap<String, Integer>();
-          dimMap.put(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, dim);
-          dimMap.put(SGIMDArrayConstants.KEY_TIME_DIMENSION, -1); // fixed value
+          dimMap.put(KEY_GENERIC_DIMENSION, dim);
+          dimMap.put(KEY_TIME_DIMENSION, -1); // fixed value
           colDims.add(dimMap);
           colNames[ii] = varName;
           colValues[ii] = tokens[2].trim();
@@ -1301,11 +1322,11 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
         // SXYZ or VXY
         String keyX, keyY;
         if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
-          keyX = SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION;
-          keyY = SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION;
+          keyX = KEY_SXYZ_X_DIMENSION;
+          keyY = KEY_SXYZ_Y_DIMENSION;
         } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
-          keyX = SGIMDArrayConstants.KEY_VXY_X_DIMENSION;
-          keyY = SGIMDArrayConstants.KEY_VXY_Y_DIMENSION;
+          keyX = KEY_VXY_X_DIMENSION;
+          keyY = KEY_VXY_Y_DIMENSION;
         } else {
           throw new Error("Invalid data type: ");
         }
@@ -1335,7 +1356,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
               succeeded = false;
               break;
             }
-            dimMap.put(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, dim);
+            dimMap.put(KEY_GENERIC_DIMENSION, dim);
           } else if (tokens.length == 4) {
             String varName = tokens[0].trim();
             colNames[ii] = varName;
@@ -1366,12 +1387,12 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
             }
             dimMap.put(keyX, dimX);
             dimMap.put(keyY, dimY);
-            dimMap.put(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, -1); // fixed value
+            dimMap.put(KEY_GENERIC_DIMENSION, -1); // fixed value
           } else {
             succeeded = false;
             break;
           }
-          dimMap.put(SGIMDArrayConstants.KEY_TIME_DIMENSION, -1); // fixed value
+          dimMap.put(KEY_TIME_DIMENSION, -1); // fixed value
           colDims.add(dimMap);
         }
       }
@@ -1525,10 +1546,9 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       // updates the information map
       List<SGDataColumnInfo> pickUpList =
-          SGDataColumnInfoUtility.findColumnsWithColumnType(
-              columns, SGIDataColumnTypeConstants.PICKUP);
+          SGDataColumnInfoUtility.findColumnsWithColumnType(columns, PICKUP);
       final boolean multipleVariable = !(pickUpList.size() == 1);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
+      infoMap.put(KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
     }
     if (SGDataFileUtility.checkNetCDFDataColumns(columns, dataType, nData.getNetcdfFile(), infoMap)
         == false) {
@@ -1595,10 +1615,9 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
       // updates the information map
       List<SGDataColumnInfo> pickUpList =
-          SGDataColumnInfoUtility.findColumnsWithColumnType(
-              columns, SGIDataColumnTypeConstants.PICKUP);
+          SGDataColumnInfoUtility.findColumnsWithColumnType(columns, PICKUP);
       final boolean multipleVariable = !(pickUpList.size() == 1);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
+      infoMap.put(KEY_SXY_MULTIPLE_VARIABLE, multipleVariable);
     }
     if (SGDataFileUtility.checkMDArrayDataColumns(
             columns, dataType, mdData.getMDArrayFile(), infoMap)
@@ -1622,7 +1641,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       for (int ii = 0; ii < vars.length; ii++) {
         String name = vars[ii].getName();
         SGMDArrayVariable var = mdData.findVariable(name);
-        var.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, -1);
+        var.setDimensionIndex(KEY_TIME_DIMENSION, -1);
       }
     }
   }
@@ -1688,7 +1707,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
         Iterator<Entry<String, Integer>> indexItr = indexMap.entrySet().iterator();
         while (indexItr.hasNext()) {
           Entry<String, Integer> entry = indexItr.next();
-          if (entry.getKey().equals(SGIMDArrayConstants.KEY_TIME_DIMENSION)) {
+          if (entry.getKey().equals(KEY_TIME_DIMENSION)) {
             continue;
           }
           Integer index = entry.getValue();
@@ -1731,7 +1750,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     SGDataColumnInfo[] cols = this.getDataColumnInfoArray();
     for (int ii = 0; ii < cols.length; ii++) {
       SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) cols[ii];
-      Integer timeDim = mdCol.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
+      Integer timeDim = mdCol.getDimensionIndex(KEY_TIME_DIMENSION);
       if (timeDim == null || timeDim == -1) {
         continue;
       }
@@ -1783,7 +1802,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       String name = entry.getKey();
       Integer index = entry.getValue();
       SGMDArrayVariable var = mdData.findVariable(name);
-      var.setDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION, index);
+      var.setDimensionIndex(KEY_TIME_DIMENSION, index);
     }
 
     // equalizes the origin of time dimension
@@ -1812,7 +1831,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     if (fIndex != -1) {
       SGMDArrayVariable[] vars = mdData.getAssignedVariables();
       for (int ii = 0; ii < vars.length; ii++) {
-        Integer timeDim = vars[ii].getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
+        Integer timeDim = vars[ii].getDimensionIndex(KEY_TIME_DIMENSION);
         if (timeDim != null && timeDim != -1) {
           int[] origins = vars[ii].getOrigins();
           origins[timeDim] = fIndex;

@@ -1,14 +1,19 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataBufferUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTitleUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataRangeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataTextUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,18 +25,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer.Token;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants.OPERATION;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants.OPERATION;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** Static helper for the Misc responsibility. */
-public final class SGDataMiscUtility
-    implements SGIDataColumnTypeConstants,
-        SGIDataPropertyKeyConstants,
-        SGINetCDFConstants,
-        SGIMDArrayConstants {
+public final class SGDataMiscUtility {
   // Column type candidate lists and validation messages.
   static final String[] ARRAY_EMPTY = {""};
 
@@ -105,11 +106,11 @@ public final class SGDataMiscUtility
       String[] options) {
 
     // current row index
-    Integer rowIndex = (Integer) infoMap.get(SGIDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX);
+    Integer rowIndex = (Integer) infoMap.get(SGDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX);
 
     // all columns
     SGDataColumnInfo[] colInfo =
-        (SGDataColumnInfo[]) infoMap.get(SGIDataInformationKeyConstants.KEY_COLUMN_INFO);
+        (SGDataColumnInfo[]) infoMap.get(SGDataInformationKeyConstants.KEY_COLUMN_INFO);
 
     // add time, pickup and serial number columns
     final boolean isNetCDFData = isNetCDFData(dataType);
@@ -251,37 +252,35 @@ public final class SGDataMiscUtility
     }
     if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       List<SGDataColumnInfo> zList =
-          SGDataColumnInfoUtility.findColumnsWithColumnType(
-              colInfoArray, SGIDataColumnTypeConstants.Z_VALUE);
+          SGDataColumnInfoUtility.findColumnsWithColumnType(colInfoArray, Z_VALUE);
       if (zList.size() != 1) {
         return false;
       }
       SGMDArrayDataColumnInfo zInfo = (SGMDArrayDataColumnInfo) zList.get(0);
-      Integer xDim = zInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION);
-      Integer yDim = zInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
+      Integer xDim = zInfo.getDimensionIndex(KEY_SXYZ_X_DIMENSION);
+      Integer yDim = zInfo.getDimensionIndex(KEY_SXYZ_Y_DIMENSION);
       Boolean grid =
           SGDataDataTypeUtility.isValidDimensionIndex(xDim)
               && SGDataDataTypeUtility.isValidDimensionIndex(yDim);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, grid);
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, grid);
     } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
-      Boolean polar = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
+      Boolean polar = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
       if (polar == null) {
         return false;
       }
-      String colName =
-          polar ? SGIDataColumnTypeConstants.MAGNITUDE : SGIDataColumnTypeConstants.X_COMPONENT;
+      String colName = polar ? MAGNITUDE : X_COMPONENT;
       List<SGDataColumnInfo> fList =
           SGDataColumnInfoUtility.findColumnsWithColumnType(colInfoArray, colName);
       if (fList.size() != 1) {
         return false;
       }
       SGMDArrayDataColumnInfo fInfo = (SGMDArrayDataColumnInfo) fList.get(0);
-      Integer xDim = fInfo.getDimensionIndex(SGIMDArrayConstants.KEY_VXY_X_DIMENSION);
-      Integer yDim = fInfo.getDimensionIndex(SGIMDArrayConstants.KEY_VXY_Y_DIMENSION);
+      Integer xDim = fInfo.getDimensionIndex(KEY_VXY_X_DIMENSION);
+      Integer yDim = fInfo.getDimensionIndex(KEY_VXY_Y_DIMENSION);
       Boolean grid =
           SGDataDataTypeUtility.isValidDimensionIndex(xDim)
               && SGDataDataTypeUtility.isValidDimensionIndex(yDim);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, grid);
+      infoMap.put(SGDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, grid);
     } else {
       return false;
     }
@@ -299,25 +298,25 @@ public final class SGDataMiscUtility
     Boolean ret = null;
     if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       Boolean gridPlot =
-          (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG);
+          (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG);
       final boolean b;
       if (gridPlot != null) {
         b = gridPlot.booleanValue();
       } else {
         SGIntegerSeriesSet indexStride =
-            (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+            (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
         b = (indexStride == null);
       }
       ret = b;
     } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       Boolean gridPlot =
-          (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG);
+          (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG);
       final boolean b;
       if (gridPlot != null) {
         b = gridPlot.booleanValue();
       } else {
         SGIntegerSeriesSet indexStride =
-            (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
+            (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
         b = (indexStride == null);
       }
       ret = b;
@@ -342,7 +341,7 @@ public final class SGDataMiscUtility
       final String singleColumnType,
       final String multiColumnType) {
 
-    String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+    String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
     String[] compColType = new String[curColType.length];
     compColType[singleIndex.intValue()] = singleColumnType;
     if (isSDArrayData(dataType)) {
@@ -404,7 +403,7 @@ public final class SGDataMiscUtility
     if (curColType.length != colInfoList.size()) {
       return null;
     }
-    String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+    String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
     String[] compColType = null;
     if (isSXYTypeData(dataType)) {
       List<Integer> xIndexList = new ArrayList<Integer>();
@@ -460,7 +459,7 @@ public final class SGDataMiscUtility
       final Map<String, Object> infoMap,
       final String[] curColType,
       final List<SGDataColumnInfo> colInfoList) {
-    String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+    String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
     if (isSXYTypeData(dataType)) {
       List<Integer> xIndexList = new ArrayList<Integer>();
       List<Integer> yIndexList = new ArrayList<Integer>();
@@ -502,18 +501,18 @@ public final class SGDataMiscUtility
    * @return true to set visible
    */
   public static boolean isComplementButtonVisible(final Map<String, Object> infoMap) {
-    String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+    String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
     if (!isSXYTypeData(dataType)) {
       return false;
     }
-    Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
+    Boolean multiple = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE);
     if (multiple == null) {
       return false;
     }
     final boolean compVisible;
     if (multiple.booleanValue()) {
       Boolean multipleVariable =
-          (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
+          (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
       if (multipleVariable == null) {
         return false;
       }
@@ -845,7 +844,7 @@ public final class SGDataMiscUtility
    * @throws Error throw if infoMap not have KEY_POLAR_SELECTED key
    */
   public static boolean isPolar(final Map<String, Object> infoMap) {
-    Object value = infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
+    Object value = infoMap.get(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
     if (value == null) {
       throw new Error("Mode for vector data is not selected.");
     }
@@ -1304,7 +1303,7 @@ public final class SGDataMiscUtility
 
     Boolean multiple = null;
     if (isNetCDFOrMDData) {
-      multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
+      multiple = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE);
       if (multiple == null) {
         return null;
       }
@@ -1319,11 +1318,11 @@ public final class SGDataMiscUtility
     }
 
     // current row index
-    Integer rowIndex = (Integer) infoMap.get(SGIDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX);
+    Integer rowIndex = (Integer) infoMap.get(SGDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX);
 
     // all columns
     SGDataColumnInfo[] colInfo =
-        (SGDataColumnInfo[]) infoMap.get(SGIDataInformationKeyConstants.KEY_COLUMN_INFO);
+        (SGDataColumnInfo[]) infoMap.get(SGDataInformationKeyConstants.KEY_COLUMN_INFO);
     boolean[] isRepeatedTitle = isEmptyOrRepeatedColumnTitle(colInfo);
 
     // get column indices of x and y values
@@ -1591,7 +1590,7 @@ public final class SGDataMiscUtility
   public static Map<String, Object> updateInfoMap(
       String dataType, SGDataColumnInfo[] colInfo, Map<String, Object> infoMap) {
     Map<String, Object> infoMapUpd = new HashMap<String, Object>(infoMap);
-    infoMapUpd.put(SGIDataInformationKeyConstants.KEY_COLUMN_INFO, colInfo.clone());
+    infoMapUpd.put(SGDataInformationKeyConstants.KEY_COLUMN_INFO, colInfo.clone());
     return infoMapUpd;
   }
 }

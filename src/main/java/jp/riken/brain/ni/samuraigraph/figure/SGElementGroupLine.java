@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -12,7 +16,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
@@ -23,7 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /** */
-public abstract class SGElementGroupLine extends SGElementGroup implements SGILineConstants {
+public abstract class SGElementGroupLine extends SGElementGroup {
 
   public static final int MODE_ALL = 0;
 
@@ -249,14 +252,14 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
   }
 
   private static String getLineWidthString(final float lineWidth) {
-    final int digitLineWidth = SGIConstants.LINE_WIDTH_MINIMAL_ORDER - 1;
+    final int digitLineWidth = LINE_WIDTH_MINIMAL_ORDER - 1;
     final float lw = (float) SGUtilityNumber.roundOffNumber(lineWidth, digitLineWidth);
-    String str = Float.toString(lw) + SGIConstants.pt;
+    String str = Float.toString(lw) + pt;
     return str;
   }
 
   private static void writeProperty(final Element el, final float lineWidth) {
-    el.setAttribute(KEY_LINE_WIDTH, getLineWidthString(lineWidth));
+    el.setAttribute(SGLineConstants.KEY_LINE_WIDTH, getLineWidthString(lineWidth));
   }
 
   /**
@@ -267,7 +270,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     Boolean b = null;
 
     // style properties
-    NodeList lineStylesNodeList = el.getElementsByTagName(SGILineConstants.TAG_NAME_STYLES);
+    NodeList lineStylesNodeList = el.getElementsByTagName(TAG_NAME_STYLES);
     if (lineStylesNodeList.getLength() > 0) {
       Element lineStylesElement = (Element) lineStylesNodeList.item(0);
       NodeList lineStyleNodeList = lineStylesElement.getChildNodes();
@@ -308,7 +311,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     // finds the style element of given index
     int cnt = 0;
     Element elStyle = null;
-    NodeList nList = el.getElementsByTagName(SGILineConstants.TAG_NAME_STYLE);
+    NodeList nList = el.getElementsByTagName(TAG_NAME_STYLE);
     for (int ii = 0; ii < nList.getLength(); ii++) {
       Node node = nList.item(ii);
       if (node instanceof Element) {
@@ -323,7 +326,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     Element elStyleHolder = (elStyle != null) ? elStyle : el;
 
     // line width
-    str = elStyleHolder.getAttribute(KEY_LINE_WIDTH);
+    str = elStyleHolder.getAttribute(SGLineConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);

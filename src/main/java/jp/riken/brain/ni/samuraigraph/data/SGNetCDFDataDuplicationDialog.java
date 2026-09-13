@@ -1,11 +1,14 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+
 import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
@@ -170,7 +173,7 @@ public class SGNetCDFDataDuplicationDialog extends SGDataDuplicationDialog {
     }
     if (!ok) {
       SGUtility.showMessageDialog(
-          this, INVALID_INPUT_VALUE, SGIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+          this, INVALID_INPUT_VALUE, SGConstants.ERROR, JOptionPane.ERROR_MESSAGE);
       return false;
     }
     return super.onOK();
@@ -190,23 +193,23 @@ public class SGNetCDFDataDuplicationDialog extends SGDataDuplicationDialog {
   }
 
   public SGIntegerSeriesSet getSXYStride() {
-    return this.mNetCDFDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+    return this.mNetCDFDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
   }
 
   public SGIntegerSeriesSet getVXYStrideX() {
-    return this.mNetCDFDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
+    return this.mNetCDFDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X);
   }
 
   public SGIntegerSeriesSet getVXYStrideY() {
-    return this.mNetCDFDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
+    return this.mNetCDFDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
   }
 
   public SGIntegerSeriesSet getSXYZStrideX() {
-    return this.mNetCDFDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
+    return this.mNetCDFDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
   }
 
   public SGIntegerSeriesSet getSXYZStrideY() {
-    return this.mNetCDFDataSetupPanel.getStride(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+    return this.mNetCDFDataSetupPanel.getStride(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
   }
 
   /**

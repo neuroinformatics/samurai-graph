@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.*;
 import jp.riken.brain.ni.samuraigraph.data.*;
+import jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
+import jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants;
 import ucar.nc2.Dimension;
 
 class SGColumnTypeUpdater {
@@ -65,11 +68,11 @@ class SGColumnTypeUpdater {
     // sets the status
     final int pickUpStatus =
         pickUpValid ? SGPropertyResults.SUCCEEDED : SGPropertyResults.INVALID_INPUT_VALUE;
-    result.putResult(owner.COM_DATA_PICKUP_DIMENSION, pickUpStatus);
+    result.putResult(SGDataCommandConstants.COM_DATA_PICKUP_DIMENSION, pickUpStatus);
 
     final int timeStatus =
         timeValid ? SGPropertyResults.SUCCEEDED : SGPropertyResults.INVALID_INPUT_VALUE;
-    result.putResult(owner.COM_DATA_ANIMATION_FRAME_DIMENSION, timeStatus);
+    result.putResult(SGDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION, timeStatus);
   }
 
   boolean setPickUpIndices(
@@ -79,9 +82,10 @@ class SGColumnTypeUpdater {
       final String value,
       Map<String, SGInteger> pickUpMap) {
 
-    if (owner.COM_DATA_PICKUP_INDICES.equalsIgnoreCase(key)) {
-      if (map.isDoubleQuoted(owner.COM_DATA_PICKUP_INDICES) == false) {
-        result.putResult(owner.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+    if (SGDataCommandConstants.COM_DATA_PICKUP_INDICES.equalsIgnoreCase(key)) {
+      if (map.isDoubleQuoted(SGDataCommandConstants.COM_DATA_PICKUP_INDICES) == false) {
+        result.putResult(
+            SGDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
         return false;
       }
       if (SGDataDataTypeUtility.isNetCDFData(owner.mData)) {
@@ -101,7 +105,9 @@ class SGColumnTypeUpdater {
         SGNetCDFPickUpDimensionInfo info =
             new SGNetCDFPickUpDimensionInfo(dim.getShortName(), indices);
         if (sxyData.setPickUpDimensionInfo(info) == false) {
-          result.putResult(owner.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_PICKUP_INDICES,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           return false;
         }
 
@@ -115,7 +121,7 @@ class SGColumnTypeUpdater {
             (SGMDArrayPickUpDimensionInfo) sxyData.getPickUpDimensionInfo();
         List<SGMDArrayVariable> pickUpVarList = sxyData.getPickUpMDArrayVariables();
         final int len =
-            pickUpVarList.get(0).getDimensionLength(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+            pickUpVarList.get(0).getDimensionLength(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
         SGIntegerSeriesSet indices = SGIntegerSeriesSet.parse(value, len);
         if (indices == null) {
           result.putResult(key, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -123,58 +129,67 @@ class SGColumnTypeUpdater {
         }
         info.setIndices(indices);
         if (sxyData.setPickUpDimensionInfo(info) == false) {
-          result.putResult(owner.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_PICKUP_INDICES,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           return false;
         }
       } else {
         // cannot apply
-        result.putResult(owner.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(
+            SGDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
         return false;
       }
-      result.putResult(owner.COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
-    } else if (owner.COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
+      result.putResult(SGDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
+    } else if (SGDataCommandConstants.COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
       if (SGDataDataTypeUtility.isNetCDFData(owner.mData)) {
         Integer num = owner.getNetCDFPickUpNumber(map, key, value);
         if (num == null) {
-          result.putResult(owner.COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
           return false;
         }
         if (num != null) {
-          pickUpMap.put(owner.COM_DATA_PICKUP_START, new SGInteger(num));
+          pickUpMap.put(SGDataCommandConstants.COM_DATA_PICKUP_START, new SGInteger(num));
         }
       } else {
         // cannot apply
-        result.putResult(owner.COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(
+            SGDataCommandConstants.COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
         return false;
       }
-    } else if (owner.COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
+    } else if (SGDataCommandConstants.COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
       if (SGDataDataTypeUtility.isNetCDFData(owner.mData)) {
         Integer num = owner.getNetCDFPickUpNumber(map, key, value);
         if (num == null) {
-          result.putResult(owner.COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
           return false;
         }
         if (num != null) {
-          pickUpMap.put(owner.COM_DATA_PICKUP_END, new SGInteger(num));
+          pickUpMap.put(SGDataCommandConstants.COM_DATA_PICKUP_END, new SGInteger(num));
         }
       } else {
         // cannot apply
-        result.putResult(owner.COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(
+            SGDataCommandConstants.COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
         return false;
       }
-    } else if (owner.COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
+    } else if (SGDataCommandConstants.COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
       if (SGDataDataTypeUtility.isNetCDFData(owner.mData)) {
         Integer num = owner.getNetCDFPickUpNumber(map, key, value);
         if (num == null) {
-          result.putResult(owner.COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
           return false;
         }
         if (num != null) {
-          pickUpMap.put(owner.COM_DATA_PICKUP_STEP, new SGInteger(num));
+          pickUpMap.put(SGDataCommandConstants.COM_DATA_PICKUP_STEP, new SGInteger(num));
         }
       } else {
         // cannot apply
-        result.putResult(owner.COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
+        result.putResult(
+            SGDataCommandConstants.COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
         return false;
       }
     }
@@ -254,40 +269,40 @@ class SGColumnTypeUpdater {
       // updates the stride with new column types
       if (!SGDataColumnInfoUtility.hasEqualInput(preColumnInfo, cols)) {
         Map<String, Object> infoMap = new HashMap<String, Object>();
-        infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, owner.mData.getDataType());
+        infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, owner.mData.getDataType());
         infoMap.put(
-            SGIDataInformationKeyConstants.KEY_FIGURE_SIZE,
+            SGDataInformationKeyConstants.KEY_FIGURE_SIZE,
             new SGTuple2f(owner.mGraph.getGraphRectWidth(), owner.mGraph.getGraphRectHeight()));
         if (SGDataDataTypeUtility.isSDArrayData(owner.mData)) {
           SGSXYSDArrayMultipleData sdData = (SGSXYSDArrayMultipleData) owner.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
               SGDataStrideUtility.calcSDArrayDefaultStride(cols, infoMap);
           SGIntegerSeriesSet stride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
           sdData.setStride(stride);
           SGIntegerSeriesSet tickLabelStride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
           sdData.setTickLabelStride(tickLabelStride);
         } else if (SGDataDataTypeUtility.isNetCDFData(owner.mData)) {
           SGSXYNetCDFMultipleData ncData = (SGSXYNetCDFMultipleData) owner.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
               SGDataStrideUtility.calcNetCDFDefaultStride(cols, infoMap);
-          SGIntegerSeriesSet stride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+          SGIntegerSeriesSet stride = strideMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
           ncData.setStride(stride);
           SGIntegerSeriesSet tickLabelStride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
           ncData.setTickLabelStride(tickLabelStride);
           SGIntegerSeriesSet indexStride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
           ncData.setIndexStride(indexStride);
         } else if (SGDataDataTypeUtility.isMDArrayData(owner.mData)) {
           SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) owner.mData;
           Map<String, SGIntegerSeriesSet> strideMap =
               SGDataStrideUtility.calcMDArrayDefaultStride(cols, infoMap);
-          SGIntegerSeriesSet stride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+          SGIntegerSeriesSet stride = strideMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
           mdData.setStride(stride);
           SGIntegerSeriesSet tickLabelStride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+              strideMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
           mdData.setTickLabelStride(tickLabelStride);
         }
       }
@@ -299,13 +314,15 @@ class SGColumnTypeUpdater {
     // sets picked up dimension and animation dimension
     if (SGDataDataTypeUtility.isMDArrayData(owner.mData)) {
       List<String> keys = map.getKeys();
-      String strPickUpDimension = map.getValueString(owner.COM_DATA_PICKUP_DIMENSION);
-      String strTimeDimension = map.getValueString(owner.COM_DATA_ANIMATION_FRAME_DIMENSION);
+      String strPickUpDimension =
+          map.getValueString(SGDataCommandConstants.COM_DATA_PICKUP_DIMENSION);
+      String strTimeDimension =
+          map.getValueString(SGDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION);
       final boolean pickUpDimContained =
-          keys.contains(owner.COM_DATA_PICKUP_DIMENSION.toUpperCase())
+          keys.contains(SGDataCommandConstants.COM_DATA_PICKUP_DIMENSION.toUpperCase())
               && !"".equals(strPickUpDimension);
       final boolean timeDimContained =
-          keys.contains(owner.COM_DATA_ANIMATION_FRAME_DIMENSION.toUpperCase())
+          keys.contains(SGDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION.toUpperCase())
               && !"".equals(strTimeDimension);
       if (timeDimContained && pickUpDimContained) {
         owner.setPickUpAndTimeDimension(result, strPickUpDimension, strTimeDimension);
@@ -313,17 +330,22 @@ class SGColumnTypeUpdater {
         if (pickUpDimContained) {
           if (!owner.setPickUpDimension(strPickUpDimension)) {
             result.putResult(
-                owner.COM_DATA_PICKUP_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
+                SGDataCommandConstants.COM_DATA_PICKUP_DIMENSION,
+                SGPropertyResults.INVALID_INPUT_VALUE);
           } else {
-            result.putResult(owner.COM_DATA_PICKUP_DIMENSION, SGPropertyResults.SUCCEEDED);
+            result.putResult(
+                SGDataCommandConstants.COM_DATA_PICKUP_DIMENSION, SGPropertyResults.SUCCEEDED);
           }
         }
         if (timeDimContained) {
           if (!owner.setTimeDimension(strTimeDimension)) {
             result.putResult(
-                owner.COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
+                SGDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION,
+                SGPropertyResults.INVALID_INPUT_VALUE);
           } else {
-            result.putResult(owner.COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.SUCCEEDED);
+            result.putResult(
+                SGDataCommandConstants.COM_DATA_ANIMATION_FRAME_DIMENSION,
+                SGPropertyResults.SUCCEEDED);
           }
         }
       }
@@ -331,31 +353,35 @@ class SGColumnTypeUpdater {
 
     // sets picked up indices
     Map<String, SGInteger> pickUpMap = new HashMap<String, SGInteger>();
-    String strPickUpIndices = map.getValueString(owner.COM_DATA_PICKUP_INDICES);
+    String strPickUpIndices = map.getValueString(SGDataCommandConstants.COM_DATA_PICKUP_INDICES);
     if (!"".equals(strPickUpIndices)) {
       if (!owner.setPickUpIndices(
-          map, result, owner.COM_DATA_PICKUP_INDICES, strPickUpIndices, pickUpMap)) {
+          map,
+          result,
+          SGDataCommandConstants.COM_DATA_PICKUP_INDICES,
+          strPickUpIndices,
+          pickUpMap)) {
         return false;
       }
     }
-    String strPickUpStart = map.getValueString(owner.COM_DATA_PICKUP_START);
+    String strPickUpStart = map.getValueString(SGDataCommandConstants.COM_DATA_PICKUP_START);
     if (!"".equals(strPickUpStart)) {
       if (!owner.setPickUpIndices(
-          map, result, owner.COM_DATA_PICKUP_START, strPickUpStart, pickUpMap)) {
+          map, result, SGDataCommandConstants.COM_DATA_PICKUP_START, strPickUpStart, pickUpMap)) {
         return false;
       }
     }
-    String strPickUpEnd = map.getValueString(owner.COM_DATA_PICKUP_END);
+    String strPickUpEnd = map.getValueString(SGDataCommandConstants.COM_DATA_PICKUP_END);
     if (!"".equals(strPickUpEnd)) {
       if (!owner.setPickUpIndices(
-          map, result, owner.COM_DATA_PICKUP_END, strPickUpEnd, pickUpMap)) {
+          map, result, SGDataCommandConstants.COM_DATA_PICKUP_END, strPickUpEnd, pickUpMap)) {
         return false;
       }
     }
-    String strPickUpStep = map.getValueString(owner.COM_DATA_PICKUP_STEP);
+    String strPickUpStep = map.getValueString(SGDataCommandConstants.COM_DATA_PICKUP_STEP);
     if (!"".equals(strPickUpStep)) {
       if (!owner.setPickUpIndices(
-          map, result, owner.COM_DATA_PICKUP_STEP, strPickUpStep, pickUpMap)) {
+          map, result, SGDataCommandConstants.COM_DATA_PICKUP_STEP, strPickUpStep, pickUpMap)) {
         return false;
       }
     }
@@ -368,61 +394,74 @@ class SGColumnTypeUpdater {
       if ("".equals(value)) {
         continue;
       }
-      if (owner.COM_DATA_ARRAY_SECTION.equalsIgnoreCase(key)) {
+      if (SGDataCommandConstants.COM_DATA_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (map.isDoubleQuoted(key) == false) {
-          result.putResult(owner.COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (owner.setStride(value) == false) {
-          result.putResult(owner.COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(owner.COM_DATA_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (owner.COM_DATA_TICK_LABEL_ARRAY_SECTION.equalsIgnoreCase(key)) {
+        result.putResult(
+            SGDataCommandConstants.COM_DATA_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+      } else if (SGDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (map.isDoubleQuoted(key) == false) {
           result.putResult(
-              owner.COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (owner.setTickLabelStride(result, value) == false) {
           result.putResult(
-              owner.COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(owner.COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (owner.COM_DATA_INDEX_ARRAY_SECTION.equalsIgnoreCase(key)) {
-        if (map.isDoubleQuoted(owner.COM_DATA_INDEX_ARRAY_SECTION) == false) {
+        result.putResult(
+            SGDataCommandConstants.COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+      } else if (SGDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION.equalsIgnoreCase(key)) {
+        if (map.isDoubleQuoted(SGDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION) == false) {
           result.putResult(
-              owner.COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         if (owner.setIndexStride(value) == false) {
           result.putResult(
-              owner.COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
-        result.putResult(owner.COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (owner.COM_DATA_ANIMATION_ARRAY_SECTION.equalsIgnoreCase(key)) {
+        result.putResult(
+            SGDataCommandConstants.COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+      } else if (SGDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION.equalsIgnoreCase(key)) {
         SGArrayData data = (SGArrayData) owner.getData();
         if (!data.isAnimationAvailable()) {
           result.putResult(
-              owner.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         final int len = data.getAnimationLength();
         if (len == -1) {
           result.putResult(
-              owner.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         SGIntegerSeriesSet arraySection = SGIntegerSeriesSet.parse(value, len);
         if (arraySection == null) {
           result.putResult(
-              owner.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
+              SGDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION,
+              SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         owner.setFrameIndices(arraySection);
-        result.putResult(owner.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
+        result.putResult(
+            SGDataCommandConstants.COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       }
     }
 
@@ -467,20 +506,25 @@ class SGColumnTypeUpdater {
         // pick up variable is newly-assigned
         Dimension dim = pickUpVar.getDimension(0);
         final int len = dim.getLength();
-        String strideValue = map.getValueString(owner.COM_DATA_PICKUP_INDICES);
+        String strideValue = map.getValueString(SGDataCommandConstants.COM_DATA_PICKUP_INDICES);
         if (!"".equals(strideValue)) {
           SGIntegerSeriesSet indices = null;
-          if (map.isDoubleQuoted(owner.COM_DATA_PICKUP_INDICES)) {
+          if (map.isDoubleQuoted(SGDataCommandConstants.COM_DATA_PICKUP_INDICES)) {
             indices = SGIntegerSeriesSet.parse(strideValue, len);
           } else {
-            result.putResult(owner.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGDataCommandConstants.COM_DATA_PICKUP_INDICES,
+                SGPropertyResults.INVALID_INPUT_VALUE);
           }
           if (indices == null) {
-            result.putResult(owner.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGDataCommandConstants.COM_DATA_PICKUP_INDICES,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             indices = new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(len));
           }
           newInfo = new SGNetCDFPickUpDimensionInfo(pickUpVar.getName(), indices);
-          result.putResult(owner.COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
         } else {
           newInfo = owner.getNetCDFPickUpInfo(map, result, dim.getShortName(), len, null);
           if (newInfo == null) {
@@ -500,7 +544,7 @@ class SGColumnTypeUpdater {
             SGDataFileUtility.updatePickupParameters(infoMap, nCols);
             SGIntegerSeriesSet indices =
                 (SGIntegerSeriesSet)
-                    infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
+                    infoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
             newInfo = new SGNetCDFPickUpDimensionInfo(pickUpVar.getName(), indices);
           }
         }
@@ -531,7 +575,7 @@ class SGColumnTypeUpdater {
       }
     }
 
-    result.putResult(owner.COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
+    result.putResult(SGDataCommandConstants.COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
     return true;
   }
 
@@ -548,24 +592,27 @@ class SGColumnTypeUpdater {
     List<String> keys = map.getKeys();
     for (String key : keys) {
       String value = map.getValueString(key);
-      if (owner.COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
+      if (SGDataCommandConstants.COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
         Number num = owner.getPickUpNumber(value, len);
         if (num == null) {
-          result.putResult(owner.COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         start = new SGInteger(num.intValue());
-      } else if (owner.COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
+      } else if (SGDataCommandConstants.COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
         Number num = owner.getPickUpNumber(value, len);
         if (num == null) {
-          result.putResult(owner.COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         end = new SGInteger(num.intValue());
-      } else if (owner.COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
+      } else if (SGDataCommandConstants.COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
         Number num = owner.getPickUpNumber(value, len);
         if (num == null) {
-          result.putResult(owner.COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
         }
         step = new SGInteger(num.intValue());
@@ -603,14 +650,15 @@ class SGColumnTypeUpdater {
       SGInteger step,
       final int status) {
     List<String> keys = map.getKeys();
-    if (start != null && keys.contains(owner.COM_DATA_PICKUP_START.toUpperCase())) {
-      result.putResult(owner.COM_DATA_PICKUP_START, status);
+    if (start != null
+        && keys.contains(SGDataCommandConstants.COM_DATA_PICKUP_START.toUpperCase())) {
+      result.putResult(SGDataCommandConstants.COM_DATA_PICKUP_START, status);
     }
-    if (end != null && keys.contains(owner.COM_DATA_PICKUP_END.toUpperCase())) {
-      result.putResult(owner.COM_DATA_PICKUP_END, status);
+    if (end != null && keys.contains(SGDataCommandConstants.COM_DATA_PICKUP_END.toUpperCase())) {
+      result.putResult(SGDataCommandConstants.COM_DATA_PICKUP_END, status);
     }
-    if (step != null && keys.contains(owner.COM_DATA_PICKUP_STEP.toUpperCase())) {
-      result.putResult(owner.COM_DATA_PICKUP_STEP, status);
+    if (step != null && keys.contains(SGDataCommandConstants.COM_DATA_PICKUP_STEP.toUpperCase())) {
+      result.putResult(SGDataCommandConstants.COM_DATA_PICKUP_STEP, status);
     }
   }
 
@@ -625,7 +673,8 @@ class SGColumnTypeUpdater {
     SGSXYMDArrayMultipleData sxyData = (SGSXYMDArrayMultipleData) owner.mData;
     SGMDArrayPickUpDimensionInfo curInfo =
         (SGMDArrayPickUpDimensionInfo) sxyData.getPickUpDimensionInfo();
-    String strPickUpDimension = map.getValueString(owner.COM_DATA_PICKUP_DIMENSION);
+    String strPickUpDimension =
+        map.getValueString(SGDataCommandConstants.COM_DATA_PICKUP_DIMENSION);
     Map<String, Integer> pickUpMap = owner.createPickUpDimMap(sxyData, strPickUpDimension);
 
     if (pickUpMap != null && pickUpMap.size() != 0) {
@@ -662,20 +711,25 @@ class SGColumnTypeUpdater {
 
       } else {
         // pick up variable is newly-assigned
-        String strideValue = map.getValueString(owner.COM_DATA_PICKUP_INDICES);
+        String strideValue = map.getValueString(SGDataCommandConstants.COM_DATA_PICKUP_INDICES);
         if (!"".equals(strideValue)) {
           SGIntegerSeriesSet indices = null;
-          if (map.isDoubleQuoted(owner.COM_DATA_PICKUP_INDICES)) {
+          if (map.isDoubleQuoted(SGDataCommandConstants.COM_DATA_PICKUP_INDICES)) {
             indices = SGIntegerSeriesSet.parse(strideValue, newLen);
           } else {
-            result.putResult(owner.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGDataCommandConstants.COM_DATA_PICKUP_INDICES,
+                SGPropertyResults.INVALID_INPUT_VALUE);
           }
           if (indices == null) {
-            result.putResult(owner.COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
+            result.putResult(
+                SGDataCommandConstants.COM_DATA_PICKUP_INDICES,
+                SGPropertyResults.INVALID_INPUT_VALUE);
             indices = new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(newLen));
           }
           newInfo = new SGMDArrayPickUpDimensionInfo(pickUpMap, indices);
-          result.putResult(owner.COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
+          result.putResult(
+              SGDataCommandConstants.COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
         } else {
           // get default pick up stride
           SGDataColumnInfo[] infoArray = owner.getDataColumnInfoArray();
@@ -691,7 +745,7 @@ class SGColumnTypeUpdater {
           SGDataFileUtility.updatePickupParameters(infoMap, mdCols);
           SGIntegerSeriesSet indices =
               (SGIntegerSeriesSet)
-                  infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
+                  infoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
           newInfo = new SGMDArrayPickUpDimensionInfo(pickUpMap, indices);
         }
       }
@@ -718,7 +772,7 @@ class SGColumnTypeUpdater {
       }
     }
 
-    result.putResult(owner.COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
+    result.putResult(SGDataCommandConstants.COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
 
     return true;
   }

@@ -38,17 +38,17 @@ class SGSXYNetCDFMultipleDataTest {
 
   private SGNetCDFDataColumnInfo info(String name) {
     return SGDataFileUtility.createDataColumnInfo(
-        this.ncfile.findVariable(name), SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+        this.ncfile.findVariable(name), SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
   }
 
   private SGNetCDFDataColumnInfo xInfo(String name) {
     return SGDataFileUtility.createDataColumnInfo(
-        this.ncfile.findVariable(name), SGIDataColumnTypeConstants.X_VALUE);
+        this.ncfile.findVariable(name), SGDataColumnTypeConstants.X_VALUE);
   }
 
   private SGNetCDFDataColumnInfo yInfo(String name) {
     return SGDataFileUtility.createDataColumnInfo(
-        this.ncfile.findVariable(name), SGIDataColumnTypeConstants.Y_VALUE);
+        this.ncfile.findVariable(name), SGDataColumnTypeConstants.Y_VALUE);
   }
 
   private SGSXYNetCDFMultipleData createBasic() {
@@ -322,19 +322,19 @@ class SGSXYNetCDFMultipleDataTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open(path.toString()));
     SGNetCDFDataColumnInfo[] xInfo = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE)
+          file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE)
     };
     SGNetCDFDataColumnInfo[] yInfo = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE)
+          file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE)
     };
     SGNetCDFDataColumnInfo[] leInfo = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("le"), SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER)
+          file.findVariable("le"), SGDataColumnTypeConstants.VALUE_TYPE_NUMBER)
     };
     SGNetCDFDataColumnInfo[] ueInfo = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("ue"), SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER)
+          file.findVariable("ue"), SGDataColumnTypeConstants.VALUE_TYPE_NUMBER)
     };
     SGNetCDFDataColumnInfo[] ehInfo = {
       SGDataFileUtility.createDataColumnInfo(file.findVariable("height"), "")

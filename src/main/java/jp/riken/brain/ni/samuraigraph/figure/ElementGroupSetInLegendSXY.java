@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+
 import java.awt.*;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -13,7 +17,7 @@ import jp.riken.brain.ni.samuraigraph.base.*;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
@@ -27,8 +31,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetInGraphSXY.SXYElementGroupSetPropertiesInFigureElement;
 
-class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
-    implements SGIElementGroupSetSXY, SGISXYDataConstants {
+class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend implements SGIElementGroupSetSXY {
   private final SGFigureElementLegend legend;
 
   /** Shift to the x direction. */
@@ -741,15 +744,15 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
 
     SGISXYTypeData data = (SGISXYTypeData) this.mData;
     SGElementGroup group = null;
-    if (type == SGIElementGroupConstants.POLYLINE_GROUP) {
+    if (type == SGElementGroupConstants.POLYLINE_GROUP) {
       group = new ElementGroupLine(legend, data);
-    } else if (type == SGIElementGroupConstants.RECTANGLE_GROUP) {
+    } else if (type == SGElementGroupConstants.RECTANGLE_GROUP) {
       group = new ElementGroupBar(legend, data);
-    } else if (type == SGIElementGroupConstants.SYMBOL_GROUP) {
+    } else if (type == SGElementGroupConstants.SYMBOL_GROUP) {
       group = new ElementGroupSymbol(legend, data);
-    } else if (type == SGIElementGroupConstants.ERROR_BAR_GROUP) {
+    } else if (type == SGElementGroupConstants.ERROR_BAR_GROUP) {
       group = new ElementGroupErrorBar(legend, data);
-    } else if (type == SGIElementGroupConstants.TICK_LABEL_GROUP) {
+    } else if (type == SGElementGroupConstants.TICK_LABEL_GROUP) {
       group = new ElementGroupTickLabels(legend, data);
     } else {
       throw new Error();
@@ -772,8 +775,8 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
 
   /** */
   public boolean setXAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-        && location != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+    if (location != SGFigureElementAxisConstants.AXIS_HORIZONTAL_1
+        && location != SGFigureElementAxisConstants.AXIS_HORIZONTAL_2) {
       return false;
     }
     this.mXAxis = this.getAxis(location);
@@ -782,8 +785,8 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
 
   /** */
   public boolean setYAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
-        && location != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+    if (location != SGFigureElementAxisConstants.AXIS_VERTICAL_1
+        && location != SGFigureElementAxisConstants.AXIS_VERTICAL_2) {
       return false;
     }
     this.mYAxis = this.getAxis(location);
@@ -791,14 +794,14 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
   }
 
   public SGElementGroupErrorBar createErrorBars(SGISXYTypeSingleData dataXY) {
-    if (this.addDrawingElementGroup(SGIElementGroupConstants.ERROR_BAR_GROUP) == false) {
+    if (this.addDrawingElementGroup(SGElementGroupConstants.ERROR_BAR_GROUP) == false) {
       return null;
     }
     return this.getErrorBarGroup();
   }
 
   public SGElementGroupTickLabel createTickLabels(SGISXYTypeSingleData dataXY) {
-    if (this.addDrawingElementGroup(SGIElementGroupConstants.TICK_LABEL_GROUP) == false) {
+    if (this.addDrawingElementGroup(SGElementGroupConstants.TICK_LABEL_GROUP) == false) {
       return null;
     }
     return this.getTickLabelGroup();

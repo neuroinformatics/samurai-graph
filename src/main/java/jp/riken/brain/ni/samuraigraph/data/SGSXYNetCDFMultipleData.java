@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -42,7 +67,7 @@ import ucar.nc2.write.NetcdfFormatWriter;
 
 /** The class of multiple scalar XY type data with netCDF data. */
 public class SGSXYNetCDFMultipleData extends SGNetCDFData
-    implements SGISXYTypeMultipleData, SGIDataPropertyKeyConstants, SGISXYMultipleDimensionData {
+    implements SGISXYTypeMultipleData, SGISXYMultipleDimensionData {
 
   private final SGSXYNetCDFMultipleDataAccess mDataAccess = new SGSXYNetCDFMultipleDataAccess(this);
 
@@ -1409,14 +1434,12 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   /** Returns a map which has data information. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> infoMap = super.getInfoMap();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
+    infoMap.put(KEY_SXY_MULTIPLE, Boolean.TRUE);
     if (this.isDimensionPicked()) {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
-      infoMap.put(
-          SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES,
-          this.mPickUpDimensionInfo.getIndices());
+      infoMap.put(KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+      infoMap.put(KEY_SXY_PICKUP_INDICES, this.mPickUpDimensionInfo.getIndices());
     } else {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+      infoMap.put(KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
     }
     return infoMap;
   }
@@ -1976,11 +1999,11 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
     if (!this.isIndexAvailable()) {
-      map.put(SGIDataInformationKeyConstants.KEY_SXY_STRIDE, this.getStride());
+      map.put(KEY_SXY_STRIDE, this.getStride());
     } else {
-      map.put(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, this.getIndexStride());
+      map.put(KEY_SXY_INDEX_STRIDE, this.getIndexStride());
     }
-    map.put(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, this.mTickLabelStride);
+    map.put(KEY_SXY_TICK_LABEL_STRIDE, this.mTickLabelStride);
     return map;
   }
 
@@ -2002,8 +2025,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * @param map the map of the stride
    */
   public void setStrideMap(Map<String, SGIntegerSeriesSet> map) {
-    this.mIndexStride = map.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
-    this.mStride = map.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+    this.mIndexStride = map.get(KEY_SXY_INDEX_STRIDE);
+    this.mStride = map.get(KEY_SXY_STRIDE);
   }
 
   @Override
@@ -2307,7 +2330,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
               indexDimName,
               validIndexDimName,
               idxDataType,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+              VALUE_TYPE_NUMBER,
               dimString,
               policy);
     }
@@ -2325,7 +2348,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
               pickUpDimName,
               validPickUpDimName,
               pDataType,
-              SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+              VALUE_TYPE_NUMBER,
               validPickUpDimName,
               policy);
     }
@@ -2386,10 +2409,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       yNum = this.mYVariables.length;
       xVars = new Variable.Builder<?>[xNum];
       xDataTypes = new DataType[xNum];
-      String xNumberType =
-          (dateFlag != null && dateFlag)
-              ? SGIDataColumnTypeConstants.VALUE_TYPE_DATE
-              : SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER;
+      String xNumberType = (dateFlag != null && dateFlag) ? VALUE_TYPE_DATE : VALUE_TYPE_NUMBER;
       for (int ii = 0; ii < xNum; ii++) {
         xDataTypes[ii] = this.getExportNumberDataType(this.mXVariables[ii], mode, policy);
         String xName = this.mXVariables[ii].getName();
@@ -2406,10 +2426,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       }
       yVars = new Variable.Builder<?>[yNum];
       yDataTypes = new DataType[yNum];
-      String yNumberType =
-          (dateFlag != null && !dateFlag)
-              ? SGIDataColumnTypeConstants.VALUE_TYPE_DATE
-              : SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER;
+      String yNumberType = (dateFlag != null && !dateFlag) ? VALUE_TYPE_DATE : VALUE_TYPE_NUMBER;
       for (int ii = 0; ii < yNum; ii++) {
         yDataTypes[ii] = this.getExportNumberDataType(this.mYVariables[ii], mode, policy);
         String yName = this.mYVariables[ii].getName();
@@ -2435,7 +2452,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
             dVar.getName(),
             validDateDimName,
             DataType.CHAR,
-            SGIDataColumnTypeConstants.VALUE_TYPE_DATE,
+            VALUE_TYPE_DATE,
             dimString,
             policy);
       }
@@ -2461,7 +2478,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
                   xName,
                   this.getValidName(xName),
                   xDataTypes[ii],
-                  SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+                  VALUE_TYPE_NUMBER,
                   xDimString,
                   policy);
         }
@@ -2477,7 +2494,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
                   yName,
                   this.getValidName(yName),
                   yDataTypes[ii],
-                  SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+                  VALUE_TYPE_NUMBER,
                   yDimString,
                   policy);
         }
@@ -2770,7 +2787,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
                 lName,
                 this.getValidName(lName),
                 leDataTypes[ii],
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+                VALUE_TYPE_NUMBER,
                 dimString,
                 policy);
         if (sameErrorVariableFlags[ii]) {
@@ -2786,7 +2803,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
                   uName,
                   this.getValidName(uName),
                   ueDataTypes[ii],
-                  SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER,
+                  VALUE_TYPE_NUMBER,
                   dimString,
                   policy);
         }
@@ -2827,7 +2844,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
                 tName,
                 this.getValidName(tName),
                 tlDataTypes[ii],
-                SGIDataColumnTypeConstants.VALUE_TYPE_TEXT,
+                VALUE_TYPE_TEXT,
                 dimString,
                 policy);
       } else {
@@ -3313,8 +3330,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   @Override
   public String[] getDataViewerColumnTypes() {
     List<String> list = new ArrayList<String>();
-    list.add(SGIDataColumnTypeConstants.X_VALUE);
-    list.add(SGIDataColumnTypeConstants.Y_VALUE);
+    list.add(X_VALUE);
+    list.add(Y_VALUE);
     String[] ret = list.toArray(new String[list.size()]);
     return ret;
   }

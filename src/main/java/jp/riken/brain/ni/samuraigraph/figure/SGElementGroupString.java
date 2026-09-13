@@ -1,5 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -7,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
@@ -15,8 +20,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
-public abstract class SGElementGroupString extends SGElementGroup
-    implements SGIStringConstants, SGIFigureDrawingElementConstants {
+public abstract class SGElementGroupString extends SGElementGroup {
 
   /** The font name. */
   protected String mFontName;
@@ -342,10 +346,10 @@ public abstract class SGElementGroupString extends SGElementGroup
     List<Color> cList = new ArrayList<Color>();
     cList.add(this.getColor());
 
-    el.setAttribute(KEY_FONT_SIZE, Float.toString(fontSize) + SGIConstants.pt);
+    el.setAttribute(KEY_FONT_SIZE, Float.toString(fontSize) + pt);
     el.setAttribute(KEY_FONT_NAME, this.mFontName);
     el.setAttribute(KEY_FONT_STYLE, SGUtilityText.getFontStyleName(this.mFontStyle));
-    el.setAttribute(KEY_ANGLE, Float.toString(angle));
+    el.setAttribute(SGStringConstants.KEY_ANGLE, Float.toString(angle));
     el.setAttribute(KEY_DECIMAL_PLACES, Integer.toString(this.mDecimalPlaces));
     el.setAttribute(KEY_EXPONENT, Integer.toString(this.mExponent));
     el.setAttribute(KEY_COLOR, SGUtilityText.getColorListString(cList));

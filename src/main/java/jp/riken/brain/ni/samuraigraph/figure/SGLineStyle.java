@@ -7,7 +7,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 public class SGLineStyle extends SGStyle implements Cloneable {
   private Color mColor = Color.BLACK;
-  private int mLineType = SGILineConstants.LINE_TYPE_SOLID;
+  private int mLineType = SGLineConstants.LINE_TYPE_SOLID;
   private float mLineWidth = 1.0f;
 
   public SGLineStyle(final int type, final Color cl, final float lineWidth) {

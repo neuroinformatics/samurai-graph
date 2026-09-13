@@ -1,11 +1,17 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGScaleConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesHolder;
 
-public interface SGIAxisScaleDialogObserver
-    extends SGIPropertyDialogObserver, SGITwoAxesHolder, SGIScaleConstants {
+public interface SGIAxisScaleDialogObserver extends SGIPropertyDialogObserver, SGITwoAxesHolder {
 
   public boolean hasValidXValue(final int location, final Number value);
 

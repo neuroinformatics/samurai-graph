@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+
 import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -17,8 +20,7 @@ import javax.swing.event.MenuListener;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow.NodeMenuItem;
 
 /** A menu bar. */
-public class SGMenuBar extends JMenuBar
-    implements ActionListener, MenuListener, SGIRootObjectConstants {
+public class SGMenuBar extends JMenuBar implements ActionListener, MenuListener {
 
   /** */
   private static final long serialVersionUID = 7504775458155768651L;

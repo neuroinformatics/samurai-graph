@@ -27,10 +27,10 @@ class SGDataViewerUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     return new SGSXYNetCDFData(
         file,
         new SGDataSourceObserver(),
@@ -74,11 +74,11 @@ class SGDataViewerUtilityTest {
     SGISXYTypeMultipleData multiple = data.toMultiple();
     assertEquals(
         1.0,
-        SGDataViewerUtility.getDataViewerValue(multiple, SGIDataColumnTypeConstants.X_VALUE, 0, 0),
+        SGDataViewerUtility.getDataViewerValue(multiple, SGDataColumnTypeConstants.X_VALUE, 0, 0),
         0.0);
     assertEquals(
         1.5,
-        SGDataViewerUtility.getDataViewerValue(multiple, SGIDataColumnTypeConstants.Y_VALUE, 0, 0),
+        SGDataViewerUtility.getDataViewerValue(multiple, SGDataColumnTypeConstants.Y_VALUE, 0, 0),
         0.0);
   }
 
@@ -93,26 +93,26 @@ class SGDataViewerUtilityTest {
   @Test
   void matchesChecksRowAndColumnTypeForSingleDimension() {
     SGDataValueHistory.SDArray.D1 value =
-        new SGDataValueHistory.SDArray.D1(3.5, SGIDataColumnTypeConstants.Y_VALUE, 2);
-    assertTrue(SGDataViewerUtility.matches(2, SGIDataColumnTypeConstants.Y_VALUE, value, 0.0));
-    assertFalse(SGDataViewerUtility.matches(3, SGIDataColumnTypeConstants.Y_VALUE, value, 0.0));
+        new SGDataValueHistory.SDArray.D1(3.5, SGDataColumnTypeConstants.Y_VALUE, 2);
+    assertTrue(SGDataViewerUtility.matches(2, SGDataColumnTypeConstants.Y_VALUE, value, 0.0));
+    assertFalse(SGDataViewerUtility.matches(3, SGDataColumnTypeConstants.Y_VALUE, value, 0.0));
     assertFalse(
-        SGDataViewerUtility.matches(2, SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, value, 0.0));
+        SGDataViewerUtility.matches(2, SGDataColumnTypeConstants.LOWER_ERROR_VALUE, value, 0.0));
   }
 
   @Test
   void matchesChecksRowColumnAndTypeForTwoDimensions() {
     SGDataValueHistory.SDArray.D1 value =
-        new SGDataValueHistory.SDArray.D1(3.5, SGIDataColumnTypeConstants.Y_VALUE, 2);
+        new SGDataValueHistory.SDArray.D1(3.5, SGDataColumnTypeConstants.Y_VALUE, 2);
     assertTrue(
         SGDataViewerUtility.matches(
             value.getRowIndex(),
             value.getColumnIndex(),
-            SGIDataColumnTypeConstants.Y_VALUE,
+            SGDataColumnTypeConstants.Y_VALUE,
             value,
             0.0));
-    assertFalse(SGDataViewerUtility.matches(2, 1, SGIDataColumnTypeConstants.Y_VALUE, value, 0.0));
-    assertFalse(SGDataViewerUtility.matches(2, 0, SGIDataColumnTypeConstants.X_VALUE, value, 0.0));
+    assertFalse(SGDataViewerUtility.matches(2, 1, SGDataColumnTypeConstants.Y_VALUE, value, 0.0));
+    assertFalse(SGDataViewerUtility.matches(2, 0, SGDataColumnTypeConstants.X_VALUE, value, 0.0));
   }
 
   @Test
@@ -123,10 +123,10 @@ class SGDataViewerUtilityTest {
     stride.add(new SGIntegerSeries(0, 7, 1));
     SGDataValueHistory history =
         SGDataViewerUtility.setDataViewerValue(
-            multiple, SGIDataColumnTypeConstants.Y_VALUE, 0, 0, "9.5", stride);
+            multiple, SGDataColumnTypeConstants.Y_VALUE, 0, 0, "9.5", stride);
     assertNotNull(history);
     assertEquals(9.5, history.getValue(), 0.0);
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, history.getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, history.getColumnType());
   }
 
   @Test
@@ -145,9 +145,9 @@ class SGDataViewerUtilityTest {
     when(data.hasMultipleYValues()).thenReturn(true);
     when(data.getChildNumber()).thenReturn(3);
     assertEquals(
-        3, SGDataViewerUtility.getDataViewerColumnNumber(data, SGIDataColumnTypeConstants.Y_VALUE));
+        3, SGDataViewerUtility.getDataViewerColumnNumber(data, SGDataColumnTypeConstants.Y_VALUE));
     assertEquals(
-        1, SGDataViewerUtility.getDataViewerColumnNumber(data, SGIDataColumnTypeConstants.X_VALUE));
+        1, SGDataViewerUtility.getDataViewerColumnNumber(data, SGDataColumnTypeConstants.X_VALUE));
   }
 
   @Test
@@ -156,9 +156,9 @@ class SGDataViewerUtilityTest {
     when(data.hasMultipleYValues()).thenReturn(false);
     when(data.getChildNumber()).thenReturn(3);
     assertEquals(
-        1, SGDataViewerUtility.getDataViewerColumnNumber(data, SGIDataColumnTypeConstants.Y_VALUE));
+        1, SGDataViewerUtility.getDataViewerColumnNumber(data, SGDataColumnTypeConstants.Y_VALUE));
     assertEquals(
-        3, SGDataViewerUtility.getDataViewerColumnNumber(data, SGIDataColumnTypeConstants.X_VALUE));
+        3, SGDataViewerUtility.getDataViewerColumnNumber(data, SGDataColumnTypeConstants.X_VALUE));
   }
 
   @Test
@@ -215,11 +215,11 @@ class SGDataViewerUtilityTest {
     double[][] fGrid = new double[7][5];
     double[][] sGrid = new double[7][5];
     SGDataValueHistory.SDArray.D1 d1 =
-        new SGDataValueHistory.SDArray.D1(3.5, SGIDataColumnTypeConstants.X_COORDINATE, 2);
+        new SGDataValueHistory.SDArray.D1(3.5, SGDataColumnTypeConstants.X_COORDINATE, 2);
     SGDataViewerUtility.setEditedValue(data, xValues, yValues, fGrid, sGrid, false, d1);
     assertEquals(3.5, xValues[2], 0.0);
     SGDataValueHistory.SDArray.D1 d2 =
-        new SGDataValueHistory.SDArray.D1(4.5, SGIDataColumnTypeConstants.X_COMPONENT, 6);
+        new SGDataValueHistory.SDArray.D1(4.5, SGDataColumnTypeConstants.X_COMPONENT, 6);
     SGDataViewerUtility.setEditedValue(data, xValues, yValues, fGrid, sGrid, false, d2);
     assertEquals(4.5, fGrid[6][0], 0.0);
   }
@@ -235,11 +235,11 @@ class SGDataViewerUtilityTest {
     double[] fValues = new double[5];
     double[] sValues = new double[5];
     SGDataValueHistory.SDArray.D1 d1 =
-        new SGDataValueHistory.SDArray.D1(1.5, SGIDataColumnTypeConstants.Y_COMPONENT, 2);
+        new SGDataValueHistory.SDArray.D1(1.5, SGDataColumnTypeConstants.Y_COMPONENT, 2);
     SGDataViewerUtility.setEditedValue(data, xValues, yValues, fValues, sValues, false, d1);
     assertEquals(1.5, sValues[2], 0.0);
     SGDataValueHistory.SDArray.D1 d2 =
-        new SGDataValueHistory.SDArray.D1(2.5, SGIDataColumnTypeConstants.X_VALUE, 1);
+        new SGDataValueHistory.SDArray.D1(2.5, SGDataColumnTypeConstants.X_VALUE, 1);
     assertThrows(
         Error.class,
         () ->
@@ -257,7 +257,7 @@ class SGDataViewerUtilityTest {
     double[] yValues = new double[5];
     double[][] zGrid = new double[7][5];
     SGDataValueHistory.SDArray.D1 d1 =
-        new SGDataValueHistory.SDArray.D1(9.5, SGIDataColumnTypeConstants.Z_VALUE, 6);
+        new SGDataValueHistory.SDArray.D1(9.5, SGDataColumnTypeConstants.Z_VALUE, 6);
     SGDataViewerUtility.setEditedValue(data, xValues, yValues, zGrid, false, d1);
     assertEquals(9.5, zGrid[6][0], 0.0);
   }
@@ -271,7 +271,7 @@ class SGDataViewerUtilityTest {
     double[] yValues = new double[5];
     double[] zValues = new double[5];
     SGDataValueHistory.SDArray.D1 d1 =
-        new SGDataValueHistory.SDArray.D1(7.5, SGIDataColumnTypeConstants.Z_VALUE, 3);
+        new SGDataValueHistory.SDArray.D1(7.5, SGDataColumnTypeConstants.Z_VALUE, 3);
     SGDataViewerUtility.setEditedValue(data, xValues, yValues, zValues, false, d1);
     assertEquals(7.5, zValues[3], 0.0);
   }
@@ -408,11 +408,11 @@ class SGDataViewerUtilityTest {
     double[][] fGrid = new double[7][5];
     double[][] sGrid = new double[7][5];
     SGDataValueHistory.SDArray.D1 magnitude =
-        new SGDataValueHistory.SDArray.D1(8.5, SGIDataColumnTypeConstants.MAGNITUDE, 6);
+        new SGDataValueHistory.SDArray.D1(8.5, SGDataColumnTypeConstants.MAGNITUDE, 6);
     SGDataViewerUtility.setEditedValue(data, xValues, yValues, fGrid, sGrid, false, magnitude);
     assertEquals(8.5, fGrid[6][0], 0.0);
     SGDataValueHistory.SDArray.D1 angle =
-        new SGDataValueHistory.SDArray.D1(9.5, SGIDataColumnTypeConstants.ANGLE, 6);
+        new SGDataValueHistory.SDArray.D1(9.5, SGDataColumnTypeConstants.ANGLE, 6);
     SGDataViewerUtility.setEditedValue(data, xValues, yValues, fGrid, sGrid, false, angle);
     assertEquals(9.5, sGrid[6][0], 0.0);
   }
@@ -529,20 +529,20 @@ class SGDataViewerUtilityTest {
         new SGISXYTypeSingleData.DoubleValueSetResult();
     result.status = true;
     result.prev = 0.5;
-    when(child.setDataViewerDoubleValue(SGIDataColumnTypeConstants.X_VALUE, 0, 4.0))
+    when(child.setDataViewerDoubleValue(SGDataColumnTypeConstants.X_VALUE, 0, 4.0))
         .thenReturn(result);
     when(data.getSXYDataArray()).thenReturn(new SGISXYTypeSingleData[] {child});
     SGDataValueHistory history =
         SGDataViewerUtility.setDataViewerValue(
-            data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, "5.0", new SGIntegerSeriesSet());
+            data, SGDataColumnTypeConstants.X_VALUE, 0, 0, "5.0", new SGIntegerSeriesSet());
     assertNotNull(history);
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, history.getColumnType());
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, history.getColumnType());
     assertNull(
         SGDataViewerUtility.setDataViewerValue(
-            data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, "abc", new SGIntegerSeriesSet()));
+            data, SGDataColumnTypeConstants.X_VALUE, 0, 0, "abc", new SGIntegerSeriesSet()));
     assertNull(
         SGDataViewerUtility.setDataViewerValue(
-            data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, null, new SGIntegerSeriesSet()));
+            data, SGDataColumnTypeConstants.X_VALUE, 0, 0, null, new SGIntegerSeriesSet()));
   }
 
   @Test
@@ -561,17 +561,17 @@ class SGDataViewerUtilityTest {
     when(data.isPolar()).thenReturn(false);
     SGDataValueHistory history =
         SGDataViewerUtility.setDataViewerValue(
-            data, SGIDataColumnTypeConstants.X_COORDINATE, 0, 0, "9.0");
+            data, SGDataColumnTypeConstants.X_COORDINATE, 0, 0, "9.0");
     assertNotNull(history);
     assertEquals(9.0, cache.mXValues[0], 0.0);
     SGDataViewerUtility.setDataViewerValue(
-        data, SGIDataColumnTypeConstants.Y_COORDINATE, 1, 0, "4.5");
+        data, SGDataColumnTypeConstants.Y_COORDINATE, 1, 0, "4.5");
     assertEquals(4.5, cache.mYValues[1], 0.0);
     SGDataViewerUtility.setDataViewerValue(
-        data, SGIDataColumnTypeConstants.X_COMPONENT, 0, 0, "6.5");
+        data, SGDataColumnTypeConstants.X_COMPONENT, 0, 0, "6.5");
     assertEquals(6.5, cache.mFirstComponentValues[0], 0.0);
     SGDataViewerUtility.setDataViewerValue(
-        data, SGIDataColumnTypeConstants.Y_COMPONENT, 1, 0, "8.5");
+        data, SGDataColumnTypeConstants.Y_COMPONENT, 1, 0, "8.5");
     assertEquals(8.5, cache.mSecondComponentValues[1], 0.0);
   }
 
@@ -597,7 +597,7 @@ class SGDataViewerUtilityTest {
     when(data.isStrideAvailable()).thenReturn(false);
     when(data.isPolar()).thenReturn(false);
     SGDataViewerUtility.setDataViewerValue(
-        data, SGIDataColumnTypeConstants.X_COMPONENT, 2, 2, "9.0");
+        data, SGDataColumnTypeConstants.X_COMPONENT, 2, 2, "9.0");
     assertEquals(9.0, block.getValue(2, 2), 0.0);
   }
 
@@ -613,22 +613,22 @@ class SGDataViewerUtilityTest {
     when(data.getSecondComponentValueAt(5)).thenReturn(4.0);
     assertEquals(
         1.0,
-        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.X_COORDINATE, 2, 9),
+        SGDataViewerUtility.getDataViewerValue(data, SGDataColumnTypeConstants.X_COORDINATE, 2, 9),
         0.0);
     assertEquals(
         2.0,
-        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.Y_COORDINATE, 3, 9),
+        SGDataViewerUtility.getDataViewerValue(data, SGDataColumnTypeConstants.Y_COORDINATE, 3, 9),
         0.0);
     assertEquals(
         3.0,
-        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.X_COMPONENT, 4, 9),
+        SGDataViewerUtility.getDataViewerValue(data, SGDataColumnTypeConstants.X_COMPONENT, 4, 9),
         0.0);
     assertEquals(
         4.0,
-        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.Y_COMPONENT, 5, 9),
+        SGDataViewerUtility.getDataViewerValue(data, SGDataColumnTypeConstants.Y_COMPONENT, 5, 9),
         0.0);
     assertNull(
-        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.Z_VALUE, 0, 0));
+        SGDataViewerUtility.getDataViewerValue(data, SGDataColumnTypeConstants.Z_VALUE, 0, 0));
   }
 
   @Test
@@ -641,15 +641,15 @@ class SGDataViewerUtilityTest {
     when(xyz.getZValueAt(3)).thenReturn(30.0);
     assertEquals(
         10.0,
-        SGDataViewerUtility.getDataViewerValue(xyz, SGIDataColumnTypeConstants.X_VALUE, 1, 9),
+        SGDataViewerUtility.getDataViewerValue(xyz, SGDataColumnTypeConstants.X_VALUE, 1, 9),
         0.0);
     assertEquals(
         20.0,
-        SGDataViewerUtility.getDataViewerValue(xyz, SGIDataColumnTypeConstants.Y_VALUE, 2, 9),
+        SGDataViewerUtility.getDataViewerValue(xyz, SGDataColumnTypeConstants.Y_VALUE, 2, 9),
         0.0);
     assertEquals(
         30.0,
-        SGDataViewerUtility.getDataViewerValue(xyz, SGIDataColumnTypeConstants.Z_VALUE, 3, 9),
+        SGDataViewerUtility.getDataViewerValue(xyz, SGDataColumnTypeConstants.Z_VALUE, 3, 9),
         0.0);
 
     SGISXYTypeMultipleData multiple = mock(SGISXYTypeMultipleData.class);
@@ -660,14 +660,14 @@ class SGDataViewerUtilityTest {
         .thenReturn(new jp.riken.brain.ni.samuraigraph.base.SGTuple2d(1.0, 1.0));
     assertEquals(
         41.0,
-        SGDataViewerUtility.getDataViewerValue(multiple, SGIDataColumnTypeConstants.X_VALUE, 2, 1),
+        SGDataViewerUtility.getDataViewerValue(multiple, SGDataColumnTypeConstants.X_VALUE, 2, 1),
         0.0);
     assertEquals(
         51.0,
-        SGDataViewerUtility.getDataViewerValue(multiple, SGIDataColumnTypeConstants.Y_VALUE, 2, 1),
+        SGDataViewerUtility.getDataViewerValue(multiple, SGDataColumnTypeConstants.Y_VALUE, 2, 1),
         0.0);
     assertNull(
-        SGDataViewerUtility.getDataViewerValue(multiple, SGIDataColumnTypeConstants.Z_VALUE, 2, 1));
+        SGDataViewerUtility.getDataViewerValue(multiple, SGDataColumnTypeConstants.Z_VALUE, 2, 1));
   }
 
   @Test
@@ -675,34 +675,33 @@ class SGDataViewerUtilityTest {
     SGIVXYTypeData polar = mock(SGIVXYTypeData.class);
     when(polar.isPolar()).thenReturn(true);
     assertEquals(
-        SGIDataColumnTypeConstants.MAGNITUDE,
+        SGDataColumnTypeConstants.MAGNITUDE,
         SGDataViewerUtility.getPreferredDataViewColumnType(polar));
     SGIVXYTypeData orthogonal = mock(SGIVXYTypeData.class);
     when(orthogonal.isPolar()).thenReturn(false);
     assertEquals(
-        SGIDataColumnTypeConstants.X_COMPONENT,
+        SGDataColumnTypeConstants.X_COMPONENT,
         SGDataViewerUtility.getPreferredDataViewColumnType(orthogonal));
     assertEquals(
-        SGIDataColumnTypeConstants.Z_VALUE,
+        SGDataColumnTypeConstants.Z_VALUE,
         SGDataViewerUtility.getPreferredDataViewColumnType(mock(SGISXYZTypeData.class)));
     SGISXYTypeMultipleData multiple = mock(SGISXYTypeMultipleData.class);
     when(multiple.hasMultipleYValues()).thenReturn(true);
     assertEquals(
-        SGIDataColumnTypeConstants.Y_VALUE,
+        SGDataColumnTypeConstants.Y_VALUE,
         SGDataViewerUtility.getPreferredDataViewColumnType(multiple));
     when(multiple.hasMultipleYValues()).thenReturn(false);
     assertEquals(
-        SGIDataColumnTypeConstants.X_VALUE,
+        SGDataColumnTypeConstants.X_VALUE,
         SGDataViewerUtility.getPreferredDataViewColumnType(multiple));
   }
 
   @Test
   void matchesCheckRowAndColumnType() {
     SGDataValueHistory.SDArray.D1 history =
-        new SGDataValueHistory.SDArray.D1(1.0, SGIDataColumnTypeConstants.X_VALUE, 0);
-    assertTrue(SGDataViewerUtility.matches(0, 0, SGIDataColumnTypeConstants.X_VALUE, history, 1.0));
-    assertFalse(
-        SGDataViewerUtility.matches(0, 1, SGIDataColumnTypeConstants.X_VALUE, history, 1.0));
+        new SGDataValueHistory.SDArray.D1(1.0, SGDataColumnTypeConstants.X_VALUE, 0);
+    assertTrue(SGDataViewerUtility.matches(0, 0, SGDataColumnTypeConstants.X_VALUE, history, 1.0));
+    assertFalse(SGDataViewerUtility.matches(0, 1, SGDataColumnTypeConstants.X_VALUE, history, 1.0));
   }
 
   @Test
@@ -755,7 +754,7 @@ class SGDataViewerUtilityTest {
         mock(SGArrayData.class, withSettings().extraInterfaces(SGISXYTypeMultipleData.class));
     SGISXYTypeMultipleData data = (SGISXYTypeMultipleData) base;
     when(base.getCache()).thenReturn(null);
-    when(data.getDataViewerColumnNumber(SGIDataColumnTypeConstants.X_VALUE, true)).thenReturn(1);
+    when(data.getDataViewerColumnNumber(SGDataColumnTypeConstants.X_VALUE, true)).thenReturn(1);
     when(data.getChildNumber()).thenReturn(2);
     when(data.getShift()).thenReturn(new jp.riken.brain.ni.samuraigraph.base.SGTuple2d(0.0, 0.0));
     when(data.isStrideAvailable()).thenReturn(false);
@@ -763,12 +762,12 @@ class SGDataViewerUtilityTest {
     SGISXYTypeSingleData.DoubleValueSetResult result =
         new SGISXYTypeSingleData.DoubleValueSetResult();
     result.status = false;
-    when(child.setDataViewerDoubleValue(SGIDataColumnTypeConstants.X_VALUE, 0, 3.0))
+    when(child.setDataViewerDoubleValue(SGDataColumnTypeConstants.X_VALUE, 0, 3.0))
         .thenReturn(result);
     when(data.getSXYDataArray()).thenReturn(new SGISXYTypeSingleData[] {child, child});
     assertTrue(
         SGDataViewerUtility.getEditedDataValueList(
-                data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, "3.0", new SGIntegerSeriesSet())
+                data, SGDataColumnTypeConstants.X_VALUE, 0, 0, "3.0", new SGIntegerSeriesSet())
             .isEmpty());
   }
 
@@ -786,12 +785,12 @@ class SGDataViewerUtilityTest {
     when(data.isStrideAvailable()).thenReturn(false);
     SGDataValueHistory xHistory =
         SGDataViewerUtility.setDataViewerValue(
-            data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, "9.0");
+            data, SGDataColumnTypeConstants.X_VALUE, 0, 0, "9.0");
     assertNotNull(xHistory);
     assertEquals(9.0, cache.mXValues[0], 0.0);
-    SGDataViewerUtility.setDataViewerValue(data, SGIDataColumnTypeConstants.Y_VALUE, 1, 0, "4.5");
+    SGDataViewerUtility.setDataViewerValue(data, SGDataColumnTypeConstants.Y_VALUE, 1, 0, "4.5");
     assertEquals(4.5, cache.mYValues[1], 0.0);
-    SGDataViewerUtility.setDataViewerValue(data, SGIDataColumnTypeConstants.Z_VALUE, 0, 0, "6.5");
+    SGDataViewerUtility.setDataViewerValue(data, SGDataColumnTypeConstants.Z_VALUE, 0, 0, "6.5");
     assertEquals(6.5, cache.mZValues[0], 0.0);
   }
 
@@ -807,7 +806,7 @@ class SGDataViewerUtilityTest {
     when(base.getCache()).thenReturn(cache);
     when(data.isIndexAvailable()).thenReturn(false);
     when(data.isStrideAvailable()).thenReturn(false);
-    SGDataViewerUtility.setDataViewerValue(data, SGIDataColumnTypeConstants.Z_VALUE, 0, 0, "9.0");
+    SGDataViewerUtility.setDataViewerValue(data, SGDataColumnTypeConstants.Z_VALUE, 0, 0, "9.0");
     assertEquals(9.0, block.getValue(0, 0), 0.0);
   }
 
@@ -815,18 +814,17 @@ class SGDataViewerUtilityTest {
   void getDataViewerValueVXYUsesStrideSearch() {
     SGIVXYTypeData data = mock(SGIVXYTypeData.class);
     when(data.isStrideAvailable()).thenReturn(true);
-    when(data.getDataViewerRowStride(SGIDataColumnTypeConstants.X_COORDINATE))
+    when(data.getDataViewerRowStride(SGDataColumnTypeConstants.X_COORDINATE))
         .thenReturn(new SGIntegerSeriesSet(0, 8, 4));
-    when(data.getDataViewerColStride(SGIDataColumnTypeConstants.X_COORDINATE))
+    when(data.getDataViewerColStride(SGDataColumnTypeConstants.X_COORDINATE))
         .thenReturn(new SGIntegerSeriesSet(0, 8, 4));
     when(data.getXValueAt(1)).thenReturn(7.0);
     assertEquals(
         7.0,
-        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.X_COORDINATE, 4, 4),
+        SGDataViewerUtility.getDataViewerValue(data, SGDataColumnTypeConstants.X_COORDINATE, 4, 4),
         0.0);
     assertNull(
-        SGDataViewerUtility.getDataViewerValue(
-            data, SGIDataColumnTypeConstants.X_COORDINATE, 5, 0));
+        SGDataViewerUtility.getDataViewerValue(data, SGDataColumnTypeConstants.X_COORDINATE, 5, 0));
   }
 
   @Test
@@ -869,13 +867,13 @@ class SGDataViewerUtilityTest {
     double[][] fGrid = new double[5][5];
     double[][] sGrid = new double[5][5];
     SGDataValueHistory.SDArray.D1 xValue =
-        new SGDataValueHistory.SDArray.D1(1.5, SGIDataColumnTypeConstants.X_COORDINATE, 2);
+        new SGDataValueHistory.SDArray.D1(1.5, SGDataColumnTypeConstants.X_COORDINATE, 2);
     SGDataViewerUtility.setEditedValue(vxy, xValues, yValues, fGrid, sGrid, true, xValue);
     assertEquals(1.5, xValues[2], 0.0);
     double[] fValues = new double[5];
     double[] sValues = new double[5];
     SGDataValueHistory.SDArray.D1 first =
-        new SGDataValueHistory.SDArray.D1(2.5, SGIDataColumnTypeConstants.X_COMPONENT, 3);
+        new SGDataValueHistory.SDArray.D1(2.5, SGDataColumnTypeConstants.X_COMPONENT, 3);
     SGDataViewerUtility.setEditedValue(vxy, xValues, yValues, fValues, sValues, true, first);
     assertEquals(2.5, fValues[3], 0.0);
     assertThrows(
@@ -888,7 +886,7 @@ class SGDataViewerUtilityTest {
                 fValues,
                 sValues,
                 true,
-                new SGDataValueHistory.SDArray.D1(3.5, SGIDataColumnTypeConstants.Z_VALUE, 0)));
+                new SGDataValueHistory.SDArray.D1(3.5, SGDataColumnTypeConstants.Z_VALUE, 0)));
 
     SGISXYZTypeData xyz = mock(SGISXYZTypeData.class);
     when(xyz.isStrideAvailable()).thenReturn(true);
@@ -897,7 +895,7 @@ class SGDataViewerUtilityTest {
     when(xyz.getIndexStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
     double[][] zGrid = new double[5][5];
     SGDataValueHistory.SDArray.D1 zValue =
-        new SGDataValueHistory.SDArray.D1(4.5, SGIDataColumnTypeConstants.Z_VALUE, 4);
+        new SGDataValueHistory.SDArray.D1(4.5, SGDataColumnTypeConstants.Z_VALUE, 4);
     SGDataViewerUtility.setEditedValue(xyz, new double[5], new double[5], zGrid, true, zValue);
     assertEquals(4.5, zGrid[4][0], 0.0);
     assertThrows(
@@ -909,8 +907,7 @@ class SGDataViewerUtilityTest {
                 new double[5],
                 new double[5],
                 true,
-                new SGDataValueHistory.SDArray.D1(
-                    1.0, SGIDataColumnTypeConstants.X_COORDINATE, 0)));
+                new SGDataValueHistory.SDArray.D1(1.0, SGDataColumnTypeConstants.X_COORDINATE, 0)));
   }
 
   @Test
@@ -960,7 +957,7 @@ class SGDataViewerUtilityTest {
         mock(SGArrayData.class, withSettings().extraInterfaces(SGISXYTypeMultipleData.class));
     SGISXYTypeMultipleData data = (SGISXYTypeMultipleData) base;
     when(base.getCache()).thenReturn(null);
-    when(data.getDataViewerColumnNumber(SGIDataColumnTypeConstants.X_VALUE, true)).thenReturn(2);
+    when(data.getDataViewerColumnNumber(SGDataColumnTypeConstants.X_VALUE, true)).thenReturn(2);
     when(data.getShift()).thenReturn(new jp.riken.brain.ni.samuraigraph.base.SGTuple2d(0.0, 0.0));
     when(data.isStrideAvailable()).thenReturn(false);
     SGISXYTypeSingleData child = mock(SGISXYTypeSingleData.class);
@@ -968,13 +965,13 @@ class SGDataViewerUtilityTest {
         new SGISXYTypeSingleData.DoubleValueSetResult();
     result.status = true;
     result.prev = 0.25;
-    when(child.setDataViewerDoubleValue(SGIDataColumnTypeConstants.X_VALUE, 0, 3.0))
+    when(child.setDataViewerDoubleValue(SGDataColumnTypeConstants.X_VALUE, 0, 3.0))
         .thenReturn(result);
     when(data.getSXYDataArray()).thenReturn(new SGISXYTypeSingleData[] {child});
     assertEquals(
         1,
         SGDataViewerUtility.getEditedDataValueList(
-                data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, "3.0", new SGIntegerSeriesSet())
+                data, SGDataColumnTypeConstants.X_VALUE, 0, 0, "3.0", new SGIntegerSeriesSet())
             .size());
   }
 }

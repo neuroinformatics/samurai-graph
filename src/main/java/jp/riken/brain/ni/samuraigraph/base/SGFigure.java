@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -35,10 +39,8 @@ public abstract class SGFigure
         SGIPaintable,
         SGIFigureDialogObserver,
         SGINode,
-        SGIRootObjectConstants,
         SGIVisible,
-        SGIDisposable,
-        SGIFigureConstants {
+        SGIDisposable {
 
   private final SGFigureInteractionHelper mInteractionHelper = new SGFigureInteractionHelper(this);
 
@@ -287,8 +289,8 @@ public abstract class SGFigure
 
   /** */
   public String getInstanceDescription() {
-    final float ratio = SGIConstants.CM_POINT_RATIO;
-    final int order = SGIRootObjectConstants.LENGTH_MINIMAL_ORDER;
+    final float ratio = CM_POINT_RATIO;
+    final int order = LENGTH_MINIMAL_ORDER;
     final float x = (float) SGUtilityNumber.roundOffNumber(this.mGraphRectX * ratio, order - 1);
     final float y = (float) SGUtilityNumber.roundOffNumber(this.mGraphRectY * ratio, order - 1);
     String str = this.getClassDescription();
@@ -587,9 +589,8 @@ public abstract class SGFigure
   // check whether two values in units of pt are equal in FIGURE_SIZE_UNIT
   private boolean equalLength(final float v1, final float v2) {
     final float diff = Math.abs(v1 - v2);
-    final double value = SGUtilityText.convert(diff, SGIConstants.pt, FIGURE_SIZE_UNIT);
-    final double ten =
-        SGUtilityNumber.getPowersOfTen(SGIRootObjectConstants.LENGTH_MINIMAL_ORDER - 1);
+    final double value = SGUtilityText.convert(diff, pt, FIGURE_SIZE_UNIT);
+    final double ten = SGUtilityNumber.getPowersOfTen(LENGTH_MINIMAL_ORDER - 1);
     return (value < ten);
   }
 
@@ -621,18 +622,16 @@ public abstract class SGFigure
   protected boolean setGraphRectLocationRoundingOut(final float xPt, final float yPt) {
     final Rectangle2D cRect = this.mWnd.getPaperRect();
 
-    final float xCM =
-        (xPt - (float) cRect.getX()) * SGIConstants.CM_POINT_RATIO / this.mMagnification;
-    final float yCM =
-        (yPt - (float) cRect.getY()) * SGIConstants.CM_POINT_RATIO / this.mMagnification;
+    final float xCM = (xPt - (float) cRect.getX()) * CM_POINT_RATIO / this.mMagnification;
+    final float yCM = (yPt - (float) cRect.getY()) * CM_POINT_RATIO / this.mMagnification;
 
     // round out the size
     final float dXCM = (float) SGUtilityNumber.roundOutNumber(xCM, -2);
     final float dYCM = (float) SGUtilityNumber.roundOutNumber(yCM, -2);
 
     // length in units of pixel
-    final float x = dXCM / SGIConstants.CM_POINT_RATIO;
-    final float y = dYCM / SGIConstants.CM_POINT_RATIO;
+    final float x = dXCM / CM_POINT_RATIO;
+    final float y = dYCM / CM_POINT_RATIO;
 
     //
     this.mGraphRectX = x;
@@ -663,16 +662,16 @@ public abstract class SGFigure
    */
   protected boolean setGraphRectSizeRoundingOut(final float widthPt, final float heightPt) {
 
-    final float widthCM = widthPt * SGIConstants.CM_POINT_RATIO / this.mMagnification;
-    final float heightCM = heightPt * SGIConstants.CM_POINT_RATIO / this.mMagnification;
+    final float widthCM = widthPt * CM_POINT_RATIO / this.mMagnification;
+    final float heightCM = heightPt * CM_POINT_RATIO / this.mMagnification;
 
     // round out the size
     final float dWidthCM = (float) SGUtilityNumber.roundOutNumber(widthCM, -2);
     final float dHeightCM = (float) SGUtilityNumber.roundOutNumber(heightCM, -2);
 
     // length in units of pixel
-    final float width = dWidthCM / SGIConstants.CM_POINT_RATIO;
-    final float height = dHeightCM / SGIConstants.CM_POINT_RATIO;
+    final float width = dWidthCM / CM_POINT_RATIO;
+    final float height = dHeightCM / CM_POINT_RATIO;
 
     //
     this.mGraphRectWidth = width;
@@ -1786,32 +1785,33 @@ public abstract class SGFigure
       final SGIFigureElement element = (SGIFigureElement) e.getSource();
 
       // notify the change of SGIFigureElement object
-      if (command.equals(SGIFigureElement.SHOW_PROPERTY_DIALOG_FOR_SELECTED_OBJECTS)) {
+      if (command.equals(SGFigureElementConstants.SHOW_PROPERTY_DIALOG_FOR_SELECTED_OBJECTS)) {
         // set properties to all selected objects
         this.mWnd.showPropertyDialogForSelectedObjects(this, element);
-      } else if (command.equals(SGIFigureElement.SHOW_PROPERTY_DIALOG_FOR_VISIBLE_OBJECTS)) {
+      } else if (command.equals(
+          SGFigureElementConstants.SHOW_PROPERTY_DIALOG_FOR_VISIBLE_OBJECTS)) {
         this.mWnd.showPropertyDialogForAllVisibleObjects(this, element);
-      } else if (command.equals(SGIFigureElement.SHOW_PROPERTY_DIALOG_FOR_ALL_OBJECTS)) {
+      } else if (command.equals(SGFigureElementConstants.SHOW_PROPERTY_DIALOG_FOR_ALL_OBJECTS)) {
         this.mWnd.showPropertyDialogForAllObjects(this, element);
-      } else if (command.equals(SGIFigureElement.CLEAR_FOCUSED_OBJECTS)) {
+      } else if (command.equals(SGFigureElementConstants.CLEAR_FOCUSED_OBJECTS)) {
         // clear focused objects
         this.mWnd.clearAllFocusedObjectsInFigures();
-      } else if (command.equals(SGIFigureElement.NOTIFY_CHANGE_TO_ROOT)) {
+      } else if (command.equals(SGFigureElementConstants.NOTIFY_CHANGE_TO_ROOT)) {
         // notify to root to update the history
         this.notifyToRoot();
-      } else if (command.equals(SGIFigureElement.NOTIFY_CHANGE_CURSOR)) {
+      } else if (command.equals(SGFigureElementConstants.NOTIFY_CHANGE_CURSOR)) {
         // notify the change of mouse cursor
         this.setCursorToWindow(element);
-      } else if (command.equals(SGIFigureElement.NOTIFY_DATA_WILL_BE_HIDDEN)) {
+      } else if (command.equals(SGFigureElementConstants.NOTIFY_DATA_WILL_BE_HIDDEN)) {
         this.mWnd.notifyToListener(command);
-      } else if (command.equals(SGIFigureElement.NOTIFY_DATA_CLICKED)) {
+      } else if (command.equals(SGFigureElementConstants.NOTIFY_DATA_CLICKED)) {
         this.mWnd.notifyToListener(command);
       } else {
 
-        if (SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT.equals(command)
-            || SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW.equals(command)
-            || SGIFigureElement.NOTIFY_DATA_PROPERTIES_CHANGE_ON_COMMIT.equals(command)
-            || SGIFigureElement.NOTIFY_DATA_PROPERTIES_CHANGE_ON_PREVIEW.equals(command)) {
+        if (SGFigureElementConstants.NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT.equals(command)
+            || SGFigureElementConstants.NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW.equals(command)
+            || SGFigureElementConstants.NOTIFY_DATA_PROPERTIES_CHANGE_ON_COMMIT.equals(command)
+            || SGFigureElementConstants.NOTIFY_DATA_PROPERTIES_CHANGE_ON_PREVIEW.equals(command)) {
           this.mWnd.notifyToListener(command);
         }
 
@@ -1868,11 +1868,11 @@ public abstract class SGFigure
       } else if (command.equals(MENUCMD_ANCHORED)) {
         final boolean b = ((JCheckBoxMenuItem) e.getSource()).isSelected();
         this.mWnd.setAnchor(b);
-      } else if (command.equals(SGIFigureElement.NOTIFY_UNKNOWN_DATA_ERROR)) {
+      } else if (command.equals(SGFigureElementConstants.NOTIFY_UNKNOWN_DATA_ERROR)) {
         this.hideData(new int[] {((Integer) source).intValue()});
         this.getWindow().clearUndoBuffer();
         return;
-      } else if (command.equals(SGIFigureElementAxisConstants.MENUCMD_HIDE_AXES)) {
+      } else if (command.equals(SGFigureElementAxisConstants.MENUCMD_HIDE_AXES)) {
         this.mWnd.doHideSelectedAxes();
       } else {
         this.mWnd.notifyToListener(command);
@@ -2247,7 +2247,7 @@ public abstract class SGFigure
   }
 
   public Element createElement(final Document document, final SGExportParameter params) {
-    Element el = document.createElement(SGFigure.TAG_NAME_FIGURE);
+    Element el = document.createElement(TAG_NAME_FIGURE);
 
     // property of figure
     if (this.writeProperty(el, params) == false) {
@@ -2263,7 +2263,7 @@ public abstract class SGFigure
 
   public Element createElementForFocusedInBoundingBox(
       final Document document, final SGExportParameter params) {
-    Element el = document.createElement(SGFigure.TAG_NAME_FIGURE);
+    Element el = document.createElement(TAG_NAME_FIGURE);
 
     // property of figure
     if (this.writePropertyOnFocusedInBoundingBox(el, params) == false) {
@@ -2279,7 +2279,7 @@ public abstract class SGFigure
 
   public Element createElementForFocusedForDuplication(
       final Document document, final SGExportParameter params) {
-    Element el = document.createElement(SGFigure.TAG_NAME_FIGURE);
+    Element el = document.createElement(TAG_NAME_FIGURE);
 
     // property of figure
     if (this.writePropertyForDuplication(el, params) == false) {
@@ -2889,15 +2889,15 @@ public abstract class SGFigure
   /** Fits axis range to the focused data. */
   public boolean fitAxisRangeToFocusedData(final boolean forAnimationFrames) {
     if (!this.fitAxisRangeToFocusedData(
-        SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL, forAnimationFrames)) {
+        SGFigureElementAxisConstants.AXIS_DIRECTION_HORIZONTAL, forAnimationFrames)) {
       return false;
     }
     if (!this.fitAxisRangeToFocusedData(
-        SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL, forAnimationFrames)) {
+        SGFigureElementAxisConstants.AXIS_DIRECTION_VERTICAL, forAnimationFrames)) {
       return false;
     }
     if (!this.fitAxisRangeToFocusedData(
-        SGIFigureElementAxis.AXIS_DIRECTION_NORMAL, forAnimationFrames)) {
+        SGFigureElementAxisConstants.AXIS_DIRECTION_NORMAL, forAnimationFrames)) {
       return false;
     }
     return true;
@@ -2921,15 +2921,15 @@ public abstract class SGFigure
    */
   public boolean fitAxisRangeToData(final int[] dataIdArray, final boolean forAnimationFrames) {
     if (!this.fitAxisRangeToDataSub(
-        dataIdArray, SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL, forAnimationFrames)) {
+        dataIdArray, SGFigureElementAxisConstants.AXIS_DIRECTION_HORIZONTAL, forAnimationFrames)) {
       return false;
     }
     if (!this.fitAxisRangeToDataSub(
-        dataIdArray, SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL, forAnimationFrames)) {
+        dataIdArray, SGFigureElementAxisConstants.AXIS_DIRECTION_VERTICAL, forAnimationFrames)) {
       return false;
     }
     if (!this.fitAxisRangeToDataSub(
-        dataIdArray, SGIFigureElementAxis.AXIS_DIRECTION_NORMAL, forAnimationFrames)) {
+        dataIdArray, SGFigureElementAxisConstants.AXIS_DIRECTION_NORMAL, forAnimationFrames)) {
       return false;
     }
     if (this.isChangedRoot()) {
@@ -2995,15 +2995,15 @@ public abstract class SGFigure
   /** Fits axis range to the visible all data. */
   public boolean fitAxisRangeToVisibleData(final boolean forAnimationFrames) {
     if (!this.fitAxisRangeToVisibleData(
-        SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL, forAnimationFrames, false)) {
+        SGFigureElementAxisConstants.AXIS_DIRECTION_HORIZONTAL, forAnimationFrames, false)) {
       return false;
     }
     if (!this.fitAxisRangeToVisibleData(
-        SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL, forAnimationFrames, false)) {
+        SGFigureElementAxisConstants.AXIS_DIRECTION_VERTICAL, forAnimationFrames, false)) {
       return false;
     }
     if (!this.fitAxisRangeToVisibleData(
-        SGIFigureElementAxis.AXIS_DIRECTION_NORMAL, forAnimationFrames, false)) {
+        SGFigureElementAxisConstants.AXIS_DIRECTION_NORMAL, forAnimationFrames, false)) {
       return false;
     }
     if (this.isChangedRoot()) {
@@ -3405,8 +3405,7 @@ public abstract class SGFigure
   }
 
   private float getExportLengthValue(final float ptLen) {
-    return SGUtility.getExportValue(
-        ptLen * SGIConstants.CM_POINT_RATIO, SGIRootObjectConstants.LENGTH_MINIMAL_ORDER);
+    return SGUtility.getExportValue(ptLen * CM_POINT_RATIO, LENGTH_MINIMAL_ORDER);
   }
 
   /**

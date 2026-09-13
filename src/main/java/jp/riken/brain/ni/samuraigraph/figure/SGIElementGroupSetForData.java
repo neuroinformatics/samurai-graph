@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+
 import java.io.File;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
@@ -7,14 +10,11 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataObject;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementForData.DataLabel;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 
-public interface SGIElementGroupSetForData
-    extends SGIConstants, SGIChildObject, SGIDataCommandConstants, SGIDataObject {
+public interface SGIElementGroupSetForData extends SGIChildObject, SGIDataObject {
 
   /**
    * Sets the name.

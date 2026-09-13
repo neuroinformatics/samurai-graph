@@ -1,5 +1,22 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -14,7 +31,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
@@ -25,7 +41,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
 /** Drawing element of arrow. */
-public abstract class SGDrawingElementArrow extends SGDrawingElement implements SGIArrowConstants {
+public abstract class SGDrawingElementArrow extends SGDrawingElement {
 
   /** A line object. */
   protected SGDrawingElementLine mLine;
@@ -511,7 +527,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     SGPropertyMap map = new SGPropertyMap();
     this.addProperties(
         map,
-        KEY_LINE_WIDTH,
+        SGLineConstants.KEY_LINE_WIDTH,
         KEY_LINE_TYPE,
         KEY_HEAD_SIZE,
         KEY_COLOR,
@@ -559,7 +575,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     Number num = null;
 
     // line width
-    str = el.getAttribute(KEY_LINE_WIDTH);
+    str = el.getAttribute(SGLineConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -640,7 +656,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     // open angle
     str = el.getAttribute(KEY_HEAD_OPEN_ANGLE);
     if (str.length() != 0) {
-      num = SGUtilityText.getFloat(str, SGIConstants.degree);
+      num = SGUtilityText.getFloat(str, degree);
       if (num == null) {
         return false;
       }
@@ -649,7 +665,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
       // close angle
       str = el.getAttribute(KEY_HEAD_CLOSE_ANGLE);
       if (str.length() != 0) {
-        num = SGUtilityText.getFloat(str, SGIConstants.degree);
+        num = SGUtilityText.getFloat(str, degree);
         if (num == null) {
           return false;
         }
@@ -901,13 +917,13 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     /** Returns a line object. */
     public Shape getLineShape() {
       final float yStart, yEnd;
-      final int aType = SGIArrowConstants.SYMBOL_TYPE_ARROW_HEAD;
+      final int aType = SYMBOL_TYPE_ARROW_HEAD;
       final boolean startArrow = (this.mArrow.getStartHeadType() == aType);
       final boolean endArrow = (this.mArrow.getEndHeadType() == aType);
       final float len = this.getMagnitude();
       if (startArrow || endArrow) {
-        final float open = this.mArrow.getHeadOpenAngle() * SGIConstants.RADIAN_DEGREE_RATIO;
-        final float close = this.mArrow.getHeadCloseAngle() * SGIConstants.RADIAN_DEGREE_RATIO;
+        final float open = this.mArrow.getHeadOpenAngle() * RADIAN_DEGREE_RATIO;
+        final float close = this.mArrow.getHeadCloseAngle() * RADIAN_DEGREE_RATIO;
         final float tanOpen = (float) Math.tan(open);
         final float tanClose = (float) Math.tan(close);
         final float diff =
@@ -1247,8 +1263,8 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
       if (close <= open) {
         return null;
       }
-      final float tanOpen = (float) Math.tan(open * SGIConstants.RADIAN_DEGREE_RATIO);
-      final float tanClose = (float) Math.tan(close * SGIConstants.RADIAN_DEGREE_RATIO);
+      final float tanOpen = (float) Math.tan(open * RADIAN_DEGREE_RATIO);
+      final float tanClose = (float) Math.tan(close * RADIAN_DEGREE_RATIO);
       final float openSize = headSize * tanOpen;
       Point2D[] pointArray = new Point2D[4];
       pointArray[0] = new Point2D.Float(0, 0);
@@ -1266,7 +1282,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
       sh = gp;
     } else if (type == SYMBOL_TYPE_ARROW) {
       Path2D gp = new Path2D.Float();
-      final float tanOpen = (float) Math.tan(open * SGIConstants.RADIAN_DEGREE_RATIO);
+      final float tanOpen = (float) Math.tan(open * RADIAN_DEGREE_RATIO);
       final float openSize = headSize * tanOpen;
       gp.moveTo(openSize, headSize);
       gp.lineTo(0, 0);

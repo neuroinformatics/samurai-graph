@@ -201,56 +201,67 @@ class SGSXYNetCDFMultipleDataPropertyIO {
       return false;
     }
     if (data.isDimensionPicked()) {
-      el.setAttribute(data.KEY_X_VALUE_NAME, data.getXVariable().getValidName());
-      el.setAttribute(data.KEY_Y_VALUE_NAME, data.getYVariable().getValidName());
+      el.setAttribute(
+          SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, data.getXVariable().getValidName());
+      el.setAttribute(
+          SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, data.getYVariable().getValidName());
       if (data.isErrorBarAvailable()) {
         el.setAttribute(
-            data.KEY_LOWER_ERROR_VALUE_NAME, data.getLowerErrorVariable().getValidName());
+            SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME,
+            data.getLowerErrorVariable().getValidName());
         el.setAttribute(
-            data.KEY_UPPER_ERROR_VALUE_NAME, data.getUpperErrorVariable().getValidName());
+            SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME,
+            data.getUpperErrorVariable().getValidName());
         el.setAttribute(
-            data.KEY_ERROR_BAR_HOLDER_NAME, data.getErrorBarHolderVariable().getValidName());
+            SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME,
+            data.getErrorBarHolderVariable().getValidName());
       }
       if (data.isTickLabelAvailable()) {
-        el.setAttribute(data.KEY_TICK_LABEL_NAME, data.getTickLabelVariable().getValidName());
         el.setAttribute(
-            data.KEY_TICK_LABEL_HOLDER_NAME, data.getTickLabelHolderVariable().getValidName());
+            SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAME,
+            data.getTickLabelVariable().getValidName());
+        el.setAttribute(
+            SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME,
+            data.getTickLabelHolderVariable().getValidName());
       }
       String dimName = data.getDimensionName();
       if (dimName != null) {
-        el.setAttribute(data.KEY_PICKUP_DIMENSION_NAME, dimName);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME, dimName);
       }
       SGIntegerSeriesSet pickUpIndices = data.mPickUpDimensionInfo.getIndices();
-      el.setAttribute(data.KEY_PICK_UP_DIMENSION_INDICES, pickUpIndices.toString());
+      el.setAttribute(
+          SGDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION_INDICES, pickUpIndices.toString());
 
     } else {
       String value = null;
       value = SGDataTextUtility.bindVariableNamesInBracket(data.mXVariables);
-      el.setAttribute(data.KEY_X_VALUE_NAMES, value);
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAMES, value);
       value = SGDataTextUtility.bindVariableNamesInBracket(data.mYVariables);
-      el.setAttribute(data.KEY_Y_VALUE_NAMES, value);
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, value);
       if (data.isErrorBarAvailable()) {
         value = SGDataTextUtility.bindVariableNamesInBracket(data.mLowerErrorVariables);
-        el.setAttribute(data.KEY_LOWER_ERROR_VALUE_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES, value);
         value = SGDataTextUtility.bindVariableNamesInBracket(data.mUpperErrorVariables);
-        el.setAttribute(data.KEY_UPPER_ERROR_VALUE_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAMES, value);
         value = SGDataTextUtility.bindVariableNamesInBracket(data.mErrorBarHolderVariables);
-        el.setAttribute(data.KEY_ERROR_BAR_HOLDER_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAMES, value);
       }
       if (data.mTickLabelVariables != null) {
         value = SGDataTextUtility.bindVariableNamesInBracket(data.mTickLabelVariables);
-        el.setAttribute(data.KEY_TICK_LABEL_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES, value);
         value = SGDataTextUtility.bindVariableNamesInBracket(data.mTickLabelHolderVariables);
-        el.setAttribute(data.KEY_TICK_LABEL_HOLDER_NAMES, value);
+        el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAMES, value);
       }
     }
 
     // stride
     if (!data.isIndexAvailable()) {
-      el.setAttribute(data.KEY_ARRAY_SECTION, data.mStride.toString());
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_ARRAY_SECTION, data.mStride.toString());
     }
     if (data.isTickLabelAvailable()) {
-      el.setAttribute(data.KEY_TICK_LABEL_ARRAY_SECTION, data.mTickLabelStride.toString());
+      el.setAttribute(
+          SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
+          data.mTickLabelStride.toString());
     }
 
     return true;

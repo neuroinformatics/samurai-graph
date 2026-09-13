@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -20,10 +45,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIData;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGISelectable;
 import jp.riken.brain.ni.samuraigraph.base.SGInteger;
@@ -48,8 +72,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYMultipleDimensionData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
@@ -74,8 +96,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     implements SGIElementGroupSetMultipleSXY,
         SGIElementGroupSetInGraphSXY,
         SGISXYDataDialogObserver,
-        SGISXYAxisShiftEnabled,
-        SGISXYDataConstants {
+        SGISXYAxisShiftEnabled {
 
   private final SGColumnTypeUpdater mColumnTypeUpdater = new SGColumnTypeUpdater(this);
 
@@ -334,11 +355,11 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
     SGISXYTypeData data = (SGISXYTypeData) this.mData;
     SGElementGroup group = null;
-    if (type == SGIElementGroupConstants.POLYLINE_GROUP) {
+    if (type == SGElementGroupConstants.POLYLINE_GROUP) {
       group = new SGElementGroupLineInGraph(data, this.mGraph);
-    } else if (type == SGIElementGroupConstants.RECTANGLE_GROUP) {
+    } else if (type == SGElementGroupConstants.RECTANGLE_GROUP) {
       group = new SGElementGroupBarInGraph(data, this.mGraph);
-    } else if (type == SGIElementGroupConstants.SYMBOL_GROUP) {
+    } else if (type == SGElementGroupConstants.SYMBOL_GROUP) {
       group = new SGElementGroupSymbolInGraph(data, this.mGraph);
     } else {
       return false;
@@ -420,7 +441,11 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       for (int ii = 0; ii < dataNum; ii++) {
         SGElementGroupSetInGraphSXY gs =
             (SGElementGroupSetInGraphSXY) this.mElementGroupSetList.get(ii);
-        SGLineStyle s = new SGLineStyle(DEFAULT_LINE_TYPE, DEFAULT_LINE_COLOR, DEFAULT_LINE_WIDTH);
+        SGLineStyle s =
+            new SGLineStyle(
+                SGSXYDataConstants.DEFAULT_LINE_TYPE,
+                SGSXYDataConstants.DEFAULT_LINE_COLOR,
+                SGSXYDataConstants.DEFAULT_LINE_WIDTH);
         gs.setLineStyle(s);
       }
     }
@@ -507,8 +532,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
   /** */
   public boolean setXAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
-        && location != SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+    if (location != SGFigureElementAxisConstants.AXIS_HORIZONTAL_1
+        && location != SGFigureElementAxisConstants.AXIS_HORIZONTAL_2) {
       return false;
     }
     this.setXAxis(this.getAxis(location));
@@ -517,8 +542,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
   /** */
   public boolean setYAxisLocation(final int location) {
-    if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
-        && location != SGIFigureElementAxis.AXIS_VERTICAL_2) {
+    if (location != SGFigureElementAxisConstants.AXIS_VERTICAL_1
+        && location != SGFigureElementAxisConstants.AXIS_VERTICAL_2) {
       return false;
     }
     this.setYAxis(this.getAxis(location));
@@ -576,13 +601,13 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     }
 
     // gets the parameters of line groups
-    Element elLineStyles = document.createElement(SGILineConstants.TAG_NAME_STYLES);
+    Element elLineStyles = document.createElement(TAG_NAME_STYLES);
     final int num = this.mElementGroupSetList.size();
     for (int ii = 0; ii < num; ii++) {
       SGElementGroupSetInGraphSXY gs =
           (SGElementGroupSetInGraphSXY) this.mElementGroupSetList.get(ii);
       SGElementGroupLine lineGroup = gs.getLineGroup();
-      Element elLineStyle = document.createElement(SGILineConstants.TAG_NAME_STYLE);
+      Element elLineStyle = document.createElement(TAG_NAME_STYLE);
       if (SGElementGroupLine.writeProperty(
               elLineStyle, lineGroup.getLineType(), lineGroup.getColor(), lineGroup.getLineWidth())
           == false) {
@@ -622,8 +647,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     }
 
     // axes
-    el.setAttribute(SGIFigureElement.KEY_X_AXIS_POSITION, this.getXAxisString());
-    el.setAttribute(SGIFigureElement.KEY_Y_AXIS_POSITION, this.getYAxisString());
+    el.setAttribute(KEY_X_AXIS_POSITION, this.getXAxisString());
+    el.setAttribute(KEY_Y_AXIS_POSITION, this.getYAxisString());
 
     // shift
     el.setAttribute(KEY_SHIFT_X, Double.toString(this.getShiftX()));
@@ -1700,7 +1725,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       String name = entry.getKey();
       Integer index = entry.getValue();
       SGMDArrayVariable var = sxyData.findVariable(name);
-      var.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, index);
+      var.setDimensionIndex(KEY_SXY_PICKUP_DIMENSION, index);
     }
 
     List<SGMDArrayDataColumnInfo> pickUpXYColList = new ArrayList<SGMDArrayDataColumnInfo>();
@@ -1708,9 +1733,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     for (int ii = 0; ii < colsNew.length; ii++) {
       SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) colsNew[ii];
       String columnType = mdCol.getColumnType();
-      if (SGIDataColumnTypeConstants.X_VALUE.equals(columnType)
-          || SGIDataColumnTypeConstants.Y_VALUE.equals(columnType)) {
-        Integer pickUpIndex = mdCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      if (X_VALUE.equals(columnType) || Y_VALUE.equals(columnType)) {
+        Integer pickUpIndex = mdCol.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
         if (pickUpIndex != null && pickUpIndex != -1) {
           pickUpXYColList.add(mdCol);
         }
@@ -1726,8 +1750,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
     // updates the indices
     SGMDArrayDataColumnInfo pickUpColumn = pickUpXYColList.get(0);
-    Integer pickUpIndex =
-        pickUpColumn.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+    Integer pickUpIndex = pickUpColumn.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
     final int len = pickUpColumn.getDimensions()[pickUpIndex];
     SGIntegerSeriesSet indices = curIndices;
     if (curLen == -1 || len != curLen) {
@@ -1738,7 +1761,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     Map<String, Integer> pickUpDimensionMap = new HashMap<String, Integer>();
     for (SGMDArrayDataColumnInfo col : pickUpXYColList) {
       String name = col.getName();
-      Integer dim = col.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      Integer dim = col.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
       pickUpDimensionMap.put(name, dim);
     }
 
@@ -1770,7 +1793,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     for (int ii = 0; ii < cols.length; ii++) {
       SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) cols[ii];
       String name = mdCol.getName();
-      Integer index = mdCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      Integer index = mdCol.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
       if (index != null && index != -1) {
         curPickUpMap.put(name, index);
       }
@@ -1807,7 +1830,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           succeeded = false;
           break;
         }
-        Integer time = var.getDimensionIndex(SGIMDArrayConstants.KEY_TIME_DIMENSION);
+        Integer time = var.getDimensionIndex(KEY_TIME_DIMENSION);
         if (time != null && time != -1) {
           if (dimIndex.equals(time)) {
             succeeded = false;
@@ -1826,7 +1849,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     for (int ii = 0; ii < cols.length; ii++) {
       SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) cols[ii];
       String name = mdCol.getName();
-      Integer index = mdCol.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+      Integer index = mdCol.getDimensionIndex(KEY_SXY_PICKUP_DIMENSION);
       if (index != null && index != -1) {
         mergedPickUpDimMap.put(name, index);
       }
@@ -2627,7 +2650,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     }
     int cnt = 0;
     for (int ii = 0; ii < varList.size(); ii++) {
-      if (SGIDataColumnTypeConstants.PICKUP.equalsIgnoreCase(colTypes[ii])) {
+      if (PICKUP.equalsIgnoreCase(colTypes[ii])) {
         SGNetCDFVariable var = varList.get(ii);
         if (!var.isCoordinateVariable()) {
           valid = false;

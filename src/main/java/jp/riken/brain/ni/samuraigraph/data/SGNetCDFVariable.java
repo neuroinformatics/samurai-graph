@@ -1,5 +1,22 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +29,7 @@ import ucar.nc2.Dimension;
 import ucar.nc2.Variable;
 
 /** The wrapper class for the netCDF variable. */
-public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
+public class SGNetCDFVariable extends SGVariable {
 
   /** The variable of netCDF. */
   protected Variable mVariable = null;
@@ -280,7 +297,7 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
    * @return the value type
    */
   public String getValueType() {
-    return SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER;
+    return VALUE_TYPE_NUMBER;
   }
 
   /**

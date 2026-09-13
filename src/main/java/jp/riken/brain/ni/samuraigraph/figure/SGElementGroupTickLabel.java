@@ -1,13 +1,15 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTickLabelConstants.*;
+
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
 /** */
-public abstract class SGElementGroupTickLabel extends SGElementGroupString
-    implements SGITickLabelConstants {
+public abstract class SGElementGroupTickLabel extends SGElementGroupString {
 
   /** A flag whether tick labels align parallel to the horizontal axis. */
   protected boolean mAlignHorizontalFlag;
@@ -22,7 +24,7 @@ public abstract class SGElementGroupTickLabel extends SGElementGroupString
     if (super.writeProperty(el) == false) {
       return false;
     }
-    el.setAttribute(KEY_ANGLE, Float.toString(this.mAngle));
+    el.setAttribute(SGStringConstants.KEY_ANGLE, Float.toString(this.mAngle));
     el.setAttribute(KEY_TICK_LABEL_ALIGN_HORIZONTALLY, Boolean.toString(this.mAlignHorizontalFlag));
     return true;
   }
@@ -41,9 +43,9 @@ public abstract class SGElementGroupTickLabel extends SGElementGroupString
     }
 
     // angle
-    str = el.getAttribute(KEY_ANGLE);
+    str = el.getAttribute(SGStringConstants.KEY_ANGLE);
     if (str.length() != 0) {
-      num = SGUtilityText.getFloat(str, SGIConstants.degree);
+      num = SGUtilityText.getFloat(str, degree);
       if (num == null) {
         if (str.trim().equalsIgnoreCase(HORIZONTAL)) {
           if (this.setAngle(ANGLE_HORIZONTAL) == false) {

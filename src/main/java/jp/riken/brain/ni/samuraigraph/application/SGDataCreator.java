@@ -1,5 +1,16 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5Exception;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
 import com.jmatio.io.MatFileReader;
@@ -19,7 +30,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
 import jp.riken.brain.ni.samuraigraph.base.SGIProgressControl;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
@@ -27,15 +37,12 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDateVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5File;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGMATLABFile;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayData;
@@ -65,12 +72,7 @@ import ucar.nc2.Dimension;
 import ucar.nc2.NetcdfFile;
 
 /** A class to create data objects. */
-public class SGDataCreator
-    implements SGIConstants,
-        SGIDataColumnTypeConstants,
-        SGINetCDFConstants,
-        SGIMDArrayConstants,
-        SGIApplicationConstants {
+public class SGDataCreator {
 
   private static final Logger logger = LogManager.getLogger(SGDataCreator.class);
 
@@ -217,12 +219,12 @@ public class SGDataCreator
     }
 
     SGIntegerSeriesSet stride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
     SGIntegerSeriesSet tickLabelStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
-    Double samplingRate = (Double) infoMap.get(SGIDataInformationKeyConstants.KEY_SAMPLING_RATE);
+    Double samplingRate = (Double) infoMap.get(SGDataInformationKeyConstants.KEY_SAMPLING_RATE);
 
     // create data objects
     List<SGISXYTypeSingleData> dataList = new ArrayList<SGISXYTypeSingleData>();
@@ -398,9 +400,9 @@ public class SGDataCreator
     }
 
     SGIntegerSeriesSet stride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
     SGIntegerSeriesSet tickLabelStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     // create a data object
@@ -507,7 +509,7 @@ public class SGDataCreator
       thIndices = thIndexList.toArray(new Integer[thIndexList.size()]);
     }
 
-    Double samplingRate = (Double) infoMap.get(SGIDataInformationKeyConstants.KEY_SAMPLING_RATE);
+    Double samplingRate = (Double) infoMap.get(SGDataInformationKeyConstants.KEY_SAMPLING_RATE);
 
     SGSXYSDArrayMultipleData data =
         new SGSXYSDArrayMultipleData(
@@ -545,7 +547,7 @@ public class SGDataCreator
     if (infoMap.size() <= 1) {
       return null;
     }
-    Object obj = infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
+    Object obj = infoMap.get(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
     if ((obj instanceof Boolean) == false) {
       return null;
     }
@@ -578,7 +580,7 @@ public class SGDataCreator
 
     // gets the stride
     SGIntegerSeriesSet stride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     // create a data object
@@ -631,7 +633,7 @@ public class SGDataCreator
 
     // gets the stride
     SGIntegerSeriesSet stride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     // create a data object
@@ -1007,11 +1009,11 @@ public class SGDataCreator
 
     // get the stride
     SGIntegerSeriesSet stride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
     SGIntegerSeriesSet tickLabelStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
     SGIntegerSeriesSet indexStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     // create data objects
@@ -1214,9 +1216,9 @@ public class SGDataCreator
 
     // get the stride
     SGIntegerSeriesSet sxyStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
     SGIntegerSeriesSet indexStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
     SGIntegerSeriesSet stride;
     if (indexStride != null) {
       stride = indexStride;
@@ -1224,7 +1226,7 @@ public class SGDataCreator
       stride = sxyStride;
     }
     SGIntegerSeriesSet tickLabelStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     SGSXYNetCDFMultipleData data =
@@ -1444,9 +1446,9 @@ public class SGDataCreator
         thNameList.toArray(new SGMDArrayDataColumnInfo[thNameList.size()]);
 
     SGIntegerSeriesSet stride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
     SGIntegerSeriesSet tickLabelStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
 
     SGSXYMDArrayMultipleData data =
         new SGSXYMDArrayMultipleData(
@@ -1550,20 +1552,20 @@ public class SGDataCreator
     }
     final String dimName = dim.getShortName();
     SGIntegerSeriesSet indices =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
     if (indices == null) {
       Integer start =
-          (Integer) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START);
+          (Integer) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_START);
       if (start == null) {
         return null;
       }
       Integer end =
-          (Integer) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_END);
+          (Integer) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_END);
       if (end == null) {
         return null;
       }
       Integer step =
-          (Integer) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_STEP);
+          (Integer) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_DIMENSION_STEP);
       if (step == null) {
         return null;
       }
@@ -1572,9 +1574,9 @@ public class SGDataCreator
 
     // get the stride
     SGIntegerSeriesSet sxyStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
     SGIntegerSeriesSet indexStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
     SGIntegerSeriesSet stride;
     if (indexStride != null) {
       stride = indexStride;
@@ -1582,7 +1584,7 @@ public class SGDataCreator
       stride = sxyStride;
     }
     SGIntegerSeriesSet tickLabelStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     CreatedDataSet cdSet = new CreatedDataSet();
@@ -1706,7 +1708,7 @@ public class SGDataCreator
     if (infoMap.size() <= 1) {
       return null;
     }
-    Object obj = infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
+    Object obj = infoMap.get(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
     if ((obj instanceof Boolean) == false) {
       return null;
     }
@@ -1756,11 +1758,11 @@ public class SGDataCreator
 
     // get stride
     SGIntegerSeriesSet xStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X);
     SGIntegerSeriesSet yStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
     SGIntegerSeriesSet indexStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     // create data object
@@ -1835,11 +1837,11 @@ public class SGDataCreator
 
     // get stride
     SGIntegerSeriesSet xStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
     SGIntegerSeriesSet yStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
     SGIntegerSeriesSet indexStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     // create data object
@@ -1926,12 +1928,12 @@ public class SGDataCreator
         return null;
       }
 
-      final String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+      final String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
 
       if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
         SGSDArrayFile file = (SGSDArrayFile) dataSource;
         if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
-          Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
+          Boolean multiple = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE);
           if (multiple == null) {
             return null;
           }
@@ -1949,12 +1951,12 @@ public class SGDataCreator
       } else if (SGDataDataTypeUtility.isNetCDFData(dataType)) {
         SGNetCDFFile file = (SGNetCDFFile) dataSource;
         if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
-          Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
+          Boolean multiple = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE);
           if (multiple == null) {
             return null;
           }
           Boolean multipleVariable =
-              (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
+              (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
           if (multipleVariable == null) {
             return null;
           }
@@ -1977,14 +1979,14 @@ public class SGDataCreator
       } else if (SGDataDataTypeUtility.isMDArrayData(dataType)) {
         SGMDArrayFile file = (SGMDArrayFile) dataSource;
         if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
-          Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
+          Boolean multiple = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE);
           if (multiple == null) {
             return null;
           }
           Set<String> keySet = infoMap.keySet();
           if (keySet.contains(
-                  SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
-              && keySet.contains(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES)) {
+                  SGDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
+              && keySet.contains(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES)) {
             cdSet =
                 this.createDimensionSXYMDArrayData(
                     file, progress, colInfoSet, infoMap, multiple.booleanValue());
@@ -2014,7 +2016,7 @@ public class SGDataCreator
 
   private boolean isStrideAvailable(Map<String, Object> infoMap) {
     Boolean strideAvailable =
-        (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
+        (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_STRIDE_AVAILABLE);
     final boolean b;
     if (strideAvailable != null) {
       b = strideAvailable.booleanValue();
@@ -2026,7 +2028,7 @@ public class SGDataCreator
 
   private boolean setTimeIndexMap(SGMDArrayData mdData, Map<String, Object> infoMap) {
     Object timeIndexMapObj =
-        infoMap.get(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP);
+        infoMap.get(SGDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP);
     if (timeIndexMapObj instanceof Map<?, ?> timeIndexMap) {
       for (Map.Entry<?, ?> entry : timeIndexMap.entrySet()) {
         String name = (String) entry.getKey();
@@ -2070,25 +2072,25 @@ public class SGDataCreator
       }
 
       if (SGDataDataTypeUtility.isSDArrayData(dataType)) {
-        Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
+        Boolean multiple = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE);
         if (multiple == null) {
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
         }
         Boolean multipleVariable =
-            (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
+            (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
         if (multipleVariable == null) {
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
         }
       }
 
       SGNetCDFFile file = (SGNetCDFFile) dataSource;
       if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
-        Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
+        Boolean multiple = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE);
         if (multiple == null) {
           return null;
         }
         Boolean multipleVariable =
-            (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
+            (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE);
         if (multipleVariable == null) {
           return null;
         }
@@ -2178,9 +2180,9 @@ public class SGDataCreator
     }
 
     SGIntegerSeriesSet stride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
     SGIntegerSeriesSet tickLabelStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     // create data objects
@@ -2423,11 +2425,11 @@ public class SGDataCreator
 
     // gets the stride
     SGIntegerSeriesSet xStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
     SGIntegerSeriesSet yStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
     SGIntegerSeriesSet indexStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     // create a data object
@@ -2520,15 +2522,15 @@ public class SGDataCreator
 
     // create an array of dimension indices
     SGIntegerSeriesSet indices =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
     if (indices == null) {
       return null;
     }
 
     SGIntegerSeriesSet stride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_STRIDE);
     SGIntegerSeriesSet tickLabelStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     CreatedDataSet cdSet = new CreatedDataSet();
@@ -2559,7 +2561,7 @@ public class SGDataCreator
     } else {
 
       Map<?, ?> pickUpDimensionIndexMap =
-          (infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
+          (infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
                   instanceof Map<?, ?> m)
               ? m
               : null;
@@ -2637,7 +2639,7 @@ public class SGDataCreator
     if (infoMap.size() <= 1) {
       return null;
     }
-    Object obj = infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
+    Object obj = infoMap.get(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
     if ((obj instanceof Boolean) == false) {
       return null;
     }
@@ -2674,11 +2676,11 @@ public class SGDataCreator
 
     // get the stride
     SGIntegerSeriesSet xStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_X);
     SGIntegerSeriesSet yStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
     SGIntegerSeriesSet indexStride =
-        (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
+        (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE);
     final boolean strideAvailable = this.isStrideAvailable(infoMap);
 
     // create data object

@@ -1,5 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,18 +21,15 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupDialog;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
-import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupDialog;
 
 /** */
-public class SGPropertyDialogSXYZData extends SGDataDialog
-    implements SGIDataColumnTypeConstants, SGINetCDFConstants, SGITwoAxesDialog {
+public class SGPropertyDialogSXYZData extends SGDataDialog implements SGITwoAxesDialog {
 
   /** Serial Version UID */
   private static final long serialVersionUID = 4413621536454191591L;
@@ -457,7 +457,7 @@ public class SGPropertyDialogSXYZData extends SGDataDialog
       // sets the stride
       if (SGDataDataTypeUtility.isSDArrayData(data)) {
         SGIntegerSeriesSet stride =
-            this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+            this.mStrideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
         if (!l.setSDArrayStride(stride)) {
           return false;
         }
@@ -475,7 +475,7 @@ public class SGPropertyDialogSXYZData extends SGDataDialog
         }
         if (indexAvailable) {
           SGIntegerSeriesSet indexStride =
-              this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
+              this.mStrideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE);
           if (!l.setIndexStride(indexStride)) {
             return false;
           }
@@ -487,12 +487,12 @@ public class SGPropertyDialogSXYZData extends SGDataDialog
           }
         } else {
           SGIntegerSeriesSet xStride =
-              this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
+              this.mStrideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X);
           if (!l.setStrideX(xStride)) {
             return false;
           }
           SGIntegerSeriesSet yStride =
-              this.mStrideMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
+              this.mStrideMap.get(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y);
           if (!l.setStrideY(yStride)) {
             return false;
           }
@@ -585,28 +585,28 @@ public class SGPropertyDialogSXYZData extends SGDataDialog
         if (SGDataDataTypeUtility.isSDArrayData(data)) {
           SGSDArrayDataSetupDialog sdg = (SGSDArrayDataSetupDialog) dg;
           SGIntegerSeriesSet stride = sdg.getSXYZStride();
-          this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, stride);
+          this.mStrideMap.put(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, stride);
         } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
           SGNetCDFDataSetupDialog ndg = (SGNetCDFDataSetupDialog) dg;
           if (ndg.isIndexAvailable()) {
             SGIntegerSeriesSet stride = ndg.getSXYZIndexStride();
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, stride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, stride);
           } else {
             SGIntegerSeriesSet xStride = ndg.getSXYZStrideX();
             SGIntegerSeriesSet yStride = ndg.getSXYZStrideY();
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X, xStride);
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y, yStride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X, xStride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y, yStride);
           }
         } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
           SGMDArrayDataSetupDialog mdg = (SGMDArrayDataSetupDialog) dg;
           if (mdg.isSXYZIndexAvailable()) {
             SGIntegerSeriesSet stride = mdg.getSXYZIndexStride();
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, stride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, stride);
           } else {
             SGIntegerSeriesSet xStride = mdg.getSXYZStrideX();
             SGIntegerSeriesSet yStride = mdg.getSXYZStrideY();
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X, xStride);
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y, yStride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X, xStride);
+            this.mStrideMap.put(SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y, yStride);
           }
         }
       }

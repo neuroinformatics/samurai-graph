@@ -1,8 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import jp.riken.brain.ni.samuraigraph.application.SGIApplicationConstants.FILE_TYPE;
+import jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.FILE_TYPE;
 
 /** The wizard dialog to select the file type. */
 public class SGFileTypeSelectionWizardDialog extends SGWizardDialog {

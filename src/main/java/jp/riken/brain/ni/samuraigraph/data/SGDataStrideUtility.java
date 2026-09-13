@@ -3,12 +3,16 @@ package jp.riken.brain.ni.samuraigraph.data;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataBufferUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTitleUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataRangeUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataTextUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
 
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -18,9 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGInteger;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
@@ -29,11 +33,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 
 /** Static helper for the Stride responsibility. */
-public final class SGDataStrideUtility
-    implements SGIDataColumnTypeConstants,
-        SGIDataPropertyKeyConstants,
-        SGINetCDFConstants,
-        SGIMDArrayConstants {
+public final class SGDataStrideUtility {
   // Default stride constants.
   static final int DEFAULT_MULTIPLE_DIMENSION_NUM = 4;
 
@@ -92,7 +92,7 @@ public final class SGDataStrideUtility
     int step;
     if (figureSize != null) {
       final float fSizePt = bx ? figureSize.x : figureSize.y;
-      final float fSizeCm = fSizePt * SGIConstants.CM_POINT_RATIO;
+      final float fSizeCm = fSizePt * SGConstants.CM_POINT_RATIO;
       final int fSize = (int) fSizeCm;
       step = len / fSize;
       if (len % fSize != 0) {
@@ -130,7 +130,7 @@ public final class SGDataStrideUtility
    * @return the column type for the second component
    */
   public static String getVXYSecondComponentColumnType(Map<String, Object> infoMap) {
-    Boolean polar = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
+    Boolean polar = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
     if (polar == null) {
       return null;
     }
@@ -154,7 +154,7 @@ public final class SGDataStrideUtility
    * @return the column type for the first component
    */
   public static String getVXYFirstComponentColumnType(Map<String, Object> infoMap) {
-    Boolean polar = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
+    Boolean polar = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED);
     if (polar == null) {
       return null;
     }
@@ -366,8 +366,8 @@ public final class SGDataStrideUtility
       Map<String, Object> infoMap,
       Map<String, SGMDArrayDimensionInfo> dimNameMap) {
 
-    SGTuple2f figureSize = (SGTuple2f) infoMap.get(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE);
-    String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+    SGTuple2f figureSize = (SGTuple2f) infoMap.get(SGDataInformationKeyConstants.KEY_FIGURE_SIZE);
+    String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
     Map<String, SGIntegerSeriesSet> map = null;
 
     if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
@@ -377,7 +377,7 @@ public final class SGDataStrideUtility
               dataType,
               figureSize,
               X_VALUE,
-              SGIDataInformationKeyConstants.KEY_SXY_STRIDE,
+              SGDataInformationKeyConstants.KEY_SXY_STRIDE,
               true,
               dimNameMap);
       Map<String, SGIntegerSeriesSet> yMap =
@@ -386,7 +386,7 @@ public final class SGDataStrideUtility
               dataType,
               figureSize,
               Y_VALUE,
-              SGIDataInformationKeyConstants.KEY_SXY_STRIDE,
+              SGDataInformationKeyConstants.KEY_SXY_STRIDE,
               false,
               dimNameMap);
       if (xMap == null && yMap == null) {
@@ -403,7 +403,7 @@ public final class SGDataStrideUtility
 
     } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       map = new HashMap<String, SGIntegerSeriesSet>();
-      Boolean grid = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG);
+      Boolean grid = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG);
       if (grid) {
         Map<String, SGIntegerSeriesSet> xMap =
             calcMDArrayStride(
@@ -411,7 +411,7 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 X_VALUE,
-                SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
+                SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
                 true,
                 dimNameMap);
         if (xMap != null) {
@@ -423,8 +423,8 @@ public final class SGDataStrideUtility
                   dataType,
                   figureSize,
                   Z_VALUE,
-                  SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION,
-                  SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
+                  KEY_SXYZ_X_DIMENSION,
+                  SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
                   true,
                   dimNameMap);
           if (xMap != null) {
@@ -437,7 +437,7 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 Y_VALUE,
-                SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
+                SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
                 false,
                 dimNameMap);
         if (yMap != null) {
@@ -449,8 +449,8 @@ public final class SGDataStrideUtility
                   dataType,
                   figureSize,
                   Z_VALUE,
-                  SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION,
-                  SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
+                  KEY_SXYZ_Y_DIMENSION,
+                  SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
                   false,
                   dimNameMap);
           if (yMap != null) {
@@ -486,7 +486,7 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 cType,
-                SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
+                SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
                 bx,
                 dimNameMap);
       }
@@ -501,7 +501,7 @@ public final class SGDataStrideUtility
         sType = Y_COMPONENT;
       }
       map = new HashMap<String, SGIntegerSeriesSet>();
-      Boolean grid = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG);
+      Boolean grid = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG);
       if (grid) {
         map =
             calcMDArrayVectorStride(
@@ -514,8 +514,8 @@ public final class SGDataStrideUtility
                 Y_COORDINATE,
                 fType,
                 sType,
-                SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X,
-                SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
+                SGDataInformationKeyConstants.KEY_VXY_STRIDE_X,
+                SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
       } else {
         String cType = null;
         List<SGDataColumnInfo> fColList = findColumnsWithColumnType(colArray, fType);
@@ -550,7 +550,7 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 cType,
-                SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
+                SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
                 bx,
                 dimNameMap);
       }
@@ -683,19 +683,19 @@ public final class SGDataStrideUtility
 
   public static Map<String, SGIntegerSeriesSet> calcSDArrayDefaultStride(
       SGDataColumnInfo[] colArray, Map<String, Object> infoMap) {
-    SGTuple2f figureSize = (SGTuple2f) infoMap.get(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE);
+    SGTuple2f figureSize = (SGTuple2f) infoMap.get(SGDataInformationKeyConstants.KEY_FIGURE_SIZE);
     final int fSize = (int) (figureSize.x > figureSize.y ? figureSize.x : figureSize.y);
     SGSDArrayDataColumnInfo sdInfo = (SGSDArrayDataColumnInfo) colArray[0];
     final int len = sdInfo.getLength();
     SGIntegerSeriesSet stride = calcStride(len, fSize);
-    String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+    String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
     if (SGDataDataTypeUtility.isSXYTypeData(dataType)) {
-      map.put(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, stride);
+      map.put(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, stride);
     } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
-      map.put(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, stride);
+      map.put(SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE, stride);
     } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
-      map.put(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, stride);
+      map.put(SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE, stride);
     }
     return map;
   }
@@ -711,8 +711,8 @@ public final class SGDataStrideUtility
   public static Map<String, SGIntegerSeriesSet> calcNetCDFDefaultStride(
       SGDataColumnInfo[] colArray, Map<String, Object> infoMap, Map<String, String> dimNameMap) {
 
-    SGTuple2f figureSize = (SGTuple2f) infoMap.get(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE);
-    String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+    SGTuple2f figureSize = (SGTuple2f) infoMap.get(SGDataInformationKeyConstants.KEY_FIGURE_SIZE);
+    String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
     Map<String, SGIntegerSeriesSet> map = null;
     final boolean hasIndex = hasIndexColumnType(colArray);
     final boolean bx = (figureSize.x > figureSize.y);
@@ -727,7 +727,7 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 cTypeList,
-                SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
+                SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
                 bx,
                 dimNameMap);
       } else {
@@ -738,7 +738,7 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 cTypeList,
-                SGIDataInformationKeyConstants.KEY_SXY_STRIDE,
+                SGDataInformationKeyConstants.KEY_SXY_STRIDE,
                 true,
                 dimNameMap);
         cTypeList.clear();
@@ -749,7 +749,7 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 cTypeList,
-                SGIDataInformationKeyConstants.KEY_SXY_STRIDE,
+                SGDataInformationKeyConstants.KEY_SXY_STRIDE,
                 false,
                 dimNameMap);
         if ((xMap != null && yMap != null) || (xMap == null && yMap == null)) {
@@ -771,7 +771,7 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 cTypeList,
-                SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
+                SGDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
                 bx,
                 dimNameMap);
       } else {
@@ -784,7 +784,7 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 cTypeList,
-                SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
+                SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_X,
                 true,
                 dimNameMap);
         if (xMap != null) {
@@ -799,7 +799,7 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 cTypeList,
-                SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
+                SGDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y,
                 false,
                 dimNameMap);
         if (yMap != null) {
@@ -816,7 +816,7 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 cTypeList,
-                SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
+                SGDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
                 bx,
                 dimNameMap);
       } else {
@@ -834,9 +834,9 @@ public final class SGDataStrideUtility
                 dataType,
                 figureSize,
                 cTypeXList,
-                SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X,
+                SGDataInformationKeyConstants.KEY_VXY_STRIDE_X,
                 cTypeYList,
-                SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
+                SGDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
       }
     }
 

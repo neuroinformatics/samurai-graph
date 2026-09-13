@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -23,6 +48,7 @@ import javax.swing.SwingUtilities;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
 import jp.riken.brain.ni.samuraigraph.base.SGICopyable;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
@@ -57,7 +83,7 @@ import org.w3c.dom.NodeList;
 
 /** A class of timing lines. */
 public class SGFigureElementTimingLine extends SGFigureElement
-    implements SGIFigureElementTimingLine, SGITimingLineConstants {
+    implements SGIFigureElementTimingLine {
 
   /** */
   private SGIFigureElementAxis mAxisElement = null;
@@ -81,10 +107,10 @@ public class SGFigureElementTimingLine extends SGFigureElement
       super();
 
       // set fixed properties
-      this.setStartHeadType(SGIArrowConstants.SYMBOL_TYPE_VOID);
-      this.setEndHeadType(SGIArrowConstants.SYMBOL_TYPE_ARROW_HEAD);
+      this.setStartHeadType(SYMBOL_TYPE_VOID);
+      this.setEndHeadType(SYMBOL_TYPE_ARROW_HEAD);
       this.setLineWidth(3.0f);
-      this.setLineType(SGILineConstants.LINE_TYPE_SOLID);
+      this.setLineType(LINE_TYPE_SOLID);
       this.setColor(Color.RED);
       this.setHeadSize(12.0f);
       this.setHeadAngle(36.0f, 60.0f);
@@ -142,16 +168,16 @@ public class SGFigureElementTimingLine extends SGFigureElement
 
     SGTuple2f start = new SGTuple2f(x, y);
     SGTuple2f end = new SGTuple2f();
-    if (config == SGIFigureElementAxis.AXIS_HORIZONTAL_1) {
+    if (config == SGFigureElementAxisConstants.AXIS_HORIZONTAL_1) {
       end.x = x;
       end.y = y + length;
-    } else if (config == SGIFigureElementAxis.AXIS_HORIZONTAL_2) {
+    } else if (config == SGFigureElementAxisConstants.AXIS_HORIZONTAL_2) {
       end.x = x;
       end.y = y - length;
-    } else if (config == SGIFigureElementAxis.AXIS_VERTICAL_1) {
+    } else if (config == SGFigureElementAxisConstants.AXIS_VERTICAL_1) {
       end.x = x - length;
       end.y = y;
-    } else if (config == SGIFigureElementAxis.AXIS_VERTICAL_2) {
+    } else if (config == SGFigureElementAxisConstants.AXIS_VERTICAL_2) {
       end.x = x + length;
       end.y = y;
     }
@@ -190,13 +216,13 @@ public class SGFigureElementTimingLine extends SGFigureElement
 
     int config = -1;
     if (minIndex == 0) {
-      config = SGIFigureElementAxis.AXIS_VERTICAL_1;
+      config = SGFigureElementAxisConstants.AXIS_VERTICAL_1;
     } else if (minIndex == 1) {
-      config = SGIFigureElementAxis.AXIS_VERTICAL_2;
+      config = SGFigureElementAxisConstants.AXIS_VERTICAL_2;
     } else if (minIndex == 2) {
-      config = SGIFigureElementAxis.AXIS_HORIZONTAL_2;
+      config = SGFigureElementAxisConstants.AXIS_HORIZONTAL_2;
     } else if (minIndex == 3) {
-      config = SGIFigureElementAxis.AXIS_HORIZONTAL_1;
+      config = SGFigureElementAxisConstants.AXIS_HORIZONTAL_1;
     }
 
     configList.add(Integer.valueOf(config));
@@ -385,7 +411,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
    * @param versionNumber the version number of property file
    */
   public boolean readProperty(final Element element, final String versionNumber) {
-    NodeList nList = element.getElementsByTagName(TimingLine.TAG_NAME_TIMING_LINE);
+    NodeList nList = element.getElementsByTagName(TAG_NAME_TIMING_LINE);
     for (int ii = 0; ii < nList.getLength(); ii++) {
       Node node = nList.item(ii);
       if (node instanceof Element) {
@@ -947,8 +973,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
           SGICopyable,
           SGIChildObject,
           SGIMovable,
-          SGITimingLineDialogObserver,
-          SGITimingLineConstants {
+          SGITimingLineDialogObserver {
 
     /** The line stroke. */
     protected SGStroke mStroke = new SGStroke();
@@ -1137,9 +1162,9 @@ public class SGFigureElementTimingLine extends SGFigureElement
     }
 
     private void init() {
-      this.setLineWidth(DEFAULT_LINE_WIDTH, LINE_WIDTH_UNIT);
-      this.setLineType(DEFAULT_LINE_TYPE);
-      this.setColor(DEFAULT_LINE_COLOR);
+      this.setLineWidth(SGTimingLineConstants.DEFAULT_LINE_WIDTH, LINE_WIDTH_UNIT);
+      this.setLineType(SGTimingLineConstants.DEFAULT_LINE_TYPE);
+      this.setColor(SGTimingLineConstants.DEFAULT_LINE_COLOR);
       this.setAnchored(DEFAULT_LINE_ANCHORED);
 
       // setup the stroke object
@@ -1543,7 +1568,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       Number num = null;
 
       // line width
-      str = el.getAttribute(KEY_LINE_WIDTH);
+      str = el.getAttribute(SGLineConstants.KEY_LINE_WIDTH);
       if (str.length() != 0) {
         StringBuilder uLineWidth = new StringBuilder();
         num = SGUtilityText.getNumber(str, uLineWidth);
@@ -1606,7 +1631,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       }
 
       // anchored
-      str = el.getAttribute(KEY_ANCHORED);
+      str = el.getAttribute(SGTimingLineConstants.KEY_ANCHORED);
       if (str.length() != 0) {
         Boolean b = SGUtilityText.getBoolean(str);
         if (b == null) {
@@ -1874,10 +1899,10 @@ public class SGFigureElementTimingLine extends SGFigureElement
           map,
           KEY_AXIS_POSITION,
           KEY_VALUE,
-          KEY_LINE_WIDTH,
+          SGLineConstants.KEY_LINE_WIDTH,
           KEY_LINE_TYPE,
           KEY_COLOR,
-          KEY_ANCHORED);
+          SGTimingLineConstants.KEY_ANCHORED);
       return map;
     }
 

@@ -1,5 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -7,7 +14,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
@@ -15,8 +21,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
 /** */
-public abstract class SGElementGroupArrow extends SGElementGroup
-    implements SGIElementGroupGridSXY, SGIArrowConstants {
+public abstract class SGElementGroupArrow extends SGElementGroup implements SGIElementGroupGridSXY {
 
   /** The line stroke. */
   protected SGStroke mStroke = new SGStroke();
@@ -310,28 +315,28 @@ public abstract class SGElementGroupArrow extends SGElementGroup
   public static String getSymbolTypeName(final int type) {
     String typeName = null;
     switch (type) {
-      case SGIArrowConstants.SYMBOL_TYPE_CIRCLE:
+      case SYMBOL_TYPE_CIRCLE:
         typeName = SYMBOL_NAME_CIRCLE;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_SQUARE:
+      case SYMBOL_TYPE_SQUARE:
         typeName = SYMBOL_NAME_SQUARE;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_TRIANGLE:
+      case SYMBOL_TYPE_TRIANGLE:
         typeName = SYMBOL_NAME_TRIANGLE;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_CROSS:
+      case SYMBOL_TYPE_CROSS:
         typeName = SYMBOL_NAME_CROSS;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_TRANSVERSELINE:
+      case SYMBOL_TYPE_TRANSVERSELINE:
         typeName = SYMBOL_NAME_TRANSVERSE_LINE;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_ARROW_HEAD:
+      case SYMBOL_TYPE_ARROW_HEAD:
         typeName = SYMBOL_NAME_ARROW_HEAD;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_ARROW:
+      case SYMBOL_TYPE_ARROW:
         typeName = SYMBOL_NAME_ARROW;
         break;
-      case SGIArrowConstants.SYMBOL_TYPE_VOID:
+      case SYMBOL_TYPE_VOID:
         typeName = SYMBOL_NAME_VOID;
         break;
       default:
@@ -348,9 +353,9 @@ public abstract class SGElementGroupArrow extends SGElementGroup
 
   /** */
   public boolean writeProperty(final Element el) {
-    final float cp = SGIConstants.CM_POINT_RATIO;
+    final float cp = CM_POINT_RATIO;
 
-    final int digitLineWidth = SGIConstants.LINE_WIDTH_MINIMAL_ORDER - 1;
+    final int digitLineWidth = LINE_WIDTH_MINIMAL_ORDER - 1;
     final int digitHeadSize = ARROW_HEAD_SIZE_MINIMAL_ORDER - 1;
     final int digitAngle = ARROW_HEAD_ANGLE_MINIMAL_ORDER - 1;
 
@@ -365,9 +370,9 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     List<Color> cList = new ArrayList<Color>();
     cList.add(this.getColor());
 
-    el.setAttribute(KEY_LINE_WIDTH, Float.toString(lineWidth) + SGIConstants.pt);
+    el.setAttribute(SGLineConstants.KEY_LINE_WIDTH, Float.toString(lineWidth) + pt);
     el.setAttribute(KEY_LINE_TYPE, SGDrawingElementLine.getLineTypeName(this.getLineType()));
-    el.setAttribute(KEY_HEAD_SIZE, Float.toString(headSize) + SGIConstants.cm);
+    el.setAttribute(KEY_HEAD_SIZE, Float.toString(headSize) + cm);
     el.setAttribute(
         KEY_START_HEAD_TYPE, SGDrawingElementArrow.getArrowHeadTypeName(this.getStartHeadType()));
     el.setAttribute(
@@ -389,7 +394,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     List<Color> list = null;
 
     // line width
-    str = el.getAttribute(KEY_LINE_WIDTH);
+    str = el.getAttribute(SGLineConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);
@@ -458,7 +463,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     // open angle
     str = el.getAttribute(KEY_HEAD_OPEN_ANGLE);
     if (str.length() != 0) {
-      num = SGUtilityText.getFloat(str, SGIConstants.degree);
+      num = SGUtilityText.getFloat(str, degree);
       if (num == null) {
         return false;
       }
@@ -467,7 +472,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
       // close angle
       str = el.getAttribute(KEY_HEAD_CLOSE_ANGLE);
       if (str.length() != 0) {
-        num = SGUtilityText.getFloat(str, SGIConstants.degree);
+        num = SGUtilityText.getFloat(str, degree);
         if (num == null) {
           return false;
         }

@@ -1,5 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureTypeConstants.*;
+
 import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
@@ -9,11 +14,10 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
+import jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
@@ -31,13 +35,12 @@ import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGIVXYTypeData;
-import jp.riken.brain.ni.samuraigraph.figure.SGIFigureTypeConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGXYFigure;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /** */
-public class SGFigureCreator implements SGIFigureConstants {
+public class SGFigureCreator {
 
   private static final org.apache.logging.log4j.Logger logger =
       org.apache.logging.log4j.LogManager.getLogger(SGFigureCreator.class);
@@ -247,19 +250,19 @@ public class SGFigureCreator implements SGIFigureConstants {
       // additional symbols
       SGIFigureElementString string =
           (SGIFigureElementString)
-              fig.getSymbolElement(SGIDrawingElementConstants.SYMBOL_ELEMENT_TYPE_STRING);
+              fig.getSymbolElement(SGDrawingElementConstants.SYMBOL_ELEMENT_TYPE_STRING);
       SGIFigureElementAxisBreak axisBreak =
           (SGIFigureElementAxisBreak)
-              fig.getSymbolElement(SGIDrawingElementConstants.SYMBOL_ELEMENT_TYPE_AXISBREAK);
+              fig.getSymbolElement(SGDrawingElementConstants.SYMBOL_ELEMENT_TYPE_AXISBREAK);
       SGIFigureElementSignificantDifference sigDiff =
           (SGIFigureElementSignificantDifference)
-              fig.getSymbolElement(SGIDrawingElementConstants.SYMBOL_ELEMENT_TYPE_SIGDIFF);
+              fig.getSymbolElement(SGDrawingElementConstants.SYMBOL_ELEMENT_TYPE_SIGDIFF);
       SGIFigureElementTimingLine timingLine =
           (SGIFigureElementTimingLine)
-              fig.getSymbolElement(SGIDrawingElementConstants.SYMBOL_ELEMENT_TYPE_TIMINGLINE);
+              fig.getSymbolElement(SGDrawingElementConstants.SYMBOL_ELEMENT_TYPE_TIMINGLINE);
       SGIFigureElementShape shape =
           (SGIFigureElementShape)
-              fig.getSymbolElement(SGIDrawingElementConstants.SYMBOL_ELEMENT_TYPE_SHAPE);
+              fig.getSymbolElement(SGDrawingElementConstants.SYMBOL_ELEMENT_TYPE_SHAPE);
 
       grid.setAxisElement(axis);
 
@@ -385,7 +388,7 @@ public class SGFigureCreator implements SGIFigureConstants {
     SGIFigureElement el = null;
 
     SGDrawingWindow wnd = figure.getWindow();
-    final int ic = SGIConstants.PROPERTY_FILE_INCORRECT;
+    final int ic = PROPERTY_FILE_INCORRECT;
     Rectangle2D gRect = figure.getGraphRect();
 
     // axis
@@ -396,7 +399,7 @@ public class SGFigureCreator implements SGIFigureConstants {
     el.setGraphRect(gRect);
     SGIFigureElementAxis axisElement = (SGIFigureElementAxis) el;
     figure.setIFigureElement(LAYER_AXIS, axisElement);
-    nList = fElement.getElementsByTagName(SGIFigureElementAxis.TAG_NAME_AXES);
+    nList = fElement.getElementsByTagName(SGFigureElementAxisConstants.TAG_NAME_AXES);
     element = (Element) nList.item(0);
     if (el.readProperty(element, versionNumber) == false) {
       return ic;
@@ -536,7 +539,7 @@ public class SGFigureCreator implements SGIFigureConstants {
     // set relation between SGIFigureElement objects
     setRelationOfFigureElements(figure);
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SUCCESSFUL_COMPLETION;
   }
 
   /** Default width of a figure. */
@@ -596,11 +599,11 @@ public class SGFigureCreator implements SGIFigureConstants {
     SGData dataFirst = data[0];
     String type;
     if (dataFirst instanceof SGISXYTypeSingleData || dataFirst instanceof SGISXYTypeMultipleData) {
-      type = SGIFigureTypeConstants.FIGURE_TYPE_SXY;
+      type = FIGURE_TYPE_SXY;
     } else if (dataFirst instanceof SGIVXYTypeData) {
-      type = SGIFigureTypeConstants.FIGURE_TYPE_VXY;
+      type = FIGURE_TYPE_VXY;
     } else if (dataFirst instanceof SGISXYZTypeData) {
-      type = SGIFigureTypeConstants.FIGURE_TYPE_SXY;
+      type = FIGURE_TYPE_SXY;
     } else {
       return null;
     }
@@ -615,7 +618,7 @@ public class SGFigureCreator implements SGIFigureConstants {
 
     // set size after created a figure instance
     SGTuple2f size = getDefaultFigureSize(dataFirst.getDataType());
-    figure.setFigureSize(size.x, size.y, SGIFigureConstants.FIGURE_SIZE_UNIT);
+    figure.setFigureSize(size.x, size.y, FIGURE_SIZE_UNIT);
 
     return figure;
   }
@@ -630,8 +633,8 @@ public class SGFigureCreator implements SGIFigureConstants {
     }
 
     // set size after created a figure instance
-    figure.setFigureWidth(FIGURE_DEFAULT_WIDTH, SGIFigureConstants.FIGURE_SIZE_UNIT);
-    figure.setFigureHeight(FIGURE_DEFAULT_HEIGHT, SGIFigureConstants.FIGURE_SIZE_UNIT);
+    figure.setFigureWidth(FIGURE_DEFAULT_WIDTH, FIGURE_SIZE_UNIT);
+    figure.setFigureHeight(FIGURE_DEFAULT_HEIGHT, FIGURE_SIZE_UNIT);
 
     return figure;
   }

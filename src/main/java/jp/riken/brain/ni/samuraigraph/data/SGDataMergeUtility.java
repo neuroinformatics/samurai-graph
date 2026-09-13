@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,7 +17,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import ucar.nc2.Dimension;
 
 /** Utility methods to merge data objects. */
-public class SGDataMergeUtility implements SGIDataColumnTypeConstants {
+public class SGDataMergeUtility {
 
   private SGDataMergeUtility() {}
 
@@ -437,14 +439,14 @@ public class SGDataMergeUtility implements SGIDataColumnTypeConstants {
       // get dimension indices
       int len = -1;
       if (xInfo != null) {
-        Integer index = xInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+        Integer index = xInfo.getDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
         if (index != null && index != -1) {
           int[] dims = xInfo.getDimensions();
           len = dims[index];
         }
       }
       if (yInfo != null && len == -1) {
-        Integer index = yInfo.getDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
+        Integer index = yInfo.getDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
         if (index != null && index != -1) {
           int[] dims = yInfo.getDimensions();
           len = dims[index];

@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -56,7 +58,7 @@ public class SGFigurePopupMenu extends SGPopupMenu {
     this.addCheckBoxItem(SGFigure.MENUCMD_RUBBER_BANDING);
 
     // snap to grid
-    this.addCheckBoxItem(SGFigure.MENUBARCMD_SNAP_TO_GRID);
+    this.addCheckBoxItem(SGRootObjectConstants.MENUBARCMD_SNAP_TO_GRID);
 
     // show bounding box
     this.addCheckBoxItem(SGFigure.MENUCMD_SHOW_BOUNDING_BOX);
@@ -74,21 +76,21 @@ public class SGFigurePopupMenu extends SGPopupMenu {
     this.addSeparator();
 
     // cut
-    this.addItem(SGFigure.MENUCMD_CUT);
+    this.addItem(MENUCMD_CUT);
 
     // copy
-    this.addItem(SGFigure.MENUCMD_COPY);
+    this.addItem(MENUCMD_COPY);
 
     // paste
-    this.addItem(SGFigure.MENUCMD_PASTE);
+    this.addItem(MENUCMD_PASTE);
 
     this.addSeparator();
 
     // delete
-    this.addItem(SGFigure.MENUCMD_DELETE);
+    this.addItem(MENUCMD_DELETE);
 
     // duplicate
-    this.addItem(SGFigure.MENUCMD_DUPLICATE);
+    this.addItem(MENUCMD_DUPLICATE);
 
     this.addSeparator();
 
@@ -98,22 +100,22 @@ public class SGFigurePopupMenu extends SGPopupMenu {
     this.addCheckBoxItem(SGFigure.MENUCMD_SCALE_VISIBLE);
     this.addCheckBoxItem(SGFigure.MENUCMD_GRID_VISIBLE);
     this.addCheckBoxItem(SGFigure.MENUCMD_DATA_ANCHORED);
-    JMenu visibleAxesMenu = this.addMenu(SGFigure.MENUCMD_AXES_VISIBLE);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.MENUCMD_VISIBLE_BOTTOM_AXIS);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.MENUCMD_VISIBLE_LEFT_AXIS);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.MENUCMD_VISIBLE_TOP_AXIS);
-    this.addCheckBoxItem(visibleAxesMenu, SGFigure.MENUCMD_VISIBLE_RIGHT_AXIS);
+    JMenu visibleAxesMenu = this.addMenu(MENUCMD_AXES_VISIBLE);
+    this.addCheckBoxItem(visibleAxesMenu, MENUCMD_VISIBLE_BOTTOM_AXIS);
+    this.addCheckBoxItem(visibleAxesMenu, MENUCMD_VISIBLE_LEFT_AXIS);
+    this.addCheckBoxItem(visibleAxesMenu, MENUCMD_VISIBLE_TOP_AXIS);
+    this.addCheckBoxItem(visibleAxesMenu, MENUCMD_VISIBLE_RIGHT_AXIS);
 
     this.addSeparator();
 
     // fit axes and align bars
-    JMenu fitAxesMenu = this.addMenu(SGFigure.MENUCMD_FIT_AXES_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.MENUCMD_FIT_ALL_AXES_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.MENUCMD_FIT_VERTICAL_AXIS_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.MENUCMD_FIT_COLOR_BAR_TO_DATA);
-    this.addItem(fitAxesMenu, SGFigure.MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES);
-    this.addItem(SGFigure.MENUCMD_ALIGN_BARS);
+    JMenu fitAxesMenu = this.addMenu(MENUCMD_FIT_AXES_TO_DATA);
+    this.addItem(fitAxesMenu, MENUCMD_FIT_ALL_AXES_TO_DATA);
+    this.addItem(fitAxesMenu, MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA);
+    this.addItem(fitAxesMenu, MENUCMD_FIT_VERTICAL_AXIS_TO_DATA);
+    this.addItem(fitAxesMenu, MENUCMD_FIT_COLOR_BAR_TO_DATA);
+    this.addItem(fitAxesMenu, MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES);
+    this.addItem(MENUCMD_ALIGN_BARS);
 
     this.addSeparator();
 
@@ -135,7 +137,7 @@ public class SGFigurePopupMenu extends SGPopupMenu {
     if (command.equals(SGFigure.MENUCMD_RUBBER_BANDING)) {
       SGFigure.mRubberBandFlag = !SGFigure.mRubberBandFlag;
       wnd.repaint();
-    } else if (command.equals(SGFigure.MENUBARCMD_SNAP_TO_GRID)) {
+    } else if (command.equals(SGRootObjectConstants.MENUBARCMD_SNAP_TO_GRID)) {
       SGFigure.setSnappingToGrid(!SGFigure.isSnappingToGrid());
       wnd.updateSnapToGridItems();
     } else if (command.equals(SGFigure.MENUCMD_SHOW_BOUNDING_BOX)) {
@@ -218,13 +220,13 @@ public class SGFigurePopupMenu extends SGPopupMenu {
 
       int location = -1;
       if (MENUCMD_VISIBLE_BOTTOM_AXIS.equals(command)) {
-        location = SGIFigureElementAxis.AXIS_HORIZONTAL_1;
+        location = SGFigureElementAxisConstants.AXIS_HORIZONTAL_1;
       } else if (MENUCMD_VISIBLE_LEFT_AXIS.equals(command)) {
-        location = SGIFigureElementAxis.AXIS_VERTICAL_1;
+        location = SGFigureElementAxisConstants.AXIS_VERTICAL_1;
       } else if (MENUCMD_VISIBLE_TOP_AXIS.equals(command)) {
-        location = SGIFigureElementAxis.AXIS_HORIZONTAL_2;
+        location = SGFigureElementAxisConstants.AXIS_HORIZONTAL_2;
       } else if (MENUCMD_VISIBLE_RIGHT_AXIS.equals(command)) {
-        location = SGIFigureElementAxis.AXIS_VERTICAL_2;
+        location = SGFigureElementAxisConstants.AXIS_VERTICAL_2;
       }
       if (location == -1) {
         return;
@@ -248,23 +250,23 @@ public class SGFigurePopupMenu extends SGPopupMenu {
       boolean forAnimationFrames = false;
       if (MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
           || MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
-        axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL);
-        axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL);
-        axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_NORMAL);
+        axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_HORIZONTAL);
+        axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_VERTICAL);
+        axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_NORMAL);
         if (MENUCMD_FIT_ALL_AXES_TO_DATA_FOR_ALL_ANIMATION_FRAMES.equals(command)) {
           forAnimationFrames = true;
         }
       } else if (MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)) {
-        axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL);
+        axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_HORIZONTAL);
       } else if (MENUCMD_FIT_VERTICAL_AXIS_TO_DATA.equals(command)) {
-        axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL);
+        axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_VERTICAL);
       } else if (MENUCMD_FIT_COLOR_BAR_TO_DATA.equals(command)) {
-        axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_NORMAL);
+        axisDirList.add(SGFigureElementAxisConstants.AXIS_DIRECTION_NORMAL);
       }
       wnd.doFitAxisRangeToVisibleData(axisDirList, forAnimationFrames);
     } else if (command.equals(MENUCMD_ALIGN_BARS)) {
       wnd.doAlignBars();
-    } else if (command.equals(SGIFigureElement.NOTIFY_UNKNOWN_DATA_ERROR)) {
+    } else if (command.equals(SGFigureElementConstants.NOTIFY_UNKNOWN_DATA_ERROR)) {
       for (SGFigure fig : this.mFigureList) {
         fig.hideData(new int[] {((Integer) source).intValue()});
       }

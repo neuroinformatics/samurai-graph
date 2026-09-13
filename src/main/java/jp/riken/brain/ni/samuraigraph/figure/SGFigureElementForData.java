@@ -1,5 +1,30 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,10 +39,10 @@ import jp.riken.brain.ni.samuraigraph.base.SGData.DataProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGDataAxisInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
-import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementForData;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
@@ -55,13 +80,13 @@ import org.w3c.dom.NodeList;
 
 /** The base class of figure element which has data object and related element group set. */
 public abstract class SGFigureElementForData extends SGFigureElement
-    implements SGIFigureElementForData, SGISXYDataConstants, SGIVXYDataConstants {
+    implements SGIFigureElementForData {
 
   /** The axis element. */
   protected SGIFigureElementAxis mAxisElement = null;
 
   /** Default scale reference. */
-  public static final String DEFAULT_SCALE_REFERENCE = SGIFigureElementAxis.LEFT_BOTTOM;
+  public static final String DEFAULT_SCALE_REFERENCE = SGFigureElementAxisConstants.LEFT_BOTTOM;
 
   /** A map of property dialogs for data. */
   private HashMap<String, SGPropertyDialog> mDataDialogMap =
@@ -329,22 +354,26 @@ public abstract class SGFigureElementForData extends SGFigureElement
       SGData data, String name, Map<String, Object> infoMap) {
 
     // get axes
-    final SGAxis bAxis = this.mAxisElement.getAxisInPlane(SGIFigureElementAxis.AXIS_HORIZONTAL_1);
-    final SGAxis tAxis = this.mAxisElement.getAxisInPlane(SGIFigureElementAxis.AXIS_HORIZONTAL_2);
-    final SGAxis lAxis = this.mAxisElement.getAxisInPlane(SGIFigureElementAxis.AXIS_VERTICAL_1);
-    final SGAxis rAxis = this.mAxisElement.getAxisInPlane(SGIFigureElementAxis.AXIS_VERTICAL_2);
+    final SGAxis bAxis =
+        this.mAxisElement.getAxisInPlane(SGFigureElementAxisConstants.AXIS_HORIZONTAL_1);
+    final SGAxis tAxis =
+        this.mAxisElement.getAxisInPlane(SGFigureElementAxisConstants.AXIS_HORIZONTAL_2);
+    final SGAxis lAxis =
+        this.mAxisElement.getAxisInPlane(SGFigureElementAxisConstants.AXIS_VERTICAL_1);
+    final SGAxis rAxis =
+        this.mAxisElement.getAxisInPlane(SGFigureElementAxisConstants.AXIS_VERTICAL_2);
     SGAxis axisX = null;
     SGAxis axisY = null;
-    if (DEFAULT_SCALE_REFERENCE.equals(SGIFigureElementAxis.LEFT_BOTTOM)) {
+    if (DEFAULT_SCALE_REFERENCE.equals(SGFigureElementAxisConstants.LEFT_BOTTOM)) {
       axisX = bAxis;
       axisY = lAxis;
-    } else if (DEFAULT_SCALE_REFERENCE.equals(SGIFigureElementAxis.LEFT_TOP)) {
+    } else if (DEFAULT_SCALE_REFERENCE.equals(SGFigureElementAxisConstants.LEFT_TOP)) {
       axisX = tAxis;
       axisY = lAxis;
-    } else if (DEFAULT_SCALE_REFERENCE.equals(SGIFigureElementAxis.RIGHT_BOTTOM)) {
+    } else if (DEFAULT_SCALE_REFERENCE.equals(SGFigureElementAxisConstants.RIGHT_BOTTOM)) {
       axisX = bAxis;
       axisY = rAxis;
-    } else if (DEFAULT_SCALE_REFERENCE.equals(SGIFigureElementAxis.RIGHT_TOP)) {
+    } else if (DEFAULT_SCALE_REFERENCE.equals(SGFigureElementAxisConstants.RIGHT_TOP)) {
       axisX = tAxis;
       axisY = rAxis;
     } else {
@@ -460,7 +489,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     groupSet.setYAxis(axisY);
 
     // add drawing element groups of lines, symbols and bars
-    if (groupSet.addDrawingElementGroup(SGIElementGroupConstants.RECTANGLE_GROUP) == false) {
+    if (groupSet.addDrawingElementGroup(SGElementGroupConstants.RECTANGLE_GROUP) == false) {
       return null;
     }
 
@@ -480,11 +509,11 @@ public abstract class SGFigureElementForData extends SGFigureElement
     // create error bar instance
     groupSet.createErrorBars(data);
 
-    if (groupSet.addDrawingElementGroup(SGIElementGroupConstants.POLYLINE_GROUP) == false) {
+    if (groupSet.addDrawingElementGroup(SGElementGroupConstants.POLYLINE_GROUP) == false) {
       return null;
     }
 
-    if (groupSet.addDrawingElementGroup(SGIElementGroupConstants.SYMBOL_GROUP) == false) {
+    if (groupSet.addDrawingElementGroup(SGElementGroupConstants.SYMBOL_GROUP) == false) {
       return null;
     }
 
@@ -658,7 +687,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     groupSet.setYAxis(axisY);
 
     // add drawing element groups of arrows
-    if (groupSet.addDrawingElementGroup(SGIElementGroupConstants.ARROW_GROUP) == false) {
+    if (groupSet.addDrawingElementGroup(SGElementGroupConstants.ARROW_GROUP) == false) {
       return null;
     }
 
@@ -694,7 +723,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     groupSet.setYAxis(axisY);
 
     // add drawing element groups of rectangles
-    if (groupSet.addDrawingElementGroup(SGIElementGroupConstants.RECTANGLE_GROUP) == false) {
+    if (groupSet.addDrawingElementGroup(SGElementGroupConstants.RECTANGLE_GROUP) == false) {
       return null;
     }
 
@@ -730,7 +759,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     }
 
     // add element groups to the multiple group set
-    if (!groupSet.addDrawingElementGroup(SGIElementGroupConstants.RECTANGLE_GROUP)) {
+    if (!groupSet.addDrawingElementGroup(SGElementGroupConstants.RECTANGLE_GROUP)) {
       return null;
     }
 
@@ -765,10 +794,10 @@ public abstract class SGFigureElementForData extends SGFigureElement
       groupSet.setErrorBarDirection(errorBarVertical.booleanValue());
     }
 
-    if (!groupSet.addDrawingElementGroup(SGIElementGroupConstants.POLYLINE_GROUP)) {
+    if (!groupSet.addDrawingElementGroup(SGElementGroupConstants.POLYLINE_GROUP)) {
       return null;
     }
-    if (!groupSet.addDrawingElementGroup(SGIElementGroupConstants.SYMBOL_GROUP)) {
+    if (!groupSet.addDrawingElementGroup(SGElementGroupConstants.SYMBOL_GROUP)) {
       return null;
     }
 
@@ -876,7 +905,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     groupSet.setZAxis(axisZ);
 
     // add drawing element groups
-    if (groupSet.addDrawingElementGroup(SGIElementGroupConstants.RECTANGLE_GROUP) == false) {
+    if (groupSet.addDrawingElementGroup(SGElementGroupConstants.RECTANGLE_GROUP) == false) {
       return null;
     }
 
@@ -909,7 +938,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
 
     // name of data
     String name = null;
-    str = el.getAttribute(KEY_DATA_NAME);
+    str = el.getAttribute(SGFigureElementConstants.KEY_DATA_NAME);
     if (str.length() == 0) {
       return false;
     }
@@ -1016,7 +1045,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
       final String name,
       final boolean readDataProperty) {
 
-    final int ic = SGIConstants.PROPERTY_FILE_INCORRECT;
+    final int ic = PROPERTY_FILE_INCORRECT;
 
     // create an instance
     SGIElementGroupSetForData gs = null;
@@ -1060,13 +1089,13 @@ public abstract class SGFigureElementForData extends SGFigureElement
   protected int setPropertyOfElementGroupSetSXY(
       final Element el, final SGIElementGroupSetSXY groupSet, final SGISXYTypeSingleData data) {
 
-    final int ic = SGIConstants.PROPERTY_FILE_INCORRECT;
+    final int ic = PROPERTY_FILE_INCORRECT;
 
     // create drawing element groups
     NodeList nList = null;
 
     // bar
-    nList = el.getElementsByTagName(SGIBarConstants.TAG_NAME_BAR);
+    nList = el.getElementsByTagName(SGBarConstants.TAG_NAME_BAR);
     if (nList.getLength() != 1) {
       return ic;
     }
@@ -1089,7 +1118,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     }
 
     // error bar
-    nList = el.getElementsByTagName(SGIErrorBarConstants.TAG_NAME_ERROR_BAR);
+    nList = el.getElementsByTagName(SGErrorBarConstants.TAG_NAME_ERROR_BAR);
     if (nList.getLength() == 1) {
       if (data.isErrorBarAvailable()) {
         SGElementGroupErrorBar eGroup = groupSet.getErrorBarGroup();
@@ -1106,7 +1135,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     }
 
     // line
-    nList = el.getElementsByTagName(SGILineConstants.TAG_NAME_LINE);
+    nList = el.getElementsByTagName(TAG_NAME_LINE);
     if (nList.getLength() != 1) {
       return ic;
     }
@@ -1120,7 +1149,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     groupSet.setLineStyle(lineStyle);
 
     // symbol
-    nList = el.getElementsByTagName(SGISymbolConstants.TAG_NAME_SYMBOL);
+    nList = el.getElementsByTagName(TAG_NAME_SYMBOL);
     if (nList.getLength() != 1) {
       return ic;
     }
@@ -1131,7 +1160,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     }
 
     // tick label
-    nList = el.getElementsByTagName(SGITickLabelConstants.TAG_NAME_TICK_LABELS);
+    nList = el.getElementsByTagName(SGTickLabelConstants.TAG_NAME_TICK_LABELS);
     if (nList.getLength() == 1) {
       if (data.isTickLabelAvailable()) {
         SGElementGroupTickLabel tGroup = groupSet.getTickLabelGroup();
@@ -1154,7 +1183,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
 
     // Enabled to hide all types of drawing elements at the same time.
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SUCCESSFUL_COMPLETION;
   }
 
   protected int setPropertyOfElementGroupSetForMultipleSXY(
@@ -1162,7 +1191,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
       final SGIElementGroupSetMultipleSXY groupSet,
       final SGISXYTypeMultipleData data) {
 
-    final int ic = SGIConstants.PROPERTY_FILE_INCORRECT;
+    final int ic = PROPERTY_FILE_INCORRECT;
 
     SGISXYTypeSingleData[] sxyArray = data.getSXYDataArray();
     try {
@@ -1177,7 +1206,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
       }
 
       // gets the line element
-      NodeList lineNodeList = el.getElementsByTagName(SGILineConstants.TAG_NAME_LINE);
+      NodeList lineNodeList = el.getElementsByTagName(TAG_NAME_LINE);
       if (lineNodeList.getLength() != 1) {
         return ic;
       }
@@ -1279,7 +1308,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
           }
         }
         if (shiftX != null && shiftY != null) {
-          NodeList barNodeList = el.getElementsByTagName(SGIBarConstants.TAG_NAME_BAR);
+          NodeList barNodeList = el.getElementsByTagName(SGBarConstants.TAG_NAME_BAR);
           if (barNodeList.getLength() > 0) {
             Element barNode = (Element) barNodeList.item(0);
             str = barNode.getAttribute(KEY_SHIFT_X);
@@ -1373,13 +1402,13 @@ public abstract class SGFigureElementForData extends SGFigureElement
       }
     }
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SUCCESSFUL_COMPLETION;
   }
 
   protected int setPropertyOfElementGroupSetVXY(
       final Element el, final SGIElementGroupSetVXY groupSet, final SGIVXYTypeData data) {
 
-    final int ic = SGIConstants.PROPERTY_FILE_INCORRECT;
+    final int ic = PROPERTY_FILE_INCORRECT;
     String str = null;
     Number num = null;
     Boolean b = null;
@@ -1392,7 +1421,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     NodeList nList = null;
 
     // arrow
-    nList = el.getElementsByTagName(SGIArrowConstants.TAG_NAME_ARROW);
+    nList = el.getElementsByTagName(TAG_NAME_ARROW);
     if (nList.getLength() != 1) {
       return ic;
     }
@@ -1422,22 +1451,22 @@ public abstract class SGFigureElementForData extends SGFigureElement
       groupSet.setDirectionInvariant(b.booleanValue());
     }
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SUCCESSFUL_COMPLETION;
   }
 
   protected int setPropertyOfElementGroupSetSXYZ(
       final Element el, final SGIElementGroupSetSXYZ groupSet, final SGISXYZTypeData data) {
 
-    final int ic = SGIConstants.PROPERTY_FILE_INCORRECT;
+    final int ic = PROPERTY_FILE_INCORRECT;
 
     // create drawing element groups
     SGElementGroup group = null;
     NodeList nList = null;
 
     // color map
-    nList = el.getElementsByTagName(SGIColorMapConstants.TAG_NAME_COLOR_MAP);
+    nList = el.getElementsByTagName(SGColorMapConstants.TAG_NAME_COLOR_MAP);
     if (nList.getLength() == 0) {
-      nList = el.getElementsByTagName(SGIColorMapConstants.TAG_NAME_GRID_COLOR_MAP);
+      nList = el.getElementsByTagName(SGColorMapConstants.TAG_NAME_GRID_COLOR_MAP);
     }
     if (nList.getLength() != 1) {
       return ic;
@@ -1448,7 +1477,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
       return ic;
     }
 
-    return SGIConstants.SUCCESSFUL_COMPLETION;
+    return SUCCESSFUL_COMPLETION;
   }
 
   /**
@@ -1536,7 +1565,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
           SGUtility.showErrorMessageDialog(
               this.mDialogOwner,
               gs.getName() + ": " + "Coordinate variables with fixed values do not exist.",
-              SGIConstants.ERROR);
+              ERROR);
         }
       }
     }
@@ -2011,10 +2040,10 @@ public abstract class SGFigureElementForData extends SGFigureElement
         SGData data = groupSet.getData();
         SGProperties gdp = dElement.getDataProperties(data);
         final boolean bUpdate;
-        if (SGIFigureElement.NOTIFY_CHANGE_ON_COMMIT.equals(msg)) {
+        if (NOTIFY_CHANGE_ON_COMMIT.equals(msg)) {
           bUpdate = dElement.isDataChanged(data);
           groupSet.setChanged(bUpdate);
-        } else if (SGIFigureElement.NOTIFY_CHANGE_ON_CANCEL.equals(msg)) {
+        } else if (NOTIFY_CHANGE_ON_CANCEL.equals(msg)) {
           bUpdate = true;
         } else {
           bUpdate = dElement.checkDataChanged(data);
@@ -2029,7 +2058,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
         }
       }
 
-    } else if (SGIFigureElement.NOTIFY_DATA_SELECTION.equals(msg)) {
+    } else if (NOTIFY_DATA_SELECTION.equals(msg)) {
 
       // update data selection
       List<SGIChildObject> cList = this.getVisibleChildList();

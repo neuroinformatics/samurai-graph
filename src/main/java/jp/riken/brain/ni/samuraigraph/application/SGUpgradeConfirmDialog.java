@@ -1,11 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import jp.riken.brain.ni.samuraigraph.base.SGBufferedFileWriter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** A dialog to confirm upgrading of the application. */
 public class SGUpgradeConfirmDialog extends SGScrollPaneDialog {
@@ -73,7 +74,7 @@ public class SGUpgradeConfirmDialog extends SGScrollPaneDialog {
 
     SGBufferedFileWriter writer = null;
     try {
-      writer = new SGBufferedFileWriter(f.getPath(), SGIConstants.CHAR_SET_NAME_UTF8);
+      writer = new SGBufferedFileWriter(f.getPath(), CHAR_SET_NAME_UTF8);
       BufferedWriter bw = writer.getBufferedWriter();
       bw.write(t);
       bw.flush();

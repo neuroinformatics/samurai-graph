@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDefaultColumnTypeUtility.*;
 
 import java.util.ArrayList;
@@ -15,8 +17,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.NamedNodeMap;
 
 /** Static helper for the MDArray default column types. */
-public final class SGDefaultColumnTypeMDArrayUtility
-    implements SGIDataColumnTypeConstants, SGIDataPropertyKeyConstants {
+public final class SGDefaultColumnTypeMDArrayUtility {
 
   private SGDefaultColumnTypeMDArrayUtility() {}
 
@@ -52,7 +53,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
     for (int ii = 0; ii < columns.length; ii++) {
       SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) columns[ii];
       String valueType = mdInfo.getValueType();
-      if (!SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER.equals(valueType)) {
+      if (!VALUE_TYPE_NUMBER.equals(valueType)) {
         continue;
       }
       int[] dims = mdInfo.getDimensions();
@@ -80,7 +81,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
   public static Map<String, int[]> getMDArrayDataOriginMap(NamedNodeMap nodeMap) {
     Map<String, int[]> map = new HashMap<String, int[]>();
     if (nodeMap != null) {
-      String originMapStr = getString(nodeMap, SGIDataPropertyKeyConstants.KEY_ORIGIN_MAP);
+      String originMapStr = getString(nodeMap, KEY_ORIGIN_MAP);
       if (originMapStr != null) {
         char[] cArray = originMapStr.toCharArray();
         boolean skip = false;
@@ -315,7 +316,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
       yCol = (SGMDArrayDataColumnInfo) columns[index];
     }
 
-    String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+    String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
     if (dataType == null) {
       return false;
     }
@@ -339,8 +340,8 @@ public final class SGDefaultColumnTypeMDArrayUtility
               columnInfoList,
               columnTypes,
               dimensionMap,
-              SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION,
-              SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION,
+              SGMDArrayConstants.KEY_SXYZ_X_DIMENSION,
+              SGMDArrayConstants.KEY_SXYZ_Y_DIMENSION,
               zNames[0],
               Z_VALUE);
       if (index == -1) {
@@ -353,7 +354,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
       int[] zDim = zCol.getDimensions();
       if (xCol != null) {
         int[] xDim = xCol.getDimensions();
-        Integer zxIndex = dimensionMap.get(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION);
+        Integer zxIndex = dimensionMap.get(SGMDArrayConstants.KEY_SXYZ_X_DIMENSION);
         if (zxIndex != null) {
           if (zDim[zxIndex] != xDim[xIndex]) {
             return false;
@@ -362,7 +363,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
       }
       if (yCol != null) {
         int[] yDim = yCol.getDimensions();
-        Integer zyIndex = dimensionMap.get(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
+        Integer zyIndex = dimensionMap.get(SGMDArrayConstants.KEY_SXYZ_Y_DIMENSION);
         if (zyIndex != null) {
           if (zDim[zyIndex] != yDim[yIndex]) {
             return false;
@@ -463,8 +464,8 @@ public final class SGDefaultColumnTypeMDArrayUtility
 
     // sets xDim and yDim
     SGMDArrayDataColumnInfo varInfo = (SGMDArrayDataColumnInfo) columns[zVarIndex];
-    varInfo.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION, xDim);
-    varInfo.setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION, yDim);
+    varInfo.setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_X_DIMENSION, xDim);
+    varInfo.setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_Y_DIMENSION, yDim);
 
     return true;
   }
@@ -475,11 +476,11 @@ public final class SGDefaultColumnTypeMDArrayUtility
       final int size,
       final SGDataColumnInfo[] columns) {
     if (getForSXYZMDArrayDataNormal(infoMap, vars, size, columns)) {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, true);
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, true);
       return true;
     }
     if (getForSXYZMDArrayDataIndex(infoMap, vars, size, columns)) {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, false);
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, false);
       return true;
     }
     return false;
@@ -552,7 +553,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
       yCol = (SGMDArrayDataColumnInfo) columns[index];
     }
 
-    String dataType = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_TYPE);
+    String dataType = (String) infoMap.get(SGDataInformationKeyConstants.KEY_DATA_TYPE);
     if (dataType == null) {
       return false;
     }
@@ -584,8 +585,8 @@ public final class SGDefaultColumnTypeMDArrayUtility
               columnInfoList,
               columnTypes,
               dimensionMap,
-              SGIMDArrayConstants.KEY_VXY_X_DIMENSION,
-              SGIMDArrayConstants.KEY_VXY_Y_DIMENSION,
+              SGMDArrayConstants.KEY_VXY_X_DIMENSION,
+              SGMDArrayConstants.KEY_VXY_Y_DIMENSION,
               fNames[0],
               first);
       if (index == -1) {
@@ -598,7 +599,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
       int[] fDim = fCol.getDimensions();
       if (xCol != null) {
         int[] xDim = xCol.getDimensions();
-        Integer fxIndex = dimensionMap.get(SGIMDArrayConstants.KEY_VXY_X_DIMENSION);
+        Integer fxIndex = dimensionMap.get(SGMDArrayConstants.KEY_VXY_X_DIMENSION);
         if (fxIndex != null) {
           if (fDim[fxIndex] != xDim[xIndex]) {
             return false;
@@ -607,7 +608,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
       }
       if (yCol != null) {
         int[] yDim = yCol.getDimensions();
-        Integer fyIndex = dimensionMap.get(SGIMDArrayConstants.KEY_VXY_Y_DIMENSION);
+        Integer fyIndex = dimensionMap.get(SGMDArrayConstants.KEY_VXY_Y_DIMENSION);
         if (fyIndex != null) {
           if (fDim[fyIndex] != yDim[yIndex]) {
             return false;
@@ -643,8 +644,8 @@ public final class SGDefaultColumnTypeMDArrayUtility
               columnInfoList,
               columnTypes,
               dimensionMap,
-              SGIMDArrayConstants.KEY_VXY_X_DIMENSION,
-              SGIMDArrayConstants.KEY_VXY_Y_DIMENSION,
+              SGMDArrayConstants.KEY_VXY_X_DIMENSION,
+              SGMDArrayConstants.KEY_VXY_Y_DIMENSION,
               sNames[0],
               second);
       if (index == -1) {
@@ -657,7 +658,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
       int[] sDim = sCol.getDimensions();
       if (xCol != null) {
         int[] xDim = xCol.getDimensions();
-        Integer sxIndex = dimensionMap.get(SGIMDArrayConstants.KEY_VXY_X_DIMENSION);
+        Integer sxIndex = dimensionMap.get(SGMDArrayConstants.KEY_VXY_X_DIMENSION);
         if (sxIndex != null) {
           if (sDim[sxIndex] != xDim[xIndex]) {
             return false;
@@ -666,7 +667,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
       }
       if (yCol != null) {
         int[] yDim = yCol.getDimensions();
-        Integer syIndex = dimensionMap.get(SGIMDArrayConstants.KEY_VXY_Y_DIMENSION);
+        Integer syIndex = dimensionMap.get(SGMDArrayConstants.KEY_VXY_Y_DIMENSION);
         if (syIndex != null) {
           if (sDim[syIndex] != yDim[yIndex]) {
             return false;
@@ -695,7 +696,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
 
   private static void setDimension(SGDataColumnInfo[] columns, MDArrayDimension dim) {
     SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) columns[dim.variableIndex];
-    mdInfo.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, dim.dimensionIndex);
+    mdInfo.setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, dim.dimensionIndex);
   }
 
   static boolean getForVXYMDArrayDataIndex(
@@ -843,11 +844,11 @@ public final class SGDefaultColumnTypeMDArrayUtility
 
     // sets xDim and yDim
     SGMDArrayDataColumnInfo fVarInfo = (SGMDArrayDataColumnInfo) columns[fVarIndex];
-    fVarInfo.setDimensionIndex(SGIMDArrayConstants.KEY_VXY_X_DIMENSION, fXDim);
-    fVarInfo.setDimensionIndex(SGIMDArrayConstants.KEY_VXY_Y_DIMENSION, fYDim);
+    fVarInfo.setDimensionIndex(SGMDArrayConstants.KEY_VXY_X_DIMENSION, fXDim);
+    fVarInfo.setDimensionIndex(SGMDArrayConstants.KEY_VXY_Y_DIMENSION, fYDim);
     SGMDArrayDataColumnInfo sVarInfo = (SGMDArrayDataColumnInfo) columns[sVarIndex];
-    sVarInfo.setDimensionIndex(SGIMDArrayConstants.KEY_VXY_X_DIMENSION, sXDim);
-    sVarInfo.setDimensionIndex(SGIMDArrayConstants.KEY_VXY_Y_DIMENSION, sYDim);
+    sVarInfo.setDimensionIndex(SGMDArrayConstants.KEY_VXY_X_DIMENSION, sXDim);
+    sVarInfo.setDimensionIndex(SGMDArrayConstants.KEY_VXY_Y_DIMENSION, sYDim);
 
     return true;
   }
@@ -858,11 +859,11 @@ public final class SGDefaultColumnTypeMDArrayUtility
       final int size,
       final SGDataColumnInfo[] columns) {
     if (getForVXYMDArrayDataNormal(infoMap, vars, size, columns)) {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, true);
+      infoMap.put(SGDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, true);
       return true;
     }
     if (getForVXYMDArrayDataIndex(infoMap, vars, size, columns)) {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, false);
+      infoMap.put(SGDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, false);
       return true;
     }
     return false;
@@ -950,14 +951,14 @@ public final class SGDefaultColumnTypeMDArrayUtility
 
     // pick up
     Map<?, ?> dimensionIndexMap =
-        (infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
+        (infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP)
                 instanceof Map<?, ?> m)
             ? m
             : null;
     SGMDArrayPickUpDimensionInfo pickUpInfo = null;
     if (dimensionIndexMap != null) {
       SGIntegerSeriesSet pickUpDimensionIndices =
-          (SGIntegerSeriesSet) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
+          (SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
       Map<String, Integer> typedMap = new java.util.HashMap<>();
       for (Map.Entry<?, ?> entry : dimensionIndexMap.entrySet()) {
         typedMap.put((String) entry.getKey(), (Integer) entry.getValue());
@@ -1200,7 +1201,7 @@ public final class SGDefaultColumnTypeMDArrayUtility
       indices[ii] = 0;
     }
 
-    Boolean multiple = (Boolean) infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE);
+    Boolean multiple = (Boolean) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE);
     if (multiple == null) {
       return false;
     }

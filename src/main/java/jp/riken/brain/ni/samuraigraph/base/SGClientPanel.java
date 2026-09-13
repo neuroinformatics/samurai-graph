@@ -1,5 +1,35 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.Adjustable;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -50,11 +80,7 @@ import javax.swing.event.MouseInputListener;
 
 /** A panel put in the window. */
 public class SGClientPanel extends JLayeredPane
-    implements SGIRootObjectConstants,
-        SGIDrawingElementConstants,
-        SGIClientPanel,
-        MouseWheelListener,
-        KeyListener {
+    implements SGIClientPanel, MouseWheelListener, KeyListener {
 
   private static final long serialVersionUID = 4663255737594310680L;
 
@@ -421,7 +447,7 @@ public class SGClientPanel extends JLayeredPane
     if (dHeightCM > PAPER_HEIGHT_MAX_VALUE) return false;
 
     // length in units of pixel
-    final float ratio = SGIConstants.CM_POINT_RATIO;
+    final float ratio = CM_POINT_RATIO;
     final float width = dWidthCM / ratio;
     final float height = dHeightCM / ratio;
 
@@ -444,7 +470,7 @@ public class SGClientPanel extends JLayeredPane
     if (dHeightCM > PAPER_HEIGHT_MAX_VALUE) return false;
 
     // length in units of pixel
-    final float ratio = SGIConstants.CM_POINT_RATIO;
+    final float ratio = CM_POINT_RATIO;
     final float width = dWidthCM / ratio;
     final float height = dHeightCM / ratio;
 
@@ -461,7 +487,7 @@ public class SGClientPanel extends JLayeredPane
    * @param heightPt a value for the paper height in units of point
    */
   public boolean setPaperSizeRoundingOff(final float widthPt, final float heightPt) {
-    final float ratio = SGIConstants.CM_POINT_RATIO;
+    final float ratio = CM_POINT_RATIO;
     final float widthCM = widthPt * ratio;
     final float heightCM = heightPt * ratio;
     if (this.setPaperSizeRoundingOffInCMUnit(widthCM, heightCM) == false) {
@@ -477,7 +503,7 @@ public class SGClientPanel extends JLayeredPane
    * @param heightPt a value for the paper height in units of point
    */
   public boolean setPaperSizeRoundingOut(final float widthPt, final float heightPt) {
-    final float ratio = SGIConstants.CM_POINT_RATIO;
+    final float ratio = CM_POINT_RATIO;
     final float widthCM = widthPt * ratio;
     final float heightCM = heightPt * ratio;
     if (this.setPaperSizeRoundingOutInCMUnit(widthCM, heightCM) == false) {
@@ -1650,19 +1676,19 @@ public class SGClientPanel extends JLayeredPane
     private static final long serialVersionUID = 3222608753764251169L;
 
     /** */
-    private boolean mGridVisibleFlag = SGIRootObjectConstants.DEFAULT_GRID_VISIBLE;
+    private boolean mGridVisibleFlag = SGRootObjectConstants.DEFAULT_GRID_VISIBLE;
 
     /** */
-    private float mGridInterval = SGIRootObjectConstants.DEFAULT_GRID_INTERVAL;
+    private float mGridInterval = DEFAULT_GRID_INTERVAL;
 
     /** */
-    private float mGridLineWidth = SGIRootObjectConstants.DEFAULT_GRID_LINE_WIDTH;
+    private float mGridLineWidth = SGRootObjectConstants.DEFAULT_GRID_LINE_WIDTH;
 
     /** */
-    private Color mGridLineColor = SGIRootObjectConstants.DEFAULT_GRID_LINE_COLOR;
+    private Color mGridLineColor = DEFAULT_GRID_LINE_COLOR;
 
     /** */
-    private Color mPaperColor = SGIRootObjectConstants.DEFAULT_PAPER_COLOR;
+    private Color mPaperColor = DEFAULT_PAPER_COLOR;
 
     /** */
     protected PaperGridPanel(SGDrawingWindow wnd) {
@@ -2394,11 +2420,11 @@ public class SGClientPanel extends JLayeredPane
         final float startX = this.getPaperStartX();
         final float startY = this.getPaperStartY();
 
-        final float ratio = SGIConstants.CM_POINT_RATIO;
-        final float minWidth = (float) SGIRootObjectConstants.PAPER_WIDTH_MIN_VALUE / ratio;
-        final float minHeight = (float) SGIRootObjectConstants.PAPER_HEIGHT_MIN_VALUE / ratio;
-        final float maxWidth = (float) SGIRootObjectConstants.PAPER_WIDTH_MAX_VALUE / ratio;
-        final float maxHeight = (float) SGIRootObjectConstants.PAPER_HEIGHT_MAX_VALUE / ratio;
+        final float ratio = CM_POINT_RATIO;
+        final float minWidth = (float) PAPER_WIDTH_MIN_VALUE / ratio;
+        final float minHeight = (float) PAPER_HEIGHT_MIN_VALUE / ratio;
+        final float maxWidth = (float) PAPER_WIDTH_MAX_VALUE / ratio;
+        final float maxHeight = (float) PAPER_HEIGHT_MAX_VALUE / ratio;
 
         if (this.mDrawHorizontalLineFlag) {
           float w = (x - startX) / this.mMagnification;

@@ -39,21 +39,21 @@ class SGDefaultColumnTypeUtilityTest {
 
   private static Map<String, Object> createInfoMap(final boolean multiple) {
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.valueOf(multiple));
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.valueOf(multiple));
     return infoMap;
   }
 
   @Test
   void testGetDefaultColumnTypesForSXYSDArray() {
     List<SGDataColumnInfo> columns =
-        createColumns(new String[] {"x", "y"}, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+        createColumns(new String[] {"x", "y"}, SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     Map<String, Object> infoMap = createInfoMap(false);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXY_DATA, columns, infoMap);
     assertTrue(result.isSucceeded());
     assertArrayEquals(
-        new String[] {SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE},
+        new String[] {SGDataColumnTypeConstants.X_VALUE, SGDataColumnTypeConstants.Y_VALUE},
         result.getDefaultColumnTypes());
   }
 
@@ -61,39 +61,38 @@ class SGDefaultColumnTypeUtilityTest {
   void testGetDefaultColumnTypesForSXYSDArrayWithErrorBar() {
     List<SGDataColumnInfo> columns =
         createColumns(
-            new String[] {"x", "y", "lower", "upper"},
-            SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            new String[] {"x", "y", "lower", "upper"}, SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     Map<String, Object> infoMap = createInfoMap(false);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXY_DATA, columns, infoMap);
     assertTrue(result.isSucceeded());
     String[] types = result.getDefaultColumnTypes();
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[0]);
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[1]);
-    assertTrue(types[2].startsWith(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE));
-    assertTrue(types[3].startsWith(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE));
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, types[0]);
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, types[1]);
+    assertTrue(types[2].startsWith(SGDataColumnTypeConstants.LOWER_ERROR_VALUE));
+    assertTrue(types[3].startsWith(SGDataColumnTypeConstants.UPPER_ERROR_VALUE));
   }
 
   @Test
   void testGetDefaultColumnTypesForMultipleSXYSDArray() {
     List<SGDataColumnInfo> columns =
-        createColumns(new String[] {"t", "y1", "y2"}, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+        createColumns(new String[] {"t", "y1", "y2"}, SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     Map<String, Object> infoMap = createInfoMap(true);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXY_MULTIPLE_DATA, columns, infoMap);
     assertTrue(result.isSucceeded());
     String[] types = result.getDefaultColumnTypes();
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[0]);
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[1]);
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[2]);
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, types[0]);
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, types[1]);
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, types[2]);
   }
 
   @Test
   void testGetDefaultColumnTypesFailsForInsufficientColumns() {
     List<SGDataColumnInfo> columns =
-        createColumns(new String[] {"a"}, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+        createColumns(new String[] {"a"}, SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     Map<String, Object> infoMap = createInfoMap(false);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
@@ -116,35 +115,35 @@ class SGDefaultColumnTypeUtilityTest {
       columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
     }
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXY_NETCDF_DATA, columns, infoMap);
     assertTrue(result.isSucceeded());
     String[] types = result.getDefaultColumnTypes();
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "height")]);
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "height")]);
   }
 
   @Test
   void testGetDefaultColumnTypesForVXYSDArray() {
     List<SGDataColumnInfo> columns =
         createColumns(
-            new String[] {"x", "y", "u", "v"}, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            new String[] {"x", "y", "u", "v"}, SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.VXY_DATA, columns, infoMap);
     assertTrue(result.isSucceeded());
     assertArrayEquals(
         new String[] {
-          SGIDataColumnTypeConstants.X_COORDINATE,
-          SGIDataColumnTypeConstants.Y_COORDINATE,
-          SGIDataColumnTypeConstants.X_COMPONENT,
-          SGIDataColumnTypeConstants.Y_COMPONENT
+          SGDataColumnTypeConstants.X_COORDINATE,
+          SGDataColumnTypeConstants.Y_COORDINATE,
+          SGDataColumnTypeConstants.X_COMPONENT,
+          SGDataColumnTypeConstants.Y_COMPONENT
         },
         result.getDefaultColumnTypes());
   }
@@ -152,16 +151,16 @@ class SGDefaultColumnTypeUtilityTest {
   @Test
   void testGetDefaultColumnTypesForSXYZSDArray() {
     List<SGDataColumnInfo> columns =
-        createColumns(new String[] {"x", "y", "z"}, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+        createColumns(new String[] {"x", "y", "z"}, SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXYZ_DATA, columns, createInfoMap(false));
     assertTrue(result.isSucceeded());
     assertArrayEquals(
         new String[] {
-          SGIDataColumnTypeConstants.X_VALUE,
-          SGIDataColumnTypeConstants.Y_VALUE,
-          SGIDataColumnTypeConstants.Z_VALUE
+          SGDataColumnTypeConstants.X_VALUE,
+          SGDataColumnTypeConstants.Y_VALUE,
+          SGDataColumnTypeConstants.Z_VALUE
         },
         result.getDefaultColumnTypes());
   }
@@ -174,17 +173,16 @@ class SGDefaultColumnTypeUtilityTest {
       columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
     }
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXYZ_NETCDF_DATA, columns, infoMap);
     assertTrue(result.isSucceeded());
     String[] types = result.getDefaultColumnTypes();
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "y")]);
-    assertEquals(SGIDataColumnTypeConstants.Z_VALUE, types[findVariableIndex(file, "height")]);
-    assertEquals(
-        SGIDataColumnTypeConstants.ANIMATION_FRAME, types[findVariableIndex(file, "time")]);
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "y")]);
+    assertEquals(SGDataColumnTypeConstants.Z_VALUE, types[findVariableIndex(file, "height")]);
+    assertEquals(SGDataColumnTypeConstants.ANIMATION_FRAME, types[findVariableIndex(file, "time")]);
   }
 
   @Test
@@ -200,12 +198,12 @@ class SGDefaultColumnTypeUtilityTest {
       columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
     }
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, matFile);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, matFile);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXYZ_MATLAB_DATA, columns, infoMap);
     assertTrue(result.isSucceeded());
-    assertEquals(SGIDataColumnTypeConstants.Z_VALUE, result.getDefaultColumnTypes()[0]);
+    assertEquals(SGDataColumnTypeConstants.Z_VALUE, result.getDefaultColumnTypes()[0]);
   }
 
   @Test
@@ -222,14 +220,14 @@ class SGDefaultColumnTypeUtilityTest {
       columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
     }
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, matFile);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, matFile);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.VXY_MATLAB_DATA, columns, infoMap);
     assertTrue(result.isSucceeded());
-    assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, result.getDefaultColumnTypes()[0]);
-    assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, result.getDefaultColumnTypes()[1]);
+    assertEquals(SGDataColumnTypeConstants.X_COMPONENT, result.getDefaultColumnTypes()[0]);
+    assertEquals(SGDataColumnTypeConstants.Y_COMPONENT, result.getDefaultColumnTypes()[1]);
   }
 
   @Test
@@ -239,15 +237,15 @@ class SGDefaultColumnTypeUtilityTest {
     columns.add(SGDataFileUtility.createDataColumnInfo(file.findVariable("height"), ""));
     columns.add(SGDataFileUtility.createDataColumnInfo(file.findVariable("x"), ""));
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXY_NETCDF_DATA, columns, infoMap);
     assertTrue(result.isSucceeded());
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, result.getDefaultColumnTypes()[0]);
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, result.getDefaultColumnTypes()[1]);
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, result.getDefaultColumnTypes()[0]);
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, result.getDefaultColumnTypes()[1]);
   }
 
   @Test
@@ -256,9 +254,9 @@ class SGDefaultColumnTypeUtilityTest {
     List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
     columns.add(SGDataFileUtility.createDataColumnInfo(file.findVariable("x"), ""));
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXY_NETCDF_DATA, columns, infoMap);
@@ -283,15 +281,15 @@ class SGDefaultColumnTypeUtilityTest {
       columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
     }
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXY_NETCDF_DATA, columns, infoMap);
     assertTrue(result.isSucceeded(), result.toString());
     String[] types = result.getDefaultColumnTypes();
-    assertEquals(SGIDataColumnTypeConstants.INDEX, types[findVariableIndex(file, "Index")]);
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "height")]);
+    assertEquals(SGDataColumnTypeConstants.INDEX, types[findVariableIndex(file, "Index")]);
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "height")]);
   }
 
   @Test
@@ -314,15 +312,15 @@ class SGDefaultColumnTypeUtilityTest {
         columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
       }
       Map<String, Object> infoMap = new HashMap<String, Object>();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
       DefaultColumnTypeResult result =
           SGDefaultColumnTypeUtility.getDefaultColumnTypes(
               SGDataTypeConstants.SXY_MULTIPLE_HDF5_DATA, columns, infoMap);
       assertTrue(result.isSucceeded(), result.toString());
       String[] types = result.getDefaultColumnTypes();
       for (String type : types) {
-        assertEquals(SGIDataColumnTypeConstants.Y_VALUE, type);
+        assertEquals(SGDataColumnTypeConstants.Y_VALUE, type);
       }
     }
   }
@@ -371,17 +369,17 @@ class SGDefaultColumnTypeUtilityTest {
       columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
     }
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.VXY_NETCDF_DATA, columns, infoMap);
     assertTrue(result.isSucceeded(), result.toString());
     String[] types = result.getDefaultColumnTypes();
-    assertEquals(SGIDataColumnTypeConstants.X_COORDINATE, types[findVariableIndex(file, "x")]);
-    assertEquals(SGIDataColumnTypeConstants.Y_COORDINATE, types[findVariableIndex(file, "y")]);
-    assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, types[findVariableIndex(file, "v1")]);
-    assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, types[findVariableIndex(file, "v2")]);
+    assertEquals(SGDataColumnTypeConstants.X_COORDINATE, types[findVariableIndex(file, "x")]);
+    assertEquals(SGDataColumnTypeConstants.Y_COORDINATE, types[findVariableIndex(file, "y")]);
+    assertEquals(SGDataColumnTypeConstants.X_COMPONENT, types[findVariableIndex(file, "v1")]);
+    assertEquals(SGDataColumnTypeConstants.Y_COMPONENT, types[findVariableIndex(file, "v2")]);
   }
 
   @Test
@@ -393,18 +391,18 @@ class SGDefaultColumnTypeUtilityTest {
       columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
     }
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.VXY_NETCDF_DATA, columns, infoMap);
     assertTrue(result.isSucceeded(), result.toString());
     String[] types = result.getDefaultColumnTypes();
-    assertEquals(SGIDataColumnTypeConstants.INDEX, types[findVariableIndex(file, "Index")]);
-    assertEquals(SGIDataColumnTypeConstants.X_COORDINATE, types[findVariableIndex(file, "a")]);
-    assertEquals(SGIDataColumnTypeConstants.Y_COORDINATE, types[findVariableIndex(file, "b")]);
-    assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, types[findVariableIndex(file, "c")]);
-    assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, types[findVariableIndex(file, "d")]);
+    assertEquals(SGDataColumnTypeConstants.INDEX, types[findVariableIndex(file, "Index")]);
+    assertEquals(SGDataColumnTypeConstants.X_COORDINATE, types[findVariableIndex(file, "a")]);
+    assertEquals(SGDataColumnTypeConstants.Y_COORDINATE, types[findVariableIndex(file, "b")]);
+    assertEquals(SGDataColumnTypeConstants.X_COMPONENT, types[findVariableIndex(file, "c")]);
+    assertEquals(SGDataColumnTypeConstants.Y_COMPONENT, types[findVariableIndex(file, "d")]);
   }
 
   @Test
@@ -416,16 +414,16 @@ class SGDefaultColumnTypeUtilityTest {
       columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
     }
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXYZ_NETCDF_DATA, columns, infoMap);
     assertTrue(result.isSucceeded(), result.toString());
     String[] types = result.getDefaultColumnTypes();
-    assertEquals(SGIDataColumnTypeConstants.INDEX, types[findVariableIndex(file, "Index")]);
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "a")]);
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "b")]);
-    assertEquals(SGIDataColumnTypeConstants.Z_VALUE, types[findVariableIndex(file, "c")]);
+    assertEquals(SGDataColumnTypeConstants.INDEX, types[findVariableIndex(file, "Index")]);
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "a")]);
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "b")]);
+    assertEquals(SGDataColumnTypeConstants.Z_VALUE, types[findVariableIndex(file, "c")]);
   }
 
   @Test
@@ -448,14 +446,14 @@ class SGDefaultColumnTypeUtilityTest {
         columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
       }
       Map<String, Object> infoMap = new HashMap<String, Object>();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+      infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
       DefaultColumnTypeResult result =
           SGDefaultColumnTypeUtility.getDefaultColumnTypes(
               SGDataTypeConstants.VXY_HDF5_DATA, columns, infoMap);
       assertTrue(result.isSucceeded(), result.toString());
-      assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, result.getDefaultColumnTypes()[0]);
-      assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, result.getDefaultColumnTypes()[1]);
+      assertEquals(SGDataColumnTypeConstants.X_COMPONENT, result.getDefaultColumnTypes()[0]);
+      assertEquals(SGDataColumnTypeConstants.Y_COMPONENT, result.getDefaultColumnTypes()[1]);
     }
   }
 
@@ -478,12 +476,12 @@ class SGDefaultColumnTypeUtilityTest {
         columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
       }
       Map<String, Object> infoMap = new HashMap<String, Object>();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
       DefaultColumnTypeResult result =
           SGDefaultColumnTypeUtility.getDefaultColumnTypes(
               SGDataTypeConstants.SXYZ_HDF5_DATA, columns, infoMap);
       assertTrue(result.isSucceeded(), result.toString());
-      assertEquals(SGIDataColumnTypeConstants.Z_VALUE, result.getDefaultColumnTypes()[0]);
+      assertEquals(SGDataColumnTypeConstants.Z_VALUE, result.getDefaultColumnTypes()[0]);
     }
   }
 
@@ -491,19 +489,19 @@ class SGDefaultColumnTypeUtilityTest {
   void testGetDefaultColumnTypesForVXYSDArrayPolar() {
     List<SGDataColumnInfo> columns =
         createColumns(
-            new String[] {"x", "y", "r", "a"}, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+            new String[] {"x", "y", "r", "a"}, SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.VXY_DATA, columns, infoMap);
     assertTrue(result.isSucceeded());
     assertArrayEquals(
         new String[] {
-          SGIDataColumnTypeConstants.X_COORDINATE,
-          SGIDataColumnTypeConstants.Y_COORDINATE,
-          SGIDataColumnTypeConstants.MAGNITUDE,
-          SGIDataColumnTypeConstants.ANGLE
+          SGDataColumnTypeConstants.X_COORDINATE,
+          SGDataColumnTypeConstants.Y_COORDINATE,
+          SGDataColumnTypeConstants.MAGNITUDE,
+          SGDataColumnTypeConstants.ANGLE
         },
         result.getDefaultColumnTypes());
   }
@@ -512,17 +510,17 @@ class SGDefaultColumnTypeUtilityTest {
   void testGetDefaultColumnTypesForSXYSDArrayWithSamplingRate() {
     List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
     columns.add(
-        new SGSDArrayDataColumnInfo("t", SGIDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE));
-    columns.add(new SGSDArrayDataColumnInfo("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
+        new SGSDArrayDataColumnInfo("t", SGDataColumnTypeConstants.VALUE_TYPE_SAMPLING_RATE));
+    columns.add(new SGSDArrayDataColumnInfo("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER));
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SAMPLING_RATE, Double.valueOf(0.1));
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SAMPLING_RATE, Double.valueOf(0.1));
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXY_DATA, columns, infoMap);
     assertTrue(result.isSucceeded(), result.toString());
     assertArrayEquals(
-        new String[] {SGIDataColumnTypeConstants.X_VALUE, SGIDataColumnTypeConstants.Y_VALUE},
+        new String[] {SGDataColumnTypeConstants.X_VALUE, SGDataColumnTypeConstants.Y_VALUE},
         result.getDefaultColumnTypes());
   }
 
@@ -535,15 +533,15 @@ class SGDefaultColumnTypeUtilityTest {
       columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
     }
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.VXY_NETCDF_DATA, columns, infoMap);
     assertTrue(result.isSucceeded(), result.toString());
     String[] types = result.getDefaultColumnTypes();
-    assertEquals(SGIDataColumnTypeConstants.MAGNITUDE, types[findVariableIndex(file, "v1")]);
-    assertEquals(SGIDataColumnTypeConstants.ANGLE, types[findVariableIndex(file, "v2")]);
+    assertEquals(SGDataColumnTypeConstants.MAGNITUDE, types[findVariableIndex(file, "v1")]);
+    assertEquals(SGDataColumnTypeConstants.ANGLE, types[findVariableIndex(file, "v2")]);
   }
 
   @Test
@@ -564,17 +562,17 @@ class SGDefaultColumnTypeUtilityTest {
       columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
     }
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXY_MULTIPLE_NETCDF_DATA, columns, infoMap);
     assertTrue(result.isSucceeded(), result.toString());
     String[] types = result.getDefaultColumnTypes();
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "y1")]);
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "y2")]);
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, types[findVariableIndex(file, "x")]);
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "y1")]);
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, types[findVariableIndex(file, "y2")]);
   }
 
   @Test
@@ -584,7 +582,7 @@ class SGDefaultColumnTypeUtilityTest {
         () ->
             SGDefaultColumnTypeUtility.getDefaultColumnTypes(
                 "UNKNOWN_DATA_TYPE",
-                createColumns(new String[] {"a"}, SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER),
+                createColumns(new String[] {"a"}, SGDataColumnTypeConstants.VALUE_TYPE_NUMBER),
                 createInfoMap(false)));
   }
 
@@ -607,13 +605,13 @@ class SGDefaultColumnTypeUtilityTest {
         columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
       }
       Map<String, Object> infoMap = new HashMap<String, Object>();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
       DefaultColumnTypeResult result =
           SGDefaultColumnTypeUtility.getDefaultColumnTypes(
               SGDataTypeConstants.SXY_HDF5_DATA, columns, infoMap);
       assertTrue(result.isSucceeded(), result.toString());
-      assertEquals(SGIDataColumnTypeConstants.Y_VALUE, result.getDefaultColumnTypes()[0]);
+      assertEquals(SGDataColumnTypeConstants.Y_VALUE, result.getDefaultColumnTypes()[0]);
     }
   }
 
@@ -636,13 +634,13 @@ class SGDefaultColumnTypeUtilityTest {
         columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
       }
       Map<String, Object> infoMap = new HashMap<String, Object>();
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, file);
-      infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, file);
+      infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
       DefaultColumnTypeResult result =
           SGDefaultColumnTypeUtility.getDefaultColumnTypes(
               SGDataTypeConstants.SXY_HDF5_DATA, columns, infoMap);
       assertTrue(result.isSucceeded(), result.toString());
-      assertEquals(SGIDataColumnTypeConstants.Y_VALUE, result.getDefaultColumnTypes()[0]);
+      assertEquals(SGDataColumnTypeConstants.Y_VALUE, result.getDefaultColumnTypes()[0]);
     }
   }
 
@@ -672,15 +670,15 @@ class SGDefaultColumnTypeUtilityTest {
       columns.add(SGDataFileUtility.createDataColumnInfo(var, ""));
     }
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_SOURCE, matFile);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_SOURCE, matFile);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
     DefaultColumnTypeResult result =
         SGDefaultColumnTypeUtility.getDefaultColumnTypes(
             SGDataTypeConstants.SXY_MULTIPLE_MATLAB_DATA, columns, infoMap);
     assertTrue(result.isSucceeded());
     String[] types = result.getDefaultColumnTypes();
     for (String type : types) {
-      assertEquals(SGIDataColumnTypeConstants.Y_VALUE, type);
+      assertEquals(SGDataColumnTypeConstants.Y_VALUE, type);
     }
   }
 
@@ -688,7 +686,7 @@ class SGDefaultColumnTypeUtilityTest {
   void getNetCDFOriginMapParsesAttribute() {
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_ORIGIN_MAP, "machine=3,date=5");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_ORIGIN_MAP, "machine=3,date=5");
     Map<String, Integer> map =
         SGDefaultColumnTypeNetCDFUtility.getNetCDFOriginMap(root.getAttributes());
     assertEquals(3, map.get("machine").intValue());
@@ -699,7 +697,7 @@ class SGDefaultColumnTypeUtilityTest {
   void getNetCDFOriginMapReturnsEmptyOnBadValue() {
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_ORIGIN_MAP, "machine=x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_ORIGIN_MAP, "machine=x");
     Map<String, Integer> map =
         SGDefaultColumnTypeNetCDFUtility.getNetCDFOriginMap(root.getAttributes());
     assertEquals(0, map.size());
@@ -720,7 +718,7 @@ class SGDefaultColumnTypeUtilityTest {
     for (int ii = 0; ii < titles.length; ii++) {
       cols[ii] =
           SGDataFileUtility.createDataColumnInfo(
-              file.findVariable(titles[ii]), SGIDataColumnTypeConstants.X_VALUE);
+              file.findVariable(titles[ii]), SGDataColumnTypeConstants.X_VALUE);
     }
     return cols;
   }
@@ -730,25 +728,25 @@ class SGDefaultColumnTypeUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     columnInfoList.add(xInfo);
     columnInfoList.add(yInfo);
     SGDataColumnInfo[] columns = {xInfo, yInfo};
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
     assertTrue(
         SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
             columnInfoList, infoMap, root.getAttributes(), null, columns));
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
   }
 
   @Test
@@ -756,7 +754,7 @@ class SGDefaultColumnTypeUtilityTest {
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
     Map<String, Object> infoMap = new HashMap<String, Object>();
     assertFalse(
         SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
@@ -768,13 +766,13 @@ class SGDefaultColumnTypeUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo heightInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     columnInfoList.add(heightInfo);
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "missing");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, "missing");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
     Map<String, Object> infoMap = new HashMap<String, Object>();
     assertFalse(
         SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
@@ -786,16 +784,16 @@ class SGDefaultColumnTypeUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     SGNetCDFDataColumnInfo leInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("le"), SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, "height");
+            file.findVariable("le"), SGDataColumnTypeConstants.LOWER_ERROR_VALUE, "height");
     SGNetCDFDataColumnInfo ueInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("ue"), SGIDataColumnTypeConstants.UPPER_ERROR_VALUE, "height");
+            file.findVariable("ue"), SGDataColumnTypeConstants.UPPER_ERROR_VALUE, "height");
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     columnInfoList.add(xInfo);
     columnInfoList.add(yInfo);
@@ -804,18 +802,18 @@ class SGDefaultColumnTypeUtilityTest {
     SGDataColumnInfo[] columns = {xInfo, yInfo, leInfo, ueInfo};
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME, "le");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME, "ue");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME, "height");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME, "le");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME, "ue");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME, "height");
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
     assertTrue(
         SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
             columnInfoList, infoMap, root.getAttributes(), null, columns));
-    assertTrue(columns[2].getColumnType().startsWith(SGIDataColumnTypeConstants.LOWER_ERROR_VALUE));
-    assertTrue(columns[3].getColumnType().startsWith(SGIDataColumnTypeConstants.UPPER_ERROR_VALUE));
+    assertTrue(columns[2].getColumnType().startsWith(SGDataColumnTypeConstants.LOWER_ERROR_VALUE));
+    assertTrue(columns[3].getColumnType().startsWith(SGDataColumnTypeConstants.UPPER_ERROR_VALUE));
   }
 
   @Test
@@ -823,13 +821,13 @@ class SGDefaultColumnTypeUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     SGNetCDFDataColumnInfo leInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("le"), SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, "height");
+            file.findVariable("le"), SGDataColumnTypeConstants.LOWER_ERROR_VALUE, "height");
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     columnInfoList.add(xInfo);
     columnInfoList.add(yInfo);
@@ -837,16 +835,16 @@ class SGDefaultColumnTypeUtilityTest {
     SGDataColumnInfo[] columns = {xInfo, yInfo, leInfo};
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_TICK_LABEL_NAME, "le");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME, "height");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAME, "le");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME, "height");
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
     assertTrue(
         SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
             columnInfoList, infoMap, root.getAttributes(), null, columns));
-    assertTrue(columns[2].getColumnType().startsWith(SGIDataColumnTypeConstants.TICK_LABEL));
+    assertTrue(columns[2].getColumnType().startsWith(SGDataColumnTypeConstants.TICK_LABEL));
     assertTrue(columns[2].getColumnType().contains("height"));
   }
 
@@ -854,8 +852,8 @@ class SGDefaultColumnTypeUtilityTest {
   void getForSXYNetCDFDataRejectsBothMultipleXY() {
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAMES, "x1,x2");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, "y1,y2");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAMES, "x1,x2");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, "y1,y2");
     Map<String, Object> infoMap = new HashMap<String, Object>();
     assertFalse(
         SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
@@ -877,11 +875,11 @@ class SGDefaultColumnTypeUtilityTest {
   private static SGNetCDFDataColumnInfo[] example16Columns(final SGNetCDFFile file) {
     return new SGNetCDFDataColumnInfo[] {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE),
+          file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE),
+          file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("le"), SGIDataColumnTypeConstants.LOWER_ERROR_VALUE, "height")
+          file.findVariable("le"), SGDataColumnTypeConstants.LOWER_ERROR_VALUE, "height")
     };
   }
 
@@ -897,9 +895,9 @@ class SGDefaultColumnTypeUtilityTest {
             varList.size(),
             columns,
             new ArrayList<Integer>()));
-    assertEquals(SGIDataColumnTypeConstants.INDEX, columns[0].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, columns[1].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[2].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.INDEX, columns[0].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, columns[1].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, columns[2].getColumnType());
   }
 
   @Test
@@ -908,13 +906,13 @@ class SGDefaultColumnTypeUtilityTest {
     List<SGNetCDFVariable> varList = example16VariableList(file);
     SGNetCDFDataColumnInfo[] columns = example16Columns(file);
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
     assertTrue(
         SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
             infoMap, varList, varList.size(), columns));
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
   }
 
   private static SGNetCDFFile createVXYNetCDFFile() throws Exception {
@@ -938,16 +936,16 @@ class SGDefaultColumnTypeUtilityTest {
     SGNetCDFFile file = createVXYNetCDFFile();
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_COORDINATE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_COORDINATE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("y"), SGIDataColumnTypeConstants.Y_COORDINATE);
+            file.findVariable("y"), SGDataColumnTypeConstants.Y_COORDINATE);
     SGNetCDFDataColumnInfo fInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("v1"), SGIDataColumnTypeConstants.X_COMPONENT);
+            file.findVariable("v1"), SGDataColumnTypeConstants.X_COMPONENT);
     SGNetCDFDataColumnInfo sInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("v2"), SGIDataColumnTypeConstants.Y_COMPONENT);
+            file.findVariable("v2"), SGDataColumnTypeConstants.Y_COMPONENT);
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     columnInfoList.add(xInfo);
     columnInfoList.add(yInfo);
@@ -956,19 +954,19 @@ class SGDefaultColumnTypeUtilityTest {
     SGDataColumnInfo[] columns = {xInfo, yInfo, fInfo, sInfo};
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, "x");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, "y");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, "v1");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, "v2");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, "y");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, "v1");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, "v2");
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     assertTrue(
         SGDefaultColumnTypeNetCDFUtility.getForVXYNetCDFData(
             columnInfoList, infoMap, root.getAttributes(), null, columns));
-    assertEquals(SGIDataColumnTypeConstants.X_COORDINATE, columns[0].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Y_COORDINATE, columns[1].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, columns[2].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, columns[3].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.X_COORDINATE, columns[0].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Y_COORDINATE, columns[1].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.X_COMPONENT, columns[2].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Y_COMPONENT, columns[3].getColumnType());
   }
 
   @Test
@@ -976,19 +974,19 @@ class SGDefaultColumnTypeUtilityTest {
     SGNetCDFFile file = createVXYNetCDFFile();
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_COORDINATE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_COORDINATE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("y"), SGIDataColumnTypeConstants.Y_COORDINATE);
+            file.findVariable("y"), SGDataColumnTypeConstants.Y_COORDINATE);
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     columnInfoList.add(xInfo);
     columnInfoList.add(yInfo);
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, "x");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, "y");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, "y");
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     assertFalse(
         SGDefaultColumnTypeNetCDFUtility.getForVXYNetCDFData(
             columnInfoList, infoMap, root.getAttributes(), null, new SGDataColumnInfo[2]));
@@ -1016,13 +1014,13 @@ class SGDefaultColumnTypeUtilityTest {
     SGNetCDFFile file = createSXYZNetCDFFile();
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("y"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("y"), SGDataColumnTypeConstants.Y_VALUE);
     SGNetCDFDataColumnInfo zInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("v"), SGIDataColumnTypeConstants.Z_VALUE);
+            file.findVariable("v"), SGDataColumnTypeConstants.Z_VALUE);
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     columnInfoList.add(xInfo);
     columnInfoList.add(yInfo);
@@ -1030,15 +1028,15 @@ class SGDefaultColumnTypeUtilityTest {
     SGDataColumnInfo[] columns = {xInfo, yInfo, zInfo};
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "y");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Z_VALUE_NAME, "v");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "y");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Z_VALUE_NAME, "v");
     assertTrue(
         SGDefaultColumnTypeNetCDFUtility.getForSXYZNetCDFData(
             columnInfoList, new HashMap<String, Object>(), root.getAttributes(), null, columns));
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Z_VALUE, columns[2].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Z_VALUE, columns[2].getColumnType());
   }
 
   @Test
@@ -1046,17 +1044,17 @@ class SGDefaultColumnTypeUtilityTest {
     SGNetCDFFile file = createSXYZNetCDFFile();
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("y"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("y"), SGDataColumnTypeConstants.Y_VALUE);
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     columnInfoList.add(xInfo);
     columnInfoList.add(yInfo);
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "y");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "y");
     assertFalse(
         SGDefaultColumnTypeNetCDFUtility.getForSXYZNetCDFData(
             columnInfoList,
@@ -1076,23 +1074,23 @@ class SGDefaultColumnTypeUtilityTest {
     varList.add(file.findVariable("v2"));
     SGNetCDFDataColumnInfo[] columns = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("x"), SGIDataColumnTypeConstants.X_COORDINATE),
+          file.findVariable("x"), SGDataColumnTypeConstants.X_COORDINATE),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("y"), SGIDataColumnTypeConstants.Y_COORDINATE),
+          file.findVariable("y"), SGDataColumnTypeConstants.Y_COORDINATE),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("v1"), SGIDataColumnTypeConstants.X_COMPONENT),
+          file.findVariable("v1"), SGDataColumnTypeConstants.X_COMPONENT),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("v2"), SGIDataColumnTypeConstants.Y_COMPONENT)
+          file.findVariable("v2"), SGDataColumnTypeConstants.Y_COMPONENT)
     };
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     assertTrue(
         SGDefaultColumnTypeNetCDFUtility.getForVXYNetCDFDataNormal(
             infoMap, varList, varList.size(), columns));
-    assertEquals(SGIDataColumnTypeConstants.X_COORDINATE, columns[0].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Y_COORDINATE, columns[1].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.X_COMPONENT, columns[2].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Y_COMPONENT, columns[3].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.X_COORDINATE, columns[0].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Y_COORDINATE, columns[1].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.X_COMPONENT, columns[2].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Y_COMPONENT, columns[3].getColumnType());
   }
 
   @Test
@@ -1105,20 +1103,20 @@ class SGDefaultColumnTypeUtilityTest {
     varList.add(file.findVariable("v"));
     SGNetCDFDataColumnInfo[] columns = {
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE),
+          file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("y"), SGIDataColumnTypeConstants.Y_VALUE),
+          file.findVariable("y"), SGDataColumnTypeConstants.Y_VALUE),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("z"), SGIDataColumnTypeConstants.Z_VALUE),
+          file.findVariable("z"), SGDataColumnTypeConstants.Z_VALUE),
       SGDataFileUtility.createDataColumnInfo(
-          file.findVariable("v"), SGIDataColumnTypeConstants.Z_VALUE)
+          file.findVariable("v"), SGDataColumnTypeConstants.Z_VALUE)
     };
     assertTrue(
         SGDefaultColumnTypeNetCDFUtility.getForSXYZNetCDFData(
             new HashMap<String, Object>(), varList, varList.size(), columns));
-    assertEquals(SGIDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Z_VALUE, columns[3].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.X_VALUE, columns[0].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Z_VALUE, columns[3].getColumnType());
   }
 
   @Test
@@ -1126,25 +1124,25 @@ class SGDefaultColumnTypeUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     columnInfoList.add(xInfo);
     columnInfoList.add(yInfo);
     SGDataColumnInfo[] columns = {xInfo, yInfo};
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_TIME_VARIABLE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_TIME_VARIABLE_NAME, "x");
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
     assertTrue(
         SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
             columnInfoList, infoMap, root.getAttributes(), null, columns));
-    assertEquals(SGIDataColumnTypeConstants.ANIMATION_FRAME, columns[0].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.ANIMATION_FRAME, columns[0].getColumnType());
   }
 
   @Test
@@ -1152,26 +1150,26 @@ class SGDefaultColumnTypeUtilityTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open("examples/data/Example16.nc"));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     columnInfoList.add(xInfo);
     columnInfoList.add(yInfo);
     SGDataColumnInfo[] columns = {xInfo, yInfo};
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, "height");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME, "x");
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.FALSE);
     assertTrue(
         SGDefaultColumnTypeNetCDFUtility.getForSXYNetCDFData(
             columnInfoList, infoMap, root.getAttributes(), null, columns));
-    assertEquals(SGIDataColumnTypeConstants.PICKUP, columns[0].getColumnType());
-    assertEquals(SGIDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.PICKUP, columns[0].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.Y_VALUE, columns[1].getColumnType());
   }
 
   @Test
@@ -1179,16 +1177,16 @@ class SGDefaultColumnTypeUtilityTest {
     SGNetCDFFile file = createVXYNetCDFFile();
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_COORDINATE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_COORDINATE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("y"), SGIDataColumnTypeConstants.Y_COORDINATE);
+            file.findVariable("y"), SGDataColumnTypeConstants.Y_COORDINATE);
     SGNetCDFDataColumnInfo fInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("v1"), SGIDataColumnTypeConstants.X_COMPONENT);
+            file.findVariable("v1"), SGDataColumnTypeConstants.X_COMPONENT);
     SGNetCDFDataColumnInfo sInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("v2"), SGIDataColumnTypeConstants.Y_COMPONENT);
+            file.findVariable("v2"), SGDataColumnTypeConstants.Y_COMPONENT);
     List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>();
     columnInfoList.add(xInfo);
     columnInfoList.add(yInfo);
@@ -1197,16 +1195,16 @@ class SGDefaultColumnTypeUtilityTest {
     SGDataColumnInfo[] columns = {xInfo, yInfo, fInfo, sInfo};
     Document doc = SGUtilityText.getDocumentFromString("<root/>");
     Element root = doc.getDocumentElement();
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, "x");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, "y");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, "v1");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, "v2");
-    root.setAttribute(SGIDataPropertyKeyConstants.KEY_TIME_VARIABLE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_X_COORDINATE_VARIABLE_NAME, "x");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_Y_COORDINATE_VARIABLE_NAME, "y");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_FIRST_COMPONENT_VARIABLE_NAME, "v1");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_SECOND_COMPONENT_VARIABLE_NAME, "v2");
+    root.setAttribute(SGDataPropertyKeyConstants.KEY_TIME_VARIABLE_NAME, "x");
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
     assertTrue(
         SGDefaultColumnTypeNetCDFUtility.getForVXYNetCDFData(
             columnInfoList, infoMap, root.getAttributes(), null, columns));
-    assertEquals(SGIDataColumnTypeConstants.ANIMATION_FRAME, columns[0].getColumnType());
+    assertEquals(SGDataColumnTypeConstants.ANIMATION_FRAME, columns[0].getColumnType());
   }
 }

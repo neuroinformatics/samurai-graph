@@ -1,5 +1,13 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGErrorBarConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -11,8 +19,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
 /** Drawing element of an error bar. */
-public abstract class SGDrawingElementErrorBar extends SGDrawingElement
-    implements SGIErrorBarConstants {
+public abstract class SGDrawingElementErrorBar extends SGDrawingElement {
 
   /** An arrow object for lower error. */
   protected SGDrawingElementArrow mLowerArrowElement;
@@ -302,7 +309,7 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
 
     public ErrorBarProperties() {
       super();
-      this.mArrowProperties.setLineType(SGILineConstants.LINE_TYPE_SOLID);
+      this.mArrowProperties.setLineType(LINE_TYPE_SOLID);
     }
 
     public boolean equals(final Object obj) {

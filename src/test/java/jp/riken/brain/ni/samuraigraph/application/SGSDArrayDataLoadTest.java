@@ -11,9 +11,9 @@ import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGIProgressControl;
+import jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYSDArrayMultipleData;
@@ -48,16 +48,16 @@ class SGSDArrayDataLoadTest {
     Files.write(path, Arrays.asList("1 10", "2 20", "3 30"));
 
     SGSDArrayDataColumnInfo xInfo =
-        new SGSDArrayDataColumnInfo("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
-    xInfo.setColumnType(SGIDataColumnTypeConstants.X_VALUE);
+        new SGSDArrayDataColumnInfo("x", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+    xInfo.setColumnType(SGDataColumnTypeConstants.X_VALUE);
     SGSDArrayDataColumnInfo yInfo =
-        new SGSDArrayDataColumnInfo("y", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
-    yInfo.setColumnType(SGIDataColumnTypeConstants.Y_VALUE);
+        new SGSDArrayDataColumnInfo("y", SGDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+    yInfo.setColumnType(SGDataColumnTypeConstants.Y_VALUE);
     SGDataColumnInfoSet colInfoSet = new SGDataColumnInfoSet(new SGDataColumnInfo[] {xInfo, yInfo});
 
     Map<String, Object> infoMap = new HashMap<String, Object>();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_DATA);
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_DATA);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
 
     SGDataCreator creator = new SGDataCreator();
     SGDataCreator.CreatedDataSet set =

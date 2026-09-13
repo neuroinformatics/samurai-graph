@@ -1,12 +1,21 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+
 import java.io.File;
 import java.io.IOException;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
@@ -15,7 +24,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetForData;
 import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetMultipleSXY;
 
 /** A class to export a data to a file. */
-public class SGDataFileExporter extends SGFileHandler implements SGIApplicationConstants {
+public class SGDataFileExporter extends SGFileHandler {
 
   public static final String DEFAULT_EXPORT_DATA_FILE_NAME = "data";
 
@@ -128,7 +137,7 @@ public class SGDataFileExporter extends SGFileHandler implements SGIApplicationC
       dg.setCenter(wnd);
       dg.setVisible(true);
       final int closeOption = dg.getCloseOption();
-      if (closeOption == SGWizardDialog.CANCEL_OPTION) {
+      if (closeOption == CANCEL_OPTION) {
         return CANCEL_OPTION;
       }
     }
@@ -205,7 +214,7 @@ public class SGDataFileExporter extends SGFileHandler implements SGIApplicationC
 
     // export to the file
     if (!gs.saveData(file, new SGExportParameter(mode), policy)) {
-      SGUtility.showErrorMessageDialog(wnd, "Failed to save the data.", SGIConstants.TITLE_ERROR);
+      SGUtility.showErrorMessageDialog(wnd, "Failed to save the data.", TITLE_ERROR);
       return ERROR_OPTION;
     }
 

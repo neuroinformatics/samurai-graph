@@ -1,7 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGIConstants.LINE_WIDTH_UNIT;
-import static jp.riken.brain.ni.samuraigraph.base.SGIRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.LINE_WIDTH_UNIT;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
 
 import java.awt.Color;
 import org.w3c.dom.Element;
@@ -231,8 +232,7 @@ final class SGDrawingWindowPropertyIO {
     SGPropertyUtility.addProperty(
         map,
         imageScaleKey,
-        SGUtility.getExportValue(
-            wnd.getImageScalingFactor(), SGIRootObjectConstants.IMAGE_SCALING_ORDER));
+        SGUtility.getExportValue(wnd.getImageScalingFactor(), IMAGE_SCALING_ORDER));
   }
 
   /** Creates the map of properties with the file attribute keys. */

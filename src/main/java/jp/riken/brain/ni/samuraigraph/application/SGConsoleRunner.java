@@ -225,13 +225,13 @@ final class SGConsoleRunner {
 
       // output the status
       StringBuilder status = new StringBuilder();
-      if (ret == SGMainFunctions.STATUS_FAILED) {
+      if (ret == SGApplicationCommandConstants.STATUS_FAILED) {
         status.append("failed: ");
-      } else if (ret == SGMainFunctions.STATUS_NOT_FOUND) {
+      } else if (ret == SGApplicationCommandConstants.STATUS_NOT_FOUND) {
         status.append("not found: ");
-      } else if (ret == SGMainFunctions.STATUS_SUCCEEDED) {
+      } else if (ret == SGApplicationCommandConstants.STATUS_SUCCEEDED) {
         status.append("succeeded: ");
-      } else if (ret == SGMainFunctions.STATUS_PARTIALLY_FAILED) {
+      } else if (ret == SGApplicationCommandConstants.STATUS_PARTIALLY_FAILED) {
         status.append("partially failed: ");
       }
       status.append(tLine);

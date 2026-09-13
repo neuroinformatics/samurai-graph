@@ -1,5 +1,12 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import java.awt.event.ActionEvent;
@@ -26,16 +33,14 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGDataPluginHolder;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPlugin;
 import jp.riken.brain.ni.samuraigraph.base.SGIPluginManager;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
+import jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYDataBuffer;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYMultipleDataBuffer;
@@ -50,13 +55,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class SGNativePluginManager
-    implements SGIPluginManager,
-        SGIApplicationConstants,
-        SGIApplicationTextConstants,
-        SGIDataColumnTypeConstants,
-        SGIDataPluginConstants,
-        SGIConstants {
+public class SGNativePluginManager implements SGIPluginManager {
 
   SGMainFunctions mMain = null;
 
@@ -398,9 +397,9 @@ public class SGNativePluginManager
 
     void showMessage(SGDrawingWindow wnd) {
       if (this.mErrorMessage != null) {
-        SGUtility.showErrorMessageDialog(wnd, this.mErrorMessage, SGIConstants.TITLE_ERROR);
+        SGUtility.showErrorMessageDialog(wnd, this.mErrorMessage, TITLE_ERROR);
       } else if (this.mWarningMessage != null) {
-        SGUtility.showWarningMessageDialog(wnd, this.mWarningMessage, SGIConstants.TITLE_WARNING);
+        SGUtility.showWarningMessageDialog(wnd, this.mWarningMessage, TITLE_WARNING);
       }
     }
   }
@@ -545,7 +544,7 @@ public class SGNativePluginManager
         columnTypes = new String[] {X_VALUE, Y_VALUE};
         cols = this.createColumns(vars);
         for (int jj = 0; jj < cols.length; jj++) {
-          cols[jj].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+          cols[jj].setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
         }
       } else if (buffer instanceof SGSXYMultipleDataBuffer) {
         SGSXYMultipleDataBuffer sxyBuffer = (SGSXYMultipleDataBuffer) buffer;
@@ -562,7 +561,7 @@ public class SGNativePluginManager
           columnTypes[1] = Y_VALUE;
           cols = this.createColumns(vars);
           for (int jj = 0; jj < cols.length; jj++) {
-            cols[jj].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+            cols[jj].setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
           }
         } else {
           SGVirtualMDArrayVariable xVar = new SGVirtualMDArrayVariable.D2(xValues, X_VALUE);
@@ -573,19 +572,19 @@ public class SGNativePluginManager
           columnTypes[1] = Y_VALUE;
           cols = this.createColumns(vars);
           for (int jj = 0; jj < cols.length; jj++) {
-            cols[jj].setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
-            cols[jj].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
+            cols[jj].setDimensionIndex(SGMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, 0);
+            cols[jj].setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 1);
           }
 
           // sets information map
           SGIntegerSeriesSet pickUpIndices =
               SGIntegerSeriesSet.createInstance(sxyBuffer.getMultiplicity());
-          infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, pickUpIndices);
+          infoMap.put(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES, pickUpIndices);
           Map<String, Integer> dimensionIndexMap = new HashMap<String, Integer>();
           dimensionIndexMap.put(X_VALUE, 0);
           dimensionIndexMap.put(Y_VALUE, 0);
           infoMap.put(
-              SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP,
+              SGDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP,
               dimensionIndexMap);
         }
 
@@ -602,7 +601,7 @@ public class SGNativePluginManager
         columnTypes = new String[] {X_VALUE, Y_VALUE, Z_VALUE};
         cols = this.createColumns(vars);
         for (int jj = 0; jj < cols.length; jj++) {
-          cols[jj].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+          cols[jj].setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
         }
       } else if (buffer instanceof SGVXYDataBuffer) {
         SGVXYDataBuffer vxyBuffer = (SGVXYDataBuffer) buffer;
@@ -621,7 +620,7 @@ public class SGNativePluginManager
         columnTypes = new String[] {X_COORDINATE, Y_COORDINATE, first, second};
         cols = this.createColumns(vars);
         for (int jj = 0; jj < cols.length; jj++) {
-          cols[jj].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+          cols[jj].setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
         }
       } else if (buffer instanceof SGSXYZGridDataBuffer) {
         SGSXYZGridDataBuffer sxyzBuffer = (SGSXYZGridDataBuffer) buffer;
@@ -635,10 +634,10 @@ public class SGNativePluginManager
         dataType = SGDataTypeConstants.SXYZ_VIRTUAL_MDARRAY_DATA;
         columnTypes = new String[] {X_VALUE, Y_VALUE, Z_VALUE};
         cols = this.createColumns(vars);
-        cols[0].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
-        cols[1].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
-        cols[2].setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION, 1);
-        cols[2].setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 0);
+        cols[0].setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+        cols[1].setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+        cols[2].setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_X_DIMENSION, 1);
+        cols[2].setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 0);
       } else if (buffer instanceof SGVXYGridDataBuffer) {
         SGVXYGridDataBuffer vxyBuffer = (SGVXYGridDataBuffer) buffer;
         final String first = vxyBuffer.isPolar() ? MAGNITUDE : X_COMPONENT;
@@ -655,12 +654,12 @@ public class SGNativePluginManager
         dataType = SGDataTypeConstants.VXY_VIRTUAL_MDARRAY_DATA;
         columnTypes = new String[] {X_COORDINATE, Y_COORDINATE, first, second};
         cols = this.createColumns(vars);
-        cols[0].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
-        cols[1].setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
-        cols[2].setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION, 1);
-        cols[2].setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 0);
-        cols[3].setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_X_DIMENSION, 1);
-        cols[3].setDimensionIndex(SGIMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 0);
+        cols[0].setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+        cols[1].setDimensionIndex(SGMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+        cols[2].setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_X_DIMENSION, 1);
+        cols[2].setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 0);
+        cols[3].setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_X_DIMENSION, 1);
+        cols[3].setDimensionIndex(SGMDArrayConstants.KEY_SXYZ_Y_DIMENSION, 0);
       } else {
         continue;
       }
@@ -689,9 +688,7 @@ public class SGNativePluginManager
   private SGMDArrayDataColumnInfo[] createColumns(SGVirtualMDArrayVariable[] vars) {
     SGMDArrayDataColumnInfo[] cols = new SGMDArrayDataColumnInfo[vars.length];
     for (int ii = 0; ii < cols.length; ii++) {
-      cols[ii] =
-          new SGMDArrayDataColumnInfo(
-              vars[ii], vars[ii].getName(), SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER);
+      cols[ii] = new SGMDArrayDataColumnInfo(vars[ii], vars[ii].getName(), VALUE_TYPE_NUMBER);
     }
     return cols;
   }

@@ -11,6 +11,8 @@
 
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -31,12 +33,11 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.data.SGDataSetupPanel;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataSetupTableHolder;
 
 /** */
 public abstract class SGPropertyFileDataDialog extends SGSingleFileChooserWizardDialog
-    implements PropertyChangeListener, ItemListener, SGIDataColumnTypeConstants {
+    implements PropertyChangeListener, ItemListener {
 
   private static final long serialVersionUID = 4613530368941416965L;
 

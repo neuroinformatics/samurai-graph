@@ -1,5 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingElement;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
@@ -11,8 +17,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Element;
 
-public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingElement
-    implements SGILineAndStringConstants {
+public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingElement {
 
   /** The location. */
   protected SGTuple2f mLocation = new SGTuple2f();
@@ -185,7 +190,12 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
   public boolean setSpace(final float space, final String unit) {
     final Float sNew =
         SGUtility.calcPropertyValue(
-            space, unit, SPACE_UNIT, SPACE_MIN, SPACE_MAX, SPACE_MINIMAL_ORDER);
+            space,
+            unit,
+            SGLineAndStringConstants.SPACE_UNIT,
+            SPACE_MIN,
+            SPACE_MAX,
+            SGLineAndStringConstants.SPACE_MINIMAL_ORDER);
     if (sNew == null) {
       return false;
     }
@@ -382,7 +392,12 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
     SGPropertyMap map = new SGPropertyMap();
     this.addProperties(
-        map, KEY_FONT_NAME, KEY_FONT_SIZE, KEY_FONT_STYLE, KEY_LINE_WIDTH, KEY_SPACE);
+        map,
+        KEY_FONT_NAME,
+        KEY_FONT_SIZE,
+        KEY_FONT_STYLE,
+        SGLineAndStringConstants.KEY_LINE_WIDTH,
+        KEY_SPACE);
     return map;
   }
 
@@ -416,8 +431,10 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     SGPropertyUtility.addProperty(
         map,
         spaceKey,
-        SGUtility.getExportValue(this.getSpace(SPACE_UNIT), SPACE_MINIMAL_ORDER),
-        SPACE_UNIT);
+        SGUtility.getExportValue(
+            this.getSpace(SGLineAndStringConstants.SPACE_UNIT),
+            SGLineAndStringConstants.SPACE_MINIMAL_ORDER),
+        SGLineAndStringConstants.SPACE_UNIT);
   }
 
   public boolean readProperty(final Element el) {
@@ -460,7 +477,7 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     }
 
     // line width
-    str = el.getAttribute(KEY_LINE_WIDTH);
+    str = el.getAttribute(SGLineAndStringConstants.KEY_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuilder uLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uLineWidth);

@@ -65,6 +65,6 @@ class SGSXYZDataBufferTest {
   void getGridTypeKey() {
     SGSXYZDataBuffer buf =
         new SGSXYZDataBuffer(new double[] {1.0}, new double[] {2.0}, new double[] {3.0});
-    assertEquals(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, buf.getGridTypeKey());
+    assertEquals(SGDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, buf.getGridTypeKey());
   }
 }

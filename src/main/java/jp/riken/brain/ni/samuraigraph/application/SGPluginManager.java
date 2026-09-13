@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
@@ -14,14 +16,14 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
-import jp.riken.brain.ni.samuraigraph.application.SGIApplicationConstants.FILE_TYPE;
+import jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.FILE_TYPE;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGExtensionFileFilter;
 import jp.riken.brain.ni.samuraigraph.base.SGFileChooser;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDisposable;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataFileConstants;
+import jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -250,7 +252,7 @@ public class SGPluginManager implements SGIDisposable {
 
   private String getCurrentFilePath() {
     if (this.mCurrentFilePath == null || this.mCurrentFilePath.equals("")) {
-      this.mCurrentFilePath = SGIConstants.USER_HOME;
+      this.mCurrentFilePath = SGConstants.USER_HOME;
     }
     return this.mCurrentFilePath;
   }
@@ -270,7 +272,7 @@ public class SGPluginManager implements SGIDisposable {
 
   public static final String DEFAULT_OUTPUT_FILE_NAME = "output";
 
-  public static final String DEFAULT_OUTPUT_FILE_EXT = SGIDataFileConstants.TEXT_FILE_EXTENSION;
+  public static final String DEFAULT_OUTPUT_FILE_EXT = SGDataFileConstants.TEXT_FILE_EXTENSION;
 
   private static class PluginException extends Exception {
     private static final long serialVersionUID = -924108456633860433L;

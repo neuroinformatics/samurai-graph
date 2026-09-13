@@ -17,10 +17,10 @@ class SGNetCDFDataTest {
     SGNetCDFFile file = new SGNetCDFFile(NetcdfFiles.open(EXAMPLE_16));
     SGNetCDFDataColumnInfo xInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE);
+            file.findVariable("x"), SGDataColumnTypeConstants.X_VALUE);
     SGNetCDFDataColumnInfo yInfo =
         SGDataFileUtility.createDataColumnInfo(
-            file.findVariable("height"), SGIDataColumnTypeConstants.Y_VALUE);
+            file.findVariable("height"), SGDataColumnTypeConstants.Y_VALUE);
     return new SGSXYNetCDFData(
         file,
         new SGDataSourceObserver(),

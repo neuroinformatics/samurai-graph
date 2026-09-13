@@ -1,5 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureTypeConstants.*;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.Iterator;
@@ -12,10 +16,11 @@ import jp.riken.brain.ni.samuraigraph.base.SGAxisStepValue;
 import jp.riken.brain.ni.samuraigraph.base.SGAxisValue;
 import jp.riken.brain.ni.samuraigraph.base.SGCommandUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
+import jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIDrawingElementConstants;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
@@ -35,8 +40,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGrid.GridProperties;
 
 /** An XY-type figure. */
-public class SGXYFigure extends SGFigure
-    implements SGIXYFigureDialogObserver, SGIFigureTypeConstants {
+public class SGXYFigure extends SGFigure implements SGIXYFigureDialogObserver {
 
   /**
    * Builds a figure.
@@ -81,19 +85,19 @@ public class SGXYFigure extends SGFigure
   public SGIFigureElement getSymbolElement(final int symbolElementType) {
     Class<?> cl = null;
     switch (symbolElementType) {
-      case SGIDrawingElementConstants.SYMBOL_ELEMENT_TYPE_STRING:
+      case SGDrawingElementConstants.SYMBOL_ELEMENT_TYPE_STRING:
         cl = SGIFigureElementString.class;
         break;
-      case SGIDrawingElementConstants.SYMBOL_ELEMENT_TYPE_AXISBREAK:
+      case SGDrawingElementConstants.SYMBOL_ELEMENT_TYPE_AXISBREAK:
         cl = SGIFigureElementAxisBreak.class;
         break;
-      case SGIDrawingElementConstants.SYMBOL_ELEMENT_TYPE_SIGDIFF:
+      case SGDrawingElementConstants.SYMBOL_ELEMENT_TYPE_SIGDIFF:
         cl = SGIFigureElementSignificantDifference.class;
         break;
-      case SGIDrawingElementConstants.SYMBOL_ELEMENT_TYPE_TIMINGLINE:
+      case SGDrawingElementConstants.SYMBOL_ELEMENT_TYPE_TIMINGLINE:
         cl = SGIFigureElementTimingLine.class;
         break;
-      case SGIDrawingElementConstants.SYMBOL_ELEMENT_TYPE_SHAPE:
+      case SGDrawingElementConstants.SYMBOL_ELEMENT_TYPE_SHAPE:
         cl = SGIFigureElementShape.class;
         break;
     }
@@ -614,7 +618,7 @@ public class SGXYFigure extends SGFigure
     if (source instanceof SGIFigureElementGrid) {
       // When grid properties are changed, sets the changed flag
       // to this figure.
-      if (command.equals(SGIFigureElement.NOTIFY_CHANGE)) {
+      if (command.equals(SGFigureElementConstants.NOTIFY_CHANGE)) {
         this.setChanged(true);
       }
     }

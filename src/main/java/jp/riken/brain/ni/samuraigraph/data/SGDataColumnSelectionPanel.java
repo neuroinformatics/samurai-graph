@@ -11,6 +11,38 @@
 
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
+import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGAnimationConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGPaintConstant.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGTimingLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGVXYDataConstants.*;
+
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -40,16 +72,11 @@ import jp.riken.brain.ni.samuraigraph.base.SGButton;
 import jp.riken.brain.ni.samuraigraph.base.SGComboBox;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGTable;
 
 /** A panel to select the data columns. */
 public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
-    implements SGIDataColumnTypeConstants,
-        MouseWheelListener,
-        ActionListener,
-        PropertyChangeListener,
-        SGIDataSetupTableHolder {
+    implements MouseWheelListener, ActionListener, PropertyChangeListener, SGIDataSetupTableHolder {
 
   /** Serial Version UID */
   private static final long serialVersionUID = 4393429488857680488L;
@@ -228,8 +255,8 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
 
     // setup the scroll bar properties
     JScrollBar vertBar = this.mTableScrollPane.getVerticalScrollBar();
-    vertBar.setUnitIncrement(SGIConstants.SCROLL_BAR_UNIT_INCREMENT);
-    vertBar.setBlockIncrement(SGIConstants.SCROLL_BAR_BLOCK_INCREMENT);
+    vertBar.setUnitIncrement(SCROLL_BAR_UNIT_INCREMENT);
+    vertBar.setBlockIncrement(SCROLL_BAR_BLOCK_INCREMENT);
 
     // setup the message label
     this.clearMessage();
@@ -401,8 +428,8 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     this.mComplementButton.setEnabled(true);
 
     // show or hide the complement button
-    if (infoMap.containsKey(SGIDataInformationKeyConstants.KEY_DATA_TYPE) == false) {
-      infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
+    if (infoMap.containsKey(SGDataInformationKeyConstants.KEY_DATA_TYPE) == false) {
+      infoMap.put(SGDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
     }
     //        final boolean compVisible = SGDataMiscUtility.isComplementButtonVisible(infoMap);
     // not use complement button.
@@ -916,7 +943,7 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     Map<String, Object> infoMapUpd = new HashMap<String, Object>(mDataInfoMap);
 
     // the current row index
-    infoMapUpd.put(SGIDataInformationKeyConstants.KEY_CURRENT_ROW_INDEX, Integer.valueOf(row));
+    infoMapUpd.put(KEY_CURRENT_ROW_INDEX, Integer.valueOf(row));
 
     // get the combo box items
     String valueType = cInfo.getValueType();

@@ -1,5 +1,18 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisBreakConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorBarConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSignificantDifferenceConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -38,8 +51,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGColorMap;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataAxisInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
+import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIChildObject;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementAxisBreak;
@@ -80,14 +93,7 @@ import org.w3c.dom.NodeList;
 
 /** A class managing axes. */
 public class SGFigureElementAxis extends SGFigureElement
-    implements SGIFigureElementAxis,
-        SGIStringConstants,
-        CaretListener,
-        DocumentListener,
-        ActionListener,
-        KeyListener,
-        SGIAxisConstants,
-        SGIColorBarConstants {
+    implements SGIFigureElementAxis, CaretListener, DocumentListener, ActionListener, KeyListener {
 
   /** The list of axes. */
   List<SGFigureAxis> mElementsGroupList = new ArrayList<SGFigureAxis>();
@@ -410,8 +416,7 @@ public class SGFigureElementAxis extends SGFigureElement
    * @param msg the message
    */
   private void synchronizeColorBar(final SGIFigureElementForData element, final String msg) {
-    if (SGIFigureElement.NOTIFY_DATA_HIDDEN.equals(msg)
-        || SGIFigureElement.NOTIFY_CHANGE_ON_UNDO.equals(msg)) {
+    if (NOTIFY_DATA_HIDDEN.equals(msg) || NOTIFY_CHANGE_ON_UNDO.equals(msg)) {
       List<SGData> dataList = this.getDataList();
       boolean sxyzVisible = false;
       for (int ii = 0; ii < dataList.size(); ii++) {
@@ -673,18 +678,10 @@ public class SGFigureElementAxis extends SGFigureElement
 
       minNew =
           SGUtilityNumber.getNumberInRangeOrder(
-              minNew,
-              min,
-              max,
-              SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT,
-              RoundingMode.HALF_UP.ordinal());
+              minNew, min, max, AXIS_SCALE_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
       maxNew =
           SGUtilityNumber.getNumberInRangeOrder(
-              maxNew,
-              min,
-              max,
-              SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT,
-              RoundingMode.HALF_UP.ordinal());
+              maxNew, min, max, AXIS_SCALE_EFFECTIVE_DIGIT, RoundingMode.HALF_UP.ordinal());
     }
 
     SGValueRange range = new SGValueRange(minNew, maxNew);
@@ -930,12 +927,12 @@ public class SGFigureElementAxis extends SGFigureElement
           dataArray,
           axisInfoListMap,
           new HashMap<SGData, SGISXYAxisShiftEnabled>(),
-          SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL);
+          AXIS_DIRECTION_HORIZONTAL);
       this.fitAxes(
           dataArray,
           axisInfoListMap,
           new HashMap<SGData, SGISXYAxisShiftEnabled>(),
-          SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL);
+          AXIS_DIRECTION_VERTICAL);
 
       // copies the same axis range
       SGAxisValue minHorizontal = groupHorizontal1.getMinValue();
@@ -983,7 +980,7 @@ public class SGFigureElementAxis extends SGFigureElement
             dataArray,
             axisInfoListMap,
             new HashMap<SGData, SGISXYAxisShiftEnabled>(),
-            SGIFigureElementAxis.AXIS_DIRECTION_NORMAL);
+            AXIS_DIRECTION_NORMAL);
 
         // setup the z-axis
         SGColorMap model = this.getColorMap();
@@ -996,7 +993,7 @@ public class SGFigureElementAxis extends SGFigureElement
         final float gy = this.mGraphRectY;
         final float gw = this.mGraphRectWidth;
         final float gh = this.mGraphRectHeight;
-        this.mZAxisElementsGroup.setDirection(SGIColorBarConstants.DIRECTION_HORIZONTAL_LOWER);
+        this.mZAxisElementsGroup.setDirection(DIRECTION_HORIZONTAL_LOWER);
         this.mZAxisElementsGroup.setLocation(gx, gy + 1.20f * gh);
         this.mZAxisElementsGroup.setSize(
             gw / this.mMagnification, DEFAULT_COLOR_BAR_WIDTH / CM_POINT_RATIO);
@@ -1641,7 +1638,7 @@ public class SGFigureElementAxis extends SGFigureElement
 
   /** */
   public String getTagName() {
-    return SGIFigureElementAxis.TAG_NAME_AXES;
+    return TAG_NAME_AXES;
   }
 
   /**
@@ -1715,12 +1712,12 @@ public class SGFigureElementAxis extends SGFigureElement
   /** */
   public boolean writeProperty(final Element el, SGExportParameter params) {
 
-    final int digitLineWidth = SGIConstants.LINE_WIDTH_MINIMAL_ORDER - 1;
+    final int digitLineWidth = LINE_WIDTH_MINIMAL_ORDER - 1;
     final float frameLineWidth =
         (float) SGUtilityNumber.roundOffNumber(this.getFrameLineWidth(), digitLineWidth);
 
     el.setAttribute(KEY_FRAME_LINE_VISIBLE, Boolean.toString(this.mFrameLineVisibleFlag));
-    el.setAttribute(KEY_FRAME_LINE_WIDTH, Float.toString(frameLineWidth) + SGIConstants.pt);
+    el.setAttribute(KEY_FRAME_LINE_WIDTH, Float.toString(frameLineWidth) + pt);
     el.setAttribute(KEY_FRAME_LINE_COLOR, SGUtilityText.getColorString(this.mFrameLineColor));
 
     return true;
@@ -1749,7 +1746,7 @@ public class SGFigureElementAxis extends SGFigureElement
     Color cl;
 
     // frame line visible
-    str = element.getAttribute(SGIFigureElementAxis.KEY_FRAME_LINE_VISIBLE);
+    str = element.getAttribute(KEY_FRAME_LINE_VISIBLE);
     if (str.length() != 0) {
       b = SGUtilityText.getBoolean(str);
       if (b == null) {
@@ -1762,7 +1759,7 @@ public class SGFigureElementAxis extends SGFigureElement
     }
 
     // frame line width
-    str = element.getAttribute(SGIFigureElementAxis.KEY_FRAME_LINE_WIDTH);
+    str = element.getAttribute(KEY_FRAME_LINE_WIDTH);
     if (str.length() != 0) {
       StringBuilder uFrameLineWidth = new StringBuilder();
       num = SGUtilityText.getNumber(str, uFrameLineWidth);
@@ -1776,7 +1773,7 @@ public class SGFigureElementAxis extends SGFigureElement
     }
 
     // frame line color
-    str = element.getAttribute(SGIFigureElementAxis.KEY_FRAME_LINE_COLOR);
+    str = element.getAttribute(KEY_FRAME_LINE_COLOR);
     if (str.length() != 0) {
       cl = SGUtilityText.parseColor(str);
       if (cl == null) {
@@ -1788,14 +1785,14 @@ public class SGFigureElementAxis extends SGFigureElement
       }
     }
 
-    NodeList nList = element.getElementsByTagName(SGIFigureElementAxis.TAG_NAME_AXIS);
+    NodeList nList = element.getElementsByTagName(TAG_NAME_AXIS);
     for (int ii = 0; ii < nList.getLength(); ii++) {
       Node node = nList.item(ii);
       if (node instanceof Element) {
         Element el = (Element) node;
 
         // location
-        str = el.getAttribute(SGIFigureElementAxis.KEY_POSITION);
+        str = el.getAttribute(KEY_POSITION);
         if (str.length() == 0) {
           return false;
         }
@@ -1819,7 +1816,7 @@ public class SGFigureElementAxis extends SGFigureElement
     Element parentElement = (Element) parentNode;
 
     // create the color bar
-    NodeList cbnList = parentElement.getElementsByTagName(SGIColorBarConstants.TAG_NAME_COLOR_BAR);
+    NodeList cbnList = parentElement.getElementsByTagName(TAG_NAME_COLOR_BAR);
     if (cbnList.getLength() > 0) {
       // set properties
       Node node = cbnList.item(0);
@@ -1832,7 +1829,7 @@ public class SGFigureElementAxis extends SGFigureElement
     }
 
     // create the scale
-    NodeList scaleList = parentElement.getElementsByTagName(SGIScaleConstants.TAG_NAME_SCALE);
+    NodeList scaleList = parentElement.getElementsByTagName(SGScaleConstants.TAG_NAME_SCALE);
     if (scaleList.getLength() > 0) {
       // set properties
       Node node = scaleList.item(0);
@@ -1864,7 +1861,7 @@ public class SGFigureElementAxis extends SGFigureElement
       Color cl = null;
 
       // axis line width
-      str = element.getAttribute(SGIFigureElementAxis.KEY_AXIS_LINE_WIDTH);
+      str = element.getAttribute(KEY_AXIS_LINE_WIDTH);
       if (str.length() == 0) {
         return false;
       }
@@ -1876,7 +1873,7 @@ public class SGFigureElementAxis extends SGFigureElement
       final float axisLineWidth = num.floatValue();
 
       // tick mark width
-      str = element.getAttribute(SGIFigureElementAxis.KEY_TICK_MARK_WIDTH);
+      str = element.getAttribute(KEY_TICK_MARK_WIDTH);
       if (str.length() == 0) {
         return false;
       }
@@ -1888,7 +1885,7 @@ public class SGFigureElementAxis extends SGFigureElement
       final float tickMarkWidth = num.floatValue();
 
       // tick mark length
-      str = element.getAttribute(SGIFigureElementAxis.KEY_TICK_MARK_LENGTH);
+      str = element.getAttribute(KEY_TICK_MARK_LENGTH);
       if (str.length() == 0) {
         return false;
       }
@@ -1900,7 +1897,7 @@ public class SGFigureElementAxis extends SGFigureElement
       final float tickMarkLength = num.floatValue();
 
       // line color
-      str = element.getAttribute(SGIFigureElementAxis.KEY_LINE_COLOR);
+      str = element.getAttribute(SGFigureElementAxisConstants.KEY_LINE_COLOR);
       if (str.length() == 0) {
         return false;
       }
@@ -2333,16 +2330,13 @@ public class SGFigureElementAxis extends SGFigureElement
 
   public boolean fitAxisRangeToFocusedData(
       final SGIFigureElementForData element, final boolean forAnimationFrames) {
-    if (!this.fitAxisRangeToFocusedData(
-        element, SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL, forAnimationFrames)) {
+    if (!this.fitAxisRangeToFocusedData(element, AXIS_DIRECTION_HORIZONTAL, forAnimationFrames)) {
       return false;
     }
-    if (!this.fitAxisRangeToFocusedData(
-        element, SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL, forAnimationFrames)) {
+    if (!this.fitAxisRangeToFocusedData(element, AXIS_DIRECTION_VERTICAL, forAnimationFrames)) {
       return false;
     }
-    if (!this.fitAxisRangeToFocusedData(
-        element, SGIFigureElementAxis.AXIS_DIRECTION_NORMAL, forAnimationFrames)) {
+    if (!this.fitAxisRangeToFocusedData(element, AXIS_DIRECTION_NORMAL, forAnimationFrames)) {
       return false;
     }
     return true;
@@ -2417,16 +2411,13 @@ public class SGFigureElementAxis extends SGFigureElement
       final SGIFigureElementForData element,
       final List<SGData> dList,
       final boolean forAnimationFrames) {
-    if (!this.fitAxisRangeToData(
-        element, dList, SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL, forAnimationFrames)) {
+    if (!this.fitAxisRangeToData(element, dList, AXIS_DIRECTION_HORIZONTAL, forAnimationFrames)) {
       return false;
     }
-    if (!this.fitAxisRangeToData(
-        element, dList, SGIFigureElementAxis.AXIS_DIRECTION_VERTICAL, forAnimationFrames)) {
+    if (!this.fitAxisRangeToData(element, dList, AXIS_DIRECTION_VERTICAL, forAnimationFrames)) {
       return false;
     }
-    if (!this.fitAxisRangeToData(
-        element, dList, SGIFigureElementAxis.AXIS_DIRECTION_NORMAL, forAnimationFrames)) {
+    if (!this.fitAxisRangeToData(element, dList, AXIS_DIRECTION_NORMAL, forAnimationFrames)) {
       return false;
     }
     return true;
@@ -2743,8 +2734,8 @@ public class SGFigureElementAxis extends SGFigureElement
   private void synchronizeDataColumnChange(
       final SGIFigureElementForData element, final String msg) {
     List<SGFigureAxis> axes = this.getAxisGroupList();
-    if (SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW.equals(msg)
-        || SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT.equals(msg)) {
+    if (NOTIFY_DATA_STRUCTURE_CHANGE_ON_PREVIEW.equals(msg)
+        || NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT.equals(msg)) {
 
       // set temporary properties
       for (SGFigureAxis axis : axes) {
@@ -2774,7 +2765,7 @@ public class SGFigureElementAxis extends SGFigureElement
       }
 
       // clear temporary properties on commit
-      if (SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT.equals(msg)) {
+      if (NOTIFY_DATA_STRUCTURE_CHANGE_ON_COMMIT.equals(msg)) {
         for (SGFigureAxis axis : axes) {
           SGProperties p = axis.getProperties();
           if (p.equals(axis.mTemporaryProperties) == false) {
@@ -2786,7 +2777,7 @@ public class SGFigureElementAxis extends SGFigureElement
         }
       }
 
-    } else if (SGIFigureElement.NOTIFY_DATA_STRUCTURE_CHANGE_ON_CANCEL.equals(msg)) {
+    } else if (NOTIFY_DATA_STRUCTURE_CHANGE_ON_CANCEL.equals(msg)) {
 
       // recover the properties
       for (SGFigureAxis axis : axes) {

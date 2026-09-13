@@ -1,9 +1,11 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class SGDataExportParameter extends SGExportParameter implements SGIConstants {
+public class SGDataExportParameter extends SGExportParameter {
 
   private List<SGData> mExportedDataList = new ArrayList<SGData>();
 

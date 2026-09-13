@@ -1,15 +1,17 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGFigure;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIDataSource;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElement;
 import jp.riken.brain.ni.samuraigraph.base.SGIFigureElementGraph;
@@ -31,7 +33,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGSXYSDArrayMultipleData;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetInGraphSXYMultiple.MultipleSXYElementGroupSetPropertiesInFigureElement;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
 
-class SGDataSplitMergeUtility implements SGIApplicationTextConstants {
+class SGDataSplitMergeUtility {
 
   static boolean splitData(SGDrawingWindow wnd) {
     List<SGFigure> fList = wnd.getVisibleFigureList();
@@ -341,7 +343,7 @@ class SGDataSplitMergeUtility implements SGIApplicationTextConstants {
         List<SGData> dataListAdded = mergeDataSub(f, dataList, hiddenDataList, progress);
         if (dataListAdded == null) {
           SGUtility.showErrorMessageDialog(
-              wnd, "Failed to merge the data.", SGIConstants.TITLE_ERROR);
+              wnd, "Failed to merge the data.", SGConstants.TITLE_ERROR);
           return false;
         }
         dataListAddedAll.addAll(dataListAdded);

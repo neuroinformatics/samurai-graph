@@ -1,5 +1,23 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
+import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
+import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,8 +46,7 @@ import ucar.nc2.write.NetcdfFormatWriter;
  * Scalar type XY data. This object has of x and y values. If given, this object can keep error bar
  * values and text strings.
  */
-public class SGSXYSDArrayData extends SGSDArrayData
-    implements SGISXYTypeSingleData, SGIDataPropertyKeyConstants {
+public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleData {
 
   /** The column index for x-values. */
   protected Integer mXIndex = null;
@@ -1162,7 +1179,7 @@ public class SGSXYSDArrayData extends SGSDArrayData
   /** Returns a map which has data information. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> infoMap = super.getInfoMap();
-    infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
     return infoMap;
   }
 
@@ -1227,16 +1244,16 @@ public class SGSXYSDArrayData extends SGSDArrayData
    */
   @Override
   public void setStrideMap(Map<String, SGIntegerSeriesSet> map) {
-    this.mStride = map.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
-    this.mTickLabelStride = map.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
+    this.mStride = map.get(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
+    this.mTickLabelStride = map.get(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
   }
 
   /** Returns a map of stride for data arrays. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
-    map.put(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, this.getStride());
-    map.put(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, this.getTickLabelStride());
+    map.put(SGDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, this.getStride());
+    map.put(SGDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, this.getTickLabelStride());
     return map;
   }
 

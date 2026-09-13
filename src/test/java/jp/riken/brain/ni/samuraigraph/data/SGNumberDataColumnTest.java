@@ -61,7 +61,7 @@ class SGNumberDataColumnTest {
   @Test
   void getValueType() {
     SGNumberDataColumn col = new SGNumberDataColumn("x", new double[] {1.0});
-    assertEquals(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, col.getValueType());
+    assertEquals(SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, col.getValueType());
   }
 
   @Test
@@ -123,7 +123,7 @@ class SGNumberDataColumnTest {
   @Test
   void getValueTypeConstant() {
     SGNumberDataColumn col = new SGNumberDataColumn("x", new double[] {1.0});
-    assertEquals(SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, col.getValueType());
+    assertEquals(SGDataColumnTypeConstants.VALUE_TYPE_NUMBER, col.getValueType());
   }
 
   @Test

@@ -1,15 +1,16 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGSXYZDataConstants.*;
+
 import java.util.Iterator;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataCommandConstants;
 
-public abstract class SGElementGroupPseudocolorMapForData extends SGElementGroupPseudocolorMap
-    implements SGISXYZDataConstants, SGIDataCommandConstants {
+public abstract class SGElementGroupPseudocolorMapForData extends SGElementGroupPseudocolorMap {
 
   /** The default constructor. */
   public SGElementGroupPseudocolorMapForData() {

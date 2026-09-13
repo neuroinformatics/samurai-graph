@@ -1,7 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGIConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGILegendConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
