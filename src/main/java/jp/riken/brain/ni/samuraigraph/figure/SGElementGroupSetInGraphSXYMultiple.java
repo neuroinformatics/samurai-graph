@@ -43,15 +43,12 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 import jp.riken.brain.ni.samuraigraph.base.SGXYSimpleIndexBlock;
 import jp.riken.brain.ni.samuraigraph.data.SGArrayData;
-import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
-import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYMultipleDimensionData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
@@ -60,7 +57,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable;
-import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFFile;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFVariable;
@@ -80,6 +76,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         SGISXYDataDialogObserver,
         SGISXYAxisShiftEnabled,
         SGISXYDataConstants {
+
+  private final SGColumnTypeUpdater mColumnTypeUpdater = new SGColumnTypeUpdater(this);
 
   /** Shift value to the x-axis direction. */
   protected double mShiftX;
@@ -1686,63 +1684,12 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     }
   }
 
-  private void setPickUpAndTimeDimension(
+  void setPickUpAndTimeDimension(
       SGPropertyResults result, final String pickUpValue, final String timeValue) {
-
-    if (!(this.mData instanceof SGSXYMDArrayMultipleData)) {
-      return;
-    }
-    SGSXYMDArrayMultipleData sxyData = (SGSXYMDArrayMultipleData) this.mData;
-
-    boolean pickUpValid = true;
-    boolean timeValid = true;
-
-    // creates dimension map
-    Map<String, Integer> pickUpDimMap = this.createPickUpDimMap(sxyData, pickUpValue);
-    if (pickUpValid && pickUpDimMap != null) {
-      if (!this.setPickUpDimension(pickUpDimMap)) {
-        pickUpValid = false;
-      }
-    } else {
-      pickUpValid = false;
-    }
-
-    Map<String, Integer> timeDimMap = this.createTimeDimMap(sxyData, timeValue);
-    if (pickUpDimMap != null && timeDimMap != null) {
-      // checks overlapping
-      Iterator<String> keyItr = timeDimMap.keySet().iterator();
-      while (keyItr.hasNext()) {
-        String name = keyItr.next();
-        Integer timeIndex = timeDimMap.get(name);
-        if (timeIndex == null || timeIndex == -1) {
-          continue;
-        }
-        Integer pickUpIndex = pickUpDimMap.get(name);
-        if (timeIndex.equals(pickUpIndex)) {
-          timeValid = false;
-          break;
-        }
-      }
-    }
-    if (timeValid && timeDimMap != null) {
-      if (!this.setTimeDimension(timeDimMap)) {
-        timeValid = false;
-      }
-    } else {
-      timeValid = false;
-    }
-
-    // sets the status
-    final int pickUpStatus =
-        pickUpValid ? SGPropertyResults.SUCCEEDED : SGPropertyResults.INVALID_INPUT_VALUE;
-    result.putResult(COM_DATA_PICKUP_DIMENSION, pickUpStatus);
-
-    final int timeStatus =
-        timeValid ? SGPropertyResults.SUCCEEDED : SGPropertyResults.INVALID_INPUT_VALUE;
-    result.putResult(COM_DATA_ANIMATION_FRAME_DIMENSION, timeStatus);
+    this.mColumnTypeUpdater.setPickUpAndTimeDimension(result, pickUpValue, timeValue);
   }
 
-  private boolean setPickUpDimension(final String value) {
+  boolean setPickUpDimension(final String value) {
     if (!(this.mData instanceof SGSXYMDArrayMultipleData)) {
       return false;
     }
@@ -1763,7 +1710,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return true;
   }
 
-  private boolean setPickUpDimension(Map<String, Integer> pickUpDimMap) {
+  boolean setPickUpDimension(Map<String, Integer> pickUpDimMap) {
     if (!(this.mData instanceof SGSXYMDArrayMultipleData)) {
       return false;
     }
@@ -1866,7 +1813,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return true;
   }
 
-  private Map<String, Integer> createPickUpDimMap(SGSXYMDArrayMultipleData sxyData, String value) {
+  Map<String, Integer> createPickUpDimMap(SGSXYMDArrayMultipleData sxyData, String value) {
     String[] values = SGUtilityText.getStringsInBracket(value);
     if (values == null) {
       return null;
@@ -1968,117 +1915,16 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return pickUpDimMap;
   }
 
-  private boolean setPickUpIndices(
+  boolean setPickUpIndices(
       SGPropertyMap map,
       SGPropertyResults result,
       final String key,
       final String value,
       Map<String, SGInteger> pickUpMap) {
-
-    if (COM_DATA_PICKUP_INDICES.equalsIgnoreCase(key)) {
-      if (map.isDoubleQuoted(COM_DATA_PICKUP_INDICES) == false) {
-        result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
-        return false;
-      }
-      if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
-        SGSXYNetCDFMultipleData sxyData = (SGSXYNetCDFMultipleData) this.mData;
-        SGNetCDFVariable pickUpVar = this.getNetCDFPickUpVariable(null);
-        if (pickUpVar == null) {
-          result.putResult(key, SGPropertyResults.INVALID_INPUT_VALUE);
-          return false;
-        }
-        Dimension dim = pickUpVar.getDimension(0);
-        final int len = dim.getLength();
-        SGIntegerSeriesSet indices = SGIntegerSeriesSet.parse(value, len);
-        if (indices == null) {
-          result.putResult(key, SGPropertyResults.INVALID_INPUT_VALUE);
-          return false;
-        }
-        SGNetCDFPickUpDimensionInfo info =
-            new SGNetCDFPickUpDimensionInfo(dim.getShortName(), indices);
-        if (sxyData.setPickUpDimensionInfo(info) == false) {
-          result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
-          return false;
-        }
-
-      } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
-        SGSXYMDArrayMultipleData sxyData = (SGSXYMDArrayMultipleData) this.mData;
-        if (!sxyData.isDimensionPicked()) {
-          result.putResult(key, SGPropertyResults.INVALID_INPUT_VALUE);
-          return false;
-        }
-        SGMDArrayPickUpDimensionInfo info =
-            (SGMDArrayPickUpDimensionInfo) sxyData.getPickUpDimensionInfo();
-        List<SGMDArrayVariable> pickUpVarList = sxyData.getPickUpMDArrayVariables();
-        final int len =
-            pickUpVarList.get(0).getDimensionLength(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-        SGIntegerSeriesSet indices = SGIntegerSeriesSet.parse(value, len);
-        if (indices == null) {
-          result.putResult(key, SGPropertyResults.INVALID_INPUT_VALUE);
-          return false;
-        }
-        info.setIndices(indices);
-        if (sxyData.setPickUpDimensionInfo(info) == false) {
-          result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
-          return false;
-        }
-      } else {
-        // cannot apply
-        result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
-        return false;
-      }
-      result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
-    } else if (COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
-      if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
-        Integer num = this.getNetCDFPickUpNumber(map, key, value);
-        if (num == null) {
-          result.putResult(COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
-          return false;
-        }
-        if (num != null) {
-          pickUpMap.put(COM_DATA_PICKUP_START, new SGInteger(num));
-        }
-      } else {
-        // cannot apply
-        result.putResult(COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
-        return false;
-      }
-    } else if (COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
-      if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
-        Integer num = this.getNetCDFPickUpNumber(map, key, value);
-        if (num == null) {
-          result.putResult(COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
-          return false;
-        }
-        if (num != null) {
-          pickUpMap.put(COM_DATA_PICKUP_END, new SGInteger(num));
-        }
-      } else {
-        // cannot apply
-        result.putResult(COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
-        return false;
-      }
-    } else if (COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
-      if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
-        Integer num = this.getNetCDFPickUpNumber(map, key, value);
-        if (num == null) {
-          result.putResult(COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
-          return false;
-        }
-        if (num != null) {
-          pickUpMap.put(COM_DATA_PICKUP_STEP, new SGInteger(num));
-        }
-      } else {
-        // cannot apply
-        result.putResult(COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
-        return false;
-      }
-    }
-
-    return true;
+    return this.mColumnTypeUpdater.setPickUpIndices(map, result, key, value, pickUpMap);
   }
 
-  private boolean setTickLabelStride(SGPropertyResults result, String value) {
+  boolean setTickLabelStride(SGPropertyResults result, String value) {
     SGISXYTypeMultipleData sxyData = (SGISXYTypeMultipleData) this.mData;
     final int len = sxyData.getAllPointsNumber();
     SGIntegerSeriesSet stride = SGIntegerSeriesSet.parse(value, len);
@@ -2091,7 +1937,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return true;
   }
 
-  private boolean setIndexStride(String value) {
+  boolean setIndexStride(String value) {
     SGData data = this.getData();
     if (!(data instanceof SGSXYNetCDFMultipleData)) {
       return false;
@@ -2808,59 +2654,16 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return this.setTickLabelStrideToData(stride);
   }
 
-  private void setPickUpResults(
+  void setPickUpResults(
       SGPropertyMap map,
       SGPropertyResults result,
       SGInteger pickUpStart,
       SGInteger pickUpEnd,
       SGInteger pickUpStep) {
-    if (this.mData instanceof SGSXYNetCDFMultipleData) {
-      SGSXYNetCDFMultipleData sxyData = (SGSXYNetCDFMultipleData) this.mData;
-      if (SGIntegerSeries.isValidSeries(pickUpStart, pickUpEnd, pickUpStep)) {
-        SGNetCDFVariable pickUpVar = this.getNetCDFPickUpVariable(null);
-        if (pickUpVar == null) {
-          this.setPickUpResults(
-              map,
-              result,
-              pickUpStart,
-              pickUpEnd,
-              pickUpStep,
-              SGPropertyResults.INVALID_INPUT_VALUE);
-          return;
-        }
-        Dimension dim = pickUpVar.getDimension(0);
-        final int len = dim.getLength();
-        SGInteger start = this.createInteger(pickUpStart, len);
-        SGInteger end = this.createInteger(pickUpEnd, len);
-        SGInteger step = this.createInteger(pickUpStep, len);
-        SGIntegerSeriesSet indices = new SGIntegerSeriesSet(start, end, step);
-        SGNetCDFPickUpDimensionInfo info =
-            new SGNetCDFPickUpDimensionInfo(dim.getShortName(), indices);
-        if (sxyData.setPickUpDimensionInfo(info) == false) {
-          this.setPickUpResults(
-              map,
-              result,
-              pickUpStart,
-              pickUpEnd,
-              pickUpStep,
-              SGPropertyResults.INVALID_INPUT_VALUE);
-        }
-        this.setPickUpResults(
-            map, result, pickUpStart, pickUpEnd, pickUpStep, SGPropertyResults.SUCCEEDED);
-      } else {
-        this.setPickUpResults(
-            map, result, pickUpStart, pickUpEnd, pickUpStep, SGPropertyResults.INVALID_INPUT_VALUE);
-      }
-    } else if (this.mData instanceof SGSXYMDArrayMultipleData) {
-      // do nothing
-      return;
-    } else {
-      this.setPickUpResults(
-          map, result, pickUpStart, pickUpEnd, pickUpStep, SGPropertyResults.INVALID_INPUT_VALUE);
-    }
+    this.mColumnTypeUpdater.setPickUpResults(map, result, pickUpStart, pickUpEnd, pickUpStep);
   }
 
-  private SGInteger createInteger(SGInteger sNum, final int len) {
+  SGInteger createInteger(SGInteger sNum, final int len) {
     Integer num = sNum.getNumber();
     if (num == null) {
       return null;
@@ -2873,7 +2676,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     }
   }
 
-  private Integer getNetCDFPickUpNumber(SGPropertyMap map, String key, String value) {
+  Integer getNetCDFPickUpNumber(SGPropertyMap map, String key, String value) {
     if (!(this.mData instanceof SGSXYNetCDFMultipleData)) {
       return null;
     }
@@ -2894,7 +2697,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   }
 
   // Finds pickup variable from given column types or current column types of data.
-  private SGNetCDFVariable getNetCDFPickUpVariable(String[] columnTypes) {
+  SGNetCDFVariable getNetCDFPickUpVariable(String[] columnTypes) {
     SGSXYNetCDFMultipleData sxyData = (SGSXYNetCDFMultipleData) this.mData;
     SGNetCDFFile ncfile = sxyData.getNetcdfFile();
     List<SGNetCDFVariable> varList = ncfile.getVariables();
@@ -2938,357 +2741,25 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   @Override
   protected boolean setProperties(
       SGPropertyMap map, SGPropertyResults result, SGDataColumnInfo[] cols) {
-
-    // set column types
-    SGArrayData aData = (SGArrayData) this.mData;
-    SGDataColumnInfo[] preColumnInfo = aData.getColumnInfo();
-    try {
-      if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
-        if (this.setNetCDFColumnType(map, result, cols) == false) {
-          return false;
-        }
-      } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
-        if (this.setMDArrayColumnType(map, result, cols) == false) {
-          return false;
-        }
-      }
-    } finally {
-      // updates the stride with new column types
-      if (!SGDataColumnInfoUtility.hasEqualInput(preColumnInfo, cols)) {
-        Map<String, Object> infoMap = new HashMap<String, Object>();
-        infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, this.mData.getDataType());
-        infoMap.put(
-            SGIDataInformationKeyConstants.KEY_FIGURE_SIZE,
-            new SGTuple2f(this.mGraph.getGraphRectWidth(), this.mGraph.getGraphRectHeight()));
-        if (SGDataDataTypeUtility.isSDArrayData(this.mData)) {
-          SGSXYSDArrayMultipleData sdData = (SGSXYSDArrayMultipleData) this.mData;
-          Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataStrideUtility.calcSDArrayDefaultStride(cols, infoMap);
-          SGIntegerSeriesSet stride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
-          sdData.setStride(stride);
-          SGIntegerSeriesSet tickLabelStride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
-          sdData.setTickLabelStride(tickLabelStride);
-        } else if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
-          SGSXYNetCDFMultipleData ncData = (SGSXYNetCDFMultipleData) this.mData;
-          Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataStrideUtility.calcNetCDFDefaultStride(cols, infoMap);
-          SGIntegerSeriesSet stride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
-          ncData.setStride(stride);
-          SGIntegerSeriesSet tickLabelStride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
-          ncData.setTickLabelStride(tickLabelStride);
-          SGIntegerSeriesSet indexStride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE);
-          ncData.setIndexStride(indexStride);
-        } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
-          SGSXYMDArrayMultipleData mdData = (SGSXYMDArrayMultipleData) this.mData;
-          Map<String, SGIntegerSeriesSet> strideMap =
-              SGDataStrideUtility.calcMDArrayDefaultStride(cols, infoMap);
-          SGIntegerSeriesSet stride = strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
-          mdData.setStride(stride);
-          SGIntegerSeriesSet tickLabelStride =
-              strideMap.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
-          mdData.setTickLabelStride(tickLabelStride);
-        }
-      }
-
-      // clears time dimension
-      this.clearTimeDimension();
-    }
-
-    // sets picked up dimension and animation dimension
-    if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
-      List<String> keys = map.getKeys();
-      String strPickUpDimension = map.getValueString(COM_DATA_PICKUP_DIMENSION);
-      String strTimeDimension = map.getValueString(COM_DATA_ANIMATION_FRAME_DIMENSION);
-      final boolean pickUpDimContained =
-          keys.contains(COM_DATA_PICKUP_DIMENSION.toUpperCase()) && !"".equals(strPickUpDimension);
-      final boolean timeDimContained =
-          keys.contains(COM_DATA_ANIMATION_FRAME_DIMENSION.toUpperCase())
-              && !"".equals(strTimeDimension);
-      if (timeDimContained && pickUpDimContained) {
-        this.setPickUpAndTimeDimension(result, strPickUpDimension, strTimeDimension);
-      } else {
-        if (pickUpDimContained) {
-          if (!this.setPickUpDimension(strPickUpDimension)) {
-            result.putResult(COM_DATA_PICKUP_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
-          } else {
-            result.putResult(COM_DATA_PICKUP_DIMENSION, SGPropertyResults.SUCCEEDED);
-          }
-        }
-        if (timeDimContained) {
-          if (!this.setTimeDimension(strTimeDimension)) {
-            result.putResult(
-                COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.INVALID_INPUT_VALUE);
-          } else {
-            result.putResult(COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.SUCCEEDED);
-          }
-        }
-      }
-    }
-
-    // sets picked up indices
-    Map<String, SGInteger> pickUpMap = new HashMap<String, SGInteger>();
-    String strPickUpIndices = map.getValueString(COM_DATA_PICKUP_INDICES);
-    if (!"".equals(strPickUpIndices)) {
-      if (!this.setPickUpIndices(
-          map, result, COM_DATA_PICKUP_INDICES, strPickUpIndices, pickUpMap)) {
-        return false;
-      }
-    }
-    String strPickUpStart = map.getValueString(COM_DATA_PICKUP_START);
-    if (!"".equals(strPickUpStart)) {
-      if (!this.setPickUpIndices(map, result, COM_DATA_PICKUP_START, strPickUpStart, pickUpMap)) {
-        return false;
-      }
-    }
-    String strPickUpEnd = map.getValueString(COM_DATA_PICKUP_END);
-    if (!"".equals(strPickUpEnd)) {
-      if (!this.setPickUpIndices(map, result, COM_DATA_PICKUP_END, strPickUpEnd, pickUpMap)) {
-        return false;
-      }
-    }
-    String strPickUpStep = map.getValueString(COM_DATA_PICKUP_STEP);
-    if (!"".equals(strPickUpStep)) {
-      if (!this.setPickUpIndices(map, result, COM_DATA_PICKUP_STEP, strPickUpStep, pickUpMap)) {
-        return false;
-      }
-    }
-
-    // sets the stride
-    Iterator<String> itr = map.getKeyIterator();
-    while (itr.hasNext()) {
-      String key = itr.next();
-      String value = map.getValueString(key);
-      if ("".equals(value)) {
-        continue;
-      }
-      if (COM_DATA_ARRAY_SECTION.equalsIgnoreCase(key)) {
-        if (map.isDoubleQuoted(key) == false) {
-          result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.setStride(value) == false) {
-          result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_TICK_LABEL_ARRAY_SECTION.equalsIgnoreCase(key)) {
-        if (map.isDoubleQuoted(key) == false) {
-          result.putResult(
-              COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.setTickLabelStride(result, value) == false) {
-          result.putResult(
-              COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_INDEX_ARRAY_SECTION.equalsIgnoreCase(key)) {
-        if (map.isDoubleQuoted(COM_DATA_INDEX_ARRAY_SECTION) == false) {
-          result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.setIndexStride(value) == false) {
-          result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      } else if (COM_DATA_ANIMATION_ARRAY_SECTION.equalsIgnoreCase(key)) {
-        SGArrayData data = (SGArrayData) this.getData();
-        if (!data.isAnimationAvailable()) {
-          result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        final int len = data.getAnimationLength();
-        if (len == -1) {
-          result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        SGIntegerSeriesSet arraySection = SGIntegerSeriesSet.parse(value, len);
-        if (arraySection == null) {
-          result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        this.setFrameIndices(arraySection);
-        result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
-      }
-    }
-
-    return true;
+    return this.mColumnTypeUpdater.setProperties(map, result, cols);
   }
 
   // Sets the column types and picked up dimension.
-  private boolean setNetCDFColumnType(
+  boolean setNetCDFColumnType(
       SGPropertyMap map, SGPropertyResults result, SGDataColumnInfo[] cols) {
-
-    String[] columnTypes = new String[cols.length];
-    for (int ii = 0; ii < columnTypes.length; ii++) {
-      columnTypes[ii] = cols[ii].getColumnType();
-    }
-
-    SGSXYNetCDFMultipleData sxyData = (SGSXYNetCDFMultipleData) this.mData;
-    SGNetCDFPickUpDimensionInfo curInfo =
-        (SGNetCDFPickUpDimensionInfo) sxyData.getPickUpDimensionInfo();
-
-    SGNetCDFVariable pickUpVar = this.getNetCDFPickUpVariable(columnTypes);
-    if (pickUpVar != null) {
-      // pick up variable is assigned
-
-      SGNetCDFPickUpDimensionInfo newInfo = null;
-      if (curInfo != null) {
-        SGNetCDFFile ncfile = sxyData.getNetcdfFile();
-        String curDimName = curInfo.getDimensionName();
-        String pickUpDimName = pickUpVar.getName();
-        Dimension curDim = ncfile.findDimension(curDimName);
-        final int curLen = curDim.getLength();
-        Dimension newDim = ncfile.findDimension(pickUpDimName);
-        final int newLen = newDim.getLength();
-        SGIntegerSeriesSet curIndices = curInfo.getIndices();
-        SGIntegerSeries curSeries = curIndices.testReduce();
-        newInfo = this.getNetCDFPickUpInfo(map, result, pickUpDimName, curLen, curSeries);
-        if (newInfo == null) {
-          SGIntegerSeriesSet indicesNew =
-              new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(newLen));
-          newInfo = new SGNetCDFPickUpDimensionInfo(pickUpDimName, indicesNew);
-        }
-
-      } else {
-        // pick up variable is newly-assigned
-        // try to get pick up information from the map
-        Dimension dim = pickUpVar.getDimension(0);
-        final int len = dim.getLength();
-        String strideValue = map.getValueString(COM_DATA_PICKUP_INDICES);
-        if (!"".equals(strideValue)) {
-          SGIntegerSeriesSet indices = null;
-          if (map.isDoubleQuoted(COM_DATA_PICKUP_INDICES)) {
-            indices = SGIntegerSeriesSet.parse(strideValue, len);
-          } else {
-            result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
-          }
-          if (indices == null) {
-            result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
-            indices = new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(len));
-          }
-          newInfo = new SGNetCDFPickUpDimensionInfo(pickUpVar.getName(), indices);
-          result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
-        } else {
-          newInfo = this.getNetCDFPickUpInfo(map, result, dim.getShortName(), len, null);
-          if (newInfo == null) {
-            // get default pick up stride
-            SGDataColumnInfo[] infoArray = this.getDataColumnInfoArray();
-            SGNetCDFDataColumnInfo[] nCols = null;
-            SGNetCDFFile ncFile = sxyData.getNetcdfFile();
-            nCols = new SGNetCDFDataColumnInfo[cols.length];
-            for (int ii = 0; ii < nCols.length; ii++) {
-              SGNetCDFDataColumnInfo nCol = (SGNetCDFDataColumnInfo) infoArray[ii];
-              String varName = nCol.getName();
-              SGNetCDFVariable var = ncFile.findVariable(varName);
-              nCols[ii] = new SGNetCDFDataColumnInfo(var, var.getName(), var.getValueType());
-              nCols[ii].setColumnType(columnTypes[ii]);
-            }
-            Map<String, Object> infoMap = new HashMap<String, Object>();
-            SGDataFileUtility.updatePickupParameters(infoMap, nCols);
-            SGIntegerSeriesSet indices =
-                (SGIntegerSeriesSet)
-                    infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
-            newInfo = new SGNetCDFPickUpDimensionInfo(pickUpVar.getName(), indices);
-          }
-        }
-      }
-
-      // set to data
-      if (sxyData.setColumnType(columnTypes, newInfo) == false) {
-        this.setFailedColumnTypeResult(map, result);
-
-        // recovers pick up information
-        sxyData.setPickUpDimensionInfo(curInfo);
-        return false;
-      }
-
-    } else {
-      // pick up variable is not assigned
-
-      // clears pick up information
-      sxyData.setPickUpDimensionInfo(null);
-
-      // sets the column types
-      if (sxyData.setColumnType(columnTypes) == false) {
-        this.setFailedColumnTypeResult(map, result);
-
-        // recovers pick up information
-        sxyData.setPickUpDimensionInfo(curInfo);
-        return false;
-      }
-    }
-
-    result.putResult(COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
-    return true;
+    return this.mColumnTypeUpdater.setNetCDFColumnType(map, result, cols);
   }
 
-  private SGNetCDFPickUpDimensionInfo getNetCDFPickUpInfo(
+  SGNetCDFPickUpDimensionInfo getNetCDFPickUpInfo(
       SGPropertyMap map,
       SGPropertyResults result,
       String dimName,
       final int len,
       final SGIntegerSeries curSeries) {
-    SGNetCDFPickUpDimensionInfo info = null;
-    SGInteger start = null;
-    SGInteger end = null;
-    SGInteger step = null;
-    List<String> keys = map.getKeys();
-    for (String key : keys) {
-      String value = map.getValueString(key);
-      if (COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
-        Number num = this.getPickUpNumber(value, len);
-        if (num == null) {
-          result.putResult(COM_DATA_PICKUP_START, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        start = new SGInteger(num.intValue());
-      } else if (COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
-        Number num = this.getPickUpNumber(value, len);
-        if (num == null) {
-          result.putResult(COM_DATA_PICKUP_END, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        end = new SGInteger(num.intValue());
-      } else if (COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
-        Number num = this.getPickUpNumber(value, len);
-        if (num == null) {
-          result.putResult(COM_DATA_PICKUP_STEP, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        step = new SGInteger(num.intValue());
-      }
-    }
-    if (start != null || end != null || step != null) {
-      if (!(start != null && end != null && step != null) && (curSeries == null)) {
-        this.setPickUpResults(map, result, start, end, step, SGPropertyResults.INVALID_INPUT_VALUE);
-      } else {
-        final int nStart =
-            (start != null) ? start.getNumber().intValue() : curSeries.getStart().getNumber();
-        final int nEnd =
-            (end != null) ? end.getNumber().intValue() : curSeries.getEnd().getNumber();
-        final int nStep =
-            (step != null) ? step.getNumber().intValue() : curSeries.getStep().getNumber();
-        if (SGIntegerSeriesSet.isValidInput(nStart, nEnd, nStep)) {
-          SGIntegerSeriesSet indicesNew = new SGIntegerSeriesSet(nStart, nEnd, nStep);
-          info = new SGNetCDFPickUpDimensionInfo(dimName, indicesNew);
-          this.setPickUpResults(map, result, start, end, step, SGPropertyResults.SUCCEEDED);
-        } else {
-          this.setPickUpResults(
-              map, result, start, end, step, SGPropertyResults.INVALID_INPUT_VALUE);
-        }
-      }
-    }
-    return info;
+    return this.mColumnTypeUpdater.getNetCDFPickUpInfo(map, result, dimName, len, curSeries);
   }
 
-  private Number getPickUpNumber(String value, final int len) {
+  Number getPickUpNumber(String value, final int len) {
     Number num = SGUtilityText.getInteger(value);
     if (num == null) {
       if (SGIntegerSeries.ARRAY_INDEX_END.equalsIgnoreCase(value)) {
@@ -3304,137 +2775,23 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return num;
   }
 
-  private void setPickUpResults(
+  void setPickUpResults(
       SGPropertyMap map,
       SGPropertyResults result,
       SGInteger start,
       SGInteger end,
       SGInteger step,
       final int status) {
-    List<String> keys = map.getKeys();
-    if (start != null && keys.contains(COM_DATA_PICKUP_START.toUpperCase())) {
-      result.putResult(COM_DATA_PICKUP_START, status);
-    }
-    if (end != null && keys.contains(COM_DATA_PICKUP_END.toUpperCase())) {
-      result.putResult(COM_DATA_PICKUP_END, status);
-    }
-    if (step != null && keys.contains(COM_DATA_PICKUP_STEP.toUpperCase())) {
-      result.putResult(COM_DATA_PICKUP_STEP, status);
-    }
+    this.mColumnTypeUpdater.setPickUpResults(map, result, start, end, step, status);
   }
 
   // Sets the column types and picked up dimension.
-  private boolean setMDArrayColumnType(
+  boolean setMDArrayColumnType(
       SGPropertyMap map, SGPropertyResults result, SGDataColumnInfo[] cols) {
-
-    String[] columnTypes = new String[cols.length];
-    for (int ii = 0; ii < columnTypes.length; ii++) {
-      columnTypes[ii] = cols[ii].getColumnType();
-    }
-
-    SGSXYMDArrayMultipleData sxyData = (SGSXYMDArrayMultipleData) this.mData;
-    SGMDArrayPickUpDimensionInfo curInfo =
-        (SGMDArrayPickUpDimensionInfo) sxyData.getPickUpDimensionInfo();
-    String strPickUpDimension = map.getValueString(COM_DATA_PICKUP_DIMENSION);
-    Map<String, Integer> pickUpMap = this.createPickUpDimMap(sxyData, strPickUpDimension);
-
-    if (pickUpMap != null && pickUpMap.size() != 0) {
-      // pick up variable is assigned
-
-      int newLen = -1;
-      Iterator<Entry<String, Integer>> pickUpItr = pickUpMap.entrySet().iterator();
-      while (pickUpItr.hasNext()) {
-        Entry<String, Integer> pickUpEntry = pickUpItr.next();
-        String pickUpVarName = pickUpEntry.getKey();
-        Integer pickUpDim = pickUpEntry.getValue();
-        SGMDArrayVariable newVar = sxyData.findVariable(pickUpVarName);
-        int[] dims = newVar.getDimensions();
-        if (pickUpDim == -1) {
-          continue;
-        }
-        if (pickUpDim < 0 || pickUpDim >= dims.length) {
-          return false;
-        }
-        final int len = dims[pickUpDim];
-        if (newLen != -1) {
-          if (len != newLen) {
-            return false;
-          }
-        }
-        newLen = len;
-      }
-
-      SGMDArrayPickUpDimensionInfo newInfo = null;
-      if (curInfo != null) {
-        SGIntegerSeriesSet indicesNew =
-            new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(newLen));
-        newInfo = new SGMDArrayPickUpDimensionInfo(pickUpMap, indicesNew);
-
-      } else {
-        // pick up variable is newly-assigned
-        // try to get pick up information from the map
-        String strideValue = map.getValueString(COM_DATA_PICKUP_INDICES);
-        if (!"".equals(strideValue)) {
-          SGIntegerSeriesSet indices = null;
-          if (map.isDoubleQuoted(COM_DATA_PICKUP_INDICES)) {
-            indices = SGIntegerSeriesSet.parse(strideValue, newLen);
-          } else {
-            result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
-          }
-          if (indices == null) {
-            result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.INVALID_INPUT_VALUE);
-            indices = new SGIntegerSeriesSet(SGDataStrideUtility.createDefaultStepSeries(newLen));
-          }
-          newInfo = new SGMDArrayPickUpDimensionInfo(pickUpMap, indices);
-          result.putResult(COM_DATA_PICKUP_INDICES, SGPropertyResults.SUCCEEDED);
-        } else {
-          // get default pick up stride
-          SGDataColumnInfo[] infoArray = this.getDataColumnInfoArray();
-          SGMDArrayDataColumnInfo[] mdCols = new SGMDArrayDataColumnInfo[cols.length];
-          for (int ii = 0; ii < mdCols.length; ii++) {
-            SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) infoArray[ii];
-            String varName = mdCol.getName();
-            SGMDArrayVariable var = sxyData.findVariable(varName);
-            mdCols[ii] = new SGMDArrayDataColumnInfo(var, var.getName(), var.getValueType());
-            mdCols[ii].setColumnType(columnTypes[ii]);
-          }
-          Map<String, Object> infoMap = new HashMap<String, Object>();
-          SGDataFileUtility.updatePickupParameters(infoMap, mdCols);
-          SGIntegerSeriesSet indices =
-              (SGIntegerSeriesSet)
-                  infoMap.get(SGIDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES);
-          newInfo = new SGMDArrayPickUpDimensionInfo(pickUpMap, indices);
-        }
-      }
-
-      // set to data
-      if (sxyData.setColumnType(cols, newInfo) == false) {
-        this.setFailedColumnTypeResult(map, result);
-
-        // recovers pick up information
-        sxyData.setPickUpDimensionInfo(curInfo);
-        return false;
-      }
-
-    } else {
-      // pick up variable is not assigned
-
-      // sets the column types
-      if (sxyData.setColumnType(cols, null) == false) {
-        this.setFailedColumnTypeResult(map, result);
-
-        // recovers pick up information
-        sxyData.setPickUpDimensionInfo(curInfo);
-        return false;
-      }
-    }
-
-    result.putResult(COM_DATA_COLUMN_TYPE, SGPropertyResults.SUCCEEDED);
-
-    return true;
+    return this.mColumnTypeUpdater.setMDArrayColumnType(map, result, cols);
   }
 
-  private boolean setStride(String value) {
+  boolean setStride(String value) {
     SGISXYTypeData data = (SGISXYTypeData) this.getData();
     if (data instanceof SGSXYSDArrayMultipleData) {
       return this.setSDArrayStride(value);
