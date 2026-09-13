@@ -119,9 +119,9 @@ class SGShapePropertyUpdater implements SGIShapeConstants {
             return null;
           }
 
-          SGFigureElementShape.Rect rect = null;
+          SGShapeRect rect = null;
           if (type == SGIFigureElementShape.RECTANGLE) {
-            rect = owner.new Rect();
+            rect = new SGShapeRect(owner);
           } else {
             rect = owner.new Ellipse();
           }
