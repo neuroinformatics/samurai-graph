@@ -5,7 +5,7 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage
 
-Actual JaCoCo measurement (line coverage) is **14.9%** overall.
+Actual JaCoCo measurement (line coverage) is **15.1%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
@@ -13,12 +13,12 @@ Actual JaCoCo measurement (line coverage) is **14.9%** overall.
 | `org.freehep...util.export` | 89.7% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 80.0% | 1 | Few instructions |
 | `com.github...lib.hdf5` | 33.5% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 26.7% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
+| `jp...samuraigraph.base` | 27.9% | 21 | Pure-logic parts plus the window property I/O round-trip tests |
 | `jp...samuraigraph.data` | 29.9% | 50 | Largest application package; all core utilities covered |
 | `jp...samuraigraph.application` | 3.4% | 5 | Data setup dialog construction smoke tests |
-| `jp...samuraigraph.figure` | 5.5% | 9 | Legend, axis, grid, string, axis-break, significant-difference and timing-line round-trip tests |
+| `jp...samuraigraph.figure` | 5.6% | 10 | Legend, axis, grid, graph, string, axis-break, significant-difference and timing-line round-trip tests |
 
-- 93 test files / 1125 test executions against 622 main files / 276k LOC
+- 97 test files / 1137 test executions against 622 main files / 276k LOC
 - Per-class coverage of the data-layer utilities now reaches 60% or
   more: column info 92%, stride 81%, range 81%, misc 76%, merge 66%,
   data type 66%, buffer 62%, viewer 60%, file 60%, text 80%, column
@@ -38,17 +38,20 @@ Actual JaCoCo measurement (line coverage) is **14.9%** overall.
   `SGIImageConstants`) or as empty marker interfaces (`SGIRootObject`,
   `SGIWindowDialogObserver`). Classes implement 3–5 of them at once.
   A Java 1.x idiom.
-- **Raw `Thread` usage**: 8 files use raw threads instead of an executor:
-  eight `extends Thread` classes — `InputObserver` in
+- **Raw `Thread` usage**: seven `extends Thread` classes still run
+  directly instead of through an executor — `InputObserver` in
   `SGDataSetupWizardDialog` / `SGPropertyFileDataDialog` / `SGDataDialog`,
   `CommandThread` in `SGConsoleRunner`,
   `SGMainFunctions.Initializer`, `SGWindowManager.DropEventHandler`,
-  and `SGAnimationThread` — plus anonymous `new Thread` in
-  `SGMainFunctions.java:2073` and `SGAsyncWorker.java:36`.
+  and `SGAnimationThread`. The one-off command reader
+  (`SGMainFunctions`) and `SGAsyncWorker` now submit to a shared
+  daemon executor service.
 - **Static mutable fields**: instance state held in static fields — e.g.
-  `SGDrawingServer.mLookAndFeel` / `mAppMain`,
-  `SGApplicationAdapter.mAdapter` (static singleton), and
-  `SGMainFunctions.virtualBounds` (`SGMainFunctions.java:152`).
+  `SGDrawingWindow.mDataPluginList` / `mDataPluginManager` (also
+  duplicated in `SGDataViewerDialog` and `SGDataPopupMenu`),
+  `SGUserProperties.mInstance` (static singleton), and
+  `SGDialog.virtualBounds`. The server adapter, look-and-feel and
+  main-function references were moved to instance state.
 
 ## 3. Repository / Dependency Hygiene
 
