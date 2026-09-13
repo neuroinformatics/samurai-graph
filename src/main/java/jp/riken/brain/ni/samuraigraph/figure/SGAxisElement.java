@@ -62,6 +62,8 @@ public abstract class SGAxisElement
         SGIUndoable,
         SGIMovable {
 
+  private final SGAxisElementPropertyHelper mPropertyHelper = new SGAxisElementPropertyHelper(this);
+
   /** The axis figure element. */
   protected SGFigureElementAxis mAxisElement = null;
 
@@ -2219,117 +2221,7 @@ public abstract class SGAxisElement
    * @return an array of axis values
    */
   private double[] calcScaleValuesInLinearScale() {
-    SGAxis axis = this.mAxis;
-    final double minValue = axis.getMinDoubleValue();
-    final double maxValue = axis.getMaxDoubleValue();
-    final SGAxisValue baseline;
-    final SGAxisStepValue step;
-    if (this.isScaleAuto()) {
-      baseline = this.mAxisElement.calcBaselineValue(axis);
-      step = this.mAxisElement.calcStepValue(axis);
-      this.mBaselineValue = baseline;
-      this.mStepValue = step;
-    } else {
-      baseline = this.getScaleBase();
-      step = this.getScaleStep();
-    }
-
-    SGAxisValue[] axisValueArray;
-    if (this.getDateMode()) {
-
-      // get an array of numbers
-      axisValueArray =
-          SGUtilityNumber.calcStepValueSorted(
-              new SGAxisDateValue(minValue),
-              new SGAxisDateValue(maxValue),
-              baseline,
-              step,
-              SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT);
-
-    } else {
-
-      // get an array of numbers
-      axisValueArray =
-          SGUtilityNumber.calcStepValueSorted(
-              new SGAxisDoubleValue(minValue),
-              new SGAxisDoubleValue(maxValue),
-              baseline,
-              step,
-              SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT);
-
-      // set scale numbers integer when all numbers
-      // can be replaced with an integer
-      if (this.mAxisElement.mStartFlag) {
-        boolean flag = true;
-        for (int ii = 0; ii < axisValueArray.length; ii++) {
-          final double value = axisValueArray[ii].getValue();
-          final long round = Math.round(value);
-          final double diff = Math.abs(value - round);
-          if (diff != 0.0) {
-            flag = false;
-            break;
-          }
-        }
-        this.setNumbersInteger(flag);
-      }
-
-      // When the scale numbers are set to be integer,
-      // cast values to integer
-      if (this.isNumbersInteger()) {
-
-        final List<Integer> numList = new ArrayList<Integer>();
-        for (int ii = 0; ii < axisValueArray.length; ii++) {
-          double value;
-          if (this.isExponentVisible()) {
-            BigDecimal db = new BigDecimal(Double.toString(axisValueArray[ii].getValue()));
-            db = db.movePointLeft(this.getExponentValue());
-            value = db.doubleValue();
-          } else {
-            value = axisValueArray[ii].getValue();
-          }
-          final int num = (int) value;
-          if (Math.abs(num - value) < Double.MIN_VALUE) {
-            numList.add(Integer.valueOf(num));
-          }
-        }
-
-        // remove the same values
-        for (int ii = numList.size() - 1; ii >= 1; ii--) {
-          final Integer n1 = numList.get(ii);
-          for (int jj = ii - 1; jj >= 0; jj--) {
-            final Integer n2 = numList.get(jj);
-            if (n2.intValue() == n1.intValue()) {
-              numList.remove(ii);
-              break;
-            }
-          }
-        }
-
-        final double[] valueArray = new double[numList.size()];
-        for (int ii = 0; ii < valueArray.length; ii++) {
-          double value = ((Integer) numList.get(ii)).doubleValue();
-          if (this.isExponentVisible()) {
-            BigDecimal db = new BigDecimal(Double.toString(value));
-            db = db.movePointRight(this.getExponentValue());
-            value = db.doubleValue();
-          }
-          valueArray[ii] = value;
-        }
-
-        // these values reflect the integer flag,
-        // but are not influenced by the exponent flag
-        axisValueArray = new SGAxisDoubleValue[valueArray.length];
-        for (int ii = 0; ii < axisValueArray.length; ii++) {
-          axisValueArray[ii] = new SGAxisDoubleValue(valueArray[ii]);
-        }
-      }
-    }
-
-    double[] ret = new double[axisValueArray.length];
-    for (int ii = 0; ii < axisValueArray.length; ii++) {
-      ret[ii] = axisValueArray[ii].getValue();
-    }
-    return ret;
+    return this.mPropertyHelper.calcScaleValuesInLinearScale();
   }
 
   /**
@@ -3363,75 +3255,7 @@ public abstract class SGAxisElement
    * @return the map of properties
    */
   public SGPropertyMap getPropertyMap() {
-    SGPropertyMap map = new SGPropertyMap();
-
-    // visible
-    SGPropertyUtility.addProperty(map, COM_AXIS_VISIBLE, this.isVisible());
-
-    // frame line
-    this.addAxisLineProperties(
-        map,
-        this.getLineVisibleCommandKey(),
-        this.getLineWidthCommandKey(),
-        this.getSpaceLineAndNumberCommandKey(),
-        this.getLineColorCommandKey());
-
-    // title
-    SGPropertyUtility.addQuotedStringProperty(map, COM_AXIS_TITLE_TEXT, this.getTitleString());
-    this.addTitleProperties(
-        map,
-        COM_AXIS_TITLE_VISIBLE,
-        COM_AXIS_SPACE_TITLE_AND_NUMBER,
-        COM_AXIS_TITLE_CENTER_SHIFT,
-        COM_AXIS_TITLE_FONT_NAME,
-        COM_AXIS_TITLE_FONT_SIZE,
-        COM_AXIS_TITLE_FONT_STYLE,
-        COM_AXIS_TITLE_FONT_COLOR);
-
-    // number
-    this.addNumberProperties(
-        map,
-        COM_AXIS_NUMBER_VISIBLE,
-        COM_AXIS_NUMBER_INTEGER,
-        COM_AXIS_NUMBER_ANGLE,
-        COM_AXIS_EXPONENT_VISIBLE,
-        COM_AXIS_EXPONENT_VALUE,
-        COM_AXIS_EXPONENT_LOCATION_X,
-        COM_AXIS_EXPONENT_LOCATION_Y,
-        COM_AXIS_NUMBER_FONT_NAME,
-        COM_AXIS_NUMBER_FONT_SIZE,
-        COM_AXIS_NUMBER_FONT_STYLE,
-        COM_AXIS_NUMBER_FONT_COLOR);
-
-    // scale
-    StringBuilder sbScale = new StringBuilder();
-    sbScale.append('(');
-    sbScale.append(this.getMinValue());
-    sbScale.append(',');
-    sbScale.append(this.getMaxValue());
-    sbScale.append(',');
-    sbScale.append(SGUtilityText.getScaleTypeName(this.getScaleType()));
-    sbScale.append(')');
-    SGPropertyUtility.addProperty(map, COM_AXIS_SCALE_RANGE, sbScale.toString());
-    this.addScaleProperties(
-        map,
-        COM_AXIS_INVERT_COORDINATES,
-        COM_AXIS_SCALE_AUTO,
-        COM_AXIS_SCALE_STEP,
-        COM_AXIS_SCALE_BASE);
-
-    // tick mark
-    this.addTickMarkProperties(
-        map,
-        COM_AXIS_TICK_MARK_VISIBLE,
-        COM_AXIS_TICK_MARK_BOTHSIDES,
-        COM_AXIS_TICK_MARK_WIDTH,
-        COM_AXIS_MAJOR_TICK_MARK_LENGTH,
-        COM_AXIS_MINOR_TICK_MARK_LENGTH,
-        COM_AXIS_MINOR_TICK_MARK_NUMBER,
-        COM_AXIS_TICK_MARK_COLOR);
-
-    return map;
+    return this.mPropertyHelper.getPropertyMap();
   }
 
   /**
@@ -3440,69 +3264,10 @@ public abstract class SGAxisElement
    * @return the map of properties
    */
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
-    SGPropertyMap map = new SGPropertyMap();
-
-    // visible
-    SGPropertyUtility.addProperty(map, KEY_VISIBLE, this.isVisible());
-
-    // axis line
-    this.addAxisLineProperties(
-        map,
-        this.getLineVisibleCommandKey(),
-        this.getLineWidthPropertyFileKey(),
-        this.getSpaceLineAndNumberPropertyFileKey(),
-        this.getLineColorPropertyFileKey());
-
-    // Title
-    SGPropertyUtility.addProperty(map, KEY_TITLE_TEXT, this.getTitleString());
-    this.addTitleProperties(
-        map,
-        KEY_TITLE_VISIBLE,
-        KEY_SPACE_TITLE_AND_NUMBERS,
-        KEY_TITLE_SHIFT_FROM_CENTER,
-        KEY_TITLE_FONT_NAME,
-        KEY_TITLE_FONT_SIZE,
-        KEY_TITLE_FONT_STYLE,
-        KEY_TITLE_FONT_COLOR);
-
-    // Number
-    this.addNumberProperties(
-        map,
-        KEY_NUMBER_VISIBLE,
-        KEY_NUMBER_INTEGER,
-        KEY_NUMBER_ANGLE,
-        KEY_EXPONENT_VISIBLE,
-        KEY_EXPONENT_VALUE,
-        KEY_EXPONENT_LOCATION_X,
-        KEY_EXPONENT_LOCATION_Y,
-        KEY_NUMBER_FONT_NAME,
-        KEY_NUMBER_FONT_SIZE,
-        KEY_NUMBER_FONT_STYLE,
-        KEY_NUMBER_FONT_COLOR);
-
-    // Scale
-    SGPropertyUtility.addProperty(map, KEY_AXIS_MIN_VALUE, this.mAxis.getMinValue());
-    SGPropertyUtility.addProperty(map, KEY_AXIS_MAX_VALUE, this.mAxis.getMaxValue());
-    SGPropertyUtility.addProperty(
-        map, KEY_AXIS_SCALE_TYPE, SGUtilityText.getScaleTypeName(this.getScaleType()));
-    this.addScaleProperties(
-        map, KEY_AXIS_INVERT_COORDINATES, KEY_AUTO_CALC_NUMBER, KEY_STEP_VALUE, KEY_BASELINE_VALUE);
-
-    // Tick Mark
-    this.addTickMarkProperties(
-        map,
-        KEY_TICK_MARK_VISIBLE,
-        KEY_TICK_MARK_BOTHSIDES,
-        KEY_TICK_MARK_WIDTH,
-        KEY_MAJOR_TICK_MARK_LENGTH,
-        KEY_MINOR_TICK_MARK_LENGTH,
-        KEY_MINOR_TICK_MARK_NUMBER,
-        KEY_TICK_MARK_COLOR);
-
-    return map;
+    return this.mPropertyHelper.getPropertyFileMap(params);
   }
 
-  private void addAxisLineProperties(
+  void addAxisLineProperties(
       SGPropertyMap map,
       String lineVisibleKey,
       String lineWidthKey,
@@ -3522,7 +3287,7 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(map, colorKey, this.mAxisLineColor);
   }
 
-  private void addTitleProperties(
+  void addTitleProperties(
       SGPropertyMap map,
       String visibleKey,
       String spaceKey,
@@ -3554,7 +3319,7 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(map, fontColorKey, this.getTitleFontColor());
   }
 
-  private void addNumberProperties(
+  void addNumberProperties(
       SGPropertyMap map,
       String numberVisibleKey,
       String integerKey,
@@ -3595,7 +3360,7 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(map, fontColorKey, this.getNumberFontColor());
   }
 
-  private void addScaleProperties(
+  void addScaleProperties(
       SGPropertyMap map, String invertKey, String autoKey, String stepKey, String baseKey) {
     SGPropertyUtility.addProperty(map, invertKey, this.isInvertCoordinates());
     SGPropertyUtility.addProperty(map, autoKey, this.isScaleAuto());
@@ -3603,7 +3368,7 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(map, baseKey, this.getScaleBase());
   }
 
-  private void addTickMarkProperties(
+  void addTickMarkProperties(
       SGPropertyMap map,
       String visibleKey,
       String bothsidesKey,
