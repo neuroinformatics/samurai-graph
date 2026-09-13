@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
@@ -18,7 +17,6 @@ import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.SwingUtilities;
 import jp.riken.brain.ni.samuraigraph.base.SGAxis;
 import jp.riken.brain.ni.samuraigraph.base.SGAxisDateStepValue;
 import jp.riken.brain.ni.samuraigraph.base.SGAxisDateValue;
@@ -61,6 +59,8 @@ public abstract class SGAxisElement
         SGIStringConstants,
         SGIUndoable,
         SGIMovable {
+
+  private final SGAxisMouseHandler mMouseHandler = new SGAxisMouseHandler(this);
 
   private final SGAxisScaleDragHelper mScaleDragHelper = new SGAxisScaleDragHelper(this);
 
@@ -933,7 +933,7 @@ public abstract class SGAxisElement
     }
   }
 
-  private boolean isExponentAvailable() {
+  boolean isExponentAvailable() {
     return (this.isExponentVisible() && !this.getDateMode());
   }
 
@@ -1068,89 +1068,7 @@ public abstract class SGAxisElement
 
   /** */
   public boolean onMouseClicked(final MouseEvent e) {
-    final int x = e.getX();
-    final int y = e.getY();
-    final int mod = e.getModifiersEx();
-    final int cnt = e.getClickCount();
-    final boolean ctrl = (mod & InputEvent.CTRL_DOWN_MASK) != 0;
-    final boolean shift = (mod & InputEvent.SHIFT_DOWN_MASK) != 0;
-
-    // check axis line even when axis is invisible
-    for (int ii = 0; ii < this.mAxisLines.length; ii++) {
-      if (this.mAxisLines[ii].contains(x, y)) {
-        return this.clicked(e);
-      }
-    }
-
-    // return if axis is invisible
-    if (!this.isVisible()) {
-      return false;
-    }
-
-    // title
-    if (this.isTitleVisible()) {
-      if (this.mTitle.contains(x, y)) {
-        if (this.mAxisElement.isEdited()) {
-          this.mAxisElement.closeTextField();
-        }
-        if (SwingUtilities.isLeftMouseButton(e) && cnt == 1) {
-          if (this.mTitle.isSelected() && !ctrl && !shift) {
-            this.mAxisElement.mEditingStringElement = this.mTitle;
-            Point point = this.mAxisElement.getPressedPoint();
-            final int tx = point.x - (int) this.mTitle.getX();
-            final int ty = point.y - (int) this.mTitle.getY();
-            this.mAxisElement.showEditField(this.mAxisElement.mTextField, this.mTitle, tx, ty);
-          } else {
-            this.mAxisElement.updateFocusedObjectsList(this.mTitle, e);
-
-            // avoids simultaneous selection
-            if (this.mTitle.isSelected()) {
-              this.setSelectedFlag(false);
-            }
-          }
-          return true;
-        }
-        return this.clicked(e);
-      }
-    }
-
-    // numbers
-    if (this.isNumbersVisible()) {
-      for (int ii = 0; ii < this.mNumberList.size(); ii++) {
-        ElementStringNumber el = this.mNumberList.get(ii);
-        if (el.contains(x, y)) {
-          return this.clicked(e);
-        }
-      }
-    }
-
-    // exponent
-    if (this.isExponentAvailable()) {
-      if (this.mExponentSymbol.contains(x, y)) {
-        if (SwingUtilities.isLeftMouseButton(e) && cnt == 1) {
-          this.mAxisElement.updateFocusedObjectsList(this.mExponentSymbol, e);
-
-          // avoids simultaneous selection
-          if (this.mExponentSymbol.isSelected()) {
-            this.setSelectedFlag(false);
-          }
-          return true;
-        }
-        return this.clicked(e);
-      }
-    }
-
-    // tick marks
-    if (this.isTickMarkVisible()) {
-      for (int ii = 0; ii < this.mTickMarksList.size(); ii++) {
-        ElementLineTickMark el = this.mTickMarksList.get(ii);
-        if (el.contains(x, y)) {
-          return this.clicked(e);
-        }
-      }
-    }
-
-    return false;
+    return this.mMouseHandler.onMouseClicked(e);
   }
 
   /**
@@ -1336,44 +1254,7 @@ public abstract class SGAxisElement
    * @return true if succeeded
    */
   public boolean onMouseDragged(final MouseEvent e) {
-    if (!this.mVisible) {
-      return false;
-    }
-    if (this.mDraggingElement == null || this.mTempRange == null) {
-      return false;
-    }
-
-    AxisValueRange range = null;
-    if (this.mDraggingElement instanceof ElementStringNumber) {
-      // ElementStringOfScale
-      range = this.dragScaleNumber(e);
-    } else if (this.mDraggingElement instanceof ElementLineTickMark) {
-      // ElementLineOfScale
-      range = this.dragElementLineOfScale(e);
-    }
-
-    if (range != null) {
-      // set the range to the axis
-      final SGAxisValue minValue = range.min;
-      final SGAxisValue maxValue = range.max;
-      final int scaleType = this.getScaleType();
-      this.mAxis.setScale(minValue, maxValue, scaleType);
-
-      // create drawing elements
-      if (this.createDrawingElements() == false) {
-        return false;
-      }
-
-      // notify to listeners
-      if (SGFigureElementAxis.mNotifyChangeOnDraggingFlag) {
-        this.mAxisElement.notifyChange();
-      }
-
-      // notify to listeners
-      this.notifyAxisScaleChange();
-    }
-
-    return true;
+    return this.mMouseHandler.onMouseDragged(e);
   }
 
   protected void notifyAxisScaleChange() {
