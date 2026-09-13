@@ -13,7 +13,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import jp.riken.brain.ni.samuraigraph.base.SGAxisSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGCheckBox;
@@ -26,7 +25,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDateUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGFillPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGGradationPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGGradationPaintDialog;
-import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesDialog;
@@ -44,24 +42,18 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
-import jp.riken.brain.ni.samuraigraph.data.SGDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
-import jp.riken.brain.ni.samuraigraph.data.SGIMDArrayConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGINetCDFConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
-import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataColumnInfo;
-import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataColumnInfo;
-import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFFile;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGPickUpDimensionInfo;
-import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYMDArrayMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYSDArrayMultipleData;
@@ -76,8 +68,14 @@ public class SGPropertyDialogSXYData extends SGDataDialog
         SGISymbolConstants,
         SGITwoAxesDialog {
 
+  final SGSXYDataDialogBuilder mDialogBuilder = new SGSXYDataDialogBuilder(this);
+
+  List<SGIPropertyDialogObserver> getDialogObserverList() {
+    return this.mPropertyDialogObserverList;
+  }
+
   // serialVersionID
-  private static final long serialVersionUID = -8504726423602738949L;
+  static final long serialVersionUID = -8504726423602738949L;
 
   /** The title of this dialog. */
   public static final String TITLE = "Data Properties";
@@ -108,174 +106,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   private void createComponents() {
-    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-
-    mLineEditButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mCommonPanel = new javax.swing.JPanel();
-    mLegendVisibleCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
-    mNameLabel = new javax.swing.JLabel();
-    mNameField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
-    mDataColumnSelectionButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mTabbedPane = new javax.swing.JTabbedPane();
-    mLinePanel = new javax.swing.JPanel();
-    mLineSubPanel = new javax.swing.JPanel();
-    mLineVisibleCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
-    mLineWidthLabel = new javax.swing.JLabel();
-    mLineWidthSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mLineColorLabel = new javax.swing.JLabel();
-    mLineColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
-    mLineTypeLabel = new javax.swing.JLabel();
-    mLineTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
-    mLineConnectCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
-    mLineSymbolLabel = new javax.swing.JLabel();
-    mLineSymbolSeparator = new javax.swing.JSeparator();
-    mLineSymbolPanel = new javax.swing.JPanel();
-    mSymbolVisibleCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
-    mSymbolTypePanel = new javax.swing.JPanel();
-    mSymbolTypeLabel = new javax.swing.JLabel();
-    mSymbolTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
-    mSymbolBodyLabel = new javax.swing.JLabel();
-    mSymbolBodySeparator = new javax.swing.JSeparator();
-    mSymbolSizeLabel = new javax.swing.JLabel();
-    mSymbolSizeSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mSymbolColorLabel = new javax.swing.JLabel();
-    mSymbolColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
-    mSymbolBodyTransparencyPanel = new javax.swing.JPanel();
-    mSymbolBodyTransparencyLabel = new javax.swing.JLabel();
-    mSymbolBodyTransparencySpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mSymbolLineWidthSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mSymbolLineWidthLabel = new javax.swing.JLabel();
-    mSymbolLineColorLabel = new javax.swing.JLabel();
-    mSymbolLineColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
-    mSymbolLineLabel = new javax.swing.JLabel();
-    mSymbolLineVisibleCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
-    mSymbolLineSeparator = new javax.swing.JSeparator();
-    mLineStyleCustomizeButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mBarPanel = new javax.swing.JPanel();
-    mBarSubPanel = new javax.swing.JPanel();
-    mBodyPanel = new javax.swing.JPanel();
-    mBarBodyTransparencyPanel = new javax.swing.JPanel();
-    mBarBodyTransparencyLabel = new javax.swing.JLabel();
-    mBarBodyTransparencySpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mBarColorPanel = new javax.swing.JPanel();
-    mBarColorLabel = new javax.swing.JLabel();
-    mBarBodyColorFillRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
-    mBarBodyColorPatternRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
-    mBarBodyColorGradationRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
-    mBarBodyColorGradationColorButton =
-        new jp.riken.brain.ni.samuraigraph.base.SGGradationPaintSelectionButton();
-    mBarBodyColorPatternPaintButton =
-        new jp.riken.brain.ni.samuraigraph.base.SGPatternPaintSelectionButton();
-    mBarInnerColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
-    mBarBodyWidthIntervalPanel = new javax.swing.JPanel();
-    mBarIntervalPanel = new javax.swing.JPanel();
-    mBarIntervalTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
-    mBarIntervalDateButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mBarIntervalLabel = new javax.swing.JLabel();
-    mBarWidthPanel = new javax.swing.JPanel();
-    mBarWidthTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
-    mBarWidthDateButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mBarWidthLabel = new javax.swing.JLabel();
-    mBarLinePanel = new javax.swing.JPanel();
-    mBarLineWidthLabel = new javax.swing.JLabel();
-    mBarLineWidthSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mBarLineColorLabel = new javax.swing.JLabel();
-    mBarLineColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
-    mBarOffsetPanel = new javax.swing.JPanel();
-    mBarOffsetXPanel = new javax.swing.JPanel();
-    mBarOffsetXTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
-    mBarOffsetXDateButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mBarOffsetXLabel = new javax.swing.JLabel();
-    mBarOffsetYPanel = new javax.swing.JPanel();
-    mBarOffsetYTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
-    mBarOffsetYDateButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mBarOffsetYLabel = new javax.swing.JLabel();
-    mBarBodyLabel = new javax.swing.JLabel();
-    mBarBodySeparator = new javax.swing.JSeparator();
-    mBarTopPanel = new javax.swing.JPanel();
-    mBarBaseLineValueLabel = new javax.swing.JLabel();
-    mBarVerticalCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
-    mBarVisibleCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
-    mBarBaselinePanel = new javax.swing.JPanel();
-    mBarBaselineTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
-    mBarBaselineDateButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mBarLineLabel = new javax.swing.JLabel();
-    mBarLineVisibleCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
-    mBarLineSeparator = new javax.swing.JSeparator();
-    mBarOffsetLabel = new javax.swing.JLabel();
-    mBarOffsetSeparator = new javax.swing.JSeparator();
-    mErrorBarPanel = new javax.swing.JPanel();
-    mErrorBarSubPanel = new javax.swing.JPanel();
-    mErrorBarVisibleCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
-    mErrorBarSymbolSizeLabel = new javax.swing.JLabel();
-    mErrorBarSymbolSizeSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mErrorBarColorLabel = new javax.swing.JLabel();
-    mErrorBarTypeLabel = new javax.swing.JLabel();
-    mErrorBarTypeComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
-    mErrorBarColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
-    mErrorBarStyleLabel = new javax.swing.JLabel();
-    mErrorBarSymbolLabel = new javax.swing.JLabel();
-    mErrorBarStyleSeparator = new javax.swing.JSeparator();
-    mErrorBarSymbolSeparator = new javax.swing.JSeparator();
-    mErrorBarStylePanel = new javax.swing.JPanel();
-    mErrorBarBothsidesRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
-    mErrorBarUpsideRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
-    mErrorBarDownsideRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
-    mErrorBarLineWidthPanel = new javax.swing.JPanel();
-    mErrorBarLineWidthLabel1 = new javax.swing.JLabel();
-    mErrorBarLineWidthSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mErrorBarLineWidthLabel2 = new javax.swing.JLabel();
-    mErrorBarPositionLabel = new javax.swing.JLabel();
-    mErrorBarPositionSeparator = new javax.swing.JSeparator();
-    mErrorBarPositionPanel = new javax.swing.JPanel();
-    mErrorBarPositionLineRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
-    mErrorBarPositionBarRadioButton = new jp.riken.brain.ni.samuraigraph.base.SGRadioButton();
-    mTickLabelPanel = new javax.swing.JPanel();
-    mTickLabelSubPanel = new javax.swing.JPanel();
-    mTickLabelFontSizeLabel = new javax.swing.JLabel();
-    mTickLabelVisibleCheckBox = new jp.riken.brain.ni.samuraigraph.base.SGCheckBox();
-    mTickLabelFontSizeSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mTickLabelColorButton = new jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton();
-    mTickLabelColorLabel = new javax.swing.JLabel();
-    mTickLabelAnglePanel = new javax.swing.JPanel();
-    mTickLabelAngleLabel = new javax.swing.JLabel();
-    mTickLabelAngleSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mTickLabelFontLabel = new javax.swing.JLabel();
-    mTickLabelFontSeparator = new javax.swing.JSeparator();
-    mTickLabelTextLabel = new javax.swing.JLabel();
-    mTickLabelAngleSeparator = new javax.swing.JSeparator();
-    mTickLabelFontStyleComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
-    mTickLabelFontNameComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
-    mTickLabelFontNameLabel = new javax.swing.JLabel();
-    mTickLabelFontStyleLabel = new javax.swing.JLabel();
-    mTickLabelFormatLabel = new javax.swing.JLabel();
-    mTickLabelFormatSeparator = new javax.swing.JSeparator();
-    mTickLabelFormatPanel = new javax.swing.JPanel();
-    mTickLabelDecimalPlacesSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mTickLabelDecimalPlacesLabel = new javax.swing.JLabel();
-    mTickLabelExponentLabel = new javax.swing.JLabel();
-    mTickLabelDateFormatComboBox = new jp.riken.brain.ni.samuraigraph.base.SGComboBox<>();
-    mExponentPanel = new javax.swing.JPanel();
-    mTickLabelExponentSpinner = new jp.riken.brain.ni.samuraigraph.base.SGSpinner();
-    mTickLabelExponentBaseLabel = new javax.swing.JLabel();
-    mTickLabelDateFormatLabel = new javax.swing.JLabel();
-    mButtonPanel = new javax.swing.JPanel();
-    mOKButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mCancelButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mPreviewButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mBottomCommonPanel = new javax.swing.JPanel();
-    mShiftXLabel = new javax.swing.JLabel();
-    mShiftLabel = new javax.swing.JLabel();
-    mShiftYLabel = new javax.swing.JLabel();
-    mShiftXPanel = new javax.swing.JPanel();
-    mShiftXTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
-    mShiftXDateButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mShiftYPanel = new javax.swing.JPanel();
-    mShiftYTextField = new jp.riken.brain.ni.samuraigraph.base.SGTextField();
-    mShiftYDateButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mHeadPanel = new javax.swing.JPanel();
-
-    mLineEditButton.setText("Edit");
+    this.mDialogBuilder.createComponents();
   }
 
   private void setupCommonSection() {
@@ -334,322 +165,11 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   private void setupLineTab() {
-    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-    mLinePanel.setLayout(new java.awt.GridBagLayout());
-
-    mLineSubPanel.setLayout(new java.awt.GridBagLayout());
-
-    mLineVisibleCheckBox.setText("Visible");
-    mLineVisibleCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 10, 2, 10);
-    mLineSubPanel.add(mLineVisibleCheckBox, gridBagConstraints);
-
-    mLineWidthLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mLineWidthLabel.setText("Width");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 15, 2, 5);
-    mLineSubPanel.add(mLineWidthLabel, gridBagConstraints);
-
-    mLineWidthSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mLineWidthSpinner.setMinimumSize(new java.awt.Dimension(75, 22));
-    mLineWidthSpinner.setPreferredSize(new java.awt.Dimension(75, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 5);
-    mLineSubPanel.add(mLineWidthSpinner, gridBagConstraints);
-
-    mLineColorLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mLineColorLabel.setText("Color");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 20, 2, 5);
-    mLineSubPanel.add(mLineColorLabel, gridBagConstraints);
-
-    mLineColorButton.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
-    mLineColorButton.setMinimumSize(new java.awt.Dimension(65, 20));
-    mLineColorButton.setPreferredSize(new java.awt.Dimension(65, 20));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 3;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
-    mLineSubPanel.add(mLineColorButton, gridBagConstraints);
-
-    mLineTypeLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mLineTypeLabel.setText("Type");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 15, 2, 5);
-    mLineSubPanel.add(mLineTypeLabel, gridBagConstraints);
-
-    mLineTypeComboBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mLineTypeComboBox.setMinimumSize(new java.awt.Dimension(140, 22));
-    mLineTypeComboBox.setPreferredSize(new java.awt.Dimension(140, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.gridwidth = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 5);
-    mLineSubPanel.add(mLineTypeComboBox, gridBagConstraints);
-
-    mLineConnectCheckBox.setText("Ignore Missing Values");
-    mLineConnectCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.gridwidth = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 40, 2, 10);
-    mLineSubPanel.add(mLineConnectCheckBox, gridBagConstraints);
-
-    mLineSymbolLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mLineSymbolLabel.setText("Symbol");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 0);
-    mLineSubPanel.add(mLineSymbolLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 50, 2, 10);
-    mLineSubPanel.add(mLineSymbolSeparator, gridBagConstraints);
-
-    this.initializeLineSymbolPanel();
-
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
-    mLineSubPanel.add(mLineStyleCustomizeButton, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
-    mLinePanel.add(mLineSubPanel, gridBagConstraints);
-
-    mTabbedPane.addTab("Line", mLinePanel);
+    this.mDialogBuilder.setupLineTab();
   }
 
-  private void initializeLineSymbolPanel() {
-    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-    mLineSymbolPanel.setLayout(new java.awt.GridBagLayout());
-
-    mSymbolVisibleCheckBox.setText("Visible");
-    mSymbolVisibleCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 10, 2, 10);
-    mLineSymbolPanel.add(mSymbolVisibleCheckBox, gridBagConstraints);
-
-    mSymbolTypePanel.setLayout(new java.awt.GridBagLayout());
-
-    mSymbolTypeLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mSymbolTypeLabel.setText("Type");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
-    mSymbolTypePanel.add(mSymbolTypeLabel, gridBagConstraints);
-
-    mSymbolTypeComboBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mSymbolTypeComboBox.setMinimumSize(new java.awt.Dimension(150, 22));
-    mSymbolTypeComboBox.setPreferredSize(new java.awt.Dimension(150, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-    mSymbolTypePanel.add(mSymbolTypeComboBox, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.gridwidth = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 30, 2, 0);
-    mLineSymbolPanel.add(mSymbolTypePanel, gridBagConstraints);
-
-    mSymbolBodyLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mSymbolBodyLabel.setText("Body");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 15, 5, 5);
-    mLineSymbolPanel.add(mSymbolBodyLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 10);
-    mLineSymbolPanel.add(mSymbolBodySeparator, gridBagConstraints);
-
-    mSymbolSizeLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mSymbolSizeLabel.setText("Size");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 25, 2, 5);
-    mLineSymbolPanel.add(mSymbolSizeLabel, gridBagConstraints);
-
-    mSymbolSizeSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mSymbolSizeSpinner.setMinimumSize(new java.awt.Dimension(75, 22));
-    mSymbolSizeSpinner.setPreferredSize(new java.awt.Dimension(75, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 5);
-    mLineSymbolPanel.add(mSymbolSizeSpinner, gridBagConstraints);
-
-    mSymbolColorLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mSymbolColorLabel.setText("Color");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 20, 2, 5);
-    mLineSymbolPanel.add(mSymbolColorLabel, gridBagConstraints);
-
-    mSymbolColorButton.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
-    mSymbolColorButton.setMinimumSize(new java.awt.Dimension(65, 20));
-    mSymbolColorButton.setPreferredSize(new java.awt.Dimension(65, 20));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 3;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
-    mLineSymbolPanel.add(mSymbolColorButton, gridBagConstraints);
-
-    mSymbolBodyTransparencyPanel.setLayout(new java.awt.GridBagLayout());
-
-    mSymbolBodyTransparencyLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mSymbolBodyTransparencyLabel.setText("Transparency");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mSymbolBodyTransparencyPanel.add(mSymbolBodyTransparencyLabel, gridBagConstraints);
-
-    mSymbolBodyTransparencySpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mSymbolBodyTransparencySpinner.setMinimumSize(new java.awt.Dimension(75, 22));
-    mSymbolBodyTransparencySpinner.setPreferredSize(new java.awt.Dimension(75, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-    mSymbolBodyTransparencyPanel.add(mSymbolBodyTransparencySpinner, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.gridwidth = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 25, 2, 0);
-    mLineSymbolPanel.add(mSymbolBodyTransparencyPanel, gridBagConstraints);
-
-    mSymbolLineWidthSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mSymbolLineWidthSpinner.setMinimumSize(new java.awt.Dimension(75, 22));
-    mSymbolLineWidthSpinner.setPreferredSize(new java.awt.Dimension(75, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 6;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
-    mLineSymbolPanel.add(mSymbolLineWidthSpinner, gridBagConstraints);
-
-    mSymbolLineWidthLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mSymbolLineWidthLabel.setText("Width");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 6;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 25, 0, 5);
-    mLineSymbolPanel.add(mSymbolLineWidthLabel, gridBagConstraints);
-
-    mSymbolLineColorLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mSymbolLineColorLabel.setText("Color");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 6;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 5);
-    mLineSymbolPanel.add(mSymbolLineColorLabel, gridBagConstraints);
-
-    mSymbolLineColorButton.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
-    mSymbolLineColorButton.setMinimumSize(new java.awt.Dimension(65, 20));
-    mSymbolLineColorButton.setPreferredSize(new java.awt.Dimension(65, 20));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 3;
-    gridBagConstraints.gridy = 6;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 10);
-    mLineSymbolPanel.add(mSymbolLineColorButton, gridBagConstraints);
-
-    mSymbolLineLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mSymbolLineLabel.setText("Line");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 15, 2, 5);
-    mLineSymbolPanel.add(mSymbolLineLabel, gridBagConstraints);
-
-    mSymbolLineVisibleCheckBox.setText("Visible");
-    mSymbolLineVisibleCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 5;
-    gridBagConstraints.gridwidth = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 25, 2, 0);
-    mLineSymbolPanel.add(mSymbolLineVisibleCheckBox, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.insets = new java.awt.Insets(0, 45, 2, 10);
-    mLineSymbolPanel.add(mSymbolLineSeparator, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mLineSubPanel.add(mLineSymbolPanel, gridBagConstraints);
-
-    mLineStyleCustomizeButton.setText("Customize");
-    mLineStyleCustomizeButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 3;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+  void initializeLineSymbolPanel() {
+    this.mDialogBuilder.initializeLineSymbolPanel();
   }
 
   private void setupBarTab() {
@@ -731,176 +251,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   private void initializeBarBodyPanel() {
-    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-    mBodyPanel.setLayout(new java.awt.GridBagLayout());
-
-    mBarBodyTransparencyPanel.setLayout(new java.awt.GridBagLayout());
-
-    mBarBodyTransparencyLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mBarBodyTransparencyLabel.setText("Transparency");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
-    mBarBodyTransparencyPanel.add(mBarBodyTransparencyLabel, gridBagConstraints);
-
-    mBarBodyTransparencySpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mBarBodyTransparencySpinner.setMinimumSize(new java.awt.Dimension(75, 22));
-    mBarBodyTransparencySpinner.setPreferredSize(new java.awt.Dimension(75, 22));
-    mBarBodyTransparencySpinner.setText("");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarBodyTransparencyPanel.add(mBarBodyTransparencySpinner, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 10);
-    mBodyPanel.add(mBarBodyTransparencyPanel, gridBagConstraints);
-
-    mBarColorPanel.setLayout(new java.awt.GridBagLayout());
-
-    mBarColorLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mBarColorLabel.setText("Color");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
-    mBarColorPanel.add(mBarColorLabel, gridBagConstraints);
-
-    mBarBodyColorFillRadioButton.setText("Fill");
-    mBarBodyColorFillRadioButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarColorPanel.add(mBarBodyColorFillRadioButton, gridBagConstraints);
-
-    mBarBodyColorPatternRadioButton.setText("Pattern");
-    mBarBodyColorPatternRadioButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarColorPanel.add(mBarBodyColorPatternRadioButton, gridBagConstraints);
-
-    mBarBodyColorGradationRadioButton.setText("Gradation");
-    mBarBodyColorGradationRadioButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarColorPanel.add(mBarBodyColorGradationRadioButton, gridBagConstraints);
-
-    mBarBodyColorGradationColorButton.setMinimumSize(new java.awt.Dimension(65, 20));
-    mBarBodyColorGradationColorButton.setPreferredSize(new java.awt.Dimension(65, 20));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarColorPanel.add(mBarBodyColorGradationColorButton, gridBagConstraints);
-
-    mBarBodyColorPatternPaintButton.setMinimumSize(new java.awt.Dimension(65, 20));
-    mBarBodyColorPatternPaintButton.setPreferredSize(new java.awt.Dimension(65, 20));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarColorPanel.add(mBarBodyColorPatternPaintButton, gridBagConstraints);
-
-    mBarInnerColorButton.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
-    mBarInnerColorButton.setMinimumSize(new java.awt.Dimension(65, 20));
-    mBarInnerColorButton.setPreferredSize(new java.awt.Dimension(65, 20));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarColorPanel.add(mBarInnerColorButton, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBodyPanel.add(mBarColorPanel, gridBagConstraints);
-
-    mBarBodyWidthIntervalPanel.setLayout(new java.awt.GridBagLayout());
-
-    mBarIntervalPanel.setLayout(new java.awt.GridBagLayout());
-
-    mBarIntervalTextField.setColumns(6);
-    mBarIntervalTextField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarIntervalPanel.add(mBarIntervalTextField, gridBagConstraints);
-
-    mBarIntervalDateButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarIntervalPanel.add(mBarIntervalDateButton, gridBagConstraints);
-
-    mBarIntervalLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mBarIntervalLabel.setText("Interval");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
-    mBarIntervalPanel.add(mBarIntervalLabel, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    mBarBodyWidthIntervalPanel.add(mBarIntervalPanel, gridBagConstraints);
-
-    mBarWidthPanel.setLayout(new java.awt.GridBagLayout());
-
-    mBarWidthTextField.setColumns(6);
-    mBarWidthTextField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarWidthPanel.add(mBarWidthTextField, gridBagConstraints);
-
-    mBarWidthDateButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mBarWidthPanel.add(mBarWidthDateButton, gridBagConstraints);
-
-    mBarWidthLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mBarWidthLabel.setText("Width");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
-    mBarWidthPanel.add(mBarWidthLabel, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
-    mBarBodyWidthIntervalPanel.add(mBarWidthPanel, gridBagConstraints);
-
-    mBodyPanel.add(mBarBodyWidthIntervalPanel, new java.awt.GridBagConstraints());
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 0);
-    mBarSubPanel.add(mBodyPanel, gridBagConstraints);
+    this.mDialogBuilder.initializeBarBodyPanel();
   }
 
   private void initializeBarLinePanel() {
@@ -1096,139 +447,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   private void setupErrorBarTab() {
-    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-    mErrorBarPanel.setLayout(new java.awt.GridBagLayout());
-
-    mErrorBarSubPanel.setLayout(new java.awt.GridBagLayout());
-
-    mErrorBarVisibleCheckBox.setText("Visible");
-    mErrorBarVisibleCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridwidth = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 10, 2, 5);
-    mErrorBarSubPanel.add(mErrorBarVisibleCheckBox, gridBagConstraints);
-
-    mErrorBarSymbolSizeLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mErrorBarSymbolSizeLabel.setText("Size");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 25, 2, 5);
-    mErrorBarSubPanel.add(mErrorBarSymbolSizeLabel, gridBagConstraints);
-
-    mErrorBarSymbolSizeSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mErrorBarSymbolSizeSpinner.setPreferredSize(new java.awt.Dimension(75, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 5);
-    mErrorBarSubPanel.add(mErrorBarSymbolSizeSpinner, gridBagConstraints);
-
-    mErrorBarColorLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mErrorBarColorLabel.setText("Color");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 20, 2, 5);
-    mErrorBarSubPanel.add(mErrorBarColorLabel, gridBagConstraints);
-
-    mErrorBarTypeLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mErrorBarTypeLabel.setText("Type");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 25, 2, 5);
-    mErrorBarSubPanel.add(mErrorBarTypeLabel, gridBagConstraints);
-
-    mErrorBarTypeComboBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mErrorBarTypeComboBox.setPreferredSize(new java.awt.Dimension(90, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.gridwidth = 3;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
-    mErrorBarSubPanel.add(mErrorBarTypeComboBox, gridBagConstraints);
-
-    mErrorBarColorButton.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
-    mErrorBarColorButton.setPreferredSize(new java.awt.Dimension(65, 20));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 3;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
-    mErrorBarSubPanel.add(mErrorBarColorButton, gridBagConstraints);
-
-    mErrorBarStyleLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mErrorBarStyleLabel.setText("Style");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 5;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 10);
-    mErrorBarSubPanel.add(mErrorBarStyleLabel, gridBagConstraints);
-
-    mErrorBarSymbolLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mErrorBarSymbolLabel.setText("Symbol ");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 10);
-    mErrorBarSubPanel.add(mErrorBarSymbolLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 5;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 50, 0, 10);
-    mErrorBarSubPanel.add(mErrorBarStyleSeparator, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.insets = new java.awt.Insets(0, 65, 0, 10);
-    mErrorBarSubPanel.add(mErrorBarSymbolSeparator, gridBagConstraints);
-
-    this.initializeErrorBarStylePanel();
-
-    this.initializeErrorBarLineWidthPanel();
-
-    mErrorBarPositionLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mErrorBarPositionLabel.setText("Position");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 7;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 10);
-    mErrorBarSubPanel.add(mErrorBarPositionLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 7;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 70, 0, 10);
-    mErrorBarSubPanel.add(mErrorBarPositionSeparator, gridBagConstraints);
-
-    this.initializeErrorBarPositionPanel();
-
-    mErrorBarPanel.add(mErrorBarSubPanel, gridBagConstraints);
-
-    mTabbedPane.addTab("Error Bar", mErrorBarPanel);
+    this.mDialogBuilder.setupErrorBarTab();
   }
 
-  private void initializeErrorBarStylePanel() {
+  void initializeErrorBarStylePanel() {
     java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mErrorBarStylePanel.setLayout(new java.awt.GridBagLayout());
 
@@ -1265,7 +487,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     mErrorBarSubPanel.add(mErrorBarStylePanel, gridBagConstraints);
   }
 
-  private void initializeErrorBarLineWidthPanel() {
+  void initializeErrorBarLineWidthPanel() {
     java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mErrorBarLineWidthPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -1305,7 +527,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     mErrorBarSubPanel.add(mErrorBarLineWidthPanel, gridBagConstraints);
   }
 
-  private void initializeErrorBarPositionPanel() {
+  void initializeErrorBarPositionPanel() {
     java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mErrorBarPositionPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -1341,168 +563,10 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   private void setupTickLabelTab() {
-    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-    mTickLabelPanel.setLayout(new java.awt.GridBagLayout());
-
-    mTickLabelSubPanel.setLayout(new java.awt.GridBagLayout());
-
-    mTickLabelFontSizeLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mTickLabelFontSizeLabel.setText("Size");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 25, 2, 5);
-    mTickLabelSubPanel.add(mTickLabelFontSizeLabel, gridBagConstraints);
-
-    mTickLabelVisibleCheckBox.setText("Visible");
-    mTickLabelVisibleCheckBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 10, 2, 10);
-    mTickLabelSubPanel.add(mTickLabelVisibleCheckBox, gridBagConstraints);
-
-    mTickLabelFontSizeSpinner.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mTickLabelFontSizeSpinner.setPreferredSize(new java.awt.Dimension(75, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 5);
-    mTickLabelSubPanel.add(mTickLabelFontSizeSpinner, gridBagConstraints);
-
-    mTickLabelColorButton.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
-    mTickLabelColorButton.setPreferredSize(new java.awt.Dimension(65, 20));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 3;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
-    mTickLabelSubPanel.add(mTickLabelColorButton, gridBagConstraints);
-
-    mTickLabelColorLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mTickLabelColorLabel.setText("Color");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 20, 2, 5);
-    mTickLabelSubPanel.add(mTickLabelColorLabel, gridBagConstraints);
-
-    mTickLabelAnglePanel.setMinimumSize(new java.awt.Dimension(150, 22));
-
-    this.initializeTickLabelAnglePanel();
-
-    mTickLabelFontLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mTickLabelFontLabel.setText("Font");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 15, 2, 5);
-    mTickLabelSubPanel.add(mTickLabelFontLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 45, 2, 10);
-    mTickLabelSubPanel.add(mTickLabelFontSeparator, gridBagConstraints);
-
-    mTickLabelTextLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mTickLabelTextLabel.setText("Text");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 5;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 10);
-    mTickLabelSubPanel.add(mTickLabelTextLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 5;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 55, 0, 10);
-    mTickLabelSubPanel.add(mTickLabelAngleSeparator, gridBagConstraints);
-
-    mTickLabelFontStyleComboBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mTickLabelFontStyleComboBox.setPreferredSize(new java.awt.Dimension(100, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.gridwidth = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
-    mTickLabelSubPanel.add(mTickLabelFontStyleComboBox, gridBagConstraints);
-
-    mTickLabelFontNameComboBox.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mTickLabelFontNameComboBox.setPreferredSize(new java.awt.Dimension(170, 22));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.gridwidth = 3;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
-    mTickLabelSubPanel.add(mTickLabelFontNameComboBox, gridBagConstraints);
-
-    mTickLabelFontNameLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mTickLabelFontNameLabel.setText("Family");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 25, 2, 5);
-    mTickLabelSubPanel.add(mTickLabelFontNameLabel, gridBagConstraints);
-
-    mTickLabelFontStyleLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mTickLabelFontStyleLabel.setText("Style");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 25, 2, 5);
-    mTickLabelSubPanel.add(mTickLabelFontStyleLabel, gridBagConstraints);
-
-    mTickLabelFormatLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mTickLabelFormatLabel.setText("Format");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 7;
-    gridBagConstraints.gridwidth = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 10);
-    mTickLabelSubPanel.add(mTickLabelFormatLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 7;
-    gridBagConstraints.gridwidth = 3;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
-    mTickLabelSubPanel.add(mTickLabelFormatSeparator, gridBagConstraints);
-
-    this.initializeTickLabelFormatPanel();
-
-    this.initializeTickLabelExponentPanel();
-
-    mTickLabelSubPanel.add(mTickLabelFormatPanel, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 40, 0);
-    mTickLabelPanel.add(mTickLabelSubPanel, gridBagConstraints);
-
-    mTabbedPane.addTab("Tick Label", mTickLabelPanel);
+    this.mDialogBuilder.setupTickLabelTab();
   }
 
-  private void initializeTickLabelAnglePanel() {
+  void initializeTickLabelAnglePanel() {
     java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mTickLabelAnglePanel.setLayout(new java.awt.GridBagLayout());
 
@@ -1533,7 +597,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     mTickLabelSubPanel.add(mTickLabelAnglePanel, gridBagConstraints);
   }
 
-  private void initializeTickLabelFormatPanel() {
+  void initializeTickLabelFormatPanel() {
     java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mTickLabelFormatPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -1574,7 +638,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     mTickLabelFormatPanel.add(mTickLabelDateFormatComboBox, gridBagConstraints);
   }
 
-  private void initializeTickLabelExponentPanel() {
+  void initializeTickLabelExponentPanel() {
     java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     mExponentPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -1622,317 +686,205 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   private void finishComponentLayout() {
-    java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    getContentPane().add(mTabbedPane, gridBagConstraints);
-
-    mOKButton.setText("OK");
-    mOKButton.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-    mButtonPanel.add(mOKButton);
-
-    mCancelButton.setText("Cancel");
-    mCancelButton.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-    mButtonPanel.add(mCancelButton);
-
-    mPreviewButton.setText("Preview");
-    mPreviewButton.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-    mButtonPanel.add(mPreviewButton);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    getContentPane().add(mButtonPanel, gridBagConstraints);
-
-    mBottomCommonPanel.setLayout(new java.awt.GridBagLayout());
-
-    mShiftXLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mShiftXLabel.setText("X");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 15, 5, 5);
-    mBottomCommonPanel.add(mShiftXLabel, gridBagConstraints);
-
-    mShiftLabel.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-    mShiftLabel.setText("Shift");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-    mBottomCommonPanel.add(mShiftLabel, gridBagConstraints);
-
-    mShiftYLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    mShiftYLabel.setText("Y");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 3;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    mBottomCommonPanel.add(mShiftYLabel, gridBagConstraints);
-
-    mShiftXPanel.setLayout(new java.awt.GridBagLayout());
-
-    mShiftXTextField.setColumns(6);
-    mShiftXTextField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mShiftXPanel.add(mShiftXTextField, gridBagConstraints);
-
-    mShiftXDateButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mShiftXPanel.add(mShiftXDateButton, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    mBottomCommonPanel.add(mShiftXPanel, gridBagConstraints);
-
-    mShiftYPanel.setLayout(new java.awt.GridBagLayout());
-
-    mShiftYTextField.setColumns(6);
-    mShiftYTextField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mShiftYPanel.add(mShiftYTextField, gridBagConstraints);
-
-    mShiftYDateButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    mShiftYPanel.add(mShiftYDateButton, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 4;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    mBottomCommonPanel.add(mShiftYPanel, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    getContentPane().add(mBottomCommonPanel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    getContentPane().add(mHeadPanel, gridBagConstraints);
-
-    pack();
+    this.mDialogBuilder.finishComponentLayout();
   }
 
-  private javax.swing.JLabel mBarBaseLineValueLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mBarBaselineDateButton;
-  private javax.swing.JPanel mBarBaselinePanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGTextField mBarBaselineTextField;
-  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mBarBodyColorFillRadioButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGGradationPaintSelectionButton
+  javax.swing.JLabel mBarBaseLineValueLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mBarBaselineDateButton;
+  javax.swing.JPanel mBarBaselinePanel;
+  jp.riken.brain.ni.samuraigraph.base.SGTextField mBarBaselineTextField;
+  jp.riken.brain.ni.samuraigraph.base.SGRadioButton mBarBodyColorFillRadioButton;
+  jp.riken.brain.ni.samuraigraph.base.SGGradationPaintSelectionButton
       mBarBodyColorGradationColorButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mBarBodyColorGradationRadioButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGPatternPaintSelectionButton
-      mBarBodyColorPatternPaintButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mBarBodyColorPatternRadioButton;
-  private javax.swing.JLabel mBarBodyLabel;
-  private javax.swing.JSeparator mBarBodySeparator;
-  private javax.swing.JLabel mBarBodyTransparencyLabel;
-  private javax.swing.JPanel mBarBodyTransparencyPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mBarBodyTransparencySpinner;
-  private javax.swing.JPanel mBarBodyWidthIntervalPanel;
-  private javax.swing.JLabel mBarColorLabel;
-  private javax.swing.JPanel mBarColorPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mBarInnerColorButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mBarIntervalDateButton;
-  private javax.swing.JLabel mBarIntervalLabel;
-  private javax.swing.JPanel mBarIntervalPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGTextField mBarIntervalTextField;
-  private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mBarLineColorButton;
-  private javax.swing.JLabel mBarLineColorLabel;
-  private javax.swing.JLabel mBarLineLabel;
-  private javax.swing.JPanel mBarLinePanel;
-  private javax.swing.JSeparator mBarLineSeparator;
-  private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mBarLineVisibleCheckBox;
-  private javax.swing.JLabel mBarLineWidthLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mBarLineWidthSpinner;
-  private javax.swing.JLabel mBarOffsetLabel;
-  private javax.swing.JPanel mBarOffsetPanel;
-  private javax.swing.JSeparator mBarOffsetSeparator;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mBarOffsetXDateButton;
-  private javax.swing.JLabel mBarOffsetXLabel;
-  private javax.swing.JPanel mBarOffsetXPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGTextField mBarOffsetXTextField;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mBarOffsetYDateButton;
-  private javax.swing.JLabel mBarOffsetYLabel;
-  private javax.swing.JPanel mBarOffsetYPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGTextField mBarOffsetYTextField;
-  private javax.swing.JPanel mBarPanel;
-  private javax.swing.JPanel mBarSubPanel;
-  private javax.swing.JPanel mBarTopPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mBarVerticalCheckBox;
-  private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mBarVisibleCheckBox;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mBarWidthDateButton;
-  private javax.swing.JLabel mBarWidthLabel;
-  private javax.swing.JPanel mBarWidthPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGTextField mBarWidthTextField;
-  private javax.swing.JPanel mBodyPanel;
-  private javax.swing.JPanel mBottomCommonPanel;
-  private javax.swing.JPanel mButtonPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mCancelButton;
-  private javax.swing.JPanel mCommonPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mDataColumnSelectionButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mErrorBarBothsidesRadioButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mErrorBarColorButton;
-  private javax.swing.JLabel mErrorBarColorLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mErrorBarDownsideRadioButton;
-  private javax.swing.JLabel mErrorBarLineWidthLabel1;
-  private javax.swing.JLabel mErrorBarLineWidthLabel2;
-  private javax.swing.JPanel mErrorBarLineWidthPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mErrorBarLineWidthSpinner;
-  private javax.swing.JPanel mErrorBarPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mErrorBarPositionBarRadioButton;
-  private javax.swing.JLabel mErrorBarPositionLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mErrorBarPositionLineRadioButton;
-  private javax.swing.JPanel mErrorBarPositionPanel;
-  private javax.swing.JSeparator mErrorBarPositionSeparator;
-  private javax.swing.JLabel mErrorBarStyleLabel;
-  private javax.swing.JSeparator mErrorBarStyleSeparator;
-  private javax.swing.JPanel mErrorBarSubPanel;
-  private javax.swing.JPanel mErrorBarStylePanel;
-  private javax.swing.JLabel mErrorBarSymbolLabel;
-  private javax.swing.JSeparator mErrorBarSymbolSeparator;
-  private javax.swing.JLabel mErrorBarSymbolSizeLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mErrorBarSymbolSizeSpinner;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mErrorBarTypeComboBox;
-  private javax.swing.JLabel mErrorBarTypeLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mErrorBarUpsideRadioButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mErrorBarVisibleCheckBox;
-  private javax.swing.JPanel mExponentPanel;
-  private javax.swing.JPanel mHeadPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mLegendVisibleCheckBox;
-  private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mLineColorButton;
-  private javax.swing.JLabel mLineColorLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mLineConnectCheckBox;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mLineEditButton;
-  private javax.swing.JPanel mLinePanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mLineStyleCustomizeButton;
-  private javax.swing.JPanel mLineSubPanel;
-  private javax.swing.JLabel mLineSymbolLabel;
-  private javax.swing.JPanel mLineSymbolPanel;
-  private javax.swing.JSeparator mLineSymbolSeparator;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mLineTypeComboBox;
-  private javax.swing.JLabel mLineTypeLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mLineVisibleCheckBox;
-  private javax.swing.JLabel mLineWidthLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mLineWidthSpinner;
-  private jp.riken.brain.ni.samuraigraph.base.SGTextField mNameField;
-  private javax.swing.JLabel mNameLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mOKButton;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mPreviewButton;
-  private javax.swing.JLabel mShiftLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mShiftXDateButton;
-  private javax.swing.JLabel mShiftXLabel;
-  private javax.swing.JPanel mShiftXPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGTextField mShiftXTextField;
-  private jp.riken.brain.ni.samuraigraph.base.SGButton mShiftYDateButton;
-  private javax.swing.JLabel mShiftYLabel;
-  private javax.swing.JPanel mShiftYPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGTextField mShiftYTextField;
-  private javax.swing.JLabel mSymbolBodyLabel;
-  private javax.swing.JSeparator mSymbolBodySeparator;
-  private javax.swing.JLabel mSymbolBodyTransparencyLabel;
-  private javax.swing.JPanel mSymbolBodyTransparencyPanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mSymbolBodyTransparencySpinner;
-  private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mSymbolColorButton;
-  private javax.swing.JLabel mSymbolColorLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mSymbolLineColorButton;
-  private javax.swing.JLabel mSymbolLineColorLabel;
-  private javax.swing.JLabel mSymbolLineLabel;
-  private javax.swing.JSeparator mSymbolLineSeparator;
-  private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mSymbolLineVisibleCheckBox;
-  private javax.swing.JLabel mSymbolLineWidthLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mSymbolLineWidthSpinner;
-  private javax.swing.JLabel mSymbolSizeLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mSymbolSizeSpinner;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mSymbolTypeComboBox;
-  private javax.swing.JLabel mSymbolTypeLabel;
-  private javax.swing.JPanel mSymbolTypePanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mSymbolVisibleCheckBox;
-  private javax.swing.JTabbedPane mTabbedPane;
-  private javax.swing.JLabel mTickLabelAngleLabel;
-  private javax.swing.JPanel mTickLabelAnglePanel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelAngleSpinner;
-  private jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mTickLabelColorButton;
-  private javax.swing.JLabel mTickLabelColorLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mTickLabelDateFormatComboBox;
-  private javax.swing.JLabel mTickLabelDateFormatLabel;
-  private javax.swing.JLabel mTickLabelDecimalPlacesLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelDecimalPlacesSpinner;
-  private javax.swing.JLabel mTickLabelExponentBaseLabel;
-  private javax.swing.JLabel mTickLabelExponentLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelExponentSpinner;
-  private javax.swing.JLabel mTickLabelFontLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mTickLabelFontNameComboBox;
-  private javax.swing.JLabel mTickLabelFontNameLabel;
-  private javax.swing.JSeparator mTickLabelFontSeparator;
-  private javax.swing.JLabel mTickLabelFontSizeLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelFontSizeSpinner;
-  private jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mTickLabelFontStyleComboBox;
-  private javax.swing.JLabel mTickLabelFontStyleLabel;
-  private javax.swing.JLabel mTickLabelFormatLabel;
-  private javax.swing.JPanel mTickLabelFormatPanel;
-  private javax.swing.JSeparator mTickLabelFormatSeparator;
-  private javax.swing.JPanel mTickLabelPanel;
-  private javax.swing.JPanel mTickLabelSubPanel;
-  private javax.swing.JLabel mTickLabelTextLabel;
-  private jp.riken.brain.ni.samuraigraph.base.SGCheckBox mTickLabelVisibleCheckBox;
-  private javax.swing.JSeparator mTickLabelAngleSeparator;
+  jp.riken.brain.ni.samuraigraph.base.SGRadioButton mBarBodyColorGradationRadioButton;
+  jp.riken.brain.ni.samuraigraph.base.SGPatternPaintSelectionButton mBarBodyColorPatternPaintButton;
+  jp.riken.brain.ni.samuraigraph.base.SGRadioButton mBarBodyColorPatternRadioButton;
+  javax.swing.JLabel mBarBodyLabel;
+  javax.swing.JSeparator mBarBodySeparator;
+  javax.swing.JLabel mBarBodyTransparencyLabel;
+  javax.swing.JPanel mBarBodyTransparencyPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mBarBodyTransparencySpinner;
+  javax.swing.JPanel mBarBodyWidthIntervalPanel;
+  javax.swing.JLabel mBarColorLabel;
+  javax.swing.JPanel mBarColorPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mBarInnerColorButton;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mBarIntervalDateButton;
+  javax.swing.JLabel mBarIntervalLabel;
+  javax.swing.JPanel mBarIntervalPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGTextField mBarIntervalTextField;
+  jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mBarLineColorButton;
+  javax.swing.JLabel mBarLineColorLabel;
+  javax.swing.JLabel mBarLineLabel;
+  javax.swing.JPanel mBarLinePanel;
+  javax.swing.JSeparator mBarLineSeparator;
+  jp.riken.brain.ni.samuraigraph.base.SGCheckBox mBarLineVisibleCheckBox;
+  javax.swing.JLabel mBarLineWidthLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mBarLineWidthSpinner;
+  javax.swing.JLabel mBarOffsetLabel;
+  javax.swing.JPanel mBarOffsetPanel;
+  javax.swing.JSeparator mBarOffsetSeparator;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mBarOffsetXDateButton;
+  javax.swing.JLabel mBarOffsetXLabel;
+  javax.swing.JPanel mBarOffsetXPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGTextField mBarOffsetXTextField;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mBarOffsetYDateButton;
+  javax.swing.JLabel mBarOffsetYLabel;
+  javax.swing.JPanel mBarOffsetYPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGTextField mBarOffsetYTextField;
+  javax.swing.JPanel mBarPanel;
+  javax.swing.JPanel mBarSubPanel;
+  javax.swing.JPanel mBarTopPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGCheckBox mBarVerticalCheckBox;
+  jp.riken.brain.ni.samuraigraph.base.SGCheckBox mBarVisibleCheckBox;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mBarWidthDateButton;
+  javax.swing.JLabel mBarWidthLabel;
+  javax.swing.JPanel mBarWidthPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGTextField mBarWidthTextField;
+  javax.swing.JPanel mBodyPanel;
+  javax.swing.JPanel mBottomCommonPanel;
+  javax.swing.JPanel mButtonPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mCancelButton;
+  javax.swing.JPanel mCommonPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mDataColumnSelectionButton;
+  jp.riken.brain.ni.samuraigraph.base.SGRadioButton mErrorBarBothsidesRadioButton;
+  jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mErrorBarColorButton;
+  javax.swing.JLabel mErrorBarColorLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGRadioButton mErrorBarDownsideRadioButton;
+  javax.swing.JLabel mErrorBarLineWidthLabel1;
+  javax.swing.JLabel mErrorBarLineWidthLabel2;
+  javax.swing.JPanel mErrorBarLineWidthPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mErrorBarLineWidthSpinner;
+  javax.swing.JPanel mErrorBarPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGRadioButton mErrorBarPositionBarRadioButton;
+  javax.swing.JLabel mErrorBarPositionLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGRadioButton mErrorBarPositionLineRadioButton;
+  javax.swing.JPanel mErrorBarPositionPanel;
+  javax.swing.JSeparator mErrorBarPositionSeparator;
+  javax.swing.JLabel mErrorBarStyleLabel;
+  javax.swing.JSeparator mErrorBarStyleSeparator;
+  javax.swing.JPanel mErrorBarSubPanel;
+  javax.swing.JPanel mErrorBarStylePanel;
+  javax.swing.JLabel mErrorBarSymbolLabel;
+  javax.swing.JSeparator mErrorBarSymbolSeparator;
+  javax.swing.JLabel mErrorBarSymbolSizeLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mErrorBarSymbolSizeSpinner;
+  jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mErrorBarTypeComboBox;
+  javax.swing.JLabel mErrorBarTypeLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGRadioButton mErrorBarUpsideRadioButton;
+  jp.riken.brain.ni.samuraigraph.base.SGCheckBox mErrorBarVisibleCheckBox;
+  javax.swing.JPanel mExponentPanel;
+  javax.swing.JPanel mHeadPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGCheckBox mLegendVisibleCheckBox;
+  jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mLineColorButton;
+  javax.swing.JLabel mLineColorLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGCheckBox mLineConnectCheckBox;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mLineEditButton;
+  javax.swing.JPanel mLinePanel;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mLineStyleCustomizeButton;
+  javax.swing.JPanel mLineSubPanel;
+  javax.swing.JLabel mLineSymbolLabel;
+  javax.swing.JPanel mLineSymbolPanel;
+  javax.swing.JSeparator mLineSymbolSeparator;
+  jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mLineTypeComboBox;
+  javax.swing.JLabel mLineTypeLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGCheckBox mLineVisibleCheckBox;
+  javax.swing.JLabel mLineWidthLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mLineWidthSpinner;
+  jp.riken.brain.ni.samuraigraph.base.SGTextField mNameField;
+  javax.swing.JLabel mNameLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mOKButton;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mPreviewButton;
+  javax.swing.JLabel mShiftLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mShiftXDateButton;
+  javax.swing.JLabel mShiftXLabel;
+  javax.swing.JPanel mShiftXPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGTextField mShiftXTextField;
+  jp.riken.brain.ni.samuraigraph.base.SGButton mShiftYDateButton;
+  javax.swing.JLabel mShiftYLabel;
+  javax.swing.JPanel mShiftYPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGTextField mShiftYTextField;
+  javax.swing.JLabel mSymbolBodyLabel;
+  javax.swing.JSeparator mSymbolBodySeparator;
+  javax.swing.JLabel mSymbolBodyTransparencyLabel;
+  javax.swing.JPanel mSymbolBodyTransparencyPanel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mSymbolBodyTransparencySpinner;
+  jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mSymbolColorButton;
+  javax.swing.JLabel mSymbolColorLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mSymbolLineColorButton;
+  javax.swing.JLabel mSymbolLineColorLabel;
+  javax.swing.JLabel mSymbolLineLabel;
+  javax.swing.JSeparator mSymbolLineSeparator;
+  jp.riken.brain.ni.samuraigraph.base.SGCheckBox mSymbolLineVisibleCheckBox;
+  javax.swing.JLabel mSymbolLineWidthLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mSymbolLineWidthSpinner;
+  javax.swing.JLabel mSymbolSizeLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mSymbolSizeSpinner;
+  jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mSymbolTypeComboBox;
+  javax.swing.JLabel mSymbolTypeLabel;
+  javax.swing.JPanel mSymbolTypePanel;
+  jp.riken.brain.ni.samuraigraph.base.SGCheckBox mSymbolVisibleCheckBox;
+  javax.swing.JTabbedPane mTabbedPane;
+  javax.swing.JLabel mTickLabelAngleLabel;
+  javax.swing.JPanel mTickLabelAnglePanel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelAngleSpinner;
+  jp.riken.brain.ni.samuraigraph.base.SGColorSelectionButton mTickLabelColorButton;
+  javax.swing.JLabel mTickLabelColorLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mTickLabelDateFormatComboBox;
+  javax.swing.JLabel mTickLabelDateFormatLabel;
+  javax.swing.JLabel mTickLabelDecimalPlacesLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelDecimalPlacesSpinner;
+  javax.swing.JLabel mTickLabelExponentBaseLabel;
+  javax.swing.JLabel mTickLabelExponentLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelExponentSpinner;
+  javax.swing.JLabel mTickLabelFontLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mTickLabelFontNameComboBox;
+  javax.swing.JLabel mTickLabelFontNameLabel;
+  javax.swing.JSeparator mTickLabelFontSeparator;
+  javax.swing.JLabel mTickLabelFontSizeLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGSpinner mTickLabelFontSizeSpinner;
+  jp.riken.brain.ni.samuraigraph.base.SGComboBox<String> mTickLabelFontStyleComboBox;
+  javax.swing.JLabel mTickLabelFontStyleLabel;
+  javax.swing.JLabel mTickLabelFormatLabel;
+  javax.swing.JPanel mTickLabelFormatPanel;
+  javax.swing.JSeparator mTickLabelFormatSeparator;
+  javax.swing.JPanel mTickLabelPanel;
+  javax.swing.JPanel mTickLabelSubPanel;
+  javax.swing.JLabel mTickLabelTextLabel;
+  jp.riken.brain.ni.samuraigraph.base.SGCheckBox mTickLabelVisibleCheckBox;
+  javax.swing.JSeparator mTickLabelAngleSeparator;
 
-  private SGTwoAxesSelectionPanel mAxisPanel = new SGTwoAxesSelectionPanel();
+  SGTwoAxesSelectionPanel mAxisPanel = new SGTwoAxesSelectionPanel();
 
-  private JRadioButton mNoErrorBarStyleSelectionRadioButton = new JRadioButton();
+  JRadioButton mNoErrorBarStyleSelectionRadioButton = new JRadioButton();
 
-  private JRadioButton mNoBarBodyColorStyleSelectionRadioButton = new JRadioButton();
+  JRadioButton mNoBarBodyColorStyleSelectionRadioButton = new JRadioButton();
 
-  private JRadioButton mNoErrorBarPositionRadioButton = new JRadioButton();
+  JRadioButton mNoErrorBarPositionRadioButton = new JRadioButton();
 
-  private SGPickUpDimensionInfo mPickUpDimensionInfo = null;
+  SGPickUpDimensionInfo mPickUpDimensionInfo = null;
 
-  private SGPatternPaintDialog mPatternPaintDialog;
+  SGPatternPaintDialog mPatternPaintDialog;
 
-  private SGGradationPaintDialog mGradationPaintDialog;
+  SGGradationPaintDialog mGradationPaintDialog;
 
-  private SGLineStyleDialog mLineStyleDialog = null;
+  SGLineStyleDialog mLineStyleDialog = null;
 
-  private List<SGLineStyle> mLineStyleList = null;
+  List<SGLineStyle> mLineStyleList = null;
 
-  private List<String> mChildNameList = null;
+  List<String> mChildNameList = null;
 
-  private String mLineColorMapName = null;
+  String mLineColorMapName = null;
 
-  private Map<String, SGProperties> mLineColorMapProperties = null;
+  Map<String, SGProperties> mLineColorMapProperties = null;
 
-  private boolean mLineColorAutoAssigned = false;
+  boolean mLineColorAutoAssigned = false;
 
   protected SGComponentGroup mBarComponentGroup = new SGComponentGroup();
 
   /** members of this group disabled if transparency is 1.0 */
-  private SGComponentGroup mBarBodyTransparentComponentGroup = new SGComponentGroup();
+  SGComponentGroup mBarBodyTransparentComponentGroup = new SGComponentGroup();
 
-  private SGComponentGroup mBarIntervalComponentGroup = new SGComponentGroup();
+  SGComponentGroup mBarIntervalComponentGroup = new SGComponentGroup();
 
   protected SGComponentGroup mDateWidthComponentGroup = new SGComponentGroup();
 
@@ -2025,104 +977,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   private void initSpinnerModels() {
-    // Sets up spinner models
-    //
-
-    // line
-    this.mLineWidthSpinner.initProperties(
-        getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
-
-    // symbol
-    this.mSymbolSizeSpinner.initProperties(
-        new SpinnerNumberModel(0.1, SYMBOL_SIZE_MIN, SYMBOL_SIZE_MAX, SYMBOL_SIZE_STEP),
-        SYMBOL_SIZE_UNIT,
-        SYMBOL_SIZE_FRAC_DIFIT_MIN,
-        SYMBOL_SIZE_FRAC_DIFIT_MAX);
-
-    this.mSymbolLineWidthSpinner.initProperties(
-        getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
-
-    this.mSymbolBodyTransparencySpinner.initProperties(
-        new SpinnerNumberModel(
-            100.0,
-            (float) SGPaintConstants.TRANSPARENCY_MIN,
-            (float) SGPaintConstants.TRANSPARENCY_MAX,
-            (float) SGPaintConstants.TRANSPARENCY_STEP),
-        SGIConstants.percent,
-        SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MIN,
-        SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MAX);
-
-    // bar
-    this.mBarLineWidthSpinner.initProperties(
-        getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
-
-    // error bar
-    this.mErrorBarLineWidthSpinner.initProperties(
-        getLineWidthSpinnerNumberModel(),
-        LINE_WIDTH_UNIT,
-        LINE_WIDTH_FRAC_DIGIT_MIN,
-        LINE_WIDTH_FRAC_DIGIT_MAX);
-
-    // bar inner paint transparency
-    this.mBarBodyTransparencySpinner.initProperties(
-        new SpinnerNumberModel(
-            100.0,
-            (float) SGPaintConstants.TRANSPARENCY_MIN,
-            (float) SGPaintConstants.TRANSPARENCY_MAX,
-            (float) SGPaintConstants.TRANSPARENCY_STEP),
-        SGIConstants.percent,
-        SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MIN,
-        SGPaintConstants.TRANSPARENCY_FRAC_DIGIT_MAX);
-
-    this.mErrorBarSymbolSizeSpinner.initProperties(
-        new SpinnerNumberModel(
-            0.1, ERROR_BAR_HEAD_SIZE_MIN, ERROR_BAR_HEAD_SIZE_MAX, ERROR_BAR_HEAD_SIZE_STEP),
-        ERROR_BAR_HEAD_SIZE_UNIT,
-        ERROR_BAR_HEAD_SIZE_FRAC_DIFIT_MIN,
-        ERROR_BAR_HEAD_SIZE_FRAC_DIFIT_MAX);
-
-    // tick label
-    this.mTickLabelFontSizeSpinner.initProperties(
-        getFontSizeSpinnerNumberModel(),
-        FONT_SIZE_UNIT,
-        FONT_SIZE_FRAC_DIGIT_MIN,
-        FONT_SIZE_FRAC_DIGIT_MAX);
-    this.mTickLabelDecimalPlacesSpinner.initProperties(
-        new SpinnerNumberModel(
-            0.0,
-            (float) TICK_LABEL_DECIMAL_PLACES_MIN,
-            (float) TICK_LABEL_DECIMAL_PLACES_MAX,
-            (float) TICK_LABEL_DECIMAL_PLACES_STEP),
-        null,
-        0,
-        0);
-    this.mTickLabelExponentSpinner.initProperties(
-        new SpinnerNumberModel(
-            0.0,
-            (float) TICK_LABEL_EXPONENT_MIN,
-            (float) TICK_LABEL_EXPONENT_MAX,
-            (float) TICK_LABEL_EXPONENT_STEP),
-        null,
-        0,
-        0);
-    this.mTickLabelAngleSpinner.initProperties(
-        new SpinnerNumberModel(
-            0.0,
-            (float) TICK_LABEL_TEXT_ANGLE_MIN,
-            (float) TICK_LABEL_TEXT_ANGLE_MAX,
-            (float) TICK_LABEL_TEXT_ANGLE_STEP),
-        degree,
-        TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MIN,
-        TICK_LABEL_TEXT_ANGLE_FRAC_DIFIT_MAX);
+    this.mDialogBuilder.initSpinnerModels();
   }
 
   private void initListeners() {
@@ -3226,161 +2081,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   private void handleDataColumnSelectionDialogAction(final Object source, final String command) {
-    if (source.equals(this.mDataColumnSelectionDialog)) {
-      SGDataSetupDialog dg = (SGDataSetupDialog) source;
-      if (OK_BUTTON_TEXT.equals(command)) {
-        // get column types
-        SGDataColumnInfo[] colInfo = dg.getDataColumnInfoSet().getDataColumnInfoArray();
-
-        // check selected tab
-        boolean ebFlag = false;
-        boolean tlFlag = false;
-        for (int ii = 0; ii < colInfo.length; ii++) {
-          final String colType = colInfo[ii].getColumnType();
-          final String valueType = colInfo[ii].getValueType();
-          if (colType == null) {
-            continue;
-          }
-          if (colType.startsWith(LOWER_ERROR_VALUE)
-              || colType.startsWith(UPPER_ERROR_VALUE)
-              || colType.startsWith(LOWER_UPPER_ERROR_VALUE)) {
-            ebFlag = true;
-          } else if (colType.startsWith(TICK_LABEL)) {
-            tlFlag = true;
-          } else if (VALUE_TYPE_DATE.equals(valueType)) {
-            if (X_VALUE.equals(colType) || Y_VALUE.equals(colType)) {
-              tlFlag = true;
-            }
-          }
-        }
-        this.setTabEnabled(this.mErrorBarPanel, ebFlag);
-        this.setTabEnabled(this.mTickLabelPanel, tlFlag);
-        Component cur = this.mTabbedPane.getSelectedComponent();
-        if (!ebFlag) {
-          if (this.mErrorBarPanel.equals(cur)) {
-            this.mTabbedPane.setSelectedComponent(this.mLinePanel);
-          }
-        }
-        if (!tlFlag) {
-          if (this.mTickLabelPanel.equals(cur)) {
-            this.mTabbedPane.setSelectedComponent(this.mLinePanel);
-          }
-        }
-
-        SGISXYDataDialogObserver obs =
-            (SGISXYDataDialogObserver) this.mPropertyDialogObserverList.get(0);
-        SGData data = obs.getData();
-        SGIntegerSeriesSet pickUpIndices = null;
-        SGIntegerSeriesSet pickUpIndicesOld = null;
-        if (SGDataDataTypeUtility.isSDArrayData(data)) {
-          // text data
-          this.setupBarVerticalByChangingTextDataColumn(colInfo, data);
-
-          // get stride
-          SGSDArrayDataSetupDialog sdg = (SGSDArrayDataSetupDialog) dg;
-          SGIntegerSeriesSet stride = sdg.getSXYStride();
-          this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, stride);
-          SGIntegerSeriesSet tickLabelStride = sdg.getSXYTickLabelStride();
-          this.mStrideMap.put(
-              SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
-
-        } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
-          // for netCDF data, changes the direction of error bars and tick labels
-          // automatically.
-          // but if change whether Pickup column type exists, data and data type are
-          // converted and then must not be change bar vertical.
-          if (obs instanceof SGElementGroupSetForData) {
-            this.setupBarVerticalByChangingNetCDFDataColumn(colInfo, data);
-          }
-
-          // get multiple origin and step
-          SGNetCDFDataSetupDialog ndg = (SGNetCDFDataSetupDialog) dg;
-          String dimName = ndg.getPickUpDimensionName();
-          pickUpIndices = ndg.getSXYPickUpIndices();
-
-          if (this.mPickUpDimensionInfo != null) {
-            pickUpIndicesOld = this.mPickUpDimensionInfo.getIndices();
-          }
-
-          // set to the attribute
-          if (pickUpIndices != null) {
-            this.mPickUpDimensionInfo = new SGNetCDFPickUpDimensionInfo(dimName, pickUpIndices);
-          } else {
-            this.mPickUpDimensionInfo = null;
-          }
-
-          // get stride
-          SGNetCDFData nData = (SGNetCDFData) data;
-          if (nData.isIndexAvailable()) {
-            SGIntegerSeriesSet indexStride = ndg.getSXYIndexStride();
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE, indexStride);
-          } else {
-            SGIntegerSeriesSet stride = ndg.getSXYStride();
-            this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXY_STRIDE, stride);
-          }
-          SGIntegerSeriesSet tickLabelStride = ndg.getSXYTickLabelStride();
-          this.mStrideMap.put(
-              SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
-
-        } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
-          SGMDArrayDataSetupDialog ndg = (SGMDArrayDataSetupDialog) dg;
-
-          // get multiple origin and step
-          List<String> pickUpVarNameList = ndg.getPickUpDatasetName();
-          Map<String, Integer> dimensionIndexMap = ndg.getPickUpDimensionIndexMap();
-          pickUpIndices = ndg.getIndices();
-
-          if (this.mPickUpDimensionInfo != null) {
-            pickUpIndicesOld = this.mPickUpDimensionInfo.getIndices();
-          }
-
-          // set to the attribute
-          if (pickUpVarNameList != null && pickUpIndices != null) {
-            this.mPickUpDimensionInfo =
-                new SGMDArrayPickUpDimensionInfo(dimensionIndexMap, pickUpIndices);
-            for (int ii = 0; ii < colInfo.length; ii++) {
-              SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) colInfo[ii];
-              String name = mdInfo.getName();
-              if (pickUpVarNameList.contains(name)) {
-                Integer dimensionIndex = dimensionIndexMap.get(name);
-                mdInfo.setDimensionIndex(
-                    SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION, dimensionIndex);
-                break;
-              }
-            }
-          } else {
-            this.mPickUpDimensionInfo = null;
-            for (int ii = 0; ii < colInfo.length; ii++) {
-              SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) colInfo[ii];
-              mdInfo.clearDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION);
-            }
-          }
-
-          // get stride
-          SGIntegerSeriesSet stride = ndg.getSXYStride();
-          this.mStrideMap.put(SGIDataInformationKeyConstants.KEY_SXY_STRIDE, stride);
-          SGIntegerSeriesSet tickLabelStride = ndg.getSXYTickLabelStride();
-          this.mStrideMap.put(
-              SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
-        }
-
-        // updates the line style
-        if (this.mDataInfoArray != null) {
-          if (!SGDataColumnInfoUtility.hasEqualColumnType(this.mDataInfoArray, colInfo)) {
-            this.updateLineStyle(obs, colInfo);
-          } else if (this.mPickUpDimensionInfo != null) {
-            if (!SGUtility.equals(pickUpIndicesOld, pickUpIndices)) {
-              this.updateLineStyle(obs, colInfo);
-            }
-          }
-        } else {
-          this.updateLineStyle(obs, colInfo);
-        }
-
-        // set to the attribute
-        this.mDataInfoArray = colInfo;
-      }
-    }
+    this.mDialogBuilder.handleDataColumnSelectionDialogAction(source, command);
   }
 
   private void handleLineStyleDialogAction(final Object source, final String command) {
@@ -3399,7 +2100,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   // updates the line style
-  private void updateLineStyle(SGISXYDataDialogObserver obs, SGDataColumnInfo[] cols) {
+  void updateLineStyle(SGISXYDataDialogObserver obs, SGDataColumnInfo[] cols) {
 
     SGData data = obs.getData();
     final boolean pickedUp = SGDataColumnInfoUtility.isPickupColumnContained(cols);
@@ -3519,7 +2220,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.mLineStyleCustomizeButton.setEnabled(available);
   }
 
-  private void setupBarVerticalByChangingNetCDFDataColumn(SGDataColumnInfo[] colInfo, SGData data) {
+  void setupBarVerticalByChangingNetCDFDataColumn(SGDataColumnInfo[] colInfo, SGData data) {
 
     SGNetCDFData ncData = (SGNetCDFData) data;
     SGNetCDFFile ncFile = ncData.getNetcdfFile();
@@ -3579,7 +2280,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     }
   }
 
-  private void setupBarVerticalByChangingTextDataColumn(SGDataColumnInfo[] colInfo, SGData data) {
+  void setupBarVerticalByChangingTextDataColumn(SGDataColumnInfo[] colInfo, SGData data) {
 
     List<Integer> xIndexList = new ArrayList<Integer>();
     List<Integer> yIndexList = new ArrayList<Integer>();
@@ -3701,7 +2402,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
    *  // set visible this.mStrokeDialog.setVisible(true); }
    */
   /** An error message which is shown when all elements are set to be invisible. */
-  private static final String ERRMSG_NOT_HIDE_ALL_ELEMENTS =
+  static final String ERRMSG_NOT_HIDE_ALL_ELEMENTS =
       "Lines, symbols and bars cannot be hidden at the same time.";
 
   /**
@@ -4050,7 +2751,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   /*
-  private String mTemporaryBarIntervalText = "";
+   String mTemporaryBarIntervalText = "";
   private void setBarIntervalEnabled(final boolean enabled) {
       if (enabled==false) {
           this.mTemporaryBarIntervalText = this.mBarIntervalTextField.getText();
