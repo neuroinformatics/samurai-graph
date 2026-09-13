@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -16,6 +18,14 @@ import java.util.concurrent.atomic.AtomicReference;
  * AWT events to stay responsive. When the task completes, the result is returned.
  */
 public class SGAsyncWorker {
+
+  private static final ExecutorService EXECUTOR =
+      Executors.newCachedThreadPool(
+          runnable -> {
+            Thread thread = new Thread(runnable, "SGAsyncWorker");
+            thread.setDaemon(true);
+            return thread;
+          });
 
   private SGAsyncWorker() {}
 
@@ -31,20 +41,16 @@ public class SGAsyncWorker {
     AtomicReference<T> resultRef = new AtomicReference<>();
     AtomicReference<Exception> errorRef = new AtomicReference<>();
 
-    Thread worker =
-        new Thread(
-            () -> {
-              try {
-                resultRef.set(task.call());
-              } catch (Exception e) {
-                errorRef.set(e);
-              } finally {
-                latch.countDown();
-              }
-            },
-            "SGAsyncWorker");
-    worker.setDaemon(true);
-    worker.start();
+    EXECUTOR.submit(
+        () -> {
+          try {
+            resultRef.set(task.call());
+          } catch (Exception e) {
+            errorRef.set(e);
+          } finally {
+            latch.countDown();
+          }
+        });
 
     pumpEventsWhileWaiting(latch);
 

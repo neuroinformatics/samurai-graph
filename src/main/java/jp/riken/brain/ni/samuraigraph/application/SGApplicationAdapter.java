@@ -11,22 +11,23 @@ import java.awt.desktop.QuitResponse;
 import java.awt.desktop.QuitStrategy;
 
 public class SGApplicationAdapter implements AboutHandler, QuitHandler, OpenFilesHandler {
-  private static SGApplicationAdapter mAdapter;
 
-  private SGApplicationAdapter() {}
+  private final SGMainFunctions mMain;
+
+  private SGApplicationAdapter(final SGMainFunctions main) {
+    this.mMain = main;
+  }
 
   /** Register application menu handler hooks using java.awt.Desktop API. */
-  public static void registerApplication() {
-    if (mAdapter == null) {
-      mAdapter = new SGApplicationAdapter();
-    }
+  public static void registerApplication(final SGMainFunctions main) {
     if (Desktop.isDesktopSupported()) {
       Desktop desktop = Desktop.getDesktop();
       if (desktop.isSupported(Desktop.Action.APP_ABOUT)) {
+        SGApplicationAdapter adapter = new SGApplicationAdapter(main);
         desktop.setQuitStrategy(QuitStrategy.CLOSE_ALL_WINDOWS);
-        desktop.setAboutHandler(mAdapter);
-        desktop.setQuitHandler(mAdapter);
-        desktop.setOpenFileHandler(mAdapter);
+        desktop.setAboutHandler(adapter);
+        desktop.setQuitHandler(adapter);
+        desktop.setOpenFileHandler(adapter);
       }
     }
   }
@@ -34,24 +35,27 @@ public class SGApplicationAdapter implements AboutHandler, QuitHandler, OpenFile
   /** Handle application about event */
   @Override
   public void handleAbout(AboutEvent event) {
-    SGDrawingServer.aboutHandler();
+    jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow wnd = this.mMain.getActiveWindow();
+    if (wnd != null) {
+      this.mMain.showAboutDialog(wnd);
+    }
   }
 
   /** Handle application quit event */
   @Override
   public void handleQuitRequestWith(QuitEvent event, QuitResponse response) {
-    if (SGDrawingServer.quitHandler() == false) {
-      response.cancelQuit();
-    } else {
-      response.performQuit();
-    }
+    this.mMain.exit();
+    response.performQuit();
   }
 
   /** Handle open file event */
   @Override
   public void openFiles(OpenFilesEvent event) {
-    for (java.io.File file : event.getFiles()) {
-      SGDrawingServer.openFileHandler(file.getAbsolutePath());
+    jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow wnd = this.mMain.getActiveWindow();
+    if (wnd != null) {
+      for (java.io.File file : event.getFiles()) {
+        this.mMain.openFile(file.getAbsolutePath(), wnd);
+      }
     }
   }
 }

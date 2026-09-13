@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import jp.riken.brain.ni.samuraigraph.base.SGDrawingWindow;
 import jp.riken.brain.ni.samuraigraph.base.SGIConstants;
 
 /** The main class of this application. */
@@ -15,22 +14,14 @@ public class SGDrawingServer implements SGIApplicationConstants, SGIApplicationT
   private static final org.apache.logging.log4j.Logger logger =
       org.apache.logging.log4j.LogManager.getLogger(SGDrawingServer.class);
 
-  // the name of look and feel
-  private static String mLookAndFeel = null;
-
-  /** main thread */
-  private static SGMainFunctions mAppMain = null;
-
-  private static SGApplicationProperties mAppProp = null;
-
   /** The main method. */
   public static void main(String args[]) {
     // interpret command lines
     Map<String, Object> paramMap = interpretCommands(args);
 
     // load dynamic constant values from property file
-    mAppProp = new SGApplicationProperties();
-    if (mAppProp.getStatus() == false) {
+    SGApplicationProperties appProp = new SGApplicationProperties();
+    if (appProp.getStatus() == false) {
       System.exit(1); // fatal error
     }
 
@@ -40,15 +31,14 @@ public class SGDrawingServer implements SGIApplicationConstants, SGIApplicationT
     }
 
     // create a Main thread
-    SGMainFunctions m = new SGMainFunctions(mAppProp, paramMap);
+    SGMainFunctions m = new SGMainFunctions(appProp, paramMap);
 
     try {
       // wait till the end of Main thread
       m.waitInit();
-      mAppMain = m;
 
       // register event handler for macos x
-      MacOSXRegistration();
+      MacOSXRegistration(m);
     } catch (Exception ex) {
       JOptionPane.showOptionDialog(
           null,
@@ -131,60 +121,23 @@ public class SGDrawingServer implements SGIApplicationConstants, SGIApplicationT
   // set look and feel
   private static boolean setLookAndFeel() {
     try {
-      if (mLookAndFeel == null) {
-        // avoid NPE at non en_US locale for JRE 1.6
-        UIManager.getInstalledLookAndFeels();
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      } else {
-        UIManager.setLookAndFeel(mLookAndFeel);
-      }
+      // avoid NPE at non en_US locale for JRE 1.6
+      UIManager.getInstalledLookAndFeels();
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     } catch (Exception ex) {
       return false;
     }
     return true;
   }
 
-  private static void MacOSXRegistration() {
+  private static void MacOSXRegistration(final SGMainFunctions main) {
     boolean isMacOSX = (System.getProperty("os.name").toLowerCase().startsWith("mac os x"));
     if (isMacOSX) {
       try {
-        SGApplicationAdapter.registerApplication();
+        SGApplicationAdapter.registerApplication(main);
       } catch (Exception e) {
         logger.warn("Error in drawing server", e);
       }
     }
-  }
-
-  /** quit handler for application adapter */
-  public static boolean quitHandler() {
-    if (mAppMain == null) {
-      return false;
-    }
-    mAppMain.exit();
-    return true;
-  }
-
-  /** about handler for application adapter */
-  public static boolean aboutHandler() {
-    if (mAppMain == null) {
-      return false;
-    }
-    SGDrawingWindow wnd = mAppMain.getActiveWindow();
-    if (wnd == null) {
-      return false;
-    }
-    return mAppMain.showAboutDialog(wnd);
-  }
-
-  /** openFile handler for application adapter */
-  public static boolean openFileHandler(final String fname) {
-    if (mAppMain == null) {
-      return false;
-    }
-    SGDrawingWindow wnd = mAppMain.getActiveWindow();
-    if (wnd == null) {
-      return false;
-    }
-    return mAppMain.openFile(fname, wnd);
   }
 }

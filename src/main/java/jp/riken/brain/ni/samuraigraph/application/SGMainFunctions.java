@@ -39,6 +39,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -149,7 +151,10 @@ class SGMainFunctions
   static boolean USE_FOXTROT = true;
 
   /** Virtual bounds. */
-  private static Rectangle virtualBounds = null;
+  private Rectangle mVirtualBounds = null;
+
+  /** Executor for console command reading. */
+  private final ExecutorService mCommandExecutor = Executors.newCachedThreadPool();
 
   /** Application Properties */
   SGApplicationProperties mAppProp = null;
@@ -398,7 +403,7 @@ class SGMainFunctions
           leftTopBounds = rect;
         }
       }
-      SGMainFunctions.setVirtualBounds(leftTopBounds);
+      SGMainFunctions.this.setVirtualBounds(leftTopBounds);
 
       // set up the properties of tooltip text
       ToolTipManager toolTipMan = ToolTipManager.sharedInstance();
@@ -2037,9 +2042,9 @@ class SGMainFunctions
       SwingUtilities.invokeLater(
           new Runnable() {
             public void run() {
-              // Creates and starts the thread to execute commands.
-              Thread th =
-                  new Thread() {
+              // Creates and starts the executor to execute commands.
+              SGMainFunctions.this.mCommandExecutor.execute(
+                  new Runnable() {
                     public void run() {
                       // setup standard output stream
                       SGMainFunctions.this
@@ -2066,8 +2071,7 @@ class SGMainFunctions
                         }
                       }
                     }
-                  };
-              th.start();
+                  });
             }
           });
 
@@ -2929,8 +2933,8 @@ class SGMainFunctions
    *
    * @param rect a rectangle to set
    */
-  public static void setVirtualBounds(Rectangle rect) {
-    virtualBounds = rect;
+  public void setVirtualBounds(Rectangle rect) {
+    this.mVirtualBounds = rect;
   }
 
   /**
@@ -2938,8 +2942,8 @@ class SGMainFunctions
    *
    * @return virtual bounds
    */
-  public static Rectangle getVirtualBounds() {
-    return virtualBounds;
+  public Rectangle getVirtualBounds() {
+    return this.mVirtualBounds;
   }
 
   // Returns the temporary directory.

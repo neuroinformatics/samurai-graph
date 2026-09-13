@@ -183,7 +183,7 @@ class SGWindowManager
     }
 
     // initializes the location
-    Rectangle virtualBounds = SGMainFunctions.getVirtualBounds();
+    Rectangle virtualBounds = this.mMain.getVirtualBounds();
     final int x = virtualBounds.x + (virtualBounds.width - wnd.getWidth()) / 2;
     final int y = virtualBounds.y + (virtualBounds.height - wnd.getHeight()) / 2;
     wnd.setLocation(x, y);
