@@ -7,7 +7,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -33,9 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.RootPaneContainer;
 import javax.swing.SwingConstants;
@@ -64,6 +61,13 @@ public class SGDrawingWindow extends JFrame
         SGIWindowDialogObserver,
         SGIProgressControl {
 
+  private final SGDrawingWindowExportHelper mExportHelper = new SGDrawingWindowExportHelper(this);
+
+  private final SGDrawingWindowGeometryHelper mGeometryHelper =
+      new SGDrawingWindowGeometryHelper(this);
+
+  private final SGDrawingWindowObjectHelper mObjectHelper = new SGDrawingWindowObjectHelper(this);
+
   private static final Logger logger = LoggerFactory.getLogger(SGDrawingWindow.class);
   private final SGDrawingWindowClipboard mClipboard = new SGDrawingWindowClipboard(this);
 
@@ -78,25 +82,25 @@ public class SGDrawingWindow extends JFrame
   private int mID;
 
   // magnification
-  private float mMagnification = 1.0f;
+  float mMagnification = 1.0f;
 
   // flag of auto zooming
   private boolean mAutoZoomFlag = false;
 
   // A layered pane.
-  private transient SGClientPanel mClientPanel;
+  transient SGClientPanel mClientPanel;
 
   // Property dialog of this window object
   private transient SGWindowDialog mPropertyDialog = null;
 
   // image file export manager
-  private transient SGIImageExportManager mImageExportManager;
+  transient SGIImageExportManager mImageExportManager;
 
   // Temporary size of the view port, which is used in the lock mode.
-  private final transient SGTuple2f mTemporaryViewportSize = new SGTuple2f();
+  final transient SGTuple2f mTemporaryViewportSize = new SGTuple2f();
 
   // The tool bar
-  private transient SGToolBar mToolBar;
+  transient SGToolBar mToolBar;
 
   // The status bar.
   private transient SGStatusBar mStatusBar;
@@ -114,7 +118,7 @@ public class SGDrawingWindow extends JFrame
   private final transient SGTuple2f mPaperOrigin = new SGTuple2f();
 
   /** Bounds of the client area. */
-  private transient Rectangle2D mClientRect = null;
+  transient Rectangle2D mClientRect = null;
 
   /** The background image. */
   private transient BackgroundImage mBackgroundImage = null;
@@ -522,7 +526,7 @@ public class SGDrawingWindow extends JFrame
   //
 
   /** The list of figures. */
-  private final transient List<SGFigure> mFigureList = new ArrayList<SGFigure>();
+  final transient List<SGFigure> mFigureList = new ArrayList<SGFigure>();
 
   /**
    * Returns a figure with given ID.
@@ -1213,64 +1217,8 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** Called when the window is resized. */
-  private boolean onResized() {
-    if (this.getClientRect() == null) {
-      return false;
-    }
-
-    // set the size of the components
-    this.setComponentBounds();
-
-    // get and record the size of viewport
-    final SGTuple2f size = this.getViewportSize();
-
-    // ratio of the viewport size
-    final float ratioX = size.x / this.mTemporaryViewportSize.x;
-    final float ratioY = size.y / this.mTemporaryViewportSize.y;
-
-    //
-    this.updateClientRect();
-
-    // resize the figures
-    ArrayList<SGFigure> list = this.getVisibleFigureList();
-    for (int ii = 0; ii < list.size(); ii++) {
-      SGFigure figure = list.get(ii);
-      figure.recordFigureRect();
-      figure.setViewBounds();
-    }
-
-    // when the figures are locked
-    if (this.isLocked()) {
-      // resize the paper
-      Rectangle2D pRect = this.getPaperRect();
-      final float pWidth = ratioX * (float) pRect.getWidth() / this.mMagnification;
-      final float pHeight = ratioY * (float) pRect.getHeight() / this.mMagnification;
-      this.mClientPanel.setPaperSizeRoundingOff(pWidth, pHeight);
-
-      // resize the figures
-      for (int ii = 0; ii < list.size(); ii++) {
-        SGFigure figure = list.get(ii);
-        figure.recordFigureRect();
-        figure.resize(ratioX, ratioY);
-        figure.setChanged(true);
-      }
-
-      //
-      this.updateClientRect();
-
-      if (this.mTemporaryViewportSize.equals(size) == false) {
-        this.setChanged(true);
-        this.notifyToRoot();
-      }
-    }
-
-    //
-    this.mTemporaryViewportSize.setValues(size);
-
-    //
-    this.doAutoZoom();
-
-    return true;
+  boolean onResized() {
+    return this.mGeometryHelper.onResized();
   }
 
   /**
@@ -1332,7 +1280,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** Do automatic zoom. */
-  private void doAutoZoom() {
+  void doAutoZoom() {
     // auto zoom if flag is set
     if (this.isAutoZoom()) {
       this.zoomWayOut();
@@ -1376,45 +1324,7 @@ public class SGDrawingWindow extends JFrame
 
   /** */
   public boolean setFigureBoundingBox(final int mode) {
-    if (mode != 0 && mode != 1 && mode != 2) {
-      return false;
-    }
-
-    ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
-    ArrayList<SGFigure> fList = this.getVisibleFigureList();
-    for (int ii = 0; ii < fList.size(); ii++) {
-      SGFigure figure = fList.get(ii);
-      rectList.add(figure.getBoundingBox());
-    }
-    Rectangle2D bbRect = SGUtility.createUnion(rectList);
-    if (bbRect == null) {
-      return false;
-    }
-
-    Rectangle2D cRect = this.getClientRect();
-    Rectangle2D pRect = this.getPaperRect();
-    float width = (float) pRect.getWidth();
-    float height = (float) pRect.getHeight();
-    final float mag = this.mMagnification;
-
-    // width
-    if (mode == 0 || mode == 1) {
-      width =
-          BOUNDING_BOX_MARGIN + (float) (-cRect.getX() + bbRect.getX() + bbRect.getWidth()) / mag;
-    }
-
-    // height
-    if (mode == 0 || mode == 2) {
-      height =
-          BOUNDING_BOX_MARGIN + (float) (-cRect.getY() + bbRect.getY() + bbRect.getHeight()) / mag;
-    }
-
-    // set to the paper
-    this.mClientPanel.setPaperSizeRoundingOut(width, height);
-
-    this.updateClientRect();
-
-    return true;
+    return this.mGeometryHelper.setFigureBoundingBox(mode);
   }
 
   public Rectangle2D getBoundingBoxOfFigures(final List<SGFigure> figureList) {
@@ -1618,50 +1528,7 @@ public class SGDrawingWindow extends JFrame
 
   // insert a symbol to figure
   protected boolean insertSymbol(final SGFigure figure, final int x, final int y) {
-
-    boolean flag = false;
-
-    // a label
-    if (this.getLabelInsertionFlag()) {
-      flag = figure.addString(x, y);
-    }
-
-    // a timing line
-    if (this.getTimingLineInsertionFlag()) {
-      flag = figure.addTimingLine(x, y);
-    }
-
-    // an axis break symbol
-    if (this.getAxisBreakSymbolInsertionFlag()) {
-      flag = figure.addAxisBreakSymbol(x, y);
-    }
-
-    // a symbol of significant difference
-    if (this.getSignificantDifferenceSymbolInsertionFlag()) {
-      flag = figure.addSignificantDifferenceSymbol(x, y);
-    }
-
-    // rectangle
-    if (this.getRectangleInsertionFlag()) {
-      flag = figure.addShape(SGIFigureElementShape.RECTANGLE, x, y);
-    }
-
-    // ellipse
-    if (this.getEllipseInsertionFlag()) {
-      flag = figure.addShape(SGIFigureElementShape.ELLIPSE, x, y);
-    }
-
-    // arrow
-    if (this.getArrowInsertionFlag()) {
-      flag = figure.addShape(SGIFigureElementShape.ARROW, x, y);
-    }
-
-    // line
-    if (this.getLineInsertionFlag()) {
-      flag = figure.addShape(SGIFigureElementShape.LINE, x, y);
-    }
-
-    return flag;
+    return this.mObjectHelper.insertSymbol(figure, x, y);
   }
 
   protected final Point mTempMouseLocation = new Point();
@@ -1732,35 +1599,8 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** */
-  private Point2D getLocationInPane(final int x, final int y) {
-
-    int xx = x;
-    int yy = y;
-
-    // get size of boarder area
-    final Insets insets = this.getInsets();
-    final int mTop = insets.top;
-    // final int mBottom = insets.bottom;
-    final int mLeft = insets.left;
-    // final int mRight = insets.right;
-
-    xx -= mLeft;
-    yy -= mTop;
-
-    // menu bar
-    final JMenuBar menuBar = this.getJMenuBar();
-    final double menuHeight = menuBar.getHeight();
-    yy -= (int) menuHeight;
-
-    // tool bar
-    yy -= this.getToolBarHeight();
-
-    // ruler
-    final double rulerWidth = this.mClientPanel.getRulerWidth();
-    xx -= (int) rulerWidth;
-    yy -= (int) rulerWidth;
-
-    return new Point2D.Float(xx, yy);
+  Point2D getLocationInPane(final int x, final int y) {
+    return this.mGeometryHelper.getLocationInPane(x, y);
   }
 
   public boolean setPositionLabel(final int x, final int y) {
@@ -1970,43 +1810,7 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   protected void updateFocusedObjectItem() {
-    boolean eff = false;
-    ArrayList<SGFigure> list = this.getVisibleFigureList();
-    for (int ii = 0; ii < list.size(); ii++) {
-      SGFigure figure = list.get(ii);
-      if (figure.isSelected()) {
-        eff = true;
-        break;
-      }
-
-      SGIFigureElement[] array = figure.getIFigureElementArray();
-      for (int jj = 0; jj < array.length; jj++) {
-        if (array[jj].getFocusedObjectsList().size() != 0) {
-          eff = true;
-          break;
-        }
-      }
-
-      if (eff) {
-        break;
-      }
-    }
-
-    // set to the menu bar
-    SGMenuBar mBar = this.mMenuBar;
-    mBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_CUT, eff);
-    mBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_COPY, eff);
-    mBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_DELETE, eff);
-    mBar.setMenuItemEnabled(MENUBAR_EDIT, MENUBARCMD_DUPLICATE, eff);
-    mBar.setMenuItemEnabled(MENUBAR_ARRANGE, MENUBARCMD_BRING_TO_FRONT, eff);
-    mBar.setMenuItemEnabled(MENUBAR_ARRANGE, MENUBARCMD_BRING_FORWARD, eff);
-    mBar.setMenuItemEnabled(MENUBAR_ARRANGE, MENUBARCMD_SEND_BACKWARD, eff);
-    mBar.setMenuItemEnabled(MENUBAR_ARRANGE, MENUBARCMD_SEND_TO_BACK, eff);
-
-    // set to the tool bar
-    SGToolBar tBar = this.mToolBar;
-    tBar.setButtonEnabled(MENUBARCMD_CUT, eff);
-    tBar.setButtonEnabled(MENUBARCMD_COPY, eff);
+    this.mObjectHelper.updateFocusedObjectItem();
   }
 
   /**
@@ -2351,62 +2155,8 @@ public class SGDrawingWindow extends JFrame
    * @param toFront true to move to the front and false to move to the back
    * @return true if succeeded
    */
-  private boolean moveFocusedObjects(final boolean toFront) {
-
-    ArrayList<SGFigure> fList = this.getVisibleFigureList();
-    boolean changed = false;
-    for (int ii = 0; ii < fList.size(); ii++) {
-      SGFigure figure = fList.get(ii);
-      if (figure.moveFocusedObjects(toFront) == false) {
-        return false;
-      }
-      SGIFigureElement[] array = figure.getIFigureElementArray();
-      for (int jj = 0; jj < array.length; jj++) {
-        if (array[jj].isChanged()) {
-          changed = true;
-        }
-      }
-    }
-
-    List<SGISelectable> list = this.getFocusedObjectsList();
-    List<SGFigure> objList = this.mFigureList;
-    List<SGFigure> objListOld = new ArrayList<SGFigure>(objList);
-
-    // move focused objects
-    if (toFront) {
-      for (int ii = 0; ii < list.size(); ii++) {
-        SGISelectable obj = list.get(ii);
-        if (obj instanceof SGFigure) {
-          if (SGUtility.moveObjectTo((SGFigure) obj, objList, objList.size() - 1) == false) {
-            return false;
-          }
-        }
-      }
-    } else {
-      for (int ii = list.size() - 1; ii >= 0; ii--) {
-        SGISelectable obj = list.get(ii);
-        if (obj instanceof SGFigure) {
-          if (SGUtility.moveObjectTo((SGFigure) obj, objList, 0) == false) {
-            return false;
-          }
-        }
-      }
-    }
-
-    if (objList.equals(objListOld) == false) {
-      this.setChanged(true);
-      changed = true;
-    }
-
-    if (changed) {
-      this.notifyToRoot();
-      this.updateDataItem();
-    }
-
-    // repaint
-    this.repaintContentPane();
-
-    return true;
+  boolean moveFocusedObjects(final boolean toFront) {
+    return this.mObjectHelper.moveFocusedObjects(toFront);
   }
 
   /** Bring the focused objects to forward. */
@@ -2425,52 +2175,8 @@ public class SGDrawingWindow extends JFrame
    * @param num the number of levels to move the focused objects
    * @return true if succeeded
    */
-  private boolean moveFocusedObjects(final int num) {
-
-    ArrayList<SGFigure> fList = this.getVisibleFigureList();
-    boolean changed = false;
-    for (int ii = 0; ii < fList.size(); ii++) {
-      SGFigure figure = fList.get(ii);
-      if (figure.moveFocusedObjects(num) == false) {
-        return false;
-      }
-      SGIFigureElement[] array = figure.getIFigureElementArray();
-      for (int jj = 0; jj < array.length; jj++) {
-        if (array[jj].isChanged()) {
-          changed = true;
-        }
-      }
-    }
-
-    List<SGISelectable> list = this.getFocusedObjectsList();
-    List<SGFigure> objList = this.mFigureList;
-
-    // record the list before edited
-    List<SGFigure> objListOld = new ArrayList<SGFigure>(objList);
-    List<SGFigure> movedFigures = new ArrayList<>();
-    for (SGISelectable s : list) {
-      if (s instanceof SGFigure) {
-        movedFigures.add((SGFigure) s);
-      }
-    }
-    if (SGUtility.moveObject(movedFigures, objList, num) == false) {
-      return false;
-    }
-
-    if (objList.equals(objListOld) == false) {
-      this.setChanged(true);
-      changed = true;
-    }
-
-    if (changed) {
-      this.notifyToRoot();
-      this.updateDataItem();
-    }
-
-    // repaint
-    this.repaintContentPane();
-
-    return true;
+  boolean moveFocusedObjects(final int num) {
+    return this.mObjectHelper.moveFocusedObjects(num);
   }
 
   /**
@@ -2481,37 +2187,7 @@ public class SGDrawingWindow extends JFrame
    * @return true if succeeded
    */
   public boolean moveFigureToEnd(final int id, final boolean toFront) {
-    SGFigure f = this.getFigure(id);
-    if (f == null) {
-      return false;
-    }
-    if (f.isVisible() == false) {
-      return false;
-    }
-
-    List<SGFigure> objList = this.mFigureList;
-    List<SGFigure> objListOld = new ArrayList<SGFigure>(objList);
-
-    // move focused objects
-    if (toFront) {
-      if (SGUtility.moveObjectToTail(f, objList) == false) {
-        return false;
-      }
-    } else {
-      if (SGUtility.moveObjectToHead(f, objList) == false) {
-        return false;
-      }
-    }
-
-    final boolean ch = !this.mFigureList.equals(objListOld);
-    if (ch) {
-      this.setChanged(true);
-      this.notifyToRoot();
-      this.updateDataItem();
-      this.repaintContentPane();
-    }
-
-    return true;
+    return this.mObjectHelper.moveFigureToEnd(id, toFront);
   }
 
   /**
@@ -2522,37 +2198,7 @@ public class SGDrawingWindow extends JFrame
    * @return true if succeeded
    */
   public boolean moveFigure(final int id, final boolean toFront) {
-    SGFigure f = this.getFigure(id);
-    if (f == null) {
-      return false;
-    }
-    if (f.isVisible() == false) {
-      return false;
-    }
-
-    List<SGFigure> objList = this.mFigureList;
-    List<SGFigure> objListOld = new ArrayList<SGFigure>(objList);
-
-    // move focused objects
-    if (toFront) {
-      if (SGUtility.moveObjectToNext(f, objList) == false) {
-        return false;
-      }
-    } else {
-      if (SGUtility.moveObjectToPrevious(f, objList) == false) {
-        return false;
-      }
-    }
-
-    final boolean ch = !this.mFigureList.equals(objListOld);
-    if (ch) {
-      this.setChanged(true);
-      this.notifyToRoot();
-      this.updateDataItem();
-      this.repaintContentPane();
-    }
-
-    return true;
+    return this.mObjectHelper.moveFigure(id, toFront);
   }
 
   /**
@@ -2916,35 +2562,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   public boolean alignFigures() {
-    // record the location
-    ArrayList<SGFigure> list = this.getVisibleFigureList();
-    for (int ii = 0; ii < list.size(); ii++) {
-      SGFigure figure = list.get(ii);
-      figure.recordFigureRect();
-    }
-    this.recordPaperRect();
-
-    // aligns figures
-    if (SGDrawingWindowAlignmentUtility.alignFiguresByGraphAreaNew(this) == false) {
-      return false;
-    }
-
-    //
-    for (int ii = 0; ii < list.size(); ii++) {
-      SGFigure figure = list.get(ii);
-      if (figure.isFigureMoved()) {
-        figure.setChanged(true);
-      }
-    }
-
-    if (this.isPaperBoundsChanged()) {
-      this.setChanged(true);
-    }
-
-    // notify to the root
-    this.notifyToRoot();
-
-    return true;
+    return this.mObjectHelper.alignFigures();
   }
 
   /**
@@ -2980,7 +2598,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  private static final float BOUNDING_BOX_MARGIN;
+  static final float BOUNDING_BOX_MARGIN;
 
   static {
     final float ratio = SGIConstants.CM_POINT_RATIO;
@@ -2992,52 +2610,7 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   public boolean setBoundingBox() {
-    // Rectangle pRect = this.getPaperRect().getBounds();
-    Rectangle2D cRect = this.getClientRect();
-
-    ArrayList<SGFigure> list = this.getVisibleFigureList();
-    if (list.size() != 0) {
-      // update the temporary rectangles
-      for (int ii = 0; ii < list.size(); ii++) {
-        SGFigure figure = list.get(ii);
-        figure.recordFigureRect();
-      }
-      this.recordPaperRect();
-
-      // align figures
-      Rectangle2D bbRect = this.getBoundingBoxOfFigures(list);
-      for (int ii = 0; ii < list.size(); ii++) {
-        SGFigure figure = list.get(ii);
-        float x =
-            BOUNDING_BOX_MARGIN + (float) (cRect.getX() + figure.getGraphRectX() - bbRect.getX());
-        float y =
-            BOUNDING_BOX_MARGIN + (float) (cRect.getY() + figure.getGraphRectY() - bbRect.getY());
-        figure.setGraphRectLocationRoundingOut(x, y);
-        if (figure.isFigureMoved()) {
-          figure.setChanged(true);
-        }
-      }
-
-      //
-      this.setFigureBoundingBox(0);
-
-      //
-      if (this.isPaperBoundsChanged()) {
-        this.setChanged(true);
-      }
-
-      // notify to the root
-      this.notifyToRoot();
-
-    } else {
-      SGUtility.showMessageDialog(
-          this,
-          "There is no figure.",
-          "Failed to get the Bounding box.",
-          JOptionPane.WARNING_MESSAGE);
-    }
-
-    return true;
+    return this.mGeometryHelper.setBoundingBox();
   }
 
   /** */
@@ -3173,106 +2746,8 @@ public class SGDrawingWindow extends JFrame
   /**
    * @return
    */
-  private boolean updateClientRectOld() {
-
-    //
-    // if the client rectangle does not contain the bounding box,
-    // fit the client rectangle to the bounding box.
-    //
-    // if the viewport rectangle contains the bounding box,
-    // fit the the client rect to the viewport rectangle.
-    //
-
-    // horizontal
-
-    this.fitRect(this.mClientRect, this.getBoundingBox(), true);
-
-    if (SGUtility.isRectContains(this.getViewportBounds(), this.getBoundingBox(), true)) {
-      this.fitRect(this.mClientRect, this.getViewportBounds(), true);
-    }
-
-    if (SGUtility.isRectContains(this.getClientRect(), this.getViewportBounds(), true) == false) {
-      Rectangle2D cRect = this.getClientRect();
-      Rectangle2D vpRect = this.getViewportBounds();
-
-      final boolean b1 = SGUtility.isRectContains(cRect, vpRect.getX(), true);
-      final boolean b2 = SGUtility.isRectContains(cRect, vpRect.getX() + vpRect.getWidth(), true);
-
-      double diff = 0.0;
-      if (!b1 && b2) {
-        diff = vpRect.getX() - cRect.getX();
-      } else if (b1 && !b2) {
-        diff = (vpRect.getX() + vpRect.getWidth()) - (cRect.getX() + cRect.getWidth());
-      } else if (!b1 && !b2) {
-        if (cRect.getX() < vpRect.getX()) {
-          diff = (vpRect.getX() + vpRect.getWidth()) - (cRect.getX() + cRect.getWidth());
-        } else {
-          diff = vpRect.getX() - cRect.getX();
-        }
-      }
-
-      this.setClientRect(
-          (float) (cRect.getX() + diff),
-          (float) cRect.getY(),
-          (float) cRect.getWidth(),
-          (float) cRect.getHeight());
-    }
-
-    // vertical
-
-    this.fitRect(this.mClientRect, this.getBoundingBox(), false);
-
-    if (SGUtility.isRectContains(this.getViewportBounds(), this.getBoundingBox(), false)) {
-      this.fitRect(this.mClientRect, this.getViewportBounds(), false);
-    }
-
-    if (SGUtility.isRectContains(this.getClientRect(), this.getViewportBounds(), false) == false) {
-      Rectangle2D cRect = this.getClientRect();
-      Rectangle2D vpRect = this.getViewportBounds();
-
-      final boolean b1 = SGUtility.isRectContains(cRect, vpRect.getY(), false);
-      final boolean b2 = SGUtility.isRectContains(cRect, vpRect.getY() + vpRect.getHeight(), false);
-
-      double diff = 0.0;
-      if (!b1 && b2) {
-        diff = vpRect.getY() - cRect.getY();
-      } else if (b1 && !b2) {
-        diff = (vpRect.getY() + vpRect.getHeight()) - (cRect.getY() + cRect.getHeight());
-      } else if (!b1 && !b2) {
-        if (cRect.getY() < vpRect.getY()) {
-          diff = (vpRect.getY() + vpRect.getHeight()) - (cRect.getY() + cRect.getHeight());
-        } else {
-          diff = vpRect.getY() - cRect.getY();
-        }
-      }
-
-      this.setClientRect(
-          (float) cRect.getX(),
-          (float) (cRect.getY() + diff),
-          (float) cRect.getWidth(),
-          (float) cRect.getHeight());
-    }
-
-    final Rectangle2D bbRect = this.getBoundingBox();
-    final Rectangle2D vpRect = this.getViewportBounds();
-    final Rectangle2D cRect = this.getClientRect();
-
-    this.mClientPanel.setScrollBarValue(cRect, vpRect);
-
-    //
-    this.mClientPanel.setEnableScrollBars(vpRect, bbRect);
-
-    if (SGUtility.isRectContains(vpRect, bbRect, true)) {
-      this.fitRect(this.mClientRect, vpRect, true);
-    }
-    if (SGUtility.isRectContains(vpRect, bbRect, false)) {
-      this.fitRect(this.mClientRect, vpRect, false);
-    }
-
-    //
-    this.mClientPanel.setScrollBarValue(cRect, vpRect);
-
-    return true;
+  boolean updateClientRectOld() {
+    return this.mGeometryHelper.updateClientRectOld();
   }
 
   /**
@@ -3282,7 +2757,7 @@ public class SGDrawingWindow extends JFrame
    * @param rect2
    * @param flag - true: x-direction, false: y-direction
    */
-  private void fitRect(Rectangle2D rect1, Rectangle2D rect2, final boolean flag) {
+  void fitRect(Rectangle2D rect1, Rectangle2D rect2, final boolean flag) {
     if (flag) {
       rect1.setRect(rect2.getX(), rect1.getY(), rect2.getWidth(), rect1.getHeight());
     } else {
@@ -3551,7 +3026,7 @@ public class SGDrawingWindow extends JFrame
   // delete figure from this window
 
   // The menu bar.
-  private SGMenuBar mMenuBar = null;
+  SGMenuBar mMenuBar = null;
 
   /** Create the menu bar. */
   private boolean createMenuBar() {
@@ -3654,50 +3129,12 @@ public class SGDrawingWindow extends JFrame
     return this.toImage(PRINT, silent);
   }
 
-  private boolean toImage(final int mode, final boolean silent) {
-    final int width = (int) this.mClientPanel.getPaperWidth();
-    final int height = (int) this.mClientPanel.getPaperHeight();
-
-    InfoForExport info = new InfoForExport();
-    ExportPanel target = new ExportPanel();
-    target.setOpaque(true);
-    target.setBackground(this.mClientPanel.getPaperColor());
-    target.setPreferredSize(new Dimension(width, height));
-
-    SGIImageExportManager man = this.mImageExportManager;
-    man.preprocessExport(this);
-
-    this.beforeExport(target, info, silent);
-
-    boolean ret;
-    switch (mode) {
-      case EXPORT:
-        {
-          // export as image
-          ret = man.export(target, this, width, height, silent);
-          break;
-        }
-
-      case PRINT:
-        {
-          // print as image
-          ret = man.print(target, this, width, height, silent);
-          break;
-        }
-
-      default:
-        {
-          ret = false;
-        }
-    }
-
-    this.afterExport(target, info, silent);
-
-    return ret;
+  boolean toImage(final int mode, final boolean silent) {
+    return this.mExportHelper.toImage(mode, silent);
   }
 
   /** A class used for the image export. */
-  private static class InfoForExport {
+  static class InfoForExport {
     float mag;
 
     float hValue;
@@ -3713,146 +3150,12 @@ public class SGDrawingWindow extends JFrame
     List<SGFigure> visibleFigureList;
   }
 
-  private boolean beforeExport(
-      final ExportPanel ePanel, final InfoForExport info, final boolean silent) {
-    float mag = this.mMagnification;
-    SGTuple2f value = this.mClientPanel.getScrollRatio();
-    float hValue = value.x;
-    float vValue = value.y;
-    List<SGFigure> list = this.getVisibleFigureList();
-
-    if (!silent) {
-      // check whether the figures run off the edge of the paper
-      boolean isInside = true;
-      Rectangle pRect = this.getPaperRect().getBounds();
-      for (int ii = 0; ii < list.size(); ii++) {
-        SGFigure figure = list.get(ii);
-        Rectangle rect = figure.getBoundingBox().getBounds();
-        if (pRect.contains(rect) == false) {
-          isInside = false;
-          break;
-        }
-      }
-      if (!isInside) {
-        SGUtility.showMessageDialog(
-            this,
-            "Some figures run off the edge of paper.",
-            "Warning",
-            JOptionPane.WARNING_MESSAGE);
-      }
-    }
-
-    // preprocessing for image export
-    for (int ii = 0; ii < list.size(); ii++) {
-      SGFigure figure = list.get(ii);
-      figure.beforeExport();
-    }
-
-    // record the location of figures
-    SGTuple2f[] locationArray = new SGTuple2f[list.size()];
-    for (int ii = 0; ii < list.size(); ii++) {
-      SGFigure figure = list.get(ii);
-      locationArray[ii] = new SGTuple2f(figure.mGraphRectX, figure.mGraphRectY);
-    }
-
-    // zoom
-    this.zoom(1.0f);
-
-    // set the location of figures
-    Rectangle2D cRect = this.getClientRect();
-    for (int ii = 0; ii < list.size(); ii++) {
-      SGFigure figure = list.get(ii);
-      figure.setGraphRectLocation(
-          figure.getGraphRectX() - (float) cRect.getX(),
-          figure.getGraphRectY() - (float) cRect.getY());
-    }
-
-    //
-    // set to the export panel
-    //
-
-    // set the location and the size of preview dialog
-    final float width = this.mClientPanel.getPaperWidth();
-    final float height = this.mClientPanel.getPaperHeight();
-
-    // set the layered pane
-    ePanel.setOpaque(false);
-    ePanel.setLocation(0, 0);
-    ePanel.setSize((int) width, (int) height);
-
-    // add figures to the export panel
-    Rectangle2D vBounds = new Rectangle2D.Float(0.0f, 0.0f, width, height);
-    for (int ii = 0; ii < list.size(); ii++) {
-      SGFigure figure = list.get(ii);
-      ePanel.add(figure);
-      // Rectangle bounds = new Rectangle(
-      // 0, 0, figure.getWidth(), figure.getHeight() );
-      figure.setViewBounds(vBounds);
-    }
-
-    // set an image
-    Image image = this.mClientPanel.getImage();
-    if (image != null) {
-      SGTuple2f location = this.mClientPanel.getImageLocation();
-      SGTuple2f size = this.mClientPanel.getImageSize();
-      final float f = this.mClientPanel.getImageScalingFactor();
-      ePanel.setImage(image, location.x, location.y, size.x, size.y, f);
-    }
-
-    // set invisible
-    for (int ii = 0; ii < list.size(); ii++) {
-      SGFigure figure = list.get(ii);
-      figure.setVisible(false);
-    }
-
-    for (int ii = 0; ii < list.size(); ii++) {
-      SGFigure figure = list.get(ii);
-      figure.setMode(MODE_EXPORT_AS_IMAGE);
-    }
-
-    // set information
-    info.mag = mag;
-    info.hValue = hValue;
-    info.vValue = vValue;
-    info.locationArray = locationArray;
-    info.visibleFigureList = list;
-
-    return true;
+  boolean beforeExport(final ExportPanel ePanel, final InfoForExport info, final boolean silent) {
+    return this.mExportHelper.beforeExport(ePanel, info, silent);
   }
 
-  private boolean afterExport(
-      final ExportPanel ePanel, final InfoForExport info, final boolean silent) {
-    float mag = info.mag;
-    float hValue = info.hValue;
-    float vValue = info.vValue;
-    SGTuple2f[] locationArray = info.locationArray;
-    List<SGFigure> fList = info.visibleFigureList;
-
-    // zoom
-    this.zoom(mag);
-
-    // set scroll value
-    this.mClientPanel.setScrollRatio(vValue, hValue);
-
-    // set the location
-    // SGTuple2f vpSize = this.getViewportSize();
-    for (int ii = 0; ii < fList.size(); ii++) {
-      SGFigure figure = fList.get(ii);
-      figure.mGraphRectX = locationArray[ii].x;
-      figure.mGraphRectY = locationArray[ii].y;
-      figure.updateGraphRect();
-      figure.setViewBounds();
-    }
-
-    // postprocessing for image export
-    for (int ii = 0; ii < fList.size(); ii++) {
-      SGFigure figure = fList.get(ii);
-      figure.afterExport();
-    }
-
-    this.repaintContentPane();
-
-    return true;
+  boolean afterExport(final ExportPanel ePanel, final InfoForExport info, final boolean silent) {
+    return this.mExportHelper.afterExport(ePanel, info, silent);
   }
 
   /** A panel class used to export images. */
@@ -3861,7 +3164,7 @@ public class SGDrawingWindow extends JFrame
     private static final long serialVersionUID = 6760038313006131448L;
 
     // The list of printable objects.
-    private transient List<SGFigure> mFigureList = new ArrayList<SGFigure>();
+    transient List<SGFigure> mFigureList = new ArrayList<SGFigure>();
 
     // The clipping flag.
     private boolean mClipFlag = true;
@@ -3968,39 +3271,7 @@ public class SGDrawingWindow extends JFrame
    * @return
    */
   public boolean createDOMTree(Document document, final SGExportParameter params) {
-    boolean flag;
-    switch (this.mPropertyFileCreationModeOfFigures) {
-      case ALL_FIGURES:
-        {
-          flag = this.createDOMTreeForAllFigures(document, params);
-          break;
-        }
-
-      case FOCUSED_FIGURES_FOR_COPY:
-        {
-          flag = this.createDOMTreeForFocusedFiguresForDuplication(document, params);
-          break;
-        }
-
-      case FOCUSED_FIGURES_IN_BOUNDING_BOX:
-        {
-          flag = this.createDOMTreeForFocusedFiguresInBoundingBox(document, params);
-          break;
-        }
-
-      case FOCUSED_FIGURES_FOR_DUPLICATION:
-        {
-          flag = this.createDOMTreeForFocusedFiguresForDuplication(document, params);
-          break;
-        }
-
-      default:
-        {
-          throw new Error();
-        }
-    }
-
-    return flag;
+    return this.mExportHelper.createDOMTree(document, params);
   }
 
   /**
@@ -4016,7 +3287,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** */
-  private boolean createDOMTreeForAllFigures(Document document, SGExportParameter params) {
+  boolean createDOMTreeForAllFigures(Document document, SGExportParameter params) {
 
     // get the root element
     Element property = document.getDocumentElement();
@@ -4043,7 +3314,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** Creation mode of the property file of focused figures. */
-  private int mPropertyFileCreationModeOfFigures;
+  int mPropertyFileCreationModeOfFigures;
 
   /**
    * @return
@@ -4055,8 +3326,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** */
-  private boolean createDOMTreeForFocusedFiguresInBoundingBox(
-      Document document, SGExportParameter params) {
+  boolean createDOMTreeForFocusedFiguresInBoundingBox(Document document, SGExportParameter params) {
 
     // get the root element
     Element property = document.getDocumentElement();
@@ -4083,7 +3353,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** */
-  private boolean createDOMTreeForFocusedFiguresForDuplication(
+  boolean createDOMTreeForFocusedFiguresForDuplication(
       Document document, SGExportParameter params) {
 
     // get the root element
@@ -4908,36 +4178,7 @@ public class SGDrawingWindow extends JFrame
    * @return a text string of the commands
    */
   public String getCommandString(SGExportParameter params) {
-    OPERATION type = params.getType();
-
-    StringBuilder sb = new StringBuilder();
-
-    // creates the command for this window
-    String wndCommands =
-        SGCommandUtility.createCommandString(COM_WINDOW, null, this.getCommandPropertyMap(params));
-    sb.append(wndCommands);
-
-    // creates the command of figures
-    List<SGFigure> figureList = this.getVisibleFigureList();
-    for (SGFigure f : figureList) {
-      if (OPERATION.SAVE_INTO_FILE_ATTRIBUTE.equals(type)) {
-        List<SGData> dataList = f.getVisibleDataList();
-        SGDataExportParameter exportParams = (SGDataExportParameter) params;
-        boolean found = false;
-        for (SGData data : dataList) {
-          if (exportParams.canExport(data)) {
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          continue;
-        }
-      }
-      String fCommands = f.getCommandString(params);
-      sb.append(fCommands);
-    }
-    return sb.toString();
+    return this.mExportHelper.getCommandString(params);
   }
 
   /**
