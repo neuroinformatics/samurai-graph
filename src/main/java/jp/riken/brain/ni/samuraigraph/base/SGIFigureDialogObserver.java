@@ -21,19 +21,16 @@ public interface SGIFigureDialogObserver extends SGIPropertyDialogObserver {
 
   /**
    * @return
-   * @uml.property name="transparent"
    */
   public boolean isTransparent();
 
   /**
    * @return
-   * @uml.property name="backgroundColor"
    */
   public Color getBackgroundColor();
 
   /**
    * @return
-   * @uml.property name="legendVisible"
    */
   public boolean isLegendVisible();
 
@@ -85,7 +82,7 @@ public interface SGIFigureDialogObserver extends SGIPropertyDialogObserver {
   /**
    * Sets whether the color bar is visible.
    *
-   * @param true to set visible
+   * @param b to set visible
    * @return true if succeeded
    */
   public boolean setColorBarVisible(final boolean b);

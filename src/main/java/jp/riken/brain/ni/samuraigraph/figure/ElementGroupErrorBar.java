@@ -34,22 +34,14 @@ class ElementGroupErrorBar extends SGElementGroupErrorBarForData implements ILeg
     return true;
   }
 
-  /**
-   * Returns the preferred width.
-   *
-   * @return the preferred width
-   */
+  /** Returns the preferred width. */
   public float getPreferredWidth() {
     return this.getMagnification() * this.getHeadSize();
   }
 
   private static final float DEFAULT_ERROR_BAR_HEIGHT = 10.0f;
 
-  /**
-   * Returns the preferred height.
-   *
-   * @return the preferred height
-   */
+  /** Returns the preferred height. */
   public float getPreferredHeight() {
 
     ElementGroupSetInLegendSXY legend = (ElementGroupSetInLegendSXY) this.mGroupSet;
@@ -159,7 +151,6 @@ class ElementGroupErrorBar extends SGElementGroupErrorBarForData implements ILeg
    * @return true if this element group contains the given point
    */
   public boolean contains(final int x, final int y) {
-    // if the data object do not have error bars, return false
     SGISXYTypeData dataSXY = (SGISXYTypeData) legend.getData(this.mGroupSet);
     if (dataSXY.isErrorBarAvailable() == false) {
       return false;

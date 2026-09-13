@@ -443,7 +443,6 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
    * @param colInfoSet data columns
    * @param infoMap a map of information
    * @param showDefault a flag whether to show default column type
-   * @return true if succeeded
    */
   public boolean setData(
       SGNetCDFFile ncFile,
@@ -583,11 +582,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     return true;
   }
 
-  /**
-   * Returns whether stride of data arrays is available.
-   *
-   * @return true if stride of data arrays is available
-   */
+  /** Returns whether stride of data arrays is available. */
   public boolean isStrideAvailable() {
     return this.mStrideAvailableCheckBox.isSelected();
   }
@@ -786,7 +781,6 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
    * @param colInfoSet data columns
    * @param infoMap a map of information
    * @param showDefault a flag whether to show default column type
-   * @return true if succeeded
    */
   public boolean setData(
       SGNetCDFData data,
@@ -803,11 +797,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     return true;
   }
 
-  /**
-   * Returns selected column types.
-   *
-   * @return selected column types
-   */
+  /** Returns selected column types. */
   public SGDataColumnInfo[] getDataColumnTypes() {
 
     SGDataColumnInfo[] cols = this.getDataColumnInfoArray();
@@ -835,7 +825,6 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
    * Returns the current value of a coordinate variable.
    *
    * @param name the name of a coordinate variable
-   * @return the current value of a given coordinate variable
    */
   public double getOriginValue(String name) {
     SGNetCDFVariable var = this.mNetCDFFile.findVariable(name);
@@ -853,7 +842,6 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
    * Returns the current index of a coordinate variable.
    *
    * @param name the name of a coordinate variable
-   * @return the current index of a given coordinate variable
    */
   public int getOriginIndex(String name) {
     SGNetCDFVariable var = this.mNetCDFFile.findVariable(name);
@@ -1161,7 +1149,6 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
    * Returns the panel object for a coordinate variable.
    *
    * @param name the name of a coordinate variable
-   * @return the panel object for a given coordinate variable
    */
   private SGNetCDFDimensionPanel getDimensionPanel(String name) {
     SGDimensionPanel[] dPanels = this.getDimensionPanels(this.mOriginPanel);
@@ -1179,11 +1166,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     return this.mDataColumnSelectionPanel;
   }
 
-  /**
-   * Checks selected items.
-   *
-   * @return true if selected items are valid for the data type
-   */
+  /** Checks selected items. */
   public boolean checkSelectedItems() {
 
     // check selected items of the table
@@ -1336,11 +1319,7 @@ public class SGNetCDFDataSetupPanel extends SGDataSetupPanel
     return Boolean.TRUE;
   }
 
-  /**
-   * Returns the indices for picked up dimension of scalar XY data.
-   *
-   * @return the indices for picked up dimension of scalar XY data
-   */
+  /** Returns the indices for picked up dimension of scalar XY data. */
   @Override
   public SGIntegerSeriesSet getSXYPickUpIndices() {
     return this.mPickUpDimensionPanel.getIndices();

@@ -17,10 +17,8 @@ class SGDrawingWindowGeometryHelper {
   boolean updateClientRectOld() {
 
     //
-    // if the client rectangle does not contain the bounding box,
     // fit the client rectangle to the bounding box.
     //
-    // if the viewport rectangle contains the bounding box,
     // fit the the client rect to the viewport rectangle.
     //
 
@@ -178,7 +176,6 @@ class SGDrawingWindowGeometryHelper {
   }
 
   public boolean setBoundingBox() {
-    // Rectangle pRect = owner.getPaperRect().getBounds();
     Rectangle2D cRect = owner.getClientRect();
 
     ArrayList<SGFigure> list = owner.getVisibleFigureList();
@@ -280,9 +277,7 @@ class SGDrawingWindowGeometryHelper {
     // get size of boarder area
     final Insets insets = owner.getInsets();
     final int mTop = insets.top;
-    // final int mBottom = insets.bottom;
     final int mLeft = insets.left;
-    // final int mRight = insets.right;
 
     xx -= mLeft;
     yy -= mTop;

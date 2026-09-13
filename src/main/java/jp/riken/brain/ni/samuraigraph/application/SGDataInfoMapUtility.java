@@ -323,7 +323,6 @@ final class SGDataInfoMapUtility
           SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE,
           infoMap,
           aliasMap);
-      // for backward compatibility
       updateStrideInfo(
           el,
           SGIDataPropertyKeyConstants.KEY_SERIAL_NUMBER_ARRAY_SECTION,
@@ -360,7 +359,6 @@ final class SGDataInfoMapUtility
           SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE,
           infoMap,
           aliasMap);
-      // for backward compatibility
       updateStrideInfo(
           el,
           SGIDataPropertyKeyConstants.KEY_SERIAL_NUMBER_ARRAY_SECTION,
@@ -397,7 +395,6 @@ final class SGDataInfoMapUtility
           SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE,
           infoMap,
           aliasMap);
-      // for backward compatibility
       updateStrideInfo(
           el,
           SGIDataPropertyKeyConstants.KEY_SERIAL_NUMBER_ARRAY_SECTION,
@@ -422,6 +419,8 @@ final class SGDataInfoMapUtility
   /**
    * Create a map of information for each data type.
    *
+   * @param figureID the figureID parameter
+   * @param pos the pos parameter
    * @param dataType the type of data
    * @param dg a wizard dialog to select data type
    * @return a map of information
@@ -451,13 +450,11 @@ final class SGDataInfoMapUtility
       }
     } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       //        	// set true by default
-      //        	infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, true);
     } else if (SGDataDataTypeUtility.isVXYTypeData(dataType)) {
       boolean b = dg.isPolarSelected();
       infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.valueOf(b));
 
       //        	// set true by default
-      //        	infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, true);
     }
 
     // figure size
@@ -501,18 +498,7 @@ final class SGDataInfoMapUtility
   }
 
   static void getDataStrideAvailable(Map<String, Object> infoMap) {
-    /*
-       Preferences pref = Preferences.userNodeForPackage(SGMainFunctions.class);
-       String strideAvailable = pref.get(PREF_KEY_DATA_STRIDE_AVAILABLE, null);
-       boolean available = false;
-       if (strideAvailable != null) {
-       	Boolean b = SGUtilityText.getBoolean(strideAvailable);
-       	if (b != null) {
-       		available = b;
-       	}
-       }
-    infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, available);
-    */
+
     // sets false by default
     infoMap.put(SGIDataInformationKeyConstants.KEY_STRIDE_AVAILABLE, false);
   }

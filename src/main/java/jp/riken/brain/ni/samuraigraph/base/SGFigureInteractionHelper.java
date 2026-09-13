@@ -241,7 +241,6 @@ class SGFigureInteractionHelper {
       return true;
     }
 
-    // if this figure is not selected, return false
     if (!owner.isSelected()) {
       return false;
     }
@@ -283,7 +282,6 @@ class SGFigureInteractionHelper {
     owner.setDraggingRect(rectNew);
     owner.snapToLines(ml);
 
-    // if we do not draw the rubber band, change the rectangle of figure now
     if (SGFigure.mRubberBandFlag == false) {
       owner.setGraphRectOnDragging();
     }
@@ -342,7 +340,6 @@ class SGFigureInteractionHelper {
     }
 
     // set the cursor to the window
-    // if set to the figure, the cursor does not change
     owner.setMouseCursor(cur);
 
     return cur;
@@ -610,7 +607,6 @@ class SGFigureInteractionHelper {
             && loc != SGIConstants.NORTH_EAST
             && loc != SGIConstants.SOUTH_EAST
             && loc != SGIConstants.SOUTH_WEST) {
-          // if no figure element is pressed, remove this figure
           // from the list of the selected figure
           if (owner.mPressedElement == null) {
             wnd.setFocusedFigure(owner, !owner.isSelected());

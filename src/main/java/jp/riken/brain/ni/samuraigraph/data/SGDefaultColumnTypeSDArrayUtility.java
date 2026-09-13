@@ -459,17 +459,6 @@ public final class SGDefaultColumnTypeSDArrayUtility
 
     final boolean dateColumnUsed =
         (dateIndexList.size() > 0 && dateIndexList.contains(Integer.valueOf(0)));
-    //		boolean dateColumnFound = false;
-    //		// when a date column is found first,
-    //		// the date column is used for x values
-    //		for (int ii = 0; ii < len; ii++) {
-    //			SGDataColumnInfo cInfo = (SGDataColumnInfo) columnInfoList.get(ii);
-    //			String valueType = cInfo.getValueType();
-    //			if (VALUE_TYPE_DATE.equals(valueType)) {
-    //				dateColumnFound = true;
-    //				break;
-    //			}
-    //		}
 
     if (multiple.booleanValue()) {
       if (samplingRate != null) {

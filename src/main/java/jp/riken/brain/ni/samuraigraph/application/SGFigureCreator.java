@@ -46,10 +46,6 @@ public class SGFigureCreator implements SGIFigureConstants {
   private static final String CLASS_NAME_OF_AXIS_ELEMENT_2D =
       "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementAxis";
 
-  // private static final String CLASS_NAME_OF_SXY_GRAPH_ELEMENT_2D
-  // = "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGraphSXY";
-  // private static final String CLASS_NAME_OF_VXY_GRAPH_ELEMENT_2D
-  // = "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGraphVXY";
   private static final String CLASS_NAME_OF_GRAPH_ELEMENT_2D =
       "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGraph";
 
@@ -78,10 +74,6 @@ public class SGFigureCreator implements SGIFigureConstants {
   private static final String CLASS_NAME_OF_AXIS_ELEMENT_3D =
       "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementAxis";
 
-  // private static final String CLASS_NAME_OF_SXY_GRAPH_ELEMENT_3D
-  // = "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementGraphSXY";
-  // private static final String CLASS_NAME_OF_VXY_GRAPH_ELEMENT_3D
-  // = "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementGraphVXY";
   private static final String CLASS_NAME_OF_GRAPH_ELEMENT_3D =
       "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementGraph";
 
@@ -106,13 +98,8 @@ public class SGFigureCreator implements SGIFigureConstants {
   private static final String CLASS_NAME_OF_SHAPE_ELEMENT_3D =
       "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementShape";
 
-  // property names for loadClassesFromFile()
   private static final String PROPERTY_NAME_OF_AXIS_ELEMENT = "SGFigureElementAxis";
 
-  // private static final String PROPERTY_NAME_OF_SXY_GRAPH_ELEMENT
-  // = "SGFigureElementGraphSXY";
-  // private static final String PROPERTY_NAME_OF_VXY_GRAPH_ELEMENT
-  // = "SGFigureElementGraphVXY";
   private static final String PROPERTY_NAME_OF_GRAPH_ELEMENT = "SGFigureElementGraph";
 
   private static final String PROPERTY_NAME_OF_GRID_ELEMENT = "SGFigureElementGrid";
@@ -135,12 +122,6 @@ public class SGFigureCreator implements SGIFigureConstants {
 
   // The class object for SGIAxisElement.
   private Class<?> mClassOfAxisElement = null;
-
-  // // The class object for SGIGraphElement of the scalar XY-type.
-  // private Class mClassOfSXYGraphElement = null;
-  //
-  // // The class object for SGIGraphElement of the vector XY-type.
-  // private Class mClassOfVXYGraphElement = null;
 
   // The class object for SGIGraphElement.
   private Class<?> mClassOfGraphElement = null;
@@ -201,10 +182,6 @@ public class SGFigureCreator implements SGIFigureConstants {
   private boolean load2DClasses() {
     try {
       this.mClassOfAxisElement = Class.forName(CLASS_NAME_OF_AXIS_ELEMENT_2D);
-      // this.mClassOfSXYGraphElement =
-      // Class.forName(CLASS_NAME_OF_SXY_GRAPH_ELEMENT_2D);
-      // this.mClassOfVXYGraphElement =
-      // Class.forName(CLASS_NAME_OF_VXY_GRAPH_ELEMENT_2D);
       this.mClassOfGraphElement = Class.forName(CLASS_NAME_OF_GRAPH_ELEMENT_2D);
       this.mClassOfGridElement = Class.forName(CLASS_NAME_OF_GRID_ELEMENT_2D);
       this.mClassOfStringElement = Class.forName(CLASS_NAME_OF_STRING_ELEMENT_2D);
@@ -224,10 +201,6 @@ public class SGFigureCreator implements SGIFigureConstants {
   private boolean load3DClasses() {
     try {
       this.mClassOfAxisElement = Class.forName(CLASS_NAME_OF_AXIS_ELEMENT_3D);
-      // this.mClassOfSXYGraphElement =
-      // Class.forName(CLASS_NAME_OF_SXY_GRAPH_ELEMENT_3D);
-      // this.mClassOfVXYGraphElement =
-      // Class.forName(CLASS_NAME_OF_VXY_GRAPH_ELEMENT_3D);
       this.mClassOfGraphElement = Class.forName(CLASS_NAME_OF_GRAPH_ELEMENT_3D);
       this.mClassOfGridElement = Class.forName(CLASS_NAME_OF_GRID_ELEMENT_3D);
       this.mClassOfStringElement = Class.forName(CLASS_NAME_OF_STRING_ELEMENT_3D);
@@ -286,12 +259,6 @@ public class SGFigureCreator implements SGIFigureConstants {
   // health check for loaded classes
   private boolean healthCheck() {
     if (!SGIFigureElementAxis.class.isAssignableFrom(this.mClassOfAxisElement)) return false;
-    // if( !SGIFigureElementGraph.class.isAssignableFrom(
-    // this.mClassOfSXYGraphElement ) )
-    // return false;
-    // if( !SGIFigureElementGraph.class.isAssignableFrom(
-    // this.mClassOfVXYGraphElement ) )
-    // return false;
     if (!SGIFigureElementGraph.class.isAssignableFrom(this.mClassOfGraphElement)) return false;
     if (!SGIFigureElementGrid.class.isAssignableFrom(this.mClassOfGridElement)) return false;
     if (!SGIFigureElementString.class.isAssignableFrom(this.mClassOfStringElement)) return false;
@@ -455,8 +422,9 @@ public class SGFigureCreator implements SGIFigureConstants {
 
   /**
    * @param figure
-   * @param element
    * @return
+   * @param fElement the fElement parameter
+   * @param versionNumber the versionNumber parameter
    */
   public int createFigureElementFromPropertyFile(
       final SGFigure figure, final Element fElement, final String versionNumber) {
@@ -695,8 +663,6 @@ public class SGFigureCreator implements SGIFigureConstants {
 
     // set size after created a figure instance
     SGTuple2f size = getDefaultFigureSize(dataFirst.getDataType());
-    //        figure.setFigureWidth(size.x, SGIFigureConstants.FIGURE_SIZE_UNIT);
-    //        figure.setFigureHeight(size.y, SGIFigureConstants.FIGURE_SIZE_UNIT);
     figure.setFigureSize(size.x, size.y, SGIFigureConstants.FIGURE_SIZE_UNIT);
 
     return figure;
@@ -721,11 +687,12 @@ public class SGFigureCreator implements SGIFigureConstants {
   /**
    * Creates a new figure.
    *
+   * @param dataIdArray the dataIdArray parameter
+   * @param infoMap the infoMap parameter
    * @param wnd the parent window
    * @param figureID the figure to create
    * @param pos mouse location of window
    * @param dataArray the array of data object added
-   * @param dataId the data ID
    * @param nameArray the array of data name
    * @return true if succeeded
    */

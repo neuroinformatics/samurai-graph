@@ -67,32 +67,16 @@ public abstract class SGDataDialog extends SGDialog
         });
   }
 
-  /**
-   * Returns the OK button of this dialog.
-   *
-   * @return the OK button
-   */
+  /** Returns the OK button of this dialog. */
   protected abstract JButton getOKButton();
 
-  /**
-   * Returns the Cancel button of this dialog.
-   *
-   * @return the Cancel button
-   */
+  /** Returns the Cancel button of this dialog. */
   protected abstract JButton getCancelButton();
 
-  /**
-   * Returns an object that has a table to setup data.
-   *
-   * @return an object that has a table to setup data
-   */
+  /** Returns an object that has a table to setup data. */
   protected abstract SGIDataSetupTableHolder getTableHolder();
 
-  /**
-   * Returns the panel to set up the data.
-   *
-   * @return the panel to set up the data
-   */
+  /** Returns the panel to set up the data. */
   protected abstract SGDataSetupPanel getDataSetupPanel();
 
   /** An observer to set enabled / disabled the OK button with input values. */

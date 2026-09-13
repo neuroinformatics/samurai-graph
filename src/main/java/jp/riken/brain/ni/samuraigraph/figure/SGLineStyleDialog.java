@@ -101,12 +101,6 @@ public class SGLineStyleDialog extends SGDialog {
   }
 
   public List<SGLineStyle> getLineStyleList() {
-    //    	List<SGLineStyle> list = new ArrayList<SGLineStyle>();
-    //    	List<SGSingleLineStylePanel> pList = this.mLineStylePanel.getLineStylePanelList();
-    //    	for (SGSingleLineStylePanel p : pList) {
-    //    		list.add(p.getLineStyle());
-    //    	}
-    //    	return list;
     return this.mLineStylePanel.getLineStyleList();
   }
 

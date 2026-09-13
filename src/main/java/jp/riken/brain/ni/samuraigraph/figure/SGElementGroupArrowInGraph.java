@@ -39,7 +39,6 @@ public class SGElementGroupArrowInGraph extends SGElementGroupArrowForData
    * Sets the group set that this element group set belongs to
    *
    * @param gs a group set that this element group set belongs to
-   * @return true if succeeded
    */
   public boolean setElementGroupSet(SGElementGroupSetInGraph gs) {
     this.mGroupSet = gs;
@@ -128,8 +127,8 @@ public class SGElementGroupArrowInGraph extends SGElementGroupArrowForData
   }
 
   /**
+   * @param arrow
    * @param g2d
-   * @param symbol
    * @return
    */
   private boolean emphasisArrow(final SGDrawingElementArrow arrow, final Graphics2D g2d) {
@@ -156,7 +155,6 @@ public class SGElementGroupArrowInGraph extends SGElementGroupArrowForData
     if (this.mGridMode) {
       return this.mBounds.contains(x, y);
     } else {
-      // if a given point is out of the graph rectangle, returns false;
       return super.contains(x, y);
     }
   }
@@ -372,6 +370,14 @@ public class SGElementGroupArrowInGraph extends SGElementGroupArrowForData
   /**
    * Sets the location of arrows as a list of blocks.
    *
+   * @param xArray the xArray parameter
+   * @param yArray the yArray parameter
+   * @param polar the polar parameter
+   * @param magPerCM the magPerCM parameter
+   * @param invariant the invariant parameter
+   * @param xyRatio the xyRatio parameter
+   * @param startArray the startArray parameter
+   * @param endArray the endArray parameter
    * @param firstComponentValueBlockList the list of arrays of integer series for the first
    *     component
    * @param secondComponentValueBlockList the list of arrays of integer series for the second

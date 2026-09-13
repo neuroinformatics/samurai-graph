@@ -10,18 +10,10 @@ import java.util.*;
 
 interface ILegendElement {
 
-  /**
-   * Returns the preferred width.
-   *
-   * @return the preferred width
-   */
+  /** Returns the preferred width. */
   public float getPreferredWidth();
 
-  /**
-   * Returns the preferred height.
-   *
-   * @return the preferred height
-   */
+  /** Returns the preferred height. */
   public float getPreferredHeight();
 
   /**

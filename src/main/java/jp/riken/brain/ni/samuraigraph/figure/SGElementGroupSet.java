@@ -43,56 +43,15 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
     this.mDrawingElementGroupList = null;
   }
 
-  /**
-   * Returns a new instance of a list of groups of drawing elements.
-   *
-   * @return a list of groups of drawing elements
-   */
+  /** Returns a new instance of a list of groups of drawing elements. */
   public ArrayList<SGElementGroup> getElementGroupList() {
     return new ArrayList<SGElementGroup>(this.mDrawingElementGroupList);
   }
-
-  //    public Map<String, SGProperties> getElementGroupPropertiesList() {
-  //        List<SGProperties> pList = new ArrayList<SGProperties>();
-  //        for (int ii = 0; ii < this.mDrawingElementGroupList.size(); ii++) {
-  //            SGElementGroup g = (SGElementGroup) this.mDrawingElementGroupList.get(ii);
-  //            pList.add(g.getProperties());
-  //        }
-  //        return pList;
-  //    }
-  //
-  //    public boolean setElementGroupListProperties(Map<String, SGProperties> pMap) {
-  //        for (int ii = 0; ii < this.mDrawingElementGroupList.size(); ii++) {
-  //            SGElementGroup group = (SGElementGroup) this.mDrawingElementGroupList.get(ii);
-  //            SGProperties gp = pList.get(ii);
-  //            if (group.setProperties(gp) == false) {
-  //                return false;
-  //            }
-  //        }
-  //        return true;
-  //    }
-
-  //    /**
-  //     * Returns a list of drawing elements.
-  //     *
-  //     * @return a list of drawing elements
-  //     */
-  //    public ArrayList getDrawingElementList() {
-  //        ArrayList list = new ArrayList();
-  //        for (int ii = 0; ii < this.mDrawingElementGroupList.size(); ii++) {
-  //            SGElementGroup group = (SGElementGroup) this.mDrawingElementGroupList
-  //                    .get(ii);
-  //            SGDrawingElement dElement = group.getDrawingElement();
-  //            list.add(dElement);
-  //        }
-  //        return list;
-  //    }
 
   /**
    * Move a group of drawing elements to front.
    *
    * @param group a group to move
-   * @return true if succeeded
    */
   public boolean moveElementsToFront(final SGElementGroup group) {
     List<SGElementGroup> groupList = this.mDrawingElementGroupList;
@@ -110,7 +69,6 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
    * Move a group of drawing elements to back.
    *
    * @param group a group to move
-   * @return true if succeeded
    */
   public boolean moveElementsToBack(final SGElementGroup group) {
     List<SGElementGroup> groupList = this.mDrawingElementGroupList;
@@ -128,7 +86,6 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
    * Remove a group of drawing elements.
    *
    * @param group a group to remove
-   * @return true if succeeded
    */
   public boolean removeElements(final SGElementGroup group) {
     List<SGElementGroup> groupList = this.mDrawingElementGroupList;
@@ -150,20 +107,12 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
     this.mVisibleFlag = b;
   }
 
-  /**
-   * Returns the visibility of this group set.
-   *
-   * @return the visibility of this group set
-   */
+  /** Returns the visibility of this group set. */
   public boolean isVisible() {
     return this.mVisibleFlag;
   }
 
-  /**
-   * Returns the magnification.
-   *
-   * @return the magnification
-   */
+  /** Returns the magnification. */
   public float getMagnification() {
     return this.mMagnification;
   }
@@ -172,7 +121,6 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
    * Set the magnification.
    *
    * @param mag a value to set to the magnification
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     this.mMagnification = mag;
@@ -185,28 +133,10 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
     return true;
   }
 
-  //    /**
-  //     * Zoom this object.
-  //     *
-  //     * @param mag
-  //     *            a value to set to the magnification
-  //     * @return true if succeeded
-  //     */
-  //    public boolean zoom(final float mag) {
-  //        this.mMagnification = mag;
-  //        ArrayList list = this.mDrawingElementGroupList;
-  //        for (int ii = 0; ii < list.size(); ii++) {
-  //            SGElementGroup group = (SGElementGroup) list.get(ii);
-  //            group.zoom(mag);
-  //        }
-  //        return true;
-  //    }
-
   /**
    * Add a group of drawing elements to this group set.
    *
    * @param type the type of group
-   * @return true if succeeded
    */
   public abstract boolean addDrawingElementGroup(final int type);
 
@@ -222,7 +152,6 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
    *
    * @param x x coordinate
    * @param y y coordinate
-   * @return true if this group set contains the given point
    */
   public boolean contains(final int x, final int y) {
     List<SGElementGroup> list = this.mDrawingElementGroupList;
@@ -243,7 +172,6 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
    *
    * @param x the x coordinate
    * @param y the y coordinate
-   * @return an element group if it contains the given point
    */
   public SGElementGroup getElementGroupAt(final int x, final int y) {
     List<SGElementGroup> list = this.mDrawingElementGroupList;
@@ -259,25 +187,14 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
     return null;
   }
 
-  // /**
-  // *
-  // */
-  // public abstract boolean addDrawingElementGroup( final SGDrawingElement
-  // element );
-
-  /**
-   * Returns the name of tag in property file.
-   *
-   * @return the name of tag in property file
-   */
+  /** Returns the name of tag in property file. */
   public abstract String getTagName();
 
   /**
    * Write properties of this object to the Element.
    *
    * @param el the Element object
-   * @param operation the operation
-   * @return true if succeeded
+   * @param params the operation
    */
   public abstract boolean writeProperty(final Element el, final SGExportParameter params);
 
@@ -285,8 +202,7 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
    * Create an Element object and write properties of this group set and element groups.
    *
    * @param document the Document object
-   * @param operation the operation
-   * @return an Element object created
+   * @param params the operation
    */
   public Element createElement(final Document document, final SGExportParameter params) {
 
@@ -317,7 +233,6 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
    *
    * @param x the x coordinate
    * @param y the y coordinate
-   * @return true if this group set contains a given point
    */
   public abstract boolean onDrawingElement(final int x, final int y);
 
@@ -325,7 +240,6 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
    * Set properties to this group set.
    *
    * @param p properties to set to this group set
-   * @return true if succeeded
    */
   public boolean setProperties(final SGProperties p) {
     if ((p instanceof ElementGroupSetProperties) == false) {
@@ -339,17 +253,6 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
       return false;
     }
 
-    //        if (this.mDrawingElementGroupList.size() != ep.mElementGroupPropertiesList.size()) {
-    //            return false;
-    //        }
-    //        for (int ii = 0; ii < ep.mElementGroupPropertiesList.size(); ii++) {
-    //            SGProperties gp = (SGProperties) ep.mElementGroupPropertiesList.get(ii);
-    //            SGElementGroup group = (SGElementGroup) this.mDrawingElementGroupList
-    //                    .get(ii);
-    //            if (group.setProperties(gp) == false) {
-    //                return false;
-    //            }
-    //        }
     return true;
   }
 
@@ -357,16 +260,11 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
    * Sets the properties of element groups.
    *
    * @param elementGroupPropertiesList
-   * @return true if succeeded
    */
   protected abstract boolean setElementGroupProperties(
       List<SGProperties> elementGroupPropertiesList);
 
-  /**
-   * Returns properties of this group set.
-   *
-   * @return properties of this group set
-   */
+  /** Returns properties of this group set. */
   public SGProperties getProperties() {
     ElementGroupSetProperties p = new ElementGroupSetProperties();
     if (this.getProperties(p) == false) {
@@ -379,7 +277,6 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
    * Get properties of this group set.
    *
    * @param p a property object to be set
-   * @return true if succeeded
    */
   public boolean getProperties(final SGProperties p) {
     if ((p instanceof ElementGroupSetProperties) == false) {
@@ -419,11 +316,7 @@ public abstract class SGElementGroupSet implements SGIConstants, SGIVisible, SGI
       super();
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       Object obj = super.copy();
       ElementGroupSetProperties p = (ElementGroupSetProperties) obj;

@@ -56,31 +56,19 @@ public abstract class SGSDArrayData extends SGArrayData
     super(dataFile, obs, strideAvailable);
   }
 
-  /**
-   * Clones this data object.
-   *
-   * @return shallow copy of this data object
-   */
+  /** Clones this data object. */
   public Object clone() {
     SGSDArrayData data = (SGSDArrayData) super.clone();
     data.mStride = this.getStride();
     return data;
   }
 
-  /**
-   * Returns the number of columns.
-   *
-   * @return the number of columns or -1 if data columns do not exist
-   */
+  /** Returns the number of columns. */
   public int getColNum() {
     return this.getDataFile().getColNum();
   }
 
-  /**
-   * Returns the number of rows of each column.
-   *
-   * @return the number of rows of each column or -1 if data columns do not exist
-   */
+  /** Returns the number of rows of each column. */
   public int getRowNum() {
     return this.getDataFile().getRowNum();
   }
@@ -93,11 +81,7 @@ public abstract class SGSDArrayData extends SGArrayData
     this.mStride = null;
   }
 
-  /**
-   * Returns an array of data columns to export.
-   *
-   * @return an array of data columns to export
-   */
+  /** Returns an array of data columns to export. */
   public abstract SGDataColumn[] getExportedColumns();
 
   public SGDataColumn[] getExportedColumnsClone() {
@@ -109,28 +93,19 @@ public abstract class SGSDArrayData extends SGArrayData
     return columns;
   }
 
-  /**
-   * Returns an array of data columns that are used in a group set.
-   *
-   * @return an array of data columns that are used in a group set
-   */
+  /** Returns an array of data columns that are used in a group set. */
   public abstract SGDataColumn[] getUsedDataColumnsClone();
 
   /**
    * Returns the number of data columns of a given class.
    *
    * @param cl a class object
-   * @return the number of data columns of a given class
    */
   public int getColNum(Class<?> cl) {
     return this.getDataFile().getColNum(cl);
   }
 
-  /**
-   * Returns the number of data points taking into account the stride.
-   *
-   * @return the number of data points taking into account the stride
-   */
+  /** Returns the number of data points taking into account the stride. */
   @Override
   public int getPointsNumber() {
     if (this.isStrideAvailable()) {
@@ -140,11 +115,7 @@ public abstract class SGSDArrayData extends SGArrayData
     }
   }
 
-  /**
-   * Returns the number of data points without taking into account the stride.
-   *
-   * @return the number of data points without taking into account the stride
-   */
+  /** Returns the number of data points without taking into account the stride. */
   @Override
   public int getAllPointsNumber() {
     SGSDArrayFile sdFile = this.getDataFile();
@@ -159,7 +130,6 @@ public abstract class SGSDArrayData extends SGArrayData
    * Returns an array of data column indices of given class.
    *
    * @param cl a class object
-   * @return an array of column indices
    */
   public int[] getIndexArray(Class<?> cl) {
     return this.getDataFile().getIndexArray(cl);
@@ -169,7 +139,6 @@ public abstract class SGSDArrayData extends SGArrayData
    * Sets a given data.
    *
    * @param data a data
-   * @return true if succeeded
    */
   public boolean setData(final SGData data) {
     if (!super.setData(data)) {
@@ -183,11 +152,7 @@ public abstract class SGSDArrayData extends SGArrayData
     return true;
   }
 
-  /**
-   * Returns an array of titles of the columns.
-   *
-   * @return an array of titles of the columns
-   */
+  /** Returns an array of titles of the columns. */
   public String[] getTitles() {
     return this.getDataFile().getTitles();
   }
@@ -196,17 +161,12 @@ public abstract class SGSDArrayData extends SGArrayData
    * Returns the title of a column at given index.
    *
    * @param colIndex the column index
-   * @return the title
    */
   public String getTitle(final int colIndex) {
     return this.getDataFile().getTitle(colIndex);
   }
 
-  /**
-   * Returns an array of value types of the columns.
-   *
-   * @return an array of value types of the columns
-   */
+  /** Returns an array of value types of the columns. */
   public String[] getValueTypes() {
     return this.getDataFile().getValueTypes();
   }
@@ -215,7 +175,6 @@ public abstract class SGSDArrayData extends SGArrayData
    * Get properties of this data.
    *
    * @param p properties to set values
-   * @return true if succeeded
    */
   public boolean getProperties(final SGProperties p) {
     if ((p instanceof SDArrayDataProperties) == false) {
@@ -233,7 +192,6 @@ public abstract class SGSDArrayData extends SGArrayData
    * Set properties to this data.
    *
    * @param p properties that have values to set to this data
-   * @return true if succeeded
    */
   public boolean setProperties(final SGProperties p) {
     if ((p instanceof SDArrayDataProperties) == false) {
@@ -286,11 +244,7 @@ public abstract class SGSDArrayData extends SGArrayData
       return true;
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       Object obj = super.copy();
       SDArrayDataProperties p = (SDArrayDataProperties) obj;
@@ -304,7 +258,6 @@ public abstract class SGSDArrayData extends SGArrayData
    *
    * @param el an Element object
    * @param key the key of index property
-   * @return the index if it exists
    */
   protected Integer readIndex(Element el, String key) {
     Integer num = null;
@@ -320,7 +273,6 @@ public abstract class SGSDArrayData extends SGArrayData
    *
    * @param el an Element object
    * @param key the key of index property
-   * @return the indices it exists
    */
   protected Integer[] readIndices(Element el, String key) {
     return SGUtility.readIndices(el, key);
@@ -335,7 +287,6 @@ public abstract class SGSDArrayData extends SGArrayData
    * Checks whether a given column index is within array bounds.
    *
    * @param index the column index
-   * @return true if the given column index is within array bounds
    */
   protected boolean checkColumnIndexRange(final Integer index) {
     return this.getDataFile().checkColumnIndexRange(index);
@@ -355,8 +306,7 @@ public abstract class SGSDArrayData extends SGArrayData
    * Writes properties of this data object to the Element.
    *
    * @param el the Element object
-   * @param type type of the method to save properties
-   * @return true if succeeded
+   * @param params type of the method to save properties
    */
   @Override
   public boolean writeProperty(Element el, final SGExportParameter params) {
@@ -406,7 +356,6 @@ public abstract class SGSDArrayData extends SGArrayData
    * Writes data column indices in the attributes.
    *
    * @param el the Element object
-   * @return true if succeeded
    */
   protected abstract boolean writeAttributeColumnIndices(Element el);
 
@@ -414,7 +363,6 @@ public abstract class SGSDArrayData extends SGArrayData
    * Writes data column indices as sequential numbers.
    *
    * @param el the Element object
-   * @return true if succeeded
    */
   protected abstract boolean writeSequentialColumnIndices(Element el);
 
@@ -422,7 +370,6 @@ public abstract class SGSDArrayData extends SGArrayData
    * Writes data column name for netCDF file as sequential numbers.
    *
    * @param el the Element object
-   * @return true if succeeded
    */
   protected abstract boolean writeSequentialColumnName(Element el);
 
@@ -430,7 +377,6 @@ public abstract class SGSDArrayData extends SGArrayData
    * Return data column name for netCDF file as sequential numbers.
    *
    * @param index
-   * @return sequential data column name for netCDF file
    */
   protected String getSequentialColumnName(final int index) {
     return "column" + index;
@@ -456,22 +402,14 @@ public abstract class SGSDArrayData extends SGArrayData
     }
   }
 
-  /**
-   * Returns a map which has data information. Overrode to set the data type.
-   *
-   * @return a map which has data information
-   */
+  /** Returns a map which has data information. Overrode to set the data type. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> map = super.getInfoMap();
     map.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, this.getDataType());
     return map;
   }
 
-  /**
-   * Returns the data file.
-   *
-   * @return the data file
-   */
+  /** Returns the data file. */
   public SGSDArrayFile getDataFile() {
     return (SGSDArrayFile) this.getDataSource();
   }
@@ -489,20 +427,12 @@ public abstract class SGSDArrayData extends SGArrayData
     super.setDataSource(src);
   }
 
-  /**
-   * Returns the text data file.
-   *
-   * @return the text data file
-   */
+  /** Returns the text data file. */
   public SGSDArrayFile getTextDataFile() {
     return (SGSDArrayFile) this.getDataSource();
   }
 
-  /**
-   * Returns the stride.
-   *
-   * @return the stride
-   */
+  /** Returns the stride. */
   public SGIntegerSeriesSet getStride() {
     if (this.mStride == null) {
       return null;
@@ -524,11 +454,7 @@ public abstract class SGSDArrayData extends SGArrayData
     }
   }
 
-  /**
-   * Returns an array of data column information.
-   *
-   * @return an array of data column information
-   */
+  /** Returns an array of data column information. */
   @Override
   public SGDataColumnInfo[] getColumnInfo() {
     final int colNum = this.getColNum();
@@ -612,8 +538,9 @@ public abstract class SGSDArrayData extends SGArrayData
   /**
    * Exports the data into a file of the same format.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param file the file to save
-   * @return true if succeeded
    */
   @Override
   public boolean saveToSameFormatFile(
@@ -664,11 +591,7 @@ public abstract class SGSDArrayData extends SGArrayData
     return true;
   }
 
-  /**
-   * Returns a text string of file extension for the file in a data set file.
-   *
-   * @return a text string of file extension
-   */
+  /** Returns a text string of file extension for the file in a data set file. */
   @Override
   public String getDataSetFileExtension() {
     return SGIDataFileConstants.CSV_FILE_EXTENSION;
@@ -677,9 +600,9 @@ public abstract class SGSDArrayData extends SGArrayData
   /**
    * Exports the data into a text file.
    *
+   * @param policy the policy parameter
    * @param file the file to save
    * @param mode the mode to save data
-   * @return true if succeeded
    */
   @Override
   public boolean saveToTextFile(
@@ -696,7 +619,6 @@ public abstract class SGSDArrayData extends SGArrayData
    *
    * @param file the file to save to
    * @param mode the mode of saving data
-   * @return true if succeeded
    */
   @Override
   public boolean saveToArchiveDataSetFile(final File file, final SGExportParameter mode) {
@@ -729,8 +651,9 @@ public abstract class SGSDArrayData extends SGArrayData
   /**
    * Saves the data into a NetCDF file.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param file the file to save
-   * @return true if succeeded
    */
   @Override
   public boolean saveToNetCDFFile(
@@ -752,10 +675,9 @@ public abstract class SGSDArrayData extends SGArrayData
   /**
    * Exports the data into a NetCDF file.
    *
-   * @param ncWrite the file to save
+   * @param builder the file to save
    * @param mode the mode to save
    * @param policy the policy for exporting data
-   * @return true if succeeded
    */
   public abstract boolean exportToNetCDFFile(
       NetcdfFormatWriter.Builder builder, final SGExportParameter mode, SGDataBufferPolicy policy)
@@ -764,8 +686,9 @@ public abstract class SGSDArrayData extends SGArrayData
   /**
    * Saves the data into a HDF5 file.
    *
-   * @param path the path of HDF5 file
-   * @return true if succeeded
+   * @param file the file parameter
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    */
   @Override
   public boolean saveToHDF5File(
@@ -818,8 +741,9 @@ public abstract class SGSDArrayData extends SGArrayData
   /**
    * Exports the data into a MATLAB file.
    *
-   * @param path the path of MATLAB file
-   * @return true if succeeded
+   * @param file the file parameter
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    */
   @Override
   public boolean saveToMATLABFile(
@@ -829,65 +753,41 @@ public abstract class SGSDArrayData extends SGArrayData
 
   public abstract Object[][] getValueTable(final SGExportParameter mode, SGDataBufferPolicy policy);
 
-  /**
-   * Returns a text string for the command of the origin.
-   *
-   * @return a text string for the command of the origin
-   */
+  /** Returns a text string for the command of the origin. */
   @Override
   public String getOriginCommandString() {
     // always returns null
     return null;
   }
 
-  /**
-   * Returns whether animation is available.
-   *
-   * @return true if animation is available
-   */
+  /** Returns whether animation is available. */
   @Override
   public boolean isAnimationAvailable() {
     // always returns false
     return false;
   }
 
-  /**
-   * Returns the length of animation.
-   *
-   * @return the length of animation
-   */
+  /** Returns the length of animation. */
   @Override
   public int getAnimationLength() {
     // always returns -1
     return -1;
   }
 
-  /**
-   * Returns whether the animation is supported in this data.
-   *
-   * @return true if the animation is supported in this data
-   */
+  /** Returns whether the animation is supported in this data. */
   @Override
   public boolean isAnimationSupported() {
     return false;
   }
 
-  /**
-   * Returns the stride of time.
-   *
-   * @return the stride of time
-   */
+  /** Returns the stride of time. */
   @Override
   public SGIntegerSeriesSet getTimeStride() {
     // always returns null
     return null;
   }
 
-  /**
-   * Returns the current index of time value.
-   *
-   * @return the current index of time value
-   */
+  /** Returns the current index of time value. */
   @Override
   public int getCurrentTimeValueIndex() {
     // always returns -1

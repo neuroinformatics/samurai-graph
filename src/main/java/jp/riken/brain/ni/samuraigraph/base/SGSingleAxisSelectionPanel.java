@@ -59,11 +59,7 @@ public class SGSingleAxisSelectionPanel extends SGAxisSelectionPanel {
     }
   }
 
-  /**
-   * Returns selected axis location.
-   *
-   * @return selected axis location
-   */
+  /** Returns selected axis location. */
   public int getAxisLocation() {
     int location = -1;
     if (this.mNoAxisSelectionButton.isSelected() == false) {

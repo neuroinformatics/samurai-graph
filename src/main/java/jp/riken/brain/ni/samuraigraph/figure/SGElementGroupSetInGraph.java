@@ -94,9 +94,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     this.mClipFlag = b;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean getClipFlag() {
     return this.mClipFlag;
   }
@@ -127,10 +125,6 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     final String command = e.getActionCommand();
     if (command.equals(SGIConstants.MENUCMD_PROPERTY)) {
       this.mGraph.setPropertiesOfSelectedObjects(this);
-      //        } else if (command.equals(SGIConstants.MENUCMD_ANIMATION)) {
-      //            this.mTempDataProperties = this.mData.getProperties();
-      //            this.mGraph.notifyToListener(command, e.getSource());
-      //            this.mGraph.doAnimation(this);
     } else {
       this.mGraph.notifyToListener(command, e.getSource());
     }
@@ -140,7 +134,6 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
    * Called when the mouse button is clicked.
    *
    * @param e the mouse event
-   * @return true if this group set is clicked or false otherwise
    */
   protected boolean onMouseClicked(final MouseEvent e) {
     SGElementGroup group = this.clickGroup(e);
@@ -191,7 +184,6 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
    * Called when the mouse button is pressed.
    *
    * @param e the mouse event
-   * @return true if this group set is pressed or false otherwise
    */
   protected boolean onMousePressed(final MouseEvent e) {
     return this.contains(e.getX(), e.getY());
@@ -209,18 +201,13 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
    * Called when the mouse button is released.
    *
    * @param e the mouse event
-   * @return true if succeeded
    */
   protected boolean onMouseReleased(final MouseEvent e) {
     // do nothing
     return true;
   }
 
-  /**
-   * Update drawing elements with related data object.
-   *
-   * @return true if succeeded
-   */
+  /** Update drawing elements with related data object. */
   public boolean updateWithData() {
     if (this.mGraph.updateAllDrawingElementsLocation() == false) {
       return false;
@@ -319,11 +306,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     this.mGraph.notifyToListener(msg, source);
   }
 
-  /**
-   * Returns a list of child nodes.
-   *
-   * @return a list of chid nodes
-   */
+  /** Returns a list of child nodes. */
   public ArrayList<SGINode> getChildNodes() {
     return new ArrayList<SGINode>();
   }
@@ -358,11 +341,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     return true;
   }
 
-  /**
-   * Returns a text string that represents the description of this instance.
-   *
-   * @return a text string that represents the description of this instance
-   */
+  /** Returns a text string that represents the description of this instance. */
   public String getInstanceDescription() {
     String dataType = this.getDataType();
     String dataTypeLong = SGDataTypeConstants.getLongDataTypeConstant(dataType);
@@ -379,8 +358,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
    * Write properties of this object to the Element.
    *
    * @param el the Element object
-   * @param type type of the method to save properties
-   * @return true if succeeded
+   * @param params type of the method to save properties
    */
   public boolean writeProperty(final Element el, final SGExportParameter params) {
     if (super.writeProperty(el, params) == false) {
@@ -389,9 +367,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getTagName() {
     return SGIFigureElementGraph.TAG_NAME_DATA;
   }
@@ -424,11 +400,7 @@ public abstract class SGElementGroupSetInGraph extends SGElementGroupSetForData
     this.mGraph.notifyToRoot();
   }
 
-  /**
-   * Returns a property dialog.
-   *
-   * @return property dialog
-   */
+  /** Returns a property dialog. */
   public SGPropertyDialog getPropertyDialog() {
     SGData data = this.mGraph.getData(this);
     SGPropertyDialog dg = this.mGraph.getDataDialog(data);

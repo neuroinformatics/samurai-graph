@@ -121,7 +121,6 @@ public class SGSpinner extends JSpinner
     final JFormattedTextField ftf = this.getFormattedTextField();
     ftf.setFocusLostBehavior(JFormattedTextField.PERSIST);
     ftf.setHorizontalAlignment(SwingConstants.LEFT);
-    // ftf.addPropertyChangeListener(this);
     ftf.addFocusListener(this);
     ftf.addKeyListener(this);
     ftf.addMouseListener(this);
@@ -152,18 +151,12 @@ public class SGSpinner extends JSpinner
     this.mDescription = str;
   }
 
-  /**
-   * Returns the description of this spinner.
-   *
-   * @return the description of this spinner
-   */
+  /** Returns the description of this spinner. */
   public String getDescription() {
     return this.mDescription;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isEditable() {
     return this.getFormattedTextField().isEditable();
   }
@@ -175,18 +168,14 @@ public class SGSpinner extends JSpinner
     this.getFormattedTextField().setEditable(b);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public JFormattedTextField getFormattedTextField() {
     final JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) this.getEditor();
     final JFormattedTextField ftf = editor.getTextField();
     return ftf;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getText() {
     return this.getFormattedTextField().getText();
   }
@@ -202,9 +191,7 @@ public class SGSpinner extends JSpinner
   // Format
   //
 
-  /**
-   * @return
-   */
+  /** */
   public DecimalFormat getDecimalFormat() {
     final JSpinner.NumberEditor editor = (JSpinner.NumberEditor) this.getEditor();
     return editor.getFormat();
@@ -230,11 +217,7 @@ public class SGSpinner extends JSpinner
     return suffix;
   }
 
-  /**
-   * Returns a string of unit.
-   *
-   * @return - the string of unit
-   */
+  /** Returns a string of unit. */
   public String getUnit() {
     String suffix = this.getSuffix();
     String unit = null;
@@ -259,16 +242,12 @@ public class SGSpinner extends JSpinner
     return this.getDecimalFormat().getPositiveSuffix();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getMinimumFractionDigits() {
     return this.getDecimalFormat().getMinimumFractionDigits();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getMaximumFractionDigits() {
     return this.getDecimalFormat().getMaximumFractionDigits();
   }
@@ -287,9 +266,7 @@ public class SGSpinner extends JSpinner
     this.getDecimalFormat().setMaximumFractionDigits(newValue);
   }
 
-  /**
-   * @return
-   */
+  /** */
   private int getDigitForRoundingOut() {
     return -this.getMaximumFractionDigits() - 1;
   }
@@ -310,38 +287,22 @@ public class SGSpinner extends JSpinner
     return (SpinnerNumberModel) this.getModel();
   }
 
-  /**
-   * Returns the minimum value.
-   *
-   * @return the minimum value
-   */
+  /** Returns the minimum value. */
   public Number getMinimumValue() {
     return (Number) this.getSpinnerNumberModel().getMinimum();
   }
 
-  /**
-   * Returns the maximum value.
-   *
-   * @return the maximum value
-   */
+  /** Returns the maximum value. */
   public Number getMaximumValue() {
     return (Number) this.getSpinnerNumberModel().getMaximum();
   }
 
-  /**
-   * Returns the step value.
-   *
-   * @return the step value
-   */
+  /** Returns the step value. */
   public Number getStepValue() {
     return this.getSpinnerNumberModel().getStepSize();
   }
 
-  /**
-   * Returns the baseline value.
-   *
-   * @return the baseline value
-   */
+  /** Returns the baseline value. */
   public Number getBaselineValue() {
     return this.mBaselineValue;
   }
@@ -367,30 +328,6 @@ public class SGSpinner extends JSpinner
     }
 
     return null;
-    /*
-            final double min = this.getMinimumValue().doubleValue();
-            // final double max = this.getMaximumValue().doubleValue();
-            final double step = this.getStepValue().doubleValue();
-
-            Number num = null;
-            int cnt = 0;
-            final int digit = this.getDigitForRoundingOut();
-            while (true) {
-                final double valueOld = min + cnt * step;
-                final double value = SGUtilityNumber
-                        .roundOffNumber(valueOld, digit);
-                if (smaller < value) {
-                    if (value < larger) {
-                        num = Double.valueOf(value);
-                        break;
-                    }
-                    break;
-                }
-                cnt++;
-            }
-
-            return num;
-    */
   }
 
   /**
@@ -438,8 +375,6 @@ public class SGSpinner extends JSpinner
   /**
    * Returns whether currently set value is valid. In this class, only a value interpreted as a
    * number is permitted.
-   *
-   * @return true if the current value is valid
    */
   public boolean hasValidValue() {
     Number num = this.getNumber();
@@ -460,11 +395,7 @@ public class SGSpinner extends JSpinner
     this.mTempString = null;
   }
 
-  /**
-   * Returns a number if it is interpreted as a number.
-   *
-   * @return a number if this spinner has a number object, and otherwise null
-   */
+  /** Returns a number if it is interpreted as a number. */
   public Number getNumber() {
     try {
       this.commitEditByDefault();
@@ -513,7 +444,6 @@ public class SGSpinner extends JSpinner
    *
    * @param input a string to be parsed
    * @param mode mode
-   * @return parsed string when succeeded, otherwise null
    */
   protected String parseString(final String input, final int mode) {
     Number num = this.parseStringToNumber(input, mode);

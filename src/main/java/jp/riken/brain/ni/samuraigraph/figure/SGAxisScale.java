@@ -112,11 +112,7 @@ class SGAxisScale extends SGDrawingElementScale
     return this.mYAxis;
   }
 
-  /**
-   * Get the flag as a focused object.
-   *
-   * @return whether this object is focused.
-   */
+  /** Get the flag as a focused object. */
   public boolean isSelected() {
     return this.mSelectedFlag;
   }
@@ -160,7 +156,6 @@ class SGAxisScale extends SGDrawingElementScale
    * Sets the x-axis.
    *
    * @param location the axis location
-   * @return true if succeeded
    */
   @Override
   public boolean setXAxisLocation(final int location) {
@@ -180,7 +175,6 @@ class SGAxisScale extends SGDrawingElementScale
    * Sets the y-axis.
    *
    * @param location the axis location
-   * @return true if succeeded
    */
   @Override
   public boolean setYAxisLocation(final int location) {
@@ -367,7 +361,6 @@ class SGAxisScale extends SGDrawingElementScale
    *
    * @param x the x coordinate to set
    * @param y the y coordinate to set
-   * @return true if succeeded
    */
   @Override
   public boolean setLocation(final float x, final float y) {
@@ -584,8 +577,6 @@ class SGAxisScale extends SGDrawingElementScale
     float y = yOld;
     float w = wOld;
     float h = hOld;
-
-    // switch operation by different dragging point
 
     final int loc = this.mMouseLocation;
     if (loc == HORIZONTAL_MIDDLE) {
@@ -841,20 +832,6 @@ class SGAxisScale extends SGDrawingElementScale
           continue;
         }
         result.putResult(COM_SCALE_Y_AXIS_TITLE_UNIT, SGPropertyResults.SUCCEEDED);
-        // } else if (COM_SCALE_AXIS_LENGTH_MODE.equalsIgnoreCase(key)) {
-        // AXIS_LENGTH_MODE mode = this.toMode(value);
-        // if (mode == null) {
-        // result.putResult(COM_SCALE_AXIS_LENGTH_MODE,
-        // SGPropertyResults.INVALID_INPUT_VALUE);
-        // continue;
-        // }
-        // if (this.setAxisLengthMode(mode) == false) {
-        // result.putResult(COM_SCALE_AXIS_LENGTH_MODE,
-        // SGPropertyResults.INVALID_INPUT_VALUE);
-        // continue;
-        // }
-        // result.putResult(COM_SCALE_AXIS_LENGTH_MODE,
-        // SGPropertyResults.SUCCEEDED);
       } else if (COM_SPACE.equalsIgnoreCase(key)) {
         StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
@@ -1021,8 +998,6 @@ class SGAxisScale extends SGDrawingElementScale
     SGPropertyUtility.addProperty(map, yAxisKey, mAxisElement.getLocationName(this.mYAxis));
     SGPropertyUtility.addProperty(map, xLengthKey, this.getXLengthValue());
     SGPropertyUtility.addProperty(map, yLengthKey, this.getYLengthValue());
-    // SGPropertyUtility.addProperty(map, lengthModeKey,
-    // this.toString(this.getAxisLengthMode()));
   }
 
   public static final String MODE_TEXT_ADAPTIVE = "Adaptive";
@@ -1300,28 +1275,6 @@ class SGAxisScale extends SGDrawingElementScale
     }
     return true;
   }
-
-  // @Override
-  // protected boolean updateDrawingElements() {
-  // final float x = this.mLocation.x;
-  // final float y = this.mLocation.y;
-  // final double xValue = this.mAxisElement.calcValue(x, this.mXAxis, true);
-  // final double yValue = this.mAxisElement.calcValue(y, this.mYAxis, false);
-  // final float endX = this.mAxisElement.calcLocation(
-  // xValue + this.mXLengthValue, this.mXAxis, true);
-  // final float endY = this.mAxisElement.calcLocation(
-  // yValue + this.mYLengthValue, this.mYAxis, false);
-  // final float width = endX - x;
-  // final float height = endY - y;
-  //
-  // final float mag = this.getMagnification();
-  // this.mWidth = width / mag;
-  // this.mHeight = height / mag;
-  //
-  // this.updateNumberLabel(true);
-  // this.updateNumberLabel(false);
-  // return super.updateDrawingElements();
-  // }
 
   private void updateNumberLabelWithLocation(final boolean horizontal) {
     if (horizontal) {

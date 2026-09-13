@@ -190,20 +190,12 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     return list;
   }
 
-  /**
-   * Returns the table.
-   *
-   * @return a table object
-   */
+  /** Returns the table. */
   public JTable getTable() {
     return this.mTable;
   }
 
-  /**
-   * Creates and returns an instance of a combo box.
-   *
-   * @return a new instance of the combo box
-   */
+  /** Creates and returns an instance of a combo box. */
   protected <T> SGComboBox<T> createComboBoxInstance() {
     SGComboBox<T> cb = new SGComboBox<>();
     cb.setBorder(BorderFactory.createEmptyBorder());
@@ -326,11 +318,7 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     this.mDataType = dataType;
   }
 
-  /**
-   * Returns the data type.
-   *
-   * @return the data type
-   */
+  /** Returns the data type. */
   public String getDataType() {
     return this.mDataType;
   }
@@ -344,7 +332,6 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
    * @param colInfoSet data columns
    * @param infoMap a map of information
    * @param showDefault a flag whether to show default column type
-   * @return true if succeeded
    */
   public boolean setData(
       String dataType,
@@ -418,7 +405,6 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
       infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, dataType);
     }
     //        final boolean compVisible = SGDataMiscUtility.isComplementButtonVisible(infoMap);
-    //        this.mComplementButton.setVisible(compVisible);
     // not use complement button.
     this.mComplementButton.setVisible(false);
 
@@ -487,18 +473,10 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     return result.isSucceeded();
   }
 
-  /**
-   * Checks selected items.
-   *
-   * @return true if selected items are valid for the data type
-   */
+  /** Checks selected items. */
   public abstract boolean checkSelectedItems();
 
-  /**
-   * Updates selected items.
-   *
-   * @return true if succeeded
-   */
+  /** Updates selected items. */
   public boolean updateSelectedItems() {
 
     final int rowNum = this.getRowCount();
@@ -522,29 +500,17 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     return true;
   }
 
-  /**
-   * Returns the array of titles from the table.
-   *
-   * @return the array of titles from the table
-   */
+  /** Returns the array of titles from the table. */
   public String[] getTitles() {
     return this.getValues(COLUMN_NAME_TITLE);
   }
 
-  /**
-   * Returns the array of value types from the table.
-   *
-   * @return the array of value types from the table
-   */
+  /** Returns the array of value types from the table. */
   public String[] getValueTypes() {
     return this.getValues(COLUMN_NAME_VALUE_TYPE);
   }
 
-  /**
-   * Returns the array of column types from the table.
-   *
-   * @return the array of column types from the table
-   */
+  /** Returns the array of column types from the table. */
   public String[] getColumnTypes() {
     return this.getValues(COLUMN_NAME_COLUMN_TYPE);
   }
@@ -566,7 +532,6 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
    * Returns the column index of table.
    *
    * @param identifier
-   * @return If the column with given identifier exists, returns the index.
    */
   public int getColumnIndex(final String identifier) {
     return this.mTable.getColumnModel().getColumnIndex(identifier);
@@ -613,7 +578,7 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     /**
      * Builds the cell editor for a combo box.
      *
-     * @param comboBox
+     * @param cb
      */
     public DataColumnCellRenderer(JComboBox<?> cb) {
       super();
@@ -654,20 +619,12 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     return new SGDataColumnInfoSet(this.getDataColumnInfoArray());
   }
 
-  /**
-   * Returns the number of data column information.
-   *
-   * @return the number of data column information
-   */
+  /** Returns the number of data column information. */
   public int getDataColumnNum() {
     return this.mColumnInfoList.size();
   }
 
-  /**
-   * Returns an array of data column information.
-   *
-   * @return an array of data column information
-   */
+  /** Returns an array of data column information. */
   public SGDataColumnInfo[] getDataColumnInfoArray() {
     SGDataColumnInfo[] cols = new SGDataColumnInfo[this.mColumnInfoList.size()];
     for (int ii = 0; ii < this.mColumnInfoList.size(); ii++) {
@@ -680,7 +637,6 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
    * Searches and returns the data column information of given index.
    *
    * @param index the index
-   * @return the data column information
    */
   protected SGDataColumnInfo findDataColumnInfo(final int index) {
     if (index < 0 || index >= this.mColumnInfoList.size()) {
@@ -694,7 +650,6 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
    * Searches and returns the data column information of given name.
    *
    * @param name the name of data column information
-   * @return the data column information if it is found
    */
   protected SGDataColumnInfo findDataColumnInfo(final String name) {
     SGDataColumnInfo info = null;
@@ -805,29 +760,17 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     }
   }
 
-  /**
-   * Returns the button to restore all data column types.
-   *
-   * @return the button to restore all data column types
-   */
+  /** Returns the button to restore all data column types. */
   public SGButton getRestoreButton() {
     return mRestoreButton;
   }
 
-  /**
-   * Returns the button to clear all data column types.
-   *
-   * @return the button to clear all data column types
-   */
+  /** Returns the button to clear all data column types. */
   public SGButton getClearButton() {
     return mClearButton;
   }
 
-  /**
-   * Returns the button to complement the column types.
-   *
-   * @return the button to complement the column types
-   */
+  /** Returns the button to complement the column types. */
   public SGButton getComplementButton() {
     return this.mComplementButton;
   }
@@ -893,11 +836,7 @@ public abstract class SGDataColumnSelectionPanel extends javax.swing.JPanel
     this.getComplementButton().setEnabled(b);
   }
 
-  /**
-   * Creates and returns a table object.
-   *
-   * @return a table object
-   */
+  /** Creates and returns a table object. */
   protected abstract SGTable createTableInstance();
 
   /** The owner of popup dialogs. */

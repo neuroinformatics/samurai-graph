@@ -315,38 +315,6 @@ class SGDataSplitMergeUtility implements SGIApplicationTextConstants {
             sb.append(suffix);
           }
         }
-        /*
-                        if (dataMulti instanceof SGSXYMultipleVariableMDData) {
-                        	SGSXYMultipleVariableMDData mdData = (SGSXYMultipleVariableMDData) dataMulti;
-                            SGMDVariable[] vars = mdData.getMultipleVariables();
-                            suffix = SGUtility.addEscapeChar(vars[ii].getSimpleName());
-                            sb.append("\\_");
-                            sb.append(suffix);
-                        } else if (dataMulti instanceof SGSXYMultipleDimensionMDData) {
-                        	SGSXYMultipleDimensionMDData mdData = (SGSXYMultipleDimensionMDData) dataMulti;
-                        	SGMDPickUpDimensionInfo mdInfo = (SGMDPickUpDimensionInfo) mdData.getPickUpDimensionInfo();
-        //                    final int start = mdInfo.getStart();
-        //                    final int end = mdInfo.getEnd();
-        //                    final int step = Math.abs(mdInfo.getStep());
-        //                    int index = start;
-        //                    if (start <= end) {
-        //                        index = start + step * ii;
-        //                        if (index > end) {
-        //                            index = end;
-        //                        }
-        //                    } else {
-        //                        index = start - step * ii;
-        //                        if (index < end) {
-        //                            index = end;
-        //                        }
-        //                    }
-                        	final int[] array = mdInfo.getIndices().getNumbers();
-                        	final int index = array[ii];
-                            sb.append(" (");
-                            sb.append(index);
-                            sb.append(")");
-                        }
-                        */
       }
       nameArray[ii] = sb.toString();
     }

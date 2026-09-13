@@ -182,7 +182,6 @@ class SGCommandManager
 
   private Integer getNewWindowId(final List<String> argsList, List<String> paramsList) {
     final int argc = argsList.size();
-    // Window()
     if (argc == 0) {
       // returns current window ID
       SGDrawingWindow cur = this.mWindowManager.getCurrentWindow();
@@ -204,7 +203,6 @@ class SGCommandManager
       return cur.getID();
     }
     if (id == 0) {
-      // ex. Window(0), Window(0, BackgroundColor=RED, ...)
       final int ret;
       List<Integer> idList = this.mWindowManager.getWindowIdList();
       if (idList.size() == 0) {
@@ -224,7 +222,6 @@ class SGCommandManager
     if (!this.checkIdUpperRange(first)) {
       return null;
     }
-    // ex. Windows(1), Window(1, BackgroundColor=RED, ...)
     if (argc > 1) {
       paramsList.addAll(argsList.subList(1, argc));
     }
@@ -274,7 +271,6 @@ class SGCommandManager
    * Execute a command.
    *
    * @param line the command line
-   * @return the status
    */
   int exec(final String line) {
 
@@ -398,129 +394,6 @@ class SGCommandManager
       return STATUS_FAILED;
     }
 
-    /*
-            // load property
-            if (COM_LOAD_PROPERTY.equalsIgnoreCase(command)) {
-                if (argc < 1) {
-                    return STATUS_FAILED;
-                }
-                if (aWnd == null) {
-                    return STATUS_FAILED;
-                }
-                String str1 = (String) argsList.get(0); // file path
-
-                File file = new File(str1);
-                if (file.exists() == false) {
-                    return STATUS_FAILED;
-                }
-    //            String path = SGUtility.getCanonicalPath(file.getPath());
-    //            if (path == null) {
-    //                return STATUS_FAILED;
-    //            }
-    //
-    //            // check validity of the file
-    //            URL url = null;
-    //            try {
-    //                url = file.toURI().toURL();
-    //            } catch (MalformedURLException ex) {
-    //                return STATUS_FAILED;
-    logger.debug("Exception occurred", ex);
-    //            }
-    //
-    //            // create a Document object
-    //            Document doc = SGUtilityText.getDocument(url);
-    //            if (doc == null) {
-    //                return STATUS_FAILED;
-    //            }
-    //
-    //            //
-    //            Element elWnd = this.mPropertyFileManager.getWindowElement(doc);
-    //            NodeList nListFigure = elWnd
-    //                    .getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
-    //            final int figureNum = nListFigure.getLength();
-    //            int cnt = 0;
-    //            final int[] dataNumArray = new int[figureNum];
-    //            for (int ii = 0; ii < figureNum; ii++) {
-    //                Node node = nListFigure.item(ii);
-    //                if ((node instanceof Element) == false) {
-    //                    return STATUS_FAILED;
-    //                }
-    //                Element elFigure = (Element) node;
-    //                NodeList nListData = elFigure
-    //                        .getElementsByTagName(SGIFigureElementGraph.TAG_NAME_DATA);
-    //                dataNumArray[ii] = nListData.getLength();
-    //                cnt += dataNumArray[ii];
-    //            }
-    //            if (cnt != argc - 1) {
-    //                return STATUS_FAILED;
-    //            }
-    //
-    //            // list of path-names of data files
-    //            ArrayList pathList = new ArrayList(argsList.subList(1, argc));
-    //
-    //            // create a data map
-    //            Map dataMap = new TreeMap();
-    //            cnt = 0;
-    //            for (int ii = 0; ii < figureNum; ii++) {
-    //                final int dataNum = dataNumArray[ii];
-    //                ArrayList dataList = new ArrayList();
-    //                for (int jj = 0; jj < dataNum; jj++) {
-    //                    dataList.add(pathList.get(cnt + jj));
-    //                }
-    //                dataMap.put(Integer.valueOf(ii), dataList);
-    //                cnt += dataNum;
-    //            }
-    //
-    //            // set properties
-    //            if (!this.mPropertyFileManager
-    //                    .setPropertyFileFromEventDispatchThread(aWnd, doc, dataMap)) {
-    //                return STATUS_FAILED;
-    //            }
-
-    //            SGDrawingWindow wnd = this.mWindowManager.getActiveWindow();
-    //            if (this.mPropertyFileManager.showMultiDataFileChooserDialog(
-    //                    file, wnd) == false) {
-    //                return STATUS_FAILED;
-    //            }
-
-                return STATUS_SUCCEEDED;
-            }
-            // save property
-            else if (COM_SAVE_PROPERTY.equalsIgnoreCase(command)) {
-                if (argc < 1) {
-                    return STATUS_FAILED;
-                }
-                if (aWnd == null) {
-                    return STATUS_FAILED;
-                }
-                if (aWnd.getVisibleFigureList().size() == 0) {
-                    return STATUS_FAILED;
-                }
-                final String str1 = (String) argsList.get(0); // path
-                final List<Integer> retList = new ArrayList<Integer>();
-                try {
-                    SwingUtilities.invokeAndWait(new Runnable() {
-                        public void run() {
-                            final int ret;
-                            if (mPropertyFileManager
-                                    .saveProperties(aWnd, str1, SAVE_PROPERTIES_TO_PROPERTY_FILE) == OK_OPTION) {
-                                ret = STATUS_SUCCEEDED;
-                                aWnd.setSaved(true);
-                            } else {
-                                ret = STATUS_FAILED;
-                                aWnd.setSaved(false);
-                            }
-                            retList.add(ret);
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    return STATUS_FAILED;
-                } catch (InvocationTargetException e) {
-                    return STATUS_FAILED;
-                }
-                return retList.get(0);
-            }
-    */
     // load data set
     if (COM_LOAD_DATA_SET.equalsIgnoreCase(command)) {
       if (argc < 1) {
@@ -620,7 +493,6 @@ class SGCommandManager
    *
    * @param command a command
    * @param argsList the list of arguments
-   * @return the status
    */
   private int execWindowCommand(final String command, final List<String> argsList) {
 
@@ -658,19 +530,6 @@ class SGCommandManager
 
       // set the background image
       String imageFilePath = map.getValueString(COM_IMAGE_FILE_PATH);
-      //            if (SGIConstants.FILE_PATH_CONFIRMATION_SYMBOL.equals(imageFilePath)) {
-      //            	// set up file chooser dialog
-      //            	SGImageFileChooserWizardDialog fileChooserDialog
-      //            			= new SGImageFileChooserWizardDialog(wnd, true);
-      //            	fileChooserDialog.setCurrentFile(this.mMain.getCurrentFileDirectory(), null);
-      //            	fileChooserDialog.setCenter(wnd);
-      //            	fileChooserDialog.setVisible(true);
-      //
-      //            	// get file path from file chooser dialog
-      //            	String fileName = fileChooserDialog.getFileName();
-      //        		this.mMain.updateCurrentFile(new File(fileName), null);
-      //            	imageFilePath = fileName;
-      //            }
       if (!"".equals(imageFilePath)) {
         final int imageStatus = this.setBackgroundImage(imageFilePath, wnd);
         result.putResult(COM_IMAGE_FILE_PATH, imageStatus);
@@ -718,7 +577,6 @@ class SGCommandManager
    *
    * @param command a command
    * @param argsList the list of arguments
-   * @return the status
    */
   private int execFigureCommand(final String command, final List<String> argsList) {
 
@@ -833,7 +691,6 @@ class SGCommandManager
    *
    * @param command a command
    * @param argsList the list of arguments
-   * @return the status
    */
   private int execFigureElementCommand(final String command, List<String> argsList) {
 
@@ -857,7 +714,6 @@ class SGCommandManager
 
       final SGPropertyMap map;
       if (!figure.isDataVisible(dataId)) {
-        // if data object does not exist or is invisible, draw the new graph
         final List<String> paramsList = new ArrayList<String>(argsList.subList(1, argsList.size()));
         map = this.getPropertiesMap(command, paramsList);
         if (map == null) {
@@ -1203,7 +1059,6 @@ class SGCommandManager
       }
 
       if (dataIdArray.length != 0) {
-        //                SGDrawingWindow wnd = figure.getWindow();
         wnd.setChanged(true);
         wnd.notifyToRoot();
       }
@@ -1216,10 +1071,6 @@ class SGCommandManager
         return this.fitAxesOlder(command, argsList, figure);
       }
     } else if (COM_ALIGN_BARS.equalsIgnoreCase(command)) {
-      //            final int argc = argsList.size();
-      //            if (argc != 0) {
-      //                return STATUS_FAILED;
-      //            }
       if (figure.alignVisibleBars() == false) {
         return STATUS_FAILED;
       }
@@ -1299,7 +1150,6 @@ class SGCommandManager
       SGPropertyResults result = null;
       SGPropertyMap map = null;
       if (location != -1) {
-        // for each axis
         List<String> paramsList = new ArrayList<String>(argsList.subList(1, argsList.size()));
         map = this.getPropertiesMap(command, paramsList);
         if (map == null) {
@@ -1313,7 +1163,6 @@ class SGCommandManager
         }
 
       } else {
-        // for all axes
         map = this.getPropertiesMap(command, argsList);
         if (map == null) {
           return STATUS_FAILED;
@@ -1524,8 +1373,6 @@ class SGCommandManager
   }
 
   private int fitAxesOlder(String command, List<String> argsList, SGFigure figure) {
-    // for backward compatibility
-    // version number <= 2.0.0
     final int argc = argsList.size();
     if (argc == 0) {
       return STATUS_FAILED;
@@ -1565,7 +1412,6 @@ class SGCommandManager
    *
    * @param command a command
    * @param argsList the list of arguments
-   * @return the status
    */
   private int execGlobalCommand(final String command, final List<String> argsList) {
 
@@ -1595,31 +1441,6 @@ class SGCommandManager
         return STATUS_FAILED;
       }
       return STATUS_SUCCEEDED;
-      //        } else if (COM_SETUP_LINE_COLOR_MAP.equalsIgnoreCase(command)) {
-      //        	List<String> aList = new ArrayList<String>(argsList);
-      //        	String colorMapName = null;
-      //        	if (aList.size() > 1) {
-      //        		String name = aList.get(0);
-      //        		if (SGColorBarColorMapManager.isValidColorMapName(name)) {
-      //        			colorMapName = name;
-      //        			aList = new ArrayList<String>(aList.subList(1, aList.size()));
-      //        		}
-      //        	}
-      //        	SGColorMap colorMap = this.mMain.getColorMap(colorMapName);
-      //        	if (colorMap == null) {
-      //                return STATUS_FAILED;
-      //        	}
-      //            SGPropertyMap map = this.getPropertiesMap(command, aList);
-      //            if (map == null) {
-      //                return STATUS_FAILED;
-      //            }
-      //
-      //            // set properties
-      //            SGPropertyResults result = colorMap.setProperties(map);
-      //            if (result == null) {
-      //                return STATUS_FAILED;
-      //            }
-      //            return STATUS_SUCCEEDED;
     } else if (COM_ASSIGN_LINE_COLOR.equalsIgnoreCase(command)) {
       List<String> aList = new ArrayList<String>(argsList);
 
@@ -1756,7 +1577,6 @@ class SGCommandManager
    *
    * @param command a command
    * @param argsList the list of arguments
-   * @return the status
    */
   private int execImageCommand(final String command, final List<String> argsList) {
 

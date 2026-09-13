@@ -85,7 +85,6 @@ class SGWindowManager
    * Create a window with given ID number.
    *
    * @param id ID number
-   * @return a created window
    */
   private SGDrawingWindow createWindow(final int id) {
 
@@ -202,17 +201,12 @@ class SGWindowManager
    * Returns a window of given window ID.
    *
    * @param wndID the window ID
-   * @return the window of given ID if it exists
    */
   public SGDrawingWindow getWindow(final int wndID) {
     return this.mWndMap.get(Integer.valueOf(wndID));
   }
 
-  /**
-   * Returns the current window. This method must be used in command handler.
-   *
-   * @return the current window
-   */
+  /** Returns the current window. This method must be used in command handler. */
   public SGDrawingWindow getCurrentWindow() {
     return this.mCurrentWindow;
   }
@@ -220,11 +214,7 @@ class SGWindowManager
   /** The map of the current figure. */
   private Map<Integer, SGFigure> mCurrentFigureMap = new HashMap<Integer, SGFigure>();
 
-  /**
-   * Returns the current figure.
-   *
-   * @return the current figure if it exists
-   */
+  /** Returns the current figure. */
   public SGFigure getCurrentFigure() {
     if (this.mCurrentWindow == null) {
       return null;
@@ -237,55 +227,31 @@ class SGWindowManager
    *
    * @param wndId thw window ID
    * @param figure a figure
-   * @return true if succeeded
    */
   public boolean setCurrentFigure(final int wndId, final SGFigure figure) {
     this.mCurrentFigureMap.put(wndId, figure);
     return true;
   }
 
-  /**
-   * Returns the ID number for a new window.
-   *
-   * @return ID number
-   */
+  /** Returns the ID number for a new window. */
   private int assignWindowID() {
-    //        int id;
-    //        if (this.mWndMap.size() == 0) {
-    //            id = 1;
-    //        } else {
-    //            id = (this.mWndMap.lastKey()).intValue() + 1;
-    //        }
-    //        return id;
 
     List<Integer> keyList = new ArrayList<Integer>(this.mWndMap.keySet());
     final int id = SGUtility.assignIdNumber(keyList);
     return id;
   }
 
-  /**
-   * Returns the number of windows.
-   *
-   * @return the number of windows
-   */
+  /** Returns the number of windows. */
   public int getWindowNumber() {
     return this.mWndMap.size();
   }
 
-  /**
-   * Returns the list of ID of all windows.
-   *
-   * @return the list of ID of all windows
-   */
+  /** Returns the list of ID of all windows. */
   public List<Integer> getWindowIdList() {
     return new ArrayList<Integer>(this.mWndMap.keySet());
   }
 
-  /**
-   * Create a new window.
-   *
-   * @return a created window
-   */
+  /** Create a new window. */
   public SGDrawingWindow createNewWindow() {
     final int id = this.assignWindowID();
     SGDrawingWindow wnd = this.createWindow(id);
@@ -300,10 +266,8 @@ class SGWindowManager
    * Create a new window of given ID.
    *
    * @param id the window ID
-   * @return a created window
    */
   public SGDrawingWindow createNewWindow(final int id) {
-    // if a window of given ID already exists, returns null
     if (this.getWindow(id) != null) {
       return null;
     }
@@ -319,7 +283,6 @@ class SGWindowManager
    * Closes the window without confirmation.
    *
    * @param id the window ID of a window to close
-   * @param true if succeeded
    */
   public boolean closeWindowWithoutConfirmation(final int id) {
     SGDrawingWindow wnd = this.getWindow(id);
@@ -333,7 +296,6 @@ class SGWindowManager
    * Closes the window with confirmation.
    *
    * @param id the window ID of a window to close
-   * @param true if succeeded
    */
   public boolean closeWindow(final int id) {
     SGDrawingWindow wnd = this.getWindow(id);
@@ -348,7 +310,6 @@ class SGWindowManager
    * Closes the window with confirmation.
    *
    * @param wnd a window to close
-   * @return the result of confirmation
    */
   public int closeWindow(final SGDrawingWindow wnd) {
     if (wnd.needsConfirmationBeforeDiscard()) {
@@ -397,7 +358,6 @@ class SGWindowManager
    * Sets the current window with given window ID. This method must be used in command handler.
    *
    * @param wndId the ID of the window to set to the current window
-   * @param true if succeeded
    */
   public boolean setCurrentWindow(final int wndId) {
     SGDrawingWindow wnd = this.getWindow(wndId);
@@ -444,7 +404,6 @@ class SGWindowManager
             }
             mCurrentFigureMap.remove(id);
 
-            // if all windows are closed, exit the application
             if (mWndMap.size() == 0) {
               mMain.exitApplication(0);
             }
@@ -476,7 +435,6 @@ class SGWindowManager
         this.closeWindow(wnd);
       } else if (command.equals(MENUBARCMD_EXIT)) {
         this.closeAllWindow();
-        // exit();
       } else if (command.equals(MENUBARCMD_DRAW_GRAPH)) {
         this.mMain.getDataAdditionHandler().onToolBarDataAdditionExecuted(wnd);
       } else if (command.equals(MENUBARCMD_RELOAD)) {
@@ -656,8 +614,6 @@ class SGWindowManager
       } else if (command.equals(SGIFigureElement.NOTIFY_DATA_CLICKED)) {
         this.mMain.updateDataTableCellSelection(wnd);
       }
-      //        } else if (source instanceof SGPluginsQueryMessage) {
-      //            this.mMain.updatePluginsMessage((SGPluginsQueryMessage)source);
     }
   }
 
@@ -753,7 +709,6 @@ class SGWindowManager
    * close operation will be canceled.
    */
   public void windowClosing(final WindowEvent e) {
-    // Object source = e.getSource();
     final SGDrawingWindow wnd = (SGDrawingWindow) e.getSource();
     this.closeWindow(wnd);
   }
@@ -790,11 +745,7 @@ class SGWindowManager
   // Currently active window.
   private SGDrawingWindow mActiveWindow = null;
 
-  /**
-   * Returns the active window.
-   *
-   * @return the active window
-   */
+  /** Returns the active window. */
   public SGDrawingWindow getActiveWindow() {
     return this.mActiveWindow;
   }
@@ -826,6 +777,7 @@ class SGWindowManager
     /**
      * Builds an event handler object.
      *
+     * @param main the main parameter
      * @param event the drop event
      * @param fileList the list of dropped files
      */

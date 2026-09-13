@@ -28,7 +28,6 @@ public class SGExclusiveAccessController {
 
   /**
    * @param obj
-   * @return
    */
   public boolean contains(final SGISelectable obj) {
     return this.mSelectableList.contains(obj);

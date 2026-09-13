@@ -15,9 +15,7 @@ public abstract class SGDrawingElement
   /** Returns whether this drawing element "contains" the given point. */
   public abstract boolean contains(final int x, final int y);
 
-  /**
-   * @return
-   */
+  /** */
   public final boolean isVisible() {
     return this.mVisibleFlag;
   }
@@ -33,22 +31,16 @@ public abstract class SGDrawingElement
    * Sets the magnification.
    *
    * @param mag the magnification
-   * @return true if succeeded
    */
   public abstract boolean setMagnification(final float mag);
 
-  /**
-   * Returns the magnification.
-   *
-   * @return the magnification
-   */
+  /** Returns the magnification. */
   public abstract float getMagnification();
 
   /**
    * Sets the given properties to this object.
    *
    * @param p the properties
-   * @return true if succeeded
    */
   public boolean setProperties(SGProperties p) {
     if ((p instanceof DrawingElementProperties) == false) {
@@ -63,11 +55,7 @@ public abstract class SGDrawingElement
     return true;
   }
 
-  /**
-   * Returns the properties of this object.
-   *
-   * @return the properties
-   */
+  /** Returns the properties of this object. */
   public SGProperties getProperties() {
     final DrawingElementProperties p = new DrawingElementProperties();
     if (this.getProperties(p) == false) {
@@ -80,7 +68,6 @@ public abstract class SGDrawingElement
    * Sets the properties of this object to a given property object.
    *
    * @param p the properties
-   * @return true if succeeded
    */
   public boolean getProperties(final SGProperties p) {
     if ((p instanceof DrawingElementProperties) == false) {
@@ -99,11 +86,7 @@ public abstract class SGDrawingElement
   // The flag whether this object is already disposed of.
   private boolean mDisposed = false;
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }

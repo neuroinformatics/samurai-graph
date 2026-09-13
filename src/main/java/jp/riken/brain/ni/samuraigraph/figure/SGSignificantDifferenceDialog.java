@@ -659,51 +659,37 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getText() {
     return this.mTextField.getText();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Number getLeftXValue() {
     return this.getNumber(this.mLeftXValueTextField);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Number getLeftYValue() {
     return this.getNumber(this.mLeftYValueTextField);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Number getRightXValue() {
     return this.getNumber(this.mRightXValueTextField);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Number getRightYValue() {
     return this.getNumber(this.mRightYValueTextField);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Number getHorizontalYValue() {
     return this.getNumber(this.mHorizontalYValueTextField);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Boolean getLineVisible() {
     return this.mLineVisibleCheckBox.getSelected();
   }
@@ -739,16 +725,13 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
     return this.mLineWidthSpinner.getNumber();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Boolean getLocationAnchored() {
     return this.mLocationAnchoredCheckBox.getSelected();
   }
 
   /**
    * @param text
-   * @return
    */
   public boolean setText(final String text) {
     this.mTextField.setText(text);
@@ -756,35 +739,35 @@ public class SGSignificantDifferenceDialog extends SGPropertyDialog
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setLeftXValue(final Object obj) {
     return this.setValue(this.mLeftXValueTextField, obj);
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setLeftYValue(final Object obj) {
     return this.setValue(this.mLeftYValueTextField, obj);
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setRightXValue(final Object obj) {
     return this.setValue(this.mRightXValueTextField, obj);
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setRightYValue(final Object obj) {
     return this.setValue(this.mRightYValueTextField, obj);
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setHorizontalYValue(final Object obj) {
     return this.setValue(this.mHorizontalYValueTextField, obj);

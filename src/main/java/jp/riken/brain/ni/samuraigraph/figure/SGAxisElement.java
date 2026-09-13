@@ -271,11 +271,7 @@ public abstract class SGAxisElement
 
   public abstract void init();
 
-  /**
-   * Creates axis lines.
-   *
-   * @return axis lines
-   */
+  /** Creates axis lines. */
   protected abstract ElementLineAxis[] createAxisLines();
 
   /** Disposes of this object. */
@@ -306,117 +302,77 @@ public abstract class SGAxisElement
     this.mTitle = null;
   }
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }
 
-  /**
-   * Returns the axis.
-   *
-   * @return the axis
-   */
+  /** Returns the axis. */
   public SGAxis getAxis() {
     return this.mAxis;
   }
 
-  /**
-   * Returns whether this axis is visible.
-   *
-   * @return true if this axis visible
-   */
+  /** Returns whether this axis is visible. */
   public boolean isVisible() {
     return this.mVisible;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isTitleVisible() {
     return this.mTitle.isVisible();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getTitleString() {
     return this.mTitle.getString();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGAxisValue getMinValue() {
     return this.mAxis.getMinValue();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGAxisValue getMaxValue() {
     return this.mAxis.getMaxValue();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isInvertCoordinates() {
     return this.mAxis.isInvertCoordinates();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getScaleType() {
     return this.mAxis.getScaleType();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isScaleAuto() {
     return this.mAutoCalcFlag;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGAxisStepValue getScaleStep() {
     return this.mStepValue;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGAxisValue getScaleBase() {
     return this.mBaselineValue;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isTickMarkVisible() {
     return this.mTickMarksVisibleFlag;
   }
 
-  /**
-   * Returns whether tick marks are drawn to both sides.
-   *
-   * @return the direction of tick marks
-   */
+  /** Returns whether tick marks are drawn to both sides. */
   public boolean isTickMarkBothsides() {
     return this.mTickMarkBothsides;
   }
 
-  /**
-   * Returns the number of minor tick marks between two major tick marks.
-   *
-   * @return the number of minor tick marks between two major tick marks
-   */
+  /** Returns the number of minor tick marks between two major tick marks. */
   public int getMinorTickMarkNumber() {
     return this.mMinorTickMarkNumber;
   }
@@ -425,52 +381,37 @@ public abstract class SGAxisElement
    * Returns the length of minor tick mark in a given unit of length.
    *
    * @param unit a unit of length
-   * @return the length of minor tick mark
    */
   public float getMinorTickMarkLength(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.mMinorTickMarkLength, unit);
   }
 
-  /**
-   * Returns the length of minor tick mark.
-   *
-   * @return the length of minor tick mark
-   */
+  /** Returns the length of minor tick mark. */
   public float getMinorTickMarkLength() {
     return this.mMinorTickMarkLength;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isNumbersVisible() {
     return this.mNumbersVisibleFlag;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isNumbersInteger() {
     return this.mNumberInteger;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isExponentVisible() {
     return this.mExponentVisible;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getExponentValue() {
     return this.mExponentValue;
   }
 
-  /**
-   * @return
-   */
+  /** */
   @Override
   public float getNumberAngle() {
     return this.mNumberAngle;
@@ -480,7 +421,6 @@ public abstract class SGAxisElement
    * Sets the visibility of the axis.
    *
    * @param b true to set visible
-   * @return true if succeeded
    */
   public boolean setVisible(final boolean b) {
     this.mVisible = b;
@@ -491,7 +431,6 @@ public abstract class SGAxisElement
    * Sets the visibility of the title.
    *
    * @param b true to set visible
-   * @return true if succeeded
    */
   public boolean setTitleVisible(final boolean b) {
     this.mTitle.setVisible(b);
@@ -502,7 +441,6 @@ public abstract class SGAxisElement
    * Sets the title.
    *
    * @param str a text string to set to the title
-   * @return true if succeeded
    */
   public boolean setTitleText(final String str) {
     if (SGUtilityText.isValidString(str) == false) {
@@ -516,7 +454,6 @@ public abstract class SGAxisElement
    * Sets whether the axis scale is inverted.
    *
    * @param b true to be inverted
-   * @return true if succeeded
    */
   public boolean setInvertedCoordinates(final boolean b) {
     return this.mAxis.setInvertCoordinates(b);
@@ -528,7 +465,6 @@ public abstract class SGAxisElement
    * @param minValue the minimum value to set
    * @param maxValue the maximum value to set
    * @param scaleType the scale type to set
-   * @return true if succeeded
    */
   public boolean setScale(
       final SGAxisValue minValue, final SGAxisValue maxValue, final Integer scaleType) {
@@ -552,7 +488,6 @@ public abstract class SGAxisElement
    *
    * @param minValue the minimum value to set
    * @param maxValue the maximum value to set
-   * @return true if succeeded
    */
   public boolean setScale(final SGAxisValue minValue, final SGAxisValue maxValue) {
     return this.setScale(minValue, maxValue, this.mAxis.getScaleType());
@@ -562,7 +497,6 @@ public abstract class SGAxisElement
    * Sets the scale type.
    *
    * @param type the scale type to set
-   * @return true if succeeded
    */
   public boolean setScaleType(final int type) {
     if (SGAxis.isValidScaleType(type) == false) {
@@ -580,7 +514,6 @@ public abstract class SGAxisElement
    * Sets the flag whether the tick marks are calculated automatically.
    *
    * @param b true to calculate automatically
-   * @return true if succeeded
    */
   public boolean setCalculateAutomatically(final boolean b) {
     this.mAutoCalcFlag = b;
@@ -591,7 +524,6 @@ public abstract class SGAxisElement
    * Sets the step value.
    *
    * @param value the step value to set
-   * @return true if succeeded
    */
   public boolean setStepValue(final SGAxisStepValue value) {
     this.mStepValue = value;
@@ -602,7 +534,6 @@ public abstract class SGAxisElement
    * Sets the baseline value.
    *
    * @param value the baseline value to set
-   * @return true if succeeded
    */
   public boolean setBaselineValue(final SGAxisValue value) {
     this.mBaselineValue = value;
@@ -613,7 +544,6 @@ public abstract class SGAxisElement
    * Sets the visibility of the tick marks.
    *
    * @param b true to set visible
-   * @return true if succeeded
    */
   public boolean setTickMarkVisible(final boolean b) {
     this.mTickMarksVisibleFlag = b;
@@ -624,7 +554,6 @@ public abstract class SGAxisElement
    * Sets whether tick marks are drawn to both sides.
    *
    * @param b true to draw to both sides
-   * @return true if succeeded
    */
   public boolean setTickMarkBothsides(final boolean b) {
     this.mTickMarkBothsides = b;
@@ -635,7 +564,6 @@ public abstract class SGAxisElement
    * Sets the number of minor tick marks.
    *
    * @param num the number of minor tick marks
-   * @return true if succeeded
    */
   public boolean setMinorTickMarkNumber(final int num) {
     if (num < MINOR_TICK_MARK_NUMBER_MIN) {
@@ -652,7 +580,6 @@ public abstract class SGAxisElement
    *
    * @param len the length of minor tick marks
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setMinorTickMarkLength(final float len, final String unit) {
     final Float lNew =
@@ -673,7 +600,6 @@ public abstract class SGAxisElement
    * Sets the length of minor tick marks.
    *
    * @param len the length of minor tick marks
-   * @return true if succeeded
    */
   public boolean setMinorTickMarkLength(final float len) {
     this.mMinorTickMarkLength = len;
@@ -684,7 +610,6 @@ public abstract class SGAxisElement
    * Sets the visibility of the numbers.
    *
    * @param b true to set visible
-   * @return true if succeeded
    */
   public boolean setNumbersVisible(final boolean b) {
     this.mNumbersVisibleFlag = b;
@@ -695,7 +620,6 @@ public abstract class SGAxisElement
    * Sets the numbers to be integer.
    *
    * @param b true for integer
-   * @return true if succeeded
    */
   public boolean setNumbersInteger(final boolean b) {
     this.mNumberInteger = b;
@@ -706,7 +630,6 @@ public abstract class SGAxisElement
    * Sets whether to use the exponent symbol.
    *
    * @param b true to use the exponent symbol
-   * @return true if succeeded
    */
   public boolean setExponentVisible(final boolean b) {
     this.mExponentVisible = b;
@@ -717,7 +640,6 @@ public abstract class SGAxisElement
    * Sets the exponent value.
    *
    * @param value the exponent value to set
-   * @return true if succeeded
    */
   public boolean setExponent(final int value) {
     final int vNew;
@@ -744,9 +666,7 @@ public abstract class SGAxisElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean hasValidAxisValues(
       final SGAxisValue minValue,
       final SGAxisValue maxValue,
@@ -756,14 +676,6 @@ public abstract class SGAxisElement
     final double min = (minValue != null) ? minValue.getValue() : this.getMinValue().getValue();
     final double max = (maxValue != null) ? maxValue.getValue() : this.getMaxValue().getValue();
     final int type = (scaleType != null) ? scaleType.intValue() : this.getScaleType();
-    //        final double step = (stepValue != null) ? stepValue.doubleValue()
-    //                : this.getScaleStep();
-    //        if (stepValue != null) {
-    //            // step value
-    //            if (stepValue.doubleValue() == 0.0) {
-    //                return false;
-    //            }
-    //        }
 
     // min and max values
     if (min >= max) {
@@ -778,9 +690,6 @@ public abstract class SGAxisElement
     }
 
     //        // step value
-    //        if (step == 0.0) {
-    //            return false;
-    //        }
 
     return true;
   }
@@ -789,7 +698,6 @@ public abstract class SGAxisElement
    * @param minValue
    * @param maxValue
    * @param scaleType
-   * @return
    */
   public boolean hasValidAxisRange(
       final SGAxisValue minValue, final SGAxisValue maxValue, final Integer scaleType) {
@@ -814,7 +722,6 @@ public abstract class SGAxisElement
    * @param baseValue
    * @param stepValue
    * @param scaleType
-   * @return
    */
   public boolean hasValidAxisValues(
       final SGAxisValue baseValue, final SGAxisStepValue stepValue, final Integer scaleType) {
@@ -996,11 +903,7 @@ public abstract class SGAxisElement
     return this.getLocationInPlane();
   }
 
-  /**
-   * Returns the magnification.
-   *
-   * @return the magnification
-   */
+  /** Returns the magnification. */
   public float getMagnification() {
     return this.mAxisElement.getMagnification();
   }
@@ -1009,7 +912,6 @@ public abstract class SGAxisElement
    * Sets the magnification.
    *
    * @param mag the magnification
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     this.mTitle.setMagnification(mag);
@@ -1026,9 +928,7 @@ public abstract class SGAxisElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected Rectangle2D getBoundingBox() {
     if (this.isVisible() == false) {
       return null;
@@ -1075,14 +975,12 @@ public abstract class SGAxisElement
    * Called when the axis is clicked.
    *
    * @param e the mouse event
-   * @return true if a drawing element is clicked, and false otherwise
    */
   protected abstract boolean clicked(final MouseEvent e);
 
   /** Called when the mouse is pressed. */
   public boolean onMousePressed(final MouseEvent e) {
 
-    // if this axis-group is invisible, returns false
     if (!this.isVisible()) {
       return false;
     }
@@ -1186,11 +1084,7 @@ public abstract class SGAxisElement
     return true;
   }
 
-  /**
-   * Commit the change of the properties.
-   *
-   * @return true if succeeded
-   */
+  /** Commit the change of the properties. */
   public boolean commit() {
 
     // compare two properties
@@ -1214,11 +1108,7 @@ public abstract class SGAxisElement
     return true;
   }
 
-  /**
-   * Cancel the setting of properties.
-   *
-   * @return true if succeeded
-   */
+  /** Cancel the setting of properties. */
   public boolean cancel() {
 
     // set temporary properties to drawing elements to cancel the change
@@ -1251,7 +1141,6 @@ public abstract class SGAxisElement
    * Called when the mouse is dragged.
    *
    * @param e the mouse event
-   * @return true if succeeded
    */
   public boolean onMouseDragged(final MouseEvent e) {
     return this.mMouseHandler.onMouseDragged(e);
@@ -1519,17 +1408,7 @@ public abstract class SGAxisElement
   /** */
   public abstract boolean onMouseReleased(final MouseEvent e);
 
-  protected void onMouseReleasedFinally() {
-    //        if (this.mTemporaryProperties != null) {
-    //            SGProperties pTemp = this.mTemporaryProperties;
-    //            SGProperties pPresent = this.getProperties();
-    //            if (pTemp.equals(pPresent) == false) {
-    //                this.setChanged(true);
-    //            }
-    //            this.mTemporaryProperties = null;
-    //    		this.mDraggingElement = null;
-    //        }
-  }
+  protected void onMouseReleasedFinally() {}
 
   protected void onMouseReleasedNumberOrTickMark() {
     this.mTempRange = null;
@@ -1563,7 +1442,6 @@ public abstract class SGAxisElement
   /**
    * @param x
    * @param y
-   * @return
    */
   public boolean contains(final int x, final int y) {
     // axis line
@@ -1694,18 +1572,10 @@ public abstract class SGAxisElement
     return true;
   }
 
-  /**
-   * Sets the location of the axis line.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of the axis line. */
   protected abstract boolean setLocationOfAxisLines();
 
-  /**
-   * Set properties to axis lines.
-   *
-   * @return true if succeeded
-   */
+  /** Set properties to axis lines. */
   protected boolean setAxisLineProperties() {
     for (int ii = 0; ii < this.mAxisLines.length; ii++) {
       this.mAxisLines[ii].setLineWidth(this.getAxisLineWidth());
@@ -1714,11 +1584,7 @@ public abstract class SGAxisElement
     return true;
   }
 
-  /**
-   * Sets the location of the title.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of the title. */
   protected abstract boolean setLocationOfTitle();
 
   // Creates instances of the scale numbers.
@@ -1843,32 +1709,16 @@ public abstract class SGAxisElement
     return el;
   }
 
-  /**
-   * Sets the location of exponent object.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of exponent object. */
   protected abstract boolean setLocationOfExponentDrawingElement();
 
-  /**
-   * Sets the location of scale numbers.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of scale numbers. */
   protected abstract boolean setLocationOfScaleNumbers();
 
-  /**
-   * Create the scale lines.
-   *
-   * @return true if succeeded
-   */
+  /** Create the scale lines. */
   protected abstract boolean createTickMarks();
 
-  /**
-   * Creates scale lines in the linear scale.
-   *
-   * @return true if succeeded
-   */
+  /** Creates scale lines in the linear scale. */
   protected boolean createTickMarksInLinearScale(
       final float width, final float length, final Color cl) {
 
@@ -1898,11 +1748,7 @@ public abstract class SGAxisElement
     return true;
   }
 
-  /**
-   * Creates scale lines in the log scale.
-   *
-   * @return true if succeeded
-   */
+  /** Creates scale lines in the log scale. */
   protected boolean createTickMarksInLogScale(
       final float width, final float length, final Color cl) {
     // create the major scale lines
@@ -1962,10 +1808,10 @@ public abstract class SGAxisElement
   /**
    * Creates a scale line.
    *
+   * @param width the width parameter
    * @param value axis value of the scale line
    * @param length the length of the scale line
    * @param inside true for inside direction
-   * @return an instance of the scale line
    */
   protected abstract ElementLineTickMark createSingleTickMark(
       final double value, final float width, final float length, final boolean inside);
@@ -1990,20 +1836,12 @@ public abstract class SGAxisElement
     return true;
   }
 
-  /**
-   * Calculate the numbers of scale in for the linear scale.
-   *
-   * @return an array of axis values
-   */
+  /** Calculate the numbers of scale in for the linear scale. */
   private double[] calcScaleValuesInLinearScale() {
     return this.mPropertyHelper.calcScaleValuesInLinearScale();
   }
 
-  /**
-   * Calculate the numbers of scale in for the log scale.
-   *
-   * @return an array of axis values
-   */
+  /** Calculate the numbers of scale in for the log scale. */
   private double[] calcScaleValuesInLogScale() {
     // minimum and maximum values of axis range
     final SGTuple2d range = this.mAxis.getRange();
@@ -2025,11 +1863,7 @@ public abstract class SGAxisElement
     return axisValueArray;
   }
 
-  /**
-   * Returns the tag name.
-   *
-   * @return the tag name
-   */
+  /** Returns the tag name. */
   public String getTagName() {
     return SGIFigureElementAxis.TAG_NAME_AXIS;
   }
@@ -2037,8 +1871,8 @@ public abstract class SGAxisElement
   /**
    * Create an Element object.
    *
+   * @param params the params parameter
    * @param document a Document object to append the Element object
-   * @return an Element object
    */
   public Element createElement(final Document document, final SGExportParameter params) {
     return this.mPropertyIO.createElement(document, params);
@@ -2047,8 +1881,8 @@ public abstract class SGAxisElement
   /**
    * Write the properties to an given Element object.
    *
+   * @param params the params parameter
    * @param el an Element object
-   * @return true if succeeded
    */
   public boolean writeProperty(final Element el, final SGExportParameter params) {
     return this.mPropertyIO.writeProperty(el, params);
@@ -2075,7 +1909,6 @@ public abstract class SGAxisElement
    *
    * @param element an Element object
    * @param versionNumber version number
-   * @return true if succeeded
    */
   protected boolean readProperties(final Element element, final String versionNumber) {
     return this.mPropertyIO.readProperties(element, versionNumber);
@@ -2103,7 +1936,6 @@ public abstract class SGAxisElement
    * Sets the properties of this axis.
    *
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setProperties(SGPropertyMap map) {
     SGPropertyResults result = new SGPropertyResults();
@@ -2134,27 +1966,18 @@ public abstract class SGAxisElement
    *
    * @param map a map of properties
    * @param iResult the input result
-   * @return the updated result of setting properties
    */
   protected SGPropertyResults setProperties(
       final SGPropertyMap map, final SGPropertyResults iResult) {
     return this.mPropertyIO.setProperties(map, iResult);
   }
 
-  /**
-   * Returns the stroke for the axis line.
-   *
-   * @return the stroke for the axis line
-   */
+  /** Returns the stroke for the axis line. */
   public SGStroke getAxisLineStroke() {
     return this.mAxisLineStroke;
   }
 
-  /**
-   * Returns axis line width.
-   *
-   * @return axis line width
-   */
+  /** Returns axis line width. */
   public float getAxisLineWidth() {
     return this.mAxisLineStroke.getLineWidth();
   }
@@ -2163,7 +1986,6 @@ public abstract class SGAxisElement
    * Returns axis line width in given unit of length.
    *
    * @param unit the unit of length
-   * @return line width in given unit of length
    */
   public float getAxisLineWidth(String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getAxisLineWidth(), unit);
@@ -2173,7 +1995,6 @@ public abstract class SGAxisElement
    * Sets axis line width.
    *
    * @param lw line width
-   * @return true if succeeded
    */
   public boolean setAxisLineWidth(final float lw) {
     if (lw < 0.0f) {
@@ -2188,7 +2009,6 @@ public abstract class SGAxisElement
    *
    * @param lw the line width to set in a given unit
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setAxisLineWidth(final float lw, final String unit) {
     final Float lwNew = SGUtility.getLineWidth(lw, unit);
@@ -2198,29 +2018,17 @@ public abstract class SGAxisElement
     return this.setAxisLineWidth(lwNew);
   }
 
-  /**
-   * Returns color of the axis line.
-   *
-   * @return color of the axis line
-   */
+  /** Returns color of the axis line. */
   public Color getAxisLineColor() {
     return this.mAxisLineColor;
   }
 
-  /**
-   * Returns color of the tick marks.
-   *
-   * @return color of the tick marks
-   */
+  /** Returns color of the tick marks. */
   public Color getTickMarkColor() {
     return this.mTickMarkColor;
   }
 
-  /**
-   * Returns the stroke for the tick marks.
-   *
-   * @return the stroke for the tick marks
-   */
+  /** Returns the stroke for the tick marks. */
   public SGStroke getTickMarkStroke() {
     return this.mTickMarkStroke;
   }
@@ -2247,7 +2055,6 @@ public abstract class SGAxisElement
    * Sets the space to the scale numbers.
    *
    * @param space the space to the scale numbers to set
-   * @return true if succeeded
    */
   public boolean setSpaceToScale(final float space) {
     this.mSpaceAxisLineAndNumbers = space;
@@ -2259,7 +2066,6 @@ public abstract class SGAxisElement
    *
    * @param space the space to the scale numbers to set in a given unit
    * @param unit an unit of length
-   * @return true if succeeded
    */
   public boolean setSpaceToScale(float space, String unit) {
     final Float sNew =
@@ -2280,7 +2086,6 @@ public abstract class SGAxisElement
    * Sets the space to the title.
    *
    * @param space the space to the title to set
-   * @return true if succeeded
    */
   public boolean setSpaceToTitle(final float space) {
     this.mSpaceTitleAndNumbers = space;
@@ -2292,7 +2097,6 @@ public abstract class SGAxisElement
    *
    * @param space the space to the title to set in a given unit
    * @param unit an unit of length
-   * @return true if succeeded
    */
   public boolean setSpaceToTitle(float space, String unit) {
     final Float sNew =
@@ -2309,29 +2113,17 @@ public abstract class SGAxisElement
     return this.setSpaceToTitle(sNew.floatValue());
   }
 
-  /**
-   * Returns the font name of the title.
-   *
-   * @return font name of the title
-   */
+  /** Returns the font name of the title. */
   public String getTitleFontName() {
     return this.mTitle.getFontName();
   }
 
-  /**
-   * Returns the font style of the title.
-   *
-   * @return font style of the title
-   */
+  /** Returns the font style of the title. */
   public int getTitleFontStyle() {
     return this.mTitle.getFontStyle();
   }
 
-  /**
-   * Returns the font size of the title.
-   *
-   * @return font size of the title
-   */
+  /** Returns the font size of the title. */
   public float getTitleFontSize() {
     return this.mTitle.getFontSize();
   }
@@ -2340,17 +2132,12 @@ public abstract class SGAxisElement
    * Returns the font size of the title in given unit.
    *
    * @param unit unit for the font size
-   * @return font size of the title in given unit
    */
   public float getTitleFontSize(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getTitleFontSize(), unit);
   }
 
-  /**
-   * Returns the color of title.
-   *
-   * @return color of title
-   */
+  /** Returns the color of title. */
   public Color getTitleFontColor() {
     return this.mTitle.getColor();
   }
@@ -2359,7 +2146,6 @@ public abstract class SGAxisElement
    * Sets the font name of the title.
    *
    * @param name font name of the title to set
-   * @return true if succeeded
    */
   public boolean setTitleFontName(final String name) {
     this.mTitle.setFontName(name);
@@ -2370,7 +2156,6 @@ public abstract class SGAxisElement
    * Set font style of the title.
    *
    * @param style font style of the title
-   * @return
    */
   public boolean setTitleFontStyle(final int style) {
     if (SGUtilityText.isValidFontStyle(style) == false) {
@@ -2384,7 +2169,6 @@ public abstract class SGAxisElement
    * Sets the font size of the title.
    *
    * @param size font size of the title
-   * @return true if succeeded
    */
   public boolean setTitleFontSize(final float size) {
     if (size < 0) {
@@ -2399,7 +2183,6 @@ public abstract class SGAxisElement
    *
    * @param size the font size to set in a given unit
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setTitleFontSize(final float size, final String unit) {
     final Float sNew = SGUtility.getFontSize(size, unit);
@@ -2413,7 +2196,6 @@ public abstract class SGAxisElement
    * Sets the font color of title.
    *
    * @param color the font color to set
-   * @return true if succeeded
    */
   public boolean setTitleFontColor(final Color color) {
     if (color == null) {
@@ -2423,29 +2205,17 @@ public abstract class SGAxisElement
     return true;
   }
 
-  /**
-   * Returns the font name of the scale.
-   *
-   * @return font name of the scale.
-   */
+  /** Returns the font name of the scale. */
   public String getNumberFontName() {
     return this.mNumberFontName;
   }
 
-  /**
-   * Returns the font style of the scale.
-   *
-   * @return font style of the scale
-   */
+  /** Returns the font style of the scale. */
   public int getNumberFontStyle() {
     return this.mNumberFontStyle;
   }
 
-  /**
-   * Returns the font size of the scale.
-   *
-   * @return font size of the scale
-   */
+  /** Returns the font size of the scale. */
   public float getNumberFontSize() {
     return this.mNumberFontSize;
   }
@@ -2454,17 +2224,12 @@ public abstract class SGAxisElement
    * Returns the font size of the scale in given unit.
    *
    * @param unit unit for the font size
-   * @return font size of the scale in given unit
    */
   public float getNumberFontSize(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getNumberFontSize(), unit);
   }
 
-  /**
-   * Returns the color of scale numbers.
-   *
-   * @return color of scale numbers
-   */
+  /** Returns the color of scale numbers. */
   public Color getNumberFontColor() {
     return this.mNumberFontColor;
   }
@@ -2474,7 +2239,6 @@ public abstract class SGAxisElement
    *
    * @param size the font size to set in a given unit
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setNumberFontSize(final float size, final String unit) {
     final Float sNew = SGUtility.getFontSize(size, unit);
@@ -2488,7 +2252,6 @@ public abstract class SGAxisElement
    * Sets the scale font size.
    *
    * @param size the font size to set
-   * @return true if succeeded
    */
   public boolean setNumberFontSize(final float size) {
     if (size < 0) {
@@ -2502,7 +2265,6 @@ public abstract class SGAxisElement
    * Sets the scale font style.
    *
    * @param style the font style to set
-   * @return true if succeeded
    */
   public boolean setNumberFontStyle(final int style) {
     if (SGUtilityText.isValidFontStyle(style) == false) {
@@ -2512,9 +2274,7 @@ public abstract class SGAxisElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean setNumberFontName(final String name) {
     this.mNumberFontName = name;
     return true;
@@ -2524,7 +2284,6 @@ public abstract class SGAxisElement
    * Sets the font color of scale.
    *
    * @param color the font color to set
-   * @return true if succeeded
    */
   public boolean setNumberFontColor(final Color color) {
     if (color == null) {
@@ -2555,7 +2314,6 @@ public abstract class SGAxisElement
    * Sets the tick mark width.
    *
    * @param lw the tick mark width
-   * @return true if succeeded
    */
   public boolean setTickMarkWidth(final float lw) {
     if (lw < 0.0f) {
@@ -2570,7 +2328,6 @@ public abstract class SGAxisElement
    *
    * @param lw the tick mark width in a given unit
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setTickMarkWidth(final float lw, final String unit) {
     final Float lwNew = SGUtility.getLineWidth(lw, unit);
@@ -2584,7 +2341,6 @@ public abstract class SGAxisElement
    * Sets the length of major tick marks.
    *
    * @param len the length of the major tick marks
-   * @return true if succeeded
    */
   public boolean setMajorTickMarkLength(final float len) {
     this.mMajorTickMarkLength = len;
@@ -2596,7 +2352,6 @@ public abstract class SGAxisElement
    *
    * @param len the length of the major tick marks in a given unit
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setMajorTickMarkLength(final float len, final String unit) {
     final Float lNew =
@@ -2613,11 +2368,7 @@ public abstract class SGAxisElement
     return this.setMajorTickMarkLength(lNew);
   }
 
-  /**
-   * Returns the space between axis line and numbers in the default unit.
-   *
-   * @return the space between axis line and numbers in the default unit
-   */
+  /** Returns the space between axis line and numbers in the default unit. */
   public float getSpaceAxisLineAndNumbers() {
     return this.mSpaceAxisLineAndNumbers;
   }
@@ -2626,7 +2377,6 @@ public abstract class SGAxisElement
    * Returns the space between axis line and numbers in given unit.
    *
    * @param unit the unit of length
-   * @return the space between axis line and numbers in given unit
    */
   public float getSpaceAxisLineAndNumbers(final String unit) {
     return (float) SGUtilityText.convert(this.getSpaceAxisLineAndNumbers(), SPACE_UNIT, unit);
@@ -2636,7 +2386,6 @@ public abstract class SGAxisElement
    * Sets the space between axis line and numbers.
    *
    * @param space the space to set
-   * @return true if succeeded
    */
   public boolean setSpaceAxisLineAndNumbers(final float space) {
     this.mSpaceAxisLineAndNumbers = space;
@@ -2648,7 +2397,6 @@ public abstract class SGAxisElement
    *
    * @param space the space to set
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setSpaceAxisLineAndNumbers(final float space, final String unit) {
     final double value = SGUtilityText.convert(space, unit, SPACE_UNIT);
@@ -2661,11 +2409,7 @@ public abstract class SGAxisElement
     return this.setSpaceAxisLineAndNumbers(this.roundOffSpace((float) value));
   }
 
-  /**
-   * Returns the space between numbers and title in the default unit.
-   *
-   * @return the space between numbers and title in the default unit
-   */
+  /** Returns the space between numbers and title in the default unit. */
   public float getSpaceTitleAndNumbers() {
     return this.mSpaceTitleAndNumbers;
   }
@@ -2674,7 +2418,6 @@ public abstract class SGAxisElement
    * Returns the space between numbers and title in given unit.
    *
    * @param unit the unit of length
-   * @return the space between numbers and title in given unit
    */
   public float getSpaceTitleAndNumbers(final String unit) {
     return (float) SGUtilityText.convert(this.getSpaceTitleAndNumbers(), SPACE_UNIT, unit);
@@ -2684,7 +2427,6 @@ public abstract class SGAxisElement
    * Sets the space between numbers and title.
    *
    * @param space the space to set
-   * @return true if succeeded
    */
   public boolean setSpaceTitleAndNumbers(final float space) {
     this.mSpaceTitleAndNumbers = space;
@@ -2696,7 +2438,6 @@ public abstract class SGAxisElement
    *
    * @param space the space to set
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setSpaceTitleAndNumbers(final float space, final String unit) {
     final double value = SGUtilityText.convert(space, unit, SPACE_UNIT);
@@ -2709,11 +2450,7 @@ public abstract class SGAxisElement
     return this.setSpaceTitleAndNumbers(this.roundOffSpace((float) value));
   }
 
-  /**
-   * Returns the shift of title from the center line.
-   *
-   * @return the space between numbers and title
-   */
+  /** Returns the shift of title from the center line. */
   public float getTitleShiftFromCenter() {
     return this.mTitleCenterShift;
   }
@@ -2722,7 +2459,6 @@ public abstract class SGAxisElement
    * Returns the shift of title from the center line in given unit.
    *
    * @param unit the unit of length
-   * @return the space between numbers and title in given unit
    */
   public float getTitleShiftFromCenter(final String unit) {
     return (float) SGUtilityText.convert(this.getTitleShiftFromCenter(), TITLE_SHIFT_UNIT, unit);
@@ -2732,7 +2468,6 @@ public abstract class SGAxisElement
    * Sets the shift of title from the center line.
    *
    * @param shift the space to set
-   * @return true if succeeded
    */
   public boolean setTitleShiftFromCenter(final float shift) {
     this.mTitleCenterShift = shift;
@@ -2744,7 +2479,6 @@ public abstract class SGAxisElement
    *
    * @param shift shift from the center line
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setTitleShiftFromCenter(final float shift, final String unit) {
     final double value = SGUtilityText.convert(shift, unit, SPACE_UNIT);
@@ -2757,20 +2491,12 @@ public abstract class SGAxisElement
     return this.setTitleShiftFromCenter(this.roundOffSpace((float) value));
   }
 
-  /**
-   * Returns the x-coordinate of the exponent symbol.
-   *
-   * @return the x-coordinate of the exponent symbol
-   */
+  /** Returns the x-coordinate of the exponent symbol. */
   public float getExponentLocationX() {
     return this.mExponentLocationX;
   }
 
-  /**
-   * Returns the y-coordinate of the exponent symbol.
-   *
-   * @return the y-coordinate of the exponent symbol
-   */
+  /** Returns the y-coordinate of the exponent symbol. */
   public float getExponentLocationY() {
     return this.mExponentLocationY;
   }
@@ -2779,7 +2505,6 @@ public abstract class SGAxisElement
    * Returns the x-coordinate of the exponent symbol in given unit.
    *
    * @param unit the unit of length
-   * @return Returns the x-coordinate of the exponent symbol in given unit
    */
   public float getExponentLocationX(final String unit) {
     return (float) SGUtilityText.convert(this.getExponentLocationX(), EXPONENT_LOCATION_UNIT, unit);
@@ -2789,7 +2514,6 @@ public abstract class SGAxisElement
    * Returns the y-coordinate of the exponent symbol in given unit.
    *
    * @param unit the unit of length
-   * @return Returns the y-coordinate of the exponent symbol in given unit
    */
   public float getExponentLocationY(final String unit) {
     return (float) SGUtilityText.convert(this.getExponentLocationY(), EXPONENT_LOCATION_UNIT, unit);
@@ -2799,7 +2523,6 @@ public abstract class SGAxisElement
    * Sets the x-coordinate of the exponent symbol.
    *
    * @param x the x-coordinate
-   * @return true if succeeded
    */
   public boolean setExponentLocationX(final float x) {
     this.mExponentLocationX = x;
@@ -2810,7 +2533,6 @@ public abstract class SGAxisElement
    * Sets the y-coordinate of the exponent symbol.
    *
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean setExponentLocationY(final float y) {
     this.mExponentLocationY = y;
@@ -2822,7 +2544,6 @@ public abstract class SGAxisElement
    *
    * @param x the x-coordinate
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setExponentLocationX(final float x, final String unit) {
     final double value = SGUtilityText.convert(x, unit, EXPONENT_LOCATION_UNIT);
@@ -2840,7 +2561,6 @@ public abstract class SGAxisElement
    *
    * @param y the y-coordinate
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setExponentLocationY(final float y, final String unit) {
     final double value = SGUtilityText.convert(y, unit, EXPONENT_LOCATION_UNIT);
@@ -2947,11 +2667,7 @@ public abstract class SGAxisElement
     this.mAxisElement.notifyToRoot();
   }
 
-  /**
-   * Returns the name of location.
-   *
-   * @return the name of location
-   */
+  /** Returns the name of location. */
   @Override
   public String getLocationName() {
     return this.mAxisElement.getLocationName(this.mAxis);
@@ -2983,11 +2699,7 @@ public abstract class SGAxisElement
     this.mSelectedFlag = b;
   }
 
-  /**
-   * Returns whether this object is selected.
-   *
-   * @return true if this object is selected
-   */
+  /** Returns whether this object is selected. */
   public boolean isSelected() {
     return this.mSelectedFlag;
   }
@@ -3007,11 +2719,7 @@ public abstract class SGAxisElement
     this.mTemporaryProperties = b ? this.getProperties() : null;
   }
 
-  /**
-   * Returns a text string of the commands.
-   *
-   * @return a text string of the commands
-   */
+  /** Returns a text string of the commands. */
   public String getCommandString() {
     StringBuilder sb = new StringBuilder();
 
@@ -3024,20 +2732,12 @@ public abstract class SGAxisElement
     return sb.toString();
   }
 
-  /**
-   * Creates and returns the map of properties.
-   *
-   * @return the map of properties
-   */
+  /** Creates and returns the map of properties. */
   public SGPropertyMap getPropertyMap() {
     return this.mPropertyHelper.getPropertyMap();
   }
 
-  /**
-   * Creates and returns the map of properties for the property file.
-   *
-   * @return the map of properties
-   */
+  /** Creates and returns the map of properties for the property file. */
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
     return this.mPropertyHelper.getPropertyFileMap(params);
   }
@@ -3175,11 +2875,7 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(map, colorKey, this.getTickMarkColor());
   }
 
-  /**
-   * Returns the flag for date mode.
-   *
-   * @return the flag for date mode
-   */
+  /** Returns the flag for date mode. */
   @Override
   public boolean getDateMode() {
     return this.mAxis.getDateMode();
@@ -3189,7 +2885,6 @@ public abstract class SGAxisElement
    * Sets the flag for date mode.
    *
    * @param b the flag to set
-   * @param true if succeeded
    */
   @Override
   public boolean setDateMode(final boolean b) {

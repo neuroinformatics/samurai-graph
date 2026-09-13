@@ -103,7 +103,7 @@ public class SGPropertyFileCreator extends SGFileHandler implements SGIPropertyF
    *
    * @param wnd
    * @param os
-   * @param type
+   * @param params
    * @param versionString
    * @return
    * @throws Exception

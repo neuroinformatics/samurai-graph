@@ -75,47 +75,27 @@ public abstract class SGDataSetupPanel extends JPanel
 
   protected abstract SGDataColumnSelectionPanel getDataColumnSelectionPanel();
 
-  /**
-   * Returns the button to restore all data column types.
-   *
-   * @return the button to restore all data column types
-   */
+  /** Returns the button to restore all data column types. */
   public SGButton getRestoreButton() {
     return this.getDataColumnSelectionPanel().getRestoreButton();
   }
 
-  /**
-   * Returns the button to clear all data column types.
-   *
-   * @return the button to clear all data column types
-   */
+  /** Returns the button to clear all data column types. */
   public SGButton getClearButton() {
     return this.getDataColumnSelectionPanel().getClearButton();
   }
 
-  /**
-   * Returns the button to complement the column types.
-   *
-   * @return the button to complement the column types
-   */
+  /** Returns the button to complement the column types. */
   public SGButton getComplementButton() {
     return this.getDataColumnSelectionPanel().getComplementButton();
   }
 
-  /**
-   * Returns the table.
-   *
-   * @return a table object
-   */
+  /** Returns the table. */
   public JTable getTable() {
     return this.getDataColumnSelectionPanel().getTable();
   }
 
-  /**
-   * Returns selected column types.
-   *
-   * @return selected column types
-   */
+  /** Returns selected column types. */
   public abstract SGDataColumnInfo[] getDataColumnTypes();
 
   @Override

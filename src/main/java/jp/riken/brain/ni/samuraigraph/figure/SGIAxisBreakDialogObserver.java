@@ -11,13 +11,11 @@ public interface SGIAxisBreakDialogObserver
 
   /**
    * @return
-   * @uml.property name="xValue"
    */
   public double getXValue();
 
   /**
    * @return
-   * @uml.property name="yValue"
    */
   public double getYValue();
 
@@ -33,13 +31,11 @@ public interface SGIAxisBreakDialogObserver
 
   /**
    * @return
-   * @uml.property name="distortion"
    */
   public float getDistortion();
 
   /**
    * @return
-   * @uml.property name="angle"
    */
   public float getAngle();
 
@@ -55,64 +51,59 @@ public interface SGIAxisBreakDialogObserver
 
   /**
    * @return
-   * @uml.property name="lineColor"
    */
   public Color getLineColor();
 
   /**
    * @return
-   * @uml.property name="innerColor"
    */
   public Color getInnerColor();
 
   /**
    * @param value
-   * @uml.property name="xValue"
    */
   public boolean setXValue(final double value);
 
   /**
    * @param value
-   * @uml.property name="yValue"
    */
   public boolean setYValue(final double value);
 
   /**
    * @param value
+   * @param unit the unit parameter
    */
   public boolean setLength(final float value, final String unit);
 
   /**
    * @param value
+   * @param unit the unit parameter
    */
   public boolean setInterval(final float value, final String unit);
 
   /**
    * @param value
+   * @param unit the unit parameter
    */
   public boolean setLineWidth(final float value, final String unit);
 
   /**
    * @param angle
-   * @uml.property name="angle"
    */
   public boolean setAngle(final float angle);
 
   /**
    * @param value
-   * @uml.property name="distortion"
    */
   public boolean setDistortion(final float value);
 
   /**
    * @param color
-   * @uml.property name="lineColor"
    */
   public boolean setLineColor(final Color color);
 
   /**
    * @param color
-   * @uml.property name="innerColor"
    */
   public boolean setInnerColor(final Color color);
 

@@ -29,20 +29,12 @@ public abstract class SGDataDuplicationDialog extends SGDataDialog {
     super(parent, modal);
   }
 
-  /**
-   * Returns the name of the data.
-   *
-   * @return the name of the data
-   */
+  /** Returns the name of the data. */
   public String getDataName() {
     return this.getDataNameTextField().getText();
   }
 
-  /**
-   * Returns the text field to set data name.
-   *
-   * @return a text field to set the data name
-   */
+  /** Returns the text field to set data name. */
   protected abstract JTextField getDataNameTextField();
 
   /** Close this dialog. */
@@ -50,22 +42,14 @@ public abstract class SGDataDuplicationDialog extends SGDataDialog {
     this.onCanceled();
   }
 
-  /**
-   * Called when the OK button is pressed.
-   *
-   * @return true if succeeded
-   */
+  /** Called when the OK button is pressed. */
   protected boolean onOK() {
     this.setCloseOption(OK_OPTION);
     this.setVisible(false);
     return true;
   }
 
-  /**
-   * Called when the cancel button is pressed.
-   *
-   * @return true if succeeded
-   */
+  /** Called when the cancel button is pressed. */
   protected boolean onCanceled() {
     this.setCloseOption(CANCEL_OPTION);
     this.setVisible(false);

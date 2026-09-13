@@ -43,11 +43,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
     this.legend = legend;
   }
 
-  /**
-   * Returns the figure element.
-   *
-   * @return the figure element
-   */
+  /** Returns the figure element. */
   public SGFigureElementForData getFigureElement() {
     return legend;
   }
@@ -95,11 +91,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
 
   private String mLineColorMapName = null;
 
-  /**
-   * Returns the name of the color map for lines.
-   *
-   * @return the name of the color map for lines
-   */
+  /** Returns the name of the color map for lines. */
   @Override
   public String getLineColorMapName() {
     return this.mLineColorMapName;
@@ -109,7 +101,6 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
    * Sets the color map for lines.
    *
    * @param name name of the map to set
-   * @return true if succeeded
    */
   public boolean setLineColorMapName(String name) {
     this.mLineColorMapName = name;
@@ -155,11 +146,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
     }
   }
 
-  /**
-   * Returns a list of line groups.
-   *
-   * @return a list of line groups
-   */
+  /** Returns a list of line groups. */
   public List<SGElementGroupLine> getLineGroups() {
     List<SGElementGroupLine> retList = new ArrayList<SGElementGroupLine>();
     List<SGElementGroup> list =
@@ -171,11 +158,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
     return retList;
   }
 
-  /**
-   * Returns a list of symbol groups.
-   *
-   * @return a list of symbol groups
-   */
+  /** Returns a list of symbol groups. */
   public List<SGElementGroupSymbol> getSymbolGroups() {
     List<SGElementGroupSymbol> retList = new ArrayList<SGElementGroupSymbol>();
     List<SGElementGroup> list =
@@ -187,11 +170,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
     return retList;
   }
 
-  /**
-   * Returns a list of bar groups.
-   *
-   * @return a list of bar groups
-   */
+  /** Returns a list of bar groups. */
   public List<SGElementGroupBar> getBarGroups() {
     List<SGElementGroupBar> retList = new ArrayList<SGElementGroupBar>();
     List<SGElementGroup> list =
@@ -202,11 +181,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
     return retList;
   }
 
-  /**
-   * Returns a list of error bar groups.
-   *
-   * @return a list of error bar groups
-   */
+  /** Returns a list of error bar groups. */
   public List<SGElementGroupErrorBar> getErrorBarGroups() {
     List<SGElementGroupErrorBar> retList = new ArrayList<SGElementGroupErrorBar>();
     List<SGElementGroup> list =
@@ -218,11 +193,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
     return retList;
   }
 
-  /**
-   * Returns a list of tick label groups.
-   *
-   * @return a list of tick label groups
-   */
+  /** Returns a list of tick label groups. */
   public List<SGElementGroupTickLabel> getTickLabelGroups() {
     List<SGElementGroupTickLabel> retList = new ArrayList<SGElementGroupTickLabel>();
     List<SGElementGroup> list =
@@ -237,8 +208,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
   /**
    * Returns a line group which is the first element of an array.
    *
-   * @return the first element of an array of line groups, or null when this group set does not have
-   *     any line groups
+   * <p>any line groups
    */
   public SGElementGroupLine getLineGroup() {
     return (SGElementGroupLine)
@@ -248,8 +218,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
   /**
    * Returns a symbol group which is the first element of an array.
    *
-   * @return the first element of an array of symbol groups, or null when this group set does not
-   *     have any symbol groups
+   * <p>have any symbol groups
    */
   public SGElementGroupSymbol getSymbolGroup() {
     return (SGElementGroupSymbol)
@@ -260,8 +229,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
   /**
    * Returns a bar group which is the first element of an array.
    *
-   * @return the first element of an array of bar groups, or null when this group set does not have
-   *     any bar groups
+   * <p>any bar groups
    */
   public SGElementGroupBar getBarGroup() {
     return (SGElementGroupBar)
@@ -271,8 +239,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
   /**
    * Returns an error bar group which is the first element of an array.
    *
-   * @return the first element of an array of error bar groups, or null when this group set does not
-   *     have any error bar groups
+   * <p>have any error bar groups
    */
   public SGElementGroupErrorBar getErrorBarGroup() {
     return (SGElementGroupErrorBar)
@@ -283,8 +250,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
   /**
    * Returns a tick label group which is the first element of an array.
    *
-   * @return the first element of an array of tick label groups, or null when this group set does
-   *     not have any tick label groups
+   * <p>not have any tick label groups
    */
   public SGElementGroupTickLabel getTickLabelGroup() {
     return (SGElementGroupTickLabel)
@@ -314,11 +280,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
     return this.getLineGroup().getColor();
   }
 
-  /**
-   * Returns whether the lines connect all effective points.
-   *
-   * @return true if connecting all effective points
-   */
+  /** Returns whether the lines connect all effective points. */
   public boolean isLineConnectingAll() {
     return this.getLineGroup().isLineConnectingAll();
   }
@@ -362,11 +324,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
     return this.getLineGroup().setColor(cl);
   }
 
-  /**
-   * Sets whether the lines connect all effective points.
-   *
-   * @return true if succeeded
-   */
+  /** Sets whether the lines connect all effective points. */
   public boolean setLineConnectingAll(final boolean b) {
     return this.getLineGroup().setLineConnectingAll(b);
   }
@@ -850,7 +808,6 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
    * Sets the properties of element groups.
    *
    * @param elementGroupPropertiesList
-   * @return true if succeeded
    */
   protected boolean setElementGroupProperties(List<SGProperties> elementGroupPropertiesList) {
     for (int ii = 0; ii < elementGroupPropertiesList.size(); ii++) {
@@ -883,7 +840,6 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
    * Sets the direction of error bars.
    *
    * @param vertical true to set vertical
-   * @return true if succeeded
    */
   public boolean setErrorBarDirection(final boolean vertical) {
     return this.setErrorBarVertical(vertical);
@@ -893,7 +849,6 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
    * Sets the alignment of tick label.
    *
    * @param horizontal true to align horizontally
-   * @return true if succeeded
    */
   public boolean setTickLabelAlignment(final boolean horizontal) {
     return this.setTickLabelHorizontalAlignment(horizontal);
@@ -903,7 +858,6 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
    * Sets the information of picked up dimension.
    *
    * @param info the information of picked up dimension
-   * @return true if succeeded
    */
   public boolean setPickUpDimensionInfo(SGPickUpDimensionInfo info) {
     SGData data = this.getData();
@@ -919,7 +873,6 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
    * Sets the stride.
    *
    * @param stride stride of arrays
-   * @return true if succeeded
    */
   public boolean setStride(SGIntegerSeriesSet stride) {
     return this.setSXYStrideToData(stride);
@@ -934,7 +887,6 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
    * Sets the stride for single dimensional data.
    *
    * @param stride stride of arrays
-   * @return true if succeeded
    */
   @Override
   public boolean setSDArrayStride(SGIntegerSeriesSet stride) {
@@ -951,7 +903,6 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
    * @param map property map
    * @param result results of setting properties
    * @param cols an array of data columns
-   * @return true if succeeded
    */
   @Override
   protected boolean setProperties(
@@ -962,11 +913,7 @@ class ElementGroupSetInLegendSXY extends ElementGroupSetInLegend
 
   private boolean mLineColorAutoAssigned = false;
 
-  /**
-   * Returns whether line color is automatically assigned.
-   *
-   * @return true if line color is automatically assigned
-   */
+  /** Returns whether line color is automatically assigned. */
   @Override
   public boolean isLineColorAutoAssigned() {
     return this.mLineColorAutoAssigned;

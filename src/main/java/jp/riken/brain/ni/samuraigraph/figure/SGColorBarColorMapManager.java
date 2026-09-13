@@ -32,19 +32,14 @@ public class SGColorBarColorMapManager extends SGColorMapManager {
 
   public static final String COLOR_MAP_NAME_HUE_GRADATION_SAW = "Hue Gradation Saw";
 
-  // for backward compatibility for version <= 2.0.0
   public static final String COLOR_MAP_NAME_GRADIENT_COLORS = "Gradient Colors";
 
-  // for backward compatibility for version <= 2.0.0
   public static final String COLOR_MAP_NAME_GRAY_SCALE = "Gray Scale";
 
-  // for backward compatibility for version <= 2.0.0
   public static final String COLOR_MAP_NAME_BLACK_AND_WHITE = "Black and White";
 
-  // for backward compatibility for version <= 2.0.0
   public static final String COLOR_MAP_NAME_GRAY_SCALE_SAW = "Gray Scale Saw";
 
-  // for backward compatibility for version <= 2.0.0
   public static final String COLOR_MAP_NAME_GRADIENT_COLORS_SAW = "Gradient Colors Saw";
 
   /** The default color bar names. */
@@ -218,7 +213,6 @@ public class SGColorBarColorMapManager extends SGColorMapManager {
     }
   }
 
-  // Overrode for backward compatibility for version <= 2.0.0
   @Override
   public SGColorMap getColorMap(final String name) {
     SGColorMap colorMap = super.getColorMap(name);

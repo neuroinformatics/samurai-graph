@@ -8,7 +8,6 @@ public interface SGIGridDialogObserver extends SGIPropertyDialogObserver, SGITwo
   /**
    * @param b
    * @return
-   * @uml.property name="gridVisible"
    */
   public boolean setGridVisible(final boolean b);
 
@@ -17,28 +16,24 @@ public interface SGIGridDialogObserver extends SGIPropertyDialogObserver, SGITwo
   /**
    * @param value
    * @return
-   * @uml.property name="stepValueX"
    */
   public boolean setStepValueX(final SGAxisStepValue value);
 
   /**
    * @param value
    * @return
-   * @uml.property name="stepValueY"
    */
   public boolean setStepValueY(final SGAxisStepValue value);
 
   /**
    * @param value
    * @return
-   * @uml.property name="baselineValueX"
    */
   public boolean setBaselineValueX(final SGAxisValue value);
 
   /**
    * @param value
    * @return
-   * @uml.property name="baselineValueY"
    */
   public boolean setBaselineValueY(final SGAxisValue value);
 
@@ -47,20 +42,17 @@ public interface SGIGridDialogObserver extends SGIPropertyDialogObserver, SGITwo
   /**
    * @param type
    * @return
-   * @uml.property name="lineType"
    */
   public boolean setLineType(final int type);
 
   /**
    * @param cl
    * @return
-   * @uml.property name="color"
    */
   public boolean setColor(final Color cl);
 
   /**
    * @return
-   * @uml.property name="gridVisible"
    */
   public boolean isGridVisible();
 
@@ -68,25 +60,21 @@ public interface SGIGridDialogObserver extends SGIPropertyDialogObserver, SGITwo
 
   /**
    * @return
-   * @uml.property name="stepValueX"
    */
   public SGAxisStepValue getStepValueX();
 
   /**
    * @return
-   * @uml.property name="stepValueY"
    */
   public SGAxisStepValue getStepValueY();
 
   /**
    * @return
-   * @uml.property name="baselineValueX"
    */
   public SGAxisValue getBaselineValueX();
 
   /**
    * @return
-   * @uml.property name="baselineValueY"
    */
   public SGAxisValue getBaselineValueY();
 
@@ -94,13 +82,11 @@ public interface SGIGridDialogObserver extends SGIPropertyDialogObserver, SGITwo
 
   /**
    * @return
-   * @uml.property name="lineType"
    */
   public int getLineType();
 
   /**
    * @return
-   * @uml.property name="color"
    */
   public Color getColor();
 

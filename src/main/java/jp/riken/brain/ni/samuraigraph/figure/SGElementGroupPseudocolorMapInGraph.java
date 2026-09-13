@@ -206,7 +206,6 @@ public class SGElementGroupPseudocolorMapInGraph extends SGElementGroupPseudocol
       Rectangle2D uRect = gRect.createIntersection(this.mBounds);
       return uRect.contains(x, y);
     } else {
-      // if a given point is out of the graph rectangle, returns false;
       Rectangle2D gRect = this.mGraph.getGraphRect();
       if (!gRect.contains(x, y)) {
         return false;

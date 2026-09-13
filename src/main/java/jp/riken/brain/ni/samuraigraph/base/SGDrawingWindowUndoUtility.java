@@ -48,7 +48,6 @@ final class SGDrawingWindowUndoUtility {
   public static boolean existsOnUndo(
       final SGDrawingWindow wnd, final boolean bUndo, final SGFigure figure, final SGData data) {
 
-    // try undo / redo
     if (bUndo) {
       if (isUndoable(wnd) == false) {
         throw new Error("This must not happen.");
@@ -152,15 +151,6 @@ final class SGDrawingWindowUndoUtility {
       SGFigure f = wnd.getFigureListInternal().get(ii);
       f.initUndoBuffer();
     }
-
-    // // dispose invisible figures
-    // for (int ii = wnd.getFigureListInternal().size() - 1; ii >= 0; ii--) {
-    // SGFigure f = (SGFigure) wnd.getFigureListInternal().get(ii);
-    // if (!f.isVisible()) {
-    // wnd.getFigureListInternal().remove(f);
-    // f.dispose();
-    // }
-    // }
 
     // initialize undo buffer
     wnd.getUndoManager().initUndoBuffer();

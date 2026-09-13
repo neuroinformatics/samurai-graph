@@ -31,48 +31,28 @@ public class SGValueRange {
     this(range.getMinValue(), range.getMaxValue());
   }
 
-  /**
-   * Returns the minimum value.
-   *
-   * @return the minimum value
-   */
+  /** Returns the minimum value. */
   public double getMinValue() {
     return this.mRange.x;
   }
 
-  /**
-   * Returns the maximum value.
-   *
-   * @return the maximum value
-   */
+  /** Returns the maximum value. */
   public double getMaxValue() {
     return this.mRange.y;
   }
 
-  /**
-   * Returns the range.
-   *
-   * @return the range
-   */
+  /** Returns the range. */
   public SGTuple2d getRange() {
     return (SGTuple2d) this.mRange.clone();
   }
 
-  /**
-   * Returns whether the minimum value is valid.
-   *
-   * @return true if the minimum value is valid
-   */
+  /** Returns whether the minimum value is valid. */
   public boolean isMinValid() {
     final double value = this.mRange.x;
     return !(Double.isNaN(value) || Double.isInfinite(value));
   }
 
-  /**
-   * Returns whether the maximum value is valid.
-   *
-   * @return true if the maximum value is valid
-   */
+  /** Returns whether the maximum value is valid. */
   public boolean isMaxValid() {
     final double value = this.mRange.y;
     return !(Double.isNaN(value) || Double.isInfinite(value));

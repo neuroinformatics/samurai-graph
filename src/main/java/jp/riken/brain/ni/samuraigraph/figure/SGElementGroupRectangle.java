@@ -53,11 +53,7 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     this.mInnerPaint = null;
   }
 
-  /**
-   * Returns a stroke.
-   *
-   * @return a stroke
-   */
+  /** Returns a stroke. */
   protected SGStroke getStroke() {
     return this.mStroke;
   }
@@ -66,7 +62,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Returns the x-coordinate of the rectangle at a given index.
    *
    * @param index the index
-   * @return the x-coordinate
    */
   public abstract float getX(final int index);
 
@@ -74,84 +69,56 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Returns the y-coordinate of the rectangle at a given index.
    *
    * @param index the index
-   * @return the y-coordinate
    */
   public abstract float getY(final int index);
 
-  /**
-   * Returns the width of a rectangle.
-   *
-   * @return the width of a rectangle
-   */
+  /** Returns the width of a rectangle. */
   public float getRectangleWidth() {
     return this.mRectangleWidth;
   }
 
   /**
    * @param unit
-   * @return
    */
   public float getRectangleWidth(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getRectangleWidth(), unit);
   }
 
-  /**
-   * Returns the height of a rectangle.
-   *
-   * @return the height of a rectangle
-   */
+  /** Returns the height of a rectangle. */
   public float getRectangleHeight() {
     return this.mRectangleHeight;
   }
 
   /**
    * @param unit
-   * @return
    */
   public float getRectangleHeight(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getRectangleHeight(), unit);
   }
 
-  /**
-   * Returns the edge line width.
-   *
-   * @return the edge line width
-   */
+  /** Returns the edge line width. */
   public float getEdgeLineWidth() {
     return this.mStroke.getLineWidth();
   }
 
   /**
    * @param unit
-   * @return
    */
   public float getEdgeLineWidth(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getEdgeLineWidth(), unit);
   }
 
-  /**
-   * Returns the edge line color.
-   *
-   * @return the edge line color
-   */
+  /** Returns the edge line color. */
   public Color getEdgeLineColor() {
     return this.mEdgeLineColor;
   }
 
-  /**
-   * Returns the edge line visibility.
-   *
-   * @return the edge line visibility
-   */
+  /** Returns the edge line visibility. */
   public boolean isEdgeLineVisible() {
     return this.mEdgeLineVisible;
   }
 
-  /**
-   * Returns the inner paint.
-   *
-   * @return the inner paint
-   */
+  /** Returns the inner paint. */
   public SGIPaint getInnerPaint() {
     try {
       return (SGIPaint) this.mInnerPaint.clone();
@@ -160,27 +127,18 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     }
   }
 
-  /**
-   * Returns the edge line type.
-   *
-   * @return the edge line type
-   */
+  /** Returns the edge line type. */
   public int getEdgeLineType() {
     return this.mStroke.getLineType();
   }
 
-  /**
-   * Returns the transparent of this rectangle.
-   *
-   * @return alpha value
-   */
+  /** Returns the transparent of this rectangle. */
   public float getTransparency() {
     return this.mInnerPaint.getAlpha();
   }
 
   /**
    * @param value
-   * @return
    */
   public boolean setRectangleWidth(final float value) {
     this.mRectangleWidth = value;
@@ -190,7 +148,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
   /**
    * @param width
    * @param unit
-   * @return
    */
   public boolean setRectangleWidth(final float width, final String unit) {
     final double w = SGUtilityText.convertToPoint(width, unit);
@@ -203,7 +160,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
 
   /**
    * @param value
-   * @return
    */
   public boolean setRectangleHeight(final float value) {
     this.mRectangleHeight = value;
@@ -213,7 +169,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
   /**
    * @param height
    * @param unit
-   * @return
    */
   public boolean setRectangleHeight(final float height, final String unit) {
     final double h = SGUtilityText.convertToPoint(height, unit);
@@ -228,7 +183,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the edge line width.
    *
    * @param lw the edge line width to set
-   * @return true if succeeded
    */
   public boolean setEdgeLineWidth(final float lw) {
     if (lw < 0.0f) {
@@ -243,7 +197,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    *
    * @param lw the edge line width to set
    * @param unit the unit for given line width
-   * @return true if succeeded
    */
   public abstract boolean setEdgeLineWidth(final float lw, final String unit);
 
@@ -251,7 +204,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the line color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setEdgeLineColor(final Color color) {
     if (color == null) {
@@ -274,7 +226,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the edge line visibility.
    *
    * @param visible the visibility to set
-   * @return true if succeeded
    */
   public boolean setEdgeLineVisible(final boolean visible) {
     this.mEdgeLineVisible = visible;
@@ -285,7 +236,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the inner paint.
    *
    * @param paint the paint to set
-   * @return true if succeeded
    */
   public boolean setInnerPaint(final SGIPaint paint) {
     if (paint == null) {
@@ -300,7 +250,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the paint style index of inner paint.
    *
    * @param style the style index to set
-   * @return true if succeeded
    */
   public boolean setInnerPaintStyle(final int style) {
     if (this.mInnerPaint instanceof SGSelectablePaint) {
@@ -313,7 +262,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the inner filled color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setInnerFillColor(final Color color) {
     if (color == null) {
@@ -331,7 +279,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the color of inner pattern.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setInnerPatternColor(final Color color) {
     if (color == null) {
@@ -349,7 +296,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the pattern index of inner paint.
    *
    * @param type the type index to set
-   * @return true if succeeded
    */
   public boolean setInnerPatternType(final int type) {
     if (this.mInnerPaint instanceof SGPatternPaint) {
@@ -364,7 +310,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the first color of inner gradation.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setInnerGradationColor1(final Color color) {
     if (color == null) {
@@ -382,7 +327,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the second color of inner gradation.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setInnerGradationColor2(final Color color) {
     if (color == null) {
@@ -400,7 +344,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the direction index of inner gradation paint.
    *
    * @param direction the direction index to set
-   * @return true if succeeded
    */
   public boolean setInnerGradationDirection(final int direction) {
     if (this.mInnerPaint instanceof SGGradationPaint) {
@@ -415,7 +358,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * Sets the order index of inner gradation paint.
    *
    * @param order the order index to set
-   * @return true if succeeded
    */
   public boolean setInnerGradationOrder(final int order) {
     if (this.mInnerPaint instanceof SGGradationPaint) {
@@ -430,7 +372,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
    * @param r
    * @param g
    * @param b
-   * @return
    */
   public boolean setEdgeLineColor(final String r, final String g, final String b) {
     final Color cl = SGUtilityText.getColor(r, g, b);
@@ -439,22 +380,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     }
     return this.setEdgeLineColor(cl);
   }
-
-  //    /**
-  //     *
-  //     */
-  //    public SGDrawingElement getDrawingElement() {
-  //        SGDrawingElementRectangle rect = (SGDrawingElementRectangle) this
-  //                .createDrawingElementInstance();
-  //        rect.setWidth(this.getRectangleWidth());
-  //        rect.setHeight(this.getRectangleHeight());
-  //        rect.setVisible(this.isVisible());
-  //        rect.setEdgeLineWidth(this.getEdgeLineWidth());
-  //        rect.setEdgeLineColor(this.getEdgeLineColor());
-  //        rect.setColorList(this.getColorList());
-  //
-  //        return rect;
-  //    }
 
   /**
    * Sets the alpha value of this rectangle's body.
@@ -469,16 +394,12 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     return ((SGTransparentPaint) this.mInnerPaint).setTransparency(percentAlpha);
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected SGDrawingElement createDrawingElementInstance(final int index) {
     return new RectInGroup(this, index);
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean initDrawingElement(final SGTuple2f[] array) {
     final int num = array.length;
     if (this.initDrawingElement(num) == false) {
@@ -492,38 +413,6 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
 
     return true;
   }
-
-  //    /**
-  //     *
-  //     */
-  //    public boolean setProperty(final SGDrawingElement element) {
-  //        if (!(element instanceof SGDrawingElementRectangle)) {
-  //            return false;
-  //        }
-  //
-  //        if (super.setProperty(element) == false) {
-  //            return false;
-  //        }
-  //
-  //        SGDrawingElementRectangle rect = (SGDrawingElementRectangle) element;
-  //        this.setRectangleWidth(rect.getWidth());
-  //        this.setRectangleHeight(rect.getHeight());
-  //        this.setEdgeLineWidth(rect.getEdgeLineWidth());
-  //        this.setEdgeLineColor(rect.getEdgeLineColor());
-  //
-  //        return true;
-  //    }
-
-  //    /**
-  //     * Zoom this line group.
-  //     */
-  //    public boolean zoom(final float mag) {
-  //        if (super.zoom(mag) == false) {
-  //            return false;
-  //        }
-  //        this.mStroke.setMagnification(mag);
-  //        return true;
-  //    }
 
   // Set magnification.
   public boolean setMagnification(final float mag) {
@@ -556,12 +445,8 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     el.setAttribute(KEY_RECTANGLE_WIDTH, Float.toString(rectWidth) + SGIConstants.cm);
     el.setAttribute(KEY_RECTANGLE_HEIGHT, Float.toString(rectHeight) + SGIConstants.cm);
     el.setAttribute(KEY_EDGE_LINE_WIDTH, Float.toString(edgeLineWidth) + SGIConstants.pt);
-    //        el.setAttribute(KEY_COLOR_LIST, SGUtilityText.getColorListString(this.mColorList));
     el.setAttribute(KEY_EDGE_LINE_COLOR, SGUtilityText.getColorString(this.mEdgeLineColor));
     el.setAttribute(KEY_EDGE_LINE_VISIBLE, Boolean.toString(this.mEdgeLineVisible));
-    //        if (! SGPaintUtility.writeProperty(el, this.mInnerPaint)) {
-    //            return false;
-    //        }
     if (!this.mInnerPaint.writeProperty(el)) {
       return false;
     }
@@ -571,17 +456,14 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
 
   /**
    * @param el
-   * @return
    */
   @Override
   public boolean readProperty(final Element el) {
-    // final float ratio = SGIConstants.CM_POINT_RATIO;
 
     String str = null;
     Number num = null;
     Color cl = null;
     Boolean b = null;
-    // List list = null;
 
     // width of the bar
     str = el.getAttribute(KEY_RECTANGLE_WIDTH);
@@ -664,6 +546,7 @@ public abstract class SGElementGroupRectangle extends SGElementGroup
     /**
      * Builds a rectangle in a group of rectangles.
      *
+     * @param index the index parameter
      * @param group a group of rectangles
      */
     public RectInGroup(SGElementGroupRectangle group, final int index) {

@@ -57,7 +57,6 @@ public abstract class SGElementGroupString extends SGElementGroup
    * Sets the text strings to the strings.
    *
    * @param array an array of text strings to set to the strings
-   * @return true if succeeded
    */
   public boolean setStrings(final String[] array) {
     if (array == null) {
@@ -78,7 +77,6 @@ public abstract class SGElementGroupString extends SGElementGroup
    * @param name
    * @param style
    * @param size
-   * @return
    */
   public boolean setFont(final String name, final int style, final float size) {
     if (!SGUtility.equals(this.mFontName, name)
@@ -101,7 +99,6 @@ public abstract class SGElementGroupString extends SGElementGroup
    * Sets the font name.
    *
    * @param name the font name to set
-   * @return true if succeeded
    */
   public boolean setFontName(final String name) {
     if (!SGUtility.equals(this.mFontName, name)) {
@@ -120,7 +117,6 @@ public abstract class SGElementGroupString extends SGElementGroup
    * Sets the font size.
    *
    * @param size the font size to set
-   * @return true if succeeded
    */
   public boolean setFontSize(final float size) {
     if (size < 0.0f) {
@@ -143,7 +139,6 @@ public abstract class SGElementGroupString extends SGElementGroup
    *
    * @param size the font size to set
    * @param unit the unit for given font size
-   * @return true if succeeded
    */
   public abstract boolean setFontSize(final float size, final String unit);
 
@@ -151,7 +146,6 @@ public abstract class SGElementGroupString extends SGElementGroup
    * Sets the font style.
    *
    * @param style the font style to set
-   * @return true if succeeded
    */
   public boolean setFontStyle(final int style) {
     if (SGUtilityText.isValidFontStyle(style) == false) {
@@ -173,7 +167,6 @@ public abstract class SGElementGroupString extends SGElementGroup
    * Sets the angle.
    *
    * @param angle the angle to set
-   * @return true if succeeded
    */
   public boolean setAngle(final float angle) {
     final Float aNew =
@@ -198,7 +191,6 @@ public abstract class SGElementGroupString extends SGElementGroup
    * Sets the color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setColor(final Color color) {
     if (color == null) {
@@ -228,7 +220,6 @@ public abstract class SGElementGroupString extends SGElementGroup
 
   /**
    * @param unit
-   * @return
    */
   public float getFontSize(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getFontSize(), unit);
@@ -239,11 +230,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     return this.mFontStyle;
   }
 
-  /**
-   * Returns the color.
-   *
-   * @return the color
-   */
+  /** Returns the color. */
   public Color getColor() {
     return this.mColor;
   }
@@ -257,7 +244,6 @@ public abstract class SGElementGroupString extends SGElementGroup
    * Sets the decimal places.
    *
    * @param value the decimal places to set
-   * @return true if succeeded
    */
   public boolean setDecimalPlaces(final int value) {
     final int vNew;
@@ -276,7 +262,6 @@ public abstract class SGElementGroupString extends SGElementGroup
    * Sets the exponent.
    *
    * @param value the exponent to set
-   * @return true if succeeded
    */
   public boolean setExponent(final int value) {
     final int vNew;
@@ -299,9 +284,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     return this.mExponent;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean initDrawingElement(final SGTuple2f[] array) {
     final int num = array.length;
     this.initDrawingElement(num);
@@ -345,9 +328,7 @@ public abstract class SGElementGroupString extends SGElementGroup
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getTagName() {
     return TAG_NAME_LABEL;
   }
@@ -375,13 +356,10 @@ public abstract class SGElementGroupString extends SGElementGroup
 
   /**
    * @param el
-   * @return
    */
   public boolean readProperty(final Element el) {
     String str = null;
     Number num = null;
-    // Color cl = null;
-    // Boolean b = null;
     List<Color> list = null;
 
     // set font size
@@ -556,17 +534,11 @@ public abstract class SGElementGroupString extends SGElementGroup
       super();
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       Object obj = super.copy();
       StringProperties p = (StringProperties) obj;
       p.stringProperties = (SGDrawingElementString.StringProperties) this.stringProperties.copy();
-      //            this.mDecimalPlaces = p.mDecimalPlaces;
-      //            this.mExponent = p.mExponent;
       return p;
     }
 
@@ -660,16 +632,6 @@ public abstract class SGElementGroupString extends SGElementGroup
   }
 
   public boolean setDateFormat(final String format) {
-    //    	boolean found = false;
-    //    	for (String f : DATE_DISPLAY_FORMAT_ARRAY) {
-    //    		if (f.equals(format)) {
-    //    			found = true;
-    //    			break;
-    //    		}
-    //    	}
-    //    	if (!found) {
-    //    		return false;
-    //    	}
     this.mDateFormat = format;
     return true;
   }

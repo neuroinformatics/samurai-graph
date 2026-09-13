@@ -160,7 +160,6 @@ public class SGCSVTokenizer implements Iterator<SGCSVTokenizer.Token>, SGITextDa
       char c = record.charAt(i);
       if (inQuote) {
         if (c == '"') {
-          // Check for escaped quote ("")
           if (i + 1 < record.length() && record.charAt(i + 1) == '"') {
             i++; // Skip the next quote
           } else {

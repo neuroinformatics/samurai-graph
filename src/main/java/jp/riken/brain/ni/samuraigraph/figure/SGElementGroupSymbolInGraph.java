@@ -115,7 +115,6 @@ public class SGElementGroupSymbolInGraph extends SGElementGroupSymbolForData
    */
   @Override
   public boolean contains(final int x, final int y) {
-    // if a given point is out of the graph rectangle, returns false;
     Rectangle2D gRect = this.mGraph.getGraphRect();
     if (!gRect.contains(x, y)) {
       return false;

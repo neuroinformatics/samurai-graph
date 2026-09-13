@@ -71,7 +71,6 @@ public abstract class SGArrayData extends SGData
    * Sets a given data.
    *
    * @param data a data
-   * @return true if succeeded
    */
   public boolean setData(final SGData data) {
     if (!super.setData(data)) {
@@ -88,11 +87,7 @@ public abstract class SGArrayData extends SGData
     return true;
   }
 
-  /**
-   * Returns whether the stride of data arrays is available.
-   *
-   * @return true if the stride of data arrays is available
-   */
+  /** Returns whether the stride of data arrays is available. */
   public boolean isStrideAvailable() {
     return this.mStrideAvailable;
   }
@@ -109,11 +104,7 @@ public abstract class SGArrayData extends SGData
     this.mStrideAvailable = b;
   }
 
-  /**
-   * Returns a map of data information.
-   *
-   * @return a map of data information
-   */
+  /** Returns a map of data information. */
   @Override
   public Map<String, Object> getInfoMap() {
     Map<String, Object> map = super.getInfoMap();
@@ -126,7 +117,6 @@ public abstract class SGArrayData extends SGData
    * Sets the column information.
    *
    * @param colInfo the column information
-   * @param true if succeeded
    */
   public boolean setColumnInfo(SGDataColumnInfo[] colInfo) {
     String[] types = new String[colInfo.length];
@@ -146,8 +136,7 @@ public abstract class SGArrayData extends SGData
   /**
    * Sets the type of data columns.
    *
-   * @param column an array of column types
-   * @return true if succeeded
+   * @param columns an array of column types
    */
   public abstract boolean setColumnType(String[] columns);
 
@@ -158,11 +147,7 @@ public abstract class SGArrayData extends SGData
    */
   public abstract void setStrideMap(Map<String, SGIntegerSeriesSet> map);
 
-  /**
-   * Returns a map of stride for data arrays.
-   *
-   * @return a map of stride for data arrays
-   */
+  /** Returns a map of stride for data arrays. */
   protected abstract Map<String, SGIntegerSeriesSet> getStrideMap();
 
   /** A class for data properties. */
@@ -212,7 +197,6 @@ public abstract class SGArrayData extends SGData
    * Get properties of this data.
    *
    * @param p properties to set values
-   * @return true if succeeded
    */
   public boolean getProperties(final SGProperties p) {
     if ((p instanceof ArrayDataProperties) == false) {
@@ -228,7 +212,6 @@ public abstract class SGArrayData extends SGData
    * Set properties to this data.
    *
    * @param p properties that have values to set to this data
-   * @return true if succeeded
    */
   public boolean setProperties(final SGProperties p) {
     if ((p instanceof ArrayDataProperties) == false) {
@@ -249,7 +232,6 @@ public abstract class SGArrayData extends SGData
    *
    * @param el an Element
    * @param type type of the method to save properties
-   * @return true if succeeded
    */
   public boolean writeProperty(Element el, SGExportParameter type) {
     el.setAttribute(
@@ -258,18 +240,10 @@ public abstract class SGArrayData extends SGData
     return true;
   }
 
-  /**
-   * Returns an array of current column types.
-   *
-   * @return an array of current column types
-   */
+  /** Returns an array of current column types. */
   public abstract String[] getCurrentColumnType();
 
-  /**
-   * Returns an array of data column information.
-   *
-   * @return an array of data column information
-   */
+  /** Returns an array of data column information. */
   public abstract SGDataColumnInfo[] getColumnInfo();
 
   protected SGIntegerSeriesSet createStride(SGIntegerSeriesSet stride, final int len) {
@@ -285,16 +259,15 @@ public abstract class SGArrayData extends SGData
    *
    * @param file the file to save to
    * @param mode the mode of saving data
-   * @return true if succeeded
    */
   public abstract boolean saveToArchiveDataSetFile(final File file, final SGExportParameter mode);
 
   /**
    * Saves the data into a file of the same format.
    *
+   * @param policy the policy parameter
    * @param file the file to save
    * @param mode the mode to save data
-   * @return true if succeeded
    */
   public abstract boolean saveToSameFormatFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy);
@@ -302,9 +275,9 @@ public abstract class SGArrayData extends SGData
   /**
    * Saves the data into a text file.
    *
+   * @param policy the policy parameter
    * @param file the file to save
    * @param mode the mode to save data
-   * @return true if succeeded
    */
   public abstract boolean saveToTextFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy);
@@ -312,9 +285,9 @@ public abstract class SGArrayData extends SGData
   /**
    * Saves the data into a NetCDF file.
    *
+   * @param policy the policy parameter
    * @param file the file to save
    * @param mode the mode to save data
-   * @return true if succeeded
    */
   public abstract boolean saveToNetCDFFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy);
@@ -323,16 +296,15 @@ public abstract class SGArrayData extends SGData
    * Saves the data to a file for NetCDF data set file.
    *
    * @param file the file to save
-   * @return true if succeeded
    */
   public abstract boolean saveToDataSetNetCDFFile(final File file);
 
   /**
    * Saves the data into a HDF5 file.
    *
-   * @param path the path of HDF5 file
+   * @param file the file parameter
+   * @param policy the policy parameter
    * @param mode the mode to save data
-   * @return true if succeeded
    */
   public abstract boolean saveToHDF5File(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy);
@@ -340,32 +312,23 @@ public abstract class SGArrayData extends SGData
   /**
    * Saves the data into a MATLAB file.
    *
-   * @param path the path of MATLAB file
+   * @param file the file parameter
+   * @param policy the policy parameter
    * @param mode the mode to save data
-   * @return true if succeeded
    */
   public abstract boolean saveToMATLABFile(
       final File file, final SGExportParameter mode, SGDataBufferPolicy policy);
 
-  /**
-   * Returns a text string for the command of the column types.
-   *
-   * @return a text string for the command of the column types
-   */
+  /** Returns a text string for the command of the column types. */
   public abstract String getColumnTypeCommandString();
 
-  /**
-   * Returns a text string for the command of the origin.
-   *
-   * @return a text string for the command of the origin
-   */
+  /** Returns a text string for the command of the origin. */
   public abstract String getOriginCommandString();
 
   /**
    * Sets the properties for the array section to given property map.
    *
    * @param map the property map
-   * @return true if succeeded
    */
   public boolean setArraySectionProperty(SGPropertyMap map) {
     SGPropertyUtility.addProperty(map, COM_DATA_ARRAY_SECTION_AVAILABLE, this.isStrideAvailable());
@@ -375,11 +338,7 @@ public abstract class SGArrayData extends SGData
 
   protected abstract boolean setArraySectionPropertySub(SGPropertyMap map);
 
-  /**
-   * Returns the length of animation.
-   *
-   * @return the length of animation
-   */
+  /** Returns the length of animation. */
   public abstract int getAnimationLength();
 
   void setCache(SGDataCache cache) {

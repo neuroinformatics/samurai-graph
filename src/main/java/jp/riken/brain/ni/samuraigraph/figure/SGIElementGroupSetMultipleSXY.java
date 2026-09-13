@@ -34,7 +34,6 @@ public interface SGIElementGroupSetMultipleSXY
    * Creates drawing elements of error bars.
    *
    * @param dataXY XY type data
-   * @return the group of error bars
    */
   public SGElementGroupErrorBar createErrorBars(SGISXYTypeMultipleData dataXY);
 
@@ -42,7 +41,6 @@ public interface SGIElementGroupSetMultipleSXY
    * Creates drawing elements of tick labels.
    *
    * @param dataXY XY type data
-   * @return the group of tick labels
    */
   public SGElementGroupTickLabel createTickLabels(SGISXYTypeMultipleData dataXY);
 

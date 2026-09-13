@@ -35,20 +35,12 @@ class ElementGroupSymbol extends SGElementGroupSymbolForData implements ILegendE
     return true;
   }
 
-  /**
-   * Returns the preferred width.
-   *
-   * @return the preferred width
-   */
+  /** Returns the preferred width. */
   public float getPreferredWidth() {
     return this.getDataElementSize();
   }
 
-  /**
-   * Returns the preferred height.
-   *
-   * @return the preferred height
-   */
+  /** Returns the preferred height. */
   public float getPreferredHeight() {
     return 1.20f * this.getDataElementSize();
   }
@@ -92,8 +84,6 @@ class ElementGroupSymbol extends SGElementGroupSymbolForData implements ILegendE
   public boolean createDrawingElementInLegend() {
     Rectangle2D lRect = legend.getRectOfGroupSet(this.mGroupSet);
     Rectangle2D dRect = this.mBoundsRect;
-    // final float x = (float)lRect.getX() +
-    // 0.50f*this.getDataElementWidth();
     final float x = (float) lRect.getX() + 0.50f * (float) dRect.getWidth();
     final float y = (float) lRect.getY() + 0.50f * (float) lRect.getHeight();
     SGTuple2f position = new SGTuple2f(x, y);

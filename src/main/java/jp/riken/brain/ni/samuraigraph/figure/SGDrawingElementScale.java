@@ -252,7 +252,6 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
    * Sets the font name.
    *
    * @param name the font name
-   * @return true if succeeded
    */
   @Override
   public boolean setFontName(final String name) {
@@ -266,7 +265,6 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
    * Sets the font size.
    *
    * @param size the font size
-   * @return true if succeeded
    */
   @Override
   public boolean setFontSize(final float size) {
@@ -280,7 +278,6 @@ public abstract class SGDrawingElementScale extends SGDrawingElementLineAndStrin
    * Sets the font style.
    *
    * @param style the font style
-   * @return true if succeeded
    */
   @Override
   public boolean setFontStyle(final int style) {

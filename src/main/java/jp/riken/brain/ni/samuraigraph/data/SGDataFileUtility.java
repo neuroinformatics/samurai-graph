@@ -344,33 +344,6 @@ public final class SGDataFileUtility
       colArray[ii] = new SGMDArrayDataColumnInfo(var, var.getName(), var.getValueType());
     }
 
-    /*
-     * Object pickUpDimensionName = infoMap.get(SGIDataInformationKeyConstants.
-     * KEY_SXY_MDARRAY_PICKUP_DATASET_NAME);
-     * if (pickUpDimensionName != null) {
-     * SGMDArrayDataColumnInfo pickUpCol = (SGMDArrayDataColumnInfo)
-     * SGDataColumnInfoUtility.findColumnWithName(
-     * colArray, pickUpDimensionName.toString());
-     * if (pickUpCol != null) {
-     * Map<String, Integer> dimensionIndexMap = (Map<String, Integer>) infoMap.get(
-     * SGIDataInformationKeyConstants.KEY_SXY_MDARRAY_PICKUP_DIMENSION_INDEX_MAP);
-     * for (int ii = 0; ii < colArray.length; ii++) {
-     * SGMDArrayDataColumnInfo mdCol = (SGMDArrayDataColumnInfo) colArray[ii];
-     * Integer dimensionIndex = dimensionIndexMap.get(mdCol.getName());
-     * if (dimensionIndex != null) {
-     * final int[] dims = mdCol.getDimensions();
-     * final int generic = mdCol.getGenericDimensionIndex();
-     * if (0 < dimensionIndex && dimensionIndex < dims.length
-     * && !dimensionIndex.equals(generic)) {
-     * mdCol.setDimensionIndex(SGIMDArrayConstants.KEY_SXY_PICKUP_DIMENSION,
-     * dimensionIndex);
-     * }
-     * }
-     * }
-     * }
-     * }
-     */
-
     Map<?, ?> timeDimensionMap =
         (infoMap.get(SGIDataInformationKeyConstants.KEY_TIME_DIMENSION_INDEX_MAP)
                 instanceof Map<?, ?> m1)
@@ -1251,7 +1224,6 @@ public final class SGDataFileUtility
           return false;
         }
 
-        // if lower and upper errors are selected, lower-upper must not
         // be selected
         final List<String> luNameList = getColumnNameList(cols, LOWER_UPPER_ERROR_VALUE);
         if (lNameList.size() == 1 && uNameList.size() == 1) {

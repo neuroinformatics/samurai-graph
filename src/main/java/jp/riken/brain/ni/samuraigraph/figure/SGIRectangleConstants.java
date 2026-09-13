@@ -18,7 +18,6 @@ public interface SGIRectangleConstants extends SGIDrawingElementConstants {
 
   public static final String KEY_EDGE_LINE_VISIBLE = "EdgeLineVisible";
 
-  // for backward compatibility
   public static final String KEY_INNER_COLOR = "InnerColor";
 
   public static final String KEY_BACKGROUND_TRANSPARENT = "Transparent";

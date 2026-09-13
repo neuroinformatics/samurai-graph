@@ -111,7 +111,6 @@ public class SGUtilityNumber implements SGIConstants {
     BigDecimal bd = new BigDecimal(value);
     double sign = bd.doubleValue() >= 0.0 ? 1.0 : -1.0;
     bd = bd.movePointLeft(digit + 1);
-    //        final double num = Math.rint(bd.doubleValue());
     final double num = sign * (long) (Math.abs(bd.doubleValue()) + 0.50);
     bd = new BigDecimal(num);
     bd = bd.movePointRight(digit + 1);
@@ -206,8 +205,8 @@ public class SGUtilityNumber implements SGIConstants {
   }
 
   /**
-   * @param min
-   * @param max
+   * @param x1
+   * @param x2
    * @param value
    * @return
    */
@@ -256,8 +255,6 @@ public class SGUtilityNumber implements SGIConstants {
       final double max,
       final double step,
       final double err) {
-
-    // final int indexMax = (int)Math.rint(max/step);
 
     final int indexNearest = (int) Math.rint(value / step);
     final double valueNearest = indexNearest * step;
@@ -770,6 +767,7 @@ public class SGUtilityNumber implements SGIConstants {
   /**
    * Returns an array of strings if they exist.
    *
+   * @param values the values parameter
    * @param dp decimal places
    * @param exp exponent
    * @return string array

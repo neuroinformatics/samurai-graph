@@ -75,11 +75,7 @@ public class SGMDArrayDataColumnInfo extends SGDataColumnInfo implements SGIMDAr
     this.mAttributeList.addAll(info.mAttributeList);
   }
 
-  /**
-   * Returns the origins.
-   *
-   * @return the origins
-   */
+  /** Returns the origins. */
   public int[] getOrigins() {
     return this.mOrigins.clone();
   }
@@ -104,20 +100,12 @@ public class SGMDArrayDataColumnInfo extends SGDataColumnInfo implements SGIMDAr
     this.mOrigins[dimensionIndex] = origin;
   }
 
-  /**
-   * Returns the name of variable.
-   *
-   * @return the name variable
-   */
+  /** Returns the name of variable. */
   public String getName() {
     return this.mVariableName;
   }
 
-  /**
-   * Returns a text string for this object.
-   *
-   * @return a text string for this object
-   */
+  /** Returns a text string for this object. */
   protected String paramString() {
     StringBuilder sb = new StringBuilder();
     sb.append(super.paramString());
@@ -128,11 +116,7 @@ public class SGMDArrayDataColumnInfo extends SGDataColumnInfo implements SGIMDAr
     return sb.toString();
   }
 
-  /**
-   * Returns the length.
-   *
-   * @return the length
-   */
+  /** Returns the length. */
   public int[] getDimensions() {
     return this.mDimensions.clone();
   }
@@ -141,35 +125,22 @@ public class SGMDArrayDataColumnInfo extends SGDataColumnInfo implements SGIMDAr
    * Returns the dimension index of given name.
    *
    * @param key the name
-   * @return the dimension index
    */
   public Integer getDimensionIndex(final String key) {
     return this.mDimensionIndices.get(key);
   }
 
-  /**
-   * Returns the generic dimension index.
-   *
-   * @return the generic dimension index
-   */
+  /** Returns the generic dimension index. */
   public Integer getGenericDimensionIndex() {
     return this.getDimensionIndex(KEY_GENERIC_DIMENSION);
   }
 
-  /**
-   * Returns the dimension index of the time.
-   *
-   * @return the dimension index of the time
-   */
+  /** Returns the dimension index of the time. */
   public Integer getTimeDimensionIndex() {
     return this.getDimensionIndex(KEY_TIME_DIMENSION);
   }
 
-  /**
-   * Returns the map of dimension indices.
-   *
-   * @return the map of dimension indices
-   */
+  /** Returns the map of dimension indices. */
   public Map<String, Integer> getDimensionIndices() {
     return new HashMap<String, Integer>(this.mDimensionIndices);
   }

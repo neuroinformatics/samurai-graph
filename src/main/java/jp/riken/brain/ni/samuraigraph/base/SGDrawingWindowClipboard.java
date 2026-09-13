@@ -53,11 +53,7 @@ final class SGDrawingWindowClipboard implements SGIRootObjectConstants {
     this.clearCopiedObjectsList();
   }
 
-  /**
-   * Returns a list of copied figures.
-   *
-   * @return a list of copied figures
-   */
+  /** Returns a list of copied figures. */
   public List<SGFigure> getCopiedFiguresList() {
     return new ArrayList<SGFigure>(this.mCopiedFiguresList);
   }
@@ -146,7 +142,6 @@ final class SGDrawingWindowClipboard implements SGIRootObjectConstants {
   /**
    * @param id
    * @param isCopy
-   * @return
    */
   public boolean cutOrCopyFigure(final int id, final boolean isCopy) {
     // get the figure
@@ -324,43 +319,27 @@ final class SGDrawingWindowClipboard implements SGIRootObjectConstants {
     }
   }
 
-  /**
-   * Returns the list of copied objects in this window.
-   *
-   * @return a list of copied objects
-   */
+  /** Returns the list of copied objects in this window. */
   public List<SGICopyable> getCopiedObjectsList() {
     List<SGICopyable> list = new ArrayList<SGICopyable>();
     SGUtility.copyObjects(this.mCopiedObjectsList, list);
     return list;
   }
 
-  /**
-   * Returns the list of copied data objects in this window.
-   *
-   * @return a list of copied data objects
-   */
+  /** Returns the list of copied data objects in this window. */
   public List<SGData> getCopiedObjectsDataList() {
     List<SGData> list = new ArrayList<SGData>();
     SGUtility.copyObjects((List<? extends SGICopyable>) this.mCopiedDataObjectsList, list);
     return list;
   }
 
-  /**
-   * Returns the list of names of copied data objects in this window.
-   *
-   * @return a list of names of copied data objects
-   */
+  /** Returns the list of names of copied data objects in this window. */
   public List<String> getCopiedDataNameList() {
     List<String> list = new ArrayList<String>(this.mCopiedDataNameList);
     return list;
   }
 
-  /**
-   * Returns the list of properties of copied data objects in this window.
-   *
-   * @return a list of properties of copied data objects
-   */
+  /** Returns the list of properties of copied data objects in this window. */
   public List<Map<Class<? extends SGIFigureElement>, SGProperties>>
       getCopiedDataPropertiesMapList() {
     List<Map<Class<? extends SGIFigureElement>, SGProperties>> list =

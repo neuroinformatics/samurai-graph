@@ -56,11 +56,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     this.mConnectedPathList = null;
   }
 
-  /**
-   * Returns a stroke.
-   *
-   * @return a stroke
-   */
+  /** Returns a stroke. */
   protected SGStroke getStroke() {
     return this.mStroke;
   }
@@ -69,7 +65,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
    * Sets the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     if (super.setMagnification(mag) == false) {
@@ -83,7 +78,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
    * Set the line width of this line group.
    *
    * @param width the line width
-   * @return true if succeeded
    */
   public boolean setLineWidth(final float width) {
     if (width < 0.0f) {
@@ -99,7 +93,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
    *
    * @param lw the line width to set
    * @param unit the unit for the given line width
-   * @return true if succeeded
    */
   public abstract boolean setLineWidth(final float lw, final String unit);
 
@@ -107,7 +100,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
    * Sets the line type.
    *
    * @param type a value to set to the line type
-   * @return true if succeeded
    */
   public boolean setLineType(final int type) {
     if (SGDrawingElementLine.isValidLineType(type) == false) {
@@ -122,7 +114,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
    * Sets the line color.
    *
    * @param cl a color to set to the line color
-   * @return true if succeeded
    */
   public boolean setColor(Color cl) {
     if (cl == null) {
@@ -132,21 +123,13 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     return true;
   }
 
-  /**
-   * Sets whether the lines connect all effective points.
-   *
-   * @return true if succeeded
-   */
+  /** Sets whether the lines connect all effective points. */
   public boolean setLineConnectingAll(final boolean b) {
     this.mConnectingAllFlag = b;
     return true;
   }
 
-  /**
-   * Returns the line width.
-   *
-   * @return the line width.
-   */
+  /** Returns the line width. */
   public float getLineWidth() {
     return this.mStyle.getLineWidth();
   }
@@ -155,17 +138,12 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
    * Returns the line width with given length unit.
    *
    * @param unit the length unit.
-   * @return the line width in given length unit.
    */
   public float getLineWidth(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getLineWidth(), unit);
   }
 
-  /**
-   * Returns the line type.
-   *
-   * @return the line type.
-   */
+  /** Returns the line type. */
   public int getLineType() {
     return this.mStyle.getLineType();
   }
@@ -174,11 +152,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     return this.mStyle.getColor();
   }
 
-  /**
-   * Returns whether the lines connect all effective points.
-   *
-   * @return true if connecting all effective points
-   */
+  /** Returns whether the lines connect all effective points. */
   public boolean isLineConnectingAll() {
     return this.mConnectingAllFlag;
   }
@@ -187,7 +161,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
    * Returns the start point of a line at given array index.
    *
    * @param index the array index
-   * @return the start point of a line
    */
   public abstract SGTuple2f getStart(final int index);
 
@@ -195,7 +168,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
    * Returns the start point of a line at given array index.
    *
    * @param index the array index
-   * @return the start point of a line
    */
   public abstract SGTuple2f getEnd(final int index);
 
@@ -247,9 +219,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getTagName() {
     return TAG_NAME_LINE;
   }
@@ -291,7 +261,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
 
   /**
    * @param el
-   * @return
    */
   public boolean readProperty(final Element el) {
     String str = null;
@@ -351,7 +320,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
       }
     }
 
-    // for backward compatibility <= 2.0.0
     Element elStyleHolder = (elStyle != null) ? elStyle : el;
 
     // line width
@@ -400,9 +368,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected SGDrawingElement createDrawingElementInstance(final int index) {
     return new LineInGroup(this, index);
   }
@@ -419,6 +385,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     /**
      * Builds this object in a given group.
      *
+     * @param index the index parameter
      * @param group a group of lines
      */
     public LineInGroup(SGElementGroupLine group, final int index) {
@@ -433,11 +400,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
       this.mGroup = null;
     }
 
-    /**
-     * Returns a stroke.
-     *
-     * @return a stroke
-     */
+    /** Returns a stroke. */
     protected SGStroke getStroke() {
       return this.mGroup.getStroke();
     }
@@ -446,7 +409,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
      * Sets the line width.
      *
      * @param width line width to set
-     * @return true if succeeded
      */
     public boolean setLineWidth(float width) {
       // do nothing
@@ -457,7 +419,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
      * Sets the line type.
      *
      * @param type line type
-     * @return true if succeeded
      */
     public boolean setLineType(int type) {
       // do nothing
@@ -507,9 +468,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean initDrawingElement(final int num) {
     final int elNum;
     if (num == 0) {
@@ -520,9 +479,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     return super.initDrawingElement(elNum);
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean initDrawingElement(final SGTuple2f[] array) {
     final int num = array.length;
     if (this.initDrawingElement(num) == false) {
@@ -595,7 +552,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
       }
     }
 
-    // if all points are effective
     if (allEffectiveFlag) {
       // set location to the drawing elements
       for (int ii = 0; ii < pointArray.length - 1; ii++) {
@@ -612,7 +568,6 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
       SGTuple2f[] points = pointArray;
 
       if (this.mMode == MODE_OMIT) {
-        // points = this.reducePointsInNoise( points );
         points = this.reduceClosePoints(points);
       }
 
@@ -868,47 +823,27 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
     this.mStroke.setSpace(this.getLineType(), space);
   }
 
-  /**
-   * Returns the number of the first line segments.
-   *
-   * @return the number of the first line segments.
-   */
+  /** Returns the number of the first line segments. */
   public int getLineNum1() {
     return this.mStroke.getLineNum1(this.getLineType());
   }
 
-  /**
-   * Returns the number of the second line segments.
-   *
-   * @return the number of the second line segments.
-   */
+  /** Returns the number of the second line segments. */
   public int getLineNum2() {
     return this.mStroke.getLineNum2(this.getLineType());
   }
 
-  /**
-   * Returns the length of the first line segments.
-   *
-   * @return the length of the first line segments.
-   */
+  /** Returns the length of the first line segments. */
   public float getLineLength1() {
     return this.mStroke.getLineLength1(this.getLineType());
   }
 
-  /**
-   * Returns the length of the second line segments.
-   *
-   * @return the length of the second line segments.
-   */
+  /** Returns the length of the second line segments. */
   public float getLineLength2() {
     return this.mStroke.getLineLength2(this.getLineType());
   }
 
-  /**
-   * Returns the space between line segments.
-   *
-   * @return the space between line segments.
-   */
+  /** Returns the space between line segments. */
   public float getSpace() {
     return this.mStroke.getSpace(this.getLineType());
   }
@@ -932,11 +867,7 @@ public abstract class SGElementGroupLine extends SGElementGroup implements SGILi
       super();
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       Object obj = super.copy();
       LineProperties p = (LineProperties) obj;

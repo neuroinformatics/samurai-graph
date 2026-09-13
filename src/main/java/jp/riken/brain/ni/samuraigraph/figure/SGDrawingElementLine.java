@@ -17,11 +17,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 public abstract class SGDrawingElementLine extends SGDrawingElement
     implements SGIDrawingElementJava2D, SGILineConstants {
 
-  /**
-   * Returns a stroke.
-   *
-   * @return a stroke
-   */
+  /** Returns a stroke. */
   protected abstract SGStroke getStroke();
 
   /** Construct a new line object. */
@@ -77,7 +73,6 @@ public abstract class SGDrawingElementLine extends SGDrawingElement
    * Sets the line width.
    *
    * @param width line width to set
-   * @return true if succeeded
    */
   public abstract boolean setLineWidth(final float width);
 
@@ -85,7 +80,6 @@ public abstract class SGDrawingElementLine extends SGDrawingElement
    * Sets the line type.
    *
    * @param type line type
-   * @return true if succeeded
    */
   public abstract boolean setLineType(final int type);
 
@@ -93,72 +87,44 @@ public abstract class SGDrawingElementLine extends SGDrawingElement
    * Set the type of cap of this line.
    *
    * @param cap cap type of this line
-   * @return
    */
   public boolean setCap(final int cap) {
     this.getStroke().setEndCap(cap);
     return true;
   }
 
-  /**
-   * Returns the coordinates of the start point of this line.
-   *
-   * @return the coordinates of the start point of this line
-   */
+  /** Returns the coordinates of the start point of this line. */
   public abstract SGTuple2f getStart();
 
-  /**
-   * Returns the coordinates of the end point of this line.
-   *
-   * @return the coordinates of the end point of this line
-   */
+  /** Returns the coordinates of the end point of this line. */
   public abstract SGTuple2f getEnd();
 
-  /**
-   * Returns type of this line.
-   *
-   * @return type of this line
-   */
+  /** Returns type of this line. */
   public int getLineType() {
     return this.getStroke().getLineType();
   }
 
-  /**
-   * Returns width of this line.
-   *
-   * @return width of this line
-   */
+  /** Returns width of this line. */
   public float getLineWidth() {
     return this.getStroke().getLineWidth();
   }
 
-  /**
-   * Returns the color.
-   *
-   * @return the color
-   */
+  /** Returns the color. */
   public abstract Color getColor();
 
   /**
    * Sets the color.
    *
    * @param cl the color to set
-   * @return true if succeeded
    */
   public abstract boolean setColor(final Color cl);
 
-  /**
-   * Returns the cap type of this line.
-   *
-   * @return cap type of this line
-   */
+  /** Returns the cap type of this line. */
   public int getCap() {
     return this.getStroke().getEndCap();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getMagnitude() {
     SGTuple2f start = this.getStart();
     SGTuple2f end = this.getEnd();
@@ -172,7 +138,6 @@ public abstract class SGDrawingElementLine extends SGDrawingElement
    * Returns whether a given line type is valid.
    *
    * @param type a line type
-   * @return true if the given line type is valid
    */
   public static boolean isValidLineType(final int type) {
     final int[] array = {
@@ -190,7 +155,6 @@ public abstract class SGDrawingElementLine extends SGDrawingElement
    * Returns the line type constant from a given name.
    *
    * @param name the name of line type
-   * @return the line type constant if it exists or null otherwise
    */
   public static Integer getLineTypeFromName(final String name) {
     if (name == null) {
@@ -217,7 +181,6 @@ public abstract class SGDrawingElementLine extends SGDrawingElement
    * Returns the name of a given line type.
    *
    * @param type the line type
-   * @return the name of a given line type
    */
   public static String getLineTypeName(final int type) {
 
@@ -369,21 +332,9 @@ public abstract class SGDrawingElementLine extends SGDrawingElement
 
   /** Construct a new line object. */
 
-  /**
-   * Construct a new line object with given start and end points.
-   *
-   * @param start coordinate of the start point
-   * @param end coordinate of the end point
-   */
+  /** Construct a new line object with given start and end points. */
 
-  /**
-   * Construct a new line object with given start and end points.
-   *
-   * @param x1 x coordinate of the start point
-   * @param y1 y coordinate of the start point
-   * @param x2 x coordinate of the end point
-   * @param y2 y coordinate of the end point
-   */
+  /** Construct a new line object with given start and end points. */
 
   /** The minimum line width used in "contains" method. */
   public static final float MINIMUM_LINE_WIDTH = 2.0f;
@@ -393,7 +344,6 @@ public abstract class SGDrawingElementLine extends SGDrawingElement
    *
    * @param x x coordinate of the point
    * @param y y coordinate of the point
-   * @return true when this line object "contains" given point
    */
   public boolean contains(final int x, final int y) {
     SGTuple2f start = this.getStart();

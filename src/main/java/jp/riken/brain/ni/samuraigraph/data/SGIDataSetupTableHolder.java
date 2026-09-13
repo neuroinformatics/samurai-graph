@@ -7,46 +7,22 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfoSet;
 /** An interface for an object that has a table to setup data. */
 public interface SGIDataSetupTableHolder {
 
-  /**
-   * Returns the table.
-   *
-   * @return a table object
-   */
+  /** Returns the table. */
   public JTable getTable();
 
-  /**
-   * Returns the button to restore all data column types.
-   *
-   * @return the button to restore all data column types
-   */
+  /** Returns the button to restore all data column types. */
   public SGButton getRestoreButton();
 
-  /**
-   * Returns the button to clear all data column types.
-   *
-   * @return the button to clear all data column types
-   */
+  /** Returns the button to clear all data column types. */
   public SGButton getClearButton();
 
-  /**
-   * Returns the button to complement the column types.
-   *
-   * @return the button to complement the column types
-   */
+  /** Returns the button to complement the column types. */
   public SGButton getComplementButton();
 
-  /**
-   * Checks selected items.
-   *
-   * @return true if selected items are valid for the data type
-   */
+  /** Checks selected items. */
   public boolean checkSelectedItems();
 
-  /**
-   * Returns selected column types.
-   *
-   * @return selected column types
-   */
+  /** Returns selected column types. */
   public SGDataColumnInfoSet getDataColumnInfoSet();
 
   /** Clear all data. */

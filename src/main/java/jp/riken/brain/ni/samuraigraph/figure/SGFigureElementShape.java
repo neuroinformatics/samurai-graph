@@ -103,9 +103,7 @@ public class SGFigureElementShape extends SGFigureElement
     this.mAxisElement = null;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGIFigureElementAxis getAxisElement() {
     return this.mAxisElement;
   }
@@ -114,7 +112,6 @@ public class SGFigureElementShape extends SGFigureElement
    * Returns the property dialog for a shape.
    *
    * @param sh a shape
-   * @return the property dialog for a given shape
    */
   SGPropertyDialog getShapeDialog(IElement sh) {
 
@@ -191,8 +188,8 @@ public class SGFigureElementShape extends SGFigureElement
   /**
    * Synchronize the element given by the argument.
    *
+   * @param msg the msg parameter
    * @param element An object to be synchronized.
-   * @return
    */
   public boolean synchronizeArgument(final SGIFigureElement element, String msg) {
     // this shouldn't happen
@@ -205,7 +202,6 @@ public class SGFigureElementShape extends SGFigureElement
    * @param type the type of shape
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addShape(final int type, final float x, final float y) {
     if (this.getGraphRect().contains(x, y) == false) {
@@ -228,7 +224,6 @@ public class SGFigureElementShape extends SGFigureElement
    * @param y the y-coordinate
    * @param xAxis the x-axis
    * @param yAxis the y-axis
-   * @return true if succeeded
    */
   private boolean addShape(
       final int id,
@@ -264,7 +259,6 @@ public class SGFigureElementShape extends SGFigureElement
    * @param type the type of shape
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addShape(final int id, final int type, final double x, final double y) {
     return this.addShape(
@@ -280,7 +274,6 @@ public class SGFigureElementShape extends SGFigureElement
    * @param y axis value for given y-axis
    * @param xAxisLocation location of the x-axis
    * @param yAxisLocation location of the y-axis
-   * @return true if succeeded
    */
   public boolean addShape(
       final int id,
@@ -509,7 +502,6 @@ public class SGFigureElementShape extends SGFigureElement
    *
    * @param id the ID to set
    * @param sh a shape
-   * @return true if succeeded
    */
   private boolean addShape(final int id, final ShapeObject sh) {
     if (this.addToList(id, sh) == false) {
@@ -533,7 +525,6 @@ public class SGFigureElementShape extends SGFigureElement
       ShapeObject el = (ShapeObject) list.get(ii);
       Class<?> cl_ = el.getIElement().getClass();
 
-      // if one of two classes is not the subclass of another class,
       // clear the focus
       if (!cl_.isAssignableFrom(cl) && !cl.isAssignableFrom(cl_)) {
         el.setSelected(false);
@@ -608,11 +599,7 @@ public class SGFigureElementShape extends SGFigureElement
     return true;
   }
 
-  /**
-   * Create copies of the focused objects.
-   *
-   * @return
-   */
+  /** Create copies of the focused objects. */
   public boolean duplicateFocusedObjects() {
     final int ox = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_X);
     final int oy = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_Y);
@@ -639,8 +626,6 @@ public class SGFigureElementShape extends SGFigureElement
       this.setChanged(true);
     }
 
-    // this.repaint();
-
     return true;
   }
 
@@ -648,7 +633,6 @@ public class SGFigureElementShape extends SGFigureElement
    * Paste the objects.
    *
    * @param list of the objects to be pasted
-   * @return true:succeeded, false:failed
    */
   public boolean paste(List<SGICopyable> list) {
     final float mag = this.getMagnification();
@@ -692,8 +676,6 @@ public class SGFigureElementShape extends SGFigureElement
       this.setChanged(true);
     }
 
-    // this.repaint();
-
     return true;
   }
 
@@ -706,67 +688,6 @@ public class SGFigureElementShape extends SGFigureElement
   public boolean writeProperty(final Element el, SGExportParameter params) {
     return true;
   }
-
-  /*
-   * public boolean onKeyPressed(final KeyEvent e) {
-   * boolean effective = false;
-   * final int keycode = e.getKeyCode();
-   * final int mod = e.getModifiersEx();
-   * final boolean isShiftPressed = ((mod & InputEvent.SHIFT_DOWN_MASK) != 0);
-   * int dx = 0;
-   * int dy = 0;
-   * switch (keycode) {
-   * case KeyEvent.VK_UP:
-   * if (isShiftPressed) {
-   * dy = -1;
-   * } else {
-   * dy = -10;
-   * }
-   * break;
-   * case KeyEvent.VK_DOWN:
-   * if (isShiftPressed) {
-   * dy = 1;
-   * } else {
-   * dy = 10;
-   * }
-   * break;
-   * case KeyEvent.VK_LEFT:
-   * if (isShiftPressed) {
-   * dx = -1;
-   * } else {
-   * dx = -10;
-   * }
-   * break;
-   * case KeyEvent.VK_RIGHT:
-   * if (isShiftPressed) {
-   * dx = 1;
-   * } else {
-   * dx = 10;
-   * }
-   * break;
-   * }
-   * if (dx != 0 || dy != 0) {
-   * final List<SGIChildObject> list = this.getVisibleChildList();
-   * for (int ii = list.size() - 1; ii >= 0; ii--) {
-   * final ShapeObject el = (ShapeObject) list.get(ii);
-   * if (el.isSelected()) {
-   * if (el.prepare() == false) {
-   * return false;
-   * }
-   * el.translate((float) dx, (float) dy);
-   * if (el.commit() == false) {
-   * return false;
-   * }
-   * notifyChange();
-   * notifyToRoot();
-   * repaint();
-   * effective = true;
-   * }
-   * }
-   * }
-   * return effective;
-   * }
-   */
 
   /** */
   public boolean onMouseClicked(final MouseEvent e) {
@@ -788,7 +709,6 @@ public class SGFigureElementShape extends SGFigureElement
    * Returns the list of selected property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of selected property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getSelectedPropertyDialogObserverList(Class<?> cl) {
@@ -805,7 +725,6 @@ public class SGFigureElementShape extends SGFigureElement
    * Returns the list of visible property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of visible property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getVisiblePropertyDialogObserverList(Class<?> cl) {
@@ -822,18 +741,13 @@ public class SGFigureElementShape extends SGFigureElement
    * Returns the list of all property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of all property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getAllPropertyDialogObserverList(Class<?> cl) {
     return this.getVisiblePropertyDialogObserverList();
   }
 
-  /**
-   * Returns the class object of property dialog observer.
-   *
-   * @return the class object
-   */
+  /** Returns the class object of property dialog observer. */
   @Override
   public Class<?> getPropertyDialogObserverClass() {
     return IElement.class;
@@ -945,7 +859,6 @@ public class SGFigureElementShape extends SGFigureElement
         continue;
       }
       final boolean flag = el.contains(x, y);
-      // el.mFrameFlag = flag;
 
       if (flag) {
         if (el.isSelected()) {
@@ -965,8 +878,8 @@ public class SGFigureElementShape extends SGFigureElement
   /**
    * Creates an array of Element objects.
    *
+   * @param params the params parameter
    * @param document an Document objects to append elements
-   * @return an array of Element objects
    */
   public Element[] createElement(final Document document, SGExportParameter params) {
     // create an Element object
@@ -997,7 +910,6 @@ public class SGFigureElementShape extends SGFigureElement
    *
    * @param element an Element object which has properties
    * @param versionNumber the version number of property file
-   * @return true if succeeded
    */
   public boolean readProperty(final Element element, final String versionNumber) {
     NodeList nList = element.getChildNodes();
@@ -1016,11 +928,7 @@ public class SGFigureElementShape extends SGFigureElement
     return true;
   }
 
-  /**
-   * Updates changed flag of focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Updates changed flag of focused objects. */
   @Override
   public boolean updateChangedFlag() {
     List<SGISelectable> list = this.getFocusedObjectsList();
@@ -1085,11 +993,7 @@ public class SGFigureElementShape extends SGFigureElement
     }
   }
 
-  /**
-   * Returns a list of child nodes.
-   *
-   * @return a list of chid nodes
-   */
+  /** Returns a list of child nodes. */
   public ArrayList<SGINode> getChildNodes() {
     final ArrayList<SGINode> list = new ArrayList<SGINode>();
     final ArrayList<SGIChildObject> aList = new ArrayList<>(this.mChildList);
@@ -1178,8 +1082,6 @@ public class SGFigureElementShape extends SGFigureElement
 
     /**
      * @param p
-     * @return
-     * @uml.property name="memento"
      */
     public boolean setMemento(final SGProperties p);
 
@@ -1208,15 +1110,10 @@ public class SGFigureElementShape extends SGFigureElement
      *
      * @param map a map of properties
      * @param iResult the result of setting properties
-     * @return updated result
      */
     public SGPropertyResults setProperties(SGPropertyMap map, SGPropertyResults iResult);
 
-    /**
-     * Creates and returns the map of properties.
-     *
-     * @return the map of properties
-     */
+    /** Creates and returns the map of properties. */
     public SGPropertyMap getCommandPropertyMap();
 
     public String getShapeType();
@@ -1366,20 +1263,12 @@ public class SGFigureElementShape extends SGFigureElement
     // The flag whether this object is already disposed of.
     private boolean mDisposed = false;
 
-    /**
-     * Returns whether this object is already disposed of.
-     *
-     * @return true if this object is already disposed of
-     */
+    /** Returns whether this object is already disposed of. */
     public boolean isDisposed() {
       return this.mDisposed;
     }
 
-    /**
-     * Returns a pop-up menu.
-     *
-     * @return a pop-up menu
-     */
+    /** Returns a pop-up menu. */
     public JPopupMenu getPopupMenu() {
       ShapeObjectPopupMenu p = null;
       if (this.mPopupMenu != null) {
@@ -1490,9 +1379,7 @@ public class SGFigureElementShape extends SGFigureElement
       return ((SGDrawingElement) this.mElement).contains(x, y);
     }
 
-    /**
-     * @return
-     */
+    /** */
     private List<Point2D> getAnchorPointList() {
       return this.mElement.getAnchorPointList();
     }
@@ -1624,11 +1511,7 @@ public class SGFigureElementShape extends SGFigureElement
     /** Flag whether this object is focused. */
     private boolean mSelectedFlag = false;
 
-    /**
-     * Get the flag as a focused object.
-     *
-     * @return whether this object is focused.
-     */
+    /** Get the flag as a focused object. */
     public boolean isSelected() {
       return this.mSelectedFlag;
     }
@@ -1644,9 +1527,7 @@ public class SGFigureElementShape extends SGFigureElement
       this.mTemporaryProperties = b ? this.getProperties() : null;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public int getAxisConfiguration(SGAxis axis) {
       return SGFigureElementShape.this.mAxisElement.getLocationInPlane(axis);
     }
@@ -1655,7 +1536,6 @@ public class SGFigureElementShape extends SGFigureElement
      * Sets the location of the x-axis.
      *
      * @param location the location of the x-axis
-     * @param true if succeeded
      */
     public boolean setXAxis(final int location) {
       if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
@@ -1670,7 +1550,6 @@ public class SGFigureElementShape extends SGFigureElement
      * Sets the location of the y-axis.
      *
      * @param location the location of the y-axis
-     * @param true if succeeded
      */
     public boolean setYAxis(final int location) {
       if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
@@ -1828,6 +1707,7 @@ public class SGFigureElementShape extends SGFigureElement
     /**
      * @param document
      * @return
+     * @param params the params parameter
      */
     public Element createElement(final Document document, SGExportParameter params) {
       Element el = document.createElement(this.mElement.getName());
@@ -1842,6 +1722,7 @@ public class SGFigureElementShape extends SGFigureElement
     /**
      * @param element
      * @return
+     * @param params the params parameter
      */
     public boolean writeProperty(final Element element, SGExportParameter params) {
       SGIFigureElementAxis aElement = this.getAxisElement();

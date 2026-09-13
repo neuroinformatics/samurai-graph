@@ -62,20 +62,12 @@ public class SGColorDialog extends JDialog {
     this.pack();
   }
 
-  /**
-   * Returns the color chooser.
-   *
-   * @return JColorChooser object
-   */
+  /** Returns the color chooser. */
   public JColorChooser getColorChooser() {
     return this.mColorChooser;
   }
 
-  /**
-   * Returns the selected color.
-   *
-   * @return the selected color
-   */
+  /** Returns the selected color. */
   public Color getSelectedColor() {
     return this.mColorChooser.getColor();
   }

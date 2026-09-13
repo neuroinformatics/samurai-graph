@@ -5,18 +5,10 @@ import java.util.List;
 /** An interface for all data classes. */
 public interface SGIData extends SGIConstants, SGIDisposable {
 
-  /**
-   * Returns the data type.
-   *
-   * @return the data type
-   */
+  /** Returns the data type. */
   public String getDataType();
 
-  /**
-   * Returns the data source.
-   *
-   * @return the data source
-   */
+  /** Returns the data source. */
   public SGIDataSource getDataSource();
 
   /**
@@ -26,69 +18,38 @@ public interface SGIData extends SGIConstants, SGIDisposable {
    */
   public void setDataSource(SGIDataSource src);
 
-  /**
-   * Returns the number of data points taking into account the stride.
-   *
-   * @return the number of data points taking into account the stride
-   */
+  /** Returns the number of data points taking into account the stride. */
   public int getPointsNumber();
 
-  /**
-   * Returns the number of data points without taking into account the stride.
-   *
-   * @return the number of data points without taking into account the stride
-   */
+  /** Returns the number of data points without taking into account the stride. */
   public int getAllPointsNumber();
 
   /**
    * Creates and returns a data buffer.
    *
    * @param policy the policy to get data buffer
-   * @return the data buffer
    */
   public SGDataBuffer getDataBuffer(SGDataBufferPolicy policy);
 
-  /**
-   * Returns whether the stride of data arrays is available.
-   *
-   * @return true if the stride of data arrays is available
-   */
+  /** Returns whether the stride of data arrays is available. */
   public boolean isStrideAvailable();
 
   /**
    * Returns true if this data has at lease one "effective" stride that has the string
    * representation different from "0:end".
-   *
-   * @return true this data has an effective stride
    */
   public boolean hasEffectiveStride();
 
-  /**
-   * Returns whether the animation is supported in this data.
-   *
-   * @return true if the animation is supported in this data
-   */
+  /** Returns whether the animation is supported in this data. */
   public boolean isAnimationSupported();
 
-  /**
-   * Returns true if this data is available for the animation.
-   *
-   * @return true if the animation is available
-   */
+  /** Returns true if this data is available for the animation. */
   public boolean isAnimationAvailable();
 
-  /**
-   * Returns the stride of time.
-   *
-   * @return the stride of time
-   */
+  /** Returns the stride of time. */
   public SGIntegerSeriesSet getTimeStride();
 
-  /**
-   * Returns the current index of time value.
-   *
-   * @return the current index of time value
-   */
+  /** Returns the current index of time value. */
   public int getCurrentTimeValueIndex();
 
   /**

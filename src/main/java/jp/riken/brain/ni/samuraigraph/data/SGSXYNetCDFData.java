@@ -227,7 +227,6 @@ public class SGSXYNetCDFData extends SGNetCDFData
     if (this.mTickLabelVariable != null) {
       // Tick labels are already set, skip setup
     } else {
-      // if tick labels are not set yet
       this.setupTickLabel(xVar, yVar);
     }
 
@@ -286,11 +285,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the properties of this data.
-   *
-   * @return the properties of this data
-   */
+  /** Returns the properties of this data. */
   public SGProperties getProperties() {
     SGProperties p = new SXYNetCDFDataProperties();
     if (this.getProperties(p) == false) {
@@ -303,7 +298,6 @@ public class SGSXYNetCDFData extends SGNetCDFData
    * Gets the properties of this data.
    *
    * @param p the properties of this data
-   * @return true if succeeded
    */
   public boolean getProperties(SGProperties p) {
     if (!(p instanceof SXYNetCDFDataProperties)) {
@@ -325,154 +319,10 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return true;
   }
 
-  // This method is not already called anywhere.
-  // /**
-  // * Read properties.
-  // *
-  // * @param el
-  // * an Element object
-  // * @return true if succeeded
-  // */
-  // public boolean readProperty(Element el) {
-  //
-  // if (super.readProperty(el) == false) {
-  // return false;
-  // }
-  //
-  // String str = null;
-  // SGVariable xVar = null;
-  // SGVariable yVar = null;
-  // SGVariable lVar = null;
-  // SGVariable uVar = null;
-  // SGVariable ehVar = null;
-  // SGVariable tVar = null;
-  // SGVariable thVar = null;
-  //
-  // // x variable
-  // str = el.getAttribute(KEY_X_VALUE_NAME);
-  // if (str.length() != 0) {
-  // xVar = this.getNetcdfFile().findVariable(str);
-  // if (xVar == null) {
-  // return false;
-  // }
-  // } else {
-  // return false;
-  // }
-  //
-  // // y variable
-  // str = el.getAttribute(KEY_Y_VALUE_NAME);
-  // if (str.length() != 0) {
-  // yVar = this.getNetcdfFile().findVariable(str);
-  // if (yVar == null) {
-  // return false;
-  // }
-  // } else {
-  // return false;
-  // }
-  //
-  // // lower error variable
-  // str = el.getAttribute(KEY_LOWER_ERROR_VALUE_NAME);
-  // if (str.length() != 0) {
-  // lVar = this.getNetcdfFile().findVariable(str);
-  // if (lVar == null) {
-  // return false;
-  // }
-  // }
-  //
-  // // error bar holder variable
-  // str = el.getAttribute(KEY_ERROR_BAR_HOLDER_NAME);
-  // if (str.length() != 0) {
-  // ehVar = this.getNetcdfFile().findVariable(str);
-  // if (ehVar == null) {
-  // return false;
-  // }
-  // }
-  //
-  // if (!(lVar == null && uVar == null && ehVar == null)
-  // && !(lVar != null && uVar != null && ehVar != null)) {
-  // return false;
-  // }
-  //
-  // // tick label variable
-  // str = el.getAttribute(KEY_TICK_LABEL_NAME);
-  // if (str.length() != 0) {
-  // tVar = this.getNetcdfFile().findVariable(str);
-  // if (tVar == null) {
-  // return false;
-  // }
-  // }
-  //
-  // // tick label holder variable
-  // str = el.getAttribute(KEY_TICK_LABEL_HOLDER_NAME);
-  // if (str.length() != 0) {
-  // thVar = this.getNetcdfFile().findVariable(str);
-  // if (thVar == null) {
-  // return false;
-  // }
-  // }
-  //
-  // if (!(tVar == null && thVar == null) && !(tVar != null && thVar != null)) {
-  // return false;
-  // }
-  //
-  // // set to attribute
-  // this.mXVariable = xVar;
-  // this.mYVariable = yVar;
-  // this.mLowerErrorVariable = lVar;
-  // this.mUpperErrorVariable = uVar;
-  // this.mErrorBarHolderVariable = ehVar;
-  // this.mTickLabelVariable = tVar;
-  // this.mTickLabelHolderVariable = thVar;
-  //
-  // return true;
-  // }
-
-  // /**
-  // * Save values to given file.
-  // *
-  // * @param data
-  // * a data
-  // * @return
-  // * true if succeeded
-  // */
-  // public boolean saveData(final File file) {
-  // boolean status = false;
-  // Variable var = this.getVariable();
-  // Variable cVar = this.getCoordinateVariable();
-  // Variable[] vArray;
-  // if (this.mLowerErrorVariable != null && this.mUpperErrorVariable != null) {
-  // vArray = new Variable[]{cVar, var, this.mLowerErrorVariable,
-  // this.mUpperErrorVariable};
-  // } else {
-  // vArray = new Variable[]{cVar, var};
-  // }
-  // try {
-  // FileWriter fw = new FileWriter(file);
-  // for (int ii = 0; ii < vArray.length; ii++) {
-  // String title = this.getNameWithUnit(vArray[ii]);
-  // if (title == null) {
-  // title = "";
-  // }
-  // String str = SGUtilityText.getCSVString(title);
-  // if (ii != 0) {
-  // fw.write(",");
-  // }
-  // fw.write(str);
-  // }
-  // fw.write("\n");
-  // status = this.writeData(fw);
-  // fw.close();
-  // } catch (IOException ex) {
-  // return false;
-  // }
-  // return status;
-  // }
-
   /**
    * Sets the data.
    *
    * @param data data set to this object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (!(data instanceof SGSXYNetCDFData)) {
@@ -502,7 +352,6 @@ public class SGSXYNetCDFData extends SGNetCDFData
    * Set properties to this data.
    *
    * @param p properties to be set
-   * @return true if succeeded
    */
   public boolean setProperties(SGProperties p) {
     if (!(p instanceof SXYNetCDFDataProperties)) {
@@ -524,20 +373,12 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return true;
   }
 
-  /**
-   * Returns a text string of data type.
-   *
-   * @return a text string of data type
-   */
+  /** Returns a text string of data type. */
   public String getDataType() {
     return SGDataTypeConstants.SXY_NETCDF_DATA;
   }
 
-  /**
-   * Returns the number of data points taking into account the stride.
-   *
-   * @return the number of data points taking into account the stride
-   */
+  /** Returns the number of data points taking into account the stride. */
   @Override
   public int getPointsNumber() {
     if (this.isIndexAvailable()) {
@@ -610,11 +451,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return this.mTickLabelStride.isComplete();
   }
 
-  /**
-   * Returns an array of X-values.
-   *
-   * @return an array of X-values
-   */
+  /** Returns an array of X-values. */
   @Override
   public double[] getXValueArray(final boolean all) {
     return SGDataViewerUtility.getXValueArray(this, all);
@@ -630,11 +467,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return ret;
   }
 
-  /**
-   * Returns an array of Y-values.
-   *
-   * @return an array of Y-values
-   */
+  /** Returns an array of Y-values. */
   @Override
   public double[] getYValueArray(final boolean all) {
     return SGDataViewerUtility.getYValueArray(this, all);
@@ -650,11 +483,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return ret;
   }
 
-  /**
-   * Returns an array of lower error values.
-   *
-   * @return an array of lower error values
-   */
+  /** Returns an array of lower error values. */
   @Override
   public double[] getLowerErrorValueArray(final boolean all) {
     return SGDataBufferUtility.getLowerErrorValueArray(this, all);
@@ -670,11 +499,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return ret;
   }
 
-  /**
-   * Returns an array of upper error values.
-   *
-   * @return an array of upper error values
-   */
+  /** Returns an array of upper error values. */
   @Override
   public double[] getUpperErrorValueArray(final boolean all) {
     return SGDataBufferUtility.getUpperErrorValueArray(this, all);
@@ -690,11 +515,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return ret;
   }
 
-  /**
-   * Returns an array of text strings.
-   *
-   * @return an array of text strings
-   */
+  /** Returns an array of text strings. */
   @Override
   public String[] getStringArray(final boolean all) {
     return SGDataViewerUtility.getStringArray(this, all);
@@ -730,20 +551,12 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return ret;
   }
 
-  /**
-   * Returns whether error bars are available.
-   *
-   * @return true if error bars are available
-   */
+  /** Returns whether error bars are available. */
   public boolean isErrorBarAvailable() {
     return (this.mLowerErrorVariable != null && this.mUpperErrorVariable != null);
   }
 
-  /**
-   * Returns whether tick labels are available.
-   *
-   * @return true if tick labels are available
-   */
+  /** Returns whether tick labels are available. */
   public boolean isTickLabelAvailable() {
     return (this.mTickLabelVariable != null);
   }
@@ -752,7 +565,6 @@ public class SGSXYNetCDFData extends SGNetCDFData
    * Returns whether a given data object has the same tick label resources.
    *
    * @param data a data to compare
-   * @return true if a given data object has the same tick label resources
    */
   public boolean hasEqualTickLabelResource(SGISXYTypeSingleData data) {
     if (!(data instanceof SGSXYNetCDFData)) {
@@ -766,38 +578,22 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the bounds of x-values.
-   *
-   * @return the bounds of x-values
-   */
+  /** Returns the bounds of x-values. */
   public SGValueRange getBoundsX() {
     return SGDataRangeUtility.getBoundsX(this);
   }
 
-  /**
-   * Returns the bounds of y-values.
-   *
-   * @return the bounds of y-values
-   */
+  /** Returns the bounds of y-values. */
   public SGValueRange getBoundsY() {
     return SGDataRangeUtility.getBoundsY(this);
   }
 
-  /**
-   * Returns the title for the X-axis.
-   *
-   * @return the title for the X-axis
-   */
+  /** Returns the title for the X-axis. */
   public String getTitleX() {
     return this.getNameWithUnit(this.mXVariable);
   }
 
-  /**
-   * Returns the title for the Y-axis.
-   *
-   * @return the title for the Y-axis
-   */
+  /** Returns the title for the Y-axis. */
   public String getTitleY() {
     return this.getNameWithUnit(this.mYVariable);
   }
@@ -875,7 +671,6 @@ public class SGSXYNetCDFData extends SGNetCDFData
      * Returns whether this data property has the equal column types with given data property.
      *
      * @param dp a data property
-     * @return true if this data property has the equal column types with given data property
      */
     @Override
     public boolean hasEqualColumnTypes(DataProperties dp) {
@@ -910,11 +705,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
       return true;
     }
 
-    /**
-     * Returns a copy of this object.
-     *
-     * @return a copy of this object
-     */
+    /** Returns a copy of this object. */
     public Object copy() {
       SXYNetCDFDataProperties p = (SXYNetCDFDataProperties) super.copy();
       p.mStride = (this.mStride != null) ? (SGIntegerSeriesSet) this.mStride.clone() : null;
@@ -926,11 +717,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns an array of current column types.
-   *
-   * @return an array of current column types
-   */
+  /** Returns an array of current column types. */
   @Override
   public String[] getCurrentColumnType() {
     SGNetCDFFile file = this.getNetcdfFile();
@@ -986,8 +773,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
   /**
    * Sets the type of data columns.
    *
-   * @param column an array of column types
-   * @return true if succeeded
+   * @param columns an array of column types
    */
   public boolean setColumnType(String[] columns) {
 
@@ -1097,11 +883,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return true;
   }
 
-  /**
-   * Returns an array of all variables.
-   *
-   * @return an array of all variables
-   */
+  /** Returns an array of all variables. */
   public SGNetCDFVariable[] getAssignedVariables() {
     List<SGNetCDFVariable> varList = new ArrayList<SGNetCDFVariable>();
     varList.add(this.mXVariable);
@@ -1179,21 +961,13 @@ public class SGSXYNetCDFData extends SGNetCDFData
     this.mExponent = exp;
   }
 
-  /**
-   * Returns the decimal places for the tick labels.
-   *
-   * @return the decimal places for the tick labels
-   */
+  /** Returns the decimal places for the tick labels. */
   @Override
   public int getDecimalPlaces() {
     return this.mDecimalPlaces;
   }
 
-  /**
-   * Returns the exponent for tick labels.
-   *
-   * @return the exponent for tick labels
-   */
+  /** Returns the exponent for tick labels. */
   @Override
   public int getExponent() {
     return this.mExponent;
@@ -1221,8 +995,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
    * Returns whether the error bars are vertical. If this data does not have error values, returns
    * null.
    *
-   * @return true if error bars are vertical, false if they are horizontal and null if this data do
-   *     not have error values
+   * <p>not have error values
    */
   public Boolean isErrorBarVertical() {
     if (this.isErrorBarAvailable()) {
@@ -1236,8 +1009,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
    * Returns whether the tick labels align horizontally. If this data does not have tick labels,
    * returns null.
    *
-   * @return true if tick labels align horizontally, false if they do not so and null if this data
-   *     do not have tick labels
+   * <p>do not have tick labels
    */
   public Boolean isTickLabelHorizontal() {
     if (this.isTickLabelAvailable()) {
@@ -1247,11 +1019,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Return whether the XVariable is a coordinate variable.
-   *
-   * @return whether the XVariable is a coordinate variable.
-   */
+  /** Return whether the XVariable is a coordinate variable. */
   public boolean isXVariableCoordinate() {
     return this.getXVariable().isCoordinateVariable();
   }
@@ -1314,14 +1082,8 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Transforms this data to a multiple type data.
-   *
-   * @return a transformed data
-   */
+  /** Transforms this data to a multiple type data. */
   public SGISXYTypeMultipleData toMultiple() {
-    // Convert this class (SGSXYNetCDFData) to class
-    // (SGSXYMultipleVariableNetCDFData).
     final boolean be = this.isErrorBarAvailable();
     final boolean bt = this.isTickLabelAvailable();
     SGNetCDFDataColumnInfo[] x =
@@ -1397,7 +1159,6 @@ public class SGSXYNetCDFData extends SGNetCDFData
    * @param dim the dimension
    * @param pickUpIndex the index of dimension
    * @param len the length of picked up dimension
-   * @return a transformed data
    */
   public SGISXYTypeMultipleData toMultiple(
       final Dimension dim, final int pickUpIndex, final int len) {
@@ -1461,11 +1222,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return data;
   }
 
-  /**
-   * Returns the stride.
-   *
-   * @return the stride
-   */
+  /** Returns the stride. */
   public SGIntegerSeriesSet getStride() {
     if (this.isIndexAvailable()) {
       return null;
@@ -1498,11 +1255,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the copy of this data object.
-   *
-   * @return a copy of this data object
-   */
+  /** Returns the copy of this data object. */
   public Object clone() {
     SGSXYNetCDFData data = (SGSXYNetCDFData) super.clone();
     data.mStride = this.getStride();
@@ -1511,11 +1264,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return data;
   }
 
-  /**
-   * Returns a map of stride for data arrays.
-   *
-   * @return a map of stride for data arrays
-   */
+  /** Returns a map of stride for data arrays. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
@@ -1528,11 +1277,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return map;
   }
 
-  /**
-   * Returns a map of stride of dimensions. The keys are the name of dimensions.
-   *
-   * @return a map of stride of dimensions
-   */
+  /** Returns a map of stride of dimensions. The keys are the name of dimensions. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getDimensionStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
@@ -1609,11 +1354,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the stride of the tick labels.
-   *
-   * @return the stride of the tick labels
-   */
+  /** Returns the stride of the tick labels. */
   @Override
   public SGIntegerSeriesSet getTickLabelStride() {
     SGIntegerSeriesSet ret = null;
@@ -1623,11 +1364,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     return ret;
   }
 
-  /**
-   * Returns the number of strings.
-   *
-   * @return the number of strings
-   */
+  /** Returns the number of strings. */
   @Override
   public int getStringNumber() {
     if (this.isStrideAvailable()) {
@@ -1637,11 +1374,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the indices of tick labels.
-   *
-   * @return the indices of tick labels
-   */
+  /** Returns the indices of tick labels. */
   @Override
   public int[] getTickLabelValueIndices() {
     if (!this.isTickLabelAvailable()) {
@@ -1655,21 +1388,13 @@ public class SGSXYNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the number of data points without taking into account the stride.
-   *
-   * @return the number of data points without taking into account the stride
-   */
+  /** Returns the number of data points without taking into account the stride. */
   @Override
   public int getAllPointsNumber() {
     return this.getCoordinateVariable().getDimension(0).getLength();
   }
 
-  /**
-   * Returns the shift.
-   *
-   * @return the shift
-   */
+  /** Returns the shift. */
   public SGTuple2d getShift() {
     return (SGTuple2d) this.mShift.clone();
   }
@@ -1698,7 +1423,6 @@ public class SGSXYNetCDFData extends SGNetCDFData
    * Creates and returns a data buffer.
    *
    * @param param parameters for data buffer
-   * @return the data buffer
    */
   @Override
   public SGDataBuffer getDataBuffer(SGDataBufferPolicy param) {
@@ -1732,19 +1456,13 @@ public class SGSXYNetCDFData extends SGNetCDFData
   /**
    * Returns true if this data has at lease one "effective" stride that has the string
    * representation different from "0:end".
-   *
-   * @return true this data has an effective stride
    */
   @Override
   public boolean hasEffectiveStride() {
     return SGDataViewerUtility.hasEffectiveStride(this);
   }
 
-  /**
-   * Returns the main stride.
-   *
-   * @return the main stride
-   */
+  /** Returns the main stride. */
   @Override
   public SGIntegerSeriesSet getMainStride() {
     SGIntegerSeriesSet ret = null;
@@ -2036,13 +1754,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
   public Double getXValueAt(final int index) {
     double[] values = this.getXValueArray(false);
     final double d = values[index];
-    /*
-     * if (this.isNaNAssignedInvalidValue(0, index, X_VALUE, d)) {
-     * return this.getValueAt(this.mXVariable, index);
-     * } else {
-     * return d;
-     * }
-     */
+
     return d;
   }
 
@@ -2050,13 +1762,7 @@ public class SGSXYNetCDFData extends SGNetCDFData
   public Double getYValueAt(final int index) {
     double[] values = this.getYValueArray(false);
     final double d = values[index];
-    /*
-     * if (this.isNaNAssignedInvalidValue(0, index, Y_VALUE, d)) {
-     * return this.getValueAt(this.mYVariable, index);
-     * } else {
-     * return d;
-     * }
-     */
+
     return d;
   }
 

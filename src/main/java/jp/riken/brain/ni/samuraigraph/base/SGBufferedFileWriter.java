@@ -42,11 +42,7 @@ public class SGBufferedFileWriter {
     bw = new BufferedWriter(osw);
   }
 
-  /**
-   * Returns the buffered writer.
-   *
-   * @return the buffered writer
-   */
+  /** Returns the buffered writer. */
   public BufferedWriter getBufferedWriter() {
     return this.bw;
   }

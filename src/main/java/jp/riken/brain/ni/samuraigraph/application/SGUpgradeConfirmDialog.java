@@ -54,10 +54,6 @@ public class SGUpgradeConfirmDialog extends SGScrollPaneDialog {
     String command = e.getActionCommand();
 
     //        // if escape key is pressed, cancel all changes
-    //        if (ESCAPE_KEY_TYPED.equals(command)) {
-    //            this.onCanceled();
-    //            return;
-    //        }
 
     if (command.equals(YES)) {
       this.onOK();

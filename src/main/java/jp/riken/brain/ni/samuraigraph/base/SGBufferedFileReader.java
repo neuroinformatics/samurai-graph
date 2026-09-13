@@ -30,6 +30,7 @@ public class SGBufferedFileReader {
   /**
    * Builds a file reader for a file of given path with given character set.
    *
+   * @param charsetName the charsetName parameter
    * @param path the file path to read
    * @throws IOException
    */
@@ -41,11 +42,7 @@ public class SGBufferedFileReader {
     br = new BufferedReader(isr);
   }
 
-  /**
-   * Returns the buffered reader.
-   *
-   * @return the buffered reader
-   */
+  /** Returns the buffered reader. */
   public BufferedReader getBufferedReader() {
     return this.br;
   }

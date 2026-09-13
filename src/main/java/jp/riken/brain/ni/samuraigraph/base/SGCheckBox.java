@@ -78,7 +78,6 @@ public class SGCheckBox extends JCheckBox implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     Object source = e.getSource();
     if (source.equals(this)) {
-      // if the box is checked, set the value is determined
       this.setIndeterminate(false);
     }
   }

@@ -119,11 +119,7 @@ public class SGDataReloadResultPanel extends javax.swing.JPanel
     this.mTable.setModel(model);
   }
 
-  /**
-   * Creates and returns a table object.
-   *
-   * @return a table object
-   */
+  /** Creates and returns a table object. */
   protected SGTable createTableInstance() {
     return new SGTable() {
       private static final long serialVersionUID = 8363166747469148328L;

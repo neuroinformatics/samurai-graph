@@ -20,7 +20,6 @@ public interface SGISXYDataDialogObserver
   // Line
   /**
    * @return
-   * @uml.property name="lineVisible"
    */
   public boolean isLineVisible();
 
@@ -44,7 +43,6 @@ public interface SGISXYDataDialogObserver
   /**
    * @param b
    * @return
-   * @uml.property name="lineVisible"
    */
   public boolean setLineVisible(final boolean b);
 
@@ -74,13 +72,11 @@ public interface SGISXYDataDialogObserver
   // Symbol
   /**
    * @return
-   * @uml.property name="symbolVisible"
    */
   public boolean isSymbolVisible();
 
   /**
    * @return
-   * @uml.property name="symbolType"
    */
   public int getSymbolType();
 
@@ -90,33 +86,28 @@ public interface SGISXYDataDialogObserver
 
   /**
    * @return
-   * @uml.property name="symbolInnerPaint"
    */
   public SGIPaint getSymbolInnerPaint();
 
   /**
    * @return
-   * @uml.property name="symbolLineColor"
    */
   public Color getSymbolLineColor();
 
   /**
    * @return
-   * @uml.property name="symbolLineVisible"
    */
   public boolean isSymbolLineVisible();
 
   /**
    * @param b
    * @return
-   * @uml.property name="symbolVisible"
    */
   public boolean setSymbolVisible(final boolean b);
 
   /**
    * @param type
    * @return
-   * @uml.property name="symbolType"
    */
   public boolean setSymbolType(final int type);
 
@@ -127,40 +118,34 @@ public interface SGISXYDataDialogObserver
   /**
    * @param paint
    * @return
-   * @uml.property name="symbolInnerPaint"
    */
   public boolean setSymbolInnerPaint(final SGIPaint paint);
 
   /**
    * @param cl
    * @return
-   * @uml.property name="symbolLineColor"
    */
   public boolean setSymbolLineColor(final Color cl);
 
   /**
    * @param b
    * @return
-   * @uml.property name="symbolLineVisible"
    */
   public boolean setSymbolLineVisible(final boolean b);
 
   // Bar
   /**
    * @return
-   * @uml.property name="barVisible"
    */
   public boolean isBarVisible();
 
   /**
    * @return
-   * @uml.property name="barBaselineValue"
    */
   public double getBarBaselineValue();
 
   /**
    * @return
-   * @uml.property name="barWidthValue"
    */
   public double getBarWidthValue();
 
@@ -168,64 +153,54 @@ public interface SGISXYDataDialogObserver
 
   /**
    * @return
-   * @uml.property name="barInnerPaint"
    */
   public SGIPaint getBarInnerPaint();
 
   /**
    * @return
-   * @uml.property name="barEdgeLineColor"
    */
   public Color getBarEdgeLineColor();
 
   /**
    * @return
-   * @uml.property name="barEdgeLineVisible"
    */
   public boolean isBarEdgeLineVisible();
 
   /**
    * @return
-   * @uml.property name="barVertical"
    */
   public boolean isBarVertical();
 
   /**
    * @return
-   * @uml.property name="barShiftX"
    */
   public double getBarOffsetX();
 
   /**
    * @return
-   * @uml.property name="barShiftY"
    */
   public double getBarOffsetY();
 
   /**
    * @return
-   * @uml.property name="barInterval"
    */
   public double getBarInterval();
 
   /**
    * @param b
    * @return
-   * @uml.property name="barVisible"
    */
   public boolean setBarVisible(final boolean b);
 
   /**
    * @param value
    * @return
-   * @uml.property name="barBaselineValue"
    */
   public boolean setBarBaselineValue(final double value);
 
   /**
    * @param width
    * @return
-   * @uml.property name="barWidthValue"
    */
   public boolean setBarWidthValue(final double width);
 
@@ -234,21 +209,18 @@ public interface SGISXYDataDialogObserver
   /**
    * @param paint
    * @return
-   * @uml.property name="barInnerPaint"
    */
   public boolean setBarInnerPaint(final SGIPaint paint);
 
   /**
    * @param cl
    * @return
-   * @uml.property name="barEdgeLineColor"
    */
   public boolean setBarEdgeLineColor(final Color cl);
 
   /**
    * @param b
    * @return
-   * @uml.property name="barEdgeLineVisible"
    */
   public boolean setBarEdgeLineVisible(final boolean b);
 
@@ -258,19 +230,16 @@ public interface SGISXYDataDialogObserver
 
   /**
    * @return
-   * @uml.property name="barShiftX"
    */
   public boolean setBarOffsetX(final double shift);
 
   /**
    * @return
-   * @uml.property name="barShiftY"
    */
   public boolean setBarOffsetY(final double shift);
 
   /**
    * @return
-   * @uml.property name="barInterval"
    */
   public boolean setBarInterval(final double interval);
 
@@ -279,13 +248,11 @@ public interface SGISXYDataDialogObserver
 
   /**
    * @return
-   * @uml.property name="errorBarVisible"
    */
   public boolean isErrorBarVisible();
 
   /**
    * @return
-   * @uml.property name="errorBarHeadType"
    */
   public int getErrorBarHeadType();
 
@@ -293,7 +260,6 @@ public interface SGISXYDataDialogObserver
 
   /**
    * @return
-   * @uml.property name="errorBarColor"
    */
   public Color getErrorBarColor();
 
@@ -301,7 +267,6 @@ public interface SGISXYDataDialogObserver
 
   /**
    * @return
-   * @uml.property name="errorBarStyle"
    */
   public int getErrorBarStyle();
 
@@ -312,14 +277,12 @@ public interface SGISXYDataDialogObserver
   /**
    * @param b
    * @return
-   * @uml.property name="errorBarVisible"
    */
   public boolean setErrorBarVisible(final boolean b);
 
   /**
    * @param type
    * @return
-   * @uml.property name="errorBarHeadType"
    */
   public boolean setErrorBarHeadType(final int type);
 
@@ -328,7 +291,6 @@ public interface SGISXYDataDialogObserver
   /**
    * @param cl
    * @return
-   * @uml.property name="errorBarColor"
    */
   public boolean setErrorBarColor(final Color cl);
 
@@ -337,7 +299,6 @@ public interface SGISXYDataDialogObserver
   /**
    * @param style
    * @return
-   * @uml.property name="errorBarStyle"
    */
   public boolean setErrorBarStyle(final int style);
 
@@ -350,19 +311,16 @@ public interface SGISXYDataDialogObserver
 
   /**
    * @return
-   * @uml.property name="tickLabelVisible"
    */
   public boolean isTickLabelVisible();
 
   /**
    * @return
-   * @uml.property name="tickLabelFontName"
    */
   public String getTickLabelFontName();
 
   /**
    * @return
-   * @uml.property name="tickLabelFontStyle"
    */
   public int getTickLabelFontStyle();
 
@@ -370,7 +328,6 @@ public interface SGISXYDataDialogObserver
 
   /**
    * @return
-   * @uml.property name="tickLabelColor"
    */
   public Color getTickLabelColor();
 
@@ -381,28 +338,24 @@ public interface SGISXYDataDialogObserver
 
   /**
    * @return
-   * @uml.property name="tickLabelAngle"
    */
   public float getTickLabelAngle();
 
   /**
    * @param b
    * @return
-   * @uml.property name="tickLabelVisible"
    */
   public boolean setTickLabelVisible(final boolean b);
 
   /**
    * @param name
    * @return
-   * @uml.property name="tickLabelFontName"
    */
   public boolean setTickLabelFontName(final String name);
 
   /**
    * @param style
    * @return
-   * @uml.property name="tickLabelFontStyle"
    */
   public boolean setTickLabelFontStyle(final int style);
 
@@ -413,7 +366,6 @@ public interface SGISXYDataDialogObserver
   /**
    * @param cl
    * @return
-   * @uml.property name="tickLabelColor"
    */
   public boolean setTickLabelColor(final Color cl);
 
@@ -426,7 +378,6 @@ public interface SGISXYDataDialogObserver
   /**
    * @param angle
    * @return
-   * @uml.property name="tickLabelAngle"
    */
   public boolean setTickLabelAngle(final float angle);
 

@@ -61,11 +61,7 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
     this.mStroke = null;
   }
 
-  /**
-   * Returns the magnification.
-   *
-   * @return the magnification
-   */
+  /** Returns the magnification. */
   public float getMagnification() {
     return this.mMagnification;
   }
@@ -74,7 +70,6 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
    * Sets the magnification.
    *
    * @param mag the magnification
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     if (mag <= 0.0) {
@@ -87,47 +82,27 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
     return true;
   }
 
-  /**
-   * Returns the line width.
-   *
-   * @return the line width
-   */
+  /** Returns the line width. */
   public float getLineWidth() {
     return this.mStroke.getLineWidth();
   }
 
-  /**
-   * Returns the line type.
-   *
-   * @return the line type
-   */
+  /** Returns the line type. */
   public int getLineType() {
     return this.mLineType;
   }
 
-  /**
-   * Returns the head size.
-   *
-   * @return the head size
-   */
+  /** Returns the head size. */
   public float getHeadSize() {
     return this.mHeadSize;
   }
 
-  /**
-   * Returns the start head type.
-   *
-   * @return the start head type
-   */
+  /** Returns the start head type. */
   public int getStartHeadType() {
     return this.mStartHeadType;
   }
 
-  /**
-   * Returns the end head type.
-   *
-   * @return the end head type
-   */
+  /** Returns the end head type. */
   public int getEndHeadType() {
     return this.mEndHeadType;
   }
@@ -137,7 +112,6 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
    *
    * @param openAngle a value to set to the open angle
    * @param closeAngle a value to set to the close angle
-   * @return true if succeeded
    */
   public boolean setHeadAngle(final Float openAngle, final Float closeAngle) {
     final Float oNew =
@@ -176,20 +150,12 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
     return true;
   }
 
-  /**
-   * Returns the open angle of the arrow head.
-   *
-   * @return the open angle of the arrow head
-   */
+  /** Returns the open angle of the arrow head. */
   public float getHeadOpenAngle() {
     return this.mHeadOpenAngle;
   }
 
-  /**
-   * Returns the close angle of the arrow head.
-   *
-   * @return the close angle of the arrow head
-   */
+  /** Returns the close angle of the arrow head. */
   public float getHeadCloseAngle() {
     return this.mHeadCloseAngle;
   }
@@ -198,7 +164,6 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
    * Sets the line width.
    *
    * @param width line width to set
-   * @return true if succeeded
    */
   public boolean setLineWidth(final float width) {
     this.mStroke.setLineWidth(width);
@@ -210,7 +175,6 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
    * Sets the line type.
    *
    * @param type the line type to set
-   * @return true if succeeded
    */
   public boolean setLineType(final int type) {
     if (SGDrawingElementLine.isValidLineType(type) == false) {
@@ -225,7 +189,6 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
    * Sets the start head type.
    *
    * @param type the start head type
-   * @return true if succeeded
    */
   public boolean setStartHeadType(final int type) {
     if (SGDrawingElementArrow.isValidArrowHeadType(type) == false) {
@@ -241,7 +204,6 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
    * Sets the end head type.
    *
    * @param type the end head type
-   * @return true if succeeded
    */
   public boolean setEndHeadType(final int type) {
     if (SGDrawingElementArrow.isValidArrowHeadType(type) == false) {
@@ -256,7 +218,6 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
    * Sets the head size.
    *
    * @param size the head size to set
-   * @return true if succeeded
    */
   public boolean setHeadSize(final float size) {
     this.mHeadSize = size;
@@ -265,11 +226,7 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
     return true;
   }
 
-  /**
-   * Returns the color.
-   *
-   * @return the color
-   */
+  /** Returns the color. */
   public Color getColor() {
     return this.mColor;
   }
@@ -278,7 +235,6 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
    * Sets the color.
    *
    * @param cl the color to set
-   * @return true if succeeded
    */
   public boolean setColor(final Color cl) {
     if (cl == null) {
@@ -302,7 +258,6 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
    *
    * @param arrow an arrow that this arrow head belongs to
    * @param start true for the arrow head at start
-   * @return an instance of the head
    */
   protected SGDrawingElementSymbol createHeadInstance(
       final SGDrawingElementArrow arrow, final boolean start) {
@@ -355,20 +310,12 @@ public abstract class SGSimpleArrow2D extends SGDrawingElementArrow {
     return true;
   }
 
-  /**
-   * Returns the shape of the start head.
-   *
-   * @return a shape object
-   */
+  /** Returns the shape of the start head. */
   public Shape getStartHeadShape() {
     return this.mStartHeadShape;
   }
 
-  /**
-   * Returns the shape of the end head.
-   *
-   * @return a shape object
-   */
+  /** Returns the shape of the end head. */
   public Shape getEndHeadShape() {
     return this.mEndHeadShape;
   }

@@ -181,7 +181,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
    * @param w width of the image
    * @param h height of the image
    * @param silent the flag for the silent mode
-   * @return true if succeeded
    */
   public boolean export(
       Component target, Frame owner, final int w, final int h, final boolean silent) {
@@ -297,7 +296,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
    * @param type the image type
    * @param path the file path to export
    * @param prop properties of the image
-   * @return the result of setting properties
    */
   public SGPropertyResults export(
       final Component target, final String type, final String path, final SGPropertyMap prop) {
@@ -311,7 +309,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
 
     UserProperties p = new UserProperties();
 
-    // set default background color (only for vector type)
     for (int ii = 0; ii < VECTOR_BG_KEY_ARRAY.length; ii++) {
       String[] array = VECTOR_BG_KEY_ARRAY[ii];
       p.setProperty(array[1], DEFAULT_BACKGROUND_COLOR);
@@ -453,12 +450,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
 
         // "Thumbnails"
         this.setBoolean(prop, "Thumbnails", p, PDFGraphics2D.THUMBNAILS, result);
-        //                // set by PDF version
-        //                String version = p.getProperty(PDFGraphics2D.VERSION);
-        //                if (version != null) {
-        //                    p.setProperty(PDFGraphics2D.THUMBNAILS, version
-        //                            .equals(PDFGraphics2D.VERSION4));
-        //                }
 
         // "Compress"
         this.setBoolean(prop, "Compress", p, PDFGraphics2D.COMPRESS, result);
@@ -539,12 +530,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
             target,
             bgFlag,
             result);
-
-        // "Version"
-        // disabled in freeHep
-        //                this.setString(prop, "Version", p, SVGGraphics2D.VERSION,
-        //                        new String[] { SVGGraphics2D.VERSION_1_0,
-        //                                SVGGraphics2D.VERSION_1_1 });
 
         // "Compress"
         this.setBoolean(prop, "Compress", p, SVGGraphics2D.COMPRESS, result);
@@ -672,7 +657,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
         // set default background color for raster type
         p.setProperty(formatKey + ImageGraphics2D.BACKGROUND_COLOR, Color.WHITE);
 
-        // for the transparent format
         if (ImageGraphics2D.canWriteTransparent(uType)) {
           // "Transparent"
           this.setBoolean(prop, PageConstants.TRANSPARENT, p, ImageGraphics2D.TRANSPARENT, result);
@@ -743,29 +727,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
     return result;
   }
 
-  // private int getRoundNumber(SGPropertyMap prop) {
-  //   String roundSize8Str = prop.getValue(KEY_ROUND_SIZE_8);
-  //   Boolean roundSize8 = (roundSize8Str != null) ? SGUtilityText.getBoolean(roundSize8Str) :
-  // null;
-  //   String roundSize16Str = prop.getValue(KEY_ROUND_SIZE_16);
-  //   Boolean roundSize16 =
-  //       (roundSize16Str != null) ? SGUtilityText.getBoolean(roundSize16Str) : null;
-  //   String roundSize32Str = prop.getValue(KEY_ROUND_SIZE_32);
-  //   Boolean roundSize32 =
-  //       (roundSize32Str != null) ? SGUtilityText.getBoolean(roundSize32Str) : null;
-  //   final int roundNum;
-  //   if (roundSize32 != null && roundSize32) {
-  //     roundNum = 32;
-  //   } else if (roundSize16 != null && roundSize16) {
-  //     roundNum = 16;
-  //   } else if (roundSize8 != null && roundSize8) {
-  //     roundNum = 8;
-  //   } else {
-  //     roundNum = 1;
-  //   }
-  //   return roundNum;
-  // }
-
   /**
    * Sets a text string to the image properties from given candidates.
    *
@@ -775,7 +736,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
    * @param key the key for an image property
    * @param candidates the candidates of values for an image property
    * @param result the results of setting properties
-   * @return true if succeeded
    */
   private boolean setString(
       final SGPropertyMap prop,
@@ -808,7 +768,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
    * @param p the image properties
    * @param key the key for the image properties
    * @param result the results of setting properties
-   * @return true if succeeded
    */
   private boolean setText(
       final SGPropertyMap prop,
@@ -838,7 +797,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
    * @param p the image properties
    * @param key the key for the image properties
    * @param result the results of setting properties
-   * @return true if succeeded
    */
   private boolean setBoolean(
       final SGPropertyMap prop,
@@ -869,7 +827,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
    * @param key the key for the image properties
    * @param candidates the candidates for an image property
    * @param result the results of setting properties
-   * @return true if succeeded
    */
   private boolean setInteger(
       final SGPropertyMap prop,
@@ -905,7 +862,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
    * @param key the key for the image properties
    * @param range value range
    * @param result the results of setting properties
-   * @return true if succeeded
    */
   private boolean setFloat(
       final SGPropertyMap prop,
@@ -942,7 +898,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
    * @param target target component
    * @param bgFlag true to set background color
    * @param result the results of setting properties
-   * @return true if succeeded
    */
   private boolean setBackgroundColor(
       final SGPropertyMap prop,
@@ -1001,7 +956,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
    * @param p the image properties
    * @param key the key for the image properties
    * @param result the results of setting properties
-   * @return true if succeeded
    */
   private boolean setDimension(
       final SGPropertyMap prop,
@@ -1031,7 +985,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
    * @param p the image properties
    * @param key the key for the image properties
    * @param result the results of setting properties
-   * @return true if succeeded
    */
   private boolean setMargin(
       final SGPropertyMap prop,
@@ -1043,7 +996,6 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
     if (value != null) {
       String[] marginTextArray = SGUtilityText.getStringsInBracket(value);
       if (marginTextArray != null) {
-        // in the format as (top, bottom, left, right)
         if (marginTextArray.length != 4) {
           result.putResult(propKey, SGPropertyResults.INVALID_INPUT_VALUE);
           return false;
@@ -1130,6 +1082,10 @@ public class SGImageExportManager implements SGIImageExportManager, SGIConstants
   /**
    * Shows the preview image of the target object.
    *
+   * @param title the title parameter
+   * @param textOK the textOK parameter
+   * @param textCancel the textCancel parameter
+   * @param silent the silent parameter
    * @param target target object for export
    * @param owner owner object
    * @param w width of image

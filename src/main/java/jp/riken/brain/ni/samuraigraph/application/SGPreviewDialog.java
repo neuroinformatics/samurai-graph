@@ -129,7 +129,6 @@ public final class SGPreviewDialog extends SGDialog implements AdjustmentListene
    * @param w width of the image
    * @param h height of the image
    * @param paperColor color of the paper
-   * @return true if succeeded
    */
   public boolean setTargetObject(
       Component target, final int w, final int h, final Color paperColor) {
@@ -231,8 +230,9 @@ public final class SGPreviewDialog extends SGDialog implements AdjustmentListene
     /**
      * Builds the paper panel
      *
+     * @param w the w parameter
+     * @param h the h parameter
      * @param cl the background color
-     * @param rect the rectangle of the paper
      */
     PaperPanel(Color cl, final int w, final int h) {
       super();

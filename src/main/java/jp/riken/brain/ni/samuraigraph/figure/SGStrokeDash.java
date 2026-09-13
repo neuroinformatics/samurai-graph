@@ -36,47 +36,27 @@ public class SGStrokeDash implements Cloneable {
     this.setSpace(space);
   }
 
-  /**
-   * Returns the length of the first line segments.
-   *
-   * @return the length of the first line segments.
-   */
+  /** Returns the length of the first line segments. */
   public float getLineLen1() {
     return mLineLen1;
   }
 
-  /**
-   * Returns the length of the second line segments.
-   *
-   * @return the length of the second line segments.
-   */
+  /** Returns the length of the second line segments. */
   public float getLineLen2() {
     return mLineLen2;
   }
 
-  /**
-   * Returns the number of the first line segments.
-   *
-   * @return the number of the first line segments.
-   */
+  /** Returns the number of the first line segments. */
   public int getLineNum1() {
     return mLineNum1;
   }
 
-  /**
-   * Returns the number of the second line segments.
-   *
-   * @return the number of the second line segments.
-   */
+  /** Returns the number of the second line segments. */
   public int getLineNum2() {
     return mLineNum2;
   }
 
-  /**
-   * Returns the space between lines.
-   *
-   * @return the space between lines.
-   */
+  /** Returns the space between lines. */
   public float getSpace() {
     return mSpace;
   }

@@ -6,11 +6,7 @@ import java.awt.geom.Rectangle2D;
 /** Drawing element with Java2D methods. */
 public interface SGIDrawingElementJava2D {
 
-  /**
-   * Returns the bounding box of this object.
-   *
-   * @return A bounding box of this object.
-   */
+  /** Returns the bounding box of this object. */
   public Rectangle2D getElementBounds();
 
   /**

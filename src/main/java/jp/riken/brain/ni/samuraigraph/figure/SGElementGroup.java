@@ -45,18 +45,12 @@ public abstract class SGElementGroup
   // The flag whether this object is already disposed of.
   private boolean mDisposed = false;
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean initDrawingElement(final int num) {
     if (this.mDrawingElementArray != null) {
       if (this.mDrawingElementArray.length == num) {
@@ -72,23 +66,15 @@ public abstract class SGElementGroup
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected abstract SGDrawingElement createDrawingElementInstance(final int index);
 
-  /**
-   * @return
-   */
+  /** */
   public SGDrawingElement[] getDrawingElementArray() {
     return this.mDrawingElementArray;
   }
 
-  /**
-   * Returns the magnification.
-   *
-   * @return the magnification
-   */
+  /** Returns the magnification. */
   public float getMagnification() {
     return this.mMagnification;
   }
@@ -97,7 +83,6 @@ public abstract class SGElementGroup
    * Sets the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     if (mag <= 0.0) {

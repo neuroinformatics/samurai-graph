@@ -268,7 +268,6 @@ public interface SGIAxisConstants extends SGIConstants {
 
   public static final String COM_AXIS = "Axis";
 
-  // for figure axis
   public static final String COM_AXIS_VISIBLE = "Visible";
 
   public static final String COM_AXIS_SHIFT = "Shift";
@@ -359,7 +358,6 @@ public interface SGIAxisConstants extends SGIConstants {
   public static final String COM_AXIS_TICK_MARK_COLOR = "TickMarkColor";
 
   //
-  // for backward compatibility (<= 2.0.0)
   //
 
   // common to the title and numbers

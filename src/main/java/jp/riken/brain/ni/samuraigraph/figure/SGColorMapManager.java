@@ -45,7 +45,6 @@ public abstract class SGColorMapManager {
    * Returns the color map.
    *
    * @param name the name of color map
-   * @return a color map of given name if it exists
    */
   public SGColorMap getColorMap(final String name) {
     if (name == null) {
@@ -65,7 +64,6 @@ public abstract class SGColorMapManager {
    *
    * @param name the name of color map
    * @param map the color map
-   * @return true if succeeded
    */
   public boolean addColorMap(final String name, final SGColorMap map) {
 
@@ -84,7 +82,6 @@ public abstract class SGColorMapManager {
    * Returns the name of the color map.
    *
    * @param map the color map
-   * @return the name of a given color map if it exists
    */
   public String getColorMapName(final SGColorMap map) {
     String name = null;
@@ -221,11 +218,7 @@ public abstract class SGColorMapManager {
 
     public static final String KEY_COLOR_2 = "Color2";
 
-    /**
-     * Creates and returns the map of properties for the property file.
-     *
-     * @return the map of properties
-     */
+    /** Creates and returns the map of properties for the property file. */
     @Override
     public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
       SGPropertyMap map = super.getPropertyFileMap(params);
@@ -237,11 +230,7 @@ public abstract class SGColorMapManager {
       return map;
     }
 
-    /**
-     * Creates and returns the map of properties.
-     *
-     * @return the map of properties
-     */
+    /** Creates and returns the map of properties. */
     @Override
     public SGPropertyMap getPropertyMap() {
       SGPropertyMap map = super.getPropertyMap();
@@ -257,7 +246,6 @@ public abstract class SGColorMapManager {
      * Reads properties from given Element and set to this object.
      *
      * @param el an Element object
-     * @return true if succeeded
      */
     @Override
     public boolean readProperty(Element el) {
@@ -290,7 +278,6 @@ public abstract class SGColorMapManager {
      *
      * @param map a map of properties
      * @param iResult the input result
-     * @return the updated result of setting properties
      */
     @Override
     public SGPropertyResults setProperties(SGPropertyMap map, SGPropertyResults iResult) {
@@ -419,11 +406,7 @@ public abstract class SGColorMapManager {
       this.mModel.setReversedOrder(b);
     }
 
-    /**
-     * Overrode to get colors from the model in an attribute.
-     *
-     * @return an array of colors
-     */
+    /** Overrode to get colors from the model in an attribute. */
     @Override
     public Color[] getColors() {
       return this.mModel.getColors();
@@ -897,6 +880,7 @@ public abstract class SGColorMapManager {
   /**
    * Writes properties of this color map to a given Element.
    *
+   * @param params the params parameter
    * @param el an Element
    * @return true if succeeded
    */

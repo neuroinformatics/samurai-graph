@@ -198,7 +198,6 @@ public class SGDataMergeUtility implements SGIDataColumnTypeConstants {
         }
       }
 
-      // if index variables are selected, cannot merge the data
       if (indexList.size() > 0) {
         return null;
       }

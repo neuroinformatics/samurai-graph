@@ -36,9 +36,6 @@ public interface SGIFigureDrawingElementConstants extends SGIDrawingElementConst
 
   public static final int RECT_SIZE_MINIMAL_ORDER = -RECT_SIZE_FRAC_DIFIT_MAX;
 
-  // bar
-  // public static final float BAR_WIDTH_MIN = 0.05f/CM_POINT_RATIO;
-  // public static final float BAR_WIDTH_MAX = 5.0f/CM_POINT_RATIO;
   public static final double BAR_EDGE_LINE_WIDTH_MIN = LINE_WIDTH_MIN_VALUE;
 
   public static final double BAR_EDGE_LINE_WIDTH_MAX = LINE_WIDTH_MAX_VALUE;

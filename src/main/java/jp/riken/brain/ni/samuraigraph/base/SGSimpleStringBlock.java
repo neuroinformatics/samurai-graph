@@ -8,6 +8,7 @@ public class SGSimpleStringBlock extends SGStringBlock {
   /**
    * Builds an block object.
    *
+   * @param values the values parameter
    * @param seriesArray the array of dimension indices
    */
   public SGSimpleStringBlock(final String[] values, SGIntegerSeries[] seriesArray) {

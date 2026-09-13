@@ -1163,11 +1163,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     return this.mOriginScrollPane;
   }
 
-  /**
-   * Checks selected items.
-   *
-   * @return true if selected items are valid for the data type
-   */
+  /** Checks selected items. */
   @Override
   public boolean checkSelectedItems() {
     // check selected items of the table
@@ -1396,11 +1392,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     return this.mDataColumnSelectionPanel;
   }
 
-  /**
-   * Returns selected column types.
-   *
-   * @return selected column types
-   */
+  /** Returns selected column types. */
   @Override
   public SGDataColumnInfo[] getDataColumnTypes() {
     SGDataColumnInfo[] cols = this.mDataColumnSelectionPanel.getDataColumnInfoArray();
@@ -1411,7 +1403,6 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
    * Returns the origins of a given variable.
    *
    * @param name the name of a variable
-   * @return the origins of a given variable
    */
   public int[] getOrigins(final String name) {
     SGMDArrayDataColumnInfo mdInfo =
@@ -1941,17 +1932,6 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
                   }
                 }
               }
-              // if (!this.isValidDimensionIndex(syIndex)) {
-              // if (this.isValidDimensionIndex(fyIndex)) {
-              // final int len = fInfo.getDimensions()[fyIndex];
-              // for (int ii = 0; ii < dims.length; ii++) {
-              // if (dims[ii] == len) {
-              // syIndex = ii;
-              // break;
-              // }
-              // }
-              // }
-              // }
               if (!this.isValidDimensionIndex(syIndex)) {
                 syIndex = 1;
               }
@@ -2228,7 +2208,6 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
    * @param colInfoSet data columns
    * @param infoMap a map of information
    * @param showDefault a flag whether to show default column type
-   * @return true if succeeded
    */
   public boolean setData(
       SGMDArrayData data,
@@ -2255,7 +2234,6 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
    * @param colInfoSet data columns
    * @param infoMap a map of information
    * @param showDefault a flag whether to show default column type
-   * @return true if succeeded
    */
   public boolean setData(
       final SGMDArrayFile mdFile,
@@ -2489,11 +2467,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     }
   }
 
-  /**
-   * Returns whether stride of data arrays is available.
-   *
-   * @return true if stride of data arrays is available
-   */
+  /** Returns whether stride of data arrays is available. */
   public boolean isStrideAvailable() {
     return this.mStrideAvailableCheckBox.isSelected();
   }
@@ -2583,7 +2557,6 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     SGDataColumnInfo curCol = cols[row];
     String name = curCol.getName();
 
-    // if the current name if different from the name in the origin panel,
     // do nothing and returns
     String originPanelName = this.mOriginNameTextField.getText();
     if (!SGUtility.equals(originPanelName, name)) {
@@ -2602,11 +2575,7 @@ public class SGMDArrayDataSetupPanel extends SGDataSetupPanel
     }
   }
 
-  /**
-   * Returns the indices for picked up dimension of scalar XY data.
-   *
-   * @return the indices for picked up dimension of scalar XY data
-   */
+  /** Returns the indices for picked up dimension of scalar XY data. */
   @Override
   public SGIntegerSeriesSet getSXYPickUpIndices() {
     return this.mSXYDataPickUpDimensionIndexPanel.getIndices();

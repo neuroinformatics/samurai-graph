@@ -8,11 +8,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 /** An interface for the observers of line style dialog. */
 public interface SGILineStyleDialogObserver {
 
-  /**
-   * Returns the map of line style.
-   *
-   * @return the map of line style
-   */
+  /** Returns the map of line style. */
   public Map<Integer, SGLineStyle> getLineStyleMap();
 
   /**
@@ -20,7 +16,6 @@ public interface SGILineStyleDialogObserver {
    *
    * @param style the line style to set
    * @param index array index of child data object
-   * @return true if succeeded
    */
   public boolean setLineStyle(final SGLineStyle style, final int index);
 
@@ -28,15 +23,10 @@ public interface SGILineStyleDialogObserver {
    * Sets the line styles to the child data object.
    *
    * @param styleList list of line styles
-   * @return true if succeeded
    */
   public boolean setLineStyle(final List<SGLineStyle> styleList);
 
-  /**
-   * Returns whether line color is automatically assigned.
-   *
-   * @return true if line color is automatically assigned
-   */
+  /** Returns whether line color is automatically assigned. */
   public boolean isLineColorAutoAssigned();
 
   /**

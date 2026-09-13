@@ -151,11 +151,7 @@ public class SGProxySettingDialog extends SGDialog {
   /** The port number. */
   private int mPortNumber = -1;
 
-  /**
-   * Initializes this dialog.
-   *
-   * @return true if succeeded
-   */
+  /** Initializes this dialog. */
   private boolean initProperty() {
     // set the title
     this.setTitle(TITLE);
@@ -242,29 +238,17 @@ public class SGProxySettingDialog extends SGDialog {
     }
   }
 
-  /**
-   * Returns the direct access flag.
-   *
-   * @return the direct access flag
-   */
+  /** Returns the direct access flag. */
   public boolean isDirectAccess() {
     return this.mDirectAccessFlag;
   }
 
-  /**
-   * Returns the host name.
-   *
-   * @return the host name
-   */
+  /** Returns the host name. */
   public String getHostName() {
     return this.mHostName;
   }
 
-  /**
-   * Returns the port number.
-   *
-   * @return the port number
-   */
+  /** Returns the port number. */
   public int getPortNumber() {
     return this.mPortNumber;
   }

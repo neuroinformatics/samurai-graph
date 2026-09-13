@@ -21,6 +21,7 @@ public class SGDataAxisInfo {
   /**
    * Builds this object.
    *
+   * @param title the title parameter
    * @param data a data
    * @param axis an axis
    * @param range the range of axis values

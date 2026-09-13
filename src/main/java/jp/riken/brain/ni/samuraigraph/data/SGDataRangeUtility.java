@@ -202,16 +202,6 @@ public final class SGDataRangeUtility
       return null;
     }
     return getBounds(values);
-    // final SGTuple2d[] coordinates = data.getXYValueArray();
-    // if (coordinates == null) {
-    // return null;
-    // }
-    // final int len = coordinates.length;
-    // double[] values = new double[len];
-    // for (int ii = 0; ii < len; ii++) {
-    // values[ii] = coordinates[ii].x;
-    // }
-    // return getBounds(values);
   }
 
   /**
@@ -221,16 +211,6 @@ public final class SGDataRangeUtility
    * @return the bounds of y-values
    */
   public static SGValueRange getBoundsY(SGIVXYTypeData data) {
-    // final SGTuple2d[] coordinates = data.getXYValueArray();
-    // if (coordinates == null) {
-    // return null;
-    // }
-    // final int len = coordinates.length;
-    // double[] values = new double[len];
-    // for (int ii = 0; ii < len; ii++) {
-    // values[ii] = coordinates[ii].y;
-    // }
-    // return getBounds(values);
     final double[] values = data.getYValueArray(false);
     if (values == null) {
       return null;

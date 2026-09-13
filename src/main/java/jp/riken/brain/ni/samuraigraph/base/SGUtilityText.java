@@ -79,7 +79,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
    * Separates a given text string into the base strings, subscript strings and superscript strings.
    *
    * @param line A line.
-   * @param bseList List of base strings.
+   * @param baseList List of base strings.
    * @param superList List of superscript strings.
    * @param subList List of subscript strings.
    * @return true if succeeded
@@ -722,8 +722,6 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
     sb.append(color.getGreen());
     sb.append(',');
     sb.append(color.getBlue());
-    // sb.append(',');
-    // sb.append(color.getAlpha());
     sb.append(')');
     return sb.toString();
   }
@@ -731,7 +729,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
   /**
    * Creates a string representation of a color object from a given string in a format of "r, g, b".
    *
-   * @param color a color object
+   * @param cl a color object
    * @return a string representation of a given color
    */
   public static String getSimpleColorString(Color cl) {
@@ -1163,6 +1161,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
   /**
    * @param str
    * @return
+   * @param unit the unit parameter
    */
   public static Number getLength(final String str, final String unit) {
     if (str == null) {
@@ -1239,12 +1238,10 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
 
     final int len = str.length();
 
-    // if the length of the string equals to zero
     if (len == 0) {
       return false;
     }
 
-    // if the string consists of spaces
     boolean flag = false;
     for (int ii = 0; ii < len; ii++) {
       final char c = str.charAt(ii);
@@ -1346,9 +1343,6 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
       throw new IllegalArgumentException();
     }
 
-    // final String uOld = unitOld.toLowerCase();
-    // final String uNew = unitNew.toLowerCase();
-
     // no needs of conversion
     if (unitOld.equalsIgnoreCase(unitNew)) {
       return value;
@@ -1403,6 +1397,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
   /**
    * Parse and convert to the given unit. ex. str - 1 inch , unit - cm is converted to "2.54"
    *
+   * @param unit the unit parameter
    * @param str - a string to be parsed
    * @return parsed string
    */
@@ -1693,6 +1688,7 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
   /**
    * @param value
    * @return
+   * @param u the u parameter
    */
   public static Number getNumber(final String value, final StringBuilder u) {
     if (value == null) {
@@ -2142,72 +2138,6 @@ public class SGUtilityText implements SGIDrawingElementConstants, SGIPropertyFil
       }
     }
     tokenList.add(args.substring(curIndex, len).trim());
-
-    /*
-     * final List<String> argsList = new ArrayList<String>();
-     *
-     * // reduce successive commas in each token
-     * for (int ii = 0; ii < tokenList.size(); ii++) {
-     * String token = tokenList.get(ii);
-     * final int fIndex = token.indexOf('"');
-     * if (fIndex == -1) {
-     * argsList.add(token);
-     * continue;
-     * }
-     * final int lIndex = token.lastIndexOf('"');
-     * if (lIndex == fIndex) {
-     * return null;
-     * }
-     * if (lIndex != token.length() - 1) {
-     * return null;
-     * }
-     * String head = token.substring(0, fIndex);
-     * String body = token.substring(fIndex + 1, lIndex);
-     *
-     * // check whether double quotations are successive
-     * for (int jj = 0; jj < body.length(); jj++) {
-     * final char c = body.charAt(jj);
-     * if (c == '"') {
-     * if (jj == body.length() - 1) {
-     * return null;
-     * }
-     * final char cNext = body.charAt(jj + 1);
-     * if (cNext != '"') {
-     * return null;
-     * }
-     * jj++;
-     * }
-     * }
-     *
-     * List<Character> cList = new ArrayList<Character>();
-     * boolean dq = false;
-     * for (int jj = 0; jj < body.length(); jj++) {
-     * final char c = body.charAt(jj);
-     * if (c == '"') {
-     * if (!dq) {
-     * dq = true;
-     * } else {
-     * cList.add(Character.valueOf(c));
-     * dq = false;
-     * }
-     * } else {
-     * cList.add(Character.valueOf(c));
-     * }
-     * }
-     * char[] cArray = new char[cList.size()];
-     * for (int jj = 0; jj < cArray.length; jj++) {
-     * cArray[jj] = cList.get(jj).charValue();
-     * }
-     * StringBuilder sb = new StringBuilder();
-     * sb.append(head);
-     * sb.append('"');
-     * sb.append(new String(cArray));
-     * sb.append('"');
-     * argsList.add(sb.toString());
-     * }
-     *
-     * return argsList;
-     */
 
     return tokenList;
   }

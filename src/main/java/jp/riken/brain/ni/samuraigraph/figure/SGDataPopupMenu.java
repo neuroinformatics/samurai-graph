@@ -325,18 +325,6 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
   protected List<PopupMenuItem> getPluginsCommandList() {
     List<PopupMenuItem> list = new ArrayList<PopupMenuItem>();
 
-    //        SGPluginsQueryMessage messageObject = new
-    // SGPluginsQueryMessage(SGPluginsQueryMessage.MENUCMD_OUTPUT_TO_FILE_IS_ENABLED);
-    //        this.notifyToListener(SGPluginsQueryMessage.MENUCMD_OUTPUT_TO_FILE_IS_ENABLED,
-    // messageObject);
-    //
-    //        boolean isOutputToFileEnabled = false;
-    //        Object result = messageObject.get();
-    //        if (result instanceof Boolean) {
-    //            isOutputToFileEnabled = ((Boolean)result).booleanValue();
-    //        }
-    //
-    //        list.add(new PopupMenuItem(MENUCMD_OUTPUT_TO_FILE, isOutputToFileEnabled));
     return list;
   }
 
@@ -436,7 +424,7 @@ public abstract class SGDataPopupMenu extends SGPopupMenu implements SGILegendCo
   /**
    * Sets the data plug-in manager.
    *
-   * @param l the data plug-in manager
+   * @param m the data plug-in manager
    */
   public static void setDataPluginManager(SGIPluginManager m) {
     mDataPluginManager = m;

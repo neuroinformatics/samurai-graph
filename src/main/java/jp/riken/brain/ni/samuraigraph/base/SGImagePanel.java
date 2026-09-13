@@ -29,6 +29,10 @@ public class SGImagePanel extends JPanel implements SGIDisposable {
 
   /**
    * @param image
+   * @param x the x parameter
+   * @param y the y parameter
+   * @param w the w parameter
+   * @param h the h parameter
    */
   public SGImagePanel(Image image, final int x, final int y, final int w, final int h) {
     super();
@@ -45,11 +49,7 @@ public class SGImagePanel extends JPanel implements SGIDisposable {
   // The flag whether this object is already disposed of.
   private boolean mDisposed = false;
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }
@@ -80,16 +80,12 @@ public class SGImagePanel extends JPanel implements SGIDisposable {
     this.mImage.setImageBounds(x, y, w, h);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGTuple2f getImageLocation() {
     return this.mImage.getImageLocation();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGTuple2f getImageSize() {
     return this.mImage.getImageSize();
   }
@@ -101,11 +97,7 @@ public class SGImagePanel extends JPanel implements SGIDisposable {
     this.mImage = new SGImage(image, this);
   }
 
-  /**
-   * Returns the image.
-   *
-   * @return
-   */
+  /** Returns the image. */
   public Image getImage() {
     return this.mImage.getImage();
   }

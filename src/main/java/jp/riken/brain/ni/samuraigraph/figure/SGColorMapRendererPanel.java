@@ -54,11 +54,7 @@ public class SGColorMapRendererPanel extends JPanel {
     }
   }
 
-  /**
-   * Returns the flag whether this component is available.
-   *
-   * @return true if this component is available
-   */
+  /** Returns the flag whether this component is available. */
   public boolean isAvailable() {
     return this.mAvailable;
   }

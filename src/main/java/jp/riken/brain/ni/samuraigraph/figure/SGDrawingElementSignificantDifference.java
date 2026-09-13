@@ -142,7 +142,6 @@ public abstract class SGDrawingElementSignificantDifference
    * Sets the color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   @Override
   public boolean setColor(final Color color) {
@@ -199,7 +198,6 @@ public abstract class SGDrawingElementSignificantDifference
    * Sets the line width.
    *
    * @param lw the line width to set
-   * @return true if succeeded
    */
   @Override
   public boolean setLineWidth(final float lw) {
@@ -225,7 +223,6 @@ public abstract class SGDrawingElementSignificantDifference
    * Sets the font name.
    *
    * @param name the font name
-   * @return true if succeeded
    */
   @Override
   public boolean setFontName(final String name) {
@@ -239,7 +236,6 @@ public abstract class SGDrawingElementSignificantDifference
    * Sets the font size.
    *
    * @param size the font size
-   * @return true if succeeded
    */
   @Override
   public boolean setFontSize(final float size) {
@@ -253,7 +249,6 @@ public abstract class SGDrawingElementSignificantDifference
    * Sets the font style.
    *
    * @param style the font style
-   * @return true if succeeded
    */
   @Override
   public boolean setFontStyle(final int style) {
@@ -593,9 +588,7 @@ public abstract class SGDrawingElementSignificantDifference
     return pos;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Point2D getHorizontalMiddle() {
     final Point2D pos =
         new Point2D.Float(
@@ -603,9 +596,7 @@ public abstract class SGDrawingElementSignificantDifference
     return pos;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Point2D getLeftMiddle() {
     final Point2D pos = new Point2D.Float();
     final Point2D joint = this.getLeftJoint();
@@ -614,9 +605,7 @@ public abstract class SGDrawingElementSignificantDifference
     return pos;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Point2D getRightMiddle() {
     final Point2D pos = new Point2D.Float();
     final Point2D joint = this.getRightJoint();
@@ -641,16 +630,13 @@ public abstract class SGDrawingElementSignificantDifference
    * Sets the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     this.getStringElement().setMagnification(mag);
     return this.createDrawingElement();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Rectangle2D getElementBounds() {
     ArrayList<Rectangle2D> rectList = new ArrayList<Rectangle2D>();
     rectList.add(this.getLineBounds());

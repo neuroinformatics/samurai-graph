@@ -65,8 +65,6 @@ public class SGSplashWindow extends JWindow {
     bar.setSize(barWidth, barHeight);
     bar.setLocation(barX, barY);
     this.mProgressBar = bar;
-    // bar.setIndeterminate(true);
-    // bar.setStringPainted(true);
 
     // add to the image panel
     imgPanel.add(vLabel);

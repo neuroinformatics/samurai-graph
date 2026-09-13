@@ -31,9 +31,9 @@ public class SGPropertyFileData {
   /**
    * Build a property file data object with given values.
    *
+   * @param dataName the dataName parameter
    * @param figureId a value set to the figure ID
    * @param dataType a value set to the data type
-   * @param dataNam a value set to the name
    * @param infoMap a map of information of this data
    */
   public SGPropertyFileData(
@@ -49,47 +49,27 @@ public class SGPropertyFileData {
     }
   }
 
-  /**
-   * Returns the name of data.
-   *
-   * @return the name of data
-   */
+  /** Returns the name of data. */
   public String getDataName() {
     return dataName;
   }
 
-  /**
-   * Returns the type of data.
-   *
-   * @return the type of data
-   */
+  /** Returns the type of data. */
   public String getDataType() {
     return dataType;
   }
 
-  /**
-   * Returns the figure ID.
-   *
-   * @return the figure ID
-   */
+  /** Returns the figure ID. */
   public int getFigureId() {
     return figureId;
   }
 
-  /**
-   * Returns a map of data information.
-   *
-   * @return a map of data information
-   */
+  /** Returns a map of data information. */
   public Map<String, Object> getInfoMap() {
     return new HashMap<String, Object>(infoMap);
   }
 
-  /**
-   * Returns the file name.
-   *
-   * @return the file name
-   */
+  /** Returns the file name. */
   public String getFileName() {
     return fileName;
   }
@@ -119,11 +99,7 @@ public class SGPropertyFileData {
     }
   }
 
-  /**
-   * Returns the size of figure.
-   *
-   * @return the size of figure
-   */
+  /** Returns the size of figure. */
   public SGTuple2f getFigureSize() {
     return new SGTuple2f(this.figureSize);
   }

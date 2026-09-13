@@ -15,11 +15,7 @@ public class SGDataCalcLibrary {
     this.mLibrary = lib;
   }
 
-  /**
-   * Returns a text string of identifier.
-   *
-   * @return a text string of identifier
-   */
+  /** Returns a text string of identifier. */
   public String getId() {
     return Integer.toString(this.mLibrary.hashCode());
   }
@@ -28,7 +24,6 @@ public class SGDataCalcLibrary {
    * Processes given data and returns the result.
    *
    * @param input pointer for input data
-   * @return pointer for the result of calculation
    */
   public Pointer calc(Pointer input) {
     return this.mLibrary.calc(input);

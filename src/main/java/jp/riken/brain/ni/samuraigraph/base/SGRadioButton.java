@@ -53,32 +53,5 @@ public class SGRadioButton extends JRadioButton
   }
 
   /** Initialize this text field. */
-  private void init() {
-    //        this.addKeyListener(this);
-  }
-
-  //    public void keyPressed(KeyEvent e) {
-  //    }
-  //
-  //    public void keyReleased(KeyEvent e) {
-  //    }
-  //
-  //    /**
-  //     * Called when the key is typed.
-  //     *
-  //     * @param e
-  //     *            the key event
-  //     */
-  //    public void keyTyped(KeyEvent e) {
-  //        final char c = e.getKeyChar();
-  //        if (c == KeyEvent.VK_ESCAPE) {
-  //            // when the escape key is typed, notify to the listeners
-  //            ActionEvent ae = new ActionEvent(this, 0, ESCAPE_KEY_TYPED);
-  //            ActionListener[] al = this.getActionListeners();
-  //            for (int ii = 0; ii < al.length; ii++) {
-  //                al[ii].actionPerformed(ae);
-  //            }
-  //        }
-  //    }
-
+  private void init() {}
 }

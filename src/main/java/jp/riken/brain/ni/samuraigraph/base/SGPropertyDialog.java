@@ -107,39 +107,21 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
   /** */
   protected String getString(final String key) {
     ResourceBundle bundle = ResourceBundle.getBundle("res", Locale.JAPAN);
-    // ResourceBundle bundle =
-    // ResourceBundle.getBundle("res",Locale.ENGLISH);
     String val = bundle.getString(key);
 
     return val;
   }
 
-  /**
-   * Returns a list of text field components.
-   *
-   * @return a list of text field components
-   */
+  /** Returns a list of text field components. */
   public abstract List<JTextField> getTextFieldComponentsList();
 
-  /**
-   * Returns a list of text field components to input axis number.
-   *
-   * @return a list of text field components to input axis number
-   */
+  /** Returns a list of text field components to input axis number. */
   public abstract List<SGTextField> getAxisNumberTextFieldList();
 
-  /**
-   * Returns a list of spinners.
-   *
-   * @return a list of spinners
-   */
+  /** Returns a list of spinners. */
   public abstract List<SGSpinner> getSpinnerList();
 
-  /**
-   * Returns a list of JFormattedTextField from spinners.
-   *
-   * @return a list of JFormattedTextField from spinners
-   */
+  /** Returns a list of JFormattedTextField from spinners. */
   protected List<JFormattedTextField> getFormattedTextFieldsListFromSpinners() {
     final List<JFormattedTextField> list = new ArrayList<JFormattedTextField>();
     final List<SGSpinner> sList = this.getSpinnerList();
@@ -177,48 +159,27 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     }
   }
 
-  /**
-   * Returns the OK button.
-   *
-   * @return the OK button
-   */
+  /** Returns the OK button. */
   protected abstract JButton getOKButton();
 
-  /**
-   * Returns the cancel button.
-   *
-   * @return the cancel button
-   */
+  /** Returns the cancel button. */
   protected abstract JButton getCancelButton();
 
-  /**
-   * Returns the preview button.
-   *
-   * @return the preview button
-   */
+  /** Returns the preview button. */
   protected abstract JButton getPreviewButton();
 
-  /**
-   * Returns the spinner model for line width.
-   *
-   * @return the spinner model for line width
-   */
+  /** Returns the spinner model for line width. */
   public static SpinnerNumberModel getLineWidthSpinnerNumberModel() {
     return SGUtility.getLineWidthSpinnerNumberModel();
   }
 
-  /**
-   * Returns the spinner model for font size.
-   *
-   * @return the spinner model for font size
-   */
+  /** Returns the spinner model for font size. */
   public static SpinnerNumberModel getFontSizeSpinnerNumberModel() {
     return SGUtility.getFontSizeSpinnerNumberModel();
   }
 
   /**
    * @param l
-   * @return
    */
   public boolean addPropertyDialogObserver(final SGIPropertyDialogObserver l) {
     this.mPropertyDialogObserverList.add(l);
@@ -227,16 +188,12 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
 
   /**
    * @param l
-   * @return
    */
   public boolean removePropertyDialogObserver(final SGIPropertyDialogObserver l) {
     return this.mPropertyDialogObserverList.remove(l);
   }
 
-  /**
-   * @param l
-   * @return
-   */
+  /** * @return */
   public boolean removeAllPropertyDialogObserver() {
     this.mPropertyDialogObserverList.clear();
     return true;
@@ -288,9 +245,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
 
   protected String mCommitActionStateMessage = null;
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean commit() {
     this.mCommitActionStateMessage = NOTIFY_ACTION_COMMIT;
     if (!this.setPropertiesToAllListeners()) {
@@ -305,9 +260,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean cancel() {
     this.mCommitActionStateMessage = NOTIFY_ACTION_CANCEL;
     for (int ii = 0; ii < this.mPropertyDialogObserverList.size(); ii++) {
@@ -319,9 +272,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean preview() {
     this.mCommitActionStateMessage = NOTIFY_ACTION_PREVIEW;
     if (!this.setPropertiesToAllListeners()) {
@@ -357,11 +308,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     return true;
   }
 
-  /**
-   * Checks the input values.
-   *
-   * @return true if input values are valid
-   */
+  /** Checks the input values. */
   protected boolean checkInputValues() {
     if (!this.hasValidInputValues()) {
       // shows a message dialog
@@ -372,11 +319,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
     return true;
   }
 
-  /**
-   * Overrode this method to check the input values.
-   *
-   * @return true if all input values are valid
-   */
+  /** Overrode this method to check the input values. */
   protected boolean hasValidInputValues() {
     boolean ret = true;
 
@@ -402,10 +345,10 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
   /**
    * Checks whether the text field has valid number type input value.
    *
+   * @param addDesc the addDesc parameter
    * @param tf the text field
    * @param min the minimum value for the input value if it exists
    * @param max the maximum value for the input value if it exists
-   * @return true if the input value is valid
    */
   protected boolean hasValidNumber(
       final SGTextField tf, final boolean addDesc, final Number min, final Number max) {
@@ -541,11 +484,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
   private static final String ERR_MSG_HEADER =
       "The input values are illegal in the following components:\n";
 
-  /**
-   * Returns a text string used as an error message for illegal input.
-   *
-   * @return a text string used as an error message for illegal input
-   */
+  /** Returns a text string used as an error message for illegal input. */
   protected String getInputErrorMessage() {
     if (this.mInputErrorComponentNameList.size() != 0) {
       List<String> list = this.mInputErrorComponentNameList;
@@ -565,8 +504,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
   /**
    * Set the error message used as an error message on input.
    *
-   * @param str
-   * @return
+   * @param name
    */
   protected boolean addInputErrorDescription(final String name) {
     this.mInputErrorComponentNameList.add(name);
@@ -575,7 +513,6 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
 
   /**
    * @param msg
-   * @return
    */
   protected boolean setInputErrorMessage(final String msg) {
     this.mInputErrorMessage = msg;
@@ -591,15 +528,10 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
    * Set properties to all observers.
    *
    * @param obs
-   * @return
    */
   public abstract boolean setPropertiesToObserver(SGIPropertyDialogObserver obs);
 
-  /**
-   * Set parameters to the components in the dialog.
-   *
-   * @return
-   */
+  /** Set parameters to the components in the dialog. */
   public abstract boolean setDialogProperty();
 
   /** */
@@ -611,6 +543,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
   /**
    * @param obj
    * @return
+   * @param tf the tf parameter
    */
   protected boolean setValue(final SGTextField tf, final Object obj) {
     return SGUtility.setDoubleValue(tf, obj);
@@ -619,6 +552,7 @@ public abstract class SGPropertyDialog extends SGDialog implements SGIDrawingEle
   /**
    * @param obj
    * @return
+   * @param sp the sp parameter
    */
   protected boolean setValue(final SGSpinner sp, final Object obj) {
     return SGUtility.setValue(sp, obj);

@@ -8,7 +8,6 @@ public interface SGIElementGroupSetSXY extends SGIElementGroupSetForData, SGIEle
    * Creates drawing elements of error bars.
    *
    * @param dataXY XY type data
-   * @return the group of error bars
    */
   public SGElementGroupErrorBar createErrorBars(SGISXYTypeSingleData dataXY);
 
@@ -16,7 +15,6 @@ public interface SGIElementGroupSetSXY extends SGIElementGroupSetForData, SGIEle
    * Creates drawing elements of tick labels.
    *
    * @param dataXY XY type data
-   * @return the group of tick labels
    */
   public SGElementGroupTickLabel createTickLabels(SGISXYTypeSingleData dataXY);
 

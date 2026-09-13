@@ -91,11 +91,7 @@ public class SGMDArrayDimensionPanel extends SGDimensionPanel {
     this.mSliderPanel.setComponentsEnabled(enabled);
   }
 
-  /**
-   * Returns the name of the dimension.
-   *
-   * @return the name of the dimension
-   */
+  /** Returns the name of the dimension. */
   public String getDimensionName() {
     return this.mNameLabel.getText();
   }
@@ -110,11 +106,7 @@ public class SGMDArrayDimensionPanel extends SGDimensionPanel {
     this.mNameLabel.setToolTipText(name);
   }
 
-  /**
-   * Returns the slider panel.
-   *
-   * @return the slider panel
-   */
+  /** Returns the slider panel. */
   protected SGSliderPanel getSliderPanel() {
     return this.mSliderPanel;
   }

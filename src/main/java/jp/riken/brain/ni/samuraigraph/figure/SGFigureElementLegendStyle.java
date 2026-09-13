@@ -190,7 +190,6 @@ final class SGFigureElementLegendStyle {
    * @param name the font name
    * @param style the font style
    * @param size the font size in units of pt
-   * @return true if the values are changed
    */
   boolean setFont(final String name, final int style, final float size) {
     boolean changed = false;

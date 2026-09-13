@@ -401,7 +401,6 @@ public class SGGradationPaintDialog extends JDialog
       }
       final boolean bcc = this.isColorChooserComponent(opposite);
 
-      // if the opposite component is not the part of the color chooser dialog,
       // clear the focused button
       if (!bcc) {
         // set the border

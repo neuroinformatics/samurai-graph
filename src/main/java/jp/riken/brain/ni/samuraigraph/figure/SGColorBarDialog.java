@@ -48,7 +48,6 @@ public class SGColorBarDialog extends SGAxisDialog
     this.mTabbedPane.addTab("Layout", this.mLayoutTabPanel);
     this.mTabbedPane.addTab("Frame Line", this.mAxisLineTabPanel);
     this.mTabbedPane.addTab("Title", this.mTitleTabPanel);
-    // this.mTabbedPane.addTab("Scale", this.mScaleTabPanel);
     this.mTabbedPane.addTab("Number", this.mNumberTabPanel);
     this.mTabbedPane.addTab("Tick Mark", this.mTickMarkTabPanel);
   }
@@ -488,11 +487,7 @@ public class SGColorBarDialog extends SGAxisDialog
     this.setCalendarIcon(this.mYDateButton);
   }
 
-  /**
-   * Returns a list of text fields components for number input.
-   *
-   * @return a list of text field components for number input
-   */
+  /** Returns a list of text fields components for number input. */
   @Override
   public List<SGTextField> getAxisNumberTextFieldList() {
     final List<SGTextField> list = super.getAxisNumberTextFieldList();
@@ -501,11 +496,7 @@ public class SGColorBarDialog extends SGAxisDialog
     return list;
   }
 
-  /**
-   * Returns a list of spinner components.
-   *
-   * @return a list of spinner components
-   */
+  /** Returns a list of spinner components. */
   @Override
   public List<SGSpinner> getSpinnerList() {
     List<SGSpinner> list = super.getSpinnerList();
@@ -876,11 +867,7 @@ public class SGColorBarDialog extends SGAxisDialog
     }
   }
 
-  /**
-   * Returns a list of color selection buttons.
-   *
-   * @return a list of color selection buttons
-   */
+  /** Returns a list of color selection buttons. */
   @Override
   public List<SGColorSelectionButton> getColorSelectionButtonsList() {
     List<SGColorSelectionButton> list = super.getColorSelectionButtonsList();

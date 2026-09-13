@@ -39,7 +39,6 @@ public class SGIntegerSeries implements Cloneable {
    * @param end the number for the end
    * @param step the step value
    * @param aliasMap the map of alias
-   * @return true if given values are valid
    */
   public static boolean isValidSeries(
       final SGInteger start,
@@ -85,7 +84,6 @@ public class SGIntegerSeries implements Cloneable {
    * @param start the number for the start
    * @param end the number for the end
    * @param step the step value
-   * @return true if given values are valid
    */
   public static boolean isValidSeries(final Integer start, final Integer end, final Integer step) {
     if (start == null || end == null || step == null) {
@@ -180,29 +178,17 @@ public class SGIntegerSeries implements Cloneable {
     this.mStep = new SGInteger(0);
   }
 
-  /**
-   * Returns the number for the start.
-   *
-   * @return the number for the start
-   */
+  /** Returns the number for the start. */
   public SGInteger getStart() {
     return this.mStart;
   }
 
-  /**
-   * Returns the number for the end.
-   *
-   * @return the number for the end
-   */
+  /** Returns the number for the end. */
   public SGInteger getEnd() {
     return this.mEnd;
   }
 
-  /**
-   * Returns the step value.
-   *
-   * @return the step value
-   */
+  /** Returns the step value. */
   public SGInteger getStep() {
     return this.mStep;
   }

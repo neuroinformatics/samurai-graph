@@ -123,8 +123,6 @@ final class SGPropertyFileDataHandler {
    * @param file the data source
    * @param dataType the data type
    * @param infoMap the information map
-   * @param isPropertyFileData true if the data is for the property file
-   * @param versionNumber the version number of the property file
    * @return default the data column information
    */
   SGDataColumnInfoSet getDefaultDataColumnInfo(
@@ -168,8 +166,12 @@ final class SGPropertyFileDataHandler {
 
   /**
    * @param elFigure
-   * @param figure
    * @return
+   * @param wnd the wnd parameter
+   * @param dataList the dataList parameter
+   * @param readDataProperty the readDataProperty parameter
+   * @param versionNumber the versionNumber parameter
+   * @param mode the mode parameter
    */
   private int createSingleFigureFromPropertyFile(
       final Element elFigure,
@@ -410,7 +412,6 @@ final class SGPropertyFileDataHandler {
 
           Map<String, Object> pfInfoMap = pfData.getInfoMap();
           if (pfInfoMap.size() == 0) {
-            // for the case of Samurai Graph Archive (.sga) file
             pfInfoMap = new HashMap<String, Object>(infoMap);
           }
 
@@ -498,6 +499,10 @@ final class SGPropertyFileDataHandler {
    * @param elWnd
    * @param wnd
    * @return
+   * @param wDataArray the wDataArray parameter
+   * @param readDataProperty the readDataProperty parameter
+   * @param versionNumber the versionNumber parameter
+   * @param mode the mode parameter
    */
   int createFiguresFromPropertyFile(
       final Element elWnd,
@@ -580,13 +585,10 @@ final class SGPropertyFileDataHandler {
       allInfoArray[ii].setColumnType(columnTypes[ii]);
     }
     if (result instanceof DefaultMDColumnTypeResult) {
-      // for multidimensional result, sets the dimension index
       DefaultMDColumnTypeResult dResult = (DefaultMDColumnTypeResult) result;
-      //        	int[] indices = dResult.getIndices();
       List<Map<String, Integer>> indices = dResult.getAllIndices();
       for (int ii = 0; ii < columnTypes.length; ii++) {
         SGMDArrayDataColumnInfo mdInfo = (SGMDArrayDataColumnInfo) allInfoArray[ii];
-        //            	mdInfo.setDefaultDimensionIndex(indices[ii]);
         mdInfo.putAllDimensionIndices(indices.get(ii));
       }
     }

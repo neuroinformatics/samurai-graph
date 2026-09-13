@@ -515,15 +515,6 @@ public class SGWindowDialog extends SGPropertyDialog
     return true;
   }
 
-  // /**
-  // *
-  // */
-  // public void dispose()
-  // {
-  // super.dispose();
-  // this.mGridVisibleComponentGroup.dispose();
-  // }
-
   /** */
   private transient SGComponentGroup mGridVisibleComponentGroup = new SGComponentGroup();
 
@@ -547,9 +538,7 @@ public class SGWindowDialog extends SGPropertyDialog
     return this.mGridLinesColorButton.getColor();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Boolean isGridVisible() {
     return this.mGridVisibleCheckBox.getSelected();
   }
@@ -584,9 +573,7 @@ public class SGWindowDialog extends SGPropertyDialog
     return this.mImageHeightSpinner.getNumber();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Number getImageScalingFactor() {
     return this.getNumber(this.mImageScaleTextField);
   }
@@ -603,7 +590,6 @@ public class SGWindowDialog extends SGPropertyDialog
 
   /**
    * @param b
-   * @return
    */
   public boolean setGridVisible(final Boolean b) {
     this.mGridVisibleCheckBox.setSelected(b);
@@ -655,7 +641,6 @@ public class SGWindowDialog extends SGPropertyDialog
 
   /**
    * @param value
-   * @return
    */
   public boolean setImageScalingFactor(final Object value) {
     return this.setValue(this.mImageScaleTextField, value);
@@ -679,11 +664,7 @@ public class SGWindowDialog extends SGPropertyDialog
     return list;
   }
 
-  /**
-   * Returns a list of text fields to set number.
-   *
-   * @return
-   */
+  /** Returns a list of text fields to set number. */
   @Override
   public List<SGTextField> getAxisNumberTextFieldList() {
     List<SGTextField> list = new ArrayList<SGTextField>();
@@ -711,12 +692,8 @@ public class SGWindowDialog extends SGPropertyDialog
     super.actionPerformed(e);
 
     Object source = e.getSource();
-    //        String command = e.getActionCommand();
 
     //        // do nothing and return when escape key is typed
-    //        if (ESCAPE_KEY_TYPED.equals(command)) {
-    //            return;
-    //        }
 
     if (source.equals(this.mGridVisibleCheckBox)) {
       this.setGridVisible(this.isGridVisible());
@@ -728,7 +705,6 @@ public class SGWindowDialog extends SGPropertyDialog
   /** */
   public void propertyChange(final PropertyChangeEvent e) {
     Object source = e.getSource();
-    // String pName = e.getPropertyName();
 
     if (source.equals(this.mImageWidthSpinner) || source.equals(this.mImageHeightSpinner)) {
       if (this.mFixSizeRatioFlag) {
@@ -798,7 +774,7 @@ public class SGWindowDialog extends SGPropertyDialog
   private double mImageHeight;
 
   /**
-   * @param b
+   * @param flag
    * @return
    */
   private boolean setGridComponentEnabled(final Boolean flag) {
@@ -817,12 +793,6 @@ public class SGWindowDialog extends SGPropertyDialog
    * @return
    */
   private boolean setGridComponentEnabled(final boolean b) {
-    // this.mIntervalLabel.setEnabled(b);
-    // this.mGridLinesIntervalSpinner.setEnabled(b);
-    // this.mBottomLabel.setEnabled(b);
-    // this.mGridLinesWidthSpinner.setEnabled(b);
-    // this.mGridLinesColorLabel.setEnabled(b);
-    // this.mGridLinesColorButton.setEnabled(b);
 
     this.mGridVisibleComponentGroup.setEnabled(b);
 
@@ -945,7 +915,6 @@ public class SGWindowDialog extends SGPropertyDialog
         SGIWindowDialogObserver wnd1 = (SGIWindowDialogObserver) list.get(ii);
         final float imageWidth1 = wnd1.getImageWidth(cm);
         if (imageWidth0 != imageWidth1) {
-          // imageWidth = null;
           break;
         }
       }
@@ -954,7 +923,6 @@ public class SGWindowDialog extends SGPropertyDialog
         SGIWindowDialogObserver wnd1 = (SGIWindowDialogObserver) list.get(ii);
         final float imageHeight1 = wnd1.getImageHeight(cm);
         if (imageHeight0 != imageHeight1) {
-          // imageHeight = null;
           break;
         }
       }

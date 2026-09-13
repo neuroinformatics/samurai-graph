@@ -22,7 +22,6 @@ public class SGAsyncWorker {
   /**
    * Execute a task on a background thread, pumping AWT events on the EDT while waiting.
    *
-   * @param <T> the result type
    * @param task the task to execute
    * @return the result of the task
    * @throws Exception if the task throws an exception

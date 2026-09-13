@@ -443,7 +443,6 @@ final class SGDrawingWindowAlignmentUtility {
     flag = true;
     for (int ny = 0; ny < sy; ny++) {
       for (int nx = 0; nx < sx; nx++) {
-        // final int index = ny*sx + nx;
         SGFigure figure = figureArray[ny][nx];
         if (figure == null) {
           flag = false;

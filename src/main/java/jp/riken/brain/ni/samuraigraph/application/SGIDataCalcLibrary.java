@@ -19,7 +19,6 @@ public interface SGIDataCalcLibrary extends SGIBaseLibrary, SGIDataPluginConstan
    * Processes given data and returns the result.
    *
    * @param input pointer for input data
-   * @return pointer for the result of calculation
    */
   public Pointer calc(Pointer input);
 

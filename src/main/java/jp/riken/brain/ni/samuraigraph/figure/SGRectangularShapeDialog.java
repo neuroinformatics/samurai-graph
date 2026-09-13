@@ -1095,28 +1095,28 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setLeftXValue(final Object obj) {
     return this.setValue(this.mLeftXValueTextField, obj);
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setRightXValue(final Object obj) {
     return this.setValue(this.mRightXValueTextField, obj);
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setTopYValue(final Object obj) {
     return this.setValue(this.mTopYValueTextField, obj);
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setBottomYValue(final Object obj) {
     return this.setValue(this.mBottomYValueTextField, obj);
@@ -1271,7 +1271,7 @@ public class SGRectangularShapeDialog extends SGPropertyDialog
   }
 
   /**
-   * @param b
+   * @param flag
    * @return
    */
   private boolean setTransparentComponentEnabled(final Boolean flag) {

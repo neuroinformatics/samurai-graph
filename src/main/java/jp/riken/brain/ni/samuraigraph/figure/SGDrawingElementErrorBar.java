@@ -55,7 +55,6 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
    * Returns whether a given error bar style is valid.
    *
    * @param style an error bar style
-   * @return true if the given error bar style is valid
    */
   public static boolean isValidErrorBarStyle(final int style) {
     final int[] array = {ERROR_BAR_BOTHSIDES, ERROR_BAR_UPSIDE, ERROR_BAR_DOWNSIDE};
@@ -71,7 +70,6 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
    * Returns the error bar style constant from a given name.
    *
    * @param name the name of error bar style
-   * @return the error bar style constant if it exists or null otherwise
    */
   public static Integer getErrorBarStyleFromName(final String name) {
     if (name == null) {
@@ -94,7 +92,6 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
    * Returns the name of a given error bar style.
    *
    * @param style the error bar style
-   * @return the name of a given error bar style
    */
   public static String getErrorBarStyleName(final int style) {
     String name = null;
@@ -117,7 +114,6 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
    * Returns whether a given head type is valid.
    *
    * @param type a head type
-   * @return true if the given head type is valid
    */
   public static boolean isValidHeadType(final int type) {
     final int[] array = {SYMBOL_TYPE_CIRCLE, SYMBOL_TYPE_TRANSVERSELINE, SYMBOL_TYPE_VOID};
@@ -133,7 +129,6 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
    * Returns the head type constant from a given name.
    *
    * @param name the name of head type
-   * @return the head type constant if it exists or null otherwise
    */
   public static Integer getHeadTypeFromName(final String name) {
     if (name == null) {
@@ -156,7 +151,6 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
    * Returns the name of a given head type.
    *
    * @param type the head type
-   * @return the name of a given head type
    */
   public static String getHeadTypeName(final int type) {
     String name = null;
@@ -181,7 +175,6 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
    * @param center the location of center
    * @param lower the location of lower end point
    * @param upper the location of upper end point
-   * @return true if succeeded
    */
   public boolean setLocation(final SGTuple2f center, final SGTuple2f lower, final SGTuple2f upper) {
     this.mLowerArrowElement.setLocation(center, lower);
@@ -189,78 +182,53 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
     return true;
   }
 
-  /**
-   * Returns the color.
-   *
-   * @return the color
-   */
+  /** Returns the color. */
   public abstract Color getColor();
 
   /**
    * Sets the color.
    *
    * @param cl the color to set
-   * @return true if succeeded
    */
   public abstract boolean setColor(Color cl);
 
-  /**
-   * Returns the line width.
-   *
-   * @return the line width.
-   */
+  /** Returns the line width. */
   public abstract float getLineWidth();
 
   /**
    * Sets the line width.
    *
    * @param width line width to set
-   * @return true if succeeded
    */
   public abstract boolean setLineWidth(final float width);
 
-  /**
-   * Returns the head size.
-   *
-   * @return the head size.
-   */
+  /** Returns the head size. */
   public abstract float getHeadSize();
 
   /**
    * Sets the head size.
    *
    * @param size the head size to set
-   * @return true if succeeded
    */
   public abstract boolean setHeadSize(final float size);
 
-  /**
-   * Returns the error bar style.
-   *
-   * @return the error bar style.
-   */
+  /** Returns the error bar style. */
   public abstract int getErrorBarStyle();
 
   /**
    * Sets the style of the error bar.
    *
    * @param style the style
-   * @return true if succeeded
    */
   public abstract boolean setErrorBarStyle(final int style);
 
-  /**
-   * Returns the head type.
-   *
-   * @return the head type.
-   */
+  /** Returns the head type. */
   public abstract int getHeadType();
 
   /**
    * Sets the head type.
    *
    * @param type the head type to set
-   * @return true if succeeded
    */
   public abstract boolean setHeadType(int type);
 
@@ -311,20 +279,12 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
     this.mUpperArrowElement.setVisible(b);
   }
 
-  /**
-   * Returns whether the lower error bar is visible.
-   *
-   * @return true if the lower error bar is visible
-   */
+  /** Returns whether the lower error bar is visible. */
   public boolean isLowerVisible() {
     return this.mLowerArrowElement.isVisible();
   }
 
-  /**
-   * Returns whether the upper error bar is visible.
-   *
-   * @return true if the upper error bar is visible
-   */
+  /** Returns whether the upper error bar is visible. */
   public boolean isUpperVisible() {
     return this.mUpperArrowElement.isVisible();
   }
@@ -449,16 +409,6 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
       default:
     }
 
-    //        if (this.isLowerVisible()) {
-    //            if (this.getLowerArrow().contains(x, y)) {
-    //                return true;
-    //            }
-    //        }
-    //        if (this.isUpperVisible()) {
-    //            if (this.getUpperArrow().contains(x, y)) {
-    //                return true;
-    //            }
-    //        }
     return false;
   }
 
@@ -484,20 +434,13 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
         break;
       default:
     }
-
-    //        if (this.isLowerVisible()) {
-    //            ((SGDrawingElementArrow) this.getLowerArrow()).paint(g2d);
-    //        }
-    //        if (this.isUpperVisible()) {
-    //            ((SGDrawingElementArrow) this.getUpperArrow()).paint(g2d);
-    //        }
   }
 
   /**
    * Paint this object with given clipping rectangle.
    *
    * @param g2d graphics context
-   * @param clipRect clipping rectangle
+   * @param rect clipping rectangle
    */
   public void paint(Graphics2D g2d, Rectangle2D rect) {
 
@@ -517,13 +460,6 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
         break;
       default:
     }
-
-    //        if (this.isLowerVisible()) {
-    //            ((SGDrawingElementArrow) this.getLowerArrow()).paint(g2d, rect);
-    //        }
-    //        if (this.isUpperVisible()) {
-    //            ((SGDrawingElementArrow) this.getUpperArrow()).paint(g2d, rect);
-    //        }
   }
 
   /** */
@@ -552,23 +488,5 @@ public abstract class SGDrawingElementErrorBar extends SGDrawingElement
     }
 
     return rectRet;
-
-    //        if (this.isLowerVisible() && this.isUpperVisible()) {
-    //            Rectangle2D rectLower = ((SGDrawingElementArrow)
-    // this.getLowerArrow()).getElementBounds();
-    //            Rectangle2D rectUpper = ((SGDrawingElementArrow)
-    // this.getUpperArrow()).getElementBounds();
-    //            ArrayList rectList = new ArrayList();
-    //            rectList.add(rectLower);
-    //            rectList.add(rectUpper);
-    //            Rectangle2D rectAll = SGUtility.createUnion(rectList);
-    //            return rectAll;
-    //        } else if (this.isLowerVisible() && !this.isUpperVisible()) {
-    //            return ((SGDrawingElementArrow) this.getLowerArrow()).getElementBounds();
-    //        } else if (!this.isLowerVisible() && this.isUpperVisible()) {
-    //            return ((SGDrawingElementArrow) this.getUpperArrow()).getElementBounds();
-    //        } else {
-    //            return new Rectangle2D.Double();
-    //        }
   }
 }

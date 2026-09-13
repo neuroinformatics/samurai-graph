@@ -266,7 +266,6 @@ public class SGPropertyDialogVXYData extends SGDataDialog
 
   /**
    * @param l
-   * @return
    */
   public boolean addPropertyDialogObserver(final SGIPropertyDialogObserver l) {
     super.addPropertyDialogObserver(l);
@@ -278,7 +277,6 @@ public class SGPropertyDialogVXYData extends SGDataDialog
 
   /**
    * @param l
-   * @return
    */
   public boolean removePropertyDialogObserver(final SGIPropertyDialogObserver l) {
     super.removePropertyDialogObserver(l);
@@ -288,9 +286,7 @@ public class SGPropertyDialogVXYData extends SGDataDialog
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean removeAllPropertyDialogObserver() {
     super.removeAllPropertyDialogObserver();
     this.mArrowPanel.removeAllObserver();
@@ -345,25 +341,20 @@ public class SGPropertyDialogVXYData extends SGDataDialog
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getDataName() {
     return this.mNameField.getText();
   }
 
   /**
    * @param str
-   * @return
    */
   public boolean setDataName(final String str) {
     this.mNameField.setText(str);
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Boolean getLegendVisible() {
     return this.mLegendVisibleCheckBox.getSelected();
   }
@@ -415,7 +406,7 @@ public class SGPropertyDialogVXYData extends SGDataDialog
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setMagnitudePerCM(final Object obj) {
     return this.setValue(this.mMagnitudePerCMTextField, obj);

@@ -1008,9 +1008,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
     return this.mBackgroundColorButton.getColor();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Boolean isBackgroundTransparent() {
     return this.mBackgroundTransparentCheckBox.getSelected();
   }
@@ -1060,7 +1058,6 @@ public class SGXYFigureDialog extends SGPropertyDialog
 
   /**
    * @param transparent
-   * @return
    */
   private boolean setBackgroundComponentsEnabled(final Boolean transparent) {
     boolean b = true;
@@ -1145,9 +1142,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Boolean getGridVisible() {
     return this.mGridVisibleCheckBox.getSelected();
   }
@@ -1183,9 +1178,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
     return this.mGridLineColorButton.getColor();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Boolean getAutoFlag() {
     return this.mAutoCheckBox.getSelected();
   }
@@ -1229,6 +1222,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
 
   /**
    * @param value
+   * @param dateMode the dateMode parameter
    */
   public boolean setBaseXValue(final Object value, final boolean dateMode) {
     if (dateMode) {
@@ -1241,6 +1235,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
 
   /**
    * @param value
+   * @param dateMode the dateMode parameter
    */
   public boolean setStepXValue(final Object value, final boolean dateMode) {
     if (dateMode) {
@@ -1252,6 +1247,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
 
   /**
    * @param value
+   * @param dateMode the dateMode parameter
    */
   public boolean setBaseYValue(final Object value, final boolean dateMode) {
     if (dateMode) {
@@ -1264,6 +1260,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
 
   /**
    * @param value
+   * @param dateMode the dateMode parameter
    */
   public boolean setStepYValue(final Object value, final boolean dateMode) {
     if (dateMode) {
@@ -1281,11 +1278,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
     return list;
   }
 
-  /**
-   * Returns a list of text fields to set number.
-   *
-   * @return
-   */
+  /** Returns a list of text fields to set number. */
   public List<SGTextField> getAxisNumberTextFieldList() {
     ArrayList<SGTextField> list = new ArrayList<SGTextField>();
     list.add(this.mStepXTextField);
@@ -1426,7 +1419,6 @@ public class SGXYFigureDialog extends SGPropertyDialog
     final boolean[] dateModeFlagArray = new boolean[num];
     for (int ii = 0; ii < num; ii++) {
       SGIXYFigureDialogObserver l = (SGIXYFigureDialogObserver) list.get(ii);
-      //            dateModeFlagArray[ii] = l.getGridDateMode(horizontal);
       dateModeFlagArray[ii] = l.getAxisDateMode(location);
     }
     Boolean dateModeFlag = SGUtility.checkEquality(dateModeFlagArray);
@@ -1727,11 +1719,7 @@ public class SGXYFigureDialog extends SGPropertyDialog
     return true;
   }
 
-  /**
-   * Overrode this method to check the input values.
-   *
-   * @return true if all input values are valid
-   */
+  /** Overrode this method to check the input values. */
   protected boolean hasValidInputValues() {
     boolean valid = true;
     if (super.hasValidInputValues() == false) {
@@ -1760,29 +1748,17 @@ public class SGXYFigureDialog extends SGPropertyDialog
     return valid;
   }
 
-  /**
-   * Returns the OK button.
-   *
-   * @return the OK button
-   */
+  /** Returns the OK button. */
   protected JButton getOKButton() {
     return this.mOKButton;
   }
 
-  /**
-   * Returns the cancel button.
-   *
-   * @return the cancel button
-   */
+  /** Returns the cancel button. */
   protected JButton getCancelButton() {
     return this.mCancelButton;
   }
 
-  /**
-   * Returns the preview button.
-   *
-   * @return the preview button
-   */
+  /** Returns the preview button. */
   protected JButton getPreviewButton() {
     return this.mPreviewButton;
   }

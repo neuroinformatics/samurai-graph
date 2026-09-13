@@ -115,7 +115,6 @@ class SGUpgradeManager
 
   /**
    * @param owner
-   * @return
    */
   public boolean showUpgradeDialog(Frame owner) {
     this.mUpgradeDialog = new SGUpgradeDialog(owner, true);
@@ -274,7 +273,6 @@ class SGUpgradeManager
     // show a message dialog
     cfDialog.setVisible(true);
 
-    // if upgrade is canceled, return true
     if (cfDialog.isCanceled()) {
       return true;
     }
@@ -285,11 +283,7 @@ class SGUpgradeManager
     return true;
   }
 
-  /**
-   * Fetch the tag_name from the latest GitHub release.
-   *
-   * @return tag name string (e.g. "v2.3.0"), or null on failure
-   */
+  /** Fetch the tag_name from the latest GitHub release. */
   private String fetchLatestReleaseTagName() {
     Proxy proxy = buildProxy();
     try {
@@ -325,7 +319,6 @@ class SGUpgradeManager
    * Parse the version number from a tag name like "v2.3.0".
    *
    * @param tagName the tag name
-   * @return version array [major, minor, micro], or null if parsing fails
    */
   private int[] parseTagVersion(String tagName) {
     Pattern p = Pattern.compile(TAG_NAME_PATTERN);
@@ -347,7 +340,6 @@ class SGUpgradeManager
    * Fetch the changelog from the product.xml file in the tagged source.
    *
    * @param tagName the Git tag name (e.g. "v2.3.0")
-   * @return HTML string of the changelog, or null on failure
    */
   private String fetchChangelog(String tagName) {
     Proxy proxy = buildProxy();
@@ -422,7 +414,6 @@ class SGUpgradeManager
   /**
    * @param root
    * @param tagName
-   * @return
    */
   private int getVersion(Element root, String tagName) {
     NodeList nodeList = root.getElementsByTagName(tagName);
@@ -454,11 +445,7 @@ class SGUpgradeManager
     }
   }
 
-  /**
-   * Build a java.net.Proxy from the application's proxy settings.
-   *
-   * @return the proxy
-   */
+  /** Build a java.net.Proxy from the application's proxy settings. */
   private Proxy buildProxy() {
     if (this.mProxyManager.isDirectAccess()) {
       return Proxy.NO_PROXY;

@@ -30,7 +30,7 @@ public class SGImage implements SGIDisposable {
   private float mScalingFactor = 1.0f;
 
   /**
-   * @param image
+   * @param obs
    */
   public SGImage(final ImageObserver obs) {
     super();
@@ -40,6 +40,7 @@ public class SGImage implements SGIDisposable {
 
   /**
    * @param image
+   * @param obs the obs parameter
    */
   public SGImage(final Image image, final ImageObserver obs) {
     super();
@@ -50,6 +51,11 @@ public class SGImage implements SGIDisposable {
 
   /**
    * @param image
+   * @param obs the obs parameter
+   * @param x the x parameter
+   * @param y the y parameter
+   * @param w the w parameter
+   * @param h the h parameter
    */
   public SGImage(
       final Image image,
@@ -74,11 +80,7 @@ public class SGImage implements SGIDisposable {
   // The flag whether this object is already disposed of.
   private boolean mDisposed = false;
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }
@@ -133,9 +135,7 @@ public class SGImage implements SGIDisposable {
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGTuple2f getImageLocation() {
     return new SGTuple2f(this.mX, this.mY);
   }
@@ -148,9 +148,7 @@ public class SGImage implements SGIDisposable {
     return this.mY;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGTuple2f getImageSize() {
     return new SGTuple2f(this.mWidth, this.mHeight);
   }
@@ -171,9 +169,7 @@ public class SGImage implements SGIDisposable {
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public final boolean setDefaultImageSize() {
     if (this.mImageObserver == null || this.mImage == null) {
       return false;
@@ -185,11 +181,7 @@ public class SGImage implements SGIDisposable {
     return true;
   }
 
-  /**
-   * Returns the image.
-   *
-   * @return
-   */
+  /** Returns the image. */
   public Image getImage() {
     return this.mImage;
   }
@@ -202,16 +194,13 @@ public class SGImage implements SGIDisposable {
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public ImageObserver getImageObserver() {
     return this.mImageObserver;
   }
 
   /**
    * @param mag
-   * @return
    */
   public boolean setMagnification(final float mag) {
     this.mMagnification = mag;
@@ -224,7 +213,6 @@ public class SGImage implements SGIDisposable {
 
   /**
    * @param f
-   * @return
    */
   public boolean setScalingFactor(final float f) {
     if (f < 0.0f) {

@@ -464,28 +464,28 @@ public class SGArrowDialog extends SGPropertyDialog implements SGITwoAxesDialog 
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setStartXValue(final Object obj) {
     return this.setValue(this.mStartXValueTextField, obj);
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setStartYValue(final Object obj) {
     return this.setValue(this.mStartYValueTextField, obj);
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setEndXValue(final Object obj) {
     return this.setValue(this.mEndXValueTextField, obj);
   }
 
   /**
-   * @param value
+   * @param obj
    */
   public boolean setEndYValue(final Object obj) {
     return this.setValue(this.mEndYValueTextField, obj);
@@ -643,11 +643,6 @@ public class SGArrowDialog extends SGPropertyDialog implements SGITwoAxesDialog 
       list.add("EndY");
     }
     if (list.size() != 0) {
-      //            String msg = ERRMSG_AXIS_VALUE_INVALID + ":\n";
-      //            for (int ii = 0; ii < list.size(); ii++) {
-      //                String str = (String) list.get(ii);
-      //                msg += "- " + str + "\n";
-      //            }
       StringBuilder sb = new StringBuilder();
       sb.append(ERRMSG_AXIS_VALUE_INVALID);
       sb.append(":\n");

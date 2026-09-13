@@ -11,7 +11,6 @@ public interface SGIFigureElementLegend extends SGIFigureElementForData {
 
   /**
    * @param element
-   * @return
    */
   public boolean setAxisElement(SGIFigureElementAxis element);
 
@@ -32,7 +31,6 @@ public interface SGIFigureElementLegend extends SGIFigureElementForData {
    * Returns the index of data object in legend.
    *
    * @param data a data object
-   * @return the index of data object in legend or -1 if not found
    */
   public int getIndex(SGData data);
 
@@ -41,15 +39,10 @@ public interface SGIFigureElementLegend extends SGIFigureElementForData {
    *
    * @param dataArray an array of data
    * @param indexArray an array of index
-   * @return true if succeeded
    */
   public boolean sortLegend(SGData[] dataArray, int[] indexArray);
 
-  /**
-   * Returns whether this legend is selected.
-   *
-   * @return true if legend is selected
-   */
+  /** Returns whether this legend is selected. */
   public boolean isSelected();
 
   /**

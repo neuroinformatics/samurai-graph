@@ -132,7 +132,8 @@ public interface SGIElementGroupSetForData
   /**
    * Save values to given file.
    *
-   * @param data a data
+   * @param file the file parameter
+   * @param policy the policy parameter
    * @param mode the mode of saving data
    * @return true if succeeded
    */

@@ -375,11 +375,7 @@ public class SGLineStylePanel extends javax.swing.JPanel
     lineColorCol.setCellRenderer(this.mLineColorRenderer);
   }
 
-  /**
-   * Creates and returns a table object.
-   *
-   * @return a table object
-   */
+  /** Creates and returns a table object. */
   protected SGTable createTableInstance() {
     return new SGTable() {
       private static final long serialVersionUID = 3516262871678750712L;
@@ -453,11 +449,7 @@ public class SGLineStylePanel extends javax.swing.JPanel
     }
   }
 
-  /**
-   * Returns the list of line style.
-   *
-   * @return the list of line style
-   */
+  /** Returns the list of line style. */
   public List<SGLineStyle> getLineStyleList() {
     final int colIndexNumber = this.getColumnIndex(COLUMN_NAME_NUMBER);
     final int colIndexLineColor = this.getColumnIndex(COLUMN_NAME_LINE_COLOR);
@@ -503,17 +495,12 @@ public class SGLineStylePanel extends javax.swing.JPanel
    * Returns the column index of table.
    *
    * @param identifier
-   * @return If the column with given identifier exists, returns the index.
    */
   public int getColumnIndex(final String identifier) {
     return this.mTable.getColumnModel().getColumnIndex(identifier);
   }
 
-  /**
-   * Returns a list of color selection buttons.
-   *
-   * @return a list of color selection buttons
-   */
+  /** Returns a list of color selection buttons. */
   public List<SGColorSelectionButton> getColorSelectionButtonsList() {
     List<SGColorSelectionButton> list = new ArrayList<SGColorSelectionButton>();
     list.add(this.mColor1Button);

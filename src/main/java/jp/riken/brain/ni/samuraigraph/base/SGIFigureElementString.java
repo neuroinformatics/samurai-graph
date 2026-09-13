@@ -8,7 +8,6 @@ public interface SGIFigureElementString extends SGIFigureElement {
    *
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addString(int x, int y);
 
@@ -19,7 +18,6 @@ public interface SGIFigureElementString extends SGIFigureElement {
    * @param str a text string to insert
    * @param x axis value for default x-axis
    * @param y axis value for default y-axis
-   * @return true if succeeded
    */
   public boolean addString(final int id, final String str, final double x, final double y);
 
@@ -32,7 +30,6 @@ public interface SGIFigureElementString extends SGIFigureElement {
    * @param y axis value for given y-axis
    * @param xAxisLocation location of the x-axis
    * @param yAxisLocation location of the y-axis
-   * @return true if succeeded
    */
   public boolean addString(
       final int id,
@@ -45,9 +42,9 @@ public interface SGIFigureElementString extends SGIFigureElement {
   /**
    * Insert a label at a given point with default axes.
    *
+   * @param str the str parameter
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return id of string label if succeeds. or -1.
    */
   public int addNewString(final String str, final int x, final int y);
 
@@ -55,7 +52,6 @@ public interface SGIFigureElementString extends SGIFigureElement {
    * Returns a label text in the given ID element.
    *
    * @param id
-   * @return label text. null if string element which has a given id not found.
    */
   public String getString(final int id);
 
@@ -63,8 +59,7 @@ public interface SGIFigureElementString extends SGIFigureElement {
    * Set newText to the given ID label.
    *
    * @param id
-   * @param text
-   * @return true if succeeds.
+   * @param newText
    */
   public boolean setString(final int id, final String newText);
 

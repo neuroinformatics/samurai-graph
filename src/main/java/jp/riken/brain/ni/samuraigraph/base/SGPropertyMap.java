@@ -31,7 +31,6 @@ public class SGPropertyMap implements Cloneable {
    *
    * @param key the key
    * @param value the value
-   * @return previously stored value
    */
   public String putValue(final String key, final String value) {
     String uKey = key.toUpperCase();
@@ -47,7 +46,6 @@ public class SGPropertyMap implements Cloneable {
    * Removes a value for a given key.
    *
    * @param key the key
-   * @return removed value if it exists, otherwise null
    */
   public String removeValue(final String key) {
     String uKey = key.toUpperCase();
@@ -60,7 +58,6 @@ public class SGPropertyMap implements Cloneable {
    * Returns the value.
    *
    * @param key the key
-   * @return the value
    */
   public String getValue(final String key) {
     String uKey = key.toUpperCase();
@@ -73,7 +70,6 @@ public class SGPropertyMap implements Cloneable {
    * key is equal to null, returns an empty string.
    *
    * @param key the key
-   * @return a text string of the value
    */
   public String getValueString(final String key) {
     String uKey = key.toUpperCase();
@@ -96,7 +92,6 @@ public class SGPropertyMap implements Cloneable {
    * Returns whether the value for a given key is double quoted.
    *
    * @param key a key
-   * @return true if the value for a given key is double quoted
    */
   public boolean isDoubleQuoted(final String key) {
     String value = this.getValue(key);
@@ -107,11 +102,7 @@ public class SGPropertyMap implements Cloneable {
     }
   }
 
-  /**
-   * Clones this object.
-   *
-   * @return a copy of this object
-   */
+  /** Clones this object. */
   @Override
   public final Object clone() {
     try {
@@ -126,29 +117,17 @@ public class SGPropertyMap implements Cloneable {
     }
   }
 
-  /**
-   * Returns the list of keys. All text strings are composed of capital characters.
-   *
-   * @return the list of keys
-   */
+  /** Returns the list of keys. All text strings are composed of capital characters. */
   public List<String> getKeys() {
     return new ArrayList<String>(this.mKeyList);
   }
 
-  /**
-   * Returns the iterator of keys.
-   *
-   * @return the iterator of keys
-   */
+  /** Returns the iterator of keys. */
   public Iterator<String> getKeyIterator() {
     return this.mKeyList.iterator();
   }
 
-  /**
-   * Creates and returns a class object of java.util.Properties.
-   *
-   * @return the properties
-   */
+  /** Creates and returns a class object of java.util.Properties. */
   public Properties toProperties() {
     Properties p = new Properties();
     Iterator<String> itr = this.getKeyIterator();
@@ -160,11 +139,7 @@ public class SGPropertyMap implements Cloneable {
     return p;
   }
 
-  /**
-   * Returns a text string for this map.
-   *
-   * @return a text string for this map
-   */
+  /** Returns a text string for this map. */
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -205,7 +180,6 @@ public class SGPropertyMap implements Cloneable {
    * Returns the original key of given key.
    *
    * @param key the key
-   * @return the original key
    */
   public String getOriginalKey(final String key) {
     return this.mOriginalKeyMap.get(key.toUpperCase());

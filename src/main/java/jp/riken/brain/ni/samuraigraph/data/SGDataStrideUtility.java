@@ -164,6 +164,7 @@ public final class SGDataStrideUtility
   /**
    * Calculates the series of dimension steps.
    *
+   * @param len the len parameter
    * @param dataList a list of data
    * @return the indices of dimension
    */
@@ -399,10 +400,6 @@ public final class SGDataStrideUtility
           map = yMap;
         }
       }
-      // SGIntegerSeriesSet tickLabelStride =
-      // map.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
-      // map.put(SGIDataInformationKeyConstants.KEY_SXY_STRIDE, (SGIntegerSeriesSet)
-      // tickLabelStride.clone());
 
     } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {
       map = new HashMap<String, SGIntegerSeriesSet>();
@@ -640,7 +637,6 @@ public final class SGDataStrideUtility
       SGNetCDFDataColumnInfo nCol = (SGNetCDFDataColumnInfo) colArray[ii];
       String colType = nCol.getColumnType();
 
-      // Only for backward compatibility <= 2.0.0
       if (SERIAL_NUMBERS.equalsIgnoreCase(colType)) {
         colType = INDEX;
       }
@@ -764,10 +760,6 @@ public final class SGDataStrideUtility
         } else {
           map = yMap;
         }
-        // SGIntegerSeriesSet tickLabelStride =
-        // map.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
-        // map.put(SGIDataInformationKeyConstants.KEY_SXY_STRIDE, (SGIntegerSeriesSet)
-        // tickLabelStride.clone());
       }
 
     } else if (SGDataDataTypeUtility.isSXYZTypeData(dataType)) {

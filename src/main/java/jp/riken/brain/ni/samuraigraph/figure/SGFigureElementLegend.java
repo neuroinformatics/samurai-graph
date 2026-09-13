@@ -187,11 +187,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     this.mStyleHolder.clear();
   }
 
-  /**
-   * Returns a pop-up menu.
-   *
-   * @return a pop-up menu
-   */
+  /** Returns a pop-up menu. */
   public JPopupMenu getPopupMenu() {
     JPopupMenu p = null;
     if (this.mPopupMenu != null) {
@@ -203,11 +199,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return p;
   }
 
-  /**
-   * Create a pop-up menu.
-   *
-   * @return a pop-up menu
-   */
+  /** Create a pop-up menu. */
   private JPopupMenu createPopupMenu() {
     JPopupMenu p = new JPopupMenu();
     p.setBounds(0, 0, 100, 100);
@@ -224,9 +216,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return p;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return "Legend";
   }
@@ -236,7 +226,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param data a data object
    * @param name the name of the data object
-   * @return true if succeeded
    */
   @Override
   public boolean addData(final SGData data, final String name) {
@@ -255,7 +244,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @param name the name of the data object
    * @param id the ID to set
    * @param infoMap the information map of data object
-   * @return true if succeeded
    */
   @Override
   public boolean addData(
@@ -321,7 +309,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @param data added data.
    * @param name the name set to the data
    * @param p properties set to be data.
-   * @return true if succeeded
    */
   public boolean addData(final SGData data, final String name, final SGProperties p) {
 
@@ -460,11 +447,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return true;
   }
 
-  /**
-   * Hide the selected objects.
-   *
-   * @return true if selected
-   */
+  /** Hide the selected objects. */
   public boolean hideSelectedObjects() {
     if (super.hideSelectedObjects() == false) {
       return false;
@@ -479,7 +462,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
   /** */
   public boolean hideSelectedObject(SGISelectable s) {
     if (s.equals(this)) {
-      // if s is equal to the legend element itself
       return true;
     } else {
       return super.hideSelectedObject(s);
@@ -516,47 +498,27 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return this.mSelectedFlag;
   }
 
-  /**
-   * Returns the x-coordinate of the legend in the figure.
-   *
-   * @return the x-coordinate of the legend in the figure
-   */
+  /** Returns the x-coordinate of the legend in the figure. */
   public float getLegendX() {
     return this.mGraphRectX + this.mLegendX * this.mMagnification;
   }
 
-  /**
-   * Returns the y-coordinate of the legend in the figure.
-   *
-   * @return the y-coordinate of the legend in the figure
-   */
+  /** Returns the y-coordinate of the legend in the figure. */
   public float getLegendY() {
     return this.mGraphRectY + this.mLegendY * this.mMagnification;
   }
 
-  /**
-   * Returns the width of the legend.
-   *
-   * @return width of the legend
-   */
+  /** Returns the width of the legend. */
   public float getLegendWidth() {
     return this.mLegendWidth;
   }
 
-  /**
-   * Returns the height of the legend.
-   *
-   * @return height of the legend
-   */
+  /** Returns the height of the legend. */
   public float getLegendHeight() {
     return this.mLegendHeight;
   }
 
-  /**
-   * Returns the location of the legend in the figure.
-   *
-   * @return the location of the legend in the figure
-   */
+  /** Returns the location of the legend in the figure. */
   public Point2D getLegendLocation() {
     Point2D pos = new Point2D.Float(this.getLegendX(), this.getLegendY());
     return pos;
@@ -567,7 +529,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean setLegendLocation(float x, float y) {
     this.mLegendX = (x - this.mGraphRectX) / this.mMagnification;
@@ -579,7 +540,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the x-value for the location.
    *
    * @param value the x-value to set
-   * @return true if succeeded
    */
   public boolean setXValue(final double value) {
     SGAxis axis = this.mXAxis;
@@ -594,7 +554,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
     // the next value to set
     final double nextValue = SGUtilityNumber.getNumberInRangeOrder(value, axis);
 
-    // if values from the dialog is different from the current values,
     // set the values from the dialog
     float x;
     if (nextValue == currentValue) {
@@ -621,7 +580,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the y-value for the location.
    *
    * @param value the y-value to set
-   * @return true if succeeded
    */
   public boolean setYValue(final double value) {
     SGAxis axis = this.mYAxis;
@@ -636,7 +594,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
     // the next value to set
     final double nextValue = SGUtilityNumber.getNumberInRangeOrder(value, axis);
 
-    // if values from the dialog is different from the current values,
     // set the values from the dialog
     float y;
     if (nextValue == currentValue) {
@@ -662,7 +619,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
   /**
    * @param config
    * @param value
-   * @return
    */
   public boolean hasValidXAxisValue(final int config, final Number value) {
     final SGAxis axis = (config == -1) ? this.mXAxis : this.mAxisElement.getAxisInPlane(config);
@@ -673,7 +629,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
   /**
    * @param config
    * @param value
-   * @return
    */
   public boolean hasValidYAxisValue(final int config, final Number value) {
     final SGAxis axis = (config == -1) ? this.mYAxis : this.mAxisElement.getAxisInPlane(config);
@@ -687,9 +642,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     this.updateAllDrawingElements();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public double getXValue() {
     SGAxis axis = this.mXAxis;
     double value = calcValue(this.getLegendX(), axis, true);
@@ -700,9 +653,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return value;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public double getYValue() {
     SGAxis axis = this.mYAxis;
     double value = calcValue(this.getLegendY(), axis, false);
@@ -727,11 +678,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     com.add(this.mTextField);
   }
 
-  /**
-   * Clear all focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Clear all focused objects. */
   public boolean clearFocusedObjects() {
     if (super.clearFocusedObjects() == false) {
       return false;
@@ -744,7 +691,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Clear focused objects other than a given figure element.
    *
    * @param ori an origin of this clearance
-   * @return true if succeeded
    */
   public boolean clearFocusedObjects(SGIFigureElement ori) {
     if (ori instanceof SGIFigureElementGraph) {
@@ -822,11 +768,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
   private static final float spaceLegend = MARGIN_VERTICAL;
 
-  /**
-   * Update all drawing elements.
-   *
-   * @return true if succeeded
-   */
+  /** Update all drawing elements. */
   boolean updateAllDrawingElements() {
 
     // the magnification
@@ -1003,11 +945,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
   }
 
-  /**
-   * Returns a list of points to draw anchors.
-   *
-   * @return a list of points to draw anchors
-   */
+  /** Returns a list of points to draw anchors. */
   private ArrayList<Point2D> getAnchorPointList() {
     ArrayList<Point2D> list = new ArrayList<Point2D>();
 
@@ -1062,11 +1000,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return rect.contains(x, y);
   }
 
-  /**
-   * Returns a set of available child objects in the histories.
-   *
-   * @return a set of available child objects in the histories
-   */
+  /** Returns a set of available child objects in the histories. */
   protected Set<SGIChildObject> getAvailableChildSet() {
     Set<SGIChildObject> set = new HashSet<SGIChildObject>();
     List<SGProperties> mList = this.getMementoList();
@@ -1082,7 +1016,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param element a figure element
    * @param msg a message
-   * @return true if succeeded
    */
   public boolean synchronize(SGIFigureElement element, String msg) {
 
@@ -1119,7 +1052,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param gElement the graph element
    * @param msg a message
-   * @return true if succeeded
    */
   private boolean synchronizeToGraphElement(
       final SGIFigureElementGraph gElement, final String msg) {
@@ -1131,7 +1063,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param aElement the axis element
    * @param msg the message
-   * @return true if succeeded
    */
   private boolean synchronizeToAxisElement(final SGIFigureElementAxis aElement, final String msg) {
     if (this.isNotificationMessage(msg)) {
@@ -1153,6 +1084,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
   /**
    * Synchronize the element given by the argument.
    *
+   * @param msg the msg parameter
    * @param element An object to be synchronized.
    */
   public boolean synchronizeArgument(final SGIFigureElement element, final String msg) {
@@ -1164,7 +1096,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Returns whether the data object is selected.
    *
    * @param data a data object
-   * @return true if selected
    */
   public boolean isDataSelected(final SGData data) {
     if (data == null) {
@@ -1181,7 +1112,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     if (this.closeTextField() == false) {
@@ -1254,7 +1184,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
   /** */
   public boolean onMouseClicked(final MouseEvent e) {
 
-    // if the legend is invisible, return false
     if (!isVisible()) {
       return false;
     }
@@ -1385,20 +1314,12 @@ public class SGFigureElementLegend extends SGFigureElementForData
   /** */
   private ElementGroupSetInLegend mFocusedGroup = null;
 
-  /**
-   * Returns a list of child nodes.
-   *
-   * @return a list of chid nodes
-   */
+  /** Returns a list of child nodes. */
   public ArrayList<SGINode> getChildNodes() {
     return new ArrayList<SGINode>();
   }
 
-  /**
-   * Returns the property dialog.
-   *
-   * @return a property dialog
-   */
+  /** Returns the property dialog. */
   public SGPropertyDialog getPropertyDialog() {
     SGPropertyDialog dg = null;
     if (mPropertyDialog != null) {
@@ -1461,18 +1382,12 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return this.mStyleHolder.getFontColor();
   }
 
-  /**
-   * Returns the symbol span.
-   *
-   * @return the symbol span
-   */
+  /** Returns the symbol span. */
   public float getSymbolSpan() {
     return this.mStyleHolder.getSymbolSpan();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getSymbolSpan(final String unit) {
     return this.mStyleHolder.getSymbolSpan(unit);
   }
@@ -1481,7 +1396,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the symbol span.
    *
    * @param span the symbol span to set
-   * @return true if succeeded
    */
   public boolean setSymbolSpan(final float span) {
     return this.mStyleHolder.setSymbolSpan(span);
@@ -1492,7 +1406,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param span the symbol span to set
    * @param unit the unit for the symbol span
-   * @return true if succeeded
    */
   public boolean setSymbolSpan(final float span, final String unit) {
     return this.mStyleHolder.setSymbolSpan(span, unit);
@@ -1509,11 +1422,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return b;
   }
 
-  /**
-   * Overrode for the text field for data name.
-   *
-   * @return true if a text field is shown
-   */
+  /** Overrode for the text field for data name. */
   public boolean closeTextField() {
     this.commitEdit();
     this.hideEditField();
@@ -1522,9 +1431,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private boolean commitEdit() {
     String str = this.mTextField.getText();
 
@@ -1557,9 +1464,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private boolean clearFocusedGroup() {
     this.mFocusedGroup = null;
     return true;
@@ -1621,20 +1526,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return true;
   }
 
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean setTemporaryPropertiesOfFocusedObjects() {
-  // this.mTemporaryProperties = this.getProperties();
-  // return true;
-  // }
-
-  /**
-   * Updates changed flag of focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Updates changed flag of focused objects. */
   @Override
   public boolean updateChangedFlag() {
     if (this.isSelected()) {
@@ -1674,7 +1566,8 @@ public class SGFigureElementLegend extends SGFigureElementForData
   }
 
   /**
-   * @param e
+   * @param x the x parameter
+   * @param y the y parameter
    */
   public boolean setMouseCursor(final int x, final int y) {
     if (this.isVisible()) {
@@ -1691,7 +1584,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the axis element.
    *
    * @param element the axis element
-   * @return true if succeeded
    */
   public boolean setAxisElement(final SGIFigureElementAxis element) {
     this.mAxisElement = element;
@@ -1711,20 +1603,12 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return true;
   }
 
-  /**
-   * Returns the location of the x-axis.
-   *
-   * @return the location of the x-axis
-   */
+  /** Returns the location of the x-axis. */
   public int getXAxisLocation() {
     return this.mAxisElement.getLocationInPlane(this.mXAxis);
   }
 
-  /**
-   * Returns the location of the y-axis.
-   *
-   * @return the location of the y-axis
-   */
+  /** Returns the location of the y-axis. */
   public int getYAxisLocation() {
     return this.mAxisElement.getLocationInPlane(this.mYAxis);
   }
@@ -1733,7 +1617,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the location of the x-axis.
    *
    * @param location the location of the x-axis to set
-   * @return true if succeeded
    */
   public boolean setXAxisLocation(final int location) {
     if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
@@ -1752,7 +1635,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the location of the y-axis.
    *
    * @param location the location of the y-axis to set
-   * @return true if succeeded
    */
   public boolean setYAxisLocation(final int location) {
     if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
@@ -1777,7 +1659,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the transparency of the background.
    *
    * @param percentAlpha the alpha value of transparency to set
-   * @return true if succeeded
    */
   @Override
   public boolean setBackgroundTransparent(final int percentAlpha) {
@@ -1788,7 +1669,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the visibility of the frame lines.
    *
    * @param b a visibility flag to set
-   * @return true if succeeded
    */
   public boolean setFrameVisible(final boolean b) {
     this.mStyleHolder.setFrameVisible(b);
@@ -1799,7 +1679,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the frame line width.
    *
    * @param lw the frame line width to set
-   * @return true if succeeded
    */
   public boolean setFrameLineWidth(final float lw) {
     return this.mStyleHolder.setFrameLineWidth(lw);
@@ -1810,7 +1689,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param lw the frame line width to set
    * @param unit the unit for the given frame line width
-   * @return true if succeeded
    */
   public boolean setFrameLineWidth(final float lw, final String unit) {
     return this.mStyleHolder.setFrameLineWidth(lw, unit);
@@ -1820,7 +1698,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the frame line color.
    *
    * @param cl the frame line color to set
-   * @return true if succeeded
    */
   public boolean setFrameLineColor(final Color cl) {
     return this.mStyleHolder.setFrameLineColor(cl);
@@ -1830,7 +1707,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the background color.
    *
    * @param cl the background color to set
-   * @return true if succeeded
    */
   @Override
   public boolean setBackgroundColor(final Color cl) {
@@ -1841,7 +1717,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the font size.
    *
    * @param size the font size in units of pt
-   * @return true if succeeded
    */
   public boolean setFontSize(final float size) {
     this.mStyleHolder.setFontSize(size);
@@ -1853,7 +1728,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param size the font size
    * @param unit the unit of font size
-   * @return true if succeeded
    */
   public boolean setFontSize(final float size, final String unit) {
     this.mStyleHolder.setFontSize(size, unit);
@@ -1864,7 +1738,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the font style.
    *
    * @param style the font style
-   * @return true if succeeded
    */
   public boolean setFontStyle(final int style) {
     this.mStyleHolder.setFontStyle(style);
@@ -1875,7 +1748,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the font color.
    *
    * @param color the font color
-   * @return true if succeeded
    */
   public boolean setFontColor(final Color color) {
     return this.mStyleHolder.setFontColor(color);
@@ -1885,7 +1757,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the font name.
    *
    * @param name the font name
-   * @return true if succeeded
    */
   public boolean setFontName(final String name) {
     this.mStyleHolder.setFontName(name);
@@ -1898,7 +1769,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * @param name the font name
    * @param style the font style
    * @param size the font size in units of pt
-   * @return true if succeeded
    */
   private boolean setFont(final String name, final int style, final float size) {
     final boolean changed = this.mStyleHolder.setFont(name, style, size);
@@ -1921,11 +1791,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return null;
   }
 
-  /**
-   * Returns whether the legend is visible.
-   *
-   * @return true if the legend is visible
-   */
+  /** Returns whether the legend is visible. */
   public boolean isVisible() {
     return this.mStyleHolder.isVisible();
   }
@@ -2004,7 +1870,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
 
   /**
    * @param groupSet
-   * @return
    */
   ElementGroupErrorBar getGroupErrorBar(final ElementGroupSetInLegend groupSet) {
     ArrayList<SGElementGroup> groupList = groupSet.getElementGroupList();
@@ -2074,11 +1939,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     }
   }
 
-  /**
-   * Commit the change of the properties.
-   *
-   * @return true if succeeded
-   */
+  /** Commit the change of the properties. */
   public boolean commit() {
 
     // compare two properties
@@ -2101,11 +1962,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return true;
   }
 
-  /**
-   * Cancel the setting of properties.
-   *
-   * @return true if succeeded
-   */
+  /** Cancel the setting of properties. */
   public boolean cancel() {
 
     // set temporary properties to drawing elements to cancel the change
@@ -2125,11 +1982,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return true;
   }
 
-  /**
-   * Set properties from the property dialog.
-   *
-   * @return true if succeeded
-   */
+  /** Set properties from the property dialog. */
   public boolean preview() {
 
     // update drawing elements
@@ -2167,11 +2020,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return true;
   }
 
-  /**
-   * Returns a list of visible group sets.
-   *
-   * @return a list of group sets
-   */
+  /** Returns a list of visible group sets. */
   protected ArrayList<ElementGroupSetInLegend> getVisibleLegendList() {
     ArrayList<ElementGroupSetInLegend> list = new ArrayList<ElementGroupSetInLegend>();
     for (int ii = 0; ii < this.mChildList.size(); ii++) {
@@ -2184,11 +2033,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return list;
   }
 
-  /**
-   * Returns a list of viewable group sets.
-   *
-   * @return a list of group sets
-   */
+  /** Returns a list of viewable group sets. */
   private List<ElementGroupSetInLegend> getViewableLegendList() {
     List<ElementGroupSetInLegend> list = new ArrayList<ElementGroupSetInLegend>();
     for (int ii = 0; ii < this.mChildList.size(); ii++) {
@@ -2200,11 +2045,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return list;
   }
 
-  /**
-   * Returns a list of viewable data.
-   *
-   * @return a list of viewable data
-   */
+  /** Returns a list of viewable data. */
   @Override
   public List<SGData> getViewableDataList() {
     List<SGData> list = new ArrayList<SGData>();
@@ -2234,22 +2075,14 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return true;
   }
 
-  /**
-   * Cut focused copyable objects.
-   *
-   * @return a list of cut objects
-   */
+  /** Cut focused copyable objects. */
   public List<SGICopyable> cutFocusedObjects() {
     // returns an empty list because no objects exist that can be cut
     // other than data
     return new ArrayList<SGICopyable>();
   }
 
-  /**
-   * Returns a list of cut data objects.
-   *
-   * @return a list of cut data objects
-   */
+  /** Returns a list of cut data objects. */
   public List<SGData> cutFocusedData() {
     List<SGData> list = this.getFocusedDataList();
     this.hideSelectedData();
@@ -2270,7 +2103,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Move the focused objects to front or back.
    *
    * @param toFront flag whether to move to front or back
-   * @return true if succeeded
    */
   public boolean moveFocusedObjects(final boolean toFront) {
     // do nothing
@@ -2281,7 +2113,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Move the focused objects to forward or backward for given steps.
    *
    * @param num the number of levels to move
-   * @return true if succeeded
    */
   public boolean moveFocusedObjects(int num) {
     // do nothing
@@ -2292,7 +2123,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Returns the index of data object in legend.
    *
    * @param data a data object
-   * @return the index of data object in legend or -1 if not found
    */
   public int getIndex(final SGData data) {
     List<SGIChildObject> cList = this.getVisibleChildList();
@@ -2311,7 +2141,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param dataArray an array of data
    * @param indexArray an array of index
-   * @return true if succeeded
    */
   public boolean sortLegend(SGData[] dataArray, int[] indexArray) {
     if (dataArray == null || indexArray == null) {
@@ -2365,9 +2194,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   /** */
   boolean setVisibleChildListForPropertyIO(final List<SGIChildObject> list) {
     return this.setVisibleChildList(list);
@@ -2397,7 +2224,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    *
    * @param element an Element object which has properties
    * @param versionNumber the version number of property file
-   * @return true if succeeded
    */
   public boolean readProperty(final Element element, final String versionNumber) {
     return this.mPropertyIO.readProperty(element, versionNumber);
@@ -2444,7 +2270,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
     Object source = e.getSource();
     char c = e.getKeyChar();
 
-    // if the text field is visible
     if (source.equals(this.mTextField)) {
 
       // hide the text field
@@ -2481,7 +2306,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
    * Sets the dialog owner this figure element.
    *
    * @param frame the dialog owner
-   * @return true if succeeded
    */
   public boolean setDialogOwner(final Frame frame) {
     if (super.setDialogOwner(frame) == false) {
@@ -2558,12 +2382,6 @@ public class SGFigureElementLegend extends SGFigureElementForData
     return this.mAxisElement.getColorMap();
   }
 
-  // @Override
-  // protected SGIElementGroupSetGridSXYZ createGridSXYZGroupSetInstance(
-  // SGISXYZTypeData dataSXYZ) {
-  // return new ElementGroupSetInLegendSXYZ(SGFigureElementLegend.this, (SGData) dataSXYZ);
-  // }
-
   /**
    * Moves the data of given ID to the top or the bottom in legend.
    *
@@ -2603,7 +2421,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
   /**
    * Sets the common properties.
    *
-   * @param kvList a list of key and values of properties
+   * @param map a list of key and values of properties
    * @return the result of setting properties
    */
   public SGPropertyResults setProperties(SGPropertyMap map) {

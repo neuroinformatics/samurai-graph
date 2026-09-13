@@ -1147,25 +1147,20 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     super.stateChanged(e);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getDataName() {
     return this.mNameField.getText();
   }
 
   /**
    * @param str
-   * @return
    */
   public boolean setDataName(final String str) {
     this.mNameField.setText(str);
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Boolean getLegendVisible() {
     return this.mLegendVisibleCheckBox.getSelected();
   }
@@ -1233,11 +1228,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     return true;
   }
 
-  /**
-   * Returns whether to connect all effective points.
-   *
-   * @return true if connecting all effective points
-   */
+  /** Returns whether to connect all effective points. */
   public Boolean getLineConnection() {
     return this.mLineConnectCheckBox.getSelected();
   }
@@ -1246,7 +1237,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
    * Sets whether to connect all effective points.
    *
    * @param flag true to connect all effective points
-   * @return true if succeeded
    */
   public boolean setLineConnection(final Boolean flag) {
     this.mLineConnectCheckBox.setSelected(flag);
@@ -1477,13 +1467,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
   }
 
   public Number getBarInterval() {
-    /*
-    if (this.mBarIntervalTextField.isEnabled()) {
-        return this.getNumber(this.mBarIntervalTextField);
-    } else {
-        return SGUtilityText.getDouble(this.mTemporaryBarIntervalText);
-    }
-    */
+
     return this.getNumber(this.mBarIntervalTextField);
   }
 
@@ -1846,7 +1830,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
    * Sets the tick label font name.
    *
    * @param name the font name to set
-   * @return true if succeeded
    */
   public boolean setTickLabelFontName(final String name) {
     final String fName = SGUtility.findFontFamilyName(name);
@@ -1921,11 +1904,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     return list;
   }
 
-  /**
-   * Returns a list of text fields to set number.
-   *
-   * @return
-   */
+  /** Returns a list of text fields to set number. */
   public List<SGTextField> getAxisNumberTextFieldList() {
     final List<SGTextField> list = new ArrayList<SGTextField>();
     list.add(this.mShiftXTextField);
@@ -1973,7 +1952,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
 
   /**
    * @param com
-   * @return
    */
   public boolean isTabEnabled(final Component com) {
     if (com == null) {
@@ -2394,22 +2372,11 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     return false;
   }
 
-  /*
-   * // a dialog to edit line stroke private SGStrokeDialog mStrokeDialog =
-   * null;
-   *  // shows a dialog to edit line stroke private void showLineEditDialog() {
-   *  // set the location this.mStrokeDialog.setLocation(this.getLocation());
-   *  // set visible this.mStrokeDialog.setVisible(true); }
-   */
   /** An error message which is shown when all elements are set to be invisible. */
   static final String ERRMSG_NOT_HIDE_ALL_ELEMENTS =
       "Lines, symbols and bars cannot be hidden at the same time.";
 
-  /**
-   * Returns whether this dialog has valid input values.
-   *
-   * @return true if all input values are valid
-   */
+  /** Returns whether this dialog has valid input values. */
   protected boolean hasValidInputValues() {
 
     boolean valid = true;
@@ -2418,14 +2385,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     }
 
     // Enabled to hide all types of drawing elements at the same time.
-    /*
-    // if all drawing elements for any one data are hidden,
-    // show an error message dialog
-    if (this.isAnyElementsShown() == false) {
-        this.setInputErrorMessage(ERRMSG_NOT_HIDE_ALL_ELEMENTS);
-        valid = false;
-    }
-    */
 
     // check the data name
     if (this.mNameField.hasValidText() == false) {
@@ -2661,27 +2620,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.mLineConnectCheckBox.setEnabled(b);
   }
 
-  //    private void setLinePlacementComponentsEnabled(Boolean flag) {
-  //        boolean b = true;
-  //        Boolean lineVisible = this.getLineVisible();
-  //        Boolean symbolVisible = this.getSymbolVisible();
-  //        if (lineVisible != null && symbolVisible != null) {
-  //            if (flag != null) {
-  //                if (lineVisible.booleanValue() || symbolVisible.booleanValue()) {
-  //                    b = true;
-  //                } else {
-  //                    b = false;
-  //                }
-  //            }
-  //        }
-  //        this.mLinePlacementLabel.setEnabled(b);
-  //        this.mLinePlacementSeparator.setEnabled(b);
-  //        this.mLinePlacementShiftXLabel.setEnabled(b);
-  //        this.mLinePlacementShiftXTextField.setEnabled(b);
-  //        this.mLinePlacementShiftYLabel.setEnabled(b);
-  //        this.mLinePlacementShiftYTextField.setEnabled(b);
-  //    }
-
   private void setSymbolComponentsEnabled(Boolean flag) {
     boolean b = true;
     if (flag != null) {
@@ -2750,18 +2688,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     this.mBarLineWidthSpinner.setEnabled(b);
   }
 
-  /*
-   String mTemporaryBarIntervalText = "";
-  private void setBarIntervalEnabled(final boolean enabled) {
-      if (enabled==false) {
-          this.mTemporaryBarIntervalText = this.mBarIntervalTextField.getText();
-          this.mBarIntervalLabel.setEnabled(enabled);
-          this.mBarIntervalTextField.setEnabled(enabled);
-          this.mBarIntervalTextField.setText("");
-      }
-  }
-  */
-
   private void setErrorBarComponentsEnabled(Boolean flag) {
     boolean b = true;
     if (flag != null) {
@@ -2794,34 +2720,11 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     if (flag != null) {
       b = flag.booleanValue();
     }
-    /*
-    this.mTickLabelTextLabel.setEnabled(b);
-    this.mTickLabelAngleLabel.setEnabled(b);
-    this.mTickLabelAngleSpinner.setEnabled(b);
-    this.mTickLabelFontNameLabel.setEnabled(b);
-    this.mTickLabelFontNameComboBox.setEnabled(b);
-    this.mTickLabelFontLabel.setEnabled(b);
-    this.mTickLabelFontSizeLabel.setEnabled(b);
-    this.mTickLabelFontSizeSpinner.setEnabled(b);
-    this.mTickLabelFontStyleLabel.setEnabled(b);
-    this.mTickLabelFontStyleComboBox.setEnabled(b);
-    this.mTickLabelColorButton.setEnabled(b);
-    this.mTickLabelColorLabel.setEnabled(b);
-    this.mTickLabelFormatLabel.setEnabled(b);
-    this.mTickLabelDecimalPlacesLabel.setEnabled(b);
-    this.mTickLabelDecimalPlacesSpinner.setEnabled(b);
-    this.mTickLabelExponentLabel.setEnabled(b);
-    this.mTickLabelExponentBaseLabel.setEnabled(b);
-    this.mTickLabelExponentSpinner.setEnabled(b);
-    this.mTickLabelDateFormatLabel.setEnabled(b);
-    this.mTickLabelDateFormatComboBox.setEnabled(b);
-    */
+
     this.mTickLabelComponentGroup.setEnabled(b);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean setDialogProperty() {
     List<SGIPropertyDialogObserver> list = this.mPropertyDialogObserverList;
     final int len = list.size();
@@ -2936,14 +2839,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
       this.mLineColorAutoAssigned = l.isLineColorAutoAssigned();
     }
 
-    /*
-     * // enable or disable the stroke dialog button // When solid lines are
-     * selected, the button is set disabled.
-     * this.mLineEditButton.setEnabled(!solidLineFlag); if (!solidLineFlag) { //
-     * set properties of the stroke dialog if
-     * (this.mStrokeDialog.setDialogProperty() == false) { return false; } }
-     */
-
     return true;
   }
 
@@ -2998,15 +2893,6 @@ public class SGPropertyDialogSXYData extends SGDataDialog
           break;
         }
       }
-      //            for (int ii = 1; ii < list.size(); ii++) {
-      //                SGISXYDataDialogObserver g1 = (SGISXYDataDialogObserver) list
-      //                        .get(ii);
-      //                final Color innerColor1 = g1.getSymbolInnerColor();
-      //                if (innerColor0.equals(innerColor1) == false) {
-      //                    innerColor = null;
-      //                    break;
-      //                }
-      //            }
       for (int ii = 1; ii < list.size(); ii++) {
         SGISXYDataDialogObserver g1 = (SGISXYDataDialogObserver) list.get(ii);
         final SGIPaint innerPaint1 = g1.getSymbolInnerPaint();
@@ -3576,80 +3462,28 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     return true;
   }
 
-  /**
-   * Add a property dialog observer.
-   *
-   * @param l property dialog observer.
-   * @return true:succeeded, false:failed
-   */
-  /*
-  public boolean addPropertyDialogObserver(final SGIPropertyDialogObserver l) {
-  if (super.addPropertyDialogObserver(l) == false) {
-  return false;
-  }
-  return this.mStrokeDialog.addPropertyDialogObserver(l);
-  }
-  */
-  /**
-   * Remove a property dialog observer.
-   *
-   * @param l property dialog observer.
-   * @return true:succeeded, false:failed
-   */
-  /*
-  public boolean removePropertyDialogObserver(final SGIPropertyDialogObserver l) {
-  if (super.removePropertyDialogObserver(l) == false) {
-  return false;
-  }
-  return this.mStrokeDialog.removePropertyDialogObserver(l);
-  }
-  */
-  /**
-   * Remove all property dialog observers.
-   *
-   * @return true:succeeded, false:failed
-   */
-  /*
-  public boolean removeAllPropertyDialogObserver() {
-  if (super.removeAllPropertyDialogObserver() == false) {
-  return false;
-  }
-  return this.mStrokeDialog.removeAllPropertyDialogObserver();
-  }
-  */
+  /** Add a property dialog observer. */
 
-  /**
-   * Returns the OK button.
-   *
-   * @return the OK button
-   */
+  /** Remove a property dialog observer. */
+
+  /** Remove all property dialog observers. */
+
+  /** Returns the OK button. */
   protected JButton getOKButton() {
     return this.mOKButton;
   }
 
-  /**
-   * Returns the cancel button.
-   *
-   * @return the cancel button
-   */
+  /** Returns the cancel button. */
   protected JButton getCancelButton() {
     return this.mCancelButton;
   }
 
-  /**
-   * Returns the preview button.
-   *
-   * @return the preview button
-   */
+  /** Returns the preview button. */
   protected JButton getPreviewButton() {
     return this.mPreviewButton;
   }
 
-  /**
-   * Overrode to clear an attribute.
-   *
-   * @return true if succeeded
-   */
+  /** Overrode to clear an attribute. */
   protected boolean onOK() {
     if (super.onOK() == false) {
       return false;
@@ -3661,11 +3495,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog
     return true;
   }
 
-  /**
-   * Overrode to clear an attribute.
-   *
-   * @return true if succeeded
-   */
+  /** Overrode to clear an attribute. */
   protected boolean onCanceled() {
     if (super.onCanceled() == false) {
       return false;

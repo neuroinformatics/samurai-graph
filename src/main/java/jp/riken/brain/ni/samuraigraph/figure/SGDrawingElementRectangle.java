@@ -27,101 +27,52 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
     super();
   }
 
-  /**
-   * Returns a stroke.
-   *
-   * @return a stroke
-   */
+  /** Returns a stroke. */
   protected abstract SGStroke getStroke();
 
-  /**
-   * Returns X coordinate of this rectangle.
-   *
-   * @return X coordinate of this rectangle
-   */
+  /** Returns X coordinate of this rectangle. */
   public abstract float getX();
 
-  /**
-   * Returns Y coordinate of this rectangle.
-   *
-   * @return Y coordinate of this rectangle
-   */
+  /** Returns Y coordinate of this rectangle. */
   public abstract float getY();
 
-  /**
-   * Returns the location of this rectangle.
-   *
-   * @return the location of this rectangle
-   */
+  /** Returns the location of this rectangle. */
   public SGTuple2f getLocation() {
     return new SGTuple2f(this.getX(), this.getY());
   }
 
-  /**
-   * Returns the width of this rectangle.
-   *
-   * @return the width of this rectangle
-   */
+  /** Returns the width of this rectangle. */
   public abstract float getWidth();
 
-  /**
-   * Returns the height of this rectangle.
-   *
-   * @return the height of this rectangle
-   */
+  /** Returns the height of this rectangle. */
   public abstract float getHeight();
 
-  /**
-   * Returns the edge line width.
-   *
-   * @return the edge line width
-   */
+  /** Returns the edge line width. */
   public abstract float getEdgeLineWidth();
 
   public float getEdgeLineWidth(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getEdgeLineWidth(), unit);
   }
 
-  /**
-   * Returns the edge line color.
-   *
-   * @return the edge line color
-   */
+  /** Returns the edge line color. */
   public abstract Color getEdgeLineColor();
 
-  /**
-   * Returns the edge line visibility.
-   *
-   * @return the edge line visibility
-   */
+  /** Returns the edge line visibility. */
   public abstract boolean isEdgeLineVisible();
 
-  /**
-   * Returns the inner paint.
-   *
-   * @return the inner paint
-   */
+  /** Returns the inner paint. */
   public abstract SGIPaint getInnerPaint();
 
-  /**
-   * Returns the edge line type.
-   *
-   * @return the edge line type
-   */
+  /** Returns the edge line type. */
   public abstract int getEdgeLineType();
 
-  /**
-   * Returns the alpha value of this rectangle's body.
-   *
-   * @return alpha value of this rectangle
-   */
+  /** Returns the alpha value of this rectangle's body. */
   public abstract float getTransparency();
 
   /**
    * Sets the edge line width.
    *
    * @param width line width to set
-   * @return true if succeeded
    */
   public abstract boolean setEdgeLineWidth(final float width);
 
@@ -130,7 +81,6 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
    *
    * @param lw the line width to set
    * @param unit the unit for given line width
-   * @return true if succeeded
    */
   public boolean setEdgeLineWidth(final float lw, final String unit) {
     final Float lwNew = SGUtility.getLineWidth(lw, unit);
@@ -147,7 +97,6 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
    * Sets the edge line type.
    *
    * @param type the line type
-   * @return true if succeeded
    */
   public abstract boolean setEdgeLineType(final int type);
 
@@ -155,7 +104,6 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
    * Sets the edge line color.
    *
    * @param color the edge line color
-   * @return true if succeeded
    */
   public abstract boolean setEdgeLineColor(final Color color);
 
@@ -163,7 +111,6 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
    * Sets the edge line visible .
    *
    * @param visible the edge line visible
-   * @return true if succeeded
    */
   public abstract boolean setEdgeLineVisible(final boolean visible);
 
@@ -171,7 +118,6 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
    * Sets the inner paint.
    *
    * @param paint the inner paint to set
-   * @return true if succeeded
    */
   public abstract boolean setInnerPaint(final SGIPaint paint);
 
@@ -186,7 +132,6 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
    * Sets the x coordinate.
    *
    * @param x the x coordinate
-   * @return true if succeeded
    */
   public abstract boolean setX(final float x);
 
@@ -194,14 +139,12 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
    * Sets the y coordinate.
    *
    * @param y the y coordinate
-   * @return true if succeeded
    */
   public abstract boolean setY(final float y);
 
   /**
    * @param x
    * @param y
-   * @return
    */
   public boolean setLocation(final float x, final float y) {
     this.setX(x);
@@ -211,7 +154,6 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
 
   /**
    * @param point
-   * @return
    */
   public boolean setLocation(final SGTuple2f point) {
     this.setLocation(point.x, point.y);
@@ -245,7 +187,6 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
   /**
    * @param w
    * @param h
-   * @return
    */
   public boolean setSize(final float w, final float h) {
     this.setWidth(w);
@@ -637,9 +578,7 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
     return this.getRectShape().contains(x, y);
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected Shape getRectShape() {
     return this.getElementBounds();
   }
@@ -659,10 +598,6 @@ public abstract class SGDrawingElementRectangle extends SGDrawingElement
       g2d.setPaint(this.getInnerPaint().getPaint(sh.getBounds2D()));
       g2d.fill(sh);
     }
-
-    //        final float width = this.getMagnification() * this.getEdgeLineWidth();
-    //        Stroke stroke = new BasicStroke(width, BasicStroke.CAP_BUTT,
-    //                BasicStroke.JOIN_MITER);
 
     if (this.isEdgeLineVisible()) {
       Stroke stroke = this.getStroke().getBasicStroke();

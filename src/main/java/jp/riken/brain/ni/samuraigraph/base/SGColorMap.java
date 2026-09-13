@@ -76,20 +76,12 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
   // The flag whether this object is already disposed of.
   private boolean mDisposed = false;
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }
 
-  /**
-   * Clones this color bar model.
-   *
-   * @return a copy of this object
-   */
+  /** Clones this color bar model. */
   public final Object clone() {
     try {
       SGColorMap model = (SGColorMap) super.clone();
@@ -116,47 +108,27 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
     return true;
   }
 
-  /**
-   * Returns the axis.
-   *
-   * @return the axis
-   */
+  /** Returns the axis. */
   public SGAxis getAxis() {
     return this.mAxis;
   }
 
-  /**
-   * Returns the minimum value.
-   *
-   * @return the minimum value
-   */
+  /** Returns the minimum value. */
   public double getMinValue() {
     return this.mAxis.getMinDoubleValue();
   }
 
-  /**
-   * Returns the maximum value.
-   *
-   * @return the maximum value
-   */
+  /** Returns the maximum value. */
   public double getMaxValue() {
     return this.mAxis.getMaxDoubleValue();
   }
 
-  /**
-   * Returns the scale type.
-   *
-   * @return the scale type
-   */
+  /** Returns the scale type. */
   public int getScaleType() {
     return this.mAxis.getScaleType();
   }
 
-  /**
-   * Returns whether the coordinate is inverted.
-   *
-   * @return true if the coordinate is inverted
-   */
+  /** Returns whether the coordinate is inverted. */
   public boolean isInvertCoordinates() {
     return this.mAxis.isInvertCoordinates();
   }
@@ -192,11 +164,7 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
     this.mAxis.setInvertCoordinates(b);
   }
 
-  /**
-   * Returns an array of colors.
-   *
-   * @return an array of colors
-   */
+  /** Returns an array of colors. */
   public Color[] getColors() {
     if (this.mColors != null) {
       return this.mColors.clone();
@@ -205,11 +173,7 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
     }
   }
 
-  /**
-   * Returns whether the order of colors is reversed.
-   *
-   * @return whether the order of colors is reversed
-   */
+  /** Returns whether the order of colors is reversed. */
   public boolean isReversedOrder() {
     return this.mReversedOrderFlag;
   }
@@ -227,7 +191,6 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
    * Evaluate a given value with the color map and returns a corresponding color.
    *
    * @param value a value to evaluate
-   * @return corresponding color
    */
   public Color evaluate(final double value) {
     final int scaleType = this.getScaleType();
@@ -239,7 +202,6 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
    *
    * @param value a value to evaluate
    * @param scaleType the scale type
-   * @return a corresponding color
    */
   public Color evaluate(final double value, final int scaleType) {
     if (Double.isNaN(value) || Double.isInfinite(value)) {
@@ -273,7 +235,6 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
    * Returns the color in an array of colors of attribute.
    *
    * @param index the array index
-   * @return the array element
    */
   protected Color getColor(final int index) {
     if (this.mReversedOrderFlag) {
@@ -291,7 +252,6 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
    * respectively.
    *
    * @param value a value
-   * @return the corresponding color
    */
   public abstract Color eval(final double value);
 
@@ -397,6 +357,7 @@ public abstract class SGColorMap implements Cloneable, SGIDisposable {
   /**
    * Writes properties of this color map to a given Element.
    *
+   * @param params the params parameter
    * @param el an Element
    * @return true if succeeded
    */

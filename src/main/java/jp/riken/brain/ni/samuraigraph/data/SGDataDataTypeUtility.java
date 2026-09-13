@@ -142,8 +142,6 @@ public final class SGDataDataTypeUtility
       SGDataTypeConstants.SXY_MULTIPLE_DATA,
       SGDataTypeConstants.VXY_DATA,
       SGDataTypeConstants.SXYZ_DATA,
-
-      // for backward compatibility
       SGDataTypeConstants.SXY_SAMPLING_DATA,
       SGDataTypeConstants.SXY_DATE_DATA
     };
@@ -265,7 +263,6 @@ public final class SGDataDataTypeUtility
       return true;
     }
 
-    // for backward compatibility
     String[] types = {SGDataTypeConstants.SXY_SAMPLING_DATA, SGDataTypeConstants.SXY_DATE_DATA};
     return SGUtility.contains(types, dataType);
   }
@@ -439,12 +436,10 @@ public final class SGDataDataTypeUtility
 
   public static final boolean isEqualColumnType(String str1, String str2) {
     return SGUtilityText.isEqualString(str1, str2);
-    // return SGUtility.equals(str1, str2);
   }
 
   public static final boolean columnTypeStartsWith(String str, String prefix) {
     return SGUtilityText.startsWith(str, prefix);
-    // return str.startsWith(prefix);
   }
 
   /**

@@ -55,20 +55,12 @@ public class SGSDArrayFile extends SGDataSource {
     this.mFilePath = filePath;
   }
 
-  /**
-   * Returns the file path.
-   *
-   * @return the file path
-   */
+  /** Returns the file path. */
   public String getPath() {
     return this.mFilePath;
   }
 
-  /**
-   * Returns the array of data columns.
-   *
-   * @return the array of data columns
-   */
+  /** Returns the array of data columns. */
   public SGDataColumn[] getDataColumns() {
     return this.mDataColumns.clone();
   }
@@ -88,11 +80,7 @@ public class SGSDArrayFile extends SGDataSource {
     }
   }
 
-  /**
-   * Clones this data file.
-   *
-   * @return copy of this data file
-   */
+  /** Clones this data file. */
   public Object clone() {
     SGSDArrayFile dataFile = null;
     try {
@@ -122,11 +110,7 @@ public class SGSDArrayFile extends SGDataSource {
     this.mDataColumns = null;
   }
 
-  /**
-   * Returns the number of columns.
-   *
-   * @return the number of columns or -1 if data columns do not exist
-   */
+  /** Returns the number of columns. */
   public int getColNum() {
     if (this.mDataColumns == null) {
       return -1;
@@ -135,11 +119,7 @@ public class SGSDArrayFile extends SGDataSource {
     }
   }
 
-  /**
-   * Returns the length of data.
-   *
-   * @return the length of data
-   */
+  /** Returns the length of data. */
   public int getLength() {
     return this.mDataColumns[0].getLength();
   }
@@ -148,7 +128,6 @@ public class SGSDArrayFile extends SGDataSource {
    * Returns the number of data columns of a given class.
    *
    * @param cl a class object
-   * @return the number of data columns of a given class
    */
   public int getColNum(Class<?> cl) {
     SGDataColumn[] columns = this.mDataColumns;
@@ -161,11 +140,7 @@ public class SGSDArrayFile extends SGDataSource {
     return cnt;
   }
 
-  /**
-   * Returns the number of rows of each column.
-   *
-   * @return the number of rows of each column or -1 if data columns do not exist
-   */
+  /** Returns the number of rows of each column. */
   public int getRowNum() {
     if (this.mDataColumns == null || this.mDataColumns.length == 0) {
       return -1;
@@ -178,7 +153,6 @@ public class SGSDArrayFile extends SGDataSource {
    * Returns an array of data column indices of given class.
    *
    * @param cl a class object
-   * @return an array of column indices
    */
   public int[] getIndexArray(Class<?> cl) {
     SGDataColumn[] columns = this.mDataColumns;
@@ -196,11 +170,7 @@ public class SGSDArrayFile extends SGDataSource {
     return array;
   }
 
-  /**
-   * Returns an array of titles of the columns.
-   *
-   * @return an array of titles of the columns
-   */
+  /** Returns an array of titles of the columns. */
   public String[] getTitles() {
     SGDataColumn[] columns = this.mDataColumns;
     String[] titles = new String[columns.length];
@@ -214,7 +184,6 @@ public class SGSDArrayFile extends SGDataSource {
    * Returns the title of a column at given index.
    *
    * @param colIndex the column index
-   * @return the title
    */
   public String getTitle(final int colIndex) {
     SGDataColumn[] columns = this.mDataColumns;
@@ -244,11 +213,7 @@ public class SGSDArrayFile extends SGDataSource {
     return false;
   }
 
-  /**
-   * Returns an array of value types of the columns.
-   *
-   * @return an array of value types of the columns
-   */
+  /** Returns an array of value types of the columns. */
   public String[] getValueTypes() {
     SGDataColumn[] columns = this.mDataColumns;
     String[] types = new String[columns.length];
@@ -262,7 +227,6 @@ public class SGSDArrayFile extends SGDataSource {
    * Checks whether a given column index is within array bounds.
    *
    * @param index the column index
-   * @return true if the given column index is within array bounds
    */
   protected boolean checkColumnIndexRange(final Integer index) {
     SGDataColumn[] columns = this.mDataColumns;

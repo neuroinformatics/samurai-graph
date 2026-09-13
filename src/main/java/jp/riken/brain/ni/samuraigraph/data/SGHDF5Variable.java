@@ -311,7 +311,6 @@ public class SGHDF5Variable extends SGMDArrayVariable {
    *
    * @param xIndex dimension index for x-values
    * @param yIndex dimension index for y-values
-   * @param origins the origins
    * @return the array of double values
    */
   @Override

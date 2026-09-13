@@ -35,29 +35,17 @@ public abstract class SGMDArrayVariable extends SGVariable
     this.mDimensionIndices.put(KEY_TIME_DIMENSION, -1);
   }
 
-  /**
-   * Returns the file.
-   *
-   * @return the file
-   */
+  /** Returns the file. */
   public SGMDArrayFile getFile() {
     return this.mFile;
   }
 
-  /**
-   * Returns the name.
-   *
-   * @return the name
-   */
+  /** Returns the name. */
   public String getName() {
     return this.mName;
   }
 
-  /**
-   * Returns the simple name.
-   *
-   * @return the simple name
-   */
+  /** Returns the simple name. */
   public String getSimpleName() {
     final String name = SGUtilityText.lastSubstring(this.mName, '/');
     if (name == null) {
@@ -67,29 +55,17 @@ public abstract class SGMDArrayVariable extends SGVariable
     }
   }
 
-  /**
-   * Returns the dimension index.
-   *
-   * @return the dimension index
-   */
+  /** Returns the dimension index. */
   public Integer getDimensionIndex(final String key) {
     return this.mDimensionIndices.get(key);
   }
 
-  /**
-   * Returns the generic dimension index.
-   *
-   * @return the generic dimension index
-   */
+  /** Returns the generic dimension index. */
   public Integer getGenericDimensionIndex() {
     return this.getDimensionIndex(KEY_GENERIC_DIMENSION);
   }
 
-  /**
-   * Returns the map of dimension indices.
-   *
-   * @return the map of dimension indices
-   */
+  /** Returns the map of dimension indices. */
   public Map<String, Integer> getDimensionIndices() {
     return new HashMap<String, Integer>(this.mDimensionIndices);
   }
@@ -145,11 +121,7 @@ public abstract class SGMDArrayVariable extends SGVariable
     }
   }
 
-  /**
-   * Returns the origin array.
-   *
-   * @return the origin array
-   */
+  /** Returns the origin array. */
   public int[] getOrigins() {
     return this.mOrigins.clone();
   }
@@ -179,18 +151,10 @@ public abstract class SGMDArrayVariable extends SGVariable
     this.mOrigins = origins.clone();
   }
 
-  /**
-   * Returns the dimensions.
-   *
-   * @return the dimensions
-   */
+  /** Returns the dimensions. */
   public abstract int[] getDimensions();
 
-  /**
-   * Returns a text string to represent this object.
-   *
-   * @return a text string to represent this object
-   */
+  /** Returns a text string to represent this object. */
   @Override
   public String toString() {
     return this.getName();
@@ -200,7 +164,6 @@ public abstract class SGMDArrayVariable extends SGVariable
    * Returns true if the data file and the variable name is equal.
    *
    * @param obj an object to be compared
-   * @return true if the data file and the variable name is equal
    */
   @Override
   public boolean equals(Object obj) {
@@ -220,11 +183,7 @@ public abstract class SGMDArrayVariable extends SGVariable
     return true;
   }
 
-  /**
-   * Returns the list of attributes.
-   *
-   * @return the list of attributes
-   */
+  /** Returns the list of attributes. */
   public abstract List<SGAttribute> getAttributes();
 
   /** Disposes of this object. */
@@ -431,7 +390,6 @@ public abstract class SGMDArrayVariable extends SGVariable
    *
    * @param xIndex dimension index for x-values
    * @param yIndex dimension index for y-values
-   * @param origins the origins
    * @return the array of double values
    */
   public abstract double[] getDoubleArray(final int xIndex, final int yIndex, final int origins[]);

@@ -301,6 +301,7 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
   /**
    * @param obj
    * @return
+   * @param tf the tf parameter
    */
   protected boolean setValue(final SGTextField tf, final Object obj) {
     return SGUtility.setDoubleValue(tf, obj);
@@ -309,6 +310,7 @@ public class SGArrowPanel extends SGPropertyPanel implements SGIArrowConstants, 
   /**
    * @param obj
    * @return
+   * @param sp the sp parameter
    */
   protected boolean setValue(final SGSpinner sp, final Object obj) {
     return SGUtility.setValue(sp, obj);

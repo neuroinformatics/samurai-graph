@@ -33,9 +33,7 @@ class ElementGroupArrow extends SGElementGroupArrowForData implements ILegendEle
     this.mMagnitudeString.setColor(DEFAULT_LEGEND_FONT_COLOR);
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected SGDrawingElement createDrawingElementInstance(final int index) {
     return new ArrowInGroup(this, index);
   }
@@ -50,11 +48,7 @@ class ElementGroupArrow extends SGElementGroupArrowForData implements ILegendEle
     return true;
   }
 
-  /**
-   * Returns the preferred width.
-   *
-   * @return the preferred width
-   */
+  /** Returns the preferred width. */
   public float getPreferredWidth() {
     return this.getMagnification() * legend.getSymbolSpan();
   }
@@ -74,11 +68,7 @@ class ElementGroupArrow extends SGElementGroupArrowForData implements ILegendEle
     return new Rectangle2D.Float();
   }
 
-  /**
-   * Returns the preferred height.
-   *
-   * @return the preferred height
-   */
+  /** Returns the preferred height. */
   public float getPreferredHeight() {
     final float elementSize = 1.20f * (float) this.getDataElementBounds().getHeight();
     final float strHeight = (float) this.mMagnitudeString.getElementBounds().getHeight();

@@ -223,11 +223,6 @@ public interface SGIApplicationCommandConstants
   /** The command to insert label of netCDF data. */
   public static final String COM_INSERT_NETCDF_DATA_LABEL = "InsertNetCDFDataLabel";
 
-  //    /**
-  //     * The command to setup the line color map.
-  //     */
-  //    public static final String COM_SETUP_LINE_COLOR_MAP = "SetupLineColorMap";
-
   /** The command to assign line color. */
   public static final String COM_ASSIGN_LINE_COLOR = "AssignLineColor";
 

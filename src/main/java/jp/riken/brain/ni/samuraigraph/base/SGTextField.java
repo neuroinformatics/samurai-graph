@@ -61,16 +61,13 @@ public class SGTextField extends JTextField {
   /** Initialize this text field. */
   private void init() {}
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isIndeterminate() {
     return this.mIndeterminate;
   }
 
   /**
    * @param b
-   * @return
    */
   private boolean setIndeterminate(final boolean b) {
     this.mIndeterminate = b;
@@ -134,9 +131,6 @@ public class SGTextField extends JTextField {
         return false;
       }
     } else {
-      //            if (text.equals("")) {
-      //                return false;
-      //            }
       if (SGUtilityText.isValidString(text) == false) {
         return false;
       }

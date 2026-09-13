@@ -89,6 +89,10 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   /**
    * Build a data with given columns and indices.
    *
+   * @param stride the stride parameter
+   * @param tickLabelStride the tickLabelStride parameter
+   * @param strideAvailable the strideAvailable parameter
+   * @param samplingRate the samplingRate parameter
    * @param dataFile the text data file
    * @param obs an observer for array data
    * @param xIndices an array of the indices for x-values
@@ -181,11 +185,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     this.mSamplingRate = samplingRate;
   }
 
-  /**
-   * Returns the sampling rate.
-   *
-   * @return the sampling rate
-   */
+  /** Returns the sampling rate. */
   public Double getSamplingRate() {
     return this.mSamplingRate;
   }
@@ -310,20 +310,12 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return (this.mXIndices.length == 1 && this.mYIndices.length == 1);
   }
 
-  /**
-   * Returns the type of data.
-   *
-   * @return the type of data
-   */
+  /** Returns the type of data. */
   public String getDataType() {
     return SGDataTypeConstants.SXY_MULTIPLE_DATA;
   }
 
-  /**
-   * Returns an array of SXYData objects.
-   *
-   * @return an array of SXYData objects
-   */
+  /** Returns an array of SXYData objects. */
   public SGISXYTypeSingleData[] getSXYDataArray() {
 
     SGSXYMultipleDataCache cache = (SGSXYMultipleDataCache) this.getCache();
@@ -431,11 +423,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return dataArray;
   }
 
-  /**
-   * Returns the number of child data.
-   *
-   * @return the number of child data
-   */
+  /** Returns the number of child data. */
   @Override
   public int getChildNumber() {
     final boolean by = this.hasMultipleYValues();
@@ -443,11 +431,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return dataNum;
   }
 
-  /**
-   * Returns an array of multiple SXYData objects.
-   *
-   * @return an array of multiple SXYData objects
-   */
+  /** Returns an array of multiple SXYData objects. */
   @Override
   public SGISXYTypeMultipleData[] getSXYTypeMultipleDataArray() {
     SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
@@ -461,20 +445,12 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return ret;
   }
 
-  /**
-   * Returns the bounds of x-values.
-   *
-   * @return the bounds of x-values
-   */
+  /** Returns the bounds of x-values. */
   public SGValueRange getBoundsX() {
     return SGDataRangeUtility.getBoundsX(this);
   }
 
-  /**
-   * Returns the bounds of y-values.
-   *
-   * @return the bounds of y-values
-   */
+  /** Returns the bounds of y-values. */
   public SGValueRange getBoundsY() {
     return SGDataRangeUtility.getBoundsY(this);
   }
@@ -483,7 +459,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    * Set values with a given data.
    *
    * @param data data to be copied
-   * @return true if succeeded
    */
   public boolean setData(final SGData data) {
     if (!(data instanceof SGSXYSDArrayMultipleData)) {
@@ -519,11 +494,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return true;
   }
 
-  /**
-   * Returns the copy of this data object.
-   *
-   * @return copy of this data object
-   */
+  /** Returns the copy of this data object. */
   public Object clone() {
     SGSXYSDArrayMultipleData data = (SGSXYSDArrayMultipleData) super.clone();
     if (this.mXIndices != null) {
@@ -576,27 +547,12 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return array;
   }
 
-  // protected double[] getNumberArray(final int index) {
-  // SGDataColumn[] columns = this.getDataFile().getDataColumns();
-  // int[] indices = SGDataUtility.getIndices(this);
-  // SGINumberDataColumn col = (SGINumberDataColumn) columns[index];
-  // return col.getNumberArray(indices);
-  // }
-
-  /**
-   * Returns the number of arrays of x-values.
-   *
-   * @return the number of arrays of x-values
-   */
+  /** Returns the number of arrays of x-values. */
   public int getXNumber() {
     return this.mXIndices.length;
   }
 
-  /**
-   * Returns the number of arrays of y-values.
-   *
-   * @return the number of arrays of y-values
-   */
+  /** Returns the number of arrays of y-values. */
   public int getYNumber() {
     return this.mYIndices.length;
   }
@@ -605,22 +561,8 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    * Writes data column indices in the attributes.
    *
    * @param el the Element object
-   * @return true if succeeded
    */
   protected boolean writeAttributeColumnIndices(Element el) {
-    // if (this.hasMultipleYValues()) {
-    //// el.setAttribute(KEY_X_VALUE_COLUMN_INDICES, this.mXIndices[0].toString());
-    // if (this.writeAttributeColumnIndicesSub(el, KEY_Y_VALUE_COLUMN_INDICES,
-    // this.mYIndices) == false) {
-    // return false;
-    // }
-    // } else {
-    // el.setAttribute(KEY_Y_VALUE_COLUMN_INDICES, this.mYIndices[0].toString());
-    // if (this.writeAttributeColumnIndicesSub(el, KEY_X_VALUE_COLUMN_INDICES,
-    // this.mXIndices) == false) {
-    // return false;
-    // }
-    // }
     if (this.writeAttributeColumnIndicesSub(el, KEY_X_VALUE_COLUMN_INDICES, this.mXIndices)
         == false) {
       return false;
@@ -702,7 +644,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    * Writes data column indices as sequential numbers.
    *
    * @param el the Element object
-   * @return true if succeeded
    */
   protected boolean writeSequentialColumnIndices(Element el) {
     int[] xIndices, yIndices;
@@ -940,7 +881,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    * Write sampling rate to the Element.
    *
    * @param el the Element object
-   * @return true
    */
   public boolean writeSamplingRateToProperty(Element el) {
     SGDataColumn[] columns = this.getExportedColumnsClone();
@@ -955,11 +895,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return true;
   }
 
-  /**
-   * Returns the title of X values.
-   *
-   * @return the title of X values
-   */
+  /** Returns the title of X values. */
   public String getTitleX() {
     if (this.hasMultipleYValues() || this.hasPairOfXYValues()) {
       SGDataColumn[] columns = this.getDataFile().mDataColumns;
@@ -969,11 +905,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns the title of Y values.
-   *
-   * @return the title of Y values
-   */
+  /** Returns the title of Y values. */
   public String getTitleY() {
     if (!this.hasMultipleYValues() || this.hasPairOfXYValues()) {
       SGDataColumn[] columns = this.getDataFile().mDataColumns;
@@ -1131,11 +1063,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns properties of this data.
-   *
-   * @return properties of this data
-   */
+  /** Returns properties of this data. */
   public SGProperties getProperties() {
     SGProperties p = new SXYMultipleDataProperties();
     if (this.getProperties(p) == false) {
@@ -1148,7 +1076,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    * Get properties of this data.
    *
    * @param p properties to set values
-   * @return true if succeeded
    */
   public boolean getProperties(final SGProperties p) {
     if ((p instanceof SXYMultipleDataProperties) == false) {
@@ -1174,7 +1101,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    * Set properties to this data.
    *
    * @param p properties that have values to set to this data
-   * @return true if succeeded
    */
   public boolean setProperties(final SGProperties p) {
     if ((p instanceof SXYMultipleDataProperties) == false) {
@@ -1199,8 +1125,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   /**
    * Sets the type of data columns.
    *
-   * @param column an array of column types
-   * @return true if succeeded
+   * @param columns an array of column types
    */
   public boolean setColumnType(String[] columns) {
     if (columns == null) {
@@ -1376,8 +1301,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     /**
      * Returns whether this data property has the equal column types with given data property.
      *
-     * @param p a data property
-     * @return true if this data property has the equal column types with given data property
+     * @param dp a data property
      */
     @Override
     public boolean hasEqualColumnTypes(DataProperties dp) {
@@ -1424,11 +1348,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
       return true;
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       Object obj = super.copy();
       SXYMultipleDataProperties p = (SXYMultipleDataProperties) obj;
@@ -1474,11 +1394,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns an array of current column types.
-   *
-   * @return an array of current column types
-   */
+  /** Returns an array of current column types. */
   public String[] getCurrentColumnType() {
     final int colNum = this.getColNum();
     String[] array = new String[colNum];
@@ -1534,13 +1450,8 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return array;
   }
 
-  /**
-   * Returns the maximum number of SXY data objects that can be obtained from this data object.
-   *
-   * @return the maximum number of SXY data objects that can be obtained from this data object
-   */
+  /** Returns the maximum number of SXY data objects that can be obtained from this data object. */
   public int getSXYDataNumMax() {
-    // return this.getColNum(SGNumberDataColumn.class) - 1;
     int num = this.getColNum(SGNumberDataColumn.class) - 1;
     final int sNum = this.getColNum(SGSamplingDataColumn.class);
     if (sNum != 0) {
@@ -1549,11 +1460,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return num;
   }
 
-  /**
-   * Returns whether a data type column is used.
-   *
-   * @return true if a data type column is used
-   */
+  /** Returns whether a data type column is used. */
   public boolean isDateColumnUsed() {
     if (this.getDateColumnIndex(this.mXIndices) != -1) {
       return true;
@@ -1575,11 +1482,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return -1;
   }
 
-  /**
-   * Returns an array of data columns.
-   *
-   * @return an array of data columns
-   */
+  /** Returns an array of data columns. */
   public SGDataColumn[] getExportedColumns() {
     final boolean be = this.isErrorBarAvailable();
     final boolean bt = this.isTickLabelAvailable() && this.hasGenericTickLabels();
@@ -1681,38 +1584,22 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return colList.toArray(new SGDataColumn[colList.size()]);
   }
 
-  /**
-   * Returns whether error bars are available.
-   *
-   * @return true if error bars are available
-   */
+  /** Returns whether error bars are available. */
   public boolean isErrorBarAvailable() {
     return (this.mLowerErrorIndices != null && this.mUpperErrorIndices != null);
   }
 
-  /**
-   * Returns whether tick labels are available.
-   *
-   * @return true if tick labels are available
-   */
+  /** Returns whether tick labels are available. */
   public boolean isTickLabelAvailable() {
     return (this.mTickLabelIndices != null);
   }
 
-  /**
-   * Returns the decimal places for the tick labels.
-   *
-   * @return the decimal places for the tick labels
-   */
+  /** Returns the decimal places for the tick labels. */
   public int getDecimalPlaces() {
     return this.mDecimalPlaces;
   }
 
-  /**
-   * Returns the exponent for tick labels.
-   *
-   * @return the exponent for tick labels
-   */
+  /** Returns the exponent for tick labels. */
   public int getExponent() {
     return this.mExponent;
   }
@@ -1742,8 +1629,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    * Returns whether the error bars are vertical. If this data does not have error values, returns
    * null.
    *
-   * @return true if error bars are vertical, false if they are horizontal and null if this data do
-   *     not have error values
+   * <p>not have error values
    */
   public Boolean isErrorBarVertical() {
     if (this.isErrorBarAvailable()) {
@@ -1761,8 +1647,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    * Returns whether the tick labels align horizontally. If this data does not have tick labels,
    * returns null.
    *
-   * @return true if tick labels align horizontally, false if they do not so and null if this data
-   *     do not have tick labels
+   * <p>do not have tick labels
    */
   public Boolean isTickLabelHorizontal() {
     if (this.isTickLabelAvailable()) {
@@ -1819,11 +1704,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns a map which has data information.
-   *
-   * @return a map which has data information
-   */
+  /** Returns a map which has data information. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> infoMap = super.getInfoMap();
     infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
@@ -1984,11 +1865,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns the stride of the tick labels.
-   *
-   * @return the stride of the tick labels
-   */
+  /** Returns the stride of the tick labels. */
   @Override
   public SGIntegerSeriesSet getTickLabelStride() {
     SGIntegerSeriesSet ret = null;
@@ -1998,11 +1875,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return ret;
   }
 
-  /**
-   * Returns the indices of tick labels.
-   *
-   * @return the indices of tick labels
-   */
+  /** Returns the indices of tick labels. */
   @Override
   public int[] getTickLabelValueIndices() {
     if (!this.isTickLabelAvailable()) {
@@ -2016,11 +1889,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns a text string of the data type to save into a NetCDF data set file.
-   *
-   * @return a text string of the data type to save into a NetCDF data set file
-   */
+  /** Returns a text string of the data type to save into a NetCDF data set file. */
   @Override
   public String getNetCDFDataSetDataType() {
     return SGDataTypeConstants.SXY_MULTIPLE_NETCDF_DATA;
@@ -2037,11 +1906,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     this.mTickLabelStride = map.get(SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE);
   }
 
-  /**
-   * Returns a map of stride for data arrays.
-   *
-   * @return a map of stride for data arrays
-   */
+  /** Returns a map of stride for data arrays. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
@@ -2055,7 +1920,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
    *
    * @param el the Element object
    * @param type type of the method to save properties
-   * @return true if succeeded
    */
   @Override
   public boolean writeProperty(Element el, final SGExportParameter type) {
@@ -2076,10 +1940,9 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   /**
    * Exports the data into a NetCDF file.
    *
-   * @param ncWrite the file to save
+   * @param builder the file to save
    * @param mode the mode to save
    * @param policy the policy for exporting data
-   * @return true if succeeded
    */
   @Override
   public boolean exportToNetCDFFile(
@@ -2370,11 +2233,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
     return true;
   }
 
-  /**
-   * Returns the shift.
-   *
-   * @return the shift
-   */
+  /** Returns the shift. */
   public SGTuple2d getShift() {
     return (SGTuple2d) this.mShift.clone();
   }
@@ -3091,52 +2950,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData
   public double[][] getYValueArray(boolean all, boolean useCache) {
     return SGDataViewerUtility.getYValueArray(this, all, useCache);
   }
-
-  // /**
-  // * Returns a copy of x-value array.
-  // *
-  // * @return x-value array
-  // */
-  // public double[][] getXValueArray(final boolean all) {
-  // double[][] ret = null;
-  // final boolean useCache = this.useCache(all);
-  // if (useCache) {
-  // ret = SGSXYMultipleDataCache.getXValues(this);
-  // }
-  // if (ret == null) {
-  // SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
-  // ret = new double[sxyArray.length][];
-  // for (int ii = 0; ii < ret.length; ii++) {
-  // ret[ii] = sxyArray[ii].getXValueArray(all);
-  // }
-  // // disposes of data objects
-  // SGDataMiscUtility.disposeSXYDataArray(sxyArray);
-  // }
-  // return ret;
-  // }
-  //
-  // /**
-  // * Returns a copy of y-value array.
-  // *
-  // * @return y-value array
-  // */
-  // public double[][] getYValueArray(final boolean all) {
-  // double[][] ret = null;
-  // final boolean useCache = this.useCache(all);
-  // if (useCache) {
-  // ret = SGSXYMultipleDataCache.getYValues(this);
-  // }
-  // if (ret == null) {
-  // SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
-  // ret = new double[sxyArray.length][];
-  // for (int ii = 0; ii < ret.length; ii++) {
-  // ret[ii] = sxyArray[ii].getYValueArray(all);
-  // }
-  // // disposes of data objects
-  // SGDataMiscUtility.disposeSXYDataArray(sxyArray);
-  // }
-  // return ret;
-  // }
 
   @Override
   public void addSingleDimensionEditedDataValue(SGDataValueHistory dataValue) {

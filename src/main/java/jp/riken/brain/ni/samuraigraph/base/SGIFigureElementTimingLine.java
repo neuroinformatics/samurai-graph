@@ -15,7 +15,6 @@ public interface SGIFigureElementTimingLine extends SGIFigureElement {
    *
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addTimingLine(final int x, final int y);
 
@@ -25,7 +24,6 @@ public interface SGIFigureElementTimingLine extends SGIFigureElement {
    * @param id the ID to set
    * @param axisLocation location of the axis
    * @param value the axis value for given axis
-   * @return true if succeeded
    */
   public boolean addTimingLine(final int id, final int axisLocation, final double value);
 

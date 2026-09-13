@@ -691,11 +691,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the number of data points taking into account the stride.
-   *
-   * @return the number of data points taking into account the stride
-   */
+  /** Returns the number of data points taking into account the stride. */
   @Override
   public int getPointsNumber() {
     if (this.isIndexAvailable()) {
@@ -705,20 +701,12 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the bounds of x-values.
-   *
-   * @return the bounds of x-values
-   */
+  /** Returns the bounds of x-values. */
   public SGValueRange getBoundsX() {
     return SGDataRangeUtility.getBoundsX(this);
   }
 
-  /**
-   * Returns the bounds of y-values.
-   *
-   * @return the bounds of y-values
-   */
+  /** Returns the bounds of y-values. */
   public SGValueRange getBoundsY() {
     return SGDataRangeUtility.getBoundsY(this);
   }
@@ -737,37 +725,23 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return vars;
   }
 
-  /**
-   * Returns whether a dimension is picked up.
-   *
-   * @return true if a dimension is picked up
-   */
+  /** Returns whether a dimension is picked up. */
   public boolean isDimensionPicked() {
     return (this.mPickUpDimensionInfo != null);
   }
 
-  /**
-   * Returns whether this multiple data has multiple arrays for y-values.
-   *
-   * @return true if this multiple data has multiple arrays for y-values
-   */
+  /** Returns whether this multiple data has multiple arrays for y-values. */
   public boolean hasMultipleYValues() {
     if (this.isDimensionPicked()) {
-      // if the x variable is a coordinate variable,
       // this data has multiple y values
       return this.getXVariable().isCoordinateVariable();
     } else {
-      // if the array of x indices has only one elements,
       // this data has "multiple" y values
       return (this.mXVariables.length == 1);
     }
   }
 
-  /**
-   * Returns a variable for multiple values.
-   *
-   * @return a variable for multiple values
-   */
+  /** Returns a variable for multiple values. */
   public SGNetCDFVariable[] getMultipleVariables() {
     if (this.hasMultipleYValues()) {
       return this.mYVariables;
@@ -776,11 +750,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns a variable for "not" multiple values.
-   *
-   * @return a variable for "not" multiple values
-   */
+  /** Returns a variable for "not" multiple values. */
   public SGNetCDFVariable getSingleVariable() {
     if (this.hasMultipleYValues()) {
       return this.getXVariable();
@@ -840,20 +810,12 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     this.mExponent = exp;
   }
 
-  /**
-   * Returns the decimal places for the tick labels.
-   *
-   * @return the decimal places for the tick labels
-   */
+  /** Returns the decimal places for the tick labels. */
   public int getDecimalPlaces() {
     return this.mDecimalPlaces;
   }
 
-  /**
-   * Returns the exponent for tick labels.
-   *
-   * @return the exponent for tick labels
-   */
+  /** Returns the exponent for tick labels. */
   public int getExponent() {
     return this.mExponent;
   }
@@ -888,11 +850,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return stride.isComplete();
   }
 
-  /**
-   * Return whether the XVariable is a coordinate variable.
-   *
-   * @return whether the XVariable is a coordinate variable.
-   */
+  /** Return whether the XVariable is a coordinate variable. */
   public boolean isXVariableCoordinate() {
     if (this.isDimensionPicked()) {
       return this.getXVariable().isCoordinateVariable();
@@ -924,11 +882,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     this.mShift = null;
   }
 
-  /**
-   * Returns the picked up dimension.
-   *
-   * @return the picked up dimension
-   */
+  /** Returns the picked up dimension. */
   public Dimension getDimension() {
     if (this.mPickUpDimensionInfo != null) {
       String name = this.mPickUpDimensionInfo.getDimensionName();
@@ -938,11 +892,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns name of the dimension.
-   *
-   * @return name of the dimension
-   */
+  /** Returns name of the dimension. */
   public String getDimensionName() {
     Dimension dim = this.getDimension();
     if (dim != null) {
@@ -952,11 +902,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns an index array of dimension.
-   *
-   * @return an index array of dimension
-   */
+  /** Returns an index array of dimension. */
   public int[] getDimensionIndices() {
     return this.mDimensionIndices.clone();
   }
@@ -1068,7 +1014,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
      * Returns whether this data property has the equal column types with given data property.
      *
      * @param dp a data property
-     * @return true if this data property has the equal column types with given data property
      */
     @Override
     public boolean hasEqualColumnTypes(DataProperties dp) {
@@ -1101,26 +1046,10 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         return false;
       }
 
-      // // compares pick up dimension
-      // String dimNameThis = null;
-      // String dimName = null;
-      // if (this.mPickUpInfo != null) {
-      // dimNameThis = this.mPickUpInfo.getDimensionName();
-      // }
-      // if (p.mPickUpInfo != null) {
-      // dimName = p.mPickUpInfo.getDimensionName();
-      // }
-      // if (SGUtility.equals(dimNameThis, dimName) == false) {
-      // return false;
-      // }
       return true;
     }
 
-    /**
-     * Returns a copy of this object.
-     *
-     * @return a copy of this object
-     */
+    /** Returns a copy of this object. */
     public Object copy() {
       SXYNetCDFMultipleDataProperties p = (SXYNetCDFMultipleDataProperties) super.copy();
       if (this.xNames != null) {
@@ -1185,11 +1114,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return true;
   }
 
-  /**
-   * Returns whether error bars are available.
-   *
-   * @return true if error bars are available
-   */
+  /** Returns whether error bars are available. */
   @Override
   public boolean isErrorBarAvailable() {
     if (this.isDimensionPicked()) {
@@ -1199,11 +1124,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns whether tick labels are available.
-   *
-   * @return true if tick labels are available
-   */
+  /** Returns whether tick labels are available. */
   @Override
   public boolean isTickLabelAvailable() {
     if (this.isDimensionPicked()) {
@@ -1220,8 +1141,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Returns whether the error bars are vertical. If this data does not have error values, returns
    * null.
    *
-   * @return true if error bars are vertical, false if they are horizontal and null if this data do
-   *     not have error values
+   * <p>not have error values
    */
   @Override
   public Boolean isErrorBarVertical() {
@@ -1236,8 +1156,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Returns whether the tick labels align horizontally. If this data does not have tick labels,
    * returns null.
    *
-   * @return true if tick labels align horizontally, false if they do not so and null if this data
-   *     do not have tick labels
+   * <p>do not have tick labels
    */
   @Override
   public Boolean isTickLabelHorizontal() {
@@ -1256,21 +1175,13 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns a text string of data type.
-   *
-   * @return a text string of data type
-   */
+  /** Returns a text string of data type. */
   @Override
   public String getDataType() {
     return SGDataTypeConstants.SXY_MULTIPLE_NETCDF_DATA;
   }
 
-  /**
-   * Returns the title for the X-axis.
-   *
-   * @return the title for the X-axis
-   */
+  /** Returns the title for the X-axis. */
   @Override
   public String getTitleX() {
     if (this.hasSingleVar(true)) {
@@ -1280,11 +1191,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the title for the Y-axis.
-   *
-   * @return the title for the Y-axis
-   */
+  /** Returns the title for the Y-axis. */
   @Override
   public String getTitleY() {
     if (this.hasSingleVar(false)) {
@@ -1312,21 +1219,13 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return singleVar;
   }
 
-  /**
-   * Returns an array of SXYData objects.
-   *
-   * @return an array of SXYData objects
-   */
+  /** Returns an array of SXYData objects. */
   @Override
   public SGISXYTypeSingleData[] getSXYDataArray() {
     return this.mDataAccess.getSXYDataArray();
   }
 
-  /**
-   * Returns the number of child data.
-   *
-   * @return the number of child data
-   */
+  /** Returns the number of child data. */
   @Override
   public int getChildNumber() {
     if (this.isDimensionPicked()) {
@@ -1337,11 +1236,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns an array of multiple SXYData objects.
-   *
-   * @return an array of multiple SXYData objects
-   */
+  /** Returns an array of multiple SXYData objects. */
   @Override
   public SGISXYTypeMultipleData[] getSXYTypeMultipleDataArray() {
     SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
@@ -1370,11 +1265,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns true if this data enables to be split.
-   *
-   * @return true if this data enables to be split
-   */
+  /** Returns true if this data enables to be split. */
   @Override
   public boolean isSplitEnabled() {
     final int len;
@@ -1387,11 +1278,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return (len > 1);
   }
 
-  /**
-   * Returns an array of current column types.
-   *
-   * @return an array of current column types
-   */
+  /** Returns an array of current column types. */
   @Override
   public String[] getCurrentColumnType() {
     List<SGNetCDFVariable> varList = this.getNetcdfFile().getVariables();
@@ -1457,11 +1344,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return array;
   }
 
-  /**
-   * Returns an array of variables that are assigned the column type.
-   *
-   * @return an array of variables
-   */
+  /** Returns an array of variables that are assigned the column type. */
   @Override
   public SGNetCDFVariable[] getAssignedVariables() {
     if (this.isDimensionPicked()) {
@@ -1523,11 +1406,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns a map which has data information.
-   *
-   * @return a map which has data information
-   */
+  /** Returns a map which has data information. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> infoMap = super.getInfoMap();
     infoMap.put(SGIDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
@@ -1546,7 +1425,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Returns the origin of a coordinate variable.
    *
    * @param name the name of the coordinate variable
-   * @return the origin of the coordinate variable
    */
   @Override
   public int getOrigin(final String name) {
@@ -1565,7 +1443,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Sets the data.
    *
    * @param data data set to this object
-   * @return true if succeeded
    */
   @Override
   public boolean setData(SGData data) {
@@ -1601,17 +1478,10 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   /**
    * Sets the type of data columns.
    *
-   * @param column an array of column types
-   * @return true if succeeded
+   * @param columns an array of column types
    */
   @Override
   public boolean setColumnType(String[] columns) {
-    // if (this.isDimensionPicked()) {
-    // return this.setColumnTypeDimensionPicked(columns);
-    // } else {
-    // return this.setColumnTypeDimensionNotPicked(columns);
-    // }
-    // tries both cases
     if (this.setColumnTypeDimensionPicked(columns)) {
       return true;
     }
@@ -1624,9 +1494,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   /**
    * Sets the type of data columns with the information of picked up dimension.
    *
-   * @param column an array of column types
+   * @param columns an array of column types
    * @param info the information of picked up dimension
-   * @return true if succeeded
    */
   public boolean setColumnType(String[] columns, SGPickUpDimensionInfo info) {
     this.setPickUpDimensionInfo(info);
@@ -1990,11 +1859,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return true;
   }
 
-  /**
-   * Returns the properties of this data.
-   *
-   * @return the properties of this data
-   */
+  /** Returns the properties of this data. */
   @Override
   public SGProperties getProperties() {
     SGProperties p = new SXYNetCDFMultipleDataProperties();
@@ -2008,7 +1873,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Gets the properties of this data.
    *
    * @param p the properties of this data
-   * @return true if succeeded
    */
   @Override
   public boolean getProperties(SGProperties p) {
@@ -2019,7 +1883,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Set properties to this data.
    *
    * @param p properties to be set
-   * @return true if succeeded
    */
   public boolean setProperties(SGProperties p) {
     return this.mPropertyIO.setProperties(p);
@@ -2030,7 +1893,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    *
    * @param el the Element object
    * @param type type of the method to save properties
-   * @return true if succeeded
    */
   @Override
   public boolean writeProperty(Element el, final SGExportParameter type) {
@@ -2041,7 +1903,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Returns the value of coordinate variable at a given index which is specified as dimension.
    *
    * @param index the array index
-   * @return the value of coordinate variable at a given index. null if file reading failure.
    * @throws IllegalArgumentException if the dimension variable is not a coordinate variable or
    *     index is illegal.
    */
@@ -2062,11 +1923,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return SGDataMergeUtility.merge(dataList);
   }
 
-  /**
-   * Returns the stride.
-   *
-   * @return the stride
-   */
+  /** Returns the stride. */
   public SGIntegerSeriesSet getStride() {
     if (this.isIndexAvailable()) {
       return null;
@@ -2097,11 +1954,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the copy of this data object.
-   *
-   * @return a copy of this data object
-   */
+  /** Returns the copy of this data object. */
   public Object clone() {
     SGSXYNetCDFMultipleData data = (SGSXYNetCDFMultipleData) super.clone();
     data.mXVariables = copyVariables(this.mXVariables);
@@ -2118,11 +1971,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return data;
   }
 
-  /**
-   * Returns a map of stride for data arrays.
-   *
-   * @return a map of stride for data arrays
-   */
+  /** Returns a map of stride for data arrays. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
@@ -2135,11 +1984,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return map;
   }
 
-  /**
-   * Returns a map of stride of dimensions. The keys are the name of dimensions.
-   *
-   * @return a map of stride of dimensions
-   */
+  /** Returns a map of stride of dimensions. The keys are the name of dimensions. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getDimensionStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
@@ -2216,11 +2061,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the stride of the tick labels.
-   *
-   * @return the stride of the tick labels
-   */
+  /** Returns the stride of the tick labels. */
   @Override
   public SGIntegerSeriesSet getTickLabelStride() {
     SGIntegerSeriesSet ret = null;
@@ -2230,11 +2071,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return ret;
   }
 
-  /**
-   * Returns the indices of tick labels.
-   *
-   * @return the indices of tick labels
-   */
+  /** Returns the indices of tick labels. */
   @Override
   public int[] getTickLabelValueIndices() {
     if (!this.isTickLabelAvailable()) {
@@ -2248,21 +2085,13 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the number of data points without taking into account the stride.
-   *
-   * @return the number of data points without taking into account the stride
-   */
+  /** Returns the number of data points without taking into account the stride. */
   @Override
   public int getAllPointsNumber() {
     return this.getCoordinateVariable().getDimension(0).getLength();
   }
 
-  /**
-   * Returns the shift.
-   *
-   * @return the shift
-   */
+  /** Returns the shift. */
   public SGTuple2d getShift() {
     return (SGTuple2d) this.mShift.clone();
   }
@@ -2279,11 +2108,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     this.mShift = (SGTuple2d) shift.clone();
   }
 
-  /**
-   * Returns the list of child objects.
-   *
-   * @return the list of child objects
-   */
+  /** Returns the list of child objects. */
   @Override
   public List<String> getChildNameList() {
     List<String> nameList = new ArrayList<String>();
@@ -2300,7 +2125,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    *
    * @param data a data
    * @param pickUpInfo pick up information
-   * @return the list of the name of child objects with given pick up information
    */
   public static List<String> getChildNameList(
       SGSXYNetCDFMultipleData data, SGNetCDFPickUpDimensionInfo pickUpInfo) {
@@ -2325,7 +2149,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Returns the list of the name of child objects with given data columns.
    *
    * @param cols data columns
-   * @return the list of the name of child objects with given data columns
    */
   public static List<String> getChildNameList(SGDataColumnInfo[] cols) {
     int xNum = 0;
@@ -2824,12 +2647,10 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
           && sameErrorVariableFlags[0] != null) {
         final int[] errorShape;
         if (pickedUp) {
-          // this.setFillValue(leVars[0], lowerErrorValues);
           Array lowerErrorArray = Array.factory(leDataTypes[0], new int[] {multiplicity, len});
           this.setArray(lowerErrorArray, lowerErrorValues);
           writer.write(leVars[0].shortName, lowerErrorArray);
           if (!sameErrorVariableFlags[0].booleanValue()) {
-            // this.setFillValue(ueVars[0], upperErrorValues);
             Array upperErrorArray = Array.factory(ueDataTypes[0], new int[] {multiplicity, len});
             this.setArray(upperErrorArray, upperErrorValues);
             writer.write(ueVars[0].shortName, upperErrorArray);
@@ -2838,13 +2659,11 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
           errorShape = new int[] {len};
           for (int ii = 0; ii < lowerErrorValues.length; ii++) {
             if (leVars[ii] != null && leDataTypes[ii] != null) {
-              // this.setFillValue(leVars[ii], lowerErrorValues);
               Array lowerErrorArray = Array.factory(leDataTypes[ii], errorShape);
               this.setArray(lowerErrorArray, lowerErrorValues[ii]);
               writer.write(leVars[ii].shortName, lowerErrorArray);
             }
             if (ueVars[ii] != null && ueDataTypes[ii] != null) {
-              // this.setFillValue(ueVars[ii], upperErrorValues);
               Array upperErrorArray = Array.factory(ueDataTypes[ii], errorShape);
               this.setArray(upperErrorArray, upperErrorValues[ii]);
               writer.write(ueVars[ii].shortName, upperErrorArray);
@@ -2883,7 +2702,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       double[] values,
       int[] shape)
       throws IOException, InvalidRangeException {
-    // this.setFillValue(var, values);
     Array array = Array.factory(dataType, shape);
     this.setArray(array, values);
     writer.write(var.shortName, array);
@@ -2896,7 +2714,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       double[][] values,
       int[] shape)
       throws IOException, InvalidRangeException {
-    // this.setFillValue(var, values);
     Array array = Array.factory(dataType, shape);
     this.setArray(array, values);
     writer.write(var.shortName, array);
@@ -3175,7 +2992,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Creates and returns a data buffer.
    *
    * @param param parameters for data buffer
-   * @return the data buffer
    */
   @Override
   public SGDataBuffer getDataBuffer(SGDataBufferPolicy param) {
@@ -3187,7 +3003,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    *
    * @param param parameters for data buffer
    * @param indices array of child indices
-   * @return the data buffer
    */
   @Override
   public SGDataBuffer getDataBuffer(SGSXYDataBufferPolicy param, int[] indices) {
@@ -3248,8 +3063,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   /**
    * Returns true if this data has at lease one "effective" stride that has the string
    * representation different from "0:end".
-   *
-   * @return true this data has an effective stride
    */
   @Override
   public boolean hasEffectiveStride() {
@@ -3270,7 +3083,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Returns unshifted x-value arrays with given policy.
    *
    * @param policy policy to get values
-   * @return arrays of unshifted x-values
    */
   @Override
   public double[][] getUnshiftedXValueArray(SGSXYDataBufferPolicy policy) {
@@ -3281,18 +3093,13 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Returns unshifted y-value arrays with given policy.
    *
    * @param policy policy to get values
-   * @return arrays of unshifted y-values
    */
   @Override
   public double[][] getUnshiftedYValueArray(SGSXYDataBufferPolicy policy) {
     return SGDataBufferUtility.getUnshiftedYValues(this, policy);
   }
 
-  /**
-   * Returns the main stride.
-   *
-   * @return the main stride
-   */
+  /** Returns the main stride. */
   @Override
   public SGIntegerSeriesSet getMainStride() {
     SGIntegerSeriesSet ret = null;
@@ -3310,7 +3117,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Returns arrays of lower error values with given policy.
    *
    * @param policy policy to get values
-   * @return arrays of lower error values
    */
   @Override
   public double[][] getLowerErrorValueArray(SGSXYDataBufferPolicy policy) {
@@ -3321,7 +3127,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Returns arrays of upper error values with given policy.
    *
    * @param policy policy to get values
-   * @return arrays of upper error values
    */
   @Override
   public double[][] getUpperErrorValueArray(SGSXYDataBufferPolicy policy) {
@@ -3332,7 +3137,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * Returns arrays of tick labels with given policy.
    *
    * @param policy policy to get values
-   * @return arrays of tick labels
    */
   @Override
   public String[][] getTickLabelArray(SGSXYDataBufferPolicy policy) {
@@ -3537,13 +3341,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       SGSXYNetCDFData ncData = (SGSXYNetCDFData) sxyArray[childIndex];
       double[] values = ncData.getXValueArray(false);
       final double d = values[arrayIndex];
-      /*
-       * if (this.isNaNAssignedInvalidValue(childIndex, arrayIndex, X_VALUE, d)) {
-       * return ncData.getXValueAt(arrayIndex);
-       * } else {
-       * return d;
-       * }
-       */
+
       return d;
     } finally {
       SGDataMiscUtility.disposeSXYDataArray(sxyArray);
@@ -3557,13 +3355,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       SGSXYNetCDFData ncData = (SGSXYNetCDFData) sxyArray[childIndex];
       double[] values = ncData.getYValueArray(false);
       final double d = values[arrayIndex];
-      /*
-       * if (this.isNaNAssignedInvalidValue(childIndex, arrayIndex, Y_VALUE, d)) {
-       * return ncData.getYValueAt(arrayIndex);
-       * } else {
-       * return d;
-       * }
-       */
+
       return d;
     } finally {
       SGDataMiscUtility.disposeSXYDataArray(sxyArray);
@@ -3837,52 +3629,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   public double[][] getYValueArray(boolean all, boolean useCache) {
     return SGDataViewerUtility.getYValueArray(this, all, useCache);
   }
-
-  // /**
-  // * Returns an array of X-values.
-  // *
-  // * @return an array of X-values
-  // */
-  // public double[][] getXValueArray(final boolean all) {
-  // double[][] ret = null;
-  // final boolean useCache = this.useCache(all);
-  // if (useCache) {
-  // ret = SGSXYMultipleDataCache.getXValues(this);
-  // }
-  // if (ret == null) {
-  // SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
-  // ret = new double[sxyArray.length][];
-  // for (int ii = 0; ii < ret.length; ii++) {
-  // ret[ii] = sxyArray[ii].getXValueArray(all);
-  // }
-  // // disposes of data objects
-  // SGDataMiscUtility.disposeSXYDataArray(sxyArray);
-  // }
-  // return ret;
-  // }
-  //
-  // /**
-  // * Returns an array of Y-values.
-  // *
-  // * @return an array of Y-values
-  // */
-  // public double[][] getYValueArray(final boolean all) {
-  // double[][] ret = null;
-  // final boolean useCache = this.useCache(all);
-  // if (useCache) {
-  // ret = SGSXYMultipleDataCache.getYValues(this);
-  // }
-  // if (ret == null) {
-  // SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
-  // ret = new double[sxyArray.length][];
-  // for (int ii = 0; ii < ret.length; ii++) {
-  // ret[ii] = sxyArray[ii].getYValueArray(all);
-  // }
-  // // disposes of data objects
-  // SGDataMiscUtility.disposeSXYDataArray(sxyArray);
-  // }
-  // return ret;
-  // }
 
   @Override
   public void addSingleDimensionEditedDataValue(SGDataValueHistory dataValue) {

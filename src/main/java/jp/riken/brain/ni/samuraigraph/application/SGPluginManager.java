@@ -44,7 +44,6 @@ public class SGPluginManager implements SGIDisposable {
    * Loads jar plugins in given directory.
    *
    * @param directory this directory
-   * @return true if succeeded
    */
   boolean loadPlugins(final String directory) {
     this.mClassList.clear();
@@ -70,7 +69,6 @@ public class SGPluginManager implements SGIDisposable {
    * Load jar files.
    *
    * @param jarFiles
-   * @return true if all jar files are loaded. false if some exception occurred.
    */
   private boolean loadJars(File[] jarFiles) {
     boolean result = true;

@@ -37,11 +37,7 @@ public abstract class SGData implements Cloneable, SGICopyable, SGIData {
     obs.addData(this);
   }
 
-  /**
-   * Returns the data source.
-   *
-   * @return the data source
-   */
+  /** Returns the data source. */
   public SGIDataSource getDataSource() {
     return this.mDataSource;
   }
@@ -55,20 +51,12 @@ public abstract class SGData implements Cloneable, SGICopyable, SGIData {
     this.mDataSource = src;
   }
 
-  /**
-   * Returns the data source observer.
-   *
-   * @return the data source observer
-   */
+  /** Returns the data source observer. */
   public SGDataSourceObserver getDataSourceObserver() {
     return this.mObserver;
   }
 
-  /**
-   * Clones this data object.
-   *
-   * @return shallow copy of this data object
-   */
+  /** Clones this data object. */
   public Object clone() {
     try {
       SGData data = (SGData) super.clone();
@@ -80,11 +68,7 @@ public abstract class SGData implements Cloneable, SGICopyable, SGIData {
     }
   }
 
-  /**
-   * Calling the clone method.
-   *
-   * @return copy of this data object
-   */
+  /** Calling the clone method. */
   public final Object copy() {
     return this.clone();
   }
@@ -93,7 +77,6 @@ public abstract class SGData implements Cloneable, SGICopyable, SGIData {
    * Sets a given data.
    *
    * @param data a data
-   * @return true if succeeded
    */
   public boolean setData(final SGData data) {
     this.mDataSource = data.getDataSource();
@@ -135,15 +118,6 @@ public abstract class SGData implements Cloneable, SGICopyable, SGIData {
    * @return true if succeeded
    */
   public abstract boolean writeProperty(Element el, SGExportParameter type);
-
-  // /**
-  // * Read properties from a given Element and set to this data.
-  // * @param el
-  // * an Element
-  // * @return
-  // * true if succeeded
-  // */
-  // public abstract boolean readProperty(Element el);
 
   /**
    * Returns a map which has data information. This method returns an empty map by default.

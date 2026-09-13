@@ -12,11 +12,7 @@ public class SGUserProperties {
 
   private SGUserProperties() {}
 
-  /**
-   * Returns the instance of this class.
-   *
-   * @return the instance of this class
-   */
+  /** Returns the instance of this class. */
   public static SGUserProperties getInstance() {
     return mInstance;
   }
@@ -25,7 +21,6 @@ public class SGUserProperties {
    * Returns the property.
    *
    * @param key the key of a property
-   * @return the property
    */
   public String getProperty(String key) {
     return this.mProperties.get(key);

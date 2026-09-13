@@ -128,7 +128,6 @@ public class SGDrawingElementString extends SGDrawingElement
    * Sets the text string.
    *
    * @param str a text to set
-   * @return true if succeeded
    */
   public boolean setString(final String str) {
     this.mString = str;
@@ -145,7 +144,6 @@ public class SGDrawingElementString extends SGDrawingElement
    * Set the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     if (mag <= 0.0) {
@@ -165,7 +163,6 @@ public class SGDrawingElementString extends SGDrawingElement
    * Sets the font name.
    *
    * @param name the font name to set
-   * @return true if succeeded
    */
   public final boolean setFontName(final String name) {
     return this.setFont(name, this.mFontStyle, this.mFontSize);
@@ -175,7 +172,6 @@ public class SGDrawingElementString extends SGDrawingElement
    * Sets the font style.
    *
    * @param style the font style to set
-   * @return true if succeeded
    */
   public final boolean setFontStyle(final int style) {
     if (SGUtilityText.isValidFontStyle(style) == false) {
@@ -188,7 +184,6 @@ public class SGDrawingElementString extends SGDrawingElement
    * Sets the font size.
    *
    * @param size the font size to set
-   * @return true if succeeded
    */
   public final boolean setFontSize(final float size) {
     return this.setFont(this.mFontName, this.mFontStyle, size);
@@ -199,7 +194,6 @@ public class SGDrawingElementString extends SGDrawingElement
    *
    * @param size the font size to set
    * @param unit a unit of length
-   * @return true if succeeded
    */
   public final boolean setFontSize(final float size, final String unit) {
     final Float sNew = SGUtility.getFontSize(size, unit);
@@ -215,7 +209,6 @@ public class SGDrawingElementString extends SGDrawingElement
    * @param name font name
    * @param style font style
    * @param size font size
-   * @return true if succeeded
    */
   public boolean setFont(final String name, final int style, final float size) {
     this.mFontName = name;
@@ -242,7 +235,6 @@ public class SGDrawingElementString extends SGDrawingElement
    *
    * @param x the x coordinate to set
    * @param y the y coordinate to set
-   * @return true if succeeded
    */
   public boolean setLocation(final float x, final float y) {
     this.mLocation.setValues(x, y);
@@ -254,7 +246,6 @@ public class SGDrawingElementString extends SGDrawingElement
    * Sets the location of this symbol.
    *
    * @param pos the location to set
-   * @return true if succeeded
    */
   public boolean setLocation(final SGTuple2f pos) {
     this.mLocation = pos;
@@ -266,7 +257,6 @@ public class SGDrawingElementString extends SGDrawingElement
    * Sets the angle of this string.
    *
    * @param angle the angle to be set in units of degree
-   * @return true if succeeded
    */
   public boolean setAngle(final float angle) {
     final Float aNew =
@@ -280,65 +270,37 @@ public class SGDrawingElementString extends SGDrawingElement
     return true;
   }
 
-  /**
-   * Returns a string object.
-   *
-   * @return string object
-   */
+  /** Returns a string object. */
   public final String getString() {
     return this.mString;
   }
 
-  /**
-   * Returns the location of this symbol.
-   *
-   * @return the location of this symbol
-   */
+  /** Returns the location of this symbol. */
   public SGTuple2f getLocation() {
     return this.mLocation;
   }
 
-  /**
-   * Returns the x coordinate of the location of this symbol.
-   *
-   * @return the x coordinate of the location of this symbol
-   */
+  /** Returns the x coordinate of the location of this symbol. */
   public float getX() {
     return this.mLocation.x;
   }
 
-  /**
-   * Returns the y coordinate of the location of this symbol.
-   *
-   * @return the y coordinate of the location of this symbol
-   */
+  /** Returns the y coordinate of the location of this symbol. */
   public float getY() {
     return this.mLocation.y;
   }
 
-  /**
-   * Returns the font.
-   *
-   * @return font
-   */
+  /** Returns the font. */
   public final Font getFont() {
     return this.mFont;
   }
 
-  /**
-   * Returns the font name.
-   *
-   * @return font name
-   */
+  /** Returns the font name. */
   public final String getFontName() {
     return this.mFontName;
   }
 
-  /**
-   * Returns the font size in the default zoom.
-   *
-   * @return font size in the default zoom
-   */
+  /** Returns the font size in the default zoom. */
   public final float getFontSize() {
     return this.mFontSize;
   }
@@ -347,29 +309,17 @@ public class SGDrawingElementString extends SGDrawingElement
     return (float) SGUtilityText.convertFromPoint(this.getFontSize(), unit);
   }
 
-  /**
-   * Returns the font style.
-   *
-   * @return font style
-   */
+  /** Returns the font style. */
   public final int getFontStyle() {
     return this.mFontStyle;
   }
 
-  /**
-   * Returns the angle of this string.
-   *
-   * @return angle of this string
-   */
+  /** Returns the angle of this string. */
   public final float getAngle() {
     return this.mAngle;
   }
 
-  /**
-   * Returns the color.
-   *
-   * @return the color
-   */
+  /** Returns the color. */
   public Color getColor() {
     return this.mColor;
   }
@@ -378,7 +328,6 @@ public class SGDrawingElementString extends SGDrawingElement
    * Sets the color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setColor(final Color color) {
     if (color == null) {
@@ -432,11 +381,7 @@ public class SGDrawingElementString extends SGDrawingElement
     return true;
   }
 
-  /**
-   * Creates and returns the map of properties.
-   *
-   * @return the map of properties
-   */
+  /** Creates and returns the map of properties. */
   public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
     SGPropertyMap map = new SGPropertyMap();
     SGPropertyUtility.addQuotedStringProperty(map, COM_LABEL_TEXT, this.getString());
@@ -676,43 +621,22 @@ public class SGDrawingElementString extends SGDrawingElement
 
   /** Dispose this object. */
 
-  /**
-   * Sets the text.
-   *
-   * @param str a text to set
-   * @return true if succeeded
-   */
+  /** Sets the text. */
 
-  /**
-   * Set the magnification.
-   *
-   * @param mag the magnification to set
-   * @return true if succeeded
-   */
+  /** Set the magnification. */
 
   /** */
 
-  /**
-   * Sets the location of this symbol.
-   *
-   * @param pos the location to set
-   * @return true if succeeded
-   */
+  /** Sets the location of this symbol. */
 
   /**
    * Sets the location of this symbol.
    *
    * @param x the x coordinate to set
    * @param y the y coordinate to set
-   * @return true if succeeded
    */
 
-  /**
-   * Sets the angle of this string.
-   *
-   * @param angle the angle to be set in units of degree
-   * @return true if succeeded
-   */
+  /** Sets the angle of this string. */
 
   /** */
   public final boolean contains(final int x, final int y) {
@@ -741,7 +665,6 @@ public class SGDrawingElementString extends SGDrawingElement
     final TextLayout layout = new TextLayout(str, font, frc);
 
     // get a visual bounds rectangle from Font object
-    //        this.mStringRect = layout.getBounds();
     this.mStringRect = layout.getOutline(new AffineTransform()).getBounds2D();
     if (this.mStringRect.isEmpty()) {
       this.mStringRect.setRect(0, 0, 0, 0);
@@ -750,8 +673,6 @@ public class SGDrawingElementString extends SGDrawingElement
     // get a line metrics from the Font object
     final LineMetrics metrics = font.getLineMetrics(str, frc);
 
-    // this.mAscent = metrics.getAscent();
-    // this.mDescent = metrics.getDescent();
     this.mAscent = (float) (-this.mStringRect.getY());
     this.mDescent = (float) (this.mStringRect.getHeight() + this.mStringRect.getY());
     this.mLeading = metrics.getLeading();
@@ -818,11 +739,7 @@ public class SGDrawingElementString extends SGDrawingElement
     return this.mLeading;
   }
 
-  /**
-   * get strike through offset of text line
-   *
-   * @return
-   */
+  /** get strike through offset of text line */
   protected float getStrikethroughOffset() {
     return this.mStrikethroughOffset;
   }

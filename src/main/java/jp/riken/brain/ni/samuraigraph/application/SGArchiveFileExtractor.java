@@ -101,7 +101,7 @@ public class SGArchiveFileExtractor extends SGFileHandler implements SGIArchiveF
   }
 
   /**
-   * @param wnd
+   * @param parent
    * @return
    */
   public File getArchiveFileFromFileChooser(final Component parent) {

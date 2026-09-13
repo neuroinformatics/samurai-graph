@@ -33,11 +33,7 @@ public abstract class SGDataColumnInfo implements Cloneable {
     this.valueType = valueType;
   }
 
-  /**
-   * Returns the type of this column.
-   *
-   * @return the type of this column
-   */
+  /** Returns the type of this column. */
   public String getColumnType() {
     return columnType;
   }
@@ -51,11 +47,7 @@ public abstract class SGDataColumnInfo implements Cloneable {
     this.columnType = columnType;
   }
 
-  /**
-   * Returns the title of this column.
-   *
-   * @return the title of this column
-   */
+  /** Returns the title of this column. */
   public String getTitle() {
     return title;
   }
@@ -69,11 +61,7 @@ public abstract class SGDataColumnInfo implements Cloneable {
     this.title = title;
   }
 
-  /**
-   * Returns the type of value of this column.
-   *
-   * @return the type of value of this column
-   */
+  /** Returns the type of value of this column. */
   public String getValueType() {
     return valueType;
   }
@@ -81,7 +69,7 @@ public abstract class SGDataColumnInfo implements Cloneable {
   /**
    * Sets the type of value of this column.
    *
-   * @param columnType a value to set to the type of value of this column
+   * @param valueType a value to set to the type of value of this column
    */
   public void setValueType(String valueType) {
     this.valueType = valueType;

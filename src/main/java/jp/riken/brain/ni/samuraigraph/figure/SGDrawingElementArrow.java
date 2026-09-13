@@ -41,11 +41,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     super();
   }
 
-  /**
-   * Creates and returns an instance of the body.
-   *
-   * @return an instance of the body
-   */
+  /** Creates and returns an instance of the body. */
   protected abstract SGDrawingElementLine createBodyInstance();
 
   /**
@@ -53,34 +49,21 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    *
    * @param arrow an arrow that this head belongs to
    * @param start true for the arrow head at start
-   * @return an instance of the head
    */
   protected abstract SGDrawingElementSymbol createHeadInstance(
       SGDrawingElementArrow arrow, final boolean start);
 
-  /**
-   * Returns the line of this arrow.
-   *
-   * @return the line of this arrow
-   */
+  /** Returns the line of this arrow. */
   protected SGDrawingElementLine getLine() {
     return this.mLine;
   }
 
-  /**
-   * Returns the symbol of the start.
-   *
-   * @return the symbol of the start
-   */
+  /** Returns the symbol of the start. */
   protected SGDrawingElementSymbol getStartHead() {
     return this.mStartHead;
   }
 
-  /**
-   * Returns the symbol of the end.
-   *
-   * @return the symbol of the end
-   */
+  /** Returns the symbol of the end. */
   protected SGDrawingElementSymbol getEndHead() {
     return this.mEndHead;
   }
@@ -128,30 +111,17 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     return true;
   }
 
-  /**
-   * Returns the color.
-   *
-   * @return the color
-   */
+  /** Returns the color. */
   public abstract Color getColor();
 
-  /**
-   * Returns the line stroke.
-   *
-   * @return the line stroke
-   */
+  /** Returns the line stroke. */
   public abstract SGStroke getStroke();
 
-  /**
-   * Returns the angle of this arrow.
-   *
-   * @return the angle
-   */
+  /** Returns the angle of this arrow. */
   /**
    * Sets the color.
    *
    * @param cl the color to set
-   * @return true if succeeded
    */
   public abstract boolean setColor(final Color cl);
 
@@ -159,7 +129,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Sets the coordinate of the start point.
    *
    * @param start the coordinate set to the start point
-   * @return true if succeeded
    */
   public boolean setStart(SGTuple2f start) {
     return this.setLocation(start, this.getEnd());
@@ -169,7 +138,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Sets the x-coordinate of the start point.
    *
    * @param x the x-coordinate set to the start point
-   * @return true if succeeded
    */
   public abstract boolean setStartX(final float x);
 
@@ -177,7 +145,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Sets the y-coordinate of the start point.
    *
    * @param y the y-coordinate set to the start point
-   * @return true if succeeded
    */
   public abstract boolean setStartY(final float y);
 
@@ -185,7 +152,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Sets the coordinate of the end point.
    *
    * @param end the coordinate set to the end point
-   * @return true if succeeded
    */
   public boolean setEnd(SGTuple2f end) {
     return this.setLocation(this.getStart(), end);
@@ -195,7 +161,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Sets the x-coordinate of the end point.
    *
    * @param x the x-coordinate set to the end point
-   * @return true if succeeded
    */
   public abstract boolean setEndX(final float x);
 
@@ -203,7 +168,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Sets the y-coordinate of the end point.
    *
    * @param y the y-coordinate set to the end point
-   * @return true if succeeded
    */
   public abstract boolean setEndY(final float y);
 
@@ -212,7 +176,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    *
    * @param start the coordinate set to the start point
    * @param end the coordinate set to the end point
-   * @return true if succeeded
    */
   public abstract boolean setLocation(final SGTuple2f start, final SGTuple2f end);
 
@@ -223,67 +186,41 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * @param y1 the y-coordinate set to the start point
    * @param x2 the x-coordinate set to the end point
    * @param y2 the y-coordinate set to the end point
-   * @return true if succeeded
    */
   public boolean setTermPoints(final float x1, final float y1, final float x2, final float y2) {
     return this.setLocation(new SGTuple2f(x1, y1), new SGTuple2f(x2, y2));
   }
 
-  /**
-   * Returns the x-coordinate of the start point.
-   *
-   * @return the x-coordinate of the start point
-   */
+  /** Returns the x-coordinate of the start point. */
   public float getStartX() {
     return this.getStart().x;
   }
 
-  /**
-   * Returns the y-coordinate of the start point.
-   *
-   * @return the y-coordinate of the start point
-   */
+  /** Returns the y-coordinate of the start point. */
   public float getStartY() {
     return this.getStart().y;
   }
 
-  /**
-   * Returns the x-coordinate of the end point.
-   *
-   * @return the x-coordinate of the end point
-   */
+  /** Returns the x-coordinate of the end point. */
   public float getEndX() {
     return this.getEnd().x;
   }
 
-  /**
-   * Returns the y-coordinate of the end point.
-   *
-   * @return the y-coordinate of the end point
-   */
+  /** Returns the y-coordinate of the end point. */
   public float getEndY() {
     return this.getEnd().y;
   }
 
-  /**
-   * Returns the start point.
-   *
-   * @return the start point
-   */
+  /** Returns the start point. */
   public abstract SGTuple2f getStart();
 
-  /**
-   * Returns the end point.
-   *
-   * @return the end point
-   */
+  /** Returns the end point. */
   public abstract SGTuple2f getEnd();
 
   /**
    * Sets the line width
    *
    * @param width line width to set
-   * @return true if succeeded
    */
   public abstract boolean setLineWidth(final float width);
 
@@ -292,7 +229,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    *
    * @param lw the line width to set
    * @param unit the unit for the given line width
-   * @return true if succeeded
    */
   public boolean setLineWidth(final float lw, final String unit) {
     final Float lwNew = SGUtility.getLineWidth(lw, unit);
@@ -309,7 +245,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Sets the line type.
    *
    * @param type the line type to set
-   * @return true if succeeded
    */
   public abstract boolean setLineType(final int type);
 
@@ -317,7 +252,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Sets the head size.
    *
    * @param size the head size to set
-   * @return true if succeeded
    */
   public abstract boolean setHeadSize(final float size);
 
@@ -326,7 +260,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    *
    * @param size the symbol size to set
    * @param unit the unit for given symbol size
-   * @return true if succeeded
    */
   public boolean setHeadSize(final float size, final String unit) {
     final Float sNew =
@@ -350,7 +283,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Sets the start head type.
    *
    * @param type the start head type
-   * @return true if succeeded
    */
   public abstract boolean setStartHeadType(final int type);
 
@@ -358,29 +290,16 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Sets the end head type.
    *
    * @param type the end head type
-   * @return true if succeeded
    */
   public abstract boolean setEndHeadType(final int type);
 
-  /**
-   * Returns the line width.
-   *
-   * @return the line width
-   */
+  /** Returns the line width. */
   public abstract float getLineWidth();
 
-  /**
-   * Returns the line type.
-   *
-   * @return the line type
-   */
+  /** Returns the line type. */
   public abstract int getLineType();
 
-  /**
-   * Returns the head size.
-   *
-   * @return the head size
-   */
+  /** Returns the head size. */
   public abstract float getHeadSize();
 
   /**
@@ -388,36 +307,19 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    *
    * @param openAngle a value to set to the open angle
    * @param closeAngle a value to set to the close angle
-   * @return true if succeeded
    */
   public abstract boolean setHeadAngle(final Float openAngle, final Float closeAngle);
 
-  /**
-   * Returns the open angle of the arrow head.
-   *
-   * @return the open angle of the arrow head
-   */
+  /** Returns the open angle of the arrow head. */
   public abstract float getHeadOpenAngle();
 
-  /**
-   * Returns the close angle of the arrow head.
-   *
-   * @return the close angle of the arrow head
-   */
+  /** Returns the close angle of the arrow head. */
   public abstract float getHeadCloseAngle();
 
-  /**
-   * Returns the start head type.
-   *
-   * @return the start head type
-   */
+  /** Returns the start head type. */
   public abstract int getStartHeadType();
 
-  /**
-   * Returns the end head type.
-   *
-   * @return the end head type
-   */
+  /** Returns the end head type. */
   public abstract int getEndHeadType();
 
   public float getLineWidth(final String unit) {
@@ -459,7 +361,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Sets the properties of arrow object.
    *
    * @param p properties of an arrow
-   * @return true if succeeded
    */
   public boolean setProperties(final SGProperties p) {
     if ((p instanceof ArrowProperties) == false) {
@@ -522,7 +423,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Returns whether a given head type is valid.
    *
    * @param type a head type
-   * @return true if the given head type is valid
    */
   public static boolean isValidArrowHeadType(final int type) {
     if (SGDrawingElementSymbol.isValidSymbolType(type)) {
@@ -543,7 +443,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Returns whether a given symbol type is of the line type.
    *
    * @param type a symbol type
-   * @return true if the given symbol type is of the line type
    */
   public static boolean isLineTypeSymbol(final int type) {
     if (SGDrawingElementSymbol.isLineTypeSymbol(type)) {
@@ -556,7 +455,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Returns the arrow head type constant from a given name.
    *
    * @param name the name of an arrow head type
-   * @return the arrow head type constant if it exists or null otherwise
    */
   public static Integer getArrowHeadTypeFromName(final String name) {
     Integer type = SGDrawingElementSymbol.getSymbolTypeFromName(name);
@@ -580,7 +478,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Returns the name of a given arrow head type.
    *
    * @param type the arrow head type
-   * @return the name of a given arrow head type
    */
   public static String getArrowHeadTypeName(final int type) {
     String name = SGDrawingElementSymbol.getSymbolTypeName(type);
@@ -655,7 +552,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
    * Reads the properties from an element.
    *
    * @param el an element
-   * @return true if succeeded
    */
   public boolean readProperty(final Element el) {
 
@@ -889,13 +785,6 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
 
   /** The default constructor. */
 
-  //    /**
-  //     * Returns a stroke.
-  //     *
-  //     * @return a stroke
-  //     */
-  //    protected abstract SGStroke getStroke();
-
   /** */
   public Rectangle2D getElementBounds() {
     SGDrawingElementLine line = (SGDrawingElementLine) this.getLine();
@@ -962,11 +851,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     g2d.draw(circle);
   }
 
-  /**
-   * Returns the magnitude of this arrow.
-   *
-   * @return the magnitude of this arrow
-   */
+  /** Returns the magnitude of this arrow. */
   public float getMagnitude() {
     final SGTuple2f start = this.getStart();
     final SGTuple2f end = this.getEnd();
@@ -975,11 +860,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     return (float) Math.sqrt(x * x + y * y);
   }
 
-  /**
-   * Returns the gradient of this arrow.
-   *
-   * @return the gradient of this arrow in units of radian
-   */
+  /** Returns the gradient of this arrow. */
   public float getGradient() {
     final SGTuple2f start = this.getStart();
     final SGTuple2f end = this.getEnd();
@@ -996,18 +877,10 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
     end.setAngle(angle + 0.50f * pi);
   }
 
-  /**
-   * Returns the shape of the start head.
-   *
-   * @return a shape object
-   */
+  /** Returns the shape of the start head. */
   protected abstract Shape getStartHeadShape();
 
-  /**
-   * Returns the shape of the start head.
-   *
-   * @return a shape object
-   */
+  /** Returns the shape of the start head. */
   protected abstract Shape getEndHeadShape();
 
   /** Updates the head shape. */
@@ -1025,11 +898,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
       this.mArrow = arrow;
     }
 
-    /**
-     * Returns a line object.
-     *
-     * @return a line object
-     */
+    /** Returns a line object. */
     public Shape getLineShape() {
       final float yStart, yEnd;
       final int aType = SGIArrowConstants.SYMBOL_TYPE_ARROW_HEAD;
@@ -1056,11 +925,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
       return shape;
     }
 
-    /**
-     * Returns an affine transform.
-     *
-     * @return an affine transform
-     */
+    /** Returns an affine transform. */
     private AffineTransform getAffineTransform() {
       AffineTransform af = new AffineTransform();
 
@@ -1180,11 +1045,7 @@ public abstract class SGDrawingElementArrow extends SGDrawingElement implements 
       return this.mArrow.getHeadCloseAngle();
     }
 
-    /**
-     * Creates a shape.
-     *
-     * @return a shape
-     */
+    /** Creates a shape. */
     protected Shape createShape() {
       final int type = this.getType();
       final float headSize = this.getMagnification() * this.getSize();

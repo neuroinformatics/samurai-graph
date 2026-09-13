@@ -388,10 +388,9 @@ public final class SGDataMiscUtility
   /**
    * Complements the column types.
    *
-   * <p>If data type is not scalar-XY, return current column type. If data type is scalar-XY, and if
-   * number of "X" column type is 1 and "Y" is 0, set "Y" column type to columns which value types
-   * are Number (array data) or which dimensions contain the dimension of "X" (netCDF data). Same
-   * for number of "X" is 0 and "Y" is 1. Otherwise return current column type.
+   * <p>number of "X" column type is 1 and "Y" is 0, set "Y" column type to columns which value
+   * types are Number (array data) or which dimensions contain the dimension of "X" (netCDF data).
+   * Same for number of "X" is 0 and "Y" is 1. Otherwise return current column type.
    *
    * @param infoMap the information map
    * @param curColType the current column types
@@ -450,8 +449,7 @@ public final class SGDataMiscUtility
   /**
    * Returns whether the complement button is to be enabled.
    *
-   * <p>If data type is scalar-XY, and if number of "X" column type is 1 or number of "Y" is 1, the
-   * complement button is enabled.
+   * <p>complement button is enabled.
    *
    * @param infoMap the information map
    * @param curColType current column type
@@ -498,8 +496,7 @@ public final class SGDataMiscUtility
   /**
    * Returns whether the complement button is to be visible.
    *
-   * <p>If data type is Scalar-XY, and multiple graphs drawing and multiple variables are selected,
-   * complement button is visible.
+   * <p>complement button is visible.
    *
    * @param infoMap the information map
    * @return true to set visible
@@ -530,8 +527,7 @@ public final class SGDataMiscUtility
   /**
    * Get index list of column type on text data.
    *
-   * <p>If column type in <b>colInfo</b> matches "X", add the index of <b>colInfo</b> into
-   * <b>xIndexList</b>. Same, check matching of "Y", "Lower Error", "Upper Error", "Lower / Upper
+   * <p><b>xIndexList</b>. Same, check matching of "Y", "Lower Error", "Upper Error", "Lower / Upper
    * Error" and "Tick Label".
    *
    * @param colInfo
@@ -982,19 +978,6 @@ public final class SGDataMiscUtility
         }
       }
 
-      // boolean checkAppendedIndex = false;
-      // if (isArrayData(dataType)){
-      // checkAppendedIndex = true;
-      // } else if (isNetCDFData(dataType) || isMDData(dataType)) {
-      // Boolean variable = (Boolean) infoMap.get(KEY_MULTIPLE_VARIABLE);
-      // if (variable == null) {
-      // return false;
-      // }
-      // checkAppendedIndex = variable.booleanValue();
-      // } else {
-      // return false;
-      // }
-
       boolean checkAppendedIndex = true;
 
       if (checkAppendedIndex) {
@@ -1206,8 +1189,6 @@ public final class SGDataMiscUtility
   /**
    * Create items for the combo box.
    *
-   * <p>Return the enabled candidates for column type.
-   *
    * @param dataType the type of data
    * @param infoMap the map of data information
    * @param valueType the type of value
@@ -1309,8 +1290,6 @@ public final class SGDataMiscUtility
   /**
    * Create items for the combo box.
    *
-   * <p>Return the enabled candidates for column type of Scalar-XY data type.
-   *
    * @param dataType the type of data
    * @param infoMap the map of data information
    * @param valueType the type of value
@@ -1375,14 +1354,7 @@ public final class SGDataMiscUtility
     }
 
     // add time, pickup and serial number columns
-    // if (isNetCDFData && VALUE_TYPE_NUMBER.equals(valueType)) {
     // SGNetCDFDataColumnInfo ncInfo = (SGNetCDFDataColumnInfo) colInfo[rowIndex];
-    // if (ncInfo.isCoordinateVariable()) {
-    // itemList.add(ANIMATION_FRAME);
-    // itemList.add(PICKUP);
-    // itemList.add(INDEX);
-    // }
-    // }
     updateNetCDFItems(
         itemList,
         infoMap,
@@ -1402,7 +1374,6 @@ public final class SGDataMiscUtility
     }
     if (errorBarTickLabelFlag) {
       // get the list of column index those are assignable
-      // for the error bar or tick labels
       List<Integer> indexList =
           getOptionalColumnsAssignableIndexList(dataType, colInfo, xIndexList, yIndexList);
       if (indexList != null) {
@@ -1546,8 +1517,7 @@ public final class SGDataMiscUtility
   /**
    * Get name list of column type on netCDF data.
    *
-   * <p>If column type in <b>colInfo</b> matches "X", add the variable name of <b>colInfo</b> into
-   * <b>xNameList</b>. Same, check matching of "Y", "Lower Error", "Upper Error", "Lower / Upper
+   * <p><b>xNameList</b>. Same, check matching of "Y", "Lower Error", "Upper Error", "Lower / Upper
    * Error", "Tick Label", "Time" and "Serial Number".
    *
    * @param colInfo
@@ -1621,12 +1591,6 @@ public final class SGDataMiscUtility
   public static Map<String, Object> updateInfoMap(
       String dataType, SGDataColumnInfo[] colInfo, Map<String, Object> infoMap) {
     Map<String, Object> infoMapUpd = new HashMap<String, Object>(infoMap);
-    // if (isSXYTypeData(dataType)) {
-    // // column information
-    // infoMapUpd.put(SGIDataInformationKeyConstants.KEY_COLUMN_INFO,
-    // colInfo.clone());
-    // }
-    // column information
     infoMapUpd.put(SGIDataInformationKeyConstants.KEY_COLUMN_INFO, colInfo.clone());
     return infoMapUpd;
   }

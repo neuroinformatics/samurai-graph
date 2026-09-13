@@ -124,9 +124,7 @@ public class SGFigureElementGrid extends SGFigureElement
     this.mTemporaryProperties = null;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return null;
   }
@@ -312,6 +310,7 @@ public class SGFigureElementGrid extends SGFigureElement
   /**
    * Synchronize the element given by the argument.
    *
+   * @param msg the msg parameter
    * @param element An object to be synchronized.
    */
   public boolean synchronizeArgument(SGIFigureElement element, String msg) {
@@ -458,7 +457,6 @@ public class SGFigureElementGrid extends SGFigureElement
       final double value = SGUtilityNumber.getPowersOfTen(num);
       valueList.add(value);
 
-      // values between 10^n and 10^(n+1)
       for (int jj = 2; jj <= 9; jj++) {
         double v = jj * value;
         if (v > max) {
@@ -604,6 +602,7 @@ public class SGFigureElementGrid extends SGFigureElement
   /**
    * Creates an array of Element objects.
    *
+   * @param params the params parameter
    * @param document an Document objects to append elements
    * @return an array of Element objects
    */
@@ -759,7 +758,6 @@ public class SGFigureElementGrid extends SGFigureElement
     // baseline and step values
     //
 
-    // for x-axis
     str = element.getAttribute(KEY_BASELINE_VALUE_X);
     if (str.length() != 0) {
       SGAxisValue baseline = this.getBaselineValue(str);
@@ -780,7 +778,6 @@ public class SGFigureElementGrid extends SGFigureElement
       }
     }
 
-    // for y-axis
     str = element.getAttribute(KEY_BASELINE_VALUE_Y);
     if (str.length() != 0) {
       SGAxisValue baseline = this.getBaselineValue(str);

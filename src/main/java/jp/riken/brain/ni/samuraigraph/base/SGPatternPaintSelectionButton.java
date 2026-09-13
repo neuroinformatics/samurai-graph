@@ -26,11 +26,7 @@ public class SGPatternPaintSelectionButton extends SGButton implements ChangeLis
     this.mPatternPaint = new SGPatternPaint();
   }
 
-  /**
-   * Returns the pattern if the pattern is "set" to this button.
-   *
-   * @return Paint object.
-   */
+  /** Returns the pattern if the pattern is "set" to this button. */
   public SGPatternPaint getPatternPaint() {
     try {
       return (SGPatternPaint) this.mPatternPaint.clone();
@@ -42,7 +38,7 @@ public class SGPatternPaintSelectionButton extends SGButton implements ChangeLis
   /**
    * If the gradation is set with this method, the gradation is "set" to this button.
    *
-   * @param gradation gradation to be set to this button
+   * @param pattern gradation to be set to this button
    */
   public void setPatternPaint(SGPatternPaint pattern) {
     if (null != pattern && !this.mPatternPaint.equals(pattern)) {

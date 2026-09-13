@@ -301,7 +301,6 @@ class SGFigureElementLegendPropertyIO implements SGIStringConstants, SGILegendCo
       }
       symbolSpan = num.floatValue();
     } else {
-      // for previous version before 0.9.1
       num =
           Float.valueOf(
               (float) SGUtilityText.convertToPoint(DEFAULT_LEGEND_SYMBOL_SPAN, SYMBOL_SPAN_UNIT));

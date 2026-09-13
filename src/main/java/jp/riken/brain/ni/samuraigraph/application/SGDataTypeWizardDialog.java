@@ -470,11 +470,7 @@ public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplica
     this.mDataFileType = type;
   }
 
-  /**
-   * Returns the type of data file.
-   *
-   * @return the type of data file
-   */
+  /** Returns the type of data file. */
   public FILE_TYPE getDataFileType() {
     return this.mDataFileType;
   }
@@ -555,7 +551,6 @@ public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplica
    * Set available data types.
    *
    * @param avList a list of available data types.
-   * @return true if succeeded
    */
   public boolean setAvailableDataType(final List<String> avList) {
 
@@ -600,7 +595,6 @@ public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplica
    * Returns the data type for a given radio button.
    *
    * @param btn a radio button
-   * @return the data type.
    */
   public String getDataType(JRadioButton btn) {
     String str = null;
@@ -616,8 +610,7 @@ public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplica
   /**
    * Returns the button for a given data type.
    *
-   * @param dataTypes the data type
-   * @return the button for a given data type
+   * @param dataType the data type
    */
   public AbstractButton getButton(String dataType) {
     AbstractButton btn = null;
@@ -630,11 +623,7 @@ public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplica
     return btn;
   }
 
-  /**
-   * Returns whether polar mode is selected.
-   *
-   * @return true if polar mode is selected
-   */
+  /** Returns whether polar mode is selected. */
   public boolean isPolarSelected() {
     return this.mPolarButton.isSelected();
   }
@@ -657,8 +646,7 @@ public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplica
   /**
    * Returns whether the radio button for multiple data is selected.
    *
-   * @return true if the radio button for multiple data is selected, false not selected and null if
-   *     the radio button is disabled
+   * <p>the radio button is disabled
    */
   public Boolean isMultipleSelected() {
     AbstractButton btn = this.mMultipleButton;
@@ -683,11 +671,7 @@ public class SGDataTypeWizardDialog extends SGWizardDialog implements SGIApplica
     return this.mDataNameTextField.getText();
   }
 
-  /**
-   * Returns the sampling rate.
-   *
-   * @return Sampling rate. If input value is illegal, returns null.
-   */
+  /** Returns the sampling rate. */
   public Double getSamplingRate() {
     if (this.mSamplingRateCheckBox.isSelected() == false) {
       return null;

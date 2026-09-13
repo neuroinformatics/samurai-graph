@@ -107,7 +107,6 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
    * Called when the location of data points is changed.
    *
    * @param data a data object
-   * @return true if succeeded
    */
   public boolean updateDrawingElementsLocation(final SGIData data) {
     if ((data instanceof SGISXYZTypeData) == false) {
@@ -286,8 +285,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
   /**
    * Returns a color map which is the first element of an array.
    *
-   * @return the first element of an array of color maps, or null when this group set does not have
-   *     any color maps
+   * <p>any color maps
    */
   public SGElementGroupPseudocolorMap getColorMap() {
     return this.getColorMapGroup();
@@ -297,7 +295,6 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
    * Sets the color bar model.
    *
    * @param model the color bar model
-   * @return true if succeeded
    */
   public boolean setColorBarModel(final SGColorMap model) {
     List<SGElementGroupPseudocolorMap> groups = this.getColorMapGroups();
@@ -351,8 +348,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
    * Write properties of this object to the Element.
    *
    * @param el the Element object
-   * @param type type of the method to save properties
-   * @return true if succeeded
+   * @param params type of the method to save properties
    */
   public boolean writeProperty(final Element el, final SGExportParameter params) {
     if (super.writeProperty(el, params) == false) {
@@ -369,7 +365,6 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
    * Returns the location at a given index.
    *
    * @param index the index
-   * @return the location
    */
   public SGTuple2f getLocation(final int index) {
     if (this.mPointsArray == null) {
@@ -398,7 +393,6 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
       String value = map.getValueString(key);
       if (COM_DATA_X_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
@@ -412,7 +406,6 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
         result.putResult(COM_DATA_X_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_Y_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
@@ -426,7 +419,6 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
         result.putResult(COM_DATA_Y_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
@@ -440,7 +432,6 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
         result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_INDEX_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
@@ -454,7 +445,6 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
         result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_ANIMATION_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         SGArrayData data = (SGArrayData) this.getData();
@@ -476,7 +466,6 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
         result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_ANIMATION_FRAME_DIMENSION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for pick up indices
           continue;
         }
         if (!this.setTimeDimension(value)) {
@@ -535,11 +524,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
     }
   }
 
-  /**
-   * Returns a list of color map groups.
-   *
-   * @return a list of color map groups
-   */
+  /** Returns a list of color map groups. */
   public List<SGElementGroupPseudocolorMap> getColorMapGroups() {
     List<SGElementGroupPseudocolorMap> retList = new ArrayList<SGElementGroupPseudocolorMap>();
     List<SGElementGroup> list =
@@ -554,8 +539,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
   /**
    * Returns a color map group which is the first element of an array.
    *
-   * @return the first element of an array of arrow groups, or null when this group set does not
-   *     have any arrow groups
+   * <p>have any arrow groups
    */
   public SGElementGroupPseudocolorMap getColorMapGroup() {
     return (SGElementGroupPseudocolorMap)
@@ -567,7 +551,6 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
    * Sets the properties of element groups.
    *
    * @param elementGroupPropertiesList
-   * @return true if succeeded
    */
   protected boolean setElementGroupProperties(List<SGProperties> elementGroupPropertiesList) {
     for (int ii = 0; ii < elementGroupPropertiesList.size(); ii++) {
@@ -591,6 +574,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
   /**
    * Sets the information of data columns.
    *
+   * @param message the message parameter
    * @param columns information of data columns
    */
   public boolean setColumnInfo(SGDataColumnInfo[] columns, String message) {
@@ -626,7 +610,6 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
    * Sets the data.
    *
    * @param data a data object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (!super.setData(data)) {
@@ -648,11 +631,7 @@ public class SGElementGroupSetInGraphSXYZ extends SGElementGroupSetInGraph
     return true;
   }
 
-  /**
-   * Updates the size of color map.
-   *
-   * @return true if succeeded
-   */
+  /** Updates the size of color map. */
   public boolean updateColorMapSize() {
 
     SGISXYZTypeData data = (SGISXYZTypeData) this.getData();

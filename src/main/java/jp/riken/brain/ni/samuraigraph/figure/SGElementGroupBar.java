@@ -47,7 +47,6 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
    * Returns the x-coordinate of the bar at given index.
    *
    * @param index the array index
-   * @return the x-coordinate of the bar
    */
   public abstract float getX(final int index);
 
@@ -55,15 +54,10 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
    * Returns the y-coordinate of the bar at given index.
    *
    * @param index the array index
-   * @return the y-coordinate of the bar
    */
   public abstract float getY(final int index);
 
-  /**
-   * Returns the baseline value.
-   *
-   * @return the baseline value
-   */
+  /** Returns the baseline value. */
   public double getBaselineValue() {
     return this.mBaselineValue;
   }
@@ -72,18 +66,13 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
    * Sets the baseline value.
    *
    * @param value axis value to set to the baseline value
-   * @return true if succeeded
    */
   public boolean setBaselineValue(final double value) {
     this.mBaselineValue = value;
     return true;
   }
 
-  /**
-   * Returns the width value.
-   *
-   * @return the width value
-   */
+  /** Returns the width value. */
   public double getWidthValue() {
     return this.mWidthValue;
   }
@@ -92,7 +81,6 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
    * Sets the width value.
    *
    * @param value axis value to set to the width value
-   * @return true if succeeded
    */
   public boolean setWidthValue(final double value) {
     if (value < 0.0) {
@@ -102,11 +90,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     return true;
   }
 
-  /**
-   * Returns whether this bar is vertical.
-   *
-   * @return true if vertical
-   */
+  /** Returns whether this bar is vertical. */
   public boolean isVertical() {
     return this.mVerticalFlag;
   }
@@ -119,21 +103,13 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     return this.mOffsetY;
   }
 
-  /**
-   * Sets the shift size of bars to x direction.
-   *
-   * @return true
-   */
+  /** Sets the shift size of bars to x direction. */
   public boolean setOffsetX(final double offset) {
     this.mOffsetX = offset;
     return true;
   }
 
-  /**
-   * Sets the shift size of bars to y direction.
-   *
-   * @return true
-   */
+  /** Sets the shift size of bars to y direction. */
   public boolean setOffsetY(final double offset) {
     this.mOffsetY = offset;
     return true;
@@ -143,11 +119,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     return this.mInterval;
   }
 
-  /**
-   * Sets the interval size of adjacent bars when the graph is multiple.
-   *
-   * @return true
-   */
+  /** Sets the interval size of adjacent bars when the graph is multiple. */
   public boolean setInterval(final double interval) {
     this.mInterval = interval;
     return true;
@@ -165,9 +137,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getTagName() {
     return TAG_NAME_BAR;
   }
@@ -182,12 +152,8 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     el.setAttribute(KEY_RECTANGLE_WIDTH_VALUE, Double.toString(this.mWidthValue));
     el.setAttribute(KEY_EDGE_LINE_WIDTH, Float.toString(edgeLineWidth) + SGIConstants.pt);
     el.setAttribute(KEY_BASELINE_VALUE, Double.toString(this.mBaselineValue));
-    //        el.setAttribute(KEY_COLOR_LIST, SGUtilityText.getColorListString(this.mColorList));
     el.setAttribute(KEY_EDGE_LINE_COLOR, SGUtilityText.getColorString(this.mEdgeLineColor));
     el.setAttribute(KEY_EDGE_LINE_VISIBLE, Boolean.toString(this.isEdgeLineVisible()));
-    //        if (! SGPaintUtility.writeProperty(el, this.mInnerPaint)) {
-    //            return false;
-    //        }
     if (!this.mInnerPaint.writeProperty(el)) {
       return false;
     }
@@ -201,10 +167,8 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
 
   /**
    * @param el
-   * @return
    */
   public boolean readProperty(final Element el) {
-    // final float ratio = SGIConstants.CM_POINT_RATIO;
 
     String str = null;
     Number num = null;
@@ -392,6 +356,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     /**
      * Builds a rectangle in a group of rectangles.
      *
+     * @param index the index parameter
      * @param group a group of rectangles
      */
     public BarInGroup(SGElementGroupBar group, final int index) {
@@ -561,7 +526,6 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
     }
 
     if (pointArray.length != this.mDrawingElementArray.length) {
-      //            throw new IllegalArgumentException();
       this.initDrawingElement(pointArray);
     }
 
@@ -570,9 +534,6 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
       SGDrawingElementBar bar = (SGDrawingElementBar) array[ii];
       final boolean eff = !(pointArray[ii].isInfinite() || pointArray[ii].isNaN());
       bar.setVisible(eff);
-      //            if (eff) {
-      //                bar.setLocation(pointArray[ii]);
-      //            }
     }
 
     return true;
@@ -582,7 +543,6 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
    * Sets whether the bars are vertical.
    *
    * @param b true to set vertical
-   * @return true if succeeded
    */
   public boolean setVertical(final boolean b) {
     this.mVerticalFlag = b;
@@ -633,7 +593,6 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
 
     BarProperties bp = (BarProperties) p;
 
-    // for the versions older than 0.9.1
     Float width = bp.getBarWidth();
     if (width == null) {
       return false;
@@ -707,11 +666,7 @@ public abstract class SGElementGroupBar extends SGElementGroupRectangle implemen
       super();
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       Object obj = super.copy();
       BarProperties p = (BarProperties) obj;

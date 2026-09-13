@@ -116,9 +116,6 @@ public final class SGDefaultColumnTypeNetCDFUtility
       final List<SGDataColumnInfo> columnInfoList, final String varName) {
     for (int ii = 0; ii < columnInfoList.size(); ii++) {
       SGNetCDFDataColumnInfo ncInfo = (SGNetCDFDataColumnInfo) columnInfoList.get(ii);
-      //			if (ncInfo.getName().equals(varName)) {
-      //				return ii;
-      //			}
       if (isEqualNetCDFName(ncInfo.getName(), varName)) {
         return ii;
       }
@@ -505,7 +502,6 @@ public final class SGDefaultColumnTypeNetCDFUtility
     }
 
     // unlimited coordinate variable is assigned to time variable
-    // if it exists
     for (int ii = 0; ii < size; ii++) {
       if (ii == xIndex || ii == yIndex || ii == zIndex) {
         continue;
@@ -941,7 +937,6 @@ public final class SGDefaultColumnTypeNetCDFUtility
     }
 
     // unlimited coordinate variable is assigned to time variable
-    // if it exists
     for (int ii = 0; ii < size; ii++) {
       if (ii == xIndex || ii == yIndex || ii == comIndex1 || ii == comIndex2) {
         continue;
@@ -1422,7 +1417,6 @@ public final class SGDefaultColumnTypeNetCDFUtility
       }
     }
 
-    // if unlimited variable is not found, search the coordinate variable
     if (xVar == null) {
       for (int ii = 0; ii < size; ii++) {
         SGNetCDFVariable var = varList.get(ii);
@@ -1491,7 +1485,6 @@ public final class SGDefaultColumnTypeNetCDFUtility
       return false;
     }
 
-    // for multiple variables
     if (variable.booleanValue()) {
       columnTypes[xCol] = X_VALUE;
 
@@ -1518,7 +1511,6 @@ public final class SGDefaultColumnTypeNetCDFUtility
         }
       }
     } else {
-      // for multiple dimension indices
       final int yIndex = yIndices[0];
       int yCol = findColumnIndex(columns, varList.get(yIndex));
       if (yCol == -1) {

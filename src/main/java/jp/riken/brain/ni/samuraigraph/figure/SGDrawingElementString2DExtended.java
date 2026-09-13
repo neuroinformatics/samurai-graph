@@ -83,11 +83,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
     this.mElementBounds = null;
   }
 
-  /**
-   * Returns whether this string element has superscripts or subscripts.
-   *
-   * @return true if this string element has superscripts or subscripts
-   */
+  /** Returns whether this string element has superscripts or subscripts. */
   private boolean containsSubscriptsOrSuperscripts() {
     final String str = this.getString();
     boolean bEscape = false;
@@ -109,8 +105,6 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
   /**
    * Returns a list of all string elements without distinction of base character, subscript or
    * superscript.
-   *
-   * @return a list of all string elements
    */
   protected final ArrayList<SGDrawingElementString> getAllStringElement() {
     ArrayList<SGDrawingElementString> list = new ArrayList<SGDrawingElementString>();
@@ -138,7 +132,6 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
    * Sets the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     if (super.setMagnification(mag) == false) {
@@ -159,7 +152,6 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
    * Sets the color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setColor(final Color color) {
     if (super.setColor(color) == false) {
@@ -205,7 +197,6 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
    * Sets the location of this symbol.
    *
    * @param pos the location to set
-   * @return true if succeeded
    */
   public boolean setLocation(final SGTuple2f pos) {
     super.setLocation(pos);
@@ -218,7 +209,6 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
    *
    * @param x the x coordinate to set
    * @param y the y coordinate to set
-   * @return true if succeeded
    */
   public boolean setLocation(final float x, final float y) {
     super.setLocation(x, y);
@@ -230,7 +220,6 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
    * Sets the angle of this string.
    *
    * @param angle the angle to be set in units of degree
-   * @return true if succeeded
    */
   public boolean setAngle(final float angle) {
     if (super.setAngle(angle) == false) {
@@ -249,7 +238,6 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
    * Creates a string element without any modification of the input text string.
    *
    * @param str a text string
-   * @return true if succeeded
    */
   protected boolean createStringElementsDirectly(final String str) {
     SGDrawingElementString el =
@@ -267,20 +255,12 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
     return true;
   }
 
-  /**
-   * Creates a string element from an input string without subscript nor superscript.
-   *
-   * @return true if succeeded
-   */
+  /** Creates a string element from an input string without subscript nor superscript. */
   protected boolean createStringElementWithoutIndex() {
     return this.createStringElementsDirectly(SGUtilityText.compile(this.getString()));
   }
 
-  /**
-   * Create all string elements. This method is called when the text is set or changed.
-   *
-   * @return true if succeeded
-   */
+  /** Create all string elements. This method is called when the text is set or changed. */
   private boolean createStringElements() {
     final String name = this.getFontName();
     final int style = this.getFontStyle();
@@ -295,7 +275,6 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
     this.mSubscriptElementList.clear();
     this.mSuperscriptElementList.clear();
 
-    // if the string does not contain subscripts nor superscripts,
     // set the string to the base element
     if (this.containsSubscriptsOrSuperscripts() == false) {
       return this.createStringElementWithoutIndex();
@@ -358,10 +337,9 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
    * Separates a given text string into the base strings, subscript strings and superscript strings.
    *
    * @param line A line.
-   * @param bseList List of base strings.
+   * @param baseList List of base strings.
    * @param superList List of superscript strings.
    * @param subList List of subscript strings.
-   * @return true if succeeded
    */
   protected boolean getSubscriptAndSuperscriptInfo(
       final String line,
@@ -458,11 +436,7 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
     }
   }
 
-  /**
-   * Update the location of the base, superscript and subscript elements.
-   *
-   * @return status
-   */
+  /** Update the location of the base, superscript and subscript elements. */
   private boolean updateLocation() {
     // calculate metrics
     this.calcMetrics();
@@ -567,21 +541,16 @@ public class SGDrawingElementString2DExtended extends SGDrawingElementString {
     float visual_advance = 0.0f;
 
     float strike_through_offset = 0.0f;
-    // float leading = 0.0f;
     float advance = 0.0f;
 
     // calculate font specific values
     if (this.mBaseElementList.size() != 0) {
       final SGDrawingElementString el = this.mBaseElementList.get(0);
-      // get center line height ( baseline to center line : negative value
-      // )
       base_strike_through_offset = el.getStrikethroughOffset();
-      // get leading ( baseline to center line )
       base_leading = el.getLeading();
       // get x offset
       base_visual_x = (float) el.getStringRect().getX();
     }
-    // leading = base_leading;
     strike_through_offset = base_strike_through_offset;
 
     // calculate string specific value

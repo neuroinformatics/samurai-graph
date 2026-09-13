@@ -17,7 +17,6 @@ public class SGVXYDataUtility {
       if (Double.isNaN(magArray[ii]) || Double.isNaN(angleArray[ii]) || magArray[ii] < 0) {
         array[ii] = Double.NaN;
       } else {
-        // r*cos(theta)
         array[ii] = magArray[ii] * Math.cos(angleArray[ii]);
       }
     }
@@ -38,7 +37,6 @@ public class SGVXYDataUtility {
       if (Double.isNaN(magArray[ii]) || Double.isNaN(angleArray[ii]) || magArray[ii] < 0) {
         array[ii] = Double.NaN;
       } else {
-        // r*sin(theta)
         array[ii] = magArray[ii] * Math.sin(angleArray[ii]);
       }
     }

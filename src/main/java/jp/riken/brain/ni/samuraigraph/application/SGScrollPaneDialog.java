@@ -102,7 +102,6 @@ public class SGScrollPaneDialog extends SGDialog implements AdjustmentListener {
   private boolean mCanceledFlag = false;
 
   private boolean initProperty() {
-    // this.mDetailEditorPane.setContentType("text/html");
 
     // add an event listener
     this.mOKButton.addActionListener(this);
@@ -120,16 +119,13 @@ public class SGScrollPaneDialog extends SGDialog implements AdjustmentListener {
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getMessage() {
     return this.mMessageEditorPane.getText();
   }
 
   /**
    * @param t
-   * @return
    */
   public boolean setDetailText(String t) {
     this.mDetailEditorPane.setText(t);
@@ -138,7 +134,6 @@ public class SGScrollPaneDialog extends SGDialog implements AdjustmentListener {
 
   /**
    * @param url
-   * @return
    */
   public boolean setPage(URL url) {
     try {
@@ -149,30 +144,22 @@ public class SGScrollPaneDialog extends SGDialog implements AdjustmentListener {
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getDetailText() {
     return this.mDetailEditorPane.getText();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public JScrollBar getVerticalScrollBar() {
     return this.mDetailScrollPane.getVerticalScrollBar();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public JScrollBar getHorizontalScrollBar() {
     return this.mDetailScrollPane.getHorizontalScrollBar();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public JViewport getViewport() {
     return this.mDetailScrollPane.getViewport();
   }
@@ -210,9 +197,7 @@ public class SGScrollPaneDialog extends SGDialog implements AdjustmentListener {
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isCanceled() {
     return this.mCanceledFlag;
   }

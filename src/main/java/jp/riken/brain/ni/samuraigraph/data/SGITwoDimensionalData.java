@@ -6,25 +6,13 @@ import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 /** An interface for the data that has two dimensions: X and Y. */
 public interface SGITwoDimensionalData extends SGIXYData {
 
-  /**
-   * Returns an array of xy-values.
-   *
-   * @return an array of xy-values
-   */
+  /** Returns an array of xy-values. */
   public SGTuple2d[] getXYValueArray(final boolean all);
 
-  /**
-   * Returns the stride for x-values.
-   *
-   * @return the stride
-   */
+  /** Returns the stride for x-values. */
   public SGIntegerSeriesSet getXStride();
 
-  /**
-   * Returns the stride for y-values.
-   *
-   * @return the stride
-   */
+  /** Returns the stride for y-values. */
   public SGIntegerSeriesSet getYStride();
 
   /**

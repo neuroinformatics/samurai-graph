@@ -121,8 +121,6 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
 
   @Override
   public SGISXYTypeMultipleData toMultiple() {
-    // Convert this class (SGSXYNetCDFData) to class
-    // (SGSXYMultipleVariableNetCDFData).
     final boolean be = this.isErrorBarAvailable();
     final boolean bt = this.isTickLabelAvailable() && !this.mIsTickLabelSubstitute;
     SGNetCDFDataColumnInfo[] x =

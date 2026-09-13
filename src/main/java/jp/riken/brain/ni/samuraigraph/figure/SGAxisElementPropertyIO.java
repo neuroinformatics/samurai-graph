@@ -61,8 +61,6 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
     // visible
     str = element.getAttribute(KEY_VISIBLE);
     if (str.length() == 0) {
-      // for backward compatibility
-      // version number <= 2.0.0
       str = element.getAttribute("AxisVisible");
     }
     if (str.length() != 0) {
@@ -1159,7 +1157,6 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
         }
         result.putResult(COM_AXIS_TICK_MARK_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_TICK_MARK_LENGTH.equalsIgnoreCase(key)) {
-        // for backward compatibility (<= 2.0.0)
         StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
@@ -1176,7 +1173,6 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
         }
         result.putResult(COM_AXIS_TICK_MARK_LENGTH, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_LINE_COLOR.equalsIgnoreCase(key)) {
-        // for backward compatibility (<= 2.0.0)
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (axis.setAxisLineColor(cl) == false) {
@@ -1204,7 +1200,6 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
         }
         result.putResult(COM_AXIS_LINE_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_FONT_NAME.equalsIgnoreCase(key)) {
-        // for backward compatibility (<= 2.0.0)
         final String name = SGUtility.findFontFamilyName(value);
         if (name == null) {
           result.putResult(COM_AXIS_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1220,7 +1215,6 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
         }
         result.putResult(COM_AXIS_FONT_NAME, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_FONT_STYLE.equalsIgnoreCase(key)) {
-        // for backward compatibility (<= 2.0.0)
         Integer style = SGUtilityText.getFontStyle(value);
         if (style == null) {
           result.putResult(COM_AXIS_FONT_STYLE, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1236,7 +1230,6 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
         }
         result.putResult(COM_AXIS_FONT_STYLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_FONT_SIZE.equalsIgnoreCase(key)) {
-        // for backward compatibility (<= 2.0.0)
         StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
         if (num == null) {
@@ -1253,7 +1246,6 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
         }
         result.putResult(COM_AXIS_FONT_SIZE, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_FONT_COLOR.equalsIgnoreCase(key)) {
-        // for backward compatibility (<= 2.0.0)
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
           if (axis.setTitleFontColor(cl) == false) {
@@ -1284,7 +1276,6 @@ class SGAxisElementPropertyIO implements SGIStringConstants, SGILegendConstants 
     }
 
     // Note: after set tick mark length
-    // for backward compatibility (<= 2.0.0)
     if (map.getKeys().contains(COM_AXIS_TICK_MARK_INNER.toUpperCase())) {
       String value = map.getValue(COM_AXIS_TICK_MARK_INNER);
       Boolean b = SGUtilityText.getBoolean(value);

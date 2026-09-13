@@ -60,11 +60,7 @@ public class SGInteger implements Cloneable {
     this.mText = num.mText;
   }
 
-  /**
-   * Returns the number.
-   *
-   * @return the number
-   */
+  /** Returns the number. */
   public Integer getNumber() {
     if (this.mNumber != null) {
       return this.mNumber;
@@ -82,11 +78,7 @@ public class SGInteger implements Cloneable {
     this.mNumber = num;
   }
 
-  /**
-   * Returns the alias.
-   *
-   * @return the alias
-   */
+  /** Returns the alias. */
   public String getText() {
     return this.mText;
   }

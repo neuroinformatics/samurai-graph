@@ -23,7 +23,6 @@ public interface SGINetCDFConstants {
 
   public static final String ATTRIBUTE_VALUE_TYPE = "value_type";
 
-  // for NetCDF Data Set
   public static final String ATTRIBUTE_PROPERTY = "samurai_graph_property";
 
   public static final int DIMENSION_EFFECTIVE_DIGIT = SGIConstants.AXIS_SCALE_EFFECTIVE_DIGIT;

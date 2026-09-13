@@ -57,11 +57,7 @@ public class SGMATLABFile extends SGMDArrayFile {
     this.mVariables = dsList.toArray(this.mVariables);
   }
 
-  /**
-   * Returns the reader.
-   *
-   * @return the reader
-   */
+  /** Returns the reader. */
   public MatFileReader getReader() {
     return this.mReader;
   }

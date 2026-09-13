@@ -262,38 +262,8 @@ public class SGFigurePopupMenu extends SGPopupMenu {
         axisDirList.add(SGIFigureElementAxis.AXIS_DIRECTION_NORMAL);
       }
       wnd.doFitAxisRangeToVisibleData(axisDirList, forAnimationFrames);
-      //        } else if (command.equals(MENUCMD_INSERT_NETCDF_LABEL)) {
-      //        	wnd.doInserNetCDFLabel();
-      //            wnd.notifyToRoot();
-      //        } else if (command.equals(MENUCMD_ANIMATION)) {
-      //        	for (SGFigure fig : this.mFigureList) {
-      //                fig.mMouseInExtraRegionFlag = false;
-      //                fig.clearFocusedObjects();
-      //        	}
     } else if (command.equals(MENUCMD_ALIGN_BARS)) {
       wnd.doAlignBars();
-      //        } else if (command.equals(MENUCMD_SPLIT_DATA)) {
-      //            wnd.doSplitMultipleData();
-      //        } else if (command.equals(MENUCMD_TRANSFORM_DATA)) {
-      //            wnd.doTransformData();
-      //        } else if (command.equals(MENUCMD_ANCHOR)) {
-      //            boolean isAnchored = ((JCheckBoxMenuItem)e.getSource()).isSelected();
-      //        	for (SGFigure fig : this.mFigureList) {
-      //                fig.setAnchoredToFocusedObjects(isAnchored);
-      //        	}
-      //        } else if (command.equals(SGPluginsQueryMessage.MENUCMD_OUTPUT_TO_FILE_IS_ENABLED))
-      // {
-      //            if (source instanceof SGPluginsQueryMessage) {
-      //                List<SGData> data = this.getGraphElement().getFocusedDataList();
-      //                if (data.size()!=1) {
-      //                    ((SGPluginsQueryMessage)source).set(Boolean.FALSE);
-      //                } else {
-      //                    this.mWnd.notifyToListener(MENUCMD_OUTPUT_TO_FILE, source);
-      //                }
-      //                return;
-      //            }
-      //        } else if (command.equals(MENUCMD_OUTPUT_TO_FILE)) {
-      //        	wnd.doOutputDataToFile();
     } else if (command.equals(SGIFigureElement.NOTIFY_UNKNOWN_DATA_ERROR)) {
       for (SGFigure fig : this.mFigureList) {
         fig.hideData(new int[] {((Integer) source).intValue()});

@@ -21,15 +21,11 @@ public interface SGIFigureElement
         SGIDrawingElementConstants,
         SGIFigureElementConstants {
 
-  /**
-   * @return
-   * @uml.property name="component"
-   */
+  /** */
   public JComponent getComponent();
 
   /**
    * @param com
-   * @uml.property name="component"
    */
   public void setComponent(JComponent com);
 
@@ -38,7 +34,6 @@ public interface SGIFigureElement
    *
    * @param data a data object
    * @param name name of the data object
-   * @return true if succeeded
    */
   public boolean addData(final SGData data, final String name);
 
@@ -48,7 +43,6 @@ public interface SGIFigureElement
    * @param data an array of data objects
    * @param name an array of names of data objects
    * @param infoMap information map of data objects
-   * @return true if succeeded
    */
   public boolean addData(
       final SGData[] data, final String[] name, final Map<String, Object> infoMap);
@@ -60,7 +54,6 @@ public interface SGIFigureElement
    * @param name name of the data object
    * @param id the ID of the data object
    * @param infoMap information map of data object
-   * @return true if succeeded
    */
   public boolean addData(
       final SGData data, final String name, final int id, final Map<String, Object> infoMap);
@@ -72,7 +65,6 @@ public interface SGIFigureElement
    * @param name an array of names of data objects
    * @param id the ID of data objects
    * @param infoMap information map of data objects
-   * @return true if succeeded
    */
   public boolean addData(
       final SGData[] data, final String[] name, final int[] id, final Map<String, Object> infoMap);
@@ -83,7 +75,6 @@ public interface SGIFigureElement
    * @param data data to add
    * @param name name of data
    * @param p properties to be set the data
-   * @return true if succeeded
    */
   public boolean addData(final SGData data, final String name, final SGProperties p);
 
@@ -91,22 +82,13 @@ public interface SGIFigureElement
    * Remove a data object.
    *
    * @param data data to be removed
-   * @return true if succeeded
    */
   public boolean removeData(SGData data);
 
-  /**
-   * Returns a list of useless data objects in this figure element.
-   *
-   * @return a list of useless data objects in this figure element
-   */
+  /** Returns a list of useless data objects in this figure element. */
   public List<SGData> getUselessDataList();
 
-  /**
-   * Returns a list of data.
-   *
-   * @return a list of data
-   */
+  /** Returns a list of data. */
   public List<SGData> getDataList();
 
   /** Returns properties of the given data. */
@@ -116,15 +98,10 @@ public interface SGIFigureElement
    * Sets the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(float mag);
 
-  /**
-   * Returns the magnification.
-   *
-   * @return the magnification
-   */
+  /** Returns the magnification. */
   public float getMagnification();
 
   /**
@@ -132,7 +109,6 @@ public interface SGIFigureElement
    *
    * @param element - the SGFigureElement object whose property has changed.
    * @param msg - message
-   * @return true:succeeded, false:failed
    */
   public boolean synchronize(SGIFigureElement element, String msg);
 
@@ -145,47 +121,30 @@ public interface SGIFigureElement
   /**
    * @param topAndBottom
    * @param leftAndRight
-   * @return
    */
   public boolean getMarginAroundGraphRect(
       final SGTuple2f topAndBottom, final SGTuple2f leftAndRight);
 
-  /**
-   * @return
-   */
+  /** */
   public float getGraphRectX();
 
-  /**
-   * @return
-   */
+  /** */
   public float getGraphRectY();
 
-  /**
-   * @return
-   */
+  /** */
   public float getGraphRectWidth();
 
-  /**
-   * @return
-   */
+  /** */
   public float getGraphRectHeight();
 
-  /**
-   * ]
-   *
-   * @uml.property name="graphRect"
-   */
+  /** ] */
   public Rectangle2D getGraphRect();
 
-  /**
-   * @return
-   */
+  /** */
   public boolean setGraphRect(float x, float y, float width, float height);
 
   /**
    * @param rect
-   * @return
-   * @uml.property name="graphRect"
    */
   public boolean setGraphRect(Rectangle2D rect);
 
@@ -228,12 +187,12 @@ public interface SGIFigureElement
    * Called when the mouse pointer moves.
    *
    * @param e the mouse event
-   * @return true if the mouse pointer passes over some objects
    */
   public boolean onMouseMoved(MouseEvent e);
 
   /**
-   * @param e
+   * @param x the x parameter
+   * @param y the y parameter
    */
   public boolean setMouseCursor(int x, int y);
 
@@ -246,8 +205,8 @@ public interface SGIFigureElement
   /**
    * Creates an array of Element objects.
    *
+   * @param params the params parameter
    * @param document an Document objects to append elements
-   * @return an array of Element objects
    */
   public Element[] createElement(final Document document, SGExportParameter params);
 
@@ -256,38 +215,28 @@ public interface SGIFigureElement
    *
    * @param element an Element object which has properties
    * @param versionNumber the version number of property file
-   * @return true if succeeded
    */
   public boolean readProperty(final Element element, final String versionNumber);
 
-  /**
-   * initialize compatible properties for previous property file.
-   *
-   * @return
-   */
+  /** initialize compatible properties for previous property file. */
   public boolean initCompatibleProperty();
 
   /**
    * Create objects related to the data with information given by an Element object.
    *
+   * @param readDataProperty the readDataProperty parameter
    * @param el an Element object
    * @param data a data object
-   * @return true:succeeded, false:failed
    */
   public boolean createDataObject(Element el, SGData data, final boolean readDataProperty);
 
-  /**
-   * Clear all focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Clear all focused objects. */
   public boolean clearFocusedObjects();
 
   /**
    * Clear focused objects.
    *
    * @param ori an origin of this clearance
-   * @return true if succeeded
    */
   public boolean clearFocusedObjects(SGIFigureElement ori);
 
@@ -315,59 +264,28 @@ public interface SGIFigureElement
    */
   public void translateFocusedObjects(final int dx, final int dy);
 
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean setTemporaryPropertiesOfFocusedObjects();
-
-  /**
-   * Updates changed flag of focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Updates changed flag of focused objects. */
   public boolean updateChangedFlag();
 
-  /**
-   * Returns whether any focused objects are changed.
-   *
-   * @return true if succeeded
-   */
+  /** Returns whether any focused objects are changed. */
   public boolean isFocusedObjectsChanged();
 
-  /**
-   * Returns a list of the focused objects.
-   *
-   * @return a list of the focused objects.
-   */
+  /** Returns a list of the focused objects. */
   public List<SGISelectable> getFocusedObjectsList();
 
-  /**
-   * Duplicate the focused objects.
-   *
-   * @return true:succeeded, false:failed
-   */
+  /** Duplicate the focused objects. */
   public boolean duplicateFocusedObjects();
 
-  /**
-   * Returns the list of copied objects.
-   *
-   * @return list of copied objects
-   */
+  /** Returns the list of copied objects. */
   public List<SGICopyable> getCopiedObjectsList();
 
-  /**
-   * Cut focused copyable objects.
-   *
-   * @return a list of cut objects
-   */
+  /** Cut focused copyable objects. */
   public List<SGICopyable> cutFocusedObjects();
 
   /**
    * Paste the objects.
    *
    * @param list of the objects to be pasted
-   * @return true:succeeded, false:failed
    */
   public boolean paste(List<SGICopyable> list);
 
@@ -375,7 +293,6 @@ public interface SGIFigureElement
    * Move the focused objects to the head or the tail of the list
    *
    * @param toTail flag whether to move focused objects to the tail of the list
-   * @return true if succeeded
    */
   public boolean moveFocusedObjects(final boolean toTail);
 
@@ -383,22 +300,16 @@ public interface SGIFigureElement
    * Move the focused objects to forward or backward for given steps.
    *
    * @param num the number of levels to move
-   * @return true if succeeded
    */
   public boolean moveFocusedObjects(int num);
 
-  /**
-   * Return list of the visible child objects.
-   *
-   * @return list of the visible child objects
-   */
+  /** Return list of the visible child objects. */
   public List<SGIChildObject> getVisibleChildList();
 
   /**
    * Returns the list of selected property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of selected property dialog observers
    */
   public List<SGIPropertyDialogObserver> getSelectedPropertyDialogObserverList(Class<?> cl);
 
@@ -406,7 +317,6 @@ public interface SGIFigureElement
    * Returns the list of visible property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of visible property dialog observers
    */
   public List<SGIPropertyDialogObserver> getVisiblePropertyDialogObserverList(Class<?> cl);
 
@@ -414,7 +324,6 @@ public interface SGIFigureElement
    * Returns the list of all property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of all property dialog observers
    */
   public List<SGIPropertyDialogObserver> getAllPropertyDialogObserverList(Class<?> cl);
 
@@ -424,7 +333,6 @@ public interface SGIFigureElement
    * Returns the child object of a given ID.
    *
    * @param id the ID number of the child
-   * @return the child object if it exists
    */
   public SGIChildObject getChild(final int id);
 
@@ -432,7 +340,6 @@ public interface SGIFigureElement
    * Hides the object of given ID.
    *
    * @param id the ID of an object
-   * @return true if succeeded
    */
   public boolean hideChildObject(final int id);
 
@@ -441,7 +348,6 @@ public interface SGIFigureElement
    *
    * @param id the ID of an object
    * @param toFront true to bring to front
-   * @return true if succeeded
    */
   public boolean moveChildToEnd(final int id, final boolean toFront);
 
@@ -450,7 +356,6 @@ public interface SGIFigureElement
    *
    * @param id the ID of an object
    * @param toFront true to bring forward
-   * @return true if succeeded
    */
   public boolean moveChild(final int id, final boolean toFront);
 
@@ -459,7 +364,6 @@ public interface SGIFigureElement
    *
    * @param p the properties
    * @param dp data properties
-   * @return synchronized properties
    */
   public SGProperties synchronizeDataProperties(SGProperties p, SGProperties dp);
 
@@ -470,7 +374,6 @@ public interface SGIFigureElement
    * Sets the properties.
    *
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setProperties(SGPropertyMap map);
 
@@ -479,7 +382,6 @@ public interface SGIFigureElement
    *
    * @param id the ID of child object
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setChildProperties(final int id, SGPropertyMap map);
 
@@ -489,7 +391,6 @@ public interface SGIFigureElement
    * @param id the ID of child object
    * @param subId the ID of sub child object
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setChildProperties(final int id, final int subId, SGPropertyMap map);
 
@@ -499,23 +400,17 @@ public interface SGIFigureElement
    * @param id the ID of child object
    * @param colorMapName the name of color map
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setChildColorMapProperties(
       final int id, final String colorMapName, SGPropertyMap map);
 
-  /**
-   * Closes the text field.
-   *
-   * @return true if succeed
-   */
+  /** Closes the text field. */
   public boolean closeTextField();
 
   /**
    * Hides the data objects of given IDs.
    *
    * @param dataIdArray
-   * @return
    */
   public boolean hideData(final int[] dataIdArray);
 
@@ -523,15 +418,10 @@ public interface SGIFigureElement
    * Sets the flag whether data objects in this figure are anchored
    *
    * @param b true to set data objects in this figure anchored
-   * @return true if succeeded
    */
   public boolean setDataAnchored(final boolean b);
 
-  /**
-   * Returns the class object of property dialog observer.
-   *
-   * @return the class object
-   */
+  /** Returns the class object of property dialog observer. */
   public Class<?> getPropertyDialogObserverClass();
 
   /**
@@ -548,18 +438,10 @@ public interface SGIFigureElement
    */
   public void setWindow(SGDrawingWindow wnd);
 
-  /**
-   * Returns the window.
-   *
-   * @return the window
-   */
+  /** Returns the window. */
   public SGDrawingWindow getWindow();
 
-  /**
-   * Returns a text string of the commands.
-   *
-   * @return a text string of the commands
-   */
+  /** Returns a text string of the commands. */
   public String getCommandString(SGExportParameter params);
 
   /**

@@ -213,15 +213,6 @@ public abstract class SGPropertyFileDataDialog extends SGSingleFileChooserWizard
     this.getDataSetupTableHolder().setDataType(dataType);
   }
 
-  //    /**
-  //     * Returns selected column types.
-  //     *
-  //     * @return selected column types
-  //     */
-  //    public SGDataColumnInfo[] getDataColumnTypes() {
-  //        return this.getDataSetupTableHolder().getDataColumnTypes();
-  //    }
-
   /** Overrode to enable or disable the OK button and the table instead of the Next button. */
   protected void acceptFile(final boolean b) {
 
@@ -229,24 +220,7 @@ public abstract class SGPropertyFileDataDialog extends SGSingleFileChooserWizard
     this.getOKButton().setEnabled(b);
   }
 
-  //    /**
-  //     * Returns an array of data column information.
-  //     * @return
-  //     *         an array of data column information
-  //     */
-  //    public SGDataColumnInfo[] getDataColumnInfo() {
-  //        if (this.mDataColumnInfo == null) {
-  //            return null;
-  //        } else {
-  //            return (SGDataColumnInfo[]) mDataColumnInfo.clone();
-  //        }
-  //    }
-
-  /**
-   * Returns an array of data column information.
-   *
-   * @return an array of data column information
-   */
+  /** Returns an array of data column information. */
   public SGDataColumnInfoSet getDataColumnInfoSet() {
     if (this.mDataColumnInfoSet == null) {
       return null;
@@ -301,11 +275,7 @@ public abstract class SGPropertyFileDataDialog extends SGSingleFileChooserWizard
     }
   }
 
-  /**
-   * Returns the panel to set up the data.
-   *
-   * @return the panel to set up the data
-   */
+  /** Returns the panel to set up the data. */
   protected abstract SGDataSetupPanel getDataSetupPanel();
 
   /** Called when a text string is inserted. */

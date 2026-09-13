@@ -416,6 +416,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
   /**
    * Synchronize the element given by the argument.
    *
+   * @param msg the msg parameter
    * @param element An object to be synchronized.
    */
   public boolean synchronizeArgument(final SGIFigureElement element, final String msg) {
@@ -451,7 +452,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
    *
    * @param valueArray the array of axis values
    * @param axis the axis for give values
-   * @param isXValues a flag whether the given values are for the x-axis
+   * @param isXValue a flag whether the given values are for the x-axis
    * @param pointArray the coordinates for given values
    * @return true if succeeded
    */
@@ -602,50 +603,6 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
     return true;
   }
 
-  // /**
-  // * Calculate the location of points.
-  // *
-  // * @param xValueArray
-  // * the array of x-values
-  // * @param yValueArray
-  // * the array of y-values
-  // * @param axisX
-  // * the x-axis for give values
-  // * @param axisY
-  // * the y-axis for give values
-  // * @param shiftX
-  // * shift value for x-values
-  // * @param shiftY
-  // * shift value for y-values
-  // * @param pointArray
-  // * the coordinates for given values
-  // * @return true if succeeded
-  // */
-  // protected boolean calcLocationOfPoints(final double[] xValueArray,
-  // final double[] yValueArray, final SGAxis axisX, final SGAxis axisY,
-  // final double shiftX, final double shiftY,
-  // final SGTuple2f[] pointArray) {
-  //
-  // if (xValueArray == null || yValueArray == null) {
-  // return false;
-  // }
-  //
-  // if (xValueArray.length != yValueArray.length) {
-  // throw new IllegalArgumentException(
-  // "xValueArray.length!=yValueArray.length : "
-  // + xValueArray.length + ", " + yValueArray.length);
-  // }
-  //
-  // final int num = xValueArray.length;
-  // SGTuple2d[] cArray = new SGTuple2d[num];
-  // for (int ii = 0; ii < cArray.length; ii++) {
-  // cArray[ii] = new SGTuple2d(xValueArray[ii] + shiftX,
-  // yValueArray[ii] + shiftY);
-  // }
-  //
-  // return this.calcLocationOfPoints(cArray, axisX, axisY, pointArray);
-  // }
-
   /** */
   public int getSelectedDataNumber() {
     return this.getFocusedObjectsList().size();
@@ -659,7 +616,6 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
    */
   public boolean clearFocusedObjects(SGIFigureElement ori) {
     if (ori instanceof SGIFigureElementLegend) {
-      // if data object is not selected in the legend element,
       // clear the focused objects in this graph
       SGIFigureElementLegend lElement = (SGIFigureElementLegend) ori;
       List<SGData> dList = lElement.getFocusedDataList();
@@ -713,8 +669,8 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
   }
 
   /**
+   * @param rect
    * @param g2d
-   * @param symbol
    * @return
    */
   protected boolean drawAnchorsOnRectangle(final Rectangle2D rect, final Graphics2D g2d) {
@@ -850,28 +806,13 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
   }
 
   /**
-   * @param e
+   * @param x the x parameter
+   * @param y the y parameter
    */
   public boolean setMouseCursor(final int x, final int y) {
-    /*
-     * for( int
-     * ii=this.mGroupSetList.size()-1; ii>=0; ii-- ) { final
-     * ElementGroupSetInGraph groupSet =
-     * (ElementGroupSetInGraph)mGroupSetList.get(ii); if(
-     * groupSet.onDrawingElement(x,y) ) { this.mCursor = new Cursor(
-     * Cursor.HAND_CURSOR ); return true; } }
-     */
 
     return false;
   }
-
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean setTemporaryPropertiesOfFocusedObjects() {
-  // return true;
-  // }
 
   /**
    * Updates changed flag of focused objects.
@@ -1028,14 +969,11 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
     }
 
     this.mChildList.clear();
-    // this.mDataList.clear();
     for (int ii = 0; ii < visibleList.size(); ii++) {
       this.mChildList.add(visibleList.get(ii));
-      // this.mDataList.add(visibleDataList.get(ii));
     }
     for (int ii = 0; ii < invisibleList.size(); ii++) {
       this.mChildList.add(invisibleList.get(ii));
-      // this.mDataList.add(invisibleDataList.get(ii));
     }
 
     return true;
@@ -1050,7 +988,6 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
 
     this.clearFocusedObjects();
     this.updateAllDrawingElementsLocation();
-    // updateImage();
     this.notifyChangeOnUndo();
 
     return true;
@@ -1065,7 +1002,6 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
 
     this.clearFocusedObjects();
     this.updateAllDrawingElementsLocation();
-    // updateImage();
     this.notifyChangeOnUndo();
 
     return true;
@@ -1491,7 +1427,6 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
       }
     }
     StringBuilder sb = new StringBuilder();
-    // String addValue = "";
     for (Entry<String, String> e : newMap.entrySet()) {
       String key = e.getKey();
       boolean notfound = true;
@@ -1511,19 +1446,11 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
         sb.append(key);
         sb.append("=");
         sb.append(newMap.get(key));
-        // if (addValue.equals("")) {
-        // addValue = key+"="+newMap.get(key);
-        // } else {
-        // addValue = addValue+", "+key+"="+newMap.get(key);
-        // }
       }
     }
     if (sb.length() != 0) {
       mapChanged.put("", sb.toString());
     }
-    // if (addValue.equals("")==false) {
-    // mapChanged.put("", addValue);
-    // }
 
     return mapChanged;
   }
@@ -1545,49 +1472,7 @@ public class SGFigureElementGraph extends SGFigureElementForData implements SGIF
             int id = i.intValue();
             String oldDataLabel = gs.mLabelStringList.get(i);
             String newDataLabel = dl.getText();
-            /*
-             * Map<String, String> mapChanged = compareNetCDFLabelText(oldDataLabel,
-             * newDataLabel);
-             * String current = fes.getString(id);
-             * StringBuilder sb = new StringBuilder();
-             * // String newStr = "";
-             * for (Entry<String, String> mce : mapChanged.entrySet()) {
-             * String key = mce.getKey();
-             * if (key.equals("")) {
-             * continue;
-             * }
-             * int pos = current.indexOf(key);
-             * if (pos>=0) {
-             * sb.setLength(0);
-             * sb.append(current.substring(0, pos));
-             * sb.append(mapChanged.get(key));
-             * sb.append(current.substring(pos + key.length()));
-             * current = sb.toString();
-             * // newStr = current.substring(0, pos);
-             * // newStr = newStr + mapChanged.get(key);
-             * // newStr = newStr + current.substring(pos+key.length());
-             * // current = newStr;
-             * }
-             * }
-             * String addedValue = mapChanged.get("");
-             * if (null!=addedValue && addedValue.equals("")==false) {
-             * if (sb.toString().trim().length() == 0) {
-             * sb.setLength(0);
-             * } else {
-             * sb.append(", ");
-             * }
-             * sb.append(addedValue);
-             * // if (newStr.trim().equals("")) {
-             * // newStr = addedValue;
-             * // } else {
-             * // newStr = newStr+", "+addedValue;
-             * // }
-             * }
-             * if (fes.setString(id, sb.toString())) {
-             * gs.mLabelStringList.put(i, newDataLabel);
-             * fes.setChanged(true);
-             * }
-             */
+
             if (!oldDataLabel.equals(newDataLabel)) {
               if (fes.setString(id, newDataLabel)) {
                 gs.mLabelStringList.put(i, newDataLabel);

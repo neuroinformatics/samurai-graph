@@ -110,20 +110,12 @@ class SGColorBarAxis extends SGAxisElement
     this.mColorMap = null;
   }
 
-  /**
-   * Returns the color map.
-   *
-   * @return the color map
-   */
+  /** Returns the color map. */
   public SGColorMap getColorMap() {
     return this.mColorMap;
   }
 
-  /**
-   * Returns the shift of axis line.
-   *
-   * @return the shift of axis line
-   */
+  /** Returns the shift of axis line. */
   public float getShift() {
     // always returns zero
     return 0.0f;
@@ -133,7 +125,6 @@ class SGColorBarAxis extends SGAxisElement
    * Returns the shift of axis line in a given unit.
    *
    * @param unit the unit of length
-   * @return the shift of axis line
    */
   public float getShift(String unit) {
     // always returns zero
@@ -145,18 +136,13 @@ class SGColorBarAxis extends SGAxisElement
    *
    * @param shift the shift of axis line to set
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setShift(final float shift, final String unit) {
     // do nothing
     return true;
   }
 
-  /**
-   * Returns a pop-up menu.
-   *
-   * @return a pop-up menu
-   */
+  /** Returns a pop-up menu. */
   public JPopupMenu getPopupMenu() {
     JPopupMenu p = null;
     if (this.mPopupMenu != null) {
@@ -183,11 +169,7 @@ class SGColorBarAxis extends SGAxisElement
     return p;
   }
 
-  /**
-   * Create a pop-up menu.
-   *
-   * @return a pop-up menu
-   */
+  /** Create a pop-up menu. */
   protected JPopupMenu createPopupMenu() {
     JPopupMenu p = new JPopupMenu();
 
@@ -268,11 +250,7 @@ class SGColorBarAxis extends SGAxisElement
     return SGIFigureElementAxis.AXIS_NORMAL;
   }
 
-  /**
-   * Set properties to axis lines.
-   *
-   * @return true if succeeded
-   */
+  /** Set properties to axis lines. */
   protected boolean setAxisLineProperties() {
     for (int ii = 0; ii < this.mAxisLines.length; ii++) {
       this.mAxisLines[ii].setLineWidth(this.getAxisLineWidth());
@@ -281,11 +259,7 @@ class SGColorBarAxis extends SGAxisElement
     return true;
   }
 
-  /**
-   * Creates axis lines.
-   *
-   * @return axis lines
-   */
+  /** Creates axis lines. */
   protected ElementLineAxis[] createAxisLines() {
     ElementLineAxis[] array = new ElementLineAxis[4];
     for (int ii = 0; ii < array.length; ii++) {
@@ -294,11 +268,7 @@ class SGColorBarAxis extends SGAxisElement
     return array;
   }
 
-  /**
-   * Create the scale lines.
-   *
-   * @return true if succeeded
-   */
+  /** Create the scale lines. */
   protected boolean createTickMarks() {
     // clear the list
     this.mTickMarksList.clear();
@@ -363,47 +333,27 @@ class SGColorBarAxis extends SGAxisElement
     this.mBarWidth = barWidth;
   }
 
-  /**
-   * Returns the x-coordinate of the color bar in the figure.
-   *
-   * @return the x-coordinate of the color bar in the figure
-   */
+  /** Returns the x-coordinate of the color bar in the figure. */
   public float getX() {
     return this.mAxisElement.getGraphRectX() + this.mX * this.mAxisElement.getMagnification();
   }
 
-  /**
-   * Returns the y-coordinate of the color bar in the figure.
-   *
-   * @return the y-coordinate of the color bar in the figure
-   */
+  /** Returns the y-coordinate of the color bar in the figure. */
   public float getY() {
     return this.mAxisElement.getGraphRectY() + this.mY * this.mAxisElement.getMagnification();
   }
 
-  /**
-   * Returns the length multiplied by the magnification.
-   *
-   * @return the length of the color bar multiplied by the magnification
-   */
+  /** Returns the length multiplied by the magnification. */
   public float getLength() {
     return this.mBarLength * this.mAxisElement.getMagnification();
   }
 
-  /**
-   * Returns the bar width multiplied by the magnification.
-   *
-   * @return the bar width of the color bar multiplied by the magnification
-   */
+  /** Returns the bar width multiplied by the magnification. */
   public float getBarWidth() {
     return this.mBarWidth * this.mAxisElement.getMagnification();
   }
 
-  /**
-   * Returns the bounds of color bar.
-   *
-   * @return the bounds of color bar
-   */
+  /** Returns the bounds of color bar. */
   public Rectangle2D getColorBarRectangle() {
     final double len = this.getLength();
     final double size = this.getBarWidth();
@@ -517,11 +467,7 @@ class SGColorBarAxis extends SGAxisElement
     }
   }
 
-  /**
-   * Returns a list of points to draw anchors.
-   *
-   * @return a list of points to draw anchors
-   */
+  /** Returns a list of points to draw anchors. */
   private ArrayList<Point2D> getAnchorPointList() {
     ArrayList<Point2D> list = new ArrayList<Point2D>();
     Rectangle2D rect = this.getColorBarRectangle();
@@ -603,7 +549,6 @@ class SGColorBarAxis extends SGAxisElement
    * Called when the mouse is clicked.
    *
    * @param e the mouse event
-   * @return true if some object is clicked
    */
   public boolean onMouseClicked(final MouseEvent e) {
     if (!this.mVisible) {
@@ -640,7 +585,6 @@ class SGColorBarAxis extends SGAxisElement
     }
 
     if (super.onMouseDragged(e) == false) {
-      // if mouse drag is succeeded for scale numbers or lines,
       // returns true
       return false;
     }
@@ -692,11 +636,7 @@ class SGColorBarAxis extends SGAxisElement
     return range;
   }
 
-  /**
-   * Sets the location of the axis line.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of the axis line. */
   protected boolean setLocationOfAxisLines() {
     float x1;
     float y1;
@@ -731,10 +671,10 @@ class SGColorBarAxis extends SGAxisElement
   /**
    * Creates a scale line.
    *
+   * @param width the width parameter
    * @param value axis value of the scale line
    * @param length the length of the scale line
    * @param inside true for inside direction
-   * @return an instance of the scale line
    */
   protected ElementLineTickMark createSingleTickMark(
       final double value, final float width, final float length, final boolean inside) {
@@ -826,9 +766,10 @@ class SGColorBarAxis extends SGAxisElement
   /**
    * Creates a scale line at the counter position.
    *
+   * @param width the width parameter
+   * @param inside the inside parameter
    * @param value axis value of the scale line
    * @param length the length of the scale line
-   * @return an instance of the scale line
    */
   protected ElementLineTickMark createSingleTickMarkCounter(
       final double value, final float width, final float length, final boolean inside) {
@@ -869,11 +810,7 @@ class SGColorBarAxis extends SGAxisElement
     return el;
   }
 
-  /**
-   * Sets the location of the title.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of the title. */
   protected boolean setLocationOfTitle() {
     final float mag = this.mAxisElement.getMagnification();
     final float factor = mag / SGIConstants.CM_POINT_RATIO;
@@ -917,11 +854,7 @@ class SGColorBarAxis extends SGAxisElement
     return true;
   }
 
-  /**
-   * Sets the location of scale numbers.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of scale numbers. */
   protected boolean setLocationOfScaleNumbers() {
     final boolean invCoord = this.isInvertCoordinates();
     final int scaleType = this.mAxis.getScaleType();
@@ -1031,11 +964,7 @@ class SGColorBarAxis extends SGAxisElement
     return true;
   }
 
-  /**
-   * Sets the location of exponent object.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of exponent object. */
   protected boolean setLocationOfExponentDrawingElement() {
     SGIFigureElementAxis aElement = this.mAxisElement;
     final float barLength = this.getLength();
@@ -1176,10 +1105,6 @@ class SGColorBarAxis extends SGAxisElement
     return this.mDirection;
   }
 
-  // public boolean isReversedOrder() {
-  // return this.mColorMap.isReversedOrder();
-  // }
-
   public String getColorBarStyle() {
     return this.mColorMapManager.getColorMapName(this.mColorMap);
   }
@@ -1210,7 +1135,6 @@ class SGColorBarAxis extends SGAxisElement
         this.mAxisElement.calcValue(this.mAxisElement.getComponent().getX(), axis, true);
     currentValue = SGUtilityNumber.getNumberInRangeOrder(currentValue, axis);
 
-    // if values from the dialog is different from the current values,
     // set the values from the dialog
     float x;
     if (value == currentValue) {
@@ -1232,7 +1156,6 @@ class SGColorBarAxis extends SGAxisElement
         this.mAxisElement.calcValue(this.mAxisElement.getComponent().getY(), axis, false);
     currentValue = SGUtilityNumber.getNumberInRangeOrder(currentValue, axis);
 
-    // if values from the dialog is different from the current values,
     // set the values from the dialog
     float y;
     if (value == currentValue) {
@@ -1250,7 +1173,6 @@ class SGColorBarAxis extends SGAxisElement
    * Sets the bar width.
    *
    * @param w the bar width to set
-   * @return true if succeeded
    */
   public boolean setBarWidth(final float w) {
     if (w < 0.0f) {
@@ -1265,7 +1187,6 @@ class SGColorBarAxis extends SGAxisElement
    *
    * @param w the bar width to set in a given unit
    * @param unit an unit of length
-   * @return true if succeeded
    */
   public boolean setBarWidth(final float w, String unit) {
     final Float sNew =
@@ -1286,7 +1207,6 @@ class SGColorBarAxis extends SGAxisElement
    * Sets the bar length.
    *
    * @param len the bar length to set
-   * @return true if succeeded
    */
   public boolean setBarLength(final float len) {
     if (len < 0.0f) {
@@ -1301,7 +1221,6 @@ class SGColorBarAxis extends SGAxisElement
    *
    * @param len the bar length to set in a given unit
    * @param unit an unit of length
-   * @return true if succeeded
    */
   public boolean setBarLength(final float len, final String unit) {
     final Float sNew =
@@ -1322,7 +1241,6 @@ class SGColorBarAxis extends SGAxisElement
    * Sets the bar direction.
    *
    * @param direction the direction of the color bar to set
-   * @return true if succeeded
    */
   public boolean setDirection(final String direction) {
     String dir;
@@ -1347,7 +1265,6 @@ class SGColorBarAxis extends SGAxisElement
    * Sets to be reversed.
    *
    * @param b true to be reversed
-   * @return true if succeeded
    */
   public boolean setReversedOrder(final boolean b) {
     this.mColorMapManager.setReversedOrder(b);
@@ -1363,7 +1280,6 @@ class SGColorBarAxis extends SGAxisElement
    * Sets the color bar style.
    *
    * @param style the color bar style
-   * @return true if succeeded
    */
   public boolean setColorBarStyle(final String style) {
     SGColorMap model = this.mColorMapManager.getColorMap(style);
@@ -1379,17 +1295,6 @@ class SGColorBarAxis extends SGAxisElement
     this.mColorMap = model;
     return true;
   }
-
-  // @Override
-  // public boolean setColorMap(String name, SGProperties p) {
-  // if (!this.setColorBarStyle(name)) {
-  // return false;
-  // }
-  // if (!this.mColorMap.setProperties(p)) {
-  // return false;
-  // }
-  // return true;
-  // }
 
   @Override
   public boolean setColors(String name, Color[] colors) {
@@ -1409,7 +1314,6 @@ class SGColorBarAxis extends SGAxisElement
    *
    * @param lw the frame line width to set in a given unit
    * @param unit an unit of length
-   * @return true if succeeded
    */
   public boolean setFrameLineWidth(final float lw, final String unit) {
     Float lwNew = SGUtility.getLineWidth(lw, unit);
@@ -1425,7 +1329,6 @@ class SGColorBarAxis extends SGAxisElement
    * @param minValue the minimum value
    * @param maxValue the maximum value
    * @param scaleType the scale type
-   * @return true if succeeded
    */
   public boolean setScale(
       final SGAxisValue minValue, final SGAxisValue maxValue, final Integer scaleType) {
@@ -1440,8 +1343,7 @@ class SGColorBarAxis extends SGAxisElement
   }
 
   /**
-   * @param value
-   * @return
+   * @param b
    */
   public boolean setInvertedCoordinates(final boolean b) {
     if (super.setInvertedCoordinates(b) == false) {
@@ -1456,7 +1358,6 @@ class SGColorBarAxis extends SGAxisElement
    *
    * @param config configuration of the x-axis
    * @param value axis value
-   * @return true for valid axis value
    */
   public boolean hasValidXAxisValue(final int config, final Number value) {
     final SGAxis axis = (config == -1) ? this.mXAxis : this.mAxisElement.getAxisInPlane(config);
@@ -1469,7 +1370,6 @@ class SGColorBarAxis extends SGAxisElement
    *
    * @param config configuration of the y-axis
    * @param value axis value
-   * @return true for valid axis value
    */
   public boolean hasValidYAxisValue(final int config, final Number value) {
     final SGAxis axis = (config == -1) ? this.mYAxis : this.mAxisElement.getAxisInPlane(config);
@@ -1485,7 +1385,6 @@ class SGColorBarAxis extends SGAxisElement
    * Called when the axis is clicked.
    *
    * @param e the mouse event
-   * @return true if a drawing element is clicked, and false otherwise
    */
   protected boolean clicked(final MouseEvent e) {
     final int x = e.getX();
@@ -1585,39 +1484,23 @@ class SGColorBarAxis extends SGAxisElement
     return true;
   }
 
-  /**
-   * Returns the list of child nodes.
-   *
-   * @return the list of child nodes
-   */
+  /** Returns the list of child nodes. */
   @Override
   public ArrayList<SGINode> getChildNodes() {
     return new ArrayList<>();
   }
 
-  /**
-   * Returns a text string that denotes this class.
-   *
-   * @return a text string that denotes this class
-   */
+  /** Returns a text string that denotes this class. */
   public String getClassDescription() {
     return "Color Bar";
   }
 
-  /**
-   * Returns a text string that denotes this instance.
-   *
-   * @return a text string that denotes this instance
-   */
+  /** Returns a text string that denotes this instance. */
   public String getInstanceDescription() {
     return "Color Bar";
   }
 
-  /**
-   * Returns the tag name.
-   *
-   * @return the tag name
-   */
+  /** Returns the tag name. */
   public String getTagName() {
     return SGIColorBarConstants.TAG_NAME_COLOR_BAR;
   }
@@ -1625,8 +1508,8 @@ class SGColorBarAxis extends SGAxisElement
   /**
    * Create an Element object.
    *
+   * @param params the params parameter
    * @param document a Document object to append the Element object
-   * @return an Element object
    */
   public Element createElement(final Document document, SGExportParameter params) {
     Element element = super.createElement(document, params);
@@ -1641,80 +1524,11 @@ class SGColorBarAxis extends SGAxisElement
     return element;
   }
 
-  // /**
-  // * Write the properties to an given Element object.
-  // *
-  // * @param el
-  // * an Element object
-  // * @return true if succeeded
-  // */
-  // public boolean writeProperty(final Element el, SGExportParameter params) {
-  // if (super.writeProperty(el, params) == false) {
-  // return false;
-  // }
-  //
-  // final int digitColorBarSize = COLOR_BAR_SIZE_MINIMAL_ORDER - 1;
-  //
-  // final float barWidth = (float) SGUtilityNumber.roundOffNumber(
-  // this.mBarWidth * SGIConstants.CM_POINT_RATIO,
-  // digitColorBarSize);
-  // final float barLength = (float) SGUtilityNumber.roundOffNumber(
-  // this.mBarLength * SGIConstants.CM_POINT_RATIO,
-  // digitColorBarSize);
-  //
-  // final String xAxisLocation = this.mAxisElement.getLocationName(this.mXAxis);
-  // final String yAxisLocation = this.mAxisElement.getLocationName(this.mYAxis);
-  // el.setAttribute(KEY_X_AXIS_POSITION, xAxisLocation);
-  // el.setAttribute(KEY_Y_AXIS_POSITION, yAxisLocation);
-  // el.setAttribute(KEY_VISIBLE, Boolean.toString(this.mVisible));
-  //
-  // // Style
-  // el.setAttribute(KEY_COLOR_BAR_STYLE, this.getColorBarStyle());
-  // el.setAttribute(KEY_COLOR_BAR_REVERSED_ORDER, Boolean
-  // .toString(this.mColorMapManager.isReversedOrder()));
-  //
-  // // Layout
-  // el.setAttribute(KEY_X_VALUE, Double.toString(this.getXValue()));
-  // el.setAttribute(KEY_Y_VALUE, Double.toString(this.getYValue()));
-  // el.setAttribute(KEY_COLOR_BAR_WIDTH, Float.toString(barWidth)
-  // + COLOR_BAR_SIZE_UNIT);
-  // el.setAttribute(KEY_COLOR_BAR_LENGTH, Float.toString(barLength)
-  // + COLOR_BAR_SIZE_UNIT);
-  // el.setAttribute(KEY_COLOR_BAR_DIRECTION, this.mDirection);
-  //
-  // // Frame Line
-  // el.setAttribute(KEY_FRAME_LINE_WIDTH, Float.toString(frameLineWidth)
-  // + LINE_WIDTH_UNIT);
-  //
-  // el.setAttribute(KEY_COLOR_BAR_SPACE_LINE_AND_NUMBERS,
-  // Float.toString(spaceLineAndNumbers)
-  // + SPACE_UNIT);
-  // el.setAttribute(KEY_COLOR_BAR_SPACE_TITLE_AND_NUMBERS,
-  // Float.toString(spaceTitleAndNumbers)
-  // + SPACE_UNIT);
-  // el.setAttribute(KEY_COLOR_BAR_LINE_COLOR,
-  // SGUtilityText.getColorString(this.mAxisLineColor));
-  // el.setAttribute(KEY_TICK_MARK_WIDTH, Float.toString(tickMarkWidth)
-  // + LINE_WIDTH_UNIT);
-  // el.setAttribute(KEY_TICK_MARK_LENGTH, Float.toString(tickMarkLength)
-  // + TICK_MARK_LENGTH_UNIT);
-  // el.setAttribute(KEY_FONT_NAME, this.mTitle.getFontName());
-  // el.setAttribute(KEY_FONT_SIZE, Float.toString(fontSize)
-  // + FONT_SIZE_UNIT);
-  // el.setAttribute(KEY_FONT_STYLE, SGUtilityText
-  // .getFontStyleName(this.mTitle.getFontStyle()));
-  // el.setAttribute(KEY_STRING_COLORS, SGUtilityText
-  // .getColorString(this.mTitle.getColor()));
-  //
-  // return true;
-  // }
-
   /**
    * Read properties from a given Element object.
    *
    * @param element an Element object
    * @param versionNumber version number
-   * @return true if succeeded
    */
   protected boolean readProperties(final Element element, final String versionNumber) {
 
@@ -1809,7 +1623,6 @@ class SGColorBarAxis extends SGAxisElement
     }
 
     // reversed order
-    // for backward compatibility for version <= 2.0.0
     if (SGUtility.isVersionNumberEqualOrSmallerThanPermittingEmptyString(versionNumber, "2.0.0")) {
       str = element.getAttribute(SGIColorBarConstants.KEY_COLOR_BAR_REVERSED_ORDER);
       if (str.length() != 0) {
@@ -1832,7 +1645,6 @@ class SGColorBarAxis extends SGAxisElement
     }
 
     // changes default colors
-    // for backward compatibility for version <= 2.0.0
     if (SGUtility.isVersionNumberEqualOrSmallerThanPermittingEmptyString(versionNumber, "2.0.0")) {
       String[] colorMapNames = {
         SGColorBarColorMapManager.COLOR_MAP_NAME_TWO_COLORS,
@@ -1855,7 +1667,6 @@ class SGColorBarAxis extends SGAxisElement
    *
    * @param map a map of properties
    * @param iResult the input result
-   * @return the updated result of setting properties
    */
   @Override
   protected SGPropertyResults setProperties(SGPropertyMap map, SGPropertyResults iResult) {
@@ -1976,7 +1787,6 @@ class SGColorBarAxis extends SGAxisElement
           || COM_AXIS_TICK_MARK_STEP.equalsIgnoreCase(key)) {
         this.setScaleStepValue(map, key, value, false, result);
       } else if (COM_COLOR_MAP_REVERSED_ORDER.equalsIgnoreCase(key)) {
-        // for backward compatibility
         Boolean b = SGUtilityText.getBoolean(value);
         if (b == null) {
           result.putResult(COM_COLOR_MAP_REVERSED_ORDER, SGPropertyResults.INVALID_INPUT_VALUE);
@@ -1985,7 +1795,6 @@ class SGColorBarAxis extends SGAxisElement
         this.setReversedOrder(b.booleanValue());
         result.putResult(COM_COLOR_MAP_REVERSED_ORDER, SGPropertyResults.SUCCEEDED);
       } else if (COM_COLOR_BAR_LINE_COLOR.equalsIgnoreCase(key)) {
-        // for backward compatibility
         String k = map.getOriginalKey(key);
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
@@ -2006,7 +1815,6 @@ class SGColorBarAxis extends SGAxisElement
         }
         result.putResult(k, SGPropertyResults.SUCCEEDED);
       } else if (COM_COLOR_BAR_SPACE_TO_SCALE.equalsIgnoreCase(key)) {
-        // for backward compatibility
         String k = map.getOriginalKey(key);
         StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
@@ -2030,7 +1838,6 @@ class SGColorBarAxis extends SGAxisElement
    *
    * @param colorMapName the name of color map
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setColorMapProperties(final String colorMapName, SGPropertyMap map) {
     SGColorMap colorMap = this.mColorMapManager.getColorMap(colorMapName);
@@ -2100,11 +1907,7 @@ class SGColorBarAxis extends SGAxisElement
     return this.mColorMapManager.getColorMap(name);
   }
 
-  /**
-   * Creates and returns the map of properties.
-   *
-   * @return the map of properties
-   */
+  /** Creates and returns the map of properties. */
   @Override
   public SGPropertyMap getPropertyMap() {
     SGPropertyMap map = super.getPropertyMap();
@@ -2137,11 +1940,7 @@ class SGColorBarAxis extends SGAxisElement
     return map;
   }
 
-  /**
-   * Returns a text string of the commands. Overrode to append properties for the color maps.
-   *
-   * @return a text string of the commands
-   */
+  /** Returns a text string of the commands. Overrode to append properties for the color maps. */
   public String getCommandString() {
     StringBuilder sb = new StringBuilder();
 
@@ -2149,25 +1948,6 @@ class SGColorBarAxis extends SGAxisElement
     String axisCommands =
         SGCommandUtility.createCommandString(COM_COLOR_BAR, null, this.getPropertyMap());
     sb.append(axisCommands);
-
-    /*
-     * Iterator<Entry<String, SGColorMap>> colorMapItr =
-     * this.mColorMapManager.getColorMaps().entrySet().iterator();
-     * while (colorMapItr.hasNext()) {
-     * StringBuilder sbTmp = new StringBuilder();
-     * Entry<String, SGColorMap> entry = colorMapItr.next();
-     * String colorMapName = entry.getKey();
-     * SGColorMap colorMap = entry.getValue();
-     * SGPropertyMap pMap = colorMap.getPropertyMap();
-     * sbTmp.append(COM_COLOR_BAR);
-     * sbTmp.append('(');
-     * sbTmp.append(colorMapName);
-     * sbTmp.append(", ");
-     * sbTmp.append(SGCommandUtility.createCommandString(pMap));
-     * sbTmp.append(")\n");
-     * sb.append(sbTmp.toString());
-     * }
-     */
 
     String colorMapName = this.getColorBarStyle();
     SGColorMap colorMap = this.mColorMapManager.getColorMap(colorMapName);
@@ -2182,11 +1962,7 @@ class SGColorBarAxis extends SGAxisElement
     return sb.toString();
   }
 
-  /**
-   * Creates and returns the map of properties for the property file.
-   *
-   * @return the map of properties
-   */
+  /** Creates and returns the map of properties for the property file. */
   @Override
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
     SGPropertyMap map = super.getPropertyFileMap(params);
@@ -2253,20 +2029,12 @@ class ElementLineOfColorBarScale extends ElementLineTickMark {
     super(el);
   }
 
-  /**
-   * Overrode to return the line color of the color bar.
-   *
-   * @return the line color of the color bar
-   */
+  /** Overrode to return the line color of the color bar. */
   public Color getColor() {
     return this.mAxisElement.getTickMarkColor();
   }
 
-  /**
-   * Overrode to return the stroke for the tick marks in the color bar.
-   *
-   * @return the stroke for the tick marks in the color bar
-   */
+  /** Overrode to return the stroke for the tick marks in the color bar. */
   public SGStroke getStroke() {
     return this.mAxisElement.getTickMarkStroke();
   }

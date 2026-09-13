@@ -151,11 +151,7 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     }
   }
 
-  /**
-   * Return the selected filename.
-   *
-   * @return filename
-   */
+  /** Return the selected filename. */
   protected String getFileName() {
     if (this.mTabbedPane.getSelectedComponent().equals(this.mLocalFilePanel)) {
       return this.mDataFileNameTextField.getText().trim();
@@ -179,11 +175,7 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     }
   }
 
-  /**
-   * Return whether data file is local or not.
-   *
-   * @return true if data file is local.
-   */
+  /** Return whether data file is local or not. */
   public boolean isLocalFileSelected() {
     return this.mTabbedPane.getSelectedComponent().equals(this.mLocalFilePanel);
   }
@@ -196,9 +188,7 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
     }
   }
 
-  /**
-   * @return true if netCDF URL is selected and the url is set.
-   */
+  /** */
   public boolean isNetCDFUrlAcceptable() {
     if (this.mTabbedPane.getSelectedComponent().equals(this.mNetCDFUrlPanel)) {
       if (this.mNetCDFUrlCheckValidButton.isVisible() == false) {
@@ -262,11 +252,7 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
   /** valid url location inputted */
   private String validUrlLocationInputted = "";
 
-  /**
-   * Return true if inputted url location is valid and not changed.
-   *
-   * @return true if inputted url location is valid and not changed
-   */
+  /** Return true if inputted url location is valid and not changed. */
   private boolean isValidUrlLocationNotChanged() {
     if (null == this.validUrlLocationInputted || this.validUrlLocationInputted.equals("")) {
       return false;
@@ -282,7 +268,6 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
    * Validate the url of netCDF and return true if valid or false if not valid.
    *
    * @param showDialog
-   * @return true if valid.
    */
   public boolean isValidUrlLocation(final boolean showDialog) {
     boolean valid =
@@ -304,7 +289,6 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
    * @param location
    * @param parentComponent
    * @param showDialog
-   * @return true if NetcdfFile can open the location. if false, shows error dialog.
    */
   public static boolean isValidUrlLocationOfNetCDF(
       final String location, final Component parentComponent, final boolean showDialog) {
@@ -399,7 +383,6 @@ public class SGNetCDFDataFileChooserPanel extends javax.swing.JPanel
    * Return whether specified location is a http, file, nodods or slurp url of netCDF file or not.
    *
    * @param location
-   * @return true if location is netcdf url.
    */
   public static boolean isNetcdfUrl(String location) {
     if (location.startsWith(PREFIX_HTTP_PROTOCOL)

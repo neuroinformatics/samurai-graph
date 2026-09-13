@@ -28,7 +28,6 @@ public class SGFileHandler implements SGIConstants {
     if (fList == null) {
       throw new Error();
     }
-    // for windows
     StringBuilder sb = new StringBuilder();
     sb.append(dir);
     for (int ii = 0; ii < fList.length; ii++) {
@@ -52,11 +51,7 @@ public class SGFileHandler implements SGIConstants {
     this.mCurrentFileName = SGApplicationUtility.appendExtension(defaultName, extension);
   }
 
-  /**
-   * Returns the current file.
-   *
-   * @return the current file
-   */
+  /** Returns the current file. */
   public File getCurrentFile() {
     if (this.mCurrentDirectory != null && this.mCurrentFileName != null) {
       return new File(this.mCurrentDirectory, this.mCurrentFileName);
@@ -72,7 +67,6 @@ public class SGFileHandler implements SGIConstants {
    *
    * @param dir directory name
    * @param name file name
-   * @return a File object
    */
   public File setCurrentFile(String dir, String name) {
     if (name == null) {

@@ -34,11 +34,7 @@ public class SGGradationPaintSelectionButton extends SGButton implements ChangeL
     this.mColorSelectionButtonEmphasisIcon = SGUtility.createIcon(this, "Lines.gif");
   }
 
-  /**
-   * Returns the gradation if the gradation is "set" to this button.
-   *
-   * @return Paint object.
-   */
+  /** Returns the gradation if the gradation is "set" to this button. */
   public SGGradationPaint getGradationPaint() {
     try {
       return (SGGradationPaint) this.mGradationPaint.clone();

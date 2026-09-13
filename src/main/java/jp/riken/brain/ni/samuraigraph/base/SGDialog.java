@@ -334,7 +334,6 @@ public abstract class SGDialog extends JDialog
    * as number.
    *
    * @param com - text component
-   * @return Number object if parsing succeeds, otherwise null
    */
   protected Number getNumber(final JTextComponent com) {
     if (com == null) {
@@ -345,11 +344,7 @@ public abstract class SGDialog extends JDialog
     return num;
   }
 
-  /**
-   * Returns the closed option.
-   *
-   * @return the closed option
-   */
+  /** Returns the closed option. */
   public int getCloseOption() {
     return this.mCloseOption;
   }
@@ -363,29 +358,10 @@ public abstract class SGDialog extends JDialog
     this.mCloseOption = num;
   }
 
-  //    /**
-  //     * Sets the visibility of this dialog with the parent window.
-  //     *
-  //     * @param b
-  //     *          true to set visible
-  //     * @param wnd
-  //     *           the parent window
-  //     */
-  //    public void setVisible(final boolean b, final SGDrawingWindow wnd) {
-  //    	if (b && this.isModal()) {
-  //    		wnd.setModalDialogShown(true);
-  //    	}
-  //        this.setVisible(b);
-  //    	if (b && this.isModal()) {
-  //    		wnd.setModalDialogShown(false);
-  //    	}
-  //    }
-
   /**
    * Sets the visibility of this dialog with the parent window.
    *
    * @param b true to set visible
-   * @param wnd the parent window
    */
   public void setVisible(final boolean b) {
     if (b) {
@@ -432,11 +408,7 @@ public abstract class SGDialog extends JDialog
     this.setLocation(x, y);
   }
 
-  /**
-   * Returns the owner window.
-   *
-   * @return the owner window
-   */
+  /** Returns the owner window. */
   public SGDrawingWindow getOwnerWindow() {
     SGDrawingWindow wnd = null;
     Window cur = this.getOwner();
@@ -463,20 +435,12 @@ public abstract class SGDialog extends JDialog
     virtualBounds = rect;
   }
 
-  /**
-   * Returns the virtual bounds.
-   *
-   * @return virtual bounds
-   */
+  /** Returns the virtual bounds. */
   public static Rectangle getVirtualBounds() {
     return virtualBounds;
   }
 
-  /**
-   * Returns a list of color selection buttons.
-   *
-   * @return a list of color selection buttons
-   */
+  /** Returns a list of color selection buttons. */
   public List<SGColorSelectionButton> getColorSelectionButtonsList() {
     // returns an empty list by default
     return new ArrayList<SGColorSelectionButton>();
@@ -486,7 +450,6 @@ public abstract class SGDialog extends JDialog
   public void actionPerformed(ActionEvent e) {
     Object source = e.getSource();
 
-    // if the event source is one of the color selection buttons
     if (this.getColorSelectionButtonsList().contains(source)) {
       SGColorSelectionButton btn = (SGColorSelectionButton) source;
 
@@ -515,11 +478,7 @@ public abstract class SGDialog extends JDialog
   /** A color selection button currently used. */
   protected SGColorSelectionButton mCurrentColorSetButton = null;
 
-  /**
-   * Returns the color selection dialog.
-   *
-   * @return the color selection dialog
-   */
+  /** Returns the color selection dialog. */
   public SGColorDialog getColorDialog() {
     return this.mColorDialog;
   }
@@ -587,7 +546,6 @@ public abstract class SGDialog extends JDialog
       }
       final boolean bcc = this.isColorChooserComponent(opposite);
 
-      // if the opposite component is not the part of the color chooser dialog,
       // clear the focused button
       if (!bcc) {
         // set the border

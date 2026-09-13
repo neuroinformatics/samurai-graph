@@ -84,9 +84,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
     this.mAxisElement = null;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return "Axis Break Symbols";
   }
@@ -143,6 +141,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
   /**
    * Synchronize the element given by the argument.
    *
+   * @param msg the msg parameter
    * @param element An object to be synchronized.
    */
   public boolean synchronizeArgument(final SGIFigureElement element, String msg) {
@@ -172,7 +171,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
    *
    * @param element an Element object which has properties
    * @param versionNumber the version number of property file
-   * @return true if succeeded
    */
   public boolean readProperty(final Element element, final String versionNumber) {
     NodeList nList = element.getElementsByTagName(SGIAxisBreakConstants.TAG_NAME_AXIS_BREAK_SYMBOL);
@@ -217,18 +215,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
     return true;
   }
 
-  //    public boolean zoom(final float ratio) {
-  //        super.zoom(ratio);
-  //
-  //        List list = this.mChildList;
-  //        for (int ii = 0; ii < list.size(); ii++) {
-  //            final AxisBreakSymbol el = (AxisBreakSymbol) list.get(ii);
-  //            el.zoom(ratio);
-  //        }
-  //
-  //        return true;
-  //    }
-
   /** */
   public void paintGraphics(Graphics g, boolean clip) {
 
@@ -242,10 +228,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
         continue;
       }
       el.paint(g2d);
-      // if( el.mFrameFlag )
-      // {
-      // el.drawBoundingBox(g2d);
-      // }
     }
 
     // draw symbols around all objects
@@ -286,8 +268,8 @@ public class SGFigureElementAxisBreak extends SGFigureElement
   /**
    * Creates an array of Element objects.
    *
+   * @param params the params parameter
    * @param document an Document objects to append elements
-   * @return an array of Element objects
    */
   public Element[] createElement(final Document document, SGExportParameter params) {
     // create an Element object
@@ -319,7 +301,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
    *
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addAxisBreakSymbol(final float x, final float y) {
     if (this.getGraphRect().contains(x, y) == false) {
@@ -344,7 +325,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
    * @param y the y-coordinate
    * @param xAxis the x-axis
    * @param yAxis the y-axis
-   * @return true if succeeded
    */
   private boolean addAxisBreakSymbol(
       final int id, final float x, final float y, final SGAxis xAxis, final SGAxis yAxis) {
@@ -387,7 +367,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
    * @param id the ID to set
    * @param x axis value for default x-axis
    * @param y axis value for default y-axis
-   * @return true if succeeded
    */
   public boolean addAxisBreakSymbol(final int id, final double x, final double y) {
     return this.addAxisBreakSymbol(
@@ -402,7 +381,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
    * @param y axis value for given y-axis
    * @param xAxisLocation location of the x-axis
    * @param yAxisLocation location of the y-axis
-   * @return true if succeeded
    */
   public boolean addAxisBreakSymbol(
       final int id,
@@ -475,67 +453,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
     return true;
   }
 
-  /*
-      public boolean onKeyPressed(final KeyEvent e) {
-          boolean effective = false;
-          final int keycode = e.getKeyCode();
-          final int mod = e.getModifiersEx();
-          final boolean isShiftPressed = ((mod & InputEvent.SHIFT_DOWN_MASK) != 0);
-          int dx = 0;
-          int dy = 0;
-          switch (keycode) {
-          case KeyEvent.VK_UP:
-              if (isShiftPressed) {
-                  dy = -1;
-              } else {
-                  dy = -10;
-              }
-              break;
-          case KeyEvent.VK_DOWN:
-              if (isShiftPressed) {
-                  dy = 1;
-              } else {
-                  dy = 10;
-              }
-              break;
-          case KeyEvent.VK_LEFT:
-              if (isShiftPressed) {
-                  dx = -1;
-              } else {
-                  dx = -10;
-              }
-              break;
-          case KeyEvent.VK_RIGHT:
-              if (isShiftPressed) {
-                  dx = 1;
-              } else {
-                  dx = 10;
-              }
-              break;
-          }
-          if (dx != 0 || dy != 0) {
-              final List<SGIChildObject> list = this.getVisibleChildList();
-              for (int ii = list.size() - 1; ii >= 0; ii--) {
-                  final AxisBreakSymbol el = (AxisBreakSymbol) list.get(ii);
-                  if (el.isSelected()) {
-                  	if (el.prepare() == false) {
-                  		return false;
-                  	}
-                      el.translate((float) dx, (float) dy);
-                      if (el.commit() == false) {
-                      	return false;
-                      }
-                      notifyToRoot();
-                      notifyChange();
-                      repaint();
-                      effective = true;
-                  }
-              }
-          }
-          return effective;
-      }
-  */
-
   /** */
   public boolean onMouseClicked(final MouseEvent e) {
     // Axis Break Symbols
@@ -553,24 +470,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
     return false;
   }
 
-  //    /**
-  //     *
-  //     * @return
-  //     */
-  //    public boolean setTemporaryPropertiesOfFocusedObjects() {
-  //    	List<SGISelectable> list = this.getFocusedObjectsList();
-  //        for (int ii = 0; ii < list.size(); ii++) {
-  //            AxisBreakSymbol el = (AxisBreakSymbol) list.get(ii);
-  //            el.mTemporaryProperties = el.getProperties();
-  //        }
-  //        return true;
-  //    }
-
-  /**
-   * Returns the class object of property dialog observer.
-   *
-   * @return the class object
-   */
+  /** Returns the class object of property dialog observer. */
   @Override
   public Class<?> getPropertyDialogObserverClass() {
     return AxisBreakSymbol.class;
@@ -580,7 +480,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
    * Returns the list of selected property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of selected property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getSelectedPropertyDialogObserverList(Class<?> cl) {
@@ -591,7 +490,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
    * Returns the list of visible property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of visible property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getVisiblePropertyDialogObserverList(Class<?> cl) {
@@ -602,7 +500,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
    * Returns the list of all property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of all property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getAllPropertyDialogObserverList(Class<?> cl) {
@@ -671,11 +568,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
     return true;
   }
 
-  /**
-   * Updates changed flag of focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Updates changed flag of focused objects. */
   @Override
   public boolean updateChangedFlag() {
     List<SGISelectable> list = this.getFocusedObjectsList();
@@ -727,7 +620,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
         continue;
       }
       final boolean flag = el.contains(x, y);
-      // el.mFrameFlag = flag;
       if (flag) {
         this.setMouseCursor(Cursor.HAND_CURSOR);
         return true;
@@ -845,11 +737,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
     return true;
   }
 
-  /**
-   * Create copies of the focused objects.
-   *
-   * @return
-   */
+  /** Create copies of the focused objects. */
   public boolean duplicateFocusedObjects() {
     final int ox = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_X);
     final int oy = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_Y);
@@ -883,7 +771,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
    * Paste the objects.
    *
    * @param list of the objects to be pasted
-   * @return true:succeeded, false:failed
    */
   public boolean paste(List<SGICopyable> list) {
     final float mag = this.getMagnification();
@@ -905,8 +792,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
         el.setMagnification(mag);
         el.setProperties(p);
 
-        // el.mXAxis = this.mAxisElement.getAxisInCube(abs.mTempXAxis);
-        // el.mYAxis = this.mAxisElement.getAxisInCube(abs.mTempYAxis);
         el.mXAxis = this.mAxisElement.getAxisInPlane(abs.mTempXAxis);
         el.mYAxis = this.mAxisElement.getAxisInPlane(abs.mTempYAxis);
 
@@ -1050,11 +935,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
     // The flag whether this object is already disposed of.
     private boolean mDisposed = false;
 
-    /**
-     * Returns whether this object is already disposed of.
-     *
-     * @return true if this object is already disposed of
-     */
+    /** Returns whether this object is already disposed of. */
     public boolean isDisposed() {
       return this.mDisposed;
     }
@@ -1081,7 +962,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
      * Sets the x-axis.
      *
      * @param location the axis location
-     * @return true if succeeded
      */
     public boolean setXAxisLocation(final int location) {
       if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
@@ -1100,7 +980,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
      * Sets the y-axis.
      *
      * @param location the axis location
-     * @return true if succeeded
      */
     public boolean setYAxisLocation(final int location) {
       if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
@@ -1129,7 +1008,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
      * Sets the axis value for the x-coordinate.
      *
      * @param value the value for the x-coordinate
-     * @return true if succeeded
      */
     public boolean setXValue(final double value) {
       if (this.mXAxis.isValidValue(value) == false) {
@@ -1143,7 +1021,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
      * Sets the axis value for the y-coordinate.
      *
      * @param value the value fot the y-coordinate
-     * @return true if succeeded
      */
     public boolean setYValue(final double value) {
       if (this.mYAxis.isValidValue(value) == false) {
@@ -1158,7 +1035,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
      *
      * @param location the axis location
      * @param value the x value
-     * @return true if valid
      */
     public boolean hasValidXValue(final int location, final Number value) {
       final SGAxis axis =
@@ -1174,7 +1050,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
      *
      * @param location the axis location
      * @param value the y value
-     * @return true if valid
      */
     public boolean hasValidYValue(final int location, final Number value) {
       final SGAxis axis =
@@ -1202,10 +1077,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
       el.setMagnification(this.getMagnification());
       el.setProperties(this.getProperties());
       el.setLocation(this.getX(), this.getY());
-      // el.mTempXAxis = SGFigureElementAxisBreak.this.mAxisElement
-      // .getLocationInCube(this.mXAxis);
-      // el.mTempYAxis = SGFigureElementAxisBreak.this.mAxisElement
-      // .getLocationInCube(this.mYAxis);
       el.mTempXAxis = mAxisElement.getLocationInPlane(this.mXAxis);
       el.mTempYAxis = mAxisElement.getLocationInPlane(this.mYAxis);
       el.setAnchored(this.isAnchored());
@@ -1216,11 +1087,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
 
     private int mTempYAxis = -1;
 
-    /**
-     * Returns the property dialog.
-     *
-     * @return a property dialog
-     */
+    /** Returns the property dialog. */
     public SGPropertyDialog getPropertyDialog() {
       SGPropertyDialog dg = null;
       if (mPropertyDialog != null) {
@@ -1232,11 +1099,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
       return dg;
     }
 
-    /**
-     * Returns a list of child nodes.
-     *
-     * @return a list of child nodes
-     */
+    /** Returns a list of child nodes. */
     public ArrayList<SGINode> getChildNodes() {
       return new ArrayList<SGINode>();
     }
@@ -1246,11 +1109,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
       return "";
     }
 
-    /**
-     * Returns the description of an instance.
-     *
-     * @return the description of an instance
-     */
+    /** Returns the description of an instance. */
     public String getInstanceDescription() {
       SGIFigureElementAxis aElement = SGFigureElementAxisBreak.this.mAxisElement;
       String xAxis = aElement.getLocationName(this.mXAxis);
@@ -1269,11 +1128,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
       return sb.toString();
     }
 
-    /**
-     * Returns a pop-up menu.
-     *
-     * @return a pop-up menu
-     */
+    /** Returns a pop-up menu. */
     public JPopupMenu getPopupMenu() {
       AxisBreakSymbolPopupMenu p = null;
       if (this.mPopupMenu != null) {
@@ -1295,44 +1150,21 @@ public class SGFigureElementAxisBreak extends SGFigureElement
     //        private JPopupMenu createPopupMenu() {
     //            JPopupMenu p = new JPopupMenu();
     //
-    //            p.setBounds(0, 0, 100, 100);
     //
     //            StringBuilder sb = new StringBuilder();
-    //            sb.append("  -- AxisBreak: ");
     //            sb.append(this.getID());
-    //            sb.append(" --");
     //
     //            p.add(new JLabel(sb.toString()));
-    //            p.addSeparator();
     //
-    //            SGUtility.addItem(p, this, MENUCMD_BRING_TO_FRONT);
-    //            SGUtility.addItem(p, this, MENUCMD_BRING_FORWARD);
-    //            SGUtility.addItem(p, this, MENUCMD_SEND_BACKWARD);
-    //            SGUtility.addItem(p, this, MENUCMD_SEND_TO_BACK);
     //
-    //            p.addSeparator();
     //
-    //            SGUtility.addItem(p, this, MENUCMD_CUT);
-    //            SGUtility.addItem(p, this, MENUCMD_COPY);
-    //            SGUtility.addItem(p, this, MENUCMD_PASTE);
     //
-    //            p.addSeparator();
     //
-    //            SGUtility.addItem(p, this, MENUCMD_DELETE);
-    //            SGUtility.addItem(p, this, MENUCMD_DUPLICATE);
     //
-    //            p.addSeparator();
     //
-    //            SGUtility.addItem(p, this, MENUCMD_PROPERTY);
     //
-    //            return p;
-    //        }
 
-    /**
-     * Returns the location of this symbol.
-     *
-     * @return the location of this symbol
-     */
+    /** Returns the location of this symbol. */
     public SGTuple2f getLocation() {
       final float baseX = super.getX();
       final float baseY = super.getY();
@@ -1341,20 +1173,12 @@ public class SGFigureElementAxisBreak extends SGFigureElement
       return new SGTuple2f(x, y);
     }
 
-    /**
-     * Returns the x coordinate of the location of this symbol.
-     *
-     * @return the x coordinate of the location of this symbol
-     */
+    /** Returns the x coordinate of the location of this symbol. */
     public float getX() {
       return this.getLocation().x;
     }
 
-    /**
-     * Returns the y coordinate of the location of this symbol.
-     *
-     * @return the y coordinate of the location of this symbol
-     */
+    /** Returns the y coordinate of the location of this symbol. */
     public float getY() {
       return this.getLocation().y;
     }
@@ -1364,7 +1188,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
      *
      * @param x the x coordinate to set
      * @param y the y coordinate to set
-     * @return true if succeeded
      */
     public boolean setLocation(final float x, final float y) {
       final float mag = this.getMagnification();
@@ -1386,9 +1209,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
       this.setDrawingElementsLocation();
     }
 
-    /**
-     * @return
-     */
+    /** */
     private ArrayList<Point2D> getAnchorPointList() {
       ArrayList<Point2D> list = new ArrayList<Point2D>();
 
@@ -1457,9 +1278,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
       return true;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public boolean setAxisValue() {
       final double xValue = calcValue(this.getX(), this.mXAxis, true);
       final double yValue = calcValue(this.getY(), this.mYAxis, false);
@@ -1470,16 +1289,14 @@ public class SGFigureElementAxisBreak extends SGFigureElement
       return true;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public String getTagName() {
       return TAG_NAME_AXIS_BREAK_SYMBOL;
     }
 
     /**
      * @param document
-     * @return
+     * @param params the params parameter
      */
     public Element createElement(final Document document, SGExportParameter params) {
       Element el = document.createElement(this.getTagName());
@@ -1624,31 +1441,24 @@ public class SGFigureElementAxisBreak extends SGFigureElement
 
     private SGUndoManager mUndoManager = new SGUndoManager(this);
 
-    /**
-     * @return
-     */
+    /** */
     public SGProperties getMemento() {
       return this.getProperties();
     }
 
     /**
      * @param p
-     * @return
      */
     public boolean setMemento(SGProperties p) {
       return this.setProperties(p);
     }
 
-    /**
-     * @return
-     */
+    /** */
     public boolean isUndoable() {
       return this.mUndoManager.isUndoable();
     }
 
-    /**
-     * @return
-     */
+    /** */
     public boolean isRedoable() {
       return this.mUndoManager.isRedoable();
     }
@@ -1711,11 +1521,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
       this.mUndoManager.setChanged(b);
     }
 
-    /**
-     * Delete all forward histories.
-     *
-     * @return true if succeeded
-     */
+    /** Delete all forward histories. */
     public boolean deleteForwardHistory() {
       return this.mUndoManager.deleteForwardHistory();
     }
@@ -1764,9 +1570,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
       return true;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public SGProperties getProperties() {
       final AxisBreakSymbolWithAxesProperties p = new AxisBreakSymbolWithAxesProperties();
       if (this.getProperties(p) == false) {
@@ -1777,7 +1581,6 @@ public class SGFigureElementAxisBreak extends SGFigureElement
 
     /**
      * @param p
-     * @return
      */
     public boolean getProperties(final SGProperties p) {
       if ((p instanceof AxisBreakSymbolWithAxesProperties) == false) {
@@ -1801,11 +1604,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement
     /** Flag whether this object is focused. */
     private boolean mSelectedFlag = false;
 
-    /**
-     * Returns whether this object is selected
-     *
-     * @return whether this object is selected
-     */
+    /** Returns whether this object is selected */
     @Override
     public boolean isSelected() {
       return this.mSelectedFlag;

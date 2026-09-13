@@ -52,35 +52,10 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     super();
   }
 
-  /**
-   * Creates and returns an instance of the error bar.
-   *
-   * @return an instance of the error bar
-   */
+  /** Creates and returns an instance of the error bar. */
   protected SGDrawingElement createDrawingElementInstance(final int index) {
     return new ErrorBarInGroup(this, index);
   }
-
-  // /**
-  // *
-  // * @return
-  // */
-  // protected boolean initDrawingElement(
-  // final SGTuple2f[] centerArray,
-  // final SGTuple2f[] lowerArray,
-  // final SGTuple2f[] upperArray) {
-  // final int num = centerArray.length;
-  // if (this.initDrawingElement(num) == false) {
-  // return false;
-  // }
-  //
-  // SGDrawingElement[] sArray = this.mDrawingElementArray;
-  // for (int ii = 0; ii < num; ii++) {
-  // ((SGDrawingElementErrorBar) sArray[ii]).setLocation(
-  // centerArray[ii], lowerArray[ii], upperArray[ii]);
-  // }
-  // return true;
-  // }
 
   /** Set the location of points. */
   public boolean setLocation(
@@ -96,8 +71,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
       throw new IllegalArgumentException("centerArray.length != upperArray.length");
     }
     if (centerArray.length != this.mDrawingElementArray.length) {
-      // throw new IllegalArgumentException(
-      // "centerArray.length != this.mDrawingElementArray.length");
       this.initDrawingElement(centerArray.length);
     }
 
@@ -107,14 +80,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     }
 
     for (int ii = 0; ii < array.length; ii++) {
-      // final boolean eff = !(startArray[ii].isInfinite()
-      // || startArray[ii].isNaN() || endArray[ii].isInfinite() || endArray[ii]
-      // .isNaN());
-      // array[ii].setVisible(eff);
-      // if (eff) {
-      // ((SGDrawingElementErrorBar) array[ii]).setTermPoints(
-      // startArray[ii], endArray[ii]);
-      // }
       ((SGDrawingElementErrorBar) array[ii])
           .setLocation(centerArray[ii], lowerArray[ii], upperArray[ii]);
     }
@@ -135,27 +100,18 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     return this.mStroke;
   }
 
-  /**
-   * Returns the color.
-   *
-   * @return the color
-   */
+  /** Returns the color. */
   public Color getColor() {
     return this.mColor;
   }
 
-  /**
-   * Returns the line width.
-   *
-   * @return the line width.
-   */
+  /** Returns the line width. */
   public float getLineWidth() {
     return this.mStroke.getLineWidth();
   }
 
   /**
    * @param unit
-   * @return
    */
   public float getLineWidth(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getLineWidth(), unit);
@@ -165,7 +121,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    * Sets the line width.
    *
    * @param lw line width to set
-   * @return true if succeeded
    */
   public boolean setLineWidth(final float lw) {
     if (lw < 0.0f) {
@@ -180,20 +135,15 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    *
    * @param lw the line width to set
    * @param unit the unit for given line width
-   * @return true if succeeded
    */
   public abstract boolean setLineWidth(final float lw, final String unit);
 
-  /**
-   * @return
-   */
+  /** */
   public float getHeadSize() {
     return this.mHeadSize;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getHeadSize(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getHeadSize(), unit);
   }
@@ -202,7 +152,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    * Sets the head size.
    *
    * @param size the head size to set
-   * @return true if succeeded
    */
   public boolean setHeadSize(final float size) {
     if (size < 0.0f) {
@@ -218,15 +167,10 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    *
    * @param size the head size to set
    * @param unit the unit for given head size
-   * @return true if succeeded
    */
   public abstract boolean setHeadSize(final float size, final String unit);
 
-  /**
-   * Returns the error bar style.
-   *
-   * @return the error bar style
-   */
+  /** Returns the error bar style. */
   public int getErrorBarStyle() {
     return this.mErrorBarStyle;
   }
@@ -235,7 +179,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    * Sets the error bar style
    *
    * @param style an error bar style to set
-   * @return true if succeeded
    */
   public boolean setErrorBarStyle(final int style) {
     if (SGDrawingElementErrorBar.isValidErrorBarStyle(style) == false) {
@@ -249,7 +192,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    * Sets the color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setColor(final Color color) {
     if (color == null) {
@@ -272,7 +214,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    * Returns the location of the start point at a given index.
    *
    * @param index the index
-   * @return the location of the start point at a given index
    */
   public abstract SGTuple2f getStartLocation(final int index);
 
@@ -280,7 +221,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    * Returns the location of the upper end point at a given index.
    *
    * @param index the index
-   * @return the location of the upper end point at a given index
    */
   public abstract SGTuple2f getUpperEndLocation(final int index);
 
@@ -288,13 +228,10 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    * Returns the location of the lower end point at a given index.
    *
    * @param index the index
-   * @return the location of the lower end point at a given index
    */
   public abstract SGTuple2f getLowerEndLocation(final int index);
 
-  /**
-   * @return
-   */
+  /** */
   public String getTagName() {
     return TAG_NAME_ERROR_BAR;
   }
@@ -333,7 +270,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    * Returns the name of a given error bar position.
    *
    * @param position the error bar position
-   * @return the name of a given error bar position
    */
   public static String getErrorBarPositionName(final int position) {
     String name = null;
@@ -351,12 +287,10 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
 
   /**
    * @param el
-   * @return
    */
   public boolean readProperty(final Element el) {
     String str = null;
     Number num = null;
-    // Color cl = null;
     Boolean b = null;
     List<?> list = null;
 
@@ -480,7 +414,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    * Returns whether a given error bar position is valid.
    *
    * @param position an error bar position
-   * @return true if the given error bar position is valid
    */
   public static boolean isValidErrorBarPosition(final int position) {
     final int[] array = {ERROR_BAR_ON_LINE, ERROR_BAR_ON_BAR};
@@ -496,7 +429,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    * Returns the error bar position constant from a given name.
    *
    * @param name the name of error bar position
-   * @return the error bar position constant if it exists or null otherwise
    */
   public static Integer getErrorBarPositionFromName(final String name) {
     if (name == null) {
@@ -513,11 +445,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     return Integer.valueOf(style);
   }
 
-  /**
-   * Returns the head type.
-   *
-   * @return the head type
-   */
+  /** Returns the head type. */
   public int getHeadType() {
     return this.mHeadType;
   }
@@ -526,7 +454,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
    * Sets the head type.
    *
    * @param type the head type to set
-   * @return true if succeeded
    */
   public boolean setHeadType(final int type) {
     if (SGDrawingElementErrorBar.isValidHeadType(type) == false) {
@@ -610,53 +537,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     return true;
   }
 
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean setPropertiesOfDrawingElements() {
-  //// SGDrawingElement[] array = this.mDrawingElementArray;
-  //// final float mag = this.getMagnification();
-  //// final ArrayList cList = this.getColorList();
-  //// final float lineWidth = this.getLineWidth();
-  //// final float headSize = this.getHeadSize();
-  //// final int headType = this.getHeadType();
-  //// final int style = this.getErrorBarStyle();
-  //
-  //// for (int ii = 0; ii < array.length; ii++) {
-  //// SGDrawingElementErrorBar bar = (SGDrawingElementErrorBar) array[ii];
-  ////// bar.setErrorBarStyle(style);
-  //// bar.setMagnification(mag);
-  ////// bar.setColorList(cList);
-  ////// bar.setLineWidth(lineWidth);
-  ////// bar.setHeadSize(headSize);
-  ////// bar.setHeadType(headType);
-  //// }
-  // return true;
-  // }
-
-  // /**
-  // *
-  // */
-  // public boolean setProperty(final SGDrawingElement element) {
-  // if (!(element instanceof SGDrawingElementErrorBar)) {
-  // return false;
-  // }
-  //
-  //// if (super.setProperty(element) == false) {
-  //// return false;
-  //// }
-  //
-  // SGDrawingElementErrorBar bar = (SGDrawingElementErrorBar) element;
-  // this.setLineWidth(bar.getLineWidth());
-  // this.setHeadSize(bar.getHeadSize());
-  // this.setLineWidth(bar.getLineWidth());
-  // this.setHeadType(bar.getHeadType());
-  // this.setErrorBarStyle(bar.getErrorBarStyle());
-  //
-  // return true;
-  // }
-
   public static class ErrorBarProperties extends ElementGroupProperties {
 
     private SGDrawingElementErrorBar.ErrorBarProperties mErrorBarProperties =
@@ -669,11 +549,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
       super();
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       Object obj = super.copy();
       ErrorBarProperties p = (ErrorBarProperties) obj;
@@ -759,11 +635,7 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     }
   }
 
-  /**
-   * Update the location of error bars.
-   *
-   * @return true if succeeded
-   */
+  /** Update the location of error bars. */
   public abstract boolean updateLocation();
 
   /** Error bar in a group of error bars. */
@@ -806,38 +678,22 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
       this.mGroup = null;
     }
 
-    /**
-     * Returns the line width.
-     *
-     * @return the line width
-     */
+    /** Returns the line width. */
     public float getLineWidth() {
       return this.mGroup.getLineWidth();
     }
 
-    /**
-     * Returns the head size.
-     *
-     * @return the head size
-     */
+    /** Returns the head size. */
     public float getHeadSize() {
       return this.mGroup.getHeadSize();
     }
 
-    /**
-     * Returns the head type.
-     *
-     * @return the start head type
-     */
+    /** Returns the head type. */
     public int getHeadType() {
       return this.mGroup.getHeadType();
     }
 
-    /**
-     * Returns the error bar style.
-     *
-     * @return the error bar style
-     */
+    /** Returns the error bar style. */
     public int getErrorBarStyle() {
       return this.mGroup.getErrorBarStyle();
     }
@@ -852,7 +708,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
      * Sets the head size.
      *
      * @param size the head size to set
-     * @return true if succeeded
      */
     public boolean setHeadSize(final float size) {
       // do nothing
@@ -863,7 +718,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
      * Sets the head type.
      *
      * @param type the head type to set
-     * @return true if succeeded
      */
     public boolean setHeadType(int type) {
       // do nothing
@@ -874,7 +728,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
      * Sets the style of the error bar.
      *
      * @param style the style
-     * @return true if succeeded
      */
     public boolean setErrorBarStyle(final int style) {
       // do nothing
@@ -954,7 +807,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
      *
      * @param arrow an arrow that this head belongs to
      * @param start true for the arrow head at start
-     * @return an instance of the head
      */
     protected SGDrawingElementSymbol createHeadInstance(
         SGDrawingElementArrow arrow, final boolean start) {
@@ -965,74 +817,45 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
      * Sets the head type.
      *
      * @param type the head type to set
-     * @return true if succeeded
      */
     public boolean setHeadType(int type) {
       this.setEndHeadType(type);
       return true;
     }
 
-    /**
-     * Returns the line width.
-     *
-     * @return the line width
-     */
+    /** Returns the line width. */
     public float getLineWidth() {
       return this.getErrorBarGroup().getLineWidth();
     }
 
-    /**
-     * Returns the line type.
-     *
-     * @return the line type
-     */
+    /** Returns the line type. */
     public int getLineType() {
       // returns a constant
       return SGDrawingElementLine.LINE_TYPE_SOLID;
     }
 
-    /**
-     * Returns the head size.
-     *
-     * @return the head size
-     */
+    /** Returns the head size. */
     public float getHeadSize() {
       return this.getErrorBarGroup().getHeadSize();
     }
 
-    /**
-     * Returns the start head type.
-     *
-     * @return the start head type
-     */
+    /** Returns the start head type. */
     public int getStartHeadType() {
       return SGDrawingElementErrorBar.SYMBOL_TYPE_VOID;
     }
 
-    /**
-     * Returns the end head type.
-     *
-     * @return the end head type
-     */
+    /** Returns the end head type. */
     public int getEndHeadType() {
       return this.getErrorBarGroup().getHeadType();
     }
 
-    /**
-     * Returns the close angle of the arrow head.
-     *
-     * @return the close angle of the arrow head
-     */
+    /** Returns the close angle of the arrow head. */
     public float getHeadCloseAngle() {
       // returns zero
       return 0.0f;
     }
 
-    /**
-     * Returns the open angle of the arrow head.
-     *
-     * @return the open angle of the arrow head
-     */
+    /** Returns the open angle of the arrow head. */
     public float getHeadOpenAngle() {
       // returns zero
       return 0.0f;
@@ -1076,7 +899,6 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
      *
      * @param arrow an arrow that this arrow head belongs to
      * @param start true for the start head
-     * @param group a group of error bars
      */
     public ErrorBarHeadInGroup(final SGDrawingElementArrow arrow, final boolean start) {
       super(arrow, start);
@@ -1092,21 +914,13 @@ public abstract class SGElementGroupErrorBar extends SGElementGroup
     }
   }
 
-  /**
-   * Returns the shape of the start head.
-   *
-   * @return a shape object
-   */
+  /** Returns the shape of the start head. */
   public Shape getStartHeadShape() {
     // always returns null
     return null;
   }
 
-  /**
-   * Returns the shape of the end head.
-   *
-   * @return a shape object
-   */
+  /** Returns the shape of the end head. */
   public Shape getEndHeadShape() {
     return this.mHeadShape;
   }

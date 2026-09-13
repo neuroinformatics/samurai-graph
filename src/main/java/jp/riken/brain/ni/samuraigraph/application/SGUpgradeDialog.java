@@ -155,9 +155,7 @@ public class SGUpgradeDialog extends SGDialog {
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getUpgradeCycle() {
     return this.mUpgrade;
   }

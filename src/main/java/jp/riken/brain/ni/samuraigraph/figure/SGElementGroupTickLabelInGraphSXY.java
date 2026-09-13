@@ -89,7 +89,10 @@ public class SGElementGroupTickLabelInGraphSXY extends SGElementGroupTickLabelIn
   /**
    * Calculates and updates the location.
    *
-   * @param true if succeeded
+   * @param dataSXY the dataSXY parameter
+   * @param axisX the axisX parameter
+   * @param axisY the axisY parameter
+   * @param valueArray the valueArray parameter
    */
   protected boolean calcLocation(
       final SGISXYTypeSingleData dataSXY,
@@ -285,7 +288,6 @@ public class SGElementGroupTickLabelInGraphSXY extends SGElementGroupTickLabelIn
    * @return true if this element group contains the given point
    */
   public boolean contains(final int x, final int y) {
-    // if the data object do not have error bars, return false
     SGISXYTypeSingleData dataSXY = (SGISXYTypeSingleData) this.mGraph.getData(this.mGroupSet);
     if (dataSXY == null) {
       return false;

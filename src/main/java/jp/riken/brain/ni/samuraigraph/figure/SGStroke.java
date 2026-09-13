@@ -72,65 +72,37 @@ public class SGStroke implements Cloneable, SGILineConstants {
     }
   }
 
-  /**
-   * Returns the magnification.
-   *
-   * @return the magnification.
-   */
+  /** Returns the magnification. */
   public float getMagnification() {
     return this.mMagnification;
   }
 
-  /**
-   * Returns the line width.
-   *
-   * @return the line width.
-   */
+  /** Returns the line width. */
   public float getLineWidth() {
     return mLineWidth;
   }
 
-  /**
-   * Returns the line type;
-   *
-   * @return the line type.
-   */
+  /** Returns the line type; */
   public int getLineType() {
     return this.mLineType;
   }
 
-  /**
-   * Returns the current dash phase.
-   *
-   * @return the dash phase.
-   */
+  /** Returns the current dash phase. */
   public float getDashPhase() {
     return mDashPhase;
   }
 
-  /**
-   * Returns the end cap style.
-   *
-   * @return the end cap style.
-   */
+  /** Returns the end cap style. */
   public int getEndCap() {
     return mCap;
   }
 
-  /**
-   * Returns the line join style.
-   *
-   * @return the line join style.
-   */
+  /** Returns the line join style. */
   public int getLineJoin() {
     return mJoin;
   }
 
-  /**
-   * Returns the limit of miter joins.
-   *
-   * @return the limit of miter joins.
-   */
+  /** Returns the limit of miter joins. */
   public float getMiterLimit() {
     return mMiterLimit;
   }
@@ -144,7 +116,6 @@ public class SGStroke implements Cloneable, SGILineConstants {
    * Returns the stroke dash object.
    *
    * @param lineType the type of line.
-   * @return the stroke dash object.
    */
   public SGStrokeDash getStrokeDash(final int lineType) {
     SGStrokeDash sd = (SGStrokeDash) this.mStrokeDashMap.get(Integer.valueOf(lineType));
@@ -239,11 +210,7 @@ public class SGStroke implements Cloneable, SGILineConstants {
     mMiterLimit = miterLimit;
   }
 
-  /**
-   * Returns the BasicStroke object.
-   *
-   * @return the BasicStroke object.
-   */
+  /** Returns the BasicStroke object. */
   public BasicStroke getBasicStroke() {
     return this.mBasicStroke;
   }
@@ -254,7 +221,6 @@ public class SGStroke implements Cloneable, SGILineConstants {
     // line width
     final float lw = this.mLineWidth * this.mMagnification;
 
-    // for the solid line
     if (this.mLineType == SGILineConstants.LINE_TYPE_SOLID) {
       this.mBasicStroke = new BasicStroke(lw, this.mCap, this.mJoin);
       return;

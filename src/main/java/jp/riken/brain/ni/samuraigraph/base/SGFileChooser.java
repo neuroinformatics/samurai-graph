@@ -27,12 +27,6 @@ public class SGFileChooser extends JFileChooser {
   }
 
   /** Overridden to avoid slow instantiation in XP if directory contains large zip files. */
-  /*
-   * // Removed this overridden function because the file chooser doesn't work
-   * normally. // We cannot move to other directories. public void updateUI() {
-   * putClientProperty("FileChooser.useShellFolder", Boolean.FALSE);
-   * super.updateUI(); }
-   */
 
   /**
    * @param currentDirectory
@@ -65,7 +59,6 @@ public class SGFileChooser extends JFileChooser {
 
         String path = file.getAbsolutePath(); // path set to the file
         // chooser
-        // if file does not have extension in lists
         // then append selected extension
         final String path_l = path.toLowerCase();
         boolean ext_found = false;
@@ -83,7 +76,6 @@ public class SGFileChooser extends JFileChooser {
         this.setSelectedFile(file);
       }
 
-      // if selected file already exists
       if (this.getSelectedFile().exists() && this.getDialogType() == JFileChooser.SAVE_DIALOG) {
         // beep
         Toolkit.getDefaultToolkit().beep();

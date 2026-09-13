@@ -40,7 +40,6 @@ public class SGPropertyResults implements Cloneable {
    *
    * @param key the property key
    * @param status the status of setting a property
-   * @return true if succeeded
    */
   public boolean putResult(final String key, final int status) {
     String uKey = key.toUpperCase();
@@ -57,7 +56,6 @@ public class SGPropertyResults implements Cloneable {
    * Removes a result for a given key.
    *
    * @param key the key
-   * @return removed result if it exists, otherwise null
    */
   public Integer removeResult(final String key) {
     String uKey = key.toUpperCase();
@@ -70,7 +68,6 @@ public class SGPropertyResults implements Cloneable {
    * Returns the result of the given key.
    *
    * @param key the property key
-   * @return the result
    */
   public Integer getResult(final String key) {
     String uKey = key.toUpperCase();
@@ -81,7 +78,6 @@ public class SGPropertyResults implements Cloneable {
    * Returns the original key of given key.
    *
    * @param key the key
-   * @return the original key
    */
   public String getOriginalKey(final String key) {
     return this.mOriginalKeyMap.get(key.toUpperCase());

@@ -55,10 +55,8 @@ public class SGDate implements Comparable<SGDate> {
   // list of date format with hyphen separators
   private static final List<DateFormat> HYPHEN_DATE_FORMAT_LIST = new ArrayList<DateFormat>();
 
-  // Pattern to detect time zone offset in ISO 8601 strings (e.g., "+09:00", "-05:00")
   private static final Pattern ISO_TIME_ZONE_PATTERN;
 
-  // static initializer
   static {
     final Calendar cal = SGDateUtility.getUTCCalendarInstance();
     for (String f : DEFAULT_DATE_FORMAT_ARRAY) {
@@ -242,7 +240,6 @@ public class SGDate implements Comparable<SGDate> {
     private DateFormat mFormat;
     private ZoneId mZoneId;
 
-    // for java.time library
     private ZonedDateTime mDateTime;
 
     public DateParseResult(Date date, DateFormat format) {
@@ -378,7 +375,6 @@ public class SGDate implements Comparable<SGDate> {
           DateTimeFormatter dtf = DateTimeFormatter.ISO_ZONED_DATE_TIME.withZone(ZoneId.of("UTC"));
           dateTime = ZonedDateTime.parse(str, dtf);
 
-          // if a given text string for date does not have
           // the time zone, sets the UTC time zone
           Matcher m = ISO_TIME_ZONE_PATTERN.matcher(str);
           if (!m.find()) {

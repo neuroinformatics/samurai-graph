@@ -85,13 +85,12 @@ public class SGDataCreator
   /**
    * Creates a data object.
    *
-   * @param path the path name of the file
+   * @param dataSource the dataSource parameter
    * @param colInfoSet a set of column information
    * @param infoMap information of data
    * @param progress the progress monitor
    * @param versionNumber the versionNumber of the property file if a property file is used
    * @param mode the mode of loading properties
-   * @return a set of created data. null if failed.
    */
   public CreatedDataSet create(
       final SGMainFunctions.DataSourceInfo dataSource,
@@ -191,11 +190,7 @@ public class SGDataCreator
     }
   }
 
-  /**
-   * Creates an array of SXY Data objects.
-   *
-   * @return an array of created data objects
-   */
+  /** Creates an array of SXY Data objects. */
   private CreatedDataSet createSingleSXYSDArrayData(
       final SGIDataSource dataSource,
       final SGIProgressControl progress,
@@ -376,11 +371,7 @@ public class SGDataCreator
     return cdSet;
   }
 
-  /**
-   * Creates a SXY Multiple data.
-   *
-   * @return created data object
-   */
+  /** Creates a SXY Multiple data. */
   private CreatedDataSet createMultipleSXYSDArrayData(
       final SGIDataSource dataSource,
       final SGIProgressControl progress,
@@ -540,11 +531,7 @@ public class SGDataCreator
     return cdSet;
   }
 
-  /**
-   * Creates a VXY data.
-   *
-   * @return created data object
-   */
+  /** Creates a VXY data. */
   private CreatedDataSet createVXYSDArrayData(
       final SGIDataSource dataSource,
       final SGIProgressControl progress,
@@ -613,11 +600,7 @@ public class SGDataCreator
     return cdSet;
   }
 
-  /**
-   * Creates a SXYZ data.
-   *
-   * @return created data object
-   */
+  /** Creates a SXYZ data. */
   private CreatedDataSet createSXYZSDArrayData(
       final SGIDataSource dataSource,
       final SGIProgressControl progress,
@@ -667,7 +650,6 @@ public class SGDataCreator
    *
    * @param path the path of file
    * @param cList the list of candidates of data types
-   * @return true if succeeded
    */
   public boolean getDataTypeCandidateList(final String path, final List<String> cList)
       throws FileNotFoundException {
@@ -676,87 +658,8 @@ public class SGDataCreator
       return false;
     }
 
-    /*
-    try {
-        if (NetcdfFiles.canOpen(path)) {
-        	if (this.getNetCDFDataTypeCandidateList(path, cList) == false) {
-        		return false;
-        	}
-
-        } else {
-        	if (this.getTextDataTypeCandidateList(path, cList) == false) {
-        		return false;
-        	}
-        }
-
-    } catch (IOException e) {
-    	return false;
-    }
-    */
-
     return true;
   }
-
-  /*
-      private boolean getNetCDFDataTypeCandidateList(final String path,
-              final List<String> cList) throws FileNotFoundException {
-
-      	// open the netCDF file
-          NetcdfFile ncFile = null;
-      	try {
-  			ncFile = NetcdfFiles.open(path);
-  		} catch (IOException e) {
-  			return false;
-          } finally {
-              if (ncFile != null) {
-                  try {
-                      ncFile.close();
-                  } catch (IOException e) {
-                      logger.debug("Failed to close NetCDF file", e);
-                  }
-              }
-          }
-
-      	SGNetCDFFile nc = new SGNetCDFFile(ncFile);
-
-          // create column info map
-          Map<String, Object> infoMap = new HashMap<String, Object>();
-          infoMap.put(KEY_DATA_SOURCE, nc);
-          infoMap.put(KEY_MULTIPLE, Boolean.FALSE);
-          infoMap.put(KEY_MULTIPLE_VARIABLE, Boolean.TRUE);
-          infoMap.put(KEY_POLAR_SELECTED, Boolean.TRUE);
-
-          // create column list
-          List<SGVariable> varList = nc.getVariables();
-          final int size = varList.size();
-          SGNetCDFDataColumnInfo[] cols = new SGNetCDFDataColumnInfo[size];
-          int cnt = 0;
-          for (SGVariable var : varList) {
-              String name = var.getNameInPriorityOrder();
-              cols[cnt] = new SGNetCDFDataColumnInfo(var, name, var.getValueType());
-              cnt++;
-          }
-          List<SGDataColumnInfo> columnInfoList = new ArrayList<SGDataColumnInfo>(
-          		Arrays.asList(cols));
-
-          // get available data types
-          String[] dataTypes = new String[] {
-          		SGDataTypeConstants.SXY_NETCDF_DATA,
-  //        		SGDataTypeConstants.SXY_MULTIPLE_NETCDF_DATA,
-          		SGDataTypeConstants.VXY_NETCDF_DATA,
-          		SGDataTypeConstants.SXYZ_NETCDF_DATA
-          };
-          for (int ii = 0; ii < dataTypes.length; ii++) {
-              SGDefaultColumnTypeUtility.DefaultColumnTypeResult result = SGDefaultColumnTypeUtility.getDefaultColumnTypes(dataTypes[ii],
-  							columnInfoList, infoMap);
-              if (result.isSucceeded()) {
-              	cList.add(dataTypes[ii]);
-              }
-          }
-
-          return true;
-      }
-      */
 
   private boolean getTextDataTypeCandidateList(final String path, final List<String> cList)
       throws FileNotFoundException {
@@ -873,7 +776,6 @@ public class SGDataCreator
    * @param dataType the type of data
    * @param isPropertyFileData set true if data is for the property file
    * @param versionNumber the version number of the property file
-   * @return result of parse
    * @throws FileNotFoundException
    */
   public SDArrayFileParseResult parseFileColumnType(
@@ -1026,7 +928,6 @@ public class SGDataCreator
       // measures for version older than 2.0.0
       if (isPropertyFileData) {
         if (versionNumber != null) {
-          // if version of the property file is older than 2.0.0
           if ("".equals(versionNumber)) {
             // data with tick labels
             if (SGDataDataTypeUtility.hasTickLabels(dataType)) {
@@ -1054,11 +955,7 @@ public class SGDataCreator
     return result;
   }
 
-  /**
-   * Creates an array of SXY NetCDF Data.
-   *
-   * @return created data
-   */
+  /** Creates an array of SXY NetCDF Data. */
   private CreatedDataSet createSingleVariableSXYNetCDFData(
       final SGIDataSource dataSource,
       final SGIProgressControl progress,
@@ -1305,11 +1202,7 @@ public class SGDataCreator
     return cdSet;
   }
 
-  /**
-   * Creates SXY NetCDF Data with multiple variables.
-   *
-   * @return created data
-   */
+  /** Creates SXY NetCDF Data with multiple variables. */
   private CreatedDataSet createMultipleVariableSXYNetCDFData(
       final SGIDataSource dataSource,
       final SGIProgressControl progress,
@@ -1780,7 +1673,6 @@ public class SGDataCreator
    * @param index
    * @param dimName
    * @param dimIndex
-   * @return the suffix for the data name
    */
   private String getDimensionDataName(
       final SGSXYNetCDFMultipleData data,
@@ -1800,11 +1692,7 @@ public class SGDataCreator
     }
   }
 
-  /**
-   * Creates VXY NetCDF Data.
-   *
-   * @return a data object
-   */
+  /** Creates VXY NetCDF Data. */
   private CreatedDataSet createVXYNetCDFData(
       final SGIDataSource dataSource,
       final SGIProgressControl progress,
@@ -1902,11 +1790,7 @@ public class SGDataCreator
     return cdSet;
   }
 
-  /**
-   * Creates SXYZ NetCDF Data.
-   *
-   * @return a data object
-   */
+  /** Creates SXYZ NetCDF Data. */
   private CreatedDataSet createSXYZNetCDFData(
       final SGIDataSource dataSource,
       final SGIProgressControl progress,
@@ -2012,14 +1896,12 @@ public class SGDataCreator
    * @param colInfoSet a set of column information
    * @param infoMap information of data
    * @param progress the progress monitor
-   * @return a set of created data
    */
   public CreatedDataSet create(
       SGIDataSource dataSource,
       final SGDataColumnInfoSet colInfoSet,
       final Map<String, Object> infoMap,
       final SGIProgressControl progress) {
-    //        progress.setIndeterminateProgress(true);
     return this.createData(dataSource, colInfoSet, infoMap, progress);
   }
 
@@ -2165,7 +2047,6 @@ public class SGDataCreator
    * @param colInfoSet a set of column information
    * @param infoMap information of data
    * @param progress the progress monitor
-   * @return a set of created data
    */
   CreatedDataSet createForNetCDFDataSet(
       final SGIDataSource dataSource,
@@ -2236,11 +2117,7 @@ public class SGDataCreator
     return cdSet;
   }
 
-  /**
-   * Returns data source observer.
-   *
-   * @return data source observer
-   */
+  /** Returns data source observer. */
   public SGDataSourceObserver getDataSourceObserver() {
     return this.mDataSourceObserver;
   }

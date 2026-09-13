@@ -34,9 +34,7 @@ public abstract class SGElementGroupTickLabel extends SGElementGroupString
   public boolean readProperty(final Element el) {
     String str = null;
     Number num = null;
-    // Color cl = null;
     Boolean b = null;
-    // ArrayList list = null;
 
     if (super.readProperty(el) == false) {
       return false;

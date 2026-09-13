@@ -63,29 +63,17 @@ public class SGTextDataColumn extends SGDataColumn {
     this.mModifier = mod;
   }
 
-  /**
-   * Returns the modifier.
-   *
-   * @return the modifier
-   */
+  /** Returns the modifier. */
   public SGIStringModifier getModifier() {
     return this.mModifier;
   }
 
-  /**
-   * Returns the length of data column.
-   *
-   * @return the length of data column
-   */
+  /** Returns the length of data column. */
   public int getLength() {
     return this.mArray.length;
   }
 
-  /**
-   * Returns the value type of this column.
-   *
-   * @return the value type of this column
-   */
+  /** Returns the value type of this column. */
   public String getValueType() {
     return SGIDataColumnTypeConstants.VALUE_TYPE_TEXT;
   }

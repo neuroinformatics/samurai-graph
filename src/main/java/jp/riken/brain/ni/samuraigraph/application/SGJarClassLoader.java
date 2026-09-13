@@ -85,7 +85,6 @@ public class SGJarClassLoader extends ClassLoader {
    *
    * @param zip
    * @param className
-   * @return
    * @throws ClassNotFoundException
    * @throws IOException
    */
@@ -146,7 +145,6 @@ public class SGJarClassLoader extends ClassLoader {
   /**
    * Classloader that loads this classloader loads given class.
    *
-   * @param className
    * @return
    * @throws ClassNotFoundException
    */

@@ -38,30 +38,18 @@ public class SGUndoManager implements SGIDisposable {
     this.mUndoable = obj;
   }
 
-  /**
-   * Initialize the history of the undoable object.
-   *
-   * @return true if succeeded
-   */
+  /** Initialize the history of the undoable object. */
   public boolean initPropertiesHistory() {
     return this.addMemento(this.mUndoable.getMemento());
   }
 
-  /**
-   * Go backward the memento list and set the memento to the undoable object.
-   *
-   * @return true if succeeded
-   */
+  /** Go backward the memento list and set the memento to the undoable object. */
   public boolean setMementoBackward() {
     this.mMementoCounter--;
     return this.setCurrentMemento();
   }
 
-  /**
-   * Go forward the memento list and set the memento to the undoable object.
-   *
-   * @return true if succeeded
-   */
+  /** Go forward the memento list and set the memento to the undoable object. */
   public boolean setMementoForward() {
     this.mMementoCounter++;
     return this.setCurrentMemento();
@@ -73,11 +61,7 @@ public class SGUndoManager implements SGIDisposable {
     return this.mUndoable.setMemento(p);
   }
 
-  /**
-   * Undo the operation.
-   *
-   * @return true if succeeded
-   */
+  /** Undo the operation. */
   public boolean undo() {
     if (this.isUndoable() == false) {
       return false;
@@ -103,11 +87,7 @@ public class SGUndoManager implements SGIDisposable {
     return true;
   }
 
-  /**
-   * Redo the operation.
-   *
-   * @return true if succeeded
-   */
+  /** Redo the operation. */
   public boolean redo() {
     if (this.isRedoable() == false) {
       return false;
@@ -145,11 +125,7 @@ public class SGUndoManager implements SGIDisposable {
     return true;
   }
 
-  /**
-   * Update the histories of the undoable object.
-   *
-   * @return true if succeeded
-   */
+  /** Update the histories of the undoable object. */
   public boolean updateHistory() {
     if (this.mUndoable.isChanged()) {
       // update the memento list of mUndoable
@@ -172,7 +148,6 @@ public class SGUndoManager implements SGIDisposable {
    * Update the histories of the undoable object together with given undoable objects.
    *
    * @param objList a list of undoable objects
-   * @return true if succeeded
    */
   public boolean updateHistory(final List<? extends SGIUndoable> objList) {
     List<SGIUndoable> changedObjList = new ArrayList<>();
@@ -226,56 +201,32 @@ public class SGUndoManager implements SGIDisposable {
     return true;
   }
 
-  /**
-   * Return whether this object can undo.
-   *
-   * @return true if it is possible to undo
-   */
+  /** Return whether this object can undo. */
   public boolean isUndoable() {
     return (this.mChangedObjectListCounter != 0);
   }
 
-  /**
-   * Return whether this object can redo.
-   *
-   * @return true if it is possible to redo
-   */
+  /** Return whether this object can redo. */
   public boolean isRedoable() {
     return (this.mChangedObjectListCounter != this.mChangedObjectListList.size());
   }
 
-  /**
-   * Returns a list of all memento objects.
-   *
-   * @return a list of all memento objects
-   */
+  /** Returns a list of all memento objects. */
   public List<SGProperties> getMementoList() {
     return new ArrayList<>(this.mMementoList);
   }
 
-  /**
-   * Returns lists of all changed objects.
-   *
-   * @return lists of all changed objects
-   */
+  /** Returns lists of all changed objects. */
   public List<List<SGIUndoable>> getChangedObjectListList() {
     return new ArrayList<>(this.mChangedObjectListList);
   }
 
-  /**
-   * Returns the present index in the series of changed objects lists.
-   *
-   * @return the present index in the series of changed objects lists
-   */
+  /** Returns the present index in the series of changed objects lists. */
   public int getChangedObjectListIndex() {
     return this.mChangedObjectListCounter;
   }
 
-  /**
-   * Returns the present index in the memento series of the undoable object.
-   *
-   * @return the present index in the memento series of the undoable object
-   */
+  /** Returns the present index in the memento series of the undoable object. */
   public int getMementoIndex() {
     return this.mMementoCounter;
   }
@@ -291,11 +242,7 @@ public class SGUndoManager implements SGIDisposable {
   // The flag whether this object is already disposed of.
   private boolean mDisposed = false;
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }

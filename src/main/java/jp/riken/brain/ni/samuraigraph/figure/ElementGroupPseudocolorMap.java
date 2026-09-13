@@ -83,9 +83,6 @@ class ElementGroupPseudocolorMap extends SGElementGroupPseudocolorMapForData
 
   /** Paint a color bar. */
   public boolean paintElement(final Graphics2D g2d, final Rectangle2D clipRect) {
-    // if (super.paintElement(g2d, clipRect) == false) {
-    // return false;
-    // }
     PseudocolorMapRectangle rect = (PseudocolorMapRectangle) this.mDrawingElementArray[0];
     Rectangle bounds = rect.getElementBounds().getBounds();
 
@@ -140,7 +137,6 @@ class ElementGroupPseudocolorMap extends SGElementGroupPseudocolorMapForData
     }
 
     if (pointArray.length != this.mDrawingElementArray.length) {
-      // throw new IllegalArgumentException();
       this.initDrawingElement(pointArray);
     }
 

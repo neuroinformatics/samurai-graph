@@ -123,7 +123,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    *
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addSignificantDifferenceSymbol(final float x, final float y) {
     if (this.getGraphRect().contains(x, y) == false) {
@@ -142,7 +141,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    * @param y axis value for given y-axis
    * @param xAxis the x-axis
    * @param yAxis the y-axis
-   * @return true if succeeded
    */
   private boolean addSignificantDifferenceSymbol(
       final int id, final float x, final float y, final SGAxis xAxis, final SGAxis yAxis) {
@@ -189,7 +187,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    * @param id the ID to set
    * @param x axis value for default x-axis
    * @param y axis value for default y-axis
-   * @return true if succeeded
    */
   public boolean addSignificantDifferenceSymbol(final int id, final double x, final double y) {
     return this.addSignificantDifferenceSymbol(
@@ -204,7 +201,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    * @param y axis value for given y-axis
    * @param xAxisLocation location of the x-axis
    * @param yAxisLocation location of the y-axis
-   * @return true if succeeded
    */
   public boolean addSignificantDifferenceSymbol(
       final int id,
@@ -246,7 +242,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    * @param rightX axis value of the right end for default x-axis
    * @param rightY axis value of the right end for default y-axis
    * @param horizontalY axis value of the horizontal bar for default y-axis
-   * @return true if succeeded
    */
   public boolean addSignificantDifferenceSymbol(
       final int id,
@@ -269,13 +264,14 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
   /**
    * Inserts a significant difference symbol with given axis values for default axes.
    *
+   * @param xAxisLocation the xAxisLocation parameter
+   * @param yAxisLocation the yAxisLocation parameter
    * @param id the ID to set
    * @param leftX axis value of the left end for default x-axis
    * @param leftY axis value of the left end for default y-axis
    * @param rightX axis value of the right end for default x-axis
    * @param rightY axis value of the right end for default y-axis
    * @param horizontalY axis value of the horizontal bar for default y-axis
-   * @return true if succeeded
    */
   private boolean addSignificantDifferenceSymbol(
       final int id,
@@ -412,6 +408,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
   /**
    * Synchronize the element given by the argument.
    *
+   * @param msg the msg parameter
    * @param element An object to be synchronized.
    */
   public boolean synchronizeArgument(final SGIFigureElement element, final String msg) {
@@ -443,7 +440,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    *
    * @param element an Element object which has properties
    * @param versionNumber the version number of property file
-   * @return true if succeeded
    */
   public boolean readProperty(final Element element, final String versionNumber) {
     NodeList nList =
@@ -590,7 +586,8 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
   }
 
   /**
-   * @param e
+   * @param x the x parameter
+   * @param y the y parameter
    */
   public boolean setMouseCursor(final int x, final int y) {
 
@@ -614,67 +611,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
 
     return false;
   }
-
-  /*
-   * public boolean onKeyPressed(final KeyEvent e) {
-   * boolean effective = false;
-   * final int keycode = e.getKeyCode();
-   * final int mod = e.getModifiersEx();
-   * final boolean isShiftPressed = ((mod & InputEvent.SHIFT_DOWN_MASK) != 0);
-   * int dx = 0;
-   * int dy = 0;
-   * switch (keycode) {
-   * case KeyEvent.VK_UP:
-   * if (isShiftPressed) {
-   * dy = -1;
-   * } else {
-   * dy = -10;
-   * }
-   * break;
-   * case KeyEvent.VK_DOWN:
-   * if (isShiftPressed) {
-   * dy = 1;
-   * } else {
-   * dy = 10;
-   * }
-   * break;
-   * case KeyEvent.VK_LEFT:
-   * if (isShiftPressed) {
-   * dx = -1;
-   * } else {
-   * dx = -10;
-   * }
-   * break;
-   * case KeyEvent.VK_RIGHT:
-   * if (isShiftPressed) {
-   * dx = 1;
-   * } else {
-   * dx = 10;
-   * }
-   * break;
-   * }
-   * if (dx != 0 || dy != 0) {
-   * final List<SGIChildObject> list = this.getVisibleChildList();
-   * for (int ii = list.size() - 1; ii >= 0; ii--) {
-   * final SigDiffSymbol el = (SigDiffSymbol) list.get(ii);
-   * if (el.isSelected()) {
-   * if (el.prepare() == false) {
-   * return false;
-   * }
-   * el.translate((float) dx, (float) dy);
-   * if (el.commit() == false) {
-   * return false;
-   * }
-   * this.notifyChange();
-   * this.notifyToRoot();
-   * this.repaint();
-   * effective = true;
-   * }
-   * }
-   * }
-   * return effective;
-   * }
-   */
 
   /** */
   public boolean onMouseClicked(final MouseEvent e) {
@@ -829,7 +765,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    * Returns the list of selected property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of selected property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getSelectedPropertyDialogObserverList(Class<?> cl) {
@@ -840,7 +775,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    * Returns the list of visible property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of visible property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getVisiblePropertyDialogObserverList(Class<?> cl) {
@@ -851,28 +785,19 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    * Returns the list of all property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of all property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getAllPropertyDialogObserverList(Class<?> cl) {
     return this.getVisiblePropertyDialogObserverList();
   }
 
-  /**
-   * Returns the class object of property dialog observer.
-   *
-   * @return the class object
-   */
+  /** Returns the class object of property dialog observer. */
   @Override
   public Class<?> getPropertyDialogObserverClass() {
     return SigDiffSymbol.class;
   }
 
-  /**
-   * Updates changed flag of focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Updates changed flag of focused objects. */
   @Override
   public boolean updateChangedFlag() {
     List<SGISelectable> list = this.getFocusedObjectsList();
@@ -889,9 +814,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean clearFocusedObjects() {
     if (super.clearFocusedObjects() == false) {
       return false;
@@ -904,9 +827,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return "Significant Difference Symbols";
   }
@@ -916,11 +837,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
     com.add(this.mEditField);
   }
 
-  /**
-   * Overrode for the text field for the text of symbols.
-   *
-   * @return true if a text field is shown
-   */
+  /** Overrode for the text field for the text of symbols. */
   public boolean closeTextField() {
     if (this.mEditField.isVisible()) {
       return this.commitEdit();
@@ -928,18 +845,14 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private boolean hideEditField() {
     this.mEditField.setText("");
     this.mEditField.setVisible(false);
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private boolean commitEdit() {
     if (this.mEditingSymbol == null) {
       return false;
@@ -997,8 +910,8 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
   /**
    * Creates an array of Element objects.
    *
+   * @param params the params parameter
    * @param document an Document objects to append elements
-   * @return an array of Element objects
    */
   public Element[] createElement(final Document document, SGExportParameter params) {
     Element el = this.createThisElement(document, params);
@@ -1046,11 +959,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
     return true;
   }
 
-  /**
-   * Create copies of the focused objects.
-   *
-   * @return
-   */
+  /** Create copies of the focused objects. */
   public boolean duplicateFocusedObjects() {
     final int ox = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_X);
     final int oy = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_Y);
@@ -1084,7 +993,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    * Paste the objects.
    *
    * @param list of the objects to be pasted
-   * @return true:succeeded, false:failed
    */
   public boolean paste(List<SGICopyable> list) {
     final float mag = this.getMagnification();
@@ -1253,11 +1161,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
     /** Flag whether this object is focused. */
     private boolean mSelectedFlag = false;
 
-    /**
-     * Get the flag as a focused object.
-     *
-     * @return whether this object is focused.
-     */
+    /** Get the flag as a focused object. */
     public boolean isSelected() {
       return this.mSelectedFlag;
     }
@@ -1339,11 +1243,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return "";
     }
 
-    /**
-     * Returns the description of an instance.
-     *
-     * @return the description of an instance
-     */
+    /** Returns the description of an instance. */
     public String getInstanceDescription() {
       String xAxis =
           SGFigureElementSignificantDifference.this.mAxisElement.getLocationName(this.mXAxis);
@@ -1380,7 +1280,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * Sets the x-axis.
      *
      * @param location the axis location
-     * @return true if succeeded
      */
     public boolean setXAxisLocation(final int location) {
       if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
@@ -1399,7 +1298,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * Sets the y-axis.
      *
      * @param location the axis location
-     * @return true if succeeded
      */
     public boolean setYAxisLocation(final int location) {
       if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
@@ -1418,7 +1316,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * Sets the text.
      *
      * @param text a text string to set
-     * @return true if succeeded
      */
     public boolean setText(final String text) {
       if (SGUtilityText.isValidString(text) == false) {
@@ -1443,11 +1340,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
 
     private int mTempYAxis = -1;
 
-    /**
-     * Returns a pop-up menu.
-     *
-     * @return a pop-up menu
-     */
+    /** Returns a pop-up menu. */
     public JPopupMenu getPopupMenu() {
       SigDiffSymbolPopupMenu p = null;
       if (this.mPopupMenu != null) {
@@ -1486,16 +1379,14 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return true;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public String getTagName() {
       return TAG_NAME_SIGDIFF_SYMBOL;
     }
 
     /**
      * @param document
-     * @return
+     * @param params the params parameter
      */
     public Element createElement(final Document document, SGExportParameter params) {
       Element el = document.createElement(this.getTagName());
@@ -1507,7 +1398,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
 
     /**
      * @param el
-     * @return
+     * @param params the params parameter
      */
     public boolean writeProperty(final Element el, SGExportParameter params) {
       if (super.writeProperty(el, params) == false) {
@@ -1741,11 +1632,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return true;
     }
 
-    /**
-     * Returns the property dialog.
-     *
-     * @return a property dialog
-     */
+    /** Returns the property dialog. */
     public SGPropertyDialog getPropertyDialog() {
       SGPropertyDialog dg = null;
       if (mPropertyDialog != null) {
@@ -1757,20 +1644,12 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return dg;
     }
 
-    /**
-     * Returns a list of child nodes.
-     *
-     * @return a list of child nodes
-     */
+    /** Returns a list of child nodes. */
     public ArrayList<SGINode> getChildNodes() {
       return new ArrayList<SGINode>();
     }
 
-    /**
-     * Returns the location of this symbol.
-     *
-     * @return the location of this symbol
-     */
+    /** Returns the location of this symbol. */
     public SGTuple2f getLocation() {
       final float baseX = super.getX();
       final float baseY = super.getY();
@@ -1781,20 +1660,12 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return new SGTuple2f(x, y);
     }
 
-    /**
-     * Returns the x coordinate of the location of this symbol.
-     *
-     * @return the x coordinate of the location of this symbol
-     */
+    /** Returns the x coordinate of the location of this symbol. */
     public float getX() {
       return this.getLocation().x;
     }
 
-    /**
-     * Returns the y coordinate of the location of this symbol.
-     *
-     * @return the y coordinate of the location of this symbol
-     */
+    /** Returns the y coordinate of the location of this symbol. */
     public float getY() {
       return this.getLocation().y;
     }
@@ -1804,7 +1675,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      *
      * @param x the x coordinate to set
      * @param y the y coordinate to set
-     * @return true if succeeded
      */
     public boolean setLocation(final float x, final float y) {
       final float mag = this.getMagnification();
@@ -1834,9 +1704,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       this.setShapeWithAxesValues();
     }
 
-    /**
-     * @return
-     */
+    /** */
     public double getLeftXValue() {
       if (!this.isFlippingHorizontal()) {
         return this.mXValue1;
@@ -1845,9 +1713,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return this.mXValue2;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public double getLeftYValue() {
       if (!this.isFlippingHorizontal()) {
         return this.mYValue1;
@@ -1855,9 +1721,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return this.mYValue2;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public double getRightXValue() {
       if (!this.isFlippingHorizontal()) {
         return this.mXValue2;
@@ -1865,9 +1729,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return this.mXValue1;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public double getRightYValue() {
       if (!this.isFlippingHorizontal()) {
         return this.mYValue2;
@@ -1875,9 +1737,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return this.mYValue1;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public double getHorizontalYValue() {
       return this.mHorizontalYValue;
     }
@@ -1886,7 +1746,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * Sets the x-coordinate of the left end.
      *
      * @param value an axis value for the x-coordinate
-     * @return true if succeeded
      */
     public boolean setLeftXValue(final double value) {
       if (this.mXAxis.isValidValue(value) == false) {
@@ -1904,7 +1763,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * Sets the y-coordinate of the left end.
      *
      * @param value an axis value for the y-coordinate
-     * @return true if succeeded
      */
     public boolean setLeftYValue(final double value) {
       if (this.mYAxis.isValidValue(value) == false) {
@@ -1922,7 +1780,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * Sets the x-coordinate of the right end.
      *
      * @param value an axis value for the x-coordinate
-     * @return true if succeeded
      */
     public boolean setRightXValue(final double value) {
       if (this.mXAxis.isValidValue(value) == false) {
@@ -1940,7 +1797,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * Sets the y-coordinate of the right end.
      *
      * @param value an axis value for the y-coordinate
-     * @return true if succeeded
      */
     public boolean setRightYValue(final double value) {
       if (this.mYAxis.isValidValue(value) == false) {
@@ -1958,7 +1814,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * Sets the y-coordinate of the horizontal bar.
      *
      * @param value an axis value for the y-coordinate
-     * @return true if succeeded
      */
     public boolean setHorizontalYValue(final double value) {
       if (this.mYAxis.isValidValue(value) == false) {
@@ -1968,11 +1823,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return true;
     }
 
-    /**
-     * Checks whether the axis values are valid.
-     *
-     * @return true if all axis values are valid
-     */
+    /** Checks whether the axis values are valid. */
     public boolean hasValidValues() {
       Number horizontalY = Double.valueOf(this.getHorizontalYValue());
       Number leftX = Double.valueOf(this.getLeftXValue());
@@ -2008,7 +1859,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      *
      * @param location the location of the axis
      * @param value the axis value
-     * @return true if the axis value is valid
      */
     public boolean hasValidHorizontalYValue(final int location, final Number value) {
       final SGAxis axis =
@@ -2024,7 +1874,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      *
      * @param location the location of the axis
      * @param value the axis value
-     * @return true if the axis value is valid
      */
     public boolean hasValidLeftXValue(final int location, final Number value) {
       final SGAxis axis =
@@ -2040,7 +1889,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      *
      * @param location the location of the axis
      * @param value the axis value
-     * @return true if the axis value is valid
      */
     public boolean hasValidLeftYValue(final int location, final Number value) {
       final SGAxis axis =
@@ -2056,7 +1904,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      *
      * @param location the location of the axis
      * @param value the axis value
-     * @return true if the axis value is valid
      */
     public boolean hasValidRightXValue(final int location, final Number value) {
       final SGAxis axis =
@@ -2072,7 +1919,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      *
      * @param location the location of the axis
      * @param value the axis value
-     * @return true if the axis value is valid
      */
     public boolean hasValidRightYValue(final int location, final Number value) {
       final SGAxis axis =
@@ -2131,9 +1977,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
     /** */
     private boolean mFlippingHorizontalFlag;
 
-    /**
-     * @return
-     */
+    /** */
     private ArrayList<Point2D> getAnchorPointList() {
       ArrayList<Point2D> list = new ArrayList<Point2D>();
       if (this.isLineVisible()) {
@@ -2161,7 +2005,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * @param radius
      * @param x
      * @param y
-     * @return
      */
     private boolean isInside(final Point2D pos, final int radius, final int x, final int y) {
       return ((Math.abs(pos.getX() - x) < radius) && (Math.abs(pos.getY() - y) < radius));
@@ -2335,8 +2178,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       float h1 = h1Old;
       float h2 = h2Old;
 
-      // switch operation by different dragging point
-
       final int loc = this.mMouseLocation;
       final boolean flag = this.mFlippingHorizontalFlag;
       if (loc == HORIZONTAL_MIDDLE) {
@@ -2464,31 +2305,24 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
     //
     private SGUndoManager mUndoManager = new SGUndoManager(this);
 
-    /**
-     * @return
-     */
+    /** */
     public SGProperties getMemento() {
       return this.getProperties();
     }
 
     /**
      * @param p
-     * @return
      */
     public boolean setMemento(SGProperties p) {
       return this.setProperties(p);
     }
 
-    /**
-     * @return
-     */
+    /** */
     public boolean isUndoable() {
       return this.mUndoManager.isUndoable();
     }
 
-    /**
-     * @return
-     */
+    /** */
     public boolean isRedoable() {
       return this.mUndoManager.isRedoable();
     }
@@ -2557,11 +2391,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       this.mUndoManager.setChanged(b);
     }
 
-    /**
-     * Delete all forward histories.
-     *
-     * @return true if succeeded
-     */
+    /** Delete all forward histories. */
     public boolean deleteForwardHistory() {
       return this.mUndoManager.deleteForwardHistory();
     }
@@ -2589,7 +2419,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
      * Sets the properties.
      *
      * @param map a map of properties
-     * @return the result of setting properties
      */
     public SGPropertyResults setProperties(SGPropertyMap map) {
       SGPropertyResults result = new SGPropertyResults();
@@ -2827,11 +2656,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return result;
     }
 
-    /**
-     * Returns a text string of the commands.
-     *
-     * @return a text string of the commands
-     */
+    /** Returns a text string of the commands. */
     @Override
     public String getCommandString(SGExportParameter params) {
       StringBuilder sb = new StringBuilder();
@@ -2843,11 +2668,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return sb.toString();
     }
 
-    /**
-     * Creates and returns a text string of commands.
-     *
-     * @return a text string of commands
-     */
+    /** Creates and returns a text string of commands. */
     @Override
     public String createCommandString(SGExportParameter params) {
       return SGCommandUtility.createCommandString(
@@ -2872,11 +2693,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       return map;
     }
 
-    /**
-     * Creates and returns the map of properties.
-     *
-     * @return the map of properties
-     */
+    /** Creates and returns the map of properties. */
     @Override
     public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
       SGPropertyMap map = super.getCommandPropertyMap(params);
@@ -3043,7 +2860,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
     Object source = e.getSource();
     char c = e.getKeyChar();
 
-    // if the text field is visible
     if (source.equals(this.mEditField)) {
 
       // hide the text field
@@ -3058,7 +2874,6 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
    * Sets the dialog owner this figure element.
    *
    * @param frame the dialog owner
-   * @return true if succeeded
    */
   public boolean setDialogOwner(final Frame frame) {
     if (super.setDialogOwner(frame) == false) {

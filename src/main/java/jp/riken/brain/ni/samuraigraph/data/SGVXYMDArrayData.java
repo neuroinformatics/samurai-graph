@@ -252,11 +252,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     this.mSecondComponentVariable = null;
   }
 
-  /**
-   * Returns a map of information.
-   *
-   * @return a map of information
-   */
+  /** Returns a map of information. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> map = super.getInfoMap();
     map.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, this.isPolar());
@@ -264,11 +260,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     return map;
   }
 
-  /**
-   * Returns a text string of data type.
-   *
-   * @return a text string of data type
-   */
+  /** Returns a text string of data type. */
   @Override
   public String getDataType() {
     SGIDataSource src = this.getDataSource();
@@ -283,21 +275,13 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     }
   }
 
-  /**
-   * Returns whether the data is given in the polar coordinate.
-   *
-   * @return true if the data is given in the polar coordinate
-   */
+  /** Returns whether the data is given in the polar coordinate. */
   @Override
   public boolean isPolar() {
     return this.mPolarFlag;
   }
 
-  /**
-   * Returns the number of data points taking into account the stride.
-   *
-   * @return the number of data points taking into account the stride
-   */
+  /** Returns the number of data points taking into account the stride. */
   @Override
   public int getPointsNumber() {
     if (this.isStrideAvailable()) {
@@ -316,31 +300,19 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     }
   }
 
-  /**
-   * Returns the bounds of x-values.
-   *
-   * @return the bounds of x-values
-   */
+  /** Returns the bounds of x-values. */
   @Override
   public SGValueRange getBoundsX() {
     return SGDataRangeUtility.getBoundsX(this);
   }
 
-  /**
-   * Returns the bounds of y-values.
-   *
-   * @return the bounds of y-values
-   */
+  /** Returns the bounds of y-values. */
   @Override
   public SGValueRange getBoundsY() {
     return SGDataRangeUtility.getBoundsY(this);
   }
 
-  /**
-   * Returns an array of values for the first component.
-   *
-   * @return an array of values for the first component
-   */
+  /** Returns an array of values for the first component. */
   @Override
   public double[] getFirstComponentValueArray(final boolean all) {
     return SGDataViewerUtility.getFirstComponentValueArray(this, all);
@@ -362,11 +334,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     return ret;
   }
 
-  /**
-   * Returns an array of values for the second component.
-   *
-   * @return an array of values for the second component
-   */
+  /** Returns an array of values for the second component. */
   @Override
   public double[] getSecondComponentValueArray(final boolean all) {
     return SGDataViewerUtility.getSecondComponentValueArray(this, all);
@@ -388,11 +356,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     return ret;
   }
 
-  /**
-   * Returns an array of magnitude of vectors.
-   *
-   * @return an array of magnitude of vectors
-   */
+  /** Returns an array of magnitude of vectors. */
   @Override
   public double[] getMagnitudeArray(final boolean all) {
     if (this.isPolar()) {
@@ -404,11 +368,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     }
   }
 
-  /**
-   * Returns an array of angle of vectors.
-   *
-   * @return an array of angle of vectors
-   */
+  /** Returns an array of angle of vectors. */
   @Override
   public double[] getAngleArray(final boolean all) {
     if (this.isPolar()) {
@@ -420,11 +380,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     }
   }
 
-  /**
-   * Returns an array of x component of vectors.
-   *
-   * @return an array of x component of vectors
-   */
+  /** Returns an array of x component of vectors. */
   @Override
   public double[] getXComponentArray(final boolean all) {
     if (this.isPolar()) {
@@ -436,11 +392,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     }
   }
 
-  /**
-   * Returns an array of y component of vectors.
-   *
-   * @return an array of y component of vectors
-   */
+  /** Returns an array of y component of vectors. */
   @Override
   public double[] getYComponentArray(final boolean all) {
     if (this.isPolar()) {
@@ -452,11 +404,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     }
   }
 
-  /**
-   * Returns an array of current column types.
-   *
-   * @return an array of current column types
-   */
+  /** Returns an array of current column types. */
   @Override
   public String[] getCurrentColumnType() {
     final boolean polar = this.isPolar();
@@ -484,8 +432,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   /**
    * Sets the type of data columns.
    *
-   * @param column an array of column types
-   * @return true if succeeded
+   * @param columns an array of column types
    */
   @Override
   public boolean setColumnType(String[] columns) {
@@ -576,7 +523,6 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
      * Returns whether this data property has the equal column types with given data property.
      *
      * @param dp a data property
-     * @return true if this data property has the equal column types with given data property
      */
     @Override
     public boolean hasEqualColumnTypes(DataProperties dp) {
@@ -597,11 +543,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     }
   }
 
-  /**
-   * Returns the properties of this data.
-   *
-   * @return the properties of this data
-   */
+  /** Returns the properties of this data. */
   @Override
   public SGProperties getProperties() {
     SGProperties p = new VXYMDDataProperties();
@@ -615,7 +557,6 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    * Returns the properties of this data.
    *
    * @param p the properties of this data
-   * @return true if succeeded
    */
   @Override
   public boolean getProperties(final SGProperties p) {
@@ -635,7 +576,6 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    * Sets the properties to this data.
    *
    * @param p properties to set
-   * @return true if succeeded
    */
   @Override
   public boolean setProperties(final SGProperties p) {
@@ -655,8 +595,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    * Writes properties of this object to the Element.
    *
    * @param el the Element object
-   * @param type type of the method to save properties
-   * @return true if succeeded
+   * @param params type of the method to save properties
    */
   @Override
   public boolean writeProperty(Element el, final SGExportParameter params) {
@@ -724,7 +663,6 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    * Sets the data.
    *
    * @param data data set to this object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (!(data instanceof SGVXYMDArrayData)) {
@@ -740,11 +678,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     return true;
   }
 
-  /**
-   * Returns the copy of this data object.
-   *
-   * @return a copy of this data object
-   */
+  /** Returns the copy of this data object. */
   public Object clone() {
     SGVXYMDArrayData data = (SGVXYMDArrayData) super.clone();
     data.mFirstComponentVariable = copyVariable(this.mFirstComponentVariable);
@@ -752,11 +686,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     return data;
   }
 
-  /**
-   * Returns the list of blocks of values of the first component.
-   *
-   * @return the list of blocks of values of the first component
-   */
+  /** Returns the list of blocks of values of the first component. */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getFirstComponentValueBlockList() {
     return SGDataViewerUtility.getFirstComponentValueBlockList(this, false, true, true);
@@ -776,11 +706,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     return ret;
   }
 
-  /**
-   * Returns the list of blocks of values of the second component.
-   *
-   * @return the list of blocks of values of the second component
-   */
+  /** Returns the list of blocks of values of the second component. */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getSecondComponentValueBlockList() {
     return SGDataViewerUtility.getSecondComponentValueBlockList(this, false, true, true);
@@ -816,7 +742,6 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    * Sets the information of data columns.
    *
    * @param cols an array of column information
-   * @return true if succeeded
    */
   public boolean setColumnType(SGDataColumnInfo[] cols) {
 
@@ -841,11 +766,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     return this.mSecondComponentVariable;
   }
 
-  /**
-   * Returns the map of dimension index that are used.
-   *
-   * @return the map of dimension index
-   */
+  /** Returns the map of dimension index that are used. */
   public Map<String, Map<String, Integer>> getUsedDimensionIndexMap() {
     Map<String, Map<String, Integer>> map = this.getDimensionIndexMap();
     Map<String, Integer> fDimMap = map.get(this.mFirstComponentVariable.getName());
@@ -855,11 +776,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     return map;
   }
 
-  /**
-   * Returns an array of variables that are assigned the column type.
-   *
-   * @return an array of variables
-   */
+  /** Returns an array of variables that are assigned the column type. */
   @Override
   public SGMDArrayVariable[] getAssignedVariables() {
     List<SGMDArrayVariable> varList = new ArrayList<SGMDArrayVariable>();
@@ -882,8 +799,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   /**
    * Adds variables to a netCDF file.
    *
-   * @param ncWrite a netCDF file
-   * @return true if succeeded
+   * @param builder a netCDF file
    */
   @Override
   protected boolean addVariables(NetcdfFormatWriter.Builder builder) {
@@ -958,8 +874,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   /**
    * Writes data to a netCDF file.
    *
-   * @param ncWrite a netCDF file
-   * @return true if succeeded
+   * @param writer a netCDF file
    */
   protected boolean writeData(NetcdfFormatWriter writer) {
 
@@ -1023,11 +938,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
     return true;
   }
 
-  /**
-   * Returns a text string of the data type to save into a NetCDF data set file.
-   *
-   * @return a text string of the data type to save into a NetCDF data set file
-   */
+  /** Returns a text string of the data type to save into a NetCDF data set file. */
   @Override
   public String getNetCDFDataSetDataType() {
     return SGDataTypeConstants.VXY_NETCDF_DATA;
@@ -1062,7 +973,6 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    * Creates and returns a data buffer.
    *
    * @param param parameters for data buffer
-   * @return the data buffer
    */
   @Override
   public SGDataBuffer getDataBuffer(SGDataBufferPolicy param) {
@@ -1108,7 +1018,6 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    *
    * @param type the type of export
    * @param all true to get all values
-   * @return a two-dimensional array of the first component values
    */
   public double[][] getTwoDimensionalFirstComponentValueArray(EXPORT_TYPE type, final boolean all) {
     double[] values = this.getFirstComponentValueArray(all);
@@ -1120,7 +1029,6 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
    *
    * @param type the type of export
    * @param all true to get all values
-   * @return a two-dimensional array of the second component values
    */
   public double[][] getTwoDimensionalSecondComponentValueArray(
       EXPORT_TYPE type, final boolean all) {
@@ -1241,8 +1149,9 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   /**
    * Exports to a HDF5 file.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param writer HDF5-file writer
-   * @return true if succeeded
    */
   @Override
   protected boolean exportToHDF5(
@@ -1267,9 +1176,10 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   /**
    * Exports to a MATLAB file.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param file the MATLAB file
    * @param writer MAT-file writer
-   * @return true if succeeded
    */
   @Override
   protected boolean exportToMATLAB(
@@ -1613,6 +1523,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   /**
    * Returns a scatter type array the first component values.
    *
+   * @param type the type parameter
    * @param all true to get all values
    * @return a scatter array of the first component values
    */
@@ -1623,6 +1534,7 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
   /**
    * Returns a scatter type array the second component values.
    *
+   * @param type the type parameter
    * @param all true to get all values
    * @return a scatter array of the second component values
    */

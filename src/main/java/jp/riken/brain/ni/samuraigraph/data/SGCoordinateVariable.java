@@ -139,7 +139,6 @@ public class SGCoordinateVariable extends SGNetCDFVariable {
   public double[] getNumberArray() {
     final int len = this.getLength();
     if (len == 0) {
-      // if the length of a coordinate variable is zero, returns null
       return null;
     }
     double[] values = new double[len];

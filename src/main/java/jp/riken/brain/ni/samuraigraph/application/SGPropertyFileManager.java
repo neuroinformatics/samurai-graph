@@ -73,9 +73,9 @@ class SGPropertyFileManager
   /**
    * save properties
    *
+   * @param params the params parameter
    * @param wnd - target window
    * @param path - save file path
-   * @return status
    */
   public int saveProperties(
       final SGDrawingWindow wnd, final String path, final SGExportParameter params) {
@@ -91,7 +91,6 @@ class SGPropertyFileManager
    * Shows a dialog to save properties.
    *
    * @param wnd a window
-   * @return status
    */
   public int savePropertiesByDialog(final SGDrawingWindow wnd) {
     String fileName = SGApplicationUtility.getOutputFileName(wnd);
@@ -144,27 +143,6 @@ class SGPropertyFileManager
     // show the first wizard dialog
     this.mPropertyFileChooserWizardDialog.setVisible(true);
 
-    /*
-    // update the selected file name
-    File pf = this.mPropertyFileChooserWizardDialog.getSelectedFile();
-    String dfPath = this.mMultiDataFileChooserWizardDialog.getSelectedFilepath();
-    final long pUsed = this.mPropertyFileChooserWizardDialog.lastUsed();
-    final long dUsed = this.mMultiDataFileChooserWizardDialog.lastUsed();
-    if (pf != null && dfPath != null && !"".equals(dfPath.trim())) {
-        if (pUsed < dUsed) {
-            File df = new File(dfPath);
-        	this.mMain.updateCurrentFile(df, FILE_TYPE.TXT_DATA);
-        } else {
-        	this.mMain.updateCurrentFile(pf, FILE_TYPE.PROPERTY);
-        }
-    } else if (pf != null) {
-    	this.mMain.updateCurrentFile(pf, FILE_TYPE.PROPERTY);
-    } else if (dfPath != null && !"".equals(dfPath.trim())) {
-        File df = new File(dfPath);
-    	this.mMain.updateCurrentFile(df, FILE_TYPE.TXT_DATA);
-    }
-    */
-
     return true;
   }
 
@@ -173,7 +151,6 @@ class SGPropertyFileManager
 
   /**
    * @param e
-   * @return
    */
   private boolean loadProperty(final ActionEvent e) {
     Object source = e.getSource();
@@ -201,9 +178,7 @@ class SGPropertyFileManager
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   boolean setPropertyFile(
       final SGDrawingWindow wnd,
       final Document doc,
@@ -281,9 +256,7 @@ class SGPropertyFileManager
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private boolean setPropertyFileFromEventDispatchThread(
       final SGDrawingWindow wnd, final Document doc, final WrappedData[] wDataArray) {
 
@@ -406,7 +379,6 @@ class SGPropertyFileManager
     // figure ID
     NodeList figureNodeList = doc.getElementsByTagName(SGFigure.TAG_NAME_FIGURE);
     if (figureNodeList.getLength() == 0) {
-      // if figure does not exist, return false
       if (!silent) {
         SGUtility.showMessageDialog(
             parent, MSG_PROPERTY_FILE_INVALID, TITLE_FILE_OPEN_FAILURE, JOptionPane.ERROR_MESSAGE);
@@ -432,7 +404,6 @@ class SGPropertyFileManager
       final int id = ii + 1;
       final int dataNum = dataList.getLength();
       if (dataNum == 0) {
-        // if the figure has no data
 
         // create a data object and set values
         SGPropertyFileData pData = new SGPropertyFileData(id, null, null, null);
@@ -513,11 +484,9 @@ class SGPropertyFileManager
   /**
    * @param e
    * @param dg
-   * @return
    */
   private boolean fromPropertyFileChooserDialog(ActionEvent e, SGWizardDialog dg) {
     String command = e.getActionCommand();
-    // Window owner = dg.getOwner();
     SGWizardDialog next = dg.getNext();
     if ((dg instanceof SGPropertyFileChooserWizardDialog) == false) {
       return false;
@@ -538,7 +507,6 @@ class SGPropertyFileManager
 
   /**
    * @param e
-   * @return
    */
   private boolean fromMultiDataFileChooser(final ActionEvent e) {
     Object source = e.getSource();
@@ -584,7 +552,6 @@ class SGPropertyFileManager
   /**
    * @param pdg
    * @param mdg
-   * @return
    */
   private boolean fromPropertyFileChooserDialogNext(
       final SGPropertyFileChooserWizardDialog pdg,
@@ -677,7 +644,6 @@ class SGPropertyFileManager
    *
    * @param propertyFile the property file
    * @param owner the owner of dialogs
-   * @return true if succeeded
    */
   boolean showMultiDataFileChooserDialog(final File propertyFile, final Frame owner) {
 
@@ -735,7 +701,6 @@ class SGPropertyFileManager
   public void actionPerformed(final ActionEvent e) {
 
     Object source = e.getSource();
-    // String command = e.getActionCommand();
 
     // Load Property
     if (source.equals(this.mPropertyFileChooserWizardDialog)

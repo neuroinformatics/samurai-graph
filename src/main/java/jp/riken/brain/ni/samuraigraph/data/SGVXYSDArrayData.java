@@ -141,7 +141,6 @@ public class SGVXYSDArrayData extends SGSDArrayData
    * Set values with a given data.
    *
    * @param data data to be copied
-   * @return true if succeeded
    */
   public boolean setData(final SGData data) {
 
@@ -163,38 +162,22 @@ public class SGVXYSDArrayData extends SGSDArrayData
     return true;
   }
 
-  /**
-   * Returns the name of data type.
-   *
-   * @return the name of data type
-   */
+  /** Returns the name of data type. */
   public String getDataType() {
     return SGDataTypeConstants.VXY_DATA;
   }
 
-  /**
-   * Returns the bounds of x-values.
-   *
-   * @return the bounds of x-values
-   */
+  /** Returns the bounds of x-values. */
   public SGValueRange getBoundsX() {
     return SGDataRangeUtility.getBoundsX(this);
   }
 
-  /**
-   * Returns the bounds of y-values.
-   *
-   * @return the bounds of y-values
-   */
+  /** Returns the bounds of y-values. */
   public SGValueRange getBoundsY() {
     return SGDataRangeUtility.getBoundsY(this);
   }
 
-  /**
-   * Returns an array of coordinates.
-   *
-   * @return an array of coordinates
-   */
+  /** Returns an array of coordinates. */
   public SGTuple2d[] getXYValueArray(final boolean all) {
     double[] xArray = this.getXValueArray(all);
     double[] yArray = this.getYValueArray(all);
@@ -205,11 +188,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     return cArray;
   }
 
-  /**
-   * Returns an array of x component of vectors.
-   *
-   * @return an array of x component of vectors
-   */
+  /** Returns an array of x component of vectors. */
   public double[] getXComponentArray(final boolean all) {
     if (this.isPolar()) {
       final double[] magArray = this.getFirstComponentValueArray(all);
@@ -220,11 +199,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns an array of y component of vectors.
-   *
-   * @return an array of y component of vectors
-   */
+  /** Returns an array of y component of vectors. */
   public double[] getYComponentArray(final boolean all) {
     if (this.isPolar()) {
       final double[] magArray = this.getFirstComponentValueArray(all);
@@ -235,11 +210,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns an array of magnitude of vectors.
-   *
-   * @return an array of magnitude of vectors
-   */
+  /** Returns an array of magnitude of vectors. */
   public double[] getMagnitudeArray(final boolean all) {
     if (this.isPolar()) {
       return this.getFirstComponentValueArray(all);
@@ -250,11 +221,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns an array of angle of vectors.
-   *
-   * @return an array of angle of vectors
-   */
+  /** Returns an array of angle of vectors. */
   public double[] getAngleArray(final boolean all) {
     if (this.isPolar()) {
       return this.getSecondComponentValueArray(all);
@@ -265,11 +232,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns an array of values for the first component.
-   *
-   * @return an array of values for the first component
-   */
+  /** Returns an array of values for the first component. */
   @Override
   public double[] getFirstComponentValueArray(final boolean all) {
     return SGDataViewerUtility.getFirstComponentValueArray(this, all);
@@ -291,11 +254,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     return ret;
   }
 
-  /**
-   * Returns an array of values for the second component.
-   *
-   * @return an array of values for the second component
-   */
+  /** Returns an array of values for the second component. */
   @Override
   public double[] getSecondComponentValueArray(final boolean all) {
     return SGDataViewerUtility.getSecondComponentValueArray(this, all);
@@ -317,11 +276,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     return ret;
   }
 
-  /**
-   * Returns whether the data is given in the polar coordinate.
-   *
-   * @return true if the data is given in the polar coordinate
-   */
+  /** Returns whether the data is given in the polar coordinate. */
   public boolean isPolar() {
     return this.mPolarFlag;
   }
@@ -330,7 +285,6 @@ public class SGVXYSDArrayData extends SGSDArrayData
    * Writes data column indices in the attributes.
    *
    * @param el the Element object
-   * @return true if succeeded
    */
   protected boolean writeAttributeColumnIndices(Element el) {
     el.setAttribute(KEY_X_COORDINATE_COLUMN_INDEX, this.mXCoordinateIndex.toString());
@@ -344,7 +298,6 @@ public class SGVXYSDArrayData extends SGSDArrayData
    * Writes data column indices as sequential numbers.
    *
    * @param el the Element object
-   * @return true if succeeded
    */
   protected boolean writeSequentialColumnIndices(Element el) {
     el.setAttribute(KEY_X_COORDINATE_COLUMN_INDEX, Integer.toString(0));
@@ -373,11 +326,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     return map;
   }
 
-  /**
-   * Returns the title of X values.
-   *
-   * @return the title of X values
-   */
+  /** Returns the title of X values. */
   public String getTitleX() {
     if (this.mXCoordinateIndex == null) {
       return "";
@@ -387,11 +336,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns the title of Y values.
-   *
-   * @return the title of Y values
-   */
+  /** Returns the title of Y values. */
   public String getTitleY() {
     if (this.mYCoordinateIndex == null) {
       return "";
@@ -445,11 +390,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     mSecondComponentIndex = index;
   }
 
-  /**
-   * Returns properties of this data.
-   *
-   * @return properties of this data
-   */
+  /** Returns properties of this data. */
   public SGProperties getProperties() {
     SGProperties p = new VXYSDArrayDataProperties();
     if (this.getProperties(p) == false) {
@@ -462,7 +403,6 @@ public class SGVXYSDArrayData extends SGSDArrayData
    * Get properties of this data.
    *
    * @param p properties to set values
-   * @return true if succeeded
    */
   public boolean getProperties(final SGProperties p) {
     if ((p instanceof VXYSDArrayDataProperties) == false) {
@@ -483,7 +423,6 @@ public class SGVXYSDArrayData extends SGSDArrayData
    * Set properties to this data.
    *
    * @param p properties that have values to set to this data
-   * @return true if succeeded
    */
   public boolean setProperties(final SGProperties p) {
     if ((p instanceof VXYSDArrayDataProperties) == false) {
@@ -503,8 +442,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
   /**
    * Sets the type of data columns.
    *
-   * @param column an array of column types
-   * @return true if succeeded
+   * @param columns an array of column types
    */
   public boolean setColumnType(String[] columns) {
     if (columns == null) {
@@ -587,8 +525,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     /**
      * Returns whether this data property has the equal column types with given data property.
      *
-     * @param p a data property
-     * @return true if this data property has the equal column types with given data property
+     * @param dp a data property
      */
     @Override
     public boolean hasEqualColumnTypes(DataProperties dp) {
@@ -621,11 +558,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     }
   }
 
-  /**
-   * Returns an array of current column types.
-   *
-   * @return an array of current column types
-   */
+  /** Returns an array of current column types. */
   public String[] getCurrentColumnType() {
     final boolean polar = this.isPolar();
     final String first = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
@@ -650,11 +583,7 @@ public class SGVXYSDArrayData extends SGSDArrayData
     return array;
   }
 
-  /**
-   * Returns an array of data columns to save to a data set.
-   *
-   * @return an array of data columns to save to a data set
-   */
+  /** Returns an array of data columns to save to a data set. */
   public SGDataColumn[] getExportedColumns() {
     SGDataColumn[] columns = this.getDataFile().mDataColumns;
     SGDataColumn[] colArray = new SGDataColumn[4];
@@ -678,33 +607,21 @@ public class SGVXYSDArrayData extends SGSDArrayData
     return this.getExportedColumnsClone();
   }
 
-  /**
-   * Returns the list of blocks of values of the first component.
-   *
-   * @return the list of blocks of values of the first component
-   */
+  /** Returns the list of blocks of values of the first component. */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getFirstComponentValueBlockList() {
     // always returns null
     return null;
   }
 
-  /**
-   * Returns the list of blocks of values of the second component.
-   *
-   * @return the list of blocks of values of the second component
-   */
+  /** Returns the list of blocks of values of the second component. */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getSecondComponentValueBlockList() {
     // always returns null
     return null;
   }
 
-  /**
-   * Returns a text string of the data type to save into a NetCDF data set file.
-   *
-   * @return a text string of the data type to save into a NetCDF data set file
-   */
+  /** Returns a text string of the data type to save into a NetCDF data set file. */
   @Override
   public String getNetCDFDataSetDataType() {
     return SGDataTypeConstants.VXY_NETCDF_DATA;
@@ -841,107 +758,6 @@ public class SGVXYSDArrayData extends SGSDArrayData
     String sName = polar ? "Angle" : "Y_Component";
 
     // grid plot
-    /*
-    Map<Double, List<Arrow>> xMap = new TreeMap<Double, List<Arrow>>();
-    Map<Double, List<Arrow>> yMap = new TreeMap<Double, List<Arrow>>();
-    for (int ii = 0; ii < len; ii++) {
-    	final double x = xValues[ii];
-    	final double y = yValues[ii];
-    	Arrow value = new Arrow(xValues[ii], yValues[ii], fValues[ii], sValues[ii]);
-
-    	List<Arrow> xList = xMap.get(x);
-    	if (xList == null) {
-    		xList = new ArrayList<Arrow>();
-    		xMap.put(x, xList);
-    	}
-    	xList.add(value);
-
-    	List<Arrow> yList = yMap.get(y);
-    	if (yList == null) {
-    		yList = new ArrayList<Arrow>();
-    		yMap.put(y, yList);
-    	}
-    	yList.add(value);
-
-    	xMap.put(x, xList);
-    	yMap.put(y, yList);
-    }
-
-    List<Double> xValueList = new ArrayList<Double>(xMap.keySet());
-    List<Double> yValueList = new ArrayList<Double>(yMap.keySet());
-
-    builder.addDimension(xName, xValueList.size());
-    builder.addDimension(yName, yValueList.size());
-
-    builder.addVariable(xName, DataType.DOUBLE, xName)
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-
-    builder.addVariable(yName, DataType.DOUBLE, yName)
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-
-    String dimString = xName + " " + yName;
-
-    builder.addVariable(fName, DataType.DOUBLE, dimString)
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-
-    builder.addVariable(sName, DataType.DOUBLE, dimString)
-        .addAttribute(
-            new Attribute(
-                SGINetCDFConstants.ATTRIBUTE_VALUE_TYPE,
-                SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER));
-
-    try (NetcdfFormatWriter writer = builder.build()) {
-
-      final int xLen = xValueList.size();
-      Array xArray = Array.factory(DataType.DOUBLE, new int[] { xLen });
-      for (int ii = 0; ii < xLen; ii++) {
-      	xArray.setDouble(ii, xValueList.get(ii));
-      }
-      writer.write(xName, xArray);
-
-      final int yLen = yValueList.size();
-      Array yArray = Array.factory(DataType.DOUBLE, new int[] { yLen });
-      for (int ii = 0; ii < yLen; ii++) {
-      	yArray.setDouble(ii, yValueList.get(ii));
-      }
-      writer.write(yName, yArray);
-
-      Array fArray = Array.factory(DataType.DOUBLE, new int[] { xLen, yLen });
-      Index fIndex = fArray.getIndex();
-      Array sArray = Array.factory(DataType.DOUBLE, new int[] { xLen, yLen });
-      Index sIndex = sArray.getIndex();
-      for (int yy = 0; yy < yLen; yy++) {
-      	List<Arrow> yList = yMap.get(yValueList.get(yy));
-      	for (int xx = 0; xx < xLen; xx++) {
-      		List<Arrow> xList = xMap.get(xValueList.get(xx));
-      		fIndex.set(xx, yy);
-      		sIndex.set(xx, yy);
-      		Arrow common = null;
-      		for (Arrow yValue : yList) {
-      			for (Arrow xValue : xList) {
-      				if (xValue.equals(yValue)) {
-      					common = xValue;
-      					break;
-      				}
-      			}
-      		}
-      		fArray.setDouble(fIndex, common.f);
-      		sArray.setDouble(sIndex, common.s);
-      	}
-      }
-      writer.write(fName, fArray);
-      writer.write(sName, sArray);
-    }
-    */
 
     // scatter plot
     String indexName = "Index";

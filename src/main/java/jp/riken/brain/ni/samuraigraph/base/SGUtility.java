@@ -63,7 +63,6 @@ public class SGUtility implements SGIDrawingElementConstants {
    */
   public static String findFontFamilyName(final String name) {
     if (name == null) {
-      // throw new IllegalArgumentException("name == null");
       return null;
     }
     String fName = null;
@@ -280,8 +279,6 @@ public class SGUtility implements SGIDrawingElementConstants {
    */
   public static void showMessageDialog(
       Component parentComponent, Object msg, String title, final int msgType) {
-    // JOptionPane.showMessageDialog(parentComponent, msg, title,
-    // msgType);
     JOptionPane.showOptionDialog(
         parentComponent,
         msg,
@@ -375,6 +372,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * @param wnd
    * @return
+   * @param owner the owner parameter
    */
   public static void setCenter(final Window wnd, final Window owner) {
     Dimension dim = owner.getSize();
@@ -436,7 +434,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * Add a menu command with the check box to the pop-up menu.
    *
-   * @param menu a pop-up menu
+   * @param p a pop-up menu
    * @param l an action listener of the command
    * @param text a text string
    * @param cmd a command to be added
@@ -481,6 +479,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * Add a menu command to the menu item.
    *
+   * @param text the text parameter
    * @param parent the parent menu item
    * @param l an action listener of the command
    * @param cmd a command to be added
@@ -504,6 +503,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * Add a menu command with the check box to the menu.
    *
+   * @param text the text parameter
    * @param parent the parent menu item
    * @param l an action listener of the command
    * @param cmd a command to be added
@@ -692,6 +692,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * @param obj
    * @return
+   * @param sp the sp parameter
    */
   public static boolean setValue(final SGSpinner sp, final Object obj) {
     if (obj == null) {
@@ -719,6 +720,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * @param obj
    * @return
+   * @param sp the sp parameter
    */
   public static boolean setIntValue(final SGSpinner sp, final Object obj) {
     if (obj == null) {
@@ -796,7 +798,7 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @param rect
    * @param pos
    * @param e
-   * @param ml
+   * @param location
    */
   public static void resizeRectangle(
       final Rectangle2D rect, // rectangle
@@ -1195,7 +1197,6 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @return modified text string
    */
   public static String addEscapeChar(final String str) {
-    // if the simplified file name contains underscores,
     // append a backslash before each of them
     char[] cArray = str.toCharArray();
     List<Character> cList = new ArrayList<Character>();
@@ -1553,25 +1554,6 @@ public class SGUtility implements SGIDrawingElementConstants {
     }
 
     return id;
-
-    /*
-     * // initialize the returned value
-     * int id = array.length + 1;
-     *
-     * // search an empty number
-     * for (int ii = 0; ii < array.length; ii++) {
-     * if (array[ii] <= 0) {
-     * throw new IllegalArgumentException("Non-positive ID number exists: "
-     * + array[ii]);
-     * }
-     * final int num = ii + 1;
-     * if (array[ii] != num) {
-     * id = num;
-     * break;
-     * }
-     * }
-     * return id;
-     */
   }
 
   /**
@@ -1796,37 +1778,7 @@ public class SGUtility implements SGIDrawingElementConstants {
    * @return the indices it exists
    */
   public static Integer[] readIndices(Element el, String key) {
-    // List<Integer> numList = new ArrayList<Integer>();
     String str = el.getAttribute(key);
-    // if (str.length() != 0) {
-    // final int start = str.indexOf('{');
-    // final int end = str.lastIndexOf('}');
-    // if (start == -1 || end == -1) {
-    // Integer num = SGUtilityText.getInteger(str);
-    // if (num == null) {
-    // return null;
-    // }
-    // return new Integer[] { num };
-    // }
-    // if (start > end) {
-    // return null;
-    // }
-    // String sub = str.substring(start + 1, end);
-    // StringTokenizer st = new StringTokenizer(sub, ",");
-    // while (st.hasMoreTokens()) {
-    // String token = st.nextToken();
-    // Integer num = SGUtilityText.getInteger(token);
-    // if (num == null) {
-    // return null;
-    // }
-    // numList.add(num);
-    // }
-    // }
-    // Integer[] array = new Integer[numList.size()];
-    // for (int ii = 0; ii < array.length; ii++) {
-    // array[ii] = (Integer) numList.get(ii);
-    // }
-    // return array;
     return SGUtilityText.parseIndices(str);
   }
 
@@ -2477,7 +2429,6 @@ public class SGUtility implements SGIDrawingElementConstants {
    * Creates an image icon.
    *
    * @param cl the class object to load the resource
-   * @param comp a component
    * @param name the name of icon resource
    * @return created image icon
    */
@@ -2662,7 +2613,7 @@ public class SGUtility implements SGIDrawingElementConstants {
   /**
    * Checks whether given array has overlapping elements.
    *
-   * @param objects an array
+   * @param values an array
    * @return true if there are no overlapping elements
    */
   public static boolean checkOverlapping(final int[] values) {

@@ -44,7 +44,8 @@ public class SGUtilityForFigureElementJava2D
   /**
    * Draw an anchor around a focused object.
    *
-   * @param pos location of an anchor
+   * @param x the x parameter
+   * @param y the y parameter
    * @param g2d graphic context
    */
   public static void drawAnchorAsFocusedObject(final float x, final float y, final Graphics2D g2d) {
@@ -161,8 +162,8 @@ public class SGUtilityForFigureElementJava2D
   }
 
   /**
+   * @param rect
    * @param g2d
-   * @param symbol
    * @return
    */
   public static boolean drawAnchorsOnRectangle(final Rectangle2D rect, final Graphics2D g2d) {
@@ -231,33 +232,6 @@ public class SGUtilityForFigureElementJava2D
     boolean barVisibleNew = (barVisible != null) ? barVisible.booleanValue() : curBarVisible;
 
     // Enabled to hide all types of drawing elements at the same time.
-    /*
-    if (!lineVisibleNew && !symbolVisibleNew && !barVisibleNew) {
-    	// if all elements are set invisible, returns error status
-    	if (lineVisible != null) {
-            result.putResult(COM_DATA_LINE_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
-    	}
-    	if (symbolVisible != null) {
-            result.putResult(COM_DATA_SYMBOL_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
-    	}
-    	if (barVisible != null) {
-            result.putResult(COM_DATA_BAR_VISIBLE, SGPropertyResults.INVALID_INPUT_VALUE);
-    	}
-    } else {
-    	if (lineVisible != null) {
-            result.putResult(COM_DATA_LINE_VISIBLE, SGPropertyResults.SUCCEEDED);
-            obs.setLineVisible(lineVisibleNew);
-    	}
-    	if (symbolVisible != null) {
-            result.putResult(COM_DATA_SYMBOL_VISIBLE, SGPropertyResults.SUCCEEDED);
-            obs.setSymbolVisible(symbolVisibleNew);
-    	}
-    	if (barVisible != null) {
-            result.putResult(COM_DATA_BAR_VISIBLE, SGPropertyResults.SUCCEEDED);
-            obs.setBarVisible(barVisibleNew);
-    	}
-    }
-    */
 
     if (lineVisible != null) {
       result.putResult(COM_DATA_LINE_VISIBLE, SGPropertyResults.SUCCEEDED);

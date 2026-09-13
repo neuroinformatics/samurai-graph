@@ -31,11 +31,7 @@ class ElementGroupSetInLegendVXY extends ElementGroupSetInLegend
     this.legend = legend;
   }
 
-  /**
-   * Returns the figure element.
-   *
-   * @return the figure element
-   */
+  /** Returns the figure element. */
   public SGFigureElementForData getFigureElement() {
     return legend;
   }

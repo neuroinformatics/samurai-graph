@@ -32,7 +32,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Sets the x-coordinate.
    *
    * @param x the x-coordinate to set
-   * @return true if succeeded
    */
   public abstract boolean setX(final float x);
 
@@ -40,7 +39,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Sets the y-coordinate.
    *
    * @param y the y-coordinate to set
-   * @return true if succeeded
    */
   public abstract boolean setY(final float y);
 
@@ -49,7 +47,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    *
    * @param x the x-coordinate to set
    * @param y the y-coordinate to set
-   * @return true if succeeded
    */
   public abstract boolean setLocation(final float x, final float y);
 
@@ -57,7 +54,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Sets the location.
    *
    * @param point the location to set
-   * @return true if succeeded
    */
   public abstract boolean setLocation(final SGTuple2f point);
 
@@ -65,7 +61,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Sets the size.
    *
    * @param size the size to set
-   * @return true if succeeded
    */
   public abstract boolean setSize(final float size);
 
@@ -73,7 +68,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Sets the symbol type.
    *
    * @param type the symbol type to set
-   * @return true if succeeded
    */
   public abstract boolean setType(final int type);
 
@@ -81,7 +75,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Sets the angle.
    *
    * @param angle the angle to set
-   * @return true if succeeded
    */
   public abstract boolean setAngle(final float angle);
 
@@ -89,7 +82,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Sets the line color.
    *
    * @param color the line color to set
-   * @return true if succeeded
    */
   public abstract boolean setLineColor(final Color color);
 
@@ -97,7 +89,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Sets the inner color.
    *
    * @param color the inner color to set
-   * @return true if succeeded
    */
   public abstract boolean setInnerColor(final Color color);
 
@@ -105,7 +96,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Sets the line width.
    *
    * @param lineWidth the line width to set
-   * @return true if succeeded
    */
   public abstract boolean setLineWidth(final float lineWidth);
 
@@ -113,89 +103,47 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Sets the line visible.
    *
    * @param visible the line visible to set
-   * @return true if succeeded
    */
   public abstract boolean setLineVisible(final boolean visible);
 
-  /**
-   * Returns the location.
-   *
-   * @return the location
-   */
+  /** Returns the location. */
   public abstract SGTuple2f getLocation();
 
-  /**
-   * Returns the x-coordinate.
-   *
-   * @return the x-coordinate
-   */
+  /** Returns the x-coordinate. */
   public float getX() {
     return this.getLocation().x;
   }
 
-  /**
-   * Returns the y-coordinate.
-   *
-   * @return the y-coordinate
-   */
+  /** Returns the y-coordinate. */
   public float getY() {
     return this.getLocation().y;
   }
 
-  /**
-   * Returns the angle of this symbol.
-   *
-   * @return the angle in units of radian
-   */
+  /** Returns the angle of this symbol. */
   public abstract float getAngle();
 
-  /**
-   * Returns the size.
-   *
-   * @return the size
-   */
+  /** Returns the size. */
   public abstract float getSize();
 
-  /**
-   * Returns the symbol type.
-   *
-   * @return the symbol type
-   */
+  /** Returns the symbol type. */
   public abstract int getType();
 
-  /**
-   * Returns the inner paint.
-   *
-   * @return the inner paint
-   */
+  /** Returns the inner paint. */
   public abstract SGIPaint getInnerPaint();
 
-  /**
-   * Returns the line color.
-   *
-   * @return the line color
-   */
+  /** Returns the line color. */
   public abstract Color getLineColor();
 
-  /**
-   * Returns the line width.
-   *
-   * @return the line width
-   */
+  /** Returns the line width. */
   public abstract float getLineWidth();
 
-  /**
-   * Returns the line visible.
-   *
-   * @return the line visible
-   */
+  /** Returns the line visible. */
   public abstract boolean isLineVisible();
 
   /**
    * Returns whether a given symbol type is valid.
    *
    * @param type a symbol type
-   * @return true if the given symbol type is valid
    */
   public static boolean isValidSymbolType(final int type) {
     final int[] array = {
@@ -219,7 +167,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Returns the symbol type constant from a given name.
    *
    * @param name the name of symbol type
-   * @return the symbol type constant if it exists or null otherwise
    */
   public static Integer getSymbolTypeFromName(final String name) {
     if (name == null) {
@@ -252,7 +199,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Returns the name of a given symbol type.
    *
    * @param type the symbol type
-   * @return the name of a given symbol type
    */
   public static String getSymbolTypeName(final int type) {
     String name = null;
@@ -287,7 +233,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    * Returns whether a given symbol type is of the line type.
    *
    * @param type a symbol type
-   * @return true if the given symbol type is of the line type
    */
   public static boolean isLineTypeSymbol(final int type) {
     return ((type == SYMBOL_TYPE_CROSS) || (type == SYMBOL_TYPE_PLUS));
@@ -435,7 +380,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    *
    * @param x the x coordinate
    * @param y the y coordinate
-   * @return true if a given point is contained
    */
   public boolean contains(final int x, final int y) {
     Shape sh = this.getSymbolShape();
@@ -446,7 +390,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
     Rectangle2D rect = sh.getBounds2D();
     final float min = MIN_SIZE;
 
-    // if the symbol is too small, enlarge the rectangle
     if (rect.getWidth() < min || rect.getHeight() < min) {
       final float centerX = (float) rect.getCenterX();
       final float centerY = (float) rect.getCenterY();
@@ -468,11 +411,7 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
     return rect.contains(x, y);
   }
 
-  /**
-   * Returns the bounds of this symbol.
-   *
-   * @return the bounds of this symbol
-   */
+  /** Returns the bounds of this symbol. */
   public Rectangle2D getElementBounds() {
     Shape sh = this.getSymbolShape();
     if (sh == null) {
@@ -481,11 +420,7 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
     return sh.getBounds2D();
   }
 
-  /**
-   * Returns the shape.
-   *
-   * @return a shape
-   */
+  /** Returns the shape. */
   public Shape getSymbolShape() {
     Shape sh = this.getShape();
     if (sh != null) {
@@ -504,7 +439,6 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
    *
    * @param type the symbol type
    * @param size the size
-   * @return a shape object
    */
   protected static Shape createShape(final int type, final float size) {
 
@@ -625,22 +559,14 @@ public abstract class SGDrawingElementSymbol extends SGDrawingElement
     return sh;
   }
 
-  /**
-   * Creates a shape object. Created object is located at the origin.
-   *
-   * @return a shape
-   */
+  /** Creates a shape object. Created object is located at the origin. */
   protected Shape createShape() {
     final int type = this.getType();
     final float size = this.getMagnification() * this.getSize();
     return createShape(type, size);
   }
 
-  /**
-   * Returns the affine transform to rotate and translate the symbol.
-   *
-   * @return the affine transform
-   */
+  /** Returns the affine transform to rotate and translate the symbol. */
   protected AffineTransform getAffineTransform() {
     AffineTransform af = new AffineTransform();
     af.translate(this.getX(), this.getY());

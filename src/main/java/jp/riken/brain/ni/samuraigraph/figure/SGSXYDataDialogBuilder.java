@@ -1257,7 +1257,6 @@ class SGSXYDataDialogBuilder {
               SGIDataInformationKeyConstants.KEY_SXY_TICK_LABEL_STRIDE, tickLabelStride);
 
         } else if (SGDataDataTypeUtility.isNetCDFData(data)) {
-          // for netCDF data, changes the direction of error bars and tick labels
           // automatically.
           // but if change whether Pickup column type exists, data and data type are
           // converted and then must not be change bar vertical.

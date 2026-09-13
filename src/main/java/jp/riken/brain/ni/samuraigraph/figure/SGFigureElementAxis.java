@@ -187,11 +187,7 @@ public class SGFigureElementAxis extends SGFigureElement
     this.mTextField.addKeyListener(this);
   }
 
-  /**
-   * Initialize the history of properties.
-   *
-   * @return true if succeeded
-   */
+  /** Initialize the history of properties. */
   public boolean initPropertiesHistory() {
     if (super.initPropertiesHistory() == false) {
       return false;
@@ -230,7 +226,6 @@ public class SGFigureElementAxis extends SGFigureElement
     this.mDraggableAxisScaleElement = null;
     this.mPressedElementOrigin = null;
     this.mPressedPoint = null;
-    //        this.mTemporaryProperties = null;
     this.mTextField = null;
     for (int ii = 0; ii < this.mElementsGroupList.size(); ii++) {
       SGFigureAxis group = (SGFigureAxis) this.mElementsGroupList.get(ii);
@@ -252,7 +247,6 @@ public class SGFigureElementAxis extends SGFigureElement
 
   /** */
   public void actionPerformed(final ActionEvent e) {
-    // String command = e.getActionCommand();
     Object source = e.getSource();
 
     if (source.equals(this.mTextField)) {
@@ -261,11 +255,7 @@ public class SGFigureElementAxis extends SGFigureElement
     }
   }
 
-  /**
-   * Overrode for the text field for axis title.
-   *
-   * @return true if a text field is shown
-   */
+  /** Overrode for the text field for axis title. */
   public boolean closeTextField() {
     this.commitEdit();
     this.hideEditField();
@@ -287,7 +277,6 @@ public class SGFigureElementAxis extends SGFigureElement
     // update the history
     if (before.equals(after) == false) {
       if (this.mEditingStringElement.equals(this.mZAxisElementsGroup.mTitle)) {
-        // if the title of the color bar is changed,
         // set changed the color bar
         this.mZAxisElementsGroup.setChanged(true);
       } else if (this.mEditingStringElement.equals(this.mAxisScale.getHorizontalStringElement())) {
@@ -332,20 +321,12 @@ public class SGFigureElementAxis extends SGFigureElement
     return true;
   }
 
-  /**
-   * Returns whether the frame line is visible.
-   *
-   * @return whether the frame line is visible
-   */
+  /** Returns whether the frame line is visible. */
   public boolean isFrameLineVisible() {
     return this.mFrameLineVisibleFlag;
   }
 
-  /**
-   * Returns width of frame lines.
-   *
-   * @return width of frame lines
-   */
+  /** Returns width of frame lines. */
   public float getFrameLineWidth() {
     return this.mFrameLineStroke.getLineWidth();
   }
@@ -354,15 +335,12 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns width of frame lines in given unit.
    *
    * @param unit unit of length
-   * @return width of frame lines in given unit
    */
   public float getFrameLineWidth(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getFrameLineWidth(), unit);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Color getFrameLineColor() {
     return this.mFrameLineColor;
   }
@@ -371,7 +349,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Sets the visibility of the frame.
    *
    * @param b true to set visible
-   * @return true if succeeded
    */
   public boolean setFrameVisible(final boolean b) {
     this.mFrameLineVisibleFlag = b;
@@ -385,40 +362,7 @@ public class SGFigureElementAxis extends SGFigureElement
 
   /** Shows the property dialog for axes. */
   void showPropertyDialog(SGIPropertyDialogObserver obs, final boolean forVisibleAxes) {
-    /*
-     	List<SGFigureAxis> axes = this.getAxisGroupList();
 
-     	// gets selected axes
-     	List<SGFigureAxis> selectedAxes = new ArrayList<SGFigureAxis>();
-     	for (SGFigureAxis axis : axes) {
-     		if (axis.isSelected()) {
-     			selectedAxes.add(axis);
-     		}
-     	}
-
-     	// deselects all axes
-     	for (SGFigureAxis axis : axes) {
-    axis.setSelected(false);
-     	}
-
-     	// selects axes
-     	if (forVisibleAxes) {
-         	for (SGFigureAxis axis : axes) {
-         		if (axis.isVisible()) {
-         			axis.setSelected(true);
-         		}
-         	}
-     	} else {
-         	for (SGFigureAxis axis : axes) {
-     			axis.setSelected(true);
-         	}
-     	}
-
-     	// recovers selected axes
-     	for (SGFigureAxis axis : axes) {
-    axis.setSelected(selectedAxes.contains(axis));
-     	}
-     	*/
     if (forVisibleAxes) {
       this.setPropertiesOfAllVisibleObjects(obs);
     } else {
@@ -468,7 +412,6 @@ public class SGFigureElementAxis extends SGFigureElement
   private void synchronizeColorBar(final SGIFigureElementForData element, final String msg) {
     if (SGIFigureElement.NOTIFY_DATA_HIDDEN.equals(msg)
         || SGIFigureElement.NOTIFY_CHANGE_ON_UNDO.equals(msg)) {
-      // if there are no SXYZ type of data exist, hide the color bar
       List<SGData> dataList = this.getDataList();
       boolean sxyzVisible = false;
       for (int ii = 0; ii < dataList.size(); ii++) {
@@ -488,6 +431,7 @@ public class SGFigureElementAxis extends SGFigureElement
   /**
    * Synchronizes the element given by the argument.
    *
+   * @param msg the msg parameter
    * @param element An object to be synchronized.
    */
   public boolean synchronizeArgument(final SGIFigureElement element, String msg) {
@@ -499,7 +443,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Sets the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     super.setMagnification(mag);
@@ -649,7 +592,6 @@ public class SGFigureElementAxis extends SGFigureElement
    *
    * @param x x coordinate
    * @param y y coordinate
-   * @return true when the mouse is on something
    */
   public boolean setMouseCursor(final int x, final int y) {
     if (this.mAxisScale.isVisible()) {
@@ -671,11 +613,7 @@ public class SGFigureElementAxis extends SGFigureElement
     return false;
   }
 
-  /**
-   * Updates changed flag of focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Updates changed flag of focused objects. */
   @Override
   public boolean updateChangedFlag() {
     if (this.mAxisScale.isVisible()) {
@@ -699,11 +637,7 @@ public class SGFigureElementAxis extends SGFigureElement
     return true;
   }
 
-  /**
-   * Overrode to check child objects of axes.
-   *
-   * @return true if succeeded
-   */
+  /** Overrode to check child objects of axes. */
   @Override
   public boolean isFocusedObjectsChanged() {
     if (super.isFocusedObjectsChanged()) {
@@ -776,7 +710,6 @@ public class SGFigureElementAxis extends SGFigureElement
    *
    * @param ori the original text string
    * @param location the axis location
-   * @return a text string for the title
    */
   private String createTitleString(final String ori, final int location) {
     String title = null;
@@ -861,7 +794,6 @@ public class SGFigureElementAxis extends SGFigureElement
    *
    * @param data data added
    * @param name name of data
-   * @return true if succeeded
    */
   public boolean addData(final SGData data, final String name) {
     if (super.addData(data, name) == false) {
@@ -930,7 +862,6 @@ public class SGFigureElementAxis extends SGFigureElement
       if (dataArray.length == 1 && dataArray[0] instanceof SGISXYTypeData) {
         SGISXYTypeData sxy = (SGISXYTypeData) dataArray[0];
         if (sxy.isTickLabelAvailable()) {
-          // for data with tick labels
           SGAxisElement group1;
           SGAxisElement group2;
           if (sxy.isTickLabelHorizontal()) {
@@ -1021,7 +952,6 @@ public class SGFigureElementAxis extends SGFigureElement
       this.setUpAxisScale();
     }
 
-    // if the color bar is not available and SXYZ type of data is added,
     // setup the color bar
     if (!this.mColorBarAvailableFlag && dataArray.length > 0) {
 
@@ -1095,7 +1025,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * @param data an array of data objects
    * @param name an array of names of data objects
    * @param infoMap the information map of data object
-   * @return true if succeeded
    */
   @Override
   public boolean addData(
@@ -1120,7 +1049,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * @param data added data.
    * @param name the name set to the data
    * @param p properties set to be data.
-   * @return true if succeeded
    */
   public boolean addData(final SGData data, final String name, final SGProperties p) {
     if (super.addData(data, name, p) == false) {
@@ -1164,10 +1092,6 @@ public class SGFigureElementAxis extends SGFigureElement
     if (groupTop == null || groupBottom == null || groupLeft == null || groupRight == null) {
       return false;
     }
-
-    //
-    // final float space =
-    // this.getSpaceAxisLineAndNumber()*this.mMagnification;
 
     // get a bounding box which contains all drawing elements
     Rectangle2D rectAllTop = groupTop.getBoundingBox();
@@ -1218,7 +1142,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Sets the frame line width.
    *
    * @param lw the line width to set
-   * @return true if succeeded
    */
   public boolean setFrameLineWidth(final float lw) {
     this.mFrameLineStroke.setLineWidth(lw);
@@ -1230,7 +1153,6 @@ public class SGFigureElementAxis extends SGFigureElement
    *
    * @param lw the line width to set in a given unit
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setFrameLineWidth(final float lw, final String unit) {
     final Float lwNew = SGUtility.getLineWidth(lw, unit);
@@ -1244,7 +1166,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Sets the frame line color.
    *
    * @param cl the frame line color to set
-   * @return true if succeeded
    */
   public boolean setFrameLineColor(final Color cl) {
     if (cl == null) {
@@ -1258,7 +1179,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns the space between axis line and numbers in the default unit at given location.
    *
    * @param location of axis
-   * @return the space between axis line and numbers in the default unit at given location
    */
   public float getSpaceAxisLineAndNumber(final int location) {
     SGAxisElement aElement = this.getAxisGroup(location);
@@ -1272,7 +1192,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns the space between numbers and title in the default unit at given location.
    *
    * @param location of axis
-   * @return the space between numbers and title in the default unit at given location
    */
   public float getSpaceNumberAndTitle(final int location) {
     SGAxisElement aElement = this.getAxisGroup(location);
@@ -1286,7 +1205,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns the list of focused objects.
    *
    * @param list the list of focused objects
-   * @return true if succeeded
    */
   public boolean getFocusedObjectsList(List<SGISelectable> list) {
     List<SGISelectable> tempList = new ArrayList<SGISelectable>();
@@ -1332,7 +1250,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * @param loc
    * @param x
    * @param y
-   * @return
    */
   public double getValue(final int loc, final int x, final int y) {
     final SGAxisElement group = this.getAxisGroup(loc);
@@ -1414,7 +1331,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns whether given axis is horizontal.
    *
    * @param axis an axis
-   * @return true when given axis is horizontal
    */
   public boolean isHorizontal(final SGAxis axis) {
     return this.getHorizontalAxisList().contains(axis);
@@ -1424,7 +1340,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns whether given axis is vertical.
    *
    * @param axis an axis
-   * @return true when given axis is vertical
    */
   public boolean isVertical(final SGAxis axis) {
     return this.getVerticalAxisList().contains(axis);
@@ -1434,7 +1349,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns whether a given axis is normal.
    *
    * @param axis an axis
-   * @return true if a given axis is normal
    */
   public boolean isNormal(final SGAxis axis) {
     if (this.mZAxisElementsGroup.mAxis.equals(axis)) {
@@ -1444,11 +1358,7 @@ public class SGFigureElementAxis extends SGFigureElement
     }
   }
 
-  /**
-   * Returns a list which contains all axes.
-   *
-   * @return a list of all axes
-   */
+  /** Returns a list which contains all axes. */
   public List<SGAxis> getAxisList() {
     final List<SGAxis> list = new ArrayList<SGAxis>();
     List<SGAxisElement> gList = this.getAllAxisGroupList();
@@ -1459,11 +1369,7 @@ public class SGFigureElementAxis extends SGFigureElement
     return list;
   }
 
-  /**
-   * Returns a list of horizontal axes.
-   *
-   * @return a list of horizontal axes
-   */
+  /** Returns a list of horizontal axes. */
   public List<SGAxis> getHorizontalAxisList() {
     final List<SGAxis> list = new ArrayList<SGAxis>();
     for (int ii = 0; ii < this.mElementsGroupList.size(); ii++) {
@@ -1489,11 +1395,7 @@ public class SGFigureElementAxis extends SGFigureElement
     return list;
   }
 
-  /**
-   * Returns the list of normal axes.
-   *
-   * @return the list of normal axes
-   */
+  /** Returns the list of normal axes. */
   public List<SGAxis> getNormalAxisList() {
     final List<SGAxis> list = new ArrayList<SGAxis>();
     list.add(this.mZAxisElementsGroup.mAxis);
@@ -1513,7 +1415,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns an axis group of given location.
    *
    * @param loc location of the axis in a plane
-   * @return the axis group
    */
   SGAxisElement getAxisGroup(final int loc) {
     List<SGAxisElement> gList = this.getAllAxisGroupList();
@@ -1541,7 +1442,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns a name of axis location in a plane.
    *
    * @param axis
-   * @return
    */
   public String getLocationName(final SGAxis axis) {
     final int loc = this.getLocationInPlane(axis);
@@ -1552,7 +1452,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns the location name of a given location ID.
    *
    * @param id a location ID
-   * @return the location name
    */
   public String getLocationName(final int id) {
     return SGUtility.getLocationName(id);
@@ -1562,7 +1461,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns the location ID of a given location name.
    *
    * @param name a location name
-   * @return the location ID
    */
   public int getLocationInPlane(final String name) {
     return SGUtility.getLocationInPlane(name);
@@ -1572,7 +1470,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns a text string for the axis location in a plane.
    *
    * @param axis an axis
-   * @return location such as AXIS_HORIZONTAL_1
    */
   public String getLocationStringInPlane(final SGAxis axis) {
     final int loc = this.getLocationInPlane(axis);
@@ -1583,7 +1480,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns a location in a plane from the location.
    *
    * @param axis an axis
-   * @return location such as AXIS_HORIZONTAL_1
    */
   public int getLocationInPlane(final SGAxis axis) {
     if (axis == null) {
@@ -1600,16 +1496,13 @@ public class SGFigureElementAxis extends SGFigureElement
 
   /**
    * @param str
-   * @return
    */
   public SGAxis getAxis(final String str) {
     final SGAxis axis = this.getAxisGroup(str).mAxis;
     return axis;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return "Axes";
   }
@@ -1618,7 +1511,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns the list of selected property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of selected property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getSelectedPropertyDialogObserverList(Class<?> cl) {
@@ -1646,7 +1538,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns the list of visible property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of visible property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getVisiblePropertyDialogObserverList(Class<?> cl) {
@@ -1674,7 +1565,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns the list of all property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of all property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getAllPropertyDialogObserverList(Class<?> cl) {
@@ -1688,20 +1578,12 @@ public class SGFigureElementAxis extends SGFigureElement
     return list;
   }
 
-  /**
-   * Returns a list of child nodes.
-   *
-   * @return a list of child nodes
-   */
+  /** Returns a list of child nodes. */
   public ArrayList<SGINode> getChildNodes() {
     return new ArrayList<SGINode>();
   }
 
-  /**
-   * Returns a property dialog.
-   *
-   * @return a property dialog
-   */
+  /** Returns a property dialog. */
   public SGPropertyDialog getPropertyDialog() {
     return this.mPropertyDialog;
   }
@@ -1757,9 +1639,7 @@ public class SGFigureElementAxis extends SGFigureElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getTagName() {
     return SGIFigureElementAxis.TAG_NAME_AXES;
   }
@@ -1767,8 +1647,8 @@ public class SGFigureElementAxis extends SGFigureElement
   /**
    * Creates an array of Element objects.
    *
+   * @param params the params parameter
    * @param document an Document objects to append elements
-   * @return an array of Element objects
    */
   public Element[] createElement(final Document document, SGExportParameter params) {
 
@@ -1851,7 +1731,6 @@ public class SGFigureElementAxis extends SGFigureElement
    *
    * @param element an Element object which has properties
    * @param versionNumber the version number of property file
-   * @return true if succeeded
    */
   public boolean readProperty(final Element element, final String versionNumber) {
 
@@ -1976,8 +1855,6 @@ public class SGFigureElementAxis extends SGFigureElement
     return true;
   }
 
-  // for property file
-  // version <= 2.0.0
   private boolean setOlderProperties(final Element element) {
 
     final String versionNumber = SGUtility.getVersionNumber(element);
@@ -2264,11 +2141,7 @@ public class SGFigureElementAxis extends SGFigureElement
     // a dummy class
   }
 
-  /**
-   * Returns the properties.
-   *
-   * @return the properties
-   */
+  /** Returns the properties. */
   public SGProperties getProperties() {
     // returns a dummy instance
     return new AxisProperties();
@@ -2278,7 +2151,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Sets the properties.
    *
    * @param p the properties to set
-   * @return true if succeeded
    */
   public boolean setProperties(final SGProperties p) {
     // do nothing
@@ -2296,7 +2168,6 @@ public class SGFigureElementAxis extends SGFigureElement
     Object source = e.getSource();
     char c = e.getKeyChar();
 
-    // if the text field is visible
     if (source.equals(this.mTextField)) {
       // hide the text field
       if (c == KeyEvent.VK_ESCAPE) {
@@ -2310,7 +2181,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Sets the dialog owner this figure element.
    *
    * @param frame the dialog owner
-   * @return true if succeeded
    */
   public boolean setDialogOwner(final Frame frame) {
     if (super.setDialogOwner(frame) == false) {
@@ -2361,34 +2231,10 @@ public class SGFigureElementAxis extends SGFigureElement
   }
 
   /** Update the text field. */
-  private void updateLabelTextField() {
-    /*
-    // create the font
-    final Font font = new Font(this.getTitleFontName(), this
-            .getTitleFontStyle(), (int) (this.getTitleFontSize() * this
-            .getMagnification()));
-
-    // update the text field
-    this.updateTextField(this.mTextField, font);
-    */
-  }
+  private void updateLabelTextField() {}
 
   /** Called when the caret in the text field is update. */
-  public void caretUpdate(final CaretEvent e) {
-    //        final String str = this.mTextField.getText();
-    //        final Font font = new Font(this.getTitleFontName(), this
-    //                .getTitleFontStyle(), (int) (this.getTitleFontSize() * this
-    //                .getMagnification()));
-    //        final Rectangle2D stringRect = font.getStringBounds(str,
-    //                new FontRenderContext(null, false, false));
-    //
-    //        final double width = stringRect.getWidth();
-    //        if (width > this.mTextField.getWidth()) {
-    //            this.mTextField.setSize((int) (stringRect.getWidth() + this
-    //                    .getMagnification()
-    //                    * this.getTitleFontSize()), this.mTextField.getHeight());
-    //        }
-  }
+  public void caretUpdate(final CaretEvent e) {}
 
   /** Called when menu items in the menu bar is selected. */
   public void onMenuSelected() {
@@ -2397,31 +2243,19 @@ public class SGFigureElementAxis extends SGFigureElement
     }
   }
 
-  /**
-   * Returns the z-axis.
-   *
-   * @return the z-axis
-   */
+  /** Returns the z-axis. */
   public SGAxis getZAxis() {
     return this.mZAxisElementsGroup.mAxis;
   }
 
-  /**
-   * Returns all axis groups.
-   *
-   * @return the list of all axis groups
-   */
+  /** Returns all axis groups. */
   private List<SGFigureAxis> getAxisGroupList() {
     List<SGFigureAxis> list = new ArrayList<SGFigureAxis>();
     list.addAll(this.mElementsGroupList);
     return list;
   }
 
-  /**
-   * Returns all axis groups including the z-axis.
-   *
-   * @return the list of all axis groups
-   */
+  /** Returns all axis groups including the z-axis. */
   private List<SGAxisElement> getAllAxisGroupList() {
     List<SGAxisElement> list = new ArrayList<SGAxisElement>(this.getAxisGroupList());
     if (this.mZAxisElementsGroup != null) {
@@ -2435,7 +2269,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns whether the axis is available.
    *
    * @param location location of an axis
-   * @return true if the axis is available
    */
   public boolean isAxisAvailable(final String location) {
     if (AXIS_COLOR_BAR.equals(location)) {
@@ -2450,11 +2283,7 @@ public class SGFigureElementAxis extends SGFigureElement
     }
   }
 
-  /**
-   * Returns the color map.
-   *
-   * @return the color map
-   */
+  /** Returns the color map. */
   public SGColorMap getColorMap() {
     SGColorBarAxis cAxis = (SGColorBarAxis) this.getAxisGroup(AXIS_NORMAL);
     return cAxis.getColorMap();
@@ -2474,11 +2303,7 @@ public class SGFigureElementAxis extends SGFigureElement
     return uList;
   }
 
-  /**
-   * Returns whether the color bar is visible.
-   *
-   * @return true if visible
-   */
+  /** Returns whether the color bar is visible. */
   public boolean isColorBarVisible() {
     return this.mZAxisElementsGroup.isVisible();
   }
@@ -2486,18 +2311,13 @@ public class SGFigureElementAxis extends SGFigureElement
   /**
    * Sets whether the color bar is visible.
    *
-   * @param true to set visible
-   * @return true if succeeded
+   * @param b to set visible
    */
   public boolean setColorBarVisible(final boolean b) {
     return this.mZAxisElementsGroup.setVisible(b);
   }
 
-  /**
-   * Returns whether the color bar is available.
-   *
-   * @return true if the color bar is available
-   */
+  /** Returns whether the color bar is available. */
   public boolean isColorBarAvailable() {
     return this.mColorBarAvailableFlag;
   }
@@ -2505,8 +2325,9 @@ public class SGFigureElementAxis extends SGFigureElement
   /**
    * Fits axis range to the focused data.
    *
+   * @param axisDirection the axisDirection parameter
+   * @param forAnimationFrames the forAnimationFrames parameter
    * @param element a figure element for data
-   * @return true if succeeded
    */
   public boolean fitAxisRangeToFocusedData(
       final SGIFigureElementForData element,
@@ -2539,9 +2360,10 @@ public class SGFigureElementAxis extends SGFigureElement
   /**
    * Fits axis range to given data objects.
    *
+   * @param axisDirection the axisDirection parameter
+   * @param forAnimationFrames the forAnimationFrames parameter
    * @param element a figure element for data
    * @param dList a list of data
-   * @return true if succeeded
    */
   @Override
   public boolean fitAxisRangeToData(
@@ -2872,7 +2694,6 @@ public class SGFigureElementAxis extends SGFigureElement
    *
    * @param element a figure element for data
    * @param data a data object
-   * @return true if succeeded
    */
   private boolean synchronizeAxis(final SGIFigureElementForData element, final SGData data) {
 
@@ -2995,7 +2816,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Sets the common properties.
    *
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setProperties(SGPropertyMap map) {
     SGPropertyResults result = new SGPropertyResults();
@@ -3082,7 +2902,6 @@ public class SGFigureElementAxis extends SGFigureElement
    *
    * @param id the ID of child object
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setChildProperties(final int id, SGPropertyMap map) {
     List<SGAxisElement> gList = this.getAllAxisGroupList();
@@ -3100,7 +2919,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * @param id the ID of child object
    * @param colorMapName the name of color map
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setChildColorMapProperties(
       final int id, final String colorMapName, SGPropertyMap map) {
@@ -3167,7 +2985,6 @@ public class SGFigureElementAxis extends SGFigureElement
    * Returns whether the axis at given location is visible.
    *
    * @param location location of an axis
-   * @return true if the axis at given location is visible
    */
   @Override
   public boolean isAxisVisible(final int location) {
@@ -3190,11 +3007,7 @@ public class SGFigureElementAxis extends SGFigureElement
     if (el == null) {
       throw new IllegalArgumentException("Invalid axis location: " + location);
     }
-    //		final boolean pre = el.isVisible();
     el.setVisible(b);
-    //    	el.setChanged(b != pre);
-    //    	this.notifyToRoot();
-    //    	this.repaint();
   }
 
   public void setChanged(final int location, final boolean b) {

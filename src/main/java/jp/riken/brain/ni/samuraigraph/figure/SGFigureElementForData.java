@@ -81,9 +81,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
   /**
    * Returns the group set object related to the given data object.
    *
-   * @param data a data object
-   * @return A group set object related to the given data object. If it does not exist, returns
-   *     null.
+   * @param data a data object null.
    */
   protected SGElementGroupSetForData getElementGroupSet(SGData data) {
     for (int ii = 0; ii < this.mChildList.size(); ii++) {
@@ -98,9 +96,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
   /**
    * Returns the data object related to the given group set object.
    *
-   * @param groupSet a group set object
-   * @return A data object related to the given group set object. If it does not exist, returns
-   *     null.
+   * @param groupSet a group set object null.
    */
   protected SGData getData(SGElementGroupSetForData groupSet) {
     for (int ii = 0; ii < this.mChildList.size(); ii++) {
@@ -117,7 +113,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns the name of a given data object.
    *
    * @param data the data object to get the name
-   * @return the name of a given data object
    */
   public String getDataName(final SGData data) {
     final SGElementGroupSetForData groupSet = this.getElementGroupSet(data);
@@ -132,7 +127,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    *
    * @param name the name to set
    * @param data the data object to set the name
-   * @return true if succeeded
    */
   public boolean setDataName(String name, SGData data) {
     final SGElementGroupSetForData groupSet = this.getElementGroupSet(data);
@@ -147,7 +141,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns properties of a given data object.
    *
    * @param data a data object
-   * @return the properties
    */
   public SGProperties getDataProperties(SGData data) {
     final SGElementGroupSetForData groupSet = this.getElementGroupSet(data);
@@ -161,7 +154,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns whether a given data is visible.
    *
    * @param data a data object
-   * @return true if a given data is visible
    */
   public boolean isDataVisible(SGData data) {
     SGElementGroupSetForData groupSet = (SGElementGroupSetForData) this.getElementGroupSet(data);
@@ -172,7 +164,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns whether a given data is visible in legend.
    *
    * @param data a data
-   * @return true if a given data is visible in legend
    */
   public boolean isDataVisibleInLegend(final SGData data) {
     SGElementGroupSetForData groupSet = (SGElementGroupSetForData) this.getElementGroupSet(data);
@@ -184,7 +175,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    *
    * @param data a data object
    * @param b visibility to set to the data
-   * @return true if succeeded
    */
   public boolean setDataVisible(final SGData data, final boolean b) {
     SGElementGroupSetForData groupSet = this.getElementGroupSet(data);
@@ -192,11 +182,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     return true;
   }
 
-  /**
-   * Returns the list of visible data objects.
-   *
-   * @return a list of visible data objects
-   */
+  /** Returns the list of visible data objects. */
   public List<SGData> getVisibleDataList() {
     List<SGData> list = new ArrayList<SGData>();
     for (int ii = 0; ii < this.mChildList.size(); ii++) {
@@ -213,7 +199,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns the list of visible flags of drawing elements.
    *
    * @param data a data object
-   * @return the list of visible flags of drawing elements
    */
   public List<Boolean> getVisibleFlagList(final SGData data) {
     if (data == null) {
@@ -231,7 +216,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns whether a given data is visible in the legend.
    *
    * @param data a data object
-   * @return true if a given data object is visible in the legend
    */
   public boolean getVisibleInLegendFlag(SGData data) {
     if (data == null) {
@@ -249,7 +233,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns the X axis for a given data.
    *
    * @param data a data object
-   * @return an axis object related to this data for the X-direction
    */
   public SGAxis getXAxis(final SGData data) {
     final SGElementGroupSetForData groupSet = this.getElementGroupSet(data);
@@ -263,7 +246,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns the Y axis for a given data.
    *
    * @param data a data object
-   * @return an axis object related to this data for the Y-direction
    */
   public SGAxis getYAxis(final SGData data) {
     final SGElementGroupSetForData groupSet = this.getElementGroupSet(data);
@@ -273,11 +255,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     return null;
   }
 
-  /**
-   * Returns a list of useless data objects in this figure element.
-   *
-   * @return a list of useless data objects in this figure element
-   */
+  /** Returns a list of useless data objects in this figure element. */
   public List<SGData> getUselessDataList() {
     List<SGData> dataList = new ArrayList<SGData>(this.mDataList);
     Set<SGIChildObject> cSet = this.getAvailableChildSet();
@@ -293,8 +271,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
   /**
    * Returns the property dialog of data.
    *
-   * @param dataType the type of data
-   * @return the property dialog for given data type
+   * @param data the type of data
    */
   public SGPropertyDialog getDataDialog(SGData data) {
 
@@ -347,7 +324,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * @param data related data
    * @param name the name of data
    * @param infoMap information map
-   * @return created object
    */
   protected SGIElementGroupSetForData createGroupSet(
       SGData data, String name, Map<String, Object> infoMap) {
@@ -542,7 +518,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Return bar width of a given groupSet.
    *
    * @param gs
-   * @return
    */
   protected double getBarWidthOfBarSeries(SGIElementGroupSetXY gs) {
     final double[] valueArray;
@@ -594,11 +569,10 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Return bar width from the interval of x values and graph width.
    *
    * @param groupBar
-   * @param barGroups
+   * @param numberOfBars
    * @param data
    * @param axisX
    * @param axisY
-   * @return calculated bar width
    */
   public double getAutoArrangementOfBarWidth(
       final SGElementGroupBar groupBar,
@@ -628,7 +602,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * @param data
    * @param axisX
    * @param axisY
-   * @return calculated bar width
    */
   public double getAutoArrangementOfBarWidth(
       final SGElementGroupBar groupBar,
@@ -701,7 +674,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Calculates the initial magnitude of the vector per centimeter.
    *
    * @param data the vector data
-   * @return the initial magnitude of the vector per centimeter
    */
   protected float getInitialMagnitudePerCM(SGIVXYTypeData data) {
     final float mag = SGDataStrideUtility.getInitialMagnitudePerCM(data);
@@ -1181,13 +1153,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
     }
 
     // Enabled to hide all types of drawing elements at the same time.
-    /*
-     * // lines, symbols or bars cannot hide at the same time
-     * if (!lineGroup.isVisible() && !symbolGroup.isVisible() &&
-     * !barGroup.isVisible()) {
-     * return PROPERTY_FILE_INCORRECT;
-     * }
-     */
 
     return SGIConstants.SUCCESSFUL_COMPLETION;
   }
@@ -1286,8 +1251,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
         }
       }
 
-      // for backward compatibility
-      // version number == 2.0.0
       String version = SGUtility.getVersionNumber(el);
       if ("2.0.0".equals(version)) {
         Double shiftX = null;
@@ -1417,7 +1380,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
       final Element el, final SGIElementGroupSetVXY groupSet, final SGIVXYTypeData data) {
 
     final int ic = SGIConstants.PROPERTY_FILE_INCORRECT;
-    // SGIFigureElementAxis aElement = this.mAxisElement;
     String str = null;
     Number num = null;
     Boolean b = null;
@@ -1475,7 +1437,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
     // color map
     nList = el.getElementsByTagName(SGIColorMapConstants.TAG_NAME_COLOR_MAP);
     if (nList.getLength() == 0) {
-      // for backward compatibility
       nList = el.getElementsByTagName(SGIColorMapConstants.TAG_NAME_GRID_COLOR_MAP);
     }
     if (nList.getLength() != 1) {
@@ -1494,7 +1455,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Sets the dialog owner this figure element.
    *
    * @param frame the dialog owner
-   * @return true if succeeded
    */
   public boolean setDialogOwner(final Frame frame) {
     if (super.setDialogOwner(frame) == false) {
@@ -1511,10 +1471,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
                 mDataDialogMap.put(DIALOG_KEY_VXY, new SGPropertyDialogVXYData(mDialogOwner, true));
               }
             }
-            // if (mAnimationDialog == null) {
-            // mAnimationDialog = new SGDataAnimationConfigurationDialog(mDialogOwner,
-            // true);
-            // }
           }
         });
     return true;
@@ -1524,7 +1480,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Checks whether the objects related to a given data are changed.
    *
    * @param data a data
-   * @return true if something changed related to a given data
    */
   @Override
   public boolean checkDataChanged(final SGData data) {
@@ -1542,7 +1497,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    *
    * @param p the properties
    * @param dp data properties
-   * @return synchronized properties
    */
   public SGProperties synchronizeDataProperties(SGProperties p, SGProperties dp) {
     if ((p instanceof ElementGroupSetPropertiesInFigureElement) == false) {
@@ -1567,11 +1521,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     return gp;
   }
 
-  /**
-   * Returns a list of labels for data objects.
-   *
-   * @return a list of labels for data objects
-   */
+  /** Returns a list of labels for data objects. */
   public List<DataLabel> getDataLabelList() {
     List<SGData> dList = this.getFocusedDataList();
     List<DataLabel> list = new ArrayList<DataLabel>();
@@ -1593,11 +1543,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     return list;
   }
 
-  /**
-   * Hide the selected objects.
-   *
-   * @return true if selected
-   */
+  /** Hide the selected objects. */
   @Override
   public boolean hideSelectedObjects() {
     List<SGISelectable> listBefore = this.getFocusedObjectsList();
@@ -1614,11 +1560,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
     return true;
   }
 
-  /**
-   * Hide the selected data objects.
-   *
-   * @return true if selected
-   */
+  /** Hide the selected data objects. */
   protected boolean hideSelectedData() {
     List<SGISelectable> listBefore = this.getFocusedObjectsList();
     if (listBefore.size() > 0) {
@@ -1634,54 +1576,10 @@ public abstract class SGFigureElementForData extends SGFigureElement
     return true;
   }
 
-  // /**
-  // * A dialog to setup the animation of data objects.
-  // */
-  // protected SGDataAnimationConfigurationDialog mAnimationDialog = null;
-  //
-  // /**
-  // * Do the animation for a given group set.
-  // *
-  // * @param gs
-  // * a group set to do animation
-  // */
-  // protected void doAnimation(SGElementGroupSetForData gs) {
-  // SGData data = gs.getData();
-  // boolean valid = false;
-  // if (SGDataDataTypeUtility.isNetCDFData(data)) {
-  // SGNetCDFData nData = (SGNetCDFData) data;
-  // if (nData.isTimeVariableAvailable()) {
-  // valid = true;
-  // } else {
-  // SGUtility.showErrorMessageDialog(this.mDialogOwner,
-  // "Variable for animation frame is not selected properly.",
-  // SGIConstants.ERROR);
-  // }
-  // } else if (SGDataDataTypeUtility.isMDArrayData(data)) {
-  // SGMDArrayData mdData = (SGMDArrayData) data;
-  // if (mdData.isTimeDimensionAvailable()) {
-  // valid = true;
-  // } else {
-  // SGUtility.showErrorMessageDialog(this.mDialogOwner,
-  // "Dimensions for animation frame are not selected properly.",
-  // SGIConstants.ERROR);
-  // }
-  // } else {
-  // throw new Error("Not supported data type: " + data.getDataType());
-  // }
-  // if (!valid) {
-  // return;
-  // }
-  // this.mAnimationDialog.setAnimation(gs);
-  // this.mAnimationDialog.setCenter(this.mDialogOwner);
-  // this.mAnimationDialog.setVisible(true);
-  // }
-
   /**
    * Returns the list of axis information of a given data.
    *
-   * @param data a data object
-   * @return the list of axis information of a given data
+   * @param forAnimationFrames a data object
    */
   public List<SGDataAxisInfo> getAxisInfoList(SGData data, final boolean forAnimationFrames) {
     SGElementGroupSetForData gs = this.getElementGroupSet(data);
@@ -1738,20 +1636,10 @@ public abstract class SGFigureElementForData extends SGFigureElement
     aList.add(info);
   }
 
-  // protected SGElementGroupSetInFigureElement getGroupSet(final int id) {
-  // SGElementGroupSetInFigureElement el = (SGElementGroupSetInFigureElement) this
-  // .getVisibleChild(id);
-  // if (el == null) {
-  // return null;
-  // }
-  // return el;
-  // }
-
   /**
    * Returns the data of a given ID.
    *
    * @param id the ID of data
-   * @return the data object if it exists
    */
   public SGData getData(final int id) {
     SGIChildObject c = this.getVisibleChild(id);
@@ -1772,7 +1660,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    *
    * @param id the ID of child object
    * @param map a map properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setChildProperties(final int id, SGPropertyMap map) {
     SGIChildObject child = this.getVisibleChild(id);
@@ -1793,7 +1680,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * @param id the ID of child object
    * @param subId the ID of sub child object
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setChildProperties(final int id, final int subId, SGPropertyMap map) {
     SGIChildObject child = this.getVisibleChild(id);
@@ -1818,7 +1704,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * @param id the ID of child object
    * @param colorMapName the name of color map
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setChildColorMapProperties(
       final int id, final String colorMapName, SGPropertyMap map) {
@@ -1845,7 +1730,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * @param data added data.
    * @param name the name set to the data
    * @param p properties set to be data.
-   * @return true if succeeded
    */
   public boolean addData(final SGData data, final String name, final SGProperties p) {
     if (data == null) {
@@ -1862,7 +1746,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * @param data an array of data objects
    * @param name an array of names of data objects
    * @param infoMap the information map of data
-   * @return true if succeeded
    */
   @Override
   public boolean addData(
@@ -1892,7 +1775,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Removes a data object.
    *
    * @param data data to be removed
-   * @return true if succeeded
    */
   public boolean removeData(SGData data) {
     if (super.removeData(data) == false) {
@@ -1913,18 +1795,13 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns the child object for given data.
    *
    * @param data data object
-   * @return the child object
    */
   @Override
   public SGIChildObject getChild(SGData data) {
     return this.getElementGroupSet(data);
   }
 
-  /**
-   * Returns a list of focused data objects.
-   *
-   * @return a list of focused data objects
-   */
+  /** Returns a list of focused data objects. */
   public List<SGData> getFocusedDataList() {
     List<SGISelectable> fList = this.getFocusedObjectsList();
     List<SGData> list = new ArrayList<SGData>();
@@ -1943,7 +1820,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns whether given group set is enabled to be merged.
    *
    * @param gs a group set
-   * @return true if given group set enabled to be merged
    */
   protected boolean isMergeEnabled(SGElementGroupSetForData gs) {
     List<SGData> dataList = this.getFocusedDataList();
@@ -1966,7 +1842,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns the style of drawing elements of given data.
    *
    * @param data a data
-   * @return list of the style
    */
   @Override
   public List<SGStyle> getStyle(SGData data) {
@@ -1981,7 +1856,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns whether it is available to assign line colors in given group set.
    *
    * @param gs a group set
-   * @return true if it is available
    */
   protected boolean isLineColorAssignAvailable(SGIElementGroupSetMultipleSXY gs) {
     List<SGData> dataList = this.getFocusedDataList();
@@ -2000,7 +1874,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Sets the flag whether data objects in this figure are anchored
    *
    * @param b true to set data objects in this figure anchored
-   * @return true if succeeded
    */
   public boolean setDataAnchored(final boolean b) {
     // sets the flag to all sxy-type data objects
@@ -2054,7 +1927,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns the list of selected property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of selected property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getSelectedPropertyDialogObserverList(Class<?> cl) {
@@ -2065,7 +1937,6 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns the list of visible property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of visible property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getVisiblePropertyDialogObserverList(Class<?> cl) {
@@ -2076,18 +1947,13 @@ public abstract class SGFigureElementForData extends SGFigureElement
    * Returns the list of all property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of all property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getAllPropertyDialogObserverList(Class<?> cl) {
     return this.getVisiblePropertyDialogObserverList();
   }
 
-  /**
-   * Returns the class object of property dialog observer.
-   *
-   * @return the class object
-   */
+  /** Returns the class object of property dialog observer. */
   @Override
   public Class<?> getPropertyDialogObserverClass() {
     return SGElementGroupSetForData.class;

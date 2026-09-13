@@ -499,20 +499,12 @@ public class SGDataViewerDialog extends SGDialog {
     this.setVisible(false);
   }
 
-  /**
-   * Returns the data.
-   *
-   * @return the data
-   */
+  /** Returns the data. */
   public SGData getData() {
     return this.mData;
   }
 
-  /**
-   * Returns the name of data.
-   *
-   * @return the name of data
-   */
+  /** Returns the name of data. */
   public String getDataName() {
     return this.mDataName;
   }

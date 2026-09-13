@@ -53,11 +53,7 @@ class SGFigureAxis extends SGAxisElement {
     this.initLocationOfExponentDrawingElement();
   }
 
-  /**
-   * Creates axis lines.
-   *
-   * @return axis lines
-   */
+  /** Creates axis lines. */
   protected ElementLineAxis[] createAxisLines() {
     ElementLineAxis[] array = new ElementLineAxis[1];
     array[0] = new ElementLineAxis();
@@ -78,11 +74,7 @@ class SGFigureAxis extends SGAxisElement {
     this.mPopupMenu = null;
   }
 
-  /**
-   * Returns a pop-up menu.
-   *
-   * @return a pop-up menu
-   */
+  /** Returns a pop-up menu. */
   public JPopupMenu getPopupMenu() {
     JPopupMenu p = null;
     if (this.mPopupMenu != null) {
@@ -109,11 +101,7 @@ class SGFigureAxis extends SGAxisElement {
     return p;
   }
 
-  /**
-   * Create a pop-up menu.
-   *
-   * @return a pop-up menu
-   */
+  /** Create a pop-up menu. */
   protected JPopupMenu createPopupMenu() {
     JPopupMenu p = new JPopupMenu();
 
@@ -135,7 +123,6 @@ class SGFigureAxis extends SGAxisElement {
 
     p.addSeparator();
 
-    //        SGUtility.addItem(p, this, MENUCMD_PROPERTY);
     JMenu menu = SGUtility.addMenu(p, this, MENUCMD_PROPERTY, true);
     SGUtility.addItem(menu, this, MENUCMD_SHOW_PROPERTIES_SELECTED_AXES);
     SGUtility.addItem(menu, this, MENUCMD_SHOW_PROPERTIES_ALL_VISIBLE_AXES);
@@ -148,7 +135,6 @@ class SGFigureAxis extends SGAxisElement {
    * Called when the axis is clicked.
    *
    * @param e the mouse event
-   * @return true if a drawing element is clicked, and false otherwise
    */
   protected boolean clicked(final MouseEvent e) {
     final int x = e.getX();
@@ -201,11 +187,7 @@ class SGFigureAxis extends SGAxisElement {
     this.setChanged(true);
   }
 
-  /**
-   * Sets the location of the axis line.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of the axis line. */
   protected boolean setLocationOfAxisLines() {
     float x1;
     float y1;
@@ -251,11 +233,7 @@ class SGFigureAxis extends SGAxisElement {
     return true;
   }
 
-  /**
-   * Sets the location of scale numbers.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of scale numbers. */
   protected boolean setLocationOfScaleNumbers() {
     final int loc = this.getLocationInPlane();
     final boolean invCoord = this.isInvertCoordinates();
@@ -391,11 +369,7 @@ class SGFigureAxis extends SGAxisElement {
     return true;
   }
 
-  /**
-   * Create the scale lines.
-   *
-   * @return true if succeeded
-   */
+  /** Create the scale lines. */
   protected boolean createTickMarks() {
     // clear the list
     this.mTickMarksList.clear();
@@ -436,11 +410,7 @@ class SGFigureAxis extends SGAxisElement {
     }
   }
 
-  /**
-   * Sets the location of the title.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of the title. */
   protected boolean setLocationOfTitle() {
     final float gx = this.mAxisElement.getGraphRectX();
     final float gy = this.mAxisElement.getGraphRectY();
@@ -500,11 +470,7 @@ class SGFigureAxis extends SGAxisElement {
     return true;
   }
 
-  /**
-   * Sets the location of exponent object.
-   *
-   * @return true if succeeded
-   */
+  /** Sets the location of exponent object. */
   protected boolean setLocationOfExponentDrawingElement() {
     SGIFigureElementAxis aElement = this.mAxisElement;
     final float gx = aElement.getGraphRectX();
@@ -603,9 +569,10 @@ class SGFigureAxis extends SGAxisElement {
   /**
    * Creates a scale line.
    *
+   * @param width the width parameter
+   * @param inside the inside parameter
    * @param value axis value of the scale line
    * @param length the length of the scale line
-   * @return an instance of the scale line
    */
   protected ElementLineTickMark createSingleTickMark(
       final double value, final float width, final float length, final boolean inside) {
@@ -760,11 +727,7 @@ class SGFigureAxis extends SGAxisElement {
     return range;
   }
 
-  /**
-   * Returns the shift of axis line.
-   *
-   * @return the shift of axis line
-   */
+  /** Returns the shift of axis line. */
   public float getShift() {
     return this.mShift;
   }
@@ -773,7 +736,6 @@ class SGFigureAxis extends SGAxisElement {
    * Sets the shift of axis line.
    *
    * @param shift the shift of axis line to set
-   * @return true if succeeded
    */
   public void setShift(final float shift) {
     this.mShift = shift;
@@ -783,7 +745,6 @@ class SGFigureAxis extends SGAxisElement {
    * Returns the shift of axis line in a given unit.
    *
    * @param unit the unit of length
-   * @return the shift of axis line
    */
   public float getShift(String unit) {
     return (float) SGUtilityText.convert(this.getShift(), AXIS_SHIFT_UNIT, unit);
@@ -794,7 +755,6 @@ class SGFigureAxis extends SGAxisElement {
    *
    * @param shift the shift of axis line to set
    * @param unit the unit of length
-   * @return true if succeeded
    */
   public boolean setShift(final float shift, final String unit) {
     final Float sNew =
@@ -844,7 +804,6 @@ class SGFigureAxis extends SGAxisElement {
    *
    * @param map a map of properties
    * @param iResult the input result
-   * @return the updated result of setting properties
    */
   protected SGPropertyResults setProperties(SGPropertyMap map, SGPropertyResults iResult) {
     SGPropertyResults result = (SGPropertyResults) iResult.clone();
@@ -929,7 +888,6 @@ class SGFigureAxis extends SGAxisElement {
           || COM_AXIS_TICK_MARK_STEP.equalsIgnoreCase(key)) {
         this.setScaleStepValue(map, key, value, dateMode, result);
       } else if (COM_AXIS_LINE_WIDTH.equalsIgnoreCase(key)) {
-        // for backward compatibility
         String k = map.getOriginalKey(key);
         StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
@@ -943,7 +901,6 @@ class SGFigureAxis extends SGAxisElement {
         }
         result.putResult(k, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_LINE_COLOR.equalsIgnoreCase(key)) {
-        // for backward compatibility
         String k = map.getOriginalKey(key);
         Color cl = SGUtilityText.getColor(value);
         if (cl != null) {
@@ -964,7 +921,6 @@ class SGFigureAxis extends SGAxisElement {
         }
         result.putResult(k, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_SPACE_TO_SCALE.equalsIgnoreCase(key)) {
-        // for backward compatibility
         String k = map.getOriginalKey(key);
         StringBuilder unit = new StringBuilder();
         Number num = SGUtilityText.getNumber(value, unit);
@@ -982,31 +938,11 @@ class SGFigureAxis extends SGAxisElement {
     return result;
   }
 
-  //    /**
-  //     * Write the properties to an given Element object.
-  //     *
-  //     * @param el
-  //     *          an Element object
-  //     * @return true if succeeded
-  //     */
-  //    public boolean writeProperty(final Element el, SGExportParameter params) {
-  //        if (super.writeProperty(el, params) == false) {
-  //            return false;
-  //        }
-  //
-  //        // shift
-  //		final float shift = this.roundOffAxisShift(this.getShift());
-  //		el.setAttribute(KEY_SHIFT, Float.toString(shift) + AXIS_SHIFT_UNIT);
-  //
-  //        return true;
-  //    }
-
   /**
    * Read properties from a given Element object.
    *
    * @param element an Element object
    * @param versionNumber version number
-   * @return true if succeeded
    */
   protected boolean readProperties(final Element element, final String versionNumber) {
     if (super.readProperties(element, versionNumber) == false) {
@@ -1044,11 +980,7 @@ class SGFigureAxis extends SGAxisElement {
     return true;
   }
 
-  /**
-   * Returns the list of anchor points.
-   *
-   * @return the list of anchor points
-   */
+  /** Returns the list of anchor points. */
   List<Point2D> getAnchorPoints() {
     List<Point2D> pList = new ArrayList<Point2D>();
     if (this.isVisible()) {
@@ -1077,12 +1009,10 @@ class SGFigureAxis extends SGAxisElement {
    * Called when the mouse is dragged.
    *
    * @param e the mouse event
-   * @return true if succeeded
    */
   @Override
   public boolean onMouseDragged(final MouseEvent e) {
     if (super.onMouseDragged(e)) {
-      // if mouse drag is succeeded for scale numbers or lines,
       // returns true
       return true;
     }
@@ -1154,7 +1084,6 @@ class SGFigureAxis extends SGAxisElement {
     }
     try {
       if (this.mDraggingElement instanceof ElementLineAxis) {
-        // if axis line is dragged
         float shift = this.getShift();
         if (shift < AXIS_SHIFT_MIN) {
           shift = (float) AXIS_SHIFT_MIN;
@@ -1166,16 +1095,13 @@ class SGFigureAxis extends SGAxisElement {
         this.updateLocationOfDrawingElements();
         return true;
       } else if (this.mTitle.equals(this.mDraggingElement)) {
-        // if the title is dragged
         this.onTitleReleased();
         return true;
       } else if (this.mExponentSymbol.equals(this.mDraggingElement)) {
-        // if the exponent symbol is dragged
         this.onExponentReleased();
         return true;
       } else if (this.mDraggingElement instanceof ElementStringNumber
           || this.mDraggingElement instanceof ElementLineTickMark) {
-        // if a number or a tick mark is dragged
         this.setChangedFocusedObjects();
         this.onMouseReleasedNumberOrTickMark();
         return true;

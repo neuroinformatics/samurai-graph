@@ -207,7 +207,6 @@ public class SGFigureIDSelectionWizardDialog extends SGWizardDialog {
       this.mAddRadioButton.setEnabled(false);
     } else {
 
-      // if both radio button is not selected, select the add radio button
       if (!this.mCreateRadioButton.isSelected() && !this.mAddRadioButton.isSelected()) {
         this.mAddRadioButton.setSelected(true);
         this.enableItems(false);
@@ -242,11 +241,7 @@ public class SGFigureIDSelectionWizardDialog extends SGWizardDialog {
     this.mFigureIDComboBox.setEnabled(!b);
   }
 
-  /**
-   * Returns the selected ID number.
-   *
-   * @return the selected ID number
-   */
+  /** Returns the selected ID number. */
   public int getFigureID() {
     if (this.mCreateRadioButton.isSelected()) {
       return this.mNewFigureId;

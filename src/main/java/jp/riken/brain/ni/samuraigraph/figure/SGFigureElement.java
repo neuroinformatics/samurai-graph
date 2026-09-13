@@ -172,20 +172,12 @@ public abstract class SGFigureElement implements SGIFigureElement {
   // The flag whether this object is already disposed of.
   private boolean mDisposed = false;
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }
 
-  /**
-   * Returns the ID for a new child object.
-   *
-   * @return the ID for a new child object
-   */
+  /** Returns the ID for a new child object. */
   protected int assignChildId() {
     List<Integer> idList = new ArrayList<Integer>();
     List<SGIChildObject> cList = this.getVisibleChildList();
@@ -202,7 +194,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @param data a data object
    * @param name the name of the data object
-   * @return true if succeeded
    */
   public boolean addData(final SGData data, final String name) {
 
@@ -221,7 +212,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param data data to add
    * @param name name of data
    * @param infoMap the information map of data
-   * @return true if succeeded
    */
   public boolean addData(final SGData data, final String name, final Map<String, Object> infoMap) {
     return this.addData(data, name);
@@ -234,7 +224,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param name name of data
    * @param id the ID to set
    * @param infoMap the information map of data
-   * @return true if succeeded
    */
   @Override
   public boolean addData(
@@ -248,7 +237,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param data an array of data objects
    * @param name an array of names of data objects
    * @param infoMap the information map of data
-   * @return true if succeeded
    */
   @Override
   public boolean addData(
@@ -271,7 +259,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param name an array of names of data objects
    * @param id the ID of data objects
    * @param infoMap the information map of data
-   * @return true if succeeded
    */
   @Override
   public boolean addData(
@@ -294,7 +281,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Adds a child object.
    *
    * @param el a child object to add
-   * @return true if succeeded
    */
   protected boolean addToList(final SGIChildObject el) {
 
@@ -308,11 +294,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
     this.mChildList.add(el);
 
-    //        el.setID(this.mIDCounter);
-    //
-    //        // update the ID counter
-    //        this.mIDCounter++;
-
     return true;
   }
 
@@ -321,7 +302,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @param id the object ID to set
    * @param el a child object to add
-   * @return true if succeeded
    */
   protected boolean addToList(final int id, final SGIChildObject el) {
     if (id <= 0) {
@@ -348,7 +328,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Returns the visible child object of a given ID.
    *
    * @param id the ID of a child object
-   * @return a child object of a given ID if it exists and visible
    */
   protected SGIChildObject getVisibleChild(final int id) {
     List<SGIChildObject> cList = this.getVisibleChildList();
@@ -365,7 +344,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Remove a child object.
    *
    * @param obj An object to be removed.
-   * @return true if this object exists
    */
   protected boolean removeChild(final Object obj) {
     if (obj instanceof SGIDisposable) {
@@ -379,7 +357,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Remove a data object.
    *
    * @param data data to be removed
-   * @return true if succeeded
    */
   public boolean removeData(final SGData data) {
     List<SGData> dList = this.mDataList;
@@ -395,8 +372,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
   /**
    * Returns a list of useless data objects in this figure element. By default, this method returns
    * an empty list.
-   *
-   * @return a list of useless data objects in this figure element
    */
   public List<SGData> getUselessDataList() {
     List<SGData> dataList = new ArrayList<SGData>();
@@ -500,18 +475,13 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Sets the dialog owner this figure element.
    *
    * @param frame the dialog owner
-   * @return true if succeeded
    */
   public boolean setDialogOwner(final Frame frame) {
     this.mDialogOwner = frame;
     return true;
   }
 
-  /**
-   * Returns the magnification.
-   *
-   * @return the magnification
-   */
+  /** Returns the magnification. */
   public float getMagnification() {
     return this.mMagnification;
   }
@@ -520,7 +490,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Sets the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     if (mag <= 0.0) {
@@ -570,9 +539,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Rectangle2D getViewBounds() {
     return this.mViewBounds;
   }
@@ -580,7 +547,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
   /**
    * @param el
    * @param data
-   * @return
+   * @param readDataProperty the readDataProperty parameter
    */
   public boolean createDataObject(Element el, SGData data, final boolean readDataProperty) {
     if (el == null || data == null) {
@@ -593,7 +560,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
   /**
    * @param el
    * @param mod
-   * @return
    */
   protected boolean updateFocusedObjectsList(final SGISelectable el, final int mod) {
     final List<SGISelectable> fList = this.getFocusedObjectsList();
@@ -605,7 +571,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
         // do nothing
       } else {
         // set all objects unselected
-        // this.clearFocusedObjects();
         this.notifyToListener(SGIFigureElement.CLEAR_FOCUSED_OBJECTS);
 
         // set given object selected
@@ -627,7 +592,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @param el a selectable object
    * @param e a mouse event
-   * @return
    */
   public boolean updateFocusedObjectsList(final SGISelectable el, final MouseEvent e) {
     final int mod = e.getModifiersEx();
@@ -661,7 +625,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * equal to this.
    *
    * @param ori an origin of this clearance
-   * @return true if succeeded
    */
   public boolean clearFocusedObjects(SGIFigureElement ori) {
     if (!this.getClass().equals(ori.getClass())) {
@@ -689,7 +652,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
     }
 
     this.clearFocusedObjects();
-    //        notifyChange();	// Do not notify the change!
 
     this.setChanged(true);
 
@@ -776,38 +738,22 @@ public abstract class SGFigureElement implements SGIFigureElement {
     }
   }
 
-  /**
-   * Returns the X-coordinate of the graph rectangle.
-   *
-   * @return the X-coordinate of the graph rectangle
-   */
+  /** Returns the X-coordinate of the graph rectangle. */
   public float getGraphRectX() {
     return this.mGraphRectX;
   }
 
-  /**
-   * Returns the Y-coordinate of the graph rectangle.
-   *
-   * @return the Y-coordinate of the graph rectangle
-   */
+  /** Returns the Y-coordinate of the graph rectangle. */
   public float getGraphRectY() {
     return this.mGraphRectY;
   }
 
-  /**
-   * Returns the width of the graph rectangle.
-   *
-   * @return the width of the graph rectangle
-   */
+  /** Returns the width of the graph rectangle. */
   public float getGraphRectWidth() {
     return this.mGraphRectWidth;
   }
 
-  /**
-   * Returns the height of the graph rectangle.
-   *
-   * @return the height of the graph rectangle
-   */
+  /** Returns the height of the graph rectangle. */
   public float getGraphRectHeight() {
     return this.mGraphRectHeight;
   }
@@ -932,7 +878,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param menu the pop-up menu
    * @param x the X-coordinate
    * @param y the Y-coordinate
-   * @return true if succeeded
    */
   protected boolean showPopupMenu(JPopupMenu menu, final int x, final int y) {
     menu.show(this.getComponent(), x, y);
@@ -942,45 +887,32 @@ public abstract class SGFigureElement implements SGIFigureElement {
   /** */
   public abstract SGProperties getProperties();
 
-  /**
-   * initialize compatible properties for previous property file.
-   *
-   * @return
-   */
+  /** initialize compatible properties for previous property file. */
   public boolean initCompatibleProperty() {
     return true;
   }
 
-  /**
-   * @uml.property name="properties"
-   */
+  /** */
   public abstract boolean setProperties(final SGProperties p);
 
-  /**
-   * @return
-   */
+  /** */
   public SGProperties getMemento() {
     return this.getProperties();
   }
 
   /**
    * @param p
-   * @return
    */
   public boolean setMemento(SGProperties p) {
     return this.setProperties(p);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isUndoable() {
     return this.mUndoManager.isUndoable();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isRedoable() {
     return this.mUndoManager.isRedoable();
   }
@@ -1018,9 +950,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     return this.mUndoManager.setMementoForward();
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected List<SGProperties> getMementoList() {
     return this.mUndoManager.getMementoList();
   }
@@ -1047,7 +977,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
   /**
    * @param listAll
    * @param listVisible
-   * @return
    */
   protected <T extends SGIVisible> boolean setVisibleList(
       final List<T> listAll, final List<T> listVisible) {
@@ -1056,8 +985,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
   /**
    * @param el
-   * @param list
-   * @return
    */
   protected boolean hideObject(final SGDrawingElement el) {
     el.setVisible(false);
@@ -1067,11 +994,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     return true;
   }
 
-  /**
-   * Hide the selected objects.
-   *
-   * @return true if selected
-   */
+  /** Hide the selected objects. */
   public boolean hideSelectedObjects() {
     List<SGISelectable> list = this.getFocusedObjectsList();
     for (int ii = 0; ii < list.size(); ii++) {
@@ -1083,26 +1006,23 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
     if (list.size() != 0) {
       this.setChanged(true);
-      //            notifyChange();	// Do not notify the change!
     }
 
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public abstract String getTagName();
 
   /**
    * @param el
-   * @return
+   * @param params the params parameter
    */
   public abstract boolean writeProperty(final Element el, SGExportParameter params);
 
   /**
    * @param document
-   * @return
+   * @param params the params parameter
    */
   protected Element createThisElement(final Document document, SGExportParameter params) {
     Element el = document.createElement(this.getTagName());
@@ -1118,11 +1038,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
   /** A flag whether anchors are visible around focused objects. */
   protected boolean mSymbolsVisibleFlagAroundFocusedObjects = true;
 
-  /**
-   * Returns whether anchors are visible around focused objects.
-   *
-   * @return true if anchors are visible
-   */
+  /** Returns whether anchors are visible around focused objects. */
   public boolean isSymbolsVisibleAroundFocusedObjects() {
     return this.mSymbolsVisibleFlagAroundFocusedObjects;
   }
@@ -1139,11 +1055,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
   /** A flag whether anchors are visible around all child objects. */
   protected boolean mSymbolsVisibleFlagAroundAllObjects = false;
 
-  /**
-   * Returns whether anchors are visible around all child objects.
-   *
-   * @return true if anchors are visible
-   */
+  /** Returns whether anchors are visible around all child objects. */
   public boolean isSymbolsVisibleAroundAllObjects() {
     return this.mSymbolsVisibleFlagAroundAllObjects;
   }
@@ -1159,7 +1071,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
   /**
    * @param list
-   * @return
    */
   protected List<SGICopyable> getCopyList(List<SGICopyable> list) {
     List<SGICopyable> cList = new ArrayList<SGICopyable>();
@@ -1170,9 +1081,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     return cList;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public List<SGISelectable> getFocusedObjectsList() {
     ArrayList<SGISelectable> list = new ArrayList<SGISelectable>();
     this.getFocusedObjectsList(list);
@@ -1203,11 +1112,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     return obsList;
   }
 
-  /**
-   * Returns the list of focused copyable objects.
-   *
-   * @return a list of focused copyable objects
-   */
+  /** Returns the list of focused copyable objects. */
   protected List<SGICopyable> getCopyableFocusedObjectsList() {
     List<SGICopyable> list = new ArrayList<SGICopyable>();
     List<SGISelectable> fList = this.getFocusedObjectsList();
@@ -1227,21 +1132,13 @@ public abstract class SGFigureElement implements SGIFigureElement {
   /** Offset y-value of the location for duplicated objects. */
   public static final int OFFSET_DUPLICATED_OBJECT_Y = 10;
 
-  /**
-   * Create copies of the focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Create copies of the focused objects. */
   public boolean duplicateFocusedObjects() {
     // do nothing by default
     return true;
   }
 
-  /**
-   * Duplicate the focused objects.
-   *
-   * @return list of duplicated objects
-   */
+  /** Duplicate the focused objects. */
   protected List<SGICopyable> duplicateObjects() {
     // get the list of copyable focused objects
     List<SGICopyable> list = this.getCopyableFocusedObjectsList();
@@ -1255,11 +1152,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     return cList;
   }
 
-  /**
-   * Returns the list of copied objects.
-   *
-   * @return list of copied objects
-   */
+  /** Returns the list of copied objects. */
   public List<SGICopyable> getCopiedObjectsList() {
     // get the list of copyable focused objects
     List<SGICopyable> list = this.getCopyableFocusedObjectsList();
@@ -1272,17 +1165,12 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Paste the objects.
    *
    * @param list of the objects to be pasted
-   * @return true:succeeded, false:failed
    */
   public boolean paste(List<SGICopyable> list) {
     return true;
   }
 
-  /**
-   * Cut focused copyable objects.
-   *
-   * @return a list of cut objects
-   */
+  /** Cut focused copyable objects. */
   public List<SGICopyable> cutFocusedObjects() {
     List<SGICopyable> list = this.getCopiedObjectsList();
     this.hideSelectedObjects();
@@ -1300,10 +1188,8 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param data added data.
    * @param name the name set to the data
    * @param p properties set to be data.
-   * @return true if succeeded
    */
   public boolean addData(final SGData data, final String name, final SGProperties p) {
-    // call addData(SGData, String) by default
     return this.addData(data, name);
   }
 
@@ -1317,7 +1203,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Calculate the baseline value from a given axis.
    *
    * @param axis an axis
-   * @return baseline value
    */
   protected SGAxisValue calcBaselineValue(SGAxis axis) {
     final SGAxisValue ret;
@@ -1408,7 +1293,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Calculate the step value from a given axis.
    *
    * @param axis an axis
-   * @return step value
    */
   protected SGAxisStepValue calcStepValue(SGAxis axis) {
     // minimum and maximum values of axis range
@@ -1518,16 +1402,13 @@ public abstract class SGFigureElement implements SGIFigureElement {
     return ret;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getInstanceDescription() {
     return this.getClassDescription();
   }
 
   /**
    * @param x
-   * @return
    */
   protected float getXFromGraphRectValue(final float x) {
     final float xx = this.getMagnification() * x + this.mGraphRectX;
@@ -1536,7 +1417,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
   /**
    * @param y
-   * @return
    */
   protected float getYFromGraphRectValue(final float y) {
     final float yy = this.getMagnification() * y + this.mGraphRectY;
@@ -1545,7 +1425,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
   /**
    * @param x
-   * @return
    */
   protected float getGraphRectValueX(final float x) {
     final float xx = (x - this.mGraphRectX) / this.getMagnification();
@@ -1554,7 +1433,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
   /**
    * @param y
-   * @return
    */
   protected float getGraphRectValueY(final float y) {
     final float yy = (y - this.mGraphRectY) / this.getMagnification();
@@ -1607,7 +1485,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Get a list of the focused objects.
    *
    * @param list a list of the focused objects
-   * @return true if succeeded
    */
   public boolean getFocusedObjectsList(List<SGISelectable> list) {
     List<SGIChildObject> elList = this.getVisibleChildList();
@@ -1623,11 +1500,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     return true;
   }
 
-  /**
-   * Returns whether any focused objects are changed.
-   *
-   * @return true if succeeded
-   */
+  /** Returns whether any focused objects are changed. */
   @Override
   public boolean isFocusedObjectsChanged() {
     List<SGISelectable> elList = this.getFocusedObjectsList();
@@ -1654,7 +1527,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Move the focused objects to the head or the tail of the list
    *
    * @param toTail flag whether to move focused objects to the tail of the list
-   * @return true if succeeded
    */
   public boolean moveFocusedObjects(final boolean toTail) {
     return this.moveFocusedObjects(toTail, this.mChildList);
@@ -1664,7 +1536,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Move the focused objects to forward or backward for given steps.
    *
    * @param num the number of levels to move
-   * @return true if succeeded
    */
   public boolean moveFocusedObjects(int num) {
     return this.moveFocusedObjects(num, this.mChildList);
@@ -1675,7 +1546,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @param id the ID of an object
    * @param toFront true to bring to front
-   * @return true if succeeded
    */
   public boolean moveChildToEnd(final int id, final boolean toFront) {
     SGIChildObject el = this.getVisibleChild(id);
@@ -1709,7 +1579,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @param id the ID of an object
    * @param toFront true to bring forward
-   * @return true if succeeded
    */
   public boolean moveChild(final int id, final boolean toFront) {
     SGIChildObject el = this.getVisibleChild(id);
@@ -1743,7 +1612,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @param toTail whether to move focused objects to the tail of the list
    * @param objList the object list
-   * @return true if succeeded
    */
   protected <T> boolean moveFocusedObjects(final boolean toTail, final List<T> objList) {
     // get the focused objects
@@ -1780,7 +1648,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @param num the number of levels to move
    * @param objList the object list
-   * @return true if succeeded
    */
   protected <T> boolean moveFocusedObjects(final int num, final List<T> objList) {
     // get the focused objects
@@ -1804,11 +1671,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     return true;
   }
 
-  /**
-   * Returns a list of child nodes.
-   *
-   * @return a list of chid nodes
-   */
+  /** Returns a list of child nodes. */
   public ArrayList<SGINode> getChildNodes() {
     return new ArrayList<SGINode>(this.getVisibleChildList());
   }
@@ -1835,29 +1698,18 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
   /** */
   public boolean updateHistory() {
-    //        final boolean changed = this.isChanged();
 
-    //        if (this.updateHistory(this.getVisibleChildList()) == false) {
-    //            return false;
-    //        }
     if (this.updateHistory(new ArrayList<SGIUndoable>(this.getUndoableChildList())) == false) {
       return false;
     }
 
     //        // if the properties of this figure element was changed,
     //        // remove useless child objects
-    //        if (changed) {
-    //            this.removeUselessChild();
-    //        }
 
     return true;
   }
 
-  /**
-   * Delete useless child objects.
-   *
-   * @return true if succeeded
-   */
+  /** Delete useless child objects. */
   protected boolean deleteUselessChild() {
     Set<?> set = this.getAvailableChildSet();
     List<SGIChildObject> cList = new ArrayList<>(this.mChildList);
@@ -1874,8 +1726,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
   /**
    * Returns a set of available child objects in the histories. By default, this method returns an
    * empty set in the histories.
-   *
-   * @return a set of available child objects in the histories
    */
   protected Set<SGIChildObject> getAvailableChildSet() {
     return new HashSet<>();
@@ -1900,11 +1750,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     }
   }
 
-  /**
-   * Delete all forward histories.
-   *
-   * @return true if succeeded
-   */
+  /** Delete all forward histories. */
   public boolean deleteForwardHistory() {
 
     // delete forward history
@@ -1949,7 +1795,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Invoked when the key is pressed.
    *
    * @param e the key event
-   * @return true if effective
    */
   public boolean onKeyPressed(final KeyEvent e) {
     boolean effective = false;
@@ -2017,7 +1862,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Returns the displacement for objects those are translated by the key event.
    *
    * @param e the key event
-   * @return displacement for movable child objects
    */
   protected SGTuple2f getDisplacement(KeyEvent e) {
     final int keycode = e.getKeyCode();
@@ -2063,11 +1907,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     this.notifyToListener(SGIFigureElement.NOTIFY_DATA_SELECTION);
   }
 
-  /**
-   * Returns a string representation of this class. This method returns the simple class name.
-   *
-   * @return a string representation of this class
-   */
+  /** Returns a string representation of this class. This method returns the simple class name. */
   public String toString() {
     return this.getClass().getSimpleName();
   }
@@ -2077,7 +1917,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @param data a data to duplicate
    * @param nameNew new name of data
-   * @return true if succeeded
    */
   public boolean duplicateFocusedData(SGData data, String nameNew) {
     // do nothing by default
@@ -2089,7 +1928,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @param p the properties
    * @param dp data properties
-   * @return synchronized properties
    */
   public SGProperties synchronizeDataProperties(SGProperties p, SGProperties dp) {
     // do nothing by default
@@ -2107,7 +1945,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param axis an axis
    * @param baseline the baseline value
    * @param step the step value
-   * @return a set of axis values
    */
   protected Set<SGAxisValue> calcAxisValues(
       SGAxis axis, final SGAxisValue baseline, final SGAxisStepValue step) {
@@ -2126,7 +1963,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Sets the properties.
    *
    * @param map a map of properties
-   * @return the result of setting properties
    */
   @Override
   public SGPropertyResults setProperties(SGPropertyMap map) {
@@ -2139,7 +1975,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    *
    * @param id the ID of child object
    * @param map a map of properties
-   * @return the result of setting properties
    */
   @Override
   public SGPropertyResults setChildProperties(final int id, SGPropertyMap map) {
@@ -2153,7 +1988,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param id the ID of child object
    * @param subId the ID of sub child object
    * @param map a map of properties
-   * @return the result of setting properties
    */
   @Override
   public SGPropertyResults setChildProperties(final int id, final int subId, SGPropertyMap map) {
@@ -2167,7 +2001,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * @param id the ID of child object
    * @param colorMapName the name of color map
    * @param map a map of properties
-   * @return the result of setting properties
    */
   @Override
   public SGPropertyResults setChildColorMapProperties(
@@ -2180,7 +2013,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Returns the child object of a given ID.
    *
    * @param id the ID number of the child
-   * @return the child object if it exists
    */
   @Override
   public SGIChildObject getChild(final int id) {
@@ -2193,11 +2025,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
     return null;
   }
 
-  /**
-   * Closes the text field.
-   *
-   * @return true if succeed
-   */
+  /** Closes the text field. */
   @Override
   public boolean closeTextField() {
     // do nothing by default
@@ -2221,7 +2049,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Sets the flag whether data objects in this figure are anchored
    *
    * @param b true to set data objects in this figure anchored
-   * @return true if succeeded
    */
   @Override
   public boolean setDataAnchored(final boolean b) {
@@ -2231,11 +2058,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
   private Class<?> mPropertyDialogObserverClass = null;
 
-  /**
-   * Returns the class object of property dialog observer.
-   *
-   * @return the class object
-   */
+  /** Returns the class object of property dialog observer. */
   @Override
   public Class<?> getPropertyDialogObserverClass() {
     return this.mPropertyDialogObserverClass;
@@ -2263,21 +2086,13 @@ public abstract class SGFigureElement implements SGIFigureElement {
     this.mWnd = wnd;
   }
 
-  /**
-   * Returns the window.
-   *
-   * @return the window
-   */
+  /** Returns the window. */
   @Override
   public SGDrawingWindow getWindow() {
     return this.mWnd;
   }
 
-  /**
-   * Returns a text string of the commands.
-   *
-   * @return a text string of the commands
-   */
+  /** Returns a text string of the commands. */
   @Override
   public String getCommandString(SGExportParameter params) {
     StringBuilder sb = new StringBuilder();
@@ -2314,7 +2129,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
    * Called when the mouse pointer moves.
    *
    * @param e the mouse event
-   * @return true if the mouse pointer passes over some objects
    */
   @Override
   public boolean onMouseMoved(MouseEvent e) {
@@ -2354,13 +2168,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
     final Rectangle2D sRect = el.getStringRect();
 
     final boolean rotated = (el.getAngle() != 0.0f);
-    //        boolean hasChildren = false;
-    //        if (el instanceof SGDrawingElementString2DExtended) {
-    //            SGDrawingElementString2DExtended ex = (SGDrawingElementString2DExtended) el;
-    //            if (ex.hasSubscript() || ex.hasSuperscript()) {
-    //                hasChildren = true;
-    //            }
-    //        }
 
     // set the location
     int x;
@@ -2423,7 +2230,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
     final double offset = font.getSize();
     final double strWidth = stringRect.getWidth() + offset;
 
-    // if the width of string exceeds the width of the text field
     if (strWidth > tf.getWidth()) {
 
       // get the view boundary
@@ -2435,7 +2241,6 @@ public abstract class SGFigureElement implements SGIFigureElement {
       // of the graph rectangle
       final double diff = boundsRight - tf.getX();
 
-      // if the end of the editing text string exceeds the right edge of the graph
       // rectangle, set the width of the text field to the difference
       final double length;
       if (strWidth < diff) {
@@ -2449,6 +2254,5 @@ public abstract class SGFigureElement implements SGIFigureElement {
     }
 
     //        // repaint
-    //        this.repaint();
   }
 }

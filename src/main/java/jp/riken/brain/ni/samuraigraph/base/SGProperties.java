@@ -7,11 +7,7 @@ public abstract class SGProperties implements SGIDisposable, Cloneable, SGICopya
     super();
   }
 
-  /**
-   * Clones this data object.
-   *
-   * @return shallow copy of this data object
-   */
+  /** Clones this data object. */
   public final Object clone() {
     try {
       return super.clone();
@@ -21,11 +17,7 @@ public abstract class SGProperties implements SGIDisposable, Cloneable, SGICopya
     }
   }
 
-  /**
-   * Returns a copy of this object.
-   *
-   * @return a copy of this object
-   */
+  /** Returns a copy of this object. */
   public Object copy() {
     return this.clone();
   }
@@ -33,11 +25,7 @@ public abstract class SGProperties implements SGIDisposable, Cloneable, SGICopya
   // The flag whether this object is already disposed of.
   private boolean mDisposed = false;
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }

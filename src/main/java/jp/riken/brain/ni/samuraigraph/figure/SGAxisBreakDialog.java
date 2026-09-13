@@ -937,16 +937,8 @@ public class SGAxisBreakDialog extends SGPropertyDialog
     this.setXValue(xValue);
     this.setYValue(yValue);
 
-    // if( length!=null )
-    // {
-    // length = Float.valueOf( length.floatValue()*CM_POINT_RATIO );
-    // }
     this.setLength(length);
 
-    // if( interval!=null )
-    // {
-    // interval = Float.valueOf( interval.floatValue()*CM_POINT_RATIO );
-    // }
     this.setInterval(interval);
 
     this.setDistortion(distortion);
@@ -969,7 +961,6 @@ public class SGAxisBreakDialog extends SGPropertyDialog
     this.setInnerColor(innerColor);
 
     this.setAnchored(anchored);
-    //        this.setColorButtonBorder(true);
 
     return true;
   }
@@ -1037,13 +1028,11 @@ public class SGAxisBreakDialog extends SGPropertyDialog
 
     // length
     if (len != null) {
-      //			abs.setLength( len.floatValue()/SGIConstants.CM_POINT_RATIO );
       abs.setLength(len.floatValue(), cm);
     }
 
     // interval
     if (interval != null) {
-      //			abs.setInterval( interval.floatValue()/SGIConstants.CM_POINT_RATIO );
       abs.setInterval(interval.floatValue(), cm);
     }
 
@@ -1059,7 +1048,6 @@ public class SGAxisBreakDialog extends SGPropertyDialog
 
     // line width
     if (lineWidth != null) {
-      //			abs.setLineWidth( lineWidth.floatValue() );
       abs.setLineWidth(lineWidth.floatValue(), pt);
     }
 

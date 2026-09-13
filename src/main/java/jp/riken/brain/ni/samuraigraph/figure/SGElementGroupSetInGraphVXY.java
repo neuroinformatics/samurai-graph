@@ -106,11 +106,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
     this.mYArray = new float[numY];
   }
 
-  /**
-   * Returns the magnitude of vectors per centimeter.
-   *
-   * @return the magnitude of vectors per centimeter
-   */
+  /** Returns the magnitude of vectors per centimeter. */
   public float getMagnitudePerCM() {
     return this.mMagnitudePerCM;
   }
@@ -119,7 +115,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
    * Sets the magnitude of vectors per centimeter.
    *
    * @param mag the magnitude of vectors per centimeter
-   * @return true if succeeded
    */
   public boolean setMagnitudePerCM(final float mag) {
     if (mag <= 0.0) {
@@ -131,9 +126,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return "";
   }
@@ -175,8 +168,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
   /**
    * Returns whether the direction is invariant when the scale of the x-axis direction and the
    * y-axis direction is different.
-   *
-   * @return a flag for the invariance
    */
   public boolean isDirectionInvariant() {
     return this.mDirectionFixedFlag;
@@ -187,7 +178,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
    * direction is set to be different.
    *
    * @param b a flag to set to the invariance
-   * @return true if succeeded
    */
   public boolean setDirectionInvariant(final boolean b) {
     this.mDirectionFixedFlag = b;
@@ -361,8 +351,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
    * Write properties of this object to the Element.
    *
    * @param el the Element object
-   * @param type type of the method to save properties
-   * @return true if succeeded
+   * @param params type of the method to save properties
    */
   public boolean writeProperty(final Element el, final SGExportParameter params) {
     if (super.writeProperty(el, params) == false) {
@@ -515,7 +504,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
      * Returns whether this object is equal to given object.
      *
      * @param obj an object to be compared
-     * @return true if two objects are equal
      */
     public boolean equals(final Object obj) {
       if ((obj instanceof ElementGroupSetInVXYGraphProperties) == false) {
@@ -536,11 +524,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
       return true;
     }
 
-    /**
-     * Returns string representation of this object.
-     *
-     * @return string representation of this object
-     */
+    /** Returns string representation of this object. */
     public String toString() {
       String str = super.toString();
       StringBuilder sb = new StringBuilder();
@@ -559,7 +543,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
    * Returns the location of the start point at a given index.
    *
    * @param index the index
-   * @return the location
    */
   public SGTuple2f getStartLocation(final int index) {
     if (this.mStartPointsArray == null) {
@@ -575,7 +558,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
    * Returns the location of the end point at a given index.
    *
    * @param index the index
-   * @return the location
    */
   public SGTuple2f getEndLocation(final int index) {
     if (this.mEndPointsArray == null) {
@@ -632,7 +614,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
         result.putResult(COM_DATA_ARROW_DIRECTION_INVARIANT, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_X_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
@@ -646,7 +627,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
         result.putResult(COM_DATA_X_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_Y_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
@@ -660,7 +640,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
         result.putResult(COM_DATA_Y_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
@@ -674,7 +653,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
         result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_INDEX_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
@@ -688,7 +666,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
         result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_ANIMATION_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         SGArrayData data = (SGArrayData) this.getData();
@@ -710,7 +687,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
         result.putResult(COM_DATA_ANIMATION_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_ANIMATION_FRAME_DIMENSION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for pick up indices
           continue;
         }
         if (!this.setTimeDimension(value)) {
@@ -768,11 +744,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
     }
   }
 
-  /**
-   * Returns a list of arrow groups.
-   *
-   * @return a list of arrow groups
-   */
+  /** Returns a list of arrow groups. */
   public List<SGElementGroupArrow> getArrowGroups() {
     List<SGElementGroupArrow> retList = new ArrayList<SGElementGroupArrow>();
     List<SGElementGroup> list =
@@ -787,8 +759,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
   /**
    * Returns an arrow group which is the first element of an array.
    *
-   * @return the first element of an array of arrow groups, or null when this group set does not
-   *     have any arrow groups
+   * <p>have any arrow groups
    */
   public SGElementGroupArrow getArrowGroup() {
     return (SGElementGroupArrow)
@@ -800,7 +771,6 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
    * Sets the properties of element groups.
    *
    * @param elementGroupPropertiesList
-   * @return true if succeeded
    */
   protected boolean setElementGroupProperties(List<SGProperties> elementGroupPropertiesList) {
     for (int ii = 0; ii < elementGroupPropertiesList.size(); ii++) {
@@ -836,6 +806,7 @@ public class SGElementGroupSetInGraphVXY extends SGElementGroupSetInGraph
   /**
    * Sets the information of data columns.
    *
+   * @param message the message parameter
    * @param columns information of data columns
    */
   public boolean setColumnInfo(SGDataColumnInfo[] columns, String message) {

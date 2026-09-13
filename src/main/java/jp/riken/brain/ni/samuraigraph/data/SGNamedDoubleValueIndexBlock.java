@@ -14,6 +14,7 @@ public class SGNamedDoubleValueIndexBlock extends SGNamedIndexBlock {
   /**
    * Builds an block object.
    *
+   * @param values the values parameter
    * @param seriesMap the map of dimension indices
    */
   public SGNamedDoubleValueIndexBlock(

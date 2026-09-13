@@ -17,7 +17,6 @@ public class SGNetCDFTextVariable extends SGNetCDFVariable {
    *
    * @param var the variable
    * @param ncfile the netCDF file
-   * @param mod the modifier
    */
   public SGNetCDFTextVariable(final Variable var, final SGNetCDFFile ncfile) {
     this(var, ncfile, null);

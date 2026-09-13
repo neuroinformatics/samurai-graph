@@ -51,11 +51,7 @@ class ElementGroupLine extends SGElementGroupLineForData implements ILegendEleme
     return this.getMagnification() * legend.getSymbolSpan();
   }
 
-  /**
-   * Returns the preferred height.
-   *
-   * @return the preferred height
-   */
+  /** Returns the preferred height. */
   public float getPreferredHeight() {
     return this.getMagnification() * this.getLineWidth();
   }
@@ -80,7 +76,6 @@ class ElementGroupLine extends SGElementGroupLineForData implements ILegendEleme
 
   /** Create drawing elements. */
   public boolean createDrawingElementInLegend() {
-    // final float width = this.getDataElementWidth();
 
     Rectangle2D lRect = legend.getRectOfGroupSet(this.mGroupSet);
     Rectangle2D dRect = this.mBoundsRect;

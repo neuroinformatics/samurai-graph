@@ -206,11 +206,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     this.mYStride = null;
   }
 
-  /**
-   * Returns the copy of this data object.
-   *
-   * @return a copy of this data object
-   */
+  /** Returns the copy of this data object. */
   @Override
   public Object clone() {
     SGTwoDimensionalNetCDFData data = (SGTwoDimensionalNetCDFData) super.clone();
@@ -219,29 +215,17 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     return data;
   }
 
-  /**
-   * Returns the length of x-dimension without taking into account the stride.
-   *
-   * @return the length of x-dimension without taking into account the stride
-   */
+  /** Returns the length of x-dimension without taking into account the stride. */
   public int getXDimensionLength() {
     return this.mXVariable.getDimension(0).getLength();
   }
 
-  /**
-   * Returns the length of y-dimension without taking into account the stride.
-   *
-   * @return the length of y-dimension without taking into account the stride
-   */
+  /** Returns the length of y-dimension without taking into account the stride. */
   public int getYDimensionLength() {
     return this.mYVariable.getDimension(0).getLength();
   }
 
-  /**
-   * Returns the number of data points without taking into account the stride.
-   *
-   * @return the number of data points without taking into account the stride
-   */
+  /** Returns the number of data points without taking into account the stride. */
   @Override
   public int getAllPointsNumber() {
     if (this.isIndexAvailable()) {
@@ -253,31 +237,19 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the title for the X-axis.
-   *
-   * @return the title for the X-axis
-   */
+  /** Returns the title for the X-axis. */
   @Override
   public String getTitleX() {
     return this.getNameWithUnit(this.mXVariable);
   }
 
-  /**
-   * Returns the title for the Y-axis.
-   *
-   * @return the title for the Y-axis
-   */
+  /** Returns the title for the Y-axis. */
   @Override
   public String getTitleY() {
     return this.getNameWithUnit(this.mYVariable);
   }
 
-  /**
-   * Returns the stride for x-values.
-   *
-   * @return the stride
-   */
+  /** Returns the stride for x-values. */
   public SGIntegerSeriesSet getXStride() {
     if (this.isIndexAvailable()) {
       return null;
@@ -306,11 +278,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the stride for y-values.
-   *
-   * @return the stride
-   */
+  /** Returns the stride for y-values. */
   public SGIntegerSeriesSet getYStride() {
     if (this.isIndexAvailable()) {
       return null;
@@ -390,7 +358,6 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
    * Sets the data.
    *
    * @param data data set to this object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (!(data instanceof SGTwoDimensionalNetCDFData)) {
@@ -412,11 +379,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     return true;
   }
 
-  /**
-   * Returns a map of stride of dimensions. The keys are the name of dimensions.
-   *
-   * @return a map of stride of dimensions
-   */
+  /** Returns a map of stride of dimensions. The keys are the name of dimensions. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getDimensionStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
@@ -433,41 +396,7 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     return map;
   }
 
-  //    /**
-  //     * Returns an array of X-values.
-  //     *
-  //     * @return an array of X-values
-  //     */
-  //    public double[] getXValueArray(final boolean all) {
-  //        if (this.isIndexAvailable()) {
-  //            return this.getValueArray(this.mXVariable, new SGNetCDFVariable[]{
-  // this.mIndexVariable }, all);
-  //        } else {
-  //            return this.getCoordinateValueArray(this.mXVariable, this.getXStrideInstance(),
-  // all);
-  //        }
-  //    }
-  //
-  //    /**
-  //     * Returns an array of Y-values.
-  //     *
-  //     * @return an array of Y-values
-  //     */
-  //    public double[] getYValueArray(final boolean all) {
-  //        if (this.isIndexAvailable()) {
-  //            return this.getValueArray(this.mYVariable, new SGNetCDFVariable[]{
-  // this.mIndexVariable }, all);
-  //        } else {
-  //            return this.getCoordinateValueArray(this.mYVariable, this.getYStrideInstance(),
-  // all);
-  //        }
-  //    }
-
-  /**
-   * Returns an array of xy-values.
-   *
-   * @return an array of xy-values
-   */
+  /** Returns an array of xy-values. */
   public SGTuple2d[] getXYValueArray(final boolean all) {
     final double[] xArray = this.getXValueArray(all);
     final double[] yArray = this.getYValueArray(all);
@@ -490,29 +419,17 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
     }
   }
 
-  /**
-   * Returns the variable for x-values.
-   *
-   * @return the variable for x-values
-   */
+  /** Returns the variable for x-values. */
   public SGNetCDFVariable getXVariable() {
     return this.mXVariable;
   }
 
-  /**
-   * Returns the variable for y-values.
-   *
-   * @return the variable for y-values
-   */
+  /** Returns the variable for y-values. */
   public SGNetCDFVariable getYVariable() {
     return this.mYVariable;
   }
 
-  /**
-   * Returns an array of coordinate variables.
-   *
-   * @return an array of coordinate variables
-   */
+  /** Returns an array of coordinate variables. */
   protected SGNetCDFVariable[] getCoordinateVariables() {
     List<SGNetCDFVariable> varList = new ArrayList<SGNetCDFVariable>();
     if (this.isIndexAvailable()) {
@@ -537,7 +454,6 @@ public abstract class SGTwoDimensionalNetCDFData extends SGNetCDFData
    *
    * @param el the Element object
    * @param type type of the method to save properties
-   * @return true if succeeded
    */
   public boolean writeProperty(Element el, final SGExportParameter type) {
     if (super.writeProperty(el, type) == false) {

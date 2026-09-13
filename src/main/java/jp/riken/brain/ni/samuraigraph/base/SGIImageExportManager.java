@@ -14,7 +14,6 @@ public interface SGIImageExportManager {
    * @param w width of the image
    * @param h height of the image
    * @param silent the flag for the silent mode
-   * @return true if succeeded
    */
   public boolean export(Component target, Frame owner, int w, int h, boolean silent);
 

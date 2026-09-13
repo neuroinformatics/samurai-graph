@@ -15,19 +15,16 @@ public interface SGIClientPanel {
 
   /**
    * @return
-   * @uml.property name="gridLineVisible"
    */
   public boolean isGridLineVisible();
 
   /**
    * @return
-   * @uml.property name="paperColor"
    */
   public Color getPaperColor();
 
   /**
    * @return
-   * @uml.property name="gridLineColor"
    */
   public Color getGridLineColor();
 
@@ -41,7 +38,6 @@ public interface SGIClientPanel {
 
   /**
    * @return
-   * @uml.property name="imageScalingFactor"
    */
   public float getImageScalingFactor();
 
@@ -56,21 +52,18 @@ public interface SGIClientPanel {
   /**
    * @param b
    * @return
-   * @uml.property name="gridLineVisible"
    */
   public boolean setGridLineVisible(final boolean b);
 
   /**
    * @param cl
    * @return
-   * @uml.property name="paperColor"
    */
   public boolean setPaperColor(final Color cl);
 
   /**
    * @param cl
    * @return
-   * @uml.property name="gridLineColor"
    */
   public boolean setGridLineColor(final Color cl);
 
@@ -78,14 +71,9 @@ public interface SGIClientPanel {
 
   public boolean setImageLocationY(final float value, final String unit);
 
-  //    public boolean setImageWidth(final float value, final String unit);
-  //
-  //    public boolean setImageHeight(final float value, final String unit);
-
   /**
    * @param value
    * @return
-   * @uml.property name="imageScalingFactor"
    */
   public boolean setImageScalingFactor(final float value);
 }

@@ -175,7 +175,6 @@ public interface SGIFigureElementAxisConstants extends SGIFigureElementConstants
 
   public static final String KEY_TICK_MARK_COLOR = "TickMarkColor";
 
-  // for backward compatibility
   public static final String KEY_TICK_MARK_LENGTH = "TickMarkLength";
 
   public static final String KEY_TICK_MARK_INSIDE = "TickMarkInside";

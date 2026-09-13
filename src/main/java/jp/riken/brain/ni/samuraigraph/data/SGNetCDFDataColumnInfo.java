@@ -86,11 +86,7 @@ public class SGNetCDFDataColumnInfo extends SGDataColumnInfo {
     this.mDimensionList.addAll(info.mDimensionList);
   }
 
-  /**
-   * Returns true if the variable is of a coordinate variable.
-   *
-   * @return true if the variable is of a coordinate variable
-   */
+  /** Returns true if the variable is of a coordinate variable. */
   public boolean isCoordinateVariable() {
     return this.mCoordinateVariableFlag;
   }

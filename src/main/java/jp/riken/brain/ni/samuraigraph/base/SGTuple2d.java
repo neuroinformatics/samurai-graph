@@ -18,8 +18,8 @@ public class SGTuple2d implements Cloneable {
   /**
    * Constructs and initializes a SGTuple2d from the specified xy coordinates.
    *
-   * @param x the x coordinate
-   * @param y the y coordinate
+   * @param X the x coordinate
+   * @param Y the y coordinate
    */
   public SGTuple2d(final double X, final double Y) {
     super();
@@ -59,8 +59,8 @@ public class SGTuple2d implements Cloneable {
   /**
    * Sets the values to both components.
    *
-   * @param x a value to set to the first component.
-   * @param y a value to set to the second component.
+   * @param X a value to set to the first component.
+   * @param Y a value to set to the second component.
    */
   public void setValues(final double X, final double Y) {
     this.x = X;

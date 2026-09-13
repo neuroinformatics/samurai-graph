@@ -9,28 +9,23 @@ interface SGILegendDialogObserver extends SGIPropertyDialogObserver, SGITwoAxesH
 
   /**
    * @return
-   * @uml.property name="xValue"
    */
   public double getXValue();
 
   /**
    * @return
-   * @uml.property name="yValue"
    */
   public double getYValue();
 
   /**
    * @return
-   * @uml.property name="fontName"
    */
   public String getFontName();
 
   /** */
   public float getFontSize(final String unit);
 
-  /**
-   * @uml.property name="fontStyle"
-   */
+  /** */
   public int getFontStyle();
 
   /**
@@ -50,25 +45,21 @@ interface SGILegendDialogObserver extends SGIPropertyDialogObserver, SGITwoAxesH
 
   /**
    * @return
-   * @uml.property name="frameLineColor"
    */
   public Color getFrameColor();
 
   /**
    * @return
-   * @uml.property name="legendVisible"
    */
   public boolean isVisible();
 
   /**
    * @return
-   * @uml.property name="backgroundTransparent"
    */
   public int getBackgroundTransparency();
 
   /**
    * @return
-   * @uml.property name="backgroundColor"
    */
   public Color getBackgroundColor();
 
@@ -79,39 +70,35 @@ interface SGILegendDialogObserver extends SGIPropertyDialogObserver, SGITwoAxesH
 
   /**
    * @param value
-   * @uml.property name="xValue"
    */
   public boolean setXValue(final double value);
 
   /**
    * @param value
-   * @uml.property name="yValue"
    */
   public boolean setYValue(final double value);
 
   /**
    * @param b
-   * @uml.property name="legendVisible"
    */
   public boolean setVisible(final boolean b);
 
   /**
    * @param name
    * @return
-   * @uml.property name="fontName"
    */
   public boolean setFontName(final String name);
 
   /**
    * @param style
    * @return
-   * @uml.property name="fontStyle"
    */
   public boolean setFontStyle(final int style);
 
   /**
    * @param size
    * @return
+   * @param unit the unit parameter
    */
   public boolean setFontSize(final float size, final String unit);
 
@@ -127,29 +114,28 @@ interface SGILegendDialogObserver extends SGIPropertyDialogObserver, SGITwoAxesH
 
   /**
    * @param width
+   * @param unit the unit parameter
    */
   public boolean setFrameLineWidth(final float width, final String unit);
 
   /**
    * @param cl
-   * @uml.property name="frameLineColor"
    */
   public boolean setFrameLineColor(final Color cl);
 
   /**
-   * @param b
-   * @uml.property name="backgroundTransparent"
+   * @param percentAlpha
    */
   public boolean setBackgroundTransparent(final int percentAlpha);
 
   /**
    * @param cl
-   * @uml.property name="backgroundColor"
    */
   public boolean setBackgroundColor(Color cl);
 
   /**
-   * @param f
+   * @param w the w parameter
+   * @param unit the unit parameter
    */
   public boolean setSymbolSpan(final float w, final String unit);
 

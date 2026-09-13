@@ -4,11 +4,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 
 public interface SGIIndexData {
 
-  /**
-   * Returns the stride for index.
-   *
-   * @return the stride for index
-   */
+  /** Returns the stride for index. */
   public SGIntegerSeriesSet getIndexStride();
 
   /**

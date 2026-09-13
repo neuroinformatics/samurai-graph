@@ -161,20 +161,12 @@ public abstract class SGNetCDFData extends SGArrayData
     return indexVar;
   }
 
-  /**
-   * Returns the netCDF file.
-   *
-   * @return the netCDF file
-   */
+  /** Returns the netCDF file. */
   public SGNetCDFFile getNetcdfFile() {
     return (SGNetCDFFile) this.getDataSource();
   }
 
-  /**
-   * Returns the copy of this data object.
-   *
-   * @return a copy of this data object
-   */
+  /** Returns the copy of this data object. */
   public Object clone() {
     SGNetCDFData data = (SGNetCDFData) super.clone();
     data.mOriginMap = new HashMap<String, Integer>(this.mOriginMap);
@@ -205,7 +197,6 @@ public abstract class SGNetCDFData extends SGArrayData
    * Sets a given data.
    *
    * @param data a data
-   * @return true if succeeded
    */
   public boolean setData(final SGData data) {
     if (!super.setData(data)) {
@@ -228,7 +219,6 @@ public abstract class SGNetCDFData extends SGArrayData
    * Gets the properties of this data.
    *
    * @param p the properties of this data
-   * @return true if succeeded
    */
   public boolean getProperties(SGProperties p) {
     if (!(p instanceof NetCDFDataProperties)) {
@@ -250,7 +240,6 @@ public abstract class SGNetCDFData extends SGArrayData
    * Set properties to this data.
    *
    * @param p properties to be set
-   * @return true if succeeded
    */
   public boolean setProperties(SGProperties p) {
     if (!(p instanceof NetCDFDataProperties)) {
@@ -274,7 +263,6 @@ public abstract class SGNetCDFData extends SGArrayData
    *
    * @param el the Element object
    * @param type type of the method to save properties
-   * @return true if succeeded
    */
   @Override
   public boolean writeProperty(Element el, final SGExportParameter type) {
@@ -350,7 +338,6 @@ public abstract class SGNetCDFData extends SGArrayData
    *
    * @param name the name of the coordinate variable
    * @param origin a value to set to the origin of the coordinate variable
-   * @return true if succeeded
    */
   public boolean setOrigin(final String name, final int origin) {
     Dimension dim = this.getNetcdfFile().findDimension(name);
@@ -369,7 +356,6 @@ public abstract class SGNetCDFData extends SGArrayData
    * Returns the origin of a coordinate variable.
    *
    * @param name the name of the coordinate variable
-   * @return the origin of the coordinate variable
    */
   public int getOrigin(final String name) {
     Dimension dim = this.getNetcdfFile().findDimension(name);
@@ -388,7 +374,6 @@ public abstract class SGNetCDFData extends SGArrayData
    *
    * @param name the name of a coordinate variable
    * @param index the array index
-   * @return the value of coordinate variable at a given index
    * @throws IOException
    */
   public double getCoordinateValue(final String name, final int index) throws IOException {
@@ -425,7 +410,6 @@ public abstract class SGNetCDFData extends SGArrayData
    * Returns a text string of the name with units string.
    *
    * @param var the variable for an axis
-   * @return a text string of the name with units string
    */
   protected String getNameWithUnit(SGNetCDFVariable var) {
     final String name = var.getNameInPriorityOrder();
@@ -473,7 +457,6 @@ public abstract class SGNetCDFData extends SGArrayData
      * Returns whether this object is equal to given object.
      *
      * @param obj an object to be compared
-     * @return true if two objects are equal
      */
     @Override
     public boolean equals(final Object obj) {
@@ -509,7 +492,6 @@ public abstract class SGNetCDFData extends SGArrayData
      * Returns whether this data property has the equal column types with given data property.
      *
      * @param dp a data property
-     * @return true if this data property has the equal column types with given data property
      */
     @Override
     public boolean hasEqualColumnTypes(DataProperties dp) {
@@ -526,11 +508,7 @@ public abstract class SGNetCDFData extends SGArrayData
       return true;
     }
 
-    /**
-     * Returns a copy of this object.
-     *
-     * @return a copy of this object
-     */
+    /** Returns a copy of this object. */
     public Object copy() {
       NetCDFDataProperties p = (NetCDFDataProperties) super.copy();
       p.originMap = new HashMap<String, Integer>(this.originMap);
@@ -546,7 +524,6 @@ public abstract class SGNetCDFData extends SGArrayData
    * Sets the column information.
    *
    * @param colInfo the column information
-   * @return true if succeeded
    */
   public boolean setColumnInfo(SGDataColumnInfo[] colInfo) {
 
@@ -566,18 +543,13 @@ public abstract class SGNetCDFData extends SGArrayData
     return true;
   }
 
-  /**
-   * Returns an array of variables that are assigned the column type.
-   *
-   * @return an array of variables
-   */
+  /** Returns an array of variables that are assigned the column type. */
   public abstract SGNetCDFVariable[] getAssignedVariables();
 
   /**
    * Returns whether the coordinate variable is fixed.
    *
    * @param name the name of a coordinate variable
-   * @return true if fixed
    */
   public boolean isFixedCoordinateVariable(String name) {
     SGNetCDFVariable var = this.getNetcdfFile().findVariable(name);
@@ -601,7 +573,6 @@ public abstract class SGNetCDFData extends SGArrayData
    *
    * @param el an Element object
    * @param key the key of name property
-   * @return the indices it exists
    */
   protected String[] readNames(Element el, String key) {
     String str = el.getAttribute(key);
@@ -630,8 +601,8 @@ public abstract class SGNetCDFData extends SGArrayData
   /**
    * Creates and returns an array of values of given coordinate variable.
    *
+   * @param removeInvalidValues the removeInvalidValues parameter
    * @param var a coordinate variable
-   * @return an array of values of given variable
    */
   private double[] createCoordinateValueArray(
       SGNetCDFVariable var, final boolean removeInvalidValues) {
@@ -1078,11 +1049,7 @@ public abstract class SGNetCDFData extends SGArrayData
     }
   }
 
-  /**
-   * Returns an array of time values.
-   *
-   * @return an array of time values
-   */
+  /** Returns an array of time values. */
   public double[] getTimeValueArray() {
     if (this.mTimeVariable == null) {
       return null;
@@ -1093,30 +1060,18 @@ public abstract class SGNetCDFData extends SGArrayData
     }
   }
 
-  /**
-   * Returns whether time variable is available.
-   *
-   * @return true if available
-   */
+  /** Returns whether time variable is available. */
   public boolean isTimeVariableAvailable() {
     return (this.mTimeVariable != null);
   }
 
-  /**
-   * Returns whether animation is available.
-   *
-   * @return true if animation is available
-   */
+  /** Returns whether animation is available. */
   @Override
   public boolean isAnimationAvailable() {
     return this.isTimeVariableAvailable();
   }
 
-  /**
-   * Returns the length of animation.
-   *
-   * @return the length of animation
-   */
+  /** Returns the length of animation. */
   @Override
   public int getAnimationLength() {
     int ret = -1;
@@ -1126,11 +1081,7 @@ public abstract class SGNetCDFData extends SGArrayData
     return ret;
   }
 
-  /**
-   * Returns the current index of time value.
-   *
-   * @return the current index of time value
-   */
+  /** Returns the current index of time value. */
   @Override
   public int getCurrentTimeValueIndex() {
     if (this.mTimeVariable == null) {
@@ -1141,20 +1092,12 @@ public abstract class SGNetCDFData extends SGArrayData
     return num;
   }
 
-  /**
-   * Returns the time variable.
-   *
-   * @return the time variable
-   */
+  /** Returns the time variable. */
   public SGNetCDFVariable getTimeVariable() {
     return this.mTimeVariable;
   }
 
-  /**
-   * Returns the current time value.
-   *
-   * @return the current time value
-   */
+  /** Returns the current time value. */
   public Number getCurrentTimeValue() {
     if (this.mTimeVariable == null) {
       return -1;
@@ -1190,7 +1133,6 @@ public abstract class SGNetCDFData extends SGArrayData
    * Returns the name of given variable if it is not null.
    *
    * @param var a variable
-   * @return the name of given variable or null
    */
   protected String getName(SGNetCDFVariable var) {
     return (var != null) ? var.getName() : null;
@@ -1200,7 +1142,6 @@ public abstract class SGNetCDFData extends SGArrayData
    * Returns the name of given dimension if it is not null.
    *
    * @param dim a dimension
-   * @return the name of given dimension or null
    */
   protected String getName(Dimension dim) {
     return (dim != null) ? dim.getShortName() : null;
@@ -1210,7 +1151,6 @@ public abstract class SGNetCDFData extends SGArrayData
    * Finds and returns a variable of given name.
    *
    * @param name the name of variable
-   * @return a variable of given name
    */
   protected SGNetCDFVariable findVariable(String name) {
     return (name != null) ? this.getNetcdfFile().findVariable(name) : null;
@@ -1232,7 +1172,6 @@ public abstract class SGNetCDFData extends SGArrayData
    * Finds and returns a dimension of given name.
    *
    * @param name the name of dimension
-   * @return a variable of given name
    */
   protected Dimension findDimension(String name) {
     return (name != null) ? this.getNetcdfFile().findDimension(name) : null;
@@ -1280,11 +1219,7 @@ public abstract class SGNetCDFData extends SGArrayData
     this.checkNonCoordinateVariable(var, cDimList);
   }
 
-  /**
-   * Returns a map which has data information. Overrode to set the data type and netCDF file.
-   *
-   * @return a map which has data information
-   */
+  /** Returns a map which has data information. Overrode to set the data type and netCDF file. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> map = super.getInfoMap();
     map.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, this.getDataType());
@@ -1292,27 +1227,15 @@ public abstract class SGNetCDFData extends SGArrayData
     return map;
   }
 
-  /**
-   * Returns a map of stride of dimensions. The keys are the name of dimensions.
-   *
-   * @return a map of stride of dimensions
-   */
+  /** Returns a map of stride of dimensions. The keys are the name of dimensions. */
   protected abstract Map<String, SGIntegerSeriesSet> getDimensionStrideMap();
 
-  /**
-   * Returns the variable of index.
-   *
-   * @return the variable of index
-   */
+  /** Returns the variable of index. */
   public SGNetCDFVariable getIndexVariable() {
     return this.mIndexVariable;
   }
 
-  /**
-   * Returns whether the index is available.
-   *
-   * @return true if the index is available
-   */
+  /** Returns whether the index is available. */
   @Override
   public boolean isIndexAvailable() {
     return (this.mIndexVariable != null);
@@ -1742,11 +1665,7 @@ public abstract class SGNetCDFData extends SGArrayData
     }
   }
 
-  /**
-   * Returns the stride for index.
-   *
-   * @return the stride for index
-   */
+  /** Returns the stride for index. */
   @Override
   public SGIntegerSeriesSet getIndexStride() {
     if (this.mIndexStride != null) {
@@ -1756,11 +1675,7 @@ public abstract class SGNetCDFData extends SGArrayData
     }
   }
 
-  /**
-   * Returns the stride of time.
-   *
-   * @return the stride of time
-   */
+  /** Returns the stride of time. */
   @Override
   public SGIntegerSeriesSet getTimeStride() {
     if (this.mTimeStride != null) {
@@ -2096,6 +2011,8 @@ public abstract class SGNetCDFData extends SGArrayData
   /**
    * Exports the data into a file of the same format.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param file the file to save
    * @return true if succeeded
    */
@@ -2212,6 +2129,8 @@ public abstract class SGNetCDFData extends SGArrayData
   /**
    * Exports the data into a NetCDF file.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param file the file to save
    * @return true if succeeded
    */
@@ -2436,7 +2355,9 @@ public abstract class SGNetCDFData extends SGArrayData
   /**
    * Exports the data into a HDF5 file.
    *
-   * @param path the path of HDF5 file
+   * @param file the file parameter
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @return true if succeeded
    */
   @Override
@@ -2448,7 +2369,9 @@ public abstract class SGNetCDFData extends SGArrayData
   /**
    * Exports the data into a MATLAB file.
    *
-   * @param path the path of MATLAB file
+   * @param file the file parameter
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @return true if succeeded
    */
   @Override
@@ -2460,6 +2383,7 @@ public abstract class SGNetCDFData extends SGArrayData
   /**
    * Exports the data into a text file.
    *
+   * @param policy the policy parameter
    * @param file the file to save
    * @param mode the mode to save data
    * @return true if succeeded
@@ -2482,34 +2406,6 @@ public abstract class SGNetCDFData extends SGArrayData
       return -1;
     }
   }
-
-  /*
-  protected void setFillValue(Variable var, double[] values) {
-  	Number fillValue = SGNetCDFVariable.getFillValue(var);
-  	if (fillValue != null) {
-  		final double f = fillValue.doubleValue();
-  		for (int ii = 0; ii < values.length; ii++) {
-  			if (Double.isNaN(values[ii])) {
-  				values[ii] = f;
-  			}
-  		}
-  	}
-  }
-
-  protected void setFillValue(Variable var, double[][] values) {
-  	Number fillValue = SGNetCDFVariable.getFillValue(var);
-  	if (fillValue != null) {
-  		final double f = fillValue.doubleValue();
-  		for (int ii = 0; ii < values.length; ii++) {
-  			for (int jj = 0; jj < values[ii].length; jj++) {
-      			if (Double.isNaN(values[ii][jj])) {
-      				values[ii][jj] = f;
-      			}
-  			}
-  		}
-  	}
-  }
-  */
 
   protected DataType getExportNumberDataType(
       SGNetCDFVariable var, SGExportParameter mode, SGDataBufferPolicy policy) {

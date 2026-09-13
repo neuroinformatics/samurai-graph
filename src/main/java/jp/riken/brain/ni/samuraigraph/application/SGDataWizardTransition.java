@@ -116,9 +116,11 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
   /**
    * Makes the transition between wizard dialogs.
    *
+   * @param path the path parameter
+   * @param figureID the figureID parameter
+   * @param pos the pos parameter
    * @param prev previous dialog to select data type
    * @param next next dialog to select column
-   * @param f a data file
    * @return true if succeeded
    */
   boolean makeTransition(
@@ -179,6 +181,8 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
   /**
    * Makes the transition between wizard dialogs of netCDF data.
    *
+   * @param figureID the figureID parameter
+   * @param pos the pos parameter
    * @param prev previous dialog to select data type
    * @param next next dialog to select column
    * @param path a data file path
@@ -248,6 +252,11 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
   /**
    * Makes the transition between wizard dialogs of netCDF data.
    *
+   * @param figureID the figureID parameter
+   * @param pos the pos parameter
+   * @param fileType the fileType parameter
+   * @param dataName the dataName parameter
+   * @param showDefault the showDefault parameter
    * @param prev previous dialog to select data type
    * @param next next dialog to select column
    * @param path a data file path
@@ -344,6 +353,7 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
   /**
    * Sets up the the dialog to setup the netCDF data.
    *
+   * @param infoMap the infoMap parameter
    * @param ncFile a netCDF file
    * @param dataType the type of data
    * @param dg the dialog to setup netCDF data
@@ -383,6 +393,9 @@ final class SGDataWizardTransition implements SGIApplicationConstants, SGIApplic
   /**
    * Sets up the the dialog to setup the multidimensional data.
    *
+   * @param infoMap the infoMap parameter
+   * @param colInfoSet the colInfoSet parameter
+   * @param showDefault the showDefault parameter
    * @param mdFile a multidimensional data file
    * @param dataType the type of data
    * @param dg the dialog to setup multidimensional data

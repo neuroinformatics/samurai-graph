@@ -300,7 +300,6 @@ public class SGNetCDFVariable extends SGVariable implements SGINetCDFConstants {
     }
     final int len = (int) array.getSize();
     if (len == 0) {
-      // if the length of a coordinate variable is zero, returns null
       return null;
     }
     double[] values = new double[len];

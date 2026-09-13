@@ -282,7 +282,6 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
    * @param colInfoSet data columns
    * @param infoMap a map of information
    * @param showDefault a flag whether to show default column type
-   * @return true if succeeded
    */
   public boolean setData(
       SGSDArrayData data,
@@ -304,11 +303,11 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
   /**
    * Set information of data columns.
    *
+   * @param sdFile the sdFile parameter
    * @param dataType data type
    * @param colInfoSet data columns
    * @param infoMap a map of information
    * @param showDefault a flag whether to show default column type
-   * @return true if succeeded
    */
   public boolean setData(
       final SGSDArrayFile sdFile,
@@ -439,18 +438,12 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
 
   @Override
   public Boolean isVariableDataType() {
-    // always returns null;
     return null;
   }
 
-  /**
-   * Returns the indices for picked up dimension of scalar XY data.
-   *
-   * @return the indices for picked up dimension of scalar XY data
-   */
+  /** Returns the indices for picked up dimension of scalar XY data. */
   @Override
   public SGIntegerSeriesSet getSXYPickUpIndices() {
-    // always returns null;
     return null;
   }
 
@@ -459,11 +452,7 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
     // do nothing
   }
 
-  /**
-   * Returns the map of the stride for arrays.
-   *
-   * @return the map of the stride for arrays
-   */
+  /** Returns the map of the stride for arrays. */
   @Override
   public Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> strideMap = new HashMap<String, SGIntegerSeriesSet>();
@@ -522,11 +511,7 @@ public class SGSDArrayDataSetupPanel extends SGDataSetupPanel implements Documen
     return lengthMap;
   }
 
-  /**
-   * Returns whether stride of data arrays is available.
-   *
-   * @return true if stride of data arrays is available
-   */
+  /** Returns whether stride of data arrays is available. */
   public boolean isStrideAvailable() {
     return this.mStrideAvailableCheckBox.isSelected();
   }

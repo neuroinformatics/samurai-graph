@@ -717,8 +717,7 @@ public class SGLegendDialog extends SGPropertyDialog
   }
 
   /**
-   * @param b
-   * @return
+   * @param flag
    */
   private boolean setAllLegendComponentsEnabled(final Boolean flag) {
     boolean b = true;
@@ -732,8 +731,7 @@ public class SGLegendDialog extends SGPropertyDialog
   }
 
   /**
-   * @param b
-   * @return
+   * @param frameVisible
    */
   private boolean setFrameComponentsEnabled(final Boolean frameVisible) {
     boolean b = true;
@@ -748,7 +746,6 @@ public class SGLegendDialog extends SGPropertyDialog
 
   /**
    * @param b
-   * @return
    */
   private boolean setFrameComponentsEnabled(final boolean b) {
     this.mFrameVisibleComponentGroup.setEnabled(b);
@@ -761,16 +758,12 @@ public class SGLegendDialog extends SGPropertyDialog
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Number getXValue() {
     return this.getNumber(this.mXValueTextField);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Number getYValue() {
     return this.getNumber(this.mYValueTextField);
   }
@@ -821,23 +814,18 @@ public class SGLegendDialog extends SGPropertyDialog
     return this.mStringColorButton.getColor();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Number getBackgroundTransparency() {
     return this.mBackgroundTransparencySpinner.getNumber();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Number getSymbolSpan() {
     return this.mSpanSpinner.getNumber();
   }
 
   /**
    * @param obj
-   * @return
    */
   public boolean setXValue(final Object obj) {
     return this.setValue(this.mXValueTextField, obj);
@@ -845,7 +833,6 @@ public class SGLegendDialog extends SGPropertyDialog
 
   /**
    * @param obj
-   * @return
    */
   public boolean setYValue(final Object obj) {
     return this.setValue(this.mYValueTextField, obj);
@@ -893,7 +880,6 @@ public class SGLegendDialog extends SGPropertyDialog
    * Sets the font name.
    *
    * @param name the font name to set
-   * @return true if succeeded
    */
   public boolean setFontName(final String name) {
     final String fName = SGUtility.findFontFamilyName(name);
@@ -918,7 +904,7 @@ public class SGLegendDialog extends SGPropertyDialog
   }
 
   /**
-   * @param flag
+   * @param alpha
    * @return
    */
   public boolean setBackgroundTransparent(final Integer alpha) {

@@ -182,20 +182,12 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
     this.mRemoteFileFlag = remote;
   }
 
-  /**
-   * Returns the netCDF file.
-   *
-   * @return the netCDF file
-   */
+  /** Returns the netCDF file. */
   public NetcdfFile getNetcdfFile() {
     return this.mNetcdfFile;
   }
 
-  /**
-   * Returns a list of variables.
-   *
-   * @return a list of variables
-   */
+  /** Returns a list of variables. */
   public List<SGNetCDFVariable> getVariables() {
     return new ArrayList<SGNetCDFVariable>(this.mVariableList);
   }
@@ -204,7 +196,6 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
    * Finds and returns a variable of a given name if it exists.
    *
    * @param name the name of variable
-   * @return found variable
    */
   public SGNetCDFVariable findVariable(String name) {
     for (SGNetCDFVariable var : this.mVariableList) {
@@ -219,7 +210,6 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
    * Finds and returns a variable of a given name if it exists.
    *
    * @param name the name of variable
-   * @return found variable
    */
   public SGNetCDFVariable findVariableEx(final String name) {
     for (int ii = 0; ii < this.mVariableList.size(); ii++) {
@@ -246,7 +236,6 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
    * Finds a variable of a given name if it exists and returns its array index.
    *
    * @param name the name of variable
-   * @return the array index of found variable or -1 if it is not found
    */
   public int getVariableIndex(final String name) {
     for (int ii = 0; ii < this.mVariableList.size(); ii++) {
@@ -254,11 +243,6 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
       if (name.equals(var.getName())) {
         return ii;
       }
-      // if (var instanceof SGTextVariable) {
-      // if (name.equals(var.getName())) {
-      // return ii;
-      // }
-      // }
     }
     return -1;
   }
@@ -283,7 +267,6 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
    * Finds and returns a text variable.
    *
    * @param dimName the name of dimension
-   * @return a text variable for a given dimension
    */
   public SGTextVariable findTextVariable(String dimName) {
     SGTextVariable ret = null;
@@ -300,11 +283,7 @@ public class SGNetCDFFile extends SGDataSource implements SGINetCDFConstants {
     return ret;
   }
 
-  /**
-   * Clones this data file.
-   *
-   * @return copy of this data file
-   */
+  /** Clones this data file. */
   public Object clone() {
     SGNetCDFFile dataFile = null;
     try {

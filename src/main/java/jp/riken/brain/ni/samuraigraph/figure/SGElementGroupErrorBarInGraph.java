@@ -242,13 +242,11 @@ public class SGElementGroupErrorBarInGraph extends SGElementGroupErrorBarForData
    * @return true if this element group contains the given point
    */
   public boolean contains(final int x, final int y) {
-    // if a given point is out of the graph rectangle, returns false;
     Rectangle2D gRect = this.mGraph.getGraphRect();
     if (!gRect.contains(x, y)) {
       return false;
     }
 
-    // if the data object do not have error bars, return false
     SGISXYTypeSingleData dataSXY = (SGISXYTypeSingleData) this.mGraph.getData(this.mGroupSet);
     if (dataSXY == null) {
       return false;

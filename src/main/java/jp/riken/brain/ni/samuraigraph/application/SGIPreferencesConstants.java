@@ -23,7 +23,6 @@ public interface SGIPreferencesConstants {
   /** The key of the pattern of the tool bar. */
   public static final String PREF_KEY_TOOL_BAR_PATTERN = "Tool Bar Pattern";
 
-  // for old version
   // constants to be removed from the backing store
   public static final String PREF_KEY_MAJOR_VERSION_NUMBER = "Major Version";
 

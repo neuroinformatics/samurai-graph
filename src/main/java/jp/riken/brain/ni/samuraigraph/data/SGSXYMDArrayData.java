@@ -249,11 +249,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     return var;
   }
 
-  /**
-   * Returns a text string of data type.
-   *
-   * @return a text string of data type
-   */
+  /** Returns a text string of data type. */
   @Override
   public String getDataType() {
     SGIDataSource src = this.getDataSource();
@@ -271,8 +267,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
   /**
    * Sets the type of data columns.
    *
-   * @param column an array of column types
-   * @return true if succeeded
+   * @param columns an array of column types
    */
   @Override
   public boolean setColumnType(String[] columns) {
@@ -383,21 +378,13 @@ public class SGSXYMDArrayData extends SGMDArrayData
     this.mShift = null;
   }
 
-  /**
-   * Returns whether error bars are available.
-   *
-   * @return true if error bars are available
-   */
+  /** Returns whether error bars are available. */
   @Override
   public boolean isErrorBarAvailable() {
     return (this.mLowerErrorVariable != null && this.mUpperErrorVariable != null);
   }
 
-  /**
-   * Returns whether tick labels are available.
-   *
-   * @return true if tick labels are available
-   */
+  /** Returns whether tick labels are available. */
   @Override
   public boolean isTickLabelAvailable() {
     return (this.mTickLabelVariable != null);
@@ -407,8 +394,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
    * Returns whether the error bars are vertical. If this data does not have error values, returns
    * null.
    *
-   * @return true if error bars are vertical, false if they are horizontal and null if this data do
-   *     not have error values
+   * <p>not have error values
    */
   @Override
   public Boolean isErrorBarVertical() {
@@ -423,8 +409,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
    * Returns whether the tick labels align horizontally. If this data does not have tick labels,
    * returns null.
    *
-   * @return true if tick labels align horizontally, false if they do not so and null if this data
-   *     do not have tick labels
+   * <p>do not have tick labels
    */
   @Override
   public Boolean isTickLabelHorizontal() {
@@ -458,31 +443,19 @@ public class SGSXYMDArrayData extends SGMDArrayData
     this.mExponent = exp;
   }
 
-  /**
-   * Returns the decimal places for the tick labels.
-   *
-   * @return the decimal places for the tick labels
-   */
+  /** Returns the decimal places for the tick labels. */
   @Override
   public int getDecimalPlaces() {
     return this.mDecimalPlaces;
   }
 
-  /**
-   * Returns the exponent for tick labels.
-   *
-   * @return the exponent for tick labels
-   */
+  /** Returns the exponent for tick labels. */
   @Override
   public int getExponent() {
     return this.mExponent;
   }
 
-  /**
-   * Returns the number of data points taking into account the stride.
-   *
-   * @return the number of data points taking into account the stride
-   */
+  /** Returns the number of data points taking into account the stride. */
   @Override
   public int getPointsNumber() {
     if (this.isStrideAvailable()) {
@@ -492,31 +465,19 @@ public class SGSXYMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns the bounds of x-values.
-   *
-   * @return the bounds of x-values
-   */
+  /** Returns the bounds of x-values. */
   @Override
   public SGValueRange getBoundsX() {
     return SGDataRangeUtility.getBoundsX(this);
   }
 
-  /**
-   * Returns the bounds of y-values.
-   *
-   * @return the bounds of y-values
-   */
+  /** Returns the bounds of y-values. */
   @Override
   public SGValueRange getBoundsY() {
     return SGDataRangeUtility.getBoundsY(this);
   }
 
-  /**
-   * Returns the title for the X-axis.
-   *
-   * @return the title for the X-axis
-   */
+  /** Returns the title for the X-axis. */
   @Override
   public String getTitleX() {
     if (this.mXVariable != null) {
@@ -526,11 +487,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns the title for the Y-axis.
-   *
-   * @return the title for the Y-axis
-   */
+  /** Returns the title for the Y-axis. */
   @Override
   public String getTitleY() {
     if (this.mYVariable != null) {
@@ -562,11 +519,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     return this.mTickLabelStride.isComplete();
   }
 
-  /**
-   * Returns an array of X-values.
-   *
-   * @return an array of X-values
-   */
+  /** Returns an array of X-values. */
   @Override
   public double[] getXValueArray(final boolean all) {
     return SGDataViewerUtility.getXValueArray(this, all);
@@ -596,11 +549,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     return ret;
   }
 
-  /**
-   * Returns an array of Y-values.
-   *
-   * @return an array of Y-values
-   */
+  /** Returns an array of Y-values. */
   @Override
   public double[] getYValueArray(final boolean all) {
     return SGDataViewerUtility.getYValueArray(this, all);
@@ -630,11 +579,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     return ret;
   }
 
-  /**
-   * Returns an array of lower error values.
-   *
-   * @return an array of lower error values
-   */
+  /** Returns an array of lower error values. */
   @Override
   public double[] getLowerErrorValueArray(final boolean all) {
     return SGDataBufferUtility.getLowerErrorValueArray(this, all);
@@ -654,11 +599,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     return ret;
   }
 
-  /**
-   * Returns an array of upper error values.
-   *
-   * @return an array of upper error values
-   */
+  /** Returns an array of upper error values. */
   @Override
   public double[] getUpperErrorValueArray(final boolean all) {
     return SGDataBufferUtility.getUpperErrorValueArray(this, all);
@@ -678,11 +619,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     return ret;
   }
 
-  /**
-   * Returns an array of text strings.
-   *
-   * @return an array of text strings
-   */
+  /** Returns an array of text strings. */
   @Override
   public String[] getStringArray(final boolean all) {
     return SGDataViewerUtility.getStringArray(this, all);
@@ -717,7 +654,6 @@ public class SGSXYMDArrayData extends SGMDArrayData
    * Returns whether a given data object has the same tick label resources.
    *
    * @param data a data to compare
-   * @return true if a given data object has the same tick label resources
    */
   @Override
   public boolean hasEqualTickLabelResource(SGISXYTypeSingleData data) {
@@ -790,11 +726,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Transforms this data to a multiple type data.
-   *
-   * @return a transformed data
-   */
+  /** Transforms this data to a multiple type data. */
   public SGISXYTypeMultipleData toMultiple() {
     final boolean be = this.isErrorBarAvailable();
     final boolean bt = this.isTickLabelAvailable();
@@ -851,9 +783,9 @@ public class SGSXYMDArrayData extends SGMDArrayData
   /**
    * Transforms this data to a multiple type data.
    *
+   * @param len the len parameter
    * @param pickupYVariable true to pick up the y variable, and false to pick up the x variable
    * @param pickUpDimensionIndex the dimension index to pick up
-   * @return a transformed data
    */
   public SGISXYTypeMultipleData toMultiple(
       final boolean pickupYVariable, final int pickUpDimensionIndex, final int len) {
@@ -898,11 +830,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     return data;
   }
 
-  /**
-   * Returns an array of current column types.
-   *
-   * @return an array of current column types
-   */
+  /** Returns an array of current column types. */
   @Override
   public String[] getCurrentColumnType() {
     SGMDArrayVariable[] vars = this.getVariables();
@@ -1022,16 +950,12 @@ public class SGSXYMDArrayData extends SGMDArrayData
      * Returns whether this data property has the equal column types with given data property.
      *
      * @param dp a data property
-     * @return true if this data property has the equal column types with given data property
      */
     @Override
     public boolean hasEqualColumnTypes(DataProperties dp) {
       if ((dp instanceof SXYMDDataProperties) == false) {
         return false;
       }
-      // if (super.hasEqualColumnTypes(dp) == false) {
-      // return false;
-      // }
       SXYMDDataProperties p = (SXYMDDataProperties) dp;
       if (SGUtility.equals(this.xName, p.xName) == false) {
         return false;
@@ -1057,11 +981,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
       return true;
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       SXYMDDataProperties p = (SXYMDDataProperties) super.copy();
       p.mStride = (this.mStride != null) ? (SGIntegerSeriesSet) this.mStride.clone() : null;
@@ -1073,11 +993,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns the properties of this data.
-   *
-   * @return the properties of this data
-   */
+  /** Returns the properties of this data. */
   @Override
   public SGProperties getProperties() {
     SGProperties p = new SXYMDDataProperties();
@@ -1091,7 +1007,6 @@ public class SGSXYMDArrayData extends SGMDArrayData
    * Returns the properties of this data.
    *
    * @param p the properties of this data
-   * @return true if succeeded
    */
   @Override
   public boolean getProperties(SGProperties p) {
@@ -1118,7 +1033,6 @@ public class SGSXYMDArrayData extends SGMDArrayData
    * Sets the properties to this data.
    *
    * @param p properties to set
-   * @return true if succeeded
    */
   @Override
   public boolean setProperties(SGProperties p) {
@@ -1141,11 +1055,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     return true;
   }
 
-  /**
-   * Returns the stride.
-   *
-   * @return the stride
-   */
+  /** Returns the stride. */
   public SGIntegerSeriesSet getStride() {
     if (this.mStride != null) {
       return (SGIntegerSeriesSet) this.mStride.clone();
@@ -1180,7 +1090,6 @@ public class SGSXYMDArrayData extends SGMDArrayData
    * Sets the data.
    *
    * @param data data set to this object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (!(data instanceof SGSXYMDArrayData)) {
@@ -1205,11 +1114,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     return true;
   }
 
-  /**
-   * Returns the copy of this data object.
-   *
-   * @return a copy of this data object
-   */
+  /** Returns the copy of this data object. */
   public Object clone() {
     SGSXYMDArrayData data = (SGSXYMDArrayData) super.clone();
     data.mXVariable = copyVariable(this.mXVariable);
@@ -1241,11 +1146,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns the stride of the tick labels.
-   *
-   * @return the stride of the tick labels
-   */
+  /** Returns the stride of the tick labels. */
   @Override
   public SGIntegerSeriesSet getTickLabelStride() {
     SGIntegerSeriesSet ret = null;
@@ -1255,11 +1156,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     return ret;
   }
 
-  /**
-   * Returns a map of stride for data arrays.
-   *
-   * @return a map of stride for data arrays
-   */
+  /** Returns a map of stride for data arrays. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
@@ -1278,11 +1175,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     this.mStride = map.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE);
   }
 
-  /**
-   * Returns the number of strings.
-   *
-   * @return the number of strings
-   */
+  /** Returns the number of strings. */
   @Override
   public int getStringNumber() {
     if (this.isStrideAvailable()) {
@@ -1292,11 +1185,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns the indices of tick labels.
-   *
-   * @return the indices of tick labels
-   */
+  /** Returns the indices of tick labels. */
   @Override
   public int[] getTickLabelValueIndices() {
     if (!this.isTickLabelAvailable()) {
@@ -1310,31 +1199,19 @@ public class SGSXYMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns the number of data points without taking into account the stride.
-   *
-   * @return the number of data points without taking into account the stride
-   */
+  /** Returns the number of data points without taking into account the stride. */
   @Override
   public int getAllPointsNumber() {
     SGMDArrayVariable var = (this.mXVariable != null) ? this.mXVariable : this.mYVariable;
     return var.getGenericDimensionLength();
   }
 
-  /**
-   * Returns the map of dimension index that are used.
-   *
-   * @return the map of dimension index
-   */
+  /** Returns the map of dimension index that are used. */
   public Map<String, Map<String, Integer>> getUsedDimensionIndexMap() {
     return this.getDimensionIndexMap();
   }
 
-  /**
-   * Returns an array of variables that are assigned the column type.
-   *
-   * @return an array of variables
-   */
+  /** Returns an array of variables that are assigned the column type. */
   @Override
   public SGMDArrayVariable[] getAssignedVariables() {
     List<SGMDArrayVariable> varList = new ArrayList<SGMDArrayVariable>();
@@ -1360,8 +1237,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
   /**
    * Adds variables to a netCDF file.
    *
-   * @param ncWrite a netCDF file
-   * @return true if succeeded
+   * @param builder a netCDF file
    */
   @Override
   protected boolean addVariables(NetcdfFormatWriter.Builder builder) {
@@ -1372,8 +1248,7 @@ public class SGSXYMDArrayData extends SGMDArrayData
   /**
    * Writes data to a netCDF file.
    *
-   * @param ncWrite a netCDF file
-   * @return true if succeeded
+   * @param writer a netCDF file
    */
   @Override
   protected boolean writeData(NetcdfFormatWriter writer) {
@@ -1381,21 +1256,13 @@ public class SGSXYMDArrayData extends SGMDArrayData
     return true;
   }
 
-  /**
-   * Returns a text string of the data type to save into a NetCDF data set file.
-   *
-   * @return a text string of the data type to save into a NetCDF data set file
-   */
+  /** Returns a text string of the data type to save into a NetCDF data set file. */
   @Override
   public String getNetCDFDataSetDataType() {
     return SGDataTypeConstants.SXY_NETCDF_DATA;
   }
 
-  /**
-   * Returns the shift.
-   *
-   * @return the shift
-   */
+  /** Returns the shift. */
   public SGTuple2d getShift() {
     return (SGTuple2d) this.mShift.clone();
   }
@@ -1415,8 +1282,9 @@ public class SGSXYMDArrayData extends SGMDArrayData
   /**
    * Exports to a HDF5 file.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param writer HDF5-file writer
-   * @return true if succeeded
    */
   @Override
   protected boolean exportToHDF5(
@@ -1428,9 +1296,10 @@ public class SGSXYMDArrayData extends SGMDArrayData
   /**
    * Exports to a MATLAB file.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param file the MATLAB file
    * @param writer MAT-file writer
-   * @return true if succeeded
    */
   @Override
   protected boolean exportToMATLAB(
@@ -1443,7 +1312,6 @@ public class SGSXYMDArrayData extends SGMDArrayData
    * Creates and returns a data buffer.
    *
    * @param param parameters for data buffer
-   * @return the data buffer
    */
   @Override
   public SGDataBuffer getDataBuffer(SGDataBufferPolicy param) {
@@ -1477,19 +1345,13 @@ public class SGSXYMDArrayData extends SGMDArrayData
   /**
    * Returns true if this data has at lease one "effective" stride that has the string
    * representation different from "0:end".
-   *
-   * @return true this data has an effective stride
    */
   @Override
   public boolean hasEffectiveStride() {
     return SGDataViewerUtility.hasEffectiveStride(this);
   }
 
-  /**
-   * Returns the main stride.
-   *
-   * @return the main stride
-   */
+  /** Returns the main stride. */
   @Override
   public SGIntegerSeriesSet getMainStride() {
     SGIntegerSeriesSet ret = null;

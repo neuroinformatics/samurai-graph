@@ -48,11 +48,7 @@ public abstract class SGDataDialog extends SGPropertyDialog {
     super(parent, modal);
   }
 
-  /**
-   * Returns the data name of dialog observers.
-   *
-   * @return data name when all names are the same, otherwise null
-   */
+  /** Returns the data name of dialog observers. */
   protected String getDataNameFromObservers() {
 
     List<SGIPropertyDialogObserver> oList = this.mPropertyDialogObserverList;
@@ -82,11 +78,7 @@ public abstract class SGDataDialog extends SGPropertyDialog {
     return name;
   }
 
-  /**
-   * Returns visibility in the legend of dialog observers.
-   *
-   * @return visibility in the legend when all values are the same, otherwise null
-   */
+  /** Returns visibility in the legend of dialog observers. */
   protected Boolean getLegendVisibleFromObservers() {
 
     List<SGIPropertyDialogObserver> oList = this.mPropertyDialogObserverList;
@@ -148,7 +140,6 @@ public abstract class SGDataDialog extends SGPropertyDialog {
     SGDataColumnInfo[] cols = obs.getDataColumnInfoArray();
     Map<String, Object> infoMap = this.createInfoMap(obs);
 
-    // if attributes of data column types array already exist, set them to the column array
     if (this.mDataInfoArray != null) {
       for (int ii = 0; ii < cols.length; ii++) {
         cols[ii] = (SGDataColumnInfo) this.mDataInfoArray[ii].clone();

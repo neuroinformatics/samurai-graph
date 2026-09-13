@@ -684,14 +684,6 @@ public final class SGDataViewerUtility
     if (ret == null) {
       return null;
     }
-    // if (data.isStrideAvailable() && !all) {
-    // int[] indices = data.getTickLabelStride().getNumbers();
-    // String[] strArray = new String[indices.length];
-    // for (int ii = 0; ii < strArray.length; ii++) {
-    // strArray[ii] = ret[indices[ii]];
-    // }
-    // ret = strArray;
-    // }
     return ret;
   }
 

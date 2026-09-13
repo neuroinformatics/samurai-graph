@@ -7,26 +7,17 @@ import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 /** An interface for Scalar-type XY data. */
 public interface SGISXYTypeData extends SGIXYData {
 
-  /**
-   * Returns whether error bars are available.
-   *
-   * @return true if error bars are available
-   */
+  /** Returns whether error bars are available. */
   public boolean isErrorBarAvailable();
 
-  /**
-   * Returns whether tick labels are available.
-   *
-   * @return true if tick labels are available
-   */
+  /** Returns whether tick labels are available. */
   public boolean isTickLabelAvailable();
 
   /**
    * Returns whether the error bars are vertical. If this data does not have error values, returns
    * null.
    *
-   * @return true if error bars are vertical, false if they are horizontal and null if this data do
-   *     not have error values
+   * <p>not have error values
    */
   public Boolean isErrorBarVertical();
 
@@ -34,23 +25,14 @@ public interface SGISXYTypeData extends SGIXYData {
    * Returns whether the tick labels align horizontally. If this data does not have tick labels,
    * returns null.
    *
-   * @return true if tick labels align horizontally, false if they do not so and null if this data
-   *     do not have tick labels
+   * <p>do not have tick labels
    */
   public Boolean isTickLabelHorizontal();
 
-  /**
-   * Returns the decimal places for the tick labels.
-   *
-   * @return the decimal places for the tick labels
-   */
+  /** Returns the decimal places for the tick labels. */
   public int getDecimalPlaces();
 
-  /**
-   * Returns the exponent for tick labels.
-   *
-   * @return the exponent for tick labels
-   */
+  /** Returns the exponent for tick labels. */
   public int getExponent();
 
   public String getDateFormat();
@@ -78,11 +60,7 @@ public interface SGISXYTypeData extends SGIXYData {
    */
   public void setStride(final SGIntegerSeriesSet stride);
 
-  /**
-   * Returns the stride.
-   *
-   * @return the stride
-   */
+  /** Returns the stride. */
   public SGIntegerSeriesSet getStride();
 
   /**
@@ -92,25 +70,13 @@ public interface SGISXYTypeData extends SGIXYData {
    */
   public void setTickLabelStride(SGIntegerSeriesSet stride);
 
-  /**
-   * Returns the stride of the tick labels.
-   *
-   * @return the stride
-   */
+  /** Returns the stride of the tick labels. */
   public SGIntegerSeriesSet getTickLabelStride();
 
-  /**
-   * Returns the indices of tick labels.
-   *
-   * @return the indices of tick labels
-   */
+  /** Returns the indices of tick labels. */
   public int[] getTickLabelValueIndices();
 
-  /**
-   * Returns the shift.
-   *
-   * @return the shift
-   */
+  /** Returns the shift. */
   public SGTuple2d getShift();
 
   /**

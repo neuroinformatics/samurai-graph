@@ -583,11 +583,7 @@ class SGMainFunctions
       }
     }
 
-    /**
-     * create splash window
-     *
-     * @return
-     */
+    /** create splash window */
     private SGSplashWindow createSplashWindow() {
       SGSplashWindow sw =
           new SGSplashWindow("Splash.png", SGMainFunctions.this.mAppProp.getVersionString());
@@ -631,7 +627,6 @@ class SGMainFunctions
    * Closes the window without confirmation.
    *
    * @param id the window ID of a window to close
-   * @param true if succeeded
    */
   public boolean closeWindowWithoutConfirmation(final int id) {
     return this.mWindowManager.closeWindowWithoutConfirmation(id);
@@ -641,7 +636,6 @@ class SGMainFunctions
    * Execute a command.
    *
    * @param line the command line
-   * @return the status
    */
   public int exec(final String line) {
     return this.mCommandManager.exec(line);
@@ -700,7 +694,6 @@ class SGMainFunctions
    * Returns the current file name of given file type.
    *
    * @param fType file type
-   * @return the current file name
    */
   String getCurrentFileName(FILE_TYPE fType) {
     return this.mCurrentFileNameMap.get(fType);
@@ -788,11 +781,7 @@ class SGMainFunctions
     return true;
   }
 
-  /**
-   * Duplicate the focused data object.
-   *
-   * @return true if succeeded
-   */
+  /** Duplicate the focused data object. */
   boolean duplicateFocusedData(SGDrawingWindow wnd) {
     List<SGFigure> fList = wnd.getVisibleFigureList();
     for (int ii = 0; ii < fList.size(); ii++) {
@@ -857,7 +846,6 @@ class SGMainFunctions
         // after the dialog is closed
         SGData dCopy = null;
         if (dg.getCloseOption() == SGDialog.OK_OPTION) {
-          // if OK button is pressed
 
           // get the results
           SGDataColumnInfo[] result = dg.getDataColumnTypes();
@@ -953,9 +941,7 @@ class SGMainFunctions
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   boolean duplicateFocusedFigures(SGDrawingWindow wnd) {
 
     DOMImplementation domImpl = SGApplicationUtility.getDOMImplementation();
@@ -1079,9 +1065,7 @@ class SGMainFunctions
     return ret;
   }
 
-  /**
-   * @return
-   */
+  /** */
   boolean showChangeLogDialog(Frame owner) {
 
     // create and set a dialog object
@@ -1166,17 +1150,6 @@ class SGMainFunctions
       return new SGStatus(false);
     }
 
-    // get or create data name base
-    //        String dataNameBase = null;
-    //        Object obj = infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_NAME);
-    //        if (obj != null) {
-    //            dataNameBase = (String) obj;
-    //        } else {
-    //            dataNameBase = SGUtility.createDataNameBase(pathName);
-    //            if (dataNameBase == null) {
-    //                return new SGStatus(false);
-    //            }
-    //        }
     String dataNameBase = (String) infoMap.get(SGIDataInformationKeyConstants.KEY_DATA_NAME);
 
     final SGFigure fig = wnd.getFigure(figureID);
@@ -1235,7 +1208,6 @@ class SGMainFunctions
    * @param cdSet
    * @param dataNameBase
    * @param fitAxisToFocused
-   * @return true if succeeds
    */
   boolean addDataToDrawGraph(
       final SGDrawingWindow wnd,
@@ -1365,16 +1337,15 @@ class SGMainFunctions
   /**
    * Draw a new graph.
    *
+   * @param colInfoSet the colInfoSet parameter
+   * @param dataSource the dataSource parameter
+   * @param dataIdArray the dataIdArray parameter
    * @param wnd a window that the graph belongs
    * @param figureID the ID of figure to draw the graph
-   * @param colInfo an array of data column information
    * @param infoMap a map for data information
-   * @param pathName path name of data
-   * @param dataId the ID of data object to add
    * @param showDialog true if error and warning dialog is shown
    * @param figureLocation The location of new figure if it is created. If data is added to a figure
    *     that already exists, this value is neglected.
-   * @return true if succeeded
    */
   SGStatus drawGraph(
       final SGDrawingWindow wnd,
@@ -1646,7 +1617,6 @@ class SGMainFunctions
    *
    * @param fname the file name
    * @param wnd the window
-   * @return true if succeeded
    */
   public boolean openFile(final String fname, SGDrawingWindow wnd) {
     if (wnd == null) {
@@ -1663,7 +1633,6 @@ class SGMainFunctions
    * @param fileList the list of dropped files
    * @param wnd the window
    * @param pos location the files are dropped
-   * @return true if succeeded
    */
   boolean onFilesDropped(List<File> fileList, final SGDrawingWindow wnd, Point pos) {
     return this.openFile(fileList, wnd, pos);
@@ -2237,17 +2206,12 @@ class SGMainFunctions
     }
   }
 
-  /**
-   * Loads the command script file.
-   *
-   * @param fileName file name
-   */
+  /** Loads the command script file. */
 
   /**
    * Splits focused SXY type data into multiple data.
    *
    * @param wnd a window
-   * @return true if succeeded
    */
   boolean splitSXYData(final SGDrawingWindow wnd) {
     Boolean result = null;
@@ -2271,7 +2235,6 @@ class SGMainFunctions
    * data.
    *
    * @param wnd a window
-   * @return true if succeeded
    */
   boolean mergeSXYData(final SGDrawingWindow wnd) {
     Boolean result = null;
@@ -2300,7 +2263,6 @@ class SGMainFunctions
    * Shows a property dialog to assign line colors.
    *
    * @param wnd the owner window
-   * @return true if succeeded
    */
   boolean assignLineColors(final SGDrawingWindow wnd) {
 
@@ -2429,7 +2391,6 @@ class SGMainFunctions
    * Transforms data object to the other type data.
    *
    * @param wnd the window
-   * @return true if succeeded
    */
   boolean transformData(SGDrawingWindow wnd) {
 
@@ -2526,7 +2487,6 @@ class SGMainFunctions
    *
    * @param infoMap map
    * @param dg data setup dialog
-   * @return
    */
   static boolean addDimensionValuesToInfoMap(
       final Map<String, Object> infoMap, final SGNetCDFDataSetupWizardDialog dg) {
@@ -2556,6 +2516,7 @@ class SGMainFunctions
   /**
    * Add values which are selected in plot type selection dialog into infoMap.
    *
+   * @param dialog the dialog parameter
    * @param infoMap
    */
   static void addPlotTypeSelectionValuesToInfoMap(
@@ -2678,7 +2639,6 @@ class SGMainFunctions
       srcMapNew.put(path, srcNew);
       resultMap.put(path, RELOAD_DATA_STATUS.SUCCEEDED);
     }
-    // for text data
     for (SGData data : dataList) {
       SGFigure figure = dataFigureMap.get(data);
       if (SGDataDataTypeUtility.isSDArrayData(data)) {

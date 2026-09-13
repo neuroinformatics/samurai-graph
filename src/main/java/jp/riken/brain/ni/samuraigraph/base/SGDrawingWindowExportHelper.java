@@ -89,8 +89,6 @@ class SGDrawingWindowExportHelper {
     for (int ii = 0; ii < list.size(); ii++) {
       SGFigure figure = list.get(ii);
       ePanel.add(figure);
-      // Rectangle bounds = new Rectangle(
-      // 0, 0, figure.getWidth(), figure.getHeight() );
       figure.setViewBounds(vBounds);
     }
 

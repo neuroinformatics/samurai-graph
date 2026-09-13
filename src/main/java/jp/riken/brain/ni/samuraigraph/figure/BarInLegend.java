@@ -11,6 +11,7 @@ class BarInLegend extends SGElementGroupBar.BarInGroup {
   /**
    * Builds a rectangle in a group of rectangles.
    *
+   * @param index the index parameter
    * @param group a group of rectangles
    */
   public BarInLegend(ElementGroupBar group, final int index) {

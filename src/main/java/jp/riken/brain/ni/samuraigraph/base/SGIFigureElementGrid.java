@@ -14,7 +14,6 @@ public interface SGIFigureElementGrid extends SGIFigureElement, SGIGridDialogObs
    * Returns whether the grid is visible.
    *
    * @return visible flag
-   * @uml.property name="gridVisible"
    */
   public boolean isGridVisible();
 
@@ -22,19 +21,15 @@ public interface SGIFigureElementGrid extends SGIFigureElement, SGIGridDialogObs
    * Set visible the grid.
    *
    * @param b visible flag
-   * @uml.property name="gridVisible"
    */
   public boolean setGridVisible(final boolean b);
 
-  /**
-   * @uml.property name="lineWidth"
-   */
+  /** */
   public float getLineWidth();
 
   /**
    * @param width
    * @return
-   * @uml.property name="lineWidth"
    */
   public boolean setLineWidth(final float width);
 

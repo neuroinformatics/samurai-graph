@@ -11,6 +11,7 @@ class PseudocolorMapRectangleInLegend extends SGElementGroupPseudocolorMap.Pseud
   /**
    * Builds a rectangle in a color map.
    *
+   * @param index the index parameter
    * @param group a color map
    */
   public PseudocolorMapRectangleInLegend(SGElementGroupPseudocolorMap group, final int index) {

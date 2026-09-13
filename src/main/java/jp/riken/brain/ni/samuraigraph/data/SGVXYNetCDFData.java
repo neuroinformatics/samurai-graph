@@ -130,31 +130,19 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     this.mSecondComponentVariable = null;
   }
 
-  /**
-   * Returns whether the data is given in the polar coordinate.
-   *
-   * @return true if the data is given in the polar coordinate
-   */
+  /** Returns whether the data is given in the polar coordinate. */
   public boolean isPolar() {
     return this.mPolarFlag;
   }
 
-  /**
-   * Returns a map of information.
-   *
-   * @return a map of information
-   */
+  /** Returns a map of information. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> infoMap = super.getInfoMap();
     infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, this.isPolar());
     return infoMap;
   }
 
-  /**
-   * Returns a map of stride for data arrays.
-   *
-   * @return a map of stride for data arrays
-   */
+  /** Returns a map of stride for data arrays. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
@@ -167,20 +155,12 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return map;
   }
 
-  /**
-   * Returns a text string of data type.
-   *
-   * @return a text string of data type
-   */
+  /** Returns a text string of data type. */
   public String getDataType() {
     return SGDataTypeConstants.VXY_NETCDF_DATA;
   }
 
-  /**
-   * Returns the number of data points taking into account the stride.
-   *
-   * @return the number of data points taking into account the stride
-   */
+  /** Returns the number of data points taking into account the stride. */
   @Override
   public int getPointsNumber() {
     if (this.isIndexAvailable()) {
@@ -195,11 +175,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     }
   }
 
-  /**
-   * Returns an array of variables that are assigned the column type.
-   *
-   * @return an array of variables
-   */
+  /** Returns an array of variables that are assigned the column type. */
   @Override
   public SGNetCDFVariable[] getAssignedVariables() {
     List<SGNetCDFVariable> varList = new ArrayList<SGNetCDFVariable>();
@@ -223,11 +199,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return (SGNetCDFVariable[]) varList.toArray(varArray);
   }
 
-  /**
-   * Returns an array of current column types.
-   *
-   * @return an array of current column types
-   */
+  /** Returns an array of current column types. */
   public String[] getCurrentColumnType() {
     final boolean polar = this.isPolar();
     final String com1 = SGDataStrideUtility.getVXYFirstComponentColumnType(polar);
@@ -263,8 +235,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
   /**
    * Sets the type of data columns.
    *
-   * @param column an array of column types
-   * @return true if succeeded
+   * @param columns an array of column types
    */
   public boolean setColumnType(String[] columns) {
     final boolean polar = this.isPolar();
@@ -316,16 +287,6 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
           return false;
         }
         indexVarList.add(var);
-        //            } else if (SGDataUtility.equals(X_INDEX, columns[ii])) {
-        //            	if (!VALUE_TYPE_NUMBER.equals(valueType)) {
-        //            		return false;
-        //            	}
-        //                xIndexVarList.add(var);
-        //            } else if (SGDataUtility.equals(Y_INDEX, columns[ii])) {
-        //            	if (!VALUE_TYPE_NUMBER.equals(valueType)) {
-        //            		return false;
-        //            	}
-        //                yIndexVarList.add(var);
       } else if ("".equals(columns[ii])) {
         continue;
       } else {
@@ -372,7 +333,6 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    * Sets the data.
    *
    * @param data data set to this object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (!(data instanceof SGVXYNetCDFData)) {
@@ -393,7 +353,6 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    * Set properties to this data.
    *
    * @param p properties to be set
-   * @return true if succeeded
    */
   public boolean setProperties(SGProperties p) {
     if (!(p instanceof VXYNetCDFDataProperties)) {
@@ -408,11 +367,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return true;
   }
 
-  /**
-   * Returns the properties of this data.
-   *
-   * @return the properties of this data
-   */
+  /** Returns the properties of this data. */
   public SGProperties getProperties() {
     SGProperties p = new VXYNetCDFDataProperties();
     if (this.getProperties(p) == false) {
@@ -425,7 +380,6 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    * Gets the properties of this data.
    *
    * @param p the properties of this data
-   * @return true if succeeded
    */
   public boolean getProperties(SGProperties p) {
     if (!(p instanceof VXYNetCDFDataProperties)) {
@@ -445,7 +399,6 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    *
    * @param el the Element object
    * @param type type of the method to save properties
-   * @return true if succeeded
    */
   public boolean writeProperty(Element el, final SGExportParameter type) {
     if (super.writeProperty(el, type) == false) {
@@ -459,11 +412,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return true;
   }
 
-  /**
-   * Returns an array of values for the first component.
-   *
-   * @return an array of values for the first component
-   */
+  /** Returns an array of values for the first component. */
   @Override
   public double[] getFirstComponentValueArray(final boolean all) {
     return SGDataViewerUtility.getFirstComponentValueArray(this, all);
@@ -495,11 +444,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return ret;
   }
 
-  /**
-   * Returns an array of values for the second component.
-   *
-   * @return an array of values for the second component
-   */
+  /** Returns an array of values for the second component. */
   @Override
   public double[] getSecondComponentValueArray(final boolean all) {
     return SGDataViewerUtility.getSecondComponentValueArray(this, all);
@@ -535,7 +480,6 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    * Returns a scatter type array of the first component.
    *
    * @param all true to get all values
-   * @return a scatter type array of the first component
    */
   protected double[] getScatterFirstComponentValueArray(final boolean all) {
     return this.getFirstComponentValueArray(all);
@@ -545,17 +489,12 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    * Returns a scatter type array of the second component.
    *
    * @param all true to get all values
-   * @return a scatter type array of the second component
    */
   protected double[] getScatterSecondComponentValueArray(final boolean all) {
     return this.getSecondComponentValueArray(all);
   }
 
-  /**
-   * Returns an array of X-values.
-   *
-   * @return an array of X-values
-   */
+  /** Returns an array of X-values. */
   @Override
   public double[] getXValueArray(final boolean all) {
     double[] values = SGDataViewerUtility.getXValueArray(this, all);
@@ -579,11 +518,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return ret;
   }
 
-  /**
-   * Returns an array of Y-values.
-   *
-   * @return an array of Y-values
-   */
+  /** Returns an array of Y-values. */
   @Override
   public double[] getYValueArray(final boolean all) {
     double[] values = SGDataViewerUtility.getYValueArray(this, all);
@@ -607,11 +542,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return ret;
   }
 
-  /**
-   * Returns an array of x component of vectors.
-   *
-   * @return an array of x component of vectors
-   */
+  /** Returns an array of x component of vectors. */
   public double[] getXComponentArray(final boolean all) {
     double[] ret = null;
     if (this.isPolar()) {
@@ -624,11 +555,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return ret;
   }
 
-  /**
-   * Returns an array of y component of vectors.
-   *
-   * @return an array of y component of vectors
-   */
+  /** Returns an array of y component of vectors. */
   public double[] getYComponentArray(final boolean all) {
     double[] ret = null;
     if (this.isPolar()) {
@@ -641,11 +568,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return ret;
   }
 
-  /**
-   * Returns an array of magnitude of vectors.
-   *
-   * @return an array of magnitude of vectors
-   */
+  /** Returns an array of magnitude of vectors. */
   public double[] getMagnitudeArray(final boolean all) {
     double[] ret = null;
     if (this.isPolar()) {
@@ -658,11 +581,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return ret;
   }
 
-  /**
-   * Returns an array of angle of vectors.
-   *
-   * @return an array of angle of vectors
-   */
+  /** Returns an array of angle of vectors. */
   public double[] getAngleArray(final boolean all) {
     double[] ret = null;
     if (this.isPolar()) {
@@ -675,20 +594,12 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return ret;
   }
 
-  /**
-   * Returns the bounds of x-values.
-   *
-   * @return the bounds of x-values
-   */
+  /** Returns the bounds of x-values. */
   public SGValueRange getBoundsX() {
     return SGDataRangeUtility.getBoundsX(this);
   }
 
-  /**
-   * Returns the bounds of y-values.
-   *
-   * @return the bounds of y-values
-   */
+  /** Returns the bounds of y-values. */
   public SGValueRange getBoundsY() {
     return SGDataRangeUtility.getBoundsY(this);
   }
@@ -738,7 +649,6 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
      * Returns whether this data property has the equal column types with given data property.
      *
      * @param dp a data property
-     * @return true if this data property has the equal column types with given data property
      */
     @Override
     public boolean hasEqualColumnTypes(DataProperties dp) {
@@ -758,11 +668,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
       return true;
     }
 
-    /**
-     * Returns a copy of this object.
-     *
-     * @return a copy of this object
-     */
+    /** Returns a copy of this object. */
     public Object copy() {
       VXYNetCDFDataProperties p = (VXYNetCDFDataProperties) super.copy();
       return p;
@@ -780,11 +686,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     this.mYStride = map.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y);
   }
 
-  /**
-   * Returns the list of blocks of values of the first component.
-   *
-   * @return the list of blocks of values of the first component
-   */
+  /** Returns the list of blocks of values of the first component. */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getFirstComponentValueBlockList() {
     return SGDataViewerUtility.getFirstComponentValueBlockList(this, false, true, true);
@@ -801,11 +703,7 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
     return ret;
   }
 
-  /**
-   * Returns the list of blocks of values of the second component.
-   *
-   * @return the list of blocks of values of the second component
-   */
+  /** Returns the list of blocks of values of the second component. */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getSecondComponentValueBlockList() {
     return SGDataViewerUtility.getSecondComponentValueBlockList(this, false, true, true);
@@ -826,7 +724,6 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
    * Creates and returns a data buffer.
    *
    * @param param parameters for data buffer
-   * @return the data buffer
    */
   @Override
   public SGDataBuffer getDataBuffer(SGDataBufferPolicy param) {

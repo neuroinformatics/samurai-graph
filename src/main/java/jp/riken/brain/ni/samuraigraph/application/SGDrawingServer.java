@@ -23,11 +23,7 @@ public class SGDrawingServer implements SGIApplicationConstants, SGIApplicationT
 
   private static SGApplicationProperties mAppProp = null;
 
-  /**
-   * The main method.
-   *
-   * @param args An array of arguments
-   */
+  /** The main method. */
   public static void main(String args[]) {
     // interpret command lines
     Map<String, Object> paramMap = interpretCommands(args);

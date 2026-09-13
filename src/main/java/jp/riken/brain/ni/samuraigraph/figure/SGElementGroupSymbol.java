@@ -64,7 +64,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
 
   /**
    * @param unit
-   * @return
    */
   public float getSize(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getSize(), unit);
@@ -82,44 +81,27 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
 
   /**
    * @param unit
-   * @return
    */
   public float getLineWidth(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getLineWidth(), unit);
   }
 
-  /**
-   * Returns the line color.
-   *
-   * @return the line color
-   */
+  /** Returns the line color. */
   public Color getLineColor() {
     return this.mLineColor;
   }
 
-  /**
-   * Returns the line visible.
-   *
-   * @return the line visible
-   */
+  /** Returns the line visible. */
   public boolean isLineVisible() {
     return this.mLineVisible;
   }
 
-  /**
-   * Returns the inner color.
-   *
-   * @return the inner color
-   */
+  /** Returns the inner color. */
   public Color getInnerColor() {
     return this.mInnerPaint.getColor();
   }
 
-  /**
-   * Returns the inner paint.
-   *
-   * @return the inner paint
-   */
+  /** Returns the inner paint. */
   public SGIPaint getInnerPaint() {
     return this.mInnerPaint;
   }
@@ -128,7 +110,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * Sets the symbol size.
    *
    * @param size the symbol size to set
-   * @return true if succeeded
    */
   public boolean setSize(final float size) {
     if (size < 0.0f) {
@@ -144,7 +125,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    *
    * @param size the symbol size to set
    * @param unit the unit for given symbol size
-   * @return true if succeeded
    */
   public abstract boolean setSize(final float size, final String unit);
 
@@ -152,7 +132,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * Sets the symbol type.
    *
    * @param type the type to set
-   * @return true if succeeded
    */
   public boolean setType(final int type) {
     if (SGDrawingElementSymbol.isValidSymbolType(type) == false) {
@@ -167,7 +146,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * Sets the line color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setLineColor(final Color color) {
     if (color == null) {
@@ -181,7 +159,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * Sets the line visibility.
    *
    * @param visible the visibility to set
-   * @return true if succeeded
    */
   public boolean setLineVisible(final boolean visible) {
     this.mLineVisible = visible;
@@ -192,7 +169,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * Sets the inner color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setInnerColor(final Color color) {
     if (color == null) {
@@ -208,7 +184,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * Sets the inner transparency.
    *
    * @param transparency the inner transparency to set
-   * @return true if succeeded
    */
   public boolean setInnerTransparency(final int transparency) {
     if (this.mInnerPaint == null) {
@@ -225,7 +200,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * Sets the inner paint.
    *
    * @param paint the paint to set
-   * @return true if succeeded
    */
   public boolean setInnerPaint(final SGIPaint paint) {
     if (paint == null) {
@@ -243,7 +217,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * Sets the line width.
    *
    * @param lw the line width to set
-   * @return true if succeeded
    */
   public boolean setLineWidth(final float lw) {
     if (lw < 0.0f) {
@@ -258,15 +231,10 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    *
    * @param lw the line width to set
    * @param unit the unit for given line width
-   * @return true if succeeded
    */
   public abstract boolean setLineWidth(final float lw, final String unit);
 
-  /**
-   * Returns the angle.
-   *
-   * @return the angle
-   */
+  /** Returns the angle. */
   public float getAngle() {
     return this.mAngle;
   }
@@ -275,7 +243,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * Sets the angle.
    *
    * @param angle the angle to set
-   * @return true if succeeded
    */
   public boolean setAngle(final float angle) {
     this.mAngle = angle;
@@ -286,7 +253,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * Returns the location at a given index.
    *
    * @param index the index
-   * @return the location
    */
   public abstract SGTuple2f getLocation(final int index);
 
@@ -294,7 +260,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
    * Sets the magnification.
    *
    * @param mag the magnification
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     if (super.setMagnification(mag) == false) {
@@ -321,9 +286,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getTagName() {
     return TAG_NAME_SYMBOL;
   }
@@ -347,8 +310,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
 
     el.setAttribute(KEY_SYMBOL_SIZE, Float.toString(symbolSize) + SGIConstants.cm);
     el.setAttribute(KEY_SYMBOL_TYPE, SGDrawingElementSymbol.getSymbolTypeName(this.mSymbolType));
-    //        el.setAttribute(KEY_SYMBOL_INNER_COLOR_LIST,
-    //        	SGUtilityText.getColorListString(this.mColorList));
     el.setAttribute(KEY_SYMBOL_LINE_WIDTH, Float.toString(lineWidth) + SGIConstants.pt);
     el.setAttribute(KEY_SYMBOL_LINE_COLOR, SGUtilityText.getColorString(this.mLineColor));
     el.setAttribute(KEY_SYMBOL_LINE_VISIBLE, Boolean.toString(this.mLineVisible));
@@ -362,7 +323,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
 
   /**
    * @param el
-   * @return
    */
   public boolean readProperty(final Element el) {
     String str = null;
@@ -480,9 +440,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected SGDrawingElement createDrawingElementInstance(final int index) {
     return new SymbolInGroup(this, index);
   }
@@ -518,7 +476,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
      * Sets the size.
      *
      * @param size the size to set
-     * @return true if succeeded
      */
     public boolean setSize(final float size) {
       // do nothing
@@ -529,7 +486,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
      * Sets the symbol type.
      *
      * @param type the symbol type to set
-     * @return true if succeeded
      */
     public boolean setType(final int type) {
       // do nothing
@@ -540,7 +496,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
      * Sets the angle.
      *
      * @param angle the angle to set
-     * @return true if succeeded
      */
     public boolean setAngle(final float angle) {
       // do nothing
@@ -551,7 +506,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
      * Sets the line color.
      *
      * @param color the line color to set
-     * @return true if succeeded
      */
     public boolean setLineColor(final Color color) {
       // do nothing
@@ -562,7 +516,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
      * Sets the line width.
      *
      * @param lineWidth the line width to set
-     * @return true if succeeded
      */
     public boolean setLineWidth(final float lineWidth) {
       // do nothing
@@ -575,38 +528,22 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
       return true;
     }
 
-    /**
-     * Returns the size.
-     *
-     * @return the size
-     */
+    /** Returns the size. */
     public float getSize() {
       return this.mGroup.getSize();
     }
 
-    /**
-     * Returns the symbol type.
-     *
-     * @return the symbol type
-     */
+    /** Returns the symbol type. */
     public int getType() {
       return this.mGroup.getType();
     }
 
-    /**
-     * Returns the line color.
-     *
-     * @return the line color
-     */
+    /** Returns the line color. */
     public Color getLineColor() {
       return this.mGroup.getLineColor();
     }
 
-    /**
-     * Returns the line width.
-     *
-     * @return the line width
-     */
+    /** Returns the line width. */
     public float getLineWidth() {
       return this.mGroup.getLineWidth();
     }
@@ -672,11 +609,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
       return true;
     }
 
-    /**
-     * Returns the shape.
-     *
-     * @return a shape object
-     */
+    /** Returns the shape. */
     protected Shape getShape() {
       return SGElementGroupSymbol.this.mShape;
     }
@@ -691,9 +624,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean initDrawingElement(final SGTuple2f[] array) {
     final int num = array.length;
     this.initDrawingElement(num);
@@ -713,7 +644,6 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     }
 
     if (pointArray.length != this.mDrawingElementArray.length) {
-      //            throw new IllegalArgumentException();
       this.initDrawingElement(pointArray);
     }
 
@@ -721,32 +651,10 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
       SGDrawingElementSymbol symbol = (SGDrawingElementSymbol) this.mDrawingElementArray[ii];
       final boolean eff = !(pointArray[ii].isInfinite() || pointArray[ii].isNaN());
       symbol.setVisible(eff);
-      //            if (eff) {
-      //                symbol.setLocation(pointArray[ii]);
-      //            }
     }
 
     return true;
   }
-
-  //    /**
-  //     *
-  //     * @return
-  //     */
-  //    public boolean setPropertiesOfDrawingElements() {
-  //        for (int ii = 0; ii < this.mDrawingElementArray.length; ii++) {
-  //            SGDrawingElementSymbol symbol = (SGDrawingElementSymbol)
-  // this.mDrawingElementArray[ii];
-  //            symbol.setMagnification(this.mMagnification);
-  ////            symbol.setColorList(this.mColorList);
-  ////            symbol.setInnerColor(this.getInnerColor());
-  ////            symbol.setSize(this.mSymbolSize);
-  ////            symbol.setType(this.mSymbolType);
-  ////            symbol.setLineWidth(this.mLineWidth);
-  ////            symbol.setLineColor(this.mLineColor);
-  //        }
-  //        return true;
-  //    }
 
   /** */
   public SGProperties getProperties() {
@@ -835,11 +743,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
       super();
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       Object obj = super.copy();
       SymbolProperties p = (SymbolProperties) obj;
@@ -917,11 +821,7 @@ public abstract class SGElementGroupSymbol extends SGElementGroup
     }
   }
 
-  /**
-   * Returns the shape.
-   *
-   * @return a shape object
-   */
+  /** Returns the shape. */
   protected Shape getShape() {
     return this.mShape;
   }

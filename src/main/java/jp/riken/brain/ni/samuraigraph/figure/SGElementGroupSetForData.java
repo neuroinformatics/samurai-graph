@@ -118,11 +118,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     this.mData = data;
   }
 
-  /**
-   * Returns the related data object.
-   *
-   * @return the related data object.
-   */
+  /** Returns the related data object. */
   public SGData getData() {
     return this.mData;
   }
@@ -156,7 +152,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Sets the name to this group set.
    *
    * @param name the name to set to this group set
-   * @return true if succeeded
    */
   public boolean setName(final String name) {
     this.mName = name;
@@ -167,36 +162,23 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Sets visibility of this group set in legend.
    *
    * @param b a value to set to visibility in legend
-   * @return true if succeeded
    */
   public boolean setVisibleInLegend(final boolean b) {
     this.mVisibleInLegendFlag = b;
     return true;
   }
 
-  /**
-   * Returns the name.
-   *
-   * @return the name
-   */
+  /** Returns the name. */
   public String getName() {
     return this.mName;
   }
 
-  /**
-   * Returns the visibility in legend.
-   *
-   * @return the visibility in legend
-   */
+  /** Returns the visibility in legend. */
   public boolean isVisibleInLegend() {
     return this.mVisibleInLegendFlag;
   }
 
-  /**
-   * Get the flag as a focused object.
-   *
-   * @return whether this object is focused.
-   */
+  /** Get the flag as a focused object. */
   public boolean isSelected() {
     return this.mSelectedFlag;
   }
@@ -214,7 +196,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Set the X-axis.
    *
    * @param axis an axis to set to the X-axis
-   * @return true if succeeded
    */
   public boolean setXAxis(final SGAxis axis) {
     this.mXAxis = axis;
@@ -225,7 +206,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Set the Y-axis.
    *
    * @param axis an axis to set to the Y-axis
-   * @return true if succeeded
    */
   public boolean setYAxis(final SGAxis axis) {
     this.mYAxis = axis;
@@ -236,36 +216,23 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Sets the Z-axis.
    *
    * @param axis an axis to set to the Z-axis
-   * @return true if succeeded
    */
   public boolean setZAxis(SGAxis axis) {
     this.mZAxis = axis;
     return true;
   }
 
-  /**
-   * Returns the X-axis.
-   *
-   * @return the X-axis
-   */
+  /** Returns the X-axis. */
   public SGAxis getXAxis() {
     return this.mXAxis;
   }
 
-  /**
-   * Returns the Y-axis.
-   *
-   * @return the Y-axis
-   */
+  /** Returns the Y-axis. */
   public SGAxis getYAxis() {
     return this.mYAxis;
   }
 
-  /**
-   * Returns the Z-axis.
-   *
-   * @return the Z-axis
-   */
+  /** Returns the Z-axis. */
   public SGAxis getZAxis() {
     return this.mZAxis;
   }
@@ -274,7 +241,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Sets the location of x-axis.
    *
    * @param location the location of the x-axis
-   * @return true if succeeded
    */
   public abstract boolean setXAxisLocation(final int location);
 
@@ -282,7 +248,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Sets the location of y-axis.
    *
    * @param location the location of the y-axis
-   * @return true if succeeded
    */
   public abstract boolean setYAxisLocation(final int location);
 
@@ -302,7 +267,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    *
    * @param x the x coordinate
    * @param y the y coordinate
-   * @return true if this group set contains a given point
    */
   public boolean onDrawingElement(final int x, final int y) {
     for (int ii = 0; ii < this.mDrawingElementGroupList.size(); ii++) {
@@ -321,8 +285,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Write properties of this object to the Element.
    *
    * @param el the Element object
-   * @param operation the operation
-   * @return true if succeeded
+   * @param params the operation
    */
   public boolean writeProperty(final Element el, final SGExportParameter params) {
     OPERATION type = params.getType();
@@ -374,11 +337,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return true;
   }
 
-  /**
-   * Returns properties of this group set.
-   *
-   * @return properties of this group set
-   */
+  /** Returns properties of this group set. */
   public SGProperties getProperties() {
     ElementGroupSetPropertiesInFigureElement ep = new ElementGroupSetPropertiesInFigureElement();
     if (this.getProperties(ep) == false) {
@@ -387,11 +346,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return ep;
   }
 
-  /**
-   * Returns properties of this group set.
-   *
-   * @return properties of this group set
-   */
+  /** Returns properties of this group set. */
   public boolean getProperties(final SGProperties p) {
     if ((p instanceof ElementGroupSetPropertiesInFigureElement) == false) {
       return false;
@@ -415,7 +370,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Set properties to this group set.
    *
    * @param p properties to set to this group set
-   * @return true if succeeded
    */
   public boolean setProperties(final SGProperties p) {
     if ((p instanceof ElementGroupSetPropertiesInFigureElement) == false) {
@@ -436,48 +390,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return true;
   }
 
-  // /**
-  // * Sets the properties of element groups.
-  // *
-  // * @param elementGroupPropertiesList
-  // * @return true if succeeded
-  // *
-  // */
-  // protected boolean setElementGroupProperties(List elementGroupPropertiesList)
-  // {
-  //
-  // for (int ii = 0; ii < elementGroupPropertiesList.size(); ii++) {
-  // SGProperties gp = (SGProperties) elementGroupPropertiesList.get(ii);
-  // SGElementGroup group = null;
-  // if (gp instanceof SGElementGroupLine.LineProperties) {
-  // group = this.getLineGroup();
-  // } else if (gp instanceof SGElementGroupSymbol.SymbolProperties) {
-  // group = this.getSymbolGroup();
-  // } else if (gp instanceof SGElementGroupBar.BarProperties) {
-  // group = this.getBarGroup();
-  // } else if (gp instanceof SGElementGroupErrorBar.ErrorBarProperties) {
-  // group = this.getErrorBarGroup();
-  // } else if (gp instanceof SGElementGroupString.StringProperties) {
-  // group = this.getTickLabelGroup();
-  // } else if (gp instanceof SGElementGroupArrow.ArrowProperties) {
-  // group = this.getArrowGroup();
-  // } else if (gp instanceof SGElementGroupColorMap.ColorMapProperties) {
-  // group = this.getColorMapGroup();
-  // } else if (gp instanceof SGElementGroupGridColorMap.GridColorMapProperties) {
-  // group = this.getGridColorMapGroup();
-  // } else {
-  // throw new Error("Illegal group property: " + gp);
-  // }
-  // if (group == null) {
-  // continue;
-  // }
-  // if (group.setProperties(gp) == false) {
-  // return false;
-  // }
-  // }
-  // return true;
-  // }
-
   /**
    * Sets the properties of data.
    *
@@ -491,11 +403,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return false;
   }
 
-  /**
-   * Returns the properties of data.
-   *
-   * @return properties of data
-   */
+  /** Returns the properties of data. */
   public SGProperties getDataProperties() {
     SGData data = this.getData();
     if (data != null) {
@@ -569,11 +477,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return true;
   }
 
-  /**
-   * Synchronize the data object to the properties of this group set.
-   *
-   * @return true if succeeded
-   */
+  /** Synchronize the data object to the properties of this group set. */
   private boolean synchronizeDataOnUndo() {
     SGData data = this.getData();
     ElementGroupSetPropertiesInFigureElement p =
@@ -604,11 +508,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return this.mUndoManager.initPropertiesHistory();
   }
 
-  /**
-   * Delete all forward histories.
-   *
-   * @return true if succeeded
-   */
+  /** Delete all forward histories. */
   public boolean deleteForwardHistory() {
     return this.mUndoManager.deleteForwardHistory();
   }
@@ -653,7 +553,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
      * Returns whether this object is equal to given object.
      *
      * @param obj an object to be compared
-     * @return true if two objects are equal
      */
     public boolean equals(final Object obj) {
 
@@ -701,11 +600,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       return true;
     }
 
-    /**
-     * Returns string representation of label list in this object.
-     *
-     * @return string representation of label list in this object
-     */
+    /** Returns string representation of label list in this object. */
     public String toStringLabelList() {
       StringBuilder sb = new StringBuilder();
       if (this.labelStringList.size() > 0) {
@@ -719,11 +614,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
       return sb.toString();
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       Object obj = super.copy();
       ElementGroupSetPropertiesInFigureElement p = (ElementGroupSetPropertiesInFigureElement) obj;
@@ -748,11 +639,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     }
   }
 
-  /**
-   * Returns an array of titles.
-   *
-   * @return an array of titles
-   */
+  /** Returns an array of titles. */
   public String[] getTitleArray() {
     SGData data = this.getData();
     if (!(data instanceof SGSDArrayData)) {
@@ -762,11 +649,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return aData.getTitles();
   }
 
-  /**
-   * Returns a map which has data information.
-   *
-   * @return a map which has data information
-   */
+  /** Returns a map which has data information. */
   public Map<String, Object> getInfoMap() {
     return this.getData().getInfoMap();
   }
@@ -774,6 +657,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   /**
    * Sets the information of data columns.
    *
+   * @param message the message parameter
    * @param columns information of data columns
    */
   public boolean setColumnInfo(SGDataColumnInfo[] columns, String message) {
@@ -785,20 +669,12 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return aData.setColumnInfo(columns);
   }
 
-  /**
-   * Returns the type of data.
-   *
-   * @return the type of data
-   */
+  /** Returns the type of data. */
   public String getDataType() {
     return this.getData().getDataType();
   }
 
-  /**
-   * Returns an array of information of data columns.
-   *
-   * @return an array of information of data columns
-   */
+  /** Returns an array of information of data columns. */
   public SGDataColumnInfo[] getDataColumnInfoArray() {
     SGData data = this.getData();
     SGDataColumnInfo[] colArray = null;
@@ -817,11 +693,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return colArray;
   }
 
-  /**
-   * Returns a label for a data object.
-   *
-   * @return a label for a data object
-   */
+  /** Returns a label for a data object. */
   public DataLabel getDataLabel() {
     SGData data = this.getData();
     StringBuilder sb = new StringBuilder();
@@ -924,7 +796,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    *
    * @param index
    * @param initialLabelText
-   * @return
    */
   public boolean addLabelStringId(final int index, final String initialLabelText) {
     Integer key = Integer.valueOf(index);
@@ -939,11 +810,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   /** Temporary data properties. */
   protected SGProperties mTempDataProperties = null;
 
-  /**
-   * Returns the number of frames.
-   *
-   * @return the number of frames
-   */
+  /** Returns the number of frames. */
   public int getFrameNumber() {
     if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGNetCDFData data = (SGNetCDFData) this.mData;
@@ -960,11 +827,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     }
   }
 
-  /**
-   * Returns the current frame index.
-   *
-   * @return the current frame index
-   */
+  /** Returns the current frame index. */
   public int getCurrentFrameIndex() {
     if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGNetCDFData data = (SGNetCDFData) this.mData;
@@ -997,23 +860,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   /** Saves all changes of this data source. */
   @Override
   public void saveChanges() {
-    // if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
-    // SGNetCDFData data = (SGNetCDFData) this.mData;
-    // SGProperties p = data.getProperties();
-    // if (p.equals(this.mTempDataProperties) == false) {
-    // this.onSaveChanges();
-    // }
-    // this.mTempDataProperties = null;
-    // } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
-    // SGMDArrayData data = (SGMDArrayData) this.mData;
-    // SGProperties p = data.getProperties();
-    // if (p.equals(this.mTempDataProperties) == false) {
-    // this.onSaveChanges();
-    // }
-    // this.mTempDataProperties = null;
-    // } else {
-    // throw new Error("Animation is not supported.");
-    // }
     SGProperties p = this.getProperties();
     if (p.equals(this.mTempDataProperties) == false) {
       this.onSaveChanges();
@@ -1026,33 +872,12 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   /** Cancels all changes of this data source. */
   @Override
   public void cancelChanges() {
-    // if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
-    // SGNetCDFData data = (SGNetCDFData) this.mData;
-    // data.setProperties(this.mTempDataProperties);
-    //
-    // // update drawing elements
-    // this.updateWithData();
-    // this.mTempDataProperties = null;
-    // } else if (SGDataDataTypeUtility.isMDArrayData(this.mData)) {
-    // SGMDArrayData data = (SGMDArrayData) this.mData;
-    // data.setProperties(this.mTempDataProperties);
-    //
-    // // update drawing elements
-    // this.updateWithData();
-    // this.mTempDataProperties = null;
-    // } else {
-    // throw new Error("Animation is not supported.");
-    // }
     this.setProperties(this.mTempDataProperties);
     this.updateWithData();
     this.mTempDataProperties = null;
   }
 
-  /**
-   * Returns the name of data source.
-   *
-   * @return the name of this animation data source
-   */
+  /** Returns the name of data source. */
   public String getDataSourceName() {
     if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGNetCDFData data = (SGNetCDFData) this.mData;
@@ -1069,11 +894,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     }
   }
 
-  /**
-   * Returns the unit string of data source.
-   *
-   * @return the unit string of data source
-   */
+  /** Returns the unit string of data source. */
   public String getDataSourceUnitString() {
     if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGNetCDFData data = (SGNetCDFData) this.mData;
@@ -1090,11 +911,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     }
   }
 
-  /**
-   * Returns the current value of data object.
-   *
-   * @return the current value of data object
-   */
+  /** Returns the current value of data object. */
   public Number getCurrentValue() {
     if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
       SGNetCDFData data = (SGNetCDFData) this.mData;
@@ -1111,7 +928,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Sets the properties.
    *
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setProperties(SGPropertyMap map) {
     SGPropertyResults result = new SGPropertyResults();
@@ -2012,7 +1828,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * @param map property map
    * @param result results of setting properties
    * @param cols an array of data columns
-   * @return true if succeeded
    */
   protected abstract boolean setProperties(
       SGPropertyMap map, SGPropertyResults result, SGDataColumnInfo[] cols);
@@ -2021,7 +1836,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Compares current data columns and temporary data columns.
    *
    * @param pTemp temporary properties
-   * @return true if data columns are changed
    */
   protected boolean compareDataColumns(final SGProperties pTemp) {
     SGProperties pPresent = this.getProperties();
@@ -2045,7 +1859,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Compares current data properties and temporary data properties.
    *
    * @param pTemp temporary properties
-   * @return true if data properties are changed
    */
   protected boolean compareDataProperties(final SGProperties pTemp) {
     SGProperties pPresent = this.getProperties();
@@ -2064,7 +1877,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Sets the data.
    *
    * @param data a data object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     this.mData = data;
@@ -2076,7 +1888,6 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * the equality obtained by "equals" method.
    *
    * @param gs the group set
-   * @return true if this group set "contains" the given group set
    */
   public boolean contains(SGElementGroupSetForData gs) {
     return this.equals(gs);
@@ -2085,9 +1896,9 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
   /**
    * Saves data to given file.
    *
-   * @param data data to be saved
+   * @param file the file parameter
+   * @param params the params parameter
    * @param policy the policy for saving data
-   * @return true if succeeded
    */
   public boolean saveData(
       final File file, final SGExportParameter params, SGDataBufferPolicy policy) {
@@ -2256,11 +2067,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return true;
   }
 
-  /**
-   * Returns the array section for animation
-   *
-   * @return the array section for animation
-   */
+  /** Returns the array section for animation */
   @Override
   public SGIntegerSeriesSet getAnimationArraySection() {
     SGIntegerSeriesSet stride = null;
@@ -2296,11 +2103,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     }
   }
 
-  /**
-   * Returns whether loop play back is available.
-   *
-   * @return true if loop play back is available
-   */
+  /** Returns whether loop play back is available. */
   @Override
   public boolean isLoopPlaybackAvailable() {
     return this.mLoopPlaybackFlag;
@@ -2316,11 +2119,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     this.mLoopPlaybackFlag = b;
   }
 
-  /**
-   * Returns the frame rate.
-   *
-   * @return the frame rate
-   */
+  /** Returns the frame rate. */
   @Override
   public double getFrameRate() {
     return this.mFrameRate;
@@ -2343,28 +2142,19 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
    * Sets the style of drawing elements.
    *
    * @param styleList the list of style
-   * @return true if succeeded
    */
   public boolean setStyle(List<SGStyle> styleList) {
     // do nothing by default
     return true;
   }
 
-  /**
-   * Returns the style of drawing elements.
-   *
-   * @return the list of style
-   */
+  /** Returns the style of drawing elements. */
   public List<SGStyle> getStyle() {
     // returns null by default
     return null;
   }
 
-  /**
-   * Returns whether data object is anchored.
-   *
-   * @return true if data object is anchored
-   */
+  /** Returns whether data object is anchored. */
   public boolean isAnchored() {
     return this.mAnchorFlag;
   }
@@ -2378,29 +2168,19 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     this.mAnchorFlag = b;
   }
 
-  /**
-   * Returns the figure element.
-   *
-   * @return the figure element
-   */
+  /** Returns the figure element. */
   public abstract SGFigureElementForData getFigureElement();
 
   /**
    * Returns true if all stride of this data are available and each string representation is
    * different from "0:end".
-   *
-   * @return true if all stride are effective
    */
   @Override
   public boolean hasEffectiveStride() {
     return this.getData().hasEffectiveStride();
   }
 
-  /**
-   * Creates and returns the map of properties.
-   *
-   * @return the map of properties
-   */
+  /** Creates and returns the map of properties. */
   @Override
   public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
     SGPropertyMap map = new SGPropertyMap();
@@ -2439,11 +2219,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return map;
   }
 
-  /**
-   * Returns a text string of the commands.
-   *
-   * @return a text string of the commands
-   */
+  /** Returns a text string of the commands. */
   @Override
   public String getCommandString(SGExportParameter params) {
     if (params instanceof SGDataExportParameter) {
@@ -2462,11 +2238,7 @@ public abstract class SGElementGroupSetForData extends SGElementGroupSet
     return sb.toString();
   }
 
-  /**
-   * Creates and returns a text string of commands.
-   *
-   * @return a text string of commands
-   */
+  /** Creates and returns a text string of commands. */
   @Override
   public String createCommandString(SGExportParameter params) {
     return SGCommandUtility.createCommandString(

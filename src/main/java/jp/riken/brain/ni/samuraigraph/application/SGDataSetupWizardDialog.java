@@ -213,11 +213,7 @@ public abstract class SGDataSetupWizardDialog extends SGWizardDialog
     }
   }
 
-  /**
-   * Returns data column information
-   *
-   * @return data column information
-   */
+  /** Returns data column information */
   public SGDataColumnInfoSet getDataColumnInfoSet() {
     return this.getDataSetupPanel().getDataColumnInfoSet();
   }
@@ -271,11 +267,7 @@ public abstract class SGDataSetupWizardDialog extends SGWizardDialog
     }
   }
 
-  /**
-   * Returns a text string input to the text field for the data name.
-   *
-   * @return a text string input to the text field for the data name
-   */
+  /** Returns a text string input to the text field for the data name. */
   public String getDataName() {
     return this.getDataNameTextField().getText();
   }
@@ -309,11 +301,7 @@ public abstract class SGDataSetupWizardDialog extends SGWizardDialog
     return this.getDataSetupPanel().isVariableDataType();
   }
 
-  /**
-   * Returns the indices for picked up dimension of scalar XY data.
-   *
-   * @return the indices for picked up dimension of scalar XY data
-   */
+  /** Returns the indices for picked up dimension of scalar XY data. */
   public SGIntegerSeriesSet getSXYPickUpIndices() {
     return this.getDataSetupPanel().getSXYPickUpIndices();
   }

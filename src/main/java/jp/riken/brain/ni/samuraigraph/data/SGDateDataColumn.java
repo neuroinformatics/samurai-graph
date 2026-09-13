@@ -34,20 +34,12 @@ public class SGDateDataColumn extends SGDataColumn implements SGINumberDataColum
     this.mArray = dest;
   }
 
-  /**
-   * Returns the length of data column.
-   *
-   * @return the length of data column
-   */
+  /** Returns the length of data column. */
   public int getLength() {
     return this.mArray.length;
   }
 
-  /**
-   * Returns the value type of this column.
-   *
-   * @return the value type of this column
-   */
+  /** Returns the value type of this column. */
   public String getValueType() {
     return SGIDataColumnTypeConstants.VALUE_TYPE_DATE;
   }

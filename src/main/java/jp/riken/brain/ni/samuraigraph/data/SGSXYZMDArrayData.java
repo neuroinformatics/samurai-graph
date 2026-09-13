@@ -201,11 +201,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     this.mZVariable = null;
   }
 
-  /**
-   * Returns a text string of data type.
-   *
-   * @return a text string of data type
-   */
+  /** Returns a text string of data type. */
   @Override
   public String getDataType() {
     SGIDataSource src = this.getDataSource();
@@ -220,11 +216,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     }
   }
 
-  /**
-   * Returns the number of data points taking into account the stride.
-   *
-   * @return the number of data points taking into account the stride
-   */
+  /** Returns the number of data points taking into account the stride. */
   @Override
   public int getPointsNumber() {
     if (this.isStrideAvailable()) {
@@ -243,51 +235,31 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     }
   }
 
-  /**
-   * Returns the bounds of x-values.
-   *
-   * @return the bounds of x-values
-   */
+  /** Returns the bounds of x-values. */
   @Override
   public SGValueRange getBoundsX() {
     return SGDataRangeUtility.getBoundsX(this);
   }
 
-  /**
-   * Returns the bounds of y-values.
-   *
-   * @return the bounds of y-values
-   */
+  /** Returns the bounds of y-values. */
   @Override
   public SGValueRange getBoundsY() {
     return SGDataRangeUtility.getBoundsY(this);
   }
 
-  /**
-   * Returns the bounds of z-values.
-   *
-   * @return the bounds of z-values
-   */
+  /** Returns the bounds of z-values. */
   @Override
   public SGValueRange getBoundsZ() {
     return SGDataRangeUtility.getBoundsZ(this);
   }
 
-  /**
-   * Returns the title for the Z-axis.
-   *
-   * @return the title for the Z-axis
-   */
+  /** Returns the title for the Z-axis. */
   @Override
   public String getTitleZ() {
     return this.mZVariable.getSimpleName();
   }
 
-  /**
-   * Returns an array of Z-values.
-   *
-   * @return an array of Z-values
-   */
+  /** Returns an array of Z-values. */
   @Override
   public double[] getZValueArray(final boolean all) {
     return SGDataViewerUtility.getZValueArray(this, all);
@@ -313,7 +285,6 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
    *
    * @param type the type of export
    * @param all true to get all values
-   * @return a grid type array of Z-values
    */
   public double[][] getGridZValueArray(EXPORT_TYPE type, final boolean all) {
     double[] values = this.getZValueArray(all);
@@ -323,18 +294,14 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   /**
    * Returns a scatter type array of Z-values.
    *
+   * @param type the type parameter
    * @param all true to get all values
-   * @return a scatter array of Z-values
    */
   public double[] getScatterZValueArray(EXPORT_TYPE type, final boolean all) {
     return this.getZValueArray(all);
   }
 
-  /**
-   * Returns an array of current column types.
-   *
-   * @return an array of current column types
-   */
+  /** Returns an array of current column types. */
   @Override
   public String[] getCurrentColumnType() {
     SGMDArrayVariable[] vars = this.getVariables();
@@ -357,8 +324,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   /**
    * Sets the type of data columns.
    *
-   * @param column an array of column types
-   * @return true if succeeded
+   * @param columns an array of column types
    */
   @Override
   public boolean setColumnType(String[] columns) {
@@ -435,7 +401,6 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
      * Returns whether this data property has the equal column types with given data property.
      *
      * @param dp a data property
-     * @return true if this data property has the equal column types with given data property
      */
     @Override
     public boolean hasEqualColumnTypes(DataProperties dp) {
@@ -453,11 +418,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     }
   }
 
-  /**
-   * Returns the properties of this data.
-   *
-   * @return the properties of this data
-   */
+  /** Returns the properties of this data. */
   @Override
   public SGProperties getProperties() {
     SGProperties p = new SXYZMDDataProperties();
@@ -471,7 +432,6 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
    * Returns the properties of this data.
    *
    * @param p the properties of this data
-   * @return true if succeeded
    */
   @Override
   public boolean getProperties(final SGProperties p) {
@@ -490,7 +450,6 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
    * Sets the properties to this data.
    *
    * @param p properties to set
-   * @return true if succeeded
    */
   @Override
   public boolean setProperties(final SGProperties p) {
@@ -509,8 +468,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
    * Writes properties of this object to the Element.
    *
    * @param el the Element object
-   * @param type type of the method to save properties
-   * @return true if succeeded
+   * @param params type of the method to save properties
    */
   @Override
   public boolean writeProperty(Element el, final SGExportParameter params) {
@@ -550,7 +508,6 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
    * Sets the data.
    *
    * @param data data set to this object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (!(data instanceof SGSXYZMDArrayData)) {
@@ -564,22 +521,14 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     return true;
   }
 
-  /**
-   * Returns the copy of this data object.
-   *
-   * @return a copy of this data object
-   */
+  /** Returns the copy of this data object. */
   public Object clone() {
     SGSXYZMDArrayData data = (SGSXYZMDArrayData) super.clone();
     data.mZVariable = copyVariable(this.mZVariable);
     return data;
   }
 
-  /**
-   * Returns the list of blocks of z-values.
-   *
-   * @return the list of blocks of z-values
-   */
+  /** Returns the list of blocks of z-values. */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getZValueBlockList() {
     return SGDataViewerUtility.getZValueBlockList(this, false, true, true);
@@ -613,7 +562,6 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
    * Sets the information of data columns.
    *
    * @param cols an array of column information
-   * @return true if succeeded
    */
   public boolean setColumnType(SGDataColumnInfo[] cols) {
 
@@ -638,11 +586,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     return this.mZVariable;
   }
 
-  /**
-   * Returns the map of dimension index that are used.
-   *
-   * @return the map of dimension index
-   */
+  /** Returns the map of dimension index that are used. */
   public Map<String, Map<String, Integer>> getUsedDimensionIndexMap() {
     Map<String, Map<String, Integer>> map = this.getDimensionIndexMap();
     Map<String, Integer> dimMap = map.get(this.mZVariable.getName());
@@ -650,11 +594,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     return map;
   }
 
-  /**
-   * Returns an array of variables that are assigned the column type.
-   *
-   * @return an array of variables
-   */
+  /** Returns an array of variables that are assigned the column type. */
   @Override
   public SGMDArrayVariable[] getAssignedVariables() {
     List<SGMDArrayVariable> varList = new ArrayList<SGMDArrayVariable>();
@@ -674,8 +614,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   /**
    * Adds variables to a netCDF file.
    *
-   * @param ncWrite a netCDF file
-   * @return true if succeeded
+   * @param builder a netCDF file
    */
   @Override
   protected boolean addVariables(NetcdfFormatWriter.Builder builder) {
@@ -747,8 +686,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   /**
    * Writes data to a netCDF file.
    *
-   * @param ncWrite a netCDF file
-   * @return true if succeeded
+   * @param writer a netCDF file
    */
   protected boolean writeData(NetcdfFormatWriter writer) {
 
@@ -802,11 +740,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     return true;
   }
 
-  /**
-   * Returns a text string of the data type to save into a NetCDF data set file.
-   *
-   * @return a text string of the data type to save into a NetCDF data set file
-   */
+  /** Returns a text string of the data type to save into a NetCDF data set file. */
   @Override
   public String getNetCDFDataSetDataType() {
     return SGDataTypeConstants.SXYZ_NETCDF_DATA;
@@ -851,7 +785,6 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
    * Creates and returns a data buffer.
    *
    * @param param parameters for data buffer
-   * @return the data buffer
    */
   @Override
   public SGDataBuffer getDataBuffer(SGDataBufferPolicy param) {
@@ -887,11 +820,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
     }
   }
 
-  /**
-   * Returns a map of information.
-   *
-   * @return a map of information
-   */
+  /** Returns a map of information. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> map = super.getInfoMap();
     map.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, !this.isIndexAvailable());
@@ -991,8 +920,9 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   /**
    * Exports to a HDF5 file.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param writer HDF5-file writer
-   * @return true if succeeded
    */
   @Override
   protected boolean exportToHDF5(
@@ -1015,9 +945,10 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
   /**
    * Exports to a MATLAB file.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param file the MATLAB file
    * @param writer MAT-file writer
-   * @return true if succeeded
    */
   @Override
   protected boolean exportToMATLAB(

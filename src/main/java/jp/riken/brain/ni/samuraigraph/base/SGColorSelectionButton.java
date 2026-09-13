@@ -32,11 +32,7 @@ public class SGColorSelectionButton extends SGButton {
     this.mColorSelectionButtonEmphasisIcon = SGUtility.createIcon(getClass(), "Lines.gif");
   }
 
-  /**
-   * Returns the background color if the color is "set" to this button.
-   *
-   * @return Color object is the color is "set", otherwise null.
-   */
+  /** Returns the background color if the color is "set" to this button. */
   public Color getColor() {
     return this.mColorSetFlag ? this.getBackground() : null;
   }
@@ -47,7 +43,6 @@ public class SGColorSelectionButton extends SGButton {
    * @param cl color to be set to this button
    */
   public void setColor(final Color cl) {
-    // if given object is not null, the color is "set"
     this.mColorSetFlag = (cl != null);
 
     // set as the background color

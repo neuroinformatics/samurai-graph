@@ -82,7 +82,6 @@ public abstract class SGElementGroupTickLabelInGraph extends SGElementGroupTickL
 
   /**
    * @param el
-   * @return
    */
   public boolean readProperty(final Element el) {
     if (super.readProperty(el) == false) {
@@ -113,11 +112,7 @@ public abstract class SGElementGroupTickLabelInGraph extends SGElementGroupTickL
     }
   }
 
-  /**
-   * Update the location of tick labels.
-   *
-   * @return true if succeeded
-   */
+  /** Update the location of tick labels. */
   public boolean updateLocation() {
     return this.setLocation(this.mPointsArray);
   }
@@ -175,7 +170,6 @@ public abstract class SGElementGroupTickLabelInGraph extends SGElementGroupTickL
    * @return true if this element group contains the given point
    */
   public boolean contains(final int x, final int y) {
-    // if a given point is inside of the graph rectangle, returns false
     Rectangle2D gRect = this.mGraph.getGraphRect();
     if (gRect.contains(x, y)) {
       return false;
@@ -186,7 +180,10 @@ public abstract class SGElementGroupTickLabelInGraph extends SGElementGroupTickL
   /**
    * Calculates and updates the location.
    *
-   * @param true if succeeded
+   * @param dataSXY the dataSXY parameter
+   * @param axisX the axisX parameter
+   * @param axisY the axisY parameter
+   * @param valueArray the valueArray parameter
    */
   protected abstract boolean calcLocation(
       final SGISXYTypeSingleData dataSXY,

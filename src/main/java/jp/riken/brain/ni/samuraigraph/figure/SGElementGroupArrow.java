@@ -76,11 +76,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     this.mYCoordinateArray = null;
   }
 
-  /**
-   * Returns a stroke.
-   *
-   * @return a stroke
-   */
+  /** Returns a stroke. */
   protected SGStroke getStroke() {
     return this.mStroke;
   }
@@ -88,8 +84,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
   /**
    * Sets the magnification.
    *
-   * @param ratio the magnification
-   * @return true if succeeded
+   * @param mag the magnification
    */
   public boolean setMagnification(final float mag) {
     if (super.setMagnification(mag) == false) {
@@ -100,27 +95,18 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     return true;
   }
 
-  /**
-   * Returns the line type.
-   *
-   * @return the line type
-   */
+  /** Returns the line type. */
   public int getLineType() {
     return this.mLineType;
   }
 
-  /**
-   * Returns the line width.
-   *
-   * @return the line width.
-   */
+  /** Returns the line width. */
   public float getLineWidth() {
     return this.mStroke.getLineWidth();
   }
 
   /**
    * @param unit
-   * @return
    */
   public float getLineWidth(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getLineWidth(), unit);
@@ -133,7 +119,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
 
   /**
    * @param unit
-   * @return
    */
   public float getHeadSize(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getHeadSize(), unit);
@@ -159,29 +144,17 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     return this.mEndHeadType;
   }
 
-  /**
-   * Returns the color.
-   *
-   * @return the color
-   */
+  /** Returns the color. */
   public Color getColor() {
     return this.mColor;
   }
 
-  /**
-   * Returns the shape of the start head.
-   *
-   * @return a shape object
-   */
+  /** Returns the shape of the start head. */
   public Shape getStartHeadShape() {
     return this.mStartHeadShape;
   }
 
-  /**
-   * Returns the shape of the end head.
-   *
-   * @return a shape object
-   */
+  /** Returns the shape of the end head. */
   public Shape getEndHeadShape() {
     return this.mEndHeadShape;
   }
@@ -201,7 +174,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
    * Sets the line type.
    *
    * @param type the line type to set
-   * @return true if succeeded
    */
   public boolean setLineType(final int type) {
     if (SGDrawingElementLine.isValidLineType(type) == false) {
@@ -216,7 +188,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
    * Sets the line width.
    *
    * @param lw line width to set
-   * @return true if succeeded
    */
   public boolean setLineWidth(final float lw) {
     if (lw < 0.0f) {
@@ -231,7 +202,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
    *
    * @param lw the line width to set
    * @param unit the unit for line width
-   * @return true if succeeded
    */
   public abstract boolean setLineWidth(final float lw, final String unit);
 
@@ -239,7 +209,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
    * Sets the head size.
    *
    * @param size the head size to set
-   * @return true if succeeded
    */
   public boolean setHeadSize(final float size) {
     if (size < 0.0f) {
@@ -255,7 +224,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
    *
    * @param size the head size to set
    * @param unit the unit for a given head size
-   * @return true if succeeded
    */
   public abstract boolean setHeadSize(final float size, final String unit);
 
@@ -264,7 +232,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
    *
    * @param openAngle the head open angle to set in units of degree
    * @param closeAngle the head close angle to set in units of degree
-   * @return true if succeeded
    */
   public abstract boolean setHeadAngle(final float openAngle, final float closeAngle);
 
@@ -272,7 +239,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
    * Sets the start head type.
    *
    * @param type the start head type to set
-   * @return true if succeeded
    */
   public boolean setStartHeadType(final int type) {
     if (SGDrawingElementArrow.isValidArrowHeadType(type) == false) {
@@ -287,7 +253,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
    * Sets the end head type.
    *
    * @param type the end head type to set
-   * @return true if succeeded
    */
   public boolean setEndHeadType(final int type) {
     if (SGDrawingElementArrow.isValidArrowHeadType(type) == false) {
@@ -302,7 +267,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
    * Sets the color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setColor(final Color color) {
     if (color == null) {
@@ -316,7 +280,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
    * Returns the location of the start point at a given index.
    *
    * @param index the index
-   * @return the location of the start point at a given index
    */
   public abstract SGTuple2f getStartLocation(final int index);
 
@@ -324,7 +287,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
    * Returns the location of the end point at a given index.
    *
    * @param index the index
-   * @return the location of the end point at a given index
    */
   public abstract SGTuple2f getEndLocation(final int index);
 
@@ -379,9 +341,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     return typeName;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getTagName() {
     return TAG_NAME_ARROW;
   }
@@ -421,13 +381,11 @@ public abstract class SGElementGroupArrow extends SGElementGroup
 
   /**
    * @param el
-   * @return
    */
   public boolean readProperty(final Element el) {
     String str = null;
     Number num = null;
     Color cl = null;
-    // Boolean b = null;
     List<Color> list = null;
 
     // line width
@@ -539,9 +497,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean initDrawingElement(final SGTuple2f[] startArray, final SGTuple2f[] endArray) {
     final int num = startArray.length;
     if (this.initDrawingElement(num) == false) {
@@ -681,11 +637,7 @@ public abstract class SGElementGroupArrow extends SGElementGroup
       super();
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       Object obj = super.copy();
       ArrowProperties p = (ArrowProperties) obj;
@@ -812,65 +764,37 @@ public abstract class SGElementGroupArrow extends SGElementGroup
       this.mEndHead = this.createHeadInstance(this, false);
     }
 
-    /**
-     * Returns the line width.
-     *
-     * @return the line width
-     */
+    /** Returns the line width. */
     public float getLineWidth() {
       return this.getArrowGroup().getLineWidth();
     }
 
-    /**
-     * Returns the line type.
-     *
-     * @return the line type
-     */
+    /** Returns the line type. */
     public int getLineType() {
       return this.getArrowGroup().getLineType();
     }
 
-    /**
-     * Returns the head size.
-     *
-     * @return the head size
-     */
+    /** Returns the head size. */
     public float getHeadSize() {
       return this.getArrowGroup().getHeadSize();
     }
 
-    /**
-     * Returns the start head type.
-     *
-     * @return the start head type
-     */
+    /** Returns the start head type. */
     public int getStartHeadType() {
       return this.getArrowGroup().getStartHeadType();
     }
 
-    /**
-     * Returns the end head type.
-     *
-     * @return the end head type
-     */
+    /** Returns the end head type. */
     public int getEndHeadType() {
       return this.getArrowGroup().getEndHeadType();
     }
 
-    /**
-     * Returns the close angle of the arrow head.
-     *
-     * @return the close angle of the arrow head
-     */
+    /** Returns the close angle of the arrow head. */
     public float getHeadCloseAngle() {
       return this.getArrowGroup().getHeadCloseAngle();
     }
 
-    /**
-     * Returns the open angle of the arrow head.
-     *
-     * @return the open angle of the arrow head
-     */
+    /** Returns the open angle of the arrow head. */
     public float getHeadOpenAngle() {
       return this.getArrowGroup().getHeadOpenAngle();
     }
@@ -880,7 +804,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
      *
      * @param openAngle a value to set to the open angle
      * @param closeAngle a value to set to the close angle
-     * @return true if succeeded
      */
     public boolean setHeadAngle(final Float openAngle, final Float closeAngle) {
       // do nothing
@@ -903,7 +826,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
      *
      * @param arrow an arrow that this head belongs to
      * @param start true for the arrow head at start
-     * @return an instance of the head
      */
     protected SGDrawingElementSymbol createHeadInstance(
         SGDrawingElementArrow arrow, final boolean start) {
@@ -931,7 +853,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
      * Sets the start head type.
      *
      * @param type the start head type
-     * @return true if succeeded
      */
     public boolean setStartHeadType(final int type) {
       // do nothing
@@ -942,7 +863,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
      * Sets the end head type.
      *
      * @param type the end head type
-     * @return true if succeeded
      */
     public boolean setEndHeadType(final int type) {
       // do nothing
@@ -953,7 +873,6 @@ public abstract class SGElementGroupArrow extends SGElementGroup
      * Sets the head size.
      *
      * @param size the head size to set
-     * @return true if succeeded
      */
     public boolean setHeadSize(final float size) {
       // do nothing

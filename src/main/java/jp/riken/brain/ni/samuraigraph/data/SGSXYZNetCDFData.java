@@ -109,11 +109,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     this.mZVariable = null;
   }
 
-  /**
-   * Returns an array of current column types.
-   *
-   * @return an array of current column types
-   */
+  /** Returns an array of current column types. */
   public String[] getCurrentColumnType() {
     List<SGNetCDFVariable> varList = this.getNetcdfFile().getVariables();
     final int varNum = varList.size();
@@ -141,11 +137,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     return array;
   }
 
-  /**
-   * Returns an array of variables that are assigned the column type.
-   *
-   * @return an array of variables
-   */
+  /** Returns an array of variables that are assigned the column type. */
   @Override
   public SGNetCDFVariable[] getAssignedVariables() {
     List<SGNetCDFVariable> varList = new ArrayList<SGNetCDFVariable>();
@@ -175,8 +167,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
   /**
    * Sets the type of data columns.
    *
-   * @param column an array of column types
-   * @return true if succeeded
+   * @param columns an array of column types
    */
   public boolean setColumnType(String[] columns) {
     List<SGNetCDFVariable> xVarList = new ArrayList<SGNetCDFVariable>();
@@ -218,16 +209,6 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
           return false;
         }
         indexVarList.add(var);
-        //            } else if (SGDataUtility.equals(X_INDEX, columns[ii])) {
-        //            	if (!VALUE_TYPE_NUMBER.equals(valueType)) {
-        //            		return false;
-        //            	}
-        //                xIndexVarList.add(var);
-        //            } else if (SGDataUtility.equals(Y_INDEX, columns[ii])) {
-        //            	if (!VALUE_TYPE_NUMBER.equals(valueType)) {
-        //            		return false;
-        //            	}
-        //                yIndexVarList.add(var);
       } else if ("".equals(columns[ii])) {
         continue;
       } else {
@@ -269,7 +250,6 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    * Sets the data.
    *
    * @param data data set to this object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (!(data instanceof SGSXYZNetCDFData)) {
@@ -284,11 +264,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     return true;
   }
 
-  /**
-   * Returns the properties of this data.
-   *
-   * @return the properties of this data
-   */
+  /** Returns the properties of this data. */
   public SGProperties getProperties() {
     SGProperties p = new SXYZNetCDFDataProperties();
     if (this.getProperties(p) == false) {
@@ -301,7 +277,6 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    * Gets the properties of this data.
    *
    * @param p the properties of this data
-   * @return true if succeeded
    */
   public boolean getProperties(SGProperties p) {
     if (!(p instanceof SXYZNetCDFDataProperties)) {
@@ -319,7 +294,6 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    * Set properties to this data.
    *
    * @param p properties to be set
-   * @return true if succeeded
    */
   public boolean setProperties(SGProperties p) {
     if (!(p instanceof SXYZNetCDFDataProperties)) {
@@ -338,7 +312,6 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    *
    * @param el the Element object
    * @param type type of the method to save properties
-   * @return true if succeeded
    */
   public boolean writeProperty(Element el, final SGExportParameter type) {
     if (super.writeProperty(el, type) == false) {
@@ -350,11 +323,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     return true;
   }
 
-  /**
-   * Returns a text string of data type.
-   *
-   * @return a text string of data type
-   */
+  /** Returns a text string of data type. */
   public String getDataType() {
     return SGDataTypeConstants.SXYZ_NETCDF_DATA;
   }
@@ -401,7 +370,6 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
      * Returns whether this data property has the equal column types with given data property.
      *
      * @param dp a data property
-     * @return true if this data property has the equal column types with given data property
      */
     @Override
     public boolean hasEqualColumnTypes(DataProperties dp) {
@@ -418,22 +386,14 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
       return true;
     }
 
-    /**
-     * Returns a copy of this object.
-     *
-     * @return a copy of this object
-     */
+    /** Returns a copy of this object. */
     public Object copy() {
       SXYZNetCDFDataProperties p = (SXYZNetCDFDataProperties) super.copy();
       return p;
     }
   }
 
-  /**
-   * Returns the number of data points taking into account the stride.
-   *
-   * @return the number of data points taking into account the stride
-   */
+  /** Returns the number of data points taking into account the stride. */
   @Override
   public int getPointsNumber() {
     if (this.isIndexAvailable()) {
@@ -448,11 +408,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     }
   }
 
-  /**
-   * Returns an array of X-values.
-   *
-   * @return an array of X-values
-   */
+  /** Returns an array of X-values. */
   @Override
   public double[] getXValueArray(final boolean all) {
     double[] values = SGDataViewerUtility.getXValueArray(this, all);
@@ -476,11 +432,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     return ret;
   }
 
-  /**
-   * Returns an array of Y-values.
-   *
-   * @return an array of Y-values
-   */
+  /** Returns an array of Y-values. */
   @Override
   public double[] getYValueArray(final boolean all) {
     double[] values = SGDataViewerUtility.getYValueArray(this, all);
@@ -504,11 +456,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     return ret;
   }
 
-  /**
-   * Returns an array of Z-values.
-   *
-   * @return an array of Z-values
-   */
+  /** Returns an array of Z-values. */
   @Override
   public double[] getZValueArray(final boolean all) {
     return SGDataViewerUtility.getZValueArray(this, all);
@@ -540,11 +488,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
     return ret;
   }
 
-  /**
-   * Returns the list of blocks of z-values.
-   *
-   * @return the list of blocks of z-values
-   */
+  /** Returns the list of blocks of z-values. */
   @Override
   public List<SGXYSimpleDoubleValueIndexBlock> getZValueBlockList() {
     return SGDataViewerUtility.getZValueBlockList(this, false, true, true);
@@ -565,53 +509,32 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    * Returns a scatter type array of Z-values.
    *
    * @param all true to get all values
-   * @return a scatter array of Z-values
    */
   protected double[] getScatterZValueArray(final boolean all) {
     return this.getZValueArray(all);
   }
 
-  /**
-   * Returns the bounds of x-values.
-   *
-   * @return the bounds of x-values
-   */
+  /** Returns the bounds of x-values. */
   public SGValueRange getBoundsX() {
     return SGDataRangeUtility.getBoundsX(this);
   }
 
-  /**
-   * Returns the bounds of y-values.
-   *
-   * @return the bounds of y-values
-   */
+  /** Returns the bounds of y-values. */
   public SGValueRange getBoundsY() {
     return SGDataRangeUtility.getBoundsY(this);
   }
 
-  /**
-   * Returns the bounds of z-values.
-   *
-   * @return the bounds of z-values
-   */
+  /** Returns the bounds of z-values. */
   public SGValueRange getBoundsZ() {
     return SGDataRangeUtility.getBoundsZ(this);
   }
 
-  /**
-   * Returns the title for the Y-axis.
-   *
-   * @return the title for the Y-axis
-   */
+  /** Returns the title for the Y-axis. */
   public String getTitleZ() {
     return this.getNameWithUnit(this.mZVariable);
   }
 
-  /**
-   * Returns a map of stride for data arrays.
-   *
-   * @return a map of stride for data arrays
-   */
+  /** Returns a map of stride for data arrays. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
@@ -639,7 +562,6 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
    * Creates and returns a data buffer.
    *
    * @param param parameters for data buffer
-   * @return the data buffer
    */
   @Override
   public SGDataBuffer getDataBuffer(SGDataBufferPolicy param) {
@@ -991,15 +913,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
   public Double getXValueAt(final int index) {
     double[] values = this.getXValueArray(false);
     final double d = values[index];
-    /*
-    if (this.isNaNAssignedInvalidValue(0, index, X_VALUE, d)) {
-    	SGNetCDFVariable cVar = this.isIndexAvailable() ? this.mIndexVariable : this.mXVariable;
-              return this.getValueAt(this.mXVariable,
-              		new SGNetCDFVariable[]{ cVar }, new int[] { index });
-    } else {
-    	return d;
-    }
-    */
+
     return d;
   }
 
@@ -1007,15 +921,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
   public Double getYValueAt(final int index) {
     double[] values = this.getYValueArray(false);
     final double d = values[index];
-    /*
-    if (this.isNaNAssignedInvalidValue(0, index, Y_VALUE, d)) {
-    	SGNetCDFVariable cVar = this.isIndexAvailable() ? this.mIndexVariable : this.mYVariable;
-              return this.getValueAt(this.mYVariable,
-              		new SGNetCDFVariable[]{ cVar }, new int[] { index });
-    } else {
-    	return d;
-    }
-    */
+
     return d;
   }
 

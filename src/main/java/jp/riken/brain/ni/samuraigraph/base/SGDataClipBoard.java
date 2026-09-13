@@ -21,7 +21,6 @@ public class SGDataClipBoard {
    *
    * @param data data object
    * @param name the name of data
-   * @return a copied data object
    */
   public DataCopy add(SGData data, String name) {
     return this.add(data, name, new HashMap<Class<?>, SGProperties>());
@@ -33,7 +32,6 @@ public class SGDataClipBoard {
    * @param data data object
    * @param name the name of data
    * @param propertiesMap a map of properties for each figure element class
-   * @return a copied data object
    */
   public DataCopy add(SGData data, String name, Map<Class<?>, SGProperties> propertiesMap) {
     SGData dCopy = (SGData) data.copy();
@@ -114,18 +112,6 @@ public class SGDataClipBoard {
     public String getName() {
       return name;
     }
-
-    //        /**
-    //         * Sets the data properties for each class object.
-    //         *
-    //         * @param cl
-    //         *          class object
-    //         * @param p
-    //         *          properties of the data for a given figure element
-    //         */
-    //        public void setProperties(Class cl, SGProperties p) {
-    //            this.propertiesMap.put(cl, p);
-    //        }
 
     /**
      * Returns the data properties for a given class object.

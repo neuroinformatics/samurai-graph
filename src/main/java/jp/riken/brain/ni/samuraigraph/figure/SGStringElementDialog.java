@@ -812,8 +812,6 @@ public class SGStringElementDialog extends SGPropertyDialog
     this.setAngle(angle);
     this.setTextColor(color);
 
-    //        this.setColorButtonBorder(true);
-
     return true;
   }
 

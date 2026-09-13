@@ -20,48 +20,33 @@ public abstract class SGDrawingElementBar extends SGDrawingElementRectangle
     super();
   }
 
-  /**
-   * Returns the baseline value.
-   *
-   * @return the baseline value
-   */
+  /** Returns the baseline value. */
   public abstract double getBaselineValue();
 
   /**
    * Sets the baseline value.
    *
    * @param value axis value to set to the baseline value
-   * @return true if succeeded
    */
   public abstract boolean setBaselineValue(final double value);
 
-  /**
-   * Returns the width value.
-   *
-   * @return the width value
-   */
+  /** Returns the width value. */
   public abstract double getWidthValue();
 
   /**
    * Sets the width value.
    *
    * @param value axis value to set to the width value
-   * @return true if succeeded
    */
   public abstract boolean setWidthValue(final double value);
 
-  /**
-   * Returns whether this bar is vertical.
-   *
-   * @return true if the bar is vertical
-   */
+  /** Returns whether this bar is vertical. */
   public abstract boolean isVertical();
 
   /**
    * Sets whether this bar is vertical.
    *
    * @param b true to set vertical
-   * @return true if succeeded
    */
   public abstract boolean setVertical(boolean b);
 
@@ -174,11 +159,7 @@ public abstract class SGDrawingElementBar extends SGDrawingElementRectangle
     this.setBounds(x, y, w, h);
   }
 
-  /**
-   * Returns the bounding box of this bar.
-   *
-   * @return a bounding box of this bar
-   */
+  /** Returns the bounding box of this bar. */
   public Rectangle2D getElementBounds() {
     final float x = this.getX();
     final float y = this.getY();
@@ -209,10 +190,6 @@ public abstract class SGDrawingElementBar extends SGDrawingElementRectangle
     if (this.isVisible() == false) {
       return;
     }
-
-    //        final float width = this.getMagnification() * this.getEdgeLineWidth();
-    //        Stroke stroke = new BasicStroke(width, BasicStroke.CAP_BUTT,
-    //                BasicStroke.JOIN_MITER);
 
     final Rectangle2D dRect = this.getElementBounds();
 
@@ -272,24 +249,4 @@ public abstract class SGDrawingElementBar extends SGDrawingElementRectangle
       }
     }
   }
-
-  // /**
-  // *
-  // */
-  // public Object copy()
-  // {
-  // SGDrawingElementBar el = new SGDrawingElementBar();
-  // this.setPropertiesForCopy(el);
-  // return el;
-  // }
-  //
-  //
-  // protected boolean setPropertiesForCopy( SGDrawingElementBar el )
-  // {
-  // el.setProperties( this.getProperties() );
-  // el.setLocation( this.getX(), this.getY() );
-  // el.setMagnification( this.mMagnification );
-  // return true;
-  // }
-
 }

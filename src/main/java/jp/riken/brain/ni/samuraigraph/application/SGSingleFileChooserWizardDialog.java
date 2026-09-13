@@ -73,18 +73,10 @@ public abstract class SGSingleFileChooserWizardDialog extends SGFileChooserWizar
         });
   }
 
-  /**
-   * Returns a text component to input file name.
-   *
-   * @return a text component to input file name
-   */
+  /** Returns a text component to input file name. */
   protected abstract JTextComponent getFileNameTextComponent();
 
-  /**
-   * Returns a button to show the file chooser.
-   *
-   * @return a button to show the file chooser
-   */
+  /** Returns a button to show the file chooser. */
   protected abstract JButton getFileChooserButton();
 
   /** */
@@ -121,24 +113,6 @@ public abstract class SGSingleFileChooserWizardDialog extends SGFileChooserWizar
 
   /** */
   public void dropActionChanged(final DropTargetDragEvent event) {}
-
-  //    /**
-  //     * Called when the text field is edited.
-  //     * @param e
-  //     *          a caret event
-  //     */
-  //    public void caretUpdate(CaretEvent e) {
-  //        Object source = e.getSource();
-  //        if (source.equals(this.getFileNameTextComponent())) {
-  //            JTextComponent tc = (JTextComponent) source;
-  //            String str = tc.getText();
-  //            File f = new File(str);
-  //
-  //            // enable or disable the next button
-  //            final boolean enable = this.isAcceptable(f);
-  //            this.acceptFile(enable);
-  //        }
-  //    }
 
   @Override
   public void actionPerformed(final ActionEvent event) {
@@ -198,11 +172,7 @@ public abstract class SGSingleFileChooserWizardDialog extends SGFileChooserWizar
     this.getFileNameTextComponent().setText(path);
   }
 
-  /**
-   * Returns a text string for file path displayed in the text field.
-   *
-   * @return a text string for file path displayed in the text field
-   */
+  /** Returns a text string for file path displayed in the text field. */
   protected String getFileName() {
     return this.getFileNameTextComponent().getText();
   }
@@ -211,7 +181,6 @@ public abstract class SGSingleFileChooserWizardDialog extends SGFileChooserWizar
    * Sets the file name and returns a file.
    *
    * @param path file path
-   * @return a file object
    */
   public File setSelectedFile(String path) {
 

@@ -64,7 +64,6 @@ final class SGDataAdditionHandler
    */
   void createDataAdditionWizardDialogs(final SGDrawingWindow owner) {
 
-    // if the owner window is the same, do nothing
     if (this.mMain.mFigureIDSelectionWizardDialog != null) {
       SGDrawingWindow curOwner = this.mMain.mFigureIDSelectionWizardDialog.getOwnerWindow();
       if (curOwner.equals(owner)) {
@@ -83,19 +82,15 @@ final class SGDataAdditionHandler
     this.mMain.mDataTypeWizardDialog = new SGDataTypeWizardDialog(owner, true);
     this.mMain.mPlotTypeSelectionWizardDialog = new SGPlotTypeSelectionWizardDialog(owner, true);
 
-    // for text data
     this.mMain.mSDArrayDataSetupWizardDialog = new SGSDArrayDataSetupWizardDialog(owner, true);
     this.mMain.mSDArrayDataSetupWizardDialog.setPrevious(this.mMain.mDataTypeWizardDialog);
 
-    // for netCDF data
     this.mMain.mNetCDFDataSetupWizardDialog = new SGNetCDFDataSetupWizardDialog(owner, true);
     this.mMain.mNetCDFDataSetupWizardDialog.setPrevious(this.mMain.mDataTypeWizardDialog);
 
-    // for multidimensional array data
     this.mMain.mMDArrayDataSetupWizardDialog = new SGMDArrayDataSetupWizardDialog(owner, true);
     this.mMain.mMDArrayDataSetupWizardDialog.setPrevious(this.mMain.mDataTypeWizardDialog);
 
-    // for HDF5 and NetCDF-4 file
     this.mMain.mFileTypeSelectionWizardDialog = new SGFileTypeSelectionWizardDialog(owner, true);
 
     // sets the connection between wizard dialogs
@@ -547,7 +542,6 @@ final class SGDataAdditionHandler
         return false;
       }
     } else if (dg.equals(this.mMain.mPlotTypeSelectionWizardDialog)) {
-      // plot type selection (text, netCDF or multidimensional data)
       SGWizardDialog prev = dg.getPrevious();
       if (this.mMain.mSDArrayDataSetupWizardDialog.equals(prev)) {
         if (this.drawNewGraphOfSDArrayData(wnd, dg, path, figureID, figureLocation) == false) {
@@ -1039,7 +1033,6 @@ final class SGDataAdditionHandler
             FILE_TYPE selectedFileType = this.mMain.getNetCDF4orHDF5FileType(file);
             this.mMain.mFileTypeSelectionWizardDialog.setSelectedFileType(selectedFileType);
           } else {
-            // for TXT, NetCDF-3 or MATLAB file
             if (FILE_TYPE.TXT_DATA.equals(fileType)) {
               if (this.toSDArrayDataTypeDialog(
                       this.mMain.mSingleDataFileChooserWizardDialog,

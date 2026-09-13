@@ -45,11 +45,7 @@ public class SGComponentGroupElement implements SGIDisposable {
     this.mComponent.setEnabled(flag);
   }
 
-  /**
-   * Returns a Component object.
-   *
-   * @return a Component for this object
-   */
+  /** Returns a Component object. */
   public Component getComponent() {
     return this.mComponent;
   }

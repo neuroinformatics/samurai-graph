@@ -11,7 +11,6 @@ public interface SGITimingLineDialogObserver
 
   /**
    * @return
-   * @uml.property name="value"
    */
   public double getValue();
 
@@ -19,19 +18,16 @@ public interface SGITimingLineDialogObserver
 
   /**
    * @return
-   * @uml.property name="lineType"
    */
   public int getLineType();
 
   /**
    * @return
-   * @uml.property name="color"
    */
   public Color getColor();
 
   /**
    * @param value
-   * @uml.property name="value"
    */
   public boolean setValue(final double value);
 
@@ -40,14 +36,12 @@ public interface SGITimingLineDialogObserver
   /**
    * @param type
    * @return
-   * @uml.property name="lineType"
    */
   public boolean setLineType(final int type);
 
   /**
    * @param cl
    * @return
-   * @uml.property name="color"
    */
   public boolean setColor(final Color cl);
 

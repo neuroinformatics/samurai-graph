@@ -47,14 +47,10 @@ public class SGStatusBar extends JPanel implements SGIConstants, SGIProgressCont
     this.setBackground(wnd.getBackground());
 
     boolean isMacOSX = false;
-    // boolean isWin32 = false;
     String laf = SGUtility.getLookAndFeelID();
     if (LAF_AQUA.equals(laf)) {
       isMacOSX = true;
     }
-    // else if( LAF_WINDOWS.equals(laf)){
-    // isWin32 = true;
-    // }
 
     this.setBorder(new EmptyBorder(0, 0, 0, (isMacOSX ? 18 : 0)));
 

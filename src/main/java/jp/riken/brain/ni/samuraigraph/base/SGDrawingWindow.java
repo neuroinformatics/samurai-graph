@@ -210,29 +210,19 @@ public class SGDrawingWindow extends JFrame
   // The flag whether this object is already disposed of.
   private boolean mDisposed = false;
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String toString() {
     return "SGDrawingWindow:" + this.getID();
   }
 
   private static final String[] IMAGE_FILENAMES_ARRAY = {SAMURAI_IMG_FILENAME};
 
-  /**
-   * Load image objects.
-   *
-   * @return a map object
-   */
+  /** Load image objects. */
   private Map<String, ImageIcon> loadImages() {
     String[] keys = IMAGE_FILENAMES_ARRAY;
     final int num = keys.length;
@@ -293,9 +283,7 @@ public class SGDrawingWindow extends JFrame
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean init() {
 
     // set default size
@@ -345,9 +333,7 @@ public class SGDrawingWindow extends JFrame
     this.mStatusBar = sBar;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private boolean createToolBar() {
     // add components into tool bar
     SGToolBar bar = new SGToolBar();
@@ -366,9 +352,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private boolean setToolBar() {
 
     this.getContentPane().remove(this.mToolBar);
@@ -394,9 +378,7 @@ public class SGDrawingWindow extends JFrame
     return height;
   }
 
-  /**
-   * @return
-   */
+  /** */
   int getToolBarWidth() {
     int width = 0;
     if (this.mToolBar.isVisible()) {
@@ -405,11 +387,7 @@ public class SGDrawingWindow extends JFrame
     return width;
   }
 
-  /**
-   * Returns an array of keys of inner tool bars.
-   *
-   * @return an array of keys of inner tool bars.
-   */
+  /** Returns an array of keys of inner tool bars. */
   public String[] getToolBarPattern() {
     final String[] pattern = this.mToolBar.getToolBarPattern();
     return pattern;
@@ -426,11 +404,7 @@ public class SGDrawingWindow extends JFrame
     this.updateToolBarVisibleItems();
   }
 
-  /**
-   * Returns the window ID.
-   *
-   * @return the window ID
-   */
+  /** Returns the window ID. */
   public int getID() {
     return this.mID;
   }
@@ -439,32 +413,15 @@ public class SGDrawingWindow extends JFrame
    * Sets the window ID.
    *
    * @param id the window ID to set
-   * @return true if succeeded
    */
   public boolean setID(final int id) {
     this.mID = id;
     return true;
   }
 
-  /**
-   * Returns the ID number of a new figure.
-   *
-   * @return the ID number of a new figure
-   */
+  /** Returns the ID number of a new figure. */
   public int assignFigureId() {
     List<SGFigure> fList = this.getVisibleFigureList();
-    // if (fList.size() == 0) {
-    // return 1;
-    // }
-    // int maxId = 0;
-    // for (int ii = 0; ii < fList.size(); ii++) {
-    // SGFigure f = (SGFigure) fList.get(ii);
-    // final int id = f.getID();
-    // if (id > maxId) {
-    // maxId = id;
-    // }
-    // }
-    // return (maxId + 1);
 
     List<Integer> idList = new ArrayList<Integer>();
     for (int ii = 0; ii < fList.size(); ii++) {
@@ -475,44 +432,32 @@ public class SGDrawingWindow extends JFrame
     return id;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getTopWidth() {
     return SGDrawingWindowViewportUtility.getTopWidth(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getBottomWidth() {
     return SGDrawingWindowViewportUtility.getBottomWidth(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getLeftWidth() {
     return SGDrawingWindowViewportUtility.getLeftWidth(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getRightWidth() {
     return SGDrawingWindowViewportUtility.getRightWidth(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getMagnification() {
     return this.mMagnification;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getMagnificationPercent() {
     return this.mMagnification * 100.0f;
   }
@@ -535,7 +480,6 @@ public class SGDrawingWindow extends JFrame
    * Returns a figure with given ID.
    *
    * @param id - Figure ID
-   * @return figure with given ID. null if not found.
    */
   public SGFigure getFigure(final int id) {
     List<SGFigure> list = this.getVisibleFigureList();
@@ -549,29 +493,17 @@ public class SGDrawingWindow extends JFrame
     return null;
   }
 
-  /**
-   * Returns the list of figures.
-   *
-   * @return a list of figures
-   */
+  /** Returns the list of figures. */
   public ArrayList<SGFigure> getFigureList() {
     return new ArrayList<SGFigure>(this.mFigureList);
   }
 
-  /**
-   * Returns an array of figures.
-   *
-   * @return
-   */
+  /** Returns an array of figures. */
   public SGFigure[] getFigureArray() {
     return this.getFigureList().toArray(new SGFigure[] {});
   }
 
-  /**
-   * Returns a list of visible figures.
-   *
-   * @return a list of visible figures
-   */
+  /** Returns a list of visible figures. */
   public ArrayList<SGFigure> getVisibleFigureList() {
     ArrayList<SGFigure> list = new ArrayList<SGFigure>();
     for (int ii = 0; ii < this.mFigureList.size(); ii++) {
@@ -583,11 +515,7 @@ public class SGDrawingWindow extends JFrame
     return list;
   }
 
-  /**
-   * Returns an array of ID numbers of visible figures.
-   *
-   * @return an array of ID numbers of visible figures
-   */
+  /** Returns an array of ID numbers of visible figures. */
   public int[] getVisibleFigureIDArray() {
     List<SGFigure> fList = this.getVisibleFigureList();
     List<Integer> idList = new ArrayList<Integer>();
@@ -607,7 +535,6 @@ public class SGDrawingWindow extends JFrame
    * Hide the figure.
    *
    * @param figure
-   * @return
    */
   boolean hideFigure(SGFigure figure) {
     this.notifyToListener(NOTIFY_FIGURE_WILL_BE_HIDDEN);
@@ -633,7 +560,6 @@ public class SGDrawingWindow extends JFrame
    *
    * @param figure
    * @param pos : mouse location of window
-   * @return
    */
   public boolean addFigure(final SGFigure figure, final Point pos) {
     // add to the list
@@ -658,7 +584,6 @@ public class SGDrawingWindow extends JFrame
    * Add a new figure.
    *
    * @param figure - figure to be added.
-   * @return
    */
   public boolean addFigure(final SGFigure figure) {
     // add to the list
@@ -779,7 +704,6 @@ public class SGDrawingWindow extends JFrame
    *
    * @param img an image to set
    * @param updateHistory true to update the history
-   * @return true if succeeded
    */
   private boolean setImage(final Image img, final boolean updateHistory) {
     boolean changed = false;
@@ -816,7 +740,6 @@ public class SGDrawingWindow extends JFrame
    * @param ext the extension of image file
    * @param b the byte array of image
    * @param updateHistory true to update the history
-   * @return true if succeeded
    */
   public boolean setImage(final byte[] b, final String ext, final boolean updateHistory) {
 
@@ -858,11 +781,7 @@ public class SGDrawingWindow extends JFrame
     this.mClientPanel.setImageFilePath(path);
   }
 
-  /**
-   * Deletes the background image.
-   *
-   * @return true if succeeded
-   */
+  /** Deletes the background image. */
   public boolean deleteImage() {
     this.mBackgroundImage = null;
     return this.setImage((Image) null, true);
@@ -880,9 +799,7 @@ public class SGDrawingWindow extends JFrame
     return this.mClientPanel.getImage();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean drawBackAllVisibleFigures() {
     ArrayList<SGFigure> list = this.getVisibleFigureList();
     for (int ii = 0; ii < list.size(); ii++) {
@@ -894,20 +811,12 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * Returns a list of child nodes.
-   *
-   * @return a list of child nodes
-   */
+  /** Returns a list of child nodes. */
   public ArrayList<SGINode> getChildNodes() {
     return new ArrayList<SGINode>(this.getVisibleFigureList());
   }
 
-  /**
-   * Deselect the focused objects.
-   *
-   * @return true
-   */
+  /** Deselect the focused objects. */
   public boolean clearFocusedObjects() {
     List<SGISelectable> list = this.getFocusedObjectsList();
     for (int ii = 0; ii < list.size(); ii++) {
@@ -917,20 +826,14 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public List<SGISelectable> getFocusedObjectsList() {
     List<SGISelectable> list = new ArrayList<SGISelectable>();
     list.addAll(this.getFocusedFigureList());
     return list;
   }
 
-  /**
-   * Returns a list of focused figures.
-   *
-   * @return a list of focused figures
-   */
+  /** Returns a list of focused figures. */
   public List<SGFigure> getFocusedFigureList() {
     List<SGFigure> list = new ArrayList<SGFigure>();
     List<SGFigure> fList = this.getVisibleFigureList();
@@ -943,11 +846,7 @@ public class SGDrawingWindow extends JFrame
     return list;
   }
 
-  /**
-   * Returns the map of focused data list.
-   *
-   * @return the map of focused data list
-   */
+  /** Returns the map of focused data list. */
   public Map<Integer, List<SGData>> getFocusedDataMap() {
     Map<Integer, List<SGData>> dataMap = new HashMap<Integer, List<SGData>>();
     List<SGFigure> figureList = this.getVisibleFigureList();
@@ -957,11 +856,7 @@ public class SGDrawingWindow extends JFrame
     return dataMap;
   }
 
-  /**
-   * Returns the map of focused data list in legend order.
-   *
-   * @return the map of focused data in legend order
-   */
+  /** Returns the map of focused data list in legend order. */
   public Map<Integer, List<SGData>> getFocusedDataMapInLegendOrder() {
     Map<Integer, List<SGData>> dataMap = new HashMap<Integer, List<SGData>>();
     List<SGFigure> figureList = this.getVisibleFigureList();
@@ -973,7 +868,6 @@ public class SGDrawingWindow extends JFrame
 
   /**
    * @param list
-   * @return
    */
   public boolean getFocusedObjectsList(List<SGISelectable> list) {
     list.addAll(this.getFocusedFigureList());
@@ -1049,11 +943,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * Clear focused figures.
-   *
-   * @return true if succeeded
-   */
+  /** Clear focused figures. */
   public boolean clearFocusedFigures() {
     List<SGFigure> list = this.getFocusedFigureList();
     for (int ii = list.size() - 1; ii >= 0; ii--) {
@@ -1067,8 +957,7 @@ public class SGDrawingWindow extends JFrame
    * Set the focused figures.
    *
    * @param figure figure
-   * @param focused flag to set
-   * @return true:succeeded, false:failed
+   * @param b flag to set
    */
   public boolean setFocusedFigure(final SGFigure figure, final boolean b) {
     figure.setSelected(b);
@@ -1085,9 +974,7 @@ public class SGDrawingWindow extends JFrame
     return SGDrawingWindowViewportUtility.getViewportSize(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGTuple2f getPaneOrigin() {
     return SGDrawingWindowViewportUtility.getPaneOrigin(this);
   }
@@ -1105,9 +992,7 @@ public class SGDrawingWindow extends JFrame
     return this.mClientPanel.setPaperSize(width, height);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public JComponent getFigurePanel() {
     return this.mClientPanel.getFigurePanel();
   }
@@ -1155,45 +1040,34 @@ public class SGDrawingWindow extends JFrame
   /**
    * @param x
    * @param y
-   * @return
    */
   public boolean setPaperOrigin(final float x, final float y) {
     return SGDrawingWindowViewportUtility.setPaperOrigin(this, x, y);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGTuple2f getPaperSize() {
     return SGDrawingWindowViewportUtility.getPaperSize(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getPaperX() {
     return SGDrawingWindowViewportUtility.getPaperX(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getPaperY() {
     return SGDrawingWindowViewportUtility.getPaperY(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Rectangle2D getPaperRect() {
     return SGDrawingWindowViewportUtility.getPaperRect(this);
   }
 
   public static final float PAPER_MARGIN = 2.0f / SGIConstants.CM_POINT_RATIO;
 
-  /**
-   * @return
-   */
+  /** */
   public Rectangle2D getBoundingBox() {
     return SGDrawingWindowViewportUtility.getBoundingBox(this);
   }
@@ -1203,13 +1077,9 @@ public class SGDrawingWindow extends JFrame
     return SGDrawingWindowViewportUtility.setViewportSize(this, width, height);
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean setComponentBounds() {
     final Rectangle2D rect = this.getPaneBounds();
-    // final int x = (int)rect.getX();
-    // final int y = (int)rect.getY();
     final int width = (int) rect.getWidth();
     final int height = (int) rect.getHeight();
     this.mClientPanel.setSize(width, height);
@@ -1228,7 +1098,6 @@ public class SGDrawingWindow extends JFrame
    * Zoom this object.
    *
    * @param cl
-   * @return
    */
   public boolean zoom(final float cl) {
     //
@@ -1249,7 +1118,6 @@ public class SGDrawingWindow extends JFrame
     this.updateClientRect();
 
     //
-    // this.setScrollBarValue();
 
     this.repaintContentPane();
 
@@ -1273,11 +1141,7 @@ public class SGDrawingWindow extends JFrame
     this.doAutoZoom();
   }
 
-  /**
-   * Returns whether auto zoom is enabled.
-   *
-   * @return true if auto zoom is enabled
-   */
+  /** Returns whether auto zoom is enabled. */
   public boolean isAutoZoom() {
     return this.mAutoZoomFlag;
   }
@@ -1293,9 +1157,7 @@ public class SGDrawingWindow extends JFrame
     this.updateZoomItems();
   }
 
-  /**
-   * @return
-   */
+  /** */
   boolean zoomWayOut() {
     Rectangle2D bbRect = this.getBoundingBox();
     SGTuple2f vpSize = this.getViewportSize();
@@ -1309,7 +1171,6 @@ public class SGDrawingWindow extends JFrame
 
   /**
    * @param mag
-   * @return
    */
   public boolean setZoomValue(final Number mag) {
     this.mToolBar.setZoomValue(mag);
@@ -1318,9 +1179,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   boolean setDefaultZoom() {
     return this.setZoomValue(Integer.valueOf(DEFAULT_ZOOM));
   }
@@ -1384,7 +1243,6 @@ public class SGDrawingWindow extends JFrame
    * Sets the properties.
    *
    * @param map a map of properties
-   * @return the result of setting properties
    */
   public SGPropertyResults setProperties(SGPropertyMap map) {
     return this.mActionHandler.setProperties(map);
@@ -1392,9 +1250,6 @@ public class SGDrawingWindow extends JFrame
 
   public void propertyChange(PropertyChangeEvent e) {
     Object source = e.getSource();
-    // String pName = e.getPropertyName();
-    // Object oldValue = e.getOldValue();
-    // Object newValue = e.getNewValue();
 
     this.onResized();
 
@@ -1444,11 +1299,7 @@ public class SGDrawingWindow extends JFrame
     this.onResized();
   }
 
-  /**
-   * Shows the property dialog of this window.
-   *
-   * @return true if succeeded
-   */
+  /** Shows the property dialog of this window. */
   boolean showPropertyDialog() {
 
     SGWindowDialog dg = (SGWindowDialog) this.getPropertyDialog();
@@ -1496,7 +1347,6 @@ public class SGDrawingWindow extends JFrame
    *
    * @param dx
    * @param dy
-   * @return
    */
   public boolean translateFocusedObjects(final int dx, final int dy) {
     ArrayList<SGFigure> list = this.getVisibleFigureList();
@@ -1618,10 +1468,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * @param flag
-   * @return
-   */
+  /** * @return */
   protected void setInsertToggleItemsUnselected() {
     this.mMenuBar.setInsertToggleItemsUnSelected();
     this.mToolBar.setInsertToggleItemsUnSelected();
@@ -1651,9 +1498,7 @@ public class SGDrawingWindow extends JFrame
 
   private transient Map<String, Boolean> mInsertFlagMap;
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isInsertFlagSelected() {
     Map<String, Boolean> map = this.mInsertFlagMap;
     Iterator<Boolean> itr = map.values().iterator();
@@ -1668,7 +1513,6 @@ public class SGDrawingWindow extends JFrame
 
   /**
    * @param command
-   * @return
    */
   public boolean getInsertFlag(final String command) {
     Object obj = this.mInsertFlagMap.get(command);
@@ -1687,58 +1531,42 @@ public class SGDrawingWindow extends JFrame
     this.mInsertFlagMap.put(command, Boolean.valueOf(b));
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean getLabelInsertionFlag() {
     return this.getInsertFlag(MENUBARCMD_INSERT_LABEL);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean getTimingLineInsertionFlag() {
     return this.getInsertFlag(MENUBARCMD_INSERT_TIMING_LINE);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean getAxisBreakSymbolInsertionFlag() {
     return this.getInsertFlag(MENUBARCMD_INSERT_AXIS_BREAK_SYMBOL);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean getSignificantDifferenceSymbolInsertionFlag() {
     return this.getInsertFlag(MENUBARCMD_INSERT_SIG_DIFF_SYMBOL);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean getRectangleInsertionFlag() {
     return this.getInsertFlag(MENUBARCMD_INSERT_RECTANGLE);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean getEllipseInsertionFlag() {
     return this.getInsertFlag(MENUBARCMD_INSERT_ELLIPSE);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean getArrowInsertionFlag() {
     return this.getInsertFlag(MENUBARCMD_INSERT_ARROW);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean getLineInsertionFlag() {
     return this.getInsertFlag(MENUBARCMD_INSERT_LINE);
   }
@@ -1748,9 +1576,7 @@ public class SGDrawingWindow extends JFrame
     this.updateFocusedObjectItem();
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected void updateFocusedObjectItem() {
     this.mObjectHelper.updateFocusedObjectItem();
   }
@@ -1885,11 +1711,11 @@ public class SGDrawingWindow extends JFrame
   /**
    * Exports this window as an image file.
    *
+   * @param bPrePostProcess the bPrePostProcess parameter
    * @param map the map of image properties
    * @param type the type of image
    * @param path the file path to export
    * @param silent true for the silent mode
-   * @return the result of setting properties
    */
   public SGPropertyResults exportAsImage(
       final SGPropertyMap map,
@@ -1936,7 +1762,6 @@ public class SGDrawingWindow extends JFrame
    * Move the focused objects to the front or back.
    *
    * @param toFront true to move to the front and false to move to the back
-   * @return true if succeeded
    */
   boolean moveFocusedObjects(final boolean toFront) {
     return this.mObjectHelper.moveFocusedObjects(toFront);
@@ -1956,7 +1781,6 @@ public class SGDrawingWindow extends JFrame
    * Move the focused objects to the front or back.
    *
    * @param num the number of levels to move the focused objects
-   * @return true if succeeded
    */
   boolean moveFocusedObjects(final int num) {
     return this.mObjectHelper.moveFocusedObjects(num);
@@ -1967,7 +1791,6 @@ public class SGDrawingWindow extends JFrame
    *
    * @param id the figure ID
    * @param toFront true to bring to front
-   * @return true if succeeded
    */
   public boolean moveFigureToEnd(final int id, final boolean toFront) {
     return this.mObjectHelper.moveFigureToEnd(id, toFront);
@@ -1978,7 +1801,6 @@ public class SGDrawingWindow extends JFrame
    *
    * @param id the figure ID
    * @param toFront true to bring forward
-   * @return true if succeeded
    */
   public boolean moveFigure(final int id, final boolean toFront) {
     return this.mObjectHelper.moveFigure(id, toFront);
@@ -1988,7 +1810,6 @@ public class SGDrawingWindow extends JFrame
    * Hide the figure with given ID.
    *
    * @param id - ID of figure to hide
-   * @return true:succeeded, false:failed
    */
   public boolean hideFigure(final int id) {
     SGFigure f = this.getFigure(id);
@@ -2068,16 +1889,13 @@ public class SGDrawingWindow extends JFrame
     this.repaintContentPane();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isLocked() {
     return this.mLockFigureFlag;
   }
 
   /**
    * @param b
-   * @return
    */
   public boolean setLocked(final boolean b) {
     this.mLockFigureFlag = b;
@@ -2085,9 +1903,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private void updateLockItems() {
     final boolean flag = this.isLocked();
 
@@ -2121,7 +1937,6 @@ public class SGDrawingWindow extends JFrame
 
   /**
    * @param idArray
-   * @return
    */
   public boolean setSelectedFigure(final int[] idArray) {
     for (int ii = 0; ii < idArray.length; ii++) {
@@ -2133,16 +1948,12 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return this.getInstanceDescription();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getInstanceDescription() {
     return "Window: " + this.mID;
   }
@@ -2184,7 +1995,7 @@ public class SGDrawingWindow extends JFrame
   /**
    * Sets the data plug-in manager.
    *
-   * @param l the data plug-in manager
+   * @param m the data plug-in manager
    */
   public static void setDataPluginManager(SGIPluginManager m) {
     mDataPluginManager = m;
@@ -2208,7 +2019,6 @@ public class SGDrawingWindow extends JFrame
 
   /**
    * @param sb
-   * @return
    */
   public boolean createTree(StringBuilder sb) {
     this.createTree(this, sb, 0);
@@ -2295,9 +2105,7 @@ public class SGDrawingWindow extends JFrame
   // About component bounds
   //
 
-  /**
-   * @return
-   */
+  /** */
   private Rectangle2D getPaperRectInClientRect() {
     Rectangle2D rect =
         new Rectangle2D.Float(
@@ -2310,28 +2118,20 @@ public class SGDrawingWindow extends JFrame
 
   private final transient Rectangle2D mTempPaperRect = new Rectangle2D.Float();
 
-  /**
-   * @return
-   */
+  /** */
   boolean recordPaperRect() {
     this.mTempPaperRect.setRect(this.getPaperRectInClientRect());
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isPaperBoundsChanged() {
     Rectangle temp = this.mTempPaperRect.getBounds();
     Rectangle present = this.getPaperRectInClientRect().getBounds();
     return !temp.equals(present);
   }
 
-  /**
-   * Align all figures.
-   *
-   * @return
-   */
+  /** Align all figures. */
   public boolean alignFiguresByGraphArea() {
     return SGDrawingWindowAlignmentUtility.alignFiguresByGraphArea(this);
   }
@@ -2350,7 +2150,7 @@ public class SGDrawingWindow extends JFrame
 
   /**
    * @param size
-   * @return
+   * @param isPortrait the isPortrait parameter
    */
   public boolean setPaperSizeDirectly(final MediaSize size, boolean isPortrait) {
     // record the previous size
@@ -2389,9 +2189,7 @@ public class SGDrawingWindow extends JFrame
     BOUNDING_BOX_MARGIN = ten / ratio;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean setBoundingBox() {
     return this.mGeometryHelper.setBoundingBox();
   }
@@ -2443,16 +2241,12 @@ public class SGDrawingWindow extends JFrame
     SGDrawingWindowUndoUtility.initUndoBuffer(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isUndoable() {
     return SGDrawingWindowUndoUtility.isUndoable(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isRedoable() {
     return SGDrawingWindowUndoUtility.isRedoable(this);
   }
@@ -2489,16 +2283,12 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public void setEnabled(boolean b) {
     super.setEnabled(b);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public void setWaitCursor(final boolean b) {
     final Cursor cur = (b) ? new Cursor(Cursor.WAIT_CURSOR) : new Cursor(Cursor.DEFAULT_CURSOR);
     RootPaneContainer root = (RootPaneContainer) this.getRootPane().getTopLevelAncestor();
@@ -2506,11 +2296,7 @@ public class SGDrawingWindow extends JFrame
     root.getGlassPane().setVisible(b);
   }
 
-  /**
-   * Returns a property dialog for the window.
-   *
-   * @return a property dialog
-   */
+  /** Returns a property dialog for the window. */
   public SGPropertyDialog getPropertyDialog() {
     if (this.mPropertyDialog == null) {
       this.mPropertyDialog = new SGWindowDialog(this, true);
@@ -2518,17 +2304,13 @@ public class SGDrawingWindow extends JFrame
     return this.mPropertyDialog;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean updateClientRect() {
     this.updateClientRectOld();
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   boolean updateClientRectOld() {
     return this.mGeometryHelper.updateClientRectOld();
   }
@@ -2570,9 +2352,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGProperties getProperties() {
     return SGDrawingWindowPropertyIO.collectWindowProperties(this);
   }
@@ -2582,9 +2362,7 @@ public class SGDrawingWindow extends JFrame
     return SGUtility.setVisibleList(this.mFigureList, list);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Rectangle2D getClientRect() {
     if (this.mClientRect == null) {
       return null;
@@ -2597,7 +2375,6 @@ public class SGDrawingWindow extends JFrame
    * @param y
    * @param w
    * @param h
-   * @return
    */
   public boolean setClientRect(final float x, final float y, final float w, final float h) {
     this.mClientRect.setRect(x, y, w, h);
@@ -2606,16 +2383,13 @@ public class SGDrawingWindow extends JFrame
 
   /**
    * @param rect
-   * @return
    */
   public boolean setClientRect(Rectangle2D rect) {
     this.mClientRect.setRect(rect);
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Rectangle2D getViewportBounds() {
     return SGDrawingWindowViewportUtility.getViewportBounds(this);
   }
@@ -2624,9 +2398,7 @@ public class SGDrawingWindow extends JFrame
     return SGDrawingWindowViewportUtility.getViewportBoundsInLayeredPane(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Rectangle2D getViewportBoundsInComponent() {
     return SGDrawingWindowViewportUtility.getViewportBoundsInComponent(this);
   }
@@ -2641,28 +2413,20 @@ public class SGDrawingWindow extends JFrame
     return this.setProperties(p);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean setMementoBackward() {
     if (this.mUndoManager.setMementoBackward() == false) {
       return false;
     }
 
-    // this.repaintAll();
-
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean setMementoForward() {
     if (this.mUndoManager.setMementoForward() == false) {
       return false;
     }
-
-    // this.repaintAll();
 
     return true;
   }
@@ -2683,7 +2447,6 @@ public class SGDrawingWindow extends JFrame
 
     // update the location and scroll values
     this.updateClientRect();
-    // this.setScrollBarValue();
 
     // update the graph rectangle of figures
     this.updateGraphRectOfAllFigures();
@@ -2714,22 +2477,17 @@ public class SGDrawingWindow extends JFrame
    * @param bUndo true to undo and false to redo
    * @param figure a figure to check
    * @param data a data to check
-   * @return true if both of given figure and data exists
    */
   public boolean existsOnUndo(final boolean bUndo, final SGFigure figure, final SGData data) {
     return SGDrawingWindowUndoUtility.existsOnUndo(this, bUndo, figure, data);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isChanged() {
     return SGDrawingWindowUndoUtility.isChanged(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isChangedRoot() {
     if (this.isChanged()) {
       return true;
@@ -2795,11 +2553,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * Delete all forward histories.
-   *
-   * @return true if succeeded
-   */
+  /** Delete all forward histories. */
   public boolean deleteForwardHistory() {
     return SGDrawingWindowUndoUtility.deleteForwardHistory(this);
   }
@@ -2844,7 +2598,6 @@ public class SGDrawingWindow extends JFrame
    * Exports this window as an image.
    *
    * @param silent silent mode flag
-   * @return true if succeeded
    */
   public boolean exportAsImage(final boolean silent) {
     return this.toImage(EXPORT, silent);
@@ -2860,7 +2613,6 @@ public class SGDrawingWindow extends JFrame
    * Preprocess for exporting this window as an image.
    *
    * @param silent true for the silent mode
-   * @return true if succeeded
    */
   public boolean startExport(final boolean silent) {
     final int width = (int) this.mClientPanel.getPaperWidth();
@@ -2884,7 +2636,6 @@ public class SGDrawingWindow extends JFrame
    * Post-process for exporting this window as an image.
    *
    * @param silent true for the silent mode
-   * @return true if succeeded
    */
   public boolean endExport(final boolean silent) {
     this.afterExport(this.mExportTarget, this.mExportInfo, silent);
@@ -2893,11 +2644,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * Returns the target component for exporting an image.
-   *
-   * @return the target component
-   */
+  /** Returns the target component for exporting an image. */
   public Component getExportTarget() {
     return this.mExportTarget;
   }
@@ -2906,7 +2653,6 @@ public class SGDrawingWindow extends JFrame
    * Prints this window as an image.
    *
    * @param silent silent mode flag
-   * @return true if succeeded
    */
   public boolean printImage(final boolean silent) {
     return this.toImage(PRINT, silent);
@@ -2924,10 +2670,7 @@ public class SGDrawingWindow extends JFrame
 
     float vValue;
 
-    /**
-     * @uml.property name="locationArray"
-     * @uml.associationEnd multiplicity="(0 -1)"
-     */
+    /** */
     SGTuple2f[] locationArray;
 
     List<SGFigure> visibleFigureList;
@@ -2984,11 +2727,7 @@ public class SGDrawingWindow extends JFrame
       }
     }
 
-    /**
-     * Returns the clipping flag.
-     *
-     * @return the clipping flag
-     */
+    /** Returns the clipping flag. */
     public boolean getClipFlag() {
       return this.mClipFlag;
     }
@@ -3036,7 +2775,7 @@ public class SGDrawingWindow extends JFrame
 
   /**
    * @param document
-   * @return
+   * @param params the params parameter
    */
   public Element createElementForFocusedFiguresInBoundingBox(
       final Document document, SGExportParameter params) {
@@ -3050,8 +2789,8 @@ public class SGDrawingWindow extends JFrame
   /**
    * Create a DOM Tree.
    *
+   * @param params the params parameter
    * @param document
-   * @return
    */
   public boolean createDOMTree(Document document, final SGExportParameter params) {
     return this.mExportHelper.createDOMTree(document, params);
@@ -3060,9 +2799,9 @@ public class SGDrawingWindow extends JFrame
   /**
    * Create a DOM Tree.
    *
+   * @param mode the mode parameter
+   * @param params the params parameter
    * @param document
-   * @param focused
-   * @return
    */
   public boolean createDOMTree(Document document, int mode, SGExportParameter params) {
     this.mPropertyFileCreationModeOfFigures = mode;
@@ -3099,9 +2838,7 @@ public class SGDrawingWindow extends JFrame
   /** Creation mode of the property file of focused figures. */
   int mPropertyFileCreationModeOfFigures;
 
-  /**
-   * @return
-   */
+  /** */
   boolean createPropertyFileFromFocusedFigures() {
     this.mPropertyFileCreationModeOfFigures = FOCUSED_FIGURES_IN_BOUNDING_BOX;
     this.notifyToListener(MENUBARCMD_SAVE_PROPERTY);
@@ -3165,7 +2902,7 @@ public class SGDrawingWindow extends JFrame
 
   /**
    * @param element
-   * @return
+   * @param params the params parameter
    */
   public boolean createElementForFocusedFiguresInBoundingBox(
       final Element element, SGExportParameter params) {
@@ -3359,7 +3096,6 @@ public class SGDrawingWindow extends JFrame
    *
    * @param figure a figure that an event generated
    * @param element an figure element that an event generated
-   * @return true if succeeded
    */
   boolean showPropertyDialogForSelectedObjects(
       final SGFigure figure, final SGIFigureElement element) {
@@ -3388,19 +3124,12 @@ public class SGDrawingWindow extends JFrame
 
   // Returns the list of property dialogs.
 
-  /**
-   * @param dg
-   * @param l - a property dialog observer
-   */
+  /** */
 
   // true if modal dialog is shown
   private boolean mModalDialogShownFlag = false;
 
-  /**
-   * Returns whether a modal dialog is shown.
-   *
-   * @return true if a modal dialog is shown
-   */
+  /** Returns whether a modal dialog is shown. */
   public boolean isModalDialogShown() {
     return this.mModalDialogShownFlag;
   }
@@ -3414,11 +3143,7 @@ public class SGDrawingWindow extends JFrame
     this.mModalDialogShownFlag = b;
   }
 
-  /**
-   * Closes the text field.
-   *
-   * @return true if succeeded
-   */
+  /** Closes the text field. */
   public boolean closeTextField() {
     List<SGFigure> list = this.getVisibleFigureList();
     for (int ii = 0; ii < list.size(); ii++) {
@@ -3430,12 +3155,7 @@ public class SGDrawingWindow extends JFrame
     return true;
   }
 
-  /**
-   * Shows a property dialog.
-   *
-   * @param dg the property dialog to be shown
-   * @param lList a list of property dialog observer
-   */
+  /** Shows a property dialog. */
   private int mSavedListIndex = -1;
 
   /**
@@ -3451,11 +3171,7 @@ public class SGDrawingWindow extends JFrame
     SGDrawingWindowUndoUtility.initSavedHistory(this);
   }
 
-  /**
-   * Whether it is guaranteed that no information is lost by discarding this window.
-   *
-   * @return
-   */
+  /** Whether it is guaranteed that no information is lost by discarding this window. */
   public boolean isSaved() {
     return SGDrawingWindowUndoUtility.isSaved(this);
   }
@@ -3879,11 +3595,7 @@ public class SGDrawingWindow extends JFrame
     this.repaintContentPane();
   }
 
-  /**
-   * Returns the background image.
-   *
-   * @return the background image
-   */
+  /** Returns the background image. */
   public BackgroundImage getBackgroundImage() {
     return this.mBackgroundImage;
   }
@@ -3912,20 +3624,12 @@ public class SGDrawingWindow extends JFrame
       this.mByteArray = Arrays.copyOf(b, b.length);
     }
 
-    /**
-     * Returns the extension of image file.
-     *
-     * @return the extension of image file
-     */
+    /** Returns the extension of image file. */
     public String getExtension() {
       return this.mExtension;
     }
 
-    /**
-     * Returns the byte array of the image.
-     *
-     * @return the byte array of the image
-     */
+    /** Returns the byte array of the image. */
     public byte[] getByteArray() {
       return this.mByteArray;
     }
@@ -3937,29 +3641,17 @@ public class SGDrawingWindow extends JFrame
     }
   }
 
-  /**
-   * Creates and returns the map of properties for the property file.
-   *
-   * @return the map of properties
-   */
+  /** Creates and returns the map of properties for the property file. */
   public SGPropertyMap getPropertyFileMap(SGExportParameter params) {
     return SGDrawingWindowPropertyIO.getPropertyFileMap(this);
   }
 
-  /**
-   * Creates and returns the map of properties for the commands.
-   *
-   * @return the map of properties
-   */
+  /** Creates and returns the map of properties for the commands. */
   public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
     return SGDrawingWindowPropertyIO.getCommandPropertyMap(this, params);
   }
 
-  /**
-   * Returns a text string of the commands.
-   *
-   * @return a text string of the commands
-   */
+  /** Returns a text string of the commands. */
   public String getCommandString(SGExportParameter params) {
     return this.mExportHelper.getCommandString(params);
   }

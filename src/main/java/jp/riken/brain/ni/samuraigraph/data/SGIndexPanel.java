@@ -310,38 +310,22 @@ public class SGIndexPanel extends javax.swing.JPanel
     return SGInteger.parse(str, this.mAliasMap);
   }
 
-  /**
-   * Returns the start index.
-   *
-   * @return the start index
-   */
+  /** Returns the start index. */
   public SGInteger getStart() {
     return this.getInteger(this.mStartTextField);
   }
 
-  /**
-   * Returns the end index.
-   *
-   * @return the end index
-   */
+  /** Returns the end index. */
   public SGInteger getEnd() {
     return this.getInteger(this.mEndTextField);
   }
 
-  /**
-   * Returns the step value.
-   *
-   * @return the step value
-   */
+  /** Returns the step value. */
   public SGInteger getStep() {
     return this.getInteger(this.mStepTextField);
   }
 
-  /**
-   * Returns the indices.
-   *
-   * @return the indices
-   */
+  /** Returns the indices. */
   public SGIntegerSeriesSet getIndices() {
     SGIntegerSeriesSet indices = null;
     if (this.isIndexSelected()) {
@@ -359,11 +343,7 @@ public class SGIndexPanel extends javax.swing.JPanel
     return indices;
   }
 
-  /**
-   * Returns whether input values are valid.
-   *
-   * @return true if input values are valid
-   */
+  /** Returns whether input values are valid. */
   public boolean hasValidInput() {
     String text = this.mIndexTextField.getText();
     SGIntegerSeriesSet stride = SGIntegerSeriesSet.parse(text, this.mAliasMap);
@@ -534,11 +514,7 @@ public class SGIndexPanel extends javax.swing.JPanel
     }
   }
 
-  /**
-   * Returns the length of index array.
-   *
-   * @return the length of index array
-   */
+  /** Returns the length of index array. */
   public int getLength() {
     return this.mLength;
   }

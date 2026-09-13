@@ -196,7 +196,7 @@ public class SGArchiveFileCreator extends SGFileHandler
   }
 
   /**
-   * @param wnd
+   * @param parent
    * @return
    */
   public ArchiveFile getArchiveFileFromFileChooser(final Component parent) throws IOException {

@@ -70,11 +70,7 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
   /** The color map for lines. */
   private String mLineColorMapName = SGLineStyleColorMapManager.COLOR_MAP_NAME_HUE_GRADATION;
 
-  /**
-   * Returns the map of line style.
-   *
-   * @return the map of line style
-   */
+  /** Returns the map of line style. */
   @Override
   public Map<Integer, SGLineStyle> getLineStyleMap() {
     Map<Integer, SGLineStyle> lineStyleMap = new TreeMap<Integer, SGLineStyle>();
@@ -91,7 +87,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    *
    * @param style the line style to set
    * @param index array index of child data object
-   * @return true if succeeded
    */
   @Override
   public boolean setLineStyle(final SGLineStyle style, final int index) {
@@ -114,7 +109,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the line styles to the child data object.
    *
    * @param styleList list of line styles
-   * @return true if succeeded
    */
   @Override
   public boolean setLineStyle(final List<SGLineStyle> styleList) {
@@ -163,21 +157,13 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
     return array;
   }
 
-  /**
-   * Returns the number of child data objects.
-   *
-   * @return the number of child data objects
-   */
+  /** Returns the number of child data objects. */
   @Override
   public int getChildNumber() {
     return this.mElementGroupSetList.size();
   }
 
-  /**
-   * Returns the list of child objects.
-   *
-   * @return the list of child objects
-   */
+  /** Returns the list of child objects. */
   @Override
   public List<String> getChildNameList() {
     SGISXYTypeMultipleData data = (SGISXYTypeMultipleData) this.mData;
@@ -187,6 +173,7 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
   /**
    * Builds the legend object with a given data object.
    *
+   * @param legend the legend parameter
    * @param data a data object
    */
   protected ElementGroupSetInLegendMultipleSXY(final SGFigureElementLegend legend, SGData data) {
@@ -206,11 +193,7 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
     }
   }
 
-  /**
-   * Returns the first element group set.
-   *
-   * @return the first element group set
-   */
+  /** Returns the first element group set. */
   public SGIElementGroupSetForData getFirst() {
     if (this.mElementGroupSetList.size() == 0) {
       return null;
@@ -334,7 +317,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the x-axis.
    *
    * @param axis the x-axis
-   * @return true if succeeded
    */
   public boolean setXAxis(final SGAxis axis) {
     if (super.setXAxis(axis) == false) {
@@ -353,7 +335,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the y-axis.
    *
    * @param axis the y-axis
-   * @return true if succeeded
    */
   public boolean setYAxis(final SGAxis axis) {
     if (super.setYAxis(axis) == false) {
@@ -372,7 +353,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the x-axis location.
    *
    * @param location the location of the x-axis
-   * @return true if succeeded
    */
   public boolean setXAxisLocation(final int location) {
     if (super.setXAxisLocation(location) == false) {
@@ -391,7 +371,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the y-axis location.
    *
    * @param location the location of the y-axis
-   * @return true if succeeded
    */
   public boolean setYAxisLocation(final int location) {
     if (super.setYAxisLocation(location) == false) {
@@ -410,7 +389,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the name to this group set.
    *
    * @param name the name to set to this group set
-   * @return true if succeeded
    */
   public boolean setName(final String name) {
     if (super.setName(name) == false) {
@@ -429,7 +407,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the flag whether this data is visible in the legend
    *
    * @param b true to set visible
-   * @return true if succeeded
    */
   public boolean setVisibleInLegend(final boolean b) {
     if (super.setVisibleInLegend(b) == false) {
@@ -491,11 +468,7 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
     return SGMultipleSXYUtility.setLineColor(this, cl);
   }
 
-  /**
-   * Sets whether the lines connect all effective points.
-   *
-   * @return true if succeeded
-   */
+  /** Sets whether the lines connect all effective points. */
   @Override
   public boolean setLineConnectingAll(final boolean b) {
     return SGMultipleSXYUtility.setLineConnectingAll(this.getLineGroupsIgnoreNull(), b);
@@ -717,7 +690,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Returns whether this group set "contains" the given group set.
    *
    * @param gs the group set
-   * @return true if this group set "contains" the given group set
    */
   public boolean contains(SGElementGroupSetForData gs) {
     if (super.contains(gs)) {
@@ -736,8 +708,8 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the information of data columns. This method is overridden to update the child data
    * objects.
    *
+   * @param message the message parameter
    * @param columns information of data columns
-   * @return true if succeeded
    */
   public boolean setColumnInfo(SGDataColumnInfo[] columns, String message) {
     if (!super.setColumnInfo(columns, message)) {
@@ -753,7 +725,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the data.
    *
    * @param data a data object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (super.setData(data) == false) {
@@ -776,11 +747,7 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
     return true;
   }
 
-  /**
-   * Updates the line style of child objects.
-   *
-   * @return true if succeeded
-   */
+  /** Updates the line style of child objects. */
   @Override
   public boolean initChildLineStyle() {
     final int dataNum = this.mElementGroupSetList.size();
@@ -817,7 +784,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the style of drawing elements.
    *
    * @param styleList the list of style
-   * @return true if succeeded
    */
   @Override
   public boolean setStyle(List<SGStyle> styleList) {
@@ -843,11 +809,7 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
     return true;
   }
 
-  /**
-   * Returns the style of drawing elements.
-   *
-   * @return the list of style
-   */
+  /** Returns the style of drawing elements. */
   @Override
   public List<SGStyle> getStyle() {
     Map<Integer, SGLineStyle> styleMap = this.getLineStyleMap();
@@ -856,11 +818,7 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
 
   private boolean mLineColorAutoAssigned = false;
 
-  /**
-   * Returns whether line color is automatically assigned.
-   *
-   * @return true if line color is automatically assigned
-   */
+  /** Returns whether line color is automatically assigned. */
   @Override
   public boolean isLineColorAutoAssigned() {
     return this.mLineColorAutoAssigned;
@@ -876,21 +834,13 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
     this.mLineColorAutoAssigned = b;
   }
 
-  /**
-   * Returns the color map manager for lines.
-   *
-   * @return the color map manager for lines
-   */
+  /** Returns the color map manager for lines. */
   @Override
   public SGColorMapManager getLineColorMapManager() {
     return this.mLineColorMapManager;
   }
 
-  /**
-   * Returns the name of the color map for lines.
-   *
-   * @return the name of the color map for lines
-   */
+  /** Returns the name of the color map for lines. */
   @Override
   public String getLineColorMapName() {
     return this.mLineColorMapName;
@@ -900,7 +850,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the color map for lines.
    *
    * @param name name of the map to set
-   * @return true if succeeded
    */
   @Override
   public boolean setLineColorMapName(String name) {
@@ -911,21 +860,13 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
     return true;
   }
 
-  /**
-   * Returns the color map for lines.
-   *
-   * @return the color map for lines
-   */
+  /** Returns the color map for lines. */
   @Override
   public SGColorMap getLineColorMap() {
     return this.mLineColorMapManager.getColorMap(this.mLineColorMapName);
   }
 
-  /**
-   * Returns a map of the properties of line color maps.
-   *
-   * @return a map of the properties of line color maps
-   */
+  /** Returns a map of the properties of line color maps. */
   @Override
   public Map<String, SGProperties> getLineColorMapProperties() {
     return this.mLineColorMapManager.getColorMapProperties();
@@ -935,7 +876,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Sets the properties of line color map.
    *
    * @param colorMapProperties the map of properties of color maps
-   * @return true if succeeded
    */
   @Override
   public boolean setLineColorMapProperties(Map<String, SGProperties> colorMapProperties) {
@@ -972,7 +912,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    * Returns the line style at given index.
    *
    * @param index index of child object
-   * @return true if succeeded
    */
   @Override
   public SGLineStyle getLineStyle(final int index) {
@@ -989,7 +928,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    *
    * @param map a map of properties
    * @param childId ID of a child data object
-   * @return the result of setting properties
    */
   @Override
   public SGPropertyResults setProperties(SGPropertyMap map, final int childId) {
@@ -1002,7 +940,6 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
    *
    * @param colorMapName the name of color map
    * @param map a map of properties
-   * @return the result of setting properties
    */
   @Override
   public SGPropertyResults setColorMapProperties(final String colorMapName, SGPropertyMap map) {
@@ -1010,11 +947,7 @@ class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY
     return null;
   }
 
-  /**
-   * Updates the child objects.
-   *
-   * @return true if succeeded
-   */
+  /** Updates the child objects. */
   @Override
   public boolean updateChild() {
     if (!legend.updateChildGroupSet(this)) {

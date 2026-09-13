@@ -63,11 +63,7 @@ public class SGComponentGroup implements SGIDisposable {
     }
   }
 
-  /**
-   * Returns whether the components are enabled.
-   *
-   * @return true if enabled
-   */
+  /** Returns whether the components are enabled. */
   public boolean isEnabled() {
     return this.mEnableFlag;
   }

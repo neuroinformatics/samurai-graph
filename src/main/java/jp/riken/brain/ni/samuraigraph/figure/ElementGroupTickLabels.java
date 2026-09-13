@@ -54,14 +54,10 @@ class ElementGroupTickLabels extends SGElementGroupTickLabelForData implements I
     return 0.0f;
   }
 
-  // private Rectangle2D mBoundsRect = new Rectangle2D.Float();
-
   /**
    * @param rect
    */
-  public void setDataElementBounds(final Rectangle2D rect) {
-    // this.mBoundsRect = rect;
-  }
+  public void setDataElementBounds(final Rectangle2D rect) {}
 
   /**
    * Returns the number of points of this element group.

@@ -26,11 +26,7 @@ public class SGExportParameter {
     this.mType = type;
   }
 
-  /**
-   * Returns the type.
-   *
-   * @return the type
-   */
+  /** Returns the type. */
   public OPERATION getType() {
     return this.mType;
   }

@@ -146,7 +146,6 @@ public class SGAttributePanel extends SGTableSelectionPanel {
    * Returns a text string about selected row.
    *
    * @param row the row index
-   * @return a text string about selected row
    */
   public String getRowText(final int row) {
     TableColumnModel model = this.mTable.getColumnModel();
@@ -163,7 +162,6 @@ public class SGAttributePanel extends SGTableSelectionPanel {
    * Returns the name of selected row.
    *
    * @param row the row index
-   * @return the name of selected row
    */
   public String getRowName(final int row) {
     TableColumnModel model = this.mTable.getColumnModel();

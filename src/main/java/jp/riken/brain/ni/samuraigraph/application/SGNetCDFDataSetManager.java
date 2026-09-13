@@ -731,6 +731,8 @@ class SGNetCDFDataSetManager implements SGIArchiveFileConstants, SGINetCDFConsta
    * @param wnd
    * @param elWnd element of the window
    * @return
+   * @param versionNumber the versionNumber parameter
+   * @param ncfile the ncfile parameter
    */
   private boolean setWindowProperty(
       final SGDrawingWindow wnd,

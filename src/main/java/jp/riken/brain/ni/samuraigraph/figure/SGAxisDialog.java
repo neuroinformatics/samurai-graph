@@ -70,7 +70,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
   protected void setupTab() {
     this.mTabbedPane.addTab("Axis Line", this.mAxisLineTabPanel);
     this.mTabbedPane.addTab("Title", this.mTitleTabPanel);
-    //    	this.mTabbedPane.addTab("Scale", this.mScaleTabPanel);
     this.mTabbedPane.addTab("Number", this.mNumberTabPanel);
     this.mTabbedPane.addTab("Tick Mark", this.mTickMarkTabPanel);
   }
@@ -1233,8 +1232,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
 
   private JRadioButton mScaleNoSelectedRadioButton = new JRadioButton();
 
-  //    private JRadioButton mDirectionNoSelectedRadioButton = new JRadioButton();
-
   private SGComponentGroup mAxisLineComponentGroup = new SGComponentGroup();
 
   private SGComponentGroup mTitleComponentGroup = new SGComponentGroup();
@@ -1607,8 +1604,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     dateComponents.add(compMap.get(this.mStepDateButton));
 
     List<SGComponentGroupElement> noDateComponents = new ArrayList<SGComponentGroupElement>();
-    //        noDateComponents.add(compMap.get(this.mLinearRadioButton));
-    //        noDateComponents.add(compMap.get(this.mLogRadioButton));
     noDateComponents.add(compMap.get(this.mIntegerCheckBox));
     noDateComponents.add(compMap.get(this.mExponentCheckBox));
     noDateComponents.add(compMap.get(this.mExponentBaseLabel));
@@ -1680,47 +1675,27 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
   // an error message for zero step value
   static final String MSG_STEP_ERROR = "Zero value is set to the step value.";
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }
 
-  /**
-   * Returns the OK button.
-   *
-   * @return the OK button
-   */
+  /** Returns the OK button. */
   protected JButton getOKButton() {
     return this.mOKButton;
   }
 
-  /**
-   * Returns the cancel button.
-   *
-   * @return the cancel button
-   */
+  /** Returns the cancel button. */
   protected JButton getCancelButton() {
     return this.mCancelButton;
   }
 
-  /**
-   * Returns the preview button.
-   *
-   * @return the preview button
-   */
+  /** Returns the preview button. */
   protected JButton getPreviewButton() {
     return this.mPreviewButton;
   }
 
-  /**
-   * Returns a list of color selection buttons.
-   *
-   * @return a list of color selection buttons
-   */
+  /** Returns a list of color selection buttons. */
   @Override
   public List<SGColorSelectionButton> getColorSelectionButtonsList() {
     List<SGColorSelectionButton> list = new ArrayList<SGColorSelectionButton>();
@@ -1731,11 +1706,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     return list;
   }
 
-  /**
-   * Returns a list of text field components.
-   *
-   * @return a list of text field components
-   */
+  /** Returns a list of text field components. */
   @Override
   public List<JTextField> getTextFieldComponentsList() {
     List<JTextField> list =
@@ -1745,11 +1716,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     return list;
   }
 
-  /**
-   * Returns a list of text fields components to input axis number.
-   *
-   * @return a list of text field components to input axis number
-   */
+  /** Returns a list of text fields components to input axis number. */
   @Override
   public List<SGTextField> getAxisNumberTextFieldList() {
     List<SGTextField> list = new ArrayList<SGTextField>();
@@ -1768,11 +1735,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     return list;
   }
 
-  /**
-   * Returns a list of spinner components.
-   *
-   * @return a list of spinner components
-   */
+  /** Returns a list of spinner components. */
   @Override
   public List<SGSpinner> getSpinnerList() {
     List<SGSpinner> list = new ArrayList<SGSpinner>();
@@ -1794,11 +1757,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     return list;
   }
 
-  /**
-   * Overrode this method to check the input values.
-   *
-   * @return true if all input values are valid
-   */
+  /** Overrode this method to check the input values. */
   protected boolean hasValidInputValues() {
     boolean valid = true;
     if (super.hasValidInputValues() == false) {
@@ -2031,29 +1990,17 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     return this.mNumberAngleSpinner.getNumber();
   }
 
-  /**
-   * Returns the shift of axis line.
-   *
-   * @return the shift of axis line
-   */
+  /** Returns the shift of axis line. */
   public Number getShift() {
     return this.mAxisShiftSpinner.getNumber();
   }
 
-  /**
-   * Returns the number of minor tick marks.
-   *
-   * @return the number of minor tick marks
-   */
+  /** Returns the number of minor tick marks. */
   public Number getMinorTickMarkNumber() {
     return this.mMinorTickMarkNumberSpinner.getNumber();
   }
 
-  /**
-   * Returns the length of minor tick marks.
-   *
-   * @return the length of minor tick marks
-   */
+  /** Returns the length of minor tick marks. */
   public Number getMinorTickMarkLength() {
     return this.mMinorTickMarkLengthSpinner.getNumber();
   }
@@ -2202,15 +2149,12 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
     if (b != null) {
       flag = b.booleanValue();
     }
-    //        this.mBaseTextField.setEditable(!flag);
-    //        this.mStepTextField.setEditable(!flag);
     this.mAutoScaleComponentGroup.setEnabled(!flag);
     return true;
   }
 
   /**
    * @param b
-   * @return
    */
   public boolean setExponentVisible(final Boolean b) {
     this.mExponentCheckBox.setSelected(b);
@@ -2224,7 +2168,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
 
   /**
    * @param value
-   * @return
    */
   public boolean setExponentValue(final Object value) {
     return SGUtility.setIntValue(this.mExponentSpinner, value);
@@ -2242,7 +2185,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the angle of the numbers.
    *
    * @param value the value to set
-   * @return true if succeeded
    */
   public boolean setNumberAngle(final Object value) {
     return SGUtility.setValue(this.mNumberAngleSpinner, value);
@@ -2252,7 +2194,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the shift of axis line.
    *
    * @param value the value to set
-   * @return true if succeeded
    */
   public boolean setShift(final Object value) {
     return SGUtility.setValue(this.mAxisShiftSpinner, value);
@@ -2262,7 +2203,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the number of minor tick marks.
    *
    * @param value the value to set
-   * @return true if succeeded
    */
   public boolean setMinorTickMarkNumber(final Object value) {
     return SGUtility.setIntValue(this.mMinorTickMarkNumberSpinner, value);
@@ -2272,7 +2212,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the length of minor tick marks.
    *
    * @param value the value to set
-   * @return true if succeeded
    */
   public boolean setMinorTickMarkLength(final Object value) {
     return SGUtility.setValue(this.mMinorTickMarkLengthSpinner, value);
@@ -2282,15 +2221,12 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the axis line width.
    *
    * @param value the value to set
-   * @return true if succeeded
    */
   public boolean setAxisLineWidth(final Object value) {
     return SGUtility.setValue(this.mAxisLineWidthSpinner, value);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean setDialogProperty() {
 
     List<SGIPropertyDialogObserver> list = this.mPropertyDialogObserverList;
@@ -2580,7 +2516,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the font name of title.
    *
    * @param name the font name to set
-   * @return true if succeeded
    */
   public boolean setTitleFontName(final String name) {
     final String fName = SGUtility.findFontFamilyName(name);
@@ -2592,7 +2527,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the font size of title.
    *
    * @param value font size to set
-   * @return true if succeeded
    */
   public boolean setTitleFontSize(final Object value) {
     return this.setValue(this.mTitleFontSizeSpinner, value);
@@ -2602,7 +2536,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the font style of title.
    *
    * @param style font style to set
-   * @return true if succeeded
    */
   public boolean setTitleFontStyle(final Integer style) {
     String styleName = null;
@@ -2617,7 +2550,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the color of title.
    *
    * @param cl the color to set
-   * @return true if succeeded
    */
   public boolean setTitleFontColor(final Color cl) {
     this.mTitleFontColorButton.setColor(cl);
@@ -2628,7 +2560,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the font name of numbers.
    *
    * @param name the font name to set
-   * @return true if succeeded
    */
   public boolean setNumberFontName(final String name) {
     final String fName = SGUtility.findFontFamilyName(name);
@@ -2640,7 +2571,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the font size of numbers.
    *
    * @param value font size to set
-   * @return true if succeeded
    */
   public boolean setNumberFontSize(final Object value) {
     return this.setValue(this.mNumberFontSizeSpinner, value);
@@ -2650,7 +2580,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the font style of numbers.
    *
    * @param style font style to set
-   * @return true if succeeded
    */
   public boolean setNumberFontStyle(final Integer style) {
     String styleName = null;
@@ -2665,7 +2594,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the color of numbers.
    *
    * @param cl the color to set
-   * @return true if succeeded
    */
   public boolean setNumberFontColor(final Color cl) {
     this.mNumberFontColorButton.setColor(cl);
@@ -2676,7 +2604,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the width of tick marks.
    *
    * @param value font size to set
-   * @return true if succeeded
    */
   public boolean setTickMarkWidth(final Object value) {
     return this.setValue(this.mTickMarkWidthSpinner, value);
@@ -2686,7 +2613,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Sets the length of tick marks.
    *
    * @param value font size to set
-   * @return true if succeeded
    */
   public boolean setTickMarkLength(final Object value) {
     return this.setValue(this.mTickMarkLengthSpinner, value);
@@ -2767,7 +2693,6 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
    * Set properties to all listeners.
    *
    * @param l
-   * @return
    */
   public boolean setPropertiesToObserver(SGIPropertyDialogObserver l) {
 
@@ -3139,7 +3064,7 @@ public class SGAxisDialog extends SGPropertyDialog implements SGIAxisConstants, 
   /**
    * Sets the visibility of the components related to the date mode.
    *
-   * @param visible true to set visible
+   * @param b true to set visible
    */
   protected void setDateComponentsVisible(final boolean b) {
     this.mDateModeCheckBox.setVisible(b);

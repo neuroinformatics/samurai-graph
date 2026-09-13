@@ -12,6 +12,7 @@ public class SGSamplingDataColumn extends SGNumberDataColumn {
   /**
    * Builds a column with given sampling rate.
    *
+   * @param length the length parameter
    * @param samplingRate the sampling rate
    */
   public SGSamplingDataColumn(final double samplingRate, final int length) {

@@ -377,22 +377,6 @@ public class SGApplicationUtility
       aColInfoList.add(samplingRateColumnInfo);
     }
 
-    //		// create a column for the tick label of the date
-    //		List<Integer> dateIndexList = new ArrayList<Integer>();
-    //		for (int ii = 0; ii < colInfoArray.length; ii++) {
-    //			final String valueType = colInfoArray[ii].getValueType();
-    //			if (VALUE_TYPE_DATE.equals(valueType)) {
-    //				dateIndexList.add(Integer.valueOf(ii));
-    //			}
-    //		}
-    //		for (int ii = 0; ii < dateIndexList.size(); ii++) {
-    //			Integer index = dateIndexList.get(ii);
-    //			String title = "Labels for date column of No." + (index + 1);
-    //			SGDataColumnInfo dateColumnInfo = new SGDataColumnInfo(title,
-    //					SGIDataColumnTypeConstants.VALUE_TYPE_TEXT);
-    //			aColInfoList.add(dateColumnInfo);
-    //		}
-
     // create an array of columns
     SGDataColumnInfo[] addInfoArray = new SGDataColumnInfo[aColInfoList.size()];
     addInfoArray = aColInfoList.toArray(addInfoArray);
@@ -561,9 +545,7 @@ public class SGApplicationUtility
         }
 
         if (versionNumber != null && mode == LOAD_PROPERTIES_FROM_DATA_SET) {
-          // if version of the property file is older than 2.0.0
           if ("".equals(versionNumber)) {
-            // if columns contains that of error bars, swap them
             // because old versions of Samurai Graph exports data columns
             // into a data set file in reverse order
             int lowerIndex = -1;

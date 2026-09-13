@@ -56,7 +56,6 @@ public class SGDataSourceObserver {
     }
     Set<SGIData> dataSet = this.mDataMap.get(source);
     if (dataSet == null) {
-      // if data list does not exist, create a new list
       Set<SGIData> set = new HashSet<SGIData>();
       set.add(data);
       this.mDataMap.put(source, set);
@@ -80,7 +79,6 @@ public class SGDataSourceObserver {
     if (dataSet != null) {
       dataSet.remove(data);
 
-      // if the list becomes empty, disposes of the data source
       if (dataSet.size() == 0) {
         this.mDataMap.remove(source);
         source.dispose();

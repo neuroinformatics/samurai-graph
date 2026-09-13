@@ -36,11 +36,7 @@ public abstract class SGDataSetupDialog extends SGDataDialog {
   /** An array of selected data column information. */
   protected SGDataColumnInfo[] mDataColumnInfo = null;
 
-  /**
-   * Returns an array of data column information.
-   *
-   * @return an array of data column information
-   */
+  /** Returns an array of data column information. */
   public SGDataColumnInfo[] getDataColumnInfo() {
     if (this.mDataColumnInfo == null) {
       return null;

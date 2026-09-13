@@ -566,7 +566,6 @@ public class SGTimingLineDialog extends SGPropertyDialog
     this.setColor(color);
 
     this.setAnchored(anchored);
-    //        this.setColorButtonBorder(true);
 
     return true;
   }

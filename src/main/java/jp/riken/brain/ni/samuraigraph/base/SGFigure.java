@@ -136,7 +136,6 @@ public abstract class SGFigure
    */
   public SGFigure(final SGDrawingWindow wnd) {
     super();
-    // this.setWindow(wnd);
     this.mWnd = wnd;
     this.mComponent = wnd.getFigurePanel();
     this.setBackgroundColor(DEFAULT_FIGURE_BACKGROUND_COLOR);
@@ -144,16 +143,12 @@ public abstract class SGFigure
     this.mUndoManager = new SGUndoManager(this);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String toString() {
     return "SGFigure:" + this.getID();
   }
 
-  /**
-   * @return
-   */
+  /** */
   private boolean mVisibleFlag = true;
 
   public boolean isVisible() {
@@ -220,7 +215,6 @@ public abstract class SGFigure
    * @param r
    * @param g
    * @param b
-   * @return
    */
   public boolean setBackgroundColor(final String r, final String g, final String b) {
     final Color cl = SGUtilityText.getColor(r, g, b);
@@ -245,112 +239,9 @@ public abstract class SGFigure
     return this.mWnd;
   }
 
-  // /**
-  // *
-  // * @return
-  // */
-  // public float getSpaceAxisLineAndNumber() {
-  // return this.getAxisElement().getSpaceAxisLineAndNumber();
-  // }
-  //
-  // /**
-  // *
-  // */
-  // public float getSpaceAxisLineAndNumber(final String unit) {
-  // final float space = this.getSpaceAxisLineAndNumber();
-  // return (float) SGUtilityText.convertFromPoint(space, unit);
-  // }
-  //
-  // /**
-  // *
-  // * @return
-  // */
-  // public float getSpaceNumberAndTitle() {
-  // return this.getAxisElement().getSpaceNumberAndTitle();
-  // }
-  //
-  // /**
-  // *
-  // */
-  // public float getSpaceNumberAndTitle(final String unit) {
-  // final float space = this.getSpaceNumberAndTitle();
-  // return (float) SGUtilityText.convertFromPoint(space, unit);
-  // }
-  //
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean setSpaceAxisLineAndNumber(final float space) {
-  // final SGIFigureElementAxis aElement = this.getAxisElement();
-  // final float s = aElement.getSpaceAxisLineAndNumber();
-  // if (space != s) {
-  // aElement.setSpaceAxisLineAndNumber(space);
-  // aElement.setChanged(true);
-  // this.updateGraphRect();
-  // }
-  // return true;
-  // }
-  //
-  // /**
-  // * Sets the space between the axis lne and the axis numbers.
-  // *
-  // * @param value
-  // * a value to set to the space
-  // * @param unit
-  // * an unit of a given value
-  // * @return true if succeeded
-  // */
-  // public boolean setSpaceAxisLineAndNumber(final float value,
-  // final String unit) {
-  // final Float sPt = this.calcFigureScale(value, unit, FIGURE_SPACE_UNIT,
-  // FIGURE_SPACE_TO_SCALE_MIN, FIGURE_SPACE_TO_SCALE_MAX);
-  // if (sPt == null) {
-  // return false;
-  // }
-  // if (this.equalLength(this.getSpaceAxisLineAndNumber(), sPt)) {
-  // return true;
-  // }
-  // return this.setSpaceAxisLineAndNumber(sPt);
-  // }
-  //
-  // /**
-  // *
-  // * @return
-  // */
-  // public boolean setSpaceNumberAndTitle(final float space) {
-  // final SGIFigureElementAxis aElement = this.getAxisElement();
-  // final float s = aElement.getSpaceNumberAndTitle();
-  // if (space != s) {
-  // aElement.setSpaceNumberAndTitle(space);
-  // aElement.setChanged(true);
-  // this.updateGraphRect();
-  // }
-  // return true;
-  // }
-  //
-  // /**
-  // * Sets the space between the axis number and the axis title.
-  // *
-  // * @param value
-  // * a value to set to the space
-  // * @param unit
-  // * an unit of a given value
-  // * @return true if succeeded
-  // */
-  // public boolean setSpaceNumberAndTitle(final float value, final String unit) {
-  // final Float sPt = this.calcFigureScale(value, unit, FIGURE_SPACE_UNIT,
-  // FIGURE_SPACE_TO_TITLE_MIN, FIGURE_SPACE_TO_TITLE_MAX);
-  // if (sPt == null) {
-  // return false;
-  // }
-  // if (this.equalLength(this.getSpaceNumberAndTitle(), sPt)) {
-  // return true;
-  // }
-  // return this.setSpaceNumberAndTitle(sPt);
-  // }
-
-  /** */
+  /**
+   * @param flag the flag parameter
+   */
   public boolean setLegendVisible(boolean flag) {
     final SGIFigureElementLegend lElement = this.getLegendElement();
     final boolean v = lElement.isVisible();
@@ -371,11 +262,7 @@ public abstract class SGFigure
   private final Map<Integer, SGIFigureElement> mFigureElementMap =
       new TreeMap<Integer, SGIFigureElement>();
 
-  /**
-   * Get the array of SGIFigureElement objects.
-   *
-   * @return the array of SGIFigureElement objects
-   */
+  /** Get the array of SGIFigureElement objects. */
   public SGIFigureElement[] getIFigureElementArray() {
     ArrayList<SGIFigureElement> list =
         new ArrayList<SGIFigureElement>(this.mFigureElementMap.values());
@@ -383,17 +270,9 @@ public abstract class SGFigure
     return array;
   }
 
-  /**
-   * Returns a list of child nodes.
-   *
-   * @return a list of child nodes
-   */
+  /** Returns a list of child nodes. */
   public ArrayList<SGINode> getChildNodes() {
     ArrayList<SGINode> list = new ArrayList<SGINode>();
-    // list.addAll(this.mFigureElementMap.values());
-    // if (this.getAxisElement().isColorBarAvailable()) {
-    // list.add(this.getAxisElement().getColorBar());
-    // }
     SGIFigureElement[] array = this.getIFigureElementArray();
     for (SGIFigureElement el : array) {
       list.addAll(el.getNodes());
@@ -401,16 +280,12 @@ public abstract class SGFigure
     return list;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return "Figure: " + this.getID();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getInstanceDescription() {
     final float ratio = SGIConstants.CM_POINT_RATIO;
     final int order = SGIRootObjectConstants.LENGTH_MINIMAL_ORDER;
@@ -424,8 +299,6 @@ public abstract class SGFigure
     sb.append("cm, Y=");
     sb.append(y);
     sb.append("cm )");
-    // str += " ( X=" + x + "cm, Y=" + y + "cm )";
-    // return str;
     return sb.toString();
   }
 
@@ -433,7 +306,6 @@ public abstract class SGFigure
    * Returns the figure element of the given class.
    *
    * @param cl a class object
-   * @return an figure element
    */
   public SGIFigureElement getIFigureElement(final Class<?> cl) {
     if (cl == null) {
@@ -449,29 +321,24 @@ public abstract class SGFigure
     return null;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGIFigureElementAxis getAxisElement() {
     return (SGIFigureElementAxis) this.getIFigureElement(SGIFigureElementAxis.class);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGIFigureElementGraph getGraphElement() {
     return (SGIFigureElementGraph) this.getIFigureElement(SGIFigureElementGraph.class);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGIFigureElementLegend getLegendElement() {
     return (SGIFigureElementLegend) this.getIFigureElement(SGIFigureElementLegend.class);
   }
 
   /**
    * @param f
+   * @param layer the layer parameter
    */
   public void setIFigureElement(final int layer, final SGIFigureElement f) {
     if (f == null) {
@@ -505,22 +372,6 @@ public abstract class SGFigure
     this.setSelected(false);
   }
 
-  // /**
-  // *
-  // */
-  // public boolean isGraphRectContains(Point2D point) {
-  // final Rectangle2D rect = this.getGraphRect();
-  // return rect.contains(point);
-  // }
-  //
-  // /**
-  // *
-  // */
-  // public boolean isGraphRectContains(int x, int y) {
-  // final Rectangle2D rect = this.getGraphRect();
-  // return rect.contains(x, y);
-  // }
-
   /** */
   public Rectangle2D getGraphRect() {
     final Rectangle2D rect =
@@ -539,32 +390,24 @@ public abstract class SGFigure
     return rect;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getGraphRectX() {
     final Rectangle2D cRect = this.mWnd.getPaperRect();
     return (float) cRect.getX() + this.mMagnification * this.mGraphRectX;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getGraphRectY() {
     final Rectangle2D cRect = this.mWnd.getPaperRect();
     return (float) cRect.getY() + this.mMagnification * this.mGraphRectY;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getGraphRectWidth() {
     return this.mMagnification * this.mGraphRectWidth;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getGraphRectHeight() {
     return this.mMagnification * this.mGraphRectHeight;
   }
@@ -772,9 +615,8 @@ public abstract class SGFigure
   }
 
   /**
-   * @param widthPt
-   * @param heightPt
-   * @return
+   * @param xPt
+   * @param yPt
    */
   protected boolean setGraphRectLocationRoundingOut(final float xPt, final float yPt) {
     final Rectangle2D cRect = this.mWnd.getPaperRect();
@@ -818,7 +660,6 @@ public abstract class SGFigure
   /**
    * @param widthPt
    * @param heightPt
-   * @return
    */
   protected boolean setGraphRectSizeRoundingOut(final float widthPt, final float heightPt) {
 
@@ -845,7 +686,6 @@ public abstract class SGFigure
    * @param y
    * @param w
    * @param h
-   * @return
    */
   public boolean setGraphRect(final float x, final float y, final float w, final float h) {
     this.setGraphRectLocationAttributes(x, y);
@@ -859,11 +699,7 @@ public abstract class SGFigure
     return this.getLegendElement().isVisible();
   }
 
-  /**
-   * Returns whether the color bar is visible.
-   *
-   * @return true if visible
-   */
+  /** Returns whether the color bar is visible. */
   public boolean isColorBarVisible() {
     return this.getAxisElement().isColorBarVisible();
   }
@@ -871,8 +707,7 @@ public abstract class SGFigure
   /**
    * Sets whether the color bar is visible.
    *
-   * @param true to set visible
-   * @return true if succeeded
+   * @param b to set visible
    */
   public boolean setColorBarVisible(final boolean b) {
     final SGIFigureElementAxis aElement = this.getAxisElement();
@@ -889,14 +724,13 @@ public abstract class SGFigure
   /**
    * Add a new data with given ID.
    *
+   * @param nameArray the nameArray parameter
    * @param dataArray the array of new data objects added
    * @param idArray the array of data ID
-   * @param dataNameArray the array of data name
    * @param progress controller of the progress
    * @param min minimum progress value
    * @param max maximum progress value
    * @param infoMap information map of data
-   * @return true if succeeded
    */
   public boolean addData(
       final SGData[] dataArray,
@@ -962,7 +796,6 @@ public abstract class SGFigure
    * @param data the new data added
    * @param name the name of data
    * @param map a map of properties
-   * @return true if succeeded
    */
   public boolean addData(
       final SGData data,
@@ -995,7 +828,6 @@ public abstract class SGFigure
    * Returns a text string for the name of new data.
    *
    * @param name the name
-   * @return the name for new data
    */
   public String getNewDataName(final String name) {
 
@@ -1024,7 +856,6 @@ public abstract class SGFigure
   /** Set the bounds of viewport. */
   protected boolean setViewBounds(final Rectangle2D rectView) {
     // // set to the attribute
-    // this.mViewBounds = rectView;
 
     // set to SGIFigureElement objects
     SGIFigureElement[] array = this.getIFigureElementArray();
@@ -1055,18 +886,12 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getMagnification() {
     return this.mMagnification;
   }
 
-  /**
-   * Zoom in/out this component.
-   *
-   * @return true:succeeded, false:failed
-   */
+  /** Zoom in/out this component. */
   public boolean setMagnification(final float mag) {
 
     this.mMagnification = mag;
@@ -1079,12 +904,8 @@ public abstract class SGFigure
     }
     this.updateGraphRect();
 
-    // if the dragging rectangle is visible,
     // set it to be equal to the graph area rectangle
-    // if( SGFigure.mRubberBandFlag )
     // {
-    // this.setRubberBandRect();
-    // }
 
     return true;
   }
@@ -1112,7 +933,6 @@ public abstract class SGFigure
 
   /**
    * @param e
-   * @return
    */
   protected boolean onMouseMoved(final MouseEvent e) {
     return this.mInteractionHelper.onMouseMoved(e);
@@ -1123,7 +943,6 @@ public abstract class SGFigure
    *
    * @param x the x coordinate
    * @param y the y coordinate
-   * @return true if a given point is in the extra region
    */
   boolean checkExtraRegion(final int x, final int y) {
     Rectangle2D eBounds = this.getExtraRegionBounds();
@@ -1145,7 +964,6 @@ public abstract class SGFigure
    *
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addString(final int x, final int y) {
     SGIFigureElementString el =
@@ -1163,7 +981,6 @@ public abstract class SGFigure
    * @param str a text string to insert
    * @param x axis value for default x-axis
    * @param y axis value for default y-axis
-   * @return true if succeeded
    */
   public boolean addString(final int id, final String str, final double x, final double y) {
     SGIFigureElementString el =
@@ -1183,7 +1000,6 @@ public abstract class SGFigure
    * @param y axis value for given y-axis
    * @param xAxisLocation location of the x-axis
    * @param yAxisLocation location of the y-axis
-   * @return true if succeeded
    */
   public boolean addString(
       final int id,
@@ -1205,7 +1021,6 @@ public abstract class SGFigure
    *
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addTimingLine(final int x, final int y) {
     SGIFigureElementTimingLine el =
@@ -1216,33 +1031,11 @@ public abstract class SGFigure
     return false;
   }
 
-  // /**
-  // * Inserts a timing line with given axis value to given axis.
-  // *
-  // * @param id
-  // * the ID to set
-  // * @param value
-  // * the axis value for given axis
-  // * @param axisLocation
-  // * location of the axis
-  // * @return true if succeeded
-  // */
-  // public boolean addTimingLine(final int id, final double value,
-  // final String axisLocation) {
-  // SGIFigureElementTimingLine el = (SGIFigureElementTimingLine) this
-  // .getIFigureElement(SGIFigureElementTimingLine.class);
-  // if (el != null) {
-  // return el.addTimingLine(id, value, axisLocation);
-  // }
-  // return false;
-  // }
-
   /**
    * Inserts an axis break symbol at a given point with default axes.
    *
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addAxisBreakSymbol(final int x, final int y) {
     SGIFigureElementAxisBreak el =
@@ -1259,7 +1052,6 @@ public abstract class SGFigure
    * @param id the ID to set
    * @param x axis value for default x-axis
    * @param y axis value for default y-axis
-   * @return true if succeeded
    */
   public boolean addAxisBreakSymbol(final int id, final double x, final double y) {
     SGIFigureElementAxisBreak el =
@@ -1278,7 +1070,6 @@ public abstract class SGFigure
    * @param y axis value for given y-axis
    * @param xAxisLocation location of the x-axis
    * @param yAxisLocation location of the y-axis
-   * @return true if succeeded
    */
   public boolean addAxisBreakSymbol(
       final int id,
@@ -1299,7 +1090,6 @@ public abstract class SGFigure
    *
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addSignificantDifferenceSymbol(final int x, final int y) {
     SGIFigureElementSignificantDifference el =
@@ -1317,7 +1107,6 @@ public abstract class SGFigure
    * @param id the ID to set
    * @param x axis value for default x-axis
    * @param y axis value for default y-axis
-   * @return true if succeeded
    */
   public boolean addSignificantDifferenceSymbol(final int id, final double x, final double y) {
     SGIFigureElementSignificantDifference el =
@@ -1337,7 +1126,6 @@ public abstract class SGFigure
    * @param y axis value for given y-axis
    * @param xAxisLocation location of the x-axis
    * @param yAxisLocation location of the y-axis
-   * @return true if succeeded
    */
   public boolean addSignificantDifferenceSymbol(
       final int id,
@@ -1360,7 +1148,6 @@ public abstract class SGFigure
    * @param type the type of shape
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addShape(final int type, final int x, final int y) {
     SGIFigureElementShape el =
@@ -1378,7 +1165,6 @@ public abstract class SGFigure
    * @param type the type of shape
    * @param x axis value for default x-axis
    * @param y axis value for default y-axis
-   * @return true if succeeded
    */
   public boolean addShape(final int id, final int type, final double x, final double y) {
     SGIFigureElementShape el =
@@ -1398,7 +1184,6 @@ public abstract class SGFigure
    * @param y axis value for given y-axis
    * @param xAxisLocation location of the x-axis
    * @param yAxisLocation location of the y-axis
-   * @return true if succeeded
    */
   public boolean addShape(
       final int id,
@@ -1431,7 +1216,6 @@ public abstract class SGFigure
    * Called when the key pressed.
    *
    * @param e key event
-   * @return whether an effective when key pressed
    */
   protected boolean onKeyPressed(final KeyEvent e) {
     return this.mInteractionHelper.onKeyPressed(e);
@@ -1441,7 +1225,6 @@ public abstract class SGFigure
    * Called when the mouse is clicked.
    *
    * @param e mouse event
-   * @return whether an effective point is clicked
    */
   protected boolean onMouseClicked(MouseEvent e) {
     return this.mInteractionHelper.onMouseClicked(e);
@@ -1450,11 +1233,7 @@ public abstract class SGFigure
   /** Flag whether this object is focused. */
   private boolean mSelectedFlag = false;
 
-  /**
-   * Get the flag as a focused object.
-   *
-   * @return whether this object is focused.
-   */
+  /** Get the flag as a focused object. */
   public boolean isSelected() {
     return this.mSelectedFlag;
   }
@@ -1485,7 +1264,6 @@ public abstract class SGFigure
    * Hide data of given ids.
    *
    * @param dataIdArray
-   * @return
    */
   public boolean hideData(final int[] dataIdArray) {
     boolean flagHide = false;
@@ -1523,29 +1301,6 @@ public abstract class SGFigure
     }
   }
 
-  // /**
-  // *
-  // * @return
-  // */
-  // protected boolean updatePopupMenu(JPopupMenu p) {
-  // Component[] array = p.getComponents();
-  // for (int ii = 0; ii < array.length; ii++) {
-  // if (array[ii] instanceof JCheckBoxMenuItem) {
-  // JCheckBoxMenuItem item = (JCheckBoxMenuItem) array[ii];
-  // String com = item.getActionCommand();
-  // if (com.equals(MENUCMD_RUBBER_BANDING)) {
-  // item.setSelected(SGFigure.mRubberBandFlag);
-  // } else if (com.equals(MENUCMD_SHOW_BOUNDING_BOX)) {
-  // item.setSelected(SGFigure.mBoundingBoxVisibleFlag);
-  // } else if (com.equals(MENUBARCMD_SNAP_TO_GRID)) {
-  // item.setSelected(SGFigure.isSnappingToGrid());
-  // }
-  // }
-  // }
-  //
-  // return true;
-  // }
-
   /** */
   boolean afterClicked(MouseEvent e) {
     this.repaint();
@@ -1568,13 +1323,10 @@ public abstract class SGFigure
    * Called when the mouse is pressed.
    *
    * @param e mouse event
-   * @return whether an effective point is pressed
    */
   protected boolean onMousePressed(final MouseEvent e) {
 
-    // if focused
     if (this.isSelected()) {
-      // for anchors
       if (this.pressWithMouseLocation(e)) {
         return true;
       }
@@ -1651,20 +1403,12 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * Update the list of focused figures when the mouse is pressed.
-   *
-   * @return
-   */
+  /** Update the list of focused figures when the mouse is pressed. */
   protected boolean updateFocusedFigureList(final MouseEvent e) {
     return this.mInteractionHelper.updateFocusedFigureList(e);
   }
 
-  /**
-   * Record the rectangle of this figure.
-   *
-   * @return true if succeeded
-   */
+  /** Record the rectangle of this figure. */
   boolean recordFigureRect() {
     this.mTempFigureRect.setRect(this.getGraphRectInClientRect());
     return true;
@@ -1675,9 +1419,6 @@ public abstract class SGFigure
     SGIFigureElement[] array = this.getIFigureElementArray();
     for (int ii = array.length - 1; ii >= 0; ii--) {
       // // set temporary properties
-      // if (array[ii].setTemporaryPropertiesOfFocusedObjects() == false) {
-      // return null;
-      // }
       if (array[ii].onMousePressed(e)) {
         this.mPressedElement = array[ii];
         return array[ii];
@@ -1699,7 +1440,6 @@ public abstract class SGFigure
   /**
    * @param dx
    * @param dy
-   * @return
    */
   public void translate(final float dx, final float dy) {
     Rectangle2D dRect = this.getDraggingRect();
@@ -1711,7 +1451,6 @@ public abstract class SGFigure
 
     this.snapToLines(OTHER);
 
-    // if the rectangle for dragging is invisible,
     // set the graph area rectangle immediately
     if (SGFigure.mRubberBandFlag == false) {
       this.mPressedPoint.setLocation(this.mPressedPoint.x + dx, this.mPressedPoint.y + dy);
@@ -1782,17 +1521,6 @@ public abstract class SGFigure
     return true;
   }
 
-  // // round off the number
-  // private float roundOffInFigureLengthOrder( final float value )
-  // {
-  // final int order = SGIRootObjectConstants.MINIMAL_LENGTH_ORDER-1;
-  // final float ratio = SGIConstants.CM_POINT_RATIO;
-  // final float vCM = value*ratio;
-  // final float r = (float)SGUtilityNumber.roundOffNumber( vCM, order );
-  // final float v = r/ratio;
-  // return v;
-  // }
-
   // set the rubber band rectangle snapped to the lines
   void snapToLines(final int mouseLocation) {
     if (isSnappingToGrid()) {
@@ -1826,7 +1554,6 @@ public abstract class SGFigure
    * Called when the mouse is released.
    *
    * @param e the mouse event
-   * @return true if succeeded
    */
   protected boolean onMouseReleased(final MouseEvent e) {
     return this.mInteractionHelper.onMouseReleased(e);
@@ -1843,18 +1570,12 @@ public abstract class SGFigure
   /** */
   public static final int DRAW_BACK_MARGIN = 2;
 
-  /**
-   * @return
-   */
+  /** */
   public boolean drawbackFigure() {
     return this.mInteractionHelper.drawbackFigure();
   }
 
-  /**
-   * Clear all focused objects in SGIFigureElement objects.
-   *
-   * @return
-   */
+  /** Clear all focused objects in SGIFigureElement objects. */
   public boolean clearFocusedObjects() {
     SGIFigureElement[] array = this.getIFigureElementArray();
     for (int ii = 0; ii < array.length; ii++) {
@@ -1865,9 +1586,7 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean setMementoBackward() {
     if (this.mUndoManager.setMementoBackward() == false) {
       return false;
@@ -1878,9 +1597,7 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean setMementoForward() {
     if (this.mUndoManager.setMementoForward() == false) {
       return false;
@@ -1918,16 +1635,12 @@ public abstract class SGFigure
     this.mWnd.notifyToRoot();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isChanged() {
     return this.mUndoManager.isChanged();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isChangedRoot() {
     if (this.isChanged()) {
       return true;
@@ -1950,7 +1663,6 @@ public abstract class SGFigure
   /**
    * @param x
    * @param y
-   * @return
    */
   Cursor setMouseCursor(final int x, final int y) {
     this.setMouseLocation(x, y);
@@ -1976,7 +1688,6 @@ public abstract class SGFigure
 
   private void setMouseLocation(final int x, final int y) {
     final float radius = 1.50f * SGClientPanel.getAnchorSize();
-    // final Rectangle2D rect = this.getGraphRect();
     final Rectangle2D rect = this.getRubberBandRect();
     this.mMouseLocation = SGUtility.getMouseLocation(rect, x, y, radius);
   }
@@ -2005,9 +1716,7 @@ public abstract class SGFigure
     return false;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean setCursorToWindow(final SGIFigureElement el) {
     Cursor cur = el.getFigureElementCursor();
     if (cur != null) {
@@ -2040,7 +1749,6 @@ public abstract class SGFigure
 
   /**
    * @param p
-   * @return
    */
   public boolean getProperties(SGProperties p) {
     if ((p instanceof FigureProperties) == false) {
@@ -2060,11 +1768,7 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * Returns a property dialog.
-   *
-   * @return property dialog
-   */
+  /** Returns a property dialog. */
   public abstract SGPropertyDialog getPropertyDialog();
 
   /**
@@ -2140,7 +1844,6 @@ public abstract class SGFigure
         this.notifyToRoot();
       } else if (command.equals(MENUCMD_ANIMATION)) {
         this.mMouseInExtraRegionFlag = false;
-        // this.clearFocusedObjects();
         this.mWnd.doAnimation();
       } else if (MENUCMD_FIT_ALL_AXES_TO_DATA.equals(command)
           || MENUCMD_FIT_HORIZONTAL_AXIS_TO_DATA.equals(command)
@@ -2188,38 +1891,22 @@ public abstract class SGFigure
   // an undo manager
   private SGUndoManager mUndoManager;
 
-  /**
-   * Initialize the history of properties.
-   *
-   * @return true if succeeded
-   */
+  /** Initialize the history of properties. */
   public boolean initPropertiesHistory() {
     return this.mUndoManager.initPropertiesHistory();
   }
 
-  /**
-   * Undo the operation.
-   *
-   * @return true if succeeded
-   */
+  /** Undo the operation. */
   public boolean undo() {
     return this.mUndoManager.undo();
   }
 
-  /**
-   * Redo the operation.
-   *
-   * @return true if succeeded
-   */
+  /** Redo the operation. */
   public boolean redo() {
     return this.mUndoManager.redo();
   }
 
-  /**
-   * Commit the change.
-   *
-   * @return true if succeeded
-   */
+  /** Commit the change. */
   public boolean commit() {
     SGProperties pTemp = this.mTemporaryProperties;
     SGProperties pPresent = this.getProperties();
@@ -2252,16 +1939,13 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGProperties getMemento() {
     return this.getProperties();
   }
 
   /**
    * @param p
-   * @return
    */
   public boolean setMemento(SGProperties p) {
     return this.setProperties(p);
@@ -2277,9 +1961,7 @@ public abstract class SGFigure
       list.add(element);
 
       // // particular case
-      // if (element.equals(this.getLegendElement())) {
       // // element.setChanged(true);
-      // }
     }
 
     if (this.mUndoManager.updateHistory(list) == false) {
@@ -2307,16 +1989,12 @@ public abstract class SGFigure
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isUndoable() {
     return this.mUndoManager.isUndoable();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isRedoable() {
     return this.mUndoManager.isRedoable();
   }
@@ -2330,11 +2008,7 @@ public abstract class SGFigure
     }
   }
 
-  /**
-   * Delete all forward histories.
-   *
-   * @return true if succeeded
-   */
+  /** Delete all forward histories. */
   public boolean deleteForwardHistory() {
 
     // delete forward history of figure elements
@@ -2358,11 +2032,7 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * Delete useless data objects.
-   *
-   * @return true if succeeded
-   */
+  /** Delete useless data objects. */
   protected boolean deleteUselessData() {
 
     SGIFigureElement[] array = this.getIFigureElementArray();
@@ -2399,9 +2069,7 @@ public abstract class SGFigure
     data.dispose();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean initGraphAreaLocation() {
 
     // calculate the margin around the graph rectangle
@@ -2431,15 +2099,12 @@ public abstract class SGFigure
   /**
    * @param topAndBottom
    * @param leftAndRight
-   * @return
    */
   public boolean calcMargin(final SGTuple2f topAndBottom, final SGTuple2f leftAndRight) {
     return this.mInteractionHelper.calcMargin(topAndBottom, leftAndRight);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Rectangle2D getBoundingBox() {
     final Rectangle2D graphAreaRect = this.getGraphRect();
 
@@ -2467,9 +2132,7 @@ public abstract class SGFigure
 
   public static final int MARGIN_RIGHT = 5;
 
-  /**
-   * @return
-   */
+  /** */
   public boolean setBoundingBox(final Rectangle2D bbRect) {
     if (bbRect == null) {
       return false;
@@ -2492,9 +2155,8 @@ public abstract class SGFigure
   }
 
   /**
-   * @param x
-   * @param y
-   * @return
+   * @param cx
+   * @param cy
    */
   public boolean setCenter(final float cx, final float cy) {
     Rectangle2D bbRect = this.getBoundingBox();
@@ -2515,7 +2177,6 @@ public abstract class SGFigure
   /**
    * @param x
    * @param y
-   * @return
    */
   public boolean setGraphRectLocationByLeftBottom(final float x, final float y) {
     Rectangle2D gRect = this.getGraphRect();
@@ -2532,20 +2193,12 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * Returns the list of data.
-   *
-   * @return a list of data
-   */
+  /** Returns the list of data. */
   public List<SGData> getDataList() {
     return new ArrayList<SGData>(this.mDataList);
   }
 
-  /**
-   * Returns the list of visible data.
-   *
-   * @return a list of visible data
-   */
+  /** Returns the list of visible data. */
   public List<SGData> getVisibleDataList() {
     return this.getGraphElement().getVisibleDataList();
   }
@@ -2559,12 +2212,11 @@ public abstract class SGFigure
   }
 
   /**
-   * @param g
+   * @param g2d
    * @param clip
    */
   private void paintGraphics(Graphics2D g2d, boolean clip) {
 
-    // if the mouse pointer is inside the extra region
     if (this.mMouseInExtraRegionFlag) {
       Rectangle2D eBounds = this.getExtraRegionBounds();
       g2d.setPaint(EXTRA_REGION_COLOR);
@@ -2688,11 +2340,7 @@ public abstract class SGFigure
 
   private static final float DUPLICATION_OFFSET = 20.0f;
 
-  /**
-   * Returns a text string denoting the class type.
-   *
-   * @return a text string denoting the class type
-   */
+  /** Returns a text string denoting the class type. */
   public String getClassType() {
     return this.mClassType;
   }
@@ -2711,7 +2359,6 @@ public abstract class SGFigure
 
   /**
    * @param el
-   * @return
    */
   public boolean readProperty(final Element el) {
     return this.mInteractionHelper.readProperty(el);
@@ -2762,11 +2409,7 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * Duplicate the focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Duplicate the focused objects. */
   protected boolean duplicateFocusedObjects() {
     SGIFigureElement[] array = this.getIFigureElementArray();
     for (int ii = 0; ii < array.length; ii++) {
@@ -2777,11 +2420,7 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * Create a list of copied objects from focused objects.
-   *
-   * @return list of copies of focused objects
-   */
+  /** Create a list of copied objects from focused objects. */
   protected List<SGICopyable> createCopiedObjects() {
     List<SGICopyable> list = new ArrayList<SGICopyable>();
     SGIFigureElement[] array = this.getIFigureElementArray();
@@ -2791,11 +2430,7 @@ public abstract class SGFigure
     return list;
   }
 
-  /**
-   * Create a list of cut objects from focused objects.
-   *
-   * @return list of cut objects
-   */
+  /** Create a list of cut objects from focused objects. */
   protected List<SGICopyable> cutFocusedObjects() {
     List<SGICopyable> list = new ArrayList<SGICopyable>();
     SGIFigureElement[] array = this.getIFigureElementArray();
@@ -2811,7 +2446,6 @@ public abstract class SGFigure
    * @param dataList list of focused data objects
    * @param dataNameList list of data names
    * @param propertiesMapList the map of properties
-   * @return true if succeeded
    */
   boolean createCopiedDataObjects(
       List<SGData> dataList,
@@ -2829,7 +2463,6 @@ public abstract class SGFigure
    * @param dataList list of focused data objects
    * @param dataNameList list of data names
    * @param propertiesMapList the map of properties
-   * @return true if succeeded
    */
   boolean cutFocusedDataObjects(
       List<SGData> dataList,
@@ -2876,7 +2509,6 @@ public abstract class SGFigure
    * Returns the data of a given ID.
    *
    * @param id the ID of data
-   * @return the data object if it exists
    */
   public SGData getData(final int id) {
     return this.getGraphElement().getData(id);
@@ -2886,7 +2518,6 @@ public abstract class SGFigure
    * Returns whether the data is visible.
    *
    * @param id the ID of data
-   * @return true if the data exists and is visible
    */
   public boolean isDataVisible(final int id) {
     SGData data = this.getData(id);
@@ -2900,7 +2531,6 @@ public abstract class SGFigure
    * Returns the name of data.
    *
    * @param data data object
-   * @return the name of data
    */
   public String getDataName(SGData data) {
     return this.getGraphElement().getDataName(data);
@@ -2911,16 +2541,12 @@ public abstract class SGFigure
    *
    * @param name the name to set to data
    * @param data the data object
-   * @return true if succeeded
    */
   public boolean setDataName(String name, SGData data) {
     return this.getGraphElement().setDataName(name, data);
   }
 
-  /**
-   * @param data
-   * @return
-   */
+  /** * @return */
   public Map<Class<? extends SGIFigureElement>, SGProperties> getDataPropertiesMap(SGData data) {
     Map<Class<? extends SGIFigureElement>, SGProperties> map =
         new HashMap<Class<? extends SGIFigureElement>, SGProperties>();
@@ -2938,7 +2564,6 @@ public abstract class SGFigure
    * Paste the objects.
    *
    * @param list of the objects to be pasted
-   * @return true:succeeded, false:failed
    */
   public boolean paste(List<SGICopyable> list) {
     SGIFigureElement[] array = this.getIFigureElementArray();
@@ -2955,7 +2580,6 @@ public abstract class SGFigure
    * Move the focused objects to the front or back.
    *
    * @param toFront true to move to the front and false to move to the back
-   * @return true if succeeded
    */
   public boolean moveFocusedObjects(final boolean toFront) {
     SGIFigureElement[] array = this.getIFigureElementArray();
@@ -2971,7 +2595,6 @@ public abstract class SGFigure
    * Move the focused objects to the front or back.
    *
    * @param num the number of levels to move the objects
-   * @return true if succeeded
    */
   public boolean moveFocusedObjects(final int num) {
     SGIFigureElement[] array = this.getIFigureElementArray();
@@ -3130,9 +2753,7 @@ public abstract class SGFigure
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   public static boolean isSnappingToGrid() {
     return mSnapToGridFlag;
   }
@@ -3144,11 +2765,7 @@ public abstract class SGFigure
     mSnapToGridFlag = b;
   }
 
-  /**
-   * Insert a label for netCDF data.
-   *
-   * @return true if succeeds.
-   */
+  /** Insert a label for netCDF data. */
   boolean insertNetCDFLabel() {
     SGIFigureElementString fes =
         (SGIFigureElementString) this.getIFigureElement(SGIFigureElementString.class);
@@ -3164,7 +2781,6 @@ public abstract class SGFigure
    * Insert labels for netCDF data that have given IDs.
    *
    * @param dataIdArray
-   * @return true if succeeds.
    */
   public boolean insertNetCDFLabels(final int[] dataIdArray) {
     List<SGData> dataList = new ArrayList<SGData>();
@@ -3213,11 +2829,7 @@ public abstract class SGFigure
   /** Width of the extra region around a figure. */
   public static final float EXTRA_REGION_WIDTH_IN_CM_UNIT = 1.0f;
 
-  /**
-   * Returns the bounds of the "extra" region.
-   *
-   * @return the bounds of the "extra" region
-   */
+  /** Returns the bounds of the "extra" region. */
   Rectangle2D getExtraRegionBounds() {
     Rectangle2D bounds = this.getGraphRect();
     final float margin = this.mMagnification * EXTRA_REGION_WIDTH_IN_CM_UNIT / CM_POINT_RATIO;
@@ -3260,8 +2872,6 @@ public abstract class SGFigure
   /**
    * Returns whether the legend is enabled. If there are any visible data objects, this method
    * returns true.
-   *
-   * @return true if the legend is enabled
    */
   public boolean isLegendAvailable() {
     return (this.getGraphElement().getVisibleDataList().size() != 0);
@@ -3270,19 +2880,13 @@ public abstract class SGFigure
   /**
    * Returns whether the color bar is available. If there are any visible data objects with the
    * color bar, this method returns true.
-   *
-   * @return true if the color bar is available
    */
   public boolean isColorBarAvailable() {
     SGIFigureElementAxis aElement = this.getAxisElement();
     return aElement.isColorBarAvailable();
   }
 
-  /**
-   * Fits axis range to the focused data.
-   *
-   * @return true if succeeded
-   */
+  /** Fits axis range to the focused data. */
   public boolean fitAxisRangeToFocusedData(final boolean forAnimationFrames) {
     if (!this.fitAxisRangeToFocusedData(
         SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL, forAnimationFrames)) {
@@ -3312,8 +2916,8 @@ public abstract class SGFigure
   /**
    * Fits axis range to given data.
    *
+   * @param forAnimationFrames the forAnimationFrames parameter
    * @param dataIdArray an array of data ID
-   * @return true if succeeded
    */
   public boolean fitAxisRangeToData(final int[] dataIdArray, final boolean forAnimationFrames) {
     if (!this.fitAxisRangeToDataSub(
@@ -3388,11 +2992,7 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * Fits axis range to the visible all data.
-   *
-   * @return true if succeeded
-   */
+  /** Fits axis range to the visible all data. */
   public boolean fitAxisRangeToVisibleData(final boolean forAnimationFrames) {
     if (!this.fitAxisRangeToVisibleData(
         SGIFigureElementAxis.AXIS_DIRECTION_HORIZONTAL, forAnimationFrames, false)) {
@@ -3438,18 +3038,12 @@ public abstract class SGFigure
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isAlignmentBarsAvailable() {
     return this.getGraphElement().isBarVisible();
   }
 
-  /**
-   * Align visible bars in this figure.
-   *
-   * @return
-   */
+  /** Align visible bars in this figure. */
   public boolean alignVisibleBars() {
     SGIFigureElementGraph gElement = this.getGraphElement();
     if (gElement.alignVisibleBars() == false) {

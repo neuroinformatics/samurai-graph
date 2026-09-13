@@ -56,7 +56,6 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
    * Sets the size.
    *
    * @param size the size to set
-   * @return true if succeeded
    */
   public boolean setSize(final float size) {
     this.mSize = size;
@@ -68,7 +67,6 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
    * Sets the symbol type.
    *
    * @param type the symbol type to set
-   * @return true if succeeded
    */
   public boolean setType(final int type) {
     this.mType = type;
@@ -80,7 +78,6 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
    * Sets the line color.
    *
    * @param color the line color to set
-   * @return true if succeeded
    */
   public boolean setLineColor(final Color color) {
     this.mLineColor = color;
@@ -91,7 +88,6 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
    * Sets the line width.
    *
    * @param lineWidth the line width to set
-   * @return true if succeeded
    */
   public boolean setLineWidth(final float lineWidth) {
     this.mLineWidth = lineWidth;
@@ -104,38 +100,22 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
     return true;
   }
 
-  /**
-   * Returns the size.
-   *
-   * @return the size
-   */
+  /** Returns the size. */
   public float getSize() {
     return this.mSize;
   }
 
-  /**
-   * Returns the symbol type.
-   *
-   * @return the symbol type
-   */
+  /** Returns the symbol type. */
   public int getType() {
     return this.mType;
   }
 
-  /**
-   * Returns the line color.
-   *
-   * @return the line color
-   */
+  /** Returns the line color. */
   public Color getLineColor() {
     return this.mLineColor;
   }
 
-  /**
-   * Returns the line width.
-   *
-   * @return the line width
-   */
+  /** Returns the line width. */
   public float getLineWidth() {
     return this.mLineWidth;
   }
@@ -145,11 +125,7 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
     return this.mLineVisible;
   }
 
-  /**
-   * Returns the magnification.
-   *
-   * @return the magnification
-   */
+  /** Returns the magnification. */
   public float getMagnification() {
     return this.mMagnification;
   }
@@ -158,7 +134,6 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
    * Sets the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     if (mag <= 0.0) {
@@ -169,11 +144,7 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
     return true;
   }
 
-  /**
-   * Returns the inner color.
-   *
-   * @return the inner color
-   */
+  /** Returns the inner color. */
   @Override
   public SGIPaint getInnerPaint() {
     return this.mInnerPaint;
@@ -183,17 +154,12 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
    * Sets the inner color.
    *
    * @param color the inner color to set
-   * @return true if succeeded
    */
   public boolean setInnerColor(Color color) {
     return this.mInnerPaint.setColor(color);
   }
 
-  /**
-   * Returns the angle.
-   *
-   * @return the angle
-   */
+  /** Returns the angle. */
   public float getAngle() {
     return this.mAngle;
   }
@@ -202,7 +168,6 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
    * Sets the angle.
    *
    * @param angle the angle to set
-   * @return true if succeeded
    */
   public boolean setAngle(final float angle) {
     this.mAngle = angle;
@@ -238,11 +203,7 @@ public class SGSimpleSymbol2D extends SGDrawingElementSymbol {
     return true;
   }
 
-  /**
-   * Returns the shape.
-   *
-   * @return a shape object
-   */
+  /** Returns the shape. */
   protected Shape getShape() {
     return this.mShape;
   }

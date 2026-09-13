@@ -9,27 +9,23 @@ public interface SGIVXYDataDialogObserver
 
   /**
    * @return
-   * @uml.property name="magnitudePerCM"
    */
   public float getMagnitudePerCM();
 
   /**
    * @param f
    * @return
-   * @uml.property name="magnitudePerCM"
    */
   public boolean setMagnitudePerCM(final float f);
 
   /**
    * @return
-   * @uml.property name="directionInvariant"
    */
   public boolean isDirectionInvariant();
 
   /**
    * @param b
    * @return
-   * @uml.property name="directionInvariant"
    */
   public boolean setDirectionInvariant(final boolean b);
 

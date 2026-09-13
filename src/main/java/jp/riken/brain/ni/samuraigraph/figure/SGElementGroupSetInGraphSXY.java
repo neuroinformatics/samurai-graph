@@ -81,9 +81,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return "";
   }
@@ -133,11 +131,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     return this.getLineGroup().getColor();
   }
 
-  /**
-   * Returns whether the lines connect all effective points.
-   *
-   * @return true if connecting all effective points
-   */
+  /** Returns whether the lines connect all effective points. */
   public boolean isLineConnectingAll() {
     return this.getLineGroup().isLineConnectingAll();
   }
@@ -159,11 +153,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     return this.getLineGroup().setColor(cl);
   }
 
-  /**
-   * Sets whether the lines connect all effective points.
-   *
-   * @return true if succeeded
-   */
+  /** Sets whether the lines connect all effective points. */
   public boolean setLineConnectingAll(final boolean b) {
     return this.getLineGroup().setLineConnectingAll(b);
   }
@@ -561,8 +551,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
   /**
    * Creates drawing elements of error bars.
    *
-   * @param dataXY XY type data
-   * @return the group of error bars
+   * @param dataSXY XY type data
    */
   public SGElementGroupErrorBar createErrorBars(SGISXYTypeSingleData dataSXY) {
     final SGElementGroupErrorBarInGraph group =
@@ -576,7 +565,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    * Creates drawing elements of tick labels.
    *
    * @param dataXY XY type data
-   * @return the group of tick labels
    */
   public SGElementGroupTickLabel createTickLabels(SGISXYTypeSingleData dataXY) {
     final SGElementGroupTickLabelInGraphSXY group =
@@ -586,24 +574,12 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     return group;
   }
 
-  protected void initPointsArray(final int num) {
-    //        this.mLinePointsArray = this.createPoints(num);
-    //        this.mBarPointsArray = this.createPoints(num);
-  }
-
-  //    private SGTuple2f[] createPoints(final int num) {
-  //        SGTuple2f[] pointsArray = new SGTuple2f[num];
-  //        for (int ii = 0; ii < num; ii++) {
-  //            pointsArray[ii] = new SGTuple2f();
-  //        }
-  //        return pointsArray;
-  //    }
+  protected void initPointsArray(final int num) {}
 
   /**
    * Called when the location of data points is changed.
    *
    * @param data a data object
-   * @return true if succeeded
    */
   public boolean updateDrawingElementsLocation(final SGIData data) {
 
@@ -658,15 +634,12 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
         return false;
       }
       final double[] valueArray;
-      //	        final SGAxis axis;
       final double tlShift;
       if (horizontal) {
         valueArray = dataSXY.getXValueArray(true);
-        //	        	axis = xAxis;
         tlShift = this.getShiftX();
       } else {
         valueArray = dataSXY.getYValueArray(true);
-        //	        	axis = yAxis;
         tlShift = this.getShiftY();
       }
       final int[] tickLabelIndices = dataSXY.getTickLabelValueIndices();
@@ -674,11 +647,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
       for (int ii = 0; ii < tickLabelValues.length; ii++) {
         tickLabelValues[ii] = valueArray[tickLabelIndices[ii]] + tlShift;
       }
-      //			float[] tickLabelPointsArray = new float[tickLabelValues.length];
-      //			if (!this.mGraph.calcLocationOfPoints(tickLabelValues, axis, horizontal,
-      // tickLabelPointsArray)) {
-      //				return false;
-      //			}
     }
 
     List<SGElementGroup> gList = this.mDrawingElementGroupList;
@@ -687,7 +655,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
       if (group.isVisible()) {
         if (group.equals(errorBarGroup)) {
 
-          // if the data does not have error values, go next
           if (!dataSXY.isErrorBarAvailable()) {
             continue;
           }
@@ -712,7 +679,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
 
         } else if (group.equals(tickLabelGroup)) {
 
-          // if the data does not have tick label, go next
           if (!dataSXY.isTickLabelAvailable()) {
             continue;
           }
@@ -922,8 +888,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    * Write properties of this object to the Element.
    *
    * @param el the Element object
-   * @param type type of the method to save properties
-   * @return true if succeeded
+   * @param params type of the method to save properties
    */
   public boolean writeProperty(final Element el, final SGExportParameter params) {
     if (super.writeProperty(el, params) == false) {
@@ -941,8 +906,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
 
   /**
    * @param e
-   * @param groupSet
-   * @return
    */
   protected boolean onMouseClicked(final MouseEvent e) {
     if (super.onMouseClicked(e) == false) {
@@ -973,7 +936,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    *
    * @param x the x coordinate
    * @param y the y coordinate
-   * @return an element group if it contains the given point
    */
   @Override
   public SGElementGroup getElementGroupAt(final int x, final int y) {
@@ -1077,11 +1039,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     }
   }
 
-  /**
-   * Update drawing elements with related data object.
-   *
-   * @return true if succeeded
-   */
+  /** Update drawing elements with related data object. */
   public boolean updateWithData() {
     this.updateTickLabelStrings();
     return super.updateWithData();
@@ -1105,7 +1063,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    * Returns the location of a line and symbols at a given index.
    *
    * @param index the index
-   * @return the location
    */
   public SGTuple2f getLineLocation(final int index) {
     SGTuple2f[] pointsArray = this.calcLinePointsArray(this.mXValuesArray, this.mYValuesArray);
@@ -1116,7 +1073,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    * Returns the location of a symbol at a given index.
    *
    * @param index the index
-   * @return the location
    */
   public SGTuple2f getSymbolLocation(final int index) {
     return this.getLineLocation(index);
@@ -1126,7 +1082,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    * Returns the location of a bar at a given index.
    *
    * @param index the index
-   * @return the location
    */
   public SGTuple2f getBarLocation(final int index) {
     SGTuple2f[] pointsArray = this.calcBarPointsArray(this.mXValuesArray, this.mYValuesArray);
@@ -1200,7 +1155,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    * Sets the data.
    *
    * @param data a data object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (!super.setData(data)) {
@@ -1222,11 +1176,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     return true;
   }
 
-  /**
-   * Returns a list of line groups.
-   *
-   * @return a list of line groups
-   */
+  /** Returns a list of line groups. */
   public List<SGElementGroupLine> getLineGroups() {
     List<SGElementGroupLine> retList = new ArrayList<SGElementGroupLine>();
     List<SGElementGroup> list =
@@ -1238,11 +1188,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     return retList;
   }
 
-  /**
-   * Returns a list of symbol groups.
-   *
-   * @return a list of symbol groups
-   */
+  /** Returns a list of symbol groups. */
   public List<SGElementGroupSymbol> getSymbolGroups() {
     List<SGElementGroupSymbol> retList = new ArrayList<SGElementGroupSymbol>();
     List<SGElementGroup> list =
@@ -1254,11 +1200,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     return retList;
   }
 
-  /**
-   * Returns a list of bar groups.
-   *
-   * @return a list of bar groups
-   */
+  /** Returns a list of bar groups. */
   public List<SGElementGroupBar> getBarGroups() {
     List<SGElementGroupBar> retList = new ArrayList<SGElementGroupBar>();
     List<SGElementGroup> list =
@@ -1269,11 +1211,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     return retList;
   }
 
-  /**
-   * Returns a list of error bar groups.
-   *
-   * @return a list of error bar groups
-   */
+  /** Returns a list of error bar groups. */
   public List<SGElementGroupErrorBar> getErrorBarGroups() {
     List<SGElementGroupErrorBar> retList = new ArrayList<SGElementGroupErrorBar>();
     List<SGElementGroup> list =
@@ -1285,11 +1223,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
     return retList;
   }
 
-  /**
-   * Returns a list of tick label groups.
-   *
-   * @return a list of tick label groups
-   */
+  /** Returns a list of tick label groups. */
   public List<SGElementGroupTickLabel> getTickLabelGroups() {
     List<SGElementGroupTickLabel> retList = new ArrayList<SGElementGroupTickLabel>();
     List<SGElementGroup> list =
@@ -1304,8 +1238,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
   /**
    * Returns a line group which is the first element of an array.
    *
-   * @return the first element of an array of line groups, or null when this group set does not have
-   *     any line groups
+   * <p>any line groups
    */
   public SGElementGroupLine getLineGroup() {
     return (SGElementGroupLine)
@@ -1315,8 +1248,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
   /**
    * Returns a symbol group which is the first element of an array.
    *
-   * @return the first element of an array of symbol groups, or null when this group set does not
-   *     have any symbol groups
+   * <p>have any symbol groups
    */
   public SGElementGroupSymbol getSymbolGroup() {
     return (SGElementGroupSymbol)
@@ -1327,8 +1259,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
   /**
    * Returns a bar group which is the first element of an array.
    *
-   * @return the first element of an array of bar groups, or null when this group set does not have
-   *     any bar groups
+   * <p>any bar groups
    */
   public SGElementGroupBar getBarGroup() {
     return (SGElementGroupBar)
@@ -1338,8 +1269,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
   /**
    * Returns an error bar group which is the first element of an array.
    *
-   * @return the first element of an array of error bar groups, or null when this group set does not
-   *     have any error bar groups
+   * <p>have any error bar groups
    */
   public SGElementGroupErrorBar getErrorBarGroup() {
     return (SGElementGroupErrorBar)
@@ -1350,8 +1280,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
   /**
    * Returns a tick label group which is the first element of an array.
    *
-   * @return the first element of an array of tick label groups, or null when this group set does
-   *     not have any tick label groups
+   * <p>not have any tick label groups
    */
   public SGElementGroupTickLabel getTickLabelGroup() {
     return (SGElementGroupTickLabel)
@@ -1363,7 +1292,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    * Sets the properties of element groups.
    *
    * @param elementGroupPropertiesList
-   * @return true if succeeded
    */
   protected boolean setElementGroupProperties(List<SGProperties> elementGroupPropertiesList) {
 
@@ -1565,7 +1493,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    * Sets the direction of error bars.
    *
    * @param vertical true to set vertical
-   * @return true if succeeded
    */
   public boolean setErrorBarDirection(final boolean vertical) {
     return this.setErrorBarVertical(vertical);
@@ -1575,7 +1502,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    * Sets the alignment of tick label.
    *
    * @param horizontal true to align horizontally
-   * @return true if succeeded
    */
   public boolean setTickLabelAlignment(final boolean horizontal) {
     return this.setTickLabelHorizontalAlignment(horizontal);
@@ -1621,7 +1547,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    * Sets the stride for single dimensional data.
    *
    * @param stride stride of arrays
-   * @return true if succeeded
    */
   @Override
   public boolean setSDArrayStride(SGIntegerSeriesSet stride) {
@@ -1635,7 +1560,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
    * @param map property map
    * @param result results of setting properties
    * @param cols an array of data columns
-   * @return true if succeeded
    */
   @Override
   protected boolean setProperties(
@@ -1657,11 +1581,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
 
   private boolean mLineColorAutoAssigned = false;
 
-  /**
-   * Returns whether line color is automatically assigned.
-   *
-   * @return true if line color is automatically assigned
-   */
+  /** Returns whether line color is automatically assigned. */
   @Override
   public boolean isLineColorAutoAssigned() {
     return this.mLineColorAutoAssigned;
@@ -1704,7 +1624,6 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
      * Returns whether this object is equal to given object.
      *
      * @param obj an object to be compared
-     * @return true if two objects are equal
      */
     public boolean equals(final Object obj) {
       if ((obj instanceof SXYElementGroupSetPropertiesInFigureElement) == false) {
@@ -1778,11 +1697,7 @@ public class SGElementGroupSetInGraphSXY extends SGElementGroupSetInGraph
 
   private String mLineColorMapName = null;
 
-  /**
-   * Returns the name of the color map for lines.
-   *
-   * @return the name of the color map for lines
-   */
+  /** Returns the name of the color map for lines. */
   @Override
   public String getLineColorMapName() {
     return this.mLineColorMapName;

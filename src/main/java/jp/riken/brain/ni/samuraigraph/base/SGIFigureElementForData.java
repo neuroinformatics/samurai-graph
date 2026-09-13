@@ -10,30 +10,24 @@ public interface SGIFigureElementForData extends SGIFigureElement {
    * Set the name of a data object.
    *
    * @param data the data object to get the name
-   * @return the name of data object
    */
   public String getDataName(SGData data);
 
   /**
    * Set the name of a data object.
    *
+   * @param name the name parameter
    * @param data the data object to set the name
-   * @return true if succeeded
    */
   public boolean setDataName(String name, SGData data);
 
-  /**
-   * Returns whether the data object is visible.
-   *
-   * @return whether the data object is visible
-   */
+  /** Returns whether the data object is visible. */
   public boolean isDataVisible(SGData data);
 
   /**
    * Returns whether a given data is visible in legend.
    *
    * @param data a data
-   * @return true if a given data is visible in legend
    */
   public boolean isDataVisibleInLegend(final SGData data);
 
@@ -41,7 +35,6 @@ public interface SGIFigureElementForData extends SGIFigureElement {
    * Returns whether the data object is selected.
    *
    * @param data a data object
-   * @return true if selected
    */
   public boolean isDataSelected(final SGData data);
 
@@ -49,31 +42,18 @@ public interface SGIFigureElementForData extends SGIFigureElement {
    * Checks whether the objects related to a given data are changed.
    *
    * @param data a data
-   * @return true if something changed related to a given data
    */
   public boolean checkDataChanged(final SGData data);
 
   public boolean isDataChanged(final SGData data);
 
-  /**
-   * Returns a list of focused data objects.
-   *
-   * @return a list of focused data objects
-   */
+  /** Returns a list of focused data objects. */
   public List<SGData> getFocusedDataList();
 
-  /**
-   * Returns a list of cut data objects.
-   *
-   * @return a list of cut data objects
-   */
+  /** Returns a list of cut data objects. */
   public List<SGData> cutFocusedData();
 
-  /**
-   * Returns a list of labels for data objects.
-   *
-   * @return a list of labels for data objects
-   */
+  /** Returns a list of labels for data objects. */
   public List<DataLabel> getDataLabelList();
 
   /** A class of the label for data objects. */
@@ -108,23 +88,18 @@ public interface SGIFigureElementForData extends SGIFigureElement {
    * Returns the data of a given ID.
    *
    * @param id the ID of data
-   * @return the data object if it exists
    */
   public SGData getData(final int id);
 
   /**
    * Returns the list of axis information of a given data.
    *
+   * @param forAnimationFrames the forAnimationFrames parameter
    * @param data a data object
-   * @return the list of axis information of a given data
    */
   public List<SGDataAxisInfo> getAxisInfoList(SGData data, final boolean forAnimationFrames);
 
-  /**
-   * Returns the list of visible data objects.
-   *
-   * @return a list of visible data objects
-   */
+  /** Returns the list of visible data objects. */
   public List<SGData> getVisibleDataList();
 
   /** */
@@ -134,7 +109,6 @@ public interface SGIFigureElementForData extends SGIFigureElement {
    * Returns the child object for given data.
    *
    * @param data data object
-   * @return the child object
    */
   public SGIChildObject getChild(SGData data);
 
@@ -142,7 +116,6 @@ public interface SGIFigureElementForData extends SGIFigureElement {
    * Returns the style of drawing elements of given data.
    *
    * @param data a data
-   * @return list of the style
    */
   public List<SGStyle> getStyle(SGData data);
 

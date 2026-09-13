@@ -47,7 +47,7 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
   /**
    * Builds an animation thread.
    *
-   * @param animation an animation data source
+   * @param animations an animation data source
    */
   public SGAnimationThread(SGIAnimation[] animations) {
     super();
@@ -130,11 +130,7 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
     this.setFrameRate(th.getFrameRate());
   }
 
-  /**
-   * Returns the animation data source.
-   *
-   * @return the animation data source
-   */
+  /** Returns the animation data source. */
   public SGIAnimation[] getAnimations() {
     return this.mAnimations.clone();
   }
@@ -262,11 +258,7 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
     return this.mPlayFlag;
   }
 
-  /**
-   * Returns whether loop play back is available.
-   *
-   * @return true the loop play back is available
-   */
+  /** Returns whether loop play back is available. */
   public boolean isLoopPlaybackEnabled() {
     return this.mLoopPlaybackFlag;
   }
@@ -283,11 +275,7 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
     }
   }
 
-  /**
-   * Returns the frame rate.
-   *
-   * @return the frame rate
-   */
+  /** Returns the frame rate. */
   public double getFrameRate() {
     return this.mFrameRate;
   }
@@ -304,11 +292,7 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
     }
   }
 
-  /**
-   * Returns the time interval.
-   *
-   * @return the sleeping time
-   */
+  /** Returns the time interval. */
   public long getTimeInterval() {
     return this.mTimeInterval;
   }
@@ -325,11 +309,7 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
     this.mTimeInterval = t;
   }
 
-  /**
-   * Returns the flag whether playing forward.
-   *
-   * @return true if playing forward
-   */
+  /** Returns the flag whether playing forward. */
   public boolean isPlayingForward() {
     return this.mForwardFlag;
   }
@@ -364,29 +344,17 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
   // The flag whether this object is already disposed of.
   private boolean mDisposed = false;
 
-  /**
-   * Returns whether this object is already disposed of.
-   *
-   * @return true if this object is already disposed of
-   */
+  /** Returns whether this object is already disposed of. */
   public boolean isDisposed() {
     return this.mDisposed;
   }
 
-  /**
-   * Returns the number of frames.
-   *
-   * @return the number of frames
-   */
+  /** Returns the number of frames. */
   public int getFrameNumber() {
     return this.mFrameNumber;
   }
 
-  /**
-   * Returns the current frame index.
-   *
-   * @return the current frame index
-   */
+  /** Returns the current frame index. */
   public int getCurrentFrameIndex() {
     return this.mCurrentFrameIndex;
   }
@@ -434,11 +402,7 @@ public class SGAnimationThread extends Thread implements SGIDisposable, SGIAnima
     this.mObserverList.remove(obs);
   }
 
-  /**
-   * Returns the list of available frame indices.
-   *
-   * @return the list of available frame indices
-   */
+  /** Returns the list of available frame indices. */
   public int[] getAvailableFrameIndices() {
     return this.mFrameIndexArray.clone();
   }

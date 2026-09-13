@@ -23,7 +23,6 @@ public interface SGIColorBarConstants extends SGIConstants {
 
   public static final String KEY_COLOR_BAR_STYLE = "ColorBarStyle";
 
-  // for backward compatibility for version <= 2.0.0
   public static final String KEY_COLOR_BAR_REVERSED_ORDER = "ReversedOrder";
 
   public static final String KEY_COLOR_BAR_LINE_COLOR = "LineColor";
@@ -116,7 +115,6 @@ public interface SGIColorBarConstants extends SGIConstants {
   public static final String COM_COLOR_BAR_SPACE_FRAME_LINE_AND_NUMBER = "FrameLineNumberSpace";
 
   //
-  // for backward compatibility (<= 2.0.0)
   //
 
   public static final String COM_COLOR_MAP_REVERSED_ORDER = "ReversedOrder";

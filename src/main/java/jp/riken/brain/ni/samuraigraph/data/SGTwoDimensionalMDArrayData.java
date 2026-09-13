@@ -64,11 +64,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     this.mYStride = null;
   }
 
-  /**
-   * Returns the copy of this data object.
-   *
-   * @return a copy of this data object
-   */
+  /** Returns the copy of this data object. */
   public Object clone() {
     SGTwoDimensionalMDArrayData data = (SGTwoDimensionalMDArrayData) super.clone();
     data.mXVariable = copyVariable(this.mXVariable);
@@ -81,6 +77,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
   /**
    * Builds a data object.
    *
+   * @param strideAvailable the strideAvailable parameter
    * @param src the data source
    * @param obs a data observer
    * @param scatterStride stride for scatter plot
@@ -94,11 +91,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     this.mIndexStride = (scatterStride != null) ? (SGIntegerSeriesSet) scatterStride.clone() : null;
   }
 
-  /**
-   * Returns the stride for x-values.
-   *
-   * @return the stride
-   */
+  /** Returns the stride for x-values. */
   public SGIntegerSeriesSet getXStride() {
     if (this.mXStride != null) {
       return (SGIntegerSeriesSet) this.mXStride.clone();
@@ -123,11 +116,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns the stride for y-values.
-   *
-   * @return the stride
-   */
+  /** Returns the stride for y-values. */
   public SGIntegerSeriesSet getYStride() {
     if (this.mYStride != null) {
       return (SGIntegerSeriesSet) this.mYStride.clone();
@@ -152,11 +141,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns the number of data points without taking into account the stride.
-   *
-   * @return the number of data points without taking into account the stride
-   */
+  /** Returns the number of data points without taking into account the stride. */
   @Override
   public int getAllPointsNumber() {
     if (this.isIndexAvailable()) {
@@ -168,11 +153,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns the title for the X-axis.
-   *
-   * @return the title for the X-axis
-   */
+  /** Returns the title for the X-axis. */
   @Override
   public String getTitleX() {
     if (this.mXVariable != null) {
@@ -182,11 +163,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns the title for the Y-axis.
-   *
-   * @return the title for the Y-axis
-   */
+  /** Returns the title for the Y-axis. */
   @Override
   public String getTitleY() {
     if (this.mYVariable != null) {
@@ -196,11 +173,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns an array of X-values.
-   *
-   * @return an array of X-values
-   */
+  /** Returns an array of X-values. */
   public double[] getXValueArray(final boolean all) {
     SGIntegerSeriesSet stride;
     String key;
@@ -214,11 +187,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     return this.getValueArraySub(all, this.mXVariable, stride, key);
   }
 
-  /**
-   * Returns an array of Y-values.
-   *
-   * @return an array of Y-values
-   */
+  /** Returns an array of Y-values. */
   public double[] getYValueArray(final boolean all) {
     SGIntegerSeriesSet stride;
     String key;
@@ -232,11 +201,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     return this.getValueArraySub(all, this.mYVariable, stride, key);
   }
 
-  /**
-   * Returns an array of xy-values.
-   *
-   * @return an array of xy-values
-   */
+  /** Returns an array of xy-values. */
   @Override
   public SGTuple2d[] getXYValueArray(final boolean all) {
     double[] xArray = this.getXValueArray(all);
@@ -259,20 +224,12 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns the variable for x-values.
-   *
-   * @return the variable for x-values
-   */
+  /** Returns the variable for x-values. */
   public SGMDArrayVariable getXVariable() {
     return this.mXVariable;
   }
 
-  /**
-   * Returns the variable for y-values.
-   *
-   * @return the variable for y-values
-   */
+  /** Returns the variable for y-values. */
   public SGMDArrayVariable getYVariable() {
     return this.mYVariable;
   }
@@ -281,7 +238,6 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
    * Sets the data.
    *
    * @param data data set to this object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (!(data instanceof SGTwoDimensionalMDArrayData)) {
@@ -304,8 +260,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
    * Write properties of this object to the Element.
    *
    * @param el the Element object
-   * @param type type of the method to save properties
-   * @return true if succeeded
+   * @param params type of the method to save properties
    */
   public boolean writeProperty(Element el, final SGExportParameter params) {
     if (super.writeProperty(el, params) == false) {
@@ -415,16 +370,12 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
      * Returns whether this data property has the equal column types with given data property.
      *
      * @param dp a data property
-     * @return true if this data property has the equal column types with given data property
      */
     @Override
     public boolean hasEqualColumnTypes(DataProperties dp) {
       if ((dp instanceof TwoDimensionalMDArrayDataProperties) == false) {
         return false;
       }
-      //            if (super.hasEqualColumnTypes(dp) == false) {
-      //            	return false;
-      //            }
       TwoDimensionalMDArrayDataProperties p = (TwoDimensionalMDArrayDataProperties) dp;
       if (SGUtility.equals(this.xName, p.xName) == false) {
         return false;
@@ -456,11 +407,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
       return true;
     }
 
-    /**
-     * Returns a copy of this object.
-     *
-     * @return a copy of this object
-     */
+    /** Returns a copy of this object. */
     public Object copy() {
       TwoDimensionalMDArrayDataProperties p = (TwoDimensionalMDArrayDataProperties) super.copy();
       p.xStride = (this.xStride != null) ? (SGIntegerSeriesSet) this.xStride.clone() : null;
@@ -475,7 +422,6 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
    * Returns the properties of this data.
    *
    * @param p the properties of this data
-   * @return true if succeeded
    */
   @Override
   public boolean getProperties(final SGProperties p) {
@@ -498,7 +444,6 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
    * Sets the properties to this data.
    *
    * @param p properties to set
-   * @return true if succeeded
    */
   @Override
   public boolean setProperties(final SGProperties p) {
@@ -720,11 +665,7 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     return true;
   }
 
-  /**
-   * Returns a map of stride for data arrays.
-   *
-   * @return a map of stride for data arrays
-   */
+  /** Returns a map of stride for data arrays. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
     Map<String, SGIntegerSeriesSet> map = new HashMap<String, SGIntegerSeriesSet>();
@@ -755,20 +696,12 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
 
   protected abstract String getScatterStrideKey();
 
-  /**
-   * Returns the length of x-dimension without taking into account the stride.
-   *
-   * @return the length of x-dimension without taking into account the stride
-   */
+  /** Returns the length of x-dimension without taking into account the stride. */
   public int getXDimensionLength() {
     return this.getAllPointsNumberSub(this.mXVariable, this.getXDimensionKey());
   }
 
-  /**
-   * Returns the length of y-dimension without taking into account the stride.
-   *
-   * @return the length of y-dimension without taking into account the stride
-   */
+  /** Returns the length of y-dimension without taking into account the stride. */
   public int getYDimensionLength() {
     return this.getAllPointsNumberSub(this.mYVariable, this.getYDimensionKey());
   }
@@ -810,21 +743,13 @@ public abstract class SGTwoDimensionalMDArrayData extends SGMDArrayData
     }
   }
 
-  /**
-   * Returns whether the index is available.
-   *
-   * @return true if the index is available
-   */
+  /** Returns whether the index is available. */
   @Override
   public boolean isIndexAvailable() {
     return (this.mIndexStride != null);
   }
 
-  /**
-   * Returns the stride for index.
-   *
-   * @return the stride for index
-   */
+  /** Returns the stride for index. */
   @Override
   public SGIntegerSeriesSet getIndexStride() {
     if (this.mIndexStride != null) {

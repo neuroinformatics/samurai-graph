@@ -186,12 +186,9 @@ public class SGSliderPanel extends javax.swing.JPanel
       if (value != cur) {
         final int min = this.mSlider.getMinimum();
         final int max = this.mSlider.getMaximum();
-        //				final int valueRange = max - min + 1;
         if (value < min) {
-          //					value += valueRange;
           value = min;
         } else if (value > max) {
-          //					value -= valueRange;
           value = max;
         }
         this.mSlider.setValue(value);
@@ -199,11 +196,7 @@ public class SGSliderPanel extends javax.swing.JPanel
     }
   }
 
-  /**
-   * Returns the current index.
-   *
-   * @return the current index
-   */
+  /** Returns the current index. */
   public int getCurrentIndex() {
     return this.mSlider.getValue();
   }
@@ -302,11 +295,7 @@ public class SGSliderPanel extends javax.swing.JPanel
     this.mSlider.setPreferredSize(new Dimension(width, cur.height));
   }
 
-  /**
-   * Returns the slider.
-   *
-   * @return the slider
-   */
+  /** Returns the slider. */
   public JSlider getSlider() {
     return this.mSlider;
   }

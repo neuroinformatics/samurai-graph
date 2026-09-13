@@ -59,11 +59,7 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     return this.getName() != null ? this.getName() : "Legend";
   }
 
-  /**
-   * Returns the commands to move data objects.
-   *
-   * @return the commands
-   */
+  /** Returns the commands to move data objects. */
   protected List<String> getMoveCommandList() {
     List<String> list = new ArrayList<String>();
     list.add(MENUCMD_MOVE_TO_TOP);
@@ -76,18 +72,12 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
   /**
    * Returns whether this group set is visible in two means: the data is not deleted and visibility
    * flag is set to true.
-   *
-   * @return true if this legend is not deleted and is visible
    */
   boolean isViewable() {
     return (this.isVisible() && this.isVisibleInLegend());
   }
 
-  /**
-   * Returns whether this group set is visible.
-   *
-   * @return true if this legend is visible
-   */
+  /** Returns whether this group set is visible. */
   public boolean getLegendVisibleFlag() {
     return this.isVisibleInLegend();
   }
@@ -120,11 +110,7 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     return true;
   }
 
-  /**
-   * Create a string object to display the data name.
-   *
-   * @return true if succeeded
-   */
+  /** Create a string object to display the data name. */
   boolean createStringElement() {
     SGDrawingElementString2DExtended el =
         new SGDrawingElementString2DExtended(
@@ -139,9 +125,7 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private boolean paintString(final Graphics2D g2d) {
     if (this.mDrawingString != null) {
       this.mDrawingString.paint(g2d);
@@ -153,7 +137,6 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
    * Sets the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     if (super.setMagnification(mag) == false) {
@@ -167,16 +150,12 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGDrawingElementString2DExtended getStringElement() {
     return this.mDrawingString;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Rectangle2D getStringBounds() {
     if (this.mDrawingString == null) {
       return null;
@@ -256,9 +235,7 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean createDrawingElement() {
     final List<SGElementGroup> list = this.mDrawingElementGroupList;
     for (int ii = 0; ii < list.size(); ii++) {
@@ -296,9 +273,6 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     group.initDrawingElement(lElement.getNumberOfPoints());
 
     // // set the properties to drawing elements
-    // if (group.setPropertiesOfDrawingElements() == false) {
-    // return false;
-    // }
 
     // set magnification
     group.setMagnification(this.getMagnification());
@@ -313,15 +287,9 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     return legend.mAxisElement.getAxisInPlane(location);
   }
 
-  /**
-   * Returns a property dialog.
-   *
-   * @return property dialog
-   */
+  /** Returns a property dialog. */
   public SGPropertyDialog getPropertyDialog() {
     SGData data = this.getData();
-    // SGPropertyDialog dg =
-    // legend.getDataDialog(data.getDataType());
     SGPropertyDialog dg = legend.getDataDialog(data);
     return dg;
   }
@@ -333,11 +301,7 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     return true;
   }
 
-  /**
-   * Update drawing elements with related data object.
-   *
-   * @return true if succeeded
-   */
+  /** Update drawing elements with related data object. */
   public boolean updateWithData() {
     // update drawing elements
     if (legend.updateAllDrawingElements() == false) {
@@ -346,11 +310,7 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     return true;
   }
 
-  /**
-   * Commit the change of the properties.
-   *
-   * @return true if succeeded
-   */
+  /** Commit the change of the properties. */
   public boolean commit() {
 
     // compare current data properties and temporary data properties and notify the
@@ -380,11 +340,7 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     return true;
   }
 
-  /**
-   * Cancel the setting of properties.
-   *
-   * @return true if succeeded
-   */
+  /** Cancel the setting of properties. */
   public boolean cancel() {
 
     // compare current data properties and temporary data properties and notify the
@@ -412,11 +368,7 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     return true;
   }
 
-  /**
-   * Set properties from the property dialog.
-   *
-   * @return true if succeeded
-   */
+  /** Set properties from the property dialog. */
   public boolean preview() {
 
     // compare current data properties and temporary data properties and notify the
@@ -446,9 +398,7 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
     legend.notifyToListener(msg, source);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getTagName() {
     return "";
   }
@@ -477,10 +427,6 @@ abstract class ElementGroupSetInLegend extends SGElementGroupSetForData implemen
       legend.moveChild(this.getID(), true);
     } else if (command.equals(MENUCMD_MOVE_TO_BOTTOM)) {
       legend.moveChildToEnd(this.getID(), true);
-      // } else if (command.equals(SGIConstants.MENUCMD_ANIMATION)) {
-      // this.mTempDataProperties = this.mData.getProperties();
-      // notifyToListener(command);
-      // doAnimation(this);
     } else {
       notifyToListener(command, source);
     }

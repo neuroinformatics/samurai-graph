@@ -125,9 +125,7 @@ public class SGFigureElementString extends SGFigureElement
     this.mAxisElement = null;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return "Labels";
   }
@@ -149,11 +147,9 @@ public class SGFigureElementString extends SGFigureElement
    *
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addString(final int x, final int y) {
 
-    // if the graph rectangle does not contain the point, returns false
     if (this.getGraphRect().contains(x, y) == false) {
       return false;
     }
@@ -197,9 +193,9 @@ public class SGFigureElementString extends SGFigureElement
   /**
    * Insert a label at a given point with default axes.
    *
+   * @param str the str parameter
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return id of string label if succeeds. or -1.
    */
   @Override
   public int addNewString(final String str, final int x, final int y) {
@@ -222,7 +218,6 @@ public class SGFigureElementString extends SGFigureElement
    * @param y the y-coordinate
    * @param xAxis the x-axis
    * @param yAxis the y-axis
-   * @return true if succeeded
    */
   private boolean addString(
       final int id,
@@ -258,7 +253,6 @@ public class SGFigureElementString extends SGFigureElement
    * @param str a text string to insert
    * @param x axis value for default x-axis
    * @param y axis value for default y-axis
-   * @return true if succeeded
    */
   public boolean addString(final int id, final String str, final double x, final double y) {
     return this.addString(
@@ -274,7 +268,6 @@ public class SGFigureElementString extends SGFigureElement
    * @param y axis value for given y-axis
    * @param xAxisLocation location of the x-axis
    * @param yAxisLocation location of the y-axis
-   * @return true if succeeded
    */
   public boolean addString(
       final int id,
@@ -440,17 +433,14 @@ public class SGFigureElementString extends SGFigureElement
   }
 
   private boolean synchronizedToAxisElement(final SGIFigureElementAxis element, final String msg) {
-    /*
-     * ArrayList list = this.getVisibleStringElementList(); for( int ii=0;
-     * ii<list.size(); ii++ ) { ElementString el =
-     * (ElementString)list.get(ii); el.setAxisValue(); }
-     */
+
     return true;
   }
 
   /**
    * Synchronize the element given by the argument.
    *
+   * @param msg the msg parameter
    * @param element An object to be synchronized.
    */
   public boolean synchronizeArgument(final SGIFigureElement element, final String msg) {
@@ -462,7 +452,6 @@ public class SGFigureElementString extends SGFigureElement
    * Sets the magnification.
    *
    * @param mag the magnification
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     if (this.closeTextField() == false) {
@@ -540,67 +529,6 @@ public class SGFigureElementString extends SGFigureElement
     return true;
   }
 
-  /*
-   * public boolean onKeyPressed(final KeyEvent e) {
-   * boolean effective = false;
-   * final int keycode = e.getKeyCode();
-   * final int mod = e.getModifiersEx();
-   * final boolean isShiftPressed = ((mod & InputEvent.SHIFT_DOWN_MASK) != 0);
-   * int dx = 0;
-   * int dy = 0;
-   * switch (keycode) {
-   * case KeyEvent.VK_UP:
-   * if (isShiftPressed) {
-   * dy = -1;
-   * } else {
-   * dy = -10;
-   * }
-   * break;
-   * case KeyEvent.VK_DOWN:
-   * if (isShiftPressed) {
-   * dy = 1;
-   * } else {
-   * dy = 10;
-   * }
-   * break;
-   * case KeyEvent.VK_LEFT:
-   * if (isShiftPressed) {
-   * dx = -1;
-   * } else {
-   * dx = -10;
-   * }
-   * break;
-   * case KeyEvent.VK_RIGHT:
-   * if (isShiftPressed) {
-   * dx = 1;
-   * } else {
-   * dx = 10;
-   * }
-   * break;
-   * }
-   * if (dx != 0 || dy != 0) {
-   * final List<SGIChildObject> list = this.getVisibleChildList();
-   * for (int ii = list.size() - 1; ii >= 0; ii--) {
-   * final LabelElement el = (LabelElement) list.get(ii);
-   * if (el.isSelected()) {
-   * if (el.prepare() == false) {
-   * return false;
-   * }
-   * el.translate((float) dx, (float) dy);
-   * if (el.commit() == false) {
-   * return false;
-   * }
-   * this.notifyToRoot();
-   * this.notifyChange();
-   * this.repaint();
-   * effective = true;
-   * }
-   * }
-   * }
-   * return effective;
-   * }
-   */
-
   /** */
   public boolean onMouseClicked(final MouseEvent e) {
 
@@ -655,19 +583,13 @@ public class SGFigureElementString extends SGFigureElement
     return false;
   }
 
-  /**
-   * Overrode for the text field for the text of symbols.
-   *
-   * @return true if a text field is shown
-   */
+  /** Overrode for the text field for the text of symbols. */
   public boolean closeTextField() {
     if (this.mEditedLabelElement == null) {
-      // if no label is edited, add a new label
       if (this.addStringElementFromTextField() == false) {
         return false;
       }
     } else {
-      // if a label is edited, commit the change of properties
       if (this.commitEdit() == false) {
         return false;
       }
@@ -716,7 +638,6 @@ public class SGFigureElementString extends SGFigureElement
     for (int ii = list.size() - 1; ii >= 0; ii--) {
       final LabelElement el = (LabelElement) list.get(ii);
       if (el.contains(x, y)) {
-        // el.mFrameFlag = true;
         if (fList.contains(el)) {
           this.mPressedPoint = e.getPoint();
           el.mTemporaryProperties = el.getProperties();
@@ -727,7 +648,6 @@ public class SGFigureElementString extends SGFigureElement
       }
     }
 
-    // if the mouse is pressed on the label
     if (flag) {
       this.setMouseCursor(Cursor.MOVE_CURSOR);
     }
@@ -735,7 +655,6 @@ public class SGFigureElementString extends SGFigureElement
     else {
       final boolean onEdgeFlag = this.onEdge(x, y);
 
-      // if the mouse is on the edge of the text field
       if (this.mEditedLabelElement != null && onEdgeFlag) {
         flag = true;
       } else {
@@ -788,11 +707,7 @@ public class SGFigureElementString extends SGFigureElement
     return true;
   }
 
-  /**
-   * Updates changed flag of focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Updates changed flag of focused objects. */
   @Override
   public boolean updateChangedFlag() {
     List<SGISelectable> list = this.getFocusedObjectsList();
@@ -832,7 +747,8 @@ public class SGFigureElementString extends SGFigureElement
   }
 
   /**
-   * @param e
+   * @param x the x parameter
+   * @param y the y parameter
    */
   public boolean setMouseCursor(final int x, final int y) {
     List<SGIChildObject> list = this.getVisibleChildList();
@@ -876,9 +792,7 @@ public class SGFigureElementString extends SGFigureElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getTagName() {
     return TAG_NAME_STRING_ELEMENT;
   }
@@ -886,8 +800,8 @@ public class SGFigureElementString extends SGFigureElement
   /**
    * Creates an array of Element objects.
    *
+   * @param params the params parameter
    * @param document an Document objects to append elements
-   * @return an array of Element objects
    */
   public Element[] createElement(final Document document, SGExportParameter params) {
     Element el = this.createThisElement(document, params);
@@ -917,7 +831,6 @@ public class SGFigureElementString extends SGFigureElement
    *
    * @param element an Element object which has properties
    * @param versionNumber the version number of property file
-   * @return true if succeeded
    */
   public boolean readProperty(final Element element, final String versionNumber) {
     NodeList nList = element.getElementsByTagName(SGIStringConstants.TAG_NAME_LABEL);
@@ -969,11 +882,7 @@ public class SGFigureElementString extends SGFigureElement
     return true;
   }
 
-  /**
-   * Create copies of the focused objects.
-   *
-   * @return
-   */
+  /** Create copies of the focused objects. */
   public boolean duplicateFocusedObjects() {
     final int ox = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_X);
     final int oy = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_Y);
@@ -1006,7 +915,6 @@ public class SGFigureElementString extends SGFigureElement
    * Paste the objects.
    *
    * @param list of the objects to be pasted
-   * @return true:succeeded, false:failed
    */
   public boolean paste(List<SGICopyable> list) {
     final float mag = this.getMagnification();
@@ -1052,7 +960,6 @@ public class SGFigureElementString extends SGFigureElement
    * Returns the list of selected property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of selected property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getSelectedPropertyDialogObserverList(Class<?> cl) {
@@ -1063,7 +970,6 @@ public class SGFigureElementString extends SGFigureElement
    * Returns the list of visible property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of visible property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getVisiblePropertyDialogObserverList(Class<?> cl) {
@@ -1074,18 +980,13 @@ public class SGFigureElementString extends SGFigureElement
    * Returns the list of all property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of all property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getAllPropertyDialogObserverList(Class<?> cl) {
     return this.getVisiblePropertyDialogObserverList();
   }
 
-  /**
-   * Returns the class object of property dialog observer.
-   *
-   * @return the class object
-   */
+  /** Returns the class object of property dialog observer. */
   @Override
   public Class<?> getPropertyDialogObserverClass() {
     return LabelElement.class;
@@ -1144,11 +1045,7 @@ public class SGFigureElementString extends SGFigureElement
     /** Flag whether this object is focused. */
     private boolean mSelectedFlag = false;
 
-    /**
-     * Get the flag as a focused object.
-     *
-     * @return whether this object is focused.
-     */
+    /** Get the flag as a focused object. */
     public boolean isSelected() {
       return this.mSelectedFlag;
     }
@@ -1198,18 +1095,12 @@ public class SGFigureElementString extends SGFigureElement
       return true;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public String getClassDescription() {
       return "";
     }
 
-    /**
-     * Returns the description of an instance.
-     *
-     * @return the description of an instance
-     */
+    /** Returns the description of an instance. */
     public String getInstanceDescription() {
       String xAxis = SGFigureElementString.this.mAxisElement.getLocationName(this.mXAxis);
       String yAxis = SGFigureElementString.this.mAxisElement.getLocationName(this.mYAxis);
@@ -1243,9 +1134,7 @@ public class SGFigureElementString extends SGFigureElement
 
     private int mTempYAxis = -1;
 
-    /**
-     * @return
-     */
+    /** */
     public double getXValue() {
       SGAxis axis = this.mXAxis;
       double value = calcValue(this.getX(), axis, true);
@@ -1253,9 +1142,7 @@ public class SGFigureElementString extends SGFigureElement
       return value;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public double getYValue() {
       SGAxis axis = this.mYAxis;
       double value = calcValue(this.getY(), axis, false);
@@ -1267,7 +1154,6 @@ public class SGFigureElementString extends SGFigureElement
      * Sets the axis value for the x-coordinate.
      *
      * @param value the axis value for the x-coordinate
-     * @return true if succeeded
      */
     public boolean setXValue(final double value) {
       SGAxis axis = this.mXAxis;
@@ -1279,7 +1165,6 @@ public class SGFigureElementString extends SGFigureElement
       double currentValue = calcValue(this.getX(), axis, true);
       currentValue = SGUtilityNumber.getNumberInRangeOrder(currentValue, axis);
 
-      // if values from the dialog is different from the current values,
       // set the values from the dialog
       float x;
       if (value == currentValue) {
@@ -1298,7 +1183,6 @@ public class SGFigureElementString extends SGFigureElement
      * Sets the axis value for the y-coordinate.
      *
      * @param value the axis value for the y-coordinate
-     * @return true if succeeded
      */
     public boolean setYValue(final double value) {
       SGAxis axis = this.mYAxis;
@@ -1310,7 +1194,6 @@ public class SGFigureElementString extends SGFigureElement
       double currentValue = calcValue(this.getY(), axis, false);
       currentValue = SGUtilityNumber.getNumberInRangeOrder(currentValue, axis);
 
-      // if values from the dialog is different from the current values,
       // set the values from the dialog
       float y;
       if (value == currentValue) {
@@ -1328,7 +1211,6 @@ public class SGFigureElementString extends SGFigureElement
     /**
      * @param config
      * @param value
-     * @return
      */
     public boolean hasValidXValue(final int config, final Number value) {
       final SGAxis axis =
@@ -1342,7 +1224,6 @@ public class SGFigureElementString extends SGFigureElement
     /**
      * @param config
      * @param value
-     * @return
      */
     public boolean hasValidYValue(final int config, final Number value) {
       final SGAxis axis =
@@ -1367,7 +1248,6 @@ public class SGFigureElementString extends SGFigureElement
      * Sets the location of the x-axis.
      *
      * @param location the location of the x-axis
-     * @return true if succeeded
      */
     public boolean setXAxisLocation(final int location) {
       if (location != SGIFigureElementAxis.AXIS_HORIZONTAL_1
@@ -1382,7 +1262,6 @@ public class SGFigureElementString extends SGFigureElement
      * Sets the location of the y-axis.
      *
      * @param location the location of the y-axis
-     * @return true if succeeded
      */
     public boolean setYAxisLocation(final int location) {
       if (location != SGIFigureElementAxis.AXIS_VERTICAL_1
@@ -1397,7 +1276,6 @@ public class SGFigureElementString extends SGFigureElement
      * Sets the text string.
      *
      * @param str a text string to set
-     * @return true if succeeded
      */
     public boolean setString(final String str) {
       if (SGUtilityText.isValidString(str) == false) {
@@ -1410,7 +1288,6 @@ public class SGFigureElementString extends SGFigureElement
      * Sets the color.
      *
      * @param color the color to set
-     * @return true if succeeded
      */
     public boolean setStringColor(final Color color) {
       return this.setColor(color);
@@ -1427,9 +1304,7 @@ public class SGFigureElementString extends SGFigureElement
       return true;
     }
 
-    /**
-     * @return
-     */
+    /** */
     private ArrayList<Point2D> getAnchorPointList() {
       ArrayList<Point2D> list = new ArrayList<>();
 
@@ -1452,11 +1327,7 @@ public class SGFigureElementString extends SGFigureElement
       return list;
     }
 
-    /**
-     * Returns a pop-up menu.
-     *
-     * @return a pop-up menu
-     */
+    /** Returns a pop-up menu. */
     public JPopupMenu getPopupMenu() {
       JPopupMenu p = null;
       if (this.mPopupMenu != null) {
@@ -1468,11 +1339,7 @@ public class SGFigureElementString extends SGFigureElement
       return p;
     }
 
-    /**
-     * Create a pop-up menu.
-     *
-     * @return a pop-up menu
-     */
+    /** Create a pop-up menu. */
     private JPopupMenu createPopupMenu() {
       JPopupMenu p = new JPopupMenu();
       p.setBounds(0, 0, 100, 100);
@@ -1504,16 +1371,14 @@ public class SGFigureElementString extends SGFigureElement
       return p;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public String getTagName() {
       return SGIStringConstants.TAG_NAME_LABEL;
     }
 
     /**
      * @param document
-     * @return
+     * @param params the params parameter
      */
     public Element createElement(final Document document, SGExportParameter params) {
       Element el = document.createElement(this.getTagName());
@@ -1586,11 +1451,7 @@ public class SGFigureElementString extends SGFigureElement
       return true;
     }
 
-    /**
-     * Returns the location of this symbol.
-     *
-     * @return the location of this symbol
-     */
+    /** Returns the location of this symbol. */
     public SGTuple2f getLocation() {
       final float baseX = super.getX();
       final float baseY = super.getY();
@@ -1599,20 +1460,12 @@ public class SGFigureElementString extends SGFigureElement
       return new SGTuple2f(x, y);
     }
 
-    /**
-     * Returns the x coordinate of the location of this symbol.
-     *
-     * @return the x coordinate of the location of this symbol
-     */
+    /** Returns the x coordinate of the location of this symbol. */
     public float getX() {
       return this.getLocation().x;
     }
 
-    /**
-     * Returns the y coordinate of the location of this symbol.
-     *
-     * @return the y coordinate of the location of this symbol
-     */
+    /** Returns the y coordinate of the location of this symbol. */
     public float getY() {
       return this.getLocation().y;
     }
@@ -1622,7 +1475,6 @@ public class SGFigureElementString extends SGFigureElement
      *
      * @param x the x coordinate to set
      * @param y the y coordinate to set
-     * @return true if succeeded
      */
     public boolean setLocation(final float x, final float y) {
       final float mag = this.getMagnification();
@@ -1718,7 +1570,6 @@ public class SGFigureElementString extends SGFigureElement
 
     /** */
     public boolean commit() {
-      // if property has changed between before and after dialog showing
       // then update history.
       SGProperties pTemp = this.mTemporaryProperties;
       SGProperties pPresent = this.getProperties();
@@ -1749,11 +1600,7 @@ public class SGFigureElementString extends SGFigureElement
       return true;
     }
 
-    /**
-     * Returns the property dialog.
-     *
-     * @return a property dialog
-     */
+    /** Returns the property dialog. */
     public SGPropertyDialog getPropertyDialog() {
       SGPropertyDialog dg = null;
       if (mPropertyDialog != null) {
@@ -1765,11 +1612,7 @@ public class SGFigureElementString extends SGFigureElement
       return dg;
     }
 
-    /**
-     * Returns a list of child nodes.
-     *
-     * @return a list of child nodes
-     */
+    /** Returns a list of child nodes. */
     public ArrayList<SGINode> getChildNodes() {
       return new ArrayList<SGINode>();
     }
@@ -1777,31 +1620,24 @@ public class SGFigureElementString extends SGFigureElement
     //
     private SGUndoManager mUndoManager = new SGUndoManager(this);
 
-    /**
-     * @return
-     */
+    /** */
     public SGProperties getMemento() {
       return this.getProperties();
     }
 
     /**
      * @param p
-     * @return
      */
     public boolean setMemento(SGProperties p) {
       return this.setProperties(p);
     }
 
-    /**
-     * @return
-     */
+    /** */
     public boolean isUndoable() {
       return this.mUndoManager.isUndoable();
     }
 
-    /**
-     * @return
-     */
+    /** */
     public boolean isRedoable() {
       return this.mUndoManager.isRedoable();
     }
@@ -1841,11 +1677,7 @@ public class SGFigureElementString extends SGFigureElement
       this.mUndoManager.initUndoBuffer();
     }
 
-    /**
-     * Delete all forward histories.
-     *
-     * @return true if succeeded
-     */
+    /** Delete all forward histories. */
     public boolean deleteForwardHistory() {
       return this.mUndoManager.deleteForwardHistory();
     }
@@ -1859,7 +1691,6 @@ public class SGFigureElementString extends SGFigureElement
      * Sets the properties.
      *
      * @param map a map of properties
-     * @return the result of setting properties
      */
     public SGPropertyResults setProperties(SGPropertyMap map) {
       SGPropertyResults result = new SGPropertyResults();
@@ -2014,11 +1845,7 @@ public class SGFigureElementString extends SGFigureElement
       return result;
     }
 
-    /**
-     * Returns a text string of the commands.
-     *
-     * @return a text string of the commands
-     */
+    /** Returns a text string of the commands. */
     @Override
     public String getCommandString(SGExportParameter params) {
       StringBuilder sb = new StringBuilder();
@@ -2030,22 +1857,14 @@ public class SGFigureElementString extends SGFigureElement
       return sb.toString();
     }
 
-    /**
-     * Creates and returns a text string of commands.
-     *
-     * @return a text string of commands
-     */
+    /** Creates and returns a text string of commands. */
     @Override
     public String createCommandString(SGExportParameter params) {
       return SGCommandUtility.createCommandString(
           COM_LABEL, Integer.toString(this.mID), this.getCommandPropertyMap(params));
     }
 
-    /**
-     * Creates and returns the map of properties.
-     *
-     * @return the map of properties
-     */
+    /** Creates and returns the map of properties. */
     @Override
     public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
       SGPropertyMap map = super.getCommandPropertyMap(params);
@@ -2108,15 +1927,9 @@ public class SGFigureElementString extends SGFigureElement
       if (this.mY != p.mY) {
         return false;
       }
-      // if (this.mText.equals(p.mText) == false)
-      // return false;
       if (SGUtility.equals(this.mText, p.mText) == false) {
         return false;
       }
-      // if (p.mXAxis.equals(this.mXAxis) == false)
-      // return false;
-      // if (p.mYAxis.equals(this.mYAxis) == false)
-      // return false;
       if (SGUtility.equals(this.mXAxis, p.mXAxis) == false) {
         return false;
       }
@@ -2230,7 +2043,6 @@ public class SGFigureElementString extends SGFigureElement
     Object source = e.getSource();
     char c = e.getKeyChar();
 
-    // if the text field is visible
     if (source.equals(this.mEditField)) {
 
       // hide the text field
@@ -2246,7 +2058,6 @@ public class SGFigureElementString extends SGFigureElement
    * Sets the dialog owner this figure element.
    *
    * @param frame the dialog owner
-   * @return true if succeeded
    */
   public boolean setDialogOwner(final Frame frame) {
     if (super.setDialogOwner(frame) == false) {

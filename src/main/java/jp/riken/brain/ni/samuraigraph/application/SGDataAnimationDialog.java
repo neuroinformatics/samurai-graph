@@ -71,7 +71,7 @@ public class SGDataAnimationDialog extends SGDialog
   /**
    * Builds a new dialog.
    *
-   * @param parent the parent of this dialog
+   * @param wnd the parent of this dialog
    * @param modal true to create a modal dialog
    */
   public SGDataAnimationDialog(SGDrawingWindow wnd, final boolean modal) {
@@ -1089,7 +1089,7 @@ public class SGDataAnimationDialog extends SGDialog
   /**
    * Sets the animation data source.
    *
-   * @param animation the animation data source
+   * @param animations the animation data source
    */
   public void setAnimation(SGIAnimation[] animations) {
     if (animations == null) {

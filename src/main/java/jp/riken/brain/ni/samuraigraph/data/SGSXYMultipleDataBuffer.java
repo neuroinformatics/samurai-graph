@@ -33,7 +33,6 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
   private double[][] mUpperErrorValues = null;
 
   // The array of flags whether child SXY data buffer has the same error values
-  // for lower and upper.
   private Boolean[] mSameErrorVariableFlags = null;
 
   // The array of tick labels.
@@ -272,34 +271,6 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
     this.mDateArray = (dateArray != null) ? dateArray.clone() : null;
   }
 
-  //	public double[] getSingleValues() {
-  //		double[] array = this.getSingleArray();
-  //		return (array != null) ? SGUtility.copyDoubleArray(array) : null;
-  //	}
-  //
-  //	private double[] getSingleArray() {
-  //		if (this.hasOneSidedMultipleValues()) {
-  //			double[][] values = this.mYValuesMultipleFlag.booleanValue() ? this.mXValues : this.mYValues;
-  //			return values[0];
-  //		} else {
-  //			return null;
-  //		}
-  //	}
-  //
-  //	public double[][] getMultipleValues() {
-  //		double[][] array = this.getMultipleArray();
-  //		return (array != null) ? SGUtility.copyDoubleArray(array) : null;
-  //	}
-  //
-  //	private double[][] getMultipleArray() {
-  //		if (this.hasOneSidedMultipleValues()) {
-  //			double[][] values = this.mYValuesMultipleFlag.booleanValue() ? this.mYValues : this.mXValues;
-  //			return values;
-  //		} else {
-  //			return null;
-  //		}
-  //	}
-
   private double[][] copyValues(double[][] values) {
     return SGUtility.copyDoubleArray(values);
   }
@@ -501,8 +472,4 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
   public Boolean[] hasSameErrorVariable() {
     return (this.mSameErrorVariableFlags != null) ? this.mSameErrorVariableFlags.clone() : null;
   }
-
-  //	public boolean hasOneSidedMultipleValues() {
-  //		return (this.mYValuesMultipleFlag != null);
-  //	}
 }

@@ -98,7 +98,6 @@ public final class SGDataColumnInfoUtility
       }
     }
     if (allEqual) {
-      // if all indices are equal, do nothing
       return -1;
     }
 

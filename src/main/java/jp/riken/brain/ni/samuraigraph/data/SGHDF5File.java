@@ -84,11 +84,7 @@ public class SGHDF5File extends SGMDArrayFile {
     return dataClassList.contains(cl);
   }
 
-  /**
-   * Returns the HDF5 reader.
-   *
-   * @return the HDF5 reader
-   */
+  /** Returns the HDF5 reader. */
   public IHDF5Reader getReader() {
     return this.mReader;
   }

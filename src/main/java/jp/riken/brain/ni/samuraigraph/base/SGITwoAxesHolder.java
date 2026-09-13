@@ -9,7 +9,6 @@ public interface SGITwoAxesHolder extends SGIAxisHolder {
    * @return one of the following values defined in
    *     jp.riken.brain.ni.samuraigraph.base.SGIAxisElement : AXIS_HORIZONTAL_1, AXIS_HORIZONTAL_2,
    *     AXIS_VERTICAL_1 or AXIS_VERTICAL_2.
-   * @uml.property name="xAxisLocation"
    */
   public int getXAxisLocation();
 
@@ -19,7 +18,6 @@ public interface SGITwoAxesHolder extends SGIAxisHolder {
    * @return one of the following values defined in
    *     jp.riken.brain.ni.samuraigraph.base.SGIAxisElement : AXIS_HORIZONTAL_1, AXIS_HORIZONTAL_2,
    *     AXIS_VERTICAL_1 or AXIS_VERTICAL_2.
-   * @uml.property name="yAxisLocation"
    */
   public int getYAxisLocation();
 
@@ -30,7 +28,6 @@ public interface SGITwoAxesHolder extends SGIAxisHolder {
    *     jp.riken.brain.ni.samuraigraph.base.SGIAxisElement : AXIS_HORIZONTAL_1, AXIS_HORIZONTAL_2,
    *     AXIS_VERTICAL_1 or AXIS_VERTICAL_2.
    * @return
-   * @uml.property name="xAxisLocation"
    */
   public boolean setXAxisLocation(final int location);
 
@@ -41,7 +38,6 @@ public interface SGITwoAxesHolder extends SGIAxisHolder {
    *     jp.riken.brain.ni.samuraigraph.base.SGIAxisElement : AXIS_HORIZONTAL_1, AXIS_HORIZONTAL_2,
    *     AXIS_VERTICAL_1 or AXIS_VERTICAL_2.
    * @return
-   * @uml.property name="yAxisLocation"
    */
   public boolean setYAxisLocation(final int location);
 }

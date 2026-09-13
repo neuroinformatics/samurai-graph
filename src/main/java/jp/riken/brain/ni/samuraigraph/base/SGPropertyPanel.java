@@ -15,9 +15,7 @@ public class SGPropertyPanel extends JPanel implements SGIDisposable {
     super();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getInputErrorMessage() {
     return this.mInputErrorMessage;
   }

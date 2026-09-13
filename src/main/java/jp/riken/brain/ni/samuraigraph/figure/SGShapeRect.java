@@ -82,9 +82,7 @@ class SGShapeRect extends SGSimpleRectangle2D
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected SGFigureElementShape.ShapeObject getShapeObject() {
     return this.mShape;
   }
@@ -114,23 +112,17 @@ class SGShapeRect extends SGSimpleRectangle2D
     return this.getEdgeLineWidth(unit);
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean isHorizontallyReversed() {
     return (this.getWidth() < 0.0f);
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean isVerticallyReversed() {
     return (this.getHeight() < 0.0f);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getX1() {
     return this.getShapeElement().getXFromGraphRectValue(super.getX());
   }
@@ -140,9 +132,7 @@ class SGShapeRect extends SGSimpleRectangle2D
     return this.getX1();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getX2() {
     return this.getX1() + this.getMagnification() * this.getWidth();
   }
@@ -157,57 +147,43 @@ class SGShapeRect extends SGSimpleRectangle2D
     return this.getY1();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getY2() {
     return this.getY1() + this.getMagnification() * this.getHeight();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getLeftX() {
     return !this.isHorizontallyReversed() ? this.getX1() : this.getX2();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getRightX() {
     return !this.isHorizontallyReversed() ? this.getX2() : this.getX1();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getCenterX() {
     return this.getX1() + 0.50f * this.getMagnification() * this.getWidth();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getTopY() {
     return !this.isVerticallyReversed() ? this.getY1() : this.getY2();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getBottomY() {
     return !this.isVerticallyReversed() ? this.getY2() : this.getY1();
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getCenterY() {
     return this.getY1() + 0.50f * this.getMagnification() * this.getHeight();
   }
 
   /**
-   * @param value
+   * @param x
    */
   public void setLeftX(final float x) {
     if (!this.isHorizontallyReversed()) {
@@ -218,7 +194,7 @@ class SGShapeRect extends SGSimpleRectangle2D
   }
 
   /**
-   * @param value
+   * @param x
    */
   public void setRightX(final float x) {
     if (!this.isHorizontallyReversed()) {
@@ -229,7 +205,7 @@ class SGShapeRect extends SGSimpleRectangle2D
   }
 
   /**
-   * @param value
+   * @param y
    */
   public void setTopY(final float y) {
     if (!this.isVerticallyReversed()) {
@@ -240,7 +216,7 @@ class SGShapeRect extends SGSimpleRectangle2D
   }
 
   /**
-   * @param value
+   * @param y
    */
   public void setBottomY(final float y) {
     if (!this.isVerticallyReversed()) {
@@ -252,7 +228,6 @@ class SGShapeRect extends SGSimpleRectangle2D
 
   /**
    * @param x
-   * @return
    */
   public boolean setX1(final float x) {
     return this.setX(x);
@@ -260,7 +235,6 @@ class SGShapeRect extends SGSimpleRectangle2D
 
   /**
    * @param x
-   * @return
    */
   public boolean setX2(final float x) {
     return this.setX(x - this.getMagnification() * this.getWidth());
@@ -268,7 +242,6 @@ class SGShapeRect extends SGSimpleRectangle2D
 
   /**
    * @param y
-   * @return
    */
   public boolean setY1(final float y) {
     return this.setY(y);
@@ -276,7 +249,6 @@ class SGShapeRect extends SGSimpleRectangle2D
 
   /**
    * @param y
-   * @return
    */
   public boolean setY2(final float y) {
     return this.setY(y - this.getMagnification() * this.getHeight());
@@ -373,9 +345,7 @@ class SGShapeRect extends SGSimpleRectangle2D
     return location;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public List<Point2D> getAnchorPointList() {
     ArrayList<Point2D> list = new ArrayList<Point2D>();
 
@@ -426,9 +396,6 @@ class SGShapeRect extends SGSimpleRectangle2D
     this.setLeftX(x);
     this.setTopY(y);
 
-    // this.setRightX(x+w);
-    // this.setBottomY(y+h);
-
     return true;
   }
 
@@ -459,7 +426,6 @@ class SGShapeRect extends SGSimpleRectangle2D
       return true;
     }
 
-    // if anchor is displayed
     if (this.mShape.isSelected()) {
       final int left = (int) this.getLeftX();
       final int right = (int) this.getRightX();

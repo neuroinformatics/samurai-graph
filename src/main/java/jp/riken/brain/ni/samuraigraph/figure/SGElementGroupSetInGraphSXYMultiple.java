@@ -153,7 +153,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
   /**
    * @param b
-   * @return
    */
   public void setVisible(final boolean b) {
     super.setVisible(b);
@@ -177,7 +176,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
   /**
    * @param b
-   * @return
    */
   public boolean setVisibleInLegend(final boolean b) {
     super.setVisibleInLegend(b);
@@ -194,7 +192,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    *
    * @param x x coordinate
    * @param y y coordinate
-   * @return true if this group set contains the given point
    */
   @Override
   public boolean contains(final int x, final int y) {
@@ -214,7 +211,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   /**
    * @param x
    * @param y
-   * @return
    */
   public SGElementGroup getElementGroupAt(final int x, final int y) {
     ArrayList<SGIElementGroupSetForData> list = this.mElementGroupSetList;
@@ -280,11 +276,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     }
   }
 
-  /**
-   * Returns the first element group set.
-   *
-   * @return the first element group set
-   */
+  /** Returns the first element group set. */
   public SGIElementGroupSetForData getFirst() {
     if (this.mElementGroupSetList.size() == 0) {
       return null;
@@ -297,7 +289,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Returns whether this group set "contains" the given group set.
    *
    * @param gs the group set
-   * @return true if this group set "contains" the given group set
    */
   public boolean contains(SGElementGroupSetForData gs) {
     if (super.contains(gs)) {
@@ -316,7 +307,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the data.
    *
    * @param data a data object
-   * @return true if succeeded
    */
   public boolean setData(SGData data) {
     if (super.setData(data) == false) {
@@ -363,19 +353,13 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       return false;
     }
 
-    //        if (group.setPropertiesOfDrawingElements() == false) {
-    //            return false;
-    //        }
-
     // add a group to the list
     this.mDrawingElementGroupList.add(group);
 
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return "";
   }
@@ -385,7 +369,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * objects.
    *
    * @param data a data object
-   * @return true if succeeded
    */
   public boolean updateDrawingElementsLocation(final SGIData data) {
     if ((data instanceof SGISXYTypeMultipleData) == false) {
@@ -420,11 +403,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return true;
   }
 
-  /**
-   * Initializes the line style of child objects.
-   *
-   * @return true if succeeded
-   */
+  /** Initializes the line style of child objects. */
   @Override
   public boolean initChildLineStyle() {
     final int dataNum = this.mElementGroupSetList.size();
@@ -475,7 +454,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Paints tick labels.
    *
    * @param g2d the graphics context
-   * @return true if succeeded
    */
   public boolean paintDataString(final Graphics2D g2d) {
 
@@ -573,7 +551,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
   /**
    * @param document
-   * @return
+   * @param params the params parameter
    */
   public Element createElement(final Document document, final SGExportParameter params) {
     Element el = document.createElement(this.getTagName());
@@ -636,8 +614,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Write properties of this object to the Element.
    *
    * @param el the Element object
-   * @param type type of the method to save properties
-   * @return true if succeeded
+   * @param params type of the method to save properties
    */
   public boolean writeProperty(final Element el, final SGExportParameter params) {
     if (super.writeProperty(el, params) == false) {
@@ -701,11 +678,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return this.getLineGroup().getColor();
   }
 
-  /**
-   * Returns whether the lines connect all effective points.
-   *
-   * @return true if connecting all effective points
-   */
+  /** Returns whether the lines connect all effective points. */
   public boolean isLineConnectingAll() {
     return this.getLineGroup().isLineConnectingAll();
   }
@@ -726,11 +699,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return SGMultipleSXYUtility.setLineColor(this, cl);
   }
 
-  /**
-   * Sets whether the lines connect all effective points.
-   *
-   * @return true if succeeded
-   */
+  /** Sets whether the lines connect all effective points. */
   public boolean setLineConnectingAll(final boolean b) {
     return SGMultipleSXYUtility.setLineConnectingAll(this.getLineGroups(), b);
   }
@@ -1163,8 +1132,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
   /**
    * @param e
-   * @param groupSet
-   * @return
    */
   @Override
   protected boolean onMouseClicked(final MouseEvent e) {
@@ -1211,11 +1178,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return array;
   }
 
-  /**
-   * Returns the number of child data objects.
-   *
-   * @return the number of child data objects
-   */
+  /** Returns the number of child data objects. */
   @Override
   public int getChildNumber() {
     return this.mElementGroupSetList.size();
@@ -1224,8 +1187,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   /**
    * Returns the location of a line at a given index.
    *
+   * @param groupIndex the groupIndex parameter
    * @param index the index
-   * @return the location
    */
   public SGTuple2f getLineLocation(final int groupIndex, final int index) {
     if (groupIndex < 0 || groupIndex >= this.mElementGroupSetList.size()) {
@@ -1239,8 +1202,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   /**
    * Returns the location of a symbol at a given index.
    *
+   * @param groupIndex the groupIndex parameter
    * @param index the index
-   * @return the location
    */
   public SGTuple2f getSymbolLocation(final int groupIndex, final int index) {
     if (groupIndex < 0 || groupIndex >= this.mElementGroupSetList.size()) {
@@ -1254,8 +1217,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   /**
    * Returns the location of a bar at a given index.
    *
+   * @param groupIndex the groupIndex parameter
    * @param index the index
-   * @return the location
    */
   public SGTuple2f getBarLocation(final int groupIndex, final int index) {
     if (groupIndex < 0 || groupIndex >= this.mElementGroupSetList.size()) {
@@ -1379,16 +1342,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
           }
         }
         result.putResult(COM_DATA_LINE_COLOR, SGPropertyResults.SUCCEEDED);
-        //			} else if (COM_DATA_COLOR_STYLE_REVERSED.equalsIgnoreCase(key)) {
-        //                Boolean b = SGUtilityText.getBoolean(value);
-        //                if (b == null) {
-        //                    result.putResult(COM_DATA_COLOR_STYLE_REVERSED,
-        //                            SGPropertyResults.INVALID_INPUT_VALUE);
-        //                    continue;
-        //                }
-        //                this.mLineColorMapManager.setReversedOrder(b.booleanValue());
-        //                result.putResult(COM_DATA_COLOR_STYLE_REVERSED,
-        //                        SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_SHIFT_X.equalsIgnoreCase(key)) {
         Number num = SGUtilityText.getDouble(value);
         if (num == null) {
@@ -1413,7 +1366,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         result.putResult(COM_DATA_SHIFT_Y, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_PICKUP_DIMENSION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for pick up indices
           continue;
         }
         if (timeContained) {
@@ -1428,11 +1380,9 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         }
       } else if (COM_DATA_ANIMATION_FRAME_DIMENSION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for pick up indices
           continue;
         }
         if (pickUpContained) {
-          // if PickUpDimension command exists, skip the command for pick up indices
           continue;
         }
         if (!this.setTimeDimension(value)) {
@@ -1443,7 +1393,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         result.putResult(COM_DATA_ANIMATION_FRAME_DIMENSION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_PICKUP_INDICES.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for pick up indices
           continue;
         }
         if (!this.setPickUpIndices(map, result, key, value, pickUpMap)) {
@@ -1452,7 +1401,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       } else if (COM_DATA_PICKUP_START.equalsIgnoreCase(key)) {
         if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
           if (dataColumnContained) {
-            // if ColumnType command exists, skip the command for pick up indices
             continue;
           }
           if (!this.setPickUpIndices(map, result, key, value, pickUpMap)) {
@@ -1466,7 +1414,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       } else if (COM_DATA_PICKUP_END.equalsIgnoreCase(key)) {
         if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
           if (dataColumnContained) {
-            // if ColumnType command exists, skip the command for pick up indices
             continue;
           }
           if (!this.setPickUpIndices(map, result, key, value, pickUpMap)) {
@@ -1480,7 +1427,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       } else if (COM_DATA_PICKUP_STEP.equalsIgnoreCase(key)) {
         if (SGDataDataTypeUtility.isNetCDFData(this.mData)) {
           if (dataColumnContained) {
-            // if ColumnType command exists, skip the command for pick up indices
             continue;
           }
           if (!this.setPickUpIndices(map, result, key, value, pickUpMap)) {
@@ -1493,7 +1439,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         }
       } else if (COM_DATA_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
@@ -1507,7 +1452,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         result.putResult(COM_DATA_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_TICK_LABEL_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
@@ -1523,7 +1467,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         result.putResult(COM_DATA_TICK_LABEL_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_INDEX_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         if (map.isDoubleQuoted(key) == false) {
@@ -1537,7 +1480,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         result.putResult(COM_DATA_INDEX_ARRAY_SECTION, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_ANIMATION_ARRAY_SECTION.equalsIgnoreCase(key)) {
         if (dataColumnContained) {
-          // if ColumnType command exists, skip the command for the stride
           continue;
         }
         SGArrayData data = (SGArrayData) this.getData();
@@ -1953,7 +1895,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Creates drawing elements of error bars.
    *
    * @param dataXY XY type data
-   * @return the group of error bars
    */
   public SGElementGroupErrorBar createErrorBars(SGISXYTypeMultipleData dataXY) {
     final SGElementGroupErrorBarInGraph group =
@@ -1967,7 +1908,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Creates drawing elements of tick labels.
    *
    * @param dataXY XY type data
-   * @return the group of tick labels
    */
   public SGElementGroupTickLabel createTickLabels(SGISXYTypeMultipleData dataXY) {
     final SGElementGroupTickLabelInGraphSXY group =
@@ -1981,8 +1921,8 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the information of data columns. This method is overridden to update the child data
    * objects.
    *
+   * @param message the message parameter
    * @param columns information of data columns
-   * @return true if succeeded
    */
   public boolean setColumnInfo(SGDataColumnInfo[] columns, String message) {
     if (!super.setColumnInfo(columns, message)) {
@@ -1994,11 +1934,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return true;
   }
 
-  /**
-   * Update drawing elements with related data object.
-   *
-   * @return true if succeeded
-   */
+  /** Update drawing elements with related data object. */
   public boolean updateWithData() {
     this.updateTickLabelStrings();
     return super.updateWithData();
@@ -2035,7 +1971,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the properties of element groups.
    *
    * @param elementGroupPropertiesList
-   * @return true if succeeded
    */
   protected boolean setElementGroupProperties(List<SGProperties> elementGroupPropertiesList) {
     for (int ii = 0; ii < elementGroupPropertiesList.size(); ii++) {
@@ -2193,7 +2128,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the direction of error bars.
    *
    * @param vertical true to set vertical
-   * @return true if succeeded
    */
   public boolean setErrorBarDirection(final boolean vertical) {
     SGIElementGroupSetForData[] childArray = this.getChildGroupSetArray();
@@ -2213,7 +2147,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the alignment of tick label.
    *
    * @param horizontal true to align horizontally
-   * @return true if succeeded
    */
   public boolean setTickLabelAlignment(final boolean horizontal) {
     SGIElementGroupSetForData[] childArray = this.getChildGroupSetArray();
@@ -2239,7 +2172,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Called when the mouse button is pressed.
    *
    * @param e the mouse event
-   * @return true if this group set is pressed or false otherwise
    */
   protected boolean onMousePressed(final MouseEvent e) {
     if (super.onMousePressed(e)) {
@@ -2267,7 +2199,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Called when the mouse button is released.
    *
    * @param e the mouse event
-   * @return true if succeeded
    */
   protected boolean onMouseReleased(final MouseEvent e) {
     if (super.onMouseReleased(e) == false) {
@@ -2537,20 +2468,12 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return true;
   }
 
-  /**
-   * Returns the shift value to the x-axis direction.
-   *
-   * @return the shift value
-   */
+  /** Returns the shift value to the x-axis direction. */
   public double getShiftX() {
     return this.mShiftX;
   }
 
-  /**
-   * Returns the shift value to the y-axis direction.
-   *
-   * @return the shift value
-   */
+  /** Returns the shift value to the y-axis direction. */
   public double getShiftY() {
     return this.mShiftY;
   }
@@ -2559,7 +2482,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the shift value to the x-axis direction.
    *
    * @param shift the shift value
-   * @return true if succeeded
    */
   public boolean setShiftX(final double shift) {
     this.mShiftX = shift;
@@ -2578,7 +2500,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the shift value to the y-axis direction.
    *
    * @param shift the shift value
-   * @return true if succeeded
    */
   public boolean setShiftY(final double shift) {
     this.mShiftY = shift;
@@ -2597,7 +2518,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the information of picked up dimension.
    *
    * @param info the information of picked up dimension
-   * @return true if succeeded
    */
   @Override
   public boolean setPickUpDimensionInfo(SGPickUpDimensionInfo info) {
@@ -2614,7 +2534,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the stride.
    *
    * @param stride stride of arrays
-   * @return true if succeeded
    */
   @Override
   public boolean setStride(SGIntegerSeriesSet stride) {
@@ -2625,7 +2544,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the stride of the indices.
    *
    * @param stride stride of arrays
-   * @return true if succeeded
    */
   @Override
   public boolean setIndexStride(SGIntegerSeriesSet stride) {
@@ -2636,7 +2554,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the stride for single dimensional data.
    *
    * @param stride stride of arrays
-   * @return true if succeeded
    */
   @Override
   public boolean setSDArrayStride(SGIntegerSeriesSet stride) {
@@ -2647,7 +2564,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the stride of the tick labels.
    *
    * @param stride stride of arrays
-   * @return true if succeeded
    */
   @Override
   public boolean setTickLabelStride(SGIntegerSeriesSet stride) {
@@ -2736,7 +2652,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * @param map property map
    * @param result results of setting properties
    * @param cols an array of data columns
-   * @return true if succeeded
    */
   @Override
   protected boolean setProperties(
@@ -2835,11 +2750,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
       this.childLineStyleList.addAll(styleList);
     }
 
-    /**
-     * Copy this object.
-     *
-     * @return a copied object
-     */
+    /** Copy this object. */
     public Object copy() {
       Object obj = super.copy();
       MultipleSXYElementGroupSetPropertiesInFigureElement p =
@@ -2882,7 +2793,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
      * Returns whether this object is equal to given object.
      *
      * @param obj an object to be compared
-     * @return true if two objects are equal
      */
     public boolean equals(final Object obj) {
       if ((obj instanceof MultipleSXYElementGroupSetPropertiesInFigureElement) == false) {
@@ -2906,11 +2816,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     }
   }
 
-  /**
-   * Returns the map of line style.
-   *
-   * @return the map of line style
-   */
+  /** Returns the map of line style. */
   @Override
   public Map<Integer, SGLineStyle> getLineStyleMap() {
     Map<Integer, SGLineStyle> lineStyleMap = new TreeMap<Integer, SGLineStyle>();
@@ -2957,7 +2863,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    *
    * @param style the line style to set
    * @param index array index of child data object
-   * @return true if succeeded
    */
   @Override
   public boolean setLineStyle(final SGLineStyle style, final int index) {
@@ -2975,7 +2880,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the line styles to the child data object.
    *
    * @param styleList list of line styles
-   * @return true if succeeded
    */
   @Override
   public boolean setLineStyle(final List<SGLineStyle> styleList) {
@@ -2995,7 +2899,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the style of drawing elements.
    *
    * @param styleList the list of style
-   * @return true if succeeded
    */
   @Override
   public boolean setStyle(List<SGStyle> styleList) {
@@ -3025,7 +2928,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the line style.
    *
    * @param lineStyle the line style
-   * @return true if succeeded
    */
   public boolean setLineStyle(SGLineStyle lineStyle) {
     for (int ii = 0; ii < this.mElementGroupSetList.size(); ii++) {
@@ -3036,11 +2938,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return true;
   }
 
-  /**
-   * Returns the style of drawing elements.
-   *
-   * @return the list of style
-   */
+  /** Returns the style of drawing elements. */
   @Override
   public List<SGStyle> getStyle() {
     Map<Integer, SGLineStyle> styleMap = this.getLineStyleMap();
@@ -3049,11 +2947,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
 
   private boolean mLineColorAutoAssigned = false;
 
-  /**
-   * Returns whether line color is automatically assigned.
-   *
-   * @return true if line color is automatically assigned
-   */
+  /** Returns whether line color is automatically assigned. */
   @Override
   public boolean isLineColorAutoAssigned() {
     return this.mLineColorAutoAssigned;
@@ -3074,31 +2968,19 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     }
   }
 
-  /**
-   * Returns the color map manager for lines.
-   *
-   * @return the color map manager for lines
-   */
+  /** Returns the color map manager for lines. */
   @Override
   public SGColorMapManager getLineColorMapManager() {
     return this.mLineColorMapManager;
   }
 
-  /**
-   * Returns the color map for lines.
-   *
-   * @return the color map for lines
-   */
+  /** Returns the color map for lines. */
   @Override
   public SGColorMap getLineColorMap() {
     return this.mLineColorMapManager.getColorMap(this.mLineColorMapName);
   }
 
-  /**
-   * Returns the name of the color map for lines.
-   *
-   * @return the name of the color map for lines
-   */
+  /** Returns the name of the color map for lines. */
   @Override
   public String getLineColorMapName() {
     return this.mLineColorMapName;
@@ -3107,8 +2989,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
   /**
    * Sets the color bar style.
    *
-   * @param style the color bar style
-   * @return true if succeeded
+   * @param name the color bar style
    */
   @Override
   public boolean setLineColorMapName(final String name) {
@@ -3120,21 +3001,13 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return true;
   }
 
-  /**
-   * Returns a map of the properties of line color maps.
-   *
-   * @return a map of the properties of line color maps
-   */
+  /** Returns a map of the properties of line color maps. */
   @Override
   public Map<String, SGProperties> getLineColorMapProperties() {
     return this.mLineColorMapManager.getColorMapProperties();
   }
 
-  /**
-   * Returns the list of child objects.
-   *
-   * @return the list of child objects
-   */
+  /** Returns the list of child objects. */
   @Override
   public List<String> getChildNameList() {
     SGISXYTypeMultipleData data = (SGISXYTypeMultipleData) this.mData;
@@ -3145,7 +3018,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Sets the properties of line color map.
    *
    * @param colorMapProperties the map of properties of color maps
-   * @return true if succeeded
    */
   @Override
   public boolean setLineColorMapProperties(Map<String, SGProperties> colorMapProperties) {
@@ -3178,7 +3050,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    * Returns the line style at given index.
    *
    * @param index index of child object
-   * @return true if succeeded
    */
   @Override
   public SGLineStyle getLineStyle(final int index) {
@@ -3195,7 +3066,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    *
    * @param map a map of properties
    * @param childId ID of a child data object
-   * @return the result of setting properties
    */
   public SGPropertyResults setProperties(SGPropertyMap map, final int childId) {
 
@@ -3287,7 +3157,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
    *
    * @param colorMapName the name of color map
    * @param map a map of properties
-   * @return the result of setting properties
    */
   @Override
   public SGPropertyResults setColorMapProperties(final String colorMapName, SGPropertyMap map) {
@@ -3319,11 +3188,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return result;
   }
 
-  /**
-   * Returns the figure element.
-   *
-   * @return the figure element
-   */
+  /** Returns the figure element. */
   public SGFigureElementForData getFigureElement() {
     return this.mGraph;
   }
@@ -3339,11 +3204,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return true;
   }
 
-  /**
-   * Updates the child objects.
-   *
-   * @return true if succeeded
-   */
+  /** Updates the child objects. */
   @Override
   public boolean updateChild() {
     if (!this.mGraph.updateChildGroupSet(this)) {
@@ -3355,11 +3216,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return true;
   }
 
-  /**
-   * Returns true if data is shifted.
-   *
-   * @return true if data is shifted
-   */
+  /** Returns true if data is shifted. */
   @Override
   public boolean isDataShifted() {
     return !this.mShift.isZero();
@@ -3375,11 +3232,7 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
     return SGUtilityForFigureElementJava2D.setElementGroupPropertiesMap(this, pMap);
   }
 
-  /**
-   * Creates and returns the map of properties.
-   *
-   * @return the map of properties
-   */
+  /** Creates and returns the map of properties. */
   @Override
   public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
     SGPropertyMap map = super.getCommandPropertyMap(params);
@@ -3534,28 +3387,6 @@ public class SGElementGroupSetInGraphSXYMultiple extends SGElementGroupSetInGrap
         sb.append(sbTmp.toString());
       }
     }
-
-    /*
-    // line color map
-    Iterator<Entry<String, SGColorMap>> colorMapItr = this.mLineColorMapManager
-    		.getColorMaps().entrySet().iterator();
-    while (colorMapItr.hasNext()) {
-    	StringBuilder sbTmp = new StringBuilder();
-    	Entry<String, SGColorMap> entry = colorMapItr.next();
-    	String colorMapName = entry.getKey();
-    	SGColorMap colorMap = entry.getValue();
-    	SGPropertyMap pMap = colorMap.getPropertyMap();
-    	sbTmp.append(COM_DATA);
-    	sbTmp.append('(');
-    	sbTmp.append(this.getID());
-    	sbTmp.append(", ");
-    	sbTmp.append(colorMapName);
-    	sbTmp.append(", ");
-    	sbTmp.append(SGCommandUtility.createCommandString(pMap));
-    	sbTmp.append(")\n");
-    	sb.append(sbTmp.toString());
-    }
-    */
 
     return sb.toString();
   }

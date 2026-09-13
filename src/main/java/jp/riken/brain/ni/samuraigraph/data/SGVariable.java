@@ -13,11 +13,7 @@ public abstract class SGVariable implements SGIDisposable {
     super();
   }
 
-  /**
-   * Returns the name of this variable.
-   *
-   * @return the name of this variable
-   */
+  /** Returns the name of this variable. */
   public abstract String getName();
 
   /** Disposes of this object. */

@@ -6,25 +6,13 @@ import jp.riken.brain.ni.samuraigraph.base.SGData;
 
 public interface SGIPluginOutputDataToFile {
 
-  /**
-   * Return a description for file chooser.
-   *
-   * @return description for file chooser
-   */
+  /** Return a description for file chooser. */
   public String getDescription();
 
-  /**
-   * Return a file extension.
-   *
-   * @return file extension
-   */
+  /** Return a file extension. */
   public String getExtension();
 
-  /**
-   * Return a filetype name.
-   *
-   * @return filetype name
-   */
+  /** Return a filetype name. */
   public String getFileTypeName();
 
   /**

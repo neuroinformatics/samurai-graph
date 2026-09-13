@@ -95,11 +95,6 @@ public class SGClientPanel extends JLayeredPane
   /** A panel to draw rulers.<br> */
   private transient RulerPanel mRulerPanel;
 
-  // /**
-  // * Bounds of the client area.
-  // */
-  // private Rectangle2D mClientRect = null;
-
   /**
    * Build the client panel.
    *
@@ -137,7 +132,6 @@ public class SGClientPanel extends JLayeredPane
    * Set the magnification.
    *
    * @param mag a value to set to the magnification
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     this.mRulerPanel.setMagnification(mag);
@@ -199,11 +193,7 @@ public class SGClientPanel extends JLayeredPane
     return true;
   }
 
-  /**
-   * Returns the figure panel.
-   *
-   * @return the figure panel
-   */
+  /** Returns the figure panel. */
   public JComponent getFigurePanel() {
     return this.mFigurePanel;
   }
@@ -235,7 +225,6 @@ public class SGClientPanel extends JLayeredPane
    * Set an image.
    *
    * @param img an image to set
-   * @return true if succeeded
    */
   public boolean setImage(final Image img) {
     return this.mImagePanel.setImage(img);
@@ -255,7 +244,6 @@ public class SGClientPanel extends JLayeredPane
    *
    * @param x x coordinate
    * @param y y coordinate
-   * @return true if succeeded
    */
   public boolean setImageLocation(final int x, final int y) {
     return this.mImagePanel.setImageLocation(x, y);
@@ -266,35 +254,22 @@ public class SGClientPanel extends JLayeredPane
    *
    * @param w width
    * @param h height
-   * @return true if succeeded
    */
   public boolean setImageSize(final int w, final int h) {
     return this.mImagePanel.setImageSize(w, h);
   }
 
-  /**
-   * Returns the image.
-   *
-   * @return the image
-   */
+  /** Returns the image. */
   public Image getImage() {
     return this.mImagePanel.getImage();
   }
 
-  /**
-   * Returns the location of the image.
-   *
-   * @return the location of the image
-   */
+  /** Returns the location of the image. */
   public SGTuple2f getImageLocation() {
     return this.mImagePanel.getImageLocation();
   }
 
-  /**
-   * Returns the size of the image.
-   *
-   * @return the size of the image
-   */
+  /** Returns the size of the image. */
   public SGTuple2f getImageSize() {
     return this.mImagePanel.getImageSize();
   }
@@ -308,20 +283,12 @@ public class SGClientPanel extends JLayeredPane
     return true;
   }
 
-  /**
-   * Returns the width of the paper.
-   *
-   * @return the width of the paper
-   */
+  /** Returns the width of the paper. */
   public float getPaperWidth() {
     return this.mPaperSize.x;
   }
 
-  /**
-   * Returns the height of the paper.
-   *
-   * @return the height of the paper
-   */
+  /** Returns the height of the paper. */
   public float getPaperHeight() {
     return this.mPaperSize.y;
   }
@@ -330,7 +297,6 @@ public class SGClientPanel extends JLayeredPane
    * Returns the width of the paper in a given unit.
    *
    * @param unit unit of length
-   * @return the width of the paper in a given unit of length
    */
   public float getPaperWidth(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getPaperWidth(), unit);
@@ -340,7 +306,6 @@ public class SGClientPanel extends JLayeredPane
    * Returns the height of the paper in a given unit.
    *
    * @param unit unit of length
-   * @return the height of the paper in a given unit of length
    */
   public float getPaperHeight(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getPaperHeight(), unit);
@@ -350,7 +315,6 @@ public class SGClientPanel extends JLayeredPane
    * Set the width of the paper.
    *
    * @param w a value for the width of the paper
-   * @return true if succeeded
    */
   public boolean setPaperWidth(final float w) {
     return this.setPaperSize(w, this.getPaperHeight());
@@ -359,9 +323,8 @@ public class SGClientPanel extends JLayeredPane
   /**
    * Set the height of the paper in a given unit.
    *
-   * @param h a value for the height of the paper
+   * @param w a value for the height of the paper
    * @param unit unit of length
-   * @return true if succeeded
    */
   public boolean setPaperWidth(final float w, final String unit) {
     final Float wNew =
@@ -381,8 +344,7 @@ public class SGClientPanel extends JLayeredPane
   /**
    * Set the height of the paper.
    *
-   * @param gh a value for the height of the paper
-   * @return true if succeeded
+   * @param h a value for the height of the paper
    */
   public boolean setPaperHeight(final float h) {
     return this.setPaperSize(this.getPaperWidth(), h);
@@ -393,7 +355,6 @@ public class SGClientPanel extends JLayeredPane
    *
    * @param h a value for the height of the paper
    * @param unit unit of length
-   * @return true if succeeded
    */
   public boolean setPaperHeight(final float h, final String unit) {
     final Float hNew =
@@ -415,7 +376,6 @@ public class SGClientPanel extends JLayeredPane
    *
    * @param w a value for the width of the paper
    * @param h a value for the height of the paper
-   * @return true if succeeded
    */
   public boolean setPaperSize(final float w, final float h) {
     return this.setPaperSizeRoundingOff(w, h);
@@ -426,7 +386,6 @@ public class SGClientPanel extends JLayeredPane
    *
    * @param size a media size
    * @param isPortrait true for portrait and false for landscape
-   * @return true if succeeded
    */
   public boolean setPaperSize(MediaSize size, boolean isPortrait) {
     if (size == null) {
@@ -500,7 +459,6 @@ public class SGClientPanel extends JLayeredPane
    *
    * @param widthPt a value for the paper width in units of point
    * @param heightPt a value for the paper height in units of point
-   * @return true if succeeded
    */
   public boolean setPaperSizeRoundingOff(final float widthPt, final float heightPt) {
     final float ratio = SGIConstants.CM_POINT_RATIO;
@@ -517,7 +475,6 @@ public class SGClientPanel extends JLayeredPane
    *
    * @param widthPt a value for the paper width in units of point
    * @param heightPt a value for the paper height in units of point
-   * @return true if succeeded
    */
   public boolean setPaperSizeRoundingOut(final float widthPt, final float heightPt) {
     final float ratio = SGIConstants.CM_POINT_RATIO;
@@ -529,20 +486,12 @@ public class SGClientPanel extends JLayeredPane
     return true;
   }
 
-  /**
-   * Returns whether the grid lines are visible.
-   *
-   * @return true if visible
-   */
+  /** Returns whether the grid lines are visible. */
   public boolean isGridLineVisible() {
     return this.mBackgroundPanel.isGridVisible();
   }
 
-  /**
-   * Returns the width of grid lines.
-   *
-   * @return width of grid lines
-   */
+  /** Returns the width of grid lines. */
   public float getGridLineWidth() {
     return this.mBackgroundPanel.getGridLineWidth();
   }
@@ -551,17 +500,12 @@ public class SGClientPanel extends JLayeredPane
    * Returns the width of grid lines in a given unit.
    *
    * @param unit unit of length
-   * @return width of grid lines in a given unit
    */
   public float getGridLineWidth(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getGridLineWidth(), unit);
   }
 
-  /**
-   * Returns the interval between grid lines.
-   *
-   * @return the interval between grid lines
-   */
+  /** Returns the interval between grid lines. */
   public float getGridLineInterval() {
     return this.mBackgroundPanel.getGridInterval();
   }
@@ -570,17 +514,12 @@ public class SGClientPanel extends JLayeredPane
    * Returns the interval between grid lines in a given unit.
    *
    * @param unit unit of length
-   * @return the interval between grid lines in a given unit
    */
   public float getGridLineInterval(final String unit) {
     return (float) SGUtilityText.convertFromPoint(this.getGridLineInterval(), unit);
   }
 
-  /**
-   * Returns the color of grid lines.
-   *
-   * @return the color of grid lines
-   */
+  /** Returns the color of grid lines. */
   public Color getGridLineColor() {
     return this.mBackgroundPanel.getGridLineColor();
   }
@@ -651,7 +590,6 @@ public class SGClientPanel extends JLayeredPane
    * Set the visibility of grid lines.
    *
    * @param b true to set visible
-   * @return true if succeeded
    */
   public boolean setGridLineVisible(final boolean b) {
     this.mBackgroundPanel.setGridVisible(b);
@@ -1029,9 +967,7 @@ public class SGClientPanel extends JLayeredPane
       }
     }
 
-    /**
-     * @return
-     */
+    /** */
     private boolean createScrollBars() {
       this.mVScrollBar = new JScrollBar(Adjustable.VERTICAL, 0, 100, 0, 100);
       this.mHScrollBar = new JScrollBar(Adjustable.HORIZONTAL, 0, 100, 0, 100);
@@ -1086,11 +1022,7 @@ public class SGClientPanel extends JLayeredPane
       return true;
     }
 
-    /**
-     * switch visible of scroll bars
-     *
-     * @return
-     */
+    /** switch visible of scroll bars */
     protected boolean setEnableScrollBars(Rectangle2D vpRect, Rectangle2D bbRect) {
       final Rectangle vpRect_ = vpRect.getBounds();
       final Rectangle bbRect_ = bbRect.getBounds();
@@ -1108,9 +1040,7 @@ public class SGClientPanel extends JLayeredPane
       return true;
     }
 
-    /**
-     * @return
-     */
+    /** */
     private boolean setScrollBarValue(final Rectangle2D cRect, final Rectangle2D vpRect) {
 
       if (this.mHScrollBar.isVisible()) {
@@ -1187,7 +1117,6 @@ public class SGClientPanel extends JLayeredPane
 
     /**
      * @param flag
-     * @return
      */
     private boolean setClientRectByValueOfScrollBar(final boolean flag) {
       float value = 0.0f;
@@ -1281,11 +1210,7 @@ public class SGClientPanel extends JLayeredPane
       }
     }
 
-    /**
-     * Returns a pop-up menu.
-     *
-     * @return a pop-up menu
-     */
+    /** Returns a pop-up menu. */
     public JPopupMenu getPopupMenu() {
       JPopupMenu p = null;
       if (this.mPopupMenu != null) {
@@ -1297,11 +1222,7 @@ public class SGClientPanel extends JLayeredPane
       return p;
     }
 
-    /**
-     * Create a pop-up menu.
-     *
-     * @return a pop-up menu
-     */
+    /** Create a pop-up menu. */
     private JPopupMenu createPopupMenu() {
       JMenuItem item;
 
@@ -1341,16 +1262,6 @@ public class SGClientPanel extends JLayeredPane
     protected void setPopupMenuEnabled(final String menucmd, final boolean b) {
 
       this.mPopupMenuEnabledMap.put(menucmd, Boolean.valueOf(b));
-
-      //            Component[] array = this.mPopupMenu.getComponents();
-      //            for (int ii = 0; ii < array.length; ii++) {
-      //                if (array[ii] instanceof JMenuItem) {
-      //                    JMenuItem item = (JMenuItem) array[ii];
-      //                    if (item.getActionCommand().equals(menucmd)) {
-      //                        item.setEnabled(b);
-      //                    }
-      //                }
-      //            }
     }
 
     private transient Map<String, Boolean> mPopupMenuEnabledMap = new HashMap<String, Boolean>();
@@ -1361,7 +1272,6 @@ public class SGClientPanel extends JLayeredPane
     /** The listener interface for receiving action events. */
     public void actionPerformed(final ActionEvent e) {
       final String command = e.getActionCommand();
-      // final Object source = e.getSource();
 
       if (command.equals(MENUCMD_PASTE)) {
         this.mWnd.doPaste();
@@ -1414,7 +1324,6 @@ public class SGClientPanel extends JLayeredPane
       Point pressedPos = this.mWnd.mMousePressLocation;
       this.mWnd.mMousePressLocation = null;
 
-      // if visible figure do not exist, return
       ArrayList<SGFigure> figureList = this.mWnd.getVisibleFigureList();
       if (figureList.size() == 0) {
         return;
@@ -1492,53 +1401,11 @@ public class SGClientPanel extends JLayeredPane
           if (isChanged) {
             // update the client rectangle
             this.mWnd.updateClientRect();
-            // this.setScrollBarValue();
 
             // notify change of the location to the root
             this.mWnd.notifyToRoot();
           }
         }
-
-        /*
-        // notify to the figures that the mouse is released
-        for (int ii = 0; ii < figureList.size(); ii++) {
-            SGFigure figure = (SGFigure) figureList.get(ii);
-            figure.onMouseReleased(e);
-        }
-
-        boolean isChanged = false;
-
-        // save the history
-        List<SGFigure> fList = this.mWnd.getFocusedFigureList();
-        for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure figure = (SGFigure) fList.get(ii);
-            if (figure.isFigureMoved()) {
-                figure.setChanged(true);
-                isChanged = true;
-            }
-        }
-
-        fList = this.mWnd.getVisibleFigureList();
-        for (int ii = 0; ii < fList.size(); ii++) {
-            SGFigure figure = (SGFigure) fList.get(ii);
-            SGIFigureElement[] array = figure.getIFigureElementArray();
-            for (int jj = array.length - 1; jj >= 0; jj--) {
-                array[jj].setChangedFocusedObjects();
-                if (array[jj].isFocusedObjectsChanged()) {
-                    isChanged = true;
-                }
-            }
-        }
-
-        if (isChanged) {
-            // update the client rectangle
-            this.mWnd.updateClientRect();
-            // this.setScrollBarValue();
-
-            // notify change of the location to the root
-            this.mWnd.notifyToRoot();
-        }
-        */
 
         // repaint
         this.mWnd.repaintContentPane();
@@ -1570,13 +1437,10 @@ public class SGClientPanel extends JLayeredPane
       this.mWnd.setPositionLabel(e.getX(), e.getY());
 
       // notify to figures
-      // if insertion toggle button is selected
       if (this.mWnd.isInsertFlagSelected()) {
         return;
       }
 
-      // if the right button is pressed, there is nothing to do
-      // for the mouse drag event
       if (SwingUtilities.isRightMouseButton(e)) {
         return;
       }
@@ -1860,9 +1724,7 @@ public class SGClientPanel extends JLayeredPane
       g2d.draw(pRect);
     }
 
-    /**
-     * @return
-     */
+    /** */
     public float[] getVerticalGridLocation() {
       final float space = this.mMagnification * this.getGridInterval();
 
@@ -1900,9 +1762,7 @@ public class SGClientPanel extends JLayeredPane
       return array;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public float[] getHorizontalGridLocation() {
       final float space = this.mMagnification * this.getGridInterval();
 
@@ -1940,30 +1800,22 @@ public class SGClientPanel extends JLayeredPane
       return array;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public float getGridInterval() {
       return this.mGridInterval;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public Color getGridLineColor() {
       return this.mGridLineColor;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public float getGridLineWidth() {
       return this.mGridLineWidth;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public boolean isGridVisible() {
       return this.mGridVisibleFlag;
     }
@@ -1996,9 +1848,7 @@ public class SGClientPanel extends JLayeredPane
       this.mGridVisibleFlag = b;
     }
 
-    /**
-     * @return
-     */
+    /** */
     public Color getPaperColor() {
       return this.mPaperColor;
     }
@@ -2026,15 +1876,10 @@ public class SGClientPanel extends JLayeredPane
     /** */
     private static final int RULER_WIDTH = 20;
 
-    // private static final int ANCHOR_SIZE = 12;
     private static final Color INNER_COLOR_1 = new Color(234, 238, 232);
 
     private static final Color INNER_COLOR_2 = new Color(124, 155, 64);
 
-    // private static final Color ANCHOR_INNER_COLOR = new
-    // Color(222,222,222);
-    // private static final float ANCHOR_EDGE_LINE_WIDTH = 4.0f;
-    // private static final Color ANCHOR_EDGE_LINE_COLOR = Color.WHITE;
     private static final Color LINE_COLOR = Color.BLACK;
 
     private static final float LINE_WIDTH = 2.0f;
@@ -2079,7 +1924,6 @@ public class SGClientPanel extends JLayeredPane
 
       final Graphics2D g2d = (Graphics2D) g;
 
-      // if( mRulerVisibleFlag )
       {
         this.drawRuler(g2d);
       }
@@ -2153,7 +1997,6 @@ public class SGClientPanel extends JLayeredPane
     }
 
     private void drawVerticalAnchor(final int y, final Graphics2D g2d) {
-      // final int size = ANCHOR_SIZE;
       final int nPoints = 7;
       final int[] xPos = new int[nPoints];
       final int[] yPos = new int[nPoints];
@@ -2208,7 +2051,6 @@ public class SGClientPanel extends JLayeredPane
         return;
       }
       Point2D pos = this.mHorizontalLocation;
-      // final float x = (float)pos.getX();
       Line2D line = new Line2D.Float();
       line.setLine(
           pos.getX(),
@@ -2236,9 +2078,7 @@ public class SGClientPanel extends JLayeredPane
       g2d.draw(line);
     }
 
-    /**
-     * @return
-     */
+    /** */
     private boolean isPressed() {
       return this.mDrawHorizontalLineFlag || this.mDrawVerticalLineFlag;
     }
@@ -2246,7 +2086,6 @@ public class SGClientPanel extends JLayeredPane
     private Point2D getHorizontalAnchorLocationFromPaper() {
       Rectangle2D rect = this.mWnd.getPaperRect();
       final float x = (float) rect.getX();
-      // final float y = (float)rect.getY();
       final float w = (float) rect.getWidth();
       final int rw = RulerPanel.RULER_WIDTH;
       Point2D pos = new Point2D.Float(x + rw + w, rw);
@@ -2255,7 +2094,6 @@ public class SGClientPanel extends JLayeredPane
 
     private Point2D getVerticalAnchorLocationFromPaper() {
       Rectangle2D rect = this.mWnd.getPaperRect();
-      // final float x = (float)rect.getX();
       final float y = (float) rect.getY();
       final float h = (float) rect.getHeight();
       final int rw = RulerPanel.RULER_WIDTH;
@@ -2276,24 +2114,6 @@ public class SGClientPanel extends JLayeredPane
       final int rw = RulerPanel.RULER_WIDTH;
       return y + rw;
     }
-
-    // private float getPaperEndX()
-    // {
-    // Rectangle2D rect = this.mWnd.getPaperRect();
-    // final float x = (float)rect.getX();
-    // final float w = (float)rect.getWidth();
-    // final int rw = RulerPanel.RULER_WIDTH;
-    // return x + rw + w;
-    // }
-
-    // private float getPaperEndY()
-    // {
-    // Rectangle2D rect = this.mWnd.getPaperRect();
-    // final float y = (float)rect.getY();
-    // final float h = (float)rect.getHeight();
-    // final int rw = RulerPanel.RULER_WIDTH;
-    // return y + rw + h;
-    // }
 
     /** */
     private boolean drawRuler(final Graphics2D g2d) {
@@ -2350,20 +2170,6 @@ public class SGClientPanel extends JLayeredPane
       g2d.setPaint(lineColor);
       g2d.draw(rectCorner);
 
-      // g2d.setStroke( new BasicStroke(2) );
-      //
-      // Line2D left = new Line2D.Float( 0.0f, 0.0f, 0.0f, rw );
-      // Line2D top = new Line2D.Float( 0.0f, 0.0f, rw, 0.0f );
-      // g2d.setPaint( Color.WHITE );
-      // g2d.draw( left );
-      // g2d.draw( top );
-      //
-      // Line2D right = new Line2D.Float( rw, 0.0f, rw, rw );
-      // Line2D bottom = new Line2D.Float( 0.0f, rw, rw, rw );
-      // g2d.setPaint( Color.BLACK );
-      // g2d.draw( right );
-      // g2d.draw( bottom );
-
       return true;
     }
 
@@ -2377,10 +2183,6 @@ public class SGClientPanel extends JLayeredPane
       final Rectangle vpRect = new Rectangle(0, 0, width - rw, height - rw);
 
       final Rectangle2D pRect = this.mWnd.getPaperRect();
-      // final Rectangle2D cRect = this.mWnd.getClientRect();
-
-      // final float hStart = rw + (float)cRect.getX();
-      // final float vStart = rw + (float)cRect.getY();
 
       final Line2D line = new Line2D.Float();
 
@@ -2588,13 +2390,9 @@ public class SGClientPanel extends JLayeredPane
         final int x = e.getX();
         final int y = e.getY();
 
-        // Rectangle2D paper = this.mWnd.getPaperRect();
         final SGTuple2f paperSize = this.mWnd.getPaperSize();
         final float startX = this.getPaperStartX();
         final float startY = this.getPaperStartY();
-
-        // final float wOld = (float)paper.getWidth();
-        // final float hOld = (float)paper.getHeight();
 
         final float ratio = SGIConstants.CM_POINT_RATIO;
         final float minWidth = (float) SGIRootObjectConstants.PAPER_WIDTH_MIN_VALUE / ratio;

@@ -48,7 +48,6 @@ public abstract class SGPopupMenu extends JPopupMenu implements ActionListener, 
    * Add a menu command with the check box.
    *
    * @param cmd a command to be added
-   * @param enabled a flag whether the command is enabled
    * @return added menu item
    */
   public JCheckBoxMenuItem addCheckBoxItem(String cmd) {
@@ -73,10 +72,7 @@ public abstract class SGPopupMenu extends JPopupMenu implements ActionListener, 
   /**
    * Adds a menu to the pop-up menu.
    *
-   * @param p a pop-up menu
-   * @param l an action listener of the command
    * @param cmd a command to be added
-   * @param enabled a flag whether the command is enabled
    * @return added menu
    */
   public JMenu addMenu(String cmd) {

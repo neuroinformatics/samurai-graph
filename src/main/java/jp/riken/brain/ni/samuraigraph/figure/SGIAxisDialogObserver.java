@@ -159,7 +159,6 @@ public interface SGIAxisDialogObserver extends SGIPropertyDialogObserver {
    * Sets the flag for date mode.
    *
    * @param b the flag to set
-   * @param true if succeeded
    */
   public boolean setDateMode(final boolean b);
 

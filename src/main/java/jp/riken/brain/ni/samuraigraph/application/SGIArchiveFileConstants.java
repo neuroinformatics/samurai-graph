@@ -21,18 +21,6 @@ public interface SGIArchiveFileConstants {
   /** File type name of the archive files for older version. */
   public static final String ARCHIVE_FILE_TYPE_SGA107 = "sga107";
 
-  //    /**
-  //     * File extension of the netCDF archive files.
-  //     */
-  //    public static final String ARCHIVE_FILE_NETCDF_EXTENSION =
-  // SGIApplicationConstants.NETCDF_FILE_EXTENSION;
-  //
-  //    /**
-  //     * Description of the netCDF archive files.
-  //     */
-  //    public static final String ARCHIVE_FILE_DESCRIPTION_NETCDF = "Samurai Graph netCDF Archive
-  // File";
-
   /** File type name of the netCDF archive files. */
   public static final String ARCHIVE_FILETYPE_NETCDF = "netCDF";
 

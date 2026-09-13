@@ -31,6 +31,7 @@ public class SGDataFileExporter extends SGFileHandler implements SGIApplicationC
   /**
    * Exports a data to a file.
    *
+   * @param command the command parameter
    * @param wnd a window
    * @param gs the group set
    * @param dataName the name of data

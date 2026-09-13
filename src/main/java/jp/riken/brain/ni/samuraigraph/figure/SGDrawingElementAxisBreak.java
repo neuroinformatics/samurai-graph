@@ -83,89 +83,57 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     this.mLocation = null;
   }
 
-  /**
-   * Returns the location of this symbol.
-   *
-   * @return the location of this symbol
-   */
+  /** Returns the location of this symbol. */
   public SGTuple2f getLocation() {
     return this.mLocation;
   }
 
-  /**
-   * Returns the x coordinate of the location of this symbol.
-   *
-   * @return the x coordinate of the location of this symbol
-   */
+  /** Returns the x coordinate of the location of this symbol. */
   public float getX() {
     return this.mLocation.x;
   }
 
-  /**
-   * Returns the y coordinate of the location of this symbol.
-   *
-   * @return the y coordinate of the location of this symbol
-   */
+  /** Returns the y coordinate of the location of this symbol. */
   public float getY() {
     return this.mLocation.y;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public final float getLength() {
     return this.mLength;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public final float getInterval() {
     return this.mInterval;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public final float getLineWidth() {
     return this.mLineWidth;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public final float getAngle() {
     return this.mAngle;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public final float getDistortion() {
     return this.mDistortion;
   }
 
-  /**
-   * Returns the line color.
-   *
-   * @return the line color
-   */
+  /** Returns the line color. */
   public Color getLineColor() {
     return this.mLineColor;
   }
 
-  /**
-   * Returns the inner color.
-   *
-   * @return the inner color
-   */
+  /** Returns the inner color. */
   public Color getInnerColor() {
     return this.mInnerColor;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isForHorizontalAxis() {
     return this.mForHorizontalAxisFlag;
   }
@@ -175,7 +143,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    *
    * @param x the x coordinate to set
    * @param y the y coordinate to set
-   * @return true if succeeded
    */
   public boolean setLocation(final float x, final float y) {
     this.mLocation.setValues(x, y);
@@ -186,7 +153,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    * Sets the location of this symbol.
    *
    * @param pos the location to set
-   * @return true if succeeded
    */
   public boolean setLocation(final SGTuple2f pos) {
     this.mLocation = pos;
@@ -197,7 +163,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    * Sets the length.
    *
    * @param len the length to set
-   * @return true if succeeded
    */
   public boolean setLength(final float len) {
     if (len < 0.0f) {
@@ -211,7 +176,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    * Sets the interval.
    *
    * @param interval the interval to set
-   * @return true if succeeded
    */
   public boolean setInterval(final float interval) {
     if (interval < 0.0f) {
@@ -225,7 +189,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    * Sets the line width.
    *
    * @param lw the line width to set
-   * @return true if succeeded
    */
   public boolean setLineWidth(final float lw) {
     if (lw < 0.0f) {
@@ -239,7 +202,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    * Sets the angle.
    *
    * @param angle the angle to set
-   * @return true if succeeded
    */
   public boolean setAngle(final float angle) {
     final Float aNew =
@@ -261,7 +223,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    * Sets the distortion.
    *
    * @param distortion distortion to set
-   * @return true if succeeded
    */
   public boolean setDistortion(final float distortion) {
     final Float dNew =
@@ -283,7 +244,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    * Sets the line color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setLineColor(final Color color) {
     if (color == null) {
@@ -297,7 +257,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    * Sets the inner color.
    *
    * @param color the color to set
-   * @return true if succeeded
    */
   public boolean setInnerColor(final Color color) {
     if (color == null) {
@@ -332,7 +291,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    *
    * @param lw the line width to set
    * @param unit a unit of length
-   * @return true if succeeded
    */
   public boolean setLineWidth(final float lw, final String unit) {
     final Float lwNew = SGUtility.getLineWidth(lw, unit);
@@ -350,7 +308,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    *
    * @param len the length to set
    * @param unit a unit of length
-   * @return true if succeeded
    */
   public boolean setLength(final float len, final String unit) {
     final Float sNew =
@@ -375,7 +332,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
    *
    * @param interval the interval to set
    * @param unit a unit of length
-   * @return true if succeeded
    */
   public boolean setInterval(final float interval, final String unit) {
     final Float iNew =
@@ -455,9 +411,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public SGProperties getProperties() {
     final AxisBreakSymbolProperties p = new AxisBreakSymbolProperties();
     if (this.getProperties(p) == false) {
@@ -468,7 +422,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
 
   /**
    * @param p
-   * @return
    */
   public boolean getProperties(final SGProperties p) {
     if ((p instanceof AxisBreakSymbolProperties) == false) {
@@ -498,11 +451,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     return true;
   }
 
-  /**
-   * Creates and returns the map of properties.
-   *
-   * @return the map of properties
-   */
+  /** Creates and returns the map of properties. */
   public SGPropertyMap getCommandPropertyMap(SGExportParameter params) {
     SGPropertyMap map = new SGPropertyMap();
     this.addProperties(
@@ -741,8 +690,6 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
       if (this.mLineWidth != p.mLineWidth) {
         return false;
       }
-      // if (this.mLineColor.equals(p.mLineColor) == false)
-      // return false;
       if (SGUtility.equals(this.mLineColor, p.mLineColor) == false) {
         return false;
       }
@@ -873,9 +820,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     return rect;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public Area getArea() {
     Shape[] array = this.getShapeArray();
     GeneralPath gp = new GeneralPath();
@@ -886,9 +831,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     return area;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private CubicCurve2D getBaseCurve() {
     final float mag = this.getMagnification();
     final float length = this.getLength() * mag;
@@ -901,18 +844,14 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     return cv;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected boolean create() {
     this.createCurve1();
     this.createCurve2();
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private boolean createCurve1() {
     final float x = this.getX();
     final float y = this.getY();
@@ -944,9 +883,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private boolean createCurve2() {
     SGTuple2f pos = this.getLocation();
 
@@ -957,9 +894,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   protected Shape[] getShapeArray() {
     if (this.mCurve1 == null || this.mCurve2 == null) {
       return new Shape[0];
@@ -1001,9 +936,7 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     return array;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private GeneralPath createConnectedPath() {
     GeneralPath gp = new GeneralPath();
     Shape[] array = this.getShapeArray();
@@ -1013,19 +946,12 @@ public abstract class SGDrawingElementAxisBreak extends SGDrawingElement
     return gp;
   }
 
-  /**
-   * Sets the location of this symbol.
-   *
-   * @param x the x coordinate to set
-   * @param y the y coordinate to set
-   * @return true if succeeded
-   */
+  /** Sets the location of this symbol. */
 
   /**
    * Sets the magnification.
    *
    * @param mag the magnification to set
-   * @return true if succeeded
    */
   public boolean setMagnification(final float mag) {
     return this.create();

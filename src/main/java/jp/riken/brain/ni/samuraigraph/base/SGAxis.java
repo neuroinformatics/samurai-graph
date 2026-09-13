@@ -72,7 +72,6 @@ public class SGAxis implements Cloneable {
    * Set the invert coordinates flag.
    *
    * @param b The invert coordinates flag.
-   * @return true:succeeded, false:failed
    */
   public boolean setInvertCoordinates(final boolean b) {
     this.mInvertCoordinates = b;
@@ -83,7 +82,6 @@ public class SGAxis implements Cloneable {
    * Sets the scale range.
    *
    * @param range the axis value range to set
-   * @return true if succeeded
    */
   public boolean setScale(final SGTuple2d range) {
     if (range == null) {
@@ -97,7 +95,6 @@ public class SGAxis implements Cloneable {
    *
    * @param range the axis value range to set
    * @param scaleType the type of scale
-   * @return true if succeeded
    */
   public boolean setScale(final SGTuple2d range, final int scaleType) {
     if (range == null) {
@@ -112,7 +109,6 @@ public class SGAxis implements Cloneable {
    * @param minValue the minimum value
    * @param maxValue the maximum value
    * @param scaleType the type of scale
-   * @return true if succeeded
    */
   public boolean setScale(final double minValue, final double maxValue, final int scaleType) {
     return this.setScale(
@@ -154,20 +150,12 @@ public class SGAxis implements Cloneable {
     return true;
   }
 
-  /**
-   * Returns the minimum value.
-   *
-   * @return the minimum value of this axis.
-   */
+  /** Returns the minimum value. */
   public double getMinDoubleValue() {
     return this.mMinValue.getValue();
   }
 
-  /**
-   * Returns the maximum value.
-   *
-   * @return the maximum value of this axis.
-   */
+  /** Returns the maximum value. */
   public double getMaxDoubleValue() {
     return this.mMaxValue.getValue();
   }
@@ -180,29 +168,17 @@ public class SGAxis implements Cloneable {
     return this.mMaxValue;
   }
 
-  /**
-   * Returns the invert coordinate flag.
-   *
-   * @return the invert coordinate flag.
-   */
+  /** Returns the invert coordinate flag. */
   public boolean isInvertCoordinates() {
     return this.mInvertCoordinates;
   }
 
-  /**
-   * Returns the range.
-   *
-   * @return the range of this axis.
-   */
+  /** Returns the range. */
   public SGTuple2d getRange() {
     return new SGTuple2d(this.getMinDoubleValue(), this.getMaxDoubleValue());
   }
 
-  /**
-   * Returns the scale type.
-   *
-   * @return the scale type of this axis.
-   */
+  /** Returns the scale type. */
   public int getScaleType() {
     return this.mScaleType;
   }
@@ -211,7 +187,6 @@ public class SGAxis implements Cloneable {
    * Returns whether the given value is inside the range.
    *
    * @param value the value to be checked
-   * @return whether the given value is inside the range.
    */
   public boolean insideRange(final double value) {
     return (this.getMinDoubleValue() <= value && value <= this.getMaxDoubleValue());
@@ -221,7 +196,6 @@ public class SGAxis implements Cloneable {
    * Returns whether the given value is "valid" in the present axis.
    *
    * @param value the value to be checked
-   * @return true if the given value is "valid" in the present axis
    */
   public boolean isValidValue(final double value) {
     return isValidValue(value, this.getScaleType());
@@ -232,7 +206,6 @@ public class SGAxis implements Cloneable {
    *
    * @param value the value to be checked
    * @param scaleType the scale type
-   * @return true if the given value is "valid" in a given scale type
    */
   public static boolean isValidValue(final double value, final int scaleType) {
     // negative value is "invalid" in the log scale
@@ -248,11 +221,7 @@ public class SGAxis implements Cloneable {
     return isValidValue(value.getValue(), scaleType);
   }
 
-  /**
-   * Clones this axis.
-   *
-   * @return a copy of this object
-   */
+  /** Clones this axis. */
   public final Object clone() {
     try {
       return super.clone();
@@ -266,17 +235,12 @@ public class SGAxis implements Cloneable {
    * Returns whether the given scale type is valid.
    *
    * @param type the scale type to check
-   * @return true if a given scale type is valid
    */
   public static boolean isValidScaleType(final int type) {
     return ((LINEAR_SCALE == type) || (LOG_SCALE == type));
   }
 
-  /**
-   * Returns the flag for date mode.
-   *
-   * @return the flag for date mode
-   */
+  /** Returns the flag for date mode. */
   public boolean getDateMode() {
     return this.mDateFlag;
   }

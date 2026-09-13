@@ -284,11 +284,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     }
   }
 
-  /**
-   * Returns the number of data.
-   *
-   * @return the number of data
-   */
+  /** Returns the number of data. */
   public int getDataNum() {
     if (this.mDataFileArray == null) {
       return 0;
@@ -329,11 +325,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     }
   }
 
-  /**
-   * Returns an array of property file data.
-   *
-   * @return an array of property file data
-   */
+  /** Returns an array of property file data. */
   public SGPropertyFileData[] getPropertyFileDataArray() {
     final int dataNum = this.getDataNum();
     SGPropertyFileData[] pFile = new SGPropertyFileData[dataNum];
@@ -475,7 +467,6 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
    * Returns the column index of table.
    *
    * @param identifier
-   * @return If the column with given identifier exists, returns the index.
    */
   public int getColumnIndex(final String identifier) {
     return this.mTable.getColumnModel().getColumnIndex(identifier);
@@ -487,7 +478,6 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     final int type = e.getType();
     if (type == TableModelEvent.UPDATE) {
 
-      // if the first row does not exist, return now
       if (e.getFirstRow() == -1) {
         return;
       }
@@ -558,37 +548,27 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getFigureIDColumnIndex() {
     return this.getColumnIndex(COLUMN_NAME_FIGURE_ID);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getDataNameColumnIndex() {
     return this.getColumnIndex(COLUMN_NAME_DATA_NAME);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getDataTypeColumnIndex() {
     return this.getColumnIndex(COLUMN_NAME_DATA_TYPE);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getFileNameColumnIndex() {
     return this.getColumnIndex(COLUMN_NAME_FILE_NAME);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public int getButtonColumnIndex() {
     return this.getColumnIndex(COLUMN_NAME_BUTTON);
   }
@@ -707,11 +687,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
     colFileName.setCellRenderer(fColRenderer);
   }
 
-  /**
-   * Returns a TreeMap object of figure ID to a list of property file data.
-   *
-   * @return a tree map object
-   */
+  /** Returns a TreeMap object of figure ID to a list of property file data. */
   public TreeMap<Object, Object> getSelectedFilePathListMap() {
 
     final int idColIndex = this.getFigureIDColumnIndex();
@@ -799,7 +775,6 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
       return;
     }
 
-    // if dropped onto a row with no data, returns now
     if (this.mDataFileArray[rowIndex].hasData == false) {
       return;
     }
@@ -830,10 +805,9 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
    * Called when some string has input to the cell for the file name.
    *
    * @param rowIndex the row index
-   * @param f a file object created with an input string
+   * @param path a file object created with an input string
    */
   private void setSelectedFile(final int rowIndex, final String path) {
-    // for different file
     if (path.equals(this.mDataFileArray[rowIndex].fileName) == false) {
 
       // set to attributes
@@ -848,7 +822,6 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
    * Returns whether a given file is acceptable as a property file.
    *
    * @param f a file
-   * @return true if a given file is acceptable
    */
   protected boolean isAcceptable(File f) {
     // the file exists and is a file
@@ -1041,7 +1014,6 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
 
       this.mCurDataSetupRowIndex = rowIndex;
 
-      // if the current row has no data, do nothing and return
       if (this.mDataFileArray[rowIndex].hasData == false) {
         return;
       }
@@ -1050,7 +1022,6 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
       DataFile dataFile = mDataFileArray[rowIndex];
       String fileName = dataFile.fileName;
       String dataType = dataFile.dataType;
-      // final int figureId = dataFile.figureId;
 
       // create a dialog
       this.createPropertyFileDataDialog(dataType);
@@ -1137,7 +1108,6 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
       final Map<String, Object> infoMap) {
 
     if (fileName != null && !"".equals(fileName)) {
-      // if a text string for file name is given
 
       if (this.setPropertyFileDataDialog(fileName, dataType, dataColumnInfoSet, infoMap) == false) {
         return false;
@@ -1401,11 +1371,7 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
 
   public void mouseReleased(MouseEvent e) {}
 
-  /**
-   * Returns the selected file path.
-   *
-   * @return the selected file path
-   */
+  /** Returns the selected file path. */
   public String getSelectedFilepath() {
     if (this.mPropertyFileDataDialog != null) {
       return this.mPropertyFileDataDialog.getFileName();
@@ -1419,7 +1385,6 @@ public class SGPropertyDataFileChooserWizardDialog extends SGWizardDialog
    *
    * @param dir directory name
    * @param name file name
-   * @return a file object
    */
   public void setSelectedFile(String dir, String name) {
     if (this.mPropertyFileDataDialog != null) {

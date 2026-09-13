@@ -465,7 +465,6 @@ class SGColumnTypeUpdater {
 
       } else {
         // pick up variable is newly-assigned
-        // try to get pick up information from the map
         Dimension dim = pickUpVar.getDimension(0);
         final int len = dim.getLength();
         String strideValue = map.getValueString(owner.COM_DATA_PICKUP_INDICES);
@@ -663,7 +662,6 @@ class SGColumnTypeUpdater {
 
       } else {
         // pick up variable is newly-assigned
-        // try to get pick up information from the map
         String strideValue = map.getValueString(owner.COM_DATA_PICKUP_INDICES);
         if (!"".equals(strideValue)) {
           SGIntegerSeriesSet indices = null;

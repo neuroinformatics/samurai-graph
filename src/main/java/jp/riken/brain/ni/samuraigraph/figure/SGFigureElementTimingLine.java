@@ -108,9 +108,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   public String getClassDescription() {
     return "Timing Lines";
   }
@@ -211,7 +209,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
    * @param id the ID to set
    * @param axisLocation location of the axis
    * @param value the axis value for given axis
-   * @return true if succeeded
    */
   public boolean addTimingLine(final int id, final int axisLocation, final double value) {
 
@@ -238,7 +235,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
    *
    * @param x the x-coordinate
    * @param y the y-coordinate
-   * @return true if succeeded
    */
   public boolean addTimingLine(final int x, final int y) {
 
@@ -355,6 +351,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
   /**
    * Synchronize the element given by the argument.
    *
+   * @param msg the msg parameter
    * @param element An object to be synchronized.
    */
   public boolean synchronizeArgument(final SGIFigureElement element, final String msg) {
@@ -386,7 +383,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
    *
    * @param element an Element object which has properties
    * @param versionNumber the version number of property file
-   * @return true if succeeded
    */
   public boolean readProperty(final Element element, final String versionNumber) {
     NodeList nList = element.getElementsByTagName(TimingLine.TAG_NAME_TIMING_LINE);
@@ -408,8 +404,8 @@ public class SGFigureElementTimingLine extends SGFigureElement
   /**
    * Creates an array of Element objects.
    *
+   * @param params the params parameter
    * @param document an Document objects to append elements
-   * @return an array of Element objects
    */
   public Element[] createElement(Document document, SGExportParameter params) {
     Element el = this.createThisElement(document, params);
@@ -469,9 +465,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private ArrayList<TimingLine> getVisibleTimingElementListInside() {
     ArrayList<TimingLine> list = new ArrayList<>();
     List<SGIChildObject> lList = this.getVisibleChildList();
@@ -484,67 +478,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
 
     return list;
   }
-
-  /*
-   * public boolean onKeyPressed(final KeyEvent e) {
-   * boolean effective = false;
-   * final int keycode = e.getKeyCode();
-   * final int mod = e.getModifiersEx();
-   * final boolean isShiftPressed = ((mod & InputEvent.SHIFT_DOWN_MASK) != 0);
-   * int dx = 0;
-   * int dy = 0;
-   * switch (keycode) {
-   * case KeyEvent.VK_UP:
-   * if (isShiftPressed) {
-   * dy = -1;
-   * } else {
-   * dy = -10;
-   * }
-   * break;
-   * case KeyEvent.VK_DOWN:
-   * if (isShiftPressed) {
-   * dy = 1;
-   * } else {
-   * dy = 10;
-   * }
-   * break;
-   * case KeyEvent.VK_LEFT:
-   * if (isShiftPressed) {
-   * dx = -1;
-   * } else {
-   * dx = -10;
-   * }
-   * break;
-   * case KeyEvent.VK_RIGHT:
-   * if (isShiftPressed) {
-   * dx = 1;
-   * } else {
-   * dx = 10;
-   * }
-   * break;
-   * }
-   * if (dx != 0 || dy != 0) {
-   * final List<SGIChildObject> list = this.getVisibleChildList();
-   * for (int ii = list.size() - 1; ii >= 0; ii--) {
-   * final TimingLine el = (TimingLine) list.get(ii);
-   * if (el.isSelected()) {
-   * if (el.prepare() == false) {
-   * return false;
-   * }
-   * el.translate((float) dx, (float) dy);
-   * if (el.commit() == false) {
-   * return false;
-   * }
-   * notifyToRoot();
-   * notifyChange();
-   * repaint();
-   * effective = true;
-   * }
-   * }
-   * }
-   * return effective;
-   * }
-   */
 
   /** */
   public boolean onMouseClicked(final MouseEvent e) {
@@ -681,7 +614,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
    * Returns the list of selected property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of selected property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getSelectedPropertyDialogObserverList(Class<?> cl) {
@@ -692,7 +624,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
    * Returns the list of visible property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of visible property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getVisiblePropertyDialogObserverList(Class<?> cl) {
@@ -703,28 +634,19 @@ public class SGFigureElementTimingLine extends SGFigureElement
    * Returns the list of all property dialog observers of given class type.
    *
    * @param cl the class
-   * @return the list of all property dialog observers
    */
   @Override
   public List<SGIPropertyDialogObserver> getAllPropertyDialogObserverList(Class<?> cl) {
     return this.getVisiblePropertyDialogObserverList();
   }
 
-  /**
-   * Returns the class object of property dialog observer.
-   *
-   * @return the class object
-   */
+  /** Returns the class object of property dialog observer. */
   @Override
   public Class<?> getPropertyDialogObserverClass() {
     return TimingLine.class;
   }
 
-  /**
-   * Updates changed flag of focused objects.
-   *
-   * @return true if succeeded
-   */
+  /** Updates changed flag of focused objects. */
   @Override
   public boolean updateChangedFlag() {
     List<SGISelectable> list = this.getFocusedObjectsList();
@@ -892,11 +814,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
     return true;
   }
 
-  /**
-   * Create copies of the focused objects.
-   *
-   * @return
-   */
+  /** Create copies of the focused objects. */
   public boolean duplicateFocusedObjects() {
     final int ox = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_X);
     final int oy = (int) (this.mMagnification * OFFSET_DUPLICATED_OBJECT_Y);
@@ -927,7 +845,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
    * Paste the objects.
    *
    * @param list of the objects to be pasted
-   * @return true:succeeded, false:failed
    */
   public boolean paste(List<SGICopyable> list) {
     final float mag = this.getMagnification();
@@ -949,7 +866,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
         el.setMagnification(mag);
         el.setProperties(p);
 
-        // el.mAxis = this.mAxisElement.getAxisInCube(line.mTempAxis);
         el.mAxis = this.mAxisElement.getAxisInPlane(line.mTempAxis);
 
         // add to the list
@@ -1051,11 +967,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
 
     private SGTuple2f mLocation = new SGTuple2f();
 
-    /**
-     * Returns the related axis
-     *
-     * @return the related axis
-     */
+    /** Returns the related axis */
     public SGAxis getAxis() {
       return this.mAxis;
     }
@@ -1069,9 +981,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       this.mAxis = axis;
     }
 
-    /**
-     * @return mValue
-     */
+    /** */
     public double getValue() {
       return this.mValue;
     }
@@ -1080,7 +990,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
      * Sets the axis value.
      *
      * @param value the value to set
-     * @return true if succeeded
      */
     public boolean setValue(final double value) {
       if (this.mAxis.isValidValue(value) == false) {
@@ -1119,11 +1028,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
     /** Flag whether this object is focused. */
     private boolean mSelectedFlag = false;
 
-    /**
-     * Get the flag as a focused object.
-     *
-     * @return whether this object is focused.
-     */
+    /** Get the flag as a focused object. */
     public boolean isSelected() {
       return this.mSelectedFlag;
     }
@@ -1154,7 +1059,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
      *
      * @param lw the line width to set
      * @param unit a unit of length
-     * @return true if succeeded
      */
     public boolean setLineWidth(final float lw, final String unit) {
       final Float lwNew = SGUtility.getLineWidth(lw, unit);
@@ -1243,18 +1147,12 @@ public class SGFigureElementTimingLine extends SGFigureElement
       this.mStroke.setJoin(BasicStroke.JOIN_BEVEL);
     }
 
-    /**
-     * @return
-     */
+    /** */
     public String getClassDescription() {
       return "";
     }
 
-    /**
-     * Returns the description of an instance.
-     *
-     * @return the description of an instance
-     */
+    /** Returns the description of an instance. */
     public String getInstanceDescription() {
 
       String config = SGFigureElementTimingLine.this.mAxisElement.getLocationName(this.mAxis);
@@ -1276,9 +1174,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       return sb.toString();
     }
 
-    /**
-     * @return
-     */
+    /** */
     private ArrayList<Point2D> getAnchorPointList() {
       ArrayList<Point2D> list = new ArrayList<>();
 
@@ -1306,11 +1202,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       return list;
     }
 
-    /**
-     * Returns a pop-up menu.
-     *
-     * @return a pop-up menu
-     */
+    /** Returns a pop-up menu. */
     public JPopupMenu getPopupMenu() {
       TimingLinePopupMenu p = null;
       if (this.mPopupMenu != null) {
@@ -1333,7 +1225,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
      * Sets the axis location.
      *
      * @param location the axis location to set
-     * @return true if succeeded
      */
     public boolean setAxisLocation(final int location) {
       SGAxis axis = SGFigureElementTimingLine.this.mAxisElement.getAxisInPlane(location);
@@ -1437,9 +1328,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       this.setDrawingElementsLocation();
     }
 
-    /**
-     * @return
-     */
+    /** */
     private boolean isHorizontal() {
       final List<SGAxis> hAxisList =
           SGFigureElementTimingLine.this.mAxisElement.getHorizontalAxisList();
@@ -1463,7 +1352,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
     /**
      * @param config
      * @param value
-     * @return
      */
     public boolean hasValidValue(final int config, final Number value) {
       final SGAxis axis =
@@ -1518,11 +1406,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       return true;
     }
 
-    /**
-     * Returns the property dialog.
-     *
-     * @return a property dialog
-     */
+    /** Returns the property dialog. */
     public SGPropertyDialog getPropertyDialog() {
       SGPropertyDialog dg = null;
       if (mPropertyDialog != null) {
@@ -1534,11 +1418,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       return dg;
     }
 
-    /**
-     * Returns a list of child nodes.
-     *
-     * @return a list of child nodes
-     */
+    /** Returns a list of child nodes. */
     public ArrayList<SGINode> getChildNodes() {
       return new ArrayList<SGINode>();
     }
@@ -1546,31 +1426,24 @@ public class SGFigureElementTimingLine extends SGFigureElement
     //
     private SGUndoManager mUndoManager = new SGUndoManager(this);
 
-    /**
-     * @return
-     */
+    /** */
     public SGProperties getMemento() {
       return this.getProperties();
     }
 
     /**
      * @param p
-     * @return
      */
     public boolean setMemento(SGProperties p) {
       return this.setProperties(p);
     }
 
-    /**
-     * @return
-     */
+    /** */
     public boolean isUndoable() {
       return this.mUndoManager.isUndoable();
     }
 
-    /**
-     * @return
-     */
+    /** */
     public boolean isRedoable() {
       return this.mUndoManager.isRedoable();
     }
@@ -1619,11 +1492,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       this.mUndoManager.initUndoBuffer();
     }
 
-    /**
-     * Delete all forward histories.
-     *
-     * @return true if succeeded
-     */
+    /** Delete all forward histories. */
     public boolean deleteForwardHistory() {
       return this.mUndoManager.deleteForwardHistory();
     }
@@ -1633,9 +1502,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       SGFigureElementTimingLine.this.notifyToRoot();
     }
 
-    /**
-     * @return
-     */
+    /** */
     public boolean isChanged() {
       return this.mUndoManager.isChanged();
     }
@@ -1668,7 +1535,6 @@ public class SGFigureElementTimingLine extends SGFigureElement
 
     /**
      * @param el
-     * @param p
      * @return
      */
     public boolean readProperty(final Element el) {

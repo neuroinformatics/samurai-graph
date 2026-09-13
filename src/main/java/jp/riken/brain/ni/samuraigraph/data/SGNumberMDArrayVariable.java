@@ -7,7 +7,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 /** The class of variable of multidimensional number array. */
 public abstract class SGNumberMDArrayVariable extends SGMDArrayVariable {
   // To get the value of a MLArray in a MATLAB file, the method
-  // com.jmatio.types.MLNumericArray.get(int index)
   // is used. For a d-dimensional MLNumericArray object, the argument of this method 'index' for a
   // set of
   // dimension indices {n[0], n[1], n[2], ..., n[d - 1]} is given by
@@ -169,7 +168,6 @@ public abstract class SGNumberMDArrayVariable extends SGMDArrayVariable {
    *
    * @param xIndex dimension index for x-values
    * @param yIndex dimension index for y-values
-   * @param origins the origins
    * @return the array of double values
    */
   @Override
@@ -256,10 +254,8 @@ public abstract class SGNumberMDArrayVariable extends SGMDArrayVariable {
     final int ySize = yIndices.length;
     double[] array = new double[xSize * ySize];
     for (int yy = 0; yy < ySize; yy++) {
-      //			indices[xIndex] = yIndices[yy];
       final int offsetNew = yFactor * yIndices[yy] + offset;
       for (int xx = 0; xx < xSize; xx++) {
-        //				indices[xIndex] = xIndices[xx];
         final int index = xFactor * xIndices[xx] + offsetNew;
         array[yy * xSize + xx] = this.mNumberArray.get(index);
       }

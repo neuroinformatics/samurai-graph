@@ -194,7 +194,6 @@ public class SGNetCDFDimensionPanel extends SGDimensionPanel implements ISliderC
       this.mValueTextField.setText("");
       this.mValueTextField.setToolTipText(null);
     } else {
-      //            final double value = this.mValues[index];
       final double value = SGDataViewerUtility.getCoordinateVariableValue(this.mValues, index);
       final String text = Double.toString(value);
       this.mValueTextField.setText(text);
@@ -208,20 +207,12 @@ public class SGNetCDFDimensionPanel extends SGDimensionPanel implements ISliderC
     }
   }
 
-  /**
-   * Returns the current index.
-   *
-   * @return the current index
-   */
+  /** Returns the current index. */
   public int getCurrentIndex() {
     return this.mSliderPanel.getCurrentIndex();
   }
 
-  /**
-   * Returns the current value.
-   *
-   * @return the current value
-   */
+  /** Returns the current value. */
   public double getCurrentValue() {
     return this.mValues[this.getCurrentIndex()];
   }
@@ -237,11 +228,7 @@ public class SGNetCDFDimensionPanel extends SGDimensionPanel implements ISliderC
     this.mSliderPanel.setComponentsEnabled(enabled);
   }
 
-  /**
-   * Returns the name of the dimension.
-   *
-   * @return the name of the dimension
-   */
+  /** Returns the name of the dimension. */
   public String getDimensionName() {
     if (this.mName != null) {
       return this.mName;

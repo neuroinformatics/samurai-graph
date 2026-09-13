@@ -14,7 +14,7 @@ public class SGNetCDFDataSetupDialog extends SGDataSetupDialog {
   /**
    * Builds this dialog.
    *
-   * @param owner the owner of this dialog
+   * @param parent the owner of this dialog
    * @param modal true for modal dialog
    */
   public SGNetCDFDataSetupDialog(java.awt.Frame parent, boolean modal) {
@@ -26,7 +26,7 @@ public class SGNetCDFDataSetupDialog extends SGDataSetupDialog {
   /**
    * Builds this dialog.
    *
-   * @param owner the owner of this dialog
+   * @param parent the owner of this dialog
    * @param modal true for modal dialog
    */
   public SGNetCDFDataSetupDialog(java.awt.Dialog parent, boolean modal) {

@@ -99,8 +99,6 @@ class SGShapeArrow extends SGSimpleArrow2D
   private static final int BODY = OTHER;
 
   public int getMouseLocation(final int x, final int y) {
-    // final int radius = (int)( 1.25f*ANCHOR_SIZE_FOR_FOCUSED_OBJECTS
-    // );
 
     final int startX = (int) this.getStartX();
     final int startY = (int) this.getStartY();
@@ -131,30 +129,22 @@ class SGShapeArrow extends SGSimpleArrow2D
     return this.mShape.getAxisConfiguration(this.getYAxis());
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getStartX() {
     return this.getShapeElement().getXFromGraphRectValue(this.mStartX);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getStartY() {
     return this.getShapeElement().getYFromGraphRectValue(this.mStartY);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getEndX() {
     return this.getShapeElement().getXFromGraphRectValue(this.mEndX);
   }
 
-  /**
-   * @return
-   */
+  /** */
   public float getEndY() {
     return this.getShapeElement().getYFromGraphRectValue(this.mEndY);
   }
@@ -163,7 +153,6 @@ class SGShapeArrow extends SGSimpleArrow2D
    * Sets the location of the x-axis.
    *
    * @param location the location of the x-axis
-   * @param true if succeeded
    */
   public boolean setXAxisLocation(final int location) {
     return this.mShape.setXAxis(location);
@@ -173,7 +162,6 @@ class SGShapeArrow extends SGSimpleArrow2D
    * Sets the location of the x-axis.
    *
    * @param location the location of the x-axis
-   * @param true if succeeded
    */
   public boolean setYAxisLocation(final int location) {
     return this.mShape.setYAxis(location);
@@ -231,7 +219,6 @@ class SGShapeArrow extends SGSimpleArrow2D
    * Sets the axis value of the start x.
    *
    * @param value the axis value to set
-   * @return true if succeeded
    */
   public boolean setStartXValue(final double value) {
     if (this.getXAxis().isValidValue(value) == false) {
@@ -245,7 +232,6 @@ class SGShapeArrow extends SGSimpleArrow2D
    * Sets the axis value of the start y.
    *
    * @param value the axis value to set
-   * @return true if succeeded
    */
   public boolean setStartYValue(final double value) {
     if (this.getYAxis().isValidValue(value) == false) {
@@ -259,7 +245,6 @@ class SGShapeArrow extends SGSimpleArrow2D
    * Sets the axis value of the end x.
    *
    * @param value the axis value to set
-   * @return true if succeeded
    */
   public boolean setEndXValue(final double value) {
     if (this.getXAxis().isValidValue(value) == false) {
@@ -273,7 +258,6 @@ class SGShapeArrow extends SGSimpleArrow2D
    * Sets the axis value of the end y.
    *
    * @param value the axis value to set
-   * @return true if succeeded
    */
   public boolean setEndYValue(final double value) {
     if (this.getYAxis().isValidValue(value) == false) {
@@ -297,7 +281,6 @@ class SGShapeArrow extends SGSimpleArrow2D
   /**
    * @param config
    * @param value
-   * @return
    */
   public boolean hasValidStartXValue(final int config, final Number value) {
     SGIFigureElementAxis aElement = this.getShapeElement().getAxisElement();
@@ -309,7 +292,6 @@ class SGShapeArrow extends SGSimpleArrow2D
   /**
    * @param config
    * @param value
-   * @return
    */
   public boolean hasValidStartYValue(final int config, final Number value) {
     SGIFigureElementAxis aElement = this.getShapeElement().getAxisElement();
@@ -321,7 +303,6 @@ class SGShapeArrow extends SGSimpleArrow2D
   /**
    * @param config
    * @param value
-   * @return
    */
   public boolean hasValidEndXValue(final int config, final Number value) {
     SGIFigureElementAxis aElement = this.getShapeElement().getAxisElement();
@@ -333,7 +314,6 @@ class SGShapeArrow extends SGSimpleArrow2D
   /**
    * @param config
    * @param value
-   * @return
    */
   public boolean hasValidEndYValue(final int config, final Number value) {
     SGIFigureElementAxis aElement = this.getShapeElement().getAxisElement();
@@ -345,7 +325,6 @@ class SGShapeArrow extends SGSimpleArrow2D
   /**
    * @param open
    * @param close
-   * @return
    */
   public boolean hasValidAngle(final Number open, final Number close) {
     final float openAngle = (open != null) ? open.floatValue() : this.getHeadOpenAngle();
@@ -402,9 +381,7 @@ class SGShapeArrow extends SGSimpleArrow2D
     return true;
   }
 
-  /**
-   * @return
-   */
+  /** */
   public List<Point2D> getAnchorPointList() {
     ArrayList<Point2D> list = new ArrayList<Point2D>();
 

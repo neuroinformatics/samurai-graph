@@ -13,13 +13,11 @@ public interface SGIFigureElementGraph extends SGIFigureElementForData {
 
   /**
    * @param data
-   * @return
    */
   public SGAxis getXAxis(SGData data);
 
   /**
    * @param data
-   * @return
    */
   public SGAxis getYAxis(SGData data);
 
@@ -30,7 +28,6 @@ public interface SGIFigureElementGraph extends SGIFigureElementForData {
    * @param elList a list of Element objects
    * @param dataList a list of data
    * @param params the parameters
-   * @return true if succeeded
    */
   public boolean createElementOfData(
       Document document, List<Element> elList, List<SGData> dataList, SGExportParameter params);
@@ -40,7 +37,6 @@ public interface SGIFigureElementGraph extends SGIFigureElementForData {
 
   /**
    * @param data
-   * @return
    */
   public boolean getVisibleInLegendFlag(SGData data);
 
@@ -48,7 +44,6 @@ public interface SGIFigureElementGraph extends SGIFigureElementForData {
    * Returns an array of data columns of given data.
    *
    * @param data a data
-   * @return an array of data columns
    */
   public SGDataColumnInfo[] getDataColumnInfoArray(SGData data);
 
@@ -56,7 +51,6 @@ public interface SGIFigureElementGraph extends SGIFigureElementForData {
    * Returns information map of given data.
    *
    * @param data a data
-   * @return information map
    */
   public Map<String, Object> getInfoMap(SGData data);
 
@@ -64,7 +58,6 @@ public interface SGIFigureElementGraph extends SGIFigureElementForData {
    * Show the netCDF data labels.
    *
    * @param fes the string element which is added with text label.
-   * @return null if succeeds. Returns data name that not have label if failed.
    */
   public String showNetCDFLabels(final SGIFigureElementString fes);
 
@@ -73,7 +66,6 @@ public interface SGIFigureElementGraph extends SGIFigureElementForData {
    *
    * @param fes
    * @param dataList
-   * @return null if succeeds. Returns data name that not have label if failed.
    */
   public String showNetCDFLabels(final SGIFigureElementString fes, final List<SGData> dataList);
 

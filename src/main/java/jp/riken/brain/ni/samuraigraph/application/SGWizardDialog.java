@@ -30,7 +30,7 @@ public abstract class SGWizardDialog extends SGDialog {
   }
 
   /**
-   * @param title
+   * @param owner
    */
   public SGWizardDialog(final Frame owner) {
     super(owner);
@@ -39,6 +39,7 @@ public abstract class SGWizardDialog extends SGDialog {
 
   /**
    * @param title
+   * @param owner the owner parameter
    */
   public SGWizardDialog(final Frame owner, final String title) {
     super(owner, title);
@@ -46,7 +47,8 @@ public abstract class SGWizardDialog extends SGDialog {
   }
 
   /**
-   * @param title
+   * @param owner the owner parameter
+   * @param modal the modal parameter
    */
   public SGWizardDialog(final Frame owner, final boolean modal) {
     super(owner, modal);
@@ -55,6 +57,8 @@ public abstract class SGWizardDialog extends SGDialog {
 
   /**
    * @param title
+   * @param owner the owner parameter
+   * @param modal the modal parameter
    */
   public SGWizardDialog(final Frame owner, final String title, final boolean modal) {
     super(owner, title, modal);
@@ -62,7 +66,7 @@ public abstract class SGWizardDialog extends SGDialog {
   }
 
   /**
-   * @param title
+   * @param owner
    */
   public SGWizardDialog(final Dialog owner) {
     super(owner);
@@ -71,6 +75,7 @@ public abstract class SGWizardDialog extends SGDialog {
 
   /**
    * @param title
+   * @param owner the owner parameter
    */
   public SGWizardDialog(final Dialog owner, final String title) {
     super(owner, title);
@@ -78,7 +83,8 @@ public abstract class SGWizardDialog extends SGDialog {
   }
 
   /**
-   * @param title
+   * @param owner the owner parameter
+   * @param modal the modal parameter
    */
   public SGWizardDialog(final Dialog owner, final boolean modal) {
     super(owner, modal);
@@ -87,6 +93,8 @@ public abstract class SGWizardDialog extends SGDialog {
 
   /**
    * @param title
+   * @param owner the owner parameter
+   * @param modal the modal parameter
    */
   public SGWizardDialog(final Dialog owner, final String title, final boolean modal) {
     super(owner, title, modal);
@@ -112,20 +120,12 @@ public abstract class SGWizardDialog extends SGDialog {
     this.onCanceled();
   }
 
-  /**
-   * Returns the previous wizard dialog.
-   *
-   * @return the previous wizard dialog
-   */
+  /** Returns the previous wizard dialog. */
   public SGWizardDialog getPrevious() {
     return this.mPreviousWizardDialog;
   }
 
-  /**
-   * Returns the next wizard dialog.
-   *
-   * @return the next wizard dialog
-   */
+  /** Returns the next wizard dialog. */
   public SGWizardDialog getNext() {
     return this.mNextWizardDialog;
   }
@@ -134,7 +134,6 @@ public abstract class SGWizardDialog extends SGDialog {
    * Sets the previous dialog.
    *
    * @param dg the previous wizard dialog
-   * @return true if succeeded
    */
   public boolean setPrevious(final SGWizardDialog dg) {
     this.mPreviousWizardDialog = dg;
@@ -147,7 +146,6 @@ public abstract class SGWizardDialog extends SGDialog {
    * Sets the next dialog.
    *
    * @param dg the next wizard dialog
-   * @return true if succeeded
    */
   public boolean setNext(final SGWizardDialog dg) {
     this.mNextWizardDialog = dg;
@@ -197,8 +195,6 @@ public abstract class SGWizardDialog extends SGDialog {
   /**
    * Called when the OK button is pressed. Closes this dialog and notify this action to the action
    * listeners of this dialog.
-   *
-   * @return true if succeeded
    */
   protected boolean onOK() {
     this.setCloseOption(OK_OPTION);
@@ -212,8 +208,6 @@ public abstract class SGWizardDialog extends SGDialog {
   /**
    * Called when the Cancel button is pressed. Closes this dialog and notify this action to the
    * action listeners of this dialog.
-   *
-   * @return true if succeeded
    */
   protected boolean onCanceled() {
     this.setCloseOption(CANCEL_OPTION);
@@ -227,8 +221,6 @@ public abstract class SGWizardDialog extends SGDialog {
   /**
    * Called when the Previous button is pressed. Closes this dialog, shows the previous wizard
    * dialog and notify this action to the action listeners this dialog.
-   *
-   * @return true if succeeded
    */
   protected boolean onPrevious() {
     // notify to the action listeners of this dialog
@@ -239,8 +231,6 @@ public abstract class SGWizardDialog extends SGDialog {
   /**
    * Called when the Next button is pressed. Closes this dialog, shows the next wizard dialog and
    * notify this action to the action listeners this dialog.
-   *
-   * @return true if succeeded
    */
   protected boolean onNext() {
     // notify to the action listeners of this dialog

@@ -131,19 +131,6 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
 
   public void actionPerformed(ActionEvent e) {
     super.actionPerformed(e);
-    /*
-    Object source = e.getSource();
-    if (this.mTimeDimensionEditorComboBox.equals(source)) {
-    	// resets the origin of time dimension
-    	Object item = this.mTimeDimensionEditorComboBox.getSelectedItem();
-    	String str = item.toString();
-    	Integer timeDimension = SGUtilityText.getInteger(str);
-    	if (timeDimension != null) {
-    		final int rowIndex = this.mTable.getSelectedRow();
-    		this.setOrigin(rowIndex, timeDimension, 0);
-    	}
-    }
-    */
   }
 
   protected String[] getColumnNameArray() {
@@ -170,11 +157,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     return new MDArrayDataColumnTableModel();
   }
 
-  /**
-   * Creates and returns a table object.
-   *
-   * @return a table object
-   */
+  /** Creates and returns a table object. */
   protected SGTable createTableInstance() {
     return new SGTable() {
       private static final long serialVersionUID = -2048668978677071802L;
@@ -276,11 +259,7 @@ public class SGMDArrayDataColumnSelectionPanel extends SGDataColumnSelectionPane
     return timeIndexStr;
   }
 
-  /**
-   * Checks selected items.
-   *
-   * @return true if selected items are valid for the data type
-   */
+  /** Checks selected items. */
   @Override
   public boolean checkSelectedItems() {
     List<SGDataColumnInfo> colInfoList = this.getColumnInfoList();

@@ -68,6 +68,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   /**
    * Builds a data object.
    *
+   * @param strideAvailable the strideAvailable parameter
    * @param src the data source
    * @param obs a data observer
    */
@@ -108,7 +109,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * Finds and returns a variable of given name.
    *
    * @param name the name of variable
-   * @return a variable if it is found
    */
   public SGMDArrayVariable findVariable(String name) {
     SGMDArrayVariable var = null;
@@ -149,11 +149,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return var;
   }
 
-  /**
-   * Returns the multidimensional data file.
-   *
-   * @return the multidimensional data file
-   */
+  /** Returns the multidimensional data file. */
   public SGMDArrayFile getMDArrayFile() {
     return (SGMDArrayFile) this.getDataSource();
   }
@@ -163,7 +159,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    *
    * @param name the name of a variable
    * @param index index to set
-   * @return true if succeeded
    */
   public boolean setDimensionIndex(final String name, final int index) {
     SGMDArrayVariable var = this.findVariable(name);
@@ -179,7 +174,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    *
    * @param name the name of a variable
    * @param index index to set
-   * @return true if succeeded
    */
   public boolean setTimeDimensionIndex(final String name, final int index) {
     SGMDArrayVariable var = this.findVariable(name);
@@ -195,7 +189,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    *
    * @param name the name of a variable
    * @param origins origins to set
-   * @return true if succeeded
    */
   public boolean setOrigin(final String name, final int[] origins) {
     if (origins == null) {
@@ -209,20 +202,12 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
-  /**
-   * Returns an array of variables.
-   *
-   * @return an array of variables
-   */
+  /** Returns an array of variables. */
   public SGMDArrayVariable[] getVariables() {
     return this.mVariables.clone();
   }
 
-  /**
-   * Returns the map of dimension index.
-   *
-   * @return the map of dimension index
-   */
+  /** Returns the map of dimension index. */
   public Map<String, Map<String, Integer>> getDimensionIndexMap() {
     Map<String, Map<String, Integer>> map = new HashMap<String, Map<String, Integer>>();
     SGMDArrayVariable[] vars = this.getVariables();
@@ -251,11 +236,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     }
   }
 
-  /**
-   * Returns the map of origins.
-   *
-   * @return the map of origins
-   */
+  /** Returns the map of origins. */
   public Map<String, int[]> getOriginMap() {
     Map<String, int[]> map = new HashMap<String, int[]>();
     SGMDArrayVariable[] vars = this.getVariables();
@@ -312,7 +293,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
      * Returns whether this object is equal to given object.
      *
      * @param obj an object to be compared
-     * @return true if two objects are equal
      */
     @Override
     public boolean equals(final Object obj) {
@@ -365,11 +345,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
       return true;
     }
 
-    /**
-     * Returns a copy of this object.
-     *
-     * @return a copy of this object
-     */
+    /** Returns a copy of this object. */
     public Object copy() {
       MDArrayDataProperties p = (MDArrayDataProperties) super.copy();
       p.dimensionIndexMap = new HashMap<String, Map<String, Integer>>();
@@ -394,26 +370,12 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
           (this.timeStride != null) ? (SGIntegerSeriesSet) this.timeStride.clone() : null;
       return p;
     }
-
-    // @Override
-    // public boolean hasEqualColumnTypes(DataProperties dp) {
-    // if ((dp instanceof MDArrayDataProperties) == false) {
-    // return false;
-    // }
-    // MDArrayDataProperties p = (MDArrayDataProperties) dp;
-    // if (SGUtility.equals(this.dimensionIndexMap, p.dimensionIndexMap) == false) {
-    // return false;
-    // }
-    // return true;
-    // }
-
   }
 
   /**
    * Returns the properties of this data.
    *
    * @param p the properties of this data
-   * @return true if succeeded
    */
   @Override
   public boolean getProperties(SGProperties p) {
@@ -434,7 +396,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * Sets the properties to this data.
    *
    * @param p properties to be set
-   * @return true if succeeded
    */
   @Override
   public boolean setProperties(SGProperties p) {
@@ -457,17 +418,12 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * Returns the name of given variable if it is not null.
    *
    * @param var a variable
-   * @return the name of given variable or null
    */
   protected String getName(SGMDArrayVariable var) {
     return (var != null) ? var.getName() : null;
   }
 
-  /**
-   * Returns a map which has data information. Overrode to set the data type and netCDF file.
-   *
-   * @return a map which has data information
-   */
+  /** Returns a map which has data information. Overrode to set the data type and netCDF file. */
   public Map<String, Object> getInfoMap() {
     Map<String, Object> map = super.getInfoMap();
     map.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, this.getDataType());
@@ -491,7 +447,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * Sets the column information.
    *
    * @param colInfo the column information
-   * @return true if succeeded
    */
   public boolean setColumnInfo(SGDataColumnInfo[] colInfo) {
     if (super.setColumnInfo(colInfo) == false) {
@@ -544,7 +499,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * Finds a variable of a given name if it exists and returns its array index.
    *
    * @param name the name of variable
-   * @return the array index of found variable or -1 if it is not found
    */
   public int getVariableIndex(final String name) {
     SGMDArrayVariable[] vars = this.getVariables();
@@ -561,7 +515,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * Generates and returns an array of double values.
    *
    * @param stride stride of an array
-   * @return an array of double values
    */
   protected double[] getIndexValues(final SGIntegerSeriesSet stride) {
     final int[] indices = stride.getNumbers();
@@ -584,7 +537,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * Sets a given data.
    *
    * @param data a data
-   * @return true if succeeded
    */
   public boolean setData(final SGData data) {
     if (!super.setData(data)) {
@@ -622,11 +574,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     }
   }
 
-  /**
-   * Returns the copy of this data object.
-   *
-   * @return a copy of this data object
-   */
+  /** Returns the copy of this data object. */
   public Object clone() {
     SGMDArrayData data = (SGMDArrayData) super.clone();
     data.mVariables = new SGMDArrayVariable[this.mVariables.length];
@@ -637,11 +585,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return data;
   }
 
-  /**
-   * Returns the stride of time.
-   *
-   * @return the stride of time
-   */
+  /** Returns the stride of time. */
   @Override
   public SGIntegerSeriesSet getTimeStride() {
     if (this.mTimeStride != null) {
@@ -699,11 +643,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return sBlockList;
   }
 
-  /**
-   * Returns an array of data column information.
-   *
-   * @return an array of data column information
-   */
+  /** Returns an array of data column information. */
   @Override
   public SGDataColumnInfo[] getColumnInfo() {
     SGMDArrayVariable[] vars = this.getVariables();
@@ -722,7 +662,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * Sets the dimensions.
    *
    * @param cols an array of column information
-   * @return true if succeeded
    */
   protected boolean setDimensionMap(SGDataColumnInfo[] cols) {
     // set dimensions
@@ -742,7 +681,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    *
    * @param el the Element object
    * @param type type of the method to save properties
-   * @return true if succeeded
    */
   @Override
   public boolean writeProperty(Element el, final SGExportParameter type) {
@@ -835,40 +773,24 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return true;
   }
 
-  /**
-   * Returns whether time dimensions are selected properly.
-   *
-   * @return true if time dimensions are selected properly
-   */
+  /** Returns whether time dimensions are selected properly. */
   public boolean isTimeDimensionAvailable() {
     return (this.getTimeDimensionLength() != -1);
   }
 
-  /**
-   * Returns whether animation is available.
-   *
-   * @return true if animation is available
-   */
+  /** Returns whether animation is available. */
   @Override
   public boolean isAnimationAvailable() {
     return this.isTimeDimensionAvailable();
   }
 
-  /**
-   * Returns the length of animation.
-   *
-   * @return the length of animation
-   */
+  /** Returns the length of animation. */
   @Override
   public int getAnimationLength() {
     return this.getTimeDimensionLength();
   }
 
-  /**
-   * Returns the length of time dimension. If time dimension is unavailable, returns -1.
-   *
-   * @return the length of time dimension
-   */
+  /** Returns the length of time dimension. If time dimension is unavailable, returns -1. */
   public int getTimeDimensionLength() {
     int len = -1;
     SGDataColumnInfo[] cols = this.getColumnInfo();
@@ -890,11 +812,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return len;
   }
 
-  /**
-   * Returns the current time value.
-   *
-   * @return the current time value
-   */
+  /** Returns the current time value. */
   public Number getCurrentTimeValue() {
     if (!this.isTimeDimensionAvailable()) {
       return -1;
@@ -903,11 +821,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return Integer.valueOf(index);
   }
 
-  /**
-   * Returns the current index of time value.
-   *
-   * @return the current index of time value
-   */
+  /** Returns the current index of time value. */
   @Override
   public int getCurrentTimeValueIndex() {
     if (!this.isTimeDimensionAvailable()) {
@@ -994,25 +908,18 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     this.clearCache();
   }
 
-  /**
-   * Returns the map of dimension index that are used.
-   *
-   * @return the map of dimension index
-   */
+  /** Returns the map of dimension index that are used. */
   public abstract Map<String, Map<String, Integer>> getUsedDimensionIndexMap();
 
-  /**
-   * Returns an array of variables that are assigned the column type.
-   *
-   * @return an array of variables
-   */
+  /** Returns an array of variables that are assigned the column type. */
   public abstract SGMDArrayVariable[] getAssignedVariables();
 
   /**
    * Exports the data into a NetCDF file.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param file the file to save
-   * @return true if succeeded
    */
   @Override
   public boolean saveToNetCDFFile(
@@ -1184,7 +1091,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * Adds variables to a netCDF file.
    *
    * @param builder the builder for the netCDF file
-   * @return true if succeeded
    */
   protected abstract boolean addVariables(NetcdfFormatWriter.Builder builder);
 
@@ -1192,7 +1098,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    * Writes data to a netCDF file.
    *
    * @param writer the netCDF file writer
-   * @return true if succeeded
    */
   protected abstract boolean writeData(NetcdfFormatWriter writer);
 
@@ -1518,7 +1423,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    *
    * @param file the file to save to
    * @param mode the mode of saving data
-   * @return true if succeeded
    */
   @Override
   public boolean saveToArchiveDataSetFile(final File file, final SGExportParameter mode) {
@@ -1638,8 +1542,9 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   /**
    * Exports the data into a file of the same format.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param file the file to save
-   * @return true if succeeded
    */
   @Override
   public boolean saveToSameFormatFile(
@@ -1659,7 +1564,6 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
    *
    * @param def default value
    * @param vars an array of existing variables
-   * @return a text string for the unique variable name
    */
   protected String getUniqueVarName(String def, SGVariable[] vars) {
     StringBuilder sb = new StringBuilder(def);
@@ -1680,11 +1584,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return sb.toString();
   }
 
-  /**
-   * Returns a text string of file extension for the file in a data set file.
-   *
-   * @return a text string of file extension
-   */
+  /** Returns a text string of file extension for the file in a data set file. */
   @Override
   public String getDataSetFileExtension() {
     SGIDataSource dataSrc = this.getDataSource();
@@ -1700,9 +1600,9 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   /**
    * Exports the data into a HDF5 file.
    *
-   * @param path the path of HDF5 file
+   * @param file the file parameter
+   * @param policy the policy parameter
    * @param mode the mode to save data
-   * @return true if succeeded
    */
   @Override
   public boolean saveToHDF5File(
@@ -1725,8 +1625,9 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   /**
    * Exports to a HDF5 file.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param writer HDF5-file writer
-   * @return true if succeeded
    */
   protected abstract boolean exportToHDF5(
       IHDF5Writer writer, final SGExportParameter mode, SGDataBufferPolicy policy);
@@ -1734,8 +1635,9 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   /**
    * Exports the data into a MATLAB file.
    *
-   * @param path the path of MATLAB file
-   * @return true if succeeded
+   * @param file the file parameter
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    */
   @Override
   public boolean saveToMATLABFile(
@@ -1747,9 +1649,10 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   /**
    * Exports to a MATLAB file.
    *
+   * @param mode the mode parameter
+   * @param policy the policy parameter
    * @param file the MATLAB file
    * @param writer MAT-file writer
-   * @return true if succeeded
    */
   protected abstract boolean exportToMATLAB(
       File file, MatFileWriter writer, final SGExportParameter mode, SGDataBufferPolicy policy);
@@ -1757,9 +1660,9 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
   /**
    * Exports the data into a text file.
    *
+   * @param policy the policy parameter
    * @param file the file to save
    * @param mode the mode to save data
-   * @return true if succeeded
    */
   @Override
   public boolean saveToTextFile(
@@ -1835,11 +1738,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     }
   }
 
-  /**
-   * Returns a text string for the command of the column types.
-   *
-   * @return a text string for the command of the column types
-   */
+  /** Returns a text string for the command of the column types. */
   @Override
   public String getColumnTypeCommandString() {
     List<String> varList = new ArrayList<String>();
@@ -1871,11 +1770,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return sb.toString();
   }
 
-  /**
-   * Returns a text string for the command of the origin.
-   *
-   * @return a text string for the command of the origin
-   */
+  /** Returns a text string for the command of the origin. */
   @Override
   public String getOriginCommandString() {
     SGMDArrayVariable[] vars = this.getAssignedVariables();
@@ -1909,11 +1804,7 @@ public abstract class SGMDArrayData extends SGArrayData implements SGIDataColumn
     return sb.toString();
   }
 
-  /**
-   * Returns a text string for the command of animation frame dimension.
-   *
-   * @return a text string for the command of animation frame dimension
-   */
+  /** Returns a text string for the command of animation frame dimension. */
   public String getAnimationFrameDimensionCommandString() {
     if (!this.isTimeDimensionAvailable()) {
       return null;

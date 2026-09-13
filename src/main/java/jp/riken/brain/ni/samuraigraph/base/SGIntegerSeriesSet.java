@@ -21,7 +21,6 @@ public class SGIntegerSeriesSet implements Cloneable {
    * @param start the number for the start
    * @param end the number for the end
    * @param step the step value
-   * @return true if given values are valid
    */
   public static boolean isValidInput(final int start, final int end, final int step) {
     return SGIntegerSeries.isValidSeries(start, end, step);
@@ -34,7 +33,6 @@ public class SGIntegerSeriesSet implements Cloneable {
    * @param end the number for the end
    * @param step the step value
    * @param aliasMap the map of alias
-   * @return true if given values are valid
    */
   public static boolean isValidInput(
       final SGInteger start,
@@ -105,7 +103,6 @@ public class SGIntegerSeriesSet implements Cloneable {
    * last index of array and the step is set to one.
    *
    * @param len array length
-   * @return created instance
    */
   public static SGIntegerSeriesSet createInstance(final int len) {
     SGIntegerSeries series = SGIntegerSeries.createInstance(len);
@@ -156,11 +153,7 @@ public class SGIntegerSeriesSet implements Cloneable {
     this.mSeriesList.add(new SGIntegerSeries(series));
   }
 
-  /**
-   * Returns a list of integer series.
-   *
-   * @return a list of integer series
-   */
+  /** Returns a list of integer series. */
   public List<SGIntegerSeries> getSeriesList() {
     return new ArrayList<SGIntegerSeries>(this.mSeriesList);
   }
@@ -168,8 +161,6 @@ public class SGIntegerSeriesSet implements Cloneable {
   /**
    * Tries to get an integer series. If all values are equally-spaces numbers, returns a series
    * object, otherwise returns null.
-   *
-   * @return a series object or null
    */
   public SGIntegerSeries testReduce() {
     if (this.mSeriesList.size() == 1) {
@@ -195,11 +186,7 @@ public class SGIntegerSeriesSet implements Cloneable {
     return new SGIntegerSeries(array[0], array[array.length - 1], step);
   }
 
-  /**
-   * Returns sorted array of numbers.
-   *
-   * @return sorted array of numbers
-   */
+  /** Returns sorted array of numbers. */
   public int[] getNumbers() {
     List<Integer> numList = new ArrayList<Integer>();
     for (int ii = 0; ii < this.mSeriesList.size(); ii++) {
@@ -230,20 +217,12 @@ public class SGIntegerSeriesSet implements Cloneable {
     return array;
   }
 
-  /**
-   * Returns the length of integer arrays.
-   *
-   * @return the length of integer arrays
-   */
+  /** Returns the length of integer arrays. */
   public int getLength() {
     return this.getNumbers().length;
   }
 
-  /**
-   * Returns the end index.
-   *
-   * @return the end index
-   */
+  /** Returns the end index. */
   public Integer getEndIndex() {
     if (this.mSeriesList.size() > 0) {
       SGIntegerSeries firstSeries = this.mSeriesList.get(0);
@@ -284,11 +263,7 @@ public class SGIntegerSeriesSet implements Cloneable {
     return mSeriesList.hashCode();
   }
 
-  /**
-   * Clones this object.
-   *
-   * @return the copy of this object
-   */
+  /** Clones this object. */
   @Override
   public Object clone() {
     try {
@@ -304,12 +279,10 @@ public class SGIntegerSeriesSet implements Cloneable {
   /**
    * Parses a given text string and returns an integer series set.
    *
-   * <p>Aliases given in the map are registered on the parsed series, so methods such as {@link
-   * #getEndIndex()} and {@link #isComplete()} can resolve them afterwards.
+   * <p>#getEndIndex()} and {@link #isComplete()} can resolve them afterwards.
    *
    * @param str a text string
    * @param aliasMap the map of alias
-   * @return an integer series set or null if failed to parse
    */
   public static SGIntegerSeriesSet parse(final String str, final Map<String, Integer> aliasMap) {
     if (str == null || aliasMap == null) {
@@ -347,7 +320,6 @@ public class SGIntegerSeriesSet implements Cloneable {
    *
    * @param str a text string
    * @param len array length
-   * @return an integer series set or null if failed to parse
    */
   public static SGIntegerSeriesSet parse(String str, final int len) {
     Map<String, Integer> aliases = new HashMap<String, Integer>();
@@ -386,12 +358,6 @@ public class SGIntegerSeriesSet implements Cloneable {
    * @return true if this object has all index from 0 to the end
    */
   public boolean isComplete() {
-    //    	SGIntegerSeries series = this.testReduce();
-    //    	if (series == null) {
-    //    		return false;
-    //    	}
-    //    	String str = series.toString();
-    //    	return "0:end".equals(str);
     Integer end = this.getEndIndex();
     if (end == null) {
       return false;

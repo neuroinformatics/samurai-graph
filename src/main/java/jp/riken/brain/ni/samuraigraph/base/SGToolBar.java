@@ -131,7 +131,6 @@ public class SGToolBar extends JToolBar
 
   private JToolBar mLayoutToolBar;
 
-  // private JToolBar mHelpToolBar;
   private JToolBar mZoomToolBar;
 
   /** Tool Bars Title. */
@@ -143,7 +142,6 @@ public class SGToolBar extends JToolBar
 
   private static final String LAYOUT_TOOLBAR_TITLE = "Layout";
 
-  // private static final String HELP_TOOLBAR_TITLE = "Help";
   private static final String ZOOM_TOOLBAR_TITLE = "Zoom";
 
   /** A combo box to set the magnification. */
@@ -299,12 +297,6 @@ public class SGToolBar extends JToolBar
     barLayout.setMinimumSize(barLayout.getPreferredSize());
     this.mLayoutToolBar = barLayout;
 
-    // JToolBar barHelp = new JToolBar( HELP_TOOLBAR_TITLE );
-    // barHelp.add(this.mHelpButton);
-    // barHelp.setMaximumSize( barHelp.getPreferredSize() );
-    // barHelp.setMinimumSize( barHelp.getPreferredSize() );
-    // this.mHelpToolBar = barHelp;
-
     JToolBar barZoom = new JToolBar(ZOOM_TOOLBAR_TITLE);
     JPanel panel = new JPanel();
     panel.setPreferredSize(new Dimension(132, this.mBoundingBoxButton.getPreferredSize().height));
@@ -321,21 +313,14 @@ public class SGToolBar extends JToolBar
       barEdit.setRollover(true);
       barInsert.setRollover(true);
       barLayout.setRollover(true);
-      // barHelp.setRollover(true);
       barZoom.setRollover(true);
     }
-
-    // AbstractButton btn = new JToggleButton("..");
-    // btn.addActionListener( this );
-    // this.mButton = btn;
 
     this.add(barFile);
     this.add(barEdit);
     this.add(barInsert);
     this.add(barLayout);
-    // this.add( barHelp );
     this.add(barZoom);
-    // this.add( btn );
 
     this.createButtonMap();
     this.createToolBarMap();
@@ -346,11 +331,7 @@ public class SGToolBar extends JToolBar
     return true;
   }
 
-  /**
-   * Returns a pop-up menu.
-   *
-   * @return a pop-up menu
-   */
+  /** Returns a pop-up menu. */
   public JPopupMenu getPopupMenu() {
     JPopupMenu p = null;
     if (this.mPopupMenu != null) {
@@ -374,11 +355,7 @@ public class SGToolBar extends JToolBar
     return p;
   }
 
-  /**
-   * Create a pop-up menu.
-   *
-   * @return a pop-up menu
-   */
+  /** Create a pop-up menu. */
   private JPopupMenu createPopupMenu() {
     JPopupMenu p = new JPopupMenu();
     p.setBounds(0, 0, 100, 100);
@@ -418,7 +395,6 @@ public class SGToolBar extends JToolBar
    * @param obj
    */
   public void setRoot(SGIRootObject obj) {
-    // this.mRoot = obj;
     this.mZoomComboBox.addZoomable(obj);
   }
 
@@ -541,8 +517,6 @@ public class SGToolBar extends JToolBar
     if (Arrays.asList(TOOLBAR_MENUCMD_ARRAY).contains(command)) {
       // set buttons visibility
       this.setToolBarVisible(command, !this.isToolBarVisible(command));
-      //            this.mButton.setSelected(false);
-
     }
 
     // from the lock button
@@ -575,7 +549,6 @@ public class SGToolBar extends JToolBar
 
   /**
    * @param command
-   * @return
    */
   public boolean isButtonEnabled(final String command) {
     Object obj = this.getButton(command);
@@ -601,7 +574,6 @@ public class SGToolBar extends JToolBar
 
   /**
    * @param command
-   * @return
    */
   public boolean isButtonSelected(final String command) {
     Object obj = this.getButton(command);
@@ -629,9 +601,7 @@ public class SGToolBar extends JToolBar
     }
   }
 
-  /**
-   * @return
-   */
+  /** */
   public boolean isInsertToggleButtonSelected() {
     final List<JToggleButton> list = this.getInsertToggleButtonList();
     for (int ii = 0; ii < list.size(); ii++) {
@@ -668,9 +638,7 @@ public class SGToolBar extends JToolBar
     return list;
   }
 
-  /**
-   * @return
-   */
+  /** */
   private JToggleButton[] getInsertToggleButtonArray() {
     JToggleButton[] array = {
       this.mInsertLabelButton,
@@ -684,7 +652,6 @@ public class SGToolBar extends JToolBar
 
   /**
    * @param command
-   * @return
    */
   public boolean hasButton(final String command) {
     Object obj = this.getButton(command);
@@ -744,13 +711,10 @@ public class SGToolBar extends JToolBar
 
     // update the bounds
     this.updateBounds();
-
-    //        this.updatePopupMenu();
   }
 
   /**
    * @param command
-   * @return
    */
   public boolean isToolBarVisible(final String command) {
     Object obj = this.mToolBarMap.get(command);
@@ -779,11 +743,7 @@ public class SGToolBar extends JToolBar
     return array;
   }
 
-  /**
-   * Returns an array of keys of inner tool bars.
-   *
-   * @return an array of keys of inner tool bars.
-   */
+  /** Returns an array of keys of inner tool bars. */
   public String[] getToolBarPattern() {
     Component[] com = this.getToolBarArray();
     String[] keys = TOOLBAR_MENUCMD_ARRAY;
@@ -908,7 +868,6 @@ public class SGToolBar extends JToolBar
   }
 
   //
-  // for zooming
   //
 
   /** */
@@ -943,13 +902,11 @@ public class SGToolBar extends JToolBar
   private interface IToolBarButton {
     /**
      * @param com
-     * @uml.property name="command"
      */
     public void setCommand(String com);
 
     /**
      * @return
-     * @uml.property name="command"
      */
     public String getCommand();
   }

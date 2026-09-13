@@ -85,16 +85,6 @@ public interface SGIRootObjectConstants extends SGIConstants {
 
   public static final String MENUBAR_PAPER_SIZE = "Paper Size";
 
-  //    public static final String MENUBARCMD_PAPER_A4_SIZE = PAPER_SIZE_A4;
-  //
-  //    public static final String MENUBARCMD_PAPER_B5_SIZE = PAPER_SIZE_B5;
-  //
-  //    public static final String MENUBARCMD_PAPER_USLETTER_SIZE = PAPER_SIZE_US_LETTER;
-  //
-  //    public static final String MENUBARCMD_PAPER_PORTRAIT = "Portrait";
-  //
-  //    public static final String MENUBARCMD_PAPER_LANDSCAPE = "Landscape";
-
   public static final String MENUBARCMD_PAPER_A4_PORTRAIT = "A4 Portrait";
 
   public static final String MENUBARCMD_PAPER_B5_PORTRAIT = "B5 Portrait";
@@ -347,14 +337,6 @@ public interface SGIRootObjectConstants extends SGIConstants {
   public static final double IMAGE_LOCATION_Y_MAX_VALUE = 150.0;
 
   public static final String IMAGE_SIZE_UNIT = cm;
-
-  //    public static final double IMAGE_WIDTH_MIN_VALUE = 0.0;
-  //
-  //    public static final double IMAGE_WIDTH_MAX_VALUE = 99.0;
-  //
-  //    public static final double IMAGE_HEIGHT_MIN_VALUE = 0.0;
-  //
-  //    public static final double IMAGE_HEIGHT_MAX_VALUE = 99.0;
 
   public static final double IMAGE_SCALE_MIN_VALUE = 0.01;
 

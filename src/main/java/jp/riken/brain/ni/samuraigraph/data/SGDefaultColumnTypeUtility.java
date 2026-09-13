@@ -357,12 +357,6 @@ public class SGDefaultColumnTypeUtility
     return true;
   }
 
-  // for serial number case
-
-  // for serial number case
-
-  // for serial number case
-
   // Compares two text strings for the name of NetCDF variables.
   // Slashes are replaces with underscores in the comparison.
   // This method is only for NetCDF data set file.

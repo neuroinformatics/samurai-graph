@@ -194,7 +194,6 @@ public class SGElementGroupBarInGraph extends SGElementGroupBarForData
   public boolean paintElement(final Graphics2D g2d, final Rectangle2D rect) {
     super.paintElement(g2d, rect);
 
-    // ElementGroupSetInGraph gs = (ElementGroupSetInGraph)this.mGroupSet;
     SGDrawingElement[] array = this.mDrawingElementArray;
 
     if (this.isFocused() && this.mGraph.isSymbolsVisibleAroundFocusedObjects()) {
@@ -222,8 +221,8 @@ public class SGElementGroupBarInGraph extends SGElementGroupBarForData
   }
 
   /**
+   * @param bar
    * @param g2d
-   * @param symbol
    * @return
    */
   private boolean emphasisBar(final SGDrawingElementBar bar, final Graphics2D g2d) {
@@ -239,7 +238,6 @@ public class SGElementGroupBarInGraph extends SGElementGroupBarForData
    * @return true if this element group contains the given point
    */
   public boolean contains(final int x, final int y) {
-    // if a given point is out of the graph rectangle, returns false;
     Rectangle2D gRect = this.mGraph.getGraphRect();
     if (!gRect.contains(x, y)) {
       return false;
@@ -319,6 +317,7 @@ public class SGElementGroupBarInGraph extends SGElementGroupBarForData
     /**
      * Builds a rectangle in a group of rectangles.
      *
+     * @param index the index parameter
      * @param group a group of rectangles
      */
     public BarInGraph(SGElementGroupBarInGraph group, final int index) {

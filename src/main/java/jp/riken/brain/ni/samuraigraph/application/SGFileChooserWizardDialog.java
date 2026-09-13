@@ -33,7 +33,6 @@ public abstract class SGFileChooserWizardDialog extends SGWizardDialog {
    *
    * @param dir directory name
    * @param name file name
-   * @return a file object
    */
   public void setCurrentFile(String dir, String name) {
     if (name == null) {
@@ -65,7 +64,6 @@ public abstract class SGFileChooserWizardDialog extends SGWizardDialog {
    * Sets the file name and returns a file.
    *
    * @param path file path
-   * @return a file object
    */
   public File setSelectedFile(String path) {
     File f = new File(path);
@@ -75,8 +73,7 @@ public abstract class SGFileChooserWizardDialog extends SGWizardDialog {
   /**
    * Sets the file name and returns a file.
    *
-   * @param path file path
-   * @return a file object
+   * @param f file path
    */
   public File setSelectedFile(File f) {
     if (f.exists()) {
@@ -85,11 +82,7 @@ public abstract class SGFileChooserWizardDialog extends SGWizardDialog {
     return f;
   }
 
-  /**
-   * Returns the selected file.
-   *
-   * @return the selected file
-   */
+  /** Returns the selected file. */
   public File getSelectedFile() {
     return (this.mSelectedFiles != null) ? this.mSelectedFiles[0] : null;
   }

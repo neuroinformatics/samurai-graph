@@ -11,6 +11,7 @@ public class SGNamedStringBlock extends SGStringBlock {
   /**
    * Builds an block object.
    *
+   * @param values the values parameter
    * @param seriesMap the map of dimension indices
    */
   public SGNamedStringBlock(final String[] values, Map<String, SGIntegerSeries> seriesMap) {

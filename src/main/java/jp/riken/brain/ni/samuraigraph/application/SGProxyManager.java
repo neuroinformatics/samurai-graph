@@ -36,11 +36,7 @@ class SGProxyManager implements ActionListener, SGIPreferencesConstants {
     }
   }
 
-  /**
-   * Returns the direct access flag.
-   *
-   * @return the direct access flag
-   */
+  /** Returns the direct access flag. */
   public boolean isDirectAccess() {
     return this.mDirectAccessFlag;
   }
@@ -54,20 +50,12 @@ class SGProxyManager implements ActionListener, SGIPreferencesConstants {
     this.mDirectAccessFlag = b;
   }
 
-  /**
-   * Returns the host name.
-   *
-   * @return the host name
-   */
+  /** Returns the host name. */
   public String getProxyHostName() {
     return this.mProxyHostName;
   }
 
-  /**
-   * Returns the port number.
-   *
-   * @return the port number
-   */
+  /** Returns the port number. */
   public int getProxyPortNumber() {
     return this.mProxyPortNumber;
   }
@@ -94,7 +82,6 @@ class SGProxyManager implements ActionListener, SGIPreferencesConstants {
    * Shows the dialog to set proxy dialog.
    *
    * @param owner the owner of the dialog
-   * @return true if succeeded
    */
   public boolean showProxySettingDialog(final Frame owner) {
 

@@ -75,11 +75,7 @@ public class SGTwoAxesSelectionPanel extends SGAxisSelectionPanel {
     }
   }
 
-  /**
-   * Returns the selected x-axis location.
-   *
-   * @return the location of x-axis
-   */
+  /** Returns the selected x-axis location. */
   public int getXAxisLocation() {
     int location = -1;
 
@@ -95,11 +91,7 @@ public class SGTwoAxesSelectionPanel extends SGAxisSelectionPanel {
     return location;
   }
 
-  /**
-   * Returns the selected y-axis location.
-   *
-   * @return the location of y-axis
-   */
+  /** Returns the selected y-axis location. */
   public int getYAxisLocation() {
     int location = -1;
 

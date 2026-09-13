@@ -25,11 +25,7 @@ class ElementGroupBar extends SGElementGroupBarForData implements ILegendElement
     this.legend = legend;
   }
 
-  /**
-   * Creates and returns an instance of drawing element.
-   *
-   * @return an instance of drawing element
-   */
+  /** Creates and returns an instance of drawing element. */
   protected SGDrawingElement createDrawingElementInstance(final int index) {
     return new BarInLegend(this, index);
   }
@@ -44,22 +40,14 @@ class ElementGroupBar extends SGElementGroupBarForData implements ILegendElement
     return true;
   }
 
-  /**
-   * Returns the preferred width.
-   *
-   * @return the preferred width
-   */
+  /** Returns the preferred width. */
   public float getPreferredWidth() {
     final ElementGroupSetInLegendSXY gs = (ElementGroupSetInLegendSXY) this.mGroupSet;
     Rectangle2D strRect = gs.mDrawingString.getElementBounds();
     return (float) strRect.getHeight();
   }
 
-  /**
-   * Returns the preferred height.
-   *
-   * @return the preferred height
-   */
+  /** Returns the preferred height. */
   public float getPreferredHeight() {
     return this.getPreferredWidth();
   }
@@ -121,7 +109,6 @@ class ElementGroupBar extends SGElementGroupBarForData implements ILegendElement
     }
 
     if (pointArray.length != this.mDrawingElementArray.length) {
-      // throw new IllegalArgumentException();
       this.initDrawingElement(pointArray);
     }
 
@@ -167,15 +154,4 @@ class ElementGroupBar extends SGElementGroupBarForData implements ILegendElement
   public float getY(int index) {
     return this.mLocation.y;
   }
-
-  // @Override
-  // protected float getShiftXInGraph() {
-  // return 0;
-  // }
-  //
-  // @Override
-  // protected float getShiftYInGraph() {
-  // return 0;
-  // }
-
 }

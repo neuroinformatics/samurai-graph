@@ -30,11 +30,7 @@ public abstract class SGDataColumn implements Cloneable, SGIDisposable, SGIConst
     this.setTitle(title);
   }
 
-  /**
-   * Clones this data column.
-   *
-   * @return shallow copy of this data column
-   */
+  /** Clones this data column. */
   public Object clone() {
     try {
       return super.clone();
@@ -44,25 +40,13 @@ public abstract class SGDataColumn implements Cloneable, SGIDisposable, SGIConst
     }
   }
 
-  /**
-   * Returns the length of data column.
-   *
-   * @return the length of data column
-   */
+  /** Returns the length of data column. */
   public abstract int getLength();
 
-  /**
-   * Returns the value type of this column.
-   *
-   * @return the value type of this column
-   */
+  /** Returns the value type of this column. */
   public abstract String getValueType();
 
-  /**
-   * Returns the title of this column.
-   *
-   * @return the title of this column
-   */
+  /** Returns the title of this column. */
   public String getTitle() {
     if (this.mTitle != null) {
       return this.mTitle;
@@ -84,11 +68,7 @@ public abstract class SGDataColumn implements Cloneable, SGIDisposable, SGIConst
     }
   }
 
-  /**
-   * Returns the type of this column.
-   *
-   * @return the type of this column
-   */
+  /** Returns the type of this column. */
   public String getColumnType() {
     return mColumnType;
   }

@@ -17,7 +17,7 @@ public class SGSDArrayDataSetupDialog extends SGDataSetupDialog
   /**
    * Builds this dialog.
    *
-   * @param owner the owner of this dialog
+   * @param parent the owner of this dialog
    * @param modal true for modal dialog
    */
   public SGSDArrayDataSetupDialog(Frame parent, boolean modal) {
@@ -29,7 +29,7 @@ public class SGSDArrayDataSetupDialog extends SGDataSetupDialog
   /**
    * Builds this dialog.
    *
-   * @param owner the owner of this dialog
+   * @param parent the owner of this dialog
    * @param modal true for modal dialog
    */
   public SGSDArrayDataSetupDialog(Dialog parent, boolean modal) {

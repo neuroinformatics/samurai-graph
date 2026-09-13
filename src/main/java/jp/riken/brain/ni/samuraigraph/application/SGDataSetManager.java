@@ -130,17 +130,6 @@ class SGDataSetManager
     for (int ii = 0; ii < fList.size(); ii++) {
       File f = fList.get(ii);
       String path = f.getPath();
-      //            String[] imgArray = SGIImageConstants.DRAWABLE_IMAGE_EXTENSIONS;
-      //            for (int jj = 0; jj < imgArray.length; jj++) {
-      //            	String suffix = "." + imgArray[jj];
-      //            	if (path.toLowerCase().endsWith(suffix)) {
-      //            		imageFile = f;
-      //            		break;
-      //            	}
-      //            }
-      //            if (imageFile != null) {
-      //            	break;
-      //            }
       if (this.hasExtension(path, SGIImageConstants.DRAWABLE_IMAGE_EXTENSIONS)) {
         imageFile = f;
         break;
@@ -149,8 +138,6 @@ class SGDataSetManager
 
     // load
     boolean result = _loadDataSet(wnd, pFname, dFnameList, imageFile);
-    //        this.mArchiveFileExtractor.deleteExtractedFiles();
-    //        datasetTempDir.delete();
     this.mDataSetFolderList.add(datasetTempDir);
     this.mDataSetFileList.addAll(this.mArchiveFileExtractor.getExtractedFileList());
 
@@ -312,11 +299,7 @@ class SGDataSetManager
         sb2.append(ii);
         sb2.append('-');
         sb2.append(jj);
-        //                sb2.append(".csv");
         String fnameHeader = sb2.toString();
-        //                if (!fList.contains(new File(fname))) {
-        //                    break;
-        //                }
         String fname = null;
         for (File f : fList) {
           String path = f.getAbsolutePath();
@@ -550,30 +533,6 @@ class SGDataSetManager
         }
 
         return OK_OPTION;
-        //            } else if (fileDesc.startsWith(ARCHIVE_FILE_DESCRIPTION_NETCDF)) {
-        //                final String versionString = this.mMain.mAppProp.getVersionString();
-        //                SGNetCDFDataSetManager netcdfDatasetManager = new
-        // SGNetCDFDataSetManager(this.mMain);
-        //                int result = netcdfDatasetManager.save(wnd, versionString, datasetTempDir,
-        // zFile.file);
-        //
-        //                // delete temporary files
-        //                File[] tempFiles = datasetTempDir.listFiles();
-        //                for (File f : tempFiles) {
-        //                    f.delete();
-        //                }
-        //                datasetTempDir.delete();
-        //                if (result != SUCCESSFUL_COMPLETION) {
-        //                    JOptionPane.showMessageDialog(wnd, failed);
-        //                    return result;
-        //                }
-        //
-        //                File f = this.mArchiveFileCreator.getSelectedFile();
-        //                if (f != null) {
-        //                    this.mMain.updateCurrentFile(f, FILE_TYPE.DATASET);
-        //                }
-        //
-        //                return OK_OPTION;
       } else {
         return ERROR_OPTION;
       }

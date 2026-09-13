@@ -90,20 +90,12 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
     this.mColorBarModel = model;
   }
 
-  /**
-   * Returns the color bar model.
-   *
-   * @return the color bar model
-   */
+  /** Returns the color bar model. */
   public SGColorMap getColorBarModel() {
     return this.mColorBarModel;
   }
 
-  /**
-   * Returns the value for rectangle width.
-   *
-   * @return the value for rectangle width
-   */
+  /** Returns the value for rectangle width. */
   public double getWidthValue() {
     return this.mWidthValue;
   }
@@ -112,7 +104,6 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
    * Sets the value for rectangle width.
    *
    * @param value rectangle width to set
-   * @return true if succeeded
    */
   public boolean setWidthValue(final double value) {
     if (value < 0.0) {
@@ -122,11 +113,7 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
     return true;
   }
 
-  /**
-   * Returns the value for rectangle height.
-   *
-   * @return the value for rectangle height
-   */
+  /** Returns the value for rectangle height. */
   public double getHeightValue() {
     return this.mHeightValue;
   }
@@ -135,7 +122,6 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
    * Sets the value for rectangle height.
    *
    * @param value rectangle height to set
-   * @return true if succeeded
    */
   public boolean setHeightValue(final double value) {
     if (value < 0.0) {
@@ -149,7 +135,6 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
    * Sets the location of drawing elements.
    *
    * @param pointArray an array of coordinates
-   * @return true if succeeded
    */
   public boolean setLocation(final SGTuple2f[] pointArray) {
 
@@ -179,7 +164,6 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
    *
    * @param xCoordinateArray an array of x-coordinates
    * @param yCoordinateArray an array of y-coordinates
-   * @return true if succeeded
    */
   public boolean setLocation(float[] xCoordinateArray, float[] yCoordinateArray) {
     if (xCoordinateArray == null || yCoordinateArray == null) {
@@ -249,11 +233,7 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
     return true;
   }
 
-  /**
-   * Returns the tag name.
-   *
-   * @return the tag name
-   */
+  /** Returns the tag name. */
   public String getTagName() {
     return TAG_NAME_COLOR_MAP;
   }
@@ -263,7 +243,6 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
    *
    * @param g2d graphic context
    * @param clipRect a rectangle for clipping
-   * @return true if succeeded
    */
   public boolean paintElement(Graphics2D g2d, Rectangle2D clipRect) {
 
@@ -377,13 +356,6 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
    * @param array the location of drawing elements
    */
   protected boolean initDrawingElement(SGTuple2f[] array) {
-    // if (this.mGridMode) {
-    // // do nothing
-    // } else {
-    // if (super.initDrawingElement(array) == false) {
-    // return false;
-    // }
-    // }
     if (super.initDrawingElement(array) == false) {
       return false;
     }
@@ -393,7 +365,8 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
   /**
    * Initializes the drawing elements.
    *
-   * @param array the location of drawing elements
+   * @param xArray the xArray parameter
+   * @param yArray the yArray parameter
    */
   public boolean initDrawingElement(float[] xArray, float[] yArray) {
     // do nothing
@@ -466,6 +439,7 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
     /**
      * Builds a rectangle in a color map.
      *
+     * @param index the index parameter
      * @param group a group of rectangles
      */
     public PseudocolorMapRectangle(final SGElementGroupPseudocolorMap group, final int index) {
@@ -481,11 +455,7 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
       this.mZValue = value;
     }
 
-    /**
-     * Returns the z-value.
-     *
-     * @return the z-value
-     */
+    /** Returns the z-value. */
     public double getZValue() {
       return this.mZValue;
     }
@@ -600,10 +570,7 @@ public abstract class SGElementGroupPseudocolorMap extends SGElementGroupRectang
     return this.mFocusedFlag;
   }
 
-  // private SGElementGroupSetInGraph mGroupSet = null;
-
   public boolean setElementGroupSet(SGElementGroupSetInGraph gs) {
-    // this.mGroupSet = gs;
     return true;
   }
 

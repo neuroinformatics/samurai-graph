@@ -19,11 +19,7 @@ public abstract class SGDimensionPanel extends JPanel {
    */
   public abstract void setComponentsEnabled(final boolean enabled);
 
-  /**
-   * Returns the slider panel.
-   *
-   * @return the slider panel
-   */
+  /** Returns the slider panel. */
   protected abstract SGSliderPanel getSliderPanel();
 
   /**

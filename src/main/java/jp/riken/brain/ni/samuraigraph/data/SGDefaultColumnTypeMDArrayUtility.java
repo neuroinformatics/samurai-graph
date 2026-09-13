@@ -1218,7 +1218,6 @@ public final class SGDefaultColumnTypeMDArrayUtility
       return false;
     }
 
-    // for multiple variables
     if (multiple.booleanValue()) {
       // multiple y-indices
       for (MDArrayDimension yDim : yDimList) {

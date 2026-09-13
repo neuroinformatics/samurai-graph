@@ -602,18 +602,6 @@ public class SGXYFigure extends SGFigure
     SGPropertyUtility.addProperty(map, frameColorKey, this.getFrameLineColor());
   }
 
-  /*
-  @Override
-  public boolean getGridDateMode(boolean horizontal) {
-  	SGIFigureElementGrid gElement = this.getGridElement();
-  	SGIFigureElementAxis aElement = this.getAxisElement();
-  	final int location = horizontal ? gElement.getXAxisLocation()
-  			: gElement.getYAxisLocation();
-  	SGAxis axis = aElement.getAxisInPlane(location);
-  	return axis.getDateMode();
-  }
-  */
-
   @Override
   public boolean getAxisDateMode(final int location) {
     return this.getAxisElement().getAxisDateMode(location);
