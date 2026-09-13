@@ -61,6 +61,9 @@ public class SGDrawingWindow extends JFrame
         SGIWindowDialogObserver,
         SGIProgressControl {
 
+  private final SGDrawingWindowActionHandler mActionHandler =
+      new SGDrawingWindowActionHandler(this);
+
   private final SGDrawingWindowExportHelper mExportHelper = new SGDrawingWindowExportHelper(this);
 
   private final SGDrawingWindowGeometryHelper mGeometryHelper =
@@ -269,7 +272,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   /** */
-  private void updateInsertItems() {
+  void updateInsertItems() {
     String[] array = INSERT_MENUBARCMD_ARRAY;
     for (int ii = 0; ii < array.length; ii++) {
       this.updateInsertItems(array[ii]);
@@ -277,7 +280,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   //
-  private void updateInsertItems(final String command) {
+  void updateInsertItems(final String command) {
     final boolean b = this.getInsertFlag(command);
 
     SGMenuBar mBar = this.mMenuBar;
@@ -1293,7 +1296,7 @@ public class SGDrawingWindow extends JFrame
   /**
    * @return
    */
-  private boolean zoomWayOut() {
+  boolean zoomWayOut() {
     Rectangle2D bbRect = this.getBoundingBox();
     SGTuple2f vpSize = this.getViewportSize();
     final float ratioX = (float) (vpSize.x / (bbRect.getWidth() / this.mMagnification));
@@ -1318,7 +1321,7 @@ public class SGDrawingWindow extends JFrame
   /**
    * @return
    */
-  private boolean setDefaultZoom() {
+  boolean setDefaultZoom() {
     return this.setZoomValue(Integer.valueOf(DEFAULT_ZOOM));
   }
 
@@ -1384,68 +1387,7 @@ public class SGDrawingWindow extends JFrame
    * @return the result of setting properties
    */
   public SGPropertyResults setProperties(SGPropertyMap map) {
-    SGPropertyResults result = new SGPropertyResults();
-
-    // prepare
-    if (this.prepare() == false) {
-      return null;
-    }
-
-    Iterator<String> itr = map.getKeyIterator();
-    while (itr.hasNext()) {
-      String key = itr.next();
-      String value = map.getValueString(key);
-
-      if (COM_PAPER_SIZE.equalsIgnoreCase(key)) {
-        String[] strArray = SGUtilityText.getStringsInBracket(value);
-        if (strArray == null) {
-          result.putResult(COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (strArray.length != 2) {
-          result.putResult(COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        String str1 = strArray[0];
-        String str2 = strArray[1];
-        MediaSize size = SGUtilityText.getMediaSize(str1);
-        if (size == null) {
-          result.putResult(COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        Boolean portrait = SGUtilityText.isPortrait(str2);
-        if (portrait == null) {
-          result.putResult(COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        if (this.mClientPanel.setPaperSize(size, portrait) == false) {
-          result.putResult(COM_PAPER_SIZE, SGPropertyResults.INVALID_INPUT_VALUE);
-          continue;
-        }
-        result.putResult(COM_PAPER_SIZE, SGPropertyResults.SUCCEEDED);
-        continue;
-      }
-
-      String comKey = SGDrawingWindowPropertyIO.getComKey(key);
-      if (comKey == null) {
-        continue;
-      }
-      Boolean r = SGDrawingWindowPropertyIO.applyStringValue(this, key, value);
-      if (r.booleanValue()) {
-        result.putResult(comKey, SGPropertyResults.SUCCEEDED);
-      } else {
-        result.putResult(comKey, SGPropertyResults.INVALID_INPUT_VALUE);
-      }
-    }
-
-    // commit the changes
-    if (this.commit() == false) {
-      return null;
-    }
-    this.notifyToRoot();
-    this.repaintContentPane();
-
-    return result;
+    return this.mActionHandler.setProperties(map);
   }
 
   public void propertyChange(PropertyChangeEvent e) {
@@ -1825,7 +1767,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   // update the menu items for grid lines on the window
-  private void updateGridItems() {
+  void updateGridItems() {
     final boolean gridVisible = this.mClientPanel.isGridLineVisible();
     boolean plusFlag = false;
     boolean minusFlag = false;
@@ -1853,7 +1795,7 @@ public class SGDrawingWindow extends JFrame
     bar.setMenuItemEnabled(MENUBAR_LAYOUT, MENUBARCMD_MINUS_GRID, minusFlag);
   }
 
-  private void updateModeMenuItems() {}
+  void updateModeMenuItems() {}
 
   // update the menu item "Snap to Grid"
   void updateSnapToGridItems() {
@@ -1894,7 +1836,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   //
-  private void updateToolBarVisibleItems() {
+  void updateToolBarVisibleItems() {
     String[] keys = TOOLBAR_MENUCMD_ARRAY;
     SGToolBar tBar = this.mToolBar;
     SGMenuBar mBar = this.mMenuBar;
@@ -1904,7 +1846,7 @@ public class SGDrawingWindow extends JFrame
   }
 
   //
-  private void updateToolBarVisibleMenuItems() {
+  void updateToolBarVisibleMenuItems() {
     String[] keys = TOOLBAR_MENUCMD_ARRAY;
     SGToolBar tBar = this.mToolBar;
     SGMenuBar mBar = this.mMenuBar;
@@ -1921,170 +1863,11 @@ public class SGDrawingWindow extends JFrame
 
   /** Called when an action is performed. */
   public void actionPerformed(final ActionEvent e) {
-    final String command = e.getActionCommand();
-    final Object source = e.getSource();
+    this.mActionHandler.actionPerformed(e);
+  }
 
-    if (command.equals(MENUBARCMD_SAVE_PROPERTY)) {
-      this.mPropertyFileCreationModeOfFigures = ALL_FIGURES;
-      this.notifyToListener(MENUBARCMD_SAVE_PROPERTY);
-    } else if (command.equals(MENUBARCMD_SAVE_DATASET)) {
-      this.mPropertyFileCreationModeOfFigures = ALL_FIGURES;
-      this.notifyToListener(MENUBARCMD_SAVE_DATASET);
-    } else if (command.equals(MENUBARCMD_DELETE)) {
-      this.deleteFocusedObjects();
-    } else if (command.equals(MENUBARCMD_CUT)) {
-      this.cutFocusedObjects();
-    } else if (command.equals(MENUBARCMD_COPY)) {
-      this.copyFocusedObjects();
-    } else if (command.equals(MENUBARCMD_PASTE)) {
-      this.pasteCopiedObjects();
-    } else if (command.equals(MENUBARCMD_DUPLICATE)) {
-      this.duplicateFocusedObjects();
-    } else if (command.equals(MENUBARCMD_DELETE_BACKGROUND_IMAGE)) {
-      this.deleteImage();
-    } else if (command.equals(MENUBARCMD_BRING_TO_FRONT)) {
-      this.bringFocusedObjectsToFront();
-    } else if (command.equals(MENUBARCMD_BRING_FORWARD)) {
-      this.bringFocusedObjectsForward();
-    } else if (command.equals(MENUBARCMD_SEND_BACKWARD)) {
-      this.sendFocusedObjectsBackward();
-    } else if (command.equals(MENUBARCMD_SEND_TO_BACK)) {
-      this.sendFocusedObjectsToBack();
-    } else if (command.equals(MENUBARCMD_CLEAR_UNDO_BUFFER)) {
-      this.clearUndoBuffer();
-    } else if (command.equals(MENUBARCMD_PAPER_A4_PORTRAIT)) {
-      this.setPaperSizeDirectly(MediaSize.ISO.A4, true);
-    } else if (command.equals(MENUBARCMD_PAPER_B5_PORTRAIT)) {
-      this.setPaperSizeDirectly(MediaSize.ISO.B5, true);
-    } else if (command.equals(MENUBARCMD_PAPER_USLETTER_PORTRAIT)) {
-      this.setPaperSizeDirectly(MediaSize.NA.LETTER, true);
-    } else if (command.equals(MENUBARCMD_PAPER_A4_LANDSCAPE)) {
-      this.setPaperSizeDirectly(MediaSize.ISO.A4, false);
-    } else if (command.equals(MENUBARCMD_PAPER_B5_LANDSCAPE)) {
-      this.setPaperSizeDirectly(MediaSize.ISO.B5, false);
-    } else if (command.equals(MENUBARCMD_PAPER_USLETTER_LANDSCAPE)) {
-      this.setPaperSizeDirectly(MediaSize.NA.LETTER, false);
-    } else if (command.equals(MENUBARCMD_BOUNDING_BOX)) {
-      this.setBoundingBox();
-    } else if (command.equals(MENUBARCMD_PAPER_USER_CUSTOMIZE)) {
-      this.showPropertyDialog();
-    } else if (command.equals(MENUBARCMD_MODE)) {
-      final int mode =
-          (this.getMode() == MODE_EXPORT_AS_IMAGE) ? MODE_DISPLAY : MODE_EXPORT_AS_IMAGE;
-      this.setMode(mode);
-      this.updateModeMenuItems();
-    } else if (command.equals(MENUBARCMD_AUTO_ARRANGEMENT)) {
-      this.alignFigures();
-    } else if (command.equals(MENUBARCMD_GRID_VISIBLE)) {
-      this.mClientPanel.setGridLineVisible(!this.mClientPanel.isGridLineVisible());
-      this.updateGridItems();
-
-      this.setChanged(true);
-      this.notifyToRoot();
-      this.repaintContentPane();
-    } else if (command.equals(MENUBARCMD_PLUS_GRID)) {
-      final double value = this.mClientPanel.getGridLineInterval() * CM_POINT_RATIO;
-      final double min = SGIRootObjectConstants.GRID_INTERVAL_MIN_VALUE;
-      final double max = SGIRootObjectConstants.GRID_INTERVAL_MAX_VALUE;
-      final double step = SGIRootObjectConstants.GRID_INTERVAL_STEP_SIZE;
-      double valueNew = SGUtilityNumber.stepValue(true, value, min, max, step, 0.001f);
-      final int indexNew = (int) Math.rint(valueNew / step);
-      final int indexMax = (int) Math.rint(max / step);
-      if (indexNew != indexMax + 1) {
-        if (valueNew > max) {
-          valueNew = max;
-        }
-        this.mClientPanel.setGridLineInterval((float) valueNew / SGIConstants.CM_POINT_RATIO);
-        this.updateGridItems();
-        this.repaintContentPane();
-
-        this.setChanged(true);
-        this.notifyToRoot();
-      }
-    } else if (command.equals(MENUBARCMD_MINUS_GRID)) {
-      final double value = this.mClientPanel.getGridLineInterval() * CM_POINT_RATIO;
-      final double min = SGIRootObjectConstants.GRID_INTERVAL_MIN_VALUE;
-      final double max = SGIRootObjectConstants.GRID_INTERVAL_MAX_VALUE;
-      final double step = SGIRootObjectConstants.GRID_INTERVAL_STEP_SIZE;
-      double valueNew = SGUtilityNumber.stepValue(false, value, min, max, step, 0.001f);
-      final int indexNew = (int) Math.rint(valueNew / step);
-      final int indexMin = (int) Math.rint(min / step);
-      if (indexNew != indexMin - 1) {
-        if (valueNew < min) {
-          valueNew = min;
-        }
-        this.mClientPanel.setGridLineInterval((float) valueNew / SGIConstants.CM_POINT_RATIO);
-        this.updateGridItems();
-        this.repaintContentPane();
-
-        this.setChanged(true);
-        this.notifyToRoot();
-      }
-    } else if (command.equals(MENUBARCMD_SNAP_TO_GRID)) {
-      SGFigure.setSnappingToGrid(!SGFigure.isSnappingToGrid());
-      this.updateSnapToGridItems();
-    } else if (command.equals(MENUBARCMD_ZOOM_IN)) {
-      final int mag = (int) (this.getMagnificationPercent());
-      final int[] array = SGIRootObjectConstants.MAGNIFICATION_ARRAY;
-      for (int ii = array.length - 1; ii >= 0; ii--) {
-        if (array[ii] > mag) {
-          this.setZoomValue(Integer.valueOf(array[ii]));
-          break;
-        }
-      }
-    } else if (command.equals(MENUBARCMD_ZOOM_OUT)) {
-      final int mag = (int) (this.getMagnificationPercent());
-      final int[] array = SGIRootObjectConstants.MAGNIFICATION_ARRAY;
-      for (int ii = 0; ii < array.length; ii++) {
-        if (array[ii] < mag) {
-          this.setZoomValue(Integer.valueOf(array[ii]));
-          break;
-        }
-      }
-    } else if (command.equals(MENUBARCMD_DEFAULT_ZOOM)) {
-      this.setDefaultZoom();
-    } else if (command.equals(MENUBARCMD_ZOOM_WAY_OUT)) {
-      this.zoomWayOut();
-    } else if (command.equals(MENUBARCMD_AUTO_ZOOM)) {
-      this.setAutoZoom(!this.isAutoZoom());
-    } else if (command.equals(MENUBARCMD_LOCK)) {
-      this.setLocked(!this.isLocked());
-    } else if (Arrays.asList(INSERT_MENUBARCMD_ARRAY).contains(command)) {
-      // menu to insert a symbol
-
-      boolean selected;
-
-      // synchronize the tool bar and the menu bar
-      if (source.equals(this.mMenuBar)) {
-        selected = this.mMenuBar.isInsertToggleItemSelected(command);
-      } else if (source.equals(this.mToolBar)) {
-        selected = this.mToolBar.isInsertToggleButtonSelected(command);
-      } else {
-        return;
-      }
-
-      this.setInsertToggleItemsUnselected();
-      this.setInsertFlag(command, selected);
-      this.updateInsertItems();
-
-      // change the mouse cursor
-      if (selected) {
-        final Cursor cur = new Cursor(Cursor.CROSSHAIR_CURSOR);
-        this.setCursor(cur);
-      } else {
-        this.setCursor(null);
-      }
-    } else if (Arrays.asList(TOOLBAR_MENUCMD_ARRAY).contains(command)) {
-      // menu for the tool bar
-      if (source.equals(this.mMenuBar)) {
-        this.updateToolBarVisibleItems();
-      } else if (source.equals(this.mToolBar)) {
-        this.updateToolBarVisibleMenuItems();
-      }
-      this.firePropertyChange(PROPERTY_NAME_TOOL_BAR, null, null);
-    } else {
-      this.notifyToListener(command);
-    }
+  void notifyPropertyChange(final String propertyName) {
+    this.firePropertyChange(propertyName, null, null);
   }
 
   public void setMode(final int mode) {
