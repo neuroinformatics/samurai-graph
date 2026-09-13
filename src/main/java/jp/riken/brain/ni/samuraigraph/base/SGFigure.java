@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -41,6 +40,8 @@ public abstract class SGFigure
         SGIDisposable,
         SGIFigureConstants {
 
+  private final SGFigureInteractionHelper mInteractionHelper = new SGFigureInteractionHelper(this);
+
   // ID-number of this figure.
   private int mID;
 
@@ -69,10 +70,10 @@ public abstract class SGFigure
   protected SGPropertyDialog mPropertyDialog = null;
 
   /** */
-  private SGIFigureElement mPressedElement = null;
+  SGIFigureElement mPressedElement = null;
 
   /** */
-  private Point mPressedPoint = new Point();
+  Point mPressedPoint = new Point();
 
   /** */
   private final Rectangle2D mTempFigureRect = new Rectangle2D.Float();
@@ -96,7 +97,7 @@ public abstract class SGFigure
   static boolean mRubberBandVisibleFlag = false;
 
   /** location of mouse pointer */
-  private int mMouseLocation = 0;
+  int mMouseLocation = 0;
 
   /** */
   protected static final float MIN_WIDTH = 50.0f;
@@ -1114,38 +1115,7 @@ public abstract class SGFigure
    * @return
    */
   protected boolean onMouseMoved(final MouseEvent e) {
-    final int x = e.getX();
-    final int y = e.getY();
-
-    if (this.mWnd.isInsertFlagSelected() == false) {
-      // when the toggle button is not selected
-
-      SGIFigureElement[] array = this.getIFigureElementArray();
-      for (int ii = array.length - 1; ii >= 0; ii--) {
-        array[ii].onMouseMoved(e);
-      }
-
-      // change the mouse cursor
-      Cursor cur = this.setMouseCursor(x, y);
-
-      if (Cursor.getDefaultCursor().equals(cur) == false) {
-        return true;
-      }
-
-    } else if (this.mWnd.getTimingLineInsertionFlag()) {
-      // timing line is to be inserted
-      SGIFigureElementTimingLine el =
-          (SGIFigureElementTimingLine) this.getIFigureElement(SGIFigureElementTimingLine.class);
-      if (el != null) {
-        el.guideToAdd(x, y);
-      }
-    }
-
-    if (this.mMouseInExtraRegionFlag) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.mInteractionHelper.onMouseMoved(e);
   }
 
   /**
@@ -1464,56 +1434,7 @@ public abstract class SGFigure
    * @return whether an effective when key pressed
    */
   protected boolean onKeyPressed(final KeyEvent e) {
-    boolean effective = false;
-
-    effective = this.onFigureElementsKeyPressed(e);
-    if (!this.isSelected()) {
-      return effective;
-    }
-
-    final int keycode = e.getKeyCode();
-    int dx = 0;
-    int dy = 0;
-    switch (keycode) {
-      case KeyEvent.VK_UP:
-        dy = -1;
-        break;
-      case KeyEvent.VK_DOWN:
-        dy = 1;
-        break;
-      case KeyEvent.VK_LEFT:
-        dx = -1;
-        break;
-      case KeyEvent.VK_RIGHT:
-        dx = 1;
-        break;
-    }
-    if (dx != 0 || dy != 0) {
-      Rectangle2D rect = this.getGraphRect();
-      float interval = this.mMagnification;
-      if (SGFigure.isSnappingToGrid()) interval *= this.mWnd.getGridLineInterval();
-      else
-        interval *=
-            (float) (SGIRootObjectConstants.GRID_INTERVAL_STEP_SIZE / SGIConstants.CM_POINT_RATIO);
-      // horizontal
-      if (dx != 0)
-        rect.setRect(rect.getX() + interval * dx, rect.getY(), rect.getWidth(), rect.getHeight());
-      // vertical
-      if (dy != 0)
-        rect.setRect(rect.getX(), rect.getY() + interval * dy, rect.getWidth(), rect.getHeight());
-
-      // moves figure
-      this.setDraggingRect(rect);
-      this.snapToLines(OTHER);
-      this.setGraphRectOnDragging();
-      if (this.isFigureMoved()) {
-        this.setChanged(true);
-      }
-
-      effective = true;
-    }
-
-    return effective;
+    return this.mInteractionHelper.onKeyPressed(e);
   }
 
   /**
@@ -1523,45 +1444,7 @@ public abstract class SGFigure
    * @return whether an effective point is clicked
    */
   protected boolean onMouseClicked(MouseEvent e) {
-
-    // count
-    final int count = e.getClickCount();
-
-    // ask to SGIFigureElement objects
-    SGIFigureElement el = this.onFigureElementClicked(e);
-    if (el != null) {
-      //
-      this.mWnd.setFocusedFigure(this, false);
-
-      // after treatment
-      this.afterClicked(e);
-
-      return true;
-    }
-
-    if (this.getExtraRegionBounds().contains(e.getPoint())) {
-      // when a point in the extra region of the figure is clicked
-
-      // update the list of focused figures
-      this.updateFocusedFigureList(e);
-
-      // after treatment
-      this.afterClicked(e);
-
-      // show the pop-up menu
-      if (SwingUtilities.isRightMouseButton(e) && count == 1) {
-        this.mWnd.showPopupMenuForSelectedFigures(this.getComponent(), e.getX(), e.getY());
-      }
-
-      // show property dialog
-      if (SwingUtilities.isLeftMouseButton(e) && count == 2) {
-        this.mWnd.showPropertyDialogForSelectedFigures();
-      }
-
-      return true;
-    }
-
-    return false;
+    return this.mInteractionHelper.onMouseClicked(e);
   }
 
   /** Flag whether this object is focused. */
@@ -1664,13 +1547,13 @@ public abstract class SGFigure
   // }
 
   /** */
-  private boolean afterClicked(MouseEvent e) {
+  boolean afterClicked(MouseEvent e) {
     this.repaint();
     return true;
   }
 
   /** */
-  private SGIFigureElement onFigureElementClicked(MouseEvent e) {
+  SGIFigureElement onFigureElementClicked(MouseEvent e) {
     SGIFigureElement[] array = this.getIFigureElementArray();
     for (int ii = array.length - 1; ii >= 0; ii--) {
       if (array[ii].onMouseClicked(e)) {
@@ -1774,41 +1657,7 @@ public abstract class SGFigure
    * @return
    */
   protected boolean updateFocusedFigureList(final MouseEvent e) {
-    final SGDrawingWindow wnd = this.getWindow();
-    final List<SGFigure> fList = wnd.getFocusedFigureList();
-
-    // Neither CTRL key nor SHIFT key is pressed.
-    final int mod = e.getModifiersEx();
-    if (((mod & InputEvent.CTRL_DOWN_MASK) == 0) && ((mod & InputEvent.SHIFT_DOWN_MASK) == 0)) {
-      // If the list already contains this object.
-      if (fList.contains(this)) {
-        // There is nothing to do.
-      } else {
-        wnd.clearAllFocusedObjectsInFigures();
-        wnd.setFocusedFigure(this, true);
-      }
-
-    }
-    // otherwise
-    else {
-      // If the list already contains this object.
-      if (fList.contains(this)) {
-        final int loc = this.mMouseLocation;
-
-        // except the four corners
-        if (loc != NORTH_WEST && loc != NORTH_EAST && loc != SOUTH_EAST && loc != SOUTH_WEST) {
-          // if no figure element is pressed, remove this figure
-          // from the list of the selected figure
-          if (this.mPressedElement == null) {
-            wnd.setFocusedFigure(this, !this.isSelected());
-          }
-        }
-      } else {
-        wnd.setFocusedFigure(this, !this.isSelected());
-      }
-    }
-
-    return true;
+    return this.mInteractionHelper.updateFocusedFigureList(e);
   }
 
   /**
@@ -1844,72 +1693,7 @@ public abstract class SGFigure
    * @param e the mouse event
    */
   protected boolean onMouseDragged(final MouseEvent e) {
-
-    // notify to the pressed SGIFigureElement object
-    if (this.mPressedElement != null) {
-      List<SGISelectable> list = this.mPressedElement.getFocusedObjectsList();
-
-      if (this.mPressedElement.onMouseDragged(e) == false) {
-        return false;
-      }
-
-      if (list.size() != 0) {
-        this.mWnd.moveFocusedObjects(e);
-      } else {
-        this.mWnd.clearAllFocusedObjectsInFigures();
-      }
-
-      this.setCursorToWindow(this.mPressedElement);
-      return true;
-    }
-
-    // if this figure is not selected, return false
-    if (!this.isSelected()) {
-      return false;
-    }
-
-    // mouse location
-    final int ml = this.mMouseLocation;
-
-    // other points
-    if (ml == OTHER) {
-      Rectangle2D rect = this.getExtraRegionBounds();
-      if (this.mWnd.mMousePressLocation != null && !rect.contains(this.mWnd.mMousePressLocation)) {
-        return false;
-      }
-
-      // parallel displacement
-      this.mWnd.moveFocusedObjects(e);
-      return true;
-    }
-    // record the temporary bounds
-    this.recordFigureRect();
-
-    // create a temporary object
-    Point posNew = new Point(this.mPressedPoint);
-    Rectangle2D rectNew = this.getDraggingRect();
-
-    // update the rectangle
-    SGUtility.resizeRectangle(rectNew, posNew, e, ml);
-
-    // when the size of rectangle becomes too small, return true
-    if (rectNew.getWidth() < MIN_WIDTH || rectNew.getHeight() < MAX_WIDTH) {
-      return true;
-    }
-
-    // set to an attribute
-    this.mPressedPoint.setLocation(posNew);
-
-    // update the graph rectangle
-    this.setDraggingRect(rectNew);
-    this.snapToLines(ml);
-
-    // if we do not draw the rubber band, change the rectangle of figure now
-    if (SGFigure.mRubberBandFlag == false) {
-      this.setGraphRectOnDragging();
-    }
-
-    return false;
+    return this.mInteractionHelper.onMouseDragged(e);
   }
 
   /**
@@ -2035,102 +1819,7 @@ public abstract class SGFigure
   // set the rubber band rectangle snapped to the grid lines
   // with given interval
   private void snap(final float interval, final int mouseLocation) {
-    final float px = this.mWnd.getPaperX();
-    final float py = this.mWnd.getPaperY();
-
-    Rectangle2D dRect = this.getDraggingRect();
-    final float minX = (float) dRect.getMinX();
-    final float maxX = (float) dRect.getMaxX();
-    final float minY = (float) dRect.getMinY();
-    final float maxY = (float) dRect.getMaxY();
-
-    final float ox = minX;
-    final float oy = maxY;
-
-    final float ox2 = ox - px;
-    final float oy2 = oy - py;
-
-    final int nx = (int) (ox2 / interval);
-    final int ny = (int) (oy2 / interval);
-
-    final float rx = interval * nx;
-    final float ry = interval * ny;
-
-    int nxNew = nx;
-    int nyNew = ny;
-    if (ox2 - rx > interval / 2.0f) {
-      nxNew++;
-    }
-    if (oy2 - ry > interval / 2.0f) {
-      nyNew++;
-    }
-
-    // new origin
-    final float oxNew = px + nxNew * interval;
-    final float oyNew = py + nyNew * interval;
-
-    // new bounds
-    float xNew;
-    float yNew;
-    float wNew;
-    float hNew;
-
-    // x
-    if (mouseLocation == WEST || mouseLocation == SOUTH_WEST || mouseLocation == NORTH_WEST) {
-      xNew = oxNew;
-      wNew = maxX - xNew;
-    } else if (mouseLocation == EAST
-        || mouseLocation == SOUTH_EAST
-        || mouseLocation == NORTH_EAST) {
-      xNew = minX;
-
-      final int nMax = (int) ((maxX - px) / interval);
-      final float rMax = interval * nMax;
-
-      int nNew = nMax;
-      if ((maxX - px) - rMax > interval / 2.0f) {
-        nNew++;
-      }
-
-      final float maxNew = px + nNew * interval;
-      wNew = maxNew - minX;
-    } else if (mouseLocation == OTHER) {
-      xNew = oxNew;
-      wNew = (float) dRect.getWidth();
-    } else {
-      xNew = minX;
-      wNew = (float) dRect.getWidth();
-    }
-
-    // y
-    if (mouseLocation == SOUTH || mouseLocation == SOUTH_WEST || mouseLocation == SOUTH_EAST) {
-      yNew = minY;
-      hNew = oyNew - minY;
-    } else if (mouseLocation == NORTH
-        || mouseLocation == NORTH_EAST
-        || mouseLocation == NORTH_WEST) {
-      final int nMin = (int) ((minY - py) / interval);
-      final float rMin = interval * nMin;
-
-      int nNew = nMin;
-      if ((minY - py) - rMin > interval / 2.0f) {
-        nNew++;
-      }
-
-      final float minNew = py + nNew * interval;
-      hNew = maxY - minNew;
-
-      yNew = minNew;
-    } else if (mouseLocation == OTHER) {
-      hNew = (float) dRect.getHeight();
-      yNew = oyNew - hNew;
-    } else {
-      yNew = minY;
-      hNew = (float) dRect.getHeight();
-    }
-
-    // set new values to the rubber band rectangle
-    this.setRubberBandRect(xNew, yNew, wNew, hNew);
+    this.mInteractionHelper.snap(interval, mouseLocation);
   }
 
   /**
@@ -2140,36 +1829,7 @@ public abstract class SGFigure
    * @return true if succeeded
    */
   protected boolean onMouseReleased(final MouseEvent e) {
-    final int x = e.getX();
-    final int y = e.getY();
-
-    // set the mouse cursor
-    if (this.mWnd.isInsertFlagSelected() == false) {
-      this.setMouseCursor(x, y);
-    }
-
-    // set the rectangle of the graph area
-    if (SGFigure.mRubberBandFlag && this.mPressedElement == null) {
-      this.setGraphRectOnDragging();
-    }
-
-    if (this.isFigureMoved()) {
-      this.setChanged(true);
-    }
-
-    // set invisible the rubber band
-    if (SwingUtilities.isLeftMouseButton(e)) {
-      SGFigure.mRubberBandVisibleFlag = false;
-    }
-
-    // call the "released" method of pressed SGIFigureElement object
-    if (this.mPressedElement != null) {
-      this.mPressedElement.onMouseReleased(e);
-    }
-    this.mPressedElement = null;
-    this.mWnd.mDraggedDirection = null;
-
-    return true;
+    return this.mInteractionHelper.onMouseReleased(e);
   }
 
   /** */
@@ -2187,48 +1847,7 @@ public abstract class SGFigure
    * @return
    */
   public boolean drawbackFigure() {
-    final Rectangle2D cRect = this.mWnd.getClientRect();
-    final Rectangle2D bbRect = this.getBoundingBox();
-    final Rectangle2D pRect = this.mWnd.getPaperRect();
-
-    final Rectangle2D rect = new Rectangle2D.Float();
-    rect.setRect(bbRect);
-
-    final int margin = DRAW_BACK_MARGIN;
-
-    if (bbRect.getX() < cRect.getX()) {
-      rect.setRect(margin, rect.getY() + margin, rect.getWidth(), rect.getHeight());
-    }
-
-    if (bbRect.getY() < cRect.getY()) {
-      rect.setRect(rect.getX() + margin, margin, rect.getWidth(), rect.getHeight());
-    }
-
-    if (bbRect.getX() + bbRect.getWidth() > pRect.getX() + pRect.getWidth()) {
-      rect.setRect(
-          pRect.getX() + pRect.getWidth() - bbRect.getWidth() - margin,
-          rect.getY() + margin,
-          rect.getWidth(),
-          rect.getHeight());
-    }
-
-    if (bbRect.getY() + bbRect.getHeight() > pRect.getY() + pRect.getHeight()) {
-      rect.setRect(
-          rect.getX() + margin,
-          pRect.getY() + pRect.getHeight() - bbRect.getHeight() - margin,
-          rect.getWidth(),
-          rect.getHeight());
-    }
-
-    if (this.setBoundingBox(rect) == false) {
-      return false;
-    }
-
-    // snap to the lines
-    this.snapToLines(OTHER);
-    this.setGraphRectOnDragging();
-
-    return true;
+    return this.mInteractionHelper.drawbackFigure();
   }
 
   /**
@@ -2333,7 +1952,7 @@ public abstract class SGFigure
    * @param y
    * @return
    */
-  private Cursor setMouseCursor(final int x, final int y) {
+  Cursor setMouseCursor(final int x, final int y) {
     this.setMouseLocation(x, y);
     if (this.mMouseLocation == OTHER) {
       if (this.setMouseCursorSub(x, y) == false) {
@@ -2346,7 +1965,7 @@ public abstract class SGFigure
     return null;
   }
 
-  private Cursor setMouseCursor() {
+  Cursor setMouseCursor() {
     if (this.isSelected() == false) {
       Cursor cur = Cursor.getDefaultCursor();
       this.setMouseCursor(cur);
@@ -2363,64 +1982,11 @@ public abstract class SGFigure
   }
 
   /** */
-  private Cursor changeCursor() {
-
-    Cursor cur = null;
-    switch (this.mMouseLocation) {
-      case WEST:
-        {
-          cur = new Cursor(Cursor.W_RESIZE_CURSOR);
-          break;
-        }
-      case EAST:
-        {
-          cur = new Cursor(Cursor.E_RESIZE_CURSOR);
-          break;
-        }
-      case NORTH:
-        {
-          cur = new Cursor(Cursor.N_RESIZE_CURSOR);
-          break;
-        }
-      case SOUTH:
-        {
-          cur = new Cursor(Cursor.S_RESIZE_CURSOR);
-          break;
-        }
-      case NORTH_WEST:
-        {
-          cur = new Cursor(Cursor.NW_RESIZE_CURSOR);
-          break;
-        }
-      case SOUTH_EAST:
-        {
-          cur = new Cursor(Cursor.SE_RESIZE_CURSOR);
-          break;
-        }
-      case NORTH_EAST:
-        {
-          cur = new Cursor(Cursor.NE_RESIZE_CURSOR);
-          break;
-        }
-      case SOUTH_WEST:
-        {
-          cur = new Cursor(Cursor.SW_RESIZE_CURSOR);
-          break;
-        }
-      default:
-        {
-          cur = Cursor.getDefaultCursor();
-        }
-    }
-
-    // set the cursor to the window
-    // if set to the figure, the cursor does not change
-    this.setMouseCursor(cur);
-
-    return cur;
+  Cursor changeCursor() {
+    return this.mInteractionHelper.changeCursor();
   }
 
-  private void setMouseCursor(Cursor cur) {
+  void setMouseCursor(Cursor cur) {
     this.mWnd.setCursor(cur);
   }
 
@@ -2868,53 +2434,7 @@ public abstract class SGFigure
    * @return
    */
   public boolean calcMargin(final SGTuple2f topAndBottom, final SGTuple2f leftAndRight) {
-
-    final SGIFigureElement[] array = this.getIFigureElementArray();
-
-    final SGTuple2f[] tbArray = new SGTuple2f[array.length];
-    final SGTuple2f[] lrArray = new SGTuple2f[array.length];
-
-    for (int ii = 0; ii < array.length; ii++) {
-      tbArray[ii] = new SGTuple2f();
-      lrArray[ii] = new SGTuple2f();
-      final boolean flag = array[ii].getMarginAroundGraphRect(tbArray[ii], lrArray[ii]);
-      if (!flag) {
-        return false;
-      }
-    }
-
-    float topMax = 0.0f;
-    float bottomMax = 0.0f;
-    float leftMax = 0.0f;
-    float rightMax = 0.0f;
-    for (int ii = 0; ii < array.length; ii++) {
-
-      final float top = tbArray[ii].x;
-      final float bottom = tbArray[ii].y;
-      final float left = lrArray[ii].x;
-      final float right = lrArray[ii].y;
-
-      if (top > topMax) {
-        topMax = top;
-      }
-      if (bottom > bottomMax) {
-        bottomMax = bottom;
-      }
-      if (left > leftMax) {
-        leftMax = left;
-      }
-      if (right > rightMax) {
-        rightMax = right;
-      }
-    }
-
-    final float mag = this.mMagnification;
-    topAndBottom.x = topMax + mag * MARGIN_TOP;
-    topAndBottom.y = bottomMax + mag * MARGIN_BOTTOM;
-    leftAndRight.x = leftMax + mag * MARGIN_LEFT;
-    leftAndRight.y = rightMax + mag * MARGIN_RIGHT;
-
-    return true;
+    return this.mInteractionHelper.calcMargin(topAndBottom, leftAndRight);
   }
 
   /**
@@ -3123,47 +2643,7 @@ public abstract class SGFigure
 
   private boolean createElementLower(
       final Document document, final Element parent, final SGExportParameter params) {
-
-    SGIFigureElement[] array = this.getIFigureElementArray();
-    for (int ii = 0; ii < array.length; ii++) {
-      if (array[ii] instanceof SGIFigureElementGraph) {
-        continue;
-      }
-      Element[] elements = array[ii].createElement(document, params);
-      if (elements == null) {
-        return false;
-      }
-      for (int jj = 0; jj < elements.length; jj++) {
-        parent.appendChild(elements[jj]);
-      }
-    }
-
-    // create Element objects for data
-    List<Element> elList = new ArrayList<Element>();
-    List<SGData> dataList = new ArrayList<SGData>();
-    if (this.getGraphElement().createElementOfData(document, elList, dataList, params) == false) {
-      return false;
-    }
-
-    // add an attribute for the index in legend
-    SGIFigureElementLegend lElement = this.getLegendElement();
-    for (int ii = 0; ii < elList.size(); ii++) {
-      Element el = elList.get(ii);
-      SGData data = dataList.get(ii);
-      final int index = lElement.getIndex(data);
-      if (index < 0) {
-        return false;
-      }
-      el.setAttribute(SGIFigureElement.KEY_INDEX_IN_LEGEND, Integer.toString(index));
-    }
-
-    // append new Element objects to the parent
-    for (int ii = 0; ii < elList.size(); ii++) {
-      Element el = elList.get(ii);
-      parent.appendChild(el);
-    }
-
-    return true;
+    return this.mInteractionHelper.createElementLower(document, parent, params);
   }
 
   public boolean writeProperty(final Element el, SGExportParameter params) {
@@ -3234,104 +2714,7 @@ public abstract class SGFigure
    * @return
    */
   public boolean readProperty(final Element el) {
-    String str = null;
-    Number num = null;
-    Boolean b = null;
-    Color cl = null;
-
-    // x
-    str = el.getAttribute(SGFigure.KEY_FIGURE_X_IN_CLIENT);
-    if (str.length() != 0) {
-      StringBuilder ux = new StringBuilder();
-      num = SGUtilityText.getNumber(str, ux);
-      if (num == null) {
-        return false;
-      }
-      final float x = num.floatValue();
-      if (this.setFigureX(x, ux.toString()) == false) {
-        return false;
-      }
-    }
-
-    // y
-    str = el.getAttribute(SGFigure.KEY_FIGURE_Y_IN_CLIENT);
-    if (str.length() != 0) {
-      StringBuilder uy = new StringBuilder();
-      num = SGUtilityText.getNumber(str, uy);
-      if (num == null) {
-        return false;
-      }
-      final float y = num.floatValue();
-      if (this.setFigureY(y, uy.toString()) == false) {
-        return false;
-      }
-    }
-
-    // width
-    str = el.getAttribute(SGFigure.KEY_FIGURE_WIDTH);
-    if (str.length() != 0) {
-      StringBuilder uWidth = new StringBuilder();
-      num = SGUtilityText.getNumber(str, uWidth);
-      if (num == null) {
-        return false;
-      }
-      final float width = num.floatValue();
-      if (this.setFigureWidth(width, uWidth.toString()) == false) {
-        return false;
-      }
-    }
-
-    // height
-    str = el.getAttribute(SGFigure.KEY_FIGURE_HEIGHT);
-    if (str.length() != 0) {
-      StringBuilder uHeight = new StringBuilder();
-      num = SGUtilityText.getNumber(str, uHeight);
-      if (num == null) {
-        return false;
-      }
-      final float height = num.floatValue();
-      if (this.setFigureHeight(height, uHeight.toString()) == false) {
-        return false;
-      }
-    }
-
-    // background color
-    str = el.getAttribute(SGFigure.KEY_FIGURE_BACKGROUND_COLOR);
-    if (str.length() != 0) {
-      cl = SGUtilityText.parseColor(str);
-      if (cl == null) {
-        return false;
-      }
-      if (this.setBackgroundColor(cl) == false) {
-        return false;
-      }
-    }
-
-    // transparent
-    str = el.getAttribute(SGFigure.KEY_FIGURE_BACKGROUND_TRANSPARENT);
-    if (str.length() != 0) {
-      b = SGUtilityText.getBoolean(str);
-      if (b == null) {
-        return false;
-      }
-      final boolean transparent = b.booleanValue();
-      if (this.setTransparent(transparent) == false) {
-        return false;
-      }
-    }
-
-    // data anchor
-    str = el.getAttribute(SGFigure.KEY_FIGURE_DATA_ANCHOR);
-    if (str.length() != 0) {
-      b = SGUtilityText.getBoolean(str);
-      if (b == null) {
-        return false;
-      }
-      final boolean anchor = b.booleanValue();
-      this.setDataAnchored(anchor);
-    }
-
-    return true;
+    return this.mInteractionHelper.readProperty(el);
   }
 
   /** */
