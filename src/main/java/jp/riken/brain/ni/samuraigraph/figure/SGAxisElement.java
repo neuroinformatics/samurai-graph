@@ -62,6 +62,8 @@ public abstract class SGAxisElement
         SGIUndoable,
         SGIMovable {
 
+  private final SGAxisScaleDragHelper mScaleDragHelper = new SGAxisScaleDragHelper(this);
+
   private final SGAxisElementPropertyHelper mPropertyHelper = new SGAxisElementPropertyHelper(this);
 
   /** The axis figure element. */
@@ -1440,7 +1442,7 @@ public abstract class SGAxisElement
     double oldValueInScale;
   }
 
-  private ValueInScale getValueTempInScale(final double elValue) {
+  ValueInScale getValueTempInScale(final double elValue) {
     final int scaleType = this.getScaleType();
     double minValueTempInScale;
     double maxValueTempInScale;
@@ -1539,67 +1541,7 @@ public abstract class SGAxisElement
 
   /** Called when a scale number is dragged vertically. */
   protected AxisValueRange dragScaleNumberPerpendicular(MouseEvent e, ElementLineAxis line) {
-    final boolean invCoord = this.isInvertCoordinates();
-    final ElementStringNumber el = (ElementStringNumber) this.mDraggingElement;
-    ValueInScale value = this.getValueTempInScale(el.mValue);
-    final double minValueTempInScale = value.minValueTempInScale;
-    final double maxValueTempInScale = value.maxValueTempInScale;
-    final double oldValueInScale = value.oldValueInScale;
-    final Rectangle2D rect = el.getElementBounds();
-
-    float draggedCoordinate =
-        e.getY() - this.mAxisElement.mPressedElementOrigin.y + (float) rect.getHeight() / 2.0f;
-    final float minCoordinate = line.getEnd().y;
-    final float maxCoordinate = line.getStart().y;
-    if (invCoord) {
-      if (draggedCoordinate <= minCoordinate) {
-        return null;
-      }
-      if (draggedCoordinate > maxCoordinate) {
-        draggedCoordinate = maxCoordinate;
-      }
-    } else {
-      if (draggedCoordinate >= maxCoordinate) {
-        return null;
-      }
-      if (draggedCoordinate < minCoordinate) {
-        draggedCoordinate = minCoordinate;
-      }
-    }
-
-    final double valueInScale;
-    if (invCoord) {
-      valueInScale =
-          minValueTempInScale
-              + (maxValueTempInScale - minValueTempInScale)
-                  * (1.0 - (maxCoordinate - draggedCoordinate) / (maxCoordinate - minCoordinate));
-    } else {
-      valueInScale =
-          minValueTempInScale
-              + (maxValueTempInScale - minValueTempInScale)
-                  * (1.0 - (draggedCoordinate - minCoordinate) / (maxCoordinate - minCoordinate));
-    }
-
-    // get new range
-    double minValueInScale = minValueTempInScale;
-    double maxValueInScale =
-        minValueTempInScale
-            + (maxValueTempInScale - minValueTempInScale)
-                * (oldValueInScale - minValueTempInScale)
-                / (valueInScale - minValueTempInScale);
-    minValueInScale = SGUtilityNumber.getNumberInRangeOrder(minValueInScale, this.mAxis);
-    maxValueInScale = SGUtilityNumber.getNumberInRangeOrder(maxValueInScale, this.mAxis);
-
-    final float y = (float) (draggedCoordinate - rect.getHeight() / 2.0);
-    el.setLocation(el.getLocation().x, y);
-
-    final float ratio =
-        (float) ((maxValueInScale - minValueInScale) / (maxValueTempInScale - minValueTempInScale));
-    if (ratio < 0.05) {
-      return null;
-    }
-
-    return this.createValueRange(minValueInScale, maxValueInScale);
+    return this.mScaleDragHelper.dragScaleNumberPerpendicular(e, line);
   }
 
   /** Called when a string of the scale number is dragged. */
@@ -1662,58 +1604,10 @@ public abstract class SGAxisElement
 
   /** Called when a scale line is dragged vertically. */
   protected AxisValueRange dragScaleLinePerpendicular(MouseEvent e, ElementLineAxis line) {
-    final ElementLineTickMark el = (ElementLineTickMark) this.mDraggingElement;
-    ValueInScale value = this.getValueTempInScale(el.mValue);
-    final double minValueTempInScale = value.minValueTempInScale;
-    final double maxValueTempInScale = value.maxValueTempInScale;
-    final double oldValueInScale = value.oldValueInScale;
-
-    // calculate the location of the point at which the mouse button is dragged
-    float draggedCoordinate = e.getY();
-    if (this.mAxisElement.mPressedElementOrigin.y == draggedCoordinate) {
-      return null;
-    }
-
-    final float minCoordinate = line.getEnd().y;
-    final float maxCoordinate = line.getStart().y;
-    if (draggedCoordinate > maxCoordinate) {
-      draggedCoordinate = maxCoordinate;
-    }
-    if (draggedCoordinate < minCoordinate) {
-      draggedCoordinate = minCoordinate;
-    }
-    final double draggedValue;
-    if (this.isInvertCoordinates()) {
-      draggedValue =
-          minValueTempInScale
-              + (maxValueTempInScale - minValueTempInScale)
-                  * (1.0 - (maxCoordinate - draggedCoordinate) / (maxCoordinate - minCoordinate));
-    } else {
-      draggedValue =
-          minValueTempInScale
-              + (maxValueTempInScale - minValueTempInScale)
-                  * (1.0 - (draggedCoordinate - minCoordinate) / (maxCoordinate - minCoordinate));
-    }
-    final double diff = Math.abs(draggedValue - oldValueInScale);
-
-    // get new range
-    double minValueInScale;
-    double maxValueInScale;
-    if (draggedValue > oldValueInScale) {
-      minValueInScale = minValueTempInScale - diff;
-      maxValueInScale = maxValueTempInScale - diff;
-    } else {
-      minValueInScale = minValueTempInScale + diff;
-      maxValueInScale = maxValueTempInScale + diff;
-    }
-    minValueInScale = SGUtilityNumber.getNumberInRangeOrder(minValueInScale, this.mAxis);
-    maxValueInScale = SGUtilityNumber.getNumberInRangeOrder(maxValueInScale, this.mAxis);
-
-    return this.createValueRange(minValueInScale, maxValueInScale);
+    return this.mScaleDragHelper.dragScaleLinePerpendicular(e, line);
   }
 
-  private AxisValueRange createValueRange(
-      final double minValueInScale, final double maxValueInScale) {
+  AxisValueRange createValueRange(final double minValueInScale, final double maxValueInScale) {
     final int scaleType = this.getScaleType();
     double minValue;
     double maxValue;
@@ -3512,68 +3406,7 @@ public abstract class SGAxisElement
       String value,
       final boolean dateMode,
       SGPropertyResults result) {
-    String[] strArray = SGUtilityText.getStringsInBracket(value);
-    if (strArray == null) {
-      result.putResult(COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
-      return;
-    }
-    final SGAxisValue min;
-    final SGAxisValue max;
-    if (dateMode) {
-      SGDate dMin = null;
-      SGDate dMax = null;
-      if (strArray.length >= 2) {
-        dMin = SGUtilityText.getDate(strArray[0]);
-        dMax = SGUtilityText.getDate(strArray[1]);
-      }
-      if (dMin == null || dMax == null) {
-        result.putResult(COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
-        return;
-      }
-      min = new SGAxisDateValue(dMin);
-      max = new SGAxisDateValue(dMax);
-    } else {
-      Double dMin = null;
-      Double dMax = null;
-      if (strArray.length >= 2) {
-        dMin = SGUtilityText.getDouble(strArray[0]);
-        dMax = SGUtilityText.getDouble(strArray[1]);
-      }
-      if (dMin == null || dMax == null) {
-        result.putResult(COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
-        return;
-      }
-      if (SGUtility.isValidPropertyValue(dMin.doubleValue()) == false) {
-        result.putResult(COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
-        return;
-      }
-      if (SGUtility.isValidPropertyValue(dMax.doubleValue()) == false) {
-        result.putResult(COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
-        return;
-      }
-      min = new SGAxisDoubleValue(dMin);
-      max = new SGAxisDoubleValue(dMax);
-    }
-    if (strArray.length == 2) {
-      if (this.setScale(min, max) == false) {
-        result.putResult(COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
-        return;
-      }
-    } else if (strArray.length == 3) {
-      final int scaleType = SGUtilityText.getScaleType(strArray[2]);
-      if (scaleType == -1) {
-        result.putResult(COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
-        return;
-      }
-      if (this.setScale(min, max, scaleType) == false) {
-        result.putResult(COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
-        return;
-      }
-    } else {
-      result.putResult(COM_AXIS_SCALE_RANGE, SGPropertyResults.INVALID_INPUT_VALUE);
-      return;
-    }
-    result.putResult(COM_AXIS_SCALE_RANGE, SGPropertyResults.SUCCEEDED);
+    this.mScaleDragHelper.setScaleRange(map, key, value, dateMode, result);
   }
 
   protected void setScaleBaselineValue(
