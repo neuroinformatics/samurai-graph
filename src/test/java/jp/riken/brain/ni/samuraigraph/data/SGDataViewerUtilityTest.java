@@ -204,24 +204,6 @@ class SGDataViewerUtilityTest {
   }
 
   @Test
-  void getDataValueVXYReadsComponentsWithoutStride() {
-    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
-    when(data.isIndexAvailable()).thenReturn(false);
-    when(data.isStrideAvailable()).thenReturn(false);
-    when(data.getXValueAt(1)).thenReturn(1.0);
-    when(data.getYValueAt(3)).thenReturn(2.0);
-    when(data.getFirstComponentValueAt(3, 1)).thenReturn(3.0);
-    when(data.getSecondComponentValueAt(3, 1)).thenReturn(4.0);
-    SGDataValue value = SGDataViewerUtility.getDataValue(data, 1, 3);
-    assertNotNull(value);
-    SGDataValue.VXYDataValue vxy = (SGDataValue.VXYDataValue) value;
-    assertEquals(1.0, vxy.xValue, 0.0);
-    assertEquals(2.0, vxy.yValue, 0.0);
-    assertEquals(3.0, vxy.fValue.number, 0.0);
-    assertEquals(4.0, vxy.sValue.number, 0.0);
-  }
-
-  @Test
   void setEditedValueVXYGridWritesCoordinateAndComponent() {
     SGIVXYTypeData data = mock(SGIVXYTypeData.class);
     when(data.isPolar()).thenReturn(false);
@@ -433,5 +415,566 @@ class SGDataViewerUtilityTest {
         new SGDataValueHistory.SDArray.D1(9.5, SGIDataColumnTypeConstants.ANGLE, 6);
     SGDataViewerUtility.setEditedValue(data, xValues, yValues, fGrid, sGrid, false, angle);
     assertEquals(9.5, sGrid[6][0], 0.0);
+  }
+
+  @Test
+  void arrayAccessorsOfVectorDataUseDataValues() {
+    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
+    when(data.useXValueCache(false)).thenReturn(false);
+    when(data.useYValueCache(false)).thenReturn(false);
+    when(data.useFirstComponentValueCache(false)).thenReturn(false);
+    when(data.useSecondComponentValueCache(false)).thenReturn(false);
+    when(data.getXValueArray(false, false)).thenReturn(new double[] {1.0, 2.0});
+    when(data.getYValueArray(false, false)).thenReturn(new double[] {3.0, 4.0});
+    when(data.getFirstComponentValueArray(false, false)).thenReturn(new double[] {5.0, 6.0});
+    when(data.getSecondComponentValueArray(false, false)).thenReturn(new double[] {7.0, 8.0});
+    assertArrayEquals(
+        new double[] {1.0, 2.0}, SGDataViewerUtility.getXValueArray(data, false), 0.0);
+    assertArrayEquals(
+        new double[] {3.0, 4.0}, SGDataViewerUtility.getYValueArray(data, false), 0.0);
+    assertArrayEquals(
+        new double[] {5.0, 6.0}, SGDataViewerUtility.getFirstComponentValueArray(data, false), 0.0);
+    assertArrayEquals(
+        new double[] {7.0, 8.0},
+        SGDataViewerUtility.getSecondComponentValueArray(data, false),
+        0.0);
+  }
+
+  @Test
+  void blockListAccessorsOfVectorDataUseDataValues() {
+    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
+    when(data.isIndexAvailable()).thenReturn(false);
+    SGXYSimpleDoubleValueIndexBlock block =
+        new SGXYSimpleDoubleValueIndexBlock(
+            new double[] {1.0, 2.0}, new SGIntegerSeries(0, 1, 1), new SGIntegerSeries(0, 0, 1));
+    when(data.getFirstComponentValueBlockListSub(false, false, false))
+        .thenReturn(java.util.Arrays.asList(block));
+    when(data.getSecondComponentValueBlockListSub(false, false, false))
+        .thenReturn(java.util.Arrays.asList(block));
+    assertEquals(
+        1, SGDataViewerUtility.getFirstComponentValueBlockList(data, false, false, false).size());
+    assertEquals(
+        1, SGDataViewerUtility.getSecondComponentValueBlockList(data, false, false, false).size());
+  }
+
+  @Test
+  void arrayAccessorsOfXYZDataUseDataValues() {
+    SGISXYZTypeData data = mock(SGISXYZTypeData.class);
+    when(data.useXValueCache(false)).thenReturn(false);
+    when(data.useYValueCache(false)).thenReturn(false);
+    when(data.useZValueCache(false)).thenReturn(false);
+    when(data.getXValueArray(false, false)).thenReturn(new double[] {1.0});
+    when(data.getYValueArray(false, false)).thenReturn(new double[] {2.0});
+    when(data.getZValueArray(false, false)).thenReturn(new double[] {3.0});
+    assertArrayEquals(new double[] {1.0}, SGDataViewerUtility.getXValueArray(data, false), 0.0);
+    assertArrayEquals(new double[] {2.0}, SGDataViewerUtility.getYValueArray(data, false), 0.0);
+    assertArrayEquals(new double[] {3.0}, SGDataViewerUtility.getZValueArray(data, false), 0.0);
+    when(data.isIndexAvailable()).thenReturn(false);
+    when(data.getZValueBlockListSub(false, false, false))
+        .thenReturn(java.util.Arrays.asList(createBlock()));
+    assertEquals(1, SGDataViewerUtility.getZValueBlockList(data, false, false, false).size());
+  }
+
+  private static SGXYSimpleDoubleValueIndexBlock createBlock() {
+    return new SGXYSimpleDoubleValueIndexBlock(
+        new double[] {1.0, 2.0}, new SGIntegerSeries(0, 1, 1), new SGIntegerSeries(0, 0, 1));
+  }
+
+  @Test
+  void updateValueArraysFillsStrideGaps() {
+    SGITwoDimensionalData data = mock(SGITwoDimensionalData.class);
+    when(data.isStrideAvailable()).thenReturn(true);
+    when(data.isIndexAvailable()).thenReturn(false);
+    when(data.getXStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
+    when(data.getYStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
+    when(data.useXYCache(true, new SGIntegerSeriesSet(0, 4, 2))).thenReturn(false);
+    when(data.getXValueArray(false)).thenReturn(new double[] {10.0, 20.0, 30.0});
+    when(data.getYValueArray(false)).thenReturn(new double[] {40.0, 50.0, 60.0});
+    double[] xValues = {0.0, 0.0, 0.0, 0.0, 0.0};
+    double[] yValues = {0.0, 0.0, 0.0, 0.0, 0.0};
+    double[] xRet = SGDataViewerUtility.updateXValueArray(data, true, xValues);
+    double[] yRet = SGDataViewerUtility.updateYValueArray(data, true, yValues);
+    assertEquals(10.0, xRet[0], 0.0);
+    assertEquals(20.0, xRet[2], 0.0);
+    assertEquals(30.0, xRet[4], 0.0);
+    assertEquals(40.0, yRet[0], 0.0);
+    assertEquals(50.0, yRet[2], 0.0);
+    assertEquals(60.0, yRet[4], 0.0);
+  }
+
+  @Test
+  void stringArrayAndSingleArrayAccessorsUseDataValues() {
+    SGISXYTypeSingleData data = mock(SGISXYTypeSingleData.class);
+    when(data.isTickLabelAvailable()).thenReturn(true);
+    when(data.useTickLabelCache(false)).thenReturn(false);
+    when(data.getStringArray(false, false)).thenReturn(new String[] {"a", "b"});
+    assertArrayEquals(new String[] {"a", "b"}, SGDataViewerUtility.getStringArray(data, false));
+    when(data.useValueCache(false)).thenReturn(false);
+    when(data.getXValueArray(false, false)).thenReturn(new double[] {1.0});
+    when(data.getYValueArray(false, false)).thenReturn(new double[] {2.0});
+    assertArrayEquals(new double[] {1.0}, SGDataViewerUtility.getXValueArray(data, false), 0.0);
+    assertArrayEquals(new double[] {2.0}, SGDataViewerUtility.getYValueArray(data, false), 0.0);
+  }
+
+  @Test
+  void setDataViewerValueMultipleCreatesHistory() {
+    SGArrayData base =
+        mock(SGArrayData.class, withSettings().extraInterfaces(SGISXYTypeMultipleData.class));
+    SGISXYTypeMultipleData data = (SGISXYTypeMultipleData) base;
+    when(base.getCache()).thenReturn(null);
+    when(data.getShift()).thenReturn(new jp.riken.brain.ni.samuraigraph.base.SGTuple2d(1.0, 2.0));
+    when(data.isStrideAvailable()).thenReturn(false);
+    SGISXYTypeSingleData child = mock(SGISXYTypeSingleData.class);
+    SGISXYTypeSingleData.DoubleValueSetResult result =
+        new SGISXYTypeSingleData.DoubleValueSetResult();
+    result.status = true;
+    result.prev = 0.5;
+    when(child.setDataViewerDoubleValue(SGIDataColumnTypeConstants.X_VALUE, 0, 4.0))
+        .thenReturn(result);
+    when(data.getSXYDataArray()).thenReturn(new SGISXYTypeSingleData[] {child});
+    SGDataValueHistory history =
+        SGDataViewerUtility.setDataViewerValue(
+            data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, "5.0", new SGIntegerSeriesSet());
+    assertNotNull(history);
+    assertEquals(SGIDataColumnTypeConstants.X_VALUE, history.getColumnType());
+    assertNull(
+        SGDataViewerUtility.setDataViewerValue(
+            data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, "abc", new SGIntegerSeriesSet()));
+    assertNull(
+        SGDataViewerUtility.setDataViewerValue(
+            data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, null, new SGIntegerSeriesSet()));
+  }
+
+  @Test
+  void setDataViewerValueVectorWithIndexUpdatesCache() {
+    SGArrayData base =
+        mock(SGArrayData.class, withSettings().extraInterfaces(SGIVXYTypeData.class));
+    SGIVXYTypeData data = (SGIVXYTypeData) base;
+    SGVXYDataCache cache = new SGVXYDataCache();
+    cache.mXValues = new double[] {1.0, 2.0};
+    cache.mYValues = new double[] {3.0, 4.0};
+    cache.mFirstComponentValues = new double[] {5.0, 6.0};
+    cache.mSecondComponentValues = new double[] {7.0, 8.0};
+    when(base.getCache()).thenReturn(cache);
+    when(data.isIndexAvailable()).thenReturn(true);
+    when(data.isStrideAvailable()).thenReturn(false);
+    when(data.isPolar()).thenReturn(false);
+    SGDataValueHistory history =
+        SGDataViewerUtility.setDataViewerValue(
+            data, SGIDataColumnTypeConstants.X_COORDINATE, 0, 0, "9.0");
+    assertNotNull(history);
+    assertEquals(9.0, cache.mXValues[0], 0.0);
+    SGDataViewerUtility.setDataViewerValue(
+        data, SGIDataColumnTypeConstants.Y_COORDINATE, 1, 0, "4.5");
+    assertEquals(4.5, cache.mYValues[1], 0.0);
+    SGDataViewerUtility.setDataViewerValue(
+        data, SGIDataColumnTypeConstants.X_COMPONENT, 0, 0, "6.5");
+    assertEquals(6.5, cache.mFirstComponentValues[0], 0.0);
+    SGDataViewerUtility.setDataViewerValue(
+        data, SGIDataColumnTypeConstants.Y_COMPONENT, 1, 0, "8.5");
+    assertEquals(8.5, cache.mSecondComponentValues[1], 0.0);
+  }
+
+  @Test
+  void setDataViewerValueVectorWithoutIndexUpdatesComponentBlocks() {
+    SGArrayData base =
+        mock(SGArrayData.class, withSettings().extraInterfaces(SGIVXYTypeData.class));
+    SGIVXYTypeData data = (SGIVXYTypeData) base;
+    SGVXYDataCache cache = new SGVXYDataCache();
+    SGXYSimpleDoubleValueIndexBlock block =
+        new SGXYSimpleDoubleValueIndexBlock(
+            new double[] {
+              1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+              1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0
+            },
+            new SGIntegerSeries(0, 4, 1),
+            new SGIntegerSeries(0, 4, 1));
+    java.util.List<SGXYSimpleDoubleValueIndexBlock> blockList = new java.util.ArrayList<>();
+    blockList.add(block);
+    cache.mFirstComponentValueBlockList = blockList;
+    when(base.getCache()).thenReturn(cache);
+    when(data.isIndexAvailable()).thenReturn(false);
+    when(data.isStrideAvailable()).thenReturn(false);
+    when(data.isPolar()).thenReturn(false);
+    SGDataViewerUtility.setDataViewerValue(
+        data, SGIDataColumnTypeConstants.X_COMPONENT, 2, 2, "9.0");
+    assertEquals(9.0, block.getValue(2, 2), 0.0);
+  }
+
+  @Test
+  void getDataViewerValueVectorReadsCells() {
+    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
+    when(data.isStrideAvailable()).thenReturn(false);
+    when(data.isPolar()).thenReturn(false);
+    when(data.getXValueAt(2)).thenReturn(1.0);
+    when(data.getYValueAt(3)).thenReturn(2.0);
+    when(data.isIndexAvailable()).thenReturn(true);
+    when(data.getFirstComponentValueAt(4)).thenReturn(3.0);
+    when(data.getSecondComponentValueAt(5)).thenReturn(4.0);
+    assertEquals(
+        1.0,
+        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.X_COORDINATE, 2, 9),
+        0.0);
+    assertEquals(
+        2.0,
+        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.Y_COORDINATE, 3, 9),
+        0.0);
+    assertEquals(
+        3.0,
+        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.X_COMPONENT, 4, 9),
+        0.0);
+    assertEquals(
+        4.0,
+        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.Y_COMPONENT, 5, 9),
+        0.0);
+    assertNull(
+        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.Z_VALUE, 0, 0));
+  }
+
+  @Test
+  void getDataViewerValueXYZAndMultipleReadsCells() {
+    SGISXYZTypeData xyz = mock(SGISXYZTypeData.class);
+    when(xyz.isStrideAvailable()).thenReturn(false);
+    when(xyz.getXValueAt(1)).thenReturn(10.0);
+    when(xyz.getYValueAt(2)).thenReturn(20.0);
+    when(xyz.isIndexAvailable()).thenReturn(true);
+    when(xyz.getZValueAt(3)).thenReturn(30.0);
+    assertEquals(
+        10.0,
+        SGDataViewerUtility.getDataViewerValue(xyz, SGIDataColumnTypeConstants.X_VALUE, 1, 9),
+        0.0);
+    assertEquals(
+        20.0,
+        SGDataViewerUtility.getDataViewerValue(xyz, SGIDataColumnTypeConstants.Y_VALUE, 2, 9),
+        0.0);
+    assertEquals(
+        30.0,
+        SGDataViewerUtility.getDataViewerValue(xyz, SGIDataColumnTypeConstants.Z_VALUE, 3, 9),
+        0.0);
+
+    SGISXYTypeMultipleData multiple = mock(SGISXYTypeMultipleData.class);
+    when(multiple.isStrideAvailable()).thenReturn(false);
+    when(multiple.getXValueAt(1, 2)).thenReturn(40.0);
+    when(multiple.getYValueAt(1, 2)).thenReturn(50.0);
+    when(multiple.getShift())
+        .thenReturn(new jp.riken.brain.ni.samuraigraph.base.SGTuple2d(1.0, 1.0));
+    assertEquals(
+        41.0,
+        SGDataViewerUtility.getDataViewerValue(multiple, SGIDataColumnTypeConstants.X_VALUE, 2, 1),
+        0.0);
+    assertEquals(
+        51.0,
+        SGDataViewerUtility.getDataViewerValue(multiple, SGIDataColumnTypeConstants.Y_VALUE, 2, 1),
+        0.0);
+    assertNull(
+        SGDataViewerUtility.getDataViewerValue(multiple, SGIDataColumnTypeConstants.Z_VALUE, 2, 1));
+  }
+
+  @Test
+  void preferredDataViewColumnTypesFollowDataShape() {
+    SGIVXYTypeData polar = mock(SGIVXYTypeData.class);
+    when(polar.isPolar()).thenReturn(true);
+    assertEquals(
+        SGIDataColumnTypeConstants.MAGNITUDE,
+        SGDataViewerUtility.getPreferredDataViewColumnType(polar));
+    SGIVXYTypeData orthogonal = mock(SGIVXYTypeData.class);
+    when(orthogonal.isPolar()).thenReturn(false);
+    assertEquals(
+        SGIDataColumnTypeConstants.X_COMPONENT,
+        SGDataViewerUtility.getPreferredDataViewColumnType(orthogonal));
+    assertEquals(
+        SGIDataColumnTypeConstants.Z_VALUE,
+        SGDataViewerUtility.getPreferredDataViewColumnType(mock(SGISXYZTypeData.class)));
+    SGISXYTypeMultipleData multiple = mock(SGISXYTypeMultipleData.class);
+    when(multiple.hasMultipleYValues()).thenReturn(true);
+    assertEquals(
+        SGIDataColumnTypeConstants.Y_VALUE,
+        SGDataViewerUtility.getPreferredDataViewColumnType(multiple));
+    when(multiple.hasMultipleYValues()).thenReturn(false);
+    assertEquals(
+        SGIDataColumnTypeConstants.X_VALUE,
+        SGDataViewerUtility.getPreferredDataViewColumnType(multiple));
+  }
+
+  @Test
+  void matchesCheckRowAndColumnType() {
+    SGDataValueHistory.SDArray.D1 history =
+        new SGDataValueHistory.SDArray.D1(1.0, SGIDataColumnTypeConstants.X_VALUE, 0);
+    assertTrue(SGDataViewerUtility.matches(0, 0, SGIDataColumnTypeConstants.X_VALUE, history, 1.0));
+    assertFalse(
+        SGDataViewerUtility.matches(0, 1, SGIDataColumnTypeConstants.X_VALUE, history, 1.0));
+  }
+
+  @Test
+  void tooltipAndStrideHelpers() {
+    assertTrue(SGDataViewerUtility.isValidTooltipTextString("a"));
+    assertFalse(SGDataViewerUtility.isValidTooltipTextString(""));
+    assertFalse(SGDataViewerUtility.isValidTooltipTextString(null));
+    SGISXYTypeData data = mock(SGISXYTypeData.class);
+    when(data.isStrideAvailable()).thenReturn(false);
+    assertFalse(SGDataViewerUtility.hasEffectiveStride(data));
+    when(data.isStrideAvailable()).thenReturn(true);
+    when(data.getStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
+    when(data.getTickLabelStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
+    assertTrue(SGDataViewerUtility.hasEffectiveStride(data));
+  }
+
+  @Test
+  void getDataValueVectorAndSXYZIndexPaths() {
+    SGIVXYTypeData vector = mock(SGIVXYTypeData.class);
+    when(vector.isIndexAvailable()).thenReturn(false);
+    when(vector.isStrideAvailable()).thenReturn(false);
+    when(vector.getXValueAt(0)).thenReturn(1.0);
+    when(vector.getYValueAt(0)).thenReturn(2.0);
+    when(vector.getFirstComponentValueAt(0, 0)).thenReturn(3.0);
+    when(vector.getSecondComponentValueAt(0, 0)).thenReturn(4.0);
+    SGDataValue value = SGDataViewerUtility.getDataValue(vector, 0, 0);
+    assertAboveZero(value);
+    when(vector.isIndexAvailable()).thenReturn(true);
+    when(vector.getFirstComponentValueAt(1)).thenReturn(5.0);
+    when(vector.getSecondComponentValueAt(1)).thenReturn(6.0);
+    assertNotNull(SGDataViewerUtility.getDataValue(vector, 1));
+
+    SGISXYZTypeData xyz = mock(SGISXYZTypeData.class);
+    when(xyz.isIndexAvailable()).thenReturn(false);
+    when(xyz.isStrideAvailable()).thenReturn(false);
+    when(xyz.getXValueAt(0)).thenReturn(1.0);
+    when(xyz.getYValueAt(0)).thenReturn(2.0);
+    when(xyz.getZValueAt(0, 0)).thenReturn(3.0);
+    assertNotNull(SGDataViewerUtility.getDataValue(xyz, 0, 0));
+  }
+
+  private static void assertAboveZero(final SGDataValue value) {
+    assertNotNull(value);
+    assertEquals(1.0, ((SGDataValue.VXYDataValue) value).xValue, 0.0);
+  }
+
+  @Test
+  void getEditedDataValueListIteratesColumns() {
+    SGArrayData base =
+        mock(SGArrayData.class, withSettings().extraInterfaces(SGISXYTypeMultipleData.class));
+    SGISXYTypeMultipleData data = (SGISXYTypeMultipleData) base;
+    when(base.getCache()).thenReturn(null);
+    when(data.getDataViewerColumnNumber(SGIDataColumnTypeConstants.X_VALUE, true)).thenReturn(1);
+    when(data.getChildNumber()).thenReturn(2);
+    when(data.getShift()).thenReturn(new jp.riken.brain.ni.samuraigraph.base.SGTuple2d(0.0, 0.0));
+    when(data.isStrideAvailable()).thenReturn(false);
+    SGISXYTypeSingleData child = mock(SGISXYTypeSingleData.class);
+    SGISXYTypeSingleData.DoubleValueSetResult result =
+        new SGISXYTypeSingleData.DoubleValueSetResult();
+    result.status = false;
+    when(child.setDataViewerDoubleValue(SGIDataColumnTypeConstants.X_VALUE, 0, 3.0))
+        .thenReturn(result);
+    when(data.getSXYDataArray()).thenReturn(new SGISXYTypeSingleData[] {child, child});
+    assertTrue(
+        SGDataViewerUtility.getEditedDataValueList(
+                data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, "3.0", new SGIntegerSeriesSet())
+            .isEmpty());
+  }
+
+  @Test
+  void setDataViewerValueXYZWithIndexUpdatesCache() {
+    SGArrayData base =
+        mock(SGArrayData.class, withSettings().extraInterfaces(SGISXYZTypeData.class));
+    SGISXYZTypeData data = (SGISXYZTypeData) base;
+    SGSXYZDataCache cache = new SGSXYZDataCache();
+    cache.mXValues = new double[] {1.0, 2.0};
+    cache.mYValues = new double[] {3.0, 4.0};
+    cache.mZValues = new double[] {5.0, 6.0};
+    when(base.getCache()).thenReturn(cache);
+    when(data.isIndexAvailable()).thenReturn(true);
+    when(data.isStrideAvailable()).thenReturn(false);
+    SGDataValueHistory xHistory =
+        SGDataViewerUtility.setDataViewerValue(
+            data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, "9.0");
+    assertNotNull(xHistory);
+    assertEquals(9.0, cache.mXValues[0], 0.0);
+    SGDataViewerUtility.setDataViewerValue(data, SGIDataColumnTypeConstants.Y_VALUE, 1, 0, "4.5");
+    assertEquals(4.5, cache.mYValues[1], 0.0);
+    SGDataViewerUtility.setDataViewerValue(data, SGIDataColumnTypeConstants.Z_VALUE, 0, 0, "6.5");
+    assertEquals(6.5, cache.mZValues[0], 0.0);
+  }
+
+  @Test
+  void setDataViewerValueXYZGridUpdatesZBlock() {
+    SGArrayData base =
+        mock(SGArrayData.class, withSettings().extraInterfaces(SGISXYZTypeData.class));
+    SGISXYZTypeData data = (SGISXYZTypeData) base;
+    SGSXYZDataCache cache = new SGSXYZDataCache();
+    SGXYSimpleDoubleValueIndexBlock block = createBlock();
+    cache.mZValueBlockList = new java.util.ArrayList<>();
+    cache.mZValueBlockList.add(block);
+    when(base.getCache()).thenReturn(cache);
+    when(data.isIndexAvailable()).thenReturn(false);
+    when(data.isStrideAvailable()).thenReturn(false);
+    SGDataViewerUtility.setDataViewerValue(data, SGIDataColumnTypeConstants.Z_VALUE, 0, 0, "9.0");
+    assertEquals(9.0, block.getValue(0, 0), 0.0);
+  }
+
+  @Test
+  void getDataViewerValueVXYUsesStrideSearch() {
+    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
+    when(data.isStrideAvailable()).thenReturn(true);
+    when(data.getDataViewerRowStride(SGIDataColumnTypeConstants.X_COORDINATE))
+        .thenReturn(new SGIntegerSeriesSet(0, 8, 4));
+    when(data.getDataViewerColStride(SGIDataColumnTypeConstants.X_COORDINATE))
+        .thenReturn(new SGIntegerSeriesSet(0, 8, 4));
+    when(data.getXValueAt(1)).thenReturn(7.0);
+    assertEquals(
+        7.0,
+        SGDataViewerUtility.getDataViewerValue(data, SGIDataColumnTypeConstants.X_COORDINATE, 4, 4),
+        0.0);
+    assertNull(
+        SGDataViewerUtility.getDataViewerValue(
+            data, SGIDataColumnTypeConstants.X_COORDINATE, 5, 0));
+  }
+
+  @Test
+  void cacheBackedAccessorsUseCachedValues() {
+    SGArrayData base =
+        mock(SGArrayData.class, withSettings().extraInterfaces(SGIVXYTypeData.class));
+    SGIVXYTypeData data = (SGIVXYTypeData) base;
+    SGVXYDataCache cache = new SGVXYDataCache();
+    cache.mFirstComponentValues = new double[] {1.0};
+    cache.mSecondComponentValues = new double[] {2.0};
+    when(base.getCache()).thenReturn(cache);
+    when(data.isIndexAvailable()).thenReturn(false);
+    when(data.useFirstComponentValueCache(false)).thenReturn(true);
+    when(data.useSecondComponentValueCache(false)).thenReturn(true);
+    assertArrayEquals(
+        new double[] {1.0}, SGDataViewerUtility.getFirstComponentValueArray(data, false), 0.0);
+    assertArrayEquals(
+        new double[] {2.0}, SGDataViewerUtility.getSecondComponentValueArray(data, false), 0.0);
+    SGXYSimpleDoubleValueIndexBlock block = createBlock();
+    cache.mFirstComponentValueBlockList = new java.util.ArrayList<>();
+    cache.mFirstComponentValueBlockList.add(block);
+    cache.mSecondComponentValueBlockList = new java.util.ArrayList<>();
+    cache.mSecondComponentValueBlockList.add(block);
+    assertEquals(
+        1, SGDataViewerUtility.getFirstComponentValueBlockList(data, false, true, false).size());
+    assertEquals(
+        1, SGDataViewerUtility.getSecondComponentValueBlockList(data, false, true, false).size());
+  }
+
+  @Test
+  void setEditedValueWithAllUsesStrideIndices() {
+    SGIVXYTypeData vxy = mock(SGIVXYTypeData.class);
+    when(vxy.isPolar()).thenReturn(false);
+    when(vxy.isStrideAvailable()).thenReturn(true);
+    when(vxy.getXStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
+    when(vxy.getYStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
+    when(vxy.getIndexStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
+    double[] xValues = new double[5];
+    double[] yValues = new double[5];
+    double[][] fGrid = new double[5][5];
+    double[][] sGrid = new double[5][5];
+    SGDataValueHistory.SDArray.D1 xValue =
+        new SGDataValueHistory.SDArray.D1(1.5, SGIDataColumnTypeConstants.X_COORDINATE, 2);
+    SGDataViewerUtility.setEditedValue(vxy, xValues, yValues, fGrid, sGrid, true, xValue);
+    assertEquals(1.5, xValues[2], 0.0);
+    double[] fValues = new double[5];
+    double[] sValues = new double[5];
+    SGDataValueHistory.SDArray.D1 first =
+        new SGDataValueHistory.SDArray.D1(2.5, SGIDataColumnTypeConstants.X_COMPONENT, 3);
+    SGDataViewerUtility.setEditedValue(vxy, xValues, yValues, fValues, sValues, true, first);
+    assertEquals(2.5, fValues[3], 0.0);
+    assertThrows(
+        Error.class,
+        () ->
+            SGDataViewerUtility.setEditedValue(
+                vxy,
+                xValues,
+                yValues,
+                fValues,
+                sValues,
+                true,
+                new SGDataValueHistory.SDArray.D1(3.5, SGIDataColumnTypeConstants.Z_VALUE, 0)));
+
+    SGISXYZTypeData xyz = mock(SGISXYZTypeData.class);
+    when(xyz.isStrideAvailable()).thenReturn(true);
+    when(xyz.getXStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
+    when(xyz.getYStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
+    when(xyz.getIndexStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
+    double[][] zGrid = new double[5][5];
+    SGDataValueHistory.SDArray.D1 zValue =
+        new SGDataValueHistory.SDArray.D1(4.5, SGIDataColumnTypeConstants.Z_VALUE, 4);
+    SGDataViewerUtility.setEditedValue(xyz, new double[5], new double[5], zGrid, true, zValue);
+    assertEquals(4.5, zGrid[4][0], 0.0);
+    assertThrows(
+        Error.class,
+        () ->
+            SGDataViewerUtility.setEditedValue(
+                xyz,
+                new double[5],
+                new double[5],
+                new double[5],
+                true,
+                new SGDataValueHistory.SDArray.D1(
+                    1.0, SGIDataColumnTypeConstants.X_COORDINATE, 0)));
+  }
+
+  @Test
+  void hasEffectiveStrideHandlesMissingStride() {
+    SGISXYTypeData data = mock(SGISXYTypeData.class);
+    when(data.isStrideAvailable()).thenReturn(true);
+    when(data.getStride()).thenReturn(null);
+    when(data.getTickLabelStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 1));
+    assertThrows(Error.class, () -> SGDataViewerUtility.hasEffectiveStride(data));
+    when(data.getStride()).thenReturn(new SGIntegerSeriesSet(0, 4, 2));
+    assertTrue(SGDataViewerUtility.hasEffectiveStride(data));
+  }
+
+  @Test
+  void cacheBackedXYZAccessorsUseCachedValues() {
+    SGArrayData base =
+        mock(SGArrayData.class, withSettings().extraInterfaces(SGISXYZTypeData.class));
+    SGISXYZTypeData data = (SGISXYZTypeData) base;
+    SGSXYZDataCache cache = new SGSXYZDataCache();
+    cache.mZValues = new double[] {1.0};
+    cache.mXValues = new double[] {2.0};
+    cache.mYValues = new double[] {3.0};
+    SGXYSimpleDoubleValueIndexBlock block = createBlock();
+    cache.mZValueBlockList = new java.util.ArrayList<>();
+    cache.mZValueBlockList.add(block);
+    when(base.getCache()).thenReturn(cache);
+    when(data.isIndexAvailable()).thenReturn(false);
+    when(data.useZValueCache(false)).thenReturn(true);
+    when(data.useXValueCache(false)).thenReturn(true);
+    when(data.useYValueCache(false)).thenReturn(true);
+    assertArrayEquals(new double[] {1.0}, SGDataViewerUtility.getZValueArray(data, false), 0.0);
+    assertEquals(1, SGDataViewerUtility.getZValueBlockList(data, false, true, false).size());
+    assertArrayEquals(new double[] {2.0}, SGDataViewerUtility.getXValueArray(data, false), 0.0);
+    assertArrayEquals(new double[] {3.0}, SGDataViewerUtility.getYValueArray(data, false), 0.0);
+  }
+
+  @Test
+  void stringArrayReturnsNullWithoutTickLabels() {
+    SGISXYTypeSingleData data = mock(SGISXYTypeSingleData.class);
+    when(data.isTickLabelAvailable()).thenReturn(false);
+    assertNull(SGDataViewerUtility.getStringArray(data, false));
+  }
+
+  @Test
+  void getEditedDataValueListUsesTargetColumn() {
+    SGArrayData base =
+        mock(SGArrayData.class, withSettings().extraInterfaces(SGISXYTypeMultipleData.class));
+    SGISXYTypeMultipleData data = (SGISXYTypeMultipleData) base;
+    when(base.getCache()).thenReturn(null);
+    when(data.getDataViewerColumnNumber(SGIDataColumnTypeConstants.X_VALUE, true)).thenReturn(2);
+    when(data.getShift()).thenReturn(new jp.riken.brain.ni.samuraigraph.base.SGTuple2d(0.0, 0.0));
+    when(data.isStrideAvailable()).thenReturn(false);
+    SGISXYTypeSingleData child = mock(SGISXYTypeSingleData.class);
+    SGISXYTypeSingleData.DoubleValueSetResult result =
+        new SGISXYTypeSingleData.DoubleValueSetResult();
+    result.status = true;
+    result.prev = 0.25;
+    when(child.setDataViewerDoubleValue(SGIDataColumnTypeConstants.X_VALUE, 0, 3.0))
+        .thenReturn(result);
+    when(data.getSXYDataArray()).thenReturn(new SGISXYTypeSingleData[] {child});
+    assertEquals(
+        1,
+        SGDataViewerUtility.getEditedDataValueList(
+                data, SGIDataColumnTypeConstants.X_VALUE, 0, 0, "3.0", new SGIntegerSeriesSet())
+            .size());
   }
 }

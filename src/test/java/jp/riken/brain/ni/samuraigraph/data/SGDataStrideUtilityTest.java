@@ -1,8 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.withSettings;
@@ -182,5 +184,269 @@ class SGDataStrideUtilityTest {
     assertEquals(2, set.getNumbers().length);
     assertEquals(0, set.getNumbers()[0]);
     assertEquals(3, set.getNumbers()[1]);
+  }
+
+  @Test
+  void dimensionSeriesMarksLastIndexAsArrayEndValues() {
+    SGData d1 =
+        mock(SGData.class, withSettings().extraInterfaces(SGISXYMultipleDimensionData.class));
+    when(((SGISXYMultipleDimensionData) d1).getIndices())
+        .thenReturn(new SGIntegerSeriesSet(0, 4, 4));
+    List<SGData> dataList = new ArrayList<SGData>();
+    dataList.add(d1);
+    SGIntegerSeriesSet set = SGDataStrideUtility.getDimensionSeries(dataList, 5);
+    assertEquals(0, set.getNumbers()[0]);
+    assertEquals(4, set.getNumbers()[set.getNumbers().length - 1]);
+  }
+
+  @Test
+  void getInitialMagnitudePerCMReturnsDefaultForZeroOrNaN() {
+    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
+    when(data.getMagnitudeArray(false)).thenReturn(new double[] {0.0, -1.0});
+    assertEquals(1.0f, SGDataStrideUtility.getInitialMagnitudePerCM(data), 0.0f);
+    when(data.getMagnitudeArray(false)).thenReturn(new double[] {Double.NaN});
+    assertEquals(1.0f, SGDataStrideUtility.getInitialMagnitudePerCM(data), 0.0f);
+  }
+
+  @Test
+  void getInitialMagnitudePerCMReturnsPositiveValue() {
+    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
+    when(data.getMagnitudeArray(false)).thenReturn(new double[] {1.0, 2.0, 3.0});
+    final float mag = SGDataStrideUtility.getInitialMagnitudePerCM(data);
+    assertTrue(mag > 0.0f);
+    assertFalse(Float.isNaN(mag));
+  }
+
+  @Test
+  void roundMagnitudePerCMReturnsInputForNaNOrInvalid() {
+    SGIVXYTypeData data = mock(SGIVXYTypeData.class);
+    when(data.getMagnitudeArray(false)).thenReturn(new double[] {1.0, 2.0});
+    assertTrue(Float.isNaN(SGDataStrideUtility.roundMagnitudePerCM(Float.NaN, data)));
+    assertEquals(5.0f, SGDataStrideUtility.roundMagnitudePerCM(5.0f, data), 0.0f);
+    when(data.getMagnitudeArray(false)).thenReturn(new double[] {Double.NaN});
+    assertEquals(3.0f, SGDataStrideUtility.roundMagnitudePerCM(3.0f, data), 0.0f);
+  }
+
+  @Test
+  void calcMDArrayDefaultStrideSXYUsesGenericDimension() {
+    SGMDArrayDataColumnInfo xCol =
+        SGTestMDArrayColumns.column("x", new int[] {8}, SGIDataColumnTypeConstants.X_VALUE);
+    xCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+    SGMDArrayDataColumnInfo yCol =
+        SGTestMDArrayColumns.column("y", new int[] {8}, SGIDataColumnTypeConstants.Y_VALUE);
+    yCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, new SGTuple2f(100.0f, 80.0f));
+    infoMap.put(
+        SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_VIRTUAL_MDARRAY_DATA);
+    Map<String, SGMDArrayDimensionInfo> dimNameMap = new HashMap<String, SGMDArrayDimensionInfo>();
+    Map<String, SGIntegerSeriesSet> map =
+        SGDataStrideUtility.calcMDArrayDefaultStride(
+            new SGDataColumnInfo[] {xCol, yCol}, infoMap, dimNameMap);
+    assertNotNull(map);
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE));
+    assertEquals("y", dimNameMap.get(SGIDataInformationKeyConstants.KEY_SXY_STRIDE).getName());
+  }
+
+  @Test
+  void calcMDArrayDefaultStrideSXYZGridUsesXAndYStrides() {
+    SGMDArrayDataColumnInfo xCol =
+        SGTestMDArrayColumns.column("x", new int[] {8}, SGIDataColumnTypeConstants.X_VALUE);
+    xCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+    SGMDArrayDataColumnInfo yCol =
+        SGTestMDArrayColumns.column("y", new int[] {8}, SGIDataColumnTypeConstants.Y_VALUE);
+    yCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, new SGTuple2f(100.0f, 80.0f));
+    infoMap.put(
+        SGIDataInformationKeyConstants.KEY_DATA_TYPE,
+        SGDataTypeConstants.SXYZ_VIRTUAL_MDARRAY_DATA);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, Boolean.TRUE);
+    Map<String, SGIntegerSeriesSet> map =
+        SGDataStrideUtility.calcMDArrayDefaultStride(new SGDataColumnInfo[] {xCol, yCol}, infoMap);
+    assertNotNull(map);
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X));
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y));
+  }
+
+  @Test
+  void calcMDArrayDefaultStrideSXYZNonGridUsesZDimension() {
+    SGMDArrayDataColumnInfo zCol =
+        SGTestMDArrayColumns.column("z", new int[] {8}, SGIDataColumnTypeConstants.Z_VALUE);
+    zCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, new SGTuple2f(100.0f, 80.0f));
+    infoMap.put(
+        SGIDataInformationKeyConstants.KEY_DATA_TYPE,
+        SGDataTypeConstants.SXYZ_VIRTUAL_MDARRAY_DATA);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, Boolean.FALSE);
+    Map<String, SGIntegerSeriesSet> map =
+        SGDataStrideUtility.calcMDArrayDefaultStride(new SGDataColumnInfo[] {zCol}, infoMap);
+    assertNotNull(map);
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_SXYZ_INDEX_STRIDE));
+  }
+
+  @Test
+  void calcMDArrayDefaultStrideSXYZNonGridWithoutColumnsReturnsNull() {
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, new SGTuple2f(100.0f, 80.0f));
+    infoMap.put(
+        SGIDataInformationKeyConstants.KEY_DATA_TYPE,
+        SGDataTypeConstants.SXYZ_VIRTUAL_MDARRAY_DATA);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_SXYZ_GRID_PLOT_FLAG, Boolean.FALSE);
+    assertNull(
+        SGDataStrideUtility.calcMDArrayDefaultStride(
+            new SGDataColumnInfo[] {SGTestMDArrayColumns.column("a", new int[] {8}, "")}, infoMap));
+  }
+
+  @Test
+  void calcMDArrayDefaultStrideVXYNonGridUsesFirstComponent() {
+    SGMDArrayDataColumnInfo fCol =
+        SGTestMDArrayColumns.column("v1", new int[] {8}, SGIDataColumnTypeConstants.MAGNITUDE);
+    fCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, new SGTuple2f(100.0f, 80.0f));
+    infoMap.put(
+        SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.VXY_VIRTUAL_MDARRAY_DATA);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.TRUE);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, Boolean.FALSE);
+    Map<String, SGIntegerSeriesSet> map =
+        SGDataStrideUtility.calcMDArrayDefaultStride(new SGDataColumnInfo[] {fCol}, infoMap);
+    assertNotNull(map);
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_VXY_INDEX_STRIDE));
+  }
+
+  @Test
+  void calcMDArrayDefaultStrideVXYGridUsesCoordinateColumns() {
+    SGMDArrayDataColumnInfo xCol =
+        SGTestMDArrayColumns.column("x", new int[] {5}, SGIDataColumnTypeConstants.X_COORDINATE);
+    xCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+    SGMDArrayDataColumnInfo yCol =
+        SGTestMDArrayColumns.column("y", new int[] {4}, SGIDataColumnTypeConstants.Y_COORDINATE);
+    yCol.setDimensionIndex(SGIMDArrayConstants.KEY_GENERIC_DIMENSION, 0);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, new SGTuple2f(100.0f, 80.0f));
+    infoMap.put(
+        SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.VXY_VIRTUAL_MDARRAY_DATA);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, Boolean.TRUE);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    Map<String, SGMDArrayDimensionInfo> dimNameMap = new HashMap<String, SGMDArrayDimensionInfo>();
+    Map<String, SGIntegerSeriesSet> map =
+        SGDataStrideUtility.calcMDArrayDefaultStride(
+            new SGDataColumnInfo[] {xCol, yCol}, infoMap, dimNameMap);
+    assertNotNull(map);
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X));
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y));
+  }
+
+  @Test
+  void calcMDArrayDefaultStrideVXYGridWithoutCoordinatesUsesComponentDimension() {
+    SGMDArrayDataColumnInfo fCol =
+        SGTestMDArrayColumns.column("v1", new int[] {4, 5}, SGIDataColumnTypeConstants.X_COMPONENT);
+    fCol.setDimensionIndex(SGIMDArrayConstants.KEY_VXY_X_DIMENSION, 1);
+    fCol.setDimensionIndex(SGIMDArrayConstants.KEY_VXY_Y_DIMENSION, 0);
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, new SGTuple2f(100.0f, 80.0f));
+    infoMap.put(
+        SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.VXY_VIRTUAL_MDARRAY_DATA);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_GRID_PLOT_FLAG, Boolean.TRUE);
+    infoMap.put(SGIDataInformationKeyConstants.KEY_VXY_POLAR_SELECTED, Boolean.FALSE);
+    Map<String, SGIntegerSeriesSet> map =
+        SGDataStrideUtility.calcMDArrayDefaultStride(new SGDataColumnInfo[] {fCol}, infoMap);
+    assertNotNull(map);
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X));
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y));
+  }
+
+  private static SGNetCDFFile createNetCDFFile(final String path) throws Exception {
+    Files.deleteIfExists(Path.of(path));
+    ucar.nc2.write.NetcdfFormatWriter.Builder writer =
+        ucar.nc2.write.NetcdfFormatWriter.createNewNetcdf3(path);
+    ucar.nc2.Dimension xDim = writer.addDimension("x", 5);
+    ucar.nc2.Dimension yDim = writer.addDimension("y", 4);
+    writer.addVariable("x", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(xDim));
+    writer.addVariable("y", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(yDim));
+    writer.addVariable("v1", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(yDim, xDim));
+    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path));
+  }
+
+  @Test
+  void calcNetCDFDefaultStrideSXYWithIndexUsesIndexDimension() throws Exception {
+    String path = Files.createTempFile("samurai-graph-test", ".nc").toString();
+    Files.deleteIfExists(Path.of(path));
+    SGNetCDFFile file = createNetCDFFile(path);
+    SGDataColumnInfo[] cols = {
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("x"), SGIDataColumnTypeConstants.INDEX),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("y"), SGIDataColumnTypeConstants.Y_VALUE)
+    };
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, new SGTuple2f(100.0f, 80.0f));
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_NETCDF_DATA);
+    Map<String, String> dimNameMap = new HashMap<String, String>();
+    Map<String, SGIntegerSeriesSet> map =
+        SGDataStrideUtility.calcNetCDFDefaultStride(cols, infoMap, dimNameMap);
+    assertNotNull(map);
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE));
+    assertEquals("x", dimNameMap.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE));
+  }
+
+  @Test
+  void calcNetCDFDefaultStrideSXYZUsesBothDimensions() throws Exception {
+    String path = Files.createTempFile("samurai-graph-test", ".nc").toString();
+    Files.deleteIfExists(Path.of(path));
+    SGNetCDFFile file = createNetCDFFile(path);
+    SGDataColumnInfo[] cols = {
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("x"), SGIDataColumnTypeConstants.X_VALUE),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("y"), SGIDataColumnTypeConstants.Y_VALUE)
+    };
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, new SGTuple2f(100.0f, 80.0f));
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXYZ_NETCDF_DATA);
+    Map<String, SGIntegerSeriesSet> map =
+        SGDataStrideUtility.calcNetCDFDefaultStride(cols, infoMap);
+    assertNotNull(map);
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_X));
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_SXYZ_STRIDE_Y));
+  }
+
+  @Test
+  void calcNetCDFDefaultStrideVXYWithCoordinateUsesVectorStride() throws Exception {
+    String path = Files.createTempFile("samurai-graph-test", ".nc").toString();
+    Files.deleteIfExists(Path.of(path));
+    SGNetCDFFile file = createNetCDFFile(path);
+    SGDataColumnInfo[] cols = {
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("x"), SGIDataColumnTypeConstants.X_COORDINATE),
+      SGDataFileUtility.createDataColumnInfo(
+          file.findVariable("y"), SGIDataColumnTypeConstants.Y_COORDINATE)
+    };
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, new SGTuple2f(100.0f, 80.0f));
+    infoMap.put(SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.VXY_NETCDF_DATA);
+    Map<String, SGIntegerSeriesSet> map =
+        SGDataStrideUtility.calcNetCDFDefaultStride(cols, infoMap);
+    assertNotNull(map);
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_X));
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_VXY_STRIDE_Y));
+  }
+
+  @Test
+  void calcSDArrayDefaultStrideUsesMaxFigureSize() {
+    SGSDArrayDataColumnInfo[] columns = {
+      new SGSDArrayDataColumnInfo("x", SGIDataColumnTypeConstants.VALUE_TYPE_NUMBER, 10)
+    };
+    Map<String, Object> infoMap = new HashMap<String, Object>();
+    infoMap.put(SGIDataInformationKeyConstants.KEY_FIGURE_SIZE, new SGTuple2f(100.0f, 80.0f));
+    infoMap.put(
+        SGIDataInformationKeyConstants.KEY_DATA_TYPE, SGDataTypeConstants.SXY_VIRTUAL_MDARRAY_DATA);
+    Map<String, SGIntegerSeriesSet> map =
+        SGDataStrideUtility.calcSDArrayDefaultStride(columns, infoMap);
+    assertNotNull(map);
+    assertNotNull(map.get(SGIDataInformationKeyConstants.KEY_SXY_INDEX_STRIDE));
   }
 }

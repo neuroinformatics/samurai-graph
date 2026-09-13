@@ -245,4 +245,45 @@ class SGDataBufferUtilityTest {
     assertArrayEquals(
         new double[] {3.0, 4.0}, SGDataBufferUtility.getUpperErrorValueArray(data, false), 0.0);
   }
+
+  @Test
+  void getXValuesWithShiftAddsShiftValue() {
+    SGISXYTypeMultipleData data = mock(SGISXYTypeMultipleData.class);
+    when(data.getUnshiftedXValueArray(org.mockito.ArgumentMatchers.any()))
+        .thenReturn(new double[][] {{1.0, 2.0}, {3.0, 4.0}});
+    when(data.getShift()).thenReturn(new jp.riken.brain.ni.samuraigraph.base.SGTuple2d(10.0, 20.0));
+    SGSXYDataBufferPolicy policy = new SGSXYDataBufferPolicy(true, false, false, true, false);
+    double[][] values = SGDataBufferUtility.getXValues(data, policy);
+    assertNotNull(values);
+    assertArrayEquals(new double[] {11.0, 12.0}, values[0], 0.0);
+    assertArrayEquals(new double[] {13.0, 14.0}, values[1], 0.0);
+  }
+
+  @Test
+  void getYValuesWithShiftAddsShiftValue() {
+    SGISXYTypeMultipleData data = mock(SGISXYTypeMultipleData.class);
+    when(data.getUnshiftedYValueArray(org.mockito.ArgumentMatchers.any()))
+        .thenReturn(new double[][] {{1.0, 2.0}, {3.0, 4.0}});
+    when(data.getShift()).thenReturn(new jp.riken.brain.ni.samuraigraph.base.SGTuple2d(10.0, 20.0));
+    SGSXYDataBufferPolicy policy = new SGSXYDataBufferPolicy(true, false, false, true, false);
+    double[][] values = SGDataBufferUtility.getYValues(data, policy);
+    assertNotNull(values);
+    assertArrayEquals(new double[] {21.0, 22.0}, values[0], 0.0);
+    assertArrayEquals(new double[] {23.0, 24.0}, values[1], 0.0);
+  }
+
+  @Test
+  void getIndexListFillsGapInSeries() {
+    SGXYSimpleDoubleValueIndexBlock blockA =
+        new SGXYSimpleDoubleValueIndexBlock(
+            new double[] {1.0, 2.0}, new SGIntegerSeries(0, 1, 1), new SGIntegerSeries(0, 0, 1));
+    SGXYSimpleDoubleValueIndexBlock blockB =
+        new SGXYSimpleDoubleValueIndexBlock(
+            new double[] {3.0, 4.0}, new SGIntegerSeries(0, 1, 1), new SGIntegerSeries(2, 2, 1));
+    List<Integer> xIndexList = new ArrayList<Integer>();
+    List<Integer> yIndexList = new ArrayList<Integer>();
+    SGDataBufferUtility.getIndexList(Arrays.asList(blockA, blockB), xIndexList, yIndexList, 3, 3);
+    assertEquals(Arrays.asList(0, 1), xIndexList);
+    assertEquals(Arrays.asList(0, 1, 2), yIndexList);
+  }
 }
