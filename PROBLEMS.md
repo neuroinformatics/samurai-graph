@@ -5,30 +5,30 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage
 
-Actual JaCoCo measurement (line coverage) is **13.3%** overall.
+Actual JaCoCo measurement (line coverage) is **14.9%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
 | `com.github...lib.mdarray` | 97.8% | 4 | Pure logic, well covered |
 | `org.freehep...util.export` | 89.7% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 80.0% | 1 | Few instructions |
-| `com.github...lib.hdf5` | 25.5% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 26.5% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
-| `jp...samuraigraph.data` | 24.8% | 48 | Largest application package |
+| `com.github...lib.hdf5` | 33.5% | 5 | Round-trip tests read/write real HDF5 |
+| `jp...samuraigraph.base` | 26.7% | 19 | Pure-logic parts plus the window property I/O round-trip tests |
+| `jp...samuraigraph.data` | 29.9% | 50 | Largest application package; all core utilities covered |
 | `jp...samuraigraph.application` | 3.4% | 5 | Data setup dialog construction smoke tests |
-| `jp...samuraigraph.figure` | 4.6% | 6 | Legend, axis, string, and axis-break unit/round-trip tests |
+| `jp...samuraigraph.figure` | 5.5% | 9 | Legend, axis, grid, string, axis-break, significant-difference and timing-line round-trip tests |
 
-- 88 test files / 981 test methods (1011 executions) against 622 main files
-  / 276k LOC
-- Per-class coverage of the data-layer utilities is uneven: the pure
-  groups (data type 64%, text 80%, column title 73%) reach 64-80%, while
-  the others remain below 60% (buffer 51%, stride 31%, column info 54%,
-  range 32%, misc 32%, viewer 18%, file 14%)
+- 93 test files / 1125 test executions against 622 main files / 276k LOC
+- Per-class coverage of the data-layer utilities now reaches 60% or
+  more: column info 92%, stride 81%, range 81%, misc 76%, merge 66%,
+  data type 66%, buffer 62%, viewer 60%, file 60%, text 80%, column
+  title 75%
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes; the
   property round-trip pattern works headlessly for the legend, axis,
-  string, and axis-break elements
+  grid, string, axis-break, significant-difference and timing-line
+  elements
 
 ## 2. Legacy Idioms
 
@@ -71,8 +71,8 @@ Actual JaCoCo measurement (line coverage) is **13.3%** overall.
 
 ## Recommended Priority
 
-1. **Thicken tests (top priority)**: extend unit tests to the pure-logic
-   `data` / `base` / `mdarray` layers and apply the proven property
+1. **Thicken tests (top priority)**: the pure-logic `data` / `base` /
+   `mdarray` layers are covered; keep extending the property
    round-trip pattern to more GUI classes
 2. **Replace legacy idioms**: migrate constant-bag interfaces to typed
    constants or enums, replace raw `Thread` usage with an executor, and
