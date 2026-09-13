@@ -2208,30 +2208,21 @@ public class SGFigureElementAxis extends SGFigureElement
    *
    * @param e a document event
    */
-  public void changedUpdate(DocumentEvent e) {
-    this.updateLabelTextField();
-  }
+  public void changedUpdate(DocumentEvent e) {}
 
   /**
    * Called when the text string in the text field is updated.
    *
    * @param e a document event
    */
-  public void insertUpdate(DocumentEvent e) {
-    this.updateLabelTextField();
-  }
+  public void insertUpdate(DocumentEvent e) {}
 
   /**
    * Called when the text string in the text field is updated.
    *
    * @param e a document event
    */
-  public void removeUpdate(DocumentEvent e) {
-    this.updateLabelTextField();
-  }
-
-  /** Update the text field. */
-  private void updateLabelTextField() {}
+  public void removeUpdate(DocumentEvent e) {}
 
   /** Called when the caret in the text field is update. */
   public void caretUpdate(final CaretEvent e) {}

@@ -42,61 +42,33 @@ public class SGFigureCreator implements SGIFigureConstants {
   private static final org.apache.logging.log4j.Logger logger =
       org.apache.logging.log4j.LogManager.getLogger(SGFigureCreator.class);
 
-  // 2D class names
-  private static final String CLASS_NAME_OF_AXIS_ELEMENT_2D =
+  // Graph element class names
+  private static final String CLASS_NAME_OF_AXIS_ELEMENT =
       "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementAxis";
 
-  private static final String CLASS_NAME_OF_GRAPH_ELEMENT_2D =
+  private static final String CLASS_NAME_OF_GRAPH_ELEMENT =
       "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGraph";
 
-  private static final String CLASS_NAME_OF_GRID_ELEMENT_2D =
+  private static final String CLASS_NAME_OF_GRID_ELEMENT =
       "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGrid";
 
-  private static final String CLASS_NAME_OF_STRING_ELEMENT_2D =
+  private static final String CLASS_NAME_OF_STRING_ELEMENT =
       "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementString";
 
-  private static final String CLASS_NAME_OF_LEGEND_ELEMENT_2D =
+  private static final String CLASS_NAME_OF_LEGEND_ELEMENT =
       "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementLegend";
 
-  private static final String CLASS_NAME_OF_AXIS_BREAK_ELEMENT_2D =
+  private static final String CLASS_NAME_OF_AXIS_BREAK_ELEMENT =
       "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementAxisBreak";
 
-  private static final String CLASS_NAME_OF_SIGNIFICANT_DIFFERENCE_ELEMENT_2D =
+  private static final String CLASS_NAME_OF_SIGNIFICANT_DIFFERENCE_ELEMENT =
       "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementSignificantDifference";
 
-  private static final String CLASS_NAME_OF_TIMING_LINE_ELEMENT_2D =
+  private static final String CLASS_NAME_OF_TIMING_LINE_ELEMENT =
       "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementTimingLine";
 
-  private static final String CLASS_NAME_OF_SHAPE_ELEMENT_2D =
+  private static final String CLASS_NAME_OF_SHAPE_ELEMENT =
       "jp.riken.brain.ni.samuraigraph.figure.SGFigureElementShape";
-
-  // 3D class names - not implemented now
-  private static final String CLASS_NAME_OF_AXIS_ELEMENT_3D =
-      "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementAxis";
-
-  private static final String CLASS_NAME_OF_GRAPH_ELEMENT_3D =
-      "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementGraph";
-
-  private static final String CLASS_NAME_OF_GRID_ELEMENT_3D =
-      "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementGrid";
-
-  private static final String CLASS_NAME_OF_STRING_ELEMENT_3D =
-      "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementString";
-
-  private static final String CLASS_NAME_OF_LEGEND_ELEMENT_3D =
-      "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementLegend";
-
-  private static final String CLASS_NAME_OF_AXIS_BREAK_ELEMENT_3D =
-      "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementAxisBreak";
-
-  private static final String CLASS_NAME_OF_SIGNIFICANT_DIFFERENCE_ELEMENT_3D =
-      "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementSignificantDifference";
-
-  private static final String CLASS_NAME_OF_TIMING_LINE_ELEMENT_3D =
-      "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementTimingLine";
-
-  private static final String CLASS_NAME_OF_SHAPE_ELEMENT_3D =
-      "jp.riken.brain.ni.samuraigraph.figure.java3d.SGFigureElementShape";
 
   private static final String PROPERTY_NAME_OF_AXIS_ELEMENT = "SGFigureElementAxis";
 
@@ -166,10 +138,9 @@ public class SGFigureCreator implements SGIFigureConstants {
 
   private static final int LAYER_STRING = 90;
 
-  //
-  public SGFigureCreator(boolean is2d) {
-    if (is2d) this.mSuccess = load2DClasses();
-    else this.mSuccess = load3DClasses();
+  /** */
+  public SGFigureCreator() {
+    this.mSuccess = loadClasses();
     if (this.mSuccess) this.mSuccess = healthCheck();
   }
 
@@ -178,38 +149,19 @@ public class SGFigureCreator implements SGIFigureConstants {
     if (this.mSuccess) this.mSuccess = healthCheck();
   }
 
-  // load 2d classes
-  private boolean load2DClasses() {
+  // load graph element classes
+  private boolean loadClasses() {
     try {
-      this.mClassOfAxisElement = Class.forName(CLASS_NAME_OF_AXIS_ELEMENT_2D);
-      this.mClassOfGraphElement = Class.forName(CLASS_NAME_OF_GRAPH_ELEMENT_2D);
-      this.mClassOfGridElement = Class.forName(CLASS_NAME_OF_GRID_ELEMENT_2D);
-      this.mClassOfStringElement = Class.forName(CLASS_NAME_OF_STRING_ELEMENT_2D);
-      this.mClassOfLegendElement = Class.forName(CLASS_NAME_OF_LEGEND_ELEMENT_2D);
-      this.mClassOfAxisBreakElement = Class.forName(CLASS_NAME_OF_AXIS_BREAK_ELEMENT_2D);
+      this.mClassOfAxisElement = Class.forName(CLASS_NAME_OF_AXIS_ELEMENT);
+      this.mClassOfGraphElement = Class.forName(CLASS_NAME_OF_GRAPH_ELEMENT);
+      this.mClassOfGridElement = Class.forName(CLASS_NAME_OF_GRID_ELEMENT);
+      this.mClassOfStringElement = Class.forName(CLASS_NAME_OF_STRING_ELEMENT);
+      this.mClassOfLegendElement = Class.forName(CLASS_NAME_OF_LEGEND_ELEMENT);
+      this.mClassOfAxisBreakElement = Class.forName(CLASS_NAME_OF_AXIS_BREAK_ELEMENT);
       this.mClassOfSignificantDifferenceElement =
-          Class.forName(CLASS_NAME_OF_SIGNIFICANT_DIFFERENCE_ELEMENT_2D);
-      this.mClassOfTimingLineElement = Class.forName(CLASS_NAME_OF_TIMING_LINE_ELEMENT_2D);
-      this.mClassOfShapeElement = Class.forName(CLASS_NAME_OF_SHAPE_ELEMENT_2D);
-    } catch (ClassNotFoundException ex) {
-      return false;
-    }
-    return true;
-  }
-
-  // load 3d classes
-  private boolean load3DClasses() {
-    try {
-      this.mClassOfAxisElement = Class.forName(CLASS_NAME_OF_AXIS_ELEMENT_3D);
-      this.mClassOfGraphElement = Class.forName(CLASS_NAME_OF_GRAPH_ELEMENT_3D);
-      this.mClassOfGridElement = Class.forName(CLASS_NAME_OF_GRID_ELEMENT_3D);
-      this.mClassOfStringElement = Class.forName(CLASS_NAME_OF_STRING_ELEMENT_3D);
-      this.mClassOfLegendElement = Class.forName(CLASS_NAME_OF_LEGEND_ELEMENT_3D);
-      this.mClassOfAxisBreakElement = Class.forName(CLASS_NAME_OF_AXIS_BREAK_ELEMENT_3D);
-      this.mClassOfSignificantDifferenceElement =
-          Class.forName(CLASS_NAME_OF_SIGNIFICANT_DIFFERENCE_ELEMENT_3D);
-      this.mClassOfTimingLineElement = Class.forName(CLASS_NAME_OF_TIMING_LINE_ELEMENT_3D);
-      this.mClassOfShapeElement = Class.forName(CLASS_NAME_OF_SHAPE_ELEMENT_3D);
+          Class.forName(CLASS_NAME_OF_SIGNIFICANT_DIFFERENCE_ELEMENT);
+      this.mClassOfTimingLineElement = Class.forName(CLASS_NAME_OF_TIMING_LINE_ELEMENT);
+      this.mClassOfShapeElement = Class.forName(CLASS_NAME_OF_SHAPE_ELEMENT);
     } catch (ClassNotFoundException ex) {
       return false;
     }

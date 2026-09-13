@@ -425,7 +425,7 @@ class SGMainFunctions
       SGMainFunctions.this.mCommandScriptManager = new SGCommandScriptManager(SGMainFunctions.this);
 
       // create the figure element
-      SGMainFunctions.this.mFigureCreator = new SGFigureCreator(true);
+      SGMainFunctions.this.mFigureCreator = new SGFigureCreator();
       if (!SGMainFunctions.this.mFigureCreator.validateClasses()) {
         exitApplication(1);
       }
