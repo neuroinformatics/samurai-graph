@@ -29,6 +29,9 @@ Actual JaCoCo measurement (instruction coverage) is **16.4%** overall.
   property round-trip pattern works headlessly for the legend, axis,
   grid, string, shape, axis-break, significant-difference and
   timing-line elements
+- Headful tests (window / dialog construction) require a running X
+  server; on display-less machines run them under a virtual X server
+  (see the Testing section of AGENTS.md)
 
 ## 2. Legacy Idioms
 

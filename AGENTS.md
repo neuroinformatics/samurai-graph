@@ -91,6 +91,18 @@ The appropriate jpackage profile is auto-activated based on the host OS. Each pl
 - **Test Location:** Tests reside in `src/test/java/`, mirroring the `src/main/java/` package structure.
 - **New Code:** Write unit tests for new public methods and classes.
 - **Bug Fixes:** Add regression tests when fixing bugs.
+- **Headful tests:** Some tests (e.g. `SGDrawingWindowPropertyIOTest`,
+  `DataSetupDialogConstructionTest`) construct real Swing windows and
+  therefore require a running X server. On display-less machines, start
+  a virtual X server first (Xvfb or, on Fedora where Xvfb is absent,
+  Xvnc ships with tigervnc) and export `DISPLAY`:
+
+  ```bash
+  Xvnc :99 -geometry 1600x1200 -depth 24 -SecurityTypes None \
+      -rfbport 5999 -NeverShared -DisconnectClients false &
+  export DISPLAY=:99
+  ./mvnw test
+  ```
 
 ---
 
