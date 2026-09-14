@@ -1591,6 +1591,14 @@ public class SGApplicationUtility {
     if (netcdf) {
       return FILE_TYPE.NETCDF_DATA;
     }
+    if (hasExtension(path, NETCDF_FILE_EXTENSION)) {
+      // the extension is NetCDF but the file could not be opened:
+      // a NetCDF4 file requires the system netcdf-c library
+      logger.warn(
+          "Unable to open the NetCDF file. The NetCDF-C library is required for"
+              + " reading NetCDF4 files. See the README for installation instructions: "
+              + path);
+    }
 
     // returns TXT for other type files
     return FILE_TYPE.TXT_DATA;
