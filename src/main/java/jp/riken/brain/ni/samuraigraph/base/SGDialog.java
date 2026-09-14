@@ -32,6 +32,8 @@ import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -65,8 +67,11 @@ public abstract class SGDialog extends JDialog
   // serialVersionUID
   private static final long serialVersionUID = 5190851306204747759L;
 
-  /** Virtual bounds. */
-  private static Rectangle virtualBounds = null;
+  /** The virtual bounds of the screen devices, computed at the construction. */
+  private final Rectangle mVirtualBounds = this.calcVirtualBounds();
+
+  /** The virtual bounds for a dialog without any screen devices. */
+  private static final Rectangle FALLBACK_VIRTUAL_BOUNDS = new Rectangle(1024, 768);
 
   /** Text for the OK button. */
   public static final String OK_BUTTON_TEXT = "OK";
@@ -410,7 +415,7 @@ public abstract class SGDialog extends JDialog
   }
 
   private void adjustLocation() {
-    Rectangle bounds = getVirtualBounds();
+    Rectangle bounds = this.getVirtualBounds();
     int x = this.getX();
     int y = this.getY();
     final int width = this.getWidth();
@@ -447,17 +452,32 @@ public abstract class SGDialog extends JDialog
   }
 
   /**
-   * Sets virtual bounds.
+   * Returns the virtual bounds of the screen devices.
    *
-   * @param rect a rectangle to set
+   * @return the virtual bounds
    */
-  public static void setVirtualBounds(Rectangle rect) {
-    virtualBounds = rect;
+  public Rectangle getVirtualBounds() {
+    return this.mVirtualBounds;
   }
 
-  /** Returns the virtual bounds. */
-  public static Rectangle getVirtualBounds() {
-    return virtualBounds;
+  /**
+   * Calculates the virtual bounds that spans all of the screen devices.
+   *
+   * @return the virtual bounds
+   */
+  private Rectangle calcVirtualBounds() {
+    Rectangle bounds = null;
+    final GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    for (GraphicsDevice device : env.getScreenDevices()) {
+      for (GraphicsConfiguration config : device.getConfigurations()) {
+        Rectangle boundsOfConfig = config.getBounds();
+        bounds = (bounds == null) ? boundsOfConfig : bounds.union(boundsOfConfig);
+      }
+    }
+    if (bounds == null) {
+      bounds = new Rectangle(FALLBACK_VIRTUAL_BOUNDS);
+    }
+    return bounds;
   }
 
   /** Returns a list of color selection buttons. */

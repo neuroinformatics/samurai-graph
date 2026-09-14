@@ -392,10 +392,6 @@ class SGMainFunctions implements ActionListener, WindowListener {
       // gets virtual bounds
       Rectangle[] virtualBoundsArray = SGApplicationUtility.getVirtualBoundsArray();
 
-      // sets to the dialog
-      Rectangle virtualBounds = SGApplicationUtility.getVirtualBounds(virtualBoundsArray);
-      SGDialog.setVirtualBounds(virtualBounds);
-
       // sets virtual bounds to the main function
       Rectangle leftTopBounds = null;
       int rectX = Integer.MAX_VALUE;

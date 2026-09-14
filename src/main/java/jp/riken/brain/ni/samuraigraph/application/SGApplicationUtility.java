@@ -855,19 +855,6 @@ public class SGApplicationUtility {
   }
 
   /**
-   * Returns the bounds of virtual devices.
-   *
-   * @return the bounds of virtual devices
-   */
-  public static Rectangle getVirtualBounds(Rectangle[] rectArray) {
-    Rectangle virtualBounds = new Rectangle();
-    for (int ii = 0; ii < rectArray.length; ii++) {
-      virtualBounds = virtualBounds.union(rectArray[ii]);
-    }
-    return virtualBounds;
-  }
-
-  /**
    * Creates an instance of data object from given class object.
    *
    * @param cl the class object
