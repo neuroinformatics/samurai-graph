@@ -469,7 +469,9 @@ public class SGArrowUtility {
       endPoint.setValues(Float.NaN, Float.NaN);
     } else {
       if (polar) {
-        final double magnitude = sValue;
+        // in polar coordinates the first value is the magnitude
+        // and the second value is the angle in radians
+        final double magnitude = fValue;
         if (magnitude < 0.0) {
           endPoint.setValues(Float.NaN, Float.NaN);
         } else if (magnitude == 0.0) {
