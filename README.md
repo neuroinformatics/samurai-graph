@@ -23,7 +23,8 @@ for visualizing experimental data from various file formats.
   - **Linux:** `libnetcdf-dev` (Debian/Ubuntu), `netcdf` (Fedora/RHEL)
   - **macOS:** `netcdf-c` via Homebrew (`brew install netcdf-c`)
   - **Windows:** NetCDF-C redistributable must be installed and on `PATH`
-  - Without it, only NetCDF3 files are supported.
+  - Without it, only NetCDF3 files are supported; NetCDF4 files fail
+    to open and are treated as text files (a warning is logged).
 
 ## Installation
 
