@@ -5,20 +5,20 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage
 
-Actual JaCoCo measurement (line coverage) is **15.1%** overall.
+Actual JaCoCo measurement (instruction coverage) is **16.4%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
-| `com.github...lib.mdarray` | 97.8% | 4 | Pure logic, well covered |
-| `org.freehep...util.export` | 89.7% | 1 | Vendored replacement class |
-| `jp...samuraigraph.export` | 80.0% | 1 | Few instructions |
-| `com.github...lib.hdf5` | 33.5% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 27.9% | 21 | Pure-logic parts plus the window property I/O round-trip tests |
-| `jp...samuraigraph.data` | 29.9% | 50 | Largest application package; all core utilities covered |
+| `com.github...lib.mdarray` | 97.4% | 4 | Pure logic, well covered |
+| `org.freehep...util.export` | 86.8% | 1 | Vendored replacement class |
+| `jp...samuraigraph.export` | 68.2% | 1 | Few instructions |
+| `com.github...lib.hdf5` | 27.2% | 5 | Round-trip tests read/write real HDF5 |
+| `jp...samuraigraph.base` | 30.1% | 22 | Pure-logic parts plus the window property I/O round-trip tests |
+| `jp...samuraigraph.data` | 30.9% | 50 | Largest application package; all core utilities covered |
 | `jp...samuraigraph.application` | 3.4% | 5 | Data setup dialog construction smoke tests |
-| `jp...samuraigraph.figure` | 5.6% | 10 | Legend, axis, grid, graph, string, axis-break, significant-difference and timing-line round-trip tests |
+| `jp...samuraigraph.figure` | 6.3% | 12 | Legend, axis, grid, graph, string, shape, axis-break, significant-difference and timing-line round-trip tests |
 
-- 97 test files / 1137 test executions against 622 main files / 276k LOC
+- 100 test files / 1155 test executions against 620 main files
 - Per-class coverage of the data-layer utilities now reaches 60% or
   more: column info 92%, stride 81%, range 81%, misc 76%, merge 66%,
   data type 66%, buffer 62%, viewer 60%, file 60%, text 80%, column
@@ -27,8 +27,8 @@ Actual JaCoCo measurement (line coverage) is **15.1%** overall.
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes; the
   property round-trip pattern works headlessly for the legend, axis,
-  grid, string, axis-break, significant-difference and timing-line
-  elements
+  grid, string, shape, axis-break, significant-difference and
+  timing-line elements
 
 ## 2. Legacy Idioms
 
