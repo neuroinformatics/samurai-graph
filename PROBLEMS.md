@@ -5,36 +5,38 @@ Items are ordered by priority.
 
 ## 1. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **19.3%**.
+The overall instruction coverage measured by JaCoCo is **19.6%**.
 
 | Package | Coverage | Test files |
 |---------|----------|-----------|
 | `com.github...lib.mdarray` | 97.4% | 4 |
 | `jp...samuraigraph.export` | 68.2% | 1 |
-| `com.github...lib.hdf5` | 27.8% | 5 |
-| `jp...samuraigraph.base` | 31.4% | 23 |
-| `jp...samuraigraph.data` | 31.4% | 50 |
-| `jp...samuraigraph.figure` | 12.0% | 26 |
-| `jp...samuraigraph.application` | 4.5% | 10 |
+| `com.github...lib.hdf5` | 35.3% | 5 |
+| `jp...samuraigraph.base` | 31.5% | 23 |
+| `jp...samuraigraph.data` | 32.0% | 50 |
+| `jp...samuraigraph.figure` | 12.0% | 27 |
+| `jp...samuraigraph.application` | 4.6% | 12 |
 
-- 118 test files / 1281 test executions against 624 main files
+- 121 test files / 1292 test executions against 624 main files
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes
 - Headful tests (window / dialog construction) require a running X
   server; on display-less machines run them under a virtual X server
   (see the Testing section of AGENTS.md)
-- Not covered: data-coupled group classes in `figure`
-  (`SGElementGroupErrorBarForData`, `SGElementGroupTickLabelForData`
-  and friends) and the dialog or window level classes beyond the
-  headful smoke tests
+- Not covered: the in-graph group set classes in `figure`
+  (`SGElementGroupLineInGraph`, `SGElementGroupSymbolInGraph` and
+  friends) and the dialog or window level classes beyond the headful
+  smoke tests
 
 ## 2. Repository / Dependency Hygiene
 
 - **Vendored code in-tree** (license headers present in all files) is
   thin but carries maintenance risk:
   - `com.github...lib.hdf5` (30 files, ~1.7k LOC): a compatibility shim
-    over `io.jhdf` that must track the upstream API changes
+    over `io.jhdf` that must track the upstream API changes; reading
+    the freshly written files is limited to the dataset level since
+    the group enumeration of freshly written files is unreliable
   - `org.freehep...ExportFileTypeRegistry` (125 LOC): replacement for
     the original class that is deliberately excluded from the shaded
     JAR
@@ -49,10 +51,7 @@ The overall instruction coverage measured by JaCoCo is **19.3%**.
 ## Recommended Priority
 
 1. **Thicken tests**: keep extending the property round-trip pattern
-   and the pure-logic utility tests to more GUI classes. Remaining
-   candidates: data-coupled group classes in `figure`
-   (`SGElementGroupErrorBarForData`, `SGElementGroupTickLabelForData`)
-   and the dialog or window level classes beyond the headful smoke
-   tests
-2. **Track the vendored code**: keep the `io.jhdf` shim and the
-   freehep replacement in line with the upstream API changes
+   and the integration tests to more groups. The next candidate is
+   the in-graph integration path with real data in
+   `SGFigureElementGraph` covering `SGElementGroupSetInGraphSXY` and
+   the line, symbol and bar group implementations in the graph
