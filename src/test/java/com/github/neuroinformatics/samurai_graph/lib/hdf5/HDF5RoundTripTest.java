@@ -1,9 +1,8 @@
 package com.github.neuroinformatics.samurai_graph.lib.hdf5;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDArray;
-import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDIntArray;
 import java.io.File;
 import java.nio.file.Files;
@@ -21,47 +20,57 @@ class HDF5RoundTripTest {
   }
 
   @Test
-  void writeAndReadBackDoubleArray() throws Exception {
-    File file = createTempHdf5File();
+  void attributesRoundTripAcrossTypes() throws Exception {
+    File file = this.createTempHdf5File();
     try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
-      writer.writeDoubleArray("values", new double[] {1.5, 2.5, 3.5});
+      writer.float32().setAttr("/", "weight", 2.25f);
+      writer.bool().setAttr("/", "enabled", true);
+      writer.string().setAttr("/", "name", "dataset");
+      writer.string().setArrayAttr("/", "tags", new String[] {"a", "b"});
+      writer.int32().setAttr("/", "count", 7);
+      writer.float32().setArrayAttr("/", "weights", new float[] {1.0f, 2.5f});
     }
     try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
-      MDDoubleArray values = reader.float64().readMDArray("values");
-      assertEquals(3, values.size());
-      assertEquals(1.5, values.get(0), 0.0);
-      assertEquals(3.5, values.get(2), 0.0);
-      HDF5DataSetInformation info = reader.getDataSetInformation("values");
-      assertEquals(HDF5DataClass.FLOAT, info.getTypeInformation().getDataClass());
-      assertEquals(1, info.getRank());
-      assertEquals(3, info.getDimensions()[0]);
+      assertEquals(2.25f, reader.float32().getAttr("/", "weight"), 0.0f);
+      assertTrue(reader.bool().getAttr("/", "enabled"));
+      assertEquals("dataset", reader.string().getAttr("/", "name"));
+      String[] tags = reader.string().getArrayAttr("/", "tags");
+      assertEquals("a", tags[0]);
+      assertEquals("b", tags[1]);
+      assertEquals(7, reader.int32().getAttr("/", "count"));
+      float[] weights = reader.float32().getArrayAttr("/", "weights");
+      assertEquals(2, weights.length);
     }
   }
 
   @Test
-  void writeAndReadBackIntArray() throws Exception {
-    File file = createTempHdf5File();
+  void intArrayAttrRoundTrip() throws Exception {
+    File file = this.createTempHdf5File();
     try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
-      writer.writeIntArray("counts", new int[] {10, 20});
+      writer.int32().setArrayAttr("/", "ids", new int[] {3, 5, 7});
     }
     try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
-      MDIntArray counts = reader.int32().readMDArray("counts");
-      assertEquals(2, counts.size());
-      assertEquals(10, counts.get(new int[] {0}));
-      assertEquals(20, counts.get(new int[] {1}));
+      int[] ids = reader.int32().getArrayAttr("/", "ids");
+      assertEquals(3, ids.length);
+      assertEquals(5, ids[1]);
+      assertEquals(7, ids[2]);
     }
   }
 
   @Test
-  void writeAndReadBackStringArray() throws Exception {
-    File file = createTempHdf5File();
+  void matrixRoundTripThroughPaths() throws Exception {
+    File file = this.createTempHdf5File();
     try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
-      writer.writeStringArray("names", new String[] {"x", "y"});
+      writer.object().createGroup("/sub");
+      writer.writeIntMatrix("matrix", new int[][] {{1, 2}, {3, 4}});
     }
     try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
-      MDArray<String> names = reader.string().readMDArray("names");
-      assertEquals(2, names.size());
-      assertEquals("x", names.get(new int[] {0}));
+      MDIntArray matrix = reader.int32().readMDArray("matrix");
+      assertEquals(4, matrix.size());
+      HDF5DataSetInformation info = reader.getDataSetInformation("matrix");
+      assertEquals(2, info.getRank());
+      assertEquals(2, info.getDimensions()[0]);
+      assertEquals(2, info.getDimensions()[1]);
     }
   }
 }
