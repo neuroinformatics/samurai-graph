@@ -128,9 +128,8 @@ public class SGPaintUtility {
         if (null != transparent) {
           paint.setTransparency(transparent.intValue());
         }
-        if (!paint.setColor(fillColor)) {
-          return paint;
-        }
+        paint.setColor(fillColor);
+        return paint;
       } else if (null != patternType) {
         SGPatternPaint paint = new SGPatternPaint();
         if (null != transparent) {
