@@ -56,4 +56,60 @@ class SGFigureElementShapePropertyIOTest {
     SGFigureElementShape element = this.createElement();
     assertFalse(element.setProperties(new SGProperties() {}));
   }
+
+  @Test
+  void mementoRoundTripPreservesArrowShape() {
+    SGFigureElementShape element = this.createElement();
+    assertTrue(element.addShape(SGIFigureElementShape.ARROW, 15.0f, 25.0f));
+    assertEquals(1, element.getVisibleChildList().size());
+
+    SGProperties p = element.getProperties();
+    assertNotNull(p);
+
+    SGFigureElementShape restored = new SGFigureElementShape();
+    restored.setAxisElement(new SGFigureElementAxis());
+    assertTrue(restored.setGraphRect(0.0f, 0.0f, 100.0f, 100.0f));
+    assertTrue(restored.setProperties(p));
+    assertEquals(1, restored.getVisibleChildList().size());
+    Object restoredShape = restored.getVisibleChildList().get(0);
+    assertNotNull(restoredShape);
+    assertEquals(element.getVisibleChildList().get(0).getClass(), restoredShape.getClass());
+  }
+
+  @Test
+  void mementoRoundTripPreservesLineShape() {
+    SGFigureElementShape element = this.createElement();
+    assertTrue(element.addShape(SGIFigureElementShape.LINE, 20.0f, 30.0f));
+    assertEquals(1, element.getVisibleChildList().size());
+
+    SGProperties p = element.getProperties();
+    assertNotNull(p);
+
+    SGFigureElementShape restored = new SGFigureElementShape();
+    restored.setAxisElement(new SGFigureElementAxis());
+    assertTrue(restored.setGraphRect(0.0f, 0.0f, 100.0f, 100.0f));
+    assertTrue(restored.setProperties(p));
+    assertEquals(1, restored.getVisibleChildList().size());
+    assertNotNull(restored.getVisibleChildList().get(0));
+    assertEquals(
+        element.getVisibleChildList().get(0).getClass(),
+        restored.getVisibleChildList().get(0).getClass());
+  }
+
+  @Test
+  void mementoRoundTripPreservesEllipseShape() {
+    SGFigureElementShape element = this.createElement();
+    assertTrue(element.addShape(SGIFigureElementShape.ELLIPSE, 35.0f, 45.0f));
+    assertEquals(1, element.getVisibleChildList().size());
+
+    SGProperties p = element.getProperties();
+    assertNotNull(p);
+
+    SGFigureElementShape restored = new SGFigureElementShape();
+    restored.setAxisElement(new SGFigureElementAxis());
+    assertTrue(restored.setGraphRect(0.0f, 0.0f, 100.0f, 100.0f));
+    assertTrue(restored.setProperties(p));
+    assertEquals(1, restored.getVisibleChildList().size());
+    assertNotNull(restored.getVisibleChildList().get(0));
+  }
 }
