@@ -74,12 +74,11 @@ Actual JaCoCo measurement (instruction coverage) is **17.1%** overall.
 
 ## 3. Repository / Dependency Hygiene
 
-- `dependency-reduced-pom.xml` (maven-shade-plugin output) is in `.gitignore`
-  and untracked, but it is regenerated at the repository root by every
-  `package` build. It cannot simply be redirected into `target/`: the shade
-  plugin replaces the project POM with the reduced POM, which breaks the
-  jpackage assembly (its `${project.basedir}` resolves to `target/`), so the
-  file has to stay at the root as long as the assembly is bound to `package`.
+- **`dependency-reduced-pom.xml` resolved**: the shade plugin no longer
+  replaces the project POM (`createDependencyReducedPom=false`), so the
+  generated file no longer appears at the repository root; this was a
+  prerequisite for the jpackage assembly to resolve `${project.basedir}`
+  at the repo root.
 - **Vendored code in-tree**:
   - `com.github...lib.hdf5` (30 files, ~1.7k LOC): a compatibility shim over
     `io.jhdf`
