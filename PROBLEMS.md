@@ -56,10 +56,12 @@ Actual JaCoCo measurement (instruction coverage) is **16.4%** overall.
   duplicated in `SGDrawingWindow`, `SGDataViewerDialog` and
   `SGDataPopupMenu` were consolidated into a single
   `SGDataPluginHolder`. `SGUserProperties.mInstance` is now `final`.
-  `SGDialog.virtualBounds` is still a static mutable `Rectangle`
-  (screen bounds computed once at startup). The server adapter,
+  `SGDialog.virtualBounds` was moved into an instance `final` field
+  computed from the screen devices at construction. The server adapter,
   look-and-feel and main-function references were moved to instance
-  state.
+  state. All known static mutable state has been resolved; remaining
+  optional item is the typed constants migration for the marker
+  interfaces.
 
 ## 3. Repository / Dependency Hygiene
 
@@ -85,7 +87,7 @@ Actual JaCoCo measurement (instruction coverage) is **16.4%** overall.
 1. **Thicken tests (top priority)**: the pure-logic `data` / `base` /
    `mdarray` layers are covered; keep extending the property
    round-trip pattern to more GUI classes
-2. **Replace legacy idioms**: the remaining items are the typed
-   constants migration for the marker interfaces (if desired) and moving
-   the remaining static mutable state (`SGDialog.virtualBounds`) into
-   instance or immutable holders
+2. **Replace legacy idioms**: completed — the static mutable state
+   (`SGDialog.virtualBounds`) was moved into an immutable instance
+   field. The optional remaining item is the typed constants migration
+   for the marker interfaces
