@@ -1,11 +1,11 @@
 # Known Problems
 
-Findings from a project-wide review of Samurai Graph (as of 2026-09-13, v2.2.0).
+Findings from a project-wide review of Samurai Graph (as of 2026-09-14, v2.2.0).
 Items are ordered by priority.
 
 ## 1. Low Test Coverage
 
-Actual JaCoCo measurement (instruction coverage) is **16.4%** overall.
+Actual JaCoCo measurement (instruction coverage) is **17.1%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
@@ -13,12 +13,21 @@ Actual JaCoCo measurement (instruction coverage) is **16.4%** overall.
 | `org.freehep...util.export` | 86.8% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 68.2% | 1 | Few instructions |
 | `com.github...lib.hdf5` | 27.2% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 30.1% | 22 | Pure-logic parts plus the window property I/O round-trip tests |
+| `jp...samuraigraph.base` | 31.0% | 23 | Pure-logic parts, the window property I/O round-trip tests and dialog virtual-bounds tests |
 | `jp...samuraigraph.data` | 30.9% | 50 | Largest application package; all core utilities covered |
-| `jp...samuraigraph.application` | 3.4% | 5 | Data setup dialog construction smoke tests |
-| `jp...samuraigraph.figure` | 6.3% | 12 | Legend, axis, grid, graph, string, shape, axis-break, significant-difference and timing-line round-trip tests |
+| `jp...samuraigraph.application` | 3.9% | 7 | Data setup dialog construction smoke tests plus archive extraction and file path handling |
+| `jp...samuraigraph.figure` | 7.4% | 17 | Legend, axis, axis scaling, grid, graph, string, shape, axis-break, significant-difference and timing-line round-trip tests plus paint and arrow geometry utilities |
 
-- 100 test files / 1155 test executions against 620 main files
+- 104 test files / 1194 test executions against 620 main files
+- New since 2026-09-13: paint XML round trip 95%, archive extractor
+  76%, file handler 53%, arrow geometry utility 27%, axis scale 13%
+- The tests caught two latent bugs that were fixed along the way:
+  the fill paint branch in `SGPaintUtility.readProperty` never
+  returned a paint (inverted condition) and the single arrow end
+  location variant checked the angle instead of the magnitude for
+  polar vectors
+- Figure round trips now cover all four shape types (rectangle,
+  ellipse, arrow, line) and the axis scale element
 - Per-class coverage of the data-layer utilities now reaches 60% or
   more: column info 92%, stride 81%, range 81%, misc 76%, merge 66%,
   data type 66%, buffer 62%, viewer 60%, file 60%, text 80%, column
@@ -86,7 +95,9 @@ Actual JaCoCo measurement (instruction coverage) is **16.4%** overall.
 
 1. **Thicken tests (top priority)**: the pure-logic `data` / `base` /
    `mdarray` layers are covered; keep extending the property
-   round-trip pattern to more GUI classes
+   round-trip pattern to more GUI classes. Next candidates: the
+   console runner and data dialog utilities in `application`, and the
+   element group / legend model classes in `figure`
 2. **Replace legacy idioms**: completed — the static mutable state
    (`SGDialog.virtualBounds`) was moved into an immutable instance
    field. The optional remaining item is the typed constants migration
