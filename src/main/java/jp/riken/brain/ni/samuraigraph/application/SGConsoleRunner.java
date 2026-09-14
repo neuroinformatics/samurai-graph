@@ -12,8 +12,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Reads commands from input streams, executes them through the main class and writes the status to
- * the output stream.
+ * Reads commands from input streams, executes them through the command executor and writes the
+ * status to the output stream.
  */
 final class SGConsoleRunner {
 
@@ -46,13 +46,13 @@ final class SGConsoleRunner {
   // a flag whether the current position is in a block comment
   private boolean mBlockComment = false;
 
-  private final SGMainFunctions mMain;
+  private final SGConsoleCommandExecutor mMain;
 
   private BufferedReader mStdinReader = null;
 
   private BufferedWriter mStdoutWriter = null;
 
-  SGConsoleRunner(SGMainFunctions main) {
+  SGConsoleRunner(SGConsoleCommandExecutor main) {
     this.mMain = main;
   }
 

@@ -151,7 +151,7 @@ import ucar.nc2.NetcdfFile;
 import ucar.nc2.NetcdfFileWriter;
 
 /** The main thread. */
-class SGMainFunctions implements ActionListener, WindowListener {
+class SGMainFunctions implements ActionListener, WindowListener, SGConsoleCommandExecutor {
 
   private static final Logger logger = LogManager.getLogger(SGMainFunctions.class);
 
@@ -646,7 +646,7 @@ class SGMainFunctions implements ActionListener, WindowListener {
   }
 
   // Checks whether a modal dialog is shown.
-  boolean isDialogOpen() {
+  public boolean isDialogOpen() {
     List<SGDrawingWindow> wndList = this.mWindowManager.getWindowList();
     for (SGDrawingWindow wnd : wndList) {
       if (wnd.isModalDialogShown()) {
@@ -657,7 +657,7 @@ class SGMainFunctions implements ActionListener, WindowListener {
   }
 
   // Checks whether a text field is shown.
-  boolean closeTextField() {
+  public boolean closeTextField() {
     List<SGDrawingWindow> wndList = this.mWindowManager.getWindowList();
     for (SGDrawingWindow wnd : wndList) {
       if (wnd.closeTextField() == false) {
