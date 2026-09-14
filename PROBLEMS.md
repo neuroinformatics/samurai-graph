@@ -3,9 +3,9 @@
 Findings from a project-wide review of Samurai Graph (as of 2026-09-14, v2.2.0).
 Items are ordered by priority.
 
-## 1. Low Test Coverage
+## 1. Test Coverage
 
-Actual JaCoCo measurement (instruction coverage) is **17.5%** overall.
+Actual JaCoCo measurement (instruction coverage) is **18.6%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
@@ -13,21 +13,21 @@ Actual JaCoCo measurement (instruction coverage) is **17.5%** overall.
 | `org.freehep...util.export` | 86.8% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 68.2% | 1 | Few instructions |
 | `com.github...lib.hdf5` | 27.8% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 31.3% | 23 | Pure-logic parts, the window property I/O round-trip tests and dialog virtual-bounds tests |
-| `jp...samuraigraph.data` | 30.9% | 50 | Largest application package; all core utilities covered |
-| `jp...samuraigraph.application` | 4.5% | 10 | Dialog construction smoke tests plus the console runner, archive extraction and file path handling |
-| `jp...samuraigraph.figure` | 8.1% | 21 | Legend, axis, axis scaling, grid, graph, string, shape, axis-break, significant-difference and timing-line round-trip tests plus paint, arrow geometry, element group, string modifier and static geometry utilities |
+| `jp...samuraigraph.base` | 31.3% | 24 | Pure-logic parts, the window property I/O round-trip tests and dialog virtual-bounds tests |
+| `jp...samuraigraph.data` | 31.0% | 50 | Largest application package; all core utilities covered |
+| `jp...samuraigraph.application` | 4.5% | 12 | Dialog construction smoke tests plus the console command loop, archive extraction and file path handling |
+| `jp...samuraigraph.figure` | 10.6% | 25 | Legend, axis, axis scaling, grid, graph, string, shape, axis-break, significant-difference and timing-line round-trip tests plus paint, arrow geometry, line and symbol element groups, legend group sets and static geometry utilities |
 
-- 110 test files / 1239 test executions against 624 main files
+- 113 test files / 1263 test executions against 624 main files
 - Per-class coverage of the data-layer utilities reaches 60% or more:
   column info 92%, stride 81%, range 81%, misc 76%, merge 66%, data
   type 66%, buffer 62%, viewer 60%, file 60%, text 80%, column title
   75%
-- Covered pure-logic utilities in `figure` / `application`: string
-  brace modifier 100%, paint XML round trip 95%, line style 95%,
-  console runner 83%, element group base 71%, archive extractor 76%,
-  arrow geometry utility 27%, axis scale 13%, file handler 53%,
-  static geometry utilities 29%, error bar helpers 31%
+- Covered utilities in `figure` / `application`: string brace modifier
+  100%, line style 95%, paint XML round trip 95%, console runner 83%,
+  archive extractor 76%, element group base 71%, file handler 53%,
+  symbol group base 40%, error bar helpers 31%, static geometry
+  utilities 29%, dialog virtual bounds 29%, axis scale 13%
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes; the
@@ -42,9 +42,10 @@ Actual JaCoCo measurement (instruction coverage) is **17.5%** overall.
 
 - **Constants**: all constant values live in `SG*Constants` final
   classes with private constructors and `public static final` fields.
-  The empty marker interfaces (`SGIRootObject`, `SGIIndex`,
-  `SGIWindowDialogObserver`) remain as interfaces since they are used
-  as marker types; migrating them to typed constants is optional.
+  Three interfaces (`SGIRootObject`, `SGIIndex`,
+  `SGIWindowDialogObserver`) are interfaces by design: they are used
+  as types in method signatures and class hierarchies, not as
+  constant bags, and contain no constants.
 - **Threads**: no class extends `Thread`; long-running work runs as
   `Runnable` tasks on executor services, and background tasks submit
   to shared daemon executors.
@@ -69,11 +70,8 @@ Actual JaCoCo measurement (instruction coverage) is **17.5%** overall.
 
 ## Recommended Priority
 
-1. **Thicken tests (top priority)**: keep extending the property
-   round-trip pattern and the pure-logic utility tests to more GUI
-   classes. Next candidates: the data dialog utilities in
-   `application` and the data-coupled element group classes
-   (`SGDrawingElementErrorBar`, `SGElementGroupBar` and the legend
-   group set models) in `figure`
-2. **Optional legacy polish**: the typed constants migration for the
-   three remaining marker interfaces
+1. **Thicken tests**: keep extending the property round-trip pattern
+   and the pure-logic utility tests to more GUI classes. Next
+   candidates: the data dialog utilities in `application` and the
+   data-coupled element group classes (`SGElementGroupBar` and the
+   remaining legend group set models) in `figure`
