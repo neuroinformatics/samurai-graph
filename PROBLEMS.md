@@ -79,12 +79,12 @@ Actual JaCoCo measurement (instruction coverage) is **17.1%** overall.
   generated file no longer appears at the repository root; this was a
   prerequisite for the jpackage assembly to resolve `${project.basedir}`
   at the repo root.
-- **Vendored code in-tree**:
+- **Vendored code in-tree** (license headers now present in all files):
   - `com.github...lib.hdf5` (30 files, ~1.7k LOC): a compatibility shim over
     `io.jhdf`
   - `org.freehep...ExportFileTypeRegistry` (125 LOC): replacement for the
     original that is deliberately excluded from the shaded JAR
-  - Both are thin, but they carry maintenance and licensing-management risk.
+  - Both are thin, but they carry maintenance risk.
 - **Implicit external dependency**: reading NetCDF4 requires the system
   netcdf-c library (`cdm-core` / `netcdf4` 5.10.0 as runtime deps). Without
   it, only NetCDF3 files can be read. This is documented in the README, but
