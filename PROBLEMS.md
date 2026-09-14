@@ -5,7 +5,7 @@ Items are ordered by priority.
 
 ## 1. Low Test Coverage
 
-Actual JaCoCo measurement (instruction coverage) is **17.3%** overall.
+Actual JaCoCo measurement (instruction coverage) is **17.5%** overall.
 
 | Package | Coverage | Test files | Notes |
 |---------|----------|-----------|-------|
@@ -13,12 +13,12 @@ Actual JaCoCo measurement (instruction coverage) is **17.3%** overall.
 | `org.freehep...util.export` | 86.8% | 1 | Vendored replacement class |
 | `jp...samuraigraph.export` | 68.2% | 1 | Few instructions |
 | `com.github...lib.hdf5` | 27.8% | 5 | Round-trip tests read/write real HDF5 |
-| `jp...samuraigraph.base` | 31.1% | 23 | Pure-logic parts, the window property I/O round-trip tests and dialog virtual-bounds tests |
+| `jp...samuraigraph.base` | 31.3% | 23 | Pure-logic parts, the window property I/O round-trip tests and dialog virtual-bounds tests |
 | `jp...samuraigraph.data` | 30.9% | 50 | Largest application package; all core utilities covered |
 | `jp...samuraigraph.application` | 4.5% | 10 | Dialog construction smoke tests plus the console runner, archive extraction and file path handling |
-| `jp...samuraigraph.figure` | 7.8% | 20 | Legend, axis, axis scaling, grid, graph, string, shape, axis-break, significant-difference and timing-line round-trip tests plus paint, arrow geometry, element group and string modifier utilities |
+| `jp...samuraigraph.figure` | 8.1% | 21 | Legend, axis, axis scaling, grid, graph, string, shape, axis-break, significant-difference and timing-line round-trip tests plus paint, arrow geometry, element group, string modifier and static geometry utilities |
 
-- 108 test files / 1223 test executions against 624 main files
+- 110 test files / 1239 test executions against 624 main files
 - Per-class coverage of the data-layer utilities reaches 60% or more:
   column info 92%, stride 81%, range 81%, misc 76%, merge 66%, data
   type 66%, buffer 62%, viewer 60%, file 60%, text 80%, column title
@@ -26,7 +26,8 @@ Actual JaCoCo measurement (instruction coverage) is **17.3%** overall.
 - Covered pure-logic utilities in `figure` / `application`: string
   brace modifier 100%, paint XML round trip 95%, line style 95%,
   console runner 83%, element group base 71%, archive extractor 76%,
-  arrow geometry utility 27%, axis scale 13%, file handler 53%
+  arrow geometry utility 27%, axis scale 13%, file handler 53%,
+  static geometry utilities 29%, error bar helpers 31%
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes; the
