@@ -3043,10 +3043,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    *
    * @return preferred column type for data viewer
    */
-  @Override
-  public String getPreferredDataViewColumnType() {
-    return SGDataViewerUtility.getPreferredDataViewColumnType(this);
-  }
 
   /**
    * Returns whether the index is available.
@@ -3104,20 +3100,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       }
     }
     return num;
-  }
-
-  @Override
-  public int getDataViewerRowNumber(final String columnType, final boolean all) {
-    if (all) {
-      return this.getAllPointsNumber();
-    } else {
-      return this.getPointsNumber();
-    }
-  }
-
-  @Override
-  public SGIntegerSeriesSet getDataViewerColStride(String columnType) {
-    return new SGIntegerSeriesSet(0, this.getChildNumber() - 1, 1);
   }
 
   @Override

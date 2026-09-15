@@ -2702,11 +2702,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
    * @return preferred column type for data viewer
    */
   @Override
-  public String getPreferredDataViewColumnType() {
-    return SGDataViewerUtility.getPreferredDataViewColumnType(this);
-  }
-
-  @Override
   public double getXValueAt(final int childIndex, final int arrayIndex) {
     SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
     double[] values = sxyArray[childIndex].getXValueArray(false);
@@ -2725,20 +2720,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
   @Override
   public int getDataViewerColumnNumber(final String columnType, final boolean all) {
     return SGDataViewerUtility.getDataViewerColumnNumber(this, columnType);
-  }
-
-  @Override
-  public int getDataViewerRowNumber(final String columnType, final boolean all) {
-    if (all) {
-      return this.getAllPointsNumber();
-    } else {
-      return this.getPointsNumber();
-    }
-  }
-
-  @Override
-  public SGIntegerSeriesSet getDataViewerColStride(String columnType) {
-    return new SGIntegerSeriesSet(0, this.getChildNumber() - 1, 1);
   }
 
   @Override

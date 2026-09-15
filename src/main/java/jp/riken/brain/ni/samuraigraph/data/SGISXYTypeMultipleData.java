@@ -3,6 +3,7 @@ package jp.riken.brain.ni.samuraigraph.data;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
+import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 
 /** An interface for multiple Scalar-type XY data. */
 public interface SGISXYTypeMultipleData extends SGISXYTypeData {
@@ -175,5 +176,24 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
   /** Returns the edited value for the data viewer. */
   public default Double getDataViewerValue(final String columnType, final int row, final int col) {
     return SGDataViewerUtility.getDataViewerValue(this, columnType, row, col);
+  }
+
+  /** Returns the preferred column type for the data view. */
+  public default String getPreferredDataViewColumnType() {
+    return SGDataViewerUtility.getPreferredDataViewColumnType(this);
+  }
+
+  /** Returns the number of rows for the data viewer. */
+  public default int getDataViewerRowNumber(String columnType, final boolean all) {
+    if (all) {
+      return this.getAllPointsNumber();
+    } else {
+      return this.getPointsNumber();
+    }
+  }
+
+  /** Returns the column stride of data viewer. */
+  public default SGIntegerSeriesSet getDataViewerColStride(String columnType) {
+    return new SGIntegerSeriesSet(0, this.getChildNumber() - 1, 1);
   }
 }
