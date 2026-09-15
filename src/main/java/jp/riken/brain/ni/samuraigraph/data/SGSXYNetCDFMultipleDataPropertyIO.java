@@ -103,8 +103,8 @@ class SGSXYNetCDFMultipleDataPropertyIO {
       data.updateIsSingleVariableDateFlag();
     }
 
-    data.mDecimalPlaces = sp.mDecimalPlaces;
-    data.mExponent = sp.mExponent;
+    data.setDecimalPlaces(sp.mDecimalPlaces);
+    data.setExponent(sp.mExponent);
     data.setPickUpProperties(sp);
     data.setStride(sp.mStride);
     data.setTickLabelStride(sp.mTickLabelStride);
@@ -187,8 +187,8 @@ class SGSXYNetCDFMultipleDataPropertyIO {
       sp.thNames = thNames;
     }
 
-    sp.mDecimalPlaces = data.mDecimalPlaces;
-    sp.mExponent = data.mExponent;
+    sp.mDecimalPlaces = data.getDecimalPlaces();
+    sp.mExponent = data.getExponent();
     sp.mPickUpInfo = (SGNetCDFPickUpDimensionInfo) data.getPickUpDimensionInfo();
     sp.mStride = data.getStride();
     sp.mTickLabelStride = data.getTickLabelStride();

@@ -79,20 +79,14 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   /** The information for picked up dimension. */
   protected SGMDArrayPickUpDimensionInfo mPickUpDimensionInfo = null;
 
-  /** The decimal places for the tick labels. */
-  protected int mDecimalPlaces = 0;
-
-  /** The exponent for the tick labels. */
-  protected int mExponent = 0;
-
   /** The stride of array. */
   protected SGIntegerSeriesSet mStride = null;
 
   /** The stride for the tick labels. */
   protected SGIntegerSeriesSet mTickLabelStride = null;
 
-  /** The shift value. */
-  private SGTuple2d mShift = new SGTuple2d();
+  /** The number format state. */
+  private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
   /** The default constructor. */
   public SGSXYMDArrayMultipleData() {
@@ -655,7 +649,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     super.dispose();
     this.mStride = null;
     this.mTickLabelStride = null;
-    this.mShift = null;
+    this.mFormat.dispose();
   }
 
   /**
@@ -665,10 +659,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    */
   @Override
   public void setDecimalPlaces(int dp) {
-    if (dp < 0) {
-      throw new IllegalArgumentException("Decimal places must not be negative: " + dp);
-    }
-    this.mDecimalPlaces = dp;
+    this.mFormat.setDecimalPlaces(dp);
   }
 
   /**
@@ -678,19 +669,19 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    */
   @Override
   public void setExponent(int exp) {
-    this.mExponent = exp;
+    this.mFormat.setExponent(exp);
   }
 
   /** Returns the decimal places for the tick labels. */
   @Override
   public int getDecimalPlaces() {
-    return this.mDecimalPlaces;
+    return this.mFormat.getDecimalPlaces();
   }
 
   /** Returns the exponent for tick labels. */
   @Override
   public int getExponent() {
-    return this.mExponent;
+    return this.mFormat.getExponent();
   }
 
   /** Returns the bounds of x-values. */
@@ -1071,8 +1062,8 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     sp.ehNames = ehNames;
     sp.tNames = tNames;
     sp.thNames = thNames;
-    sp.mDecimalPlaces = this.mDecimalPlaces;
-    sp.mExponent = this.mExponent;
+    sp.mDecimalPlaces = this.getDecimalPlaces();
+    sp.mExponent = this.getExponent();
     sp.mPickUpInfo = (SGMDArrayPickUpDimensionInfo) this.getPickUpDimensionInfo();
     sp.mStride = this.getStride();
     sp.mTickLabelStride = this.getTickLabelStride();
@@ -1153,8 +1144,8 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     this.mTickLabelVariables = tVars;
     this.mTickLabelHolderVariables = thVars;
 
-    this.mDecimalPlaces = sp.mDecimalPlaces;
-    this.mExponent = sp.mExponent;
+    this.setDecimalPlaces(sp.mDecimalPlaces);
+    this.setExponent(sp.mExponent);
     this.mPickUpDimensionInfo =
         (sp.mPickUpInfo != null) ? (SGMDArrayPickUpDimensionInfo) sp.mPickUpInfo.clone() : null;
     this.setStride(sp.mStride);
@@ -1392,10 +1383,10 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
           }
           data.setOrigin(varName, origins);
         }
-        data.setDecimalPlaces(this.mDecimalPlaces);
-        data.setExponent(this.mExponent);
+        data.setDecimalPlaces(this.getDecimalPlaces());
+        data.setExponent(this.getExponent());
         data.setTimeStride(this.mTimeStride);
-        data.setShift(this.mShift);
+        data.setShift(this.getShift());
 
         // sets the cache
         if (sxyCacheArray != null) {
@@ -1478,11 +1469,11 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
                 this.mStride,
                 this.mTickLabelStride,
                 this.isStrideAvailable());
-        data.setDecimalPlaces(this.mDecimalPlaces);
-        data.setExponent(this.mExponent);
+        data.setDecimalPlaces(this.getDecimalPlaces());
+        data.setExponent(this.getExponent());
         data.setTimeStride(this.mTimeStride);
         data.setOrigin(this.getOriginMap());
-        data.setShift(this.mShift);
+        data.setShift(this.getShift());
 
         // sets the cache
         if (sxyCacheArray != null) {
@@ -1679,7 +1670,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     this.mStride = mdData.getStride();
     this.mTickLabelStride = mdData.getTickLabelStride();
     this.updateDimensionIndices();
-    this.mShift = mdData.getShift();
+    this.setShift(mdData.getShift());
     return true;
   }
 
@@ -1772,7 +1763,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     data.mPickUpDimensionInfo = (SGMDArrayPickUpDimensionInfo) this.getPickUpDimensionInfo();
     data.mStride = this.getStride();
     data.mTickLabelStride = this.getTickLabelStride();
-    data.mShift = this.getShift();
+    data.setShift(this.getShift());
     return data;
   }
 
@@ -2542,7 +2533,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
   /** Returns the shift. */
   public SGTuple2d getShift() {
-    return (SGTuple2d) this.mShift.clone();
+    return this.mFormat.getShift();
   }
 
   /**
@@ -2551,10 +2542,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    * @param shift the shift to set
    */
   public void setShift(SGTuple2d shift) {
-    if (shift == null) {
-      throw new IllegalArgumentException("shift == null");
-    }
-    this.mShift = (SGTuple2d) shift.clone();
+    this.mFormat.setShift(shift);
   }
 
   /** Returns the list of child objects. */

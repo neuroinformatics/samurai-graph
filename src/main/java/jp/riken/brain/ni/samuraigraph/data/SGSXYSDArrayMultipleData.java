@@ -68,19 +68,13 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
   /** An array of column indices for tick label holders. */
   protected Integer[] mTickLabelHolderIndices = null;
 
-  /** The decimal places for the tick labels. */
-  protected int mDecimalPlaces = 0;
-
-  /** The exponent for the tick labels. */
-  protected int mExponent = 0;
-
   protected String mDateFormat = "";
 
   /** The stride for the tick labels. */
   protected SGIntegerSeriesSet mTickLabelStride = null;
 
-  /** The shift value. */
-  private SGTuple2d mShift = new SGTuple2d();
+  /** The number format state. */
+  private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
   /** Sampling rate. */
   private Double mSamplingRate = null;
@@ -409,10 +403,10 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
               this.mTickLabelStride,
               this.isStrideAvailable(),
               this.mSamplingRate);
-      data.setDecimalPlaces(this.mDecimalPlaces);
-      data.setExponent(this.mExponent);
+      data.setDecimalPlaces(this.getDecimalPlaces());
+      data.setExponent(this.getExponent());
       data.setDateFormat(this.mDateFormat);
-      data.setShift(this.mShift);
+      data.setShift(this.getShift());
 
       // sets the cache
       if (sxyCacheArray != null) {
@@ -494,7 +488,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       this.mTickLabelHolderIndices = SGUtility.copyIntegerArray(dataMulti.mTickLabelHolderIndices);
     }
     this.mTickLabelStride = dataMulti.getTickLabelStride();
-    this.mShift = dataMulti.getShift();
+    this.setShift(dataMulti.getShift());
     return true;
   }
 
@@ -523,7 +517,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       data.mTickLabelHolderIndices = SGUtility.copyIntegerArray(this.mTickLabelHolderIndices);
     }
     data.mTickLabelStride = this.getTickLabelStride();
-    data.mShift = this.getShift();
+    data.setShift(this.getShift());
     return data;
   }
 
@@ -540,7 +534,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     this.mTickLabelIndices = null;
     this.mTickLabelHolderIndices = null;
     this.mTickLabelStride = null;
-    this.mShift = null;
+    this.mFormat.dispose();
   }
 
   protected double[][] getValueArray(Integer[] indices, final boolean all) {
@@ -1600,12 +1594,12 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
 
   /** Returns the decimal places for the tick labels. */
   public int getDecimalPlaces() {
-    return this.mDecimalPlaces;
+    return this.mFormat.getDecimalPlaces();
   }
 
   /** Returns the exponent for tick labels. */
   public int getExponent() {
-    return this.mExponent;
+    return this.mFormat.getExponent();
   }
 
   /**
@@ -1617,7 +1611,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     if (dp < 0) {
       throw new IllegalArgumentException("Decimal places must not be negative: " + dp);
     }
-    this.mDecimalPlaces = dp;
+    this.mFormat.setDecimalPlaces(dp);
   }
 
   /**
@@ -1626,7 +1620,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
    * @param exp a value to set to the exponent
    */
   public void setExponent(final int exp) {
-    this.mExponent = exp;
+    this.mFormat.setExponent(exp);
   }
 
   /**
@@ -2219,7 +2213,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
 
   /** Returns the shift. */
   public SGTuple2d getShift() {
-    return (SGTuple2d) this.mShift.clone();
+    return this.mFormat.getShift();
   }
 
   /**
@@ -2228,10 +2222,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
    * @param shift the shift to set
    */
   public void setShift(SGTuple2d shift) {
-    if (shift == null) {
-      throw new IllegalArgumentException("shift == null");
-    }
-    this.mShift = (SGTuple2d) shift.clone();
+    this.mFormat.setShift(shift);
   }
 
   @Override

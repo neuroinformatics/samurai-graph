@@ -79,12 +79,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   /** Whether single variable is date. */
   protected boolean mIsSingleVariableDateFlag = false;
 
-  /** The decimal places for the tick labels. */
-  protected int mDecimalPlaces = 0;
-
-  /** The exponent for the tick labels. */
-  protected int mExponent = 0;
-
   protected String mDateFormat = "";
 
   /** The stride of array. */
@@ -99,8 +93,8 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   /** The information for picked up dimension. */
   protected SGNetCDFPickUpDimensionInfo mPickUpDimensionInfo = null;
 
-  /** The shift value. */
-  private SGTuple2d mShift = new SGTuple2d();
+  /** The number format state. */
+  private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
   /** The default constructor. */
   public SGSXYNetCDFMultipleData() {
@@ -801,10 +795,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * @param dp a value to set to the decimal places
    */
   public void setDecimalPlaces(int dp) {
-    if (dp < 0) {
-      throw new IllegalArgumentException("Decimal places must not be negative: " + dp);
-    }
-    this.mDecimalPlaces = dp;
+    this.mFormat.setDecimalPlaces(dp);
   }
 
   /**
@@ -813,17 +804,17 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * @param exp a value to set to the exponent
    */
   public void setExponent(int exp) {
-    this.mExponent = exp;
+    this.mFormat.setExponent(exp);
   }
 
   /** Returns the decimal places for the tick labels. */
   public int getDecimalPlaces() {
-    return this.mDecimalPlaces;
+    return this.mFormat.getDecimalPlaces();
   }
 
   /** Returns the exponent for tick labels. */
   public int getExponent() {
-    return this.mExponent;
+    return this.mFormat.getExponent();
   }
 
   protected SGNetCDFVariable getCoordinateVariable() {
@@ -885,7 +876,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     this.mPickUpDimensionInfo = null;
     this.mStride = null;
     this.mTickLabelStride = null;
-    this.mShift = null;
+    this.mFormat.dispose();
   }
 
   /** Returns the picked up dimension. */
@@ -1475,7 +1466,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
     this.setStride(nData.mStride);
     this.setTickLabelStride(nData.mTickLabelStride);
-    this.mShift = nData.getShift();
+    this.setShift(nData.getShift());
     return true;
   }
 
@@ -1971,7 +1962,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     data.mPickUpDimensionInfo = (SGNetCDFPickUpDimensionInfo) this.getPickUpDimensionInfo();
     data.mStride = this.getStride();
     data.mTickLabelStride = this.getTickLabelStride();
-    data.mShift = this.getShift();
+    data.setShift(this.getShift());
     return data;
   }
 
@@ -2097,7 +2088,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
 
   /** Returns the shift. */
   public SGTuple2d getShift() {
-    return (SGTuple2d) this.mShift.clone();
+    return this.mFormat.getShift();
   }
 
   /**
@@ -2106,10 +2097,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * @param shift the shift to set
    */
   public void setShift(SGTuple2d shift) {
-    if (shift == null) {
-      throw new IllegalArgumentException("shift == null");
-    }
-    this.mShift = (SGTuple2d) shift.clone();
+    this.mFormat.setShift(shift);
   }
 
   /** Returns the list of child objects. */
