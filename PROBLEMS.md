@@ -6,19 +6,19 @@ Items are ordered by priority.
 ## 1. Test Coverage
 
 
-The overall instruction coverage measured by JaCoCo is **30.5%**.
+The overall instruction coverage measured by JaCoCo is **31.1%**.
 
 | Package | Coverage | Test files |
 |---------|----------|-----------|
 | `com.github...lib.mdarray` | 97.4% | 4 |
 | `jp...samuraigraph.export` | 68.2% | 1 |
 | `com.github...lib.hdf5` | 38.6% | 6 |
-| `jp...samuraigraph.base` | 35.5% | 27 |
+| `jp...samuraigraph.base` | 35.9% | 27 |
 | `jp...samuraigraph.data` | 33.8% | 59 |
-| `jp...samuraigraph.figure` | 33.6% | 48 |
+| `jp...samuraigraph.figure` | 35.0% | 52 |
 | `jp...samuraigraph.application` | 9.0% | 15 |
 
-- 145 test files / 1350 test executions against 624 main files
+- 147 test files / 1357 test executions against 624 main files
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes
@@ -37,9 +37,12 @@ The overall instruction coverage measured by JaCoCo is **30.5%**.
   the timing lines, the significant differences and the strings)
   are constructed on the EDT, the data property dialogs of the
   SXY, VXY and SXYZ groups are constructed on a real window and
-  the property dialog utility of a drawing window runs the show
-  dialog path of a lightweight dialog subclass with a stub
-  observer
+  the axis break dialog and the data pop-up menus are constructed
+  on the window with the graph and the data
+- The XY figure is created with a real window, the axis break
+  element rejects symbols outside the graph rect and the
+  significant difference element family is exercised on the
+  graph
 - Not covered: the show dialog paths of the property dialog
   utility with real figures and the data setup wizard option
   paths beyond the smoke tests
@@ -66,5 +69,5 @@ The overall instruction coverage measured by JaCoCo is **30.5%**.
 ## Recommended Priority
 
 1. **Thicken tests**: keep extending the integration and property
-   round trip tests. Remaining candidates: the data dialogs of the
-   pop-up menus and the data viewer
+   round trip tests. Remaining candidates: the data pop-up menu
+   interactions and the data viewer dialog operations
