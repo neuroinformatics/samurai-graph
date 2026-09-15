@@ -1,9 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGSXYZDataConstants.*;
-
 import java.awt.*;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;

@@ -1,21 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import static jp.riken.brain.ni.samuraigraph.application.SGApplicationCommandConstants.*;
-import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
-import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
-import static jp.riken.brain.ni.samuraigraph.application.SGArchiveFileConstants.*;
-import static jp.riken.brain.ni.samuraigraph.application.SGImageConstants.*;
-import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
-import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
 
 import java.awt.Point;
 import java.util.HashMap;

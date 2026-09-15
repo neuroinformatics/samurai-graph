@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
-
 /** An interface of the grid element. */
 public interface SGIFigureElementGrid extends SGIFigureElement, SGIGridDialogObserver {
 

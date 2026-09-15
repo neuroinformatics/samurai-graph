@@ -11,8 +11,6 @@
 
 package jp.riken.brain.ni.samuraigraph.application;
 
-import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
-
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;

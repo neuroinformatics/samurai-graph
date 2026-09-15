@@ -2,7 +2,6 @@ package jp.riken.brain.ni.samuraigraph.application;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGFigureTypeConstants.*;
 
 import java.awt.Point;

@@ -3,10 +3,6 @@ package jp.riken.brain.ni.samuraigraph.application;
 import static jp.riken.brain.ni.samuraigraph.application.SGApplicationCommandConstants.*;
 import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
 
 import java.io.File;
 import java.io.IOException;

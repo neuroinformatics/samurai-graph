@@ -3,8 +3,6 @@ package jp.riken.brain.ni.samuraigraph.application;
 import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
 import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
 
 import java.awt.event.ActionEvent;
 import java.io.Serializable;

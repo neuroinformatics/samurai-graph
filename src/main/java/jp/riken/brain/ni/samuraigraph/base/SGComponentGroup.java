@@ -1,8 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
-
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;

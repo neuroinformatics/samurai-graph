@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
-
 import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;

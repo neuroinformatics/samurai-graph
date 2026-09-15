@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;

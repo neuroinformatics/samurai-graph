@@ -1,18 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-import static jp.riken.brain.ni.samuraigraph.data.SGDataBufferUtility.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnInfoUtility.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataFileUtility.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataRangeUtility.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataTextUtility.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataViewerUtility.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
 
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;

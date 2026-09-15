@@ -1,8 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
-
 /** Constants for rectangles. */
 public class SGRectangleConstants {
   public static final String TAG_NAME_RECTANGLE = "Rectangle";

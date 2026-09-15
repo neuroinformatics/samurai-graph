@@ -1,8 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
-
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 
 public interface SGIElementGroupSetSXY extends SGIElementGroupSetForData, SGIElementGroupSetXY {

@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
-
 import java.text.ParseException;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGIStringModifier;

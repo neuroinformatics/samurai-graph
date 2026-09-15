@@ -1,12 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
-
 import java.util.ArrayList;
 
 /** A class to control exclusive access of selectable objects. */

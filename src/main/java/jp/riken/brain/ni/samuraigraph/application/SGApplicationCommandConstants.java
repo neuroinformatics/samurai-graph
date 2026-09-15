@@ -1,10 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
 
 import jp.riken.brain.ni.samuraigraph.figure.SGAxisBreakConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants;

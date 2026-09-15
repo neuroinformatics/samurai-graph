@@ -1,9 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
 import static jp.riken.brain.ni.samuraigraph.application.SGArchiveFileConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
 
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;

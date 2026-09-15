@@ -6,7 +6,6 @@ import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGErrorBarConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

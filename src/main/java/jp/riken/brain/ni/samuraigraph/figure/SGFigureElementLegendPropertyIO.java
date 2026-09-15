@@ -1,8 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGIFigureElementLegend.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;

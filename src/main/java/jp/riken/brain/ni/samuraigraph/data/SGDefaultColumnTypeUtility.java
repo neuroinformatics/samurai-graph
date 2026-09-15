@@ -1,18 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGTextDataConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDefaultColumnTypeMDArrayUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDefaultColumnTypeNetCDFUtility.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDefaultColumnTypeSDArrayUtility.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
 
 import java.util.ArrayList;
 import java.util.List;

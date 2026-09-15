@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JRadioButton;

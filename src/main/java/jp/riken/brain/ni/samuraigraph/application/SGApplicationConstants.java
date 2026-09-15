@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
-
 /** Constants used in this application. */
 public class SGApplicationConstants {
 

@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants.*;
 
 import java.awt.*;

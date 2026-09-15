@@ -1,7 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JToggleButton;

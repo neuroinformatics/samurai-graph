@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
-
 public class SGFigureElementAxisConstants {
 
   /** Constants for axis location. */

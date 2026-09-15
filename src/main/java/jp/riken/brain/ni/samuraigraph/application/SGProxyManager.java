@@ -1,14 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
 import static jp.riken.brain.ni.samuraigraph.application.SGPreferencesConstants.*;
-import static jp.riken.brain.ni.samuraigraph.application.SGUpgradeConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;

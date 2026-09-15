@@ -1,8 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
-
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;

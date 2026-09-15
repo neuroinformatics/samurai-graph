@@ -1,10 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGBarConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGRectangleConstants.*;
-
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Shape;

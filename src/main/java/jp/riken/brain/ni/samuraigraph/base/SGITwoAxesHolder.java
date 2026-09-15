@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants.*;
-
 /** An interface which provides the definition of the objects which holds two axes. */
 public interface SGITwoAxesHolder extends SGIAxisHolder {
 

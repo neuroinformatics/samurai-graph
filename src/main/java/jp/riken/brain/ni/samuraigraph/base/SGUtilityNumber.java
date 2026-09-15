@@ -1,8 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

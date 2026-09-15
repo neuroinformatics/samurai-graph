@@ -1,11 +1,8 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
-import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
 import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
 
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;

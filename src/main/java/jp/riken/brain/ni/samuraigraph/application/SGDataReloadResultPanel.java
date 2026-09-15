@@ -1,7 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
 import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
 
 import java.awt.Color;
 import java.awt.Component;

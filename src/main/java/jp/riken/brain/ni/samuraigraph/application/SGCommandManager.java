@@ -2,17 +2,12 @@ package jp.riken.brain.ni.samuraigraph.application;
 
 import static jp.riken.brain.ni.samuraigraph.application.SGApplicationCommandConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGRootObjectConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGAxisBreakConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGShapeConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGSignificantDifferenceConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;

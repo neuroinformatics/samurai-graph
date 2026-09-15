@@ -1,10 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGErrorBarConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
 

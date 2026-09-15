@@ -1,12 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.figure;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGLineAndStringConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGSignificantDifferenceConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

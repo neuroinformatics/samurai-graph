@@ -2,7 +2,6 @@ package jp.riken.brain.ni.samuraigraph.application;
 
 import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.*;
 import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
 
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5Exception;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;

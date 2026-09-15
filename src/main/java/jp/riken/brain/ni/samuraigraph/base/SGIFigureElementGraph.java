@@ -1,10 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants.*;
-
 import java.util.List;
 import java.util.Map;
 import org.w3c.dom.Document;

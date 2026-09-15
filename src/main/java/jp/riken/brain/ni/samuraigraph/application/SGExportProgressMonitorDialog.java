@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.application;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-
 import java.awt.Dialog;
 import java.awt.Frame;
 

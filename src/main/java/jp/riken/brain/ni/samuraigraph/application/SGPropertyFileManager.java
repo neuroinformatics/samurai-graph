@@ -4,7 +4,6 @@ import static jp.riken.brain.ni.samuraigraph.application.SGApplicationConstants.
 import static jp.riken.brain.ni.samuraigraph.application.SGApplicationTextConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGPropertyFileConstants.*;
-import static jp.riken.brain.ni.samuraigraph.data.SGDataFileConstants.*;
 
 import java.awt.Component;
 import java.awt.Frame;

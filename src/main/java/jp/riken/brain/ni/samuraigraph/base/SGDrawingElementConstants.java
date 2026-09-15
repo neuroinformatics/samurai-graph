@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
-import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
-
 /** Constants for drawing elements. */
 public class SGDrawingElementConstants {
 
