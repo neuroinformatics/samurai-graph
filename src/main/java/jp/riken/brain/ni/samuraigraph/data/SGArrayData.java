@@ -474,4 +474,13 @@ public abstract class SGArrayData extends SGData {
     }
     return ret;
   }
+
+  /** Returns the number of points with the stride. */
+  public int getPointsNumber() {
+    if (this.isStrideAvailable()) {
+      return this.mStride.getLength();
+    } else {
+      return this.getAllPointsNumber();
+    }
+  }
 }

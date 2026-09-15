@@ -447,16 +447,6 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
     return this.mFormat.getExponent();
   }
 
-  /** Returns the number of data points taking into account the stride. */
-  @Override
-  public int getPointsNumber() {
-    if (this.isStrideAvailable()) {
-      return this.mStride.getLength();
-    } else {
-      return this.getAllPointsNumber();
-    }
-  }
-
   /** Returns the bounds of x-values. */
   @Override
   public SGValueRange getBoundsX() {

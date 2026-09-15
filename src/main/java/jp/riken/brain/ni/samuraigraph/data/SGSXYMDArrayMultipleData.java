@@ -1249,16 +1249,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     }
   }
 
-  /** Returns the number of data points taking into account the stride. */
-  @Override
-  public int getPointsNumber() {
-    if (this.isStrideAvailable()) {
-      return this.mStride.getLength();
-    } else {
-      return this.getAllPointsNumber();
-    }
-  }
-
   /** Returns the title for the X-axis. */
   @Override
   public String getTitleX() {

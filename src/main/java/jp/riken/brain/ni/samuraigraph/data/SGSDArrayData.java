@@ -106,16 +106,6 @@ public abstract class SGSDArrayData extends SGArrayData {
     return this.getDataFile().getColNum(cl);
   }
 
-  /** Returns the number of data points taking into account the stride. */
-  @Override
-  public int getPointsNumber() {
-    if (this.isStrideAvailable()) {
-      return this.mStride.getLength();
-    } else {
-      return this.getAllPointsNumber();
-    }
-  }
-
   /** Returns the number of data points without taking into account the stride. */
   @Override
   public int getAllPointsNumber() {
