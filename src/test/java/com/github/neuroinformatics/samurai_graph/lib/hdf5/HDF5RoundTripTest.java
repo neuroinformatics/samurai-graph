@@ -73,4 +73,16 @@ class HDF5RoundTripTest {
       assertEquals(2, info.getDimensions()[1]);
     }
   }
+
+  @Test
+  void enumerationAttrRoundTrip() throws Exception {
+    File file = this.createTempHdf5File();
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
+      writer.enumeration().setAttr("/", "kind", new HDF5EnumerationValue(3L));
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      HDF5EnumerationValue value = reader.enumeration().getAttr("/", "kind");
+      assertEquals(3L, value.getValue());
+    }
+  }
 }
