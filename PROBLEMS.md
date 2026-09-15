@@ -97,6 +97,13 @@ backends, so a design note for the following slices:
   `createPickUpInfo`-style typed hooks)
 - the `SGColumnTypeUpdater` characterization tests added on
   2026-09-15 lock the dispatch behavior of this surface
+- **progress (2026-09-15):** the picked-up dispatch chain of
+  `setColumnType` with a pickup info became the default method
+  `setColumnTypeWithPickUp` on `SGISXYMultipleDimensionData`, the
+  state branch methods are declared abstract over the interface,
+  and both NetCDF and MDArray backends carry the shared chain; the
+  remaining difference is the name-to-dimension-index bookkeeping
+  of the MDArray backend that feeds `updateDimensionIndices`
 
 A `javap`-level API analysis of the SXY multiple triplet (member count
 including package-private, 2026-09-15):
