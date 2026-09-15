@@ -1156,16 +1156,6 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
     return infoMap;
   }
 
-  /** Returns the number of strings. */
-  @Override
-  public int getStringNumber() {
-    if (this.isStrideAvailable()) {
-      return this.mTickLabelStride.getLength();
-    } else {
-      return this.getPointsNumber();
-    }
-  }
-
   /** Returns the indices of tick labels. */
 
   /** Returns a text string of the data type to save into a NetCDF data set file. */

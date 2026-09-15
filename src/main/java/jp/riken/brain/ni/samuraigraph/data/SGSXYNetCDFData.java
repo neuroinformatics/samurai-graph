@@ -1331,16 +1331,6 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
     return ret;
   }
 
-  /** Returns the number of strings. */
-  @Override
-  public int getStringNumber() {
-    if (this.isStrideAvailable()) {
-      return this.mTickLabelStride.getLength();
-    } else {
-      return this.getPointsNumber();
-    }
-  }
-
   /** Returns the indices of tick labels. */
 
   /** Returns the number of data points without taking into account the stride. */

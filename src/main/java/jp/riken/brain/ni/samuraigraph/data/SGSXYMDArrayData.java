@@ -1144,16 +1144,6 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
     this.mStride = map.get(KEY_SXY_STRIDE);
   }
 
-  /** Returns the number of strings. */
-  @Override
-  public int getStringNumber() {
-    if (this.isStrideAvailable()) {
-      return this.mTickLabelStride.getLength();
-    } else {
-      return this.getPointsNumber();
-    }
-  }
-
   /** Returns the indices of tick labels. */
 
   /** Returns the number of data points without taking into account the stride. */

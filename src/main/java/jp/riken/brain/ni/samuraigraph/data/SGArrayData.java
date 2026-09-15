@@ -453,4 +453,13 @@ public abstract class SGArrayData extends SGData {
       this.mTickLabelStride = null;
     }
   }
+
+  /** Returns the number of strings. */
+  public int getStringNumber() {
+    if (this.isStrideAvailable()) {
+      return this.mTickLabelStride.getLength();
+    } else {
+      return this.getPointsNumber();
+    }
+  }
 }
