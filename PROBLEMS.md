@@ -6,19 +6,19 @@ Items are ordered by priority.
 ## 1. Test Coverage
 
 
-The overall instruction coverage measured by JaCoCo is **21.2%**.
+The overall instruction coverage measured by JaCoCo is **21.4%**.
 
 | Package | Coverage | Test files |
 |---------|----------|-----------|
 | `com.github...lib.mdarray` | 97.4% | 4 |
 | `jp...samuraigraph.export` | 68.2% | 1 |
-| `com.github...lib.hdf5` | 36.3% | 6 |
+| `com.github...lib.hdf5` | 36.2% | 7 |
 | `jp...samuraigraph.base` | 31.8% | 23 |
-| `jp...samuraigraph.data` | 33.5% | 55 |
-| `jp...samuraigraph.figure` | 13.7% | 32 |
-| `jp...samuraigraph.application` | 7.8% | 13 |
+| `jp...samuraigraph.data` | 33.5% | 56 |
+| `jp...samuraigraph.figure` | 13.8% | 33 |
+| `jp...samuraigraph.application` | 8.9% | 14 |
 
-- 131 test files / 1316 test executions against 624 main files
+- 133 test files / 1322 test executions against 624 main files
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes
@@ -57,5 +57,5 @@ The overall instruction coverage measured by JaCoCo is **21.2%**.
 ## Recommended Priority
 
 1. **Thicken tests**: keep extending the integration and property
-   round trip tests. Remaining candidates: the duplicate dialog
-   option path and the interactions of the remaining dialogs
+   round trip tests. Remaining candidates: the mouse interaction
+   details of the remaining in-graph group set implementations
