@@ -5,19 +5,19 @@ Items are ordered by priority.
 
 ## 1. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **20.3%**.
+The overall instruction coverage measured by JaCoCo is **20.9%**.
 
 | Package | Coverage | Test files |
 |---------|----------|-----------|
 | `com.github...lib.mdarray` | 97.4% | 4 |
 | `jp...samuraigraph.export` | 68.2% | 1 |
 | `com.github...lib.hdf5` | 35.3% | 5 |
-| `jp...samuraigraph.base` | 31.6% | 23 |
-| `jp...samuraigraph.data` | 32.2% | 50 |
-| `jp...samuraigraph.figure` | 13.6% | 29 |
-| `jp...samuraigraph.application` | 4.6% | 12 |
+| `jp...samuraigraph.base` | 31.8% | 23 |
+| `jp...samuraigraph.data` | 32.6% | 51 |
+| `jp...samuraigraph.figure` | 13.7% | 31 |
+| `jp...samuraigraph.application` | 7.8% | 13 |
 
-- 123 test files / 1297 test executions against 624 main files
+- 126 test files / 1305 test executions against 624 main files
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes
@@ -27,9 +27,11 @@ The overall instruction coverage measured by JaCoCo is **20.3%**.
 - Integration tests exercise the add-data path of the graph and the
   legend elements for the single SXY, vector, multiple SXY and
   SXYZ data types
-- Not covered: the paint and the mouse interaction parts of the
-  in-graph group set classes and the dialog or window level classes
-  beyond the headful smoke tests
+- The in-graph group sets are painted on an off-screen image and the
+  animation dialog is constructed on a real window and disposed
+- Not covered: the mouse interaction parts of the in-graph group set
+  classes and the dialog or window level classes beyond the headful
+  smoke tests
 
 ## 2. Repository / Dependency Hygiene
 
