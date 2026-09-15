@@ -5,19 +5,20 @@ Items are ordered by priority.
 
 ## 1. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **21.0%**.
+
+The overall instruction coverage measured by JaCoCo is **21.2%**.
 
 | Package | Coverage | Test files |
 |---------|----------|-----------|
 | `com.github...lib.mdarray` | 97.4% | 4 |
 | `jp...samuraigraph.export` | 68.2% | 1 |
-| `com.github...lib.hdf5` | 35.3% | 5 |
+| `com.github...lib.hdf5` | 36.3% | 6 |
 | `jp...samuraigraph.base` | 31.8% | 23 |
-| `jp...samuraigraph.data` | 32.7% | 52 |
+| `jp...samuraigraph.data` | 33.5% | 55 |
 | `jp...samuraigraph.figure` | 13.7% | 32 |
 | `jp...samuraigraph.application` | 7.8% | 13 |
 
-- 128 test files / 1308 test executions against 624 main files
+- 131 test files / 1316 test executions against 624 main files
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes
@@ -55,8 +56,6 @@ The overall instruction coverage measured by JaCoCo is **21.0%**.
 
 ## Recommended Priority
 
-1. **Thicken tests**: keep extending the property round-trip pattern
-   and the integration tests to more groups. The next candidate is
-   the in-graph integration path with real data in
-   `SGFigureElementGraph` covering `SGElementGroupSetInGraphSXY` and
-   the line, symbol and bar group implementations in the graph
+1. **Thicken tests**: keep extending the integration and property
+   round trip tests. Remaining candidates: the duplicate dialog
+   option path and the interactions of the remaining dialogs
