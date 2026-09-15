@@ -4,7 +4,6 @@ import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGDateConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGStringConstants.*;
 
 import java.time.Duration;
 import java.time.Period;
