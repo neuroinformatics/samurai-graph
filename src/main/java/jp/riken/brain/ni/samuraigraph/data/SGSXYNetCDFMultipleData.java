@@ -2962,11 +2962,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return !SGUtility.contains(this.mTickLabelVariables, this.getDateVariable());
   }
 
-  @Override
-  public SGDate[] getDateArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getDateArray(this, policy);
-  }
-
   /**
    * Returns true if this data has at lease one "effective" stride that has the string
    * representation different from "0:end".
