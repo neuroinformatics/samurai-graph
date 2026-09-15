@@ -75,7 +75,19 @@ duplicated members have been unified.
   based points number getter and the cache restore logic shared
   through the static helpers on `SGDataMiscUtility`
 - `SGISXYTypeData`: the tick label value indices getter as a
-  default method using the interface-facing accessors
+  default method using the interface-facing accessors; the second
+  pass on 2026-09-15 also carries the effective stride getter, the
+  data viewer accessors (value, row number, column stride,
+  preferred column type), the same error variable flag collection
+  and the setColumnType pickup dispatch chain;
+  `SGISXYTypeMultipleData` additionally carries the value array
+  and unshifted families with the cache and invalid value
+  overloads, the lower and upper error and tick label policy
+  accessors and the date array policy accessor. The remaining
+  typed residue is the name-to-dimension-index bookkeeping of the
+  MDArray backend (`updateDimensionIndices`) and the typed
+  `setPickUpDimensionInfo` validation, both requiring the hook
+  pattern from the design note
 
 The remaining items 2 to 4 of the extraction order hit the typed
 backends, so a design note for the following slices:
