@@ -6,19 +6,19 @@ Items are ordered by priority.
 ## 1. Test Coverage
 
 
-The overall instruction coverage measured by JaCoCo is **22.9%**.
+The overall instruction coverage measured by JaCoCo is **28.3%**.
 
 | Package | Coverage | Test files |
 |---------|----------|-----------|
 | `com.github...lib.mdarray` | 97.4% | 4 |
 | `jp...samuraigraph.export` | 68.2% | 1 |
 | `com.github...lib.hdf5` | 36.2% | 7 |
-| `jp...samuraigraph.base` | 33.5% | 25 |
-| `jp...samuraigraph.data` | 33.7% | 58 |
-| `jp...samuraigraph.figure` | 16.5% | 37 |
+| `jp...samuraigraph.base` | 35.4% | 26 |
+| `jp...samuraigraph.data` | 33.8% | 59 |
+| `jp...samuraigraph.figure` | 28.5% | 44 |
 | `jp...samuraigraph.application` | 9.0% | 15 |
 
-- 139 test files / 1336 test executions against 624 main files
+- 143 test files / 1345 test executions against 624 main files
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes
@@ -32,8 +32,15 @@ The overall instruction coverage measured by JaCoCo is **22.9%**.
   click handling of the group based on the mouse coordinates is
   keyed against the in-graph group set, and the animation dialog is
   constructed on a real window and disposed
-- Not covered: the dialog or window level classes beyond the headful
-  smoke tests
+- The full family of the figure property dialogs (the legend, the
+  arrows, the axis, the axis scaling, the color bar, the shapes,
+  the timing lines, the significant differences and the strings)
+  are constructed on the EDT, the NetCDF data setup dialog is
+  constructed on a real window and the property dialog utility of
+  a drawing window returns empty observer lists without dialogs
+- Not covered: the show dialog paths of the property dialog
+  utility with real figures and the data setup wizard option
+  paths beyond the smoke tests
 
 ## 2. Repository / Dependency Hygiene
 
@@ -57,5 +64,5 @@ The overall instruction coverage measured by JaCoCo is **22.9%**.
 ## Recommended Priority
 
 1. **Thicken tests**: keep extending the integration and property
-   round trip tests. Remaining candidates: the property dialogs of
-   the legend and the dialogs of the remaining groups
+   round trip tests. Remaining candidates: the show dialog paths of
+   the property dialog utility with real figures
