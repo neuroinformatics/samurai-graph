@@ -2526,10 +2526,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
    * @param policy policy to get values
    * @return arrays of lower error values
    */
-  @Override
-  public double[][] getLowerErrorValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getLowerErrorValueArray(this, policy);
-  }
 
   /**
    * Returns arrays of upper error values with given policy.
@@ -2537,10 +2533,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
    * @param policy policy to get values
    * @return arrays of upper error values
    */
-  @Override
-  public double[][] getUpperErrorValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getUpperErrorValueArray(this, policy);
-  }
 
   /**
    * Returns arrays of tick labels with given policy.
@@ -2548,11 +2540,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
    * @param policy policy to get values
    * @return arrays of tick labels
    */
-  @Override
-  public String[][] getTickLabelArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getTickLabelArray(this, policy);
-  }
-
   @Override
   public Boolean isYValuesHolder() {
     if (this.isErrorBarAvailable()) {

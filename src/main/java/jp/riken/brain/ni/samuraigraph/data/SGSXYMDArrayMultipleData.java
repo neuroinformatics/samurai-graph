@@ -2826,31 +2826,18 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    *
    * @param policy policy to get values
    */
-  @Override
-  public double[][] getLowerErrorValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getLowerErrorValueArray(this, policy);
-  }
 
   /**
    * Returns arrays of upper error values with given policy.
    *
    * @param policy policy to get values
    */
-  @Override
-  public double[][] getUpperErrorValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getUpperErrorValueArray(this, policy);
-  }
 
   /**
    * Returns arrays of tick labels with given policy.
    *
    * @param policy policy to get values
    */
-  @Override
-  public String[][] getTickLabelArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getTickLabelArray(this, policy);
-  }
-
   @Override
   public SGDate[] getDateArray(boolean all) {
     // always returns null

@@ -76,7 +76,9 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    * @param policy policy to get values
    * @return arrays of lower error values
    */
-  public double[][] getLowerErrorValueArray(SGSXYDataBufferPolicy policy);
+  public default double[][] getLowerErrorValueArray(SGSXYDataBufferPolicy policy) {
+    return SGDataBufferUtility.getLowerErrorValueArray(this, policy);
+  }
 
   /**
    * Returns arrays of upper error values with given policy.
@@ -84,7 +86,9 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    * @param policy policy to get values
    * @return arrays of upper error values
    */
-  public double[][] getUpperErrorValueArray(SGSXYDataBufferPolicy policy);
+  public default double[][] getUpperErrorValueArray(SGSXYDataBufferPolicy policy) {
+    return SGDataBufferUtility.getUpperErrorValueArray(this, policy);
+  }
 
   /**
    * Returns arrays of tick labels with given policy.
@@ -92,7 +96,9 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    * @param policy policy to get values
    * @return arrays of tick labels
    */
-  public String[][] getTickLabelArray(SGSXYDataBufferPolicy policy);
+  public default String[][] getTickLabelArray(SGSXYDataBufferPolicy policy) {
+    return SGDataBufferUtility.getTickLabelArray(this, policy);
+  }
 
   /**
    * Returns true if this data enables to be split.
