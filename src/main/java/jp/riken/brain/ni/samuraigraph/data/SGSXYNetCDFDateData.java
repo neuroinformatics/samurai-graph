@@ -176,8 +176,8 @@ public class SGSXYNetCDFDateData extends SGSXYNetCDFData {
             this.mTickLabelStride,
             this.isStrideAvailable());
     data.mOriginMap = new HashMap<String, Integer>(this.mOriginMap);
-    data.setDecimalPlaces(this.mDecimalPlaces);
-    data.setExponent(this.mExponent);
+    data.setDecimalPlaces(this.getDecimalPlaces());
+    data.setExponent(this.getExponent());
     SGDataCache cache = this.getCache();
     if (cache != null) {
       data.setCache(new SGSXYMultipleDataCache((SGSXYDataCache) cache));

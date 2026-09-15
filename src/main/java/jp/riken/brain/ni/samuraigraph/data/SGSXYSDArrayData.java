@@ -53,19 +53,13 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
   /** The column index for values that holds tick labels. */
   protected Integer mTickLabelHolderIndex = null;
 
-  /** The decimal places for the tick labels. */
-  protected int mDecimalPlaces = 0;
-
-  /** The exponent for the tick labels. */
-  protected int mExponent = 0;
-
   protected String mDateFormat = "";
 
   /** The stride for the tick labels. */
   protected SGIntegerSeriesSet mTickLabelStride = null;
 
-  /** The shift value. */
-  private SGTuple2d mShift = new SGTuple2d();
+  /** The number format state. */
+  private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
   /** Sampling rate. */
   private Double mSamplingRate = null;
@@ -201,10 +195,10 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
             maxOrder = order;
           }
         }
-        this.mExponent = maxOrder;
+        this.setExponent(maxOrder);
 
         // set the default value to decimal places
-        this.mDecimalPlaces = 2;
+        this.setDecimalPlaces(2);
       }
 
     } else {
@@ -256,14 +250,14 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
     this.mTickLabelIndex = null;
     this.mTickLabelHolderIndex = null;
     this.mTickLabelStride = null;
-    this.mShift = null;
+    this.mFormat.dispose();
   }
 
   /** Returns the copy of this data object. */
   public Object clone() {
     SGSXYSDArrayData data = (SGSXYSDArrayData) super.clone();
     data.mTickLabelStride = this.getTickLabelStride();
-    data.mShift = (SGTuple2d) this.mShift.clone();
+    data.setShift(this.getShift());
     return data;
   }
 
@@ -288,7 +282,7 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
     this.mTickLabelIndex = dataSXY.mTickLabelIndex;
     this.mTickLabelHolderIndex = dataSXY.mTickLabelHolderIndex;
     this.mStride = dataSXY.getTickLabelStride();
-    this.setShift(dataSXY.mShift);
+    this.setShift(dataSXY.getShift());
     return true;
   }
 
@@ -405,7 +399,7 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
       SGIntegerSeriesSet stride = (all || !this.isStrideAvailable()) ? null : this.mTickLabelStride;
       if (col instanceof SGNumberDataColumn) {
         SGNumberDataColumn numCol = (SGNumberDataColumn) col;
-        return numCol.getStringArray(this.mDecimalPlaces, this.mExponent, stride);
+        return numCol.getStringArray(this.getDecimalPlaces(), this.getExponent(), stride);
       } else if (col instanceof SGDateDataColumn) {
         SGDateDataColumn dateCol = (SGDateDataColumn) col;
         return dateCol.getStringArray(this.mDateFormat, stride);
@@ -1039,7 +1033,7 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
     if (dp < 0) {
       throw new IllegalArgumentException("Decimal places must not be negative: " + dp);
     }
-    this.mDecimalPlaces = dp;
+    this.mFormat.setDecimalPlaces(dp);
   }
 
   /**
@@ -1048,17 +1042,17 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
    * @param exp a value to set to the exponent
    */
   public void setExponent(final int exp) {
-    this.mExponent = exp;
+    this.mFormat.setExponent(exp);
   }
 
   /** Returns the decimal places for the tick labels. */
   public int getDecimalPlaces() {
-    return this.mDecimalPlaces;
+    return this.mFormat.getDecimalPlaces();
   }
 
   /** Returns the exponent for tick labels. */
   public int getExponent() {
-    return this.mExponent;
+    return this.mFormat.getExponent();
   }
 
   /**
@@ -1121,9 +1115,9 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
             this.mTickLabelStride,
             this.isStrideAvailable(),
             this.mSamplingRate);
-    data.setDecimalPlaces(this.mDecimalPlaces);
-    data.setExponent(this.mExponent);
-    data.setShift(this.mShift);
+    data.setDecimalPlaces(this.getDecimalPlaces());
+    data.setExponent(this.getExponent());
+    data.setShift(this.getShift());
     for (int ii = 0; ii < this.mEditedDataValueList.size(); ii++) {
       SGDataValueHistory dataValue = this.mEditedDataValueList.get(ii);
       data.addSingleDimensionEditedDataValue(dataValue);
@@ -1264,7 +1258,7 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
 
   /** Returns the shift. */
   public SGTuple2d getShift() {
-    return (SGTuple2d) this.mShift.clone();
+    return this.mFormat.getShift();
   }
 
   /**
@@ -1273,10 +1267,7 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
    * @param shift the shift to set
    */
   public void setShift(SGTuple2d shift) {
-    if (shift == null) {
-      throw new IllegalArgumentException("shift == null");
-    }
-    this.mShift = (SGTuple2d) shift.clone();
+    this.mFormat.setShift(shift);
   }
 
   /**

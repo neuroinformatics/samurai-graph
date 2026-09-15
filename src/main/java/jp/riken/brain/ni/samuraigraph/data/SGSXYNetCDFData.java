@@ -63,12 +63,6 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
   /** The variable for values that holds tick labels. */
   protected SGNetCDFVariable mTickLabelHolderVariable = null;
 
-  /** The decimal places for the tick labels. */
-  protected int mDecimalPlaces = 0;
-
-  /** The exponent for the tick labels. */
-  protected int mExponent = 0;
-
   protected String mDateFormat = "";
 
   /** The stride of array. */
@@ -77,8 +71,8 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
   /** The stride for the tick labels. */
   protected SGIntegerSeriesSet mTickLabelStride = null;
 
-  /** The shift value. */
-  private SGTuple2d mShift = new SGTuple2d();
+  /** The number format state. */
+  private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
   /** The default constructor. */
   public SGSXYNetCDFData() {
@@ -272,7 +266,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
     this.mTickLabelHolderVariable = null;
     this.mStride = null;
     this.mTickLabelStride = null;
-    this.mShift = null;
+    this.mFormat.dispose();
   }
 
   private SGNetCDFVariable getCoordinateVariable() {
@@ -342,11 +336,11 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
     this.mErrorBarHolderVariable = nData.mErrorBarHolderVariable;
     this.mTickLabelVariable = nData.mTickLabelVariable;
     this.mTickLabelHolderVariable = nData.mTickLabelHolderVariable;
-    this.mDecimalPlaces = nData.mDecimalPlaces;
-    this.mExponent = nData.mExponent;
+    this.setDecimalPlaces(nData.getDecimalPlaces());
+    this.setExponent(nData.getExponent());
     this.setStride(nData.mStride);
     this.setTickLabelStride(nData.mTickLabelStride);
-    this.setShift(nData.mShift);
+    this.setShift(nData.getShift());
     return true;
   }
 
@@ -544,7 +538,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
                 this.mOriginMap,
                 true,
                 false);
-        ret = SGUtilityNumber.getStringArray(dArray, this.mDecimalPlaces, this.mExponent);
+        ret = SGUtilityNumber.getStringArray(dArray, this.getDecimalPlaces(), this.getExponent());
       }
     }
     if (useCache) {
@@ -950,7 +944,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
     if (dp < 0) {
       throw new IllegalArgumentException("Decimal places must not be negative: " + dp);
     }
-    this.mDecimalPlaces = dp;
+    this.mFormat.setDecimalPlaces(dp);
   }
 
   /**
@@ -960,19 +954,19 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
    */
   @Override
   public void setExponent(final int exp) {
-    this.mExponent = exp;
+    this.mFormat.setExponent(exp);
   }
 
   /** Returns the decimal places for the tick labels. */
   @Override
   public int getDecimalPlaces() {
-    return this.mDecimalPlaces;
+    return this.mFormat.getDecimalPlaces();
   }
 
   /** Returns the exponent for tick labels. */
   @Override
   public int getExponent() {
-    return this.mExponent;
+    return this.mFormat.getExponent();
   }
 
   @Override
@@ -1138,15 +1132,15 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
             this.getTickLabelStride(),
             this.isStrideAvailable());
     data.mOriginMap = new HashMap<String, Integer>(this.mOriginMap);
-    data.setDecimalPlaces(this.mDecimalPlaces);
-    data.setExponent(this.mExponent);
+    data.setDecimalPlaces(this.getDecimalPlaces());
+    data.setExponent(this.getExponent());
     data.setStrideMap(this.getStrideMap());
     SGDataCache cache = this.getCache();
     if (cache != null) {
       data.setCache(new SGSXYMultipleDataCache((SGSXYDataCache) cache));
     }
     data.setTimeStride(this.mTimeStride);
-    data.setShift(this.mShift);
+    data.setShift(this.getShift());
     for (int ii = 0; ii < this.mEditedDataValueList.size(); ii++) {
       SGDataValueHistory dataValue = this.mEditedDataValueList.get(ii);
       data.addSingleDimensionEditedDataValue(dataValue);
@@ -1213,8 +1207,8 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
             this.mStride,
             this.mTickLabelStride,
             this.isStrideAvailable());
-    data.setDecimalPlaces(this.mDecimalPlaces);
-    data.setExponent(this.mExponent);
+    data.setDecimalPlaces(this.getDecimalPlaces());
+    data.setExponent(this.getExponent());
     data.mOriginMap = new HashMap<String, Integer>(this.mOriginMap);
     SGDataCache cache = this.getCache();
     if (cache != null) {
@@ -1262,7 +1256,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
     SGSXYNetCDFData data = (SGSXYNetCDFData) super.clone();
     data.mStride = this.getStride();
     data.mTickLabelStride = this.getTickLabelStride();
-    data.mShift = (SGTuple2d) this.mShift.clone();
+    data.setShift(this.getShift());
     return data;
   }
 
@@ -1398,7 +1392,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
 
   /** Returns the shift. */
   public SGTuple2d getShift() {
-    return (SGTuple2d) this.mShift.clone();
+    return this.mFormat.getShift();
   }
 
   /**
@@ -1407,10 +1401,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
    * @param shift the shift to set
    */
   public void setShift(SGTuple2d shift) {
-    if (shift == null) {
-      throw new IllegalArgumentException("shift == null");
-    }
-    this.mShift = (SGTuple2d) shift.clone();
+    this.mFormat.setShift(shift);
   }
 
   @Override

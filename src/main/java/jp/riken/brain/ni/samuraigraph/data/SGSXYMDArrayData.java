@@ -56,20 +56,14 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
   /** The variable for values that holds tick labels. */
   protected SGMDArrayVariable mTickLabelHolderVariable = null;
 
-  /** The decimal places for the tick labels. */
-  protected int mDecimalPlaces = 0;
-
-  /** The exponent for the tick labels. */
-  protected int mExponent = 0;
-
   /** The stride of array. */
   protected SGIntegerSeriesSet mStride = null;
 
   /** The stride for the tick labels. */
   protected SGIntegerSeriesSet mTickLabelStride = null;
 
-  /** The shift value. */
-  private SGTuple2d mShift = new SGTuple2d();
+  /** The number format state. */
+  private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
   /** The default constructor. */
   public SGSXYMDArrayData() {
@@ -377,7 +371,7 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
     this.mTickLabelHolderVariable = null;
     this.mStride = null;
     this.mTickLabelStride = null;
-    this.mShift = null;
+    this.mFormat.dispose();
   }
 
   /** Returns whether error bars are available. */
@@ -432,7 +426,7 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
     if (dp < 0) {
       throw new IllegalArgumentException("Decimal places must not be negative: " + dp);
     }
-    this.mDecimalPlaces = dp;
+    this.mFormat.setDecimalPlaces(dp);
   }
 
   /**
@@ -442,19 +436,19 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
    */
   @Override
   public void setExponent(int exp) {
-    this.mExponent = exp;
+    this.mFormat.setExponent(exp);
   }
 
   /** Returns the decimal places for the tick labels. */
   @Override
   public int getDecimalPlaces() {
-    return this.mDecimalPlaces;
+    return this.mFormat.getDecimalPlaces();
   }
 
   /** Returns the exponent for tick labels. */
   @Override
   public int getExponent() {
-    return this.mExponent;
+    return this.mFormat.getExponent();
   }
 
   /** Returns the number of data points taking into account the stride. */
@@ -638,7 +632,7 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
       } else {
         dArray = this.mTickLabelVariable.getGenericNumberArray(this.mTickLabelStride);
       }
-      ret = SGUtilityNumber.getStringArray(dArray, this.mDecimalPlaces, this.mExponent);
+      ret = SGUtilityNumber.getStringArray(dArray, this.getDecimalPlaces(), this.getExponent());
     } else {
       if (b) {
         ret = this.mTickLabelVariable.getAllGenericStringArray();
@@ -771,9 +765,9 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
             this.mStride,
             this.mTickLabelStride,
             this.isStrideAvailable());
-    data.setDecimalPlaces(this.mDecimalPlaces);
-    data.setExponent(this.mExponent);
-    data.setShift(this.mShift);
+    data.setDecimalPlaces(this.getDecimalPlaces());
+    data.setExponent(this.getExponent());
+    data.setShift(this.getShift());
     for (int ii = 0; ii < this.mEditedDataValueList.size(); ii++) {
       SGDataValueHistory dataValue = this.mEditedDataValueList.get(ii);
       data.addSingleDimensionEditedDataValue(dataValue);
@@ -827,8 +821,8 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
             this.mStride,
             this.mTickLabelStride,
             this.isStrideAvailable());
-    data.setDecimalPlaces(this.mDecimalPlaces);
-    data.setExponent(this.mExponent);
+    data.setDecimalPlaces(this.getDecimalPlaces());
+    data.setExponent(this.getExponent());
     return data;
   }
 
@@ -1108,11 +1102,11 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
     this.mErrorBarHolderVariable = copyVariable(mdData.mErrorBarHolderVariable);
     this.mTickLabelVariable = copyVariable(mdData.mTickLabelVariable);
     this.mTickLabelHolderVariable = copyVariable(mdData.mTickLabelHolderVariable);
-    this.mDecimalPlaces = mdData.mDecimalPlaces;
-    this.mExponent = mdData.mExponent;
+    this.setDecimalPlaces(mdData.getDecimalPlaces());
+    this.setExponent(mdData.getExponent());
     this.setStride(mdData.mStride);
     this.setTickLabelStride(mdData.mTickLabelStride);
-    this.setShift(mdData.mShift);
+    this.setShift(mdData.getShift());
     return true;
   }
 
@@ -1126,11 +1120,11 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
     data.mErrorBarHolderVariable = copyVariable(this.mErrorBarHolderVariable);
     data.mTickLabelVariable = copyVariable(this.mTickLabelVariable);
     data.mTickLabelHolderVariable = copyVariable(this.mTickLabelHolderVariable);
-    data.mDecimalPlaces = this.mDecimalPlaces;
-    data.mExponent = this.mExponent;
+    data.setDecimalPlaces(this.getDecimalPlaces());
+    data.setExponent(this.getExponent());
     data.mStride = this.getStride();
     data.mTickLabelStride = this.getTickLabelStride();
-    data.mShift = (SGTuple2d) this.mShift.clone();
+    data.setShift(this.getShift());
     return data;
   }
 
@@ -1266,7 +1260,7 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
 
   /** Returns the shift. */
   public SGTuple2d getShift() {
-    return (SGTuple2d) this.mShift.clone();
+    return this.mFormat.getShift();
   }
 
   /**
@@ -1275,10 +1269,7 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
    * @param shift the shift to set
    */
   public void setShift(SGTuple2d shift) {
-    if (shift == null) {
-      throw new IllegalArgumentException("shift == null");
-    }
-    this.mShift = (SGTuple2d) shift.clone();
+    this.mFormat.setShift(shift);
   }
 
   /**
