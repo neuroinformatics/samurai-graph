@@ -1,6 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-import static jp.riken.brain.ni.samuraigraph.application.SGDataPluginConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGDrawingElementConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGFigureElementConstants.*;
@@ -11,12 +10,6 @@ import static jp.riken.brain.ni.samuraigraph.data.SGDataCommandConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataPropertyKeyConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGNetCDFConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGColorMapConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGElementGroupConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
-import static jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants.*;
 
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
