@@ -2464,23 +2464,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     return SGDataBufferUtility.getDateArray(this, policy);
   }
 
-  @Override
-  public Boolean[] hasSameErrorVariable() {
-    if (!this.isErrorBarAvailable()) {
-      return null;
-    }
-    SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
-    Boolean[] ret = new Boolean[sxyArray.length];
-    for (int ii = 0; ii < ret.length; ii++) {
-      if (sxyArray[ii].isErrorBarAvailable()) {
-        ret[ii] = sxyArray[ii].hasSameErrorVariable();
-      }
-    }
-    // disposes of data objects
-    SGDataMiscUtility.disposeSXYDataArray(sxyArray);
-    return ret;
-  }
-
   private boolean[] getSameErrorVariableFlags() {
     boolean[] ret = new boolean[this.mLowerErrorIndices.length];
     for (int ii = 0; ii < ret.length; ii++) {

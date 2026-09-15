@@ -2767,23 +2767,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return SGDataBufferUtility.getDateArray(this, policy);
   }
 
-  @Override
-  public Boolean[] hasSameErrorVariable() {
-    if (!this.isErrorBarAvailable()) {
-      return null;
-    }
-    SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
-    Boolean[] ret = new Boolean[sxyArray.length];
-    for (int ii = 0; ii < ret.length; ii++) {
-      if (sxyArray[ii].isErrorBarAvailable()) {
-        ret[ii] = sxyArray[ii].hasSameErrorVariable();
-      }
-    }
-    // disposes of data objects
-    SGDataMiscUtility.disposeSXYDataArray(sxyArray);
-    return ret;
-  }
-
   /**
    * Returns true if this data has at lease one "effective" stride that has the string
    * representation different from "0:end".

@@ -130,7 +130,29 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    */
   public SGDataBuffer getDataBuffer(SGSXYDataBufferPolicy policy, int[] indices);
 
-  public Boolean[] hasSameErrorVariable();
+  /**
+   * Returns whether the same error variable is used per child.
+   *
+   * <p>The shared implementation collects the flag of each child data object through the SXY-type
+   * interface and disposes the children afterwards.
+   *
+   * @return an array with the same-error-variable flags of the children
+   */
+  public default Boolean[] hasSameErrorVariable() {
+    if (!this.isErrorBarAvailable()) {
+      return null;
+    }
+    SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
+    Boolean[] ret = new Boolean[sxyArray.length];
+    for (int ii = 0; ii < ret.length; ii++) {
+      if (sxyArray[ii].isErrorBarAvailable()) {
+        ret[ii] = sxyArray[ii].hasSameErrorVariable();
+      }
+    }
+    // disposes of data objects
+    SGDataMiscUtility.disposeSXYDataArray(sxyArray);
+    return ret;
+  }
 
   public boolean hasOneSidedMultipleValues();
 
