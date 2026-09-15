@@ -77,6 +77,27 @@ duplicated members have been unified.
 - `SGISXYTypeData`: the tick label value indices getter as a
   default method using the interface-facing accessors
 
+The remaining items 2 to 4 of the extraction order hit the typed
+backends, so a design note for the following slices:
+
+- the pick-up state is represented by
+  `SGNetCDFPickUpDimensionInfo` (single dimension name plus
+  indices) in the NetCDF backend and by
+  `SGMDArrayPickUpDimensionInfo` (a name-to-dimension-index map)
+  in the MDArray backend, and the column type setting disposes
+  the pad-up info through `setColumnType` alone; the shared
+  structure is the `setColumnType` dispatch, `clearTimeDimension`
+  and `updateDimensionIndices` chain around them
+- a Java shared superclass cannot be inserted between
+  `SGNetCDFData` and `SGMDArrayData`, so the shared column type
+  flow should be expressed as default methods on
+  `SGISXYMultipleDimensionData` (already implemented by both
+  backends), parameterized by small abstract accessors
+  (`getPickUpDimensionInfo`, `isDimensionPicked`,
+  `createPickUpInfo`-style typed hooks)
+- the `SGColumnTypeUpdater` characterization tests added on
+  2026-09-15 lock the dispatch behavior of this surface
+
 A `javap`-level API analysis of the SXY multiple triplet (member count
 including package-private, 2026-09-15):
 
