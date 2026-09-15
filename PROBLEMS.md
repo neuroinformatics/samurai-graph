@@ -52,18 +52,6 @@ no constants needed to be moved.
   commits; the lower three layers no longer reference upper layers
   through static imports
 
-### 2.2 Backend-tripled parallel inheritance in `data` (Critical)
-
-Saving backends are mirrored by near-identical class triplets:
-
-| | SDArray | NetCDF | MDArray |
-|---|---|---|---|
-| SXY single | `SGSXYSDArrayData` | `SGSXYNetCDFData` | `SGSXYMDArrayData` |
-| SXY multiple | `SGSXYSDArrayMultipleData` (2,990 lines) | `SGSXYNetCDFMultipleData` (3,711 lines) | `SGSXYMDArrayMultipleData` (3,528 lines) |
-| SXYZ | `SGSXYZSDArrayData` | `SGSXYZNetCDFData` | `SGSXYZMDArrayData` |
-| VXY | - | `SGVXYNetCDFData` | `SGVXYMDArrayData` |
-| date variants | - | `SGSXYNetCDFDateData` | ... |
-
 - The three multiple-data classes differ in only ~27 public method
   signatures yet are joined only by the marker-ish
   `SGISXYTypeMultipleData`
@@ -73,6 +61,45 @@ Saving backends are mirrored by near-identical class triplets:
 - Mitigation: pull shared logic up into an intermediate base class
   incrementally, starting from the next bug fix that touches several
   backends
+
+A `javap`-level API analysis of the SXY multiple triplet (member count
+including package-private, 2026-09-15):
+
+- **76 methods** have the same name in all three classes: the value
+  access surface (`getXValueArray`, `getYValueArray`, date/tick label
+  and error bar accessors), the property I/O (`getProperties`,
+  `setProperties`, `writeProperty`, `merge`, `matches`) and the whole
+  stride/pick-up family (`setColumnType` with a
+  `SGPickUpDimensionInfo`, `setStrideMap`, `getStrideMap`,
+  `getTickLabelStride`, ...)
+- **42 methods** are shared only between the NetCDF and the MDArray
+  variants: they operate on variable arrays instead of the
+  `Integer[]` column indices kept by the SDArray backend
+  (e.g. `getXVariables`, `setLowerErrorVariables`): the variable-object
+  API converges while the SDArray backend still stores plain index
+  arrays with an equivalent method shape by name
+- only 4 fields and no additional inherited contracts are common, so
+  a shared base class can own the column-type/pick-up/stride state
+  without disturbing the backend-specific variables
+- signature typing differs (e.g. `Integer[]` indices vs
+  `SGNetCDFVariable[]`/`SGMDArrayVariable[]`), so the consolidation
+  pattern is "same name, same contract": extract the shared logic into
+  an intermediate base class typed against the backend-neutral
+  abstractions (`SGPickUpDimensionInfo`, `SGDataColumnInfo`), and let
+  each backend override only the typed variable access
+
+Recommended extraction order (API-stable surface first):
+
+1. cache/properties plumbing (`useCache`, `restoreCache`,
+   `getProperties`/`setProperties`, date format and decimal places)
+2. column type + pick-up dimension handling (`setColumnType`,
+   `setColumnTypeDimensionNotPicked`,
+   `setColumnTypeDimensionPicked`, `isDimensionPicked`,
+   `getPickUpDimensionInfo`, `setPickUpDimensionInfo`,
+   `updateDimensionIndices`)
+3. stride handling (`setStride`, `setTickLabelStride`,
+   `getStrideMap`, `setArraySectionPropertySub`)
+4. value access (shift/exponent/date array handling)
 
 ### 2.3 Concentration of 2,000+ line classes (Major)
 
@@ -212,7 +239,8 @@ coverage level.
    (646) and `figure` (42) were all unused and were simply removed;
    no constants needed to be moved
 3. **Consolidate the `data` triple hierarchy (2.2)**: pull common logic
-   into intermediate base classes
+   into intermediate base classes, following the documented analysis
+   (76 name-compatible methods, extraction order listed in 2.2)
 4. **Extract file operation logic from `SGMainFunctions.openFile` and
    `SGDrawingWindow` (2.3)**: fold into the existing
    `SGFileHandler`/`SGArchiveFileCreator` to make them
