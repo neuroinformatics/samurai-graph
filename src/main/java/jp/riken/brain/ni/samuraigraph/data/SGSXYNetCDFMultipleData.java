@@ -82,9 +82,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   /** The stride of array. */
   protected SGIntegerSeriesSet mStride = null;
 
-  /** The stride for the tick labels. */
-  protected SGIntegerSeriesSet mTickLabelStride = null;
-
   /** Indices of the dimension. */
   protected int[] mDimensionIndices = null;
 
@@ -2040,43 +2037,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return ret;
   }
 
-  /**
-   * Sets the stride of the tick labels.
-   *
-   * @param stride stride of arrays
-   */
-  @Override
-  public void setTickLabelStride(SGIntegerSeriesSet stride) {
-    if (stride != null) {
-      this.mTickLabelStride = (SGIntegerSeriesSet) stride.clone();
-    } else {
-      this.mTickLabelStride = null;
-    }
-  }
-
-  /** Returns the stride of the tick labels. */
-  @Override
-  public SGIntegerSeriesSet getTickLabelStride() {
-    SGIntegerSeriesSet ret = null;
-    if (this.mTickLabelStride != null) {
-      ret = (SGIntegerSeriesSet) this.mTickLabelStride.clone();
-    }
-    return ret;
-  }
-
   /** Returns the indices of tick labels. */
-  @Override
-  public int[] getTickLabelValueIndices() {
-    if (!this.isTickLabelAvailable()) {
-      return null;
-    }
-    if (this.isStrideAvailable()) {
-      return this.mTickLabelStride.getNumbers();
-    } else {
-      final int len = this.getPointsNumber();
-      return SGUtilityNumber.toIntArray(len);
-    }
-  }
 
   /** Returns the number of data points without taking into account the stride. */
   @Override
@@ -3674,5 +3635,19 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
 
   boolean callSuperWriteProperty(final Element el, final SGExportParameter type) {
     return super.writeProperty(el, type);
+  }
+
+  /** Returns the indices of tick labels. */
+  @Override
+  public int[] getTickLabelValueIndices() {
+    if (!this.isTickLabelAvailable()) {
+      return null;
+    }
+    if (this.isStrideAvailable()) {
+      return this.mTickLabelStride.getNumbers();
+    } else {
+      final int len = this.getPointsNumber();
+      return SGUtilityNumber.toIntArray(len);
+    }
   }
 }

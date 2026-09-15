@@ -36,6 +36,9 @@ public abstract class SGArrayData extends SGData {
   /** The list of edited data values. */
   protected List<SGDataValueHistory> mEditedDataValueList = new ArrayList<SGDataValueHistory>();
 
+  /** The stride for the tick labels. */
+  protected SGIntegerSeriesSet mTickLabelStride = null;
+
   /** The default constructor. */
   public SGArrayData() {
     super();
@@ -427,5 +430,27 @@ public abstract class SGArrayData extends SGData {
       ret = cell;
     }
     return ret;
+  }
+
+  /** Returns the stride of the tick labels. */
+  public SGIntegerSeriesSet getTickLabelStride() {
+    SGIntegerSeriesSet ret = null;
+    if (this.mTickLabelStride != null) {
+      ret = (SGIntegerSeriesSet) this.mTickLabelStride.clone();
+    }
+    return ret;
+  }
+
+  /**
+   * Sets the stride of the tick labels.
+   *
+   * @param stride stride of arrays
+   */
+  public void setTickLabelStride(SGIntegerSeriesSet stride) {
+    if (stride != null) {
+      this.mTickLabelStride = (SGIntegerSeriesSet) stride.clone();
+    } else {
+      this.mTickLabelStride = null;
+    }
   }
 }

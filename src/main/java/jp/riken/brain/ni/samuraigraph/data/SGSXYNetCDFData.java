@@ -66,9 +66,6 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
   /** The stride of array. */
   protected SGIntegerSeriesSet mStride = null;
 
-  /** The stride for the tick labels. */
-  protected SGIntegerSeriesSet mTickLabelStride = null;
-
   /** The number format state. */
   private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
@@ -1334,30 +1331,6 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
     return ret;
   }
 
-  /**
-   * Sets the stride of the tick labels.
-   *
-   * @param stride stride of arrays
-   */
-  @Override
-  public void setTickLabelStride(SGIntegerSeriesSet stride) {
-    if (stride != null) {
-      this.mTickLabelStride = (SGIntegerSeriesSet) stride.clone();
-    } else {
-      this.mTickLabelStride = null;
-    }
-  }
-
-  /** Returns the stride of the tick labels. */
-  @Override
-  public SGIntegerSeriesSet getTickLabelStride() {
-    SGIntegerSeriesSet ret = null;
-    if (this.mTickLabelStride != null) {
-      ret = (SGIntegerSeriesSet) this.mTickLabelStride.clone();
-    }
-    return ret;
-  }
-
   /** Returns the number of strings. */
   @Override
   public int getStringNumber() {
@@ -1369,18 +1342,6 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
   }
 
   /** Returns the indices of tick labels. */
-  @Override
-  public int[] getTickLabelValueIndices() {
-    if (!this.isTickLabelAvailable()) {
-      return null;
-    }
-    if (this.isStrideAvailable()) {
-      return this.mTickLabelStride.getNumbers();
-    } else {
-      final int len = this.getPointsNumber();
-      return SGUtilityNumber.toIntArray(len);
-    }
-  }
 
   /** Returns the number of data points without taking into account the stride. */
   @Override
@@ -1830,5 +1791,19 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
       NetcdfFormatWriter writer, String varName, Array array, final boolean all) {
     // do nothing
     return array;
+  }
+
+  /** Returns the indices of tick labels. */
+  @Override
+  public int[] getTickLabelValueIndices() {
+    if (!this.isTickLabelAvailable()) {
+      return null;
+    }
+    if (this.isStrideAvailable()) {
+      return this.mTickLabelStride.getNumbers();
+    } else {
+      final int len = this.getPointsNumber();
+      return SGUtilityNumber.toIntArray(len);
+    }
   }
 }

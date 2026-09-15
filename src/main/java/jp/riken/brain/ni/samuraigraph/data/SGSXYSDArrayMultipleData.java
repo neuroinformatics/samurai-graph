@@ -68,9 +68,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
   /** An array of column indices for tick label holders. */
   protected Integer[] mTickLabelHolderIndices = null;
 
-  /** The stride for the tick labels. */
-  protected SGIntegerSeriesSet mTickLabelStride = null;
-
   /** The number format state. */
   private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
@@ -1847,43 +1844,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     return data;
   }
 
-  /**
-   * Sets the stride of the tick labels.
-   *
-   * @param stride stride of arrays
-   */
-  @Override
-  public void setTickLabelStride(SGIntegerSeriesSet stride) {
-    if (stride != null) {
-      this.mTickLabelStride = (SGIntegerSeriesSet) stride.clone();
-    } else {
-      this.mTickLabelStride = null;
-    }
-  }
-
-  /** Returns the stride of the tick labels. */
-  @Override
-  public SGIntegerSeriesSet getTickLabelStride() {
-    SGIntegerSeriesSet ret = null;
-    if (this.mTickLabelStride != null) {
-      ret = (SGIntegerSeriesSet) this.mTickLabelStride.clone();
-    }
-    return ret;
-  }
-
   /** Returns the indices of tick labels. */
-  @Override
-  public int[] getTickLabelValueIndices() {
-    if (!this.isTickLabelAvailable()) {
-      return null;
-    }
-    if (this.isStrideAvailable()) {
-      return this.mTickLabelStride.getNumbers();
-    } else {
-      final int len = this.getPointsNumber();
-      return SGUtilityNumber.toIntArray(len);
-    }
-  }
 
   /** Returns a text string of the data type to save into a NetCDF data set file. */
   @Override
@@ -2963,5 +2924,19 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       }
     }
     return ret;
+  }
+
+  /** Returns the indices of tick labels. */
+  @Override
+  public int[] getTickLabelValueIndices() {
+    if (!this.isTickLabelAvailable()) {
+      return null;
+    }
+    if (this.isStrideAvailable()) {
+      return this.mTickLabelStride.getNumbers();
+    } else {
+      final int len = this.getPointsNumber();
+      return SGUtilityNumber.toIntArray(len);
+    }
   }
 }

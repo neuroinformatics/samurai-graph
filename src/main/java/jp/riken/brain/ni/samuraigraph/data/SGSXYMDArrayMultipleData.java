@@ -82,9 +82,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   /** The stride of array. */
   protected SGIntegerSeriesSet mStride = null;
 
-  /** The stride for the tick labels. */
-  protected SGIntegerSeriesSet mTickLabelStride = null;
-
   /** The number format state. */
   private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
@@ -1767,30 +1764,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return data;
   }
 
-  /**
-   * Sets the stride of the tick labels.
-   *
-   * @param stride stride of arrays
-   */
-  @Override
-  public void setTickLabelStride(SGIntegerSeriesSet stride) {
-    if (stride != null) {
-      this.mTickLabelStride = (SGIntegerSeriesSet) stride.clone();
-    } else {
-      this.mTickLabelStride = null;
-    }
-  }
-
-  /** Returns the stride of the tick labels. */
-  @Override
-  public SGIntegerSeriesSet getTickLabelStride() {
-    SGIntegerSeriesSet ret = null;
-    if (this.mTickLabelStride != null) {
-      ret = (SGIntegerSeriesSet) this.mTickLabelStride.clone();
-    }
-    return ret;
-  }
-
   /** Returns a map of stride for data arrays. */
   @Override
   protected Map<String, SGIntegerSeriesSet> getStrideMap() {
@@ -1811,18 +1784,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   }
 
   /** Returns the indices of tick labels. */
-  @Override
-  public int[] getTickLabelValueIndices() {
-    if (!this.isTickLabelAvailable()) {
-      return null;
-    }
-    if (this.isStrideAvailable()) {
-      return this.mTickLabelStride.getNumbers();
-    } else {
-      final int len = this.getPointsNumber();
-      return SGUtilityNumber.toIntArray(len);
-    }
-  }
 
   /** Returns an index array of dimension. */
   public int[] getDimensionIndices() {
@@ -3493,5 +3454,19 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       }
     }
     return ret;
+  }
+
+  /** Returns the indices of tick labels. */
+  @Override
+  public int[] getTickLabelValueIndices() {
+    if (!this.isTickLabelAvailable()) {
+      return null;
+    }
+    if (this.isStrideAvailable()) {
+      return this.mTickLabelStride.getNumbers();
+    } else {
+      final int len = this.getPointsNumber();
+      return SGUtilityNumber.toIntArray(len);
+    }
   }
 }
