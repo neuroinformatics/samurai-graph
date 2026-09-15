@@ -28,7 +28,10 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    * @param all true to get all values
    * @return arrays of x-values
    */
-  public double[][] getXValueArray(final boolean all);
+  /** Returns the x value arrays for all or not. */
+  public default double[][] getXValueArray(final boolean all) {
+    return SGDataViewerUtility.getXValueArray(this, all);
+  }
 
   /**
    * Returns x-value arrays with given policy.
@@ -36,7 +39,10 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    * @param policy policy to get values
    * @return arrays of x-values
    */
-  public double[][] getXValueArray(SGSXYDataBufferPolicy policy);
+  /** Returns the x value arrays with given policy. */
+  public default double[][] getXValueArray(SGSXYDataBufferPolicy policy) {
+    return SGDataBufferUtility.getXValues(this, policy);
+  }
 
   /**
    * Returns unshifted x-value arrays with given policy.
@@ -44,7 +50,10 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    * @param policy policy to get values
    * @return arrays of unshifted x-values
    */
-  public double[][] getUnshiftedXValueArray(SGSXYDataBufferPolicy policy);
+  /** Returns the unshifted x value arrays. */
+  public default double[][] getUnshiftedXValueArray(SGSXYDataBufferPolicy policy) {
+    return SGDataBufferUtility.getUnshiftedXValues(this, policy);
+  }
 
   /**
    * Returns a copy of y-value arrays.
@@ -52,7 +61,10 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    * @param all true to get all values
    * @return arrays of y-values
    */
-  public double[][] getYValueArray(final boolean all);
+  /** Returns the y value arrays for all or not. */
+  public default double[][] getYValueArray(final boolean all) {
+    return SGDataViewerUtility.getYValueArray(this, all);
+  }
 
   /**
    * Returns y-value arrays with given policy.
@@ -60,7 +72,9 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    * @param policy policy to get values
    * @return arrays of y-values
    */
-  public double[][] getYValueArray(SGSXYDataBufferPolicy policy);
+  public default double[][] getYValueArray(SGSXYDataBufferPolicy policy) {
+    return SGDataBufferUtility.getYValues(this, policy);
+  }
 
   /**
    * Returns unshifted y-value arrays with given policy.
@@ -68,7 +82,10 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    * @param policy policy to get values
    * @return arrays of unshifted y-values
    */
-  public double[][] getUnshiftedYValueArray(SGSXYDataBufferPolicy policy);
+  /** Returns the unshifted y value arrays. */
+  public default double[][] getUnshiftedYValueArray(SGSXYDataBufferPolicy policy) {
+    return SGDataBufferUtility.getUnshiftedYValues(this, policy);
+  }
 
   /**
    * Returns arrays of lower error values with given policy.
@@ -167,15 +184,23 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
 
   public double getYValueAt(final int childIndex, final int arrayIndex);
 
-  public double[][] getXValueArray(
-      final boolean all, final boolean useCache, final boolean removeInvalidValues);
+  public default double[][] getXValueArray(
+      final boolean all, final boolean useCache, final boolean removeInvalidValues) {
+    return SGDataViewerUtility.getXValueArray(this, all, useCache, removeInvalidValues);
+  }
 
-  public double[][] getXValueArray(final boolean all, final boolean useCache);
+  public default double[][] getXValueArray(final boolean all, final boolean useCache) {
+    return SGDataViewerUtility.getXValueArray(this, all, useCache);
+  }
 
-  public double[][] getYValueArray(
-      final boolean all, final boolean useCache, final boolean removeInvalidValues);
+  public default double[][] getYValueArray(
+      final boolean all, final boolean useCache, final boolean removeInvalidValues) {
+    return SGDataViewerUtility.getYValueArray(this, all, useCache, removeInvalidValues);
+  }
 
-  public double[][] getYValueArray(final boolean all, final boolean useCache);
+  public default double[][] getYValueArray(final boolean all, final boolean useCache) {
+    return SGDataViewerUtility.getYValueArray(this, all, useCache);
+  }
 
   public void addSingleDimensionEditedDataValue(SGDataValueHistory dataValue);
 

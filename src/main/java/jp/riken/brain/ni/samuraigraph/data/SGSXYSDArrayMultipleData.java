@@ -2483,26 +2483,12 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     return SGDataViewerUtility.hasEffectiveStride(this);
   }
 
-  @Override
-  public double[][] getXValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getXValues(this, policy);
-  }
-
-  @Override
-  public double[][] getYValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getYValues(this, policy);
-  }
-
   /**
    * Returns unshifted x-value arrays with given policy.
    *
    * @param policy policy to get values
    * @return arrays of unshifted x-values
    */
-  @Override
-  public double[][] getUnshiftedXValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getUnshiftedXValues(this, policy);
-  }
 
   /**
    * Returns unshifted y-value arrays with given policy.
@@ -2510,10 +2496,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
    * @param policy policy to get values
    * @return arrays of unshifted y-values
    */
-  @Override
-  public double[][] getUnshiftedYValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getUnshiftedYValues(this, policy);
-  }
 
   /**
    * Returns the main stride.
@@ -2775,36 +2757,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
   protected boolean matches(
       final int col, final int row, String columnType, SGDataValueHistory value, final double d) {
     return SGDataViewerUtility.matches(col, row, columnType, value, d);
-  }
-
-  @Override
-  public double[][] getXValueArray(final boolean all) {
-    return SGDataViewerUtility.getXValueArray(this, all);
-  }
-
-  @Override
-  public double[][] getXValueArray(boolean all, boolean useCache, boolean removeInvalidValues) {
-    return SGDataViewerUtility.getXValueArray(this, all, useCache, removeInvalidValues);
-  }
-
-  @Override
-  public double[][] getXValueArray(boolean all, boolean useCache) {
-    return SGDataViewerUtility.getXValueArray(this, all, useCache);
-  }
-
-  @Override
-  public double[][] getYValueArray(final boolean all) {
-    return SGDataViewerUtility.getYValueArray(this, all);
-  }
-
-  @Override
-  public double[][] getYValueArray(boolean all, boolean useCache, boolean removeInvalidValues) {
-    return SGDataViewerUtility.getYValueArray(this, all, useCache, removeInvalidValues);
-  }
-
-  @Override
-  public double[][] getYValueArray(boolean all, boolean useCache) {
-    return SGDataViewerUtility.getYValueArray(this, all, useCache);
   }
 
   @Override

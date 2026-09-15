@@ -2791,35 +2791,17 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     }
   }
 
-  @Override
-  public double[][] getXValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getXValues(this, policy);
-  }
-
-  @Override
-  public double[][] getYValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getYValues(this, policy);
-  }
-
   /**
    * Returns unshifted x-value arrays with given policy.
    *
    * @param policy policy to get values
    */
-  @Override
-  public double[][] getUnshiftedXValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getUnshiftedXValues(this, policy);
-  }
 
   /**
    * Returns unshifted y-value arrays with given policy.
    *
    * @param policy policy to get values
    */
-  @Override
-  public double[][] getUnshiftedYValueArray(SGSXYDataBufferPolicy policy) {
-    return SGDataBufferUtility.getUnshiftedYValues(this, policy);
-  }
 
   /**
    * Returns arrays of lower error values with given policy.
@@ -3256,36 +3238,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     }
 
     return ret;
-  }
-
-  @Override
-  public double[][] getXValueArray(final boolean all) {
-    return SGDataViewerUtility.getXValueArray(this, all);
-  }
-
-  @Override
-  public double[][] getXValueArray(boolean all, boolean useCache, boolean removeInvalidValues) {
-    return SGDataViewerUtility.getXValueArray(this, all, useCache, removeInvalidValues);
-  }
-
-  @Override
-  public double[][] getXValueArray(boolean all, boolean useCache) {
-    return SGDataViewerUtility.getXValueArray(this, all, useCache);
-  }
-
-  @Override
-  public double[][] getYValueArray(final boolean all) {
-    return SGDataViewerUtility.getYValueArray(this, all);
-  }
-
-  @Override
-  public double[][] getYValueArray(boolean all, boolean useCache, boolean removeInvalidValues) {
-    return SGDataViewerUtility.getYValueArray(this, all, useCache, removeInvalidValues);
-  }
-
-  @Override
-  public double[][] getYValueArray(boolean all, boolean useCache) {
-    return SGDataViewerUtility.getYValueArray(this, all, useCache);
   }
 
   @Override
