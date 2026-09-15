@@ -30,20 +30,27 @@ Package sizes and JaCoCo instruction coverage:
 ## 2. Architecture
 
 ### 2.1 Constants + static star imports break the layering (Critical)
+**RESOLVED (2026-09-15):** all upward static constant imports below
+`application` (307 in `base`, 646 in `data`, 42 in `figure`) were
+analyzed and turned out to be entirely unused, so they were removed;
+no constants needed to be moved.
 
 - 45 `*Constants` classes across `base`/`data`/`figure`/`application`,
   referenced via **3,742** `import static ...Constants.*` statements
-- Constants leak back down the layers: `base` -> `figure` (241 sites)
-  and `base` -> `application` (66), `data` -> `figure` (532) and
-  `data` -> `application` (114), `figure` -> `application` (42)
-- Worst case: `SGAnimationThread` wildcard-static-imports from 31 files
-  in all four packages
-- Practical impact: `base`/`data` cannot be reused or tested in
-  isolation, and locating the owning package of a given constant
-  (e.g. `KEY_FRAME_RATE`) requires searching all Constants files
-- Mitigation: moving constants is a mechanical, compiler-verified
-  rename; start by consolidating into `base` the constants that `base`
-  itself references
+- ~~Constants leak back down the layers~~ (resolved): `base` ->
+  `figure` (241 sites), `base` -> `application` (66),
+  `data` -> `figure` (532), `data` -> `application` (114) and
+  `figure` -> `application` (42) were all unused wildcard imports
+  that could be removed without moving any constant
+- Worst case example from the review: `SGAnimationThread`
+  wildcard-static-imported from 31 files in all four packages
+- Practical impact during the review: `base`/`data` could not be
+  reused or tested in isolation, and locating the owning package of a
+  given constant (e.g. `KEY_FRAME_RATE`) required searching all
+  Constants files
+- Resolution: the 995 upward import lines were removed in three
+  commits; the lower three layers no longer reference upper layers
+  through static imports
 
 ### 2.2 Backend-tripled parallel inheritance in `data` (Critical)
 
@@ -200,9 +207,10 @@ coverage level.
    trip tests. Remaining candidates: the figure-level column type
    updater, the drawing window alignment utility and the data handler
    interactions
-2. **Fix the static-constant dependency direction (2.1)**: move the
-   307 `base`-side static imports of `figure`/`application` constants
-   into `base`. Mechanical and low risk
+2. ~~Fix the static-constant dependency direction (2.1)~~ **DONE
+   (2026-09-15)**: the upward static imports in `base` (307), `data`
+   (646) and `figure` (42) were all unused and were simply removed;
+   no constants needed to be moved
 3. **Consolidate the `data` triple hierarchy (2.2)**: pull common logic
    into intermediate base classes
 4. **Extract file operation logic from `SGMainFunctions.openFile` and
