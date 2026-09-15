@@ -15,10 +15,10 @@ The overall instruction coverage measured by JaCoCo is **33.4%**.
 | `com.github...lib.hdf5` | 38.6% | 6 |
 | `jp...samuraigraph.base` | 40.1% | 30 |
 | `jp...samuraigraph.data` | 33.8% | 59 |
-| `jp...samuraigraph.figure` | 35.0% | 52 |
+| `jp...samuraigraph.figure` | 35.0% | 53 |
 | `jp...samuraigraph.application` | 20.0% | 20 |
 
-- 154 test files / 1392 test executions against 624 main files
+- 155 test files / 1393 test executions against 624 main files
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes
@@ -32,7 +32,9 @@ The overall instruction coverage measured by JaCoCo is **33.4%**.
   click handling of the group based on the mouse coordinates is
   keyed against the in-graph group set, and the animation dialog is
   constructed on a real window and disposed
-- The full family of the figure property dialogs (the legend, the
+- The significant difference drawing element can be constructed
+  as a headless stub with the magnification override, and the
+  full family of the figure property dialogs (the legend, the
   arrows, the axis, the axis scaling, the color bar, the shapes,
   the timing lines, the significant differences and the strings)
   are constructed on the EDT, the data property dialogs of the
