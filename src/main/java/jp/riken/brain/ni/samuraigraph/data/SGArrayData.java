@@ -39,6 +39,9 @@ public abstract class SGArrayData extends SGData {
   /** The stride for the tick labels. */
   protected SGIntegerSeriesSet mTickLabelStride = null;
 
+  /** The stride of data arrays. */
+  protected SGIntegerSeriesSet mStride = null;
+
   /** The default constructor. */
   public SGArrayData() {
     super();
@@ -461,5 +464,14 @@ public abstract class SGArrayData extends SGData {
     } else {
       return this.getPointsNumber();
     }
+  }
+
+  /** Returns the main stride. */
+  public SGIntegerSeriesSet getMainStride() {
+    SGIntegerSeriesSet ret = null;
+    if (this.isStrideAvailable()) {
+      ret = this.mStride;
+    }
+    return ret;
   }
 }

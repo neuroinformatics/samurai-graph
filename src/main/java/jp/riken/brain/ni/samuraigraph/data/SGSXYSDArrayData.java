@@ -1288,15 +1288,6 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
    * @return the main stride
    */
   @Override
-  public SGIntegerSeriesSet getMainStride() {
-    SGIntegerSeriesSet ret = null;
-    if (this.isStrideAvailable()) {
-      ret = this.mStride;
-    }
-    return ret;
-  }
-
-  @Override
   public SGDate[] getDateArray(boolean all) {
     // always returns null
     return null;

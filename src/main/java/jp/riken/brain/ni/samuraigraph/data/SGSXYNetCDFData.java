@@ -64,7 +64,6 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
   protected SGNetCDFVariable mTickLabelHolderVariable = null;
 
   /** The stride of array. */
-  protected SGIntegerSeriesSet mStride = null;
 
   /** The number format state. */
   private final SGXYNumberFormat mFormat = new SGXYNumberFormat();

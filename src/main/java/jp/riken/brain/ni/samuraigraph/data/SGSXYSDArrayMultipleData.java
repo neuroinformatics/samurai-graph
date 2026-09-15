@@ -2537,15 +2537,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
    *
    * @return the main stride
    */
-  @Override
-  public SGIntegerSeriesSet getMainStride() {
-    SGIntegerSeriesSet ret = null;
-    if (this.isStrideAvailable()) {
-      ret = this.mStride;
-    }
-    return ret;
-  }
-
   /**
    * Returns arrays of lower error values with given policy.
    *

@@ -79,7 +79,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   protected boolean mIsSingleVariableDateFlag = false;
 
   /** The stride of array. */
-  protected SGIntegerSeriesSet mStride = null;
 
   /** Indices of the dimension. */
   protected int[] mDimensionIndices = null;

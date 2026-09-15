@@ -79,7 +79,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   protected SGMDArrayPickUpDimensionInfo mPickUpDimensionInfo = null;
 
   /** The stride of array. */
-  protected SGIntegerSeriesSet mStride = null;
 
   /** The number format state. */
   private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
@@ -2868,16 +2867,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   @Override
   public double[][] getUnshiftedYValueArray(SGSXYDataBufferPolicy policy) {
     return SGDataBufferUtility.getUnshiftedYValues(this, policy);
-  }
-
-  /** Returns the main stride. */
-  @Override
-  public SGIntegerSeriesSet getMainStride() {
-    SGIntegerSeriesSet ret = null;
-    if (this.isStrideAvailable()) {
-      ret = this.mStride;
-    }
-    return ret;
   }
 
   /**

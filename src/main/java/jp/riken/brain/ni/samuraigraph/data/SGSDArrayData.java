@@ -39,7 +39,6 @@ public abstract class SGSDArrayData extends SGArrayData {
   private static final Logger logger = LogManager.getLogger(SGSDArrayData.class);
 
   /** The stride of an array. */
-  protected SGIntegerSeriesSet mStride = null;
 
   /** The default constructor. */
   public SGSDArrayData() {

@@ -57,7 +57,6 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
   protected SGMDArrayVariable mTickLabelHolderVariable = null;
 
   /** The stride of array. */
-  protected SGIntegerSeriesSet mStride = null;
 
   /** The number format state. */
   private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
@@ -1293,16 +1292,6 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
   @Override
   public boolean hasEffectiveStride() {
     return SGDataViewerUtility.hasEffectiveStride(this);
-  }
-
-  /** Returns the main stride. */
-  @Override
-  public SGIntegerSeriesSet getMainStride() {
-    SGIntegerSeriesSet ret = null;
-    if (this.isStrideAvailable()) {
-      ret = this.mStride;
-    }
-    return ret;
   }
 
   @Override
