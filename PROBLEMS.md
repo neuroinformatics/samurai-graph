@@ -62,6 +62,19 @@ no constants needed to be moved.
   incrementally, starting from the next bug fix that touches several
   backends
 
+**Consolidation progress (as of 2026-09-15):** the following
+duplicated members have been unified.
+
+- `SGXYNumberFormat` (package-private holder shared by the six SXY
+  data classes): shift, exponent and decimal places, extended with
+  the date format; the MDArray classes intentionally decode dates
+  elsewhere, so their date handling stays per backend
+- `SGArrayData`: the tick label stride state with the
+  clone-on-read getter and its setter, and the string number
+  getter
+- `SGISXYTypeData`: the tick label value indices getter as a
+  default method using the interface-facing accessors
+
 A `javap`-level API analysis of the SXY multiple triplet (member count
 including package-private, 2026-09-15):
 
