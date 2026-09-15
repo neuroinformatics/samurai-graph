@@ -525,7 +525,7 @@
         <dependency>
             <groupId>io.jhdf</groupId>
             <artifactId>jhdf</artifactId>
-            <version>0.12.0</version>
+            <version>0.13.0</version>
         </dependency>
 
         <!-- MATLAB file I/O -->
