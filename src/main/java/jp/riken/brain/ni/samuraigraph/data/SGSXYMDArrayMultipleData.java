@@ -1804,31 +1804,20 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       return false;
     }
 
-    // set pick up information
-    this.setPickUpDimensionInfo(info);
-
     // set column types
     String[] columns = new String[cols.length];
     for (int ii = 0; ii < columns.length; ii++) {
       columns[ii] = cols[ii].getColumnType();
     }
-    if (info != null) {
-      if (!this.setColumnTypeDimensionPicked(columns)) {
-        // clears pick up information
-        this.setPickUpDimensionInfo(null);
-        return false;
-      }
-      return true;
-    } else {
-      return this.setColumnTypeDimensionNotPicked(columns);
-    }
+    return this.setColumnTypeWithPickUp(columns, info);
   }
 
   boolean callSuperWriteProperty(final Element el, final SGExportParameter type) {
     return super.writeProperty(el, type);
   }
 
-  private boolean setColumnTypeDimensionPicked(String[] columns) {
+  @Override
+  public boolean setColumnTypeDimensionPicked(String[] columns) {
     List<SGMDArrayVariable> xVarList = new ArrayList<SGMDArrayVariable>();
     List<SGMDArrayVariable> yVarList = new ArrayList<SGMDArrayVariable>();
     List<SGMDArrayVariable> lVarList = new ArrayList<SGMDArrayVariable>();
@@ -1886,7 +1875,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return true;
   }
 
-  private boolean setColumnTypeDimensionNotPicked(String[] columns) {
+  public boolean setColumnTypeDimensionNotPicked(String[] columns) {
     List<SGMDArrayVariable> xVarList = new ArrayList<SGMDArrayVariable>();
     List<SGMDArrayVariable> yVarList = new ArrayList<SGMDArrayVariable>();
     List<SGMDArrayVariable> lVarList = new ArrayList<SGMDArrayVariable>();

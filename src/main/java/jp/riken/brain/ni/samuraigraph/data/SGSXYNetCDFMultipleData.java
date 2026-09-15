@@ -1476,20 +1476,11 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * @param info the information of picked up dimension
    */
   public boolean setColumnType(String[] columns, SGPickUpDimensionInfo info) {
-    this.setPickUpDimensionInfo(info);
-    if (info != null) {
-      if (!this.setColumnTypeDimensionPicked(columns)) {
-        // clears pick up information
-        this.setPickUpDimensionInfo(null);
-        return false;
-      }
-      return true;
-    } else {
-      return this.setColumnTypeDimensionNotPicked(columns);
-    }
+    return this.setColumnTypeWithPickUp(columns, info);
   }
 
-  private boolean setColumnTypeDimensionPicked(String[] columns) {
+  @Override
+  public boolean setColumnTypeDimensionPicked(String[] columns) {
     List<SGNetCDFVariable> xVarList = new ArrayList<SGNetCDFVariable>();
     List<SGNetCDFVariable> yVarList = new ArrayList<SGNetCDFVariable>();
     List<SGNetCDFVariable> lVarList = new ArrayList<SGNetCDFVariable>();
@@ -1581,7 +1572,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return true;
   }
 
-  private boolean setColumnTypeDimensionNotPicked(String[] columns) {
+  public boolean setColumnTypeDimensionNotPicked(String[] columns) {
     List<SGNetCDFVariable> xVarList = new ArrayList<SGNetCDFVariable>();
     List<SGNetCDFVariable> yVarList = new ArrayList<SGNetCDFVariable>();
     List<SGNetCDFVariable> lVarList = new ArrayList<SGNetCDFVariable>();
