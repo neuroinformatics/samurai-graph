@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesHolder;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;

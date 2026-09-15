@@ -1,9 +1,11 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import java.util.List;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGColorMap;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
+import jp.riken.brain.ni.samuraigraph.figure.SGColorMapManager;
+import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
 
 /** An interface for the observers of line style dialog. */
 public interface SGILineStyleDialogObserver {

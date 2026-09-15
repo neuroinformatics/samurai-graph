@@ -61,6 +61,8 @@ import jp.riken.brain.ni.samuraigraph.data.SGPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYMDArrayMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYSDArrayMultipleData;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIDataPropertyDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISXYDataDialogObserver;
 
 /** A dialog to set the properties of two-dimensional scalar type data. */
 public class SGPropertyDialogSXYData extends SGDataDialog implements SGITwoAxesDialog {

@@ -38,6 +38,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGFigureElementGrid.GridProperties;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIXYFigureDialogObserver;
 
 /** An XY-type figure. */
 public class SGXYFigure extends SGFigure implements SGIXYFigureDialogObserver {

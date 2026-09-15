@@ -5,6 +5,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.base.SGStyle;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGILineStylePropertyDialogObserver;
 import org.w3c.dom.Element;
 
 public interface SGIElementGroupSetMultipleSXY

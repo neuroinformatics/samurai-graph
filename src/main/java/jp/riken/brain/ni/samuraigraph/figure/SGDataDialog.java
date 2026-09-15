@@ -22,6 +22,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupDialog;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIDataPropertyDialogObserver;
 
 /** A base dialog class to set the properties of data objects. */
 public abstract class SGDataDialog extends SGPropertyDialog {

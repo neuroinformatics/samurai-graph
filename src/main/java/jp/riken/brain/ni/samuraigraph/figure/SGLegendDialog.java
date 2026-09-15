@@ -24,6 +24,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGILegendDialogObserver;
 
 /** A dialog to set the properties of legend. */
 public class SGLegendDialog extends SGPropertyDialog implements SGITwoAxesDialog {

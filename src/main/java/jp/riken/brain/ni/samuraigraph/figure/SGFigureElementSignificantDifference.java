@@ -67,6 +67,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility.MouseDragResult;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementSignificantDifference.SigDiffProperties;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISignificantDifferenceDialogObserver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

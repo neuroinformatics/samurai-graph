@@ -28,6 +28,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIAxisScaleDialogObserver;
 
 /** The dialog for axis scale symbol. */
 public class SGAxisScaleDialog extends SGPropertyDialog implements SGITwoAxesDialog {

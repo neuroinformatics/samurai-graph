@@ -24,6 +24,8 @@ import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupDialog;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIArrowPanelObserver;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIVXYDataDialogObserver;
 
 /** A dialog to set the properties of two-dimensional vector type data. */
 public class SGPropertyDialogVXYData extends SGDataDialog implements SGITwoAxesDialog {

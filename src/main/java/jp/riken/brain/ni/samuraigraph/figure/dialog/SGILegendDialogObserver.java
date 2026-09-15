@@ -1,11 +1,11 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGIPropertyDialogObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesHolder;
 
 /** An observer of the property dialog for legend. */
-interface SGILegendDialogObserver extends SGIPropertyDialogObserver, SGITwoAxesHolder {
+public interface SGILegendDialogObserver extends SGIPropertyDialogObserver, SGITwoAxesHolder {
 
   /**
    * @return

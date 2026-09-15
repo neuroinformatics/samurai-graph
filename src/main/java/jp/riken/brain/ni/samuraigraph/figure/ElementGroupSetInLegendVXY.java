@@ -20,6 +20,7 @@ import jp.riken.brain.ni.samuraigraph.data.*;
 import jp.riken.brain.ni.samuraigraph.data.SGDataStrideUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGIVXYTypeData;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetInGraphVXY.ElementGroupSetInVXYGraphProperties;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIVXYDataDialogObserver;
 
 class ElementGroupSetInLegendVXY extends ElementGroupSetInLegend
     implements SGIElementGroupSetVXY, SGIVXYDataDialogObserver {

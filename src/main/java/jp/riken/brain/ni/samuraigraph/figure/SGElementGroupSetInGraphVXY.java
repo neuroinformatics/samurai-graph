@@ -48,6 +48,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGVXYMDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGVXYSDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGXYSimpleDoubleValueIndexBlock;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIVXYDataDialogObserver;
 import org.w3c.dom.Element;
 
 /** */

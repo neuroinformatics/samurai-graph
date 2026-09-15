@@ -35,6 +35,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayData;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupBarInGraph.BarInGraph;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIStrokeEditDialogObserver;
 import org.w3c.dom.Element;
 
 /** The child object of the scalar type XY graph. */

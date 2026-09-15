@@ -18,6 +18,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
 import jp.riken.brain.ni.samuraigraph.data.*;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISXYZDataDialogObserver;
 
 class ElementGroupSetInLegendSXYZ extends ElementGroupSetInLegend
     implements SGIElementGroupSetSXYZ, SGISXYZDataDialogObserver {

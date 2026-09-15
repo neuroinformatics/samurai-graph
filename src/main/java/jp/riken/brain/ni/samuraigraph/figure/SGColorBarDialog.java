@@ -26,6 +26,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIColorBarDialogObserver;
 
 /** Property dialog for the color bar. */
 public class SGColorBarDialog extends SGAxisDialog implements ItemListener, SGITwoAxesDialog {

@@ -40,6 +40,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGAxisElement.AxisScaleChangeListener;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementScale.ScaleProperties;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIAxisScaleDialogObserver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

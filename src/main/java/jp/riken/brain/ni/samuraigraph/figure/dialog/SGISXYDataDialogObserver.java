@@ -1,10 +1,11 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import java.awt.Color;
 import jp.riken.brain.ni.samuraigraph.base.SGIPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGITwoAxesHolder;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.data.SGPickUpDimensionInfo;
+import jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants;
 
 /** An observer of the property dialog for two-dimensional scalar type data. */
 public interface SGISXYDataDialogObserver

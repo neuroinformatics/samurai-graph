@@ -22,6 +22,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIAxisBreakDialogObserver;
 
 /** A dialog to set the properties of axis break symbols. */
 public class SGAxisBreakDialog extends SGPropertyDialog implements SGITwoAxesDialog {

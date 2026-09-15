@@ -72,6 +72,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGSXYMDArrayMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYSDArrayMultipleData;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetInGraphSXY.SXYElementGroupSetPropertiesInFigureElement;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISXYDataDialogObserver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import ucar.nc2.Dimension;

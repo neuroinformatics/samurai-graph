@@ -37,6 +37,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIXYFigureDialogObserver;
 
 /** A property dialog for figures with two-dimensional data. */
 public class SGXYFigureDialog extends SGPropertyDialog implements SGITwoAxesDialog {

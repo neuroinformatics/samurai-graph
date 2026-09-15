@@ -61,6 +61,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGNetCDFVariable;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYSDArrayMultipleData;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIDataPropertyDialogObserver;
 import org.w3c.dom.Element;
 
 /** The class for the set of drawing elements for data objects. */

@@ -50,6 +50,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGSXYZNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYZSDArrayData;
 import jp.riken.brain.ni.samuraigraph.data.SGXYSimpleDoubleValueIndexBlock;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupPseudocolorMap.PseudocolorMapRectangle;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISXYZDataDialogObserver;
 import org.w3c.dom.Element;
 
 /** A class for the scalar XYZ-type data object in graph. */

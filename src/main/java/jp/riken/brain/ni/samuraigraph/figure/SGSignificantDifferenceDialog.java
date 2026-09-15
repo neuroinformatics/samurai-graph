@@ -19,6 +19,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISignificantDifferenceDialogObserver;
 
 /** A dialog to set the properties of significant difference symbols. */
 public class SGSignificantDifferenceDialog extends SGPropertyDialog implements SGITwoAxesDialog {

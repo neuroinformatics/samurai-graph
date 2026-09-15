@@ -40,6 +40,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIAxisDialogObserver;
 
 /** A dialog to set the properties of axes. */
 public class SGAxisDialog extends SGPropertyDialog {

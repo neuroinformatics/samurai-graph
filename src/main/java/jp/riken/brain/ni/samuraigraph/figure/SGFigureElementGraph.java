@@ -55,6 +55,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGIVXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISXYDataDialogObserver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

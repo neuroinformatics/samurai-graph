@@ -17,6 +17,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2f;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeSingleData;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIStrokeEditDialogObserver;
 import org.w3c.dom.Element;
 
 /** A group of lines in the graph object. */

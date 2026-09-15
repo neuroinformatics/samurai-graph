@@ -11,6 +11,7 @@ import jp.riken.brain.ni.samuraigraph.data.*;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISXYDataDialogObserver;
 
 class SGSXYDataDialogBuilder {
 

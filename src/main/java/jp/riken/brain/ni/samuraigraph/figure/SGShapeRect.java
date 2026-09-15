@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.*;
 import jp.riken.brain.ni.samuraigraph.base.SGFigureElementAxisConstants;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIRectangularShapeDialogObserver;
 import org.w3c.dom.Element;
 
 class SGShapeRect extends SGSimpleRectangle2D

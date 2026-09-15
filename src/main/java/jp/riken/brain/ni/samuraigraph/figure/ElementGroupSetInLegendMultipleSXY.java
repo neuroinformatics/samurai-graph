@@ -28,6 +28,7 @@ import jp.riken.brain.ni.samuraigraph.data.*;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
 import jp.riken.brain.ni.samuraigraph.figure.SGColorMapManager.HueColorMap;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetInGraphSXYMultiple.MultipleSXYElementGroupSetPropertiesInFigureElement;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISXYDataDialogObserver;
 import org.w3c.dom.Element;
 
 class ElementGroupSetInLegendMultipleSXY extends ElementGroupSetInLegendSXY

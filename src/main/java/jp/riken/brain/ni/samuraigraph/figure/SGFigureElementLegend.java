@@ -76,6 +76,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGISXYZTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGIVXYTypeData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGILegendDialogObserver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

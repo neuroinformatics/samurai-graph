@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.*;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIArrowDialogObserver;
 import org.w3c.dom.Element;
 
 class SGShapeArrow extends SGSimpleArrow2D

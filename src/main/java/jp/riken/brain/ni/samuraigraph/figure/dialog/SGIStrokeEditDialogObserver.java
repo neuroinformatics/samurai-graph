@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 /** An observer of the property dialog for line stroke. */
 public interface SGIStrokeEditDialogObserver {
