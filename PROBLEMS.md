@@ -6,7 +6,7 @@ Items are ordered by priority.
 ## 1. Test Coverage
 
 
-The overall instruction coverage measured by JaCoCo is **21.7%**.
+The overall instruction coverage measured by JaCoCo is **22.9%**.
 
 | Package | Coverage | Test files |
 |---------|----------|-----------|
@@ -15,10 +15,10 @@ The overall instruction coverage measured by JaCoCo is **21.7%**.
 | `com.github...lib.hdf5` | 36.2% | 7 |
 | `jp...samuraigraph.base` | 33.5% | 25 |
 | `jp...samuraigraph.data` | 33.7% | 58 |
-| `jp...samuraigraph.figure` | 13.8% | 33 |
+| `jp...samuraigraph.figure` | 16.5% | 37 |
 | `jp...samuraigraph.application` | 9.0% | 15 |
 
-- 137 test files / 1330 test executions against 624 main files
+- 139 test files / 1336 test executions against 624 main files
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes
@@ -57,5 +57,5 @@ The overall instruction coverage measured by JaCoCo is **21.7%**.
 ## Recommended Priority
 
 1. **Thicken tests**: keep extending the integration and property
-   round trip tests. Remaining candidates: the mouse interaction
-   details of the remaining in-graph group set implementations
+   round trip tests. Remaining candidates: the property dialogs of
+   the legend and the dialogs of the remaining groups
