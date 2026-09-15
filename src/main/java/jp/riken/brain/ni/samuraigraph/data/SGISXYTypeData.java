@@ -94,6 +94,11 @@ public interface SGISXYTypeData extends SGIXYData {
     return SGUtilityNumber.toIntArray(len);
   }
 
+  /** Returns whether an effective stride is applied. */
+  public default boolean hasEffectiveStride() {
+    return SGDataViewerUtility.hasEffectiveStride(this);
+  }
+
   /** Returns the shift. */
   public SGTuple2d getShift();
 

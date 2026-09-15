@@ -171,4 +171,9 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
   public double[][] getYValueArray(final boolean all, final boolean useCache);
 
   public void addSingleDimensionEditedDataValue(SGDataValueHistory dataValue);
+
+  /** Returns the edited value for the data viewer. */
+  public default Double getDataViewerValue(final String columnType, final int row, final int col) {
+    return SGDataViewerUtility.getDataViewerValue(this, columnType, row, col);
+  }
 }

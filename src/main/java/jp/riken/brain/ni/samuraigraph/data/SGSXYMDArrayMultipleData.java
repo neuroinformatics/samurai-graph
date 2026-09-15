@@ -3060,11 +3060,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   }
 
   @Override
-  public Double getDataViewerValue(String columnType, int row, int col) {
-    return SGDataViewerUtility.getDataViewerValue(this, columnType, row, col);
-  }
-
-  @Override
   public double getXValueAt(final int childIndex, final int arrayIndex) {
     SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
     double[] values = sxyArray[childIndex].getXValueArray(false);

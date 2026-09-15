@@ -3237,11 +3237,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
   }
 
   @Override
-  public Double getDataViewerValue(String columnType, final int row, final int col) {
-    return SGDataViewerUtility.getDataViewerValue(this, columnType, row, col);
-  }
-
-  @Override
   public double getXValueAt(final int childIndex, final int arrayIndex) {
     SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
     try {
