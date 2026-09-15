@@ -1658,18 +1658,4 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
   protected MLDouble setEditedValues(SGMDArrayVariable var, MLDouble array) {
     return array;
   }
-
-  /** Returns the indices of tick labels. */
-  @Override
-  public int[] getTickLabelValueIndices() {
-    if (!this.isTickLabelAvailable()) {
-      return null;
-    }
-    if (this.isStrideAvailable()) {
-      return this.mTickLabelStride.getNumbers();
-    } else {
-      final int len = this.getPointsNumber();
-      return SGUtilityNumber.toIntArray(len);
-    }
-  }
 }

@@ -31,7 +31,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoDimensionalArrayIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
@@ -2924,19 +2923,5 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       }
     }
     return ret;
-  }
-
-  /** Returns the indices of tick labels. */
-  @Override
-  public int[] getTickLabelValueIndices() {
-    if (!this.isTickLabelAvailable()) {
-      return null;
-    }
-    if (this.isStrideAvailable()) {
-      return this.mTickLabelStride.getNumbers();
-    } else {
-      final int len = this.getPointsNumber();
-      return SGUtilityNumber.toIntArray(len);
-    }
   }
 }

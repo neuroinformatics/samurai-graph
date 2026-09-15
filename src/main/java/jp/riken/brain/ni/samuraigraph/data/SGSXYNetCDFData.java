@@ -1782,18 +1782,4 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
     // do nothing
     return array;
   }
-
-  /** Returns the indices of tick labels. */
-  @Override
-  public int[] getTickLabelValueIndices() {
-    if (!this.isTickLabelAvailable()) {
-      return null;
-    }
-    if (this.isStrideAvailable()) {
-      return this.mTickLabelStride.getNumbers();
-    } else {
-      final int len = this.getPointsNumber();
-      return SGUtilityNumber.toIntArray(len);
-    }
-  }
 }

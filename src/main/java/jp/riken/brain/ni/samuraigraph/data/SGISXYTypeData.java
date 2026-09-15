@@ -3,6 +3,7 @@ package jp.riken.brain.ni.samuraigraph.data;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
+import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 
 /** An interface for Scalar-type XY data. */
 public interface SGISXYTypeData extends SGIXYData {
@@ -73,8 +74,25 @@ public interface SGISXYTypeData extends SGIXYData {
   /** Returns the stride of the tick labels. */
   public SGIntegerSeriesSet getTickLabelStride();
 
-  /** Returns the indices of tick labels. */
-  public int[] getTickLabelValueIndices();
+  /**
+   * Returns the indices of tick labels.
+   *
+   * <p>If the stride is available, returns the tick label indices in the tick label stride, and
+   * otherwise the indices of all points.
+   */
+  default int[] getTickLabelValueIndices() {
+    if (!this.isTickLabelAvailable()) {
+      return null;
+    }
+    if (this instanceof SGArrayData arrayData && arrayData.isStrideAvailable()) {
+      final SGIntegerSeriesSet tickLabelStride = this.getTickLabelStride();
+      if (tickLabelStride != null) {
+        return tickLabelStride.getNumbers();
+      }
+    }
+    final int len = this.getPointsNumber();
+    return SGUtilityNumber.toIntArray(len);
+  }
 
   /** Returns the shift. */
   public SGTuple2d getShift();
