@@ -70,8 +70,10 @@ duplicated members have been unified.
   the date format; the MDArray classes intentionally decode dates
   elsewhere, so their date handling stays per backend
 - `SGArrayData`: the tick label stride state with the
-  clone-on-read getter and its setter, and the string number
-  getter
+  clone-on-read getter and its setter, the string number getter,
+  the array stride state with the main stride getter, the stride
+  based points number getter and the cache restore logic shared
+  through the static helpers on `SGDataMiscUtility`
 - `SGISXYTypeData`: the tick label value indices getter as a
   default method using the interface-facing accessors
 
