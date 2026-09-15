@@ -6,19 +6,19 @@ Items are ordered by priority.
 ## 1. Test Coverage
 
 
-The overall instruction coverage measured by JaCoCo is **21.4%**.
+The overall instruction coverage measured by JaCoCo is **21.7%**.
 
 | Package | Coverage | Test files |
 |---------|----------|-----------|
 | `com.github...lib.mdarray` | 97.4% | 4 |
 | `jp...samuraigraph.export` | 68.2% | 1 |
 | `com.github...lib.hdf5` | 36.2% | 7 |
-| `jp...samuraigraph.base` | 31.8% | 23 |
-| `jp...samuraigraph.data` | 33.5% | 56 |
+| `jp...samuraigraph.base` | 33.5% | 25 |
+| `jp...samuraigraph.data` | 33.7% | 58 |
 | `jp...samuraigraph.figure` | 13.8% | 33 |
-| `jp...samuraigraph.application` | 8.9% | 14 |
+| `jp...samuraigraph.application` | 9.0% | 15 |
 
-- 133 test files / 1322 test executions against 624 main files
+- 137 test files / 1330 test executions against 624 main files
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
 - The heavy Swing/AWT coupling limits coverage of the GUI classes
