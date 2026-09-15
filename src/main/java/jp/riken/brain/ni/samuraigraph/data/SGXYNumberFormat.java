@@ -17,6 +17,9 @@ class SGXYNumberFormat {
   /** The shift value. */
   private SGTuple2d mShift = new SGTuple2d();
 
+  /** The date format string. */
+  private String mDateFormat = "";
+
   /** The default constructor. */
   SGXYNumberFormat() {
     super();
@@ -73,5 +76,19 @@ class SGXYNumberFormat {
       throw new IllegalArgumentException("shift == null");
     }
     this.mShift = (SGTuple2d) shift.clone();
+  }
+
+  /** Returns the date format string. */
+  public String getDateFormat() {
+    return this.mDateFormat;
+  }
+
+  /**
+   * Sets the date format string.
+   *
+   * @param format the date format string
+   */
+  public void setDateFormat(final String format) {
+    this.mDateFormat = format;
   }
 }

@@ -63,8 +63,6 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
   /** The variable for values that holds tick labels. */
   protected SGNetCDFVariable mTickLabelHolderVariable = null;
 
-  protected String mDateFormat = "";
-
   /** The stride of array. */
   protected SGIntegerSeriesSet mStride = null;
 
@@ -1510,12 +1508,12 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
 
   @Override
   public String getDateFormat() {
-    return this.mDateFormat;
+    return this.mFormat.getDateFormat();
   }
 
   @Override
   public void setDateFormat(String format) {
-    this.mDateFormat = format;
+    this.mFormat.setDateFormat(format);
   }
 
   /**

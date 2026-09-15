@@ -68,8 +68,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
   /** An array of column indices for tick label holders. */
   protected Integer[] mTickLabelHolderIndices = null;
 
-  protected String mDateFormat = "";
-
   /** The stride for the tick labels. */
   protected SGIntegerSeriesSet mTickLabelStride = null;
 
@@ -405,7 +403,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
               this.mSamplingRate);
       data.setDecimalPlaces(this.getDecimalPlaces());
       data.setExponent(this.getExponent());
-      data.setDateFormat(this.mDateFormat);
+      data.setDateFormat(this.getDateFormat());
       data.setShift(this.getShift());
 
       // sets the cache
@@ -2722,12 +2720,12 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
 
   @Override
   public String getDateFormat() {
-    return this.mDateFormat;
+    return this.mFormat.getDateFormat();
   }
 
   @Override
   public void setDateFormat(String format) {
-    this.mDateFormat = format;
+    this.mFormat.setDateFormat(format);
   }
 
   /**

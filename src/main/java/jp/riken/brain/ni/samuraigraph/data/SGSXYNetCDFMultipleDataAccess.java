@@ -127,7 +127,7 @@ class SGSXYNetCDFMultipleDataAccess {
         // sets attributes for tick labels
         data.setDecimalPlaces(owner.getDecimalPlaces());
         data.setExponent(owner.getExponent());
-        data.setDateFormat(owner.mDateFormat);
+        data.setDateFormat(owner.getDateFormat());
 
         // sets the stride of time
         data.setTimeStride(owner.mTimeStride);
@@ -280,7 +280,7 @@ class SGSXYNetCDFMultipleDataAccess {
         // sets attributes for tick labels
         data.setDecimalPlaces(owner.getDecimalPlaces());
         data.setExponent(owner.getExponent());
-        data.setDateFormat(owner.mDateFormat);
+        data.setDateFormat(owner.getDateFormat());
 
         // sets the stride of time
         data.setTimeStride(owner.mTimeStride);

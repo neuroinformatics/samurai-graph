@@ -53,8 +53,6 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
   /** The column index for values that holds tick labels. */
   protected Integer mTickLabelHolderIndex = null;
 
-  protected String mDateFormat = "";
-
   /** The stride for the tick labels. */
   protected SGIntegerSeriesSet mTickLabelStride = null;
 
@@ -402,7 +400,7 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
         return numCol.getStringArray(this.getDecimalPlaces(), this.getExponent(), stride);
       } else if (col instanceof SGDateDataColumn) {
         SGDateDataColumn dateCol = (SGDateDataColumn) col;
-        return dateCol.getStringArray(this.mDateFormat, stride);
+        return dateCol.getStringArray(this.getDateFormat(), stride);
       } else {
         return col.getStringArray(stride);
       }
@@ -1372,12 +1370,12 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
 
   @Override
   public String getDateFormat() {
-    return this.mDateFormat;
+    return this.mFormat.getDateFormat();
   }
 
   @Override
   public void setDateFormat(String format) {
-    this.mDateFormat = format;
+    this.mFormat.setDateFormat(format);
   }
 
   /**
