@@ -1677,21 +1677,6 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
   }
 
   @Override
-  public void restoreCache() {
-    final boolean all = false;
-    final boolean useCache = true;
-    this.getXValueArray(all, useCache);
-    this.getYValueArray(all, useCache);
-    if (this.isErrorBarAvailable()) {
-      this.getLowerErrorValueArray(all, useCache);
-      this.getUpperErrorValueArray(all, useCache);
-    }
-    if (this.isTickLabelAvailable()) {
-      this.getStringArray(all, useCache);
-    }
-  }
-
-  @Override
   public Double getXValueAt(final int index) {
     double[] values = this.getXValueArray(false);
     final double d = values[index];
@@ -1780,5 +1765,11 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
       NetcdfFormatWriter writer, String varName, Array array, final boolean all) {
     // do nothing
     return array;
+  }
+
+  /** Restores the cache. */
+  @Override
+  public void restoreCache() {
+    SGDataMiscUtility.restoreCache(this);
   }
 }

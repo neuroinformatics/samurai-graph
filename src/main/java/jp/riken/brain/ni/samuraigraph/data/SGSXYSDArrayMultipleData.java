@@ -2810,20 +2810,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
   }
 
   @Override
-  public void restoreCache() {
-    SGISXYTypeSingleData[] sxyArray = this.getSXYDataArray();
-    for (int ii = 0; ii < sxyArray.length; ii++) {
-      sxyArray[ii].restoreCache();
-    }
-
-    // updates the cache
-    SGDataViewerUtility.updateCache(this, sxyArray);
-
-    // disposes of data objects
-    SGDataMiscUtility.disposeSXYDataArray(sxyArray);
-  }
-
-  @Override
   public boolean hasDateTypeXVariable() {
     if (this.mXIndices.length != 1) {
       return false;
@@ -2914,5 +2900,11 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       }
     }
     return ret;
+  }
+
+  /** Restores the cache. */
+  @Override
+  public void restoreCache() {
+    SGDataMiscUtility.restoreCache(this);
   }
 }

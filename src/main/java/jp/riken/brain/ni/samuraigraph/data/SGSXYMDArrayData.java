@@ -1539,21 +1539,6 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
   }
 
   @Override
-  public void restoreCache() {
-    final boolean all = false;
-    final boolean useCache = true;
-    this.getXValueArray(all, useCache);
-    this.getYValueArray(all, useCache);
-    if (this.isErrorBarAvailable()) {
-      this.getLowerErrorValueArray(all, useCache);
-      this.getUpperErrorValueArray(all, useCache);
-    }
-    if (this.isTickLabelAvailable()) {
-      this.getStringArray(all, useCache);
-    }
-  }
-
-  @Override
   public Double getXValueAt(final int index) {
     double[] values = this.getXValueArray(false);
     return values[index];
@@ -1646,5 +1631,11 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
   @Override
   protected MLDouble setEditedValues(SGMDArrayVariable var, MLDouble array) {
     return array;
+  }
+
+  /** Restores the cache. */
+  @Override
+  public void restoreCache() {
+    SGDataMiscUtility.restoreCache(this);
   }
 }

@@ -1586,4 +1586,39 @@ public final class SGDataMiscUtility {
     infoMapUpd.put(SGDataInformationKeyConstants.KEY_COLUMN_INFO, colInfo.clone());
     return infoMapUpd;
   }
+
+  /**
+   * Restores the cache of a single SXY data object.
+   *
+   * @param data the single SXY data object
+   */
+  public static void restoreCache(final SGISXYTypeSingleData data) {
+    final boolean all = false;
+    final boolean useCache = true;
+    data.getXValueArray(all, useCache);
+    data.getYValueArray(all, useCache);
+    if (data.isErrorBarAvailable()) {
+      data.getLowerErrorValueArray(all, useCache);
+      data.getUpperErrorValueArray(all, useCache);
+    }
+    if (data.isTickLabelAvailable()) {
+      data.getStringArray(all, useCache);
+    }
+  }
+
+  /**
+   * Restores the cache of a multiple SXY data object.
+   *
+   * @param data the multiple SXY data object
+   */
+  public static void restoreCache(final SGISXYTypeMultipleData data) {
+    SGISXYTypeSingleData[] sxyArray = data.getSXYDataArray();
+    for (int ii = 0; ii < sxyArray.length; ii++) {
+      sxyArray[ii].restoreCache();
+    }
+    // updates the cache
+    SGDataViewerUtility.updateCache(data, sxyArray);
+    // disposes of data objects
+    disposeSXYDataArray(sxyArray);
+  }
 }
