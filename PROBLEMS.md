@@ -147,6 +147,14 @@ The dialog-in-model-package layout is also a main driver of the
 `data` -> `figure` backflow (see 2.1); the one-observer-per-dialog
 pattern could be merged into a common event notification abstraction.
 
+**Split progress (as of 2026-09-15):** the dialog side now lives in
+the dedicated `figure.dialog` subpackage: the twenty per-dialog
+Observer interfaces and the Swing dialog classes including the
+panels (34 classes in total, the former `figure` package remains
+for the drawing model, the constants and data side elements).
+
+### 2.5 `base` as a grab-bag (Medium)
+
 ### 2.5 `base` as a grab-bag (Medium)
 
 Although a primitive layer, `base` contains:
@@ -261,4 +269,7 @@ coverage level.
    `SGFileHandler`/`SGArchiveFileCreator` to make them
    headless-testable
 5. **Split `figure` into `figure/model` and `figure/dialog` (2.4)**;
-   unify the Observer interfaces afterwards
+   unify the Observer interfaces afterwards. **Partial progress:** the
+   Observer interfaces and the dialog classes are in `figure.dialog`
+   now; the remaining steps are the observer unification and, if
+   worthwhile, a further split of the drawing model side
