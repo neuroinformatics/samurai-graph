@@ -166,6 +166,12 @@ public abstract class SGArrayData extends SGData {
 
     List<SGDataValueHistory> editedDataValueList = new ArrayList<SGDataValueHistory>();
 
+    /** The decimal places for the tick labels. */
+    protected int mDecimalPlaces = 0;
+
+    /** The exponent for the tick labels. */
+    protected int mExponent = 0;
+
     /** The default constructor. */
     public ArrayDataProperties() {
       super();
@@ -184,6 +190,12 @@ public abstract class SGArrayData extends SGData {
         return false;
       }
       if (!SGUtility.equals(this.editedDataValueList, p.editedDataValueList)) {
+        return false;
+      }
+      if (this.mDecimalPlaces != p.mDecimalPlaces) {
+        return false;
+      }
+      if (this.mExponent != p.mExponent) {
         return false;
       }
       return true;

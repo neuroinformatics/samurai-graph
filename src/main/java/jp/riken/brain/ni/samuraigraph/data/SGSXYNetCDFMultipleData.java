@@ -923,10 +923,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
 
     protected String[] thNames = null;
 
-    protected int mDecimalPlaces = 0;
-
-    protected int mExponent = 0;
-
     protected SGNetCDFPickUpDimensionInfo mPickUpInfo = null;
 
     SGIntegerSeriesSet mStride = null;
@@ -963,12 +959,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         return false;
       }
       SXYNetCDFMultipleDataProperties p = (SXYNetCDFMultipleDataProperties) obj;
-      if (this.mDecimalPlaces != p.mDecimalPlaces) {
-        return false;
-      }
-      if (this.mExponent != p.mExponent) {
-        return false;
-      }
       return true;
     }
 

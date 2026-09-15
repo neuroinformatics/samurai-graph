@@ -849,10 +849,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
     protected String[] thNames = null;
 
-    protected int mDecimalPlaces = 0;
-
-    protected int mExponent = 0;
-
     protected SGMDArrayPickUpDimensionInfo mPickUpInfo = null;
 
     SGIntegerSeriesSet mStride = null;
@@ -889,12 +885,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
         return false;
       }
       SXYMDArrayMultipleDataProperties p = (SXYMDArrayMultipleDataProperties) obj;
-      if (this.mDecimalPlaces != p.mDecimalPlaces) {
-        return false;
-      }
-      if (this.mExponent != p.mExponent) {
-        return false;
-      }
       return true;
     }
 
