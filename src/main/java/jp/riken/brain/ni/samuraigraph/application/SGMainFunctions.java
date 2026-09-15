@@ -1646,36 +1646,32 @@ class SGMainFunctions implements ActionListener, WindowListener, SGConsoleComman
       for (File file : fileList) {
         String path = file.getAbsolutePath();
 
+        final FILE_TYPE type = SGOpenFileClassifier.classifyOpenFile(path);
+
         // property file?
-        final boolean propertyFlag =
-            SGApplicationUtility.hasExtension(path, PROPERTY_FILE_EXTENSION);
-        if (propertyFlag) {
+        if (FILE_TYPE.PROPERTY.equals(type)) {
           propertyFile = file;
           continue;
         }
 
         // archive file?
-        final boolean archiveFlag = SGApplicationUtility.hasExtension(path, ARCHIVE_FILE_EXTENSION);
-        if (archiveFlag) {
+        if (FILE_TYPE.DATASET.equals(type)) {
           archiveFile = file;
           continue;
         }
 
         // script file?
-        final boolean scriptFlag = SGApplicationUtility.hasExtension(path, SCRIPT_FILE_EXTENSION);
-        if (scriptFlag) {
+        if (FILE_TYPE.SCRIPT.equals(type)) {
           scriptFile = file;
           continue;
         }
 
         // image file?
-        boolean imageFlag = SGApplicationUtility.hasExtension(path, DRAWABLE_IMAGE_EXTENSIONS);
-        if (imageFlag) {
+        if (FILE_TYPE.IMAGE.equals(type)) {
           imageFile = file;
           continue;
         }
 
-        FILE_TYPE type = SGApplicationUtility.identifyDataFileType(path);
         if (FILE_TYPE.POSSIBLY_HDF5_DATA.equals(type)) {
           SGApplicationUtility.showHDF5ReadErrorMessageDialog(wnd, path);
           return false;
