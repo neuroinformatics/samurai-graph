@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
@@ -20,7 +20,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGSingleAxisSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGITimingLineDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 
 /** A dialog to set the properties of timing lines. */
 public class SGTimingLineDialog extends SGPropertyDialog implements SGISingleAxisDialog {

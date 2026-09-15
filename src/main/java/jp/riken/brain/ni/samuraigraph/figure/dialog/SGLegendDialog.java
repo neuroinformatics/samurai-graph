@@ -1,7 +1,8 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGLegendConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGPaintConstants.*;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -24,7 +25,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGILegendDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGPaintConstants;
 
 /** A dialog to set the properties of legend. */
 public class SGLegendDialog extends SGPropertyDialog implements SGITwoAxesDialog {

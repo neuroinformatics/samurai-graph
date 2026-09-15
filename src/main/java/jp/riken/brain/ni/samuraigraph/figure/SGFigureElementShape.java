@@ -61,6 +61,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility.MouseDragResult;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementArrow.ArrowProperties;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementRectangle.RectangleProperties;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGArrowDialog;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGRectangularShapeDialog;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

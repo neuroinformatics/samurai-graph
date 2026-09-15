@@ -8,7 +8,7 @@
  *
  * Created on 2011/08/02, 16:34:56
  */
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 
@@ -28,7 +28,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGStyle;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.data.SGISXYTypeMultipleData;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGILineStylePropertyDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetMultipleSXY;
+import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
 
 /** A property dialog to set the line style. */
 public class SGLineStylePropertyDialog extends SGPropertyDialog {

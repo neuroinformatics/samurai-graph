@@ -58,6 +58,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementAxisBreak.AxisBreakSymbolProperties;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGAxisBreakDialog;
 import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIAxisBreakDialogObserver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

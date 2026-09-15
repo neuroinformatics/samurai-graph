@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -11,9 +11,11 @@ import jp.riken.brain.ni.samuraigraph.data.*;
 import jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGDataInformationKeyConstants;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayConstants;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISXYDataDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetForData;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureDrawingElementConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGPaintConstants;
 
-class SGSXYDataDialogBuilder {
+public class SGSXYDataDialogBuilder {
 
   private final SGPropertyDialogSXYData owner;
 

@@ -2,6 +2,9 @@ package jp.riken.brain.ni.samuraigraph.figure;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGPropertyDialogSXYData;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGPropertyDialogSXYZData;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGPropertyDialogVXYData;
 import org.junit.jupiter.api.Test;
 
 /** Headful construction tests for the data property dialogs. */

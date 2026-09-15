@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -24,8 +24,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupDialog;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIArrowPanelObserver;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIVXYDataDialogObserver;
 
 /** A dialog to set the properties of two-dimensional vector type data. */
 public class SGPropertyDialogVXYData extends SGDataDialog implements SGITwoAxesDialog {
@@ -62,7 +60,7 @@ public class SGPropertyDialogVXYData extends SGDataDialog implements SGITwoAxesD
     mOKButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
     mCancelButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
     mPreviewButton = new jp.riken.brain.ni.samuraigraph.base.SGButton();
-    mArrowPanel = new jp.riken.brain.ni.samuraigraph.figure.SGArrowPanel();
+    mArrowPanel = new jp.riken.brain.ni.samuraigraph.figure.dialog.SGArrowPanel();
     mHeadPanel = new javax.swing.JPanel();
 
     getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -187,7 +185,7 @@ public class SGPropertyDialogVXYData extends SGDataDialog implements SGITwoAxesD
   }
 
   private jp.riken.brain.ni.samuraigraph.base.SGRadioButton mAmplitudeInvariantRadioButton;
-  private jp.riken.brain.ni.samuraigraph.figure.SGArrowPanel mArrowPanel;
+  private jp.riken.brain.ni.samuraigraph.figure.dialog.SGArrowPanel mArrowPanel;
   private javax.swing.JPanel mButtonPanel;
   private jp.riken.brain.ni.samuraigraph.base.SGButton mCancelButton;
   private javax.swing.JPanel mCommonPanel;

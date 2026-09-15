@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
@@ -26,7 +26,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIColorBarDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGColorBarColorMapManager;
 
 /** Property dialog for the color bar. */
 public class SGColorBarDialog extends SGAxisDialog implements ItemListener, SGITwoAxesDialog {

@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
@@ -30,7 +30,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIRectangularShapeDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
+import jp.riken.brain.ni.samuraigraph.figure.SGPaintConstants;
 
 /** A dialog to set the properties of rectangular shapes. */
 public class SGRectangularShapeDialog extends SGPropertyDialog implements SGITwoAxesDialog {

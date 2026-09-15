@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants.*;
@@ -40,7 +40,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIAxisDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants;
 
 /** A dialog to set the properties of axes. */
 public class SGAxisDialog extends SGPropertyDialog {

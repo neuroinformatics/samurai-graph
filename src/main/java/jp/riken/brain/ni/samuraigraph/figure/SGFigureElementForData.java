@@ -59,6 +59,9 @@ import jp.riken.brain.ni.samuraigraph.data.SGNetCDFData;
 import jp.riken.brain.ni.samuraigraph.figure.SGColorMapManager.HueColorMap;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetForData.ElementGroupSetPropertiesInFigureElement;
 import jp.riken.brain.ni.samuraigraph.figure.SGElementGroupSetInGraphSXYMultiple.MultipleSXYElementGroupSetPropertiesInFigureElement;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGPropertyDialogSXYData;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGPropertyDialogSXYZData;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGPropertyDialogVXYData;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 

@@ -4,7 +4,7 @@
  * Created on 2005/05/23, 18:11
  */
 
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants.*;
@@ -22,7 +22,9 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIArrowPanelObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementArrow;
+import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 
 /** A panel to set the properties of arrows. */
 public class SGArrowPanel extends SGPropertyPanel implements ItemListener {

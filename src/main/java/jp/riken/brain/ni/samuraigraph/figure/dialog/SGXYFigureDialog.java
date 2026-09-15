@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.base.SGFigureConstants.*;
@@ -37,7 +37,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIXYFigureDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 
 /** A property dialog for figures with two-dimensional data. */
 public class SGXYFigureDialog extends SGPropertyDialog implements SGITwoAxesDialog {

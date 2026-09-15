@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -15,8 +15,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIArrowDialogObserver;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIArrowPanelObserver;
 
 /** A dialog to set the properties of arrows. */
 public class SGArrowDialog extends SGPropertyDialog implements SGITwoAxesDialog {

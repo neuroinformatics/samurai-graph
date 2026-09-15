@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
@@ -61,8 +61,15 @@ import jp.riken.brain.ni.samuraigraph.data.SGPickUpDimensionInfo;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYMDArrayMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYNetCDFMultipleData;
 import jp.riken.brain.ni.samuraigraph.data.SGSXYSDArrayMultipleData;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGIDataPropertyDialogObserver;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISXYDataDialogObserver;
+import jp.riken.brain.ni.samuraigraph.figure.SGArrowConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementErrorBar;
+import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
+import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementSymbol;
+import jp.riken.brain.ni.samuraigraph.figure.SGErrorBarConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
+import jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGUtilityForFigureElement;
 
 /** A dialog to set the properties of two-dimensional scalar type data. */
 public class SGPropertyDialogSXYData extends SGDataDialog implements SGITwoAxesDialog {

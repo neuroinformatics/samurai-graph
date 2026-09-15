@@ -1,4 +1,4 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -24,7 +24,6 @@ import jp.riken.brain.ni.samuraigraph.data.SGIIndexData;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFDataSetupDialog;
 import jp.riken.brain.ni.samuraigraph.data.SGSDArrayDataSetupDialog;
-import jp.riken.brain.ni.samuraigraph.figure.dialog.SGISXYZDataDialogObserver;
 
 /** */
 public class SGPropertyDialogSXYZData extends SGDataDialog implements SGITwoAxesDialog {

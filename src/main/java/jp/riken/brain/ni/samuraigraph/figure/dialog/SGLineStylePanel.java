@@ -1,6 +1,7 @@
-package jp.riken.brain.ni.samuraigraph.figure;
+package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import static jp.riken.brain.ni.samuraigraph.base.SGConstants.*;
+import static jp.riken.brain.ni.samuraigraph.figure.SGLineConstants.*;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -44,6 +45,12 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTable;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.figure.SGColorMapManager;
+import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
+import jp.riken.brain.ni.samuraigraph.figure.SGLineConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
+import jp.riken.brain.ni.samuraigraph.figure.SGLineStyleColorMapManager;
+import jp.riken.brain.ni.samuraigraph.figure.SGUtilityForFigureElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

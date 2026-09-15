@@ -2,6 +2,15 @@ package jp.riken.brain.ni.samuraigraph.figure;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGArrowDialog;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGAxisDialog;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGAxisScaleDialog;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGColorBarDialog;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGLegendDialog;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGRectangularShapeDialog;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGSignificantDifferenceDialog;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGStringElementDialog;
+import jp.riken.brain.ni.samuraigraph.figure.dialog.SGTimingLineDialog;
 import org.junit.jupiter.api.Test;
 
 /** Headful construction tests for the remaining property dialogs. */
