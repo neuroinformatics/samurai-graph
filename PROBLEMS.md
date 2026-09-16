@@ -233,6 +233,25 @@ extracted and is covered by headless unit tests.
   transitions (LOST, INVALID_DATA, SUCCEEDED, the SDArray overwrite and
   the replace-failure overwrite)
 
+**Progress (2026-09-16):** the embedded command/property reading of
+NetCDF and HDF5 files was unified and made testable.
+
+- `SGEmbeddedContentReader` abstracts the global attribute access of a
+  NetCDF or HDF5 file, with `NetCDFEmbeddedContentReader` and
+  `HDF5EmbeddedContentReader` as the per-format implementations; the
+  contents are read on demand so the close timing of the callers is
+  preserved
+- `SGEmbeddedCommandLoader` dispatches to the `SGEmbeddedActions`
+  implemented by `SGMainFunctions` (the confirmation dialogs, the
+  command manager and the property file manager stay in the main
+  functions class)
+- the four duplicated discovery wrappers
+  (`execCommand`/`applyProperties` for NetCDF and HDF5) were removed
+  and their callers updated
+- new unit tests: `SGEmbeddedCommandLoaderTest` (5 cases),
+  `NetCDFEmbeddedContentReaderTest` (3 cases with a real NetCDF file)
+  and `HDF5EmbeddedContentReaderTest` (3 cases with a mocked reader)
+
 ### 2.4 Mixed responsibilities in `figure` (Medium)
 
 185 files / ~113k lines mixing:
