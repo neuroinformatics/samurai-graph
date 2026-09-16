@@ -30,10 +30,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGNamedStringBlock;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
-import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoDimensionalArrayIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayByte;
@@ -88,6 +86,12 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
 
   /** The number format state. */
   private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
+
+  /** Returns the number format state. */
+  @Override
+  public SGXYNumberFormat getNumberFormat() {
+    return this.mFormat;
+  }
 
   /** The default constructor. */
   public SGSXYNetCDFMultipleData() {
@@ -694,16 +698,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     }
   }
 
-  /** Returns the bounds of x-values. */
-  public SGValueRange getBoundsX() {
-    return SGDataRangeUtility.getBoundsX(this);
-  }
-
-  /** Returns the bounds of y-values. */
-  public SGValueRange getBoundsY() {
-    return SGDataRangeUtility.getBoundsY(this);
-  }
-
   protected SGNetCDFVariable[] getVariables(
       final SGNetCDFDataColumnInfo[] names, SGNetCDFFile ncfile, List<Dimension> cDimList) {
     SGNetCDFVariable[] vars = null;
@@ -780,34 +774,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       }
     }
     return -1;
-  }
-
-  /**
-   * Sets the decimal places for the tick labels.
-   *
-   * @param dp a value to set to the decimal places
-   */
-  public void setDecimalPlaces(int dp) {
-    this.mFormat.setDecimalPlaces(dp);
-  }
-
-  /**
-   * Sets the exponent for the tick labels.
-   *
-   * @param exp a value to set to the exponent
-   */
-  public void setExponent(int exp) {
-    this.mFormat.setExponent(exp);
-  }
-
-  /** Returns the decimal places for the tick labels. */
-  public int getDecimalPlaces() {
-    return this.mFormat.getDecimalPlaces();
-  }
-
-  /** Returns the exponent for tick labels. */
-  public int getExponent() {
-    return this.mFormat.getExponent();
   }
 
   protected SGNetCDFVariable getCoordinateVariable() {
@@ -2024,20 +1990,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
     return this.getCoordinateVariable().getDimension(0).getLength();
   }
 
-  /** Returns the shift. */
-  public SGTuple2d getShift() {
-    return this.mFormat.getShift();
-  }
-
-  /**
-   * Sets the shift.
-   *
-   * @param shift the shift to set
-   */
-  public void setShift(SGTuple2d shift) {
-    this.mFormat.setShift(shift);
-  }
-
   /** Returns the list of child objects. */
   @Override
   public List<String> getChildNameList() {
@@ -2929,11 +2881,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
    * @param indices array of child indices
    */
   @Override
-  public SGDataBuffer getDataBuffer(SGSXYDataBufferPolicy param, int[] indices) {
-    return SGDataBufferUtility.getDataBuffer(this, param, indices);
-  }
-
-  @Override
   public Boolean getDateFlag() {
     if (this.mXVariables[0] instanceof SGDateVariable) {
       return true;
@@ -2960,15 +2907,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       return false;
     }
     return !SGUtility.contains(this.mTickLabelVariables, this.getDateVariable());
-  }
-
-  /**
-   * Returns true if this data has at lease one "effective" stride that has the string
-   * representation different from "0:end".
-   */
-  @Override
-  public boolean hasEffectiveStride() {
-    return SGDataViewerUtility.hasEffectiveStride(this);
   }
 
   /**
@@ -3144,36 +3082,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
       this.mTickLabelVariables = this.findVariables(ncfile, this.mTickLabelVariables);
       this.mTickLabelHolderVariables = this.findVariables(ncfile, this.mTickLabelHolderVariables);
     }
-  }
-
-  @Override
-  public String getDateFormat() {
-    return this.mFormat.getDateFormat();
-  }
-
-  @Override
-  public void setDateFormat(String format) {
-    this.mFormat.setDateFormat(format);
-  }
-
-  /**
-   * Returns the bounds of x-values for all animation frames.
-   *
-   * @return the bounds of x-values
-   */
-  @Override
-  public SGValueRange getAllAnimationFrameBoundsX() {
-    return SGDataRangeUtility.getAllAnimationFrameBoundsX(this);
-  }
-
-  /**
-   * Returns the bounds of y-values for all animation frames.
-   *
-   * @return the bounds of y-values
-   */
-  @Override
-  public SGValueRange getAllAnimationFrameBoundsY() {
-    return SGDataRangeUtility.getAllAnimationFrameBoundsY(this);
   }
 
   /**
@@ -3493,11 +3401,5 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
 
   boolean callSuperWriteProperty(final Element el, final SGExportParameter type) {
     return super.writeProperty(el, type);
-  }
-
-  /** Restores the cache. */
-  @Override
-  public void restoreCache() {
-    SGDataMiscUtility.restoreCache(this);
   }
 }

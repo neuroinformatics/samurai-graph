@@ -30,29 +30,48 @@ public interface SGISXYTypeData extends SGIXYData {
    */
   public Boolean isTickLabelHorizontal();
 
+  /**
+   * Returns the number format state shared by the scalar XY data classes.
+   *
+   * @return the number format state
+   */
+  public SGXYNumberFormat getNumberFormat();
+
   /** Returns the decimal places for the tick labels. */
-  public int getDecimalPlaces();
+  public default int getDecimalPlaces() {
+    return this.getNumberFormat().getDecimalPlaces();
+  }
 
   /** Returns the exponent for tick labels. */
-  public int getExponent();
+  public default int getExponent() {
+    return this.getNumberFormat().getExponent();
+  }
 
-  public String getDateFormat();
+  public default String getDateFormat() {
+    return this.getNumberFormat().getDateFormat();
+  }
 
   /**
    * Sets the decimal places for the tick labels.
    *
    * @param dp a value to set to the decimal places
    */
-  public void setDecimalPlaces(final int dp);
+  public default void setDecimalPlaces(final int dp) {
+    this.getNumberFormat().setDecimalPlaces(dp);
+  }
 
   /**
    * Sets the exponent for the tick labels.
    *
    * @param exp a value to set to the exponent
    */
-  public void setExponent(final int exp);
+  public default void setExponent(final int exp) {
+    this.getNumberFormat().setExponent(exp);
+  }
 
-  public void setDateFormat(final String format);
+  public default void setDateFormat(final String format) {
+    this.getNumberFormat().setDateFormat(format);
+  }
 
   /**
    * Sets the stride.
@@ -100,14 +119,18 @@ public interface SGISXYTypeData extends SGIXYData {
   }
 
   /** Returns the shift. */
-  public SGTuple2d getShift();
+  public default SGTuple2d getShift() {
+    return this.getNumberFormat().getShift();
+  }
 
   /**
    * Sets the shift.
    *
    * @param shift the shift to set
    */
-  public void setShift(SGTuple2d shift);
+  public default void setShift(SGTuple2d shift) {
+    this.getNumberFormat().setShift(shift);
+  }
 
   public Boolean getDateFlag();
 

@@ -25,7 +25,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
-import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
@@ -60,6 +59,12 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
 
   /** The number format state. */
   private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
+
+  /** Returns the number format state. */
+  @Override
+  public SGXYNumberFormat getNumberFormat() {
+    return this.mFormat;
+  }
 
   /** The default constructor. */
   public SGSXYMDArrayData() {
@@ -410,41 +415,6 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
     } else {
       return null;
     }
-  }
-
-  /**
-   * Sets the decimal places for the tick labels.
-   *
-   * @param dp a value to set to the decimal places
-   */
-  @Override
-  public void setDecimalPlaces(int dp) {
-    if (dp < 0) {
-      throw new IllegalArgumentException("Decimal places must not be negative: " + dp);
-    }
-    this.mFormat.setDecimalPlaces(dp);
-  }
-
-  /**
-   * Sets the exponent for the tick labels.
-   *
-   * @param exp a value to set to the exponent
-   */
-  @Override
-  public void setExponent(int exp) {
-    this.mFormat.setExponent(exp);
-  }
-
-  /** Returns the decimal places for the tick labels. */
-  @Override
-  public int getDecimalPlaces() {
-    return this.mFormat.getDecimalPlaces();
-  }
-
-  /** Returns the exponent for tick labels. */
-  @Override
-  public int getExponent() {
-    return this.mFormat.getExponent();
   }
 
   /** Returns the bounds of x-values. */
@@ -1196,20 +1166,6 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
   @Override
   public String getNetCDFDataSetDataType() {
     return SGDataTypeConstants.SXY_NETCDF_DATA;
-  }
-
-  /** Returns the shift. */
-  public SGTuple2d getShift() {
-    return this.mFormat.getShift();
-  }
-
-  /**
-   * Sets the shift.
-   *
-   * @param shift the shift to set
-   */
-  public void setShift(SGTuple2d shift) {
-    this.mFormat.setShift(shift);
   }
 
   /**

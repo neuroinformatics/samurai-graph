@@ -5,6 +5,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
+import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 
 /** An interface for multiple Scalar-type XY data. */
 public interface SGISXYTypeMultipleData extends SGISXYTypeData {
@@ -153,7 +154,9 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    * @param indices array of child indices
    * @return the data buffer
    */
-  public SGDataBuffer getDataBuffer(SGSXYDataBufferPolicy policy, int[] indices);
+  public default SGDataBuffer getDataBuffer(SGSXYDataBufferPolicy policy, int[] indices) {
+    return SGDataBufferUtility.getDataBuffer(this, policy, indices);
+  }
 
   /**
    * Returns whether the same error variable is used per child.
@@ -232,5 +235,30 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
   /** Returns the date arrays with given policy. */
   public default SGDate[] getDateArray(SGSXYDataBufferPolicy policy) {
     return SGDataBufferUtility.getDateArray(this, policy);
+  }
+
+  /** Returns the bounds of x-values. */
+  public default SGValueRange getBoundsX() {
+    return SGDataRangeUtility.getBoundsX(this);
+  }
+
+  /** Returns the bounds of y-values. */
+  public default SGValueRange getBoundsY() {
+    return SGDataRangeUtility.getBoundsY(this);
+  }
+
+  /** Returns the bounds of x-values for all animation frames. */
+  public default SGValueRange getAllAnimationFrameBoundsX() {
+    return SGDataRangeUtility.getAllAnimationFrameBoundsX(this);
+  }
+
+  /** Returns the bounds of y-values for all animation frames. */
+  public default SGValueRange getAllAnimationFrameBoundsY() {
+    return SGDataRangeUtility.getAllAnimationFrameBoundsY(this);
+  }
+
+  /** Restores the normalized cache state. */
+  public default void restoreCache() {
+    SGDataMiscUtility.restoreCache(this);
   }
 }

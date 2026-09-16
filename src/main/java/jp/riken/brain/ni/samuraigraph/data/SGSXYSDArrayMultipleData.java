@@ -28,10 +28,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
-import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoDimensionalArrayIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
 import ucar.ma2.ArrayByte;
@@ -69,6 +67,12 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
 
   /** The number format state. */
   private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
+
+  /** Returns the number format state. */
+  @Override
+  public SGXYNumberFormat getNumberFormat() {
+    return this.mFormat;
+  }
 
   /** Sampling rate. */
   private Double mSamplingRate = null;
@@ -435,16 +439,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     // disposes of data objects
     SGDataMiscUtility.disposeSXYDataArray(sxyArray);
     return ret;
-  }
-
-  /** Returns the bounds of x-values. */
-  public SGValueRange getBoundsX() {
-    return SGDataRangeUtility.getBoundsX(this);
-  }
-
-  /** Returns the bounds of y-values. */
-  public SGValueRange getBoundsY() {
-    return SGDataRangeUtility.getBoundsY(this);
   }
 
   /**
@@ -1586,37 +1580,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     return (this.mTickLabelIndices != null);
   }
 
-  /** Returns the decimal places for the tick labels. */
-  public int getDecimalPlaces() {
-    return this.mFormat.getDecimalPlaces();
-  }
-
-  /** Returns the exponent for tick labels. */
-  public int getExponent() {
-    return this.mFormat.getExponent();
-  }
-
-  /**
-   * Sets the decimal places for the tick labels.
-   *
-   * @param dp a value to set to the decimal places
-   */
-  public void setDecimalPlaces(final int dp) {
-    if (dp < 0) {
-      throw new IllegalArgumentException("Decimal places must not be negative: " + dp);
-    }
-    this.mFormat.setDecimalPlaces(dp);
-  }
-
-  /**
-   * Sets the exponent for the tick labels.
-   *
-   * @param exp a value to set to the exponent
-   */
-  public void setExponent(final int exp) {
-    this.mFormat.setExponent(exp);
-  }
-
   /**
    * Returns whether the error bars are vertical. If this data does not have error values, returns
    * null.
@@ -2169,20 +2132,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     return true;
   }
 
-  /** Returns the shift. */
-  public SGTuple2d getShift() {
-    return this.mFormat.getShift();
-  }
-
-  /**
-   * Sets the shift.
-   *
-   * @param shift the shift to set
-   */
-  public void setShift(SGTuple2d shift) {
-    this.mFormat.setShift(shift);
-  }
-
   @Override
   protected Object[][] getDataFileExportValues(
       final SGExportParameter mode, SGDataBufferPolicy policy) {
@@ -2395,11 +2344,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
    * @param indices array of child indices
    * @return the data buffer
    */
-  @Override
-  public SGDataBuffer getDataBuffer(SGSXYDataBufferPolicy param, int[] indices) {
-    return SGDataBufferUtility.getDataBuffer(this, param, indices);
-  }
-
   private SGDateDataColumn getDateDataColumn() {
     SGDateDataColumn col;
     col = this.getDateDataColumn(this.mXIndices[0]);
@@ -2470,17 +2414,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       ret[ii] = this.mLowerErrorIndices[ii].equals(this.mUpperErrorIndices[ii]);
     }
     return ret;
-  }
-
-  /**
-   * Returns true if this data has at lease one "effective" stride that has the string
-   * representation different from "0:end".
-   *
-   * @return true this data has an effective stride
-   */
-  @Override
-  public boolean hasEffectiveStride() {
-    return SGDataViewerUtility.hasEffectiveStride(this);
   }
 
   /**
@@ -2619,36 +2552,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       }
     }
     return true;
-  }
-
-  @Override
-  public String getDateFormat() {
-    return this.mFormat.getDateFormat();
-  }
-
-  @Override
-  public void setDateFormat(String format) {
-    this.mFormat.setDateFormat(format);
-  }
-
-  /**
-   * Returns the bounds of x-values for all animation frames.
-   *
-   * @return the bounds of x-values
-   */
-  @Override
-  public SGValueRange getAllAnimationFrameBoundsX() {
-    return SGDataRangeUtility.getAllAnimationFrameBoundsX(this);
-  }
-
-  /**
-   * Returns the bounds of y-values for all animation frames.
-   *
-   * @return the bounds of y-values
-   */
-  @Override
-  public SGValueRange getAllAnimationFrameBoundsY() {
-    return SGDataRangeUtility.getAllAnimationFrameBoundsY(this);
   }
 
   /**
@@ -2798,11 +2701,5 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       }
     }
     return ret;
-  }
-
-  /** Restores the cache. */
-  @Override
-  public void restoreCache() {
-    SGDataMiscUtility.restoreCache(this);
   }
 }

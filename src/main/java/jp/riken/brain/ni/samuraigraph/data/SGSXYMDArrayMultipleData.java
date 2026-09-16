@@ -34,10 +34,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyUtility;
-import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoDimensionalArrayIndex;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
 import jp.riken.brain.ni.samuraigraph.data.SGMDArrayVariable.MDArrayDataType;
 import org.w3c.dom.Element;
 import ucar.ma2.Array;
@@ -82,6 +80,12 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
   /** The number format state. */
   private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
+
+  /** Returns the number format state. */
+  @Override
+  public SGXYNumberFormat getNumberFormat() {
+    return this.mFormat;
+  }
 
   /** The default constructor. */
   public SGSXYMDArrayMultipleData() {
@@ -645,50 +649,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     this.mStride = null;
     this.mTickLabelStride = null;
     this.mFormat.dispose();
-  }
-
-  /**
-   * Sets the decimal places for the tick labels.
-   *
-   * @param dp a value to set to the decimal places
-   */
-  @Override
-  public void setDecimalPlaces(int dp) {
-    this.mFormat.setDecimalPlaces(dp);
-  }
-
-  /**
-   * Sets the exponent for the tick labels.
-   *
-   * @param exp a value to set to the exponent
-   */
-  @Override
-  public void setExponent(int exp) {
-    this.mFormat.setExponent(exp);
-  }
-
-  /** Returns the decimal places for the tick labels. */
-  @Override
-  public int getDecimalPlaces() {
-    return this.mFormat.getDecimalPlaces();
-  }
-
-  /** Returns the exponent for tick labels. */
-  @Override
-  public int getExponent() {
-    return this.mFormat.getExponent();
-  }
-
-  /** Returns the bounds of x-values. */
-  @Override
-  public SGValueRange getBoundsX() {
-    return SGDataRangeUtility.getBoundsX(this);
-  }
-
-  /** Returns the bounds of y-values. */
-  @Override
-  public SGValueRange getBoundsY() {
-    return SGDataRangeUtility.getBoundsY(this);
   }
 
   public boolean useCache(final boolean all) {
@@ -2459,20 +2419,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     }
   }
 
-  /** Returns the shift. */
-  public SGTuple2d getShift() {
-    return this.mFormat.getShift();
-  }
-
-  /**
-   * Sets the shift.
-   *
-   * @param shift the shift to set
-   */
-  public void setShift(SGTuple2d shift) {
-    this.mFormat.setShift(shift);
-  }
-
   /** Returns the list of child objects. */
   @Override
   public List<String> getChildNameList() {
@@ -2550,11 +2496,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
    * @param param parameters for data buffer
    * @param indices array of child indices
    */
-  @Override
-  public SGDataBuffer getDataBuffer(SGSXYDataBufferPolicy param, int[] indices) {
-    return SGDataBufferUtility.getDataBuffer(this, param, indices);
-  }
-
   static class SXYExportInfo {
     String[] xNames;
     double[][] xValues;
@@ -2762,15 +2703,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     return true;
   }
 
-  /**
-   * Returns true if this data has at lease one "effective" stride that has the string
-   * representation different from "0:end".
-   */
-  @Override
-  public boolean hasEffectiveStride() {
-    return SGDataViewerUtility.hasEffectiveStride(this);
-  }
-
   @Override
   protected MDArrayDataType getExportNumberDataType(
       SGMDArrayVariable var, SGExportParameter mode, SGDataBufferPolicy policy) {
@@ -2962,26 +2894,6 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   @Override
   public void setDateFormat(String format) {
     // do nothing
-  }
-
-  /**
-   * Returns the bounds of x-values for all animation frames.
-   *
-   * @return the bounds of x-values
-   */
-  @Override
-  public SGValueRange getAllAnimationFrameBoundsX() {
-    return SGDataRangeUtility.getAllAnimationFrameBoundsX(this);
-  }
-
-  /**
-   * Returns the bounds of y-values for all animation frames.
-   *
-   * @return the bounds of y-values
-   */
-  @Override
-  public SGValueRange getAllAnimationFrameBoundsY() {
-    return SGDataRangeUtility.getAllAnimationFrameBoundsY(this);
   }
 
   /**
@@ -3291,11 +3203,5 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
       }
     }
     return ret;
-  }
-
-  /** Restores the cache. */
-  @Override
-  public void restoreCache() {
-    SGDataMiscUtility.restoreCache(this);
   }
 }

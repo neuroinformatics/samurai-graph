@@ -23,7 +23,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGNamedStringBlock;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
-import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGValueRange;
@@ -67,6 +66,12 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
 
   /** The number format state. */
   private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
+
+  /** Returns the number format state. */
+  @Override
+  public SGXYNumberFormat getNumberFormat() {
+    return this.mFormat;
+  }
 
   /** The default constructor. */
   public SGSXYNetCDFData() {
@@ -928,41 +933,6 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
     return this.mTickLabelHolderVariable;
   }
 
-  /**
-   * Sets the decimal places for the tick labels.
-   *
-   * @param dp a value to set to the decimal places
-   */
-  @Override
-  public void setDecimalPlaces(final int dp) {
-    if (dp < 0) {
-      throw new IllegalArgumentException("Decimal places must not be negative: " + dp);
-    }
-    this.mFormat.setDecimalPlaces(dp);
-  }
-
-  /**
-   * Sets the exponent for the tick labels.
-   *
-   * @param exp a value to set to the exponent
-   */
-  @Override
-  public void setExponent(final int exp) {
-    this.mFormat.setExponent(exp);
-  }
-
-  /** Returns the decimal places for the tick labels. */
-  @Override
-  public int getDecimalPlaces() {
-    return this.mFormat.getDecimalPlaces();
-  }
-
-  /** Returns the exponent for tick labels. */
-  @Override
-  public int getExponent() {
-    return this.mFormat.getExponent();
-  }
-
   @Override
   protected double[] arrangeValueArray(
       Array data,
@@ -1338,20 +1308,6 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
     return this.getCoordinateVariable().getDimension(0).getLength();
   }
 
-  /** Returns the shift. */
-  public SGTuple2d getShift() {
-    return this.mFormat.getShift();
-  }
-
-  /**
-   * Sets the shift.
-   *
-   * @param shift the shift to set
-   */
-  public void setShift(SGTuple2d shift) {
-    this.mFormat.setShift(shift);
-  }
-
   @Override
   protected boolean exportToFile(
       NetcdfFormatWriter.Builder builder, final SGExportParameter mode, SGDataBufferPolicy policy)
@@ -1454,16 +1410,6 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
       this.mTickLabelVariable = this.findVariable(ncfile, this.mTickLabelVariable);
       this.mTickLabelHolderVariable = this.findVariable(ncfile, this.mTickLabelHolderVariable);
     }
-  }
-
-  @Override
-  public String getDateFormat() {
-    return this.mFormat.getDateFormat();
-  }
-
-  @Override
-  public void setDateFormat(String format) {
-    this.mFormat.setDateFormat(format);
   }
 
   /**
