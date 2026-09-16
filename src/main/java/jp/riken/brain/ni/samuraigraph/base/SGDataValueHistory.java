@@ -78,6 +78,16 @@ public abstract class SGDataValueHistory implements Cloneable {
   }
 
   @Override
+  public int hashCode() {
+    int result = 1;
+    result = 31 * result + Double.hashCode(this.mValue);
+    result = 31 * result + (this.mColumnType != null ? this.mColumnType.hashCode() : 0);
+    result = 31 * result + this.mColIndex;
+    result = 31 * result + this.mRowIndex;
+    return result;
+  }
+
+  @Override
   public final String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("[");
@@ -221,7 +231,7 @@ public abstract class SGDataValueHistory implements Cloneable {
 
     @Override
     public int hashCode() {
-      int result = super.hashCode();
+      int result = 1;
       result = 31 * result + (this.mVarName != null ? this.mVarName.hashCode() : 0);
       result =
           31 * result + (this.mAnimationDimName != null ? this.mAnimationDimName.hashCode() : 0);
@@ -568,7 +578,7 @@ public abstract class SGDataValueHistory implements Cloneable {
 
     @Override
     public int hashCode() {
-      int result = super.hashCode();
+      int result = 1;
       result = 31 * result + (this.mVarName != null ? this.mVarName.hashCode() : 0);
       result = 31 * result + this.mAnimationDimension;
       result = 31 * result + this.mAnimationDimIndex;

@@ -65,6 +65,34 @@ class SGDataValueHistoryTest {
   }
 
   @Test
+  void equalEntriesHashEqually() {
+    final D1 first = new D1(1.0, "x", 2);
+    final D1 second = new D1(1.0, "x", 2);
+    assertEquals(first, second);
+    assertEquals(first.hashCode(), second.hashCode());
+  }
+
+  @Test
+  void netCDFEntriesWithTheSameNameHashEquallyIgnoreTheBaseFields() {
+    final SGDataValueHistory.NetCDF.D1 first =
+        new SGDataValueHistory.NetCDF.D1(1.0, "x", 0, 2, "var");
+    final SGDataValueHistory.NetCDF.D1 second =
+        new SGDataValueHistory.NetCDF.D1(9.0, "y", 3, 4, "var");
+    assertEquals(first, second);
+    assertEquals(first.hashCode(), second.hashCode());
+  }
+
+  @Test
+  void mdArrayEntriesWithTheSameNameHashEquallyIgnoreTheBaseFields() {
+    final SGDataValueHistory.MDArray.D1 first =
+        new SGDataValueHistory.MDArray.D1(1.0, "x", 0, 2, "var");
+    final SGDataValueHistory.MDArray.D1 second =
+        new SGDataValueHistory.MDArray.D1(9.0, "y", 3, 4, "var");
+    assertEquals(first, second);
+    assertEquals(first.hashCode(), second.hashCode());
+  }
+
+  @Test
   void toStringContainsTheFields() {
     final String str = new D1(1.25, "x", 2).toString();
     assertNotNull(str);
