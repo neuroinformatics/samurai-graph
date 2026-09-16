@@ -422,7 +422,7 @@ public class SGIntegerSeries implements Cloneable {
 
   @Override
   public int hashCode() {
-    int result = super.hashCode();
+    int result = 1;
     result = 31 * result + (this.mStart != null ? this.mStart.hashCode() : 0);
     result = 31 * result + (this.mEnd != null ? this.mEnd.hashCode() : 0);
     result = 31 * result + (this.mStep != null ? this.mStep.hashCode() : 0);

@@ -188,8 +188,14 @@ class SGIntegerSeriesTest {
     assertEquals(first, second);
     assertFalse(first.equals(new SGIntegerSeries(0, 10, 3)));
     assertFalse(first.equals(new SGIntegerSeries(0, 9, 2)));
-    // Known issue: hashCode mixes in the object identity, so two equal
-    // instances may hash differently (equals/hashCode contract violation).
+  }
+
+  @Test
+  void equalInstancesHashEqually() {
+    final SGIntegerSeries first = new SGIntegerSeries(0, 10, 2);
+    final SGIntegerSeries second = new SGIntegerSeries(0, 10, 2);
+    assertEquals(first, second);
+    assertEquals(first.hashCode(), second.hashCode());
   }
 
   @Test

@@ -157,7 +157,7 @@ public class SGInteger implements Cloneable {
 
   @Override
   public int hashCode() {
-    int result = super.hashCode();
+    int result = 1;
     result = 31 * result + (this.mText != null ? this.mText.hashCode() : 0);
     result = 31 * result + (this.mNumber != null ? this.mNumber.hashCode() : 0);
     return result;
