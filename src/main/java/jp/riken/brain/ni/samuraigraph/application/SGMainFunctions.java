@@ -139,7 +139,8 @@ import ucar.nc2.NetcdfFile;
 import ucar.nc2.NetcdfFileWriter;
 
 /** The main thread. */
-class SGMainFunctions implements ActionListener, WindowListener, SGConsoleCommandExecutor {
+class SGMainFunctions
+    implements ActionListener, WindowListener, SGConsoleCommandExecutor, SGOpenFileActions {
 
   private static final Logger logger = LogManager.getLogger(SGMainFunctions.class);
 
@@ -1630,208 +1631,104 @@ class SGMainFunctions implements ActionListener, WindowListener, SGConsoleComman
   }
 
   private boolean openFile(List<File> fileList, SGDrawingWindow wnd, Point pos) {
-    wnd.setWaitCursor(true);
+    final SGFileOpenHandler handler = new SGFileOpenHandler(this, SGFileOpenCategorizer.create());
+    return handler.execute(fileList, wnd, pos);
+  }
 
-    try {
-      // analyze the file list
-      List<File> textDataFileList = new ArrayList<File>();
-      List<File> netCDFDataFileList = new ArrayList<File>();
-      List<File> hdf5DataFileList = new ArrayList<File>();
-      List<File> matlabDataFileList = new ArrayList<File>();
-      File propertyFile = null;
-      File archiveFile = null;
-      File netcdfArchiveFile = null;
-      File scriptFile = null;
-      File imageFile = null;
-      for (File file : fileList) {
-        String path = file.getAbsolutePath();
+  // ---- Implementation of SGOpenFileActions ----
 
-        final FILE_TYPE type = SGOpenFileClassifier.classifyOpenFile(path);
+  @Override
+  public boolean confirmDiscard(final SGDrawingWindow wnd) {
+    return this.beforeDiscard(wnd) != CANCEL_OPTION;
+  }
 
-        // property file?
-        if (FILE_TYPE.PROPERTY.equals(type)) {
-          propertyFile = file;
-          continue;
-        }
+  @Override
+  public void closeModelessDialogs(final SGDrawingWindow wnd) {
+    this.closeAllModelessDialogs(wnd);
+  }
 
-        // archive file?
-        if (FILE_TYPE.DATASET.equals(type)) {
-          archiveFile = file;
-          continue;
-        }
+  @Override
+  public boolean handlePropertyFile(final SGDrawingWindow wnd, final File propertyFile) {
+    return this.mPropertyFileManager.showMultiDataFileChooserDialog(propertyFile, wnd);
+  }
 
-        // script file?
-        if (FILE_TYPE.SCRIPT.equals(type)) {
-          scriptFile = file;
-          continue;
-        }
+  @Override
+  public boolean handleDataSetArchive(final SGDrawingWindow wnd, final File archiveFile) {
+    return this.loadDataSetArchive(wnd, archiveFile);
+  }
 
-        // image file?
-        if (FILE_TYPE.IMAGE.equals(type)) {
-          imageFile = file;
-          continue;
-        }
+  @Override
+  public boolean handleNetCDFDataSetArchive(final SGDrawingWindow wnd, final File archiveFile) {
+    return this.loadDataSetArchive(wnd, archiveFile);
+  }
 
-        if (FILE_TYPE.POSSIBLY_HDF5_DATA.equals(type)) {
-          SGApplicationUtility.showHDF5ReadErrorMessageDialog(wnd, path);
-          return false;
-        }
+  private boolean loadDataSetArchive(final SGDrawingWindow wnd, final File archiveFile) {
+    SGUtility.clearMessageDialogVisible();
 
-        // MATLAB file?
-        if (FILE_TYPE.MATLAB_DATA.equals(type)) {
-          matlabDataFileList.add(file);
-          continue;
-        }
-
-        // HDF5 file?
-        if (FILE_TYPE.HDF5_DATA.equals(type)) {
-          hdf5DataFileList.add(file);
-          continue;
-        }
-
-        // netCDF file or date set file?
-        boolean netcdfArchiveFlag = false;
-        boolean netCDFFlag = false;
-        if (FILE_TYPE.NETCDF_DATA.equals(type)) {
-          if (SGNetCDFDataSetManager.isNetCDFDatasetFile(path)) {
-            // confirms whether to load netCDF data set file
-            final String message =
-                "This NetCDF file has samurai-graph properties. Do you apply them to the graph?";
-            final int confirmResult = SGUtility.showYesNoConfirmationDialog(wnd, message);
-            if (confirmResult == JOptionPane.OK_OPTION) {
-              netcdfArchiveFlag = true;
-            } else {
-              netCDFFlag = true;
-            }
-          } else {
-            netCDFFlag = true;
-          }
-        }
-        if (netCDFFlag) {
-          netCDFDataFileList.add(file);
-          continue;
-        }
-        if (netcdfArchiveFlag) {
-          netcdfArchiveFile = file;
-          continue;
-        }
-
-        // regard the file as a data file
-        textDataFileList.add(file);
-      }
-
-      if (propertyFile != null) {
-        // use an property file
-        if (wnd.needsConfirmationBeforeDiscard()) {
-          final int ret = this.beforeDiscard(wnd);
-          if (ret == CANCEL_OPTION) {
-            return true;
-          }
-        }
-
-        // close all data viewer and animation dialogs
-        this.closeAllModelessDialogs(wnd);
-
-        if (this.mPropertyFileManager.showMultiDataFileChooserDialog(propertyFile, wnd) == false) {
-          return false;
-        }
-      } else if (archiveFile != null) {
-        // use an archive file
-        if (wnd.needsConfirmationBeforeDiscard()) {
-          final int ret = this.beforeDiscard(wnd);
-          if (ret == CANCEL_OPTION) {
-            return true;
-          }
-        }
-        SGUtility.clearMessageDialogVisible();
-
-        // close all data viewer and animation dialogs
-        this.closeAllModelessDialogs(wnd);
-
-        final boolean result =
-            this.mDataSetManager.loadDataSetFromEventDispatchThread(wnd, archiveFile);
-        if (result == false && SGUtility.wasMessageDialogVisible() == false) {
-          SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_LOAD_DATASET, TITLE_ERROR);
-        }
-        SGUtility.clearMessageDialogVisible();
-        wnd.setSaved(result);
-      } else if (netcdfArchiveFile != null) {
-        // use an netCDF archive file
-        if (wnd.needsConfirmationBeforeDiscard()) {
-          final int ret = this.beforeDiscard(wnd);
-          if (ret == CANCEL_OPTION) {
-            return true;
-          }
-        }
-        SGUtility.clearMessageDialogVisible();
-
-        // close all data viewer and animation dialogs
-        this.closeAllModelessDialogs(wnd);
-
-        final boolean result =
-            this.mDataSetManager.loadDataSetFromEventDispatchThread(wnd, netcdfArchiveFile);
-        if (result == false && SGUtility.wasMessageDialogVisible() == false) {
-          SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_LOAD_DATASET, TITLE_ERROR);
-        }
-        SGUtility.clearMessageDialogVisible();
-        wnd.setSaved(result);
-      } else if (scriptFile != null) {
-        if (this.getConsoleRunner().hasStreams()) {
-          // sets the current window
-          this.mWindowManager.setCurrentWindow(wnd);
-
-          // loads the command script file
-          this.getConsoleRunner().loadCommandScriptFile(scriptFile.getPath());
-        } else {
-          SGUtility.showErrorMessageDialog(wnd, ERRMSG_SCRIPT_START, TITLE_ERROR);
-        }
-      } else if (imageFile != null) {
-        // use a image file
-        byte[] imageByteArray = SGApplicationUtility.toByteArray(imageFile);
-        String ext = SGApplicationUtility.getImageExtension(imageFile);
-        if (ext == null) {
-          return false;
-        }
-        if (wnd.setImage(imageByteArray, ext, true) == false) {
-          return false;
-        }
-        wnd.setImageFilePath(imageFile.getAbsolutePath());
-      } else if (netCDFDataFileList.size() != 0) {
-        // add netCDF data
-        if (this.onNetCDFDataFilesDropped(netCDFDataFileList, wnd, pos) == false) {
-          return false;
-        }
-      } else if (hdf5DataFileList.size() != 0) {
-        // add HDF5 data
-        if (this.onHDF5DataFilesDropped(hdf5DataFileList, wnd, pos) == false) {
-          return false;
-        }
-      } else if (matlabDataFileList.size() != 0) {
-        // add MATLAB data
-        if (this.onMATLABDataFilesDropped(matlabDataFileList, wnd, pos) == false) {
-          return false;
-        }
-      } else {
-        if (textDataFileList.size() == 0) {
-          return false;
-        }
-        // add text data
-        if (this.onTextDataFilesDropped(textDataFileList, wnd, pos) == false) {
-          return false;
-        }
-      }
-
-    } catch (Exception ex) {
-      logger.warn("Error in main function operation", ex);
-      return false;
-    } finally {
-      // set enabled the window
-      wnd.setWaitCursor(false);
+    final boolean result =
+        this.mDataSetManager.loadDataSetFromEventDispatchThread(wnd, archiveFile);
+    if (result == false && SGUtility.wasMessageDialogVisible() == false) {
+      SGUtility.showErrorMessageDialog(wnd, ERRMSG_TO_LOAD_DATASET, TITLE_ERROR);
     }
+    SGUtility.clearMessageDialogVisible();
 
+    wnd.setSaved(result);
+    return result;
+  }
+
+  @Override
+  public void handleScriptFile(final SGDrawingWindow wnd, final File scriptFile) {
+    if (this.getConsoleRunner().hasStreams()) {
+      // sets the current window
+      this.mWindowManager.setCurrentWindow(wnd);
+
+      // loads the command script file
+      this.getConsoleRunner().loadCommandScriptFile(scriptFile.getPath());
+    } else {
+      SGUtility.showErrorMessageDialog(wnd, ERRMSG_SCRIPT_START, TITLE_ERROR);
+    }
+  }
+
+  @Override
+  public boolean handleImageFile(final SGDrawingWindow wnd, final File imageFile) {
+    // use a image file
+    byte[] imageByteArray = SGApplicationUtility.toByteArray(imageFile);
+    String ext = SGApplicationUtility.getImageExtension(imageFile);
+    if (ext == null) {
+      return false;
+    }
+    if (wnd.setImage(imageByteArray, ext, true) == false) {
+      return false;
+    }
+    wnd.setImageFilePath(imageFile.getAbsolutePath());
     return true;
   }
 
+  @Override
+  public boolean handleNetCDFData(
+      final SGDrawingWindow wnd, final Point pos, final List<File> fileList) {
+    return this.onNetCDFDataFilesDropped(fileList, wnd, pos);
+  }
+
+  @Override
+  public boolean handleHDF5Data(
+      final SGDrawingWindow wnd, final Point pos, final List<File> fileList) {
+    return this.onHDF5DataFilesDropped(fileList, wnd, pos);
+  }
+
+  @Override
+  public boolean handleMATLABData(
+      final SGDrawingWindow wnd, final Point pos, final List<File> fileList) {
+    return this.onMATLABDataFilesDropped(fileList, wnd, pos);
+  }
+
+  @Override
+  public boolean handleTextData(
+      final SGDrawingWindow wnd, final Point pos, final List<File> fileList) {
+    return this.onTextDataFilesDropped(fileList, wnd, pos);
+  }
+
+  // Updates the pattern of the tool bar in the preferences.
   // Updates the pattern of the tool bar in the preferences.
   void updateToolBarPatternInPreferences(final String[] array) {
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
