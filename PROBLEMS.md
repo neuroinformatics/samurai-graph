@@ -403,16 +403,20 @@ hashCode built on the object identity hash).
   `SGAxisDoubleStepValue`/`SGAxisDateStepValue` and
   `SGDataColumnInfo` (whose subclasses chain `super.hashCode`, so the
   whole column-info hierarchy is now consistent)
+- fixed (2026-09-16): `SGLineStyle` -- a value type used in style
+  maps -- gained a field-based `hashCode`; the regression test also
+  verifies its use as a `HashMap` key
 - verified consistent (the base is field-based and the subclasses
   chain it): the `SGTransparentPaint` paint family and the remaining
   nested `SGDataValueHistory` branches
-- remaining candidates (documented, not fixed): the large figure and
-  data element classes that override `equals` without `hashCode`
-  (e.g. `SGLineStyle`, `LegendProperties`, the `SGDrawingElement*`
-  and `SGElementGroup*` families) -- these are large stateful objects
-  whose identity semantics dominate usage; per-class `hashCode`
-  additions would be needed if any of them is stored in a hash-based
-  collection keyed by value equality
+- remaining candidates (documented, not fixed): `LegendProperties`
+  (its equality is tied to the identity of `SGAxis` instances, so no
+  verifiable equal-instance case exists) and the large figure and
+  data element classes with `equals` but no `hashCode` (e.g. the
+  `SGDrawingElement*`/`SGElementGroup*` families) -- these are large
+  stateful objects whose identity semantics dominate usage; they
+  should only gain per-class `hashCode` if one of them is used as a
+  hash-based collection key with value equality
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
