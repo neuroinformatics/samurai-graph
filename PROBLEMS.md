@@ -369,6 +369,26 @@ two core, previously untested shared classes:
   history entry -- the constructor field mapping, the previous value,
   the field-wise equality and the string form
 
+**Progress (2026-09-16):** the integer series core and the property
+map helper were covered.
+
+- `SGIntegerSeriesTest` (29 cases): series validation, the constructors
+  and their rejection of inconsistent values, the length and number
+  enumeration, the `"start:step:end"` parsing with the computed and
+  aliased steps, `toString`, equality, clone, `createInstance` and
+  `createList`, the range queries and the overlap test
+- `SGPropertyUtilityTest` (8 cases): the typed property additions
+  (boolean, number, number with unit, raw and quoted strings, color)
+
+**Found issue (2026-09-16, via characterization testing):**
+`SGIntegerSeries.equals` returns true for two distinct instances with
+the same start/end/step, but `hashCode` mixes in the object identity
+hash, so equal instances can hash differently -- a violation of the
+`equals`/`hashCode` contract. This can degrade map/set lookups that
+rely on the contract. The bug is locked by the characterization tests
+(equality is asserted, the unstable hash is documented) and should be
+fixed by dropping the identity `super.hashCode()` term.
+
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
 trips).
