@@ -217,6 +217,22 @@ covered by unit tests with fake actions.
   GUI managers (`SGPropertyFileManager`, `SGDataSetManager`, console
   runner and wizard dialogs) stay in `SGMainFunctions`
 
+**Progress (2026-09-16):** the `reloadData` refresh pipeline was also
+extracted and is covered by headless unit tests.
+
+- `SGDataReloader` owns the data source refresh (path collection and
+  de-duplication, existence checking, NetCDF/HDF5/MATLAB reopening,
+  scalar XY array source recreation and the graph element
+  replacement/update), returning the per-path status map
+- `SGDataReloadActions` abstracts the file I/O and graph operations so
+  that the pipeline runs headlessly with fake actions
+- `reloadData` now delegates the refresh to `SGDataReloader` and keeps
+  only the result aggregation, the error dialog and the data viewer
+  repaint
+- new unit test `SGDataReloaderTest` (16 cases) locks the status
+  transitions (LOST, INVALID_DATA, SUCCEEDED, the SDArray overwrite and
+  the replace-failure overwrite)
+
 ### 2.4 Mixed responsibilities in `figure` (Medium)
 
 185 files / ~113k lines mixing:
@@ -353,9 +369,10 @@ coverage level.
    `SGDrawingWindow` (2.3)**: fold into the existing
    `SGFileHandler`/`SGArchiveFileCreator` to make them
    headless-testable. **Partial progress (2026-09-16):** the `openFile`
-   flow is extracted into `SGFileOpenCategorizer`/`SGFileOpenHandler`
-   and covered by headless unit tests; the remaining work is the
-   `SGDrawingWindow` side and moving the `reloadData` flow
+   and `reloadData` flows are extracted into headless-testable units
+   (`SGFileOpenCategorizer`/`SGFileOpenHandler`/
+   `SGDataReloader`) with unit tests; the remaining work is the
+   `SGDrawingWindow` side
 5. **Split `figure` into `figure/model` and `figure/dialog` (2.4)**;
    unify the Observer interfaces afterwards. **Partial progress:** the
    Observer interfaces and the dialog classes are in `figure.dialog`
