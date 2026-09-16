@@ -161,4 +161,15 @@ public abstract class SGDataColumnInfo implements Cloneable {
     }
     return true;
   }
+
+  @Override
+  public int hashCode() {
+    int result = 1;
+    result = 31 * result + (this.columnType != null ? this.columnType.hashCode() : 0);
+    result = 31 * result + (this.valueType != null ? this.valueType.hashCode() : 0);
+    result = 31 * result + (this.title != null ? this.title.hashCode() : 0);
+    result = 31 * result + (this.mUnitsString != null ? this.mUnitsString.hashCode() : 0);
+    result = 31 * result + (this.mAttributeList != null ? this.mAttributeList.hashCode() : 0);
+    return result;
+  }
 }

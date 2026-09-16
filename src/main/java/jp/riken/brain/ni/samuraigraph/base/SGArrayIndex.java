@@ -33,6 +33,11 @@ public class SGArrayIndex implements SGIIndex {
     return true;
   }
 
+  @Override
+  public int hashCode() {
+    return Integer.hashCode(this.mIndex);
+  }
+
   /**
    * Clones this object.
    *

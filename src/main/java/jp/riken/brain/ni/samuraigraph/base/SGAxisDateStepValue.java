@@ -41,6 +41,11 @@ public class SGAxisDateStepValue extends SGAxisStepValue {
     return this.mPeriod.equals(step.mPeriod);
   }
 
+  @Override
+  public int hashCode() {
+    return this.mPeriod.hashCode();
+  }
+
   /**
    * Returns true if this object has zero step value.
    *

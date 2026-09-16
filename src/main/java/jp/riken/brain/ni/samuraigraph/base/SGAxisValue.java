@@ -17,6 +17,11 @@ public abstract class SGAxisValue implements Comparable<SGAxisValue> {
   }
 
   @Override
+  public int hashCode() {
+    return Double.hashCode(this.getValue());
+  }
+
+  @Override
   public int compareTo(SGAxisValue o) {
     if (!(o instanceof SGAxisValue)) {
       throw new IllegalArgumentException("!(o instanceof SGAxisValue)");

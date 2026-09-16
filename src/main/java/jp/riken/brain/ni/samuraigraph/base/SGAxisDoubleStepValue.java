@@ -27,6 +27,11 @@ public class SGAxisDoubleStepValue extends SGAxisStepValue {
     return (this.mValue == step.mValue);
   }
 
+  @Override
+  public int hashCode() {
+    return Double.hashCode(this.mValue);
+  }
+
   /**
    * Returns true if this object has zero step value.
    *
