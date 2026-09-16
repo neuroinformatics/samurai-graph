@@ -2,6 +2,22 @@
 <product>
   <release>
     <releaseinfo>
+      <releasedesc>Samurai Graph 2.2.0</releasedesc>
+      <releasedate>2026-09-16</releasedate>
+      <changelog>
+        <itemize>
+          <item>Modernized the application to Java 21.</item>
+          <item>Added native installers for Windows (exe), macOS (dmg) and Linux (deb and rpm).</item>
+          <item>Added support for reading NetCDF4 files with the NetCDF-C library.</item>
+          <item>Added support for reading HDF5 and MATLAB (v5) files.</item>
+          <item>Added automatic character set detection for CSV and TSV files.</item>
+          <item>Added a plugin system for native libraries with JNA.</item>
+        </itemize>
+      </changelog>
+    </releaseinfo>
+  </release>
+  <release>
+    <releaseinfo>
       <releasedesc>Samurai Graph 2.0.0</releasedesc>
       <releasedate>2010-11-23</releasedate>
       <changelog>

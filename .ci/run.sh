@@ -46,9 +46,34 @@ run_step() {
 
 cd "$PROJECT_DIR"
 
+# Starts a virtual X server for the headful tests when there is no DISPLAY.
+setup_display() {
+    if [ -n "$DISPLAY" ]; then
+        return 0
+    fi
+    # Xvfb is common on Debian/Ubuntu; Xvnc (from tigervnc) is used on Fedora.
+    local xvfb
+    local xvnc
+    xvfb=$(command -v Xvfb 2>/dev/null || true)
+    xvnc=$(command -v Xvnc 2>/dev/null || true)
+    if [ -n "$xvfb" ]; then
+        "$xvfb" :99 -screen 0 1600x1200x24 >/dev/null 2>&1 &
+        export DISPLAY=:99
+    elif [ -n "$xvnc" ]; then
+        "$xvnc" :99 -geometry 1600x1200 -depth 24 -SecurityTypes None \
+            -rfbport 5999 -NeverShared -DisconnectClients false >/dev/null 2>&1 &
+        export DISPLAY=:99
+    else
+        echo "WARN: no DISPLAY and no Xvfb/Xvnc found; headful tests may fail"
+        return 0
+    fi
+    sleep 1
+}
+
 run_step "Clean" ./mvnw clean
 run_step "Format Check (spotless:check)" ./mvnw spotless:check
 run_step "Compile (with lint)" ./mvnw compile
+setup_display
 run_step "Unit Tests" ./mvnw test
 run_step "Package (fat JAR)" ./mvnw package -DskipTests
 

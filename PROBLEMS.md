@@ -355,6 +355,20 @@ trips).
   falls back to the text import path. The README documents the symptom
   and the per-OS install packages.
 
+**Hygiene progress (2026-09-16):**
+
+- The changelog now carries a `2.2.0` entry (the previous entry was
+  `2.0.0` from 2010); update it again before tagging the release
+- `.ci/run.sh` starts a virtual X server (Xvfb or, on Fedora, Xvnc)
+  and exports `DISPLAY` for the headful tests on display-less machines
+- the stray empty `figure/src` directory tree was removed
+- the test-source lint warnings were reduced from 36 to 4; the
+  remaining four are the intentional use of the deprecated
+  `ucar.nc2.NetcdfFileWriter` (required for updating the global
+  attributes of an existing file), and
+  `FigureAxisProperties` was moved out of `SGFigureAxis.java` to its
+  own file to clear the auxiliary class warnings
+
 ## 5. Healthy Aspects
 
 - The type-level dependency DAG is respected; no import cycles in
