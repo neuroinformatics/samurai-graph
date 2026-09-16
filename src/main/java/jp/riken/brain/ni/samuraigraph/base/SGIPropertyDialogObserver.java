@@ -1,7 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.base;
 
 /** A base interface which is set properties with the property dialog. */
-public interface SGIPropertyDialogObserver {
+public interface SGIPropertyDialogObserver extends SGIDialogObserver {
 
   /**
    * Commit the change with the dialog.

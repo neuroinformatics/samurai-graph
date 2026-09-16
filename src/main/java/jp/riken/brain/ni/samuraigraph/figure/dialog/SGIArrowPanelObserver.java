@@ -1,9 +1,10 @@
 package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
 import java.awt.Color;
+import jp.riken.brain.ni.samuraigraph.base.SGIDialogObserver;
 
 /** An observer of the property panel for arrows. */
-public interface SGIArrowPanelObserver {
+public interface SGIArrowPanelObserver extends SGIDialogObserver {
 
   public float getLineWidth(final String unit);
 

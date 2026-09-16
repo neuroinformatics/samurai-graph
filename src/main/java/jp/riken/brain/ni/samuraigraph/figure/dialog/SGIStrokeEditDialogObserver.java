@@ -1,7 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
+import jp.riken.brain.ni.samuraigraph.base.SGIDialogObserver;
+
 /** An observer of the property dialog for line stroke. */
-public interface SGIStrokeEditDialogObserver {
+public interface SGIStrokeEditDialogObserver extends SGIDialogObserver {
 
   /**
    * Set the number of the first line.

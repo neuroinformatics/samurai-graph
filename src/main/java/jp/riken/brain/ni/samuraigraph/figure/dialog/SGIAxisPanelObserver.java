@@ -1,7 +1,9 @@
 package jp.riken.brain.ni.samuraigraph.figure.dialog;
 
+import jp.riken.brain.ni.samuraigraph.base.SGIDialogObserver;
+
 /** An observer of the property panel for single axis. */
-public interface SGIAxisPanelObserver {
+public interface SGIAxisPanelObserver extends SGIDialogObserver {
 
   /**
    * @return
