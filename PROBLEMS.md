@@ -395,6 +395,25 @@ compared fields (their `equals` ignores the base fields), so the whole
 nested family now obeys the contract; the regression tests assert
 equal hashes for the equal SDArray/NetCDF/MDArray entries.
 
+**Hash contract audit (2026-09-16):** the whole tree was scanned for
+`equals`/`hashCode` violations (equals overrides without hashCode, or
+hashCode built on the object identity hash).
+
+- fixed: `SGArrayIndex`, the `SGAxisValue` hierarchy,
+  `SGAxisDoubleStepValue`/`SGAxisDateStepValue` and
+  `SGDataColumnInfo` (whose subclasses chain `super.hashCode`, so the
+  whole column-info hierarchy is now consistent)
+- verified consistent (the base is field-based and the subclasses
+  chain it): the `SGTransparentPaint` paint family and the remaining
+  nested `SGDataValueHistory` branches
+- remaining candidates (documented, not fixed): the large figure and
+  data element classes that override `equals` without `hashCode`
+  (e.g. `SGLineStyle`, `LegendProperties`, the `SGDrawingElement*`
+  and `SGElementGroup*` families) -- these are large stateful objects
+  whose identity semantics dominate usage; per-class `hashCode`
+  additions would be needed if any of them is stored in a hash-based
+  collection keyed by value equality
+
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
 trips).
