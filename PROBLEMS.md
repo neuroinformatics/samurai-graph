@@ -358,6 +358,17 @@ two core, previously untested shared classes:
   the original keys, deep clone and the `setToElement` attribute
   round trip
 
+**Progress (2026-09-16):** further headless base characterization:
+
+- `SGPropertyResultsTest` (7 cases): the property setting results --
+  uppercase key handling, insertion order and move-on-re-put, removal,
+  the original key and the independent clone
+- `SGDataBufferPolicyTest` (4 cases): the all/edited/invalid value
+  policy flags
+- `SGDataValueHistoryTest` (7 cases): the single-dimensional data value
+  history entry -- the constructor field mapping, the previous value,
+  the field-wise equality and the string form
+
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
 trips).
