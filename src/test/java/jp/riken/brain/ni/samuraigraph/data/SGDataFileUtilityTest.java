@@ -315,7 +315,8 @@ class SGDataFileUtilityTest {
     writer.addVariable("y", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim));
     writer.addVariable("v1", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim, xDim));
     writer.addVariable("v2", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim, xDim));
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
   }
 
@@ -332,7 +333,8 @@ class SGDataFileUtilityTest {
     writer.addVariable("y", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim));
     writer.addVariable("z", ucar.ma2.DataType.FLOAT, Arrays.asList(zDim));
     writer.addVariable("v", ucar.ma2.DataType.FLOAT, Arrays.asList(zDim, yDim, xDim));
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
   }
 
@@ -377,7 +379,8 @@ class SGDataFileUtilityTest {
     writer.addVariable("v", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim, xDim));
     writer.addVariable("le", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim, xDim));
     writer.addVariable("ue", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim, xDim));
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
   }
 
@@ -651,7 +654,7 @@ class SGDataFileUtilityTest {
     Map<String, Object> infoMap = new HashMap<String, Object>();
     assertTrue(SGDataFileUtility.updatePickupParameters(infoMap, cols));
     assertEquals(
-        new Integer(0),
+        Integer.valueOf(0),
         ((SGIntegerSeriesSet) infoMap.get(SGDataInformationKeyConstants.KEY_SXY_PICKUP_INDICES))
             .getNumbers()[0]);
 
@@ -701,17 +704,18 @@ class SGDataFileUtilityTest {
         ucar.nc2.write.NetcdfFormatWriter.createNewNetcdf4(
             ucar.nc2.write.NetcdfFileFormat.NETCDF4, path.toString(), null);
     ucar.nc2.Dimension xDim = writer.addDimension("x", 3);
-    ucar.nc2.Variable.Builder textVar =
+    ucar.nc2.Variable.Builder<?> textVar =
         writer.addVariable("label", ucar.ma2.DataType.CHAR, Arrays.asList(xDim));
     textVar.addAttribute(
         new ucar.nc2.Attribute(
             SGNetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGDataColumnTypeConstants.VALUE_TYPE_TEXT));
-    ucar.nc2.Variable.Builder dateVar =
+    ucar.nc2.Variable.Builder<?> dateVar =
         writer.addVariable("date", ucar.ma2.DataType.CHAR, Arrays.asList(xDim));
     dateVar.addAttribute(
         new ucar.nc2.Attribute(
             SGNetCDFConstants.ATTRIBUTE_VALUE_TYPE, SGDataColumnTypeConstants.VALUE_TYPE_DATE));
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     ucar.nc2.NetcdfFile ncFile = ucar.nc2.NetcdfFiles.open(path.toString());
     assertTrue(SGDataFileUtility.isSGTextVariable(ncFile.findVariable("label")));
     assertTrue(SGDataFileUtility.isSGDateVariable(ncFile.findVariable("date")));

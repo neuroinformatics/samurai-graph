@@ -60,7 +60,7 @@ class SGElementGroupSetInGraphMouseEventTest {
   }
 
   private MouseEvent createMouseEvent(final int x, final int y) {
-    JComponent component = (JComponent) this.graph.getComponent();
+    JComponent component = this.graph.getComponent();
     if (component == null) {
       component = new javax.swing.JPanel();
     }

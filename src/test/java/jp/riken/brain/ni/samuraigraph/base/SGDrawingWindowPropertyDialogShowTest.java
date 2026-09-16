@@ -22,6 +22,8 @@ class SGDrawingWindowPropertyDialogShowTest {
 
   /** A dialog subclass that does not show a window on its own. */
   private static class TestPropertyDialog extends SGPropertyDialog {
+    private static final long serialVersionUID = 1L;
+
     boolean dialogPropertySet = false;
 
     TestPropertyDialog() {

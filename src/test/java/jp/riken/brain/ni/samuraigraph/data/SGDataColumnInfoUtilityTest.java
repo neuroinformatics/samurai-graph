@@ -158,7 +158,8 @@ class SGDataColumnInfoUtilityTest {
     writer.addVariable("y", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(yDim));
     writer.addVariable("v1", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(yDim, xDim));
     writer.addVariable("v2", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(yDim, xDim));
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
   }
 

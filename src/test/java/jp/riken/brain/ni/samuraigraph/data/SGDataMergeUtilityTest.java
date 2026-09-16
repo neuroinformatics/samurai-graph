@@ -138,8 +138,7 @@ class SGDataMergeUtilityTest {
     SGMDArrayDataColumnInfo[] infos = new SGMDArrayDataColumnInfo[names.length];
     for (int ii = 0; ii < names.length; ii++) {
       SGMDArrayDataColumnInfo col =
-          (SGMDArrayDataColumnInfo)
-              SGDataFileUtility.createDataColumnInfo(file.findVariable(names[ii]), "");
+          SGDataFileUtility.createDataColumnInfo(file.findVariable(names[ii]), "");
       col.setGenericDimensionIndex(0);
       infos[ii] = col;
     }
@@ -177,8 +176,8 @@ class SGDataMergeUtilityTest {
   void mergeMDArrayCombinesDataFromSameFile() throws IOException {
     SGHDF5File file = createHDF5File(createTempHdf5File());
     List<SGData> dataList = new ArrayList<SGData>();
-    dataList.add(this.createMDData(file));
-    dataList.add(this.createMDData(file));
+    dataList.add(SGDataMergeUtilityTest.createMDData(file));
+    dataList.add(SGDataMergeUtilityTest.createMDData(file));
     SGISXYTypeMultipleData merged = SGDataMergeUtility.mergeMDArray(dataList);
     assertNotNull(merged);
     assertTrue(merged instanceof SGSXYMDArrayMultipleData);
@@ -222,7 +221,8 @@ class SGDataMergeUtilityTest {
     ucar.nc2.Dimension yDim = writer.addDimension("y", 2);
     writer.addVariable("x", ucar.ma2.DataType.FLOAT, Arrays.asList(xDim));
     writer.addVariable("v", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim, xDim));
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     SGNetCDFFile file = new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
     SGSXYNetCDFMultipleData picked =
         new SGSXYNetCDFMultipleData(

@@ -28,15 +28,14 @@ class SGMainFunctionsNetCDFTest {
   void openExistingCanReadGlobalAttributes() throws IOException {
     Path path = tempDir.resolve("test_read.nc");
 
-    try (NetcdfFormatWriter writer =
+    final NetcdfFormatWriter writer =
         NetcdfFormatWriter.createNewNetcdf3(path.toString())
             .addAttribute(new Attribute("commandScript", "test_value"))
-            .build()) {
-      // file created with global attribute
-    }
+            .build();
+    writer.close();
 
-    try (NetcdfFormatWriter writer = NetcdfFormatWriter.openExisting(path.toString()).build()) {
-      Attribute attr = writer.findGlobalAttribute("commandScript");
+    try (NetcdfFormatWriter reader = NetcdfFormatWriter.openExisting(path.toString()).build()) {
+      Attribute attr = reader.findGlobalAttribute("commandScript");
       assertNotNull(attr);
       assertEquals("test_value", attr.getStringValue());
     }
@@ -46,12 +45,11 @@ class SGMainFunctionsNetCDFTest {
   void openExistingPreservesGlobalAttributes() throws IOException {
     Path path = tempDir.resolve("test_preserve.nc");
 
-    try (NetcdfFormatWriter writer =
+    final NetcdfFormatWriter writer =
         NetcdfFormatWriter.createNewNetcdf3(path.toString())
             .addAttribute(new Attribute("file_level", "original"))
-            .build()) {
-      // file created with global attribute
-    }
+            .build();
+    writer.close();
 
     try (NetcdfFile ncfile = NetcdfFiles.open(path.toString())) {
       assertNotNull(ncfile.findGlobalAttribute("file_level"));

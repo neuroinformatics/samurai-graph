@@ -59,7 +59,7 @@ class SGElementGroupLineTest {
   }
 
   private SGTuple2f[] locate(SGTuple2f... points) {
-    TestLineGroup lineGroup = (TestLineGroup) this.group;
+    TestLineGroup lineGroup = this.group;
     lineGroup.setPoints(points);
     return points;
   }
@@ -140,7 +140,7 @@ class SGElementGroupLineTest {
         new SGTuple2f[] {
           tuple(0, 0), new SGTuple2f(Float.NaN, Float.NaN), tuple(2, 2), tuple(3, 3)
         };
-    ((TestLineGroup) (this.group)).setPoints(points);
+    this.group.setPoints(points);
     SGElementGroupLine group = this.group;
     assertTrue(group.initDrawingElement(points));
     group.setLineConnectingAll(true);
@@ -184,7 +184,7 @@ class SGElementGroupLineTest {
 
   @Test
   void nullGraphicsContextIsRejected() {
-    assertFalse(((TestLineGroup) this.group).paintElement(null, null));
+    assertFalse(this.group.paintElement(null, null));
   }
 
   @Test

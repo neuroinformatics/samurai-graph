@@ -88,8 +88,7 @@ class SGAnimationThreadTest {
   @Test
   void constructorRejectsNull() {
     final SGIAnimation[] animations = null;
-    assertThrows(
-        IllegalArgumentException.class, () -> new SGAnimationThread((SGIAnimation[]) animations));
+    assertThrows(IllegalArgumentException.class, () -> new SGAnimationThread(animations));
   }
 
   @Test
@@ -140,7 +139,7 @@ class SGAnimationThreadTest {
   void copyConstructorCarriesFrameNumber() {
     SGIAnimation[] animations = {new TestAnimation(7, 10.0, true)};
     SGAnimationThread original = new SGAnimationThread(animations);
-    SGAnimationThread copy = new SGAnimationThread((SGAnimationThread) original);
+    SGAnimationThread copy = new SGAnimationThread(original);
     assertEquals(original.getFrameNumber(), copy.getFrameNumber());
   }
 

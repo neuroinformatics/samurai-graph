@@ -274,7 +274,8 @@ class SGDefaultColumnTypeUtilityTest {
     writer.addVariable("Index", ucar.ma2.DataType.INT, "Index");
     writer.addVariable("x", ucar.ma2.DataType.FLOAT, "Index");
     writer.addVariable("height", ucar.ma2.DataType.FLOAT, "Index");
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     SGNetCDFFile file = new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
     List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
     for (SGNetCDFVariable var : file.getVariables()) {
@@ -338,7 +339,8 @@ class SGDefaultColumnTypeUtilityTest {
     for (String var : varNames) {
       writer.addVariable(var, ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(yDim, xDim));
     }
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
   }
 
@@ -353,7 +355,8 @@ class SGDefaultColumnTypeUtilityTest {
     for (String var : vars) {
       writer.addVariable(var, ucar.ma2.DataType.FLOAT, "Index");
     }
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
   }
 
@@ -555,7 +558,8 @@ class SGDefaultColumnTypeUtilityTest {
     writer.addVariable("x", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(xDim));
     writer.addVariable("y1", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(xDim));
     writer.addVariable("y2", ucar.ma2.DataType.FLOAT, java.util.Arrays.asList(xDim));
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     SGNetCDFFile file = new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
     List<SGDataColumnInfo> columns = new ArrayList<SGDataColumnInfo>();
     for (SGNetCDFVariable var : file.getVariables()) {
@@ -927,7 +931,8 @@ class SGDefaultColumnTypeUtilityTest {
     writer.addVariable("y", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim));
     writer.addVariable("v1", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim, xDim));
     writer.addVariable("v2", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim, xDim));
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
   }
 
@@ -1005,7 +1010,8 @@ class SGDefaultColumnTypeUtilityTest {
     writer.addVariable("y", ucar.ma2.DataType.FLOAT, Arrays.asList(yDim));
     writer.addVariable("z", ucar.ma2.DataType.FLOAT, Arrays.asList(zDim));
     writer.addVariable("v", ucar.ma2.DataType.FLOAT, Arrays.asList(zDim, yDim, xDim));
-    try (ucar.nc2.write.NetcdfFormatWriter ignored = writer.build()) {}
+    final ucar.nc2.write.NetcdfFormatWriter ignored = writer.build();
+    ignored.close();
     return new SGNetCDFFile(ucar.nc2.NetcdfFiles.open(path.toString()));
   }
 

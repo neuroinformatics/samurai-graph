@@ -43,8 +43,7 @@ class SGSXYMDArrayMultipleDataTest {
     SGMDArrayDataColumnInfo[] infos = new SGMDArrayDataColumnInfo[names.length];
     for (int ii = 0; ii < names.length; ii++) {
       SGMDArrayDataColumnInfo col =
-          (SGMDArrayDataColumnInfo)
-              SGDataFileUtility.createDataColumnInfo(file.findVariable(names[ii]), "");
+          SGDataFileUtility.createDataColumnInfo(file.findVariable(names[ii]), "");
       col.setGenericDimensionIndex(0);
       infos[ii] = col;
     }
