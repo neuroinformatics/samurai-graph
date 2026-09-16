@@ -20,7 +20,6 @@ import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5Exception;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
-import com.jmatio.io.MatFileReader;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Frame;
@@ -140,7 +139,11 @@ import ucar.nc2.NetcdfFileWriter;
 
 /** The main thread. */
 class SGMainFunctions
-    implements ActionListener, WindowListener, SGConsoleCommandExecutor, SGOpenFileActions {
+    implements ActionListener,
+        WindowListener,
+        SGConsoleCommandExecutor,
+        SGOpenFileActions,
+        SGDataReloadActions {
 
   private static final Logger logger = LogManager.getLogger(SGMainFunctions.class);
 
@@ -1728,7 +1731,71 @@ class SGMainFunctions
     return this.onTextDataFilesDropped(fileList, wnd, pos);
   }
 
-  // Updates the pattern of the tool bar in the preferences.
+  // ---- Implementation of SGDataReloadActions ----
+
+  @Override
+  public boolean isSDArrayData(final SGData data) {
+    return SGDataDataTypeUtility.isSDArrayData(data);
+  }
+
+  @Override
+  public boolean exists(final String path, final SGIDataSource srcCur) {
+    final File dataFile = new File(path);
+    if (srcCur instanceof SGNetCDFFile) {
+      final SGNetCDFFile ncfile = (SGNetCDFFile) srcCur;
+      if (!ncfile.isRemoteFile()) {
+        return dataFile.exists();
+      }
+      return true;
+    }
+    return dataFile.exists();
+  }
+
+  @Override
+  public SGIDataSource openNetCDF(final String path) throws IOException {
+    return new SGNetCDFFile(SGApplicationUtility.openNetCDF(path));
+  }
+
+  @Override
+  public SGIDataSource openHDF5(final String path) throws HDF5Exception {
+    return new SGHDF5File(SGApplicationUtility.openHDF5(path));
+  }
+
+  @Override
+  public SGIDataSource openMAT(final String path) throws IOException {
+    return new SGMATLABFile(path, SGApplicationUtility.openMAT(path));
+  }
+
+  @Override
+  public SGDataColumnInfoSet getDataColumnInfoSet(final SGData data, final SGFigure figure) {
+    final SGDataColumnInfo[] cols = figure.getGraphElement().getDataColumnInfoArray(data);
+    return new SGDataColumnInfoSet(cols);
+  }
+
+  @Override
+  public SGIDataSource createDataSource(
+      final String path, final SGDataColumnInfoSet colInfoSet, final Map<String, Object> infoMap)
+      throws FileNotFoundException {
+    return SGApplicationUtility.createDataSource(path, colInfoSet, infoMap);
+  }
+
+  @Override
+  public SGDataSourceObserver getDataSourceObserver() {
+    return this.mDataCreator.getDataSourceObserver();
+  }
+
+  @Override
+  public boolean replaceAndUpdateData(
+      final SGData data,
+      final SGFigure figure,
+      final SGIDataSource srcOld,
+      final SGIDataSource srcNew) {
+    final SGDataSourceObserver obs = this.getDataSourceObserver();
+    final SGIFigureElementGraph gElement = figure.getGraphElement();
+    gElement.replaceDataSource(srcOld, srcNew, obs);
+    return gElement.updateDrawingElementsLocation(data);
+  }
+
   // Updates the pattern of the tool bar in the preferences.
   void updateToolBarPatternInPreferences(final String[] array) {
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
@@ -2448,122 +2515,9 @@ class SGMainFunctions
     List<SGData> dataList = dl.dataList;
     Map<SGData, SGFigure> dataFigureMap = dl.figureMap;
 
-    // get data path and data source
-    Set<String> dataPathSet = new HashSet<String>(); // to prevent duplication
-    Map<String, SGIDataSource> srcMap = new HashMap<String, SGIDataSource>();
-    for (SGData data : dataList) {
-      String path = data.getPath();
-      if (path == null) {
-        continue;
-      }
-      dataPathSet.add(path);
-      srcMap.put(path, data.getDataSource());
-    }
-
-    // creates new data source
-    Map<String, SGIDataSource> srcMapNew = new HashMap<String, SGIDataSource>();
-    Map<String, RELOAD_DATA_STATUS> resultMap = new HashMap<String, RELOAD_DATA_STATUS>();
-    for (String path : dataPathSet) {
-      File dataFile = new File(path);
-      SGIDataSource srcCur = srcMap.get(path);
-      boolean found = true;
-      if (srcCur instanceof SGNetCDFFile) {
-        SGNetCDFFile ncfile = (SGNetCDFFile) srcCur;
-        if (!ncfile.isRemoteFile()) {
-          if (!dataFile.exists()) {
-            found = false;
-          }
-        }
-      } else {
-        if (!dataFile.exists()) {
-          found = false;
-        }
-      }
-      if (!found) {
-        resultMap.put(path, RELOAD_DATA_STATUS.LOST);
-        continue;
-      }
-
-      SGIDataSource srcNew = null;
-      if (srcCur instanceof SGNetCDFFile) {
-        NetcdfFile ncfile;
-        try {
-          ncfile = SGApplicationUtility.openNetCDF(path);
-        } catch (IOException e) {
-          resultMap.put(path, RELOAD_DATA_STATUS.INVALID_DATA);
-          continue;
-        }
-        srcNew = new SGNetCDFFile(ncfile);
-      } else if (srcCur instanceof SGHDF5File) {
-        IHDF5Reader reader = null;
-        try {
-          reader = SGApplicationUtility.openHDF5(path);
-        } catch (HDF5Exception e) {
-          resultMap.put(path, RELOAD_DATA_STATUS.INVALID_DATA);
-          continue;
-        }
-        srcNew = new SGHDF5File(reader);
-      } else if (srcCur instanceof SGMATLABFile) {
-        MatFileReader reader = null;
-        try {
-          reader = SGApplicationUtility.openMAT(path);
-        } catch (IOException e) {
-          resultMap.put(path, RELOAD_DATA_STATUS.INVALID_DATA);
-          continue;
-        }
-        srcNew = new SGMATLABFile(path, reader);
-      }
-      srcMapNew.put(path, srcNew);
-      resultMap.put(path, RELOAD_DATA_STATUS.SUCCEEDED);
-    }
-    for (SGData data : dataList) {
-      SGFigure figure = dataFigureMap.get(data);
-      if (SGDataDataTypeUtility.isSDArrayData(data)) {
-        String path = data.getPath();
-        SGIFigureElementGraph gElement = figure.getGraphElement();
-        SGDataColumnInfo[] cols = gElement.getDataColumnInfoArray(data);
-        SGDataColumnInfoSet colInfoSet = new SGDataColumnInfoSet(cols);
-        Map<String, Object> infoMap = data.getInfoMap();
-        SGIDataSource srcNew = null;
-        try {
-          srcNew = SGApplicationUtility.createDataSource(path, colInfoSet, infoMap);
-        } catch (FileNotFoundException e) {
-          resultMap.put(path, RELOAD_DATA_STATUS.LOST);
-          continue;
-        }
-        if (srcNew == null) {
-          resultMap.put(path, RELOAD_DATA_STATUS.INVALID_DATA);
-          continue;
-        }
-        srcMapNew.put(path, srcNew);
-        resultMap.put(path, RELOAD_DATA_STATUS.SUCCEEDED);
-      }
-    }
-
-    SGDataSourceObserver obs = this.mDataCreator.getDataSourceObserver();
-    for (SGData data : dataList) {
-      String path = data.getPath();
-      if (path == null) {
-        continue;
-      }
-      RELOAD_DATA_STATUS result = resultMap.get(path);
-      if (RELOAD_DATA_STATUS.LOST.equals(result)
-          || RELOAD_DATA_STATUS.INVALID_DATA.equals(result)) {
-        continue;
-      }
-      SGIDataSource srcNew = srcMapNew.get(path);
-      SGFigure figure = dataFigureMap.get(data);
-      SGIFigureElementGraph gElement = figure.getGraphElement();
-
-      // replaces the data source
-      SGIDataSource srcOld = data.getDataSource();
-      gElement.replaceDataSource(srcOld, srcNew, obs);
-
-      // updates the drawing elements
-      if (!gElement.updateDrawingElementsLocation(data)) {
-        resultMap.put(path, RELOAD_DATA_STATUS.INVALID_DATA);
-      }
-    }
+    // reloads the data sources
+    final Map<String, RELOAD_DATA_STATUS> statusMap =
+        new SGDataReloader().reload(dataList, dataFigureMap, this);
 
     final DataReloadResultSet resultsSet = new DataReloadResultSet();
     int cntError = 0;
@@ -2572,7 +2526,7 @@ class SGMainFunctions
       if (path == null) {
         continue;
       }
-      RELOAD_DATA_STATUS status = resultMap.get(path);
+      RELOAD_DATA_STATUS status = statusMap.get(path);
       if (RELOAD_DATA_STATUS.LOST.equals(status)
           || RELOAD_DATA_STATUS.INVALID_DATA.equals(status)) {
         cntError++;
