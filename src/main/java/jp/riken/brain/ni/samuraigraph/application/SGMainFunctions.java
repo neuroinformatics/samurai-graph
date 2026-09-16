@@ -143,7 +143,8 @@ class SGMainFunctions
         WindowListener,
         SGConsoleCommandExecutor,
         SGOpenFileActions,
-        SGDataReloadActions {
+        SGDataReloadActions,
+        SGEmbeddedActions {
 
   private static final Logger logger = LogManager.getLogger(SGMainFunctions.class);
 
@@ -1796,6 +1797,20 @@ class SGMainFunctions
     return gElement.updateDrawingElementsLocation(data);
   }
 
+  // ---- Implementation of SGEmbeddedActions ----
+
+  @Override
+  public boolean executeEmbeddedCommands(
+      final String commands, final String path, final SGDrawingWindow wnd) {
+    return this.execCommand(commands, path, wnd);
+  }
+
+  @Override
+  public boolean applyEmbeddedProperties(
+      final String commands, final String path, final SGDrawingWindow wnd) {
+    return this.applyProperties(commands, path, wnd);
+  }
+
   // Updates the pattern of the tool bar in the preferences.
   void updateToolBarPatternInPreferences(final String[] array) {
     Preferences pref = Preferences.userNodeForPackage(this.getClass());
@@ -1891,8 +1906,10 @@ class SGMainFunctions
     }
 
     // executes commands if they exist
+    final SGEmbeddedContentReader embedded = new NetCDFEmbeddedContentReader(ncFile);
+    final SGEmbeddedCommandLoader embeddedLoader = new SGEmbeddedCommandLoader();
     try {
-      if (this.execCommand(ncFile, wnd)) {
+      if (embeddedLoader.executeEmbeddedCommands(embedded, wnd, this)) {
         return true;
       }
     } finally {
@@ -1904,7 +1921,7 @@ class SGMainFunctions
     }
 
     // apply embedded properties if they exist
-    if (this.applyProperties(ncFile, wnd)) {
+    if (embeddedLoader.applyEmbeddedProperties(embedded, wnd, this)) {
       return true;
     }
 
@@ -1921,46 +1938,6 @@ class SGMainFunctions
     this.mDataTypeWizardDialog.setVisible(true);
 
     return true;
-  }
-
-  private boolean execCommand(NetcdfFile ncFile, SGDrawingWindow wnd) {
-    final Attribute attr = ncFile.findGlobalAttribute(ATTR_NAME_SAMURAI_GRAPH_COMMAND);
-    if (attr != null) {
-      final String commands = attr.getStringValue();
-      return this.execCommand(commands, ncFile.getLocation(), wnd);
-    }
-    return false;
-  }
-
-  private boolean applyProperties(NetcdfFile ncFile, SGDrawingWindow wnd) {
-    final Attribute attr = ncFile.findGlobalAttribute(ATTR_NAME_SAMURAI_GRAPH_PROPERTIES);
-    if (attr != null) {
-      final String properties = attr.getStringValue();
-      return this.applyProperties(properties, ncFile.getLocation(), wnd);
-    }
-    return false;
-  }
-
-  private boolean execCommand(IHDF5Reader reader, SGDrawingWindow wnd) {
-    if (!reader.object().hasAttribute("/", ATTR_NAME_SAMURAI_GRAPH_COMMAND)) {
-      return false;
-    }
-    final String commands = reader.string().getAttr("/", ATTR_NAME_SAMURAI_GRAPH_COMMAND);
-    if (commands != null) {
-      return this.execCommand(commands, reader.file().getFile().getPath(), wnd);
-    }
-    return false;
-  }
-
-  private boolean applyProperties(IHDF5Reader reader, SGDrawingWindow wnd) {
-    if (!reader.object().hasAttribute("/", ATTR_NAME_SAMURAI_GRAPH_PROPERTIES)) {
-      return false;
-    }
-    final String commands = reader.string().getAttr("/", ATTR_NAME_SAMURAI_GRAPH_PROPERTIES);
-    if (commands != null) {
-      return this.applyProperties(commands, reader.file().getFile().getPath(), wnd);
-    }
-    return false;
   }
 
   private boolean execCommand(final String commands, String path, SGDrawingWindow wnd) {
@@ -2663,13 +2640,16 @@ class SGMainFunctions
       return false;
     }
     try {
+      final SGEmbeddedContentReader embedded = new HDF5EmbeddedContentReader(reader);
+      final SGEmbeddedCommandLoader embeddedLoader = new SGEmbeddedCommandLoader();
+
       // execute embedded commands if they exist
-      if (this.execCommand(reader, wnd)) {
+      if (embeddedLoader.executeEmbeddedCommands(embedded, wnd, this)) {
         return true;
       }
 
       // apply embedded properties if they exist
-      if (this.applyProperties(reader, wnd)) {
+      if (embeddedLoader.applyEmbeddedProperties(embedded, wnd, this)) {
         return true;
       }
     } finally {
