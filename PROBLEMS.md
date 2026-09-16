@@ -273,6 +273,20 @@ Observer interfaces and the Swing dialog classes including the
 panels (34 classes in total, the former `figure` package remains
 for the drawing model, the constants and data side elements).
 
+**Observer resolution (2026-09-16):** a full unification into a
+generic event abstraction was evaluated and **rejected**; the
+per-dialog observers are type-safe contracts with almost no shared
+method surface, and the lifecycle notification is already
+centralized in `base/SGPropertyDialog` +
+`base/SGIPropertyDialogObserver`. Merging them would trade compile-
+time type safety for a generic event mechanism across hundreds of
+files. Instead, a common role marker `base/SGIDialogObserver` was
+introduced and all twenty per-dialog observer types now extend it
+(directly or through `SGIPropertyDialogObserver`), which names the
+common supertype without adding any contract; a unit test locks the
+invariant.
+
+
 ### 2.5 `base` as a grab-bag (Medium)
 
 ### 2.5 `base` as a grab-bag (Medium)
@@ -409,5 +423,7 @@ coverage level.
 5. **Split `figure` into `figure/model` and `figure/dialog` (2.4)**;
    unify the Observer interfaces afterwards. **Partial progress:** the
    Observer interfaces and the dialog classes are in `figure.dialog`
-   now; the remaining steps are the observer unification and, if
-   worthwhile, a further split of the drawing model side
+   now. The observer unification was evaluated and **rejected** (see
+   2.4 rationale); a common role marker `SGIDialogObserver` was
+   introduced instead. A further split of the drawing model side
+   remains possible
