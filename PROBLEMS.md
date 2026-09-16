@@ -388,9 +388,12 @@ hash, so equal instances could hash differently -- a violation of the
 term was dropped from `SGInteger.hashCode` and
 `SGIntegerSeries.hashCode`, and a regression test
 (`SGIntegerSeriesTest.equalInstancesHashEqually`) locks the contract.
-Related follow-up: `SGDataValueHistory` overrides `equals` without
-`hashCode`, so it exhibits the same violation; its nested classes also
-mix the identity hash into `hashCode`.
+Related: `SGDataValueHistory` overrode `equals` without `hashCode`.
+**Fixed (2026-09-16):** the base `hashCode` was added from the compared
+fields, and the `NetCDF`/`MDArray` hashes were computed from their own
+compared fields (their `equals` ignores the base fields), so the whole
+nested family now obeys the contract; the regression tests assert
+equal hashes for the equal SDArray/NetCDF/MDArray entries.
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
