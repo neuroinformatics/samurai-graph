@@ -382,12 +382,15 @@ map helper were covered.
 
 **Found issue (2026-09-16, via characterization testing):**
 `SGIntegerSeries.equals` returns true for two distinct instances with
-the same start/end/step, but `hashCode` mixes in the object identity
-hash, so equal instances can hash differently -- a violation of the
-`equals`/`hashCode` contract. This can degrade map/set lookups that
-rely on the contract. The bug is locked by the characterization tests
-(equality is asserted, the unstable hash is documented) and should be
-fixed by dropping the identity `super.hashCode()` term.
+the same start/end/step, but `hashCode` mixed in the object identity
+hash, so equal instances could hash differently -- a violation of the
+`equals`/`hashCode` contract. **Fixed (2026-09-16):** the identity-hash
+term was dropped from `SGInteger.hashCode` and
+`SGIntegerSeries.hashCode`, and a regression test
+(`SGIntegerSeriesTest.equalInstancesHashEqually`) locks the contract.
+Related follow-up: `SGDataValueHistory` overrides `equals` without
+`hashCode`, so it exhibits the same violation; its nested classes also
+mix the identity hash into `hashCode`.
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
