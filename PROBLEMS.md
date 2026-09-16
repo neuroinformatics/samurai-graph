@@ -346,6 +346,18 @@ The overall instruction coverage measured by JaCoCo is **33.4%**
   with real figures and the data setup wizard option paths beyond the
   smoke tests
 
+**Progress (2026-09-16):** characterization unit tests were added for
+two core, previously untested shared classes:
+
+- `SGXYNumberFormatTest` (8 cases, data): the shared scalar XY number
+  format -- decimal places validation, exponent, the clone-on-read and
+  copy-on-set shift, and the date format
+- `SGPropertyMapTest` (15 cases, base): the property map -- case
+  insensitive keys with the uppercase key list, insertion order and
+  move-on-re-put, trimming/unquoting `getValueString`, `putAll` with
+  the original keys, deep clone and the `setToElement` attribute
+  round trip
+
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
 trips).
