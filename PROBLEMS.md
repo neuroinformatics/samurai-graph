@@ -89,6 +89,29 @@ duplicated members have been unified.
   `setPickUpDimensionInfo` validation, both requiring the hook
   pattern from the design note
 
+**Consolidation progress (2026-09-16):** the cache/properties and
+the simple bounds/delegation surface were pulled up as interface
+default methods.
+
+- `SGISXYTypeMultipleData` now defaults the bounds accessors
+  (`getBoundsX`, `getBoundsY`, `getAllAnimationFrameBoundsX`,
+  `getAllAnimationFrameBoundsY` via `SGDataRangeUtility`), the
+  child-indexed `getDataBuffer` (via `SGDataBufferUtility`) and
+  `restoreCache` (via `SGDataMiscUtility`); the three backends no
+  longer override them
+- `hasEffectiveStride` had already been defaulted on
+  `SGISXYTypeData`; the three redundant backend overrides were
+  deleted
+- `SGISXYTypeData` now carries the `SGXYNumberFormat` accessors as
+  defaults through a new abstract format accessor
+  (`getNumberFormat` -> the `mFormat` field of each of the six SXY
+  classes): `getDecimalPlaces`, `setDecimalPlaces`, `getExponent`,
+  `setExponent`, `getShift`, `setShift` and, where the date format
+  is not deliberately disabled, `getDateFormat`/`setDateFormat`
+- the two MDArray backends keep their own `getDateFormat`
+  (returns null) and `setDateFormat` (does nothing) overrides since
+  they intentionally decode dates per backend
+
 The remaining items 2 to 4 of the extraction order hit the typed
 backends, so a design note for the following slices:
 
