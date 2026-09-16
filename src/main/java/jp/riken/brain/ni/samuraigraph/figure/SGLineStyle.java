@@ -78,6 +78,15 @@ public class SGLineStyle extends SGStyle implements Cloneable {
   }
 
   @Override
+  public int hashCode() {
+    int result = 1;
+    result = 31 * result + (this.mColor != null ? this.mColor.hashCode() : 0);
+    result = 31 * result + this.mLineType;
+    result = 31 * result + Float.hashCode(this.mLineWidth);
+    return result;
+  }
+
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("[");

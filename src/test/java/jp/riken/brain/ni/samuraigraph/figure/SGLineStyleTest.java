@@ -62,6 +62,23 @@ class SGLineStyleTest {
   }
 
   @Test
+  void equalDistinctInstancesHashEqually() {
+    final SGLineStyle first = new SGLineStyle(SGLineConstants.LINE_TYPE_SOLID, Color.RED, 1.0f);
+    final SGLineStyle second = new SGLineStyle(SGLineConstants.LINE_TYPE_SOLID, Color.RED, 1.0f);
+    assertEquals(first, second);
+    assertEquals(first.hashCode(), second.hashCode());
+  }
+
+  @Test
+  void lineStyleWorksAsAHashMapKey() {
+    final java.util.Map<SGLineStyle, String> map = new java.util.HashMap<SGLineStyle, String>();
+    final SGLineStyle style = new SGLineStyle(SGLineConstants.LINE_TYPE_SOLID, Color.RED, 1.0f);
+    map.put(style, "value");
+    final SGLineStyle equal = new SGLineStyle(SGLineConstants.LINE_TYPE_SOLID, Color.RED, 1.0f);
+    assertEquals("value", map.get(equal));
+  }
+
+  @Test
   void toStringContainsTypeName() {
     SGLineStyle style = new SGLineStyle(SGLineConstants.LINE_TYPE_SOLID, Color.BLACK, 1.0f);
     String str = style.toString();
