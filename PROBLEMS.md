@@ -195,6 +195,28 @@ Recommended extraction order (API-stable surface first):
 These are a direct cause of the low `application` coverage (20.0%) and
 make headless testing structurally impossible.
 
+**Split progress (2026-09-16):** the file open flow of
+`SGMainFunctions` was extracted into headless-testable units. The
+200-line `openFile` is now a thin delegation, and the routing is
+covered by unit tests with fake actions.
+
+- `SGFileOpenCategorizer` categorizes the dropped files into the
+  dedicated kinds (property, archive, NetCDF archive, script, image,
+  NetCDF/HDF5/MATLAB/text data), with the NetCDF-archive confirmation
+  and the unreadable-HDF5 error injected as callbacks so that the
+  routing is testable without a display
+- `SGFileOpenHandler` owns the orchestration (classification,
+  dispatch and wait-cursor/exception handling) and delegates the GUI
+  operations to the `SGOpenFileActions` interface, implemented by
+  `SGMainFunctions`
+- `SGOpenFileCategory` is the immutable result of the categorization
+- new unit tests: `SGFileOpenCategorizerTest` (13 cases) and
+  `SGFileOpenHandlerTest` (15 cases, with fake actions and a mocked
+  window) lock the category mapping and the dispatch/return-code flow
+- `openFile`/`onFilesDropped` are behavior-preserving delegations; the
+  GUI managers (`SGPropertyFileManager`, `SGDataSetManager`, console
+  runner and wizard dialogs) stay in `SGMainFunctions`
+
 ### 2.4 Mixed responsibilities in `figure` (Medium)
 
 185 files / ~113k lines mixing:
@@ -330,7 +352,10 @@ coverage level.
 4. **Extract file operation logic from `SGMainFunctions.openFile` and
    `SGDrawingWindow` (2.3)**: fold into the existing
    `SGFileHandler`/`SGArchiveFileCreator` to make them
-   headless-testable
+   headless-testable. **Partial progress (2026-09-16):** the `openFile`
+   flow is extracted into `SGFileOpenCategorizer`/`SGFileOpenHandler`
+   and covered by headless unit tests; the remaining work is the
+   `SGDrawingWindow` side and moving the `reloadData` flow
 5. **Split `figure` into `figure/model` and `figure/dialog` (2.4)**;
    unify the Observer interfaces afterwards. **Partial progress:** the
    Observer interfaces and the dialog classes are in `figure.dialog`
