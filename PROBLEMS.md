@@ -13,13 +13,13 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
-| `jp...samuraigraph.base` | 180 | 44,503 | 41.6% | 38 |
+| `jp...samuraigraph.base` | 180 | 44,503 | 41.7% | 39 |
 | `jp...samuraigraph.data` | 136 | 66,956 | 34.0% | 57 |
-| `jp...samuraigraph.figure` | 186 | 112,405 | 21.8% | 49 |
+| `jp...samuraigraph.figure` | 186 | 112,405 | 21.9% | 50 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **34.1%** (182 test classes / 1594
+- Overall instruction coverage is **34.2%** (184 test classes / 1606
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -320,7 +320,7 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **34.1%**
+The overall instruction coverage measured by JaCoCo is **34.2%**
 (seen per package in section 1; re-measured 2026-09-29 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -435,6 +435,31 @@ base `SGNamedStringBlock` test was added.
   and the series map, the out-of-range value rejection, and the
   `paramString`/`toString` forms. The class coverage rose from 0% to
   100%, the `base` package to 41.6% (overall 34.1%); it runs headless
+
+**Found issue (2026-09-29, via characterization testing):**
+`SGDrawingElementBar.getProperties` collected the bar state
+(baseline, width value and interval) but there was no `setProperties`
+override, so those fields -- and the vertical flag, omitted from
+`getProperties` -- were lost on a get/set round trip. **Fixed
+(2026-09-29):** `setProperties` was added to restore the bar state and
+the vertical flag is now included by `getProperties`, consistent with
+`SGElementGroupBar`; the regression test
+(`SGDrawingElementBarTest.barPropertiesRoundTripPreservesTheFullState`)
+locks the round trip.
+
+**Progress (2026-09-29, headless units):** two further headless units
+were added.
+
+- `SGDrawingElementBarTest` (8 cases) locks the abstract bar drawing
+  element through a stub: the axis values, the vertical flag and
+  interval, the bounds and hit test, the shape, the full bar property
+  round trip and the foreign rejection. The class coverage rose from
+  1.5% to 52.4%; it runs headless
+- `SGBufferedFileWriterTest` (4 cases) locks the buffered file writer:
+  the text write, the explicit character set, the utf-8 fallback and
+  the idempotent close. The class coverage rose from 0% to 83.7%, the
+  `base` package to 41.7% and `figure` to 21.9% (overall 34.2%); it
+  runs headless
 
 **Found issue (2026-09-16, via characterization testing):**
 `SGIntegerSeries.equals` returns true for two distinct instances with

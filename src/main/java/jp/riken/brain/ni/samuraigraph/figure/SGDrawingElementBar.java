@@ -70,7 +70,47 @@ public abstract class SGDrawingElementBar extends SGDrawingElementRectangle
     BarProperties bp = (BarProperties) p;
     bp.setBaselineValue(this.getBaselineValue());
     bp.setWidthValue(this.getWidthValue());
+    bp.setVertical(this.isVertical());
     bp.setInterval(this.getInterval());
+
+    return true;
+  }
+
+  /** */
+  @Override
+  public boolean setProperties(SGProperties p) {
+    if ((p instanceof BarProperties) == false) {
+      return false;
+    }
+    if (super.setProperties(p) == false) {
+      return false;
+    }
+
+    BarProperties bp = (BarProperties) p;
+
+    Double baselineValue = bp.getBaselineValue();
+    if (baselineValue == null) {
+      return false;
+    }
+    this.setBaselineValue(baselineValue.doubleValue());
+
+    Double widthValue = bp.getWidthValue();
+    if (widthValue == null) {
+      return false;
+    }
+    this.setWidthValue(widthValue.doubleValue());
+
+    Boolean vertical = bp.isVertical();
+    if (vertical == null) {
+      return false;
+    }
+    this.setVertical(vertical.booleanValue());
+
+    Double interval = bp.getInterval();
+    if (interval == null) {
+      return false;
+    }
+    this.setInterval(interval.doubleValue());
 
     return true;
   }
