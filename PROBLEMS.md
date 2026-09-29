@@ -13,13 +13,13 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
-| `jp...samuraigraph.base` | 180 | 44,503 | 41.4% | 37 |
+| `jp...samuraigraph.base` | 180 | 44,503 | 41.6% | 38 |
 | `jp...samuraigraph.data` | 136 | 66,956 | 34.0% | 57 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 21.8% | 49 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **34.1%** (181 test classes / 1583
+- Overall instruction coverage is **34.1%** (182 test classes / 1594
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -424,6 +424,17 @@ drawing-element test was added to the `figure` package.
   the `writeProperty`/`readProperty` edge line and inner paint
   attributes. The class coverage rose from 12.9% to 72.1%, the
   `figure` package to 21.8% (overall 34.1%); it runs headless
+
+**Progress (2026-09-29, base headless units):** the first headless
+base `SGNamedStringBlock` test was added.
+
+- `SGNamedStringBlockTest` (11 cases) locks the named string block:
+  the constructor validation (null/empty series map and the mismatch
+  between the value count and the product of the series lengths), the
+  series lookup, the defensive copying of both the returned values
+  and the series map, the out-of-range value rejection, and the
+  `paramString`/`toString` forms. The class coverage rose from 0% to
+  100%, the `base` package to 41.6% (overall 34.1%); it runs headless
 
 **Found issue (2026-09-16, via characterization testing):**
 `SGIntegerSeries.equals` returns true for two distinct instances with
