@@ -15,11 +15,11 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
 | `jp...samuraigraph.base` | 180 | 44,503 | 41.7% | 39 |
 | `jp...samuraigraph.data` | 136 | 66,956 | 34.0% | 57 |
-| `jp...samuraigraph.figure` | 186 | 112,405 | 21.9% | 50 |
+| `jp...samuraigraph.figure` | 186 | 112,405 | 22.2% | 53 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **34.2%** (184 test classes / 1606
+- Overall instruction coverage is **34.3%** (187 test classes / 1624
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -126,7 +126,7 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **34.2%**
+The overall instruction coverage measured by JaCoCo is **34.3%**
 (seen per package in section 1; re-measured 2026-09-29 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -163,11 +163,16 @@ Headless characterization units added so far (2026-09-16 to
 `SGPropertyUtilityTest` (8), `SGSXYNetCDFMultipleDataPropertyIOTest`
 (5, file I/O against the real `Example16.nc`),
 `SGSimpleSymbol2DTest` (13), `SGDrawingElementRectangleTest` (14),
-`SGElementGroupBarTest` (8), `SGBufferedFileWriterTest` (4), and
-`SGNamedStringBlockTest` (11). Notable per-class rises:
+`SGElementGroupBarTest` (8), `SGBufferedFileWriterTest` (4),
+`SGNamedStringBlockTest` (11), `SGFigureElementGridPropertiesTest`
+(6), `SGDrawingElementScalePropertiesTest` (5) and
+`SGAxisElementAxisPropertiesTest` (9). Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
-from 1.5% to 52.4%, `SGBufferedFileWriter` from 0% to 83.7%.
+from 1.5% to 52.4%, `SGBufferedFileWriter` from 0% to 83.7%,
+`SGFigureElementGrid.GridProperties` from 2.9% to 96.1%,
+`SGDrawingElementScale.ScaleProperties` to 100% and
+`SGAxisElement.AxisProperties` from 1.0% to 84.2%.
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round

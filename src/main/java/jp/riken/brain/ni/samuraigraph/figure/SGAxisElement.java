@@ -3619,10 +3619,10 @@ public abstract class SGAxisElement
       if (p.autoCalc != this.autoCalc) {
         return false;
       }
-      if (p.stepValue != this.stepValue) {
+      if (SGUtility.equals(p.stepValue, this.stepValue) == false) {
         return false;
       }
-      if (p.baselineValue != this.baselineValue) {
+      if (SGUtility.equals(p.baselineValue, this.baselineValue) == false) {
         return false;
       }
       if (p.exponentVisible != this.exponentVisible) {
