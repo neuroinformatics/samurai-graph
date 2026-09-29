@@ -15,11 +15,11 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
 | `jp...samuraigraph.base` | 180 | 44,503 | 41.4% | 37 |
 | `jp...samuraigraph.data` | 136 | 66,956 | 34.0% | 57 |
-| `jp...samuraigraph.figure` | 186 | 112,405 | 21.2% | 47 |
+| `jp...samuraigraph.figure` | 186 | 112,405 | 21.5% | 48 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **33.9%** (179 test classes / 1556
+- Overall instruction coverage is **34.0%** (180 test classes / 1569
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -320,7 +320,7 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **33.9%**
+The overall instruction coverage measured by JaCoCo is **34.0%**
 (seen per package in section 1; re-measured 2026-09-29 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -402,6 +402,18 @@ The first file I/O property round trip was added:
   measures 18.1% (1,270 of 7,036 instructions), so per-class figures
   are only comparable within a single measurement session
   (total instructions moved as the shared surface was refactored)
+
+**Progress (2026-09-29, figure headless units):** the first headless
+drawing-element test was added to the `figure` package.
+
+- `SGSimpleSymbol2DTest` (13 cases) locks the 2D symbol drawing
+  element: the default attributes, the size/type/magnification
+  validation, the shape generation for all seven symbol types, the
+  location copy-on-read/write semantics, the rotation/translation
+  through the symbol shape transform, the line attributes round trip,
+  the inner paint delegation and the dispose cleanup. The class
+  coverage rose from 0% to 100% and the `figure` package from 21.2%
+  to 21.5% (overall 34.0%); it runs headless
 
 **Found issue (2026-09-16, via characterization testing):**
 `SGIntegerSeries.equals` returns true for two distinct instances with
