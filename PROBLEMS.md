@@ -5,20 +5,26 @@ Findings from a project-wide, all-architecture review of Samurai Graph
 
 ## 1. Overview
 
-Package sizes and JaCoCo instruction coverage:
+Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
+`./mvnw clean test` with JDK 21, then a `jacoco:report`):
 
 | Package | Files | LOC | Coverage | Test files |
 |---------|------:|------:|----------|-----------:|
-| `com.github...lib.mdarray` | - | - | 97.4% | 4 |
-| `jp...samuraigraph.export` | 2 | 54 | 68.2% | 1 |
-| `com.github...lib.hdf5` | 30 | ~1.7k | 38.6% | 6 |
-| `jp...samuraigraph.base` | 179 | 45,193 | 40.1% | 30 |
-| `jp...samuraigraph.data` | 135 | 69,291 | 33.8% | 59 |
-| `jp...samuraigraph.figure` | 185 | 112,960 | 35.0% | 53 |
-| `jp...samuraigraph.application` | 92 | 37,398 | 20.0% | 20 |
+| `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
+| `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
+| `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
+| `jp...samuraigraph.base` | 180 | 44,503 | 41.4% | 37 |
+| `jp...samuraigraph.data` | 136 | 66,956 | 34.0% | 57 |
+| `jp...samuraigraph.figure` | 186 | 112,405 | 21.2% | 47 |
+| `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
+| `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **33.4%** (155 test files / 1393 test
-  executions against 624 main files)
+- Overall instruction coverage is **33.9%** (179 test classes / 1556
+  test executions against 639 main files)
+- The `figure` row above is the drawing-model package only; the figure
+  dialogs and their observers live in `figure.dialog` (65.6%) and the
+  combined `figure` + `figure.dialog` surface is 35.1%. The previous
+  single `figure` figure of 35.0% dated from before the dialog split
 - The type-level dependency DAG (`base` <- `data` <- `figure` <-
   `application`) is respected for regular imports; the problems below
   stem from constants (static imports), duplicated backends and
@@ -314,8 +320,9 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **33.4%**
-(seen per package in section 1). Current state:
+The overall instruction coverage measured by JaCoCo is **33.9%**
+(seen per package in section 1; re-measured 2026-09-29 with
+`./mvnw clean test` on JDK 21). Current state:
 
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
   CSV)
@@ -379,6 +386,22 @@ map helper were covered.
   `createList`, the range queries and the overlap test
 - `SGPropertyUtilityTest` (8 cases): the typed property additions
   (boolean, number, number with unit, raw and quoted strings, color)
+
+**Progress (2026-09-16, coverage-driven):** the JaCoCo report was
+regenerated and the lowest-coverage headless units were targeted.
+The first file I/O property round trip was added:
+
+- `SGSXYNetCDFMultipleDataPropertyIOTest` (5 cases) locks the property
+  I/O of the multiple NetCDF data against the real `Example16.nc`
+  file: the variable-name collection, the wrong-type rejection and the
+  `setProperties`/`getProperties` round trip plus the `writeProperty`
+  attribute output. The class coverage rose from 30.9% to 37.5%;
+  the picked-dimension and error-bar variants are follow-ups.
+  Re-checked on 2026-09-29 after the shared property/cache surface was
+  pulled into interface defaults: in a clean `test` run the class now
+  measures 18.1% (1,270 of 7,036 instructions), so per-class figures
+  are only comparable within a single measurement session
+  (total instructions moved as the shared surface was refactored)
 
 **Found issue (2026-09-16, via characterization testing):**
 `SGIntegerSeries.equals` returns true for two distinct instances with
