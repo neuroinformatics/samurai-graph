@@ -482,6 +482,9 @@ public abstract class SGDataValueHistory implements Cloneable {
         if (!(obj instanceof MD1)) {
           return false;
         }
+        if (!super.equals(obj)) {
+          return false;
+        }
         MD1 value = (MD1) obj;
         if (!SGUtility.equals(this.mDimName, value.mDimName)) {
           return false;
