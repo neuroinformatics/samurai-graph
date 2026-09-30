@@ -53,7 +53,7 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
   protected Integer mTickLabelHolderIndex = null;
 
   /** The number format state. */
-  private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
+  private SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
   /** Returns the number format state. */
   @Override
@@ -256,8 +256,8 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
   /** Returns the copy of this data object. */
   public Object clone() {
     SGSXYSDArrayData data = (SGSXYSDArrayData) super.clone();
+    data.mFormat = this.mFormat.copyFormat();
     data.mTickLabelStride = this.getTickLabelStride();
-    data.setShift(this.getShift());
     return data;
   }
 

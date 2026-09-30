@@ -79,7 +79,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   /** The stride of array. */
 
   /** The number format state. */
-  private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
+  private SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
   /** Returns the number format state. */
   @Override
@@ -1696,9 +1696,9 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     data.mTickLabelVariables = copyVariables(this.mTickLabelVariables);
     data.mTickLabelHolderVariables = copyVariables(this.mTickLabelHolderVariables);
     data.mPickUpDimensionInfo = (SGMDArrayPickUpDimensionInfo) this.getPickUpDimensionInfo();
+    data.mFormat = this.mFormat.copyFormat();
     data.mStride = this.getStride();
     data.mTickLabelStride = this.getTickLabelStride();
-    data.setShift(this.getShift());
     return data;
   }
 

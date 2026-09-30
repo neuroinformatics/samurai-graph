@@ -3,9 +3,11 @@ package jp.riken.brain.ni.samuraigraph.data;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
@@ -238,5 +240,60 @@ class SGSXYSDArrayMultipleDataTest {
     assertEquals(2, x[0].length);
     assertEquals(1.0, x[0][0], 0.0);
     assertEquals(3.0, x[0][1], 0.0);
+  }
+
+  @Test
+  void copySurvivesDisposalOfTheSourceArray() {
+    // Reproduces the child group set flow: a fresh child array is copied into the
+    // group sets and the source array is disposed right afterwards.
+    SGSXYSDArrayMultipleData data = this.createData(new Integer[] {0}, new Integer[] {1, 2});
+    data.setShift(new SGTuple2d(1.5, -0.5));
+    SGISXYTypeSingleData[] sxyArray = data.getSXYDataArray();
+    SGISXYTypeSingleData[] copies = new SGISXYTypeSingleData[sxyArray.length];
+    for (int ii = 0; ii < sxyArray.length; ii++) {
+      copies[ii] = (SGISXYTypeSingleData) ((SGData) sxyArray[ii]).copy();
+    }
+    SGDataMiscUtility.disposeSXYDataArray(sxyArray);
+    for (SGISXYTypeSingleData copy : copies) {
+      SGTuple2d shift = copy.getShift();
+      assertEquals(1.5, shift.x, 0.0);
+      assertEquals(-0.5, shift.y, 0.0);
+      assertEquals(0, copy.getDecimalPlaces());
+      assertEquals(0, copy.getExponent());
+    }
+  }
+
+  @Test
+  void disposingTheCopyLeavesTheSourceArrayIntact() {
+    SGSXYSDArrayMultipleData data = this.createData(new Integer[] {0}, new Integer[] {1});
+    data.setShift(new SGTuple2d(2.0, 3.0));
+    SGISXYTypeSingleData[] sxyArray = data.getSXYDataArray();
+    SGISXYTypeSingleData copy = (SGISXYTypeSingleData) ((SGData) sxyArray[0]).copy();
+    copy.dispose();
+    SGTuple2d shift = sxyArray[0].getShift();
+    assertEquals(2.0, shift.x, 0.0);
+    assertEquals(3.0, shift.y, 0.0);
+  }
+
+  @Test
+  void copyCopiesTheFormatStateByValue() {
+    SGSXYSDArrayMultipleData data = this.createData(new Integer[] {0}, new Integer[] {1});
+    data.setShift(new SGTuple2d(1.0, 2.0));
+    data.setDecimalPlaces(3);
+    data.setExponent(4);
+    data.setDateFormat("yyyy-MM-dd");
+    SGISXYTypeData copy = (SGISXYTypeData) data.copy();
+    SGTuple2d shift = copy.getShift();
+    assertEquals(1.0, shift.x, 0.0);
+    assertEquals(2.0, shift.y, 0.0);
+    assertEquals(3, copy.getDecimalPlaces());
+    assertEquals(4, copy.getExponent());
+    assertEquals("yyyy-MM-dd", copy.getDateFormat());
+    // the copy must not share the state with the source
+    assertNotSame(data.getNumberFormat(), copy.getNumberFormat());
+    copy.setShift(new SGTuple2d(5.0, 6.0));
+    SGTuple2d source = data.getShift();
+    assertEquals(1.0, source.x, 0.0);
+    assertEquals(2.0, source.y, 0.0);
   }
 }

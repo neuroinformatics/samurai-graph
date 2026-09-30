@@ -65,7 +65,7 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
   /** The stride of array. */
 
   /** The number format state. */
-  private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
+  private SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
   /** Returns the number format state. */
   @Override
@@ -1218,9 +1218,9 @@ public class SGSXYNetCDFData extends SGNetCDFData implements SGISXYTypeSingleDat
   /** Returns the copy of this data object. */
   public Object clone() {
     SGSXYNetCDFData data = (SGSXYNetCDFData) super.clone();
+    data.mFormat = this.mFormat.copyFormat();
     data.mStride = this.getStride();
     data.mTickLabelStride = this.getTickLabelStride();
-    data.setShift(this.getShift());
     return data;
   }
 

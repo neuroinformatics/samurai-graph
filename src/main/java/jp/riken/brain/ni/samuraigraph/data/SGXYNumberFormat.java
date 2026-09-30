@@ -91,4 +91,14 @@ class SGXYNumberFormat {
   public void setDateFormat(final String format) {
     this.mDateFormat = format;
   }
+
+  /** Returns a deep copy of this object. */
+  public SGXYNumberFormat copyFormat() {
+    final SGXYNumberFormat ret = new SGXYNumberFormat();
+    ret.mDecimalPlaces = this.mDecimalPlaces;
+    ret.mExponent = this.mExponent;
+    ret.mShift = (SGTuple2d) this.mShift.clone();
+    ret.mDateFormat = this.mDateFormat;
+    return ret;
+  }
 }

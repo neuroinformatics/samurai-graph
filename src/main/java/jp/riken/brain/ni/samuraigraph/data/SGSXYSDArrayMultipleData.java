@@ -66,7 +66,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
   protected Integer[] mTickLabelHolderIndices = null;
 
   /** The number format state. */
-  private final SGXYNumberFormat mFormat = new SGXYNumberFormat();
+  private SGXYNumberFormat mFormat = new SGXYNumberFormat();
 
   /** Returns the number format state. */
   @Override
@@ -504,8 +504,8 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     if (this.mTickLabelHolderIndices != null) {
       data.mTickLabelHolderIndices = SGUtility.copyIntegerArray(this.mTickLabelHolderIndices);
     }
+    data.mFormat = this.mFormat.copyFormat();
     data.mTickLabelStride = this.getTickLabelStride();
-    data.setShift(this.getShift());
     return data;
   }
 
