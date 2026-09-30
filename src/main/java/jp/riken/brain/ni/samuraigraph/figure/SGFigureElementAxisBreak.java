@@ -1952,8 +1952,8 @@ public class SGFigureElementAxisBreak extends SGFigureElement implements SGIFigu
 
       if (p.mXValue != this.mXValue) return false;
       if (p.mYValue != this.mYValue) return false;
-      if (this.mXAxis.equals(p.mXAxis) == false) return false;
-      if (this.mYAxis.equals(p.mYAxis) == false) return false;
+      if (SGUtility.equals(this.mXAxis, p.mXAxis) == false) return false;
+      if (SGUtility.equals(this.mYAxis, p.mYAxis) == false) return false;
       if (p.mAnchored != this.mAnchored) return false;
 
       return true;
