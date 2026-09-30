@@ -339,6 +339,11 @@ public abstract class SGMDArrayData extends SGArrayData {
         String varName = varEntry.getKey();
         Map<String, Integer> dimMap = varEntry.getValue();
         Map<String, Integer> pDimMap = p.dimensionIndexMap.get(varName);
+        // the variable is missing from the other map, so the
+        // dimension indexes can not be equal
+        if (pDimMap == null) {
+          return false;
+        }
         Iterator<Entry<String, Integer>> dimItr = dimMap.entrySet().iterator();
         while (dimItr.hasNext()) {
           Entry<String, Integer> dimEntry = dimItr.next();

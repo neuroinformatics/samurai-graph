@@ -14,12 +14,12 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
 | `jp...samuraigraph.base` | 180 | 44,503 | 44.4% | 48 |
-| `jp...samuraigraph.data` | 136 | 66,956 | 36.9% | 72 |
+| `jp...samuraigraph.data` | 136 | 66,956 | 37.2% | 74 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **35.7%** (222 test classes / 1857
+- Overall instruction coverage is **35.8%** (224 test classes / 1872
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -126,7 +126,7 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **35.7%**
+The overall instruction coverage measured by JaCoCo is **35.8%**
 (seen per package in section 1; re-measured 2026-09-29 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -193,8 +193,10 @@ Headless characterization units added so far (2026-09-16 to
 `SGSpinnerCaretPositionAdjusterTest` (5),
 `SGSelectablePaintGetPropertiesTest` (3),
 `SGNetCDFDataColumnSelectionPanelTest` (9),
-`SGSDArrayDataColumnSelectionPanelTest` (8) and
-`SGMDArrayDataColumnSelectionPanelTest` (9).
+`SGSDArrayDataColumnSelectionPanelTest` (8),
+`SGMDArrayDataColumnSelectionPanelTest` (9),
+`SGSXYMDArrayMultipleDataPropertiesTest` (8) and
+`SGSXYSDArrayMultipleDataPropertiesTest` (7).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -234,7 +236,10 @@ from 46.5% to 65.6%, and the data column selection panel base
 `SGDataColumnSelectionPanel` from 31.9% to 68.7%, with
 `SGNetCDFDataColumnSelectionPanel` from 43.8% to 94.9%,
 `SGSDArrayDataColumnSelectionPanel` from 41.5% to 93.8% and
-`SGMDArrayDataColumnSelectionPanel` from 17.3% to 60.6%.
+`SGMDArrayDataColumnSelectionPanel` from 17.3% to 60.6%, and the SXY
+multiple data properties (`SGSXYMDArrayMultipleDataProperties` from
+0% to 93.3% and `SGSXYSDArrayMultipleDataProperties` from 34.7% to
+95.0%).
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
