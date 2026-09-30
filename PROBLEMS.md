@@ -14,12 +14,12 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
 | `jp...samuraigraph.base` | 180 | 44,503 | 44.4% | 48 |
-| `jp...samuraigraph.data` | 136 | 66,956 | 35.5% | 69 |
+| `jp...samuraigraph.data` | 136 | 66,956 | 36.2% | 70 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **35.3%** (219 test classes / 1831
+- Overall instruction coverage is **35.5%** (220 test classes / 1840
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -126,7 +126,7 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **35.3%**
+The overall instruction coverage measured by JaCoCo is **35.5%**
 (seen per package in section 1; re-measured 2026-09-29 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -190,8 +190,9 @@ Headless characterization units added so far (2026-09-16 to
 `SGAsyncWorkerTest` (4), `SGSXYZSDArrayDataRectTest` (3),
 `SGCommandUtilityTest` (3), `SGPropertyFileUtilityTest` (5),
 `SGDataAnimationThreadTest` (5),
-`SGSpinnerCaretPositionAdjusterTest` (5) and
-`SGSelectablePaintGetPropertiesTest` (3).
+`SGSpinnerCaretPositionAdjusterTest` (5),
+`SGSelectablePaintGetPropertiesTest` (3) and
+`SGNetCDFDataColumnSelectionPanelTest` (9).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -226,8 +227,10 @@ variable classes `SGDateVariable`, `SGTextVariable` and
 `SGMDArrayData.MDArrayNode`, `SGCheckBoxMenuItem`, `SGAsyncWorker`,
 `SGSXYZSDArrayData.Rect`, `SGDataAnimationThread`,
 `SGSpinner.CaretPositionAdjuster` and
-`SGSelectablePaint.COMMAND_KEYS` from 0% to 100%, and
-`SGSelectablePaint` from 46.5% to 65.6%.
+`SGSelectablePaint.COMMAND_KEYS` from 0% to 100%, `SGSelectablePaint`
+from 46.5% to 65.6%, and the data column selection panel base
+`SGDataColumnSelectionPanel` from 31.9% to 68.4% with
+`SGNetCDFDataColumnSelectionPanel` from 43.8% to 94.9%.
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
