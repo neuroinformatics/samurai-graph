@@ -13,13 +13,13 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
-| `jp...samuraigraph.base` | 180 | 44,503 | 43.1% | 41 |
+| `jp...samuraigraph.base` | 180 | 44,503 | 43.4% | 43 |
 | `jp...samuraigraph.data` | 136 | 66,956 | 35.2% | 64 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **35.1%** (206 test classes / 1772
+- Overall instruction coverage is **35.1%** (208 test classes / 1783
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -183,7 +183,8 @@ Headless characterization units added so far (2026-09-16 to
 `SGSXYNetCDFDataPropertiesTest` (8),
 `SGTwoDimensionalMDArrayDataPropertiesTest` (7),
 `SGTwoDimensionalNetCDFDataPropertiesTest` (8),
-`SGDateVariableTest` (4) and `SGTextVariableTest` (4).
+`SGDateVariableTest` (4) and `SGTextVariableTest` (4),
+`SGExtensionFileFilterTest` (7) and `SGDataAxisInfoTest` (4).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -211,8 +212,9 @@ also raised the MD array and NetCDF base property classes from 0% to
 97.9% and from 52.6% to 94.7% respectively, and the two
 dimensional data properties (`SGTwoDimensionalMDArrayData` and
 `SGTwoDimensionalNetCDFData` bases from 0% to 92.9% and 92.6%, the
-SXYZ and VXY subclasses from 0% to 80% or above), and the char
+SXYZ and VXY subclasses from 0% to 80% or above), the char
 variable classes `SGDateVariable` and `SGTextVariable` from 0% to
+100%, and `SGExtensionFileFilter` and `SGDataAxisInfo` from 0% to
 100%.
 
 Because of the coverage level, any refactoring of the areas in
