@@ -14,12 +14,12 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
 | `jp...samuraigraph.base` | 180 | 44,503 | 43.1% | 41 |
-| `jp...samuraigraph.data` | 136 | 66,956 | 34.6% | 60 |
+| `jp...samuraigraph.data` | 136 | 66,956 | 35.0% | 62 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **34.9%** (202 test classes / 1749
+- Overall instruction coverage is **35.0%** (204 test classes / 1764
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -126,7 +126,7 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **34.9%**
+The overall instruction coverage measured by JaCoCo is **35.0%**
 (seen per package in section 1; re-measured 2026-09-29 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -179,8 +179,10 @@ Headless characterization units added so far (2026-09-16 to
 `SGColorBarAxisColorBarPropertiesTest` (8),
 `SGFigureElementSignificantDifferencePropertiesTest` (9) and
 `SGFigureElementTimingLinePropertiesTest` (6),
-`SGSXYMDArrayDataPropertiesTest` (9) and
-`SGSXYNetCDFDataPropertiesTest` (8). Notable per-class rises:
+`SGSXYMDArrayDataPropertiesTest` (9),
+`SGSXYNetCDFDataPropertiesTest` (8),
+`SGTwoDimensionalMDArrayDataPropertiesTest` (7) and
+`SGTwoDimensionalNetCDFDataPropertiesTest` (8). Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
 from 1.5% to 52.4%, `SGBufferedFileWriter` from 0% to 83.7%,
@@ -204,7 +206,10 @@ to 100%, `ColorBarProperties` from 0% to 91.8%, and the SXY data
 properties (`SGSXYMDArrayData.SXYMDDataProperties` from 0% to 92.0%,
 `SGSXYNetCDFData.SXYNetCDFDataProperties` from 0% to 92.2%) which
 also raised the MD array and NetCDF base property classes from 0% to
-97.9% and from 52.6% to 94.7% respectively.
+97.9% and from 52.6% to 94.7% respectively, and the two
+dimensional data properties (`SGTwoDimensionalMDArrayData` and
+`SGTwoDimensionalNetCDFData` bases from 0% to 92.9% and 92.6%, the
+SXYZ and VXY subclasses from 0% to 80% or above).
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
