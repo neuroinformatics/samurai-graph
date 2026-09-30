@@ -2777,8 +2777,8 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       if (p.mLeftYValue != this.mLeftYValue) return false;
       if (p.mRightYValue != this.mRightYValue) return false;
       if (p.mHorizontalYValue != this.mHorizontalYValue) return false;
-      if (p.mXAxis.equals(this.mXAxis) == false) return false;
-      if (p.mYAxis.equals(this.mYAxis) == false) return false;
+      if (SGUtility.equals(this.mXAxis, p.mXAxis) == false) return false;
+      if (SGUtility.equals(this.mYAxis, p.mYAxis) == false) return false;
       if (p.mAnchored != this.mAnchored) return false;
 
       return true;

@@ -15,15 +15,15 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
 | `jp...samuraigraph.base` | 180 | 44,503 | 43.1% | 41 |
 | `jp...samuraigraph.data` | 136 | 66,956 | 34.0% | 57 |
-| `jp...samuraigraph.figure` | 186 | 112,405 | 22.8% | 60 |
+| `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **34.6%** (197 test classes / 1709
+- Overall instruction coverage is **34.7%** (200 test classes / 1732
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
-  combined `figure` + `figure.dialog` surface is 36.2%
+  combined `figure` + `figure.dialog` surface is 36.4%
 - The type-level dependency DAG (`base` <- `data` <- `figure` <-
   `application`) is respected for regular imports; the problems below
   stem from duplicated backends and oversized classes rather than from
@@ -126,7 +126,7 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **34.6%**
+The overall instruction coverage measured by JaCoCo is **34.7%**
 (seen per package in section 1; re-measured 2026-09-29 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -174,8 +174,11 @@ Headless characterization units added so far (2026-09-16 to
 `SGDrawingElementStringPropertiesTest` (7),
 `SGElementGroupStringPropertiesTest` (7),
 `SGFigureElementStringLabelPropertiesTest` (7),
-`SGDrawingElementAxisBreakPropertiesTest` (6) and
-`SGFigureElementAxisBreakPropertiesTest` (5). Notable per-class rises:
+`SGDrawingElementAxisBreakPropertiesTest` (6),
+`SGFigureElementAxisBreakPropertiesTest` (5),
+`SGColorBarAxisColorBarPropertiesTest` (8),
+`SGFigureElementSignificantDifferencePropertiesTest` (9) and
+`SGFigureElementTimingLinePropertiesTest` (6). Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
 from 1.5% to 52.4%, `SGBufferedFileWriter` from 0% to 83.7%,
@@ -190,8 +193,12 @@ above, the `SGDataValueHistory` `NetCDF.D1` and `MDArray.D1` entries
 from 31% to 100%, the figure string property classes
 (`SGDrawingElementString.StringProperties` from 37.1% to 98.3%,
 `SGElementGroupString.StringProperties` from 32.8% to 100%,
-`SGFigureElementString.LabelProperties` from 34.2% to 100%) and the
-axis break symbol properties from 0% to 99.1% and 98.1%.
+`SGFigureElementString.LabelProperties` from 34.2% to 100%), the
+axis break symbol properties from 0% to 99.1% and 98.1%,
+`SGFigureElementTimingLine.TimingLineProperties` and
+`SGFigureElementSignificantDifference.SigDiffPropertiesWithAxes`
+from 0% to 100%, the significant difference base properties from 0%
+to 100% and `ColorBarProperties` from 0% to 91.8%.
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
