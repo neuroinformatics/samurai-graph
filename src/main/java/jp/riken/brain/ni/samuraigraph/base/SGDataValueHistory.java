@@ -216,6 +216,9 @@ public abstract class SGDataValueHistory implements Cloneable {
       if (!(obj instanceof NetCDF)) {
         return false;
       }
+      if (!super.equals(obj)) {
+        return false;
+      }
       NetCDF value = (NetCDF) obj;
       if (!SGUtility.equals(this.mVarName, value.mVarName)) {
         return false;
@@ -564,6 +567,9 @@ public abstract class SGDataValueHistory implements Cloneable {
     @Override
     public boolean equals(Object obj) {
       if (!(obj instanceof MDArray)) {
+        return false;
+      }
+      if (!super.equals(obj)) {
         return false;
       }
       MDArray value = (MDArray) obj;

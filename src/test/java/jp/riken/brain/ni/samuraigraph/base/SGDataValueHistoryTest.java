@@ -73,23 +73,19 @@ class SGDataValueHistoryTest {
   }
 
   @Test
-  void netCDFEntriesWithTheSameNameHashEquallyIgnoreTheBaseFields() {
-    final SGDataValueHistory.NetCDF.D1 first =
+  void netCDFEntriesCompareTheBaseFieldsToo() {
+    final SGDataValueHistory.NetCDF.D1 value =
         new SGDataValueHistory.NetCDF.D1(1.0, "x", 0, 2, "var");
-    final SGDataValueHistory.NetCDF.D1 second =
-        new SGDataValueHistory.NetCDF.D1(9.0, "y", 3, 4, "var");
-    assertEquals(first, second);
-    assertEquals(first.hashCode(), second.hashCode());
+    assertEquals(value, new SGDataValueHistory.NetCDF.D1(1.0, "x", 0, 2, "var"));
+    assertNotEquals(value, new SGDataValueHistory.NetCDF.D1(9.0, "y", 3, 4, "var"));
   }
 
   @Test
-  void mdArrayEntriesWithTheSameNameHashEquallyIgnoreTheBaseFields() {
-    final SGDataValueHistory.MDArray.D1 first =
+  void mdArrayEntriesCompareTheBaseFieldsToo() {
+    final SGDataValueHistory.MDArray.D1 value =
         new SGDataValueHistory.MDArray.D1(1.0, "x", 0, 2, "var");
-    final SGDataValueHistory.MDArray.D1 second =
-        new SGDataValueHistory.MDArray.D1(9.0, "y", 3, 4, "var");
-    assertEquals(first, second);
-    assertEquals(first.hashCode(), second.hashCode());
+    assertEquals(value, new SGDataValueHistory.MDArray.D1(1.0, "x", 0, 2, "var"));
+    assertNotEquals(value, new SGDataValueHistory.MDArray.D1(9.0, "y", 3, 4, "var"));
   }
 
   @Test
