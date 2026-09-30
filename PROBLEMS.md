@@ -13,13 +13,13 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
-| `jp...samuraigraph.base` | 180 | 44,503 | 43.5% | 44 |
-| `jp...samuraigraph.data` | 136 | 66,956 | 35.4% | 67 |
+| `jp...samuraigraph.base` | 180 | 44,503 | 43.8% | 47 |
+| `jp...samuraigraph.data` | 136 | 66,956 | 35.5% | 68 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **35.2%** (212 test classes / 1803
+- Overall instruction coverage is **35.2%** (216 test classes / 1818
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -186,7 +186,9 @@ Headless characterization units added so far (2026-09-16 to
 `SGDateVariableTest` (4) and `SGTextVariableTest` (4),
 `SGExtensionFileFilterTest` (7), `SGDataAxisInfoTest` (4),
 `SGNetCDFTextVariableTest` (7), `SGVXYSDArrayDataArrowTest` (3),
-`SGMDArrayDataMDArrayNodeTest` (4) and `SGCheckBoxMenuItemTest` (6).
+`SGMDArrayDataMDArrayNodeTest` (4), `SGCheckBoxMenuItemTest` (6),
+`SGAsyncWorkerTest` (4), `SGSXYZSDArrayDataRectTest` (3),
+`SGCommandUtilityTest` (3) and `SGPropertyFileUtilityTest` (5).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -218,8 +220,8 @@ SXYZ and VXY subclasses from 0% to 80% or above), the char
 variable classes `SGDateVariable`, `SGTextVariable` and
 `SGNetCDFTextVariable` from 0% to 100%, `SGExtensionFileFilter`,
 `SGDataAxisInfo`, `SGVXYSDArrayData.Arrow`,
-`SGMDArrayData.MDArrayNode` and `SGCheckBoxMenuItem` from 0% to
-100%.
+`SGMDArrayData.MDArrayNode`, `SGCheckBoxMenuItem`, `SGAsyncWorker`
+and `SGSXYZSDArrayData.Rect` from 0% to 100%.
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
