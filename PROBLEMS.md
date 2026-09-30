@@ -15,11 +15,11 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
 | `jp...samuraigraph.base` | 180 | 44,503 | 43.1% | 41 |
 | `jp...samuraigraph.data` | 136 | 66,956 | 34.0% | 57 |
-| `jp...samuraigraph.figure` | 186 | 112,405 | 22.3% | 55 |
+| `jp...samuraigraph.figure` | 186 | 112,405 | 22.5% | 58 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **34.5%** (192 test classes / 1677
+- Overall instruction coverage is **34.6%** (195 test classes / 1698
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -126,7 +126,7 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **34.5%**
+The overall instruction coverage measured by JaCoCo is **34.6%**
 (seen per package in section 1; re-measured 2026-09-29 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -169,8 +169,11 @@ Headless characterization units added so far (2026-09-16 to
 `SGAxisElementAxisPropertiesTest` (9), `SGDataValueHistoryDimTest`
 (18), `SGColorMapColorMapPropertiesTest` (8),
 `SGColorMapManagerRepeatedPropertiesTest` (7),
-`SGColorMapManagerMultiplePropertiesTest` (5) and
-`SGDataValueHistoryD1Test` (15). Notable per-class rises:
+`SGColorMapManagerMultiplePropertiesTest` (5),
+`SGDataValueHistoryD1Test` (15),
+`SGDrawingElementStringPropertiesTest` (7),
+`SGElementGroupStringPropertiesTest` (7) and
+`SGFigureElementStringLabelPropertiesTest` (7). Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
 from 1.5% to 52.4%, `SGBufferedFileWriter` from 0% to 83.7%,
@@ -181,8 +184,11 @@ from 1.5% to 52.4%, `SGBufferedFileWriter` from 0% to 83.7%,
 `MDArray.MD1` from 0% to 97% or above, `NetCDF.MD1` from 22.3% to
 98.9%), `SGColorMap.ColorMapProperties` from 12.7% to 100%, the
 `SGColorMapManager` repeated/multiple map properties from 0% to 96% or
-above, and the `SGDataValueHistory` `NetCDF.D1` and `MDArray.D1`
-entries from 31% to 100%.
+above, the `SGDataValueHistory` `NetCDF.D1` and `MDArray.D1` entries
+from 31% to 100%, and the figure string property classes
+(`SGDrawingElementString.StringProperties` from 37.1% to 98.3%,
+`SGElementGroupString.StringProperties` from 32.8% to 100%,
+`SGFigureElementString.LabelProperties` from 34.2% to 100%).
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round

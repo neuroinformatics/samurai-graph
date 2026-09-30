@@ -539,7 +539,7 @@ public class SGDrawingElementString extends SGDrawingElement implements SGIDrawi
       if (this.mFontStyle != p.mFontStyle) {
         return false;
       }
-      if (this.mFontName.equals(p.mFontName) == false) {
+      if (SGUtility.equals(this.mFontName, p.mFontName) == false) {
         return false;
       }
       if (this.mAngle != p.mAngle) {
