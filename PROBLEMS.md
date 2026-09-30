@@ -13,13 +13,13 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
-| `jp...samuraigraph.base` | 180 | 44,503 | 43.4% | 43 |
-| `jp...samuraigraph.data` | 136 | 66,956 | 35.3% | 66 |
+| `jp...samuraigraph.base` | 180 | 44,503 | 43.5% | 44 |
+| `jp...samuraigraph.data` | 136 | 66,956 | 35.4% | 67 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **35.1%** (210 test classes / 1793
+- Overall instruction coverage is **35.2%** (212 test classes / 1803
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -126,7 +126,7 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **35.1%**
+The overall instruction coverage measured by JaCoCo is **35.2%**
 (seen per package in section 1; re-measured 2026-09-29 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -185,7 +185,8 @@ Headless characterization units added so far (2026-09-16 to
 `SGTwoDimensionalNetCDFDataPropertiesTest` (8),
 `SGDateVariableTest` (4) and `SGTextVariableTest` (4),
 `SGExtensionFileFilterTest` (7), `SGDataAxisInfoTest` (4),
-`SGNetCDFTextVariableTest` (7) and `SGVXYSDArrayDataArrowTest` (3).
+`SGNetCDFTextVariableTest` (7), `SGVXYSDArrayDataArrowTest` (3),
+`SGMDArrayDataMDArrayNodeTest` (4) and `SGCheckBoxMenuItemTest` (6).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -215,9 +216,10 @@ dimensional data properties (`SGTwoDimensionalMDArrayData` and
 `SGTwoDimensionalNetCDFData` bases from 0% to 92.9% and 92.6%, the
 SXYZ and VXY subclasses from 0% to 80% or above), the char
 variable classes `SGDateVariable`, `SGTextVariable` and
-`SGNetCDFTextVariable` from 0% to 100%, `SGExtensionFileFilter` and
-`SGDataAxisInfo` from 0% to 100%, and
-`SGVXYSDArrayData.Arrow` from 0% to 100%.
+`SGNetCDFTextVariable` from 0% to 100%, `SGExtensionFileFilter`,
+`SGDataAxisInfo`, `SGVXYSDArrayData.Arrow`,
+`SGMDArrayData.MDArrayNode` and `SGCheckBoxMenuItem` from 0% to
+100%.
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
