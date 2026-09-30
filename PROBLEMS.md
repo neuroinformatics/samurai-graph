@@ -13,13 +13,13 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-29,
 | `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
-| `jp...samuraigraph.base` | 180 | 44,503 | 43.8% | 47 |
+| `jp...samuraigraph.base` | 180 | 44,503 | 44.4% | 48 |
 | `jp...samuraigraph.data` | 136 | 66,956 | 35.5% | 69 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **35.3%** (217 test classes / 1823
+- Overall instruction coverage is **35.3%** (219 test classes / 1831
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -188,8 +188,10 @@ Headless characterization units added so far (2026-09-16 to
 `SGNetCDFTextVariableTest` (7), `SGVXYSDArrayDataArrowTest` (3),
 `SGMDArrayDataMDArrayNodeTest` (4), `SGCheckBoxMenuItemTest` (6),
 `SGAsyncWorkerTest` (4), `SGSXYZSDArrayDataRectTest` (3),
-`SGCommandUtilityTest` (3), `SGPropertyFileUtilityTest` (5) and
-`SGDataAnimationThreadTest` (5).
+`SGCommandUtilityTest` (3), `SGPropertyFileUtilityTest` (5),
+`SGDataAnimationThreadTest` (5),
+`SGSpinnerCaretPositionAdjusterTest` (5) and
+`SGSelectablePaintGetPropertiesTest` (3).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -222,8 +224,10 @@ variable classes `SGDateVariable`, `SGTextVariable` and
 `SGNetCDFTextVariable` from 0% to 100%, `SGExtensionFileFilter`,
 `SGDataAxisInfo`, `SGVXYSDArrayData.Arrow`,
 `SGMDArrayData.MDArrayNode`, `SGCheckBoxMenuItem`, `SGAsyncWorker`,
-`SGSXYZSDArrayData.Rect` and `SGDataAnimationThread` from 0% to
-100%.
+`SGSXYZSDArrayData.Rect`, `SGDataAnimationThread`,
+`SGSpinner.CaretPositionAdjuster` and
+`SGSelectablePaint.COMMAND_KEYS` from 0% to 100%, and
+`SGSelectablePaint` from 46.5% to 65.6%.
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
