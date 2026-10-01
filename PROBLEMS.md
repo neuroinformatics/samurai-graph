@@ -13,13 +13,13 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-30,
 | `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
-| `jp...samuraigraph.base` | 180 | 44,503 | 47.0% | 51 |
+| `jp...samuraigraph.base` | 180 | 44,503 | 49.0% | 52 |
 | `jp...samuraigraph.data` | 136 | 66,956 | 37.3% | 74 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **36.2%** (226 test classes / 1933
+- Overall instruction coverage is **36.5%** (227 test classes / 1975
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -126,7 +126,7 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **36.2%**
+The overall instruction coverage measured by JaCoCo is **36.5%**
 (seen per package in section 1; re-measured 2026-09-30 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -198,7 +198,8 @@ Headless characterization units added so far (2026-09-16 to
 `SGSXYMDArrayMultipleDataPropertiesTest` (8),
 `SGSXYSDArrayMultipleDataPropertiesTest` (7),
 `SGUtilityTextTest` (46) and
-`SGSXYSDArrayDataCloneTest` (5).
+`SGSXYSDArrayDataCloneTest` (5) and
+`SGUtilityTest` (42).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -241,7 +242,10 @@ from 46.5% to 65.6%, and the data column selection panel base
 `SGMDArrayDataColumnSelectionPanel` from 17.3% to 60.6%, and the SXY
 multiple data properties (`SGSXYMDArrayMultipleDataProperties` from
 0% to 93.3% and `SGSXYSDArrayMultipleDataProperties` from 34.7% to
-95.0%), `SGUtilityText` from 40.8% to 90.6%, and the shared SXY
+95.0%), `SGUtilityText` from 40.8% to 90.6%, `SGUtility` from 30.8%
+to 62.3% (number naming, version comparison, array and equality
+helpers, axis value parsing, file name helpers, id assignment and
+index property reading), and the shared SXY
 number format holder `SGXYNumberFormat` to 100% (covered by the clone
 and disposal regression tests of the six SXY data classes).
 
