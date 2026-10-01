@@ -14,12 +14,12 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-10-01,
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
 | `jp...samuraigraph.base` | 180 | 44,503 | 49.4% | 54 |
-| `jp...samuraigraph.data` | 136 | 66,956 | 38.1% | 77 |
+| `jp...samuraigraph.data` | 136 | 66,956 | 39.6% | 78 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **36.8%** (232 test classes / 2020
+- Overall instruction coverage is **37.2%** (233 test classes / 2042
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -123,10 +123,14 @@ make static analysis hard in this layer.
 - The `plugins/jna` boundary is otherwise sound, but
   `SGDataPluginConstants` is static-imported from `base` and the plugin
   contract lives in the `application` package
+- The SXY entry of `SGDefaultColumnTypeMDArrayUtility` dereferences the
+  result of `extractDimensions` without a null check, so variables
+  without any dimensions (e.g. scalar or zero-length arrays) throw an
+  `NullPointerException` instead of returning `false`
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **36.8%**
+The overall instruction coverage measured by JaCoCo is **37.2%**
 (seen per package in section 1; re-measured 2026-10-01 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -203,7 +207,8 @@ Headless characterization units added so far (2026-09-16 to
 `SGMDArrayDataColumnSelectionPanelEditorTest` (26),
 `SGDataClipBoardTest` (6) and `SGFileChooserTest` (9),
 `SGMDArrayDataSetupDialogConstructionTest` (2) and
-`SGSDArrayDataSetupDialogConstructionTest` (2).
+`SGSDArrayDataSetupDialogConstructionTest` (2),
+`SGDefaultColumnTypeMDArrayUtilityTest` (22).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -265,7 +270,10 @@ from 0% to 76.4% (its extension normalization and the
 overwrite-confirmation guard are driven headfully), and the MDArray and
 SDArray data setup dialogs from 0% to 67.6% and 76.7% (construction
 from a frame and from a dialog plus the button, table holder and
-delegation accessors).
+delegation accessors), and the MDArray default column type utility
+`SGDefaultColumnTypeMDArrayUtility` from 23.5% to 86.9% (origin map
+parsing, index pair selection, dimension extraction and column title
+lookup driven with mocked node maps).
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
