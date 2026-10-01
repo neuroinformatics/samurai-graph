@@ -14,12 +14,12 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-10-01,
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
 | `jp...samuraigraph.base` | 180 | 44,503 | 49.4% | 54 |
-| `jp...samuraigraph.data` | 136 | 66,956 | 37.9% | 75 |
+| `jp...samuraigraph.data` | 136 | 66,956 | 38.1% | 77 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **36.7%** (230 test classes / 2016
+- Overall instruction coverage is **36.8%** (232 test classes / 2020
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -126,7 +126,7 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **36.7%**
+The overall instruction coverage measured by JaCoCo is **36.8%**
 (seen per package in section 1; re-measured 2026-10-01 with
 `./mvnw clean test` on JDK 21). Current state:
 
@@ -201,7 +201,9 @@ Headless characterization units added so far (2026-09-16 to
 `SGSXYSDArrayDataCloneTest` (5) and
 `SGUtilityTest` (42) and
 `SGMDArrayDataColumnSelectionPanelEditorTest` (26),
-`SGDataClipBoardTest` (6) and `SGFileChooserTest` (9).
+`SGDataClipBoardTest` (6) and `SGFileChooserTest` (9),
+`SGMDArrayDataSetupDialogConstructionTest` (2) and
+`SGSDArrayDataSetupDialogConstructionTest` (2).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -260,7 +262,10 @@ from 60.6% to 71.3% and the base `SGDataColumnSelectionPanel` from
 68.7% to 74.6%), the data clipboard `SGDataClipBoard` and its
 `DataCopy` holder from 0% to 100% and the file chooser `SGFileChooser`
 from 0% to 76.4% (its extension normalization and the
-overwrite-confirmation guard are driven headfully).
+overwrite-confirmation guard are driven headfully), and the MDArray and
+SDArray data setup dialogs from 0% to 67.6% and 76.7% (construction
+from a frame and from a dialog plus the button, table holder and
+delegation accessors).
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
