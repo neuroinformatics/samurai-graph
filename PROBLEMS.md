@@ -5,7 +5,7 @@ Findings from a project-wide, all-architecture review of Samurai Graph
 
 ## 1. Overview
 
-Package sizes and JaCoCo instruction coverage (re-measured 2026-09-30,
+Package sizes and JaCoCo instruction coverage (re-measured 2026-10-01,
 `./mvnw clean test` with JDK 21, then a `jacoco:report`):
 
 | Package | Files | LOC | Coverage | Test files |
@@ -13,13 +13,13 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-09-30,
 | `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
-| `jp...samuraigraph.base` | 180 | 44,503 | 49.0% | 52 |
-| `jp...samuraigraph.data` | 136 | 66,956 | 37.3% | 74 |
+| `jp...samuraigraph.base` | 180 | 44,503 | 49.1% | 52 |
+| `jp...samuraigraph.data` | 136 | 66,956 | 37.9% | 75 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **36.5%** (227 test classes / 1975
+- Overall instruction coverage is **36.7%** (228 test classes / 2001
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -126,8 +126,8 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **36.5%**
-(seen per package in section 1; re-measured 2026-09-30 with
+The overall instruction coverage measured by JaCoCo is **36.7%**
+(seen per package in section 1; re-measured 2026-10-01 with
 `./mvnw clean test` on JDK 21). Current state:
 
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
@@ -199,7 +199,8 @@ Headless characterization units added so far (2026-09-16 to
 `SGSXYSDArrayMultipleDataPropertiesTest` (7),
 `SGUtilityTextTest` (46) and
 `SGSXYSDArrayDataCloneTest` (5) and
-`SGUtilityTest` (42).
+`SGUtilityTest` (42) and
+`SGMDArrayDataColumnSelectionPanelEditorTest` (26).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -247,7 +248,15 @@ to 62.3% (number naming, version comparison, array and equality
 helpers, axis value parsing, file name helpers, id assignment and
 index property reading), and the shared SXY
 number format holder `SGXYNumberFormat` to 100% (covered by the clone
-and disposal regression tests of the six SXY data classes).
+and disposal regression tests of the six SXY data classes), the MD
+array column selection panel editors and models
+(`SGMDArrayDataColumnSelectionPanel.MDArrayDataColumnTableModel` from
+0% to 91.7%, `TimeCellEditor`, `GenericDimensionCellEditor`,
+`PickUpDimensionCellEditor`, `DimensionListCellRenderer`,
+`DimensionEditorComboBox` and the base `ColumnTypeCellEditor`,
+`DataColumnCellRenderer` and `ButtonColumn` to 100%, the panel itself
+from 60.6% to 71.3% and the base `SGDataColumnSelectionPanel` from
+68.7% to 74.6%).
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
