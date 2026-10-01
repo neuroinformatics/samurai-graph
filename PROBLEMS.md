@@ -13,13 +13,13 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-10-01,
 | `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
-| `jp...samuraigraph.base` | 180 | 44,503 | 49.1% | 52 |
+| `jp...samuraigraph.base` | 180 | 44,503 | 49.4% | 54 |
 | `jp...samuraigraph.data` | 136 | 66,956 | 37.9% | 75 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **36.7%** (228 test classes / 2001
+- Overall instruction coverage is **36.7%** (230 test classes / 2016
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -200,7 +200,8 @@ Headless characterization units added so far (2026-09-16 to
 `SGUtilityTextTest` (46) and
 `SGSXYSDArrayDataCloneTest` (5) and
 `SGUtilityTest` (42) and
-`SGMDArrayDataColumnSelectionPanelEditorTest` (26).
+`SGMDArrayDataColumnSelectionPanelEditorTest` (26),
+`SGDataClipBoardTest` (6) and `SGFileChooserTest` (9).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -256,7 +257,10 @@ array column selection panel editors and models
 `DimensionEditorComboBox` and the base `ColumnTypeCellEditor`,
 `DataColumnCellRenderer` and `ButtonColumn` to 100%, the panel itself
 from 60.6% to 71.3% and the base `SGDataColumnSelectionPanel` from
-68.7% to 74.6%).
+68.7% to 74.6%), the data clipboard `SGDataClipBoard` and its
+`DataCopy` holder from 0% to 100% and the file chooser `SGFileChooser`
+from 0% to 76.4% (its extension normalization and the
+overwrite-confirmation guard are driven headfully).
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round
