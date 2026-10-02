@@ -442,9 +442,12 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
     if (data instanceof double[]) {
       return new MDDoubleArray((double[]) data);
     } else if (data instanceof double[][]) {
-      return new MDDoubleArray(flattenDouble2D((double[][]) data));
+      double[][] arr = (double[][]) data;
+      return new MDDoubleArray(flattenDouble2D(arr), new int[] {arr.length, arr[0].length});
     } else if (data instanceof double[][][]) {
-      return new MDDoubleArray(flattenDouble3D((double[][][]) data));
+      double[][][] arr = (double[][][]) data;
+      return new MDDoubleArray(
+          flattenDouble3D(arr), new int[] {arr.length, arr[0].length, arr[0][0].length});
     } else if (data instanceof Number) {
       return new MDDoubleArray(new double[] {((Number) data).doubleValue()});
     } else if (data instanceof float[]) {
@@ -471,7 +474,8 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
     if (data instanceof int[]) {
       return new MDIntArray((int[]) data);
     } else if (data instanceof int[][]) {
-      return new MDIntArray(flattenInt2D((int[][]) data));
+      int[][] arr = (int[][]) data;
+      return new MDIntArray(flattenInt2D(arr), new int[] {arr.length, arr[0].length});
     } else {
       throw new RuntimeException("Cannot convert " + data.getClass() + " to MDIntArray");
     }
@@ -481,7 +485,8 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
     if (data instanceof long[]) {
       return new MDLongArray((long[]) data);
     } else if (data instanceof long[][]) {
-      return new MDLongArray(flattenLong2D((long[][]) data));
+      long[][] arr = (long[][]) data;
+      return new MDLongArray(flattenLong2D(arr), new int[] {arr.length, arr[0].length});
     } else {
       throw new RuntimeException("Cannot convert " + data.getClass() + " to MDLongArray");
     }

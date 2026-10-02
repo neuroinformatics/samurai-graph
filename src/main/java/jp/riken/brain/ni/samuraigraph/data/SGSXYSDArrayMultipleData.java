@@ -788,18 +788,18 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       int[] lIndices = new int[errLen];
       int[] uIndices = new int[errLen];
       boolean[] sameErrorVariableFlags = this.getSameErrorVariableFlags();
-      int errCnt = 0;
+      int tmp = offset;
       for (int ii = 0; ii < errLen; ii++) {
-        lIndices[ii] = offset + errCnt;
+        lIndices[ii] = tmp;
+        tmp++;
         if (!sameErrorVariableFlags[ii]) {
-          uIndices[ii] = lIndices[ii];
+          uIndices[ii] = tmp;
+          tmp++;
         } else {
-          uIndices[ii] = lIndices[ii] + 1;
-          errCnt++;
+          uIndices[ii] = lIndices[ii];
         }
-        errCnt++;
       }
-      offset += errCnt;
+      offset = tmp;
 
       if (!this.writeAttributeColumnIndicesSub(el, KEY_LOWER_ERROR_BAR_COLUMN_INDICES, lIndices)) {
         return false;

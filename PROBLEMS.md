@@ -5,21 +5,21 @@ Findings from a project-wide, all-architecture review of Samurai Graph
 
 ## 1. Overview
 
-Package sizes and JaCoCo instruction coverage (re-measured 2026-10-01,
+Package sizes and JaCoCo instruction coverage (re-measured 2026-10-02,
 `./mvnw clean test` with JDK 21, then a `jacoco:report`):
 
 | Package | Files | LOC | Coverage | Test files |
 |---------|------:|------:|----------|-----------:|
 | `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
-| `com.github...lib.hdf5` | 26 | 1,585 | 38.8% | 7 |
-| `jp...samuraigraph.base` | 180 | 44,503 | 49.4% | 54 |
-| `jp...samuraigraph.data` | 136 | 66,956 | 39.6% | 78 |
+| `com.github...lib.hdf5` | 26 | 1,585 | 41.5% | 7 |
+| `jp...samuraigraph.base` | 180 | 44,503 | 49.5% | 54 |
+| `jp...samuraigraph.data` | 136 | 66,956 | 45.8% | 81 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **37.2%** (233 test classes / 2042
+- Overall instruction coverage is **38.9%** (236 test classes / 2,132
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -130,8 +130,8 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **37.2%**
-(seen per package in section 1; re-measured 2026-10-01 with
+The overall instruction coverage measured by JaCoCo is **38.9%**
+(seen per package in section 1; re-measured 2026-10-02 with
 `./mvnw clean test` on JDK 21). Current state:
 
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
@@ -208,7 +208,10 @@ Headless characterization units added so far (2026-09-16 to
 `SGDataClipBoardTest` (6) and `SGFileChooserTest` (9),
 `SGMDArrayDataSetupDialogConstructionTest` (2) and
 `SGSDArrayDataSetupDialogConstructionTest` (2),
-`SGDefaultColumnTypeMDArrayUtilityTest` (22).
+`SGDefaultColumnTypeMDArrayUtilityTest` (22),
+`SGSXYMDArrayMultipleDataCharacterizationTest` (22),
+`SGSXYNetCDFMultipleDataCharacterizationTest` (20) and
+`SGSXYSDArrayMultipleDataCharacterizationTest` (46).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -273,7 +276,32 @@ from a frame and from a dialog plus the button, table holder and
 delegation accessors), and the MDArray default column type utility
 `SGDefaultColumnTypeMDArrayUtility` from 23.5% to 86.9% (origin map
 parsing, index pair selection, dimension extraction and column title
-lookup driven with mocked node maps).
+lookup driven with mocked node maps). The three multiple-data classes
+were brought up by the new in-memory characterization suites:
+`SGSXYSDArrayMultipleData` to 74.4% (column type resolution, property
+export in the three save modes, value tables, NetCDF export, merge and
+the data viewer cells), `SGSXYMDArrayMultipleData` to 40.7% (picked and
+not-picked column type resolution, picked-dimension info, child names,
+data viewer cells and property I/O) and `SGSXYNetCDFMultipleData` to
+35.8%; together these lifted `jp...samuraigraph.data` from 39.6% to
+45.8%. `Hdf5ReaderAdapter` gained coverage from the 2-D/3-D shape
+regression (the `convertToMD*Array` fix and the round-trip asserting the
+preserved rank and values), lifting `com.github...lib.hdf5` from 38.8%
+to 41.5%.
+
+Two bugs were found while writing these characterization tests and fixed
+in the same pass. `Hdf5ReaderAdapter.convertToMD*Array` flattened 2-D/3-D
+datasets to 1-D (`Invalid indices length: 2 != 1`); the dimension array
+is now passed to the `(flat, dims)` constructors so the rank is
+preserved. And `SGSXYSDArrayMultipleData.writeSequentialColumnName` had
+the `sameErrorVariableFlags` branch inverted against its sibling
+`writeSequentialColumnIndices` (a separate lower/upper pair consumed one
+slot and a shared pair two — the opposite of the exported layout), so in
+the `SAVE_TO_DATA_SET_NETCDF` mode a separate pair would have written the
+upper error as a duplicate of the lower and shifted the following tick
+label one slot early; the branches were swapped so a separate pair
+occupies two sequential slots and a shared pair one, matching
+`getExportedColumns`.
 
 Because of the coverage level, any refactoring of the areas in
 section 2 must be preceded by characterization tests (file I/O round

@@ -1,5 +1,6 @@
 package com.github.neuroinformatics.samurai_graph.lib.hdf5;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -67,6 +68,13 @@ class HDF5RoundTripTest {
     try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
       MDIntArray matrix = reader.int32().readMDArray("matrix");
       assertEquals(4, matrix.size());
+      // The reader must preserve the 2-D shape, not flatten it to a 1-D vector.
+      assertEquals(2, matrix.getRank());
+      assertArrayEquals(new int[] {2, 2}, matrix.getDimensions());
+      assertEquals(1, matrix.get(new int[] {0, 0}));
+      assertEquals(2, matrix.get(new int[] {0, 1}));
+      assertEquals(3, matrix.get(new int[] {1, 0}));
+      assertEquals(4, matrix.get(new int[] {1, 1}));
       HDF5DataSetInformation info = reader.getDataSetInformation("matrix");
       assertEquals(2, info.getRank());
       assertEquals(2, info.getDimensions()[0]);
