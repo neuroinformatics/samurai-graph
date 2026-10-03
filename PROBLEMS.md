@@ -1,7 +1,8 @@
 # Known Problems
 
 Findings from a project-wide, all-architecture review of Samurai Graph
-(as of 2026-09-30, v2.2.0). Items are ordered by priority.
+(as of 2026-09-30, v2.2.0, coverage re-measured 2026-10-03). Items are
+ordered by priority.
 
 ## 1. Overview
 
@@ -14,12 +15,12 @@ Package sizes and JaCoCo instruction coverage (re-measured 2026-10-02,
 | `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
 | `com.github...lib.hdf5` | 26 | 1,585 | 41.5% | 7 |
 | `jp...samuraigraph.base` | 180 | 44,503 | 49.5% | 54 |
-| `jp...samuraigraph.data` | 136 | 66,956 | 45.8% | 81 |
+| `jp...samuraigraph.data` | 136 | 66,956 | 50.2% | 82 |
 | `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
 | `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
 | `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
 
-- Overall instruction coverage is **38.9%** (236 test classes / 2,132
+- Overall instruction coverage is **40.1%** (237 test classes / 2,153
   test executions against 639 main files)
 - The `figure` row above is the drawing-model package only; the figure
   dialogs and their observers live in `figure.dialog` (65.6%) and the
@@ -130,8 +131,8 @@ make static analysis hard in this layer.
 
 ## 3. Test Coverage
 
-The overall instruction coverage measured by JaCoCo is **38.9%**
-(seen per package in section 1; re-measured 2026-10-02 with
+The overall instruction coverage measured by JaCoCo is **40.1%**
+(seen per package in section 1; re-measured 2026-10-03 with
 `./mvnw clean test` on JDK 21). Current state:
 
 - File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
@@ -210,8 +211,10 @@ Headless characterization units added so far (2026-09-16 to
 `SGSDArrayDataSetupDialogConstructionTest` (2),
 `SGDefaultColumnTypeMDArrayUtilityTest` (22),
 `SGSXYMDArrayMultipleDataCharacterizationTest` (22),
-`SGSXYNetCDFMultipleDataCharacterizationTest` (20) and
-`SGSXYSDArrayMultipleDataCharacterizationTest` (46).
+`SGSXYNetCDFMultipleDataCharacterizationTest` (20),
+`SGSXYSDArrayMultipleDataCharacterizationTest` (46) and
+`SGMDArrayDataSetupPanelCharacterizationTest` (23, headful, on a real
+window).
 Notable per-class rises:
 `SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
 `SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
@@ -284,7 +287,11 @@ the data viewer cells), `SGSXYMDArrayMultipleData` to 40.7% (picked and
 not-picked column type resolution, picked-dimension info, child names,
 data viewer cells and property I/O) and `SGSXYNetCDFMultipleData` to
 35.8%; together these lifted `jp...samuraigraph.data` from 39.6% to
-45.8%. `Hdf5ReaderAdapter` gained coverage from the 2-D/3-D shape
+45.8%, and the headful MDArray data setup panel suite lifted
+`SGMDArrayDataSetupPanel` from 41.6% to 87.0% (construction, the SXY /
+SXYZ / VXY update paths, the stride round trip, the index panel sync,
+the column type dispatch and the complement buttons), bringing
+`jp...samuraigraph.data` to 50.2%. `Hdf5ReaderAdapter` gained coverage from the 2-D/3-D shape
 regression (the `convertToMD*Array` fix and the round-trip asserting the
 preserved rank and values), lifting `com.github...lib.hdf5` from 38.8%
 to 41.5%.
