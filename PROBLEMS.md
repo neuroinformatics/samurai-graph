@@ -6,15 +6,16 @@ Coverage snapshot: 2026-10-05, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`)
 
 | Package | Instr | Missed | Cov | Method | Cov |
 |---|---|---|---|---|---|
-| `mdarray` | 2757 | 72 | 97.4% | 214 | 99.1% |
-| `export` | 4102 | 1304 | 68.2% | 400 | 81.8% |
-| `base` | 4296 | 2170 | 49.5% | 616 | 74.0% |
-| `data` | 4656 | 2312 | 50.2% | 306 | 73.5% |
-| `hdf5` | 6500 | 3800 | 41.5% | 420 | 73.3% |
-| `figure` (top level) | 33646 | 25891 | 23.1% | 2870 | 61.4% |
-| `figure.dialog` | 2486 | 858 | 65.6% | 449 | 84.0% |
-| `application` | 1207 | 944 | 21.8% | 76 | 55.3% |
-| **Total** | **58040** | **34351** | **40.8%** | **5351** | **75.6%** |
+| `mdarray` | 664 | 17 | 97.4% | 53 | 98.1% |
+| `export` | 44 | 14 | 68.2% | 8 | 75.0% |
+| `base` | 69,607 | 34,517 | 50.4% | 2,713 | 51.8% |
+| `data` | 126,944 | 63,179 | 50.2% | 3,380 | 51.9% |
+| `hdf5` | 2,625 | 1,535 | 41.5% | 118 | 81.4% |
+| `figure` (top level) | 137,762 | 105,972 | 23.1% | 5,446 | 33.4% |
+| `figure.dialog` | 62,808 | 21,582 | 65.6% | 968 | 22.2% |
+| `application` | 68,566 | 53,649 | 21.8% | 1,678 | 21.3% |
+| `org.freehep...export` | 220 | 29 | 86.8% | 8 | 100.0% |
+| **Total** | **469,240** | **280,494** | **40.2%** | **14,372** | **39.7%** |
 
 ## 2. Current Problems
 
@@ -185,6 +186,10 @@ Key problems:
    methods and static utilities (the §2.1 pattern); a shared abstract base
    is infeasible because the three multiple-data classes extend three
    different backend parents.
-2. Add characterization tests for `SGUtility` (§3).
+2. Finish the remaining `SGUtility` static methods (§3): the headful
+   modal display helpers (`show*MessageDialog`, `showConfirmationDialog`,
+   `showColorSelectionDialog`) and a few list/font/canonical-path
+   accessors. The pure and headless-safe value, rectangle, menu and
+   visibility helpers are covered since 2026-10-05.
 3. Document and pin the NetCDF4 system-library vs. classpath dependency
    (§2.4).
