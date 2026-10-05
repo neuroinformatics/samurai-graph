@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jp.riken.brain.ni.samuraigraph.base.SGData;
+import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
@@ -50,6 +51,18 @@ class SGSXYSDArrayMultipleDataTest {
     assertEquals(2, data.getChildNumber());
     assertTrue(data.hasMultipleYValues());
     assertFalse(data.hasPairOfXYValues());
+  }
+
+  @Test
+  void getDataBufferViaInterfaceDefaultReturnsMultipleBuffer() {
+    SGISXYTypeMultipleData data = this.createData(new Integer[] {0}, new Integer[] {1, 2});
+    SGDataBuffer buffer =
+        data.getDataBuffer(new SGSXYDataBufferPolicy(true, false, false, false, true));
+    assertNotNull(buffer);
+    SGSXYMultipleDataBuffer multipleBuffer = (SGSXYMultipleDataBuffer) buffer;
+    assertEquals(2, multipleBuffer.getXValues().length);
+    assertEquals(2, multipleBuffer.getYValues().length);
+    assertEquals(4, multipleBuffer.getXValues()[0].length);
   }
 
   @Test

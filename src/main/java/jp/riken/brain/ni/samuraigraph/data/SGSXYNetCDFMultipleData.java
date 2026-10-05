@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
-import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
@@ -2862,16 +2861,6 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
         return var.getDataType();
       }
     }
-  }
-
-  /**
-   * Creates and returns a data buffer.
-   *
-   * @param param parameters for data buffer
-   */
-  @Override
-  public SGDataBuffer getDataBuffer(SGDataBufferPolicy param) {
-    return SGDataBufferUtility.getDataBuffer(this, (SGSXYDataBufferPolicy) param);
   }
 
   /**

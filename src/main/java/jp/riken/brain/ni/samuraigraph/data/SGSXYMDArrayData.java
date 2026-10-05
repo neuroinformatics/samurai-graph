@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
-import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
@@ -1193,16 +1192,6 @@ public class SGSXYMDArrayData extends SGMDArrayData implements SGISXYTypeSingleD
       File file, MatFileWriter writer, final SGExportParameter mode, SGDataBufferPolicy policy) {
     // do nothing
     return true;
-  }
-
-  /**
-   * Creates and returns a data buffer.
-   *
-   * @param param parameters for data buffer
-   */
-  @Override
-  public SGDataBuffer getDataBuffer(SGDataBufferPolicy param) {
-    return SGDataBufferUtility.getDataBuffer(this, (SGSXYDataBufferPolicy) param);
   }
 
   @Override

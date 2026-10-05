@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
@@ -73,6 +74,18 @@ class SGDataBufferUtilityTest {
     assertEquals(8, buffer.getXValues().length);
     assertEquals(8, buffer.getYValues().length);
     assertEquals(15.0, buffer.getXValues()[7], 0.0);
+  }
+
+  @Test
+  void getDataBufferViaSingleInterfaceDefaultReturnsSingleBuffer() throws IOException {
+    SGISXYTypeSingleData data = this.createSXYDataFromExample16();
+    SGDataBuffer buffer =
+        data.getDataBuffer(new SGSXYDataBufferPolicy(true, false, false, false, true));
+    assertNotNull(buffer);
+    SGSXYDataBuffer singleBuffer = (SGSXYDataBuffer) buffer;
+    assertEquals(8, singleBuffer.getXValues().length);
+    assertEquals(8, singleBuffer.getYValues().length);
+    assertEquals(15.0, singleBuffer.getXValues()[7], 0.0);
   }
 
   @Test

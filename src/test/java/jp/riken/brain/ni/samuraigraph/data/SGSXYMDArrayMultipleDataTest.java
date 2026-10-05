@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
+import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
@@ -96,6 +97,19 @@ class SGSXYMDArrayMultipleDataTest {
     assertEquals(30.0, yValues[0][2], 0.0);
     assertEquals(40.0, yValues[1][0], 0.0);
     assertEquals(60.0, yValues[1][2], 0.0);
+  }
+
+  @Test
+  void getDataBufferViaInterfaceDefaultReturnsMultipleBuffer() throws IOException {
+    SGHDF5File file = createHDF5File(createTempHdf5File());
+    SGISXYTypeMultipleData data = createData(file, null);
+    SGDataBuffer buffer =
+        data.getDataBuffer(new SGSXYDataBufferPolicy(true, false, false, false, true));
+    assertNotNull(buffer);
+    SGSXYMultipleDataBuffer multipleBuffer = (SGSXYMultipleDataBuffer) buffer;
+    assertEquals(2, multipleBuffer.getXValues().length);
+    assertEquals(2, multipleBuffer.getYValues().length);
+    assertEquals(3, multipleBuffer.getXValues()[0].length);
   }
 
   @Test

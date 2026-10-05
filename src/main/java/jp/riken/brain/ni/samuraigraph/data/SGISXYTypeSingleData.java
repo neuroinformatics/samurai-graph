@@ -1,5 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
+import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
 
 /** An interface for single Scalar-type XY data. */
@@ -61,6 +63,16 @@ public interface SGISXYTypeSingleData extends SGISXYTypeData {
   public int getStringNumber();
 
   public SGISXYTypeMultipleData toMultiple();
+
+  /**
+   * Creates and returns a data buffer.
+   *
+   * @param policy the policy to get the data buffer
+   * @return the data buffer
+   */
+  public default SGDataBuffer getDataBuffer(final SGDataBufferPolicy policy) {
+    return SGDataBufferUtility.getDataBuffer(this, (SGSXYDataBufferPolicy) policy);
+  }
 
   public boolean hasSameErrorVariable();
 

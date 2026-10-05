@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
-import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
@@ -1177,17 +1176,6 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
   public boolean saveToDataSetNetCDFFile(final File file) {
     // do nothing
     return true;
-  }
-
-  /**
-   * Creates and returns a data buffer.
-   *
-   * @param param parameters for data buffer
-   * @return the data buffer
-   */
-  @Override
-  public SGDataBuffer getDataBuffer(SGDataBufferPolicy param) {
-    return SGDataBufferUtility.getDataBuffer(this, (SGSXYDataBufferPolicy) param);
   }
 
   @Override

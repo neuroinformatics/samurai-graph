@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
+import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
@@ -74,6 +75,18 @@ class SGSXYNetCDFMultipleDataTest {
     assertEquals(8, data.getAllPointsNumber());
     assertEquals(1, data.getChildNumber());
     assertNull(data.getDateFlag());
+  }
+
+  @Test
+  void getDataBufferViaInterfaceDefaultReturnsMultipleBuffer() {
+    SGISXYTypeMultipleData data = this.createBasic();
+    SGDataBuffer buffer =
+        data.getDataBuffer(new SGSXYDataBufferPolicy(true, false, false, false, true));
+    assertNotNull(buffer);
+    SGSXYMultipleDataBuffer multipleBuffer = (SGSXYMultipleDataBuffer) buffer;
+    assertEquals(1, multipleBuffer.getXValues().length);
+    assertEquals(1, multipleBuffer.getYValues().length);
+    assertEquals(8, multipleBuffer.getXValues()[0].length);
   }
 
   @Test

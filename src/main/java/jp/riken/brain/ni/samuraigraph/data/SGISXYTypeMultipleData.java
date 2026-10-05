@@ -2,6 +2,7 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
+import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
@@ -156,6 +157,16 @@ public interface SGISXYTypeMultipleData extends SGISXYTypeData {
    */
   public default SGDataBuffer getDataBuffer(SGSXYDataBufferPolicy policy, int[] indices) {
     return SGDataBufferUtility.getDataBuffer(this, policy, indices);
+  }
+
+  /**
+   * Creates and returns a data buffer.
+   *
+   * @param policy the policy to get the data buffer
+   * @return the data buffer
+   */
+  public default SGDataBuffer getDataBuffer(SGDataBufferPolicy policy) {
+    return SGDataBufferUtility.getDataBuffer(this, (SGSXYDataBufferPolicy) policy);
   }
 
   /**

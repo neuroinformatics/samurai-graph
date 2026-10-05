@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
-import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
@@ -2324,17 +2323,6 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       }
     }
     return nameList;
-  }
-
-  /**
-   * Creates and returns a data buffer.
-   *
-   * @param policy the policy to get the data buffer
-   * @return the data buffer
-   */
-  @Override
-  public SGDataBuffer getDataBuffer(SGDataBufferPolicy policy) {
-    return SGDataBufferUtility.getDataBuffer(this, (SGSXYDataBufferPolicy) policy);
   }
 
   /**
