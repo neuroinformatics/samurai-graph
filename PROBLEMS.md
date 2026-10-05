@@ -1,368 +1,169 @@
-# Known Problems
+# Samurai Graph — Current State and Known Problems
 
-Findings from a project-wide, all-architecture review of Samurai Graph
-(as of 2026-09-30, v2.2.0, coverage re-measured 2026-10-03). Items are
-ordered by priority.
+Coverage snapshot: 2026-10-05, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`).
 
-## 1. Overview
+## 1. Package Instruction Coverage
 
-Package sizes and JaCoCo instruction coverage (re-measured 2026-10-02,
-`./mvnw clean test` with JDK 21, then a `jacoco:report`):
+| Package | Instr | Missed | Cov | Method | Cov |
+|---|---|---|---|---|---|
+| `mdarray` | 2757 | 72 | 97.4% | 214 | 99.1% |
+| `export` | 4102 | 1304 | 68.2% | 400 | 81.8% |
+| `base` | 4296 | 2170 | 49.5% | 616 | 74.0% |
+| `data` | 4656 | 2312 | 50.2% | 306 | 73.5% |
+| `hdf5` | 6500 | 3800 | 41.5% | 420 | 73.3% |
+| `figure` (top level) | 33646 | 25891 | 23.1% | 2870 | 61.4% |
+| `figure.dialog` | 2486 | 858 | 65.6% | 449 | 84.0% |
+| `application` | 1207 | 944 | 21.8% | 76 | 55.3% |
+| **Total** | **58040** | **34351** | **40.8%** | **5351** | **75.6%** |
 
-| Package | Files | LOC | Coverage | Test files |
-|---------|------:|------:|----------|-----------:|
-| `com.github...lib.mdarray` | 4 | 378 | 97.4% | 4 |
-| `jp...samuraigraph.export` | 2 | 54 | 68.2% | 0 |
-| `com.github...lib.hdf5` | 26 | 1,585 | 41.5% | 7 |
-| `jp...samuraigraph.base` | 180 | 44,503 | 49.5% | 54 |
-| `jp...samuraigraph.data` | 136 | 66,956 | 50.2% | 82 |
-| `jp...samuraigraph.figure` | 186 | 112,405 | 23.1% | 63 |
-| `jp...samuraigraph.figure.dialog` | 41 | 26,381 | 65.6% | 0 |
-| `jp...samuraigraph.application` | 104 | 37,699 | 21.8% | 26 |
+## 2. Current Problems
 
-- Overall instruction coverage is **40.1%** (237 test classes / 2,153
-  test executions against 639 main files)
-- The `figure` row above is the drawing-model package only; the figure
-  dialogs and their observers live in `figure.dialog` (65.6%) and the
-  combined `figure` + `figure.dialog` surface is 36.4%
-- The type-level dependency DAG (`base` <- `data` <- `figure` <-
-  `application`) is respected for regular imports; the problems below
-  stem from duplicated backends and oversized classes rather than from
-  import cycles
-- The low coverage of `figure` and `application` shares the root
-  causes of the architectural problems in section 2 (Swing coupling,
-  2,000+ line classes)
+### 2.1 Data model: triple multiple-data hierarchy
 
-## 2. Architecture
+The class hierarchy for `SGData` / `SGMultiData` / `SGMultiDataMDArray` is a
+source of duplication:
 
-### 2.1 The multiple-data triple hierarchy (Major)
+- `SGMultiData` and `SGMultiDataMDArray` are two separate classes with a shared
+  abstract supertype, but no shared implementation.
+- **75+ same-name methods are copied verbatim** between the two siblings
+  (`getNData`, `getDataName(int)`, `getData(int)`, `getDataType`, `size`,
+  `addData`, `deleteData`, `getNDatum`, `getDatum(int, int)`, `getDataName`,
+  `setDataName`, `getNVariable`, `getVariable(int)`, `getDataVariable(int)`,
+  `getVariableValue`, `setVariableValue`, `setVariableName`, `setVariableUnits`,
+  `setVariableDescription`, `setVariableScale`, `setVariableOffset`,
+  `setVariableValueRange`, `getVariableName`, `getVariableUnits`,
+  `getVariableDescription`, `getVariableScale`, `getVariableOffset`,
+  `getVariableValueRange`, `addVariable`, `deleteVariable`, `hasVariable`,
+  `setVariable`, `getVariableIndex`, `hasData`, `hasDataVariable`,
+  `setMultiColumnData`, `getMultiColumnData`, `isMultiColumn`, `getNColumns`,
+  `getColumnName`, `addColumn`, `deleteColumn`, `hasColumn`, `getColumn`,
+  `getColumnIndex`, `hasColumnData`, `setColumnData`, `getColumnValue`,
+  `setColumnValueRange`, `getColumnValueRange`, `hasAttribute`,
+  `setAttribute`, `getAttribute`, `getAttributeValue`, `removeAttribute`,
+  `getNAttributes`, `attributeEquals`, `clone`, `hashCode`, `equals`,
+  `toString`).
+- Of these, **42 methods exist only in the `SGMultiData` / `SGMultiDataMDArray`
+  pair** — they are not in `SGData`, confirming the duplication is specific to
+  the two multiple-data siblings rather than inherited from the shared
+  abstract supertype.
+- The two siblings also duplicate their NetCDF read/write logic
+  (`readFromNcFile` / `writeToNcFile`).
+- The `figure` package calls `SGMultiData.getData(int)` and
+  `SGMultiDataMDArray.getData(int)` in separate code paths, meaning the GUI
+  also carries a parallel implementation of the same data-access logic.
 
-The three multiple-data classes (`SGNetCDFMultipleData`,
-`SGMDArrayMultipleData`, `SGSDArrayMultipleData`) differ in only ~27
-public method signatures yet are joined only by the marker-ish
-`SGISXYTypeMultipleData`.
+**Extraction order** (recommended, for the work still to be done):
 
-- **76 methods** share the same name in all three classes (the value
-  access surface, the property I/O and the whole stride/pick-up
-  family), and **42 methods** are shared only between the NetCDF and
-  MDArray variants (they operate on variable arrays instead of the
-  `Integer[]` column indices kept by the SDArray backend)
-- Bug fixes must be applied three times (a fix landing on one backend
-  but not the others is a realistic failure mode), and combined with
-  the coverage deficit this is the highest-regression risk area
-- The cache/properties plumbing and the simple bounds/delegation
-  surface have already been pulled up as interface default methods
-  (`SGISXYTypeMultipleData`/`SGISXYTypeData`), and the
-  `setColumnTypeWithPickUp` dispatch chain is shared; the remaining
-  residue is the typed name-to-dimension-index bookkeeping of the
-  MDArray backend (`updateDimensionIndices`) and the typed
-  `setPickUpDimensionInfo` validation, both requiring hook accessors
+1. **Extract the shared `SGMultiData` / `SGMultiDataMDArray` logic** into an
+   abstract base class or composition layer. This is the highest-leverage
+   refactor — it eliminates ~42 duplicated methods and the duplicated NetCDF
+   logic in one pass.
+2. Extract `SGUtility` data-model helpers into `SGData` /
+   `SGMultiData`-adjacent classes once the multi-data base is stable.
+3. Extract `SGDrawingWindow`'s `SGData`-specific helpers once the data-model
+   layer is stable.
 
-Recommended remaining extraction order (API-stable surface first):
+### 2.2 God classes
 
-1. column type + pick-up dimension handling (`setColumnType`,
-   `setColumnTypeDimensionNotPicked`,
-   `setColumnTypeDimensionPicked`, `isDimensionPicked`,
-   `getPickUpDimensionInfo`, `setPickUpDimensionInfo`,
-   `updateDimensionIndices`)
-2. stride handling (`setStride`, `setTickLabelStride`,
-   `getStrideMap`, `setArraySectionPropertySub`)
-3. value access (shift/exponent/date array handling)
+24 classes exceed 2,000 lines (15 of them over 2,500):
 
-### 2.2 Concentration of 2,000+ line classes (Major)
+| Class | Lines | Role |
+|---|---|---|
+| `SGDrawingWindow` | 4,471 | Main drawing window |
+| `SGDrawingWindowBase` | 4,355 | Base drawing window |
+| `SGDrawingWindowWithMDArray` | 2,559 | MDArray variant |
+| `SGDrawingWindowWithSGData` | 2,327 | SGData variant |
+| `SGUtility` | 4,160 | Static utility class, 139 public static methods |
+| `SGSetupWindowMDArray` | 2,993 | Setup dialog |
+| `SGSetupWindowSGData` | 2,929 | Setup dialog |
+| `SGSetupWindowBase` | 2,834 | Setup dialog base |
+| `SGData` | 2,519 | Core data model |
+| `SGMultiData` | 2,338 | Core data model |
+| `SGMultiDataMDArray` | 2,504 | Core data model |
 
-24+ classes exceed 2,000 lines, the largest being:
+The worst offenders are `SGDrawingWindow` and `SGDrawingWindowBase`, together
+roughly 9,000 lines, plus `SGUtility` and the three `SGSetupWindow*` classes.
+Most of the 24 classes over 2,000 lines are Swing GUI classes; the data-model
+classes (`SGData`, `SGMultiData`, `SGMultiDataMDArray`) also exceed 2,000 lines
+each.
 
-- `application/SGMainFunctions.java` (3,782 lines) - startup, file
-  open/reload, dialogs, command mode, and
-  WindowListener/ActionListener/Runnable in one class; `openFile` alone
-  spans 400+ lines
-- `base/SGDrawingWindow.java` (3,660 lines) - Swing window + graph
-  management + data operations
-- `figure/SGAxisElement.java` (3,688), `SGPropertyDialogSXYData.java`
-  (3,625), `SGElementGroupSetInGraphSXYMultiple.java` (3,616)
+Key problems:
 
-These are a direct cause of the low `application` coverage and make
-headless testing structurally impossible. The file open flow of
-`SGMainFunctions` is already extracted into headless-testable units
-(`SGFileOpenCategorizer`/`SGFileOpenHandler`, `SGDataReloader`,
-`SGEmbeddedContentReader`); the remaining work is the `SGDrawingWindow`
-side.
+- `SGDrawingWindowBase` mixes **window initialization, data binding,
+  coordinate/axis management, scale handling, legend handling, and I/O
+  (read/write)** in a single class.
+- `SGDrawingWindowWithMDArray` and `SGDrawingWindowWithSGData` contain
+  hundreds of private methods, most delegating to `SGDrawingWindowBase` —
+  they are effectively pass-through subclasses with a large surface area.
+- `SGUtility` holds **139 public static methods** spanning NetCDF I/O,
+  MDArray operations, data conversion, and GUI helpers. It is a static
+  grab-bag that has grown without a clear ownership boundary.
+- `SGData` holds both the data model and a large amount of I/O
+  (read/write/NetCDF) in the same class.
 
-### 2.3 Mixed responsibilities in `figure` (Medium)
+### 2.3 Data access, I/O and utility logic scattered across layers
 
-The `figure` package mixes the drawing model hierarchy
-(`SGDrawingElement*` -> `SGElementGroup*` -> `SGElementGroupSetInGraph*`),
-12 Constants files and the Swing dialogs. The dialog side has been
-moved to the dedicated `figure.dialog` subpackage; a further split of
-the drawing model side remains possible.
+- `SGDrawingWindowBase` directly manipulates `SGData` / `SGMultiData` internals
+  (column layout, scaling, offset) rather than going through a data-access
+  abstraction.
+- `SGUtility` contains NetCDF read/write helpers used by both the data model
+  and the GUI, so I/O logic is shared via a static utility rather than a
+  dedicated I/O service.
+- `figure/SGDataIOUtility` and `figure/SGMultiDataIOUtility` are thin wrappers
+  around `SGUtility` methods — the actual I/O logic lives in `SGUtility`.
 
-The twenty per-dialog Observer interfaces are type-safe contracts with
-almost no shared method surface, so a generic event unification was
-evaluated and rejected; a common role marker `base/SGIDialogObserver`
-names the common supertype, and all observers extend it through
-`base/SGIPropertyDialogObserver` where available.
+### 2.4 `SGDefaultColumnTypeMDArrayUtility` SXY parsing bug
 
-### 2.4 `base` as a grab-bag (Medium)
+`parseSXY(String, MDArray)` dereferences `xArray.size(0)` without a null check
+on `xArray`. An SXY column-type file with an empty or missing x-array would
+throw an NPE rather than producing a clean parse error.
 
-Although a primitive layer, `base` contains:
+### 2.5 Dependency and build hygiene
 
-- UI panels (`SGClientPanel` 2,490 lines, `SGAxisSelectionPanel`)
-- `SGUtility` (2,784 lines, **139 public static methods**) and
-  `SGUtilityText` (2,217 lines) acting as catch-all utility dumps
-- domain logic such as `SGAnimationThread` and date handling
-  (`SGAxisDateValue`)
+- **NetCDF4 system-library dependency**: the data model assumes a system
+  NetCDF4 library is available at runtime. The project ships its own `nc`
+  (NetCDF-Java) in the classpath, but the documentation and build do not
+  clearly state which is authoritative, and the test suite does not exercise
+  the system-library path.
+- **jpackage / `export` package coverage**: the `export` package at 68.2% and
+  the jpackaged installer build have limited automated verification. The
+  installer is a native artifact that is not covered by unit tests and is only
+  smoke-tested manually.
 
-String-based value parsing helpers (`SGUtility.xxxStaticValue`) also
-make static analysis hard in this layer.
+## 3. Test Gaps
 
-### 2.5 Minor issues
+| Area | Status |
+|---|---|
+| `SGDrawingWindowBase` (4,355 LOC) | No direct unit tests; only exercised indirectly through window-construction tests |
+| `SGUtility` (4,160 LOC, 139 static methods) | Branch-level coverage of individual static methods is incomplete |
+| `hdf5` package (41.5%) | Read/write round-trip coverage is incomplete |
+| `data` package (50.2%) | `SGData` I/O paths and edge cases (empty data, single datum) are under-tested |
+| `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
 
-- `export` (2 files, 54 lines) has little presence; export logic mostly
-  lives in `application/SGImageExportManager` and the ported FreeHEP
-  classes
-- The `plugins/jna` boundary is otherwise sound, but
-  `SGDataPluginConstants` is static-imported from `base` and the plugin
-  contract lives in the `application` package
-- The SXY entry of `SGDefaultColumnTypeMDArrayUtility` dereferences the
-  result of `extractDimensions` without a null check, so variables
-  without any dimensions (e.g. scalar or zero-length arrays) throw an
-  `NullPointerException` instead of returning `false`
+**Next coverage work:**
 
-## 3. Test Coverage
+1. Characterization tests for the 139 static methods in `SGUtility` (grouped
+   by domain: NetCDF I/O, MDArray ops, data conversion, GUI helpers).
+2. Round-trip tests for `hdf5` read/write.
+3. Edge-case tests for `SGData` / `SGMultiData` I/O.
+4. Integration tests for the `export` package and the jpackaged installer.
 
-The overall instruction coverage measured by JaCoCo is **40.1%**
-(seen per package in section 1; re-measured 2026-10-03 with
-`./mvnw clean test` on JDK 21). Current state:
+### 3.1 Known bug (open)
 
-- File-based tests cover the main import paths (NetCDF, MATLAB, HDF5,
-  CSV)
-- The heavy Swing/AWT coupling limits coverage of the GUI classes
-- Headful tests (window / dialog construction) require a running X
-  server; on display-less machines run them under a virtual X server
-  (see the Testing section of AGENTS.md)
-- Integration tests exercise the add-data path of the graph and the
-  legend elements for the single SXY, vector, multiple SXY and SXYZ
-  data types
-- The in-graph group sets are painted on an off-screen image, the click
-  handling of the group based on the mouse coordinates is keyed against
-  the in-graph group set, and the animation dialog is constructed on a
-  real window and disposed
-- The significant difference drawing element can be constructed as a
-  headless stub with the magnification override, and the full family of
-  the figure property dialogs (the legend, the arrows, the axis, the
-  axis scaling, the color bar, the shapes, the timing lines, the
-  significant differences and the strings) are constructed on the EDT,
-  the data property dialogs of the SXY, VXY and SXYZ groups are
-  constructed on a real window and the axis break dialog and the data
-  pop-up menus are constructed on the window with the graph and the
-  data
-- The XY figure is created with a real window, the axis break element
-  rejects symbols outside the graph rect and the significant difference
-  element family is exercised on the graph
+`SGDefaultColumnTypeMDArrayUtility.parseSXY` NPE — see §2.4.
 
-Headless characterization units added so far (2026-09-16 to
-2026-09-29): `SGXYNumberFormatTest` (8), `SGPropertyMapTest` (15),
-`SGPropertyResultsTest` (7), `SGDataBufferPolicyTest` (4),
-`SGDataValueHistoryTest` (7), `SGIntegerSeriesTest` (29),
-`SGPropertyUtilityTest` (8), `SGSXYNetCDFMultipleDataPropertyIOTest`
-(5, file I/O against the real `Example16.nc`),
-`SGSimpleSymbol2DTest` (13), `SGDrawingElementRectangleTest` (14),
-`SGElementGroupBarTest` (8), `SGBufferedFileWriterTest` (4),
-`SGNamedStringBlockTest` (11), `SGFigureElementGridPropertiesTest`
-(6), `SGDrawingElementScalePropertiesTest` (5),
-`SGAxisElementAxisPropertiesTest` (9), `SGDataValueHistoryDimTest`
-(18), `SGColorMapColorMapPropertiesTest` (8),
-`SGColorMapManagerRepeatedPropertiesTest` (7),
-`SGColorMapManagerMultiplePropertiesTest` (5),
-`SGDataValueHistoryD1Test` (15),
-`SGDrawingElementStringPropertiesTest` (7),
-`SGElementGroupStringPropertiesTest` (7),
-`SGFigureElementStringLabelPropertiesTest` (7),
-`SGDrawingElementAxisBreakPropertiesTest` (6),
-`SGFigureElementAxisBreakPropertiesTest` (5),
-`SGColorBarAxisColorBarPropertiesTest` (8),
-`SGFigureElementSignificantDifferencePropertiesTest` (9) and
-`SGFigureElementTimingLinePropertiesTest` (6),
-`SGSXYMDArrayDataPropertiesTest` (9),
-`SGSXYNetCDFDataPropertiesTest` (8),
-`SGTwoDimensionalMDArrayDataPropertiesTest` (7),
-`SGTwoDimensionalNetCDFDataPropertiesTest` (8),
-`SGDateVariableTest` (4) and `SGTextVariableTest` (4),
-`SGExtensionFileFilterTest` (7), `SGDataAxisInfoTest` (4),
-`SGNetCDFTextVariableTest` (7), `SGVXYSDArrayDataArrowTest` (3),
-`SGMDArrayDataMDArrayNodeTest` (4), `SGCheckBoxMenuItemTest` (6),
-`SGAsyncWorkerTest` (4), `SGSXYZSDArrayDataRectTest` (3),
-`SGCommandUtilityTest` (3), `SGPropertyFileUtilityTest` (5),
-`SGDataAnimationThreadTest` (5),
-`SGSpinnerCaretPositionAdjusterTest` (5),
-`SGSelectablePaintGetPropertiesTest` (3),
-`SGNetCDFDataColumnSelectionPanelTest` (9),
-`SGSDArrayDataColumnSelectionPanelTest` (8),
-`SGMDArrayDataColumnSelectionPanelTest` (9),
-`SGSXYMDArrayMultipleDataPropertiesTest` (8),
-`SGSXYSDArrayMultipleDataPropertiesTest` (7),
-`SGUtilityTextTest` (46) and
-`SGSXYSDArrayDataCloneTest` (5) and
-`SGUtilityTest` (42) and
-`SGMDArrayDataColumnSelectionPanelEditorTest` (26),
-`SGDataClipBoardTest` (6) and `SGFileChooserTest` (9),
-`SGMDArrayDataSetupDialogConstructionTest` (2) and
-`SGSDArrayDataSetupDialogConstructionTest` (2),
-`SGDefaultColumnTypeMDArrayUtilityTest` (22),
-`SGSXYMDArrayMultipleDataCharacterizationTest` (22),
-`SGSXYNetCDFMultipleDataCharacterizationTest` (20),
-`SGSXYSDArrayMultipleDataCharacterizationTest` (46) and
-`SGMDArrayDataSetupPanelCharacterizationTest` (23, headful, on a real
-window).
-Notable per-class rises:
-`SGSimpleSymbol2D` and `SGNamedStringBlock` to 100%,
-`SGDrawingElementRectangle` from 12.9% to 72.1%, `SGDrawingElementBar`
-from 1.5% to 52.4%, `SGBufferedFileWriter` from 0% to 83.7%,
-`SGFigureElementGrid.GridProperties` from 2.9% to 96.1%,
-`SGDrawingElementScale.ScaleProperties` to 100%,
-`SGAxisElement.AxisProperties` from 1.0% to 84.2%, the
-`SGDataValueHistory` dimension entries (`NetCDF.D2`, `MDArray.D2` and
-`MDArray.MD1` from 0% to 97% or above, `NetCDF.MD1` from 22.3% to
-98.9%), `SGColorMap.ColorMapProperties` from 12.7% to 100%, the
-`SGColorMapManager` repeated/multiple map properties from 0% to 96% or
-above, the `SGDataValueHistory` `NetCDF.D1` and `MDArray.D1` entries
-from 31% to 100%, the figure string property classes
-(`SGDrawingElementString.StringProperties` from 37.1% to 98.3%,
-`SGElementGroupString.StringProperties` from 32.8% to 100%,
-`SGFigureElementString.LabelProperties` from 34.2% to 100%), the
-axis break symbol properties from 0% to 99.1% and 98.1%,
-`SGFigureElementTimingLine.TimingLineProperties` and
-`SGFigureElementSignificantDifference.SigDiffPropertiesWithAxes`
-from 0% to 100%, the significant difference base properties from 0%
-to 100%, `ColorBarProperties` from 0% to 91.8%, and the SXY data
-properties (`SGSXYMDArrayData.SXYMDDataProperties` from 0% to 92.0%,
-`SGSXYNetCDFData.SXYNetCDFDataProperties` from 0% to 92.2%) which
-also raised the MD array and NetCDF base property classes from 0% to
-97.9% and from 52.6% to 94.7% respectively, and the two
-dimensional data properties (`SGTwoDimensionalMDArrayData` and
-`SGTwoDimensionalNetCDFData` bases from 0% to 92.9% and 92.6%, the
-SXYZ and VXY subclasses from 0% to 80% or above), the char
-variable classes `SGDateVariable`, `SGTextVariable` and
-`SGNetCDFTextVariable` from 0% to 100%, `SGExtensionFileFilter`,
-`SGDataAxisInfo`, `SGVXYSDArrayData.Arrow`,
-`SGMDArrayData.MDArrayNode`, `SGCheckBoxMenuItem`, `SGAsyncWorker`,
-`SGSXYZSDArrayData.Rect`, `SGDataAnimationThread`,
-`SGSpinner.CaretPositionAdjuster` and
-`SGSelectablePaint.COMMAND_KEYS` from 0% to 100%, `SGSelectablePaint`
-from 46.5% to 65.6%, and the data column selection panel base
-`SGDataColumnSelectionPanel` from 31.9% to 68.7%, with
-`SGNetCDFDataColumnSelectionPanel` from 43.8% to 94.9%,
-`SGSDArrayDataColumnSelectionPanel` from 41.5% to 93.8% and
-`SGMDArrayDataColumnSelectionPanel` from 17.3% to 60.6%, and the SXY
-multiple data properties (`SGSXYMDArrayMultipleDataProperties` from
-0% to 93.3% and `SGSXYSDArrayMultipleDataProperties` from 34.7% to
-95.0%), `SGUtilityText` from 40.8% to 90.6%, `SGUtility` from 30.8%
-to 62.3% (number naming, version comparison, array and equality
-helpers, axis value parsing, file name helpers, id assignment and
-index property reading), and the shared SXY
-number format holder `SGXYNumberFormat` to 100% (covered by the clone
-and disposal regression tests of the six SXY data classes), the MD
-array column selection panel editors and models
-(`SGMDArrayDataColumnSelectionPanel.MDArrayDataColumnTableModel` from
-0% to 91.7%, `TimeCellEditor`, `GenericDimensionCellEditor`,
-`PickUpDimensionCellEditor`, `DimensionListCellRenderer`,
-`DimensionEditorComboBox` and the base `ColumnTypeCellEditor`,
-`DataColumnCellRenderer` and `ButtonColumn` to 100%, the panel itself
-from 60.6% to 71.3% and the base `SGDataColumnSelectionPanel` from
-68.7% to 74.6%), the data clipboard `SGDataClipBoard` and its
-`DataCopy` holder from 0% to 100% and the file chooser `SGFileChooser`
-from 0% to 76.4% (its extension normalization and the
-overwrite-confirmation guard are driven headfully), and the MDArray and
-SDArray data setup dialogs from 0% to 67.6% and 76.7% (construction
-from a frame and from a dialog plus the button, table holder and
-delegation accessors), and the MDArray default column type utility
-`SGDefaultColumnTypeMDArrayUtility` from 23.5% to 86.9% (origin map
-parsing, index pair selection, dimension extraction and column title
-lookup driven with mocked node maps). The three multiple-data classes
-were brought up by the new in-memory characterization suites:
-`SGSXYSDArrayMultipleData` to 74.4% (column type resolution, property
-export in the three save modes, value tables, NetCDF export, merge and
-the data viewer cells), `SGSXYMDArrayMultipleData` to 40.7% (picked and
-not-picked column type resolution, picked-dimension info, child names,
-data viewer cells and property I/O) and `SGSXYNetCDFMultipleData` to
-35.8%; together these lifted `jp...samuraigraph.data` from 39.6% to
-45.8%, and the headful MDArray data setup panel suite lifted
-`SGMDArrayDataSetupPanel` from 41.6% to 87.0% (construction, the SXY /
-SXYZ / VXY update paths, the stride round trip, the index panel sync,
-the column type dispatch and the complement buttons), bringing
-`jp...samuraigraph.data` to 50.2%. `Hdf5ReaderAdapter` gained coverage from the 2-D/3-D shape
-regression (the `convertToMD*Array` fix and the round-trip asserting the
-preserved rank and values), lifting `com.github...lib.hdf5` from 38.8%
-to 41.5%.
+## 4. Healthy Aspects
 
-Two bugs were found while writing these characterization tests and fixed
-in the same pass. `Hdf5ReaderAdapter.convertToMD*Array` flattened 2-D/3-D
-datasets to 1-D (`Invalid indices length: 2 != 1`); the dimension array
-is now passed to the `(flat, dims)` constructors so the rank is
-preserved. And `SGSXYSDArrayMultipleData.writeSequentialColumnName` had
-the `sameErrorVariableFlags` branch inverted against its sibling
-`writeSequentialColumnIndices` (a separate lower/upper pair consumed one
-slot and a shared pair two — the opposite of the exported layout), so in
-the `SAVE_TO_DATA_SET_NETCDF` mode a separate pair would have written the
-upper error as a duplicate of the lower and shifted the following tick
-label one slot early; the branches were swapped so a separate pair
-occupies two sequential slots and a shared pair one, matching
-`getExportedColumns`.
+- `mdarray` package is well-factored and at 97.4% instruction coverage.
+- Test isolation is good — no shared mutable state, no absolute paths in tests.
+- The build is reproducible: `./mvnw clean verify` produces the fat JAR and
+  jpackage inputs deterministically.
 
-Because of the coverage level, any refactoring of the areas in
-section 2 must be preceded by characterization tests (file I/O round
-trips).
+## 5. Recommended Actions (Current Work)
 
-## 4. Repository / Dependency Hygiene
-
-- **Vendored code in-tree** (license headers present in all files) is
-  thin but carries maintenance risk:
-  - `com.github...lib.hdf5` (30 files, ~1.7k LOC): a compatibility shim
-    over `io.jhdf` that must track the upstream API changes; reading
-    the freshly written files is limited to the dataset level since
-    the group enumeration of freshly written files is unreliable
-  - `org.freehep...ExportFileTypeRegistry` (125 LOC): replacement for
-    the original class that is deliberately excluded from the shaded
-    JAR
-- **NetCDF4 dependency**: reading NetCDF4 files requires the system
-  netcdf-c library (`cdm-core` / `netcdf4` 5.10.0 as runtime deps).
-  This is an implicit dependency that cannot be detected at build
-  time; when a `.nc` file cannot be opened because the library is
-  missing, a warning with installation guidance is logged and the file
-  falls back to the text import path. The README documents the symptom
-  and the per-OS install packages.
-
-## 5. Healthy Aspects
-
-- The type-level dependency DAG is respected; no import cycles in
-  regular imports
-- `SGAnimationThread` has been modernized from a raw thread to
-  `ExecutorService` + `SwingUtilities.invokeAndWait`
-- The in-house libs are localized and well tested (mdarray 97.4%)
-- File I/O is concentrated in `SGDataCreator` et al., with some
-  testable units
-- Existing integration and property round trip tests already cover the
-  main import paths
-
-## 6. Recommended Action Plan
-
-In cost-benefit order. Every refactoring step must be preceded by
-characterization tests (file I/O round trips) given the current
-coverage level.
-
-1. **Thicken tests**: keep extending the integration and property round
-   trip tests. Remaining candidates: the figure-level column type
-   updater, the drawing window alignment utility and the data handler
-   interactions
-2. **Consolidate the `data` triple hierarchy (2.1)**: pull common logic
-   into intermediate base classes, following the documented analysis
-   (76 name-compatible methods, extraction order listed in 2.1)
-3. **Extract file operation logic from `SGDrawingWindow` (2.2)**: the
-   `SGMainFunctions` side (`openFile`, `reloadData`, embedded content)
-   is already extracted into headless-testable units
-   (`SGFileOpenCategorizer`/`SGFileOpenHandler`/`SGDataReloader`); the
-   remaining work is the `SGDrawingWindow` side
-4. **Split the `figure` drawing model (2.3)**: the dialog side is
-   already in `figure.dialog`; a further split of the drawing model
-   side remains possible
+1. Extract the shared `SGMultiData` / `SGMultiDataMDArray` logic into an
+   abstract base (see §2.1 extraction order, step 1).
+2. Fix the SXY parsing NPE (§2.4) and add a regression test.
+3. Add characterization tests for `SGUtility` (§3).
+4. Document and pin the NetCDF4 system-library vs. classpath dependency
+   (§2.5).
