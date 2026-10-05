@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.awt.Panel;
+import java.awt.Point;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
@@ -121,5 +125,127 @@ class SGUtilityRectangleTest {
     ArrayList<Rectangle2D> list = new ArrayList<>();
     list.add(null);
     assertThrows(IllegalArgumentException.class, () -> SGUtility.createUnion(list));
+  }
+
+  // -- mouse location ---------------------------------------------------------
+
+  /** Builds a rectangle of 100x100 at the origin for location tests. */
+  private static Rectangle2D unitRect() {
+    return new Rectangle2D.Double(0, 0, 100, 100);
+  }
+
+  @Test
+  void getMouseLocationMapsCorners() {
+    Rectangle2D rect = unitRect();
+    assertEquals(SGConstants.NORTH_WEST, SGUtility.getMouseLocation(rect, 0, 0, 5));
+    assertEquals(SGConstants.NORTH_EAST, SGUtility.getMouseLocation(rect, 100, 0, 5));
+    assertEquals(SGConstants.SOUTH_WEST, SGUtility.getMouseLocation(rect, 0, 100, 5));
+    assertEquals(SGConstants.SOUTH_EAST, SGUtility.getMouseLocation(rect, 100, 100, 5));
+  }
+
+  @Test
+  void getMouseLocationMapsEdgeMidpoints() {
+    Rectangle2D rect = unitRect();
+    assertEquals(SGConstants.NORTH, SGUtility.getMouseLocation(rect, 50, 0, 5));
+    assertEquals(SGConstants.SOUTH, SGUtility.getMouseLocation(rect, 50, 100, 5));
+    assertEquals(SGConstants.WEST, SGUtility.getMouseLocation(rect, 0, 50, 5));
+    assertEquals(SGConstants.EAST, SGUtility.getMouseLocation(rect, 100, 50, 5));
+  }
+
+  @Test
+  void getMouseLocationReturnsOtherOutsideTolerance() {
+    Rectangle2D rect = unitRect();
+    assertEquals(SGConstants.OTHER, SGUtility.getMouseLocation(rect, 50, 50, 5));
+    assertEquals(SGConstants.OTHER, SGUtility.getMouseLocation(rect, 30, 30, 5));
+  }
+
+  // -- resizeRectangle --------------------------------------------------------
+
+  private static MouseEvent event(final int x, final int y) {
+    return new MouseEvent(new Panel(), 0, 0L, 0, x, y, 1, false);
+  }
+
+  private static MouseEvent eventWithShift(final int x, final int y) {
+    return new MouseEvent(new Panel(), 0, 0L, InputEvent.SHIFT_DOWN_MASK, x, y, 1, false);
+  }
+
+  @Test
+  void resizeRectangleExpandsFromEastEdge() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(60, 10); // the east edge
+    SGUtility.resizeRectangle(rect, pos, event(70, 10), SGConstants.EAST);
+    assertEquals(10.0, rect.getX(), DELTA);
+    assertEquals(10.0, rect.getY(), DELTA);
+    assertEquals(60.0, rect.getWidth(), DELTA);
+    assertEquals(50.0, rect.getHeight(), DELTA);
+    assertEquals(70, pos.x);
+    assertEquals(10, pos.y);
+  }
+
+  @Test
+  void resizeRectangleMovesNorthEdgeDownward() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(35, 10); // the north edge
+    SGUtility.resizeRectangle(rect, pos, event(35, 20), SGConstants.NORTH);
+    assertEquals(10.0, rect.getX(), DELTA);
+    assertEquals(20.0, rect.getY(), DELTA);
+    assertEquals(50.0, rect.getWidth(), DELTA);
+    assertEquals(40.0, rect.getHeight(), DELTA);
+    assertEquals(35, pos.x);
+    assertEquals(20, pos.y);
+  }
+
+  @Test
+  void resizeRectangleExpandsFromSouthEdge() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(35, 60); // the south edge
+    SGUtility.resizeRectangle(rect, pos, event(35, 70), SGConstants.SOUTH);
+    assertEquals(10.0, rect.getX(), DELTA);
+    assertEquals(10.0, rect.getY(), DELTA);
+    assertEquals(50.0, rect.getWidth(), DELTA);
+    assertEquals(60.0, rect.getHeight(), DELTA);
+  }
+
+  @Test
+  void resizeRectangleMovesWestEdgeLeftward() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(10, 35); // the west edge
+    SGUtility.resizeRectangle(rect, pos, event(-5, 35), SGConstants.WEST);
+    assertEquals(-5.0, rect.getX(), DELTA);
+    assertEquals(10.0, rect.getY(), DELTA);
+    assertEquals(65.0, rect.getWidth(), DELTA);
+    assertEquals(50.0, rect.getHeight(), DELTA);
+  }
+
+  @Test
+  void resizeRectangleExpandsFromSouthEastCorner() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(60, 60); // the south-east corner
+    SGUtility.resizeRectangle(rect, pos, event(80, 70), SGConstants.SOUTH_EAST);
+    assertEquals(10.0, rect.getX(), DELTA);
+    assertEquals(10.0, rect.getY(), DELTA);
+    assertEquals(70.0, rect.getWidth(), DELTA);
+    assertEquals(60.0, rect.getHeight(), DELTA);
+  }
+
+  @Test
+  void resizeRectangleMovesNorthWestCorner() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(10, 10); // the north-west corner
+    SGUtility.resizeRectangle(rect, pos, event(0, 0), SGConstants.NORTH_WEST);
+    assertEquals(0.0, rect.getX(), DELTA);
+    assertEquals(0.0, rect.getY(), DELTA);
+    assertEquals(60.0, rect.getWidth(), DELTA);
+    assertEquals(60.0, rect.getHeight(), DELTA);
+  }
+
+  @Test
+  void resizeRectangleKeepsAspectWhenShiftIsHeld() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(60, 60); // the south-east corner
+    // dragging 20 px to the right keeps the 1:1 aspect ratio, so height grows too
+    SGUtility.resizeRectangle(rect, pos, eventWithShift(80, 60), SGConstants.SOUTH_EAST);
+    assertEquals(70.0, rect.getWidth(), DELTA);
+    assertEquals(70.0, rect.getHeight(), DELTA);
   }
 }

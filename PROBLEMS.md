@@ -146,16 +146,18 @@ Key problems:
 | Area | Status |
 |---|---|
 | `SGDrawingWindow` (3,660 LOC) | No direct unit tests for the window logic; exercised indirectly through window-construction tests (e.g. `SGDrawingWindowPropertyIOTest`) |
-| `SGUtility` (2,784 LOC, 139 static methods) | Partial coverage via `SGUtilityTest`, `SGUtilityTextTest`, `SGUtilityNumberTest`, `SGUtilityRectangleTest`; branch-level coverage of individual static methods is incomplete |
+| `SGUtility` (2,784 LOC, 139 static methods) | Pure and headless-safe static methods covered via `SGUtilityTest`, `SGUtilityTextTest`, `SGUtilityNumberTest`, `SGUtilityRectangleTest`, `SGUtilityPropertyValueTest`, `SGUtilityMenuTest` (instruction 77.3%, branch 78.8%). Still untested: the modal `show*MessageDialog`/`showConfirmationDialog`/`showColorSelectionDialog` display helpers, the `moveObjectTo*` list wrappers, and a few font/canonical-path accessors |
 | `hdf5` package (41.5%) | Read/write round-trip coverage is incomplete |
 | `data` package (50.2%) | SXY single/multiple data I/O paths and edge cases (empty data, single datum) are under-tested |
 | `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
 
 **Next coverage work:**
 
-1. Characterization tests for the 139 static methods in `SGUtility`
-   (grouped by domain: property validation, value computation, text/date
-   parsing, GUI helpers).
+1. Remaining `SGUtility` static methods: the modal display helpers
+   (`show*MessageDialog`, `showConfirmationDialog`, `showColorSelectionDialog`)
+   need a headful harness, plus a few remaining list/font/canonical-path
+   accessors. (The pure and headless-safe value, rectangle, menu and
+   visibility helpers are now covered.)
 2. Round-trip tests for `hdf5` read/write.
 3. Edge-case tests for the SXY single/multiple data I/O paths.
 4. Integration tests for the `export` package and the jpackaged installer.

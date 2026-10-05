@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.nio.charset.StandardCharsets;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -525,5 +526,98 @@ class SGUtilityTest {
     assertNull(SGUtility.readIndices(elementWithAttribute("i", "{a}"), "i"));
     assertNull(SGUtility.readIndices(elementWithAttribute("i", "{1, x}"), "i"));
     assertNull(SGUtility.readIndices(elementWithAttribute("i", "a{b"), "i"));
+  }
+
+  // -- list moving helpers ------------------------------------------------------
+
+  @Test
+  void moveObjectToRawListMovesObjectToTail() {
+    final List<Object> list = new ArrayList<>(List.of("a", "b", "c"));
+    assertTrue(SGUtility.moveObjectToRawList("b", list, true));
+    assertEquals(List.of("a", "c", "b"), list);
+  }
+
+  @Test
+  void moveObjectToRawListMovesObjectToHead() {
+    final List<Object> list = new ArrayList<>(List.of("a", "b", "c"));
+    assertTrue(SGUtility.moveObjectToRawList("b", list, false));
+    assertEquals(List.of("b", "a", "c"), list);
+  }
+
+  @Test
+  void moveObjectToRawListFailsWhenObjectMissing() {
+    final List<Object> list = new ArrayList<>(List.of("a", "b"));
+    assertFalse(SGUtility.moveObjectToRawList("z", list, true));
+    assertEquals(List.of("a", "b"), list);
+  }
+
+  @Test
+  void moveObjectRawListShiftsObjectsForward() {
+    final List<Object> list = new ArrayList<>(List.of("a", "b", "c", "d"));
+    final List<Object> moved = new ArrayList<>(List.of("b"));
+    assertTrue(SGUtility.moveObjectRawList(moved, list, 1));
+    assertEquals(List.of("a", "c", "b", "d"), list);
+  }
+
+  @Test
+  void moveObjectRawListShiftsObjectsBackward() {
+    final List<Object> list = new ArrayList<>(List.of("a", "b", "c", "d"));
+    final List<Object> moved = new ArrayList<>(List.of("c"));
+    assertTrue(SGUtility.moveObjectRawList(moved, list, -1));
+    assertEquals(List.of("a", "c", "b", "d"), list);
+  }
+
+  @Test
+  void moveObjectRawListFailsWhenObjectMissing() {
+    final List<Object> list = new ArrayList<>(List.of("a", "b"));
+    final List<Object> moved = new ArrayList<>(List.of("z"));
+    assertFalse(SGUtility.moveObjectRawList(moved, list, 1));
+    assertEquals(List.of("a", "b"), list);
+  }
+
+  // -- visibility helpers ---------------------------------------------------------
+
+  /** A minimal {@link SGIVisible} used to exercise the visibility helper. */
+  private static final class Visible implements SGIVisible {
+    private boolean visible;
+
+    Visible(final boolean visible) {
+      this.visible = visible;
+    }
+
+    public boolean isVisible() {
+      return visible;
+    }
+
+    public void setVisible(final boolean b) {
+      this.visible = b;
+    }
+  }
+
+  @Test
+  void setVisibleListOrdersVisibleFirstAndUpdatesFlags() {
+    final Visible v1 = new Visible(true);
+    final Visible v2 = new Visible(true);
+    final Visible v3 = new Visible(true);
+    final List<Visible> list = new ArrayList<>(List.of(v1, v2, v3));
+    final List<Visible> visible = new ArrayList<>(List.of(v2));
+    assertTrue(SGUtility.setVisibleList(list, visible));
+    // the list is rebuilt with the visible elements first, in their given order
+    assertEquals(List.of(v2, v1, v3), list);
+    assertFalse(v1.isVisible());
+    assertTrue(v2.isVisible());
+    assertFalse(v3.isVisible());
+  }
+
+  // -- message dialog visibility flag ---------------------------------------------
+
+  @Test
+  void messageDialogVisibilityFlagReflectsSetAndClear() {
+    SGUtility.clearMessageDialogVisible();
+    assertFalse(SGUtility.wasMessageDialogVisible());
+    SGUtility.setMessageDialogWasVisible();
+    assertTrue(SGUtility.wasMessageDialogVisible());
+    SGUtility.clearMessageDialogVisible();
+    assertFalse(SGUtility.wasMessageDialogVisible());
   }
 }
