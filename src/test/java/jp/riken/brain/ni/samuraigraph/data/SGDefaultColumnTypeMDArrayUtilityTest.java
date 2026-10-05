@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -172,17 +171,14 @@ class SGDefaultColumnTypeMDArrayUtilityTest {
   }
 
   @Test
-  void theSXYDataThrowsForVariablesWithoutDimensions() {
-    // the dimension map is empty so extractDimensions returns null, which the
-    // SXY entry point does not check before dereferencing it
+  void theSXYDataFailsWithoutDimensionedVariables() {
+    // no variable has any dimension, so extractDimensions returns null and the
+    // SXY entry point must fail cleanly instead of throwing an NPE
     SGMDArrayDataColumnInfo[] cols2 = cols(new int[][] {{}, {}}, "x", "y");
     Map<String, Object> infoMap2 =
         infoMap(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.TRUE);
-    assertThrows(
-        NullPointerException.class,
-        () ->
-            SGDefaultColumnTypeMDArrayUtility.getForSXYMDArrayData(
-                infoMap2, vars("x", "y"), 2, cols2));
+    assertFalse(
+        SGDefaultColumnTypeMDArrayUtility.getForSXYMDArrayData(infoMap2, vars("x", "y"), 2, cols2));
   }
 
   @Test

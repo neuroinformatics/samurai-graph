@@ -1211,12 +1211,12 @@ public final class SGDefaultColumnTypeMDArrayUtility {
 
     // assign the columns for y-values
     List<MDArrayDimension> yDimList = extractDimensions(dimListMap, 1);
+    if (yDimList == null || yDimList.size() == 0) {
+      return false;
+    }
     final int maxSize = 5;
     if (yDimList.size() > maxSize) {
       yDimList = new ArrayList<MDArrayDimension>(yDimList.subList(0, maxSize));
-    }
-    if (yDimList == null || yDimList.size() == 0) {
-      return false;
     }
 
     if (multiple.booleanValue()) {

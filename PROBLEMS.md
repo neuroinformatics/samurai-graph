@@ -112,13 +112,7 @@ Key problems:
 - `figure/SGDataIOUtility` and `figure/SGMultiDataIOUtility` are thin wrappers
   around `SGUtility` methods — the actual I/O logic lives in `SGUtility`.
 
-### 2.4 `SGDefaultColumnTypeMDArrayUtility` SXY parsing bug
-
-`parseSXY(String, MDArray)` dereferences `xArray.size(0)` without a null check
-on `xArray`. An SXY column-type file with an empty or missing x-array would
-throw an NPE rather than producing a clean parse error.
-
-### 2.5 Dependency and build hygiene
+### 2.4 Dependency and build hygiene
 
 - **NetCDF4 system-library dependency**: the data model assumes a system
   NetCDF4 library is available at runtime. The project ships its own `nc`
@@ -148,9 +142,15 @@ throw an NPE rather than producing a clean parse error.
 3. Edge-case tests for `SGData` / `SGMultiData` I/O.
 4. Integration tests for the `export` package and the jpackaged installer.
 
-### 3.1 Known bug (open)
+### 3.1 Fixed bugs
 
-`SGDefaultColumnTypeMDArrayUtility.parseSXY` NPE — see §2.4.
+- **SXY default-column NPE (2026-10-05)**: the no-property overload
+  `SGDefaultColumnTypeMDArrayUtility.getForSXYMDArrayData` dereferenced the
+  result of `extractDimensions` (`yDimList.size()`) before its null check, so
+  an SXY data file whose variables have no dimensions threw a
+  `NullPointerException` instead of returning `false`. The null/empty check
+  now runs before the size cap, and the regression test
+  `theSXYDataFailsWithoutDimensionedVariables` pins the clean failure.
 
 ## 4. Healthy Aspects
 
@@ -163,7 +163,6 @@ throw an NPE rather than producing a clean parse error.
 
 1. Extract the shared `SGMultiData` / `SGMultiDataMDArray` logic into an
    abstract base (see §2.1 extraction order, step 1).
-2. Fix the SXY parsing NPE (§2.4) and add a regression test.
-3. Add characterization tests for `SGUtility` (§3).
-4. Document and pin the NetCDF4 system-library vs. classpath dependency
-   (§2.5).
+2. Add characterization tests for `SGUtility` (§3).
+3. Document and pin the NetCDF4 system-library vs. classpath dependency
+   (§2.4).
