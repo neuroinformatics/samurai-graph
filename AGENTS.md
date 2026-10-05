@@ -120,3 +120,6 @@ The appropriate jpackage profile is auto-activated based on the host OS. Each pl
 - Only run `git commit` after the user has approved the draft.
 - Follow the project's commit message conventions (see `git-commit` skill / Conventional Commits): valid type, lowercase imperative description, subject and every body line ≤ 72 characters, no agent attribution or session references.
 - Stage changes only after the work is verified (format, compile, tests) and the commit plan is approved.
+- **Documentation must be current before committing.** When a change modifies code, behavior, or coverage, update the affected documents (`PROBLEMS.md`, `README.md`, `AGENTS.md`, ...) in the same verified state before committing — the commit must not leave any document stale.
+- **Documents describe the present state, not the history.** Keep them a faithful, direct snapshot of the current state only. Do not add changelog-style narration, background, rationale, or "previously X, now Y" wording; rewrite affected lines in place so a reader sees only what is true today.
+- **PROBLEMS.md records only outstanding problems.** Every entry must be an issue or gap that still exists. When the work is done, delete its entry entirely — do not keep resolved or completed items, dates, or "already covered" annotations.

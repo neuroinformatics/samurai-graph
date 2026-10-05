@@ -147,31 +147,20 @@ Key problems:
 | Area | Status |
 |---|---|
 | `SGDrawingWindow` (3,660 LOC) | No direct unit tests for the window logic; exercised indirectly through window-construction tests (e.g. `SGDrawingWindowPropertyIOTest`) |
-| `SGUtility` (2,784 LOC, 139 static methods) | Pure and headless-safe static methods covered via `SGUtilityTest`, `SGUtilityTextTest`, `SGUtilityNumberTest`, `SGUtilityRectangleTest`, `SGUtilityPropertyValueTest`, `SGUtilityMenuTest` (instruction 77.3%, branch 78.8%). Still untested: the modal `show*MessageDialog`/`showConfirmationDialog`/`showColorSelectionDialog` display helpers, the `moveObjectTo*` list wrappers, and a few font/canonical-path accessors |
+| `SGUtility` (2,784 LOC, 139 static methods) | The modal `show*MessageDialog` / `showConfirmationDialog` / `showColorSelectionDialog` display helpers, the `moveObjectTo*` list wrappers, and a few font/canonical-path accessors are untested (class coverage: 77.3% instruction, 78.8% branch) |
 | `hdf5` package (41.5%) | Read/write round-trip coverage is incomplete |
 | `data` package (50.2%) | SXY single/multiple data I/O paths and edge cases (empty data, single datum) are under-tested |
 | `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
 
 **Next coverage work:**
 
-1. Remaining `SGUtility` static methods: the modal display helpers
+1. `SGUtility` modal display helpers
    (`show*MessageDialog`, `showConfirmationDialog`, `showColorSelectionDialog`)
-   need a headful harness, plus a few remaining list/font/canonical-path
-   accessors. (The pure and headless-safe value, rectangle, menu and
-   visibility helpers are now covered.)
+   need a headful harness; a few list/font/canonical-path accessors remain
+   untested.
 2. Round-trip tests for `hdf5` read/write.
 3. Edge-case tests for the SXY single/multiple data I/O paths.
 4. Integration tests for the `export` package and the jpackaged installer.
-
-### 3.1 Resolved defects
-
-- **SXY default-column NPE**: the no-property overload
-  `SGDefaultColumnTypeMDArrayUtility.getForSXYMDArrayData` dereferenced the
-  result of `extractDimensions` (`yDimList.size()`) before its null check, so
-  an SXY data file whose variables have no dimensions threw a
-  `NullPointerException` instead of returning `false`. The null/empty check
-  now runs before the size cap, and the regression test
-  `theSXYDataFailsWithoutDimensionedVariables` pins the clean failure.
 
 ## 4. Healthy Aspects
 
@@ -186,10 +175,8 @@ Key problems:
    methods and static utilities (the §2.1 pattern); a shared abstract base
    is infeasible because the three multiple-data classes extend three
    different backend parents.
-2. Finish the remaining `SGUtility` static methods (§3): the headful
+2. Test the remaining `SGUtility` static methods (§3): the headful
    modal display helpers (`show*MessageDialog`, `showConfirmationDialog`,
-   `showColorSelectionDialog`) and a few list/font/canonical-path
-   accessors. The pure and headless-safe value, rectangle, menu and
-   visibility helpers are covered since 2026-10-05.
+   `showColorSelectionDialog`) and a few list/font/canonical-path accessors.
 3. Document and pin the NetCDF4 system-library vs. classpath dependency
    (§2.4).
