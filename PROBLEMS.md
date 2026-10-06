@@ -9,13 +9,13 @@ Coverage snapshot: 2026-10-06, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`)
 | `mdarray` | 664 | 17 | 97.4% | 53 | 98.1% |
 | `export` | 44 | 14 | 68.2% | 8 | 75.0% |
 | `base` | 69,607 | 34,517 | 50.4% | 2,713 | 51.8% |
-| `data` | 126,944 | 63,179 | 50.2% | 3,380 | 51.9% |
+| `data` | 126,951 | 63,056 | 50.3% | 3,380 | 52.0% |
 | `hdf5` | 2,625 | 1,413 | 46.2% | 118 | 89.0% |
 | `figure` (top level) | 137,762 | 105,972 | 23.1% | 5,446 | 33.4% |
 | `figure.dialog` | 62,808 | 21,582 | 65.6% | 968 | 22.2% |
 | `application` | 68,566 | 53,649 | 21.8% | 1,678 | 21.3% |
 | `org.freehep...export` | 220 | 29 | 86.8% | 8 | 100.0% |
-| **Total** | **469,240** | **280,372** | **40.2%** | **14,372** | **39.8%** |
+| **Total** | **469,247** | **280,249** | **40.3%** | **14,372** | **39.8%** |
 
 ## 2. Current Problems
 
@@ -161,7 +161,7 @@ the same adapter (`writeDoubleArray` / `writeIntArray` /
 | `SGDrawingWindow` (3,660 LOC) | No direct unit tests for the window logic; exercised indirectly through window-construction tests (e.g. `SGDrawingWindowPropertyIOTest`) |
 | `SGUtility` (2,784 LOC, 139 static methods) | The modal `show*MessageDialog` / `showConfirmationDialog` / `showColorSelectionDialog` display helpers, the `moveObjectTo*` list wrappers, and a few font/canonical-path accessors are untested (class coverage: 77.3% instruction, 78.8% branch) |
 | `hdf5` package (46.2%) | Data-array read/write round-trip is covered; the int64 read path, the 3-D / long 2-D flatten helpers, and the `IHDF5ObjectReader` group/attribute inspection methods are untested |
-| `data` package (50.2%) | SXY single/multiple data I/O paths and edge cases (empty data, single datum) are under-tested |
+| `data` package (50.3%) | The SXY data-buffer I/O path is covered, including the empty (0-point) and single-datum edge cases; the data-viewer value path (`SGDataViewerUtility`) and the backend setup dialogs remain under-tested |
 | `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
 
 **Next coverage work:**
@@ -170,8 +170,7 @@ the same adapter (`writeDoubleArray` / `writeIntArray` /
    (`show*MessageDialog`, `showConfirmationDialog`, `showColorSelectionDialog`)
    need a headful harness; a few list/font/canonical-path accessors remain
    untested.
-2. Edge-case tests for the SXY single/multiple data I/O paths.
-3. Integration tests for the `export` package and the jpackaged installer.
+2. Integration tests for the `export` package and the jpackaged installer.
 
 ## 4. Healthy Aspects
 

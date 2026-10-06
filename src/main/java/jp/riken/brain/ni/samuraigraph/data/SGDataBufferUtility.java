@@ -619,10 +619,17 @@ public final class SGDataBufferUtility {
     // set edited values
     if (edit) {
       final boolean all = policy.isAllValuesGotten();
-      SGIntegerSeriesSet stride =
-          data.isIndexAvailable() ? data.getIndexStride() : data.getStride();
-      int[] indexArray = stride.getNumbers();
       List<SGDataValueHistory> editedValueList = data.getEditedValueList();
+      // The index array is only needed to map edited values when the policy
+      // does not cover the full range. Resolving it for a data set without
+      // any points throws a NullPointerException, so it is skipped when
+      // there are no edited values or the array is not required.
+      int[] indexArray = null;
+      if (!all && !editedValueList.isEmpty()) {
+        SGIntegerSeriesSet stride =
+            data.isIndexAvailable() ? data.getIndexStride() : data.getStride();
+        indexArray = stride.getNumbers();
+      }
       for (int ii = 0; ii < editedValueList.size(); ii++) {
         SGDataValueHistory dataValue = editedValueList.get(ii);
         SGDataValueHistory.IMultiple multiple = (SGDataValueHistory.IMultiple) dataValue;

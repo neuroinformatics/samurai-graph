@@ -14,6 +14,7 @@ import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataSourceObserver;
+import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import org.junit.jupiter.api.Test;
@@ -298,5 +299,122 @@ class SGDataBufferUtilityTest {
     SGDataBufferUtility.getIndexList(Arrays.asList(blockA, blockB), xIndexList, yIndexList, 3, 3);
     assertEquals(Arrays.asList(0, 1), xIndexList);
     assertEquals(Arrays.asList(0, 1, 2), yIndexList);
+  }
+
+  private static SGSXYSDArrayData createSdArraySXYData(double[] x, double[] y) {
+    SGDataColumn[] columns = {new SGNumberDataColumn("x", x), new SGNumberDataColumn("y", y)};
+    SGSDArrayFile file = new SGSDArrayFile("dummy.dat", columns);
+    return new SGSXYSDArrayData(
+        file,
+        new SGDataSourceObserver(),
+        0,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        false,
+        null);
+  }
+
+  private static SGSXYSDArrayMultipleData createSdArrayMultipleData(double[] x, double[] y) {
+    SGDataColumn[] columns = {new SGNumberDataColumn("x", x), new SGNumberDataColumn("y", y)};
+    SGSDArrayFile file = new SGSDArrayFile("dummy.dat", columns);
+    return new SGSXYSDArrayMultipleData(
+        file,
+        new SGDataSourceObserver(),
+        new Integer[] {0},
+        new Integer[] {1},
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        false,
+        null);
+  }
+
+  @Test
+  void getDataBufferBuildsEmptyBufferForZeroPointData() {
+    for (boolean edit : new boolean[] {true, false}) {
+      SGSXYSDArrayData data = createSdArraySXYData(new double[] {}, new double[] {});
+      SGSXYDataBuffer buffer =
+          (SGSXYDataBuffer)
+              SGDataBufferUtility.getDataBuffer(
+                  data, new SGSXYDataBufferPolicy(true, true, edit, false, true));
+      assertNotNull(buffer);
+      assertEquals(0, buffer.getLength());
+      assertEquals(0, buffer.getXValues().length);
+      assertEquals(0, buffer.getYValues().length);
+    }
+  }
+
+  @Test
+  void getDataBufferBuildsSinglePointBuffer() {
+    SGSXYSDArrayData data = createSdArraySXYData(new double[] {5.0}, new double[] {7.0});
+    for (boolean edit : new boolean[] {true, false}) {
+      SGSXYDataBuffer buffer =
+          (SGSXYDataBuffer)
+              SGDataBufferUtility.getDataBuffer(
+                  data, new SGSXYDataBufferPolicy(true, true, edit, false, true));
+      assertNotNull(buffer);
+      assertEquals(1, buffer.getLength());
+      assertEquals(5.0, buffer.getXValues()[0], 0.0);
+      assertEquals(7.0, buffer.getYValues()[0], 0.0);
+    }
+  }
+
+  @Test
+  void getDataBufferBuildsEmptyMultipleBufferForZeroPointData() {
+    for (boolean edit : new boolean[] {true, false}) {
+      SGSXYSDArrayMultipleData data = createSdArrayMultipleData(new double[] {}, new double[] {});
+      SGSXYMultipleDataBuffer buffer =
+          (SGSXYMultipleDataBuffer)
+              SGDataBufferUtility.getDataBuffer(
+                  data, new SGSXYDataBufferPolicy(true, true, edit, false, true));
+      assertNotNull(buffer);
+      assertEquals(1, buffer.getXValues().length);
+      assertEquals(0, buffer.getXValues()[0].length);
+      assertEquals(0, buffer.getYValues()[0].length);
+    }
+  }
+
+  @Test
+  void getDataBufferBuildsSinglePointMultipleBuffer() {
+    SGSXYSDArrayMultipleData data =
+        createSdArrayMultipleData(new double[] {5.0}, new double[] {7.0});
+    for (boolean edit : new boolean[] {true, false}) {
+      SGSXYMultipleDataBuffer buffer =
+          (SGSXYMultipleDataBuffer)
+              SGDataBufferUtility.getDataBuffer(
+                  data, new SGSXYDataBufferPolicy(true, true, edit, false, true));
+      assertNotNull(buffer);
+      assertEquals(1, buffer.getXValues().length);
+      assertEquals(1, buffer.getXValues()[0].length);
+      assertEquals(5.0, buffer.getXValues()[0][0], 0.0);
+      assertEquals(7.0, buffer.getYValues()[0][0], 0.0);
+    }
+  }
+
+  @Test
+  void getDataBufferAppliesEditedValueWithoutStride() {
+    SGSXYSDArrayData data =
+        createSdArraySXYData(new double[] {1.0, 2.0, 3.0}, new double[] {4.0, 5.0, 6.0});
+    data.mEditedDataValueList.add(
+        new SGDataValueHistory.SDArray.D1(99.0, SGDataColumnTypeConstants.Y_VALUE, 1));
+    // The full-range policy maps the edited index directly, so no stride
+    // resolution is required.
+    SGSXYDataBuffer buffer =
+        (SGSXYDataBuffer)
+            SGDataBufferUtility.getDataBuffer(
+                data, new SGSXYDataBufferPolicy(true, true, true, false, true));
+    assertEquals(3, buffer.getLength());
+    assertArrayEquals(new double[] {1.0, 2.0, 3.0}, buffer.getXValues(), 0.0);
+    assertArrayEquals(new double[] {4.0, 99.0, 6.0}, buffer.getYValues(), 0.0);
   }
 }
