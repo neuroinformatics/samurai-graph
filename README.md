@@ -18,13 +18,21 @@ for visualizing experimental data from various file formats.
 ## System Requirements
 
 - Java 21 or later
-- **NetCDF4/HDF5 support (optional):** The NetCDF-C library must be installed
-  on the system for NetCDF4 files to be readable.
-  - **Linux:** `libnetcdf-dev` (Debian/Ubuntu), `netcdf` (Fedora/RHEL)
-  - **macOS:** `netcdf-c` via Homebrew (`brew install netcdf-c`)
-  - **Windows:** NetCDF-C redistributable must be installed and on `PATH`
-  - Without it, only NetCDF3 files are supported; NetCDF4 files fail
-    to open and are treated as text files (a warning is logged).
+- **NetCDF support:**
+  - **Reading** NetCDF-3 and NetCDF-4 files is handled by the NetCDF-Java
+    reader bundled in the classpath and requires **no** system library.
+  - **Exporting** data to a new NetCDF file writes NetCDF-3 and requires
+    **no** system library.
+  - **Writing into an existing NetCDF-4 file** (the *Add Properties to
+    NetCDF* and *Add Commands to NetCDF* menu commands) goes through the
+    JNA-backed NetCDF-C interface and **does** require the NetCDF-C library
+    on the system.
+    - **Linux:** `libnetcdf-dev` (Debian/Ubuntu), `netcdf` (Fedora/RHEL)
+    - **macOS:** `netcdf-c` via Homebrew (`brew install netcdf-c`)
+    - **Windows:** NetCDF-C redistributable must be installed and on `PATH`
+    - Without it, opening, reading, and exporting still work; only writing
+      into an existing NetCDF-4 file fails (an error is logged and the file
+      is left unchanged).
 
 ## Installation
 

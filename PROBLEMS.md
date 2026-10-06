@@ -132,11 +132,6 @@ Key problems:
 
 ### 2.4 Dependency and build hygiene
 
-- **NetCDF4 system-library dependency**: the data model assumes a system
-  NetCDF4 library is available at runtime. The project ships its own `nc`
-  (NetCDF-Java) in the classpath, but the documentation and build do not
-  clearly state which is authoritative, and the test suite does not exercise
-  the system-library path.
 - **jpackage / `export` package coverage**: the `export` package at 68.2% and
   the jpackaged installer build have limited automated verification. The
   installer is a native artifact that is not covered by unit tests and is only
@@ -178,5 +173,3 @@ Key problems:
 2. Test the remaining `SGUtility` static methods (§3): the headful
    modal display helpers (`show*MessageDialog`, `showConfirmationDialog`,
    `showColorSelectionDialog`) and a few list/font/canonical-path accessors.
-3. Document and pin the NetCDF4 system-library vs. classpath dependency
-   (§2.4).
