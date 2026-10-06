@@ -171,7 +171,7 @@ dataset so the values still round-trip. The convenience writers
 | `SGDrawingWindow` (3,660 LOC) | No direct unit tests for the window logic; exercised indirectly through window-construction tests (e.g. `SGDrawingWindowPropertyIOTest`) |
 | `SGUtility` (2,784 LOC, 139 static methods) | The modal `show*MessageDialog` / `showConfirmationDialog` / `showColorSelectionDialog` display helpers, the `moveObjectTo*` list wrappers, and a few font/canonical-path accessors are untested (class coverage: 77.3% instruction, 78.8% branch) |
 | `hdf5` package (53.6%) | Data-array read/write round-trip is covered, including the shape-preserving typed writes; the int64 read path (and its 2-D long flatten helper), and the `IHDF5ObjectReader` group/attribute inspection methods are untested |
-| `data` package (50.3%) | The SXY data-buffer I/O path is covered, including the empty (0-point) and single-datum edge cases; the data-viewer value path (`SGDataViewerUtility`) and the backend setup dialogs remain under-tested |
+| `data` package (50.3%) | The SXY data-buffer I/O path, including the empty (0-point) and single-datum edge cases, and the data-viewer value path (`SGDataViewerUtility`) are covered; the backend setup dialogs remain under-tested |
 | `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
 
 **Next coverage work:**
