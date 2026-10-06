@@ -695,14 +695,20 @@ class SGDataFileUtilityTest {
             .getNumbers()[0]);
   }
 
+  /**
+   * Verifies that the text and date variable checks recognize VALUE_TYPE attributes on CHAR
+   * variables.
+   *
+   * <p>The checks are format-agnostic, so the file is written as NetCDF-3: that keeps the test
+   * runnable without a system NetCDF-C library.
+   */
   @Test
   void textAndDateVariableChecksAcceptAttributeVariables() throws Exception {
     Path path = Files.createTempFile("samurai-graph-test", ".nc");
     Files.delete(path);
     path.toFile().deleteOnExit();
     ucar.nc2.write.NetcdfFormatWriter.Builder writer =
-        ucar.nc2.write.NetcdfFormatWriter.createNewNetcdf4(
-            ucar.nc2.write.NetcdfFileFormat.NETCDF4, path.toString(), null);
+        ucar.nc2.write.NetcdfFormatWriter.createNewNetcdf3(path.toString());
     ucar.nc2.Dimension xDim = writer.addDimension("x", 3);
     ucar.nc2.Variable.Builder<?> textVar =
         writer.addVariable("label", ucar.ma2.DataType.CHAR, Arrays.asList(xDim));
