@@ -10,12 +10,12 @@ Coverage snapshot: 2026-10-06, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`)
 | `export` | 44 | 14 | 68.2% | 8 | 75.0% |
 | `base` | 69,607 | 34,517 | 50.4% | 2,713 | 51.8% |
 | `data` | 126,951 | 63,056 | 50.3% | 3,380 | 52.0% |
-| `hdf5` | 2,625 | 1,413 | 46.2% | 118 | 89.0% |
+| `hdf5` | 2,775 | 1,288 | 53.6% | 121 | 90.1% |
 | `figure` (top level) | 137,762 | 105,972 | 23.1% | 5,446 | 33.4% |
 | `figure.dialog` | 62,808 | 21,582 | 65.6% | 968 | 22.2% |
 | `application` | 68,566 | 53,649 | 21.8% | 1,678 | 21.3% |
 | `org.freehep...export` | 220 | 29 | 86.8% | 8 | 100.0% |
-| **Total** | **469,247** | **280,249** | **40.3%** | **14,372** | **39.8%** |
+| **Total** | **469,397** | **280,124** | **40.3%** | **14,375** | **39.8%** |
 
 ## 2. Current Problems
 
@@ -137,22 +137,32 @@ Key problems:
   installer is a native artifact that is not covered by unit tests and is only
   smoke-tested manually.
 
-### 2.5 The HDF5 writer flattens multidimensional datasets
+### 2.5 The HDF5 writer supports only up to the rank the reader can convert
 
 The typed `writeMDArray` methods of `Hdf5WriterAdapter` (float64, int32,
-string) write `array.getFlatArrayRef()`, so a multidimensional array is
-stored as a 1-D dataset and its shape is lost. The convenience writers in
-the same adapter (`writeDoubleArray` / `writeIntArray` /
-`writeDoubleMatrix` / `writeIntMatrix`) preserve the shape instead.
+string) store a dataset with the shape of the source `MDArray`: float64 keeps
+the 1-D, 2-D and 3-D shapes, int32 keeps 1-D and 2-D, and string stores a
+1-D dataset. The rank is chosen per type because the reader converts a
+dataset to an `MDArray` from a nested array of at most that rank:
+`convertToMDDoubleArray` accepts 1-D, 2-D and 3-D data,
+`convertToMDIntArray` 1-D and 2-D, and `convertToMDStringArray` 1-D only.
+An array whose rank the reader cannot convert is written as a flat 1-D
+dataset so the values still round-trip. The convenience writers
+(`writeDoubleArray` / `writeIntArray` / `writeDoubleMatrix` /
+`writeIntMatrix`) preserve the shape the same way.
 
 - `SGMDArrayData.saveToArchiveDataSetFileAsHDF5File` (lines 1474-1485)
-  round-trips each variable through `readMDArray` (shape-preserving) and
-  `writeMDArray` (flattening), so saving a 2-D HDF5 dataset as an archive
-  downgrades it to a 1-D dataset. The same-format export path
-  (`saveToHDF5File` via the `write` overloads, lines 1683-1724) writes 2-D
-  data through `writeDoubleMatrix` / `writeIntMatrix` and keeps the shape.
-- `HDF5RoundTripTest.typedMdArrayWriteFlattensTwoDimensionalArrays` pins
-  the current flattening behavior.
+  round-trips each variable through `readMDArray` and `writeMDArray`, so an
+  archive save keeps the shape of every dataset the reader can convert. The
+  same-format export path (`saveToHDF5File` via the `write` overloads, lines
+  1683-1724) writes 2-D data through `writeDoubleMatrix` / `writeIntMatrix`.
+- `SGSXYZSDArrayData` and `SGVXYSDArrayData` write their 2-D grid values
+  (`z`, `f`/`s`) through the float64 `writeMDArray`, so their grid files
+  store 2-D datasets.
+- `HDF5RoundTripTest.typedMdArrayWritePreservesTwoDimensionalShape`,
+  `typedDoubleMdArrayWritePreservesThreeDimensionalShape`, and
+  `archiveRoundTripKeepsTwoDimensionalShapeThroughTypedWrite` pin the
+  shape-preserving behavior.
 
 ## 3. Test Gaps
 
@@ -160,7 +170,7 @@ the same adapter (`writeDoubleArray` / `writeIntArray` /
 |---|---|
 | `SGDrawingWindow` (3,660 LOC) | No direct unit tests for the window logic; exercised indirectly through window-construction tests (e.g. `SGDrawingWindowPropertyIOTest`) |
 | `SGUtility` (2,784 LOC, 139 static methods) | The modal `show*MessageDialog` / `showConfirmationDialog` / `showColorSelectionDialog` display helpers, the `moveObjectTo*` list wrappers, and a few font/canonical-path accessors are untested (class coverage: 77.3% instruction, 78.8% branch) |
-| `hdf5` package (46.2%) | Data-array read/write round-trip is covered; the int64 read path, the 3-D / long 2-D flatten helpers, and the `IHDF5ObjectReader` group/attribute inspection methods are untested |
+| `hdf5` package (53.6%) | Data-array read/write round-trip is covered, including the shape-preserving typed writes; the int64 read path (and its 2-D long flatten helper), and the `IHDF5ObjectReader` group/attribute inspection methods are untested |
 | `data` package (50.3%) | The SXY data-buffer I/O path is covered, including the empty (0-point) and single-datum edge cases; the data-viewer value path (`SGDataViewerUtility`) and the backend setup dialogs remain under-tested |
 | `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
 
@@ -188,6 +198,3 @@ the same adapter (`writeDoubleArray` / `writeIntArray` /
 2. Test the remaining `SGUtility` static methods (§3): the headful
    modal display helpers (`show*MessageDialog`, `showConfirmationDialog`,
    `showColorSelectionDialog`) and a few list/font/canonical-path accessors.
-3. Decide whether the typed HDF5 `writeMDArray` methods should preserve the
-   array shape (§2.5); the archive-save path currently loses 2-D shape
-   through the flattening write.

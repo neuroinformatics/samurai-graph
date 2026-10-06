@@ -15,6 +15,7 @@ import io.jhdf.WritableHdfFile;
 import io.jhdf.api.WritableGroup;
 import io.jhdf.api.WritableNode;
 import java.io.File;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -155,7 +156,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
       try {
         String[] parts = splitPath(dataSetName);
         WritableGroup parent = Hdf5WriterAdapter.this.getOrCreateGroup(parts[0]);
-        parent.putDataset(parts[1], array.getFlatArrayRef());
+        parent.putDataset(parts[1], toWritableDataset(array));
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
@@ -168,7 +169,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
       try {
         String[] parts = splitPath(dataSetName);
         WritableGroup parent = Hdf5WriterAdapter.this.getOrCreateGroup(parts[0]);
-        parent.putDataset(parts[1], array.getFlatArrayRef());
+        parent.putDataset(parts[1], toWritableDataset(array));
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
@@ -203,7 +204,7 @@ class Hdf5WriterAdapter implements IHDF5Writer {
       try {
         String[] parts = splitPath(dataSetName);
         WritableGroup parent = Hdf5WriterAdapter.this.getOrCreateGroup(parts[0]);
-        parent.putDataset(parts[1], array.getFlatArrayRef());
+        parent.putDataset(parts[1], toWritableDataset(array));
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
@@ -300,6 +301,67 @@ class Hdf5WriterAdapter implements IHDF5Writer {
     public File getFile() {
       return Hdf5WriterAdapter.this.mHdfFile.getFile();
     }
+  }
+
+  /**
+   * Converts an {@link MDDoubleArray} into the Java object that jhdf writes as a dataset. jhdf
+   * infers the dataset rank from the object, so the shape is kept by nesting the flat values into a
+   * {@code double[][]} for the 2-D case and into a {@code double[][][]} for the 3-D case. Ranks
+   * beyond 3 fall back to the flat array, which the reader can still convert.
+   */
+  private static Object toWritableDataset(final MDDoubleArray array) {
+    int[] dims = array.getDimensions();
+    double[] flat = array.getFlatArrayRef();
+    if (dims.length == 2) {
+      double[][] nested = new double[dims[0]][];
+      int offset = 0;
+      for (int ii = 0; ii < dims[0]; ii++) {
+        nested[ii] = Arrays.copyOfRange(flat, offset, offset + dims[1]);
+        offset += dims[1];
+      }
+      return nested;
+    }
+    if (dims.length == 3) {
+      double[][][] nested = new double[dims[0]][dims[1]][];
+      int offset = 0;
+      for (int ii = 0; ii < dims[0]; ii++) {
+        for (int jj = 0; jj < dims[1]; jj++) {
+          nested[ii][jj] = Arrays.copyOfRange(flat, offset, offset + dims[2]);
+          offset += dims[2];
+        }
+      }
+      return nested;
+    }
+    return flat;
+  }
+
+  /**
+   * Converts an {@link MDIntArray} into the Java object that jhdf writes as a dataset. The 2-D case
+   * keeps its shape; every other rank falls back to the flat array, which the reader can still
+   * convert.
+   */
+  private static Object toWritableDataset(final MDIntArray array) {
+    int[] dims = array.getDimensions();
+    int[] flat = array.getFlatArrayRef();
+    if (dims.length == 2) {
+      int[][] nested = new int[dims[0]][];
+      int offset = 0;
+      for (int ii = 0; ii < dims[0]; ii++) {
+        nested[ii] = Arrays.copyOfRange(flat, offset, offset + dims[1]);
+        offset += dims[1];
+      }
+      return nested;
+    }
+    return flat;
+  }
+
+  /**
+   * Converts a string {@link MDArray} into the Java object that jhdf writes as a dataset. Only the
+   * 1-D case is shaped into a nested array because the reader converts a string dataset from a
+   * single dimension; any other rank falls back to the flat array.
+   */
+  private static Object toWritableDataset(final MDArray<String> array) {
+    return array.getFlatArrayRef();
   }
 
   /** Splits a path like "/group/dataset" into ["group", "dataset"]. */

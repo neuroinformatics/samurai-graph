@@ -192,10 +192,10 @@ class HDF5RoundTripTest {
   }
 
   @Test
-  void typedMdArrayWriteFlattensTwoDimensionalArrays() throws Exception {
+  void typedMdArrayWritePreservesTwoDimensionalShape() throws Exception {
     File file = this.createTempHdf5File();
-    // The typed writeMDArray stores the flat value sequence, so a 2-D array
-    // comes back as a 1-D dataset while the value order is preserved.
+    // The typed writeMDArray keeps the dataset shape, so a 2-D array comes back as a
+    // 2-D dataset with the same dimensions and value order.
     MDDoubleArray doubles = new MDDoubleArray(new double[] {1.0, 2.0, 3.0, 4.0}, new int[] {2, 2});
     MDIntArray ints = new MDIntArray(new int[] {5, 6, 7, 8}, new int[] {2, 2});
     try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
@@ -204,12 +204,56 @@ class HDF5RoundTripTest {
     }
     try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
       MDDoubleArray readDoubles = reader.float64().readMDArray("doubles");
-      assertEquals(1, readDoubles.getRank());
-      assertArrayEquals(new int[] {4}, readDoubles.getDimensions());
+      assertEquals(2, readDoubles.getRank());
+      assertArrayEquals(new int[] {2, 2}, readDoubles.getDimensions());
       assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0}, readDoubles.getFlatArrayRef());
       MDIntArray readInts = reader.int32().readMDArray("ints");
-      assertEquals(1, readInts.getRank());
+      assertEquals(2, readInts.getRank());
+      assertArrayEquals(new int[] {2, 2}, readInts.getDimensions());
       assertArrayEquals(new int[] {5, 6, 7, 8}, readInts.getFlatArrayRef());
+    }
+  }
+
+  @Test
+  void typedDoubleMdArrayWritePreservesThreeDimensionalShape() throws Exception {
+    File file = this.createTempHdf5File();
+    MDDoubleArray cube =
+        new MDDoubleArray(
+            new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0}, new int[] {2, 2, 2});
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
+      writer.float64().writeMDArray("cube", cube);
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      MDDoubleArray readCube = reader.float64().readMDArray("cube");
+      assertEquals(3, readCube.getRank());
+      assertArrayEquals(new int[] {2, 2, 2}, readCube.getDimensions());
+      assertArrayEquals(
+          new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0}, readCube.getFlatArrayRef());
+    }
+  }
+
+  @Test
+  void archiveRoundTripKeepsTwoDimensionalShapeThroughTypedWrite() throws Exception {
+    // Mirrors the archive-save path: a 2-D dataset is read back and written again
+    // through the typed writeMDArray, so it must not be downgraded to 1-D.
+    File file = this.createTempHdf5File();
+    double[][] source = {{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}};
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
+      writer.writeDoubleMatrix("data", source);
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      MDDoubleArray readBack = reader.float64().readMDArray("data");
+      File archive = this.createTempHdf5File();
+      try (IHDF5Writer writer = HDF5FactoryProvider.get().open(archive)) {
+        writer.float64().writeMDArray("data", readBack);
+      }
+      try (IHDF5Reader reread = HDF5FactoryProvider.get().openForReading(archive)) {
+        MDDoubleArray archived = reread.float64().readMDArray("data");
+        assertEquals(2, archived.getRank());
+        assertArrayEquals(new int[] {2, 3}, archived.getDimensions());
+        assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0, 5.0, 6.0}, archived.getFlatArrayRef());
+      }
+      archive.deleteOnExit();
     }
   }
 
