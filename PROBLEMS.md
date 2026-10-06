@@ -1,6 +1,6 @@
 # Samurai Graph — Current State and Known Problems
 
-Coverage snapshot: 2026-10-05, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`).
+Coverage snapshot: 2026-10-06, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`).
 
 ## 1. Package Instruction Coverage
 
@@ -10,12 +10,12 @@ Coverage snapshot: 2026-10-05, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`)
 | `export` | 44 | 14 | 68.2% | 8 | 75.0% |
 | `base` | 69,607 | 34,517 | 50.4% | 2,713 | 51.8% |
 | `data` | 126,944 | 63,179 | 50.2% | 3,380 | 51.9% |
-| `hdf5` | 2,625 | 1,535 | 41.5% | 118 | 81.4% |
+| `hdf5` | 2,625 | 1,413 | 46.2% | 118 | 89.0% |
 | `figure` (top level) | 137,762 | 105,972 | 23.1% | 5,446 | 33.4% |
 | `figure.dialog` | 62,808 | 21,582 | 65.6% | 968 | 22.2% |
 | `application` | 68,566 | 53,649 | 21.8% | 1,678 | 21.3% |
 | `org.freehep...export` | 220 | 29 | 86.8% | 8 | 100.0% |
-| **Total** | **469,240** | **280,494** | **40.2%** | **14,372** | **39.7%** |
+| **Total** | **469,240** | **280,372** | **40.2%** | **14,372** | **39.8%** |
 
 ## 2. Current Problems
 
@@ -137,13 +137,30 @@ Key problems:
   installer is a native artifact that is not covered by unit tests and is only
   smoke-tested manually.
 
+### 2.5 The HDF5 writer flattens multidimensional datasets
+
+The typed `writeMDArray` methods of `Hdf5WriterAdapter` (float64, int32,
+string) write `array.getFlatArrayRef()`, so a multidimensional array is
+stored as a 1-D dataset and its shape is lost. The convenience writers in
+the same adapter (`writeDoubleArray` / `writeIntArray` /
+`writeDoubleMatrix` / `writeIntMatrix`) preserve the shape instead.
+
+- `SGMDArrayData.saveToArchiveDataSetFileAsHDF5File` (lines 1474-1485)
+  round-trips each variable through `readMDArray` (shape-preserving) and
+  `writeMDArray` (flattening), so saving a 2-D HDF5 dataset as an archive
+  downgrades it to a 1-D dataset. The same-format export path
+  (`saveToHDF5File` via the `write` overloads, lines 1683-1724) writes 2-D
+  data through `writeDoubleMatrix` / `writeIntMatrix` and keeps the shape.
+- `HDF5RoundTripTest.typedMdArrayWriteFlattensTwoDimensionalArrays` pins
+  the current flattening behavior.
+
 ## 3. Test Gaps
 
 | Area | Status |
 |---|---|
 | `SGDrawingWindow` (3,660 LOC) | No direct unit tests for the window logic; exercised indirectly through window-construction tests (e.g. `SGDrawingWindowPropertyIOTest`) |
 | `SGUtility` (2,784 LOC, 139 static methods) | The modal `show*MessageDialog` / `showConfirmationDialog` / `showColorSelectionDialog` display helpers, the `moveObjectTo*` list wrappers, and a few font/canonical-path accessors are untested (class coverage: 77.3% instruction, 78.8% branch) |
-| `hdf5` package (41.5%) | Read/write round-trip coverage is incomplete |
+| `hdf5` package (46.2%) | Data-array read/write round-trip is covered; the int64 read path, the 3-D / long 2-D flatten helpers, and the `IHDF5ObjectReader` group/attribute inspection methods are untested |
 | `data` package (50.2%) | SXY single/multiple data I/O paths and edge cases (empty data, single datum) are under-tested |
 | `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
 
@@ -153,9 +170,8 @@ Key problems:
    (`show*MessageDialog`, `showConfirmationDialog`, `showColorSelectionDialog`)
    need a headful harness; a few list/font/canonical-path accessors remain
    untested.
-2. Round-trip tests for `hdf5` read/write.
-3. Edge-case tests for the SXY single/multiple data I/O paths.
-4. Integration tests for the `export` package and the jpackaged installer.
+2. Edge-case tests for the SXY single/multiple data I/O paths.
+3. Integration tests for the `export` package and the jpackaged installer.
 
 ## 4. Healthy Aspects
 
@@ -173,3 +189,6 @@ Key problems:
 2. Test the remaining `SGUtility` static methods (§3): the headful
    modal display helpers (`show*MessageDialog`, `showConfirmationDialog`,
    `showColorSelectionDialog`) and a few list/font/canonical-path accessors.
+3. Decide whether the typed HDF5 `writeMDArray` methods should preserve the
+   array shape (§2.5); the archive-save path currently loses 2-D shape
+   through the flattening write.

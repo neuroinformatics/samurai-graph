@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDArray;
+import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDIntArray;
 import java.io.File;
 import java.nio.file.Files;
@@ -79,6 +81,135 @@ class HDF5RoundTripTest {
       assertEquals(2, info.getRank());
       assertEquals(2, info.getDimensions()[0]);
       assertEquals(2, info.getDimensions()[1]);
+    }
+  }
+
+  @Test
+  void doubleArrayRoundTripPreservesValues() throws Exception {
+    File file = this.createTempHdf5File();
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
+      writer.writeDoubleArray("values", new double[] {1.5, 2.5, 3.5});
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      MDDoubleArray values = reader.float64().readMDArray("values");
+      assertEquals(3, values.size());
+      assertEquals(1, values.getRank());
+      assertArrayEquals(new int[] {3}, values.getDimensions());
+      assertEquals(1.5, values.get(new int[] {0}), 0.0);
+      assertEquals(2.5, values.get(new int[] {1}), 0.0);
+      assertEquals(3.5, values.get(new int[] {2}), 0.0);
+      HDF5DataSetInformation info = reader.getDataSetInformation("values");
+      assertEquals(1, info.getRank());
+      assertEquals(3, info.getDimensions()[0]);
+      assertEquals(HDF5DataClass.FLOAT, info.getTypeInformation().getDataClass());
+    }
+  }
+
+  @Test
+  void intArrayRoundTripPreservesValues() throws Exception {
+    File file = this.createTempHdf5File();
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
+      writer.writeIntArray("ids", new int[] {10, 20, 30});
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      MDIntArray ids = reader.int32().readMDArray("ids");
+      assertEquals(3, ids.size());
+      assertEquals(1, ids.getRank());
+      assertArrayEquals(new int[] {3}, ids.getDimensions());
+      assertEquals(10, ids.get(new int[] {0}));
+      assertEquals(20, ids.get(new int[] {1}));
+      assertEquals(30, ids.get(new int[] {2}));
+      HDF5DataSetInformation info = reader.getDataSetInformation("ids");
+      assertEquals(1, info.getRank());
+      assertEquals(HDF5DataClass.INTEGER, info.getTypeInformation().getDataClass());
+    }
+  }
+
+  @Test
+  void doubleMatrixRoundTripPreservesShape() throws Exception {
+    File file = this.createTempHdf5File();
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
+      writer.writeDoubleMatrix("matrix", new double[][] {{1.0, 2.0}, {3.0, 4.0}});
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      MDDoubleArray matrix = reader.float64().readMDArray("matrix");
+      // The reader must preserve the 2-D shape, not flatten it to a 1-D vector.
+      assertEquals(2, matrix.getRank());
+      assertArrayEquals(new int[] {2, 2}, matrix.getDimensions());
+      assertEquals(1.0, matrix.get(new int[] {0, 0}), 0.0);
+      assertEquals(2.0, matrix.get(new int[] {0, 1}), 0.0);
+      assertEquals(3.0, matrix.get(new int[] {1, 0}), 0.0);
+      assertEquals(4.0, matrix.get(new int[] {1, 1}), 0.0);
+      HDF5DataSetInformation info = reader.getDataSetInformation("matrix");
+      assertEquals(2, info.getRank());
+      assertEquals(2, info.getDimensions()[0]);
+      assertEquals(2, info.getDimensions()[1]);
+    }
+  }
+
+  @Test
+  void stringArrayRoundTripPreservesValues() throws Exception {
+    File file = this.createTempHdf5File();
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
+      writer.writeStringArray("labels", new String[] {"a", "bb", "ccc"});
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      MDArray<String> labels = reader.string().readMDArray("labels");
+      assertEquals(3, labels.size());
+      assertEquals(1, labels.getRank());
+      assertArrayEquals(new int[] {3}, labels.getDimensions());
+      assertEquals("a", labels.get(new int[] {0}));
+      assertEquals("bb", labels.get(new int[] {1}));
+      assertEquals("ccc", labels.get(new int[] {2}));
+      HDF5DataSetInformation info = reader.getDataSetInformation("labels");
+      assertEquals(1, info.getRank());
+      assertEquals(HDF5DataClass.STRING, info.getTypeInformation().getDataClass());
+    }
+  }
+
+  @Test
+  void typedMdArrayRoundTripsAsOneDimensionalData() throws Exception {
+    File file = this.createTempHdf5File();
+    MDDoubleArray doubles = new MDDoubleArray(new double[] {1.0, 2.0, 3.0});
+    MDIntArray ints = new MDIntArray(new int[] {4, 5, 6});
+    MDArray<String> strings = new MDArray<>(new String[] {"x", "yy", "zzz"});
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
+      writer.float64().writeMDArray("doubles", doubles);
+      writer.int32().writeMDArray("ints", ints);
+      writer.string().writeMDArray("strings", strings);
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      MDDoubleArray readDoubles = reader.float64().readMDArray("doubles");
+      assertEquals(1, readDoubles.getRank());
+      assertArrayEquals(new double[] {1.0, 2.0, 3.0}, readDoubles.getFlatArrayRef());
+      MDIntArray readInts = reader.int32().readMDArray("ints");
+      assertEquals(1, readInts.getRank());
+      assertArrayEquals(new int[] {4, 5, 6}, readInts.getFlatArrayRef());
+      MDArray<String> readStrings = reader.string().readMDArray("strings");
+      assertEquals(1, readStrings.getRank());
+      assertArrayEquals(new String[] {"x", "yy", "zzz"}, readStrings.getFlatArrayRef());
+    }
+  }
+
+  @Test
+  void typedMdArrayWriteFlattensTwoDimensionalArrays() throws Exception {
+    File file = this.createTempHdf5File();
+    // The typed writeMDArray stores the flat value sequence, so a 2-D array
+    // comes back as a 1-D dataset while the value order is preserved.
+    MDDoubleArray doubles = new MDDoubleArray(new double[] {1.0, 2.0, 3.0, 4.0}, new int[] {2, 2});
+    MDIntArray ints = new MDIntArray(new int[] {5, 6, 7, 8}, new int[] {2, 2});
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
+      writer.float64().writeMDArray("doubles", doubles);
+      writer.int32().writeMDArray("ints", ints);
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      MDDoubleArray readDoubles = reader.float64().readMDArray("doubles");
+      assertEquals(1, readDoubles.getRank());
+      assertArrayEquals(new int[] {4}, readDoubles.getDimensions());
+      assertArrayEquals(new double[] {1.0, 2.0, 3.0, 4.0}, readDoubles.getFlatArrayRef());
+      MDIntArray readInts = reader.int32().readMDArray("ints");
+      assertEquals(1, readInts.getRank());
+      assertArrayEquals(new int[] {5, 6, 7, 8}, readInts.getFlatArrayRef());
     }
   }
 
