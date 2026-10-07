@@ -1,6 +1,6 @@
 # Samurai Graph — Current State and Known Problems
 
-Coverage snapshot: 2026-10-06, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`).
+Coverage snapshot: 2026-10-07, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`).
 
 ## 1. Package Instruction Coverage
 
@@ -8,14 +8,14 @@ Coverage snapshot: 2026-10-06, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`)
 |---|---|---|---|---|---|
 | `mdarray` | 664 | 17 | 97.4% | 53 | 98.1% |
 | `export` | 44 | 14 | 68.2% | 8 | 75.0% |
-| `base` | 69,607 | 34,517 | 50.4% | 2,713 | 51.8% |
+| `base` | 69,607 | 34,049 | 51.1% | 2,713 | 52.8% |
 | `data` | 126,951 | 63,056 | 50.3% | 3,380 | 52.0% |
 | `hdf5` | 2,775 | 1,288 | 53.6% | 121 | 90.1% |
 | `figure` (top level) | 137,762 | 105,972 | 23.1% | 5,446 | 33.4% |
 | `figure.dialog` | 62,808 | 21,582 | 65.6% | 968 | 22.2% |
 | `application` | 68,566 | 53,649 | 21.8% | 1,678 | 21.3% |
 | `org.freehep...export` | 220 | 29 | 86.8% | 8 | 100.0% |
-| **Total** | **469,397** | **280,124** | **40.3%** | **14,375** | **39.8%** |
+| **Total** | **469,397** | **279,656** | **40.4%** | **14,375** | **40.0%** |
 
 ## 2. Current Problems
 
@@ -169,18 +169,17 @@ dataset so the values still round-trip. The convenience writers
 | Area | Status |
 |---|---|
 | `SGDrawingWindow` (3,660 LOC) | No direct unit tests for the window logic; exercised indirectly through window-construction tests (e.g. `SGDrawingWindowPropertyIOTest`) |
-| `SGUtility` (2,784 LOC, 139 static methods) | The modal `show*MessageDialog` / `showConfirmationDialog` / `showColorSelectionDialog` display helpers, the `moveObjectTo*` list wrappers, and a few font/canonical-path accessors are untested (class coverage: 77.3% instruction, 78.8% branch) |
+| `SGUtility` (2,784 LOC, 139 static methods) | The modal `show*MessageDialog` / `showConfirmationDialog` / `showColorSelectionDialog` display helpers, the `moveObjectTo*` list wrappers, and the font/canonical-path accessors are covered (class coverage: 88.0% instruction, 86.4% branch); the form-widget value setters over `SGTextField` / `SGSpinner` (`setDoubleValue`, `setIntValue`, `setValue`), `getMouseDragResult`, `getVersionNumber`, `isValidPropertyValue(double)`, `createPluginItemString`, and `getExportFontSize` remain untested |
 | `hdf5` package (53.6%) | Data-array read/write round-trip is covered, including the shape-preserving typed writes; the int64 read path (and its 2-D long flatten helper), and the `IHDF5ObjectReader` group/attribute inspection methods are untested |
 | `data` package (50.3%) | The SXY data-buffer I/O path, including the empty (0-point) and single-datum edge cases, and the data-viewer value path (`SGDataViewerUtility`) are covered; the backend setup dialogs remain under-tested |
 | `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
 
 **Next coverage work:**
 
-1. `SGUtility` modal display helpers
-   (`show*MessageDialog`, `showConfirmationDialog`, `showColorSelectionDialog`)
-   need a headful harness; a few list/font/canonical-path accessors remain
-   untested.
-2. Integration tests for the `export` package and the jpackaged installer.
+1. Integration tests for the `export` package and the jpackaged installer.
+2. The remaining `SGUtility` form-widget value setters
+   (`setDoubleValue`, `setIntValue`, `setValue` over `SGTextField` /
+   `SGSpinner`) and the drag/version/plugin/export-font-size helpers.
 
 ## 4. Healthy Aspects
 
@@ -195,6 +194,7 @@ dataset so the values still round-trip. The convenience writers
    methods and static utilities (the §2.1 pattern); a shared abstract base
    is infeasible because the three multiple-data classes extend three
    different backend parents.
-2. Test the remaining `SGUtility` static methods (§3): the headful
-   modal display helpers (`show*MessageDialog`, `showConfirmationDialog`,
-   `showColorSelectionDialog`) and a few list/font/canonical-path accessors.
+2. Test the remaining `SGUtility` static methods (§3): the form-widget
+   value setters over `SGTextField` / `SGSpinner` (`setDoubleValue`,
+   `setIntValue`, `setValue`) and the drag/version/plugin/export-font-size
+   helpers.

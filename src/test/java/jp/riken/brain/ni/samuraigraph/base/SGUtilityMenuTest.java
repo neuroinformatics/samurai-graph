@@ -2,6 +2,7 @@ package jp.riken.brain.ni.samuraigraph.base;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -87,6 +88,26 @@ class SGUtilityMenuTest {
     assertTrue(parent.isAncestorOf(item));
   }
 
+  @Test
+  void addItemUsesCommandAsTextOnParentMenuItem() {
+    JMenuItem parent = new JMenuItem("Parent");
+    JMenuItem item = SGUtility.addItem(parent, NO_OP, "cmd");
+    assertEquals("cmd", item.getText());
+    assertEquals("cmd", item.getActionCommand());
+    assertTrue(item.isEnabled());
+    assertTrue(parent.isAncestorOf(item));
+  }
+
+  @Test
+  void addCheckBoxItemUsesCommandAsTextOnParentMenuItem() {
+    JMenuItem parent = new JMenuItem("Parent");
+    JCheckBoxMenuItem item = SGUtility.addCheckBoxItem(parent, NO_OP, "cbcmd");
+    assertEquals("cbcmd", item.getText());
+    assertEquals("cbcmd", item.getActionCommand());
+    assertTrue(item.isEnabled());
+    assertTrue(parent.isAncestorOf(item));
+  }
+
   // -- addMenu ----------------------------------------------------------------
 
   @Test
@@ -151,5 +172,45 @@ class SGUtilityMenuTest {
     popup.add(other);
     assertSame(wanted, SGUtility.findMenu(popup, "Wanted"));
     assertNull(SGUtility.findMenu(popup, "Absent"));
+  }
+
+  @Test
+  void findMenuItemReturnsItemUnderNamedMenu() {
+    JPopupMenu popup = new JPopupMenu();
+    JMenu menu = new JMenu("Sub");
+    JMenuItem deep = new JMenuItem("Deep");
+    menu.add(deep);
+    popup.add(menu);
+    assertSame(deep, SGUtility.findMenuItem(popup, "Sub", "Deep"));
+    assertNull(SGUtility.findMenuItem(popup, "MissingMenu", "Deep"));
+    assertNull(SGUtility.findMenuItem(popup, "Sub", "MissingItem"));
+  }
+
+  @Test
+  void findMenuItemReturnsTopLevelPopupItemOnly() {
+    JPopupMenu popup = new JPopupMenu();
+    JMenuItem top = new JMenuItem("Top");
+    JMenu nested = new JMenu("Nested");
+    nested.add(new JMenuItem("Hidden"));
+    popup.add(top);
+    popup.add(nested);
+    assertSame(top, SGUtility.findMenuItem(popup, "Top"));
+    assertNull(SGUtility.findMenuItem(popup, "Hidden"));
+    assertNull(SGUtility.findMenuItem(popup, "Absent"));
+  }
+
+  @Test
+  void addArrangeItemsAppendsArrangeMenuWithFourCommands() {
+    JPopupMenu popup = new JPopupMenu();
+    SGUtility.addArrangeItems(popup, NO_OP);
+    JMenu arrange = SGUtility.findMenu(popup, "Arrange");
+    assertNotNull(arrange);
+    assertSame(arrange, popup.getComponent(0));
+    assertEquals("Bring to Front", SGUtility.findMenuItem(arrange, "Bring to Front").getText());
+    assertEquals("Bring Forward", SGUtility.findMenuItem(arrange, "Bring Forward").getText());
+    assertEquals("Send Backward", SGUtility.findMenuItem(arrange, "Send Backward").getText());
+    assertEquals("Send to Back", SGUtility.findMenuItem(arrange, "Send to Back").getText());
+    assertEquals(4, arrange.getItemCount());
+    assertTrue(arrange.getItem(0).isEnabled());
   }
 }

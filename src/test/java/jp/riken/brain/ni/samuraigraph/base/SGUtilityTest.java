@@ -9,12 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -619,5 +621,123 @@ class SGUtilityTest {
     assertTrue(SGUtility.wasMessageDialogVisible());
     SGUtility.clearMessageDialogVisible();
     assertFalse(SGUtility.wasMessageDialogVisible());
+  }
+
+  // -- font and path accessors --------------------------------------------------
+
+  @Test
+  void findFontFamilyNameMatchesAvailableFontIgnoreCase() {
+    // "Dialog" is a logical font that is always available
+    assertEquals("Dialog", SGUtility.findFontFamilyName("Dialog"));
+    assertEquals("Dialog", SGUtility.findFontFamilyName("dialog"));
+    assertNull(SGUtility.findFontFamilyName("No Such Font Family"));
+    assertNull(SGUtility.findFontFamilyName(null));
+  }
+
+  @Test
+  void getCanonicalPathResolvesRelativeAndAbsolutePaths() {
+    assertEquals(
+        new File("PROBLEMS.md").getAbsolutePath(), SGUtility.getCanonicalPath("PROBLEMS.md"));
+    assertEquals(new File("/").getAbsolutePath(), SGUtility.getCanonicalPath("/"));
+  }
+
+  // -- list movement wrappers ---------------------------------------------------
+
+  @Test
+  void moveObjectToTailMovesElementToLastPosition() {
+    List<String> list = new ArrayList<>(List.of("a", "b", "c"));
+    assertTrue(SGUtility.moveObjectToTail("a", list));
+    assertEquals(List.of("b", "c", "a"), list);
+    // an element already at the tail stays put
+    assertTrue(SGUtility.moveObjectToTail("a", list));
+    assertEquals(List.of("b", "c", "a"), list);
+  }
+
+  @Test
+  void moveObjectToHeadMovesElementToFirstPosition() {
+    List<String> list = new ArrayList<>(List.of("a", "b", "c"));
+    assertTrue(SGUtility.moveObjectToHead("c", list));
+    assertEquals(List.of("c", "a", "b"), list);
+  }
+
+  @Test
+  void moveObjectToNextAndPreviousSwapWithAdjacentElement() {
+    List<String> list = new ArrayList<>(List.of("a", "b", "c", "d"));
+    assertTrue(SGUtility.moveObjectToNext("a", list));
+    assertEquals(List.of("b", "a", "c", "d"), list);
+    assertTrue(SGUtility.moveObjectToPrevious("a", list));
+    assertEquals(List.of("a", "b", "c", "d"), list);
+    // moving the head element previous stays at the head
+    assertTrue(SGUtility.moveObjectToPrevious("a", list));
+    assertEquals(List.of("a", "b", "c", "d"), list);
+    // moving the tail element next stays at the tail
+    assertTrue(SGUtility.moveObjectToNext("d", list));
+    assertEquals(List.of("a", "b", "c", "d"), list);
+  }
+
+  @Test
+  void moveObjectToPlacesElementAtGivenIndex() {
+    List<String> list = new ArrayList<>(List.of("a", "b", "c", "d"));
+    assertTrue(SGUtility.moveObjectTo("d", list, 1));
+    assertEquals(List.of("a", "d", "b", "c"), list);
+    // an absent element is reported as not moved
+    assertFalse(SGUtility.moveObjectTo("q", list, 1));
+    assertEquals(List.of("a", "d", "b", "c"), list);
+    assertThrows(IllegalArgumentException.class, () -> SGUtility.moveObjectTo("a", null, 0));
+    assertThrows(IllegalArgumentException.class, () -> SGUtility.moveObjectTo("a", list, 99));
+  }
+
+  @Test
+  void moveObjectShiftsSeveralElementsByGivenLevel() {
+    List<String> list = new ArrayList<>(List.of("x", "y", "z", "w"));
+    assertTrue(SGUtility.moveObject(new ArrayList<>(List.of("x", "y")), list, 1));
+    assertEquals(List.of("z", "x", "y", "w"), list);
+    List<String> backward = new ArrayList<>(List.of("x", "y", "z", "w"));
+    assertTrue(SGUtility.moveObject(new ArrayList<>(List.of("z", "w")), backward, -2));
+    assertEquals(List.of("z", "w", "x", "y"), backward);
+    // an element that is not in the list fails the move
+    assertFalse(SGUtility.moveObject(new ArrayList<>(List.of("q")), backward, 1));
+  }
+
+  // -- copyable list --------------------------------------------------------------
+
+  @Test
+  void copyObjectsCopiesElementsIntoTargetList() {
+    SGICopyable copyable = () -> "copied";
+    List<SGICopyable> source = new ArrayList<>(List.of(copyable));
+    source.add(null);
+    List<Object> target = new ArrayList<>();
+    assertTrue(SGUtility.copyObjects(source, target));
+    assertEquals(List.of("copied"), target);
+    assertThrows(IllegalArgumentException.class, () -> SGUtility.copyObjects(null, target));
+    assertThrows(IllegalArgumentException.class, () -> SGUtility.copyObjects(source, null));
+  }
+
+  // -- object counting -------------------------------------------------------------
+
+  @Test
+  void getCntMapCountsOccurrencesOfEachObject() {
+    Map<Object, Integer> cntMap = SGUtility.getCntMap(List.of("a", "b", "a", "c", "b", "a"));
+    assertEquals(3, cntMap.get("a"));
+    assertEquals(2, cntMap.get("b"));
+    assertEquals(1, cntMap.get("c"));
+    assertEquals(
+        SGUtility.getCntMap(new Object[] {"a", "b", "a"}),
+        SGUtility.getCntMap(List.of("a", "b", "a")));
+    assertEquals(0, SGUtility.getCntMap(new Object[0]).size());
+  }
+
+  @Test
+  void findMostFrequentObjectsReturnsMaximumCountObjects() {
+    assertEquals(List.of("a"), SGUtility.findMostFrequentObjects(List.of("a", "b", "a")));
+    // a tie returns all objects that share the maximum count
+    List<Object> tied = SGUtility.findMostFrequentObjects(List.of("a", "b", "a", "b"));
+    assertEquals(2, tied.size());
+    assertTrue(tied.contains("a"));
+    assertTrue(tied.contains("b"));
+    List<Object> fromArray = SGUtility.findMostFrequentObjects(new Object[] {"a", "b"});
+    assertEquals(2, fromArray.size());
+    assertTrue(fromArray.containsAll(List.of("a", "b")));
+    assertEquals(0, SGUtility.findMostFrequentObjects(List.of()).size());
   }
 }
