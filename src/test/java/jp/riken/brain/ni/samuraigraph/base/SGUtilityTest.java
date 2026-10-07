@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
+import java.awt.Point;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.time.ZoneOffset;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import javax.swing.SpinnerNumberModel;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -739,5 +743,181 @@ class SGUtilityTest {
     assertEquals(2, fromArray.size());
     assertTrue(fromArray.containsAll(List.of("a", "b")));
     assertEquals(0, SGUtility.findMostFrequentObjects(List.of()).size());
+  }
+
+  // -- form widget value setters --------------------------------------------------
+
+  private static SGSpinner createSpinner() {
+    return new SGSpinner(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5), null, 0, 2);
+  }
+
+  @Test
+  void setDoubleValueOnTextFieldAcceptsValidNumbersOnly() {
+    SGTextField tf = new SGTextField();
+    assertTrue(SGUtility.setDoubleValue(tf, " 3.5 "));
+    assertEquals("3.5", tf.getText());
+    assertFalse(SGUtility.setDoubleValue(tf, "abc"));
+    assertEquals("3.5", tf.getText());
+    assertTrue(SGUtility.setDoubleValue(tf, null));
+    assertNull(tf.getText());
+  }
+
+  @Test
+  void setIntValueOnTextFieldAcceptsIntegersOnly() {
+    SGTextField tf = new SGTextField();
+    assertTrue(SGUtility.setIntValue(tf, "7"));
+    assertEquals("7", tf.getText());
+    assertFalse(SGUtility.setIntValue(tf, "x"));
+    assertEquals("7", tf.getText());
+    assertTrue(SGUtility.setIntValue(tf, null));
+    assertNull(tf.getText());
+  }
+
+  @Test
+  void setValueOnSpinnerCommitsValidNumbersOnly() {
+    SGSpinner sp = createSpinner();
+    assertTrue(SGUtility.setValue(sp, "3.5"));
+    assertEquals(3.5, ((Number) sp.getValue()).doubleValue(), 0.0);
+    assertEquals("3.5", sp.getText());
+    assertFalse(SGUtility.setValue(sp, "abc"));
+    assertEquals(3.5, ((Number) sp.getValue()).doubleValue(), 0.0);
+    assertFalse(SGUtility.setValue(sp, null));
+    assertEquals("", sp.getText());
+  }
+
+  @Test
+  void setIntValueOnSpinnerCommitsIntegersOnly() {
+    SGSpinner sp = createSpinner();
+    assertTrue(SGUtility.setIntValue(sp, "7"));
+    assertEquals(7.0, ((Number) sp.getValue()).doubleValue(), 0.0);
+    assertFalse(SGUtility.setIntValue(sp, "x"));
+    assertEquals(7.0, ((Number) sp.getValue()).doubleValue(), 0.0);
+    assertFalse(SGUtility.setIntValue(sp, null));
+    assertEquals("", sp.getText());
+  }
+
+  // -- property and export helpers -------------------------------------------------
+
+  @Test
+  void isValidPropertyValueRejectsNaNAndInfinite() {
+    assertTrue(SGUtility.isValidPropertyValue(1.5));
+    assertFalse(SGUtility.isValidPropertyValue(Double.NaN));
+    assertFalse(SGUtility.isValidPropertyValue(Double.POSITIVE_INFINITY));
+    assertFalse(SGUtility.isValidPropertyValue(Double.NEGATIVE_INFINITY));
+  }
+
+  @Test
+  void getExportFontSizeRoundsToTwoFractionDigits() {
+    assertEquals(10.5f, SGUtility.getExportFontSize(10.5f), 0.0f);
+    assertEquals(12.35f, SGUtility.getExportFontSize(12.345f), 0.0f);
+    assertEquals(-12.34f, SGUtility.getExportFontSize(-12.34f), 0.0f);
+    assertEquals(0.0f, SGUtility.getExportFontSize(0.001f), 0.0f);
+  }
+
+  @Test
+  void createPluginItemStringReturnsPluginName() {
+    SGIPlugin plugin =
+        new SGIPlugin() {
+          @Override
+          public String getName() {
+            return "Plugin A";
+          }
+
+          @Override
+          public String getDeveloper() {
+            return "";
+          }
+
+          @Override
+          public String getVersion() {
+            return "";
+          }
+
+          @Override
+          public String getDesc() {
+            return "";
+          }
+
+          @Override
+          public String getPath() {
+            return "";
+          }
+
+          @Override
+          public String getCommand() {
+            return "";
+          }
+        };
+    assertEquals("Plugin A", SGUtility.createPluginItemString(plugin));
+  }
+
+  @Test
+  void getVersionNumberWalksUpToElementWithVersionAttribute() {
+    Document doc = SGUtilityText.getDocumentFromString("<PropertySet><Figure/></PropertySet>");
+    Element figure = (Element) doc.getDocumentElement().getFirstChild();
+    assertEquals("", SGUtility.getVersionNumber(figure));
+    doc.getDocumentElement().setAttribute("Version", "1.2.3");
+    assertEquals("1.2.3", SGUtility.getVersionNumber(figure));
+    assertEquals("1.2.3", SGUtility.getVersionNumber(doc.getDocumentElement()));
+  }
+
+  // -- mouse drag result -------------------------------------------------------------
+
+  private static MouseEvent createDragEvent(final int modifiersEx, final int x, final int y) {
+    return new MouseEvent(
+        new java.awt.Canvas(), MouseEvent.MOUSE_DRAGGED, 0L, modifiersEx, x, y, 0, false, 0);
+  }
+
+  @Test
+  void getMouseDragResultReportsPlainMovement() {
+    SGUtility.MouseDragResult result =
+        SGUtility.getMouseDragResult(
+            new SGUtility.MouseDragInput(createDragEvent(0, 10, 7), new Point(4, 2), null, 0));
+    assertEquals(6, result.dx);
+    assertEquals(5, result.dy);
+    assertEquals(10, result.ex);
+    assertEquals(7, result.ey);
+    assertNull(result.draggedDirection);
+  }
+
+  @Test
+  void getMouseDragResultShiftDragLocksDominantAxis() {
+    // horizontal drag dominates: the y coordinate is fixed
+    SGUtility.MouseDragResult horizontal =
+        SGUtility.getMouseDragResult(
+            new SGUtility.MouseDragInput(
+                createDragEvent(InputEvent.SHIFT_DOWN_MASK, 10, 7), new Point(4, 2), null, 0));
+    assertEquals(6, horizontal.dx);
+    assertEquals(0, horizontal.dy);
+    assertEquals(10, horizontal.ex);
+    assertEquals(7, horizontal.ey);
+    assertEquals(new SGTuple2f(6.0f, 5.0f), horizontal.draggedDirection);
+    // vertical drag dominates: the x coordinate is fixed
+    SGUtility.MouseDragResult vertical =
+        SGUtility.getMouseDragResult(
+            new SGUtility.MouseDragInput(
+                createDragEvent(InputEvent.SHIFT_DOWN_MASK, 1, 12), new Point(4, 2), null, 0));
+    assertEquals(0, vertical.dx);
+    assertEquals(10, vertical.dy);
+    assertEquals(1, vertical.ex);
+    assertEquals(12, vertical.ey);
+    assertEquals(1, vertical.fixedCoordinate);
+  }
+
+  @Test
+  void getMouseDragResultShiftDragKeepsPresetDirection() {
+    SGUtility.MouseDragResult result =
+        SGUtility.getMouseDragResult(
+            new SGUtility.MouseDragInput(
+                createDragEvent(InputEvent.SHIFT_DOWN_MASK, 3, 1),
+                new Point(0, 0),
+                new SGTuple2f(5.0f, 1.0f),
+                99));
+    // the preset direction keeps the horizontal axis dominant
+    assertEquals(3, result.dx);
+    assertEquals(0, result.dy);
+    assertEquals(3, result.ex);
+    assertEquals(99, result.ey);
+    assertEquals(99, result.fixedCoordinate);
   }
 }
