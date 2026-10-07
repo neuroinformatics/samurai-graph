@@ -8,14 +8,14 @@ Coverage snapshot: 2026-10-07, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`)
 |---|---|---|---|---|---|
 | `mdarray` | 664 | 17 | 97.4% | 53 | 98.1% |
 | `export` | 44 | 14 | 68.2% | 8 | 75.0% |
-| `base` | 69,607 | 33,585 | 51.8% | 2,713 | 53.6% |
+| `base` | 69,607 | 33,368 | 52.1% | 2,713 | 53.6% |
 | `data` | 126,951 | 63,056 | 50.3% | 3,380 | 52.0% |
 | `hdf5` | 2,775 | 1,288 | 53.6% | 121 | 90.1% |
 | `figure` (top level) | 137,762 | 105,972 | 23.1% | 5,446 | 33.4% |
 | `figure.dialog` | 62,808 | 21,582 | 65.6% | 968 | 22.2% |
 | `application` | 68,566 | 53,649 | 21.8% | 1,678 | 21.3% |
 | `org.freehep...export` | 220 | 29 | 86.8% | 8 | 100.0% |
-| **Total** | **469,397** | **279,192** | **40.5%** | **14,375** | **40.2%** |
+| **Total** | **469,397** | **278,975** | **40.6%** | **14,375** | **40.2%** |
 
 ## 2. Current Problems
 
@@ -159,19 +159,15 @@ dataset so the values still round-trip. The convenience writers
 - `SGSXYZSDArrayData` and `SGVXYSDArrayData` write their 2-D grid values
   (`z`, `f`/`s`) through the float64 `writeMDArray`, so their grid files
   store 2-D datasets.
-- `HDF5RoundTripTest.typedMdArrayWritePreservesTwoDimensionalShape`,
-  `typedDoubleMdArrayWritePreservesThreeDimensionalShape`, and
-  `archiveRoundTripKeepsTwoDimensionalShapeThroughTypedWrite` pin the
-  shape-preserving behavior.
 
 ## 3. Test Gaps
 
 | Area | Status |
 |---|---|
 | `SGDrawingWindow` (3,660 LOC) | No direct unit tests for the window logic; exercised indirectly through window-construction tests (e.g. `SGDrawingWindowPropertyIOTest`) |
-| `SGUtility` (2,784 LOC, 139 static methods) | The modal display helpers, the `moveObjectTo*` list wrappers, the font/canonical-path accessors, the form-widget value setters, and the drag/version/plugin/export-font-size helpers are covered (class coverage: 94.3% instruction, 91.5% branch); only the private constructor remains untested |
-| `hdf5` package (53.6%) | Data-array read/write round-trip is covered, including the shape-preserving typed writes; the int64 read path (and its 2-D long flatten helper), and the `IHDF5ObjectReader` group/attribute inspection methods are untested |
-| `data` package (50.3%) | The SXY data-buffer I/O path, including the empty (0-point) and single-datum edge cases, and the data-viewer value path (`SGDataViewerUtility`) are covered; the backend setup dialogs remain under-tested |
+| `SGUtility` (2,784 LOC, 139 static methods) | Only unreachable or platform-specific defensive branches remain untested (class coverage: 99.5% instruction, 98.8% branch, 100% method): the `moveObjectTo`-failure returns inside `moveObject` / `moveObjectRawList`, the `getFileName` forward-slash fallback for Windows paths, the `assignIdNumber` `Error` guard and its loop exit, the `PermittingEmptyString` empty-string rechecks shadowed by the earlier return, the `getVersionNumber` defensive `property == null` check, and the `setupMediaTracker` `InterruptedException` catch |
+| `hdf5` package (53.6%) | The int64 read path (and its 2-D long flatten helper), and the `IHDF5ObjectReader` group/attribute inspection methods are untested |
+| `data` package (50.3%) | The backend setup dialogs remain under-tested |
 | `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
 
 **Next coverage work:**
