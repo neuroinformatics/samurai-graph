@@ -248,4 +248,98 @@ class SGUtilityRectangleTest {
     assertEquals(70.0, rect.getWidth(), DELTA);
     assertEquals(70.0, rect.getHeight(), DELTA);
   }
+
+  @Test
+  void resizeRectangleNorthWestCornerKeepsAspectWhenShiftIsHeld() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(10, 10); // the north-west corner
+    // dragging to (20, 20) shrinks the width to 40, and the 1:1 aspect ratio
+    // keeps the height at 40 as well
+    SGUtility.resizeRectangle(rect, pos, eventWithShift(20, 20), SGConstants.NORTH_WEST);
+    assertEquals(20.0, rect.getX(), DELTA);
+    assertEquals(20.0, rect.getY(), DELTA);
+    assertEquals(40.0, rect.getWidth(), DELTA);
+    assertEquals(40.0, rect.getHeight(), DELTA);
+    assertEquals(20, pos.x);
+    assertEquals(20, pos.y);
+  }
+
+  @Test
+  void resizeRectangleExpandsFromNorthEastCorner() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(60, 10); // the north-east corner
+    SGUtility.resizeRectangle(rect, pos, event(80, 20), SGConstants.NORTH_EAST);
+    assertEquals(10.0, rect.getX(), DELTA);
+    assertEquals(20.0, rect.getY(), DELTA);
+    assertEquals(70.0, rect.getWidth(), DELTA);
+    assertEquals(40.0, rect.getHeight(), DELTA);
+    assertEquals(80, pos.x);
+    assertEquals(20, pos.y);
+  }
+
+  @Test
+  void resizeRectangleNorthEastCornerKeepsAspectWhenShiftIsHeld() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(60, 10); // the north-east corner
+    // dragging down to y=20 shrinks the height to 40, and the 1:1 aspect ratio
+    // keeps the width at 40; only the y coordinate of the anchor moves
+    SGUtility.resizeRectangle(rect, pos, eventWithShift(80, 20), SGConstants.NORTH_EAST);
+    assertEquals(10.0, rect.getX(), DELTA);
+    assertEquals(20.0, rect.getY(), DELTA);
+    assertEquals(40.0, rect.getWidth(), DELTA);
+    assertEquals(40.0, rect.getHeight(), DELTA);
+    assertEquals(60, pos.x);
+    assertEquals(20, pos.y);
+  }
+
+  @Test
+  void resizeRectangleMovesSouthWestCorner() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(10, 60); // the south-west corner
+    SGUtility.resizeRectangle(rect, pos, event(-5, 70), SGConstants.SOUTH_WEST);
+    assertEquals(-5.0, rect.getX(), DELTA);
+    assertEquals(10.0, rect.getY(), DELTA);
+    assertEquals(65.0, rect.getWidth(), DELTA);
+    assertEquals(60.0, rect.getHeight(), DELTA);
+    assertEquals(-5, pos.x);
+    assertEquals(70, pos.y);
+  }
+
+  @Test
+  void resizeRectangleSouthWestCornerKeepsAspectWhenShiftIsHeld() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(10, 60); // the south-west corner
+    // dragging to (-5, 70) widens the rectangle to 65, and the 1:1 aspect ratio
+    // grows the height to 65 as well
+    SGUtility.resizeRectangle(rect, pos, eventWithShift(-5, 70), SGConstants.SOUTH_WEST);
+    assertEquals(-5.0, rect.getX(), DELTA);
+    assertEquals(10.0, rect.getY(), DELTA);
+    assertEquals(65.0, rect.getWidth(), DELTA);
+    assertEquals(65.0, rect.getHeight(), DELTA);
+    assertEquals(-5, pos.x);
+    assertEquals(70, pos.y);
+  }
+
+  @Test
+  void getMouseLocationReturnsOtherAtUnmatchedEdgePosition() {
+    Rectangle2D rect = unitRect();
+    // x is on the west edge but y matches no edge: no location is reported
+    assertEquals(SGConstants.OTHER, SGUtility.getMouseLocation(rect, 0, 30, 5));
+    // x is on the east edge but y matches no edge: no location is reported
+    assertEquals(SGConstants.OTHER, SGUtility.getMouseLocation(rect, 100, 30, 5));
+  }
+
+  @Test
+  void resizeRectangleIgnoresUnrecognizedLocation() {
+    Rectangle2D rect = new Rectangle2D.Double(10, 10, 50, 50);
+    Point pos = new Point(35, 35);
+    SGUtility.resizeRectangle(rect, pos, event(37, 36), SGConstants.OTHER);
+    // no location matches, so the rectangle and the anchor stay unchanged
+    assertEquals(10.0, rect.getX(), DELTA);
+    assertEquals(10.0, rect.getY(), DELTA);
+    assertEquals(50.0, rect.getWidth(), DELTA);
+    assertEquals(50.0, rect.getHeight(), DELTA);
+    assertEquals(35, pos.x);
+    assertEquals(35, pos.y);
+  }
 }

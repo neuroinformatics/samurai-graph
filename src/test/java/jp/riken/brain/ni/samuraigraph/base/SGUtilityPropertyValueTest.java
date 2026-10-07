@@ -48,6 +48,16 @@ class SGUtilityPropertyValueTest {
     assertNull(SGUtility.calcPropertyValueInUnit(Float.POSITIVE_INFINITY, null, null, 0, 100, 1));
   }
 
+  @Test
+  void calcPropertyValueInUnitTreatsSingleMissingUnitAsUnconverted() {
+    // only one of the units is null: the value is used as-is, without conversion
+    assertEquals(0.5f, SGUtility.calcPropertyValueInUnit(0.5f, null, "pt", 0.25, 6.0, -2));
+    assertEquals(0.5f, SGUtility.calcPropertyValueInUnit(0.5f, "pt", null, 0.25, 6.0, -2));
+    // an out-of-range value is rejected the same way
+    assertNull(SGUtility.calcPropertyValueInUnit(0.1f, null, "pt", 0.25, 6.0, -2));
+    assertNull(SGUtility.calcPropertyValueInUnit(7.0f, "pt", null, 0.25, 6.0, -2));
+  }
+
   // -- calcPropertyValue ------------------------------------------------------
 
   @Test

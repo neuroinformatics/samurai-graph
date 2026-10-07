@@ -3,24 +3,35 @@ package jp.riken.brain.ni.samuraigraph.base;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Panel;
 import java.awt.Point;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import javax.swing.LookAndFeel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -919,5 +930,279 @@ class SGUtilityTest {
     assertEquals(3, result.ex);
     assertEquals(99, result.ey);
     assertEquals(99, result.fixedCoordinate);
+  }
+
+  // -- characterization of remaining defensive branches ------------------------
+
+  @Test
+  void utilityClassIsInstantiable() {
+    assertNotNull(new SGUtility());
+  }
+
+  @Test
+  void identifyOSComparesPrefixOfOsName() {
+    final String osName = SGConstants.OS_NAME.toLowerCase();
+    assertTrue(SGUtility.identifyOS(osName.substring(0, 1)));
+    assertFalse(SGUtility.identifyOS("~"));
+    assertThrows(IllegalArgumentException.class, () -> SGUtility.identifyOS(null));
+  }
+
+  @Test
+  void getLookAndFeelIDReturnsIdOfInstalledLookAndFeel() {
+    final LookAndFeel laf = UIManager.getLookAndFeel();
+    if (laf == null) {
+      assertNull(SGUtility.getLookAndFeelID());
+    } else {
+      assertEquals(laf.getID(), SGUtility.getLookAndFeelID());
+    }
+  }
+
+  @Test
+  void getLookAndFeelIDReturnsNullWhenNoLookAndFeelIsInstalled() throws Exception {
+    final LookAndFeel original = UIManager.getLookAndFeel();
+    try {
+      UIManager.setLookAndFeel((LookAndFeel) null);
+      assertNull(SGUtility.getLookAndFeelID());
+    } finally {
+      if (original != null) {
+        UIManager.setLookAndFeel(original);
+      }
+    }
+  }
+
+  @Test
+  void getCanonicalPathReturnsNullWhenPathCannotBeResolved() {
+    // a NUL byte in the path makes getCanonicalPath throw an IOException
+    assertNull(SGUtility.getCanonicalPath("a\0b"));
+  }
+
+  @Test
+  void copyArrayHelpersAcceptNullSource() {
+    assertNull(SGUtility.copyStringArray((String[][]) null));
+    assertNull(SGUtility.copyIntegerArray((int[]) null));
+    assertNull(SGUtility.copyIntegerArray((Integer[]) null));
+    assertNull(SGUtility.copyDoubleArray((double[]) null));
+    assertNull(SGUtility.copyDoubleArray((double[][]) null));
+  }
+
+  @Test
+  void copyStringArrayKeepsNullRows() {
+    final String[][] src = {{"a", "b"}, null, {"c"}};
+    final String[][] dest = SGUtility.copyStringArray(src);
+    assertArrayEquals(src, dest);
+    assertNull(dest[1]);
+    assertNotSame(src[0], dest[0]);
+    assertNotSame(src[2], dest[2]);
+    // the copy is deep: mutating the copy does not affect the source
+    dest[0][0] = "x";
+    assertEquals("a", src[0][0]);
+  }
+
+  @Test
+  void getFileNameFallsBackToForwardSlashOnWindowsPaths() {
+    if (File.separatorChar == '/') {
+      Assumptions.abort("the forward-slash fallback only exists for non-unix separators");
+    }
+    assertEquals("data.txt", SGUtility.getFileName("dir\\data.txt"));
+    assertEquals("data.txt", SGUtility.getFileName("C:\\dir\\data.txt"));
+  }
+
+  @Test
+  void equalsRejectsNullPairAgainstNonNullArray() {
+    assertFalse(SGUtility.equals((Object[]) null, new Object[] {"a"}));
+    assertFalse(SGUtility.equals(new int[] {1, 2}, new int[] {1}));
+  }
+
+  @Test
+  void setValueOnSpinnerLogsAndSurvivesCommitFailure() throws ParseException {
+    final SGSpinner sp = mock(SGSpinner.class);
+    doThrow(new ParseException("forced", 0)).when(sp).commitEditByDefault();
+    assertTrue(SGUtility.setValue(sp, "1.5"));
+    verify(sp).setText("1.5");
+    verify(sp).setValue(1.5);
+    verify(sp).commitEditByDefault();
+  }
+
+  @Test
+  void setIntValueOnSpinnerLogsAndSurvivesCommitFailure() throws ParseException {
+    final SGSpinner sp = mock(SGSpinner.class);
+    doThrow(new ParseException("forced", 0)).when(sp).commitEditByDefault();
+    assertTrue(SGUtility.setIntValue(sp, "7"));
+    verify(sp).setText("7");
+    verify(sp).setValue(7.0);
+    verify(sp).commitEditByDefault();
+  }
+
+  @Test
+  void moveObjectToRejectsOutOfRangeIndex() {
+    final List<String> list = new ArrayList<>(List.of("a", "b"));
+    assertThrows(IllegalArgumentException.class, () -> SGUtility.moveObjectTo("a", list, -1));
+    assertThrows(IllegalArgumentException.class, () -> SGUtility.moveObjectTo("a", list, 2));
+  }
+
+  @Test
+  void moveObjectKeepsElementWhenTargetIndexIsOutOfRange() {
+    final List<String> list = new ArrayList<>(List.of("a", "b", "c"));
+    // the moved element is already at the tail, so shifting forward is a no-op
+    assertTrue(SGUtility.moveObject(List.of("c"), list, 1));
+    assertEquals(List.of("a", "b", "c"), list);
+    // the moved element is already at the head, so shifting backward is a no-op
+    assertTrue(SGUtility.moveObject(List.of("a"), list, -1));
+    assertEquals(List.of("a", "b", "c"), list);
+    // a missing element fails the move in both directions
+    assertFalse(SGUtility.moveObject(List.of("q"), list, -1));
+    assertEquals(List.of("a", "b", "c"), list);
+  }
+
+  @Test
+  void moveObjectRawListKeepsElementWhenTargetIndexIsOutOfRange() {
+    final List<Object> list = new ArrayList<>(List.of("a", "b", "c"));
+    assertTrue(SGUtility.moveObjectRawList(List.of("c"), list, 1));
+    assertEquals(List.of("a", "b", "c"), list);
+    assertTrue(SGUtility.moveObjectRawList(List.of("a"), list, -1));
+    assertEquals(List.of("a", "b", "c"), list);
+    // a missing element fails the backward move
+    assertFalse(SGUtility.moveObjectRawList(List.of("q"), list, -1));
+    assertEquals(List.of("a", "b", "c"), list);
+  }
+
+  @Test
+  void setVisibleListSkipsNullElementWhenSettingVisibility() {
+    final Visible v1 = new Visible(true);
+    final List<Visible> list = new ArrayList<>(List.of(v1));
+    list.add(null);
+    final List<Visible> visible = new ArrayList<>(List.of(v1));
+    assertTrue(SGUtility.setVisibleList(list, visible));
+    final List<Visible> expected = new ArrayList<>(List.of(v1));
+    expected.add(null);
+    assertEquals(expected, list);
+    assertTrue(v1.isVisible());
+  }
+
+  @Test
+  void containsRejectsNullArrayAsFirstArgument() {
+    assertThrows(
+        IllegalArgumentException.class, () -> SGUtility.contains((char[]) null, new char[] {'a'}));
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SGUtility.contains((Object[]) null, new Object[] {"a"}));
+    assertThrows(
+        IllegalArgumentException.class, () -> SGUtility.contains((List<?>) null, List.of("a")));
+    assertThrows(
+        IllegalArgumentException.class, () -> SGUtility.containsAll((List<?>) null, List.of("a")));
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SGUtility.containsAll((Object[]) null, new Object[] {"a"}));
+  }
+
+  @Test
+  void containsNullIgnoredRejectsNullArrayPair() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SGUtility.containsNullIgnored(new Object[] {"a"}, (Object[]) null));
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SGUtility.containsNullIgnored((Object[]) null, new Object[] {"a"}));
+  }
+
+  @Test
+  void compareVersionNumberRejectsNewerMinorWhenMajorIsEqual() {
+    assertFalse(SGUtility.compareVersionNumber(1, 5, 0, 1, 3, 9));
+  }
+
+  @Test
+  void isVersionNumberEqualOrSmallerThanRejectsNullTargetVersion() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SGUtility.isVersionNumberEqualOrSmallerThan("1.0.1", null));
+  }
+
+  @Test
+  void isVersionNumberEqualOrSmallerThanRejectsMalformedTargetVersion() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SGUtility.isVersionNumberEqualOrSmallerThan("1.0.1", "1.x.3"));
+  }
+
+  @Test
+  void isVersionNumberPermittingEmptyStringRejectsNullVersion() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SGUtility.isVersionNumberEqualOrSmallerThanPermittingEmptyString("1.0.1", null));
+  }
+
+  @Test
+  void assignIdNumberFindsGapBeforeExhaustedMaximum() {
+    // ids 1..3 are all taken and the list ends with Integer.MAX_VALUE,
+    // so the first missing id after the dense prefix is returned
+    assertEquals(4, SGUtility.assignIdNumber(List.of(3, 1, Integer.MAX_VALUE, 2)));
+  }
+
+  @Test
+  void checkEqualityReturnsSingleElementForFloatAndString() {
+    assertEquals(2.5f, SGUtility.checkEquality(new float[] {2.5f}));
+    assertEquals("solo", SGUtility.checkEquality(new String[] {"solo"}));
+  }
+
+  @Test
+  void checkEqualityForColorRowsReturnsFirstRowWhenAllMatch() {
+    final Color red = new Color(255, 0, 0);
+    final Color blue = new Color(0, 0, 255);
+    final Color[][] rows = {{red, blue}, {new Color(255, 0, 0), new Color(0, 0, 255)}};
+    assertSame(rows[0], SGUtility.checkEquality(rows));
+  }
+
+  @Test
+  void getVersionNumberReadsAttributeFromRootElement() {
+    final Document doc = SGUtilityText.getDocumentFromString("<PropertySet/>");
+    doc.getDocumentElement().setAttribute("Version", "9.9.9");
+    assertEquals("9.9.9", SGUtility.getVersionNumber(doc.getDocumentElement()));
+  }
+
+  @Test
+  void getVersionNumberReadsAttributeFromDetachedElement() {
+    final Document doc = SGUtilityText.getDocumentFromString("<PropertySet/>");
+    final Element orphan = doc.createElement("Orphan");
+    orphan.setAttribute("Version", "5.5.5");
+    assertEquals("5.5.5", SGUtility.getVersionNumber(orphan));
+  }
+
+  @Test
+  void findNearestValuePrefersNextValueWhenEquidistant() {
+    final int[] array = {1, 2, 5};
+    // 4 is one step away from both 2 and 5; the next value wins
+    assertEquals(5, SGUtility.findNearestValue(4, array));
+  }
+
+  @Test
+  void findNearestValuePrefersPreviousValueWhenCloser() {
+    // 2 is closer to 1 than to 4, so the previous value wins
+    assertEquals(1, SGUtility.findNearestValue(2, new int[] {1, 4, 9}));
+  }
+
+  @Test
+  void createImageLoadsClasspathResourceWithMediaTracking() {
+    // the resource must be looked up with a class from the application class loader
+    final Image image = SGUtility.createImage(SGUtility.class, new Panel(), "About.png");
+    assertNotNull(image);
+  }
+
+  @Test
+  void createImageWithoutComponentSkipsMediaTracking() {
+    // a null component skips the media tracker setup
+    final Image image = SGUtility.createImage(SGUtility.class, null, "About.png");
+    assertNotNull(image);
+  }
+
+  @Test
+  void isAlphabeticRejectsNonAsciiLetters() {
+    assertFalse(SGUtility.isAlphabetic('\u00e4'));
+  }
+
+  @Test
+  void transposeRejectsEmptyFirstRow() {
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> SGUtility.transpose(new double[][] {new double[] {}}));
   }
 }

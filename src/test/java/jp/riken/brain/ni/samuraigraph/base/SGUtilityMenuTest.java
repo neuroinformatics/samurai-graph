@@ -213,4 +213,24 @@ class SGUtilityMenuTest {
     assertEquals(4, arrange.getItemCount());
     assertTrue(arrange.getItem(0).isEnabled());
   }
+
+  @Test
+  void findSubMenuReturnsMatchingDirectSubmenu() {
+    JMenu parent = new JMenu("Parent");
+    JMenu target = new JMenu("Target");
+    parent.add(new JMenuItem("Plain item"));
+    parent.add(target);
+    assertSame(target, SGUtility.findSubMenu(parent, "Target"));
+    assertNull(SGUtility.findSubMenu(parent, "Missing"));
+  }
+
+  @Test
+  void findMenuItemSkipsNonItemComponents() {
+    JPopupMenu popup = new JPopupMenu();
+    popup.addSeparator();
+    JMenuItem item = new JMenuItem("Target");
+    popup.add(item);
+    assertSame(item, SGUtility.findMenuItem(popup, "Target"));
+    assertNull(SGUtility.findMenuItem(popup, "Absent"));
+  }
 }
