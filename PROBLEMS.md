@@ -1,21 +1,21 @@
 # Samurai Graph — Current State and Known Problems
 
-Coverage snapshot: 2026-10-07, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`).
+Coverage snapshot: 2026-10-08, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`).
 
 ## 1. Package Instruction Coverage
 
 | Package | Instr | Missed | Cov | Method | Cov |
 |---|---|---|---|---|---|
 | `mdarray` | 664 | 17 | 97.4% | 53 | 98.1% |
-| `export` | 44 | 14 | 68.2% | 8 | 75.0% |
-| `base` | 69,607 | 33,368 | 52.1% | 2,713 | 53.6% |
-| `data` | 126,951 | 63,056 | 50.3% | 3,380 | 52.0% |
-| `hdf5` | 2,775 | 1,288 | 53.6% | 121 | 90.1% |
+| `export` | 44 | 0 | 100.0% | 8 | 100.0% |
+| `base` | 69,607 | 33,291 | 52.2% | 2,713 | 53.7% |
+| `data` | 126,951 | 60,214 | 52.6% | 3,380 | 53.5% |
+| `hdf5` | 2,775 | 263 | 90.5% | 121 | 97.5% |
 | `figure` (top level) | 137,762 | 105,972 | 23.1% | 5,446 | 33.4% |
 | `figure.dialog` | 62,808 | 21,582 | 65.6% | 968 | 22.2% |
 | `application` | 68,566 | 53,649 | 21.8% | 1,678 | 21.3% |
-| `org.freehep...export` | 220 | 29 | 86.8% | 8 | 100.0% |
-| **Total** | **469,397** | **278,975** | **40.6%** | **14,375** | **40.2%** |
+| `org.freehep...export` | 220 | 5 | 97.7% | 8 | 100.0% |
+| **Total** | **469,397** | **274,993** | **41.4%** | **14,375** | **40.6%** |
 
 ## 2. Current Problems
 
@@ -132,10 +132,11 @@ Key problems:
 
 ### 2.4 Dependency and build hygiene
 
-- **jpackage / `export` package coverage**: the `export` package at 68.2% and
-  the jpackaged installer build have limited automated verification. The
-  installer is a native artifact that is not covered by unit tests and is only
-  smoke-tested manually.
+- **jpackage installer**: the jpackaged installer build has limited automated
+  verification. The installer is a native artifact that is not covered by unit
+  tests and is only smoke-tested manually. (The `export` package it feeds is now
+  fully covered — `export` at 100%, `org.freehep...export` at 97.7% — leaving only
+  the installer artifact itself untested.)
 
 ### 2.5 The HDF5 writer supports only up to the rank the reader can convert
 
@@ -166,13 +167,15 @@ dataset so the values still round-trip. The convenience writers
 |---|---|
 | `SGDrawingWindow` (3,660 LOC) | No direct unit tests for the window logic; exercised indirectly through window-construction tests (e.g. `SGDrawingWindowPropertyIOTest`) |
 | `SGUtility` (2,784 LOC, 139 static methods) | Only unreachable or platform-specific defensive branches remain untested (class coverage: 99.5% instruction, 98.8% branch, 100% method): the `moveObjectTo`-failure returns inside `moveObject` / `moveObjectRawList`, the `getFileName` forward-slash fallback for Windows paths, the `assignIdNumber` `Error` guard and its loop exit, the `PermittingEmptyString` empty-string rechecks shadowed by the earlier return, the `getVersionNumber` defensive `property == null` check, and the `setupMediaTracker` `InterruptedException` catch |
-| `hdf5` package (53.6%) | The int64 read path (and its 2-D long flatten helper), and the `IHDF5ObjectReader` group/attribute inspection methods are untested |
-| `data` package (50.3%) | The backend setup dialogs remain under-tested |
+| `hdf5` package (90.5%) | The remaining 263 missed instructions are unreachable through jhdf or defensive fallbacks: the `mapDataClass` cases jhdf never reports (opaque, compound, reference, enum, vlen, time), the dead `Hdf5WriterAdapter$FileReader` (the `IHDF5Writer` interface exposes no `file()` accessor), the five convenience-writer `catch` blocks (jhdf buffers `putDataset` in memory, so a failing write is not thrown until `close`), the `getDataset` by-name fallback, the `byte[][]`/`Number[]`/`String.valueOf` attribute-coercion fallbacks jhdf never produces, and the `close()` error handlers |
+| `export` package (100.0%) | Fully covered. The `org.freehep...export` registry is at 97.7%: only the outer `getResources` `IOException` catch (a defensive handler for an unreadable classloader) remains unreachable in tests |
+| `data` package (52.6%) | The backend setup dialogs remain under-tested |
 | `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
 
 **Next coverage work:**
 
-1. Integration tests for the `export` package and the jpackaged installer.
+1. The `data` package (52.6%): the `SGDataCreator` factory methods are the largest
+   untested unit (see §2.2).
 
 ## 4. Healthy Aspects
 
