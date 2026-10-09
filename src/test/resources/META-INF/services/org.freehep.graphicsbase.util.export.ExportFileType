@@ -1,0 +1,6 @@
+# Samurai Graph test service file: exercises the comment, blank, non-assignable and missing-class
+# branches of ExportFileTypeRegistry.loadExportFileTypeProviders.
+
+org.freehep.graphicsbase.util.export.ExportFileTypeRegistryProviderTest$TestProvider
+java.lang.String
+org.freehep.graphicsbase.util.export.DoesNotExist
