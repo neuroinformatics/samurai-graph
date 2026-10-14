@@ -101,11 +101,7 @@ class SGSXYMDArrayMultipleDataExporter {
 
       // stride
       el.setAttribute(SGDataPropertyKeyConstants.KEY_ARRAY_SECTION, data.mStride.toString());
-      if (data.isTickLabelAvailable()) {
-        el.setAttribute(
-            SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
-            data.mTickLabelStride.toString());
-      }
+      SGDataMiscUtility.setTickLabelArraySection(el, data);
 
     } else if (SGConstants.OPERATION.SAVE_TO_DATA_SET_NETCDF.equals(type)) {
 
@@ -123,12 +119,7 @@ class SGSXYMDArrayMultipleDataExporter {
       // stride as the index stride
       el.setAttribute(SGDataPropertyKeyConstants.KEY_INDEX_ARRAY_SECTION, data.mStride.toString());
 
-      if (data.isTickLabelAvailable()) {
-        el.setAttribute(
-            SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
-            data.mTickLabelStride.toString());
-      }
-
+      SGDataMiscUtility.setTickLabelArraySection(el, data);
       String value = null;
       if (xNameList.size() == 0) {
         value = data.bindVariableNameInBracket(data.X_VALUE_VAR_NAME);

@@ -23,6 +23,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import org.w3c.dom.Element;
 
 /** Static helper for the Misc responsibility. */
 public final class SGDataMiscUtility {
@@ -1620,5 +1621,20 @@ public final class SGDataMiscUtility {
     SGDataViewerUtility.updateCache(data, sxyArray);
     // disposes of data objects
     disposeSXYDataArray(sxyArray);
+  }
+
+  /**
+   * Sets the tick label array section attribute to the element. Shared by the multiple SXY data
+   * writeProperty implementations.
+   *
+   * @param el the element to which the attribute is set
+   * @param data the multiple SXY data
+   */
+  public static void setTickLabelArraySection(final Element el, final SGISXYTypeMultipleData data) {
+    if (data.isTickLabelAvailable()) {
+      el.setAttribute(
+          SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
+          data.getTickLabelStride().toString());
+    }
   }
 }

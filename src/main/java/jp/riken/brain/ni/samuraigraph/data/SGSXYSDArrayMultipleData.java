@@ -1846,9 +1846,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     }
 
     // tick label stride
-    if (this.isTickLabelAvailable()) {
-      el.setAttribute(KEY_TICK_LABEL_ARRAY_SECTION, this.mTickLabelStride.toString());
-    }
+    SGDataMiscUtility.setTickLabelArraySection(el, this);
 
     return true;
   }

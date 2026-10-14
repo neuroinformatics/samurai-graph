@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,11 +18,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.xml.parsers.DocumentBuilderFactory;
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer;
 import jp.riken.brain.ni.samuraigraph.base.SGConstants;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.Element;
 import ucar.nc2.NetcdfFiles;
 
 /** Unit tests for {@link SGDataMiscUtility}. */
@@ -854,5 +857,35 @@ class SGDataMiscUtilityTest {
     };
     String[] ret = SGDataMiscUtility.updateDataColumns(SGDataTypeConstants.SXY_DATA, cols, types);
     assertNull(ret);
+  }
+
+  // -----------------------------------------------------------------
+  // Shared property I/O helper
+  // -----------------------------------------------------------------
+
+  private static Element newElement() throws Exception {
+    return DocumentBuilderFactory.newInstance()
+        .newDocumentBuilder()
+        .newDocument()
+        .createElement("data");
+  }
+
+  @Test
+  void setTickLabelArraySectionWritesWhenAvailable() throws Exception {
+    Element el = newElement();
+    SGISXYTypeMultipleData data = mock(SGISXYTypeMultipleData.class);
+    when(data.isTickLabelAvailable()).thenReturn(true);
+    when(data.getTickLabelStride()).thenReturn(new SGIntegerSeriesSet(1, 3, 1));
+    SGDataMiscUtility.setTickLabelArraySection(el, data);
+    assertEquals("1:end", el.getAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION));
+  }
+
+  @Test
+  void setTickLabelArraySectionSkipsWhenUnavailable() throws Exception {
+    Element el = newElement();
+    SGISXYTypeMultipleData data = mock(SGISXYTypeMultipleData.class);
+    when(data.isTickLabelAvailable()).thenReturn(false);
+    SGDataMiscUtility.setTickLabelArraySection(el, data);
+    assertEquals("", el.getAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION));
   }
 }

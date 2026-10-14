@@ -258,11 +258,7 @@ class SGSXYNetCDFMultipleDataPropertyIO {
     if (!data.isIndexAvailable()) {
       el.setAttribute(SGDataPropertyKeyConstants.KEY_ARRAY_SECTION, data.mStride.toString());
     }
-    if (data.isTickLabelAvailable()) {
-      el.setAttribute(
-          SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
-          data.mTickLabelStride.toString());
-    }
+    SGDataMiscUtility.setTickLabelArraySection(el, data);
 
     return true;
   }
