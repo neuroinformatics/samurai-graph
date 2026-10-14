@@ -1814,7 +1814,7 @@ public abstract class SGNetCDFData extends SGArrayData implements SGIIndexData {
     for (int ii = 0; ii < bArray.length; ii++) {
       bArray[ii] = (byte) cArray[ii];
     }
-    return SGUtility.createString(bArray);
+    return SGDataMiscUtility.createString(bArray);
   }
 
   /**

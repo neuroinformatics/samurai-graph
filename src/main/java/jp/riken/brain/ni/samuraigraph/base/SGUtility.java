@@ -18,7 +18,6 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -1688,18 +1687,6 @@ public class SGUtility {
   }
 
   /**
-   * Read and returns the column indices.
-   *
-   * @param el an Element object
-   * @param key the key of index property
-   * @return the indices it exists
-   */
-  public static Integer[] readIndices(Element el, String key) {
-    String str = el.getAttribute(key);
-    return SGUtilityText.parseIndices(str);
-  }
-
-  /**
    * Return the string of given value.
    *
    * @param value
@@ -2274,17 +2261,6 @@ public class SGUtility {
   }
 
   /**
-   * Creates a text string from a given byte array.
-   *
-   * @param byteArray a byte array
-   * @return a text string
-   * @throws UnsupportedEncodingException
-   */
-  public static String createString(byte[] byteArray) throws UnsupportedEncodingException {
-    return new String(byteArray, CHAR_SET_NAME_UTF8).trim();
-  }
-
-  /**
    * Returns the nearest index in given index array to given index.
    *
    * @param value the index
@@ -2525,47 +2501,6 @@ public class SGUtility {
       objects[ii] = values[ii];
     }
     return checkOverlapping(objects);
-  }
-
-  public static boolean isAlphabetic(final char c) {
-    return (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'));
-  }
-
-  public static boolean isDigit(final char c) {
-    return ('0' <= c && c <= '9');
-  }
-
-  public static double[][] transpose(double[][] array) {
-    if (array == null) {
-      throw new IllegalArgumentException("array == null");
-    }
-    if (array.length == 0) {
-      throw new IllegalArgumentException("array.length == 0");
-    }
-    int len = -1;
-    for (int ii = 0; ii < array.length; ii++) {
-      if (array[ii] == null) {
-        throw new IllegalArgumentException("array[" + ii + "] == null");
-      }
-      if (len == -1) {
-        len = array[ii].length;
-        if (len == 0) {
-          throw new IllegalArgumentException("array[" + ii + "].length == 0");
-        }
-      } else {
-        if (array[ii].length != len) {
-          throw new IllegalArgumentException(
-              "array[" + ii + "].length != len: " + array[ii].length + ", " + len);
-        }
-      }
-    }
-    double[][] ret = new double[len][array.length];
-    for (int ii = 0; ii < len; ii++) {
-      for (int jj = 0; jj < array.length; jj++) {
-        ret[ii][jj] = array[jj][ii];
-      }
-    }
-    return ret;
   }
 
   /**

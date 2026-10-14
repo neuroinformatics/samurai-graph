@@ -902,7 +902,7 @@ public class SGSXYZMDArrayData extends SGTwoDimensionalMDArrayData implements SG
         this.getIndexList(blocks, xIndexList, yIndexList);
         double[][] values =
             SGDataBufferUtility.getTwoDimensionalValues(blocks, xIndexList, yIndexList);
-        twoDimZValues = SGUtility.transpose(values);
+        twoDimZValues = SGDataMiscUtility.transpose(values);
       }
     }
 

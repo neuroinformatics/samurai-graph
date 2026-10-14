@@ -713,7 +713,7 @@ public class SGSXYZNetCDFData extends SGTwoDimensionalNetCDFData implements SGIS
         this.getIndexList(blocks, xIndexList, yIndexList);
         double[][] values =
             SGDataBufferUtility.getTwoDimensionalValues(blocks, xIndexList, yIndexList);
-        values = SGUtility.transpose(values);
+        values = SGDataMiscUtility.transpose(values);
         Array array = Array.factory(zDataType, new int[] {xLen, yLen});
         this.setArray(array, values);
         writer.write(zName, array);

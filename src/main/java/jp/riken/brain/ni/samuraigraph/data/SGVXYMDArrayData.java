@@ -1120,10 +1120,10 @@ public class SGVXYMDArrayData extends SGTwoDimensionalMDArrayData implements SGI
         this.getIndexList(fBlocks, xIndexList, yIndexList);
         double[][] fValues =
             SGDataBufferUtility.getTwoDimensionalValues(fBlocks, xIndexList, yIndexList);
-        twoDimFValues = SGUtility.transpose(fValues);
+        twoDimFValues = SGDataMiscUtility.transpose(fValues);
         double[][] sValues =
             SGDataBufferUtility.getTwoDimensionalValues(sBlocks, xIndexList, yIndexList);
-        twoDimSValues = SGUtility.transpose(sValues);
+        twoDimSValues = SGDataMiscUtility.transpose(sValues);
       }
     }
 

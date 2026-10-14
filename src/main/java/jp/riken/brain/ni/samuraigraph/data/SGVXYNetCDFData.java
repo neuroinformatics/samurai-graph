@@ -897,13 +897,13 @@ public class SGVXYNetCDFData extends SGTwoDimensionalNetCDFData implements SGIVX
         this.getIndexList(fBlocks, xIndexList, yIndexList);
         double[][] fValues =
             SGDataBufferUtility.getTwoDimensionalValues(fBlocks, xIndexList, yIndexList);
-        fValues = SGUtility.transpose(fValues);
+        fValues = SGDataMiscUtility.transpose(fValues);
         Array fArray = Array.factory(fDataType, new int[] {xLen, yLen});
         this.setArray(fArray, fValues);
         writer.write(fName, fArray);
         double[][] sValues =
             SGDataBufferUtility.getTwoDimensionalValues(sBlocks, xIndexList, yIndexList);
-        sValues = SGUtility.transpose(sValues);
+        sValues = SGDataMiscUtility.transpose(sValues);
         Array sArray = Array.factory(sDataType, new int[] {xLen, yLen});
         this.setArray(sArray, sValues);
         writer.write(sName, sArray);

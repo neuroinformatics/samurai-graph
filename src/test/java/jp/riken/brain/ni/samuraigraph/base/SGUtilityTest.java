@@ -31,6 +31,7 @@ import java.util.Map;
 import javax.swing.LookAndFeel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
+import jp.riken.brain.ni.samuraigraph.data.SGDataMiscUtility;
 import jp.riken.brain.ni.samuraigraph.figure.SGFigureUtility;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
@@ -151,28 +152,29 @@ class SGUtilityTest {
   @Test
   void transposeExchangesRowsAndColumns() {
     final double[][] input = {{1, 2, 3}, {4, 5, 6}};
-    assertArrayEquals(new double[][] {{1, 4}, {2, 5}, {3, 6}}, SGUtility.transpose(input));
+    assertArrayEquals(new double[][] {{1, 4}, {2, 5}, {3, 6}}, SGDataMiscUtility.transpose(input));
   }
 
   @Test
   void transposeRejectsInvalidArrays() {
-    assertThrows(IllegalArgumentException.class, () -> SGUtility.transpose(null));
-    assertThrows(IllegalArgumentException.class, () -> SGUtility.transpose(new double[][] {}));
+    assertThrows(IllegalArgumentException.class, () -> SGDataMiscUtility.transpose(null));
+    assertThrows(
+        IllegalArgumentException.class, () -> SGDataMiscUtility.transpose(new double[][] {}));
     assertThrows(
         IllegalArgumentException.class,
-        () -> SGUtility.transpose(new double[][] {new double[] {1}, null}));
+        () -> SGDataMiscUtility.transpose(new double[][] {new double[] {1}, null}));
     assertThrows(
         IllegalArgumentException.class,
-        () -> SGUtility.transpose(new double[][] {new double[] {1, 2}, new double[] {1}}));
+        () -> SGDataMiscUtility.transpose(new double[][] {new double[] {1, 2}, new double[] {1}}));
     assertThrows(
         IllegalArgumentException.class,
-        () -> SGUtility.transpose(new double[][] {new double[] {1}, new double[] {}}));
+        () -> SGDataMiscUtility.transpose(new double[][] {new double[] {1}, new double[] {}}));
   }
 
   @Test
   void createStringBuildsTrimmedUtf8String() throws Exception {
     final byte[] bytes = "  hello wörld  ".getBytes(StandardCharsets.UTF_8);
-    assertEquals("hello wörld", SGUtility.createString(bytes));
+    assertEquals("hello wörld", SGDataMiscUtility.createString(bytes));
   }
 
   @Test
@@ -334,15 +336,15 @@ class SGUtilityTest {
 
   @Test
   void isAlphabeticAndIsDigitClassifyCharacters() {
-    assertTrue(SGUtility.isAlphabetic('a'));
-    assertTrue(SGUtility.isAlphabetic('Z'));
-    assertFalse(SGUtility.isAlphabetic('0'));
-    assertFalse(SGUtility.isAlphabetic('_'));
+    assertTrue(SGDataMiscUtility.isAlphabetic('a'));
+    assertTrue(SGDataMiscUtility.isAlphabetic('Z'));
+    assertFalse(SGDataMiscUtility.isAlphabetic('0'));
+    assertFalse(SGDataMiscUtility.isAlphabetic('_'));
 
-    assertTrue(SGUtility.isDigit('0'));
-    assertTrue(SGUtility.isDigit('9'));
-    assertFalse(SGUtility.isDigit('a'));
-    assertFalse(SGUtility.isDigit('.'));
+    assertTrue(SGDataMiscUtility.isDigit('0'));
+    assertTrue(SGDataMiscUtility.isDigit('9'));
+    assertFalse(SGDataMiscUtility.isDigit('a'));
+    assertFalse(SGDataMiscUtility.isDigit('.'));
   }
 
   // -- file name helpers -------------------------------------------------------
@@ -539,13 +541,14 @@ class SGUtilityTest {
     assertArrayEquals(
         new Integer[] {1, 3, 5},
         // the tokens must be plain numbers, so no spaces are allowed
-        SGUtility.readIndices(elementWithAttribute("i", "{1,3,5}"), "i"));
-    assertArrayEquals(new Integer[] {}, SGUtility.readIndices(elementWithAttribute("i", ""), "i"));
+        SGDataMiscUtility.readIndices(elementWithAttribute("i", "{1,3,5}"), "i"));
     assertArrayEquals(
-        new Integer[] {7}, SGUtility.readIndices(elementWithAttribute("i", "7"), "i"));
-    assertNull(SGUtility.readIndices(elementWithAttribute("i", "{a}"), "i"));
-    assertNull(SGUtility.readIndices(elementWithAttribute("i", "{1, x}"), "i"));
-    assertNull(SGUtility.readIndices(elementWithAttribute("i", "a{b"), "i"));
+        new Integer[] {}, SGDataMiscUtility.readIndices(elementWithAttribute("i", ""), "i"));
+    assertArrayEquals(
+        new Integer[] {7}, SGDataMiscUtility.readIndices(elementWithAttribute("i", "7"), "i"));
+    assertNull(SGDataMiscUtility.readIndices(elementWithAttribute("i", "{a}"), "i"));
+    assertNull(SGDataMiscUtility.readIndices(elementWithAttribute("i", "{1, x}"), "i"));
+    assertNull(SGDataMiscUtility.readIndices(elementWithAttribute("i", "a{b"), "i"));
   }
 
   // -- list moving helpers ------------------------------------------------------
@@ -1199,13 +1202,13 @@ class SGUtilityTest {
 
   @Test
   void isAlphabeticRejectsNonAsciiLetters() {
-    assertFalse(SGUtility.isAlphabetic('\u00e4'));
+    assertFalse(SGDataMiscUtility.isAlphabetic('\u00e4'));
   }
 
   @Test
   void transposeRejectsEmptyFirstRow() {
     assertThrows(
         IllegalArgumentException.class,
-        () -> SGUtility.transpose(new double[][] {new double[] {}}));
+        () -> SGDataMiscUtility.transpose(new double[][] {new double[] {}}));
   }
 }

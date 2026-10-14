@@ -5,7 +5,6 @@ import static jp.riken.brain.ni.samuraigraph.data.SGDataDataTypeUtility.*;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGConstants;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import ucar.nc2.Dimension;
 
 /** Static helpers for text and name manipulation. */
@@ -87,13 +86,13 @@ public final class SGDataTextUtility {
     final char[] cArray = str.toCharArray();
     final char c0 = cArray[0];
     StringBuilder sb = new StringBuilder();
-    if (!SGUtility.isAlphabetic(c0)) {
+    if (!SGDataMiscUtility.isAlphabetic(c0)) {
       sb.append("sg_");
     }
     for (int ii = 0; ii < cArray.length; ii++) {
       final char c = cArray[ii];
       final char cNew;
-      if (SGUtility.isAlphabetic(c) || SGUtility.isDigit(c) || (c == '_')) {
+      if (SGDataMiscUtility.isAlphabetic(c) || SGDataMiscUtility.isDigit(c) || (c == '_')) {
         cNew = c;
       } else {
         cNew = '_';

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGAttribute;
 import jp.riken.brain.ni.samuraigraph.base.SGIStringModifier;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ucar.ma2.Array;
@@ -131,7 +130,7 @@ public class SGNetCDFFile extends SGDataSource {
                   for (int jj = 0; jj < shape[1]; jj++) {
                     byteArray[jj] = cArray.getByte(index.set(ii, jj));
                   }
-                  str[ii] = SGUtility.createString(byteArray);
+                  str[ii] = SGDataMiscUtility.createString(byteArray);
                 }
               }
             } catch (IOException e) {

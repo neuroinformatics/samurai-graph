@@ -266,7 +266,7 @@ public abstract class SGSDArrayData extends SGArrayData {
    * @param key the key of index property
    */
   protected Integer[] readIndices(Element el, String key) {
-    return SGUtility.readIndices(el, key);
+    return SGDataMiscUtility.readIndices(el, key);
   }
 
   protected abstract Object[][] getDataFileExportValues(
