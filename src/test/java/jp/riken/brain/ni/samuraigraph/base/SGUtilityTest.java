@@ -31,6 +31,7 @@ import java.util.Map;
 import javax.swing.LookAndFeel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureUtility;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
@@ -450,57 +451,57 @@ class SGUtilityTest {
   void getAxisLocationMapsNamesToIds() {
     assertEquals(
         SGFigureElementAxisConstants.AXIS_HORIZONTAL_1,
-        SGUtility.getAxisLocation(SGFigureElementAxisConstants.AXIS_BOTTOM));
+        SGFigureUtility.getAxisLocation(SGFigureElementAxisConstants.AXIS_BOTTOM));
     assertEquals(
         SGFigureElementAxisConstants.AXIS_HORIZONTAL_2,
-        SGUtility.getAxisLocation(SGFigureElementAxisConstants.AXIS_TOP));
+        SGFigureUtility.getAxisLocation(SGFigureElementAxisConstants.AXIS_TOP));
     assertEquals(
         SGFigureElementAxisConstants.AXIS_VERTICAL_1,
-        SGUtility.getAxisLocation(SGFigureElementAxisConstants.AXIS_LEFT));
+        SGFigureUtility.getAxisLocation(SGFigureElementAxisConstants.AXIS_LEFT));
     assertEquals(
         SGFigureElementAxisConstants.AXIS_VERTICAL_2,
-        SGUtility.getAxisLocation(SGFigureElementAxisConstants.AXIS_RIGHT));
-    assertEquals(-1, SGUtility.getAxisLocation("None"));
+        SGFigureUtility.getAxisLocation(SGFigureElementAxisConstants.AXIS_RIGHT));
+    assertEquals(-1, SGFigureUtility.getAxisLocation("None"));
   }
 
   @Test
   void getLocationInPlaneMapsNamesToIds() {
     assertEquals(
         SGFigureElementAxisConstants.AXIS_HORIZONTAL_1,
-        SGUtility.getLocationInPlane(SGFigureElementAxisConstants.AXIS_BOTTOM));
+        SGFigureUtility.getLocationInPlane(SGFigureElementAxisConstants.AXIS_BOTTOM));
     assertEquals(
         SGFigureElementAxisConstants.AXIS_HORIZONTAL_2,
-        SGUtility.getLocationInPlane(SGFigureElementAxisConstants.AXIS_TOP));
+        SGFigureUtility.getLocationInPlane(SGFigureElementAxisConstants.AXIS_TOP));
     assertEquals(
         SGFigureElementAxisConstants.AXIS_VERTICAL_1,
-        SGUtility.getLocationInPlane(SGFigureElementAxisConstants.AXIS_LEFT));
+        SGFigureUtility.getLocationInPlane(SGFigureElementAxisConstants.AXIS_LEFT));
     assertEquals(
         SGFigureElementAxisConstants.AXIS_VERTICAL_2,
-        SGUtility.getLocationInPlane(SGFigureElementAxisConstants.AXIS_RIGHT));
+        SGFigureUtility.getLocationInPlane(SGFigureElementAxisConstants.AXIS_RIGHT));
     assertEquals(
         SGFigureElementAxisConstants.AXIS_NORMAL,
-        SGUtility.getLocationInPlane(SGFigureElementAxisConstants.AXIS_COLOR_BAR));
-    assertEquals(-1, SGUtility.getLocationInPlane("None"));
+        SGFigureUtility.getLocationInPlane(SGFigureElementAxisConstants.AXIS_COLOR_BAR));
+    assertEquals(-1, SGFigureUtility.getLocationInPlane("None"));
   }
 
   @Test
   void getLocationNameMapsIdsToNames() {
     assertEquals(
         SGFigureElementAxisConstants.AXIS_BOTTOM,
-        SGUtility.getLocationName(SGFigureElementAxisConstants.AXIS_HORIZONTAL_1));
+        SGFigureUtility.getLocationName(SGFigureElementAxisConstants.AXIS_HORIZONTAL_1));
     assertEquals(
         SGFigureElementAxisConstants.AXIS_TOP,
-        SGUtility.getLocationName(SGFigureElementAxisConstants.AXIS_HORIZONTAL_2));
+        SGFigureUtility.getLocationName(SGFigureElementAxisConstants.AXIS_HORIZONTAL_2));
     assertEquals(
         SGFigureElementAxisConstants.AXIS_LEFT,
-        SGUtility.getLocationName(SGFigureElementAxisConstants.AXIS_VERTICAL_1));
+        SGFigureUtility.getLocationName(SGFigureElementAxisConstants.AXIS_VERTICAL_1));
     assertEquals(
         SGFigureElementAxisConstants.AXIS_RIGHT,
-        SGUtility.getLocationName(SGFigureElementAxisConstants.AXIS_VERTICAL_2));
+        SGFigureUtility.getLocationName(SGFigureElementAxisConstants.AXIS_VERTICAL_2));
     assertEquals(
         SGFigureElementAxisConstants.AXIS_COLOR_BAR,
-        SGUtility.getLocationName(SGFigureElementAxisConstants.AXIS_NORMAL));
-    assertNull(SGUtility.getLocationName(99));
+        SGFigureUtility.getLocationName(SGFigureElementAxisConstants.AXIS_NORMAL));
+    assertNull(SGFigureUtility.getLocationName(99));
   }
 
   // -- id assignment ------------------------------------------------------------------

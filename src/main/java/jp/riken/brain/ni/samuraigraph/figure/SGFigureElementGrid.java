@@ -1452,9 +1452,9 @@ public class SGFigureElementGrid extends SGFigureElement implements SGIFigureEle
       String gridColorKey) {
     SGPropertyUtility.addProperty(map, gridVisibleKey, this.isGridVisible());
     SGPropertyUtility.addProperty(
-        map, gridAxisXKey, SGUtility.getLocationName(this.getXAxisLocation()));
+        map, gridAxisXKey, SGFigureUtility.getLocationName(this.getXAxisLocation()));
     SGPropertyUtility.addProperty(
-        map, gridAxisYKey, SGUtility.getLocationName(this.getYAxisLocation()));
+        map, gridAxisYKey, SGFigureUtility.getLocationName(this.getYAxisLocation()));
     SGPropertyUtility.addProperty(map, gridAutoKey, this.isAutoRange());
     SGPropertyUtility.addProperty(map, gridStepXKey, this.getStepValueX());
     SGPropertyUtility.addProperty(map, gridStepYKey, this.getStepValueY());

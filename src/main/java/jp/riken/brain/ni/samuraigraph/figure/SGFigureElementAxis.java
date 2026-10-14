@@ -1449,7 +1449,7 @@ public class SGFigureElementAxis extends SGFigureElement
    * @param id a location ID
    */
   public String getLocationName(final int id) {
-    return SGUtility.getLocationName(id);
+    return SGFigureUtility.getLocationName(id);
   }
 
   /**
@@ -1458,7 +1458,7 @@ public class SGFigureElementAxis extends SGFigureElement
    * @param name a location name
    */
   public int getLocationInPlane(final String name) {
-    return SGUtility.getLocationInPlane(name);
+    return SGFigureUtility.getLocationInPlane(name);
   }
 
   /**

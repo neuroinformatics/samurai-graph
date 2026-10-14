@@ -689,7 +689,7 @@ class SGAxisScale extends SGDrawingElementScale
         this.setVisible(b);
         result.putResult(COM_SCALE_VISIBLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_SCALE_X_AXIS.equalsIgnoreCase(key)) {
-        final int loc = SGUtility.getAxisLocation(value);
+        final int loc = SGFigureUtility.getAxisLocation(value);
         if (loc == -1) {
           result.putResult(COM_SCALE_X_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
@@ -700,7 +700,7 @@ class SGAxisScale extends SGDrawingElementScale
         }
         result.putResult(COM_SCALE_X_AXIS, SGPropertyResults.SUCCEEDED);
       } else if (COM_SCALE_Y_AXIS.equalsIgnoreCase(key)) {
-        final int loc = SGUtility.getAxisLocation(value);
+        final int loc = SGFigureUtility.getAxisLocation(value);
         if (loc == -1) {
           result.putResult(COM_SCALE_Y_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;

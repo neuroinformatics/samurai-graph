@@ -1819,7 +1819,7 @@ public class SGFigureElementShape extends SGFigureElement implements SGIFigureEl
         String value = map.getValueString(key);
 
         if (COM_SHAPE_AXIS_X.equalsIgnoreCase(key)) {
-          final int loc = SGUtility.getAxisLocation(value);
+          final int loc = SGFigureUtility.getAxisLocation(value);
           if (loc == -1) {
             result.putResult(COM_SHAPE_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
@@ -1830,7 +1830,7 @@ public class SGFigureElementShape extends SGFigureElement implements SGIFigureEl
           }
           result.putResult(COM_SHAPE_AXIS_X, SGPropertyResults.SUCCEEDED);
         } else if (COM_SHAPE_AXIS_Y.equalsIgnoreCase(key)) {
-          final int loc = SGUtility.getAxisLocation(value);
+          final int loc = SGFigureUtility.getAxisLocation(value);
           if (loc == -1) {
             result.putResult(COM_SHAPE_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;

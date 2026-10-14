@@ -1735,7 +1735,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
         String value = map.getValueString(key);
 
         if (COM_TIMING_LINE_AXIS.equalsIgnoreCase(key)) {
-          final int loc = SGUtility.getAxisLocation(value);
+          final int loc = SGFigureUtility.getAxisLocation(value);
           if (loc == -1) {
             result.putResult(COM_TIMING_LINE_AXIS, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
@@ -2061,7 +2061,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       if (sValue == null) {
         return null;
       }
-      final int location = SGUtility.getAxisLocation(sAxis);
+      final int location = SGFigureUtility.getAxisLocation(sAxis);
       Double value = SGUtilityText.getDouble(sValue);
       if (location == -1) {
         return null;

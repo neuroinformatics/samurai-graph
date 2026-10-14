@@ -2444,7 +2444,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
       String value = map.getValueString(key);
 
       if (COM_LEGEND_AXIS_X.equalsIgnoreCase(key)) {
-        final int loc = SGUtility.getAxisLocation(value);
+        final int loc = SGFigureUtility.getAxisLocation(value);
         if (loc == -1) {
           result.putResult(COM_LEGEND_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
@@ -2455,7 +2455,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
         }
         result.putResult(COM_LEGEND_AXIS_X, SGPropertyResults.SUCCEEDED);
       } else if (COM_LEGEND_AXIS_Y.equalsIgnoreCase(key)) {
-        final int loc = SGUtility.getAxisLocation(value);
+        final int loc = SGFigureUtility.getAxisLocation(value);
         if (loc == -1) {
           result.putResult(COM_LEGEND_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;

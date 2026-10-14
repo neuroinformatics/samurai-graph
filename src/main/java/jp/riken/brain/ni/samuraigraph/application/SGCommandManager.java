@@ -57,6 +57,7 @@ import jp.riken.brain.ni.samuraigraph.data.SGMATLABFile;
 import jp.riken.brain.ni.samuraigraph.data.SGNetCDFFile;
 import jp.riken.brain.ni.samuraigraph.figure.SGColorBarColorMapManager;
 import jp.riken.brain.ni.samuraigraph.figure.SGColorBarConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureUtility;
 import jp.riken.brain.ni.samuraigraph.figure.SGIElementGroupSetMultipleSXY;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyleColorMapManager;
@@ -1139,7 +1140,7 @@ class SGCommandManager {
         return STATUS_FAILED;
       }
       String args0 = argsList.get(0);
-      final int location = SGUtility.getAxisLocation(args0);
+      final int location = SGFigureUtility.getAxisLocation(args0);
 
       SGPropertyResults result = null;
       SGPropertyMap map = null;

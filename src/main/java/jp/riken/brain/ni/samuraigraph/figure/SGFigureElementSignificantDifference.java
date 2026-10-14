@@ -2440,7 +2440,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
         String value = map.getValueString(key);
 
         if (COM_SIGDIFF_AXIS_X.equalsIgnoreCase(key)) {
-          final int loc = SGUtility.getAxisLocation(value);
+          final int loc = SGFigureUtility.getAxisLocation(value);
           if (loc == -1) {
             result.putResult(COM_SIGDIFF_AXIS_X, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
@@ -2451,7 +2451,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
           }
           result.putResult(COM_SIGDIFF_AXIS_X, SGPropertyResults.SUCCEEDED);
         } else if (COM_SIGDIFF_AXIS_Y.equalsIgnoreCase(key)) {
-          final int loc = SGUtility.getAxisLocation(value);
+          final int loc = SGFigureUtility.getAxisLocation(value);
           if (loc == -1) {
             result.putResult(COM_SIGDIFF_AXIS_Y, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;
