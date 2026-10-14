@@ -429,6 +429,30 @@ class SGDataCreatorTest {
   }
 
   @Test
+  void createThroughDataSourceInfoPropagatesNetCDFFileNotFound() {
+    Map<String, Object> infoMap = baseInfoMap(SGDataTypeConstants.SXY_NETCDF_DATA);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);
+    infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE_VARIABLE, Boolean.TRUE);
+    SGDataColumnInfoSet cols =
+        sset(
+            scol("x", SGDataColumnTypeConstants.X_VALUE),
+            scol("y", SGDataColumnTypeConstants.Y_VALUE));
+    // A missing NetCDF file must be reported by the declared exception rather
+    // than silently turned into a null data source.
+    assertThrows(
+        FileNotFoundException.class,
+        () ->
+            new SGDataCreator()
+                .create(
+                    new SGMainFunctions.DataSourceInfo("no/such/file.nc"),
+                    cols,
+                    infoMap,
+                    new NoopProgressControl(),
+                    null,
+                    -1));
+  }
+
+  @Test
   void createThroughDataSourceInfoUsesExistingSource() throws Exception {
     Map<String, Object> infoMap = baseInfoMap(SGDataTypeConstants.SXY_DATA);
     infoMap.put(SGDataInformationKeyConstants.KEY_SXY_MULTIPLE, Boolean.FALSE);

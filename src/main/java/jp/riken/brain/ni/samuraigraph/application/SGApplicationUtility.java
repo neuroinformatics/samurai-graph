@@ -575,6 +575,9 @@ public class SGApplicationUtility {
         NetcdfFile ncFile = null;
         try {
           ncFile = SGApplicationUtility.openNetCDF(path);
+        } catch (FileNotFoundException e) {
+          // propagate so that the callers can distinguish "file not found"
+          throw e;
         } catch (IOException e) {
           return null;
         }
