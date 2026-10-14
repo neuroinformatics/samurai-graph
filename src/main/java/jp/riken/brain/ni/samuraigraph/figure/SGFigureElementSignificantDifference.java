@@ -1113,7 +1113,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
       this.add(new JLabel(sb.toString()));
       this.addSeparator();
 
-      SGUtility.addArrangeItems(this, sd);
+      SGFigureUtility.addArrangeItems(this, sd);
 
       this.addSeparator();
 

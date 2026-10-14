@@ -1357,7 +1357,7 @@ public class SGFigureElementString extends SGFigureElement
       p.add(new JLabel(sb.toString()));
       p.addSeparator();
 
-      SGUtility.addArrangeItems(p, this);
+      SGFigureUtility.addArrangeItems(p, this);
 
       p.addSeparator();
 

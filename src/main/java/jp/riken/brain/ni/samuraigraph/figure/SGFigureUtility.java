@@ -8,7 +8,16 @@
 
 package jp.riken.brain.ni.samuraigraph.figure;
 
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.MENUCMD_ARRANGE;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.MENUCMD_BRING_FORWARD;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.MENUCMD_BRING_TO_FRONT;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.MENUCMD_SEND_BACKWARD;
+import static jp.riken.brain.ni.samuraigraph.base.SGConstants.MENUCMD_SEND_TO_BACK;
+
+import java.awt.event.ActionListener;
 import java.text.ParseException;
+import javax.swing.JMenu;
+import javax.swing.JPopupMenu;
 import jp.riken.brain.ni.samuraigraph.base.SGAxisDateStepValue;
 import jp.riken.brain.ni.samuraigraph.base.SGAxisDateValue;
 import jp.riken.brain.ni.samuraigraph.base.SGAxisDoubleStepValue;
@@ -23,6 +32,20 @@ import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 public final class SGFigureUtility {
 
   private SGFigureUtility() {}
+
+  /**
+   * Adds menu items to arrange objects.
+   *
+   * @param p the pop up menu
+   * @param l the action listener
+   */
+  public static void addArrangeItems(JPopupMenu p, ActionListener l) {
+    JMenu arrangeMenu = SGUtility.addMenu(p, l, MENUCMD_ARRANGE);
+    SGUtility.addItem(arrangeMenu, l, MENUCMD_BRING_TO_FRONT);
+    SGUtility.addItem(arrangeMenu, l, MENUCMD_BRING_FORWARD);
+    SGUtility.addItem(arrangeMenu, l, MENUCMD_SEND_BACKWARD);
+    SGUtility.addItem(arrangeMenu, l, MENUCMD_SEND_TO_BACK);
+  }
 
   /**
    * Finds a right font name from the system with a given font name.

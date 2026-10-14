@@ -12,6 +12,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureUtility;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -202,7 +203,7 @@ class SGUtilityMenuTest {
   @Test
   void addArrangeItemsAppendsArrangeMenuWithFourCommands() {
     JPopupMenu popup = new JPopupMenu();
-    SGUtility.addArrangeItems(popup, NO_OP);
+    SGFigureUtility.addArrangeItems(popup, NO_OP);
     JMenu arrange = SGUtility.findMenu(popup, "Arrange");
     assertNotNull(arrange);
     assertSame(arrange, popup.getComponent(0));

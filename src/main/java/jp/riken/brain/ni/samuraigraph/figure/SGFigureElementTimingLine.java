@@ -925,7 +925,7 @@ public class SGFigureElementTimingLine extends SGFigureElement
       this.add(new JLabel(sb.toString()));
       this.addSeparator();
 
-      SGUtility.addArrangeItems(this, tm);
+      SGFigureUtility.addArrangeItems(this, tm);
 
       this.addSeparator();
 

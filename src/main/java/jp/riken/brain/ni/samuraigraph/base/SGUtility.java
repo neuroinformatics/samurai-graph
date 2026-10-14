@@ -2250,20 +2250,6 @@ public class SGUtility {
   }
 
   /**
-   * Adds menu items to arrange objects.
-   *
-   * @param p the pop up menu
-   * @param l the action listener
-   */
-  public static void addArrangeItems(JPopupMenu p, ActionListener l) {
-    JMenu arrangeMenu = SGUtility.addMenu(p, l, MENUCMD_ARRANGE);
-    SGUtility.addItem(arrangeMenu, l, MENUCMD_BRING_TO_FRONT);
-    SGUtility.addItem(arrangeMenu, l, MENUCMD_BRING_FORWARD);
-    SGUtility.addItem(arrangeMenu, l, MENUCMD_SEND_BACKWARD);
-    SGUtility.addItem(arrangeMenu, l, MENUCMD_SEND_TO_BACK);
-  }
-
-  /**
    * Creates and returns the array indices within given array length.
    *
    * @param stride the stride of array

@@ -839,7 +839,7 @@ public class SGFigureElementAxisBreak extends SGFigureElement implements SGIFigu
       add(new JLabel(sb.toString()));
       this.addSeparator();
 
-      SGUtility.addArrangeItems(this, abs);
+      SGFigureUtility.addArrangeItems(this, abs);
 
       this.addSeparator();
 

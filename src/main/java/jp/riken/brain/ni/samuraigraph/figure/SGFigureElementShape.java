@@ -1139,7 +1139,7 @@ public class SGFigureElementShape extends SGFigureElement implements SGIFigureEl
       add(new JLabel(sb.toString()));
       addSeparator();
 
-      SGUtility.addArrangeItems(this, so);
+      SGFigureUtility.addArrangeItems(this, so);
 
       addSeparator();
 
