@@ -83,9 +83,9 @@ into interface defaults or static utilities, not class bodies.
 | `figure.dialog/SGAxisDialog` | 3,082 | Axis property dialog |
 | `figure/SGFigureElementSignificantDifference` | 3,060 | Significant-difference element |
 
-Beyond the top 12: `SGFigureElementLegend` (2,810), `SGUtility` (2,784),
+Beyond the top 12: `SGFigureElementLegend` (2,810),
 `SGDataCreator` (2,775), `SGNetCDFData` (2,745),
-`SGSXYSDArrayMultipleData` (2,693), `SGClientPanel` (2,463), and 10 more
+`SGSXYSDArrayMultipleData` (2,693), `SGUtility` (2,293), `SGClientPanel` (2,463), and 10 more
 between 2,062 and 2,306 lines. Most of the 28 classes over 2,000 lines are
 Swing GUI classes in `figure` and `base`.
 
@@ -98,9 +98,13 @@ Key problems:
   collaborators (ActionHandler, AlignmentUtility, Clipboard, ExportHelper,
   GeometryHelper, ObjectHelper, PropertyDialogUtility, PropertyIO,
   UndoUtility, ViewportUtility), but the remainder is still large.
-- `SGUtility` (2,784 lines) holds **139 public static methods**. It is a
-  static grab-bag with no clear ownership boundary, called directly from 66
-  classes in `figure` and 57 classes in `data`.
+- `SGUtility` (2,293 lines) still holds **113 public static methods**. It is
+  a static grab-bag with no clear ownership boundary, called directly from
+  classes in `figure` and `data`. The figure-only helpers (axis location and
+  value parsing, font lookup, context menu builders, export font size,
+  version lookup) were split into `figure/SGFigureUtility`; the data-only
+  helpers (encoding, array transpose, index parsing, array copies, overlap
+  checks) into `data/SGDataMiscUtility`.
 - The three multiple-data SXY classes (§2.1) each exceed 2,600 lines
   (`SGSXYNetCDFMultipleData` at 3,394 is the largest), and
   `SGNetCDFData` (2,745) is the largest non-SXY data class.
@@ -132,8 +136,10 @@ Key problems:
   unifying those property formats, which would break the compatibility of
   existing property files, so the per-backend split is kept deliberately.
 - `SGUtility` static helpers are shared across layers instead of a service:
-  57 classes in `data` and 66 in `figure` call them directly (property
-  validation, value computation, text/date parsing, GUI helpers).
+  37 classes in `data` and 63 in `figure` call them directly (property
+  validation, value computation, text/date parsing, GUI helpers). The figure
+  and data-only helpers were split into `SGFigureUtility` and
+  `SGDataMiscUtility`, but the remaining shared set still spans all layers.
 - `SGDrawingWindow` operates on `SGData` objects directly (e.g.
   `readProperty`, `doOutputDataToFile`) rather than going through a
   data-access abstraction.
@@ -181,7 +187,7 @@ both directions without truncating to 32 bits.
 | Area | Status |
 |---|---|
 | `SGDrawingWindow` (3,660 LOC) | No direct unit tests for the window logic; exercised indirectly through window-construction tests (e.g. `SGDrawingWindowPropertyIOTest`) |
-| `SGUtility` (2,784 LOC, 139 static methods) | Only unreachable or platform-specific defensive branches remain untested: the `moveObjectTo`-failure returns inside `moveObject` / `moveObjectRawList`, the `getFileName` forward-slash fallback for Windows paths, the `assignIdNumber` `Error` guard and its loop exit, the `PermittingEmptyString` empty-string rechecks shadowed by the earlier return, the `getVersionNumber` defensive `property == null` check, and the `setupMediaTracker` `InterruptedException` catch |
+| `SGUtility` (2,293 LOC, 113 static methods) | Only unreachable or platform-specific defensive branches remain untested: the `moveObjectTo`-failure returns inside `moveObject`, the `getFileName` forward-slash fallback for Windows paths, the `assignIdNumber` `Error` guard and its loop exit, the `PermittingEmptyString` empty-string rechecks shadowed by the earlier return, and the `setupMediaTracker` `InterruptedException` catch. The same defensive branches in the moved helpers still exist in `SGFigureUtility` (the `moveObjectRawList` failure return and the `getVersionNumber` `property == null` check) and remain untested there |
 | `hdf5` package | The remaining missed instructions are unreachable through jhdf or defensive fallbacks: the `mapDataClass` cases jhdf never reports (opaque, compound, reference, enum, vlen, time), the dead `Hdf5WriterAdapter$FileReader` (the `IHDF5Writer` interface exposes no `file()` accessor), the five convenience-writer `catch` blocks (jhdf buffers `putDataset` in memory, so a failing write is not thrown until `close`), the `getDataset` by-name fallback, the `byte[][]`/`Number[]`/`String.valueOf` attribute-coercion fallbacks jhdf never produces, and the `close()` error handlers |
 | `export` package | Fully covered. The `org.freehep...export` registry leaves only the outer `getResources` `IOException` catch (a defensive handler for an unreadable classloader) unreachable in tests |
 | `data` package | Both multiple-data SXY classes are covered by export (HDF5/MATLAB/NetCDF), assigned-variable, column-type, data-copy and data-viewer-edit suites; the backend setup dialogs and the tick-label/date export branches remain under-tested |
