@@ -210,12 +210,22 @@ public final class SGDataFileUtility {
           writer.string().setAttr(path, attrName, value);
         }
       } else if (HDF5DataClass.INTEGER.equals(attrDataClass)) {
-        if (arrayType) {
-          final int[] value = reader.int32().getArrayAttr(path, attrName);
-          writer.int32().setArrayAttr(path, attrName, value);
+        if (attrInfo.isLongInteger()) {
+          if (arrayType) {
+            final long[] value = reader.int64().getArrayAttr(path, attrName);
+            writer.int64().setArrayAttr(path, attrName, value);
+          } else {
+            final long value = reader.int64().getAttr(path, attrName);
+            writer.int64().setAttr(path, attrName, value);
+          }
         } else {
-          final int value = reader.int32().getAttr(path, attrName);
-          writer.int32().setAttr(path, attrName, value);
+          if (arrayType) {
+            final int[] value = reader.int32().getArrayAttr(path, attrName);
+            writer.int32().setArrayAttr(path, attrName, value);
+          } else {
+            final int value = reader.int32().getAttr(path, attrName);
+            writer.int32().setAttr(path, attrName, value);
+          }
         }
       } else if (HDF5DataClass.FLOAT.equals(attrDataClass)) {
         if (arrayType) {

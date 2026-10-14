@@ -18,6 +18,7 @@ import io.jhdf.api.Dataset;
 import io.jhdf.api.Group;
 import io.jhdf.api.Node;
 import io.jhdf.api.NodeType;
+import io.jhdf.object.datatype.DataType;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -170,6 +171,18 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
     }
   }
 
+  /**
+   * Returns whether the given HDF5 data type is a 64-bit (long) integer, i.e. an INTEGER data class
+   * whose storage is at least 8 bytes.
+   *
+   * @param dataType the HDF5 data type
+   * @return true if the data type is a 64-bit integer
+   */
+  private static boolean isLongIntegerData(final DataType dataType) {
+    return (HDF5DataClass.INTEGER.equals(mapDataClass(dataType.getDataClass())))
+        && (dataType.getSize() >= 8);
+  }
+
   // --- Nested reader implementations ---
 
   private class Float64Reader implements IHDF5Float64DatatypeInterface {
@@ -235,6 +248,32 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         return convertToMDLongArray(data);
       } catch (Exception e) {
         logger.error("Failed to read int64 data: {}", dataSetName, e);
+        throw new RuntimeException(e);
+      }
+    }
+
+    @Override
+    public long getAttr(final String path, final String attributeName) {
+      try {
+        Node node = Hdf5ReaderAdapter.this.getNodeByPath(path);
+        Attribute attr = node.getAttribute(attributeName);
+        Object value = attr.getData();
+        return toLong(value);
+      } catch (Exception e) {
+        logger.error("Failed to read int64 attr: {}@{}", attributeName, path, e);
+        throw new RuntimeException(e);
+      }
+    }
+
+    @Override
+    public long[] getArrayAttr(final String path, final String attributeName) {
+      try {
+        Node node = Hdf5ReaderAdapter.this.getNodeByPath(path);
+        Attribute attr = node.getAttribute(attributeName);
+        Object value = attr.getData();
+        return toLongArray(value);
+      } catch (Exception e) {
+        logger.error("Failed to read int64 array attr: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
       }
     }
@@ -420,8 +459,9 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
         Node node = Hdf5ReaderAdapter.this.getNodeByPath(path);
         Attribute attr = node.getAttribute(attributeName);
         int numElements = (int) attr.getSize();
-        return new HDF5DataTypeInformation(
-            mapDataClass(attr.getDataType().getDataClass()), numElements);
+        HDF5DataClass dataClass = mapDataClass(attr.getDataType().getDataClass());
+        boolean isLongInteger = isLongIntegerData(attr.getDataType());
+        return new HDF5DataTypeInformation(dataClass, numElements, isLongInteger);
       } catch (Exception e) {
         logger.error("Failed to get attribute info: {}@{}", attributeName, path, e);
         throw new RuntimeException(e);
@@ -592,6 +632,28 @@ class Hdf5ReaderAdapter implements IHDF5Reader {
       return result;
     } else {
       return new int[] {toInt(value)};
+    }
+  }
+
+  private static long[] toLongArray(final Object value) {
+    if (value instanceof long[]) {
+      return (long[]) value;
+    } else if (value instanceof Number[]) {
+      Number[] arr = (Number[]) value;
+      long[] result = new long[arr.length];
+      for (int i = 0; i < arr.length; i++) {
+        result[i] = arr[i].longValue();
+      }
+      return result;
+    } else if (value instanceof int[]) {
+      int[] arr = (int[]) value;
+      long[] result = new long[arr.length];
+      for (int i = 0; i < arr.length; i++) {
+        result[i] = arr[i];
+      }
+      return result;
+    } else {
+      return new long[] {toLong(value)};
     }
   }
 

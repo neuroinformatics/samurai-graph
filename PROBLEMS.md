@@ -161,6 +161,9 @@ that rank: `convertToMDDoubleArray` accepts 1-D, 2-D and 3-D data,
 convert is written as a flat 1-D dataset so the values still round-trip.
 The convenience writers (`writeDoubleArray` / `writeIntArray` /
 `writeDoubleMatrix` / `writeIntMatrix`) preserve the shape the same way.
+Since the int64 writer and attribute reader/writer were added, the
+reader/writer now handle 64-bit integers (datasets and attributes) in
+both directions without truncating to 32 bits.
 
 - `SGMDArrayData.saveToArchiveDataSetFileAsHDF5File` (lines 1474-1485)
   round-trips each variable through `readMDArray` and `writeMDArray`, so an

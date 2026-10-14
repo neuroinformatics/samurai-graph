@@ -13,6 +13,7 @@ public class HDF5DataTypeInformation {
 
   private final HDF5DataClass mDataClass;
   private final int mNumberOfElements;
+  private final boolean mIsLongInteger;
 
   /**
    * Constructs data type information.
@@ -21,8 +22,21 @@ public class HDF5DataTypeInformation {
    * @param numberOfElements the number of elements (for arrays)
    */
   public HDF5DataTypeInformation(final HDF5DataClass dataClass, final int numberOfElements) {
+    this(dataClass, numberOfElements, false);
+  }
+
+  /**
+   * Constructs data type information.
+   *
+   * @param dataClass the data class
+   * @param numberOfElements the number of elements (for arrays)
+   * @param isLongInteger true if the integer data is of the 64-bit (long) type
+   */
+  public HDF5DataTypeInformation(
+      final HDF5DataClass dataClass, final int numberOfElements, final boolean isLongInteger) {
     this.mDataClass = dataClass;
     this.mNumberOfElements = numberOfElements;
+    this.mIsLongInteger = isLongInteger;
   }
 
   /**
@@ -41,5 +55,15 @@ public class HDF5DataTypeInformation {
    */
   public int getNumberOfElements() {
     return this.mNumberOfElements;
+  }
+
+  /**
+   * Returns whether the integer data is of the 64-bit (long) type. Only meaningful when the data
+   * class is {@link HDF5DataClass#INTEGER}.
+   *
+   * @return true if the integer data is of the 64-bit (long) type
+   */
+  public boolean isLongInteger() {
+    return this.mIsLongInteger;
   }
 }

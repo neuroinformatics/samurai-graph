@@ -11,4 +11,8 @@ package com.github.neuroinformatics.samurai_graph.lib.hdf5;
 public interface IHDF5Int64DatatypeInterface {
   com.github.neuroinformatics.samurai_graph.lib.mdarray.MDLongArray readMDArray(
       final String dataSetName);
+
+  long getAttr(final String path, final String attributeName);
+
+  long[] getArrayAttr(final String path, final String attributeName);
 }

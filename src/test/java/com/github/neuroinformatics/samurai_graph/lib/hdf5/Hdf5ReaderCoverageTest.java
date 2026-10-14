@@ -209,6 +209,35 @@ class Hdf5ReaderCoverageTest {
   }
 
   @Test
+  void int64AttributesReadLongAndLongArrays() throws Exception {
+    File file = this.createTempHdf5File();
+    try (io.jhdf.WritableHdfFile w = HdfFile.write(file.toPath())) {
+      w.putDataset("vals", new double[] {1.0});
+      // A value that exceeds the int range proves the long is not truncated.
+      w.putAttribute("longAttr", 5_000_000_000L);
+      w.putAttribute("longArr", new long[] {1L, 2L, 3L});
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      assertEquals(5_000_000_000L, reader.int64().getAttr("/", "longAttr"));
+      assertArrayEquals(new long[] {1L, 2L, 3L}, reader.int64().getArrayAttr("/", "longArr"));
+    }
+  }
+
+  @Test
+  void attributeInformationFlagsInt64IntegerType() throws Exception {
+    File file = this.createTempHdf5File();
+    try (io.jhdf.WritableHdfFile w = HdfFile.write(file.toPath())) {
+      w.putDataset("vals", new double[] {1.0});
+      w.putAttribute("intAttr", 5);
+      w.putAttribute("longAttr", 5_000_000_000L);
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      assertFalse(reader.object().getAttributeInformation("/", "intAttr").isLongInteger());
+      assertTrue(reader.object().getAttributeInformation("/", "longAttr").isLongInteger());
+    }
+  }
+
+  @Test
   void booleanAndEnumerationAttributesCoerceFromNumberAndString() throws Exception {
     File file = this.createTempHdf5File();
     try (io.jhdf.WritableHdfFile w = HdfFile.write(file.toPath())) {

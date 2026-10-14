@@ -1,5 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -817,6 +818,30 @@ class SGDataFileUtilityTest {
       assertEquals(3, ((Number) attrs.get(0).getValue(0)).intValue());
       assertEquals(1.5f, ((Number) attrs.get(1).getValue(0)).floatValue(), 0.0f);
       assertEquals("[a, b]", java.util.Arrays.toString((String[]) attrs.get(2).getValue(0)));
+    }
+  }
+
+  @Test
+  void writeHDF5AttributeCopiesInt64Attributes() throws Exception {
+    File src = createTempHdf5File();
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(src)) {
+      writer.writeDoubleArray("values", new double[] {1.5});
+      // A value beyond the int range proves the long is preserved end to end.
+      writer.int64().setAttr("/", "bigCount", 5_000_000_000L);
+      writer.int64().setArrayAttr("/", "bigArr", new long[] {10L, 20L});
+    }
+    File dst = createTempHdf5File();
+    try (IHDF5Writer dstWriter = HDF5FactoryProvider.get().open(dst)) {
+      dstWriter.writeDoubleArray("values", new double[] {2.5});
+      try (IHDF5Reader srcReader = HDF5FactoryProvider.get().openForReading(src)) {
+        assertTrue(
+            SGDataFileUtility.writeHDF5Attribute(
+                dstWriter, srcReader, "/", Arrays.asList("bigCount", "bigArr")));
+      }
+    }
+    try (IHDF5Reader dstReader = HDF5FactoryProvider.get().openForReading(dst)) {
+      assertEquals(5_000_000_000L, dstReader.int64().getAttr("/", "bigCount"));
+      assertArrayEquals(new long[] {10L, 20L}, dstReader.int64().getArrayAttr("/", "bigArr"));
     }
   }
 
