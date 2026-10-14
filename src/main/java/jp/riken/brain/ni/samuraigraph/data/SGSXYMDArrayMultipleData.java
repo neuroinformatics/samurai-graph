@@ -947,56 +947,35 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
 
     String[] xNames = null;
     if (this.mXVariables != null) {
-      xNames = new String[this.mXVariables.length];
-      for (int ii = 0; ii < xNames.length; ii++) {
-        xNames[ii] = this.mXVariables[ii].getName();
-      }
+      xNames = SGDataMiscUtility.getNames(this.mXVariables);
     }
     String[] yNames = null;
     if (this.mYVariables != null) {
-      yNames = new String[this.mYVariables.length];
-      for (int ii = 0; ii < yNames.length; ii++) {
-        yNames[ii] = this.mYVariables[ii].getName();
-      }
+      yNames = SGDataMiscUtility.getNames(this.mYVariables);
     }
     String[] lNames = null;
     String[] uNames = null;
     String[] ehNames = null;
     if (this.isErrorBarAvailable()) {
-      lNames = new String[this.mLowerErrorVariables.length];
-      for (int ii = 0; ii < lNames.length; ii++) {
-        lNames[ii] = this.mLowerErrorVariables[ii].getName();
-      }
-      uNames = new String[this.mUpperErrorVariables.length];
-      for (int ii = 0; ii < uNames.length; ii++) {
-        uNames[ii] = this.mUpperErrorVariables[ii].getName();
-      }
+      lNames = SGDataMiscUtility.getNames(this.mLowerErrorVariables);
+      uNames = SGDataMiscUtility.getNames(this.mUpperErrorVariables);
       if (this.isDimensionPicked()) {
         lNames = new String[] {this.getName(this.getLowerErrorVariable())};
         uNames = new String[] {this.getName(this.getUpperErrorVariable())};
         ehNames = new String[] {this.getName(this.getErrorBarHolderVariable())};
       } else {
-        ehNames = new String[this.mErrorBarHolderVariables.length];
-        for (int ii = 0; ii < ehNames.length; ii++) {
-          ehNames[ii] = this.mErrorBarHolderVariables[ii].getName();
-        }
+        ehNames = SGDataMiscUtility.getNames(this.mErrorBarHolderVariables);
       }
     }
     String[] tNames = null;
     String[] thNames = null;
     if (this.isTickLabelAvailable()) {
-      tNames = new String[this.mTickLabelVariables.length];
-      for (int ii = 0; ii < tNames.length; ii++) {
-        tNames[ii] = this.mTickLabelVariables[ii].getName();
-      }
+      tNames = SGDataMiscUtility.getNames(this.mTickLabelVariables);
       if (this.isDimensionPicked()) {
         tNames = new String[] {this.getName(this.getTickLabelVariable())};
         thNames = new String[] {this.getName(this.getTickLabelHolderVariable())};
       } else {
-        thNames = new String[this.mTickLabelHolderVariables.length];
-        for (int ii = 0; ii < thNames.length; ii++) {
-          thNames[ii] = this.mTickLabelHolderVariables[ii].getName();
-        }
+        thNames = SGDataMiscUtility.getNames(this.mTickLabelHolderVariables);
       }
     }
     sp.xNames = xNames;
@@ -2557,11 +2536,7 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
   }
 
   String[] getNames(SGMDArrayVariable[] vars) {
-    String[] names = new String[vars.length];
-    for (int ii = 0; ii < names.length; ii++) {
-      names[ii] = (vars[ii] != null) ? vars[ii].getName() : null;
-    }
-    return names;
+    return SGDataMiscUtility.getNames(vars);
   }
 
   MDArrayDataType[] getDataTypes(SGMDArrayVariable[] vars) {

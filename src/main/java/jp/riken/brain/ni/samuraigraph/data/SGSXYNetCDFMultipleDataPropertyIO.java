@@ -141,50 +141,17 @@ class SGSXYNetCDFMultipleDataPropertyIO {
         sp.thNames = null;
       }
     } else {
-      String[] xNames = new String[data.mXVariables.length];
-      for (int ii = 0; ii < xNames.length; ii++) {
-        xNames[ii] = data.mXVariables[ii].getName();
-      }
-      String[] yNames = new String[data.mYVariables.length];
-      for (int ii = 0; ii < yNames.length; ii++) {
-        yNames[ii] = data.mYVariables[ii].getName();
-      }
-      String[] lNames = null;
-      String[] uNames = null;
-      String[] ehNames = null;
+      sp.xNames = SGDataMiscUtility.getNames(data.mXVariables);
+      sp.yNames = SGDataMiscUtility.getNames(data.mYVariables);
       if (data.isErrorBarAvailable()) {
-        lNames = new String[data.mLowerErrorVariables.length];
-        for (int ii = 0; ii < lNames.length; ii++) {
-          lNames[ii] = data.mLowerErrorVariables[ii].getName();
-        }
-        uNames = new String[data.mUpperErrorVariables.length];
-        for (int ii = 0; ii < uNames.length; ii++) {
-          uNames[ii] = data.mUpperErrorVariables[ii].getName();
-        }
-        ehNames = new String[data.mErrorBarHolderVariables.length];
-        for (int ii = 0; ii < ehNames.length; ii++) {
-          ehNames[ii] = data.mErrorBarHolderVariables[ii].getName();
-        }
+        sp.lNames = SGDataMiscUtility.getNames(data.mLowerErrorVariables);
+        sp.uNames = SGDataMiscUtility.getNames(data.mUpperErrorVariables);
+        sp.ehNames = SGDataMiscUtility.getNames(data.mErrorBarHolderVariables);
       }
-      String[] tNames = null;
-      String[] thNames = null;
       if (data.mTickLabelVariables != null) {
-        tNames = new String[data.mTickLabelVariables.length];
-        for (int ii = 0; ii < tNames.length; ii++) {
-          tNames[ii] = data.mTickLabelVariables[ii].getName();
-        }
-        thNames = new String[data.mTickLabelHolderVariables.length];
-        for (int ii = 0; ii < thNames.length; ii++) {
-          thNames[ii] = data.mTickLabelHolderVariables[ii].getName();
-        }
+        sp.tNames = SGDataMiscUtility.getNames(data.mTickLabelVariables);
+        sp.thNames = SGDataMiscUtility.getNames(data.mTickLabelHolderVariables);
       }
-      sp.xNames = xNames;
-      sp.yNames = yNames;
-      sp.lNames = lNames;
-      sp.uNames = uNames;
-      sp.ehNames = ehNames;
-      sp.tNames = tNames;
-      sp.thNames = thNames;
     }
 
     sp.mDecimalPlaces = data.getDecimalPlaces();

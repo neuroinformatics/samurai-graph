@@ -927,4 +927,22 @@ class SGDataMiscUtilityTest {
     assertEquals("", el.getAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES));
     assertEquals("", el.getAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES));
   }
+
+  @Test
+  void getNamesCollectsNetCDFVariableNames() throws Exception {
+    SGNetCDFFile file =
+        createNetCDFFile(Files.createTempFile("samurai-graph-test", ".nc").toString());
+    SGNetCDFVariable[] vars = {
+      file.findVariable("x"), file.findVariable("y"), file.findVariable("v1")
+    };
+    assertArrayEquals(new String[] {"x", "y", "v1"}, SGDataMiscUtility.getNames(vars));
+  }
+
+  @Test
+  void getNamesKeepsNullElements() throws Exception {
+    SGNetCDFFile file =
+        createNetCDFFile(Files.createTempFile("samurai-graph-test", ".nc").toString());
+    SGNetCDFVariable[] vars = {file.findVariable("x"), null, file.findVariable("v1")};
+    assertArrayEquals(new String[] {"x", null, "v1"}, SGDataMiscUtility.getNames(vars));
+  }
 }

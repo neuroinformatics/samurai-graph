@@ -115,13 +115,14 @@ Key problems:
   backend-specific element type, plus per-class collaborators
   (`SGSXYNetCDFMultipleDataPropertyIO`,
   `SGSXYNetCDFMultipleDataAccess`, `SGSXYMDArrayMultipleDataExporter`).
-  The tick-label array-section attribute and the non-picked variable-name
-  attributes are written through the shared
-  `SGDataMiscUtility.setTickLabelArraySection` /
-  `SGDataMiscUtility.setSXYMultipleVariableNameAttributes` helpers, with each
-  backend supplying its own bound-name strings (`{name}` for NetCDF vs
-  `{name:index}` for MDArray). The SDArray column-index output and the
-  `getProperties`/`setProperties` name-array assembly remain duplicated.
+  The tick-label array-section attribute, the non-picked variable-name
+  attributes, and the `getProperties` name-array assembly are written through
+  the shared `SGDataMiscUtility.setTickLabelArraySection` /
+  `SGDataMiscUtility.setSXYMultipleVariableNameAttributes` /
+  `SGDataMiscUtility.getNames` helpers, with each backend supplying its own
+  bound-name strings (`{name}` for NetCDF vs `{name:index}` for MDArray).
+  The SDArray column-index output, the picked-name branches and the
+  `setProperties` name resolution remain duplicated.
   Further unification would require unifying those property formats, which
   would break the compatibility of existing property files, so the
   per-backend split is kept deliberately.

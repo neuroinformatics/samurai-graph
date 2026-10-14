@@ -1680,4 +1680,32 @@ public final class SGDataMiscUtility {
       el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAMES, thNames.get());
     }
   }
+
+  /**
+   * Returns the array of the names of given NetCDF variables. A null element is kept as null.
+   *
+   * @param vars the NetCDF variables
+   * @return the array of the names
+   */
+  public static String[] getNames(final SGNetCDFVariable[] vars) {
+    String[] names = new String[vars.length];
+    for (int ii = 0; ii < names.length; ii++) {
+      names[ii] = (vars[ii] != null) ? vars[ii].getName() : null;
+    }
+    return names;
+  }
+
+  /**
+   * Returns the array of the names of given MDArray variables. A null element is kept as null.
+   *
+   * @param vars the MDArray variables
+   * @return the array of the names
+   */
+  public static String[] getNames(final SGMDArrayVariable[] vars) {
+    String[] names = new String[vars.length];
+    for (int ii = 0; ii < names.length; ii++) {
+      names[ii] = (vars[ii] != null) ? vars[ii].getName() : null;
+    }
+    return names;
+  }
 }
