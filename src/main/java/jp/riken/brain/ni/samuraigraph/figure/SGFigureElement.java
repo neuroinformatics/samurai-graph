@@ -1628,11 +1628,11 @@ public abstract class SGFigureElement implements SGIFigureElement {
     // move focused objects
     if (toTail) {
       for (int ii = 0; ii < list.size(); ii++) {
-        SGUtility.moveObjectToRawList(list.get(ii), objList, true);
+        SGFigureUtility.moveObjectToRawList(list.get(ii), objList, true);
       }
     } else {
       for (int ii = list.size() - 1; ii >= 0; ii--) {
-        SGUtility.moveObjectToRawList(list.get(ii), objList, false);
+        SGFigureUtility.moveObjectToRawList(list.get(ii), objList, false);
       }
     }
 
@@ -1660,7 +1660,7 @@ public abstract class SGFigureElement implements SGIFigureElement {
 
     // record the list before edited
     List<T> objListOld = new ArrayList<>(objList);
-    if (SGUtility.moveObjectRawList(list, objList, num) == false) {
+    if (SGFigureUtility.moveObjectRawList(list, objList, num) == false) {
       return false;
     }
 

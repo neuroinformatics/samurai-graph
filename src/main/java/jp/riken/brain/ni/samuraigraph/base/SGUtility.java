@@ -40,8 +40,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /** */
 public class SGUtility {
@@ -482,30 +480,6 @@ public class SGUtility {
   }
 
   /**
-   * Add a menu command with the check box to the menu.
-   *
-   * @param text the text parameter
-   * @param parent the parent menu item
-   * @param l an action listener of the command
-   * @param cmd a command to be added
-   * @param enabled a flag whether the command is enabled
-   * @return added menu item
-   */
-  public static JCheckBoxMenuItem addCheckBoxItem(
-      JMenuItem parent, ActionListener l, String text, String cmd, boolean enabled) {
-    final SGCheckBoxMenuItem item = new SGCheckBoxMenuItem(text);
-    parent.add(item);
-    item.setActionCommand(cmd);
-    item.addActionListener(l);
-    item.setEnabled(enabled);
-    return item;
-  }
-
-  public static JCheckBoxMenuItem addCheckBoxItem(JMenuItem parent, ActionListener l, String cmd) {
-    return addCheckBoxItem(parent, l, cmd, cmd, true);
-  }
-
-  /**
    * Identify the OS name.
    *
    * @param prefix - the prefix of OS name
@@ -688,34 +662,6 @@ public class SGUtility {
     }
     sp.setText(str);
     sp.setValue(d);
-
-    try {
-      sp.commitEditByDefault();
-    } catch (ParseException e) {
-      logger.debug("Exception occurred", e);
-    }
-
-    return true;
-  }
-
-  /**
-   * @param obj
-   * @return
-   * @param sp the sp parameter
-   */
-  public static boolean setIntValue(final SGSpinner sp, final Object obj) {
-    if (obj == null) {
-      sp.setText("");
-      return false;
-    }
-
-    String str = obj.toString().trim();
-    Integer n = SGUtilityText.getInteger(str);
-    if (n == null) {
-      return false;
-    }
-    sp.setText(str);
-    sp.setValue(Double.valueOf(n.doubleValue()));
 
     try {
       sp.commitEditByDefault();
@@ -1019,61 +965,6 @@ public class SGUtility {
       }
     }
 
-    return true;
-  }
-
-  /** Moves an object to the head or tail of a list. */
-  public static boolean moveObjectToRawList(
-      final Object obj, final List<?> list, final boolean toTail) {
-    final int index = list.indexOf(obj);
-    if (index == -1) {
-      return false;
-    }
-    @SuppressWarnings("unchecked")
-    List<Object> rawList = (List<Object>) list;
-    rawList.remove(obj);
-    if (toTail) {
-      rawList.add(obj);
-    } else {
-      rawList.add(0, obj);
-    }
-    return true;
-  }
-
-  /** Moves objects from one list to another. */
-  public static boolean moveObjectRawList(
-      final List<?> movedList, final List<?> list, final int num) {
-    @SuppressWarnings("unchecked")
-    final List<Object> rawList = (List<Object>) list;
-    if (num > 0) {
-      for (int ii = movedList.size() - 1; ii >= 0; ii--) {
-        Object obj = movedList.get(ii);
-        final int index = list.indexOf(obj);
-        if (index == -1) {
-          return false;
-        }
-        final int indexNew = index + num;
-        if (indexNew > list.size() - 1) {
-          continue;
-        }
-        rawList.remove(obj);
-        rawList.add(indexNew, obj);
-      }
-    } else {
-      for (int ii = 0; ii < movedList.size(); ii++) {
-        Object obj = movedList.get(ii);
-        final int index = list.indexOf(obj);
-        if (index == -1) {
-          return false;
-        }
-        final int indexNew = index + num;
-        if (indexNew < 0) {
-          continue;
-        }
-        rawList.remove(obj);
-        rawList.add(indexNew, obj);
-      }
-    }
     return true;
   }
 
@@ -2098,34 +1989,6 @@ public class SGUtility {
   }
 
   /**
-   * Finds and returns the version number in a property file for given element.
-   *
-   * @param el an element
-   * @return a text string of the version number or null if the version number does not exist
-   */
-  public static String getVersionNumber(Element el) {
-    Element property = null;
-    Element cur = el;
-    while (true) {
-      Node node = cur.getParentNode();
-      if (node == null) {
-        property = cur;
-        break;
-      }
-      if (!(node instanceof Element)) {
-        property = cur;
-        break;
-      }
-      cur = (Element) node;
-    }
-    if (property == null) {
-      return null;
-    }
-    String version = property.getAttribute(SGPropertyFileConstants.KEY_VERSION_NUMBER);
-    return version;
-  }
-
-  /**
    * Finds and returns a sub menu of given name from a given menu.
    *
    * @param menu a menu
@@ -2512,17 +2375,6 @@ public class SGUtility {
   public static float getExportLineWidth(final float lw) {
     final int digit = LINE_WIDTH_MINIMAL_ORDER - 1;
     return (float) SGUtilityNumber.roundOffNumber(lw, digit);
-  }
-
-  /**
-   * Calculates and returns font size to export from given font size.
-   *
-   * @param size font size in units of FONT_SIZE_UNIT
-   * @return font size to export
-   */
-  public static float getExportFontSize(final float size) {
-    final int digit = FONT_SIZE_MINIMAL_ORDER - 1;
-    return (float) SGUtilityNumber.roundOffNumber(size, digit);
   }
 
   /**

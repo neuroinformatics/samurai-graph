@@ -65,7 +65,7 @@ class SGUtilityMenuTest {
   @Test
   void addCheckBoxItemAppendsConfiguredCheckBoxToPopup() {
     JPopupMenu menu = new JPopupMenu();
-    JCheckBoxMenuItem item = SGUtility.addCheckBoxItem(menu, NO_OP, "CB", "cbcmd", true);
+    JCheckBoxMenuItem item = SGFigureUtility.addCheckBoxItem(menu, NO_OP, "CB", "cbcmd", true);
     assertTrue(item instanceof SGCheckBoxMenuItem);
     assertEquals("CB", item.getText());
     assertEquals("cbcmd", item.getActionCommand());
@@ -75,7 +75,7 @@ class SGUtilityMenuTest {
   @Test
   void addCheckBoxItemUsesCommandAsTextAndEnablesByDefault() {
     JPopupMenu menu = new JPopupMenu();
-    JCheckBoxMenuItem item = SGUtility.addCheckBoxItem(menu, NO_OP, "cbcmd");
+    JCheckBoxMenuItem item = SGFigureUtility.addCheckBoxItem(menu, NO_OP, "cbcmd");
     assertEquals("cbcmd", item.getText());
     assertEquals("cbcmd", item.getActionCommand());
     assertTrue(item.isEnabled());
@@ -84,7 +84,7 @@ class SGUtilityMenuTest {
   @Test
   void addCheckBoxItemAppendsItemToParentMenuItem() {
     JMenuItem parent = new JMenuItem("Parent");
-    JCheckBoxMenuItem item = SGUtility.addCheckBoxItem(parent, NO_OP, "CB", "cbcmd", true);
+    JCheckBoxMenuItem item = SGFigureUtility.addCheckBoxItem(parent, NO_OP, "CB", "cbcmd", true);
     assertEquals("cbcmd", item.getActionCommand());
     assertTrue(parent.isAncestorOf(item));
   }
@@ -102,7 +102,7 @@ class SGUtilityMenuTest {
   @Test
   void addCheckBoxItemUsesCommandAsTextOnParentMenuItem() {
     JMenuItem parent = new JMenuItem("Parent");
-    JCheckBoxMenuItem item = SGUtility.addCheckBoxItem(parent, NO_OP, "cbcmd");
+    JCheckBoxMenuItem item = SGFigureUtility.addCheckBoxItem(parent, NO_OP, "cbcmd");
     assertEquals("cbcmd", item.getText());
     assertEquals("cbcmd", item.getActionCommand());
     assertTrue(item.isEnabled());

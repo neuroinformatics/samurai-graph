@@ -185,7 +185,7 @@ public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickL
     SGPropertyUtility.addProperty(
         map,
         COM_DATA_TICK_LABEL_FONT_SIZE,
-        SGUtility.getExportFontSize(this.getFontSize(FONT_SIZE_UNIT)),
+        SGFigureUtility.getExportFontSize(this.getFontSize(FONT_SIZE_UNIT)),
         FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, COM_DATA_TICK_LABEL_FONT_COLOR, this.getColor());
     SGPropertyUtility.addProperty(

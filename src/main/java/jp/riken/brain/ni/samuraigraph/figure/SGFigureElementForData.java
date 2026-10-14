@@ -1267,7 +1267,7 @@ public abstract class SGFigureElementForData extends SGFigureElement
         }
       }
 
-      String version = SGUtility.getVersionNumber(el);
+      String version = SGFigureUtility.getVersionNumber(el);
       if ("2.0.0".equals(version)) {
         Double shiftX = null;
         Double shiftY = null;

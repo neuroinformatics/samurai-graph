@@ -194,14 +194,14 @@ public abstract class SGDataPopupMenu extends SGPopupMenu {
           String cCmd = cItem.getActionCommand();
           final boolean cEnabled = cItem.isEnabled();
           if (cItem instanceof CheckBoxPopupMenuItem) {
-            SGUtility.addCheckBoxItem(menu, cl, cText, cCmd, cEnabled);
+            SGFigureUtility.addCheckBoxItem(menu, cl, cText, cCmd, cEnabled);
           } else {
             SGUtility.addItem(menu, cl, cText, cCmd, cEnabled);
           }
         }
       } else {
         if (item instanceof CheckBoxPopupMenuItem) {
-          SGUtility.addCheckBoxItem(p, l, text, cmd, enabled);
+          SGFigureUtility.addCheckBoxItem(p, l, text, cmd, enabled);
         } else {
           SGUtility.addItem(p, l, text, cmd, enabled);
         }

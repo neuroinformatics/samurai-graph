@@ -117,11 +117,11 @@ class SGFigureAxis extends SGAxisElement {
     p.add(new JLabel(sb.toString()));
     p.addSeparator();
 
-    SGUtility.addCheckBoxItem(p, this, MENUCMD_SHOW_AXIS);
+    SGFigureUtility.addCheckBoxItem(p, this, MENUCMD_SHOW_AXIS);
 
     p.addSeparator();
 
-    SGUtility.addCheckBoxItem(p, this, MENUCMD_DRAW_LATER);
+    SGFigureUtility.addCheckBoxItem(p, this, MENUCMD_DRAW_LATER);
 
     p.addSeparator();
 

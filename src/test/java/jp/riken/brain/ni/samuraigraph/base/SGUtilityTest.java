@@ -556,21 +556,21 @@ class SGUtilityTest {
   @Test
   void moveObjectToRawListMovesObjectToTail() {
     final List<Object> list = new ArrayList<>(List.of("a", "b", "c"));
-    assertTrue(SGUtility.moveObjectToRawList("b", list, true));
+    assertTrue(SGFigureUtility.moveObjectToRawList("b", list, true));
     assertEquals(List.of("a", "c", "b"), list);
   }
 
   @Test
   void moveObjectToRawListMovesObjectToHead() {
     final List<Object> list = new ArrayList<>(List.of("a", "b", "c"));
-    assertTrue(SGUtility.moveObjectToRawList("b", list, false));
+    assertTrue(SGFigureUtility.moveObjectToRawList("b", list, false));
     assertEquals(List.of("b", "a", "c"), list);
   }
 
   @Test
   void moveObjectToRawListFailsWhenObjectMissing() {
     final List<Object> list = new ArrayList<>(List.of("a", "b"));
-    assertFalse(SGUtility.moveObjectToRawList("z", list, true));
+    assertFalse(SGFigureUtility.moveObjectToRawList("z", list, true));
     assertEquals(List.of("a", "b"), list);
   }
 
@@ -578,7 +578,7 @@ class SGUtilityTest {
   void moveObjectRawListShiftsObjectsForward() {
     final List<Object> list = new ArrayList<>(List.of("a", "b", "c", "d"));
     final List<Object> moved = new ArrayList<>(List.of("b"));
-    assertTrue(SGUtility.moveObjectRawList(moved, list, 1));
+    assertTrue(SGFigureUtility.moveObjectRawList(moved, list, 1));
     assertEquals(List.of("a", "c", "b", "d"), list);
   }
 
@@ -586,7 +586,7 @@ class SGUtilityTest {
   void moveObjectRawListShiftsObjectsBackward() {
     final List<Object> list = new ArrayList<>(List.of("a", "b", "c", "d"));
     final List<Object> moved = new ArrayList<>(List.of("c"));
-    assertTrue(SGUtility.moveObjectRawList(moved, list, -1));
+    assertTrue(SGFigureUtility.moveObjectRawList(moved, list, -1));
     assertEquals(List.of("a", "c", "b", "d"), list);
   }
 
@@ -594,7 +594,7 @@ class SGUtilityTest {
   void moveObjectRawListFailsWhenObjectMissing() {
     final List<Object> list = new ArrayList<>(List.of("a", "b"));
     final List<Object> moved = new ArrayList<>(List.of("z"));
-    assertFalse(SGUtility.moveObjectRawList(moved, list, 1));
+    assertFalse(SGFigureUtility.moveObjectRawList(moved, list, 1));
     assertEquals(List.of("a", "b"), list);
   }
 
@@ -805,11 +805,11 @@ class SGUtilityTest {
   @Test
   void setIntValueOnSpinnerCommitsIntegersOnly() {
     SGSpinner sp = createSpinner();
-    assertTrue(SGUtility.setIntValue(sp, "7"));
+    assertTrue(SGFigureUtility.setIntValue(sp, "7"));
     assertEquals(7.0, ((Number) sp.getValue()).doubleValue(), 0.0);
-    assertFalse(SGUtility.setIntValue(sp, "x"));
+    assertFalse(SGFigureUtility.setIntValue(sp, "x"));
     assertEquals(7.0, ((Number) sp.getValue()).doubleValue(), 0.0);
-    assertFalse(SGUtility.setIntValue(sp, null));
+    assertFalse(SGFigureUtility.setIntValue(sp, null));
     assertEquals("", sp.getText());
   }
 
@@ -825,10 +825,10 @@ class SGUtilityTest {
 
   @Test
   void getExportFontSizeRoundsToTwoFractionDigits() {
-    assertEquals(10.5f, SGUtility.getExportFontSize(10.5f), 0.0f);
-    assertEquals(12.35f, SGUtility.getExportFontSize(12.345f), 0.0f);
-    assertEquals(-12.34f, SGUtility.getExportFontSize(-12.34f), 0.0f);
-    assertEquals(0.0f, SGUtility.getExportFontSize(0.001f), 0.0f);
+    assertEquals(10.5f, SGFigureUtility.getExportFontSize(10.5f), 0.0f);
+    assertEquals(12.35f, SGFigureUtility.getExportFontSize(12.345f), 0.0f);
+    assertEquals(-12.34f, SGFigureUtility.getExportFontSize(-12.34f), 0.0f);
+    assertEquals(0.0f, SGFigureUtility.getExportFontSize(0.001f), 0.0f);
   }
 
   @Test
@@ -872,10 +872,10 @@ class SGUtilityTest {
   void getVersionNumberWalksUpToElementWithVersionAttribute() {
     Document doc = SGUtilityText.getDocumentFromString("<PropertySet><Figure/></PropertySet>");
     Element figure = (Element) doc.getDocumentElement().getFirstChild();
-    assertEquals("", SGUtility.getVersionNumber(figure));
+    assertEquals("", SGFigureUtility.getVersionNumber(figure));
     doc.getDocumentElement().setAttribute("Version", "1.2.3");
-    assertEquals("1.2.3", SGUtility.getVersionNumber(figure));
-    assertEquals("1.2.3", SGUtility.getVersionNumber(doc.getDocumentElement()));
+    assertEquals("1.2.3", SGFigureUtility.getVersionNumber(figure));
+    assertEquals("1.2.3", SGFigureUtility.getVersionNumber(doc.getDocumentElement()));
   }
 
   // -- mouse drag result -------------------------------------------------------------
@@ -1033,7 +1033,7 @@ class SGUtilityTest {
   void setIntValueOnSpinnerLogsAndSurvivesCommitFailure() throws ParseException {
     final SGSpinner sp = mock(SGSpinner.class);
     doThrow(new ParseException("forced", 0)).when(sp).commitEditByDefault();
-    assertTrue(SGUtility.setIntValue(sp, "7"));
+    assertTrue(SGFigureUtility.setIntValue(sp, "7"));
     verify(sp).setText("7");
     verify(sp).setValue(7.0);
     verify(sp).commitEditByDefault();
@@ -1063,12 +1063,12 @@ class SGUtilityTest {
   @Test
   void moveObjectRawListKeepsElementWhenTargetIndexIsOutOfRange() {
     final List<Object> list = new ArrayList<>(List.of("a", "b", "c"));
-    assertTrue(SGUtility.moveObjectRawList(List.of("c"), list, 1));
+    assertTrue(SGFigureUtility.moveObjectRawList(List.of("c"), list, 1));
     assertEquals(List.of("a", "b", "c"), list);
-    assertTrue(SGUtility.moveObjectRawList(List.of("a"), list, -1));
+    assertTrue(SGFigureUtility.moveObjectRawList(List.of("a"), list, -1));
     assertEquals(List.of("a", "b", "c"), list);
     // a missing element fails the backward move
-    assertFalse(SGUtility.moveObjectRawList(List.of("q"), list, -1));
+    assertFalse(SGFigureUtility.moveObjectRawList(List.of("q"), list, -1));
     assertEquals(List.of("a", "b", "c"), list);
   }
 
@@ -1162,7 +1162,7 @@ class SGUtilityTest {
   void getVersionNumberReadsAttributeFromRootElement() {
     final Document doc = SGUtilityText.getDocumentFromString("<PropertySet/>");
     doc.getDocumentElement().setAttribute("Version", "9.9.9");
-    assertEquals("9.9.9", SGUtility.getVersionNumber(doc.getDocumentElement()));
+    assertEquals("9.9.9", SGFigureUtility.getVersionNumber(doc.getDocumentElement()));
   }
 
   @Test
@@ -1170,7 +1170,7 @@ class SGUtilityTest {
     final Document doc = SGUtilityText.getDocumentFromString("<PropertySet/>");
     final Element orphan = doc.createElement("Orphan");
     orphan.setAttribute("Version", "5.5.5");
-    assertEquals("5.5.5", SGUtility.getVersionNumber(orphan));
+    assertEquals("5.5.5", SGFigureUtility.getVersionNumber(orphan));
   }
 
   @Test

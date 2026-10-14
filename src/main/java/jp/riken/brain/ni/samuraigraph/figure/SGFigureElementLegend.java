@@ -2723,7 +2723,10 @@ public class SGFigureElementLegend extends SGFigureElementForData
     SGPropertyUtility.addProperty(
         map, COM_LEGEND_FONT_STYLE, SGUtilityText.getFontStyleName(this.getFontStyle()));
     SGPropertyUtility.addProperty(
-        map, COM_LEGEND_FONT_SIZE, SGUtility.getExportFontSize(this.getFontSize()), FONT_SIZE_UNIT);
+        map,
+        COM_LEGEND_FONT_SIZE,
+        SGFigureUtility.getExportFontSize(this.getFontSize()),
+        FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, COM_LEGEND_FONT_COLOR, this.getFontColor());
 
     // frame
@@ -2776,7 +2779,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
     SGPropertyUtility.addProperty(
         map, KEY_FONT_STYLE, SGUtilityText.getFontStyleName(this.getFontStyle()));
     SGPropertyUtility.addProperty(
-        map, KEY_FONT_SIZE, SGUtility.getExportFontSize(this.getFontSize()), FONT_SIZE_UNIT);
+        map, KEY_FONT_SIZE, SGFigureUtility.getExportFontSize(this.getFontSize()), FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(map, KEY_STRING_COLORS, this.getFontColor());
 
     // frame

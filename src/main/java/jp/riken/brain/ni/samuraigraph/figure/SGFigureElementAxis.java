@@ -1852,7 +1852,7 @@ public class SGFigureElementAxis extends SGFigureElement
 
   private boolean setOlderProperties(final Element element) {
 
-    final String versionNumber = SGUtility.getVersionNumber(element);
+    final String versionNumber = SGFigureUtility.getVersionNumber(element);
     if (SGUtility.isVersionNumberEqualOrSmallerThanPermittingEmptyString(versionNumber, "2.0.0")) {
       String str = null;
       Number num = null;

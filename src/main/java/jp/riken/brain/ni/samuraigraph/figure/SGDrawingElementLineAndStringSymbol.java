@@ -417,7 +417,7 @@ public abstract class SGDrawingElementLineAndStringSymbol extends SGDrawingEleme
     SGPropertyUtility.addProperty(
         map,
         fontSizeKey,
-        SGUtility.getExportFontSize(this.getFontSize(FONT_SIZE_UNIT)),
+        SGFigureUtility.getExportFontSize(this.getFontSize(FONT_SIZE_UNIT)),
         FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(
         map, fontStyleKey, SGUtilityText.getFontStyleName(this.getFontStyle()));

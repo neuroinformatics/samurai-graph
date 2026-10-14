@@ -2176,7 +2176,7 @@ public class SGAxisDialog extends SGPropertyDialog {
    * @param value
    */
   public boolean setExponentValue(final Object value) {
-    return SGUtility.setIntValue(this.mExponentSpinner, value);
+    return SGFigureUtility.setIntValue(this.mExponentSpinner, value);
   }
 
   public boolean setExponentLocationX(final Object value) {
@@ -2211,7 +2211,7 @@ public class SGAxisDialog extends SGPropertyDialog {
    * @param value the value to set
    */
   public boolean setMinorTickMarkNumber(final Object value) {
-    return SGUtility.setIntValue(this.mMinorTickMarkNumberSpinner, value);
+    return SGFigureUtility.setIntValue(this.mMinorTickMarkNumberSpinner, value);
   }
 
   /**

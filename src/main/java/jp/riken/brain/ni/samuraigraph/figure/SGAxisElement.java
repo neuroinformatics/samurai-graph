@@ -2789,7 +2789,7 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(
         map,
         fontSizeKey,
-        SGUtility.getExportFontSize(this.getTitleFontSize(FONT_SIZE_UNIT)),
+        SGFigureUtility.getExportFontSize(this.getTitleFontSize(FONT_SIZE_UNIT)),
         FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(
         map, fontStyleKey, SGUtilityText.getFontStyleName(this.getTitleFontStyle()));
@@ -2830,7 +2830,7 @@ public abstract class SGAxisElement
     SGPropertyUtility.addProperty(
         map,
         fontSizeKey,
-        SGUtility.getExportFontSize(this.getNumberFontSize(FONT_SIZE_UNIT)),
+        SGFigureUtility.getExportFontSize(this.getNumberFontSize(FONT_SIZE_UNIT)),
         FONT_SIZE_UNIT);
     SGPropertyUtility.addProperty(
         map, fontStyleKey, SGUtilityText.getFontStyleName(this.getNumberFontStyle()));
