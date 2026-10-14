@@ -1734,4 +1734,50 @@ public final class SGDataMiscUtility {
     }
     return vars;
   }
+
+  /**
+   * Sets the single-variable-name attributes of a picked multiple SXY data to the element. Shared
+   * by the NetCDF and MDArray writeProperty implementations. The caller provides the already-bound
+   * names so that the backend-specific binding format is preserved, and the optional-name suppliers
+   * are evaluated only when the corresponding flag is set. A null x/y name (an absent variable) is
+   * simply not written.
+   *
+   * @param el the element to which the attributes are set
+   * @param errorBarAvailable whether the error bars are assigned
+   * @param tickLabelAvailable whether the tick labels are assigned
+   * @param xName the bound name of the x variable, or null if absent
+   * @param yName the bound name of the y variable, or null if absent
+   * @param leName the bound name of the lower error variable
+   * @param ueName the bound name of the upper error variable
+   * @param ehName the bound name of the error bar holder variable
+   * @param tlName the bound name of the tick label variable
+   * @param thName the bound name of the tick label holder variable
+   */
+  public static void setSXYPickedVariableNameAttributes(
+      final Element el,
+      final boolean errorBarAvailable,
+      final boolean tickLabelAvailable,
+      final String xName,
+      final String yName,
+      final Supplier<String> leName,
+      final Supplier<String> ueName,
+      final Supplier<String> ehName,
+      final Supplier<String> tlName,
+      final Supplier<String> thName) {
+    if (xName != null) {
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, xName);
+    }
+    if (yName != null) {
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, yName);
+    }
+    if (errorBarAvailable) {
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME, leName.get());
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME, ueName.get());
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME, ehName.get());
+    }
+    if (tickLabelAvailable) {
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAME, tlName.get());
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME, thName.get());
+    }
+  }
 }

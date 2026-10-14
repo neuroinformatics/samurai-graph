@@ -962,4 +962,33 @@ class SGDataMiscUtilityTest {
   void resolveVariablesReturnsNullForNullNames() {
     assertNull(SGDataMiscUtility.resolveVariables(null, name -> null, SGNetCDFVariable[]::new));
   }
+
+  @Test
+  void setSXYPickedVariableNameAttributesWritesAllWhenAvailable() throws Exception {
+    Element el = newElement();
+    SGDataMiscUtility.setSXYPickedVariableNameAttributes(
+        el, true, true, "x", "y", () -> "le", () -> "ue", () -> "eh", () -> "tl", () -> "th");
+    assertEquals("x", el.getAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME));
+    assertEquals("y", el.getAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME));
+    assertEquals("le", el.getAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME));
+    assertEquals("ue", el.getAttribute(SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME));
+    assertEquals("eh", el.getAttribute(SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME));
+    assertEquals("tl", el.getAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAME));
+    assertEquals("th", el.getAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME));
+  }
+
+  @Test
+  void setSXYPickedVariableNameAttributesSkipsOptionalAndNullXY() throws Exception {
+    Element el = newElement();
+    Supplier<String> never =
+        () -> {
+          throw new AssertionError("optional supplier must not be evaluated");
+        };
+    SGDataMiscUtility.setSXYPickedVariableNameAttributes(
+        el, false, false, null, null, never, never, never, never, never);
+    assertEquals("", el.getAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME));
+    assertEquals("", el.getAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME));
+    assertEquals("", el.getAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME));
+    assertEquals("", el.getAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAME));
+  }
 }

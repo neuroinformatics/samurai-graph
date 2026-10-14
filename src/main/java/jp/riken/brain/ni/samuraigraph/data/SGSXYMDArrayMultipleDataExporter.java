@@ -25,37 +25,20 @@ class SGSXYMDArrayMultipleDataExporter {
     if (SGDataMiscUtility.isArchiveDataSetOperation(type)
         || SGConstants.OPERATION.SAVE_TO_PROPERTY_FILE.equals(type)) {
 
-      String value = null;
       if (data.isDimensionPicked()) {
         SGMDArrayVariable xVar = data.getXVariable();
         SGMDArrayVariable yVar = data.getYVariable();
-        if (xVar != null) {
-          value = data.bindVariableNames(xVar, true);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, value);
-        }
-        if (yVar != null) {
-          value = data.bindVariableNames(yVar, true);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, value);
-        }
-        if (data.isErrorBarAvailable()) {
-          SGMDArrayVariable lVar = data.getLowerErrorVariable();
-          value = data.bindVariableNames(lVar, true);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME, value);
-          SGMDArrayVariable uVar = data.getUpperErrorVariable();
-          value = data.bindVariableNames(uVar, true);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME, value);
-          SGMDArrayVariable hVar = data.getErrorBarHolderVariable();
-          value = data.bindVariableNames(hVar, false);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME, value);
-        }
-        if (data.isTickLabelAvailable()) {
-          SGMDArrayVariable tVar = data.getTickLabelVariable();
-          value = data.bindVariableNames(tVar, true);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAME, value);
-          SGMDArrayVariable hVar = data.getTickLabelHolderVariable();
-          value = data.bindVariableNames(hVar, false);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME, value);
-        }
+        SGDataMiscUtility.setSXYPickedVariableNameAttributes(
+            el,
+            data.isErrorBarAvailable(),
+            data.isTickLabelAvailable(),
+            (xVar != null) ? data.bindVariableNames(xVar, true) : null,
+            (yVar != null) ? data.bindVariableNames(yVar, true) : null,
+            () -> data.bindVariableNames(data.getLowerErrorVariable(), true),
+            () -> data.bindVariableNames(data.getUpperErrorVariable(), true),
+            () -> data.bindVariableNames(data.getErrorBarHolderVariable(), false),
+            () -> data.bindVariableNames(data.getTickLabelVariable(), true),
+            () -> data.bindVariableNames(data.getTickLabelHolderVariable(), false));
 
         String pickUpIndicesStr = data.mPickUpDimensionInfo.getIndices().toString();
         el.setAttribute(SGDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION_INDICES, pickUpIndicesStr);

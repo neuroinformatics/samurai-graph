@@ -132,29 +132,17 @@ class SGSXYNetCDFMultipleDataPropertyIO {
       return false;
     }
     if (data.isDimensionPicked()) {
-      el.setAttribute(
-          SGDataPropertyKeyConstants.KEY_X_VALUE_NAME, data.getXVariable().getValidName());
-      el.setAttribute(
-          SGDataPropertyKeyConstants.KEY_Y_VALUE_NAME, data.getYVariable().getValidName());
-      if (data.isErrorBarAvailable()) {
-        el.setAttribute(
-            SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAME,
-            data.getLowerErrorVariable().getValidName());
-        el.setAttribute(
-            SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAME,
-            data.getUpperErrorVariable().getValidName());
-        el.setAttribute(
-            SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAME,
-            data.getErrorBarHolderVariable().getValidName());
-      }
-      if (data.isTickLabelAvailable()) {
-        el.setAttribute(
-            SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAME,
-            data.getTickLabelVariable().getValidName());
-        el.setAttribute(
-            SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAME,
-            data.getTickLabelHolderVariable().getValidName());
-      }
+      SGDataMiscUtility.setSXYPickedVariableNameAttributes(
+          el,
+          data.isErrorBarAvailable(),
+          data.isTickLabelAvailable(),
+          data.getXVariable().getValidName(),
+          data.getYVariable().getValidName(),
+          () -> data.getLowerErrorVariable().getValidName(),
+          () -> data.getUpperErrorVariable().getValidName(),
+          () -> data.getErrorBarHolderVariable().getValidName(),
+          () -> data.getTickLabelVariable().getValidName(),
+          () -> data.getTickLabelHolderVariable().getValidName());
       String dimName = data.getDimensionName();
       if (dimName != null) {
         el.setAttribute(SGDataPropertyKeyConstants.KEY_PICKUP_DIMENSION_NAME, dimName);
