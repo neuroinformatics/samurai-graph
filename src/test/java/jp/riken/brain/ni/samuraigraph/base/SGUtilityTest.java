@@ -403,35 +403,37 @@ class SGUtilityTest {
 
   @Test
   void getAxisValueParsesNumericValues() throws Exception {
-    assertNull(SGUtility.getAxisValue(null, false));
-    assertNull(SGUtility.getAxisValue("", false));
-    final SGAxisDoubleValue value = (SGAxisDoubleValue) SGUtility.getAxisValue("12.5", false);
+    assertNull(SGFigureUtility.getAxisValue(null, false));
+    assertNull(SGFigureUtility.getAxisValue("", false));
+    final SGAxisDoubleValue value = (SGAxisDoubleValue) SGFigureUtility.getAxisValue("12.5", false);
     assertEquals(12.5, value.getValue());
-    assertThrows(java.text.ParseException.class, () -> SGUtility.getAxisValue("abc", false));
+    assertThrows(java.text.ParseException.class, () -> SGFigureUtility.getAxisValue("abc", false));
   }
 
   @Test
   void getAxisValueParsesDateValues() throws Exception {
     final String str = "2026-09-30T12:00:00Z";
-    final SGAxisDateValue value = (SGAxisDateValue) SGUtility.getAxisValue(str, true);
+    final SGAxisDateValue value = (SGAxisDateValue) SGFigureUtility.getAxisValue(str, true);
     final double expected = utcDaysOf(ZonedDateTime.parse(str));
     assertEquals(expected, value.getValue());
-    assertThrows(java.text.ParseException.class, () -> SGUtility.getAxisValue("abc", true));
+    assertThrows(java.text.ParseException.class, () -> SGFigureUtility.getAxisValue("abc", true));
   }
 
   @Test
   void getAxisStepValueParsesNumericAndDateSteps() throws Exception {
-    assertNull(SGUtility.getAxisStepValue(null, false));
-    assertNull(SGUtility.getAxisStepValue("", false));
+    assertNull(SGFigureUtility.getAxisStepValue(null, false));
+    assertNull(SGFigureUtility.getAxisStepValue("", false));
     final SGAxisDoubleStepValue step =
-        (SGAxisDoubleStepValue) SGUtility.getAxisStepValue("2.5", false);
+        (SGAxisDoubleStepValue) SGFigureUtility.getAxisStepValue("2.5", false);
     assertEquals(2.5, step.getValue());
-    assertThrows(java.text.ParseException.class, () -> SGUtility.getAxisStepValue("abc", false));
+    assertThrows(
+        java.text.ParseException.class, () -> SGFigureUtility.getAxisStepValue("abc", false));
 
     final SGAxisDateStepValue dateStep =
-        (SGAxisDateStepValue) SGUtility.getAxisStepValue("P1D", true);
+        (SGAxisDateStepValue) SGFigureUtility.getAxisStepValue("P1D", true);
     assertEquals(1, dateStep.getPeriod().getDays());
-    assertThrows(java.text.ParseException.class, () -> SGUtility.getAxisStepValue("abc", true));
+    assertThrows(
+        java.text.ParseException.class, () -> SGFigureUtility.getAxisStepValue("abc", true));
   }
 
   // -- export values ---------------------------------------------------------------
@@ -644,10 +646,10 @@ class SGUtilityTest {
   @Test
   void findFontFamilyNameMatchesAvailableFontIgnoreCase() {
     // "Dialog" is a logical font that is always available
-    assertEquals("Dialog", SGUtility.findFontFamilyName("Dialog"));
-    assertEquals("Dialog", SGUtility.findFontFamilyName("dialog"));
-    assertNull(SGUtility.findFontFamilyName("No Such Font Family"));
-    assertNull(SGUtility.findFontFamilyName(null));
+    assertEquals("Dialog", SGFigureUtility.findFontFamilyName("Dialog"));
+    assertEquals("Dialog", SGFigureUtility.findFontFamilyName("dialog"));
+    assertNull(SGFigureUtility.findFontFamilyName("No Such Font Family"));
+    assertNull(SGFigureUtility.findFontFamilyName(null));
   }
 
   @Test

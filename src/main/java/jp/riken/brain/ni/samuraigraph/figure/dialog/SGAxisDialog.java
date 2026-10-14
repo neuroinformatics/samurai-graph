@@ -41,6 +41,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGAxisConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureUtility;
 
 /** A dialog to set the properties of axes. */
 public class SGAxisDialog extends SGPropertyDialog {
@@ -1910,22 +1911,22 @@ public class SGAxisDialog extends SGPropertyDialog {
 
   public SGAxisValue getMinValue() throws ParseException {
     final String str = this.mMinValueTextField.getText();
-    return SGUtility.getAxisValue(str, this.isDateMode());
+    return SGFigureUtility.getAxisValue(str, this.isDateMode());
   }
 
   public SGAxisValue getMaxValue() throws ParseException {
     final String str = this.mMaxValueTextField.getText();
-    return SGUtility.getAxisValue(str, this.isDateMode());
+    return SGFigureUtility.getAxisValue(str, this.isDateMode());
   }
 
   public SGAxisValue getBaseValue() throws ParseException {
     String str = this.mBaselineTextField.getText();
-    return SGUtility.getAxisValue(str, this.isDateMode());
+    return SGFigureUtility.getAxisValue(str, this.isDateMode());
   }
 
   public SGAxisStepValue getStepValue() throws ParseException {
     String str = this.mStepTextField.getText();
-    return SGUtility.getAxisStepValue(str, this.isDateMode());
+    return SGFigureUtility.getAxisStepValue(str, this.isDateMode());
   }
 
   /** */
@@ -2523,7 +2524,7 @@ public class SGAxisDialog extends SGPropertyDialog {
    * @param name the font name to set
    */
   public boolean setTitleFontName(final String name) {
-    final String fName = SGUtility.findFontFamilyName(name);
+    final String fName = SGFigureUtility.findFontFamilyName(name);
     this.mTitleFontNameComboBox.setSelectedItem(fName);
     return true;
   }
@@ -2567,7 +2568,7 @@ public class SGAxisDialog extends SGPropertyDialog {
    * @param name the font name to set
    */
   public boolean setNumberFontName(final String name) {
-    final String fName = SGUtility.findFontFamilyName(name);
+    final String fName = SGFigureUtility.findFontFamilyName(name);
     this.mNumberFontNameComboBox.setSelectedItem(fName);
     return true;
   }

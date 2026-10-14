@@ -2585,7 +2585,7 @@ public class SGFigureElementSignificantDifference extends SGFigureElement
           }
           result.putResult(COM_SIGDIFF_TEXT, SGPropertyResults.SUCCEEDED);
         } else if (COM_FONT_NAME.equalsIgnoreCase(key)) {
-          final String name = SGUtility.findFontFamilyName(value);
+          final String name = SGFigureUtility.findFontFamilyName(value);
           if (name == null) {
             result.putResult(COM_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
             continue;

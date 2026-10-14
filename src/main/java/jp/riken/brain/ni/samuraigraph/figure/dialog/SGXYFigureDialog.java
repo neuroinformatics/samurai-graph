@@ -38,6 +38,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureUtility;
 
 /** A property dialog for figures with two-dimensional data. */
 public class SGXYFigureDialog extends SGPropertyDialog implements SGITwoAxesDialog {
@@ -1189,25 +1190,25 @@ public class SGXYFigureDialog extends SGPropertyDialog implements SGITwoAxesDial
   /** */
   public SGAxisValue getBaseXValue() throws ParseException {
     String str = this.mBaselineXTextField.getText();
-    return SGUtility.getAxisValue(str, this.isDateMode(true));
+    return SGFigureUtility.getAxisValue(str, this.isDateMode(true));
   }
 
   /** */
   public SGAxisValue getBaseYValue() throws ParseException {
     String str = this.mBaselineYTextField.getText();
-    return SGUtility.getAxisValue(str, this.isDateMode(false));
+    return SGFigureUtility.getAxisValue(str, this.isDateMode(false));
   }
 
   /** */
   public SGAxisStepValue getStepXValue() throws ParseException {
     String str = this.mStepXTextField.getText();
-    return SGUtility.getAxisStepValue(str, this.isDateMode(true));
+    return SGFigureUtility.getAxisStepValue(str, this.isDateMode(true));
   }
 
   /** */
   public SGAxisStepValue getStepYValue() throws ParseException {
     String str = this.mStepYTextField.getText();
-    return SGUtility.getAxisStepValue(str, this.isDateMode(false));
+    return SGFigureUtility.getAxisStepValue(str, this.isDateMode(false));
   }
 
   private Boolean isDateMode(final boolean horizontal) {

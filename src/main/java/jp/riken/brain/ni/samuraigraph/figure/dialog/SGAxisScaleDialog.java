@@ -28,6 +28,7 @@ import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
 import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureUtility;
 
 /** The dialog for axis scale symbol. */
 public class SGAxisScaleDialog extends SGPropertyDialog implements SGITwoAxesDialog {
@@ -1675,7 +1676,7 @@ public class SGAxisScaleDialog extends SGPropertyDialog implements SGITwoAxesDia
    * @return true if succeeded
    */
   public boolean setFontName(final String name) {
-    final String fName = SGUtility.findFontFamilyName(name);
+    final String fName = SGFigureUtility.findFontFamilyName(name);
     this.mFontNameComboBox.setSelectedItem(fName);
     return true;
   }

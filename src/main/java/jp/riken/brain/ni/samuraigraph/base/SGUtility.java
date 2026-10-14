@@ -59,27 +59,6 @@ public class SGUtility {
   }
 
   /**
-   * Finds a right font name from the system with a given font name.
-   *
-   * @param name a font name
-   * @return found font family name
-   */
-  public static String findFontFamilyName(final String name) {
-    if (name == null) {
-      return null;
-    }
-    String fName = null;
-    String[] names = getAvailableFontFamilyNames();
-    for (int ii = 0; ii < names.length; ii++) {
-      if (SGUtilityText.isEqualString(names[ii], name)) {
-        fName = names[ii];
-        break;
-      }
-    }
-    return fName;
-  }
-
-  /**
    * Returns the canonical path.
    *
    * @param path path name
@@ -2659,61 +2638,5 @@ public class SGUtility {
       logger.debug("Exception occurred", e);
     }
     return ret;
-  }
-
-  public static SGAxisValue getAxisValue(final String str, final boolean dateMode)
-      throws ParseException {
-    if (str == null) {
-      return null;
-    }
-    if (str.length() == 0) {
-      return null;
-    }
-
-    if (dateMode) {
-      // parses as a date value
-      SGAxisDateValue dateValue = null;
-      try {
-        dateValue = new SGAxisDateValue(str);
-      } catch (ParseException e) {
-        throw e;
-      }
-      return dateValue;
-    } else {
-      // parses as a double value
-      Double d = SGUtilityText.getDouble(str);
-      if (d == null) {
-        throw new ParseException("Invalid input: " + d, 0);
-      }
-      return new SGAxisDoubleValue(d);
-    }
-  }
-
-  public static SGAxisStepValue getAxisStepValue(final String str, final boolean dateMode)
-      throws ParseException {
-    if (str == null) {
-      return null;
-    }
-    if (str.length() == 0) {
-      return null;
-    }
-
-    if (dateMode) {
-      // parses as a date value
-      SGAxisDateStepValue p = null;
-      try {
-        p = new SGAxisDateStepValue(str);
-      } catch (ParseException e) {
-        throw e;
-      }
-      return p;
-    } else {
-      // parses as a double value
-      Double d = SGUtilityText.getDouble(str);
-      if (d == null) {
-        throw new ParseException("Invalid input: " + d, 0);
-      }
-      return new SGAxisDoubleStepValue(d);
-    }
   }
 }

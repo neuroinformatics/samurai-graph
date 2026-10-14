@@ -2504,7 +2504,7 @@ public class SGFigureElementLegend extends SGFigureElementForData
         this.setVisible(b.booleanValue());
         result.putResult(COM_LEGEND_VISIBLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_LEGEND_FONT_NAME.equalsIgnoreCase(key)) {
-        final String name = SGUtility.findFontFamilyName(value);
+        final String name = SGFigureUtility.findFontFamilyName(value);
         if (name == null) {
           result.putResult(COM_LEGEND_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;

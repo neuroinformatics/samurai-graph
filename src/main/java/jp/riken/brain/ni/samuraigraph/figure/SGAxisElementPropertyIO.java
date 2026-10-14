@@ -23,7 +23,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGPeriod;
 import jp.riken.brain.ni.samuraigraph.base.SGProperties;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyMap;
 import jp.riken.brain.ni.samuraigraph.base.SGPropertyResults;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -832,7 +831,7 @@ class SGAxisElementPropertyIO {
         }
         result.putResult(COM_AXIS_TITLE_CENTER_SHIFT, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_TITLE_FONT_NAME.equalsIgnoreCase(key)) {
-        final String name = SGUtility.findFontFamilyName(value);
+        final String name = SGFigureUtility.findFontFamilyName(value);
         if (name == null) {
           result.putResult(COM_AXIS_TITLE_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
@@ -968,7 +967,7 @@ class SGAxisElementPropertyIO {
         }
         result.putResult(COM_AXIS_EXPONENT_LOCATION_Y, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_NUMBER_FONT_NAME.equalsIgnoreCase(key)) {
-        final String name = SGUtility.findFontFamilyName(value);
+        final String name = SGFigureUtility.findFontFamilyName(value);
         if (name == null) {
           result.putResult(COM_AXIS_NUMBER_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;
@@ -1198,7 +1197,7 @@ class SGAxisElementPropertyIO {
         }
         result.putResult(COM_AXIS_LINE_COLOR, SGPropertyResults.SUCCEEDED);
       } else if (COM_AXIS_FONT_NAME.equalsIgnoreCase(key)) {
-        final String name = SGUtility.findFontFamilyName(value);
+        final String name = SGFigureUtility.findFontFamilyName(value);
         if (name == null) {
           result.putResult(COM_AXIS_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;

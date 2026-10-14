@@ -67,7 +67,7 @@ public abstract class SGElementGroupTickLabelForData extends SGElementGroupTickL
         this.setVisible(b.booleanValue());
         result.putResult(COM_DATA_TICK_LABEL_VISIBLE, SGPropertyResults.SUCCEEDED);
       } else if (COM_DATA_TICK_LABEL_FONT_NAME.equalsIgnoreCase(key)) {
-        final String name = SGUtility.findFontFamilyName(value);
+        final String name = SGFigureUtility.findFontFamilyName(value);
         if (name == null) {
           result.putResult(COM_DATA_TICK_LABEL_FONT_NAME, SGPropertyResults.INVALID_INPUT_VALUE);
           continue;

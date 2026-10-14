@@ -22,8 +22,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGPropertyDialog;
 import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureUtility;
 
 /** A dialog to set the properties of labels. */
 public class SGStringElementDialog extends SGPropertyDialog implements SGITwoAxesDialog {
@@ -513,7 +513,7 @@ public class SGStringElementDialog extends SGPropertyDialog implements SGITwoAxe
    * @return true if succeeded
    */
   public boolean setFontName(final String name) {
-    final String fName = SGUtility.findFontFamilyName(name);
+    final String fName = SGFigureUtility.findFontFamilyName(name);
     this.mFontNameComboBox.setSelectedItem(fName);
     return true;
   }

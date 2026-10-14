@@ -66,6 +66,7 @@ import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementErrorBar;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementLine;
 import jp.riken.brain.ni.samuraigraph.figure.SGDrawingElementSymbol;
 import jp.riken.brain.ni.samuraigraph.figure.SGErrorBarConstants;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureUtility;
 import jp.riken.brain.ni.samuraigraph.figure.SGLineStyle;
 import jp.riken.brain.ni.samuraigraph.figure.SGSXYDataConstants;
 import jp.riken.brain.ni.samuraigraph.figure.SGSymbolConstants;
@@ -1838,7 +1839,7 @@ public class SGPropertyDialogSXYData extends SGDataDialog implements SGITwoAxesD
    * @param name the font name to set
    */
   public boolean setTickLabelFontName(final String name) {
-    final String fName = SGUtility.findFontFamilyName(name);
+    final String fName = SGFigureUtility.findFontFamilyName(name);
     this.mTickLabelFontNameComboBox.setSelectedItem(fName);
     return true;
   }

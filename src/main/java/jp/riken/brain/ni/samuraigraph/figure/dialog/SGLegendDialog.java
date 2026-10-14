@@ -23,8 +23,8 @@ import jp.riken.brain.ni.samuraigraph.base.SGSpinner;
 import jp.riken.brain.ni.samuraigraph.base.SGTextField;
 import jp.riken.brain.ni.samuraigraph.base.SGTransparentPaint;
 import jp.riken.brain.ni.samuraigraph.base.SGTwoAxesSelectionPanel;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
+import jp.riken.brain.ni.samuraigraph.figure.SGFigureUtility;
 import jp.riken.brain.ni.samuraigraph.figure.SGPaintConstants;
 
 /** A dialog to set the properties of legend. */
@@ -885,7 +885,7 @@ public class SGLegendDialog extends SGPropertyDialog implements SGITwoAxesDialog
    * @param name the font name to set
    */
   public boolean setFontName(final String name) {
-    final String fName = SGUtility.findFontFamilyName(name);
+    final String fName = SGFigureUtility.findFontFamilyName(name);
     this.mFontNameComboBox.setSelectedItem(fName);
     return true;
   }
