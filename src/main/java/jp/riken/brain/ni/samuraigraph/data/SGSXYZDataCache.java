@@ -2,7 +2,6 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 class SGSXYZDataCache extends SGDataCache {
 
@@ -21,9 +20,9 @@ class SGSXYZDataCache extends SGDataCache {
   @Override
   public Object clone() {
     SGSXYZDataCache cache = (SGSXYZDataCache) super.clone();
-    cache.mXValues = SGUtility.copyDoubleArray(this.mXValues);
-    cache.mYValues = SGUtility.copyDoubleArray(this.mYValues);
-    cache.mZValues = SGUtility.copyDoubleArray(this.mZValues);
+    cache.mXValues = SGDataMiscUtility.copyDoubleArray(this.mXValues);
+    cache.mYValues = SGDataMiscUtility.copyDoubleArray(this.mYValues);
+    cache.mZValues = SGDataMiscUtility.copyDoubleArray(this.mZValues);
     if (this.mZValueBlockList != null) {
       cache.mZValueBlockList = new ArrayList<SGXYSimpleDoubleValueIndexBlock>();
       for (SGXYSimpleDoubleValueIndexBlock block : this.mZValueBlockList) {

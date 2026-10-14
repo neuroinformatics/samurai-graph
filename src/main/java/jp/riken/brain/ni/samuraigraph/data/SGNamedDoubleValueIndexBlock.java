@@ -3,7 +3,6 @@ package jp.riken.brain.ni.samuraigraph.data;
 import java.util.Map;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGNamedIndexBlock;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** The class of a block of double values with names. */
 public class SGNamedDoubleValueIndexBlock extends SGNamedIndexBlock {
@@ -28,7 +27,7 @@ public class SGNamedDoubleValueIndexBlock extends SGNamedIndexBlock {
       throw new IllegalArgumentException(
           "Invalid array length: " + values.length + " must be equal to " + len);
     }
-    this.mValues = SGUtility.copyDoubleArray(values);
+    this.mValues = SGDataMiscUtility.copyDoubleArray(values);
   }
 
   /**
@@ -39,7 +38,7 @@ public class SGNamedDoubleValueIndexBlock extends SGNamedIndexBlock {
   @Override
   public Object clone() {
     SGNamedDoubleValueIndexBlock ret = (SGNamedDoubleValueIndexBlock) super.clone();
-    ret.mValues = SGUtility.copyDoubleArray(this.mValues);
+    ret.mValues = SGDataMiscUtility.copyDoubleArray(this.mValues);
     return ret;
   }
 
@@ -49,7 +48,7 @@ public class SGNamedDoubleValueIndexBlock extends SGNamedIndexBlock {
    * @return the array of double values
    */
   public double[] getValues() {
-    return SGUtility.copyDoubleArray(this.mValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mValues);
   }
 
   /**

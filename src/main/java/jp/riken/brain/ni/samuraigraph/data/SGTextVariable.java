@@ -3,7 +3,6 @@ package jp.riken.brain.ni.samuraigraph.data;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 
 import jp.riken.brain.ni.samuraigraph.base.SGIStringModifier;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import ucar.nc2.Variable;
 
 /**
@@ -60,7 +59,7 @@ public class SGTextVariable extends SGCharVariable {
         }
       }
     } else {
-      stringArrayNew = SGUtility.copyStringArray(stringArray);
+      stringArrayNew = SGDataMiscUtility.copyStringArray(stringArray);
       for (int ii = 0; ii < stringArrayNew.length; ii++) {
         if (stringArrayNew[ii] == null) {
           stringArrayNew[ii] = "";
@@ -88,7 +87,7 @@ public class SGTextVariable extends SGCharVariable {
    */
   @Override
   public String[] getStringArray() {
-    return SGUtility.copyStringArray(this.mStringArray);
+    return SGDataMiscUtility.copyStringArray(this.mStringArray);
   }
 
   /**

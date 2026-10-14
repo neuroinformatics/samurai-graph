@@ -2,7 +2,6 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 class SGVXYDataCache extends SGDataCache {
 
@@ -25,10 +24,10 @@ class SGVXYDataCache extends SGDataCache {
   @Override
   public Object clone() {
     SGVXYDataCache cache = (SGVXYDataCache) super.clone();
-    cache.mXValues = SGUtility.copyDoubleArray(this.mXValues);
-    cache.mYValues = SGUtility.copyDoubleArray(this.mYValues);
-    cache.mFirstComponentValues = SGUtility.copyDoubleArray(this.mFirstComponentValues);
-    cache.mSecondComponentValues = SGUtility.copyDoubleArray(this.mSecondComponentValues);
+    cache.mXValues = SGDataMiscUtility.copyDoubleArray(this.mXValues);
+    cache.mYValues = SGDataMiscUtility.copyDoubleArray(this.mYValues);
+    cache.mFirstComponentValues = SGDataMiscUtility.copyDoubleArray(this.mFirstComponentValues);
+    cache.mSecondComponentValues = SGDataMiscUtility.copyDoubleArray(this.mSecondComponentValues);
     if (this.mFirstComponentValueBlockList != null) {
       cache.mFirstComponentValueBlockList = new ArrayList<SGXYSimpleDoubleValueIndexBlock>();
       for (SGXYSimpleDoubleValueIndexBlock block : this.mFirstComponentValueBlockList) {

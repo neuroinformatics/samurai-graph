@@ -23,12 +23,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -505,40 +503,6 @@ public class SGUtility {
   }
 
   /**
-   * Copy an array of a String array.
-   *
-   * @param src an array to be copied
-   * @return a copy of an array
-   */
-  public static String[] copyStringArray(String[] src) {
-    if (src == null) {
-      return null;
-    }
-    final String[] dest = new String[src.length];
-    System.arraycopy(src, 0, dest, 0, src.length);
-    return dest;
-  }
-
-  /**
-   * Copy an array of a String array.
-   *
-   * @param src an array to be copied
-   * @return a copy of an array
-   */
-  public static String[][] copyStringArray(String[][] src) {
-    if (src == null) {
-      return null;
-    }
-    final String[][] dest = new String[src.length][];
-    for (int ii = 0; ii < src.length; ii++) {
-      if (src[ii] != null) {
-        dest[ii] = copyStringArray(src[ii]);
-      }
-    }
-    return dest;
-  }
-
-  /**
    * Copy an array of a primitive integer array.
    *
    * @param src an array to be copied
@@ -565,40 +529,6 @@ public class SGUtility {
     }
     final Integer[] dest = new Integer[src.length];
     System.arraycopy(src, 0, dest, 0, src.length);
-    return dest;
-  }
-
-  /**
-   * Copy an array of a primitive double array.
-   *
-   * @param src an array to be copied
-   * @return a copy of an array
-   */
-  public static double[] copyDoubleArray(double[] src) {
-    if (src == null) {
-      return null;
-    }
-    final double[] dest = new double[src.length];
-    System.arraycopy(src, 0, dest, 0, src.length);
-    return dest;
-  }
-
-  /**
-   * Copy an array of a primitive double array.
-   *
-   * @param src an array to be copied
-   * @return a copy of an array
-   */
-  public static double[][] copyDoubleArray(double[][] src) {
-    if (src == null) {
-      return null;
-    }
-    final double[][] dest = new double[src.length][];
-    for (int ii = 0; ii < src.length; ii++) {
-      if (src[ii] != null) {
-        dest[ii] = copyDoubleArray(src[ii]);
-      }
-    }
     return dest;
   }
 
@@ -1444,30 +1374,6 @@ public class SGUtility {
       }
     }
     return false;
-  }
-
-  /**
-   * Removes an element of given value from given array.
-   *
-   * @param array an array
-   * @param num an element to remove
-   * @return modified array
-   */
-  public static int[] remove(int[] array, final int num) {
-    if (array == null) {
-      throw new IllegalArgumentException("array == null");
-    }
-    List<Integer> list = new ArrayList<Integer>();
-    for (int ii = 0; ii < array.length; ii++) {
-      if (array[ii] != num) {
-        list.add(array[ii]);
-      }
-    }
-    int[] ret = new int[list.size()];
-    for (int ii = 0; ii < ret.length; ii++) {
-      ret[ii] = list.get(ii);
-    }
-    return ret;
   }
 
   /**
@@ -2336,34 +2242,6 @@ public class SGUtility {
    */
   public static String createPluginItemString(SGIPlugin lib) {
     return lib.getName();
-  }
-
-  /**
-   * Checks whether given array has overlapping elements.
-   *
-   * @param objects an array
-   * @return true if there are no overlapping elements
-   */
-  public static boolean checkOverlapping(final Object[] objects) {
-    Set<Object> objSet = new HashSet<Object>();
-    for (int ii = 0; ii < objects.length; ii++) {
-      objSet.add(objects[ii]);
-    }
-    return (objSet.size() == objects.length);
-  }
-
-  /**
-   * Checks whether given array has overlapping elements.
-   *
-   * @param values an array
-   * @return true if there are no overlapping elements
-   */
-  public static boolean checkOverlapping(final int[] values) {
-    Integer[] objects = new Integer[values.length];
-    for (int ii = 0; ii < objects.length; ii++) {
-      objects[ii] = values[ii];
-    }
-    return checkOverlapping(objects);
   }
 
   /**

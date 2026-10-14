@@ -262,10 +262,10 @@ class SGUtilityTest {
 
   @Test
   void removeStripsAllMatchingElements() {
-    assertArrayEquals(new int[] {1, 3}, SGUtility.remove(new int[] {1, 2, 3, 2}, 2));
-    assertArrayEquals(new int[] {}, SGUtility.remove(new int[] {2, 2}, 2));
-    assertArrayEquals(new int[] {1, 2}, SGUtility.remove(new int[] {1, 2}, 9));
-    assertThrows(IllegalArgumentException.class, () -> SGUtility.remove((int[]) null, 1));
+    assertArrayEquals(new int[] {1, 3}, SGDataMiscUtility.remove(new int[] {1, 2, 3, 2}, 2));
+    assertArrayEquals(new int[] {}, SGDataMiscUtility.remove(new int[] {2, 2}, 2));
+    assertArrayEquals(new int[] {1, 2}, SGDataMiscUtility.remove(new int[] {1, 2}, 9));
+    assertThrows(IllegalArgumentException.class, () -> SGDataMiscUtility.remove((int[]) null, 1));
   }
 
   // -- equality helpers ------------------------------------------------------
@@ -984,17 +984,17 @@ class SGUtilityTest {
 
   @Test
   void copyArrayHelpersAcceptNullSource() {
-    assertNull(SGUtility.copyStringArray((String[][]) null));
+    assertNull(SGDataMiscUtility.copyStringArray((String[][]) null));
     assertNull(SGUtility.copyIntegerArray((int[]) null));
     assertNull(SGUtility.copyIntegerArray((Integer[]) null));
-    assertNull(SGUtility.copyDoubleArray((double[]) null));
-    assertNull(SGUtility.copyDoubleArray((double[][]) null));
+    assertNull(SGDataMiscUtility.copyDoubleArray((double[]) null));
+    assertNull(SGDataMiscUtility.copyDoubleArray((double[][]) null));
   }
 
   @Test
   void copyStringArrayKeepsNullRows() {
     final String[][] src = {{"a", "b"}, null, {"c"}};
-    final String[][] dest = SGUtility.copyStringArray(src);
+    final String[][] dest = SGDataMiscUtility.copyStringArray(src);
     assertArrayEquals(src, dest);
     assertNull(dest[1]);
     assertNotSame(src[0], dest[0]);

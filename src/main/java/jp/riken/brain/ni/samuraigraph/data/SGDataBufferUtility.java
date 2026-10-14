@@ -19,7 +19,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGExportParameter;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
 import jp.riken.brain.ni.samuraigraph.base.SGTuple2d;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -597,7 +596,7 @@ public final class SGDataBufferUtility {
             "Index out of bounds: indices[" + ii + "] == " + indices[ii]);
       }
     }
-    if (!SGUtility.checkOverlapping(indices)) {
+    if (!SGDataMiscUtility.checkOverlapping(indices)) {
       throw new IllegalArgumentException("Indices overlapping");
     }
 

@@ -16,7 +16,6 @@ import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory;
 import jp.riken.brain.ni.samuraigraph.base.SGDataValueHistory.ISingleDimension;
 import jp.riken.brain.ni.samuraigraph.base.SGIData;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 import jp.riken.brain.ni.samuraigraph.data.SGDataValue.SXYDoubleDataValue;
@@ -575,7 +574,7 @@ public final class SGDataViewerUtility {
 
   public static double[] updateYValueArray(
       SGITwoDimensionalData data, final boolean all, final double[] values) {
-    double[] ret = SGUtility.copyDoubleArray(values);
+    double[] ret = SGDataMiscUtility.copyDoubleArray(values);
     if (all && data.isStrideAvailable() && !data.isIndexAvailable()) {
       final SGIntegerSeriesSet stride = data.getYStride();
       final boolean useCache = data.useXYCache(all, stride);
@@ -595,7 +594,7 @@ public final class SGDataViewerUtility {
 
   public static double[] updateXValueArray(
       SGITwoDimensionalData data, final boolean all, final double[] values) {
-    double[] ret = SGUtility.copyDoubleArray(values);
+    double[] ret = SGDataMiscUtility.copyDoubleArray(values);
     if (all && data.isStrideAvailable() && !data.isIndexAvailable()) {
       final SGIntegerSeriesSet stride = data.getXStride();
       final boolean useCache = data.useXYCache(all, stride);

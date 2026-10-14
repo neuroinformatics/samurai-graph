@@ -1,7 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** The buffer for single scalar-XY type data. */
 public class SGSXYDataBuffer extends SGOneDimensionalDataBuffer {
@@ -39,20 +38,22 @@ public class SGSXYDataBuffer extends SGOneDimensionalDataBuffer {
       throw new IllegalArgumentException("xValues.length != yValues.length");
     }
     this.mLength = xValues.length;
-    double[][] xValues2dim = new double[][] {SGUtility.copyDoubleArray(xValues)};
-    double[][] yValues2dim = new double[][] {SGUtility.copyDoubleArray(yValues)};
+    double[][] xValues2dim = new double[][] {SGDataMiscUtility.copyDoubleArray(xValues)};
+    double[][] yValues2dim = new double[][] {SGDataMiscUtility.copyDoubleArray(yValues)};
     SGDate[] dateValues = (dateArray != null) ? dateArray.clone() : null;
     double[][] leValues =
         (lowerErrorValues != null)
-            ? new double[][] {SGUtility.copyDoubleArray(lowerErrorValues)}
+            ? new double[][] {SGDataMiscUtility.copyDoubleArray(lowerErrorValues)}
             : null;
     double[][] ueValues =
         (upperErrorValues != null)
-            ? new double[][] {SGUtility.copyDoubleArray(upperErrorValues)}
+            ? new double[][] {SGDataMiscUtility.copyDoubleArray(upperErrorValues)}
             : null;
     Boolean[] sameErrorVariableFlags = new Boolean[] {sameErrorValuesFlag};
     String[][] tickLabelValues =
-        (tickLabels != null) ? new String[][] {SGUtility.copyStringArray(tickLabels)} : null;
+        (tickLabels != null)
+            ? new String[][] {SGDataMiscUtility.copyStringArray(tickLabels)}
+            : null;
     this.mMultipleBuffer =
         new SGSXYMultipleDataBuffer(
             xValues2dim,

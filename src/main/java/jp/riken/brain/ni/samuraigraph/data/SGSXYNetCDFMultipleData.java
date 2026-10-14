@@ -2755,7 +2755,7 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
                   strArray[jj] = mod.modify(tickLabels[ii][jj]);
                 }
               } else {
-                strArray = SGUtility.copyStringArray(tickLabels[ii]);
+                strArray = SGDataMiscUtility.copyStringArray(tickLabels[ii]);
               }
             }
           } else if (var instanceof SGVariable) {

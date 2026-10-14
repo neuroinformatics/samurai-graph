@@ -4,7 +4,6 @@ import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 
 import jp.riken.brain.ni.samuraigraph.base.SGIStringModifier;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** The class of data column of the text type. */
 public class SGTextDataColumn extends SGDataColumn {
@@ -54,7 +53,7 @@ public class SGTextDataColumn extends SGDataColumn {
         }
       }
     } else {
-      stringArrayNew = SGUtility.copyStringArray(stringArray);
+      stringArrayNew = SGDataMiscUtility.copyStringArray(stringArray);
       for (int ii = 0; ii < stringArrayNew.length; ii++) {
         if (stringArrayNew[ii] == null) {
           stringArrayNew[ii] = "";
@@ -110,7 +109,7 @@ public class SGTextDataColumn extends SGDataColumn {
    * @return an array of text strings
    */
   public String[] getStringArray() {
-    return SGUtility.copyStringArray(this.mArray);
+    return SGDataMiscUtility.copyStringArray(this.mArray);
   }
 
   /**

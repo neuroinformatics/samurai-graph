@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-
 class SGSXYDataCache extends SGDataCache {
 
   double[] mXValues = null;
@@ -21,11 +19,11 @@ class SGSXYDataCache extends SGDataCache {
   @Override
   public Object clone() {
     SGSXYDataCache cache = (SGSXYDataCache) super.clone();
-    cache.mXValues = SGUtility.copyDoubleArray(this.mXValues);
-    cache.mYValues = SGUtility.copyDoubleArray(this.mYValues);
-    cache.mLowerErrorValues = SGUtility.copyDoubleArray(this.mLowerErrorValues);
-    cache.mUpperErrorValues = SGUtility.copyDoubleArray(this.mUpperErrorValues);
-    cache.mTickLabels = SGUtility.copyStringArray(this.mTickLabels);
+    cache.mXValues = SGDataMiscUtility.copyDoubleArray(this.mXValues);
+    cache.mYValues = SGDataMiscUtility.copyDoubleArray(this.mYValues);
+    cache.mLowerErrorValues = SGDataMiscUtility.copyDoubleArray(this.mLowerErrorValues);
+    cache.mUpperErrorValues = SGDataMiscUtility.copyDoubleArray(this.mUpperErrorValues);
+    cache.mTickLabels = SGDataMiscUtility.copyStringArray(this.mTickLabels);
     return cache;
   }
 

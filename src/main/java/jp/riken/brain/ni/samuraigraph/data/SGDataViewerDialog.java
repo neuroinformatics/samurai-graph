@@ -717,7 +717,7 @@ public class SGDataViewerDialog extends SGDialog {
   private List<SGSimpleIndexBlock> getSelectedCells(final boolean withValues) {
     List<SGSimpleIndexBlock> blockList = new ArrayList<SGSimpleIndexBlock>();
     int[] tableCols = this.getSelectedTableColumns();
-    tableCols = SGUtility.remove(tableCols, 0); // remove a column for row-header
+    tableCols = SGDataMiscUtility.remove(tableCols, 0); // remove a column for row-header
     int[] tableRows = this.getSelectedTableRows();
     SGIntegerSeries[] tableColSeriesArray = createSeriesArray(tableCols);
     SGIntegerSeries[] tableRowSeriesArray = createSeriesArray(tableRows);

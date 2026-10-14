@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-
 /** The buffer for vector-XY type data. */
 public class SGVXYDataBuffer extends SGOneDimensionalDataBuffer {
 
@@ -37,27 +35,27 @@ public class SGVXYDataBuffer extends SGOneDimensionalDataBuffer {
       throw new IllegalArgumentException("xValues.length != sValues.length");
     }
     this.mLength = xValues.length;
-    this.mXValues = SGUtility.copyDoubleArray(xValues);
-    this.mYValues = SGUtility.copyDoubleArray(yValues);
-    this.mFirstComponentValues = SGUtility.copyDoubleArray(fValues);
-    this.mSecondComponentValues = SGUtility.copyDoubleArray(sValues);
+    this.mXValues = SGDataMiscUtility.copyDoubleArray(xValues);
+    this.mYValues = SGDataMiscUtility.copyDoubleArray(yValues);
+    this.mFirstComponentValues = SGDataMiscUtility.copyDoubleArray(fValues);
+    this.mSecondComponentValues = SGDataMiscUtility.copyDoubleArray(sValues);
     this.mPolarFlag = polar;
   }
 
   public double[] getXValues() {
-    return SGUtility.copyDoubleArray(this.mXValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mXValues);
   }
 
   public double[] getYValues() {
-    return SGUtility.copyDoubleArray(this.mYValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mYValues);
   }
 
   public double[] getFirstComponentValues() {
-    return SGUtility.copyDoubleArray(this.mFirstComponentValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mFirstComponentValues);
   }
 
   public double[] getSecondComponentValues() {
-    return SGUtility.copyDoubleArray(this.mSecondComponentValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mSecondComponentValues);
   }
 
   public boolean isPolar() {

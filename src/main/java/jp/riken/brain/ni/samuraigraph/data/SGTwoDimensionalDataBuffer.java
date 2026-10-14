@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBuffer;
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** An abstract class of the data buffer for two-dimensional data. */
 public abstract class SGTwoDimensionalDataBuffer extends SGDataBuffer {
@@ -21,8 +20,8 @@ public abstract class SGTwoDimensionalDataBuffer extends SGDataBuffer {
     if (xValues == null || yValues == null) {
       throw new IllegalArgumentException("xValues == null || yValues == null");
     }
-    this.mXValues = SGUtility.copyDoubleArray(xValues);
-    this.mYValues = SGUtility.copyDoubleArray(yValues);
+    this.mXValues = SGDataMiscUtility.copyDoubleArray(xValues);
+    this.mYValues = SGDataMiscUtility.copyDoubleArray(yValues);
   }
 
   /**

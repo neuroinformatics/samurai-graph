@@ -1,7 +1,6 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
 import jp.riken.brain.ni.samuraigraph.base.SGDate;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** The buffer for multiple scalar-XY type data. */
 public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
@@ -59,11 +58,11 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
     }
     this.mLength = singleValues.length;
     double[][] sValues = new double[multipleValues.length][];
-    double[] sValueCopy = SGUtility.copyDoubleArray(singleValues);
+    double[] sValueCopy = SGDataMiscUtility.copyDoubleArray(singleValues);
     for (int ii = 0; ii < multipleValues.length; ii++) {
       sValues[ii] = sValueCopy;
     }
-    double[][] mValues = SGUtility.copyDoubleArray(multipleValues);
+    double[][] mValues = SGDataMiscUtility.copyDoubleArray(multipleValues);
     this.mXValues = yValuesMultipleFlag ? sValues : mValues;
     this.mYValues = yValuesMultipleFlag ? mValues : sValues;
     this.mYValuesMultipleFlag = yValuesMultipleFlag;
@@ -151,7 +150,7 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
           }
         }
       }
-      this.mLowerErrorValues = SGUtility.copyDoubleArray(leValues);
+      this.mLowerErrorValues = SGDataMiscUtility.copyDoubleArray(leValues);
       for (int ii = 0; ii < ueValues.length; ii++) {
         if (ueValues[ii] != null) {
           if (ueValues[ii].length != this.mLength) {
@@ -159,7 +158,7 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
           }
         }
       }
-      this.mUpperErrorValues = SGUtility.copyDoubleArray(ueValues);
+      this.mUpperErrorValues = SGDataMiscUtility.copyDoubleArray(ueValues);
       for (int ii = 0; ii < multipleValues.length; ii++) {
         if (!(leValues[ii] != null && ueValues[ii] != null)
             && !(leValues[ii] == null && ueValues[ii] == null)) {
@@ -182,7 +181,7 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
       if (tickLabels.length != multipleValues.length) {
         throw new IllegalArgumentException("tickLabels.length != multipleValues.length");
       }
-      this.mTickLabels = SGUtility.copyStringArray(tickLabels);
+      this.mTickLabels = SGDataMiscUtility.copyStringArray(tickLabels);
     }
 
     this.mDateFlag = dateFlag;
@@ -272,19 +271,19 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
   }
 
   private double[][] copyValues(double[][] values) {
-    return SGUtility.copyDoubleArray(values);
+    return SGDataMiscUtility.copyDoubleArray(values);
   }
 
   private String[][] copyValues(String[][] values) {
-    return SGUtility.copyStringArray(values);
+    return SGDataMiscUtility.copyStringArray(values);
   }
 
   public double[][] getXValues() {
-    return SGUtility.copyDoubleArray(this.mXValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mXValues);
   }
 
   public double[][] getYValues() {
-    return SGUtility.copyDoubleArray(this.mYValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mYValues);
   }
 
   public double[][] getLowerErrorValues() {
@@ -412,7 +411,7 @@ public class SGSXYMultipleDataBuffer extends SGOneDimensionalDataBuffer {
             "Index out of bounds: indices[" + ii + "] == " + indices[ii]);
       }
     }
-    if (!SGUtility.checkOverlapping(indices)) {
+    if (!SGDataMiscUtility.checkOverlapping(indices)) {
       throw new IllegalArgumentException("Indices overlapping");
     }
     double[][] xValues = new double[indices.length][];

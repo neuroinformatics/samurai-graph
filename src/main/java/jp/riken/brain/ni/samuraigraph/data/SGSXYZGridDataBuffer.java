@@ -2,7 +2,6 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** The buffer for scalar-XYZ type data on grid. */
 public class SGSXYZGridDataBuffer extends SGTwoDimensionalDataBuffer {
@@ -17,8 +16,8 @@ public class SGSXYZGridDataBuffer extends SGTwoDimensionalDataBuffer {
       throw new IllegalArgumentException("zValueBlocks == null");
     }
     this.checkBlocks(xValues, yValues, zValueBlocks, "zValueBlocks");
-    this.mXValues = SGUtility.copyDoubleArray(xValues);
-    this.mYValues = SGUtility.copyDoubleArray(yValues);
+    this.mXValues = SGDataMiscUtility.copyDoubleArray(xValues);
+    this.mYValues = SGDataMiscUtility.copyDoubleArray(yValues);
     this.mZValueBlocks = this.copyBlocks(zValueBlocks);
   }
 
@@ -31,11 +30,11 @@ public class SGSXYZGridDataBuffer extends SGTwoDimensionalDataBuffer {
   }
 
   public double[] getXValues() {
-    return SGUtility.copyDoubleArray(this.mXValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mXValues);
   }
 
   public double[] getYValues() {
-    return SGUtility.copyDoubleArray(this.mYValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mYValues);
   }
 
   public double[][] getZValues() {

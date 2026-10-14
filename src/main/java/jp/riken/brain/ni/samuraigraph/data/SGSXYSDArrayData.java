@@ -354,7 +354,7 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
   public double[] getLowerErrorValueArray(final boolean all, final boolean useCache) {
     double[] ret = null;
     final boolean b = (all || !this.isStrideAvailable());
-    ret = SGUtility.copyDoubleArray(this.getLowerErrorArray(b));
+    ret = SGDataMiscUtility.copyDoubleArray(this.getLowerErrorArray(b));
     if (useCache) {
       SGSXYDataCache.setLowerErrorValues(this, ret);
     }
@@ -371,7 +371,7 @@ public class SGSXYSDArrayData extends SGSDArrayData implements SGISXYTypeSingleD
   public double[] getUpperErrorValueArray(final boolean all, final boolean useCache) {
     double[] ret = null;
     final boolean b = (all || !this.isStrideAvailable());
-    ret = SGUtility.copyDoubleArray(this.getUpperErrorArray(b));
+    ret = SGDataMiscUtility.copyDoubleArray(this.getUpperErrorArray(b));
     if (useCache) {
       SGSXYDataCache.setUpperErrorValues(this, ret);
     }

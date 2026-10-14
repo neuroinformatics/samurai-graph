@@ -4,7 +4,6 @@ import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5DataClass;
 import java.util.ArrayList;
 import java.util.List;
 import jp.riken.brain.ni.samuraigraph.base.SGAttribute;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.data.SGHDF5Variable.HDF5DataType;
 import jp.riken.brain.ni.samuraigraph.data.SGNumberMDArrayVariable.INumberArray;
 
@@ -52,7 +51,7 @@ public abstract class SGVirtualMDArrayVariable extends SGNumberMDArrayVariable
   public Object clone() {
     SGVirtualMDArrayVariable var = (SGVirtualMDArrayVariable) super.clone();
     var.mDimensions = this.mDimensions.clone();
-    var.mValues = SGUtility.copyDoubleArray(this.mValues);
+    var.mValues = SGDataMiscUtility.copyDoubleArray(this.mValues);
     return var;
   }
 
@@ -107,7 +106,7 @@ public abstract class SGVirtualMDArrayVariable extends SGNumberMDArrayVariable
       if (values == null) {
         throw new IllegalArgumentException("values == null");
       }
-      this.mValues = SGUtility.copyDoubleArray(values);
+      this.mValues = SGDataMiscUtility.copyDoubleArray(values);
 
       this.mDimensions = new int[] {values.length};
       this.initWithDimensions();

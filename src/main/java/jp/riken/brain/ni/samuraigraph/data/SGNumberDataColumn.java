@@ -3,7 +3,6 @@ package jp.riken.brain.ni.samuraigraph.data;
 import static jp.riken.brain.ni.samuraigraph.data.SGDataColumnTypeConstants.*;
 
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeriesSet;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityNumber;
 import jp.riken.brain.ni.samuraigraph.base.SGUtilityText;
 
@@ -34,7 +33,7 @@ public class SGNumberDataColumn extends SGDataColumn implements SGINumberDataCol
     }
 
     // set to an attribute
-    this.mArray = SGUtility.copyDoubleArray(array);
+    this.mArray = SGDataMiscUtility.copyDoubleArray(array);
   }
 
   /**
@@ -63,7 +62,7 @@ public class SGNumberDataColumn extends SGDataColumn implements SGINumberDataCol
     }
 
     // set to an attribute
-    this.mArray = SGUtility.copyDoubleArray(dArray);
+    this.mArray = SGDataMiscUtility.copyDoubleArray(dArray);
   }
 
   /** Returns the length of data column. */
@@ -89,7 +88,7 @@ public class SGNumberDataColumn extends SGDataColumn implements SGINumberDataCol
    */
   @Override
   public double[] getNumberArray() {
-    return SGUtility.copyDoubleArray(this.mArray);
+    return SGDataMiscUtility.copyDoubleArray(this.mArray);
   }
 
   double[] getArray() {

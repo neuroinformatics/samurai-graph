@@ -2,7 +2,6 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import jp.riken.brain.ni.samuraigraph.base.SGIntegerSeries;
 import jp.riken.brain.ni.samuraigraph.base.SGSimpleIndexBlock;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** The class of a block of double values with indices. */
 public class SGSimpleDoubleValueIndexBlock extends SGSimpleIndexBlock {
@@ -26,7 +25,7 @@ public class SGSimpleDoubleValueIndexBlock extends SGSimpleIndexBlock {
       throw new IllegalArgumentException(
           "Invalid array length: " + values.length + " must be equal to " + len);
     }
-    this.mValues = SGUtility.copyDoubleArray(values);
+    this.mValues = SGDataMiscUtility.copyDoubleArray(values);
   }
 
   /**
@@ -37,7 +36,7 @@ public class SGSimpleDoubleValueIndexBlock extends SGSimpleIndexBlock {
   @Override
   public Object clone() {
     SGSimpleDoubleValueIndexBlock ret = (SGSimpleDoubleValueIndexBlock) super.clone();
-    ret.mValues = SGUtility.copyDoubleArray(this.mValues);
+    ret.mValues = SGDataMiscUtility.copyDoubleArray(this.mValues);
     return ret;
   }
 
@@ -47,7 +46,7 @@ public class SGSimpleDoubleValueIndexBlock extends SGSimpleIndexBlock {
    * @return the array of double values
    */
   public double[] getValues() {
-    return SGUtility.copyDoubleArray(this.mValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mValues);
   }
 
   /**

@@ -1,7 +1,5 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
-
 /** The buffer for scalar-XYZ type data. */
 public class SGSXYZDataBuffer extends SGOneDimensionalDataBuffer {
 
@@ -26,21 +24,21 @@ public class SGSXYZDataBuffer extends SGOneDimensionalDataBuffer {
       throw new IllegalArgumentException("xValues.length != zValues.length");
     }
     this.mLength = xValues.length;
-    this.mXValues = SGUtility.copyDoubleArray(xValues);
-    this.mYValues = SGUtility.copyDoubleArray(yValues);
-    this.mZValues = SGUtility.copyDoubleArray(zValues);
+    this.mXValues = SGDataMiscUtility.copyDoubleArray(xValues);
+    this.mYValues = SGDataMiscUtility.copyDoubleArray(yValues);
+    this.mZValues = SGDataMiscUtility.copyDoubleArray(zValues);
   }
 
   public double[] getXValues() {
-    return SGUtility.copyDoubleArray(this.mXValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mXValues);
   }
 
   public double[] getYValues() {
-    return SGUtility.copyDoubleArray(this.mYValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mYValues);
   }
 
   public double[] getZValues() {
-    return SGUtility.copyDoubleArray(this.mZValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mZValues);
   }
 
   /**

@@ -2,7 +2,6 @@ package jp.riken.brain.ni.samuraigraph.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import jp.riken.brain.ni.samuraigraph.base.SGUtility;
 
 /** The buffer for vector-XY type data on grid. */
 public class SGVXYGridDataBuffer extends SGTwoDimensionalDataBuffer {
@@ -28,8 +27,8 @@ public class SGVXYGridDataBuffer extends SGTwoDimensionalDataBuffer {
     }
     this.checkBlocks(xValues, yValues, fValueBlocks, "fValueBlocks");
     this.checkBlocks(xValues, yValues, sValueBlocks, "sValueBlocks");
-    this.mXValues = SGUtility.copyDoubleArray(xValues);
-    this.mYValues = SGUtility.copyDoubleArray(yValues);
+    this.mXValues = SGDataMiscUtility.copyDoubleArray(xValues);
+    this.mYValues = SGDataMiscUtility.copyDoubleArray(yValues);
     this.mFirstComponentValueBlocks = this.copyBlocks(fValueBlocks);
     this.mSecondComponentValueBlocks = this.copyBlocks(sValueBlocks);
     this.mPolarFlag = polar;
@@ -54,11 +53,11 @@ public class SGVXYGridDataBuffer extends SGTwoDimensionalDataBuffer {
   }
 
   public double[] getXValues() {
-    return SGUtility.copyDoubleArray(this.mXValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mXValues);
   }
 
   public double[] getYValues() {
-    return SGUtility.copyDoubleArray(this.mYValues);
+    return SGDataMiscUtility.copyDoubleArray(this.mYValues);
   }
 
   public List<SGXYSimpleDoubleValueIndexBlock> getFirstComponentValueBlocks() {
