@@ -630,7 +630,21 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
    *
    * @param el the Element object
    */
+  @Override
   protected boolean writeSequentialColumnIndices(Element el) {
+    return this.writeSequentialColumns(el, false);
+  }
+
+  /**
+   * Writes the sequentially numbered columns shared by the archive-save (column indices) and the
+   * data-set NetCDF (sequential names) writers. The lower/upper error columns are always written as
+   * column indices, matching the historical output; the other columns follow the given mode.
+   *
+   * @param el the element to which the attributes are set
+   * @param asName true to write sequential column names, false to write column indices
+   * @return true if succeeded
+   */
+  private boolean writeSequentialColumns(Element el, final boolean asName) {
     int[] xIndices, yIndices;
     if (this.hasMultipleYValues()) {
       xIndices = new int[] {0};
@@ -647,10 +661,10 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
     }
 
     // write indices
-    if (!this.writeAttributeColumnIndicesSub(el, KEY_X_VALUE_COLUMN_INDICES, xIndices)) {
+    if (!this.writeColumnSub(el, KEY_X_VALUE_COLUMN_INDICES, xIndices, asName)) {
       return false;
     }
-    if (!this.writeAttributeColumnIndicesSub(el, KEY_Y_VALUE_COLUMN_INDICES, yIndices)) {
+    if (!this.writeColumnSub(el, KEY_Y_VALUE_COLUMN_INDICES, yIndices, asName)) {
       return false;
     }
 
@@ -677,6 +691,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       }
       offset = tmp;
 
+      // the error values are always written as column indices
       if (!this.writeAttributeColumnIndicesSub(el, KEY_LOWER_ERROR_BAR_COLUMN_INDICES, lIndices)) {
         return false;
       }
@@ -698,8 +713,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
         }
         ehIndices[ii] = index + holderOffset;
       }
-      if (!this.writeAttributeColumnIndicesSub(
-          el, KEY_ERROR_BAR_HOLDER_COLUMN_INDICES, ehIndices)) {
+      if (!this.writeColumnSub(el, KEY_ERROR_BAR_HOLDER_COLUMN_INDICES, ehIndices, asName)) {
         return false;
       }
     }
@@ -711,7 +725,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
       for (int ii = 0; ii < tIndices.length; ii++) {
         tIndices[ii] = ii + offset;
       }
-      if (!this.writeAttributeColumnIndicesSub(el, KEY_TICK_LABEL_COLUMN_INDICES, tIndices)) {
+      if (!this.writeColumnSub(el, KEY_TICK_LABEL_COLUMN_INDICES, tIndices, asName)) {
         return false;
       }
 
@@ -729,13 +743,26 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
         }
         thIndices[ii] = index + holderOffset;
       }
-      if (!this.writeAttributeColumnIndicesSub(
-          el, KEY_TICK_LABEL_HOLDER_COLUMN_INDICES, thIndices)) {
+      if (!this.writeColumnSub(el, KEY_TICK_LABEL_HOLDER_COLUMN_INDICES, thIndices, asName)) {
         return false;
       }
     }
 
+    // serial numbers
+    if (asName) {
+      el.setAttribute(KEY_INDEX_VARIABLE_NAME, INDEX);
+    }
+
     return true;
+  }
+
+  private boolean writeColumnSub(
+      final Element el, final String key, final int[] indices, final boolean asName) {
+    if (asName) {
+      return this.writeAttributeColumnNameSub(el, key, indices);
+    } else {
+      return this.writeAttributeColumnIndicesSub(el, key, indices);
+    }
   }
 
   private boolean writeAttributeColumnNameSub(Element el, String key, int[] indices) {
@@ -754,112 +781,7 @@ public class SGSXYSDArrayMultipleData extends SGSDArrayData implements SGISXYTyp
 
   @Override
   protected boolean writeSequentialColumnName(Element el) {
-    int[] xIndices, yIndices;
-    if (this.hasMultipleYValues()) {
-      xIndices = new int[] {0};
-      yIndices = new int[this.mYIndices.length];
-      for (int ii = 0; ii < yIndices.length; ii++) {
-        yIndices[ii] = ii + 1;
-      }
-    } else {
-      xIndices = new int[this.mXIndices.length];
-      for (int ii = 0; ii < xIndices.length; ii++) {
-        xIndices[ii] = ii;
-      }
-      yIndices = new int[] {xIndices.length};
-    }
-
-    // write indices
-    if (!this.writeAttributeColumnNameSub(el, KEY_X_VALUE_COLUMN_INDICES, xIndices)) {
-      return false;
-    }
-    if (!this.writeAttributeColumnNameSub(el, KEY_Y_VALUE_COLUMN_INDICES, yIndices)) {
-      return false;
-    }
-
-    final Integer[] holders = this.hasMultipleYValues() ? this.mYIndices : this.mXIndices;
-    final int holderOffset = this.hasMultipleYValues() ? 1 : 0;
-
-    int offset = xIndices.length + yIndices.length;
-    if (this.isErrorBarAvailable()) {
-      // error bars
-      final int errLen = this.mLowerErrorIndices.length;
-      int[] lIndices = new int[errLen];
-      int[] uIndices = new int[errLen];
-      boolean[] sameErrorVariableFlags = this.getSameErrorVariableFlags();
-      int tmp = offset;
-      for (int ii = 0; ii < errLen; ii++) {
-        lIndices[ii] = tmp;
-        tmp++;
-        if (!sameErrorVariableFlags[ii]) {
-          uIndices[ii] = tmp;
-          tmp++;
-        } else {
-          uIndices[ii] = lIndices[ii];
-        }
-      }
-      offset = tmp;
-
-      if (!this.writeAttributeColumnIndicesSub(el, KEY_LOWER_ERROR_BAR_COLUMN_INDICES, lIndices)) {
-        return false;
-      }
-      if (!this.writeAttributeColumnIndicesSub(el, KEY_UPPER_ERROR_BAR_COLUMN_INDICES, uIndices)) {
-        return false;
-      }
-
-      int[] ehIndices = new int[this.mErrorBarHolderIndices.length];
-      for (int ii = 0; ii < ehIndices.length; ii++) {
-        int index = -1;
-        for (int jj = 0; jj < holders.length; jj++) {
-          if (holders[jj].equals(this.mErrorBarHolderIndices[ii])) {
-            index = jj;
-            break;
-          }
-        }
-        if (index == -1) {
-          return false;
-        }
-        ehIndices[ii] = index + holderOffset;
-      }
-      if (!this.writeAttributeColumnNameSub(el, KEY_ERROR_BAR_HOLDER_COLUMN_INDICES, ehIndices)) {
-        return false;
-      }
-    }
-
-    if (this.isTickLabelAvailable() && this.hasGenericTickLabels()) {
-      // tick labels
-
-      int[] tIndices = new int[this.mTickLabelIndices.length];
-      for (int ii = 0; ii < tIndices.length; ii++) {
-        tIndices[ii] = ii + offset;
-      }
-      if (!this.writeAttributeColumnNameSub(el, KEY_TICK_LABEL_COLUMN_INDICES, tIndices)) {
-        return false;
-      }
-
-      int[] thIndices = new int[this.mTickLabelHolderIndices.length];
-      for (int ii = 0; ii < thIndices.length; ii++) {
-        int index = -1;
-        for (int jj = 0; jj < holders.length; jj++) {
-          if (holders[jj].equals(this.mTickLabelHolderIndices[ii])) {
-            index = jj;
-            break;
-          }
-        }
-        if (index == -1) {
-          return false;
-        }
-        thIndices[ii] = index + holderOffset;
-      }
-      if (!this.writeAttributeColumnNameSub(el, KEY_TICK_LABEL_HOLDER_COLUMN_INDICES, thIndices)) {
-        return false;
-      }
-    }
-
-    // serial numbers
-    el.setAttribute(KEY_INDEX_VARIABLE_NAME, INDEX);
-
-    return true;
+    return this.writeSequentialColumns(el, true);
   }
 
   /**

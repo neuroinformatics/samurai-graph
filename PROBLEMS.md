@@ -126,9 +126,11 @@ Key problems:
   for NetCDF vs `{name:index}` for MDArray) and its own variable resolver.
   The picked-dimension metadata (`KEY_PICKUP_DIMENSION_NAME` for NetCDF vs
   `KEY_PICK_UP_DIMENSION` for MDArray) and the SDArray column-index output
-  remain backend-specific. Further unification would require unifying those
-  property formats, which would break the compatibility of existing property
-  files, so the per-backend split is kept deliberately.
+  remain backend-specific. The SDArray sequential-index/sequential-name
+  writers share their index assembly through the internal
+  `writeSequentialColumns` helper. Further unification would require
+  unifying those property formats, which would break the compatibility of
+  existing property files, so the per-backend split is kept deliberately.
 - `SGUtility` static helpers are shared across layers instead of a service:
   57 classes in `data` and 66 in `figure` call them directly (property
   validation, value computation, text/date parsing, GUI helpers).
