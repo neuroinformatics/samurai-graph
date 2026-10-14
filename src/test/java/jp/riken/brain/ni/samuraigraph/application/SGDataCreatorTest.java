@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.HDF5FactoryProvider;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Reader;
 import com.github.neuroinformatics.samurai_graph.lib.hdf5.IHDF5Writer;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -999,9 +1000,13 @@ class SGDataCreatorTest {
   }
 
   @Test
-  void getDataTypeCandidateListReturnsFalseForNonexistentFile() throws Exception {
+  void getDataTypeCandidateListThrowsForNonexistentFile() {
     List<String> cList = new java.util.ArrayList<String>();
-    assertFalse(new SGDataCreator().getDataTypeCandidateList("no/such/file.txt", cList));
+    // "file not found" is a distinct condition: it must be reported by the
+    // declared exception rather than swallowed as a "no candidates" result.
+    assertThrows(
+        FileNotFoundException.class,
+        () -> new SGDataCreator().getDataTypeCandidateList("no/such/file.txt", cList));
   }
 
   @Test
@@ -1058,10 +1063,15 @@ class SGDataCreatorTest {
   }
 
   @Test
-  void parseFileColumnTypeReturnsNullForNonexistentFile() throws Exception {
-    assertNull(
-        new SGDataCreator()
-            .parseFileColumnType("no/such/file.txt", SGDataTypeConstants.SXY_DATA, false, null));
+  void parseFileColumnTypeThrowsForNonexistentFile() {
+    // "file not found" must be reported by the declared exception so that the
+    // callers can distinguish it from an empty or invalid file.
+    assertThrows(
+        FileNotFoundException.class,
+        () ->
+            new SGDataCreator()
+                .parseFileColumnType(
+                    "no/such/file.txt", SGDataTypeConstants.SXY_DATA, false, null));
   }
 
   // -----------------------------------------------------------------

@@ -158,15 +158,6 @@ dataset so the values still round-trip. The convenience writers
   (`z`, `f`/`s`) through the float64 `writeMDArray`, so their grid files
   store 2-D datasets.
 
-### 2.6 Exceptions are routinely swallowed as `null`/`false`
-
-The `data` layer returns `null` or `false` from `catch (IOException)` blocks
-in ~30 places, so an I/O failure (missing file, unreadable source) is
-indistinguishable from a genuinely empty or inapplicable result. A concrete
-example is `SGDataCreator.parseFileColumnType`, which declares
-`throws FileNotFoundException` yet swallows it and returns `null`. Callers
-cannot tell "file was not found" from "file parsed to no columns".
-
 ## 3. Test Gaps
 
 | Area | Status |

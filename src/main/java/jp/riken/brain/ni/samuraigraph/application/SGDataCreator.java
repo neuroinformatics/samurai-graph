@@ -717,6 +717,9 @@ public class SGDataCreator {
         return false;
       }
 
+    } catch (FileNotFoundException ex) {
+      // propagate so that the callers can distinguish "file not found"
+      throw ex;
     } catch (IOException ex) {
       return false;
     } finally {
@@ -934,6 +937,9 @@ public class SGDataCreator {
         }
       }
 
+    } catch (FileNotFoundException ex) {
+      // propagate so that the callers can distinguish "file not found"
+      throw ex;
     } catch (IOException ex) {
       return null;
     } finally {
