@@ -17,6 +17,9 @@ public interface IHDF5Writer extends AutoCloseable {
   /** Returns the int32 datatype writer. */
   IHDF5Int32Writer int32();
 
+  /** Returns the int64 datatype writer. */
+  IHDF5Int64Writer int64();
+
   /** Returns the string datatype writer. */
   IHDF5StringWriter string();
 

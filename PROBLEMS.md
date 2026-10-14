@@ -151,16 +151,16 @@ Key problems:
 ### 2.5 The HDF5 writer supports only up to the rank the reader can convert
 
 The typed `writeMDArray` methods of `Hdf5WriterAdapter` (float64, int32,
-string) store a dataset with the shape of the source `MDArray`: float64 keeps
-the 1-D, 2-D and 3-D shapes, int32 keeps 1-D and 2-D, and string stores a
-1-D dataset. The rank is chosen per type because the reader converts a
-dataset to an `MDArray` from a nested array of at most that rank:
-`convertToMDDoubleArray` accepts 1-D, 2-D and 3-D data,
-`convertToMDIntArray` 1-D and 2-D, and `convertToMDStringArray` 1-D only.
-An array whose rank the reader cannot convert is written as a flat 1-D
-dataset so the values still round-trip. The convenience writers
-(`writeDoubleArray` / `writeIntArray` / `writeDoubleMatrix` /
-`writeIntMatrix`) preserve the shape the same way.
+int64, string) store a dataset with the shape of the source `MDArray`:
+float64 keeps the 1-D, 2-D and 3-D shapes, int32 and int64 keep 1-D and 2-D,
+and string stores a 1-D dataset. The rank is chosen per type because the
+reader converts a dataset to an `MDArray` from a nested array of at most
+that rank: `convertToMDDoubleArray` accepts 1-D, 2-D and 3-D data,
+`convertToMDIntArray` and `convertToMDLongArray` 1-D and 2-D, and
+`convertToMDStringArray` 1-D only. An array whose rank the reader cannot
+convert is written as a flat 1-D dataset so the values still round-trip.
+The convenience writers (`writeDoubleArray` / `writeIntArray` /
+`writeDoubleMatrix` / `writeIntMatrix`) preserve the shape the same way.
 
 - `SGMDArrayData.saveToArchiveDataSetFileAsHDF5File` (lines 1474-1485)
   round-trips each variable through `readMDArray` and `writeMDArray`, so an

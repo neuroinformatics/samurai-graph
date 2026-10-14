@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDArray;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDIntArray;
+import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDLongArray;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -188,6 +189,37 @@ class HDF5RoundTripTest {
       MDArray<String> readStrings = reader.string().readMDArray("strings");
       assertEquals(1, readStrings.getRank());
       assertArrayEquals(new String[] {"x", "yy", "zzz"}, readStrings.getFlatArrayRef());
+    }
+  }
+
+  @Test
+  void typedInt64MdArrayRoundTripsAsOneDimensionalData() throws Exception {
+    File file = this.createTempHdf5File();
+    MDLongArray longs = new MDLongArray(new long[] {100L, 200L, 300L});
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
+      writer.int64().writeMDArray("longs", longs);
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      MDLongArray readLongs = reader.int64().readMDArray("longs");
+      assertEquals(1, readLongs.getRank());
+      assertArrayEquals(new long[] {100L, 200L, 300L}, readLongs.getFlatArrayRef());
+    }
+  }
+
+  @Test
+  void typedInt64MdArrayWritePreservesTwoDimensionalShape() throws Exception {
+    File file = this.createTempHdf5File();
+    // The typed writeMDArray keeps the dataset shape, so a 2-D array comes back as a
+    // 2-D dataset with the same dimensions and value order.
+    MDLongArray longs = new MDLongArray(new long[] {1L, 2L, 3L, 4L, 5L, 6L}, new int[] {2, 3});
+    try (IHDF5Writer writer = HDF5FactoryProvider.get().open(file)) {
+      writer.int64().writeMDArray("longs", longs);
+    }
+    try (IHDF5Reader reader = HDF5FactoryProvider.get().openForReading(file)) {
+      MDLongArray readLongs = reader.int64().readMDArray("longs");
+      assertEquals(2, readLongs.getRank());
+      assertArrayEquals(new int[] {2, 3}, readLongs.getDimensions());
+      assertArrayEquals(new long[] {1L, 2L, 3L, 4L, 5L, 6L}, readLongs.getFlatArrayRef());
     }
   }
 

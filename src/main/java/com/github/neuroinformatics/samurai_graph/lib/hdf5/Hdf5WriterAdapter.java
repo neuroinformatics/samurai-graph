@@ -11,6 +11,7 @@ package com.github.neuroinformatics.samurai_graph.lib.hdf5;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDArray;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDDoubleArray;
 import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDIntArray;
+import com.github.neuroinformatics.samurai_graph.lib.mdarray.MDLongArray;
 import io.jhdf.WritableHdfFile;
 import io.jhdf.api.WritableGroup;
 import io.jhdf.api.WritableNode;
@@ -38,6 +39,11 @@ class Hdf5WriterAdapter implements IHDF5Writer {
   @Override
   public IHDF5Int32Writer int32() {
     return new Int32Writer();
+  }
+
+  @Override
+  public IHDF5Int64Writer int64() {
+    return new Int64Writer();
   }
 
   @Override
@@ -198,6 +204,41 @@ class Hdf5WriterAdapter implements IHDF5Writer {
     }
   }
 
+  private class Int64Writer implements IHDF5Int64Writer {
+    @Override
+    public void writeMDArray(final String dataSetName, final MDLongArray array) {
+      try {
+        String[] parts = splitPath(dataSetName);
+        WritableGroup parent = Hdf5WriterAdapter.this.getOrCreateGroup(parts[0]);
+        parent.putDataset(parts[1], toWritableDataset(array));
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    @Override
+    public void setAttr(final String path, final String attributeName, final long value) {
+      try {
+        WritableGroup group = Hdf5WriterAdapter.this.getOrCreateGroup(path);
+        group.putAttribute(attributeName, value);
+      } catch (Exception e) {
+        logger.error("Failed to set int64 attr: {}@{}", attributeName, path, e);
+        throw new RuntimeException(e);
+      }
+    }
+
+    @Override
+    public void setArrayAttr(final String path, final String attributeName, final long[] value) {
+      try {
+        WritableGroup group = Hdf5WriterAdapter.this.getOrCreateGroup(path);
+        group.putAttribute(attributeName, value);
+      } catch (Exception e) {
+        logger.error("Failed to set int64 array attr: {}@{}", attributeName, path, e);
+        throw new RuntimeException(e);
+      }
+    }
+  }
+
   private class StringWriter implements IHDF5StringWriter {
     @Override
     public void writeMDArray(final String dataSetName, final MDArray<String> array) {
@@ -345,6 +386,26 @@ class Hdf5WriterAdapter implements IHDF5Writer {
     int[] flat = array.getFlatArrayRef();
     if (dims.length == 2) {
       int[][] nested = new int[dims[0]][];
+      int offset = 0;
+      for (int ii = 0; ii < dims[0]; ii++) {
+        nested[ii] = Arrays.copyOfRange(flat, offset, offset + dims[1]);
+        offset += dims[1];
+      }
+      return nested;
+    }
+    return flat;
+  }
+
+  /**
+   * Converts an {@link MDLongArray} into the Java object that jhdf writes as a dataset. The 2-D
+   * case keeps its shape; every other rank falls back to the flat array, which the reader can still
+   * convert.
+   */
+  private static Object toWritableDataset(final MDLongArray array) {
+    int[] dims = array.getDimensions();
+    long[] flat = array.getFlatArrayRef();
+    if (dims.length == 2) {
+      long[][] nested = new long[dims[0]][];
       int offset = 0;
       for (int ii = 0; ii < dims[0]; ii++) {
         nested[ii] = Arrays.copyOfRange(flat, offset, offset + dims[1]);
