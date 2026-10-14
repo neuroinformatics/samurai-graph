@@ -9,13 +9,13 @@ Coverage snapshot: 2026-10-14, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`)
 | `mdarray` | 664 | 17 | 97.4% | 53 | 98.1% |
 | `export` | 44 | 0 | 100.0% | 8 | 100.0% |
 | `base` | 69,607 | 33,324 | 52.1% | 2,713 | 53.7% |
-| `data` | 126,951 | 56,378 | 55.6% | 3,380 | 53.5% |
+| `data` | 126,951 | 54,121 | 57.4% | 3,380 | 53.5% |
 | `hdf5` | 2,775 | 263 | 90.5% | 121 | 97.5% |
 | `figure` (top level) | 137,762 | 105,972 | 23.1% | 5,446 | 33.4% |
 | `figure.dialog` | 62,808 | 21,582 | 65.6% | 968 | 22.2% |
 | `application` | 68,566 | 49,891 | 27.2% | 1,678 | 21.3% |
 | `org.freehep...export` | 220 | 5 | 97.7% | 8 | 100.0% |
-| **Total** | **469,397** | **267,432** | **43.0%** | **14,375** | **40.6%** |
+| **Total** | **469,397** | **265,175** | **43.5%** | **14,375** | **40.6%** |
 
 ## 2. Current Problems
 
@@ -169,14 +169,15 @@ dataset so the values still round-trip. The convenience writers
 | `SGUtility` (2,784 LOC, 139 static methods) | Only unreachable or platform-specific defensive branches remain untested (class coverage: 99.5% instruction, 98.8% branch, 100% method): the `moveObjectTo`-failure returns inside `moveObject` / `moveObjectRawList`, the `getFileName` forward-slash fallback for Windows paths, the `assignIdNumber` `Error` guard and its loop exit, the `PermittingEmptyString` empty-string rechecks shadowed by the earlier return, the `getVersionNumber` defensive `property == null` check, and the `setupMediaTracker` `InterruptedException` catch |
 | `hdf5` package (90.5%) | The remaining 263 missed instructions are unreachable through jhdf or defensive fallbacks: the `mapDataClass` cases jhdf never reports (opaque, compound, reference, enum, vlen, time), the dead `Hdf5WriterAdapter$FileReader` (the `IHDF5Writer` interface exposes no `file()` accessor), the five convenience-writer `catch` blocks (jhdf buffers `putDataset` in memory, so a failing write is not thrown until `close`), the `getDataset` by-name fallback, the `byte[][]`/`Number[]`/`String.valueOf` attribute-coercion fallbacks jhdf never produces, and the `close()` error handlers |
 | `export` package (100.0%) | Fully covered. The `org.freehep...export` registry is at 97.7%: only the outer `getResources` `IOException` catch (a defensive handler for an unreadable classloader) remains unreachable in tests |
-| `data` package (55.6%) | `SGSXYNetCDFMultipleData` now at 60.9% with the export/archive-save, assigned-variable, data-copy and data-viewer-edit suite; the MDArray multiple-data sibling and the backend setup dialogs remain under-tested |
+| `data` package (57.4%) | Both multiple-data SXY classes are now at ~61% (`SGSXYNetCDFMultipleData` 60.9%, `SGSXYMDArrayMultipleData` 61.0%) with export (HDF5/MATLAB/NetCDF), assigned-variable, column-type, data-copy and data-viewer-edit suites; the backend setup dialogs and the tick-label/date export branches remain under-tested |
 | `application` package (27.2%) | `SGDataCreator` (2,775 LOC) now at 77.1% with the factory-path test suite; the remaining covered-unit gap is the dialog and menu surface of `SGMainFunctions` |
 | `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
 
 **Next coverage work:**
 
-1. The `data` package (55.6%): `SGSXYMDArrayMultipleData` (4,066 missed) is the
-   largest remaining untested unit among the multiple-data SXY classes.
+1. The `data` package (57.4%): the NetCDF and MDArray setup dialogs
+   (`SGNetCDFDataSetupPanel`, `SGMDArrayDataSetupPanel`) are the largest untested
+   units remaining in the data layer.
 
 ## 4. Healthy Aspects
 
