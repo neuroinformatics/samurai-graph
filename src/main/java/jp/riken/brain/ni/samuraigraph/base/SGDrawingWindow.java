@@ -2001,46 +2001,8 @@ public class SGDrawingWindow extends JFrame
    * @param sb
    */
   public boolean createTree(StringBuilder sb) {
-    this.createTree(this, sb, 0);
+    SGDrawingWindowTreeUtility.createTree(this, sb);
     return true;
-  }
-
-  private void createTree(final SGINode node, final StringBuilder sb, final int depth) {
-    final ArrayList<SGINode> childList = node.getChildNodes();
-    final String cText = node.getClassDescription();
-    final String iText = node.getInstanceDescription();
-    final boolean pFlag = (node instanceof SGIPropertyDialogObserver);
-
-    // has child objects
-    if (childList.size() != 0) {
-      if (cText != null && iText != null) {
-        this.append(sb, iText, depth);
-
-        final int d = depth + 1;
-
-        // add child
-        for (int ii = 0; ii < childList.size(); ii++) {
-          SGINode child = childList.get(ii);
-          this.createTree(child, sb, d);
-        }
-      }
-    } else {
-      if (iText != null) {
-        // property dialog observer
-        if (pFlag) {
-          this.append(sb, iText, depth);
-        }
-      }
-    }
-  }
-
-  private void append(final StringBuilder sb, final String str, final int depth) {
-    final String s = "  ";
-    for (int ii = 0; ii < depth; ii++) {
-      sb.append(s);
-    }
-    sb.append(str);
-    sb.append(LINE_SEPARATOR);
   }
 
   //
