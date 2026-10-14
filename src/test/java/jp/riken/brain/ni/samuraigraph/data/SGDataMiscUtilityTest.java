@@ -945,4 +945,21 @@ class SGDataMiscUtilityTest {
     SGNetCDFVariable[] vars = {file.findVariable("x"), null, file.findVariable("v1")};
     assertArrayEquals(new String[] {"x", null, "v1"}, SGDataMiscUtility.getNames(vars));
   }
+
+  @Test
+  void resolveVariablesResolvesNetCDFNames() throws Exception {
+    SGNetCDFFile file =
+        createNetCDFFile(Files.createTempFile("samurai-graph-test", ".nc").toString());
+    String[] names = {"x", "v1"};
+    SGNetCDFVariable[] vars =
+        SGDataMiscUtility.resolveVariables(names, file::findVariable, SGNetCDFVariable[]::new);
+    assertEquals(2, vars.length);
+    assertEquals("x", vars[0].getName());
+    assertEquals("v1", vars[1].getName());
+  }
+
+  @Test
+  void resolveVariablesReturnsNullForNullNames() {
+    assertNull(SGDataMiscUtility.resolveVariables(null, name -> null, SGNetCDFVariable[]::new));
+  }
 }

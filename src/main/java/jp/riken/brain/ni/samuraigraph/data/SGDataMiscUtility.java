@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Function;
+import java.util.function.IntFunction;
 import java.util.function.Supplier;
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer.Token;
 import jp.riken.brain.ni.samuraigraph.base.SGConstants.OPERATION;
@@ -1707,5 +1709,29 @@ public final class SGDataMiscUtility {
       names[ii] = (vars[ii] != null) ? vars[ii].getName() : null;
     }
     return names;
+  }
+
+  /**
+   * Resolves each name in the given array with the resolver. A null input array results in a null
+   * return value, which the setProperties implementations rely on to clear the per-backend variable
+   * arrays.
+   *
+   * @param names the array of the variable names, possibly null
+   * @param resolver the resolver from a name to a variable
+   * @param arrayFactory the factory of a variable array of the given length
+   * @return the array of the resolved variables, or null if names is null
+   */
+  public static <T> T[] resolveVariables(
+      final String[] names,
+      final Function<String, T> resolver,
+      final IntFunction<T[]> arrayFactory) {
+    if (names == null) {
+      return null;
+    }
+    T[] vars = arrayFactory.apply(names.length);
+    for (int ii = 0; ii < names.length; ii++) {
+      vars[ii] = resolver.apply(names[ii]);
+    }
+    return vars;
   }
 }

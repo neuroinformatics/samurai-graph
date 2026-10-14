@@ -1,6 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
 import java.util.*;
+import java.util.function.Function;
 import jp.riken.brain.ni.samuraigraph.base.*;
 import org.w3c.dom.Element;
 
@@ -46,59 +47,22 @@ class SGSXYNetCDFMultipleDataPropertyIO {
     } else {
 
       SGNetCDFFile ncFile = data.getNetcdfFile();
+      final Function<String, SGNetCDFVariable> findVariable = ncFile::findVariable;
 
-      SGNetCDFVariable[] xVars = new SGNetCDFVariable[sp.xNames.length];
-      for (int ii = 0; ii < xVars.length; ii++) {
-        xVars[ii] = ncFile.findVariable(sp.xNames[ii]);
-      }
-      SGNetCDFVariable[] yVars = new SGNetCDFVariable[sp.yNames.length];
-      for (int ii = 0; ii < yVars.length; ii++) {
-        yVars[ii] = ncFile.findVariable(sp.yNames[ii]);
-      }
-      SGNetCDFVariable[] lVars = null;
-      if (sp.lNames != null) {
-        lVars = new SGNetCDFVariable[sp.lNames.length];
-        for (int ii = 0; ii < lVars.length; ii++) {
-          lVars[ii] = ncFile.findVariable(sp.lNames[ii]);
-        }
-      }
-      SGNetCDFVariable[] uVars = null;
-      if (sp.uNames != null) {
-        uVars = new SGNetCDFVariable[sp.uNames.length];
-        for (int ii = 0; ii < uVars.length; ii++) {
-          uVars[ii] = ncFile.findVariable(sp.uNames[ii]);
-        }
-      }
-      SGNetCDFVariable[] ehVars = null;
-      if (sp.ehNames != null) {
-        ehVars = new SGNetCDFVariable[sp.ehNames.length];
-        for (int ii = 0; ii < ehVars.length; ii++) {
-          ehVars[ii] = ncFile.findVariable(sp.ehNames[ii]);
-        }
-      }
-      SGNetCDFVariable[] tVars = null;
-      if (sp.tNames != null) {
-        tVars = new SGNetCDFVariable[sp.tNames.length];
-        for (int ii = 0; ii < tVars.length; ii++) {
-          tVars[ii] = ncFile.findVariable(sp.tNames[ii]);
-        }
-      }
-      SGNetCDFVariable[] thVars = null;
-      if (sp.thNames != null) {
-        thVars = new SGNetCDFVariable[sp.thNames.length];
-        for (int ii = 0; ii < thVars.length; ii++) {
-          thVars[ii] = ncFile.findVariable(sp.thNames[ii]);
-        }
-      }
-
-      // set to the attributes
-      data.mXVariables = xVars;
-      data.mYVariables = yVars;
-      data.mLowerErrorVariables = lVars;
-      data.mUpperErrorVariables = uVars;
-      data.mErrorBarHolderVariables = ehVars;
-      data.mTickLabelVariables = tVars;
-      data.mTickLabelHolderVariables = thVars;
+      data.mXVariables =
+          SGDataMiscUtility.resolveVariables(sp.xNames, findVariable, SGNetCDFVariable[]::new);
+      data.mYVariables =
+          SGDataMiscUtility.resolveVariables(sp.yNames, findVariable, SGNetCDFVariable[]::new);
+      data.mLowerErrorVariables =
+          SGDataMiscUtility.resolveVariables(sp.lNames, findVariable, SGNetCDFVariable[]::new);
+      data.mUpperErrorVariables =
+          SGDataMiscUtility.resolveVariables(sp.uNames, findVariable, SGNetCDFVariable[]::new);
+      data.mErrorBarHolderVariables =
+          SGDataMiscUtility.resolveVariables(sp.ehNames, findVariable, SGNetCDFVariable[]::new);
+      data.mTickLabelVariables =
+          SGDataMiscUtility.resolveVariables(sp.tNames, findVariable, SGNetCDFVariable[]::new);
+      data.mTickLabelHolderVariables =
+          SGDataMiscUtility.resolveVariables(sp.thNames, findVariable, SGNetCDFVariable[]::new);
 
       data.updateIsSingleVariableDateFlag();
     }

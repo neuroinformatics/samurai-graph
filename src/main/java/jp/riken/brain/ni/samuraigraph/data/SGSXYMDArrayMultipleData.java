@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.function.Function;
 import jp.riken.brain.ni.samuraigraph.base.SGData;
 import jp.riken.brain.ni.samuraigraph.base.SGDataBufferPolicy;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
@@ -1008,64 +1009,21 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     }
     SXYMDArrayMultipleDataProperties sp = (SXYMDArrayMultipleDataProperties) p;
 
-    SGMDArrayVariable[] xVars = null;
-    if (sp.xNames != null) {
-      xVars = new SGMDArrayVariable[sp.xNames.length];
-      for (int ii = 0; ii < xVars.length; ii++) {
-        xVars[ii] = this.findVariable(sp.xNames[ii]);
-      }
-    }
-    SGMDArrayVariable[] yVars = null;
-    if (sp.yNames != null) {
-      yVars = new SGMDArrayVariable[sp.yNames.length];
-      for (int ii = 0; ii < yVars.length; ii++) {
-        yVars[ii] = this.findVariable(sp.yNames[ii]);
-      }
-    }
-    SGMDArrayVariable[] lVars = null;
-    if (sp.lNames != null) {
-      lVars = new SGMDArrayVariable[sp.lNames.length];
-      for (int ii = 0; ii < lVars.length; ii++) {
-        lVars[ii] = this.findVariable(sp.lNames[ii]);
-      }
-    }
-    SGMDArrayVariable[] uVars = null;
-    if (sp.uNames != null) {
-      uVars = new SGMDArrayVariable[sp.uNames.length];
-      for (int ii = 0; ii < uVars.length; ii++) {
-        uVars[ii] = this.findVariable(sp.uNames[ii]);
-      }
-    }
-    SGMDArrayVariable[] ehVars = null;
-    if (sp.ehNames != null) {
-      ehVars = new SGMDArrayVariable[sp.ehNames.length];
-      for (int ii = 0; ii < ehVars.length; ii++) {
-        ehVars[ii] = this.findVariable(sp.ehNames[ii]);
-      }
-    }
-    SGMDArrayVariable[] tVars = null;
-    if (sp.tNames != null) {
-      tVars = new SGMDArrayVariable[sp.tNames.length];
-      for (int ii = 0; ii < tVars.length; ii++) {
-        tVars[ii] = this.findVariable(sp.tNames[ii]);
-      }
-    }
-    SGMDArrayVariable[] thVars = null;
-    if (sp.thNames != null) {
-      thVars = new SGMDArrayVariable[sp.thNames.length];
-      for (int ii = 0; ii < thVars.length; ii++) {
-        thVars[ii] = this.findVariable(sp.thNames[ii]);
-      }
-    }
-
-    // set to the attributes
-    this.mXVariables = xVars;
-    this.mYVariables = yVars;
-    this.mLowerErrorVariables = lVars;
-    this.mUpperErrorVariables = uVars;
-    this.mErrorBarHolderVariables = ehVars;
-    this.mTickLabelVariables = tVars;
-    this.mTickLabelHolderVariables = thVars;
+    final Function<String, SGMDArrayVariable> findVariable = this::findVariable;
+    this.mXVariables =
+        SGDataMiscUtility.resolveVariables(sp.xNames, findVariable, SGMDArrayVariable[]::new);
+    this.mYVariables =
+        SGDataMiscUtility.resolveVariables(sp.yNames, findVariable, SGMDArrayVariable[]::new);
+    this.mLowerErrorVariables =
+        SGDataMiscUtility.resolveVariables(sp.lNames, findVariable, SGMDArrayVariable[]::new);
+    this.mUpperErrorVariables =
+        SGDataMiscUtility.resolveVariables(sp.uNames, findVariable, SGMDArrayVariable[]::new);
+    this.mErrorBarHolderVariables =
+        SGDataMiscUtility.resolveVariables(sp.ehNames, findVariable, SGMDArrayVariable[]::new);
+    this.mTickLabelVariables =
+        SGDataMiscUtility.resolveVariables(sp.tNames, findVariable, SGMDArrayVariable[]::new);
+    this.mTickLabelHolderVariables =
+        SGDataMiscUtility.resolveVariables(sp.thNames, findVariable, SGMDArrayVariable[]::new);
 
     this.setDecimalPlaces(sp.mDecimalPlaces);
     this.setExponent(sp.mExponent);
