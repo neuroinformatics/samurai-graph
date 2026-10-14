@@ -1,6 +1,7 @@
 package jp.riken.brain.ni.samuraigraph.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -362,9 +363,20 @@ class SGSXYMDArrayMultipleDataCoverageTest {
     SGSXYMDArrayMultipleData data = create1D(create1DFile(createTempHdf5File()));
     SGDataValueHistory.MDArray.D1 d1 =
         new SGDataValueHistory.MDArray.D1(1.5, SGDataColumnTypeConstants.Y_VALUE, 0, 0, "y1");
+    d1.setDimension(0);
+    // The method converts the 1-D edited value to the multiple form and keeps
+    // the generic dimension index so the archive save can locate it again.
     data.addSingleDimensionEditedDataValue(d1);
-    // The recorded edit is reflected through the HDF5 export.
-    assertTrue(data.saveToHDF5File(newTempFile(".h5"), exportMode(), policy()));
+    assertTrue(data.saveToArchiveDataSetFile(newTempFile(".h5"), archiveMode()));
+  }
+
+  @Test
+  void archiveModeHdf5ExportFailsCleanlyInsteadOfNpe() throws Exception {
+    SGSXYMDArrayMultipleData data = create1D(create1DFile(createTempHdf5File()));
+    // The archive operation is only valid for NetCDF-format archives; the
+    // HDF5/MATLAB exporters must refuse it rather than dereference null.
+    assertFalse(data.saveToHDF5File(newTempFile(".h5"), archiveMode(), policy()));
+    assertFalse(data.saveToMATLABFile(newTempFile(".mat"), archiveMode(), policy()));
   }
 
   // -----------------------------------------------------------------

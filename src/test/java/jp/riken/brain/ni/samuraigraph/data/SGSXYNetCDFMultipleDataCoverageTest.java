@@ -371,13 +371,15 @@ class SGSXYNetCDFMultipleDataCoverageTest {
   }
 
   @Test
-  void addSingleDimensionEditedDataValueAcceptsD1() {
+  void addSingleDimensionEditedDataValueAcceptsD1() throws Exception {
     SGSXYNetCDFMultipleData data = createIndexAvailable();
     SGDataValueHistory.NetCDF.D1 d1 =
         new SGDataValueHistory.NetCDF.D1(1.5, SGDataColumnTypeConstants.Y_VALUE, 0, 0, "le");
     d1.setIndexDimName("x");
-    // The method converts the 1-D edited value to the multiple form.
+    // The method converts the 1-D edited value to the multiple form and keeps
+    // the dimension name so the archive save can locate it again.
     data.addSingleDimensionEditedDataValue(d1);
+    assertTrue(data.saveToArchiveDataSetFile(newTempFile(".nc"), archiveMode()));
   }
 
   // -----------------------------------------------------------------

@@ -158,42 +158,7 @@ dataset so the values still round-trip. The convenience writers
   (`z`, `f`/`s`) through the float64 `writeMDArray`, so their grid files
   store 2-D datasets.
 
-### 2.6 Latent exceptions in the edited-value and export paths
-
-Three latent `NullPointerException`/index exceptions were observed while
-exercising the data paths from the characterization suites:
-
-- **`SGSXYNetCDFMultipleData.addSingleDimensionEditedDataValue` loses the
-  dimension name.** When a single-data object is converted with `toMultiple()`
-  its edited values are copied over through this method, which builds an
-  `MD1` without calling `setDimInfo`, so `MD1.getDimName()` stays `null`.
-  Saving the resulting multiple data with `saveToArchiveDataSetFile` then
-  reaches `setEditedValues`, which passes the `null` dim name to
-  `findDimensionOrder` and NPEs on `dimName.equals(...)`. This is reachable
-  from the ordinary flow (edit a single-data cell, convert to multiple, save
-  an archive) and is not limited to invalid API usage.
-
-- **`SGSXYMDArrayMultipleData.addSingleDimensionEditedDataValue` loses the
-  dimension index.** The MDArray sibling has the same shape of bug: the
-  copied `MD1` never gets `setDimensionInfo`, so `getDimension()` stays `-1`.
-  When such a value reaches `getEditedValueMap` during an archive save it
-  indexes `factors[dimension]` with `-1` and throws
-  `ArrayIndexOutOfBoundsException`.
-
-- **`SGSXYMDArrayMultipleData.exportToHDF5` / `exportToMATLAB` assume the
-  value arrays are populated.** `exportCommon` leaves `xValues`/`yValues` as
-  `null` (while keeping `xValid`/`yValid` true) when saving a non-virtual
-  `SGHDF5File` source with an archive operation, and the exporters dereference
-  `info.xValues[ii]` without a null check. `saveToHDF5File(file,
-  SAVE_TO_ARCHIVE_DATA_SET, policy)` therefore NPEs instead of failing
-  cleanly. The archive op is only valid for NetCDF-format archives, so the
-  HDF5/MATLAB exporters should reject it rather than crash.
-
-All three are reachable only through the edited-value / mixed-operation paths
-rather than the plain data-viewing flow, but they make the converted/export
-APIs unsafe and are worth guarding.
-
-### 2.7 Exceptions are routinely swallowed as `null`/`false`
+### 2.6 Exceptions are routinely swallowed as `null`/`false`
 
 The `data` layer returns `null` or `false` from `catch (IOException)` blocks
 in ~30 places, so an I/O failure (missing file, unreadable source) is

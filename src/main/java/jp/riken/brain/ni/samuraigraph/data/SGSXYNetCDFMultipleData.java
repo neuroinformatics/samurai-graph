@@ -3349,6 +3349,12 @@ public class SGSXYNetCDFMultipleData extends SGNetCDFData
           new SGDataValueHistory.NetCDF.MD1(
               dValue.getValue(), dValue.getColumnType(), 0, dValue.getIndex(), dValue.getVarName());
     }
+    // copies the dimension name so that the edited value can be located again
+    // when it is saved to a file.
+    String indexDimName = dValue.getIndexDimName();
+    if (indexDimName != null) {
+      mdValue.setDimInfo(indexDimName);
+    }
     this.mEditedDataValueList.add(mdValue);
   }
 

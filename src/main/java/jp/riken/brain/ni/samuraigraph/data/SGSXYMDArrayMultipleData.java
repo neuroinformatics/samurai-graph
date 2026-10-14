@@ -2585,6 +2585,14 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     SXYExportInfo info = this.exportCommon(mode, policy);
     final double[][] xValues = info.xValues;
     final double[][] yValues = info.yValues;
+    // The archive operation does not populate the value arrays for a
+    // non-virtual file source, so refuse it instead of dereferencing null.
+    if (info.xValid && xValues == null) {
+      return false;
+    }
+    if (info.yValid && yValues == null) {
+      return false;
+    }
     if (this.isDimensionPicked()) {
       if (info.xValid) {
         this.write(writer, info.xNames[0], info.xDataTypes[0], xValues);
@@ -2658,6 +2666,14 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
     List<MLArray> mlList = new ArrayList<MLArray>();
     final double[][] xValues = info.xValues;
     final double[][] yValues = info.yValues;
+    // The archive operation does not populate the value arrays for a
+    // non-virtual file source, so refuse it instead of dereferencing null.
+    if (info.xValid && xValues == null) {
+      return false;
+    }
+    if (info.yValid && yValues == null) {
+      return false;
+    }
     if (info.xValid) {
       String[] xNames = info.xNames;
       for (int ii = 0; ii < xNames.length; ii++) {
@@ -3155,6 +3171,9 @@ public class SGSXYMDArrayMultipleData extends SGMDArrayData
           new SGDataValueHistory.MDArray.MD1(
               dValue.getValue(), dValue.getColumnType(), 0, dValue.getIndex(), dValue.getVarName());
     }
+    // copies the generic dimension index so that the edited value can be
+    // located again when it is saved to a file.
+    mdValue.setDimension(dValue.getDimension());
     this.mEditedDataValueList.add(mdValue);
   }
 
