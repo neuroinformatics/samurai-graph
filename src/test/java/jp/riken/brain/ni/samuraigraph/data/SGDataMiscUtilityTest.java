@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import javax.xml.parsers.DocumentBuilderFactory;
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer;
 import jp.riken.brain.ni.samuraigraph.base.SGConstants;
@@ -887,5 +888,43 @@ class SGDataMiscUtilityTest {
     when(data.isTickLabelAvailable()).thenReturn(false);
     SGDataMiscUtility.setTickLabelArraySection(el, data);
     assertEquals("", el.getAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION));
+  }
+
+  @Test
+  void setSXYMultipleVariableNameAttributesWritesAllWhenAvailable() throws Exception {
+    Element el = newElement();
+    SGDataMiscUtility.setSXYMultipleVariableNameAttributes(
+        el,
+        true,
+        true,
+        "{x}",
+        "{y}",
+        () -> "{le}",
+        () -> "{ue}",
+        () -> "{eh}",
+        () -> "{tl}",
+        () -> "{th}");
+    assertEquals("{x}", el.getAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAMES));
+    assertEquals("{y}", el.getAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAMES));
+    assertEquals("{le}", el.getAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES));
+    assertEquals("{ue}", el.getAttribute(SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAMES));
+    assertEquals("{eh}", el.getAttribute(SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAMES));
+    assertEquals("{tl}", el.getAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES));
+    assertEquals("{th}", el.getAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAMES));
+  }
+
+  @Test
+  void setSXYMultipleVariableNameAttributesSkipsOptionalWhenUnavailable() throws Exception {
+    Element el = newElement();
+    Supplier<String> never =
+        () -> {
+          throw new AssertionError("optional supplier must not be evaluated");
+        };
+    SGDataMiscUtility.setSXYMultipleVariableNameAttributes(
+        el, false, false, "{x}", "{y}", never, never, never, never, never);
+    assertEquals("{x}", el.getAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAMES));
+    assertEquals("{y}", el.getAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAMES));
+    assertEquals("", el.getAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES));
+    assertEquals("", el.getAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES));
   }
 }

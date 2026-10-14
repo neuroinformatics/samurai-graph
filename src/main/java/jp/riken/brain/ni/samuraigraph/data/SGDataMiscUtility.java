@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Supplier;
 import jp.riken.brain.ni.samuraigraph.base.SGCSVTokenizer.Token;
 import jp.riken.brain.ni.samuraigraph.base.SGConstants.OPERATION;
 import jp.riken.brain.ni.samuraigraph.base.SGDataColumnInfo;
@@ -1635,6 +1636,48 @@ public final class SGDataMiscUtility {
       el.setAttribute(
           SGDataPropertyKeyConstants.KEY_TICK_LABEL_ARRAY_SECTION,
           data.getTickLabelStride().toString());
+    }
+  }
+
+  /**
+   * Sets the variable-name attributes of a non-picked multiple SXY data to the element. Shared by
+   * the NetCDF and MDArray writeProperty implementations. The caller provides the already-bound
+   * name strings so that the backend-specific binding format ({@code {name}} vs {@code
+   * {name:index}}) is preserved. The optional-name suppliers are evaluated only when the
+   * corresponding flag is set, so variables that are absent keep working without a null check.
+   *
+   * @param el the element to which the attributes are set
+   * @param errorBarAvailable whether the error bars are assigned
+   * @param tickLabelAvailable whether the tick labels are assigned
+   * @param xNames the bound names of the x variables
+   * @param yNames the bound names of the y variables
+   * @param leNames the bound names of the lower error variables
+   * @param ueNames the bound names of the upper error variables
+   * @param ehNames the bound names of the error bar holder variables
+   * @param tlNames the bound names of the tick label variables
+   * @param thNames the bound names of the tick label holder variables
+   */
+  public static void setSXYMultipleVariableNameAttributes(
+      final Element el,
+      final boolean errorBarAvailable,
+      final boolean tickLabelAvailable,
+      final String xNames,
+      final String yNames,
+      final Supplier<String> leNames,
+      final Supplier<String> ueNames,
+      final Supplier<String> ehNames,
+      final Supplier<String> tlNames,
+      final Supplier<String> thNames) {
+    el.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAMES, xNames);
+    el.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, yNames);
+    if (errorBarAvailable) {
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES, leNames.get());
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAMES, ueNames.get());
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAMES, ehNames.get());
+    }
+    if (tickLabelAvailable) {
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES, tlNames.get());
+      el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAMES, thNames.get());
     }
   }
 }

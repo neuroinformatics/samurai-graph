@@ -115,13 +115,16 @@ Key problems:
   backend-specific element type, plus per-class collaborators
   (`SGSXYNetCDFMultipleDataPropertyIO`,
   `SGSXYNetCDFMultipleDataAccess`, `SGSXYMDArrayMultipleDataExporter`).
-  The tick-label array-section attribute is written through the shared
-  `SGDataMiscUtility.setTickLabelArraySection` helper, but the variable-name
-  binding (`{name}` for NetCDF vs `{name:index}` for MDArray, column
-  indices for SDArray) and the `getProperties`/`setProperties` name-array
-  assembly remain duplicated. Further unification would require unifying
-  those property formats, which would break the compatibility of existing
-  property files, so the per-backend split is kept deliberately.
+  The tick-label array-section attribute and the non-picked variable-name
+  attributes are written through the shared
+  `SGDataMiscUtility.setTickLabelArraySection` /
+  `SGDataMiscUtility.setSXYMultipleVariableNameAttributes` helpers, with each
+  backend supplying its own bound-name strings (`{name}` for NetCDF vs
+  `{name:index}` for MDArray). The SDArray column-index output and the
+  `getProperties`/`setProperties` name-array assembly remain duplicated.
+  Further unification would require unifying those property formats, which
+  would break the compatibility of existing property files, so the
+  per-backend split is kept deliberately.
 - `SGUtility` static helpers are shared across layers instead of a service:
   57 classes in `data` and 66 in `figure` call them directly (property
   validation, value computation, text/date parsing, GUI helpers).

@@ -79,24 +79,17 @@ class SGSXYMDArrayMultipleDataExporter {
         el.setAttribute(SGDataPropertyKeyConstants.KEY_PICK_UP_DIMENSION, sb.toString());
 
       } else {
-        value = data.bindVariableNamesInBracket(data.mXVariables, true);
-        el.setAttribute(SGDataPropertyKeyConstants.KEY_X_VALUE_NAMES, value);
-        value = data.bindVariableNamesInBracket(data.mYVariables, true);
-        el.setAttribute(SGDataPropertyKeyConstants.KEY_Y_VALUE_NAMES, value);
-        if (data.isErrorBarAvailable()) {
-          value = data.bindVariableNamesInBracket(data.mLowerErrorVariables, true);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_LOWER_ERROR_VALUE_NAMES, value);
-          value = data.bindVariableNamesInBracket(data.mUpperErrorVariables, true);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_UPPER_ERROR_VALUE_NAMES, value);
-          value = data.bindVariableNamesInBracket(data.mErrorBarHolderVariables, false);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_ERROR_BAR_HOLDER_NAMES, value);
-        }
-        if (data.isTickLabelAvailable()) {
-          value = data.bindVariableNamesInBracket(data.mTickLabelVariables, true);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_NAMES, value);
-          value = data.bindVariableNamesInBracket(data.mTickLabelHolderVariables, false);
-          el.setAttribute(SGDataPropertyKeyConstants.KEY_TICK_LABEL_HOLDER_NAMES, value);
-        }
+        SGDataMiscUtility.setSXYMultipleVariableNameAttributes(
+            el,
+            data.isErrorBarAvailable(),
+            data.isTickLabelAvailable(),
+            data.bindVariableNamesInBracket(data.mXVariables, true),
+            data.bindVariableNamesInBracket(data.mYVariables, true),
+            () -> data.bindVariableNamesInBracket(data.mLowerErrorVariables, true),
+            () -> data.bindVariableNamesInBracket(data.mUpperErrorVariables, true),
+            () -> data.bindVariableNamesInBracket(data.mErrorBarHolderVariables, false),
+            () -> data.bindVariableNamesInBracket(data.mTickLabelVariables, true),
+            () -> data.bindVariableNamesInBracket(data.mTickLabelHolderVariables, false));
       }
 
       // stride
