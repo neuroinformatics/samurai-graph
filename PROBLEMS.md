@@ -1,6 +1,6 @@
 # Samurai Graph — Current State and Known Problems
 
-Coverage snapshot: 2026-10-14, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`).
+Coverage snapshot: 2026-10-15, JaCoCo 0.8.12 (`./mvnw clean test jacoco:report`).
 
 ## 1. Package Instruction Coverage
 
@@ -26,35 +26,31 @@ backend:
 
 | Class | Lines | Extends | Also implements |
 |---|---|---|---|
-| `SGSXYNetCDFMultipleData` | 3,405 | `SGNetCDFData` | `SGISXYMultipleDimensionData` |
-| `SGSXYMDArrayMultipleData` | 3,207 | `SGMDArrayData` | `SGISXYMultipleDimensionData` |
-| `SGSXYSDArrayMultipleData` | 2,705 | `SGSDArrayData` | — |
+| `SGSXYNetCDFMultipleData` | 3,394 | `SGNetCDFData` | `SGISXYMultipleDimensionData` |
+| `SGSXYMDArrayMultipleData` | 3,196 | `SGMDArrayData` | `SGISXYMultipleDimensionData` |
+| `SGSXYSDArrayMultipleData` | 2,693 | `SGSDArrayData` | — |
 
 All three implement `SGISXYTypeMultipleData`. The backend parents are all
 under `SGArrayData` (498 lines), which extends `base/SGData` (217 lines).
 
-Measured duplication (name + signature scan of the three classes):
-
-- **50 methods are shared by all three classes**, but only **one**
-  (`getNumberFormat()`, a one-line getter) has a verbatim-identical body.
-  It cannot be lifted because it returns a per-class `private` `mFormat`
-  field.
-- The NetCDF and MDArray siblings share **82 methods** in total (32 of them
-  not in the SDArray variant); only **7** are verbatim-identical, and all 7
-  are trivial one-to-three-line accessors or delegations that touch
-  per-backend private fields or `super`.
-- The remaining same-signature methods are **parallel implementations, not
-  copy-paste**: each backend stores its child columns as a different element
-  type (`SGNetCDFVariable[]`, `SGMDArrayVariable[]`, or `Integer[]` column
-  indices), so the bodies differ even where signatures match.
+Each class stores its child columns in a backend-specific element type —
+`SGNetCDFVariable[]` for the NetCDF variant, `SGMDArrayVariable[]` for the
+MDArray variant, and `Integer[]` column indices for the SDArray variant (the
+SDArray class exposes `getXIndices` / `getYColumn` style accessors and has
+no `getAssignedVariables`). As a result the same-signature methods across
+the three classes are **parallel implementations, not copy-paste**: the
+bodies differ even where signatures match, and only trivial one-line
+accessors such as `getNumberFormat` are verbatim-identical. The NetCDF and
+MDArray siblings are also the only two that implement
+`SGISXYMultipleDimensionData`.
 
 Structural constraint: Java single inheritance binds each class to a
 different backend parent, so **no shared abstract base can be inserted**
 among the three without restructuring the backend hierarchy. The codebase's
 pattern for shared logic is **interface default methods that delegate to
-static utilities**: `SGISXYTypeMultipleData` carries 25 defaults delegating
+static utilities**: `SGISXYTypeMultipleData` carries 26 defaults delegating
 to `SGDataBufferUtility`, `SGDataViewerUtility`, `SGDataRangeUtility`, and
-`SGDataMiscUtility`, and `SGISXYTypeData` carries 9. Per-class collaborators
+`SGDataMiscUtility`, and `SGISXYTypeData` carries 10. Per-class collaborators
 hold the extracted backend-specific logic
 (`SGSXYNetCDFMultipleDataAccess`, `SGSXYNetCDFMultipleDataPropertyIO`,
 `SGSXYMDArrayMultipleDataExporter`).
@@ -81,15 +77,15 @@ into interface defaults or static utilities, not class bodies.
 | `data/SGMDArrayDataSetupPanel` | 3,598 | MDArray data setup panel |
 | `application/SGMainFunctions` | 3,597 | Application entry and menu actions |
 | `base/SGFigure` | 3,487 | Figure model |
-| `data/SGSXYNetCDFMultipleData` | 3,405 | Multiple SXY data, NetCDF backend (§2.1) |
-| `data/SGSXYMDArrayMultipleData` | 3,207 | Multiple SXY data, MDArray backend (§2.1) |
+| `data/SGSXYNetCDFMultipleData` | 3,394 | Multiple SXY data, NetCDF backend (§2.1) |
+| `data/SGSXYMDArrayMultipleData` | 3,196 | Multiple SXY data, MDArray backend (§2.1) |
 | `figure/SGFigureElementAxis` | 3,166 | Axis figure element |
 | `figure.dialog/SGAxisDialog` | 3,082 | Axis property dialog |
 | `figure/SGFigureElementSignificantDifference` | 3,060 | Significant-difference element |
 
 Beyond the top 12: `SGFigureElementLegend` (2,810), `SGUtility` (2,784),
 `SGDataCreator` (2,775), `SGNetCDFData` (2,745),
-`SGSXYSDArrayMultipleData` (2,705), `SGClientPanel` (2,463), and 10 more
+`SGSXYSDArrayMultipleData` (2,693), `SGClientPanel` (2,463), and 10 more
 between 2,062 and 2,306 lines. Most of the 28 classes over 2,000 lines are
 Swing GUI classes in `figure` and `base`.
 
@@ -105,7 +101,8 @@ Key problems:
 - `SGUtility` (2,784 lines) holds **139 public static methods**. It is a
   static grab-bag with no clear ownership boundary, called directly from 66
   classes in `figure` and 57 classes in `data`.
-- The three multiple-data SXY classes (§2.1) each exceed 2,700 lines, and
+- The three multiple-data SXY classes (§2.1) each exceed 2,600 lines
+  (`SGSXYNetCDFMultipleData` at 3,394 is the largest), and
   `SGNetCDFData` (2,745) is the largest non-SXY data class.
 - The setup panels have diverged under the shared abstract
   `SGDataSetupPanel`: `SGMDArrayDataSetupPanel` (3,598 lines) vs
@@ -161,23 +158,74 @@ dataset so the values still round-trip. The convenience writers
   (`z`, `f`/`s`) through the float64 `writeMDArray`, so their grid files
   store 2-D datasets.
 
+### 2.6 Latent exceptions in the edited-value and export paths
+
+Three latent `NullPointerException`/index exceptions were observed while
+exercising the data paths from the characterization suites:
+
+- **`SGSXYNetCDFMultipleData.addSingleDimensionEditedDataValue` loses the
+  dimension name.** When a single-data object is converted with `toMultiple()`
+  its edited values are copied over through this method, which builds an
+  `MD1` without calling `setDimInfo`, so `MD1.getDimName()` stays `null`.
+  Saving the resulting multiple data with `saveToArchiveDataSetFile` then
+  reaches `setEditedValues`, which passes the `null` dim name to
+  `findDimensionOrder` and NPEs on `dimName.equals(...)`. This is reachable
+  from the ordinary flow (edit a single-data cell, convert to multiple, save
+  an archive) and is not limited to invalid API usage.
+
+- **`SGSXYMDArrayMultipleData.addSingleDimensionEditedDataValue` loses the
+  dimension index.** The MDArray sibling has the same shape of bug: the
+  copied `MD1` never gets `setDimensionInfo`, so `getDimension()` stays `-1`.
+  When such a value reaches `getEditedValueMap` during an archive save it
+  indexes `factors[dimension]` with `-1` and throws
+  `ArrayIndexOutOfBoundsException`.
+
+- **`SGSXYMDArrayMultipleData.exportToHDF5` / `exportToMATLAB` assume the
+  value arrays are populated.** `exportCommon` leaves `xValues`/`yValues` as
+  `null` (while keeping `xValid`/`yValid` true) when saving a non-virtual
+  `SGHDF5File` source with an archive operation, and the exporters dereference
+  `info.xValues[ii]` without a null check. `saveToHDF5File(file,
+  SAVE_TO_ARCHIVE_DATA_SET, policy)` therefore NPEs instead of failing
+  cleanly. The archive op is only valid for NetCDF-format archives, so the
+  HDF5/MATLAB exporters should reject it rather than crash.
+
+All three are reachable only through the edited-value / mixed-operation paths
+rather than the plain data-viewing flow, but they make the converted/export
+APIs unsafe and are worth guarding.
+
+### 2.7 Exceptions are routinely swallowed as `null`/`false`
+
+The `data` layer returns `null` or `false` from `catch (IOException)` blocks
+in ~30 places, so an I/O failure (missing file, unreadable source) is
+indistinguishable from a genuinely empty or inapplicable result. A concrete
+example is `SGDataCreator.parseFileColumnType`, which declares
+`throws FileNotFoundException` yet swallows it and returns `null`. Callers
+cannot tell "file was not found" from "file parsed to no columns".
+
 ## 3. Test Gaps
 
 | Area | Status |
 |---|---|
 | `SGDrawingWindow` (3,660 LOC) | No direct unit tests for the window logic; exercised indirectly through window-construction tests (e.g. `SGDrawingWindowPropertyIOTest`) |
-| `SGUtility` (2,784 LOC, 139 static methods) | Only unreachable or platform-specific defensive branches remain untested (class coverage: 99.5% instruction, 98.8% branch, 100% method): the `moveObjectTo`-failure returns inside `moveObject` / `moveObjectRawList`, the `getFileName` forward-slash fallback for Windows paths, the `assignIdNumber` `Error` guard and its loop exit, the `PermittingEmptyString` empty-string rechecks shadowed by the earlier return, the `getVersionNumber` defensive `property == null` check, and the `setupMediaTracker` `InterruptedException` catch |
-| `hdf5` package (90.5%) | The remaining 263 missed instructions are unreachable through jhdf or defensive fallbacks: the `mapDataClass` cases jhdf never reports (opaque, compound, reference, enum, vlen, time), the dead `Hdf5WriterAdapter$FileReader` (the `IHDF5Writer` interface exposes no `file()` accessor), the five convenience-writer `catch` blocks (jhdf buffers `putDataset` in memory, so a failing write is not thrown until `close`), the `getDataset` by-name fallback, the `byte[][]`/`Number[]`/`String.valueOf` attribute-coercion fallbacks jhdf never produces, and the `close()` error handlers |
-| `export` package (100.0%) | Fully covered. The `org.freehep...export` registry is at 97.7%: only the outer `getResources` `IOException` catch (a defensive handler for an unreadable classloader) remains unreachable in tests |
-| `data` package (57.4%) | Both multiple-data SXY classes are now at ~61% (`SGSXYNetCDFMultipleData` 60.9%, `SGSXYMDArrayMultipleData` 61.0%) with export (HDF5/MATLAB/NetCDF), assigned-variable, column-type, data-copy and data-viewer-edit suites; the backend setup dialogs and the tick-label/date export branches remain under-tested |
-| `application` package (27.2%) | `SGDataCreator` (2,775 LOC) now at 77.1% with the factory-path test suite; the remaining covered-unit gap is the dialog and menu surface of `SGMainFunctions` |
-| `figure` top-level (23.1%) | Most drawing logic is untested; only `figure.dialog` (65.6%) and a few window-construction tests exist |
+| `SGUtility` (2,784 LOC, 139 static methods) | Only unreachable or platform-specific defensive branches remain untested: the `moveObjectTo`-failure returns inside `moveObject` / `moveObjectRawList`, the `getFileName` forward-slash fallback for Windows paths, the `assignIdNumber` `Error` guard and its loop exit, the `PermittingEmptyString` empty-string rechecks shadowed by the earlier return, the `getVersionNumber` defensive `property == null` check, and the `setupMediaTracker` `InterruptedException` catch |
+| `hdf5` package | The remaining missed instructions are unreachable through jhdf or defensive fallbacks: the `mapDataClass` cases jhdf never reports (opaque, compound, reference, enum, vlen, time), the dead `Hdf5WriterAdapter$FileReader` (the `IHDF5Writer` interface exposes no `file()` accessor), the five convenience-writer `catch` blocks (jhdf buffers `putDataset` in memory, so a failing write is not thrown until `close`), the `getDataset` by-name fallback, the `byte[][]`/`Number[]`/`String.valueOf` attribute-coercion fallbacks jhdf never produces, and the `close()` error handlers |
+| `export` package | Fully covered. The `org.freehep...export` registry leaves only the outer `getResources` `IOException` catch (a defensive handler for an unreadable classloader) unreachable in tests |
+| `data` package | Both multiple-data SXY classes are covered by export (HDF5/MATLAB/NetCDF), assigned-variable, column-type, data-copy and data-viewer-edit suites; the backend setup dialogs and the tick-label/date export branches remain under-tested |
+| `application` package | `SGDataCreator` is covered by the factory-path test suite; the remaining covered-unit gap is the dialog and menu surface of `SGMainFunctions` |
+| `figure` top-level | Most drawing logic is untested; only `figure.dialog` and a few window-construction tests exist |
 
-**Next coverage work:**
+**Remaining test-gap note:**
 
-1. The `data` package (57.4%): the NetCDF and MDArray setup dialogs
-   (`SGNetCDFDataSetupPanel`, `SGMDArrayDataSetupPanel`) are the largest untested
-   units remaining in the data layer.
+The areas that remain without direct unit tests are dominated by the Swing
+GUI and drawing layers — `figure` (drawing elements and window logic),
+`application` (`SGMainFunctions` menu/dialog surface) and the backend setup
+dialogs in `data` — whose headful, event-driven nature makes them
+disproportionately costly to test relative to their architectural value, so
+they are intentionally not targeted. The data-model and data-creation
+layers the application's correctness depends on (data factories, the
+multiple-data SXY classes, the NetCDF data model and the shared utility
+classes) are covered by the characterization suites added in the recent
+test commits.
 
 ## 4. Healthy Aspects
 
