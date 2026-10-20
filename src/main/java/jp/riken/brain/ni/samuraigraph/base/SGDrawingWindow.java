@@ -78,6 +78,9 @@ public class SGDrawingWindow extends JFrame
   private final SGDrawingWindowPopupMenuHelper mPopupMenuHelper =
       new SGDrawingWindowPopupMenuHelper(this);
 
+  private final SGDrawingWindowCommandHelper mCommandHelper =
+      new SGDrawingWindowCommandHelper(this);
+
   SGDrawingWindowClipboard getClipboard() {
     return this.mClipboard;
   }
@@ -3295,74 +3298,26 @@ public class SGDrawingWindow extends JFrame
 
   /** Splits the focused data objects. */
   public void doSplitMultipleData() {
-
-    // notify the command
-    this.notifyToListener(MENUBARCMD_SPLIT);
-
-    // notify the change to the root
-    this.notifyToRoot();
-
-    // update the menu items
-    this.updateFocusedObjectItem();
-
-    // repaint
-    this.repaintContentPane();
+    this.mCommandHelper.doSplitMultipleData();
   }
 
   /** Transforms the focused data objects to other type data. */
   public void doTransformData() {
-
-    // notify the command
-    this.notifyToListener(MENUCMD_TRANSFORM_DATA);
-
-    // notify the change to the root
-    this.notifyToRoot();
-
-    // update the menu items
-    this.updateFocusedObjectItem();
-
-    // repaint
-    this.repaintContentPane();
+    this.mCommandHelper.doTransformData();
   }
 
   /** Merge the focused data objects to one object. */
   public void doMergeMultipleData() {
-
-    // notify the command
-    this.notifyToListener(MENUBARCMD_MERGE);
-
-    // notify the change to the root
-    this.notifyToRoot();
-
-    // update the menu items
-    this.updateFocusedObjectItem();
-
-    // repaint
-    this.repaintContentPane();
+    this.mCommandHelper.doMergeMultipleData();
   }
 
   /** Assigns line colors. */
   public void doAssignLineColors() {
-    // notify the command
-    this.notifyToListener(MENUBARCMD_ASSIGN_LINE_COLORS);
-
-    // notify the change to the root
-    this.notifyToRoot();
-
-    // update the menu items
-    this.updateFocusedObjectItem();
-
-    // repaint
-    this.repaintContentPane();
+    this.mCommandHelper.doAssignLineColors();
   }
 
   public void doHideSelectedAxes() {
-    ArrayList<SGFigure> fList = this.getVisibleFigureList();
-    for (SGFigure f : fList) {
-      f.getAxisElement().hideSelectedAxes();
-    }
-    this.repaint();
-    this.notifyToRoot();
+    this.mCommandHelper.doHideSelectedAxes();
   }
 
   /**
